@@ -4,3 +4,5 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     message: "clicked_browser_action",
   });
 });
+
+chrome.tabs.create({ url: "./public/main.html" });

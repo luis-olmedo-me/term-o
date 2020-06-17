@@ -9,12 +9,27 @@
 
 .main-wrapper > * {
   flex: 1;
-  background-color: goldenrod;
+  background-color: var(--neutral1-color);
   height: 100vh;
 }
 
+/* Text decorations */
+.centred-text {
+  text-align: center;
+}
+
+.title {
+  color: var(--main-font-color);
+  margin: 10px 0;
+}
+
+/* Scripts seccion */
 .main-scripts {
   flex: 0.3;
-  background-color: cadetblue;
+  background-color: var(--main-color);
+  width: 100%;
+}
+
+.scripts-option {
   width: 100%;
 }

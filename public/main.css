@@ -1,10 +1,6 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-
 .main-wrapper {
   display: flex;
+  font-family: var(--font-family);
 }
 
 .main-wrapper > * {
@@ -20,16 +16,39 @@
 
 .title {
   color: var(--main-font-color);
-  margin: 10px 0;
+  background-color: var(--main-color);
+  padding: 20px;
+  margin: 0;
 }
 
 /* Scripts seccion */
 .main-scripts {
   flex: 0.3;
-  background-color: var(--main-color);
+  background-color: var(--dark-color);
   width: 100%;
 }
 
-.scripts-option {
+.script-option {
   width: 100%;
+}
+
+.script-option button {
+  width: 100%;
+  padding: 10px 0;
+  font-weight: bold;
+  font-size: 16px;
+  border: none !important;
+  background-color: var(--main-color);
+  cursor: pointer;
+  color: var(--font-color);
+}
+
+.script-option button:hover,
+.script-option button:focus {
+  outline: none;
+}
+
+.script-option button:hover {
+  background-color: var(--light-color);
+  color: var(--main-font-color);
 }

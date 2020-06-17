@@ -5,8 +5,23 @@
 
 .main-wrapper > * {
   flex: 1;
-  background-color: var(--neutral1-color);
+  background-color: var(--neutral2-color);
   height: 100vh;
+}
+
+/* Custom defaults */
+input,
+input,
+textarea,
+textarea {
+  border: none;
+}
+
+input:hover,
+input:focus,
+textarea:hover,
+textarea:focus {
+  outline: none;
 }
 
 /* Text decorations */
@@ -43,12 +58,22 @@
   color: var(--font-color);
 }
 
-.script-option button:hover,
-.script-option button:focus {
-  outline: none;
-}
-
 .script-option button:hover {
   background-color: var(--light-color);
   color: var(--main-font-color);
+}
+
+/* Code seccion */
+.code {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.coder {
+  width: 90%;
+  height: 90%;
+  background-color: var(--neutral1-color);
+  padding: 10px;
+  color: var(--font-color);
 }

@@ -1,3 +1,20 @@
+function SubOption({ options = [] }) {
+  const scriptContainer = document.createElement("div");
+  scriptContainer.classList = ["script-sub-option"];
+
+  options.forEach(({ text, callback }) => {
+    const scriptButton = document.createElement("button");
+    scriptButton.onclick = callback;
+
+    const textNode = document.createTextNode(text);
+    scriptButton.appendChild(textNode);
+
+    scriptContainer.appendChild(scriptButton);
+  });
+
+  return scriptContainer;
+}
+
 function Script({ text = "script", callback }) {
   const scriptContainer = document.createElement("div");
   scriptContainer.classList = ["script-option"];

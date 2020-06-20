@@ -64,7 +64,7 @@ function updateUI() {
             callback,
             options: [
               { text: "Delete", callback: deleteCallback },
-              { text: "save", callback: saveCallback },
+              { text: "Save", callback: saveCallback },
             ],
           })
         );

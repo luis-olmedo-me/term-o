@@ -63,8 +63,8 @@ function updateUI() {
             text: name,
             callback,
             options: [
-              { text: "Delete", callback: deleteScript },
-              { text: "Save", callback: saveScript },
+              { text: "Delete", callback: () => deleteScript(name) },
+              { text: "Save", callback: () => saveScript(name) },
             ],
           })
         );

@@ -24,6 +24,27 @@ function createScript() {
   saveScripts(newScripts);
 }
 
+const saveScript = (name) => {
+  const newScripts = currentScripts.map((script) => {
+    return script.name !== name
+      ? script
+      : {
+          name: codeName.value,
+          script: codeCoder.value,
+        };
+  });
+
+  saveScripts(newScripts);
+};
+
+const deleteScript = (name) => {
+  const newScripts = currentScripts.filter((script) => {
+    return script.name !== name;
+  });
+
+  saveScripts(newScripts);
+};
+
 function updateUI() {
   scripts.innerHTML = "";
 
@@ -37,34 +58,13 @@ function updateUI() {
           codeCoder.value = script;
         };
 
-        const saveCallback = () => {
-          const newScripts = currentScripts.map((script) => {
-            return script.name !== name
-              ? script
-              : {
-                  name: codeName.value,
-                  script: codeCoder.value,
-                };
-          });
-
-          saveScripts(newScripts);
-        };
-
-        const deleteCallback = () => {
-          const newScripts = currentScripts.filter((script) => {
-            return script.name !== name;
-          });
-
-          saveScripts(newScripts);
-        };
-
         scripts.appendChild(
           Script({
             text: name,
             callback,
             options: [
-              { text: "Delete", callback: deleteCallback },
-              { text: "Save", callback: saveCallback },
+              { text: "Delete", callback: deleteScript },
+              { text: "Save", callback: saveScript },
             ],
           })
         );

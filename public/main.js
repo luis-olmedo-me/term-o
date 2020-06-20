@@ -4,13 +4,13 @@ const scripts = document.getElementById("scripts");
 let currentScripts = [];
 const { Script } = Components;
 
-function saveScripts(scripts) {
+const storeScripts = (scripts) => {
   chrome.storage.local.set({ scriptsBagKey: JSON.stringify(scripts) });
 
   updateUI();
-}
+};
 
-function createScript() {
+const createScript = () => {
   if (codeName.value === "") {
     codeCoder.value = "";
     return;
@@ -21,8 +21,29 @@ function createScript() {
     { name: codeName.value, script: codeCoder.value },
   ];
 
-  saveScripts(newScripts);
-}
+  storeScripts(newScripts);
+};
+
+const saveScript = (name) => {
+  const newScripts = currentScripts.map((script) => {
+    return script.name !== name
+      ? script
+      : {
+          name: codeName.value,
+          script: codeCoder.value,
+        };
+  });
+
+  storeScripts(newScripts);
+};
+
+const deleteScript = (name) => {
+  const newScripts = currentScripts.filter((script) => {
+    return script.name !== name;
+  });
+
+  storeScripts(newScripts);
+};
 
 function updateUI() {
   scripts.innerHTML = "";
@@ -37,25 +58,14 @@ function updateUI() {
           codeCoder.value = script;
         };
 
-        const saveCallback = () => {
-          const newScripts = currentScripts.map((script) => {
-            return script.name !== name
-              ? script
-              : {
-                  name: codeName.value,
-                  script: codeCoder.value,
-                };
-          });
-
-          saveScripts(newScripts);
-          currentScripts = newScripts;
-        };
-
         scripts.appendChild(
           Script({
             text: name,
             callback,
-            options: [{ text: "save", callback: saveCallback }],
+            options: [
+              { text: "Delete", callback: () => deleteScript(name) },
+              { text: "Save", callback: () => saveScript(name) },
+            ],
           })
         );
       });

@@ -1,4 +1,4 @@
-function SubOption({ options }) {
+function SubOptions({ options }) {
   const scriptContainer = document.createElement("div");
   scriptContainer.classList = ["script-sub-options"];
   console.log(options);
@@ -17,6 +17,8 @@ function SubOption({ options }) {
 }
 
 function Script({ text = "script", callback, options }) {
+  const hasOptions = Boolean(options);
+
   const scriptContainer = document.createElement("div");
   scriptContainer.classList = ["script-option"];
 
@@ -28,11 +30,20 @@ function Script({ text = "script", callback, options }) {
 
   scriptContainer.appendChild(scriptButton);
 
-  const hasOptions = Boolean(options);
   if (hasOptions) {
-    console.log("script", options);
-    scriptContainer.appendChild(SubOption({ options }));
+    const subOptions = SubOptions({ options });
+
+    scriptButton.onclick = () => {
+      const isClosed = subOptions.className.includes("closed");
+
+      subOptions.className = `script-sub-options ${isClosed ? "" : "closed"}`;
+    };
+
+    scriptContainer.appendChild(subOptions);
+
+    callback && callback();
   }
+
   return scriptContainer;
 }
 

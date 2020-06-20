@@ -1,8 +1,5 @@
-chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-  var activeTab = tabs[0];
-  chrome.tabs.sendMessage(activeTab.id, {
-    message: "clicked_browser_action",
-  });
+// chrome.tabs.create({ url: "./public/main.html" });
+const value = "console.log('funco?')";
+chrome.storage.local.set({ myKey: value }, function () {
+  console.log("Value is set to" + value);
 });
-
-chrome.tabs.create({ url: "./public/main.html" });

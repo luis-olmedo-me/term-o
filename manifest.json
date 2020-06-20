@@ -3,7 +3,7 @@
   "version": "1.0",
   "description": "Temporally description",
   "manifest_version": 2,
-  "permissions": ["tabs"],
+  "permissions": ["tabs", "activeTab", "storage"],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],

@@ -1,7 +1,6 @@
 function SubOptions({ options }) {
   const scriptContainer = document.createElement("div");
   scriptContainer.classList = ["script-sub-options"];
-  console.log(options);
 
   options.forEach(({ text, callback }) => {
     const scriptButton = document.createElement("button");
@@ -37,11 +36,11 @@ function Script({ text = "script", callback, options }) {
       const isClosed = subOptions.className.includes("closed");
 
       subOptions.className = `script-sub-options ${isClosed ? "" : "closed"}`;
+
+      callback && callback();
     };
 
     scriptContainer.appendChild(subOptions);
-
-    callback && callback();
   }
 
   return scriptContainer;
@@ -74,7 +73,14 @@ chrome.storage.local.get(["scriptsBagKey"], function (result) {
 
   customScripts &&
     customScripts.forEach(({ name, script }) => {
-      scripts.appendChild(Script({ text: name, options: [{ text: "save" }] }));
+      const callback = () => {
+        codeName.value = name;
+        codeCoder.value = script;
+      };
+
+      scripts.appendChild(
+        Script({ text: name, callback, options: [{ text: "save" }] })
+      );
     });
 
   scripts.appendChild(Script({ text: "+", callback: createScript }));

@@ -25,7 +25,7 @@ function createScript() {
 
   const newScripts = [
     ...currentScripts,
-    { name: "My great script", script: "console.log('hola')" },
+    { name: codeName.value, script: codeCoder.value },
   ];
 
   chrome.storage.local.set({ scriptsBagKey: JSON.stringify(newScripts) });

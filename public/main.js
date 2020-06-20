@@ -36,9 +36,10 @@ function createScript() {
 chrome.storage.local.get(["scriptsBagKey"], function (result) {
   const customScripts = JSON.parse(result.scriptsBagKey);
 
-  customScripts.forEach(({ name, script }) => {
-    scripts.appendChild(Script({ text: name }));
-  });
+  customScripts &&
+    customScripts.forEach(({ name, script }) => {
+      scripts.appendChild(Script({ text: name }));
+    });
 
   scripts.appendChild(Script({ text: "+", callback: createScript }));
   currentScripts = customScripts;

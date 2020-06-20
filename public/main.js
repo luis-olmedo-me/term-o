@@ -1,21 +1,14 @@
-function Script({ text = "script", callback }) {
-  const scriptContainer = document.createElement("div");
-  scriptContainer.classList = ["script-option"];
-
-  const scriptButton = document.createElement("button");
-  scriptButton.onclick = callback;
-
-  const textNode = document.createTextNode(text);
-  scriptButton.appendChild(textNode);
-
-  scriptContainer.appendChild(scriptButton);
-
-  return scriptContainer;
-}
-
 const codeCoder = document.getElementById("code-coder");
 const codeName = document.getElementById("code-name");
+const scripts = document.getElementById("scripts");
 let currentScripts = [];
+const { Script } = Components;
+
+function saveScripts(scripts) {
+  chrome.storage.local.set({ scriptsBagKey: JSON.stringify(scripts) });
+
+  updateUI();
+}
 
 function createScript() {
   if (codeName.value === "") {
@@ -28,19 +21,48 @@ function createScript() {
     { name: codeName.value, script: codeCoder.value },
   ];
 
-  chrome.storage.local.set({ scriptsBagKey: JSON.stringify(newScripts) });
-
-  location.reload();
+  saveScripts(newScripts);
 }
 
-chrome.storage.local.get(["scriptsBagKey"], function (result) {
-  const customScripts = JSON.parse(result.scriptsBagKey);
+function updateUI() {
+  scripts.innerHTML = "";
 
-  customScripts &&
-    customScripts.forEach(({ name, script }) => {
-      scripts.appendChild(Script({ text: name }));
-    });
+  chrome.storage.local.get(["scriptsBagKey"], function (result) {
+    const customScripts = JSON.parse(result.scriptsBagKey);
 
-  scripts.appendChild(Script({ text: "+", callback: createScript }));
-  currentScripts = customScripts;
-});
+    customScripts &&
+      customScripts.forEach(({ name, script }) => {
+        const callback = () => {
+          codeName.value = name;
+          codeCoder.value = script;
+        };
+
+        const saveCallback = () => {
+          const newScripts = currentScripts.map((script) => {
+            return script.name !== name
+              ? script
+              : {
+                  name: codeName.value,
+                  script: codeCoder.value,
+                };
+          });
+
+          saveScripts(newScripts);
+          currentScripts = newScripts;
+        };
+
+        scripts.appendChild(
+          Script({
+            text: name,
+            callback,
+            options: [{ text: "save", callback: saveCallback }],
+          })
+        );
+      });
+
+    scripts.appendChild(Script({ text: "+", callback: createScript }));
+    currentScripts = customScripts;
+  });
+}
+
+updateUI();

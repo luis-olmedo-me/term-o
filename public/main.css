@@ -42,13 +42,17 @@ button:focus {
   flex: 0.3;
   background-color: var(--dark-color);
   width: 100%;
+  -webkit-box-shadow: 10px 0px 18px 0px rgb(27, 27, 27);
+  -moz-box-shadow: 10px 0px 18px 0px rgb(27, 27, 27);
+  box-shadow: 10px 0px 18px 0px rgb(27, 27, 27);
+  z-index: 1;
 }
 
 .script-option {
   width: 100%;
 }
 
-.script-option button {
+.script-option > button {
   width: 100%;
   padding: 10px 0;
   font-weight: bold;
@@ -58,7 +62,30 @@ button:focus {
   color: var(--font-color);
 }
 
-.script-option button:hover {
+.script-option > button:hover {
+  background-color: var(--light-color);
+  color: var(--main-font-color);
+}
+
+.script-sub-options {
+  display: flex;
+}
+
+.script-sub-options.closed {
+  height: 0;
+}
+
+.script-sub-options > button {
+  padding: 10px 20px;
+  font-weight: bold;
+  font-size: 14px;
+  background-color: var(--secondary-color);
+  cursor: pointer;
+  color: var(--font-color);
+  flex: 1;
+}
+
+.script-sub-options > button:hover {
   background-color: var(--light-color);
   color: var(--main-font-color);
 }

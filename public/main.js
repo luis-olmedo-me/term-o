@@ -13,8 +13,24 @@ function Script({ text = "script", callback }) {
   return scriptContainer;
 }
 
+const codeCoder = document.getElementById("code-coder");
+const codeName = document.getElementById("code-name");
+let currentScripts = [];
+
 function createScript() {
-  console.log("creating");
+  if (codeName.value === "") {
+    codeCoder.value = "";
+    return;
+  }
+
+  const newScripts = [
+    ...currentScripts,
+    { name: "My great script", script: "console.log('hola')" },
+  ];
+
+  chrome.storage.local.set({ scriptsBagKey: JSON.stringify(newScripts) });
+
+  location.reload();
 }
 
 chrome.storage.local.get(["scriptsBagKey"], function (result) {
@@ -25,4 +41,5 @@ chrome.storage.local.get(["scriptsBagKey"], function (result) {
   });
 
   scripts.appendChild(Script({ text: "+", callback: createScript }));
+  currentScripts = customScripts;
 });

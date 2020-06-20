@@ -1,22 +1,8 @@
 const mainPageButton = document.getElementById("mainPageLink");
+const { Script } = Components;
 
 mainPageButton.onclick = () =>
   chrome.tabs.create({ url: "./public/main.html" });
-
-function Script({ text = "script", callback }) {
-  const scriptContainer = document.createElement("div");
-  scriptContainer.classList = ["script-option"];
-
-  const scriptButton = document.createElement("button");
-  scriptButton.onclick = callback;
-
-  const textNode = document.createTextNode(text);
-  scriptButton.appendChild(textNode);
-
-  scriptContainer.appendChild(scriptButton);
-
-  return scriptContainer;
-}
 
 const scripts = document.getElementById("scripts");
 

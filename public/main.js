@@ -1,6 +1,6 @@
 function SubOptions({ options }) {
   const scriptContainer = document.createElement("div");
-  scriptContainer.classList = ["script-sub-options"];
+  scriptContainer.classList = ["script-sub-options closed"];
 
   options.forEach(({ text, callback }) => {
     const scriptButton = document.createElement("button");

@@ -4,13 +4,13 @@ const scripts = document.getElementById("scripts");
 let currentScripts = [];
 const { Script } = Components;
 
-function saveScripts(scripts) {
+const storeScripts = (scripts) => {
   chrome.storage.local.set({ scriptsBagKey: JSON.stringify(scripts) });
 
   updateUI();
-}
+};
 
-function createScript() {
+const createScript = () => {
   if (codeName.value === "") {
     codeCoder.value = "";
     return;
@@ -21,8 +21,8 @@ function createScript() {
     { name: codeName.value, script: codeCoder.value },
   ];
 
-  saveScripts(newScripts);
-}
+  storeScripts(newScripts);
+};
 
 const saveScript = (name) => {
   const newScripts = currentScripts.map((script) => {
@@ -34,7 +34,7 @@ const saveScript = (name) => {
         };
   });
 
-  saveScripts(newScripts);
+  storeScripts(newScripts);
 };
 
 const deleteScript = (name) => {
@@ -42,7 +42,7 @@ const deleteScript = (name) => {
     return script.name !== name;
   });
 
-  saveScripts(newScripts);
+  storeScripts(newScripts);
 };
 
 function updateUI() {

@@ -71,8 +71,6 @@ function createScript() {
   saveScripts(newScripts);
 }
 
-function focusScript(name, script) {}
-
 function updateUI() {
   scripts.innerHTML = "";
 

@@ -50,6 +50,14 @@ const codeCoder = document.getElementById("code-coder");
 const codeName = document.getElementById("code-name");
 let currentScripts = [];
 
+function saveScripts(scripts, shouldReload = true) {
+  chrome.storage.local.set({ scriptsBagKey: JSON.stringify(scripts) });
+
+  if (shouldReload) {
+    location.reload();
+  }
+}
+
 function createScript() {
   if (codeName.value === "") {
     codeCoder.value = "";
@@ -61,9 +69,7 @@ function createScript() {
     { name: codeName.value, script: codeCoder.value },
   ];
 
-  chrome.storage.local.set({ scriptsBagKey: JSON.stringify(newScripts) });
-
-  location.reload();
+  saveScripts(newScripts);
 }
 
 function focusScript(name, script) {}
@@ -78,8 +84,26 @@ chrome.storage.local.get(["scriptsBagKey"], function (result) {
         codeCoder.value = script;
       };
 
+      const saveCallback = () => {
+        const newScripts = currentScripts.map((script) => {
+          return script.name !== name
+            ? script
+            : {
+                name: codeName.value,
+                script: codeCoder.value,
+              };
+        });
+
+        saveScripts(newScripts);
+        currentScripts = newScripts;
+      };
+
       scripts.appendChild(
-        Script({ text: name, callback, options: [{ text: "save" }] })
+        Script({
+          text: name,
+          callback,
+          options: [{ text: "save", callback: saveCallback }],
+        })
       );
     });
 

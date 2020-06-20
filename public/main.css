@@ -68,11 +68,20 @@ button:focus {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-flow: column nowrap;
+}
+
+.code-name {
+  width: 90%;
+  margin-bottom: 1%;
+  padding: 10px;
+  background-color: var(--neutral1-color);
+  color: var(--font-color);
 }
 
 .coder {
   width: 90%;
-  height: 90%;
+  height: 85%;
   background-color: var(--neutral1-color);
   padding: 10px;
   color: var(--font-color);

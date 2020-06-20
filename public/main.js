@@ -3,6 +3,7 @@ function Script({ text = "script", callback }) {
   scriptContainer.classList = ["script-option"];
 
   const scriptButton = document.createElement("button");
+  scriptButton.onclick = callback;
 
   const textNode = document.createTextNode(text);
   scriptButton.appendChild(textNode);
@@ -12,15 +13,34 @@ function Script({ text = "script", callback }) {
   return scriptContainer;
 }
 
-chrome.storage.local.get(["scriptsBagKey"], function (result) {
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    var activeTab = tabs[0];
-    const callback = () =>
-      chrome.tabs.sendMessage(activeTab.id, {
-        message: "EXECUTE_SCRIPT_BAG",
-        customCode: result.scriptsBagKey,
-      });
+const codeCoder = document.getElementById("code-coder");
+const codeName = document.getElementById("code-name");
+let currentScripts = [];
 
-    scripts.appendChild(Script({ text: "My Custom Script", callback }));
-  });
+function createScript() {
+  if (codeName.value === "") {
+    codeCoder.value = "";
+    return;
+  }
+
+  const newScripts = [
+    ...currentScripts,
+    { name: codeName.value, script: codeCoder.value },
+  ];
+
+  chrome.storage.local.set({ scriptsBagKey: JSON.stringify(newScripts) });
+
+  location.reload();
+}
+
+chrome.storage.local.get(["scriptsBagKey"], function (result) {
+  const customScripts = JSON.parse(result.scriptsBagKey);
+
+  customScripts &&
+    customScripts.forEach(({ name, script }) => {
+      scripts.appendChild(Script({ text: name }));
+    });
+
+  scripts.appendChild(Script({ text: "+", callback: createScript }));
+  currentScripts = customScripts;
 });

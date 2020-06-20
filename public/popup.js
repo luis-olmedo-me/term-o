@@ -22,13 +22,17 @@ const scripts = document.getElementById("scripts");
 
 chrome.storage.local.get(["scriptsBagKey"], function (result) {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    var activeTab = tabs[0];
-    const callback = () =>
-      chrome.tabs.sendMessage(activeTab.id, {
-        message: "EXECUTE_SCRIPT_BAG",
-        customCode: result.scriptsBagKey,
-      });
+    const activeTab = tabs[0];
+    const customScripts = JSON.parse(result.scriptsBagKey);
 
-    scripts.appendChild(Script({ text: "My Custom Script", callback }));
+    customScripts.forEach(({ name, script }) => {
+      const callback = () =>
+        chrome.tabs.sendMessage(activeTab.id, {
+          message: "EXECUTE_SCRIPT_BAG",
+          customCode: script,
+        });
+
+      scripts.appendChild(Script({ text: name, callback }));
+    });
   });
 });

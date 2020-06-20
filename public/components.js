@@ -36,6 +36,14 @@
 
         scriptButton.onclick = () => {
           const isClosed = subOptions.className.includes("closed");
+          const allSubOptions = Array.from(
+            document.getElementsByClassName("script-sub-options")
+          );
+
+          allSubOptions &&
+            allSubOptions.forEach((subOption) => {
+              subOption.className = "script-sub-options closed";
+            });
 
           subOptions.className = `script-sub-options ${
             isClosed ? "" : "closed"

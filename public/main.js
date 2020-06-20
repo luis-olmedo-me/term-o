@@ -48,14 +48,24 @@ function updateUI() {
           });
 
           saveScripts(newScripts);
-          currentScripts = newScripts;
+        };
+
+        const deleteCallback = () => {
+          const newScripts = currentScripts.filter((script) => {
+            return script.name !== name;
+          });
+
+          saveScripts(newScripts);
         };
 
         scripts.appendChild(
           Script({
             text: name,
             callback,
-            options: [{ text: "save", callback: saveCallback }],
+            options: [
+              { text: "Delete", callback: deleteCallback },
+              { text: "save", callback: saveCallback },
+            ],
           })
         );
       });

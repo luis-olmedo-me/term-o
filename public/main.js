@@ -1,6 +1,7 @@
-function SubOption({ options = [] }) {
+function SubOption({ options }) {
   const scriptContainer = document.createElement("div");
-  scriptContainer.classList = ["script-sub-option"];
+  scriptContainer.classList = ["script-sub-options"];
+  console.log(options);
 
   options.forEach(({ text, callback }) => {
     const scriptButton = document.createElement("button");
@@ -15,7 +16,7 @@ function SubOption({ options = [] }) {
   return scriptContainer;
 }
 
-function Script({ text = "script", callback }) {
+function Script({ text = "script", callback, options }) {
   const scriptContainer = document.createElement("div");
   scriptContainer.classList = ["script-option"];
 
@@ -27,6 +28,11 @@ function Script({ text = "script", callback }) {
 
   scriptContainer.appendChild(scriptButton);
 
+  const hasOptions = Boolean(options);
+  if (hasOptions) {
+    console.log("script", options);
+    scriptContainer.appendChild(SubOption({ options }));
+  }
   return scriptContainer;
 }
 
@@ -50,12 +56,14 @@ function createScript() {
   location.reload();
 }
 
+function focusScript(name, script) {}
+
 chrome.storage.local.get(["scriptsBagKey"], function (result) {
   const customScripts = JSON.parse(result.scriptsBagKey);
 
   customScripts &&
     customScripts.forEach(({ name, script }) => {
-      scripts.appendChild(Script({ text: name }));
+      scripts.appendChild(Script({ text: name, options: [{ text: "save" }] }));
     });
 
   scripts.appendChild(Script({ text: "+", callback: createScript }));

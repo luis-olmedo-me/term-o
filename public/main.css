@@ -67,6 +67,10 @@ button:focus {
   display: flex;
 }
 
+.script-sub-options.closed {
+  height: 0;
+}
+
 .script-sub-options > button {
   padding: 10px 20px;
   font-weight: bold;

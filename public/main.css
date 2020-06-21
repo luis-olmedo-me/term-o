@@ -2,6 +2,7 @@
   display: flex;
   font-family: var(--font-family);
   position: relative;
+  overflow: hidden;
 }
 
 .main-wrapper > * {
@@ -125,6 +126,11 @@ button:focus {
   background-color: var(--alert-color);
   display: flex;
   justify-content: space-between;
+  transform: translateY(100%);
+}
+
+.main-snackbar.open {
+  transform: translateY(0);
 }
 
 .main-snackbar .message {

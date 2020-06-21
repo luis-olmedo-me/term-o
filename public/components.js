@@ -1,4 +1,9 @@
 (function initializeComponents(global) {
+  const snackbarButton = document.getElementById("snackbar-button");
+  const snackbar = document.getElementById("snackbar");
+  snackbarButton &&
+    (snackbarButton.onclick = () => (snackbar.className = "main-snackbar"));
+
   const ScriptSubOption = ({ options }) => {
     const scriptContainer = document.createElement("div");
     scriptContainer.classList = ["script-sub-options closed"];
@@ -56,6 +61,13 @@
       }
 
       return scriptContainer;
+    },
+    ErrorAlert: (text) => {
+      const snackbar = document.getElementById("main-snackbar");
+      const snackbarText = document.getElementById("snackbar-message");
+
+      snackbar.className = "main-snackbar open";
+      snackbarText.innerHTML = text;
     },
   };
 

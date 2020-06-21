@@ -1,8 +1,10 @@
 const codeCoder = document.getElementById("code-coder");
 const codeName = document.getElementById("code-name");
+const mainWrapper = document.getElementById("main");
 const scripts = document.getElementById("scripts");
 let currentScripts = [];
 const { Script, ErrorAlert } = Components;
+const [snackbar, showErrorMessage] = ErrorAlert();
 
 const storeScripts = (scripts) => {
   chrome.storage.local.set({ scriptsBagKey: JSON.stringify(scripts) });
@@ -39,7 +41,7 @@ const saveScript = (name) => {
   );
 
   if (isNewNameRepeated) {
-    return ErrorAlert("The name given is already taken!");
+    return showErrorMessage("The name given is already taken!");
   }
 
   const newScripts = currentScripts.map((script) => {
@@ -92,4 +94,5 @@ function updateUI() {
   });
 }
 
+mainWrapper.appendChild(snackbar);
 updateUI();

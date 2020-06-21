@@ -111,6 +111,7 @@ button:focus {
   justify-content: center;
   align-items: center;
   flex-flow: column nowrap;
+  font-family: monospace;
 }
 
 .code-name {
@@ -118,7 +119,9 @@ button:focus {
   margin-bottom: 1%;
   padding: 10px;
   background-color: var(--neutral1-color);
-  color: var(--font-color);
+  color: var(--main-color);
+  font-size: 18px;
+  font-weight: bolder;
 }
 
 .coder {

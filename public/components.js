@@ -1,8 +1,11 @@
 (function initializeComponents(global) {
   const snackbarButton = document.getElementById("snackbar-button");
+  const snackbarText = document.getElementById("snackbar-message");
   const snackbar = document.getElementById("snackbar");
-  snackbarButton &&
-    (snackbarButton.onclick = () => (snackbar.className = "main-snackbar"));
+  if (snackbar) {
+    snackbar.className = "main-snackbar";
+    snackbarButton.onclick = () => (snackbar.className = "main-snackbar");
+  }
 
   const ScriptSubOption = ({ options }) => {
     const scriptContainer = document.createElement("div");
@@ -63,8 +66,9 @@
       return scriptContainer;
     },
     ErrorAlert: (text) => {
-      const snackbar = document.getElementById("main-snackbar");
-      const snackbarText = document.getElementById("snackbar-message");
+      if (!snackbar) {
+        return;
+      }
 
       snackbar.className = "main-snackbar open";
       snackbarText.innerHTML = text;

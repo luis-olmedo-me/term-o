@@ -16,11 +16,10 @@ const createScript = () => {
   let number = 0;
   let isNumberAvaiable = false;
   let avaiableName = "";
-  const defaultName = "New Script";
+  const defaultName = "New bot";
 
   while (!isNumberAvaiable) {
     avaiableName = `${defaultName} ${number}`;
-    console.log("loop infinito?");
 
     isNumberAvaiable = currentScripts.every(
       ({ name }) => name !== avaiableName

@@ -101,7 +101,7 @@ button:focus {
 }
 
 .script-sub-options > button:hover {
-  background-color: var(--light-color);
+  background-color: var(--light1-color);
   color: var(--main-font-color);
 }
 

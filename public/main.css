@@ -48,6 +48,11 @@ button:focus {
   -moz-box-shadow: 10px 0px 18px 0px rgb(27, 27, 27);
   box-shadow: 10px 0px 18px 0px rgb(27, 27, 27);
   z-index: 1;
+  overflow-y: scroll;
+}
+
+.main-scripts::-webkit-scrollbar {
+  display: none;
 }
 
 .script-option {

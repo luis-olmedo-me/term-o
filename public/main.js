@@ -11,7 +11,23 @@ const storeScripts = (scripts) => {
 };
 
 const createScript = () => {
-  const newScripts = [...currentScripts, { name: "New Script", script: "" }];
+  let number = 0;
+  let isNumberAvaiable = false;
+  let avaiableName = "";
+  const defaultName = "New Script";
+
+  while (!isNumberAvaiable) {
+    avaiableName = `${defaultName} ${number}`;
+    console.log("loop infinito?");
+
+    isNumberAvaiable = currentScripts.every(
+      ({ name }) => name !== avaiableName
+    );
+
+    number++;
+  }
+
+  const newScripts = [...currentScripts, { name: avaiableName, script: "" }];
 
   storeScripts(newScripts);
 };
@@ -19,7 +35,7 @@ const createScript = () => {
 const saveScript = (name) => {
   const newName = codeName.value;
   const isNewNameRepeated = currentScripts.some(({ name }) => name === newName);
-  console.log(isNewNameRepeated);
+
   if (isNewNameRepeated) {
     return ErrorAlert("The name given is already taken!");
   }

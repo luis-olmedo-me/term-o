@@ -15,6 +15,7 @@
   },
   "browser_action": {
     "default_popup": "./public/popup.html",
-    "default_title": "ScriptBag"
+    "default_title": "ScriptBag",
+    "default_icon": "public/assets/icons/wb.png"
   }
 }

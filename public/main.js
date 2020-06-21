@@ -1,8 +1,10 @@
 const codeCoder = document.getElementById("code-coder");
 const codeName = document.getElementById("code-name");
+const mainWrapper = document.getElementById("main");
 const scripts = document.getElementById("scripts");
 let currentScripts = [];
 const { Script, ErrorAlert } = Components;
+const [snackbar, showErrorMessage] = ErrorAlert();
 
 const storeScripts = (scripts) => {
   chrome.storage.local.set({ scriptsBagKey: JSON.stringify(scripts) });
@@ -14,11 +16,10 @@ const createScript = () => {
   let number = 0;
   let isNumberAvaiable = false;
   let avaiableName = "";
-  const defaultName = "New Script";
+  const defaultName = "New bot";
 
   while (!isNumberAvaiable) {
     avaiableName = `${defaultName} ${number}`;
-    console.log("loop infinito?");
 
     isNumberAvaiable = currentScripts.every(
       ({ name }) => name !== avaiableName
@@ -34,10 +35,12 @@ const createScript = () => {
 
 const saveScript = (name) => {
   const newName = codeName.value;
-  const isNewNameRepeated = currentScripts.some(({ name }) => name === newName);
+  const isNewNameRepeated = currentScripts.some(
+    ({ name: scriptName }) => scriptName === newName && scriptName !== name
+  );
 
   if (isNewNameRepeated) {
-    return ErrorAlert("The name given is already taken!");
+    return showErrorMessage("The name given is already taken!");
   }
 
   const newScripts = currentScripts.map((script) => {
@@ -90,4 +93,5 @@ function updateUI() {
   });
 }
 
+mainWrapper.appendChild(snackbar);
 updateUI();

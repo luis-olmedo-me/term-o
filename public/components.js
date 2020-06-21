@@ -1,12 +1,4 @@
 (function initializeComponents(global) {
-  const snackbarButton = document.getElementById("snackbar-button");
-  const snackbarText = document.getElementById("snackbar-message");
-  const snackbar = document.getElementById("snackbar");
-  if (snackbar) {
-    snackbar.className = "main-snackbar";
-    snackbarButton.onclick = () => (snackbar.className = "main-snackbar");
-  }
-
   const ScriptSubOption = ({ options }) => {
     const scriptContainer = document.createElement("div");
     scriptContainer.classList = ["script-sub-options closed"];
@@ -65,13 +57,25 @@
 
       return scriptContainer;
     },
-    ErrorAlert: (text) => {
-      if (!snackbar) {
-        return;
-      }
+    ErrorAlert: () => {
+      const snackbar = document.createElement("div");
+      snackbar.className = "main-snackbar";
 
-      snackbar.className = "main-snackbar open";
-      snackbarText.innerHTML = text;
+      const snackbarMessage = document.createElement("p");
+      snackbarMessage.className = "message";
+
+      snackbar.appendChild(snackbarMessage);
+
+      const showErrorMessage = (text) => {
+        snackbarMessage.innerHTML = text;
+        snackbar.className = "main-snackbar open";
+
+        setTimeout(() => {
+          snackbar.className = "main-snackbar";
+        }, 1000);
+      };
+
+      return [snackbar, showErrorMessage];
     },
   };
 

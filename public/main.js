@@ -34,7 +34,9 @@ const createScript = () => {
 
 const saveScript = (name) => {
   const newName = codeName.value;
-  const isNewNameRepeated = currentScripts.some(({ name }) => name === newName);
+  const isNewNameRepeated = currentScripts.some(
+    ({ name: scriptName }) => scriptName === newName && scriptName !== name
+  );
 
   if (isNewNameRepeated) {
     return ErrorAlert("The name given is already taken!");

@@ -2,7 +2,7 @@ const codeCoder = document.getElementById("code-coder");
 const codeName = document.getElementById("code-name");
 const scripts = document.getElementById("scripts");
 let currentScripts = [];
-const { Script } = Components;
+const { Script, ErrorAlert } = Components;
 
 const storeScripts = (scripts) => {
   chrome.storage.local.set({ scriptsBagKey: JSON.stringify(scripts) });
@@ -11,17 +11,40 @@ const storeScripts = (scripts) => {
 };
 
 const createScript = () => {
-  const newScripts = [...currentScripts, { name: "New Script", script: "" }];
+  let number = 0;
+  let isNumberAvaiable = false;
+  let avaiableName = "";
+  const defaultName = "New Script";
+
+  while (!isNumberAvaiable) {
+    avaiableName = `${defaultName} ${number}`;
+    console.log("loop infinito?");
+
+    isNumberAvaiable = currentScripts.every(
+      ({ name }) => name !== avaiableName
+    );
+
+    number++;
+  }
+
+  const newScripts = [...currentScripts, { name: avaiableName, script: "" }];
 
   storeScripts(newScripts);
 };
 
 const saveScript = (name) => {
+  const newName = codeName.value;
+  const isNewNameRepeated = currentScripts.some(({ name }) => name === newName);
+
+  if (isNewNameRepeated) {
+    return ErrorAlert("The name given is already taken!");
+  }
+
   const newScripts = currentScripts.map((script) => {
     return script.name !== name
       ? script
       : {
-          name: codeName.value,
+          name: newName,
           script: codeCoder.value,
         };
   });

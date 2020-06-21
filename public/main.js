@@ -11,15 +11,7 @@ const storeScripts = (scripts) => {
 };
 
 const createScript = () => {
-  if (codeName.value === "") {
-    codeCoder.value = "";
-    return;
-  }
-
-  const newScripts = [
-    ...currentScripts,
-    { name: codeName.value, script: codeCoder.value },
-  ];
+  const newScripts = [...currentScripts, { name: "New Script", script: "" }];
 
   storeScripts(newScripts);
 };

@@ -45,11 +45,7 @@
               subOption.className = "script-sub-options closed";
             });
 
-          subOptions.className = `script-sub-options ${
-            isClosed ? "" : "closed"
-          }`;
-
-          callback && callback();
+          subOptions.className = "script-sub-options";
         };
 
         scriptContainer.appendChild(subOptions);

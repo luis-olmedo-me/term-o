@@ -18,7 +18,9 @@ chrome.storage.local.get(["scriptsBagKey"], function (result) {
           customCode: script,
         });
 
-      scripts.appendChild(Script({ text: name, callback }));
+      scripts.appendChild(
+        Script({ text: name, options: [{ text: "Run", callback }] })
+      );
     });
   });
 });

@@ -6,10 +6,10 @@ mainPageButton.onclick = () =>
 
 const scripts = document.getElementById("scripts");
 
-chrome.storage.local.get(["scriptsBagKey"], function (result) {
+chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     const activeTab = tabs[0];
-    const customScripts = JSON.parse(result.scriptsBagKey);
+    const customScripts = scriptsBagKey ? JSON.parse(scriptsBagKey) : [];
 
     customScripts.forEach(({ name, script }) => {
       const callback = () =>

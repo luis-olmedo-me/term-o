@@ -67,26 +67,25 @@ function updateUI() {
   scripts.innerHTML = "";
 
   chrome.storage.local.get(["scriptsBagKey"], function (result) {
-    const customScripts = JSON.parse(result.scriptsBagKey);
+    const customScripts = JSON.parse(result.scriptsBagKey) || [];
 
-    customScripts &&
-      customScripts.forEach(({ name, script }) => {
-        const callback = () => {
-          codeName.value = name;
-          codeCoder.value = script;
-        };
+    customScripts.forEach(({ name, script }) => {
+      const callback = () => {
+        codeName.value = name;
+        codeCoder.value = script;
+      };
 
-        scripts.appendChild(
-          Script({
-            text: name,
-            callback,
-            options: [
-              { text: "Delete", callback: () => deleteScript(name) },
-              { text: "Save", callback: () => saveScript(name) },
-            ],
-          })
-        );
-      });
+      scripts.appendChild(
+        Script({
+          text: name,
+          callback,
+          options: [
+            { text: "Delete", callback: () => deleteScript(name) },
+            { text: "Save", callback: () => saveScript(name) },
+          ],
+        })
+      );
+    });
 
     scripts.appendChild(Script({ text: "+", callback: createScript }));
     currentScripts = customScripts;

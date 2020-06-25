@@ -46,6 +46,8 @@
             });
 
           subOptions.className = "script-sub-options";
+
+          callback && callback();
         };
 
         scriptContainer.appendChild(subOptions);

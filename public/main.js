@@ -14,21 +14,21 @@ const storeScripts = (scripts) => {
 
 const createScript = () => {
   let number = 0;
-  let isNumberAvaiable = false;
-  let avaiableName = "";
+  let isNumberAvailable = false;
+  let availableName = "";
   const defaultName = "New bot";
 
-  while (!isNumberAvaiable) {
-    avaiableName = `${defaultName} ${number}`;
+  while (!isNumberAvailable) {
+    availableName = `${defaultName} ${number}`;
 
-    isNumberAvaiable = currentScripts.every(
-      ({ name }) => name !== avaiableName
+    isNumberAvailable = currentScripts.every(
+      ({ name }) => name !== availableName
     );
 
     number++;
   }
 
-  const newScripts = [...currentScripts, { name: avaiableName, script: "" }];
+  const newScripts = [...currentScripts, { name: availableName, script: "" }];
 
   storeScripts(newScripts);
 };

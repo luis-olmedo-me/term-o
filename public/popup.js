@@ -1,7 +1,7 @@
 const mainPageButton = document.getElementById("mainPageLink");
 const popupWrapper = document.getElementById("popup");
 
-const { Script, SnackBar } = Components;
+const { Script, SnackBar, EmptySpace } = Components;
 const [snackbar, showSnackBarMessage] = SnackBar();
 
 popupWrapper.appendChild(snackbar);
@@ -28,6 +28,8 @@ chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
         Script({ text: name, options: [{ text: "Run", callback }] })
       );
     });
+
+    scripts.appendChild(EmptySpace());
   });
 });
 

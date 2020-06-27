@@ -53,6 +53,7 @@ const saveScript = (name) => {
   });
 
   storeScripts(newScripts);
+  showSnackBarMessage("success", "Changes made has been saved!");
 };
 
 const deleteScript = (name) => {

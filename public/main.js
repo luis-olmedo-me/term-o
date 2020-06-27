@@ -4,7 +4,7 @@ const mainWrapper = document.getElementById("main");
 const scripts = document.getElementById("scripts");
 let currentScripts = [];
 const { Script, ErrorAlert } = Components;
-const [snackbar, showErrorMessage] = ErrorAlert();
+const [snackbar, showSnackBarMessage] = ErrorAlert();
 
 const storeScripts = (scripts) => {
   chrome.storage.local.set({ scriptsBagKey: JSON.stringify(scripts) });
@@ -40,7 +40,7 @@ const saveScript = (name) => {
   );
 
   if (isNewNameRepeated) {
-    return showErrorMessage("The name given is already taken!");
+    return showSnackBarMessage("success", "The name given is already taken!");
   }
 
   const newScripts = currentScripts.map((script) => {

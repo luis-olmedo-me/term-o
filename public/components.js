@@ -94,6 +94,12 @@
 
       return [snackbar, showMessage];
     },
+    EmptySpace: () => {
+      const space = document.createElement("div");
+      space.className = "empty-space";
+
+      return space;
+    },
   };
 
   global.Components = Object.create(componentsPrototype);

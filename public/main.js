@@ -3,8 +3,8 @@ const codeName = document.getElementById("code-name");
 const mainWrapper = document.getElementById("main");
 const scripts = document.getElementById("scripts");
 let currentScripts = [];
-const { Script, ErrorAlert } = Components;
-const [snackbar, showSnackBarMessage] = ErrorAlert();
+const { Script, SnackBar } = Components;
+const [snackbar, showSnackBarMessage] = SnackBar();
 
 const storeScripts = (scripts) => {
   chrome.storage.local.set({ scriptsBagKey: JSON.stringify(scripts) });
@@ -31,6 +31,7 @@ const createScript = () => {
   const newScripts = [...currentScripts, { name: availableName, script: "" }];
 
   storeScripts(newScripts);
+  showSnackBarMessage("success", `Script ${availableName} has been created!`);
 };
 
 const saveScript = (name) => {

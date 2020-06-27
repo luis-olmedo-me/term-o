@@ -54,7 +54,7 @@
 
       return scriptContainer;
     },
-    ErrorAlert: () => {
+    SnackBar: () => {
       const snackbar = document.createElement("div");
       snackbar.className = "main-snackbar";
 
@@ -63,13 +63,33 @@
 
       snackbar.appendChild(snackbarMessage);
 
+      let messagesCounter = 0;
+      let isSnackBarOpen = false;
       const showMessage = (theme, text) => {
-        snackbarMessage.innerHTML = text;
-        snackbar.className = `main-snackbar ${theme} open`;
+        if (!isSnackBarOpen) {
+          snackbar.className = `main-snackbar ${theme} open`;
+          isSnackBarOpen = true;
+          snackbarMessage.innerText = text;
+        }
+
+        messagesCounter++;
 
         setTimeout(() => {
-          snackbar.className = `main-snackbar ${theme}`;
-        }, 4000);
+          snackbar.className = `main-snackbar ${theme} open`;
+
+          if (messagesCounter - 1 >= 0) {
+            messagesCounter--;
+          }
+
+          snackbarMessage.innerText = text;
+
+          if (!messagesCounter) {
+            setTimeout(() => {
+              snackbar.className = `main-snackbar ${theme}`;
+              isSnackBarOpen = false;
+            }, 1000);
+          }
+        }, 1000 * messagesCounter);
       };
 
       return [snackbar, showMessage];

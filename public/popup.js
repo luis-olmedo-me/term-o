@@ -33,6 +33,6 @@ chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
 
 chrome.runtime.onMessage.addListener(function ({ type, error }) {
   if (type == "ERROR_SCRIPT_BAG") {
-    console.log("chan chan", error);
+    showSnackBarMessage("error", error);
   }
 });

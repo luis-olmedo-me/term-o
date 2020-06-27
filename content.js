@@ -1,16 +1,18 @@
 chrome.runtime.onMessage.addListener(function (message, sender) {
   if (message.message == "EXECUTE_SCRIPT_BAG") {
-    try {
-      const script = new Function(message.customCode);
-
-      script();
-    } catch (error) {
-      console.log(error);
-      // sender({ message: "ERROR_SCRIPT_BAG", error });
+    const showStatus = (theme, text) => {
       chrome.runtime.sendMessage({
-        type: "ERROR_SCRIPT_BAG",
-        error: error.name,
+        type: "STATUS_SCRIPT_BAG",
+        theme,
+        text,
       });
+    };
+
+    try {
+      eval(message.customCode);
+      showStatus("success", "Code successfuly executed");
+    } catch ({ name: errorName }) {
+      showStatus("error", errorName);
     }
   }
 });

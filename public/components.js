@@ -63,16 +63,16 @@
 
       snackbar.appendChild(snackbarMessage);
 
-      const showErrorMessage = (text) => {
+      const showMessage = (theme, text) => {
         snackbarMessage.innerHTML = text;
-        snackbar.className = "main-snackbar open";
+        snackbar.className = `main-snackbar ${theme} open`;
 
         setTimeout(() => {
-          snackbar.className = "main-snackbar";
+          snackbar.className = `main-snackbar ${theme}`;
         }, 1000);
       };
 
-      return [snackbar, showErrorMessage];
+      return [snackbar, showMessage];
     },
   };
 

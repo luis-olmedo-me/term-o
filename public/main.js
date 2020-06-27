@@ -40,7 +40,7 @@ const saveScript = (name) => {
   );
 
   if (isNewNameRepeated) {
-    return showSnackBarMessage("success", "The name given is already taken!");
+    return showSnackBarMessage("error", "The name given is already taken!");
   }
 
   const newScripts = currentScripts.map((script) => {

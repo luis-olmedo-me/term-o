@@ -143,7 +143,8 @@ button:focus {
   display: flex;
   justify-content: space-between;
   transform: translateY(100%);
-  transition: transform 0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
+  transition-property: transform background-color;
 }
 
 .main-snackbar.open {

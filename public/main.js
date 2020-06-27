@@ -62,6 +62,7 @@ const deleteScript = (name) => {
   });
 
   storeScripts(newScripts);
+  showSnackBarMessage("success", `Script ${name} has been deleted!`);
 };
 
 function updateUI() {

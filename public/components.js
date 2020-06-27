@@ -69,7 +69,7 @@
 
         setTimeout(() => {
           snackbar.className = `main-snackbar ${theme}`;
-        }, 2000);
+        }, 4000);
       };
 
       return [snackbar, showMessage];

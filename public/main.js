@@ -31,6 +31,7 @@ const createScript = () => {
   const newScripts = [...currentScripts, { name: availableName, script: "" }];
 
   storeScripts(newScripts);
+  showSnackBarMessage("success", `Script ${availableName} has been created!`);
 };
 
 const saveScript = (name) => {

@@ -140,15 +140,22 @@ button:focus {
   bottom: 0;
   width: 100%;
   height: 70px;
-  background-color: var(--alert-color);
   display: flex;
   justify-content: space-between;
   transform: translateY(100%);
-  transition: transform 0.2s ease-in-out;
+  transition: transform 0.5s ease-in-out;
 }
 
 .main-snackbar.open {
   transform: translateY(0);
+}
+
+.main-snackbar.success {
+  background-color: var(--success-color);
+}
+
+.main-snackbar.error {
+  background-color: var(--alert-color);
 }
 
 .main-snackbar .message {

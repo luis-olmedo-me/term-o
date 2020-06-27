@@ -35,7 +35,6 @@
         const subOptions = ScriptSubOption({ options });
 
         scriptButton.onclick = () => {
-          const isClosed = subOptions.className.includes("closed");
           const allSubOptions = Array.from(
             document.getElementsByClassName("script-sub-options")
           );
@@ -64,16 +63,16 @@
 
       snackbar.appendChild(snackbarMessage);
 
-      const showErrorMessage = (text) => {
+      const showMessage = (theme, text) => {
         snackbarMessage.innerHTML = text;
-        snackbar.className = "main-snackbar open";
+        snackbar.className = `main-snackbar ${theme} open`;
 
         setTimeout(() => {
-          snackbar.className = "main-snackbar";
-        }, 1000);
+          snackbar.className = `main-snackbar ${theme}`;
+        }, 4000);
       };
 
-      return [snackbar, showErrorMessage];
+      return [snackbar, showMessage];
     },
   };
 

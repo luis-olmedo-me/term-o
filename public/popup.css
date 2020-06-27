@@ -8,3 +8,7 @@
 .popup-wrapper::-webkit-scrollbar {
   display: none;
 }
+
+.empty-space {
+  height: 70px;
+}

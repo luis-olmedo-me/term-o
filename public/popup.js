@@ -31,8 +31,8 @@ chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
   });
 });
 
-chrome.runtime.onMessage.addListener(function ({ type, error }) {
-  if (type == "ERROR_SCRIPT_BAG") {
-    showSnackBarMessage("error", error);
+chrome.runtime.onMessage.addListener(function ({ type, theme, text }) {
+  if (type == "STATUS_SCRIPT_BAG") {
+    showSnackBarMessage(theme, text);
   }
 });

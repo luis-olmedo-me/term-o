@@ -54,7 +54,7 @@
 
       return scriptContainer;
     },
-    ErrorAlert: () => {
+    SnackBar: () => {
       const snackbar = document.createElement("div");
       snackbar.className = "main-snackbar";
 

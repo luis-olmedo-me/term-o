@@ -15,8 +15,39 @@
 
     return scriptContainer;
   };
+  const inputText = ({ title, defaultValue, name, saveEnvChanges }) => {
+    const inputWrapper = document.createElement("div");
+    inputWrapper.className = "input-wrapper";
+
+    const header = document.createElement("h3");
+    header.className = "configuration-title";
+    const headerNode = document.createTextNode(title);
+    header.appendChild(headerNode);
+
+    const inputContainer = document.createElement("div");
+    inputContainer.className = "configuration-input-container";
+    const input = document.createElement("input");
+    input.className = "configuration-input";
+    input.value = defaultValue;
+    input.onchange = () => saveEnvChanges(input.value, name);
+    inputContainer.appendChild(input);
+
+    inputWrapper.appendChild(header);
+    inputWrapper.appendChild(inputContainer);
+
+    return inputWrapper;
+  };
 
   const componentsPrototype = {
+    Input: ({ type, ...rest }) => {
+      switch (type) {
+        case "text":
+          return inputText(rest);
+
+        default:
+          break;
+      }
+    },
     Script: ({ text = "script", callback, options }) => {
       const hasOptions = Boolean(options);
 

@@ -1,3 +1,4 @@
+const codeQuery = document.getElementById("code-query");
 const codeCoder = document.getElementById("code-coder");
 const codeName = document.getElementById("code-name");
 const mainWrapper = document.getElementById("main");
@@ -5,6 +6,18 @@ const scripts = document.getElementById("scripts");
 let currentScripts = [];
 const { Script, SnackBar } = Components;
 const [snackbar, showSnackBarMessage] = SnackBar();
+
+const getParsedQuery = (query) => {
+  let env = {};
+
+  try {
+    env = JSON.parse(query);
+  } catch ({ message }) {
+    showSnackBarMessage("error", message);
+  } finally {
+    return JSON.stringify(env);
+  }
+};
 
 const storeScripts = (scripts) => {
   chrome.storage.local.set({ scriptsBagKey: JSON.stringify(scripts) });
@@ -28,7 +41,10 @@ const createScript = () => {
     number++;
   }
 
-  const newScripts = [...currentScripts, { name: availableName, script: "" }];
+  const newScripts = [
+    ...currentScripts,
+    { name: availableName, script: "", query: "" },
+  ];
 
   storeScripts(newScripts);
   showSnackBarMessage("success", `Script ${availableName} has been created!`);
@@ -50,6 +66,7 @@ const saveScript = (name) => {
       : {
           name: newName,
           script: codeCoder.value,
+          query: getParsedQuery(codeQuery.value),
         };
   });
 
@@ -72,10 +89,11 @@ function updateUI() {
   chrome.storage.local.get(["scriptsBagKey"], function (result) {
     const customScripts = JSON.parse(result.scriptsBagKey) || [];
 
-    customScripts.forEach(({ name, script }) => {
+    customScripts.forEach(({ name, script, query }) => {
       const callback = () => {
         codeName.value = name;
         codeCoder.value = script;
+        codeQuery.value = query;
       };
 
       scripts.appendChild(

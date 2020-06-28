@@ -20,22 +20,42 @@ chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
     const configurationMenu = document.getElementById("configuration");
     const configurationInputs = document.getElementById("configuration-inputs");
     const configurationButton = document.getElementById("configuration-button");
-    const openConfiguration = (query, runCallback) => {
-      const queryParsed = JSON.parse(query);
+    const openConfiguration = (queryParsed, runCallback, scriptName) => {
       const envVariables = Object.keys(queryParsed);
+
+      const saveEnvChanges = (newValue, env) => {
+        const queryEdited = queries.find(({ name }) => name === scriptName);
+        const queryEditedParsed = JSON.parse(queryEdited.query);
+
+        queryEditedParsed[env].value = newValue;
+
+        queries = queries.map((query) => {
+          const name = query.name;
+
+          return {
+            ...query,
+            query:
+              name === scriptName
+                ? JSON.stringify(queryEditedParsed)
+                : query.query,
+          };
+        });
+      };
 
       configurationInputs.innerHTML = null;
       envVariables.forEach((env) => {
         const envVariable = queryParsed[env];
-        console.log(env, envVariable, Input(envVariable));
 
-        configurationInputs.appendChild(Input(envVariable));
+        configurationInputs.appendChild(
+          Input({ ...envVariable, saveEnvChanges, name: env })
+        );
       });
 
       configurationButton.onclick = () => {
         runCallback();
         configurationMenu.className = "script-configuration";
       };
+
       configurationMenu.className = "script-configuration open";
     };
 
@@ -51,12 +71,13 @@ chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
         });
       };
 
-      const hasQuery = query && query !== "";
+      const queryParsed = JSON.parse(query);
+      const hasQuery = Boolean(Object.keys(queryParsed).length);
       const ConfigurationMenu = hasQuery
         ? [
             {
               text: "adjust",
-              callback: () => openConfiguration(query, callbackRun),
+              callback: () => openConfiguration(queryParsed, callbackRun, name),
             },
           ]
         : [];

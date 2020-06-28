@@ -12,3 +12,16 @@
 .popup-scripts {
   padding-bottom: 70px;
 }
+
+.script-configuration {
+  background-color: green;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 2;
+  transform: translateY(0%);
+}
+
+.script-configuration.open {
+  transform: translateY(0);
+}

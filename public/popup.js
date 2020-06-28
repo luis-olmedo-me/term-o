@@ -1,7 +1,7 @@
 const mainPageButton = document.getElementById("mainPageLink");
 const popupWrapper = document.getElementById("popup");
 
-const { Script, SnackBar } = Components;
+const { Script, SnackBar, Input } = Components;
 const [snackbar, showSnackBarMessage] = SnackBar();
 let queries = [];
 
@@ -16,8 +16,19 @@ chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     const activeTab = tabs[0];
     const customScripts = scriptsBagKey ? JSON.parse(scriptsBagKey) : [];
-    const openConfiguration = () => {
-      const configurationMenu = document.getElementById("configuration");
+
+    const configurationMenu = document.getElementById("configuration");
+    const configurationInputs = document.getElementById("configuration-inputs");
+    const openConfiguration = (query) => {
+      const queryParsed = JSON.parse(query);
+      const envVariables = Object.keys(queryParsed);
+
+      envVariables.forEach((env) => {
+        const envVariable = queryParsed[env];
+        console.log(env, envVariable, Input(envVariable));
+
+        configurationInputs.appendChild(Input(envVariable));
+      });
 
       configurationMenu.className = "script-configuration open";
     };
@@ -36,7 +47,7 @@ chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
 
       const hasQuery = query && query !== "";
       const ConfigurationMenu = hasQuery
-        ? [{ text: "adjust", callback: openConfiguration }]
+        ? [{ text: "adjust", callback: () => openConfiguration(query) }]
         : [];
 
       scripts.appendChild(

@@ -3,6 +3,7 @@ const popupWrapper = document.getElementById("popup");
 
 const { Script, SnackBar } = Components;
 const [snackbar, showSnackBarMessage] = SnackBar();
+let queries = [];
 
 popupWrapper.appendChild(snackbar);
 
@@ -16,11 +17,14 @@ chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
     const activeTab = tabs[0];
     const customScripts = scriptsBagKey ? JSON.parse(scriptsBagKey) : [];
 
-    customScripts.forEach(({ name, script }) => {
+    customScripts.forEach(({ name, script, query }) => {
+      queries.push({ name, query });
+
       const callback = () => {
         chrome.tabs.sendMessage(activeTab.id, {
           message: "EXECUTE_SCRIPT_BAG",
           customCode: script,
+          env: queries.find(({ name: queryName }) => queryName === name).query,
         });
       };
 

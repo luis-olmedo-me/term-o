@@ -20,7 +20,7 @@ chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
     customScripts.forEach(({ name, script, query }) => {
       queries.push({ name, query });
 
-      const callback = () => {
+      const callbackRun = () => {
         chrome.tabs.sendMessage(activeTab.id, {
           message: "EXECUTE_SCRIPT_BAG",
           customCode: script,
@@ -36,7 +36,7 @@ chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
       scripts.appendChild(
         Script({
           text: name,
-          options: [...ConfigurationMenu, { text: "Run", callback }],
+          options: [...ConfigurationMenu, { text: "Run", callbackRun }],
         })
       );
     });

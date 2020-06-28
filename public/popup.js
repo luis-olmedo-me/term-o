@@ -16,6 +16,11 @@ chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     const activeTab = tabs[0];
     const customScripts = scriptsBagKey ? JSON.parse(scriptsBagKey) : [];
+    const openConfiguration = () => {
+      const configurationMenu = document.getElementById("configuration");
+
+      configurationMenu.className = "script-configuration open";
+    };
 
     customScripts.forEach(({ name, script, query }) => {
       queries.push({ name, query });
@@ -30,13 +35,17 @@ chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
       };
 
       const hasQuery = query && query !== "";
-
-      const ConfigurationMenu = hasQuery ? [{ text: "adjust" }] : [];
+      const ConfigurationMenu = hasQuery
+        ? [{ text: "adjust", callback: openConfiguration }]
+        : [];
 
       scripts.appendChild(
         Script({
           text: name,
-          options: [...ConfigurationMenu, { text: "Run", callbackRun }],
+          options: [
+            ...ConfigurationMenu,
+            { text: "Run", callback: callbackRun },
+          ],
         })
       );
     });

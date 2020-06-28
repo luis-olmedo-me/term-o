@@ -15,7 +15,7 @@
 
     return scriptContainer;
   };
-  const inputText = ({ title, defaultValue, name }) => {
+  const inputText = ({ title, defaultValue, name, saveEnvChanges }) => {
     const inputWrapper = document.createElement("div");
     inputWrapper.className = "";
 
@@ -26,6 +26,7 @@
 
     const input = document.createElement("input");
     input.value = defaultValue;
+    input.onchange = () => saveEnvChanges(input.value, name);
 
     inputWrapper.appendChild(header);
     inputWrapper.appendChild(input);

@@ -13,15 +13,20 @@
   padding-bottom: 70px;
 }
 
+.configuration-wrapper {
+  position: relative;
+}
+
 .script-configuration {
-  background-color: green;
-  height: 100%;
+  background-color: var(--dark-color);
   width: 100%;
+  height: 100vh;
   position: absolute;
-  z-index: 2;
-  transform: translateY(0%);
+  z-index: 3;
+  left: -100%;
+  transition: left 0.2s ease-in-out;
 }
 
 .script-configuration.open {
-  transform: translateY(0);
+  left: 0%;
 }

@@ -15,8 +15,31 @@
 
     return scriptContainer;
   };
+  const inputText = ({ title, defaultValue, name }) => {
+    const inputWrapper = document.createElement("div");
+    inputWrapper.className = "";
+
+    const header = document.createElement("h4");
+    header.className = "";
+    const headerNode = document.createTextNode(title);
+    header.appendChild(headerNode);
+
+    const input = document.createElement("input");
+    input.value = defaultValue;
+
+    return inputWrapper;
+  };
 
   const componentsPrototype = {
+    Input: ({ type, ...rest }) => {
+      switch (type) {
+        case "text":
+          return inputText(rest);
+
+        default:
+          break;
+      }
+    },
     Script: ({ text = "script", callback, options }) => {
       const hasOptions = Boolean(options);
 

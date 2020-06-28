@@ -7,6 +7,18 @@ let currentScripts = [];
 const { Script, SnackBar } = Components;
 const [snackbar, showSnackBarMessage] = SnackBar();
 
+const getParsedQuery = (query) => {
+  let env = {};
+
+  try {
+    env = JSON.parse(query);
+  } catch ({ message }) {
+    showSnackBarMessage("error", message);
+  } finally {
+    return JSON.stringify(env);
+  }
+};
+
 const storeScripts = (scripts) => {
   chrome.storage.local.set({ scriptsBagKey: JSON.stringify(scripts) });
 
@@ -54,7 +66,7 @@ const saveScript = (name) => {
       : {
           name: newName,
           script: codeCoder.value,
-          query: codeQuery.value,
+          query: getParsedQuery(codeQuery.value),
         };
   });
 

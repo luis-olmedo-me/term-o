@@ -27,6 +27,9 @@
     const input = document.createElement("input");
     input.value = defaultValue;
 
+    inputWrapper.appendChild(header);
+    inputWrapper.appendChild(input);
+
     return inputWrapper;
   };
 

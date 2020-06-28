@@ -17,19 +17,23 @@
   };
   const inputText = ({ title, defaultValue, name, saveEnvChanges }) => {
     const inputWrapper = document.createElement("div");
-    inputWrapper.className = "";
+    inputWrapper.className = "input-wrapper";
 
-    const header = document.createElement("h4");
-    header.className = "";
+    const header = document.createElement("h3");
+    header.className = "configuration-title";
     const headerNode = document.createTextNode(title);
     header.appendChild(headerNode);
 
+    const inputContainer = document.createElement("div");
+    inputContainer.className = "configuration-input-container";
     const input = document.createElement("input");
+    input.className = "configuration-input";
     input.value = defaultValue;
     input.onchange = () => saveEnvChanges(input.value, name);
+    inputContainer.appendChild(input);
 
     inputWrapper.appendChild(header);
-    inputWrapper.appendChild(input);
+    inputWrapper.appendChild(inputContainer);
 
     return inputWrapper;
   };

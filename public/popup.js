@@ -19,10 +19,12 @@ chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
 
     const configurationMenu = document.getElementById("configuration");
     const configurationInputs = document.getElementById("configuration-inputs");
-    const openConfiguration = (query) => {
+    const configurationButton = document.getElementById("configuration-button");
+    const openConfiguration = (query, runCallback) => {
       const queryParsed = JSON.parse(query);
       const envVariables = Object.keys(queryParsed);
 
+      configurationInputs.innerHTML = null;
       envVariables.forEach((env) => {
         const envVariable = queryParsed[env];
         console.log(env, envVariable, Input(envVariable));
@@ -30,6 +32,10 @@ chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
         configurationInputs.appendChild(Input(envVariable));
       });
 
+      configurationButton.onclick = () => {
+        runCallback();
+        configurationMenu.className = "script-configuration";
+      };
       configurationMenu.className = "script-configuration open";
     };
 
@@ -47,7 +53,12 @@ chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
 
       const hasQuery = query && query !== "";
       const ConfigurationMenu = hasQuery
-        ? [{ text: "adjust", callback: () => openConfiguration(query) }]
+        ? [
+            {
+              text: "adjust",
+              callback: () => openConfiguration(query, callbackRun),
+            },
+          ]
         : [];
 
       scripts.appendChild(

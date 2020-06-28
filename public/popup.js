@@ -19,7 +19,6 @@ chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
 
     const configurationMenu = document.getElementById("configuration");
     const configurationInputs = document.getElementById("configuration-inputs");
-    const configurationButton = document.getElementById("configuration-button");
     const openConfiguration = (queryParsed, runCallback, scriptName) => {
       const envVariables = Object.keys(queryParsed);
 
@@ -51,10 +50,15 @@ chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
         );
       });
 
-      configurationButton.onclick = () => {
-        runCallback();
-        configurationMenu.className = "script-configuration";
-      };
+      const runButton = Script({
+        text: "Run",
+        callback: () => {
+          runCallback();
+          configurationMenu.className = "script-configuration";
+          runButton.remove();
+        },
+      });
+      configurationMenu.appendChild(runButton);
 
       configurationMenu.className = "script-configuration open";
     };

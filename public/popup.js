@@ -29,8 +29,15 @@ chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
         });
       };
 
+      const hasQuery = query && query !== "";
+
+      const ConfigurationMenu = hasQuery ? [{ text: "adjust" }] : [];
+
       scripts.appendChild(
-        Script({ text: name, options: [{ text: "Run", callback }] })
+        Script({
+          text: name,
+          options: [...ConfigurationMenu, { text: "Run", callback }],
+        })
       );
     });
   });

@@ -24,7 +24,8 @@ chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
         chrome.tabs.sendMessage(activeTab.id, {
           message: "EXECUTE_SCRIPT_BAG",
           customCode: script,
-          env: queries.find(({ name: queryName }) => queryName === name).query,
+          query: queries.find(({ name: queryName }) => queryName === name)
+            .query,
         });
       };
 

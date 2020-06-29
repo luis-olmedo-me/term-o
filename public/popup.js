@@ -80,7 +80,7 @@ chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
       const ConfigurationMenu = hasQuery
         ? [
             {
-              text: "adjust",
+              text: "Adjust",
               callback: () => openConfiguration(queryParsed, callbackRun, name),
             },
           ]

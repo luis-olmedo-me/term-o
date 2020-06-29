@@ -54,11 +54,22 @@ chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
         text: "Run",
         callback: () => {
           runCallback();
-          configurationMenu.className = "script-configuration";
-          runButton.remove();
         },
       });
       configurationMenu.appendChild(runButton);
+
+      const goBackButton = Script({
+        text: "Go Back",
+        callback: () => {
+          configurationMenu.className = "script-configuration";
+
+          setTimeout(() => {
+            goBackButton.remove();
+            runButton.remove();
+          }, 500);
+        },
+      });
+      configurationMenu.appendChild(goBackButton);
 
       configurationMenu.className = "script-configuration open";
     };
@@ -80,7 +91,7 @@ chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
       const ConfigurationMenu = hasQuery
         ? [
             {
-              text: "adjust",
+              text: "Adjust",
               callback: () => openConfiguration(queryParsed, callbackRun, name),
             },
           ]

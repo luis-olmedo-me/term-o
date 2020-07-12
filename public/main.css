@@ -111,7 +111,6 @@ button:focus {
   justify-content: center;
   align-items: center;
   flex-flow: column nowrap;
-  font-family: monospace;
 }
 
 .code-name {
@@ -137,6 +136,8 @@ button:focus {
 
 .coder,
 .query {
+  font-family: monospace;
+  line-height: 22px;
   margin-top: 1%;
   width: 90%;
   height: 55%;

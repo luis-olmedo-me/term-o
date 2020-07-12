@@ -4,18 +4,15 @@
 }
 
 :root {
-  --main-color: #e2abe9;
-  --font-selected-color: #5a2261;
-  --light1-color: #dfbce4;
-  --alert-color: #ff212c;
-  --success-color: #619c61;
-  --secondary-color: #444;
-  --main-font-color: #fff;
+  --event-alert-color: #ff212c;
+  --event-success-color: #619c61;
   --font-color: #ddd;
-  --dark-color: #333;
-  --light-color: #444;
+  --font-title-color: #fff;
+  --accent-color: #e2abe9;
+  --accent-font-color: #5a2261;
+  --accent-hover-color: #dfbce4;
   --neutral0-color: #222;
-  --neutral1-color: #222;
+  --neutral1-color: #333;
   --neutral2-color: #444;
   --font-family: "Baloo da 2", "Courier New", Courier, monospace;
 }

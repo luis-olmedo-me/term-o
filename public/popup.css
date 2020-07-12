@@ -1,7 +1,7 @@
 .popup-wrapper {
   width: 250px;
   height: 300px;
-  background-color: var(--neutral2-color);
+  background-color: var(--dark-color);
   overflow-y: scroll;
   font-family: var(--font-family);
 }
@@ -33,7 +33,7 @@
 }
 
 .input-wrapper {
-  background-color: var(--main-color);
+  background-color: var(--dark-color);
   padding: 10px 0;
 }
 

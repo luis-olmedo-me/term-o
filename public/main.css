@@ -72,7 +72,7 @@ button:focus {
 
 .script-option > button:hover {
   background-color: var(--neutral2-color);
-  color: var(--font-title-color);
+  color: var(--accent-color);
 }
 
 .script-sub-options {

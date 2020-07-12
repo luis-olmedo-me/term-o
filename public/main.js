@@ -1,11 +1,12 @@
-const codeQuery = document.getElementById("code-query");
-const codeCoder = document.getElementById("code-coder");
-const codeName = document.getElementById("code-name");
-const mainWrapper = document.getElementById("main");
-const scripts = document.getElementById("scripts");
+const $codeQuery = $("#code-query");
+const $codeCoder = $("#code-coder");
+const $codeName = $("#code-name");
+const $mainWrapper = $("#main");
+const $scripts = $("#scripts");
+
 let currentScripts = [];
 const { Script, SnackBar } = Components;
-const [snackbar, showSnackBarMessage] = SnackBar();
+const [$snackbar, showSnackBarMessage] = SnackBar();
 
 const getParsedQuery = (query) => {
   let env = {};
@@ -51,7 +52,7 @@ const createScript = () => {
 };
 
 const saveScript = (name) => {
-  const newName = codeName.value;
+  const newName = $codeName.val();
   const isNewNameRepeated = currentScripts.some(
     ({ name: scriptName }) => scriptName === newName && scriptName !== name
   );
@@ -65,8 +66,8 @@ const saveScript = (name) => {
       ? script
       : {
           name: newName,
-          script: codeCoder.value,
-          query: getParsedQuery(codeQuery.value),
+          script: $codeCoder.val(),
+          query: getParsedQuery($codeQuery.val()),
         };
   });
 
@@ -84,19 +85,19 @@ const deleteScript = (name) => {
 };
 
 function updateUI() {
-  scripts.innerHTML = "";
+  $scripts.empty();
 
   chrome.storage.local.get(["scriptsBagKey"], function (result) {
     const customScripts = JSON.parse(result.scriptsBagKey) || [];
 
     customScripts.forEach(({ name, script, query }) => {
       const callback = () => {
-        codeName.value = name;
-        codeCoder.value = script;
-        codeQuery.value = query;
+        $codeName.val(name);
+        $codeCoder.val(script);
+        $codeQuery.val(query);
       };
 
-      scripts.appendChild(
+      $scripts.append(
         Script({
           text: name,
           callback,
@@ -108,10 +109,10 @@ function updateUI() {
       );
     });
 
-    scripts.appendChild(Script({ text: "+", callback: createScript }));
+    $scripts.append(Script({ text: "+", callback: createScript }));
     currentScripts = customScripts;
   });
 }
 
-mainWrapper.appendChild(snackbar);
+$mainWrapper.append($snackbar);
 updateUI();

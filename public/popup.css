@@ -26,6 +26,11 @@
   z-index: 3;
   left: -100%;
   transition: left 0.2s ease-in-out;
+  overflow-y: scroll;
+}
+
+.script-configuration::-webkit-scrollbar {
+  display: none;
 }
 
 .script-configuration.open {

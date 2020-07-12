@@ -1,15 +1,18 @@
+@font-face {
+  font-family: "Baloo da 2";
+  src: url("assets/fonts/balooda2-regular-webfont.woff") format("woff");
+}
+
 :root {
-  --main-color: #3282b8;
-  --alert-color: #ff212c;
-  --success-color: #619c61;
-  --secondary-color: #296994;
-  --main-font-color: #fff;
+  --event-alert-color: #ff212c;
+  --event-success-color: #619c61;
   --font-color: #ddd;
-  --dark-color: #0f4c75;
-  --light-color: #93bfde;
-  --light1-color: #7eaccc;
-  --neutral0-color: #000000;
-  --neutral1-color: #1e1e21;
-  --neutral2-color: #312f36;
-  --font-family: "Courier New", Courier, monospace;
+  --font-title-color: #fff;
+  --accent-color: #e2abe9;
+  --accent-font-color: #5a2261;
+  --accent-hover-color: #dfbce4;
+  --neutral0-color: #222;
+  --neutral1-color: #333;
+  --neutral2-color: #444;
+  --font-family: "Baloo da 2", "Courier New", Courier, monospace;
 }

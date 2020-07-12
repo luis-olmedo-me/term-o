@@ -1,24 +1,24 @@
-const mainPageButton = document.getElementById("mainPageLink");
-const popupWrapper = document.getElementById("popup");
+const $mainPageButton = $("#mainPageLink");
+const $popupWrapper = $("#popup");
+const $scripts = $("#scripts");
 
 const { Script, SnackBar, Input } = Components;
-const [snackbar, showSnackBarMessage] = SnackBar();
+const [$snackbar, showSnackBarMessage] = SnackBar();
 let queries = [];
 
-popupWrapper.appendChild(snackbar);
+$popupWrapper.append($snackbar);
 
-mainPageButton.onclick = () =>
-  chrome.tabs.create({ url: "./public/main.html" });
-
-const scripts = document.getElementById("scripts");
+$mainPageButton.on("click", () =>
+  chrome.tabs.create({ url: "./public/main.html" })
+);
 
 chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     const activeTab = tabs[0];
     const customScripts = scriptsBagKey ? JSON.parse(scriptsBagKey) : [];
 
-    const configurationMenu = document.getElementById("configuration");
-    const configurationInputs = document.getElementById("configuration-inputs");
+    const $configurationMenu = $("#configuration");
+    const $configurationInputs = $("#configuration-inputs");
     const openConfiguration = (queryParsed, runCallback, scriptName) => {
       const envVariables = Object.keys(queryParsed);
 
@@ -41,37 +41,37 @@ chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
         });
       };
 
-      configurationInputs.innerHTML = null;
+      $configurationInputs.empty();
       envVariables.forEach((env) => {
         const envVariable = queryParsed[env];
 
-        configurationInputs.appendChild(
+        $configurationInputs.append(
           Input({ ...envVariable, saveEnvChanges, name: env })
         );
       });
 
-      const runButton = Script({
+      const $runButton = Script({
         text: "Run",
         callback: () => {
           runCallback();
         },
       });
-      configurationMenu.appendChild(runButton);
+      $configurationMenu.append($runButton);
 
-      const goBackButton = Script({
+      const $goBackButton = Script({
         text: "Go Back",
         callback: () => {
-          configurationMenu.className = "script-configuration";
+          $configurationMenu.removeClass("open");
 
           setTimeout(() => {
-            goBackButton.remove();
-            runButton.remove();
+            $goBackButton.remove();
+            $runButton.remove();
           }, 500);
         },
       });
-      configurationMenu.appendChild(goBackButton);
+      $configurationMenu.append($goBackButton);
 
-      configurationMenu.className = "script-configuration open";
+      $configurationMenu.addClass("open");
     };
 
     customScripts.forEach(({ name, script, query }) => {
@@ -88,7 +88,7 @@ chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
 
       const queryParsed = JSON.parse(query);
       const hasQuery = Boolean(Object.keys(queryParsed).length);
-      const ConfigurationMenu = hasQuery
+      const $ConfigurationMenu = hasQuery
         ? [
             {
               text: "Adjust",
@@ -97,11 +97,11 @@ chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
           ]
         : [];
 
-      scripts.appendChild(
+      $scripts.append(
         Script({
           text: name,
           options: [
-            ...ConfigurationMenu,
+            ...$ConfigurationMenu,
             { text: "Run", callback: callbackRun },
           ],
         })

@@ -88,7 +88,7 @@ chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
 
       const queryParsed = JSON.parse(query);
       const hasQuery = Boolean(Object.keys(queryParsed).length);
-      const $ConfigurationMenu = hasQuery
+      const configurationMenu = hasQuery
         ? [
             {
               text: "Adjust",
@@ -101,7 +101,7 @@ chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
         Script({
           text: name,
           options: [
-            ...$ConfigurationMenu,
+            ...configurationMenu,
             { text: "Run", callback: callbackRun },
           ],
         })

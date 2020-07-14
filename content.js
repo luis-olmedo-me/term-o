@@ -13,6 +13,11 @@ chrome.runtime.onMessage.addListener(function (
 
     try {
       const env = JSON.parse(query);
+      Object.keys(env).forEach((envName) => {
+        const envVariable = env[envName];
+
+        env[envName].value = envVariable.value || envVariable.defaultValue;
+      });
 
       eval(customCode);
       showStatus("success", "Code successfuly executed");

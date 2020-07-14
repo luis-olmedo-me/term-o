@@ -19,7 +19,7 @@
 
     const $input = $("<input></input>")
       .addClass("configuration-input")
-      .on("change", () => saveEnvChanges($input.value, name))
+      .on("change", () => saveEnvChanges($input.val(), name))
       .val(defaultValue);
 
     const $inputContainer = $("<div></div>")

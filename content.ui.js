@@ -24,6 +24,8 @@
     const $message = $("<p></p>").text(newMessage).css("margin", 0);
 
     const $snackBarWrapper = $("<div></div>")
+      .css("pointer-events", "auto")
+      .css("cursor", "pointer")
       .css("color", "#fff")
       .css("background-color", theme)
       .css("position", "absolute")
@@ -32,6 +34,7 @@
       .css("border-radius", "0 5px 5px 0")
       .css("top", scrollY + 75)
       .css("box-shadow", "0px 0px 8px 1px #d6d6d6")
+      .on("click", () => $snackBarWrapper.remove())
       .append($title)
       .append($message);
 

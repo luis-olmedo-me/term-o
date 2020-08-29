@@ -53,11 +53,14 @@
 
       $webBotsContents.append($snackbar);
 
-      window.addEventListener("scroll", (event) => {
-        $webBotsContents.css("top", scrollY);
+      const scrollEventId = window.addEventListener("scroll", (event) => {
+        $webBotsContents.animate({ top: scrollY }, 1);
       });
 
-      setTimeout(() => $snackbar.remove(), 5000);
+      setTimeout(() => {
+        $snackbar.remove();
+        window.removeEventListener("scroll", scrollEventId);
+      }, 5000);
     },
   };
 

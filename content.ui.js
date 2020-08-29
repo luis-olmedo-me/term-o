@@ -3,54 +3,39 @@
     throw new Error("Web Bots duplicated data found");
   }
 
-  const page = document.getElementsByTagName("body")[0];
+  const $page = $("body");
+  const $webBotsContents = $("<div></div>");
 
-  const webBotsContents = document.createElement("div");
-  const webBotsContentsStyle = webBotsContents.style;
+  $webBotsContents
+    .css("width", "100vw")
+    .css("height", "100vh")
+    .css("position", "absolute")
+    .css("z-index", 1000000)
+    .css("top", 0)
+    .css("pointer-events", "none");
 
-  webBotsContents.id = "web-bots-contents";
-  webBotsContentsStyle.width = "100vw";
-  webBotsContentsStyle.height = "100vh";
-  webBotsContentsStyle.position = "absolute";
-  webBotsContentsStyle.zIndex = 10000000;
-  webBotsContentsStyle.top = 0;
-  webBotsContentsStyle.pointerEvents = "none";
-
-  page.insertBefore(webBotsContents, page.firstChild);
+  $page.prepend($webBotsContents);
 
   const createSnackbar = ({ newTitle, newMessage, theme }) => {
-    const snackBarWrapper = document.createElement("div");
-    const snackBarWrapperStyle = snackBarWrapper.style;
+    const $title = $("<span></span>")
+      .text(newTitle)
+      .css("font-size", 18)
+      .css("font-weight", "bold");
+    const $message = $("<p></p>").text(newMessage).css("margin", 0);
 
-    snackBarWrapperStyle.color = "#fff";
-    snackBarWrapperStyle.backgroundColor = theme;
-    snackBarWrapperStyle.position = "absolute";
-    snackBarWrapperStyle.width = "max-content";
-    snackBarWrapperStyle.padding = "10px 50px 10px 20px";
-    snackBarWrapperStyle.borderRadius = "0 5px 5px 0";
-    snackBarWrapperStyle.top = "50px";
-    snackBarWrapperStyle.boxShadow = "0px 0px 8px 1px #d6d6d6";
+    const $snackBarWrapper = $("<div></div>")
+      .css("color", "#fff")
+      .css("background-color", theme)
+      .css("position", "absolute")
+      .css("width", "max-content")
+      .css("padding", "10px 50px 10px 20px")
+      .css("border-radius", "0 5px 5px 0")
+      .css("top", 50)
+      .css("box-shadow", "0px 0px 8px 1px #d6d6d6")
+      .append($title)
+      .append($message);
 
-    const titleText = document.createTextNode(newTitle);
-    const messageText = document.createTextNode(newMessage);
-    const title = document.createElement("span");
-    const message = document.createElement("p");
-
-    const titleStyle = title.style;
-    const messageStyle = message.style;
-
-    titleStyle.fontSize = 18;
-    titleStyle.fontWeight = "bold";
-
-    messageStyle.margin = 0;
-
-    title.appendChild(titleText);
-    message.appendChild(messageText);
-
-    snackBarWrapper.appendChild(title);
-    snackBarWrapper.appendChild(message);
-
-    return snackBarWrapper;
+    return $snackBarWrapper;
   };
 
   const COLORS = {
@@ -58,23 +43,21 @@
     error: "#ff212c",
   };
 
-  const $webBots = $("#web-bots-contents");
-
   global.contentSnackBarAPI = {
     setMessage: (title, message, theme) => {
-      const snackbar = createSnackbar({
+      const $snackbar = createSnackbar({
         theme: COLORS[theme] || COLORS.error,
         newTitle: title,
         newMessage: message,
       });
 
-      webBotsContents.appendChild(snackbar);
+      $webBotsContents.append($snackbar);
 
       window.addEventListener("scroll", (event) => {
-        $webBots.css("top", scrollY);
+        $webBotsContents.css("top", scrollY);
       });
 
-      setTimeout(() => snackbar.remove(), 5000);
+      setTimeout(() => $snackbar.remove(), 5000);
     },
   };
 

@@ -16,12 +16,6 @@ chrome.runtime.onMessage.addListener(function (
       });
 
       eval(customCode);
-
-      contentSnackBarAPI.setMessage(
-        "Good news",
-        "Code successfully executed",
-        "success"
-      );
     } catch ({ name }) {
       contentSnackBarAPI.setMessage(`Error on web bot`, name);
     }

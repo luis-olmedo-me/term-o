@@ -21,6 +21,11 @@ chrome.runtime.onMessage.addListener(function (
 
       eval(customCode);
       showStatus("success", "Code successfuly executed");
+      contentSnackBarAPI.setMessage(
+        "Good news",
+        "Code successfuly executed",
+        "success"
+      );
     } catch ({ name: errorName }) {
       showStatus("error", errorName);
     }

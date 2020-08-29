@@ -3,9 +3,7 @@ chrome.runtime.onMessage.addListener(function (
   sender
 ) {
   if (message == "EXECUTE_SCRIPT_BAG") {
-    const webBots = {
-      snackbar: contentSnackBarAPI,
-    };
+    const webBots = { snackbar: contentSnackBarAPI };
 
     try {
       const env = JSON.parse(query);

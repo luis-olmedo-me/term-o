@@ -3,19 +3,20 @@ chrome.runtime.onMessage.addListener(function (
   sender
 ) {
   if (message == "EXECUTE_SCRIPT_BAG") {
-    const webBots = { snackbar: contentSnackBarAPI };
+    const env = JSON.parse(query);
+    Object.keys(env).forEach((envName) => {
+      const envVariable = env[envName];
+
+      env[envName].value = envVariable.value || envVariable.defaultValue;
+    });
+    const scope = { snackbar: contentSnackBarAPI, env, window };
 
     try {
-      const env = JSON.parse(query);
-      Object.keys(env).forEach((envName) => {
-        const envVariable = env[envName];
-
-        env[envName].value = envVariable.value || envVariable.defaultValue;
-      });
-
-      eval(customCode);
+      (function webBot(code) {
+        eval(code);
+      }.call(scope, customCode));
     } catch ({ name }) {
-      contentSnackBarAPI.setMessage(`Error on web bot`, name);
+      contentSnackBarAPI.setMessage("Error on web bot", name);
     }
   }
 });

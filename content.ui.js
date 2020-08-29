@@ -7,8 +7,8 @@
   const $webBotsContents = $("<div></div>");
 
   $webBotsContents
-    .css("width", "100vw")
-    .css("height", "100vh")
+    .css("width", "100%")
+    .css("height", "100%")
     .css("position", "absolute")
     .css("z-index", 1000000)
     .css("top", 0)
@@ -30,7 +30,7 @@
       .css("width", "max-content")
       .css("padding", "10px 50px 10px 20px")
       .css("border-radius", "0 5px 5px 0")
-      .css("top", 50)
+      .css("top", scrollY + 75)
       .css("box-shadow", "0px 0px 8px 1px #d6d6d6")
       .append($title)
       .append($message);
@@ -53,14 +53,15 @@
 
       $webBotsContents.append($snackbar);
 
-      const scrollEventId = window.addEventListener("scroll", (event) => {
-        $webBotsContents.animate({ top: scrollY }, 1);
-      });
-
-      setTimeout(() => {
+      const removeSnackbar = () => {
         $snackbar.remove();
+
         window.removeEventListener("scroll", scrollEventId);
-      }, 5000);
+        window.clearTimeout(timeOutEventId);
+      };
+
+      const scrollEventId = window.addEventListener("scroll", removeSnackbar);
+      const timeOutEventId = setTimeout(removeSnackbar, 5000);
     },
   };
 

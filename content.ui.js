@@ -1,34 +1,65 @@
-const page = document.getElementsByTagName("body")[0];
+(function initializeSnackbarAPI(global) {
+  if (global.contentSnackBarAPI) {
+    throw new Error("Web Bots duplicated data found");
+  }
 
-const snackBarWrapper = document.createElement("div");
-const snackBarWrapperStyle = snackBarWrapper.style;
+  const page = document.getElementsByTagName("body")[0];
 
-snackBarWrapperStyle.color = "#fff";
-snackBarWrapperStyle.backgroundColor = "#619c61";
-snackBarWrapperStyle.position = "sticky";
-snackBarWrapperStyle.width = "max-content";
-snackBarWrapperStyle.padding = "10px 30px 10px";
-snackBarWrapperStyle.borderRadius = "0 5px 5px 0";
-snackBarWrapperStyle.marginTop = "20px";
-snackBarWrapperStyle.boxShadow = "0px 0px 8px 1px #d6d6d6";
+  // const webBotsContents = document.createElement("div");
 
-const titleText = document.createTextNode("title");
-const messageText = document.createTextNode("wea message");
-const title = document.createElement("span");
-const message = document.createElement("p");
+  const createSnackbar = ({ newTitle, newMessage, theme }) => {
+    const snackBarWrapper = document.createElement("div");
+    const snackBarWrapperStyle = snackBarWrapper.style;
 
-const titleStyle = title.style;
-const messageStyle = message.style;
+    snackBarWrapperStyle.color = "#fff";
+    snackBarWrapperStyle.backgroundColor = theme;
+    snackBarWrapperStyle.position = "sticky";
+    snackBarWrapperStyle.width = "max-content";
+    snackBarWrapperStyle.padding = "10px 50px 10px 20px";
+    snackBarWrapperStyle.borderRadius = "0 5px 5px 0";
+    snackBarWrapperStyle.marginTop = "50px";
+    snackBarWrapperStyle.boxShadow = "0px 0px 8px 1px #d6d6d6";
 
-titleStyle.fontSize = 18;
-titleStyle.fontWeight = "bold";
+    const titleText = document.createTextNode(newTitle);
+    const messageText = document.createTextNode(newMessage);
+    const title = document.createElement("span");
+    const message = document.createElement("p");
 
-messageStyle.margin = 0;
+    const titleStyle = title.style;
+    const messageStyle = message.style;
 
-title.appendChild(titleText);
-message.appendChild(messageText);
+    titleStyle.fontSize = 18;
+    titleStyle.fontWeight = "bold";
 
-snackBarWrapper.appendChild(title);
-snackBarWrapper.appendChild(message);
+    messageStyle.margin = 0;
 
-page.appendChild(snackBarWrapper);
+    title.appendChild(titleText);
+    message.appendChild(messageText);
+
+    snackBarWrapper.appendChild(title);
+    snackBarWrapper.appendChild(message);
+
+    return snackBarWrapper;
+  };
+
+  const COLORS = {
+    success: "#619c61",
+    error: "#ff212c",
+  };
+
+  global.contentSnackBarAPI = {
+    setMessage: (title, message, theme) => {
+      const snackbar = createSnackbar({
+        theme: COLORS[theme] || COLORS.error,
+        newTitle: title,
+        newMessage: message,
+      });
+
+      page.appendChild(snackbar);
+
+      setTimeout(() => snackbar.remove(), 5000);
+    },
+  };
+
+  Object.freeze(global.contentSnackBarAPI);
+})(this);

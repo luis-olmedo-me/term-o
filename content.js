@@ -3,13 +3,14 @@ chrome.runtime.onMessage.addListener(function (
   sender
 ) {
   if (message == "EXECUTE_SCRIPT_BAG") {
-    const env = JSON.parse(query);
-    Object.keys(env).forEach((envName) => {
-      const envVariable = env[envName];
+    const options = JSON.parse(query);
+    const environment = Object.keys(options).reduce((environment, name) => {
+      const env = options[name];
 
-      env[envName].value = envVariable.value || envVariable.defaultValue;
-    });
-    const scope = { snackbar: contentSnackBarAPI, env, window };
+      return { ...environment, [name]: env.value || env.defaultValue };
+    }, {});
+
+    const scope = { window, snackbar: contentSnackBarAPI, environment };
 
     try {
       (function webBot(code) {

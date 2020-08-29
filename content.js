@@ -3,12 +3,8 @@ chrome.runtime.onMessage.addListener(function (
   sender
 ) {
   if (message == "EXECUTE_SCRIPT_BAG") {
-    const showStatus = (theme, text) => {
-      chrome.runtime.sendMessage({
-        type: "STATUS_SCRIPT_BAG",
-        theme,
-        text,
-      });
+    const webBots = {
+      snackbar: contentSnackBarAPI,
     };
 
     try {
@@ -20,14 +16,14 @@ chrome.runtime.onMessage.addListener(function (
       });
 
       eval(customCode);
-      showStatus("success", "Code successfuly executed");
+
       contentSnackBarAPI.setMessage(
         "Good news",
-        "Code successfuly executed",
+        "Code successfully executed",
         "success"
       );
-    } catch ({ name: errorName }) {
-      showStatus("error", errorName);
+    } catch ({ name }) {
+      contentSnackBarAPI.setMessage(`Error on web bot`, name);
     }
   }
 });

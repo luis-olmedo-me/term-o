@@ -44,9 +44,8 @@ button:focus {
   flex: 0.3;
   background-color: var(--neutral1-color);
   width: 100%;
-  -webkit-box-shadow: 10px 0px 18px 0px rgba(27, 27, 27, 0.8);
-  -moz-box-shadow: 10px 0px 18px 0px rgba(27, 27, 27, 0.8);
-  box-shadow: 10px 0px 18px 0px rgba(27, 27, 27, 0.8);
+  border: solid var(--accent-color);
+  border-width: 0 3px 0 0;
   z-index: 1;
   overflow-y: scroll;
 }
@@ -111,6 +110,8 @@ button:focus {
   justify-content: center;
   align-items: center;
   flex-flow: column nowrap;
+  padding: 10px 0;
+  box-sizing: border-box;
 }
 
 .coder,

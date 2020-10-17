@@ -120,18 +120,14 @@ button:focus {
   color: var(--accent-color);
   font-size: 18px;
   font-weight: bolder;
-  -webkit-box-shadow: 0px 7px 18px 0px rgb(27, 27, 27);
-  -moz-box-shadow: 0px 7px 18px 0px rgb(27, 27, 27);
-  box-shadow: 0px 7px 18px 0px rgb(27, 27, 27);
   overflow-y: scroll;
+  border: 3px solid transparent;
   border-radius: 5px;
-  transition: box-shadow 0.2s ease-in-out;
+  transition: border-color 0.3s ease-in-out;
 }
 
 .code-name:focus {
-  -webkit-box-shadow: 0px 7px 18px 0px var(--accent-color);
-  -moz-box-shadow: 0px 7px 18px 0px var(--accent-color);
-  box-shadow: 0px 7px 18px 0px var(--accent-color);
+  border-color: var(--accent-color);
 }
 
 .coder,
@@ -145,11 +141,9 @@ button:focus {
   padding: 10px;
   color: var(--font-color);
   font-size: 16px;
-  -webkit-box-shadow: 0px 7px 18px 0px rgb(27, 27, 27);
-  -moz-box-shadow: 0px 7px 18px 0px rgb(27, 27, 27);
-  box-shadow: 0px 7px 18px 0px rgb(27, 27, 27);
+  border: 3px solid transparent;
   border-radius: 5px;
-  transition: box-shadow 0.2s ease-in-out;
+  transition: border-color 0.2s ease-in-out;
   overflow-y: scroll;
 }
 
@@ -160,9 +154,7 @@ button:focus {
 
 .coder:focus,
 .query:focus {
-  -webkit-box-shadow: 0px 7px 18px 0px var(--accent-color);
-  -moz-box-shadow: 0px 7px 18px 0px var(--accent-color);
-  box-shadow: 0px 7px 18px 0px var(--accent-color);
+  border-color: var(--accent-color);
 }
 
 .query {

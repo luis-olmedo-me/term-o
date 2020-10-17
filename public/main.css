@@ -105,7 +105,7 @@ button:focus {
   color: var(--neutral1-color);
 }
 
-/* Code seccion */
+/* Code section */
 .code {
   display: flex;
   justify-content: center;
@@ -113,17 +113,22 @@ button:focus {
   flex-flow: column nowrap;
 }
 
+.coder,
+.query,
 .code-name {
   width: 90%;
-  padding: 10px;
   background-color: var(--neutral0-color);
-  color: var(--accent-color);
-  font-size: 18px;
-  font-weight: bolder;
   overflow-y: scroll;
   border: 3px solid transparent;
   border-radius: 5px;
   transition: border-color 0.3s ease-in-out;
+}
+
+.code-name {
+  padding: 10px;
+  color: var(--accent-color);
+  font-size: 18px;
+  font-weight: bolder;
 }
 
 .code-name:focus {
@@ -135,16 +140,10 @@ button:focus {
   font-family: monospace;
   line-height: 22px;
   margin-top: 1%;
-  width: 90%;
   height: 55%;
-  background-color: var(--neutral0-color);
   padding: 10px;
   color: var(--font-color);
   font-size: 16px;
-  border: 3px solid transparent;
-  border-radius: 5px;
-  transition: border-color 0.2s ease-in-out;
-  overflow-y: scroll;
 }
 
 .coder::-webkit-scrollbar,

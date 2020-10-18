@@ -4,9 +4,7 @@
   }
 
   const $page = $("body");
-  const $webBotsContents = $("<div></div>");
-
-  $webBotsContents
+  const $webBotsContents = $("<div></div>")
     .css("width", "100%")
     .css("height", "100%")
     .css("position", "absolute")

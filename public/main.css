@@ -132,10 +132,6 @@ button:focus {
   font-weight: bolder;
 }
 
-.code-name:focus {
-  border-color: var(--accent-color);
-}
-
 .coder,
 .query {
   font-family: monospace;
@@ -152,6 +148,7 @@ button:focus {
   display: none;
 }
 
+.code-name:focus,
 .coder:focus,
 .query:focus {
   border-color: var(--accent-color);

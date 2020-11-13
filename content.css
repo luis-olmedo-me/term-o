@@ -51,6 +51,12 @@
   box-sizing: border-box;
   display: inline-block;
   vertical-align: middle;
+  border: solid #333;
+  border-width: 0 3px;
+}
+.web-bots-terminal-input:focus {
+  border: solid darkorchid;
+  border-width: 0 3px;
 }
 .web-bots-terminal-input:focus {
   outline: none;

@@ -96,6 +96,16 @@
 
       const scrollEventId = window.addEventListener("scroll", removeTerminal);
 
+      const onInputKeyUp = ({ key }) => {
+        if (key === "Enter") {
+          const commands = $terminalInput.val();
+
+          eval(commands);
+        }
+      };
+
+      $terminalInput.on("keyup", onInputKeyUp);
+
       console.log($terminalInput);
     },
   };

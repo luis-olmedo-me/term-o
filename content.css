@@ -1,0 +1,56 @@
+.web-bots-terminal-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: all;
+  background-color: #444;
+  width: 100vw;
+  box-sizing: border-box;
+  padding: 5px 30vw 5px 10px;
+  box-shadow: 0px 3px 8px 1px #d6d6d6;
+}
+
+.web-bots-terminal-chevron {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+}
+.web-bots-terminal-chevron::before,
+.web-bots-terminal-chevron::after {
+  content: "";
+  position: absolute;
+  background-color: darkorchid;
+  left: 0;
+  height: 5px;
+  width: 50%;
+  border-radius: 2.5px;
+}
+.web-bots-terminal-chevron::before {
+  bottom: 30%;
+  transform: rotateZ(-45deg);
+}
+.web-bots-terminal-chevron::after {
+  top: 30%;
+  transform: rotateZ(45deg);
+}
+
+.web-bots-terminal-input {
+  width: calc(100% - 40px);
+  font-family: "monospace";
+  background-color: #222;
+  color: #ddd;
+  border-radius: 5;
+  color: 5;
+  padding: 5px 10px;
+  font-size: 20;
+  border: none;
+  border-radius: 5px;
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: middle;
+}
+.web-bots-terminal-input:focus {
+  outline: none;
+}

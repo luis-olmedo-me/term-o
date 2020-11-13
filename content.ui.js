@@ -39,6 +39,22 @@
     return $snackBarWrapper;
   };
 
+  const createTerminal = () => {
+    const $input = $("<input />")
+      .attr("type", "text")
+      .addClass("web-bots-terminal-input");
+
+    const $icon = $("<div></div>").addClass("web-bots-terminal-chevron");
+
+    const $terminalWrapper = $("<div></div>")
+      .addClass("web-bots-terminal-wrapper")
+      .css("top", scrollY)
+      .append($icon)
+      .append($input);
+
+    return [$terminalWrapper, $input];
+  };
+
   const COLORS = {
     success: "#619c61",
     error: "#ff212c",
@@ -62,9 +78,28 @@
       };
 
       const scrollEventId = window.addEventListener("scroll", removeSnackbar);
-      const timeOutEventId = setTimeout(removeSnackbar, 5000);
+      const timeOutEventId = setTimeout(removeSnackbar, 50000000);
+    },
+  };
+
+  global.terminal = {
+    open: () => {
+      const [$terminal, $terminalInput] = createTerminal();
+
+      $webBotsContents.append($terminal);
+
+      const removeTerminal = () => {
+        $terminal.remove();
+
+        window.removeEventListener("scroll", scrollEventId);
+      };
+
+      const scrollEventId = window.addEventListener("scroll", removeTerminal);
+
+      console.log($terminalInput);
     },
   };
 
   Object.freeze(global.contentSnackBarAPI);
+  Object.freeze(global.terminal);
 })(this);

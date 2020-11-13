@@ -10,7 +10,7 @@ chrome.runtime.onMessage.addListener(function (
       return { ...environment, [name]: env.value || env.defaultValue };
     }, {});
 
-    const scope = { window, contentSnackBarAPI, environment };
+    const scope = { window, contentSnackBarAPI, terminal, environment };
 
     try {
       (function webBot(code) {

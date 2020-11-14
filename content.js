@@ -10,14 +10,43 @@ chrome.runtime.onMessage.addListener(function (
       return { ...environment, [name]: env.value || env.defaultValue };
     }, {});
 
-    const scope = { window, contentSnackBarAPI, terminal, environment };
+    const scope = { window, contentSnackBarAPI, environment };
 
     try {
       (function webBot(code) {
         eval(code);
       }.call(scope, customCode));
-    } catch ({ name }) {
-      contentSnackBarAPI.setMessage("Error on web bot", name);
+    } catch ({ stack, message }) {
+      const stackFirstPart = stack.split("\n")[0];
+
+      contentSnackBarAPI.setMessage(stackFirstPart, message, "error");
     }
   }
 });
+
+(function setUpKeyForTerminal() {
+  let keysPressing = [];
+  let terminalCreated = {};
+
+  window.addEventListener("keydown", ({ key }) => {
+    keysPressing = keysPressing.includes(key)
+      ? keysPressing
+      : [...keysPressing, key.toLowerCase()];
+
+    keysPressingString = keysPressing.join("+");
+
+    if (keysPressingString === "alt+t") {
+      const hasTerminalCreated = Object.keys(terminalCreated).length;
+
+      if (hasTerminalCreated) {
+        terminalCreated.removeTerminal();
+      } else {
+        terminalCreated = terminal.create();
+      }
+    }
+  });
+
+  window.addEventListener("keyup", ({ key }) => {
+    keysPressing = keysPressing.filter((keyPressing) => key !== keyPressing);
+  });
+})();

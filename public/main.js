@@ -35,16 +35,6 @@ const backgroundRequest = (key, data, callback) => {
   }
 };
 
-const storeScripts = (scripts) => {
-  // chrome.storage.local.set({ scriptsBagKey: JSON.stringify(scripts) });
-
-  // backgroundRequest("get_queries", (response) => {
-  //   console.log("response", response);
-  // });
-
-  updateUI();
-};
-
 const createScript = () => {
   backgroundRequest("create_script", null, ({ response: newScript }) => {
     showSnackBarMessage(
@@ -81,12 +71,11 @@ const saveScript = (name) => {
 };
 
 const deleteScript = (name) => {
-  const newScripts = currentScripts.filter((script) => {
-    return script.name !== name;
+  backgroundRequest("delete_script", { name }, () => {
+    showSnackBarMessage("success", `Script ${name} has been deleted!`);
   });
 
-  storeScripts(newScripts);
-  showSnackBarMessage("success", `Script ${name} has been deleted!`);
+  updateUI();
 };
 
 function updateUI() {

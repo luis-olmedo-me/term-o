@@ -24,6 +24,13 @@ const getParsedQuery = (query) => {
 const storeScripts = (scripts) => {
   chrome.storage.local.set({ scriptsBagKey: JSON.stringify(scripts) });
 
+  chrome.runtime.sendMessage(
+    { WEB_BOTS_REQUEST: "get_queries" },
+    function onResponse(response) {
+      console.log(response.response);
+    }
+  );
+
   updateUI();
 };
 

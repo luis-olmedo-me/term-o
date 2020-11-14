@@ -24,29 +24,57 @@ chrome.runtime.onMessage.addListener(function (
   }
 });
 
+class KeysManager {
+  constructor() {
+    this.keysListening = [];
+    this.keysPressing = [];
+
+    this.init();
+  }
+
+  init() {
+    window.addEventListener("keydown", ({ key }) => {
+      this.keysPressing = this.keysPressing.includes(key)
+        ? this.keysPressing
+        : [...this.keysPressing, key.toLowerCase()];
+
+      const keysCombination = this.keysPressing.join("+");
+
+      this.matchKey(keysCombination);
+    });
+
+    window.addEventListener("keyup", ({ key }) => {
+      this.keysPressing = this.keysPressing.filter(
+        (keyPressing) => key !== keyPressing
+      );
+    });
+  }
+
+  matchKey(keyCombination) {
+    const matches = this.keysListening.filter(
+      ({ keyMatch }) => keyMatch === keyCombination
+    );
+
+    matches.forEach(({ callback }) => callback());
+  }
+
+  on(keyMatch, callback) {
+    this.keysListening = [...this.keysListening, { keyMatch, callback }];
+  }
+}
+
 (function setUpKeyForTerminal() {
-  let keysPressing = [];
   let terminalCreated = {};
 
-  window.addEventListener("keydown", ({ key }) => {
-    keysPressing = keysPressing.includes(key)
-      ? keysPressing
-      : [...keysPressing, key.toLowerCase()];
+  keyManager = new KeysManager();
 
-    keysPressingString = keysPressing.join("+");
+  keyManager.on("alt+t", () => {
+    const hasTerminalCreated = Object.keys(terminalCreated).length;
 
-    if (keysPressingString === "alt+t") {
-      const hasTerminalCreated = Object.keys(terminalCreated).length;
-
-      if (hasTerminalCreated) {
-        terminalCreated.removeTerminal();
-      } else {
-        terminalCreated = terminal.create();
-      }
+    if (hasTerminalCreated) {
+      terminalCreated.removeTerminal();
+    } else {
+      terminalCreated = terminal.create();
     }
-  });
-
-  window.addEventListener("keyup", ({ key }) => {
-    keysPressing = keysPressing.filter((keyPressing) => key !== keyPressing);
   });
 })();

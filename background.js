@@ -38,14 +38,14 @@ class Broker {
 
 const getAvailableName = (scripts) => {
   let number = 0;
-  let isNumberAvailable = false;
+  let isNameTaken = true;
   let availableName = "";
   const defaultName = "New bot";
 
-  while (!isNumberAvailable) {
+  while (isNameTaken) {
     availableName = `${defaultName} ${number}`;
 
-    isNumberAvailable = scripts.every(({ name }) => name !== availableName);
+    isNameTaken = scripts.some(({ name }) => name === availableName);
 
     number++;
   }

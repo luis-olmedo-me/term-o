@@ -24,57 +24,71 @@ chrome.runtime.onMessage.addListener(function (
   }
 });
 
-class KeysManager {
-  constructor() {
-    this.keysListening = [];
-    this.keysPressing = [];
-
-    this.init();
-  }
-
-  init() {
-    window.addEventListener("keydown", ({ key }) => {
-      this.keysPressing = this.keysPressing.includes(key)
-        ? this.keysPressing
-        : [...this.keysPressing, key.toLowerCase()];
-
-      const keysCombination = this.keysPressing.join("+");
-
-      this.matchKey(keysCombination);
-    });
-
-    window.addEventListener("keyup", ({ key }) => {
-      this.keysPressing = this.keysPressing.filter(
-        (keyPressing) => key !== keyPressing
-      );
-    });
-  }
-
-  matchKey(keyCombination) {
-    const matches = this.keysListening.filter(
-      ({ keyMatch }) => keyMatch === keyCombination
-    );
-
-    matches.forEach(({ callback }) => callback());
-  }
-
-  on(keyMatch, callback) {
-    this.keysListening = [...this.keysListening, { keyMatch, callback }];
-  }
-}
-
 (function setUpKeyForTerminal() {
+  class KeysManager {
+    constructor() {
+      this.keysListening = [];
+      this.keysPressing = [];
+
+      this.init();
+    }
+
+    init() {
+      window.addEventListener("keydown", ({ key }) => {
+        this.keysPressing = this.keysPressing.includes(key)
+          ? this.keysPressing
+          : [...this.keysPressing, key.toLowerCase()];
+
+        const keysCombination = this.keysPressing.join("+");
+
+        this.matchKey(keysCombination);
+      });
+
+      window.addEventListener("keyup", ({ key }) => {
+        const keyFormatted = key.toLowerCase();
+
+        this.keysPressing = this.keysPressing.filter(
+          (keyPressing) => keyFormatted !== keyPressing
+        );
+      });
+    }
+
+    matchKey(keyCombination) {
+      const matches = this.keysListening.filter(
+        ({ keyMatch }) => keyMatch === keyCombination
+      );
+
+      matches.forEach(({ callback }) => callback());
+    }
+
+    on(keyMatch, callback) {
+      this.keysListening = [...this.keysListening, { keyMatch, callback }];
+    }
+  }
+
   let terminalCreated = {};
 
   keyManager = new KeysManager();
+
+  const deleteTerminal = () => {
+    const hasTerminalCreated = Object.keys(terminalCreated).length;
+
+    if (hasTerminalCreated) {
+      terminalCreated.removeTerminal();
+
+      terminalCreated = {};
+    }
+  };
 
   keyManager.on("alt+t", () => {
     const hasTerminalCreated = Object.keys(terminalCreated).length;
 
     if (hasTerminalCreated) {
-      terminalCreated.removeTerminal();
+      deleteTerminal();
     } else {
       terminalCreated = terminal.create();
     }
   });
+
+  keyManager.on("escape", deleteTerminal);
 })();

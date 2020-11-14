@@ -114,29 +114,41 @@ button:focus {
   box-sizing: border-box;
 }
 
+.code-display {
+  display: flex;
+  width: 90%;
+}
+
 .coder,
 .query,
-.code-name {
-  width: 90%;
+.code-display-value {
   background-color: var(--neutral0-color);
   overflow-y: scroll;
   border: 3px solid transparent;
   border-radius: 5px;
   transition: border-color 0.3s ease-in-out;
+  box-sizing: border-box;
 }
 
-.code-name {
-  padding: 10px;
+.code-display-value {
+  width: 60%;
+  padding: 3px 10px;
   color: var(--accent-color);
   font-size: 18px;
   font-weight: bolder;
+  line-height: 18px;
+}
+.code-display-value:last-child {
+  width: 40%;
+  margin-left: 15px;
 }
 
 .coder,
 .query {
+  width: 90%;
   font-family: monospace;
   line-height: 22px;
-  margin-top: 1%;
+  margin-top: 15px;
   height: 55%;
   padding: 10px;
   color: var(--font-color);
@@ -148,7 +160,7 @@ button:focus {
   display: none;
 }
 
-.code-name:focus,
+.code-display-value:focus,
 .coder:focus,
 .query:focus {
   border-color: var(--accent-color);

@@ -1,6 +1,7 @@
 const $codeQuery = $("#code-query");
 const $codeCoder = $("#code-coder");
 const $codeName = $("#code-name");
+const $codeCommand = $("#code-command");
 const $mainWrapper = $("#main");
 const $scripts = $("#scripts");
 
@@ -44,7 +45,12 @@ const createScript = () => {
 
   const newScripts = [
     ...currentScripts,
-    { name: availableName, script: "", query: "" },
+    {
+      name: availableName,
+      script: "",
+      query: "",
+      command: availableName.replace(" ", "_"),
+    },
   ];
 
   storeScripts(newScripts);
@@ -68,6 +74,7 @@ const saveScript = (name) => {
           name: newName,
           script: $codeCoder.val(),
           query: getParsedQuery($codeQuery.val()),
+          command: $codeCommand.val(),
         };
   });
 
@@ -90,11 +97,12 @@ function updateUI() {
   chrome.storage.local.get(["scriptsBagKey"], function (result) {
     const customScripts = JSON.parse(result.scriptsBagKey) || [];
 
-    customScripts.forEach(({ name, script, query }) => {
+    customScripts.forEach(({ name, script, query, command }) => {
       const callback = () => {
         $codeName.val(name);
         $codeCoder.val(script);
         $codeQuery.val(query);
+        $codeCommand.val(command);
       };
 
       $scripts.append(

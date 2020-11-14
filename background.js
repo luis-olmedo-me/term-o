@@ -69,6 +69,10 @@ const getAvailableName = (scripts) => {
   const broker = new Broker();
   const successResponse = { status: "success", response: {} };
 
+  const updateStoredScripts = (scripts) => {
+    chrome.storage.local.set({ scriptsBagKey: JSON.stringify(scripts) });
+  };
+
   broker.on("get_scripts", () => {
     return { ...successResponse, response: scripts };
   });
@@ -83,6 +87,8 @@ const getAvailableName = (scripts) => {
     };
 
     scripts = [...scripts, newScript];
+
+    updateStoredScripts(scripts);
 
     return { successResponse, response: newScript };
   });
@@ -105,6 +111,20 @@ const getAvailableName = (scripts) => {
     scripts = scripts.map((script) =>
       script.name === oldName ? updatedScript : script
     );
+
+    updateStoredScripts(scripts);
+
+    return successResponse;
+  });
+
+  broker.on("delete_script", ({ request: { data } }) => {
+    const name = data.name;
+
+    scripts = scripts.filter((script) => {
+      return script.name !== name;
+    });
+
+    updateStoredScripts(scripts);
 
     return successResponse;
   });

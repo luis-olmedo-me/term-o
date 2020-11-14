@@ -19,7 +19,10 @@ class Broker {
   init() {
     chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       if (request[this.requestKey]) {
-        this.matchKey(request.WEB_BOTS_REQUEST, sendResponse, sender);
+        this.matchKey(request.WEB_BOTS_REQUEST, sendResponse, {
+          request,
+          sender,
+        });
       }
     });
   }
@@ -36,7 +39,6 @@ class Broker {
     matches.forEach(({ callback }) => {
       const data = callback(sender);
 
-      console.log(data);
       if (data) {
         sendResponse(data);
       }
@@ -44,12 +46,70 @@ class Broker {
   }
 }
 
+const getAvailableName = (scripts) => {
+  let number = 0;
+  let isNumberAvailable = false;
+  let availableName = "";
+  const defaultName = "New bot";
+
+  while (!isNumberAvailable) {
+    availableName = `${defaultName} ${number}`;
+
+    isNumberAvailable = scripts.every(({ name }) => name !== availableName);
+
+    number++;
+  }
+
+  return availableName;
+};
+
 (function manageScripts() {
-  let queries = [];
+  let scripts = [];
 
   const broker = new Broker();
+  const successResponse = { status: "success", response: {} };
 
-  broker.on("get_queries", () => {
-    return { response: queries };
+  broker.on("get_scripts", () => {
+    return { ...successResponse, response: scripts };
+  });
+
+  broker.on("create_script", () => {
+    const availableName = getAvailableName(scripts);
+    const newScript = {
+      name: availableName,
+      script: "",
+      query: "{}",
+      command: availableName.replace(" ", "_"),
+    };
+
+    scripts = [...scripts, newScript];
+
+    return { successResponse, response: newScript };
+  });
+
+  broker.on("update_script", ({ request: { data } }) => {
+    const { oldName, updatedScript } = data;
+    const newName = updatedScript.name;
+
+    const isNewNameRepeated = scripts.some(
+      ({ name: scriptName }) => scriptName === newName && scriptName !== oldName
+    );
+
+    if (isNewNameRepeated) {
+      return {
+        status: "error",
+        message: "name_already_taken",
+      };
+    }
+
+    scripts = scripts.map((script) =>
+      script.name === oldName ? updatedScript : script
+    );
+
+    return successResponse;
+  });
+
+  chrome.storage.local.get(["scriptsBagKey"], function (result) {
+    scripts = JSON.parse(result.scriptsBagKey) || [];
   });
 })();

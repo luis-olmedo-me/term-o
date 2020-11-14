@@ -83,7 +83,7 @@
   };
 
   global.terminal = {
-    open: () => {
+    create: () => {
       const [$terminal, $terminalInput] = createTerminal();
 
       $webBotsContents.append($terminal);
@@ -100,13 +100,21 @@
         if (key === "Enter") {
           const commands = $terminalInput.val();
 
-          eval(commands);
+          try {
+            eval(commands);
+          } catch ({ stack, message }) {
+            const stackFirstPart = stack.split("\n")[0];
+
+            contentSnackBarAPI.setMessage(stackFirstPart, message, "error");
+          }
+
+          $terminalInput.val("");
         }
       };
 
-      $terminalInput.on("keyup", onInputKeyUp);
+      $terminalInput.on("keyup", onInputKeyUp).focus();
 
-      console.log($terminalInput);
+      return { $terminal, removeTerminal };
     },
   };
 

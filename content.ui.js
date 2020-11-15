@@ -1,4 +1,4 @@
-(function initializeSnackbarAPI(global) {
+(function initializeAPIs(global) {
   if (global.contentSnackBarAPI) {
     throw new Error("Web Bots duplicated data found");
   }
@@ -83,7 +83,8 @@
   };
 
   global.terminal = {
-    create: () => {
+    create: (scripts = []) => {
+      console.log(scripts);
       const [$terminal, $terminalInput] = createTerminal();
 
       $webBotsContents.append($terminal);
@@ -99,9 +100,17 @@
       const onInputKeyUp = ({ key }) => {
         if (key === "Enter") {
           const commands = $terminalInput.val();
+          const arguments = commands.split(" ");
+          const scope = { arguments };
+
+          const scriptMatch = scripts.find(
+            ({ command }) => command === arguments[0]
+          );
 
           try {
-            eval(commands);
+            (function webBot(code) {
+              eval(code);
+            }.call(scope, scriptMatch.script));
           } catch ({ stack, message }) {
             const stackFirstPart = stack.split("\n")[0];
 

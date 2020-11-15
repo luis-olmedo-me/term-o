@@ -25,6 +25,25 @@ chrome.runtime.onMessage.addListener(function (
 });
 
 (function setUpKeyForTerminal() {
+  const backgroundRequest = (key, data, callback) => {
+    if (key) {
+      const requestData = {
+        WEB_BOTS_REQUEST: key,
+        data,
+      };
+
+      chrome.runtime.sendMessage(
+        requestData,
+        (response) => callback && callback(response)
+      );
+    }
+  };
+  let scripts = [];
+
+  backgroundRequest("get_scripts", null, ({ response: scriptsResponse }) => {
+    scripts = scriptsResponse;
+  });
+
   class KeysManager {
     constructor() {
       this.keysListening = [];
@@ -86,7 +105,7 @@ chrome.runtime.onMessage.addListener(function (
     if (hasTerminalCreated) {
       deleteTerminal();
     } else {
-      terminalCreated = terminal.create();
+      terminalCreated = terminal.create(scripts);
     }
   });
 

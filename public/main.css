@@ -124,8 +124,7 @@ button:focus {
 .code-display-value {
   background-color: var(--neutral0-color);
   overflow-y: scroll;
-  border:  solid var(--neutral1-color);
-  border-width: 0 3px;
+  border: solid var(--neutral1-color);
   border-radius: 5px;
   transition: border-color 0.2s ease-in-out;
   box-sizing: border-box;
@@ -138,6 +137,7 @@ button:focus {
   font-size: 18px;
   font-weight: bolder;
   line-height: 18px;
+  border-width: 0 3px;
 }
 .code-display-value:last-child {
   width: 40%;
@@ -154,6 +154,7 @@ button:focus {
   padding: 10px;
   color: var(--font-color);
   font-size: 16px;
+  border-width: 3px 0;
 }
 
 .coder::-webkit-scrollbar,

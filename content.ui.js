@@ -84,7 +84,6 @@
 
   global.terminal = {
     create: (scripts = []) => {
-      console.log(scripts);
       const [$terminal, $terminalInput] = createTerminal();
 
       $webBotsContents.append($terminal);

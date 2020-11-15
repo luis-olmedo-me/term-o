@@ -78,7 +78,7 @@
       };
 
       const scrollEventId = window.addEventListener("scroll", removeSnackbar);
-      const timeOutEventId = setTimeout(removeSnackbar, 50000000);
+      const timeOutEventId = setTimeout(removeSnackbar, 5000);
     },
   };
 
@@ -100,11 +100,11 @@
       const onInputKeyUp = ({ key }) => {
         if (key === "Enter") {
           const commands = $terminalInput.val();
-          const arguments = commands.split(" ");
-          const scope = { arguments };
+          const terminalArguments = commands.split(" ");
+          const scope = { terminalArguments };
 
           const scriptMatch = scripts.find(
-            ({ command }) => command === arguments[0]
+            ({ command }) => command === terminalArguments[0]
           );
 
           try {

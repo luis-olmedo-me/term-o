@@ -100,20 +100,48 @@
         if (key === "Enter") {
           const commands = $terminalInput.val();
           const terminalArguments = commands.split(" ");
-          const scope = { terminalArguments };
 
           const scriptMatch = scripts.find(
             ({ command }) => command === terminalArguments[0]
           );
 
-          try {
-            (function webBot(code) {
-              eval(code);
-            }.call(scope, scriptMatch.script));
-          } catch ({ stack, message }) {
-            const stackFirstPart = stack.split("\n")[0];
+          if (scriptMatch) {
+            const query = JSON.parse(scriptMatch.query);
 
-            contentSnackBarAPI.setMessage(stackFirstPart, message, "error");
+            const environment = Object.keys(query).reduce(
+              (environment, name) => {
+                const env = query[name];
+
+                return {
+                  ...environment,
+                  [name]: env.value || env.defaultValue,
+                };
+              },
+              {}
+            );
+
+            const scope = {
+              window,
+              contentSnackBarAPI,
+              environment,
+              terminalArguments,
+            };
+
+            try {
+              (function webBot(code) {
+                eval(code);
+              }.call(scope, scriptMatch.script));
+            } catch ({ stack, message }) {
+              const stackFirstPart = stack.split("\n")[0];
+
+              contentSnackBarAPI.setMessage(stackFirstPart, message, "error");
+            }
+          } else {
+            contentSnackBarAPI.setMessage(
+              "The following command does not exist!",
+              `Command: ${command}`,
+              "error"
+            );
           }
 
           $terminalInput.val("");

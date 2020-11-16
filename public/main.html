@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="./assets/icons/wb.svg" />
+
+    <link rel="stylesheet" href="./normalize.css" />
+    <link rel="stylesheet" href="./theme.css" />
+    <link rel="stylesheet" href="./main.css" />
+
     <title>Web Bots</title>
   </head>
   <body>
@@ -20,18 +25,29 @@
       </div> -->
       </div>
       <div id="code" class="code">
-        <input
-          type="text"
-          id="code-name"
-          class="code-name"
-          placeholder="Name"
-        />
+        <div class="code-display">
+          <input
+            type="text"
+            id="code-name"
+            class="code-display-value"
+            placeholder="Name"
+          />
+
+          <input
+            type="text"
+            id="code-command"
+            class="code-display-value"
+            placeholder="Magic Key"
+          />
+        </div>
+
         <textarea
           id="code-coder"
           class="coder"
           aria-expanded="false"
           placeholder="/* Write your code here */"
         ></textarea>
+
         <textarea
           id="code-query"
           class="query"
@@ -42,9 +58,6 @@
     </div>
   </body>
 
-  <link rel="stylesheet" href="./normalize.css" />
-  <link rel="stylesheet" href="./theme.css" />
-  <link rel="stylesheet" href="./main.css" />
   <script src="packages/jquery-3.5.1.min.js"></script>
   <script src="./components.js"></script>
   <script src="./main.js"></script>

@@ -1,12 +1,10 @@
-(function initializeSnackbarAPI(global) {
+(function initializeAPIs(global) {
   if (global.contentSnackBarAPI) {
     throw new Error("Web Bots duplicated data found");
   }
 
   const $page = $("body");
-  const $webBotsContents = $("<div></div>");
-
-  $webBotsContents
+  const $webBotsContents = $("<div></div>")
     .css("width", "100%")
     .css("height", "100%")
     .css("position", "absolute")
@@ -41,6 +39,22 @@
     return $snackBarWrapper;
   };
 
+  const createTerminal = () => {
+    const $input = $("<input />")
+      .attr("type", "text")
+      .addClass("web-bots-terminal-input");
+
+    const $icon = $("<div></div>").addClass("web-bots-terminal-chevron");
+
+    const $terminalWrapper = $("<div></div>")
+      .addClass("web-bots-terminal-wrapper")
+      .css("top", scrollY)
+      .append($icon)
+      .append($input);
+
+    return [$terminalWrapper, $input];
+  };
+
   const COLORS = {
     success: "#619c61",
     error: "#ff212c",
@@ -68,5 +82,78 @@
     },
   };
 
+  global.terminal = {
+    create: (scripts = []) => {
+      const [$terminal, $terminalInput] = createTerminal();
+
+      $webBotsContents.append($terminal);
+
+      const removeTerminal = () => {
+        $terminal.remove();
+
+        window.removeEventListener("scroll", scrollEventId);
+      };
+
+      const scrollEventId = window.addEventListener("scroll", removeTerminal);
+
+      const onInputKeyUp = ({ key }) => {
+        if (key === "Enter") {
+          const commands = $terminalInput.val();
+          const terminalArguments = commands.split(" ");
+
+          const scriptMatch = scripts.find(
+            ({ command }) => command === terminalArguments[0]
+          );
+
+          if (scriptMatch) {
+            const query = JSON.parse(scriptMatch.query);
+
+            const environment = Object.keys(query).reduce(
+              (environment, name) => {
+                const env = query[name];
+
+                return {
+                  ...environment,
+                  [name]: env.value || env.defaultValue,
+                };
+              },
+              {}
+            );
+
+            const scope = {
+              window,
+              contentSnackBarAPI,
+              environment,
+              terminalArguments,
+            };
+
+            try {
+              (function webBot(code) {
+                eval(code);
+              }.call(scope, scriptMatch.script));
+            } catch ({ stack, message }) {
+              const stackFirstPart = stack.split("\n")[0];
+
+              contentSnackBarAPI.setMessage(stackFirstPart, message, "error");
+            }
+          } else {
+            contentSnackBarAPI.setMessage(
+              "The following command does not exist!",
+              `Command: ${command}`,
+              "error"
+            );
+          }
+
+          $terminalInput.val("");
+        }
+      };
+
+      $terminalInput.on("keyup", onInputKeyUp).focus();
+
+      return { $terminal, removeTerminal };
+    },
+  };
+
   Object.freeze(global.contentSnackBarAPI);
+  Object.freeze(global.terminal);
 })(this);

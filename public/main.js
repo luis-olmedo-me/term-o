@@ -1,6 +1,7 @@
 const $codeQuery = $("#code-query");
 const $codeCoder = $("#code-coder");
 const $codeName = $("#code-name");
+const $codeCommand = $("#code-command");
 const $mainWrapper = $("#main");
 const $scripts = $("#scripts");
 
@@ -20,81 +21,73 @@ const getParsedQuery = (query) => {
   }
 };
 
-const storeScripts = (scripts) => {
-  chrome.storage.local.set({ scriptsBagKey: JSON.stringify(scripts) });
+const backgroundRequest = (key, data, callback) => {
+  if (key) {
+    const requestData = {
+      WEB_BOTS_REQUEST: key,
+      data,
+    };
+
+    chrome.runtime.sendMessage(
+      requestData,
+      (response) => callback && callback(response)
+    );
+  }
+};
+
+const createScript = () => {
+  backgroundRequest("create_script", null, ({ response: newScript }) => {
+    showSnackBarMessage(
+      "success",
+      `Script ${newScript.availableName} has been created!`
+    );
+  });
 
   updateUI();
 };
 
-const createScript = () => {
-  let number = 0;
-  let isNumberAvailable = false;
-  let availableName = "";
-  const defaultName = "New bot";
-
-  while (!isNumberAvailable) {
-    availableName = `${defaultName} ${number}`;
-
-    isNumberAvailable = currentScripts.every(
-      ({ name }) => name !== availableName
-    );
-
-    number++;
-  }
-
-  const newScripts = [
-    ...currentScripts,
-    { name: availableName, script: "", query: "" },
-  ];
-
-  storeScripts(newScripts);
-  showSnackBarMessage("success", `Script ${availableName} has been created!`);
-};
-
 const saveScript = (name) => {
-  const newName = $codeName.val();
-  const isNewNameRepeated = currentScripts.some(
-    ({ name: scriptName }) => scriptName === newName && scriptName !== name
-  );
+  const updatedScript = {
+    name: $codeName.val(),
+    script: $codeCoder.val(),
+    query: getParsedQuery($codeQuery.val()),
+    command: $codeCommand.val(),
+  };
 
-  if (isNewNameRepeated) {
-    return showSnackBarMessage("error", "The name given is already taken!");
-  }
+  const data = {
+    oldName: name,
+    updatedScript,
+  };
 
-  const newScripts = currentScripts.map((script) => {
-    return script.name !== name
-      ? script
-      : {
-          name: newName,
-          script: $codeCoder.val(),
-          query: getParsedQuery($codeQuery.val()),
-        };
+  backgroundRequest("update_script", data, ({ status }) => {
+    if (status === "success") {
+      showSnackBarMessage("success", "Changes made has been saved!");
+    } else {
+      showSnackBarMessage("error", "The name given is already taken!");
+    }
   });
 
-  storeScripts(newScripts);
-  showSnackBarMessage("success", "Changes made has been saved!");
+  updateUI();
 };
 
 const deleteScript = (name) => {
-  const newScripts = currentScripts.filter((script) => {
-    return script.name !== name;
+  backgroundRequest("delete_script", { name }, () => {
+    showSnackBarMessage("success", `Script ${name} has been deleted!`);
   });
 
-  storeScripts(newScripts);
-  showSnackBarMessage("success", `Script ${name} has been deleted!`);
+  updateUI();
 };
 
 function updateUI() {
   $scripts.empty();
 
-  chrome.storage.local.get(["scriptsBagKey"], function (result) {
-    const customScripts = JSON.parse(result.scriptsBagKey) || [];
-
-    customScripts.forEach(({ name, script, query }) => {
+  backgroundRequest("get_scripts", null, ({ response: scriptsResponse }) => {
+    scriptsResponse.forEach(({ name, script, query, command }) => {
       const callback = () => {
         $codeName.val(name);
         $codeCoder.val(script);
         $codeQuery.val(query);
+        $codeCommand.val(command);
       };
 
       $scripts.append(
@@ -110,7 +103,7 @@ function updateUI() {
     });
 
     $scripts.append(Script({ text: "+", callback: createScript }));
-    currentScripts = customScripts;
+    currentScripts = scriptsResponse;
   });
 }
 

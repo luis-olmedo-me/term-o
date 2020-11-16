@@ -12,10 +12,24 @@ $mainPageButton.on("click", () =>
   chrome.tabs.create({ url: "./public/main.html" })
 );
 
-chrome.storage.local.get(["scriptsBagKey"], function ({ scriptsBagKey }) {
+const backgroundRequest = (key, data, callback) => {
+  if (key) {
+    const requestData = {
+      WEB_BOTS_REQUEST: key,
+      data,
+    };
+
+    chrome.runtime.sendMessage(
+      requestData,
+      (response) => callback && callback(response)
+    );
+  }
+};
+
+backgroundRequest("get_scripts", null, ({ response: scriptsResponse }) => {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     const activeTab = tabs[0];
-    const customScripts = scriptsBagKey ? JSON.parse(scriptsBagKey) : [];
+    const customScripts = scriptsResponse || [];
 
     const $configurationMenu = $("#configuration");
     const $configurationInputs = $("#configuration-inputs");

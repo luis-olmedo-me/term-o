@@ -44,9 +44,8 @@ button:focus {
   flex: 0.3;
   background-color: var(--neutral1-color);
   width: 100%;
-  -webkit-box-shadow: 10px 0px 18px 0px rgba(27, 27, 27, 0.8);
-  -moz-box-shadow: 10px 0px 18px 0px rgba(27, 27, 27, 0.8);
-  box-shadow: 10px 0px 18px 0px rgba(27, 27, 27, 0.8);
+  border: solid var(--accent-color);
+  border-width: 0 3px 0 0;
   z-index: 1;
   overflow-y: scroll;
 }
@@ -105,52 +104,57 @@ button:focus {
   color: var(--neutral1-color);
 }
 
-/* Code seccion */
+/* Code section */
 .code {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-flow: column nowrap;
+  padding: 10px 0;
+  box-sizing: border-box;
 }
 
-.code-name {
+.code-display {
+  display: flex;
   width: 90%;
-  padding: 10px;
+}
+
+.coder,
+.query,
+.code-display-value {
   background-color: var(--neutral0-color);
+  overflow-y: scroll;
+  border: solid var(--neutral1-color);
+  border-radius: 5px;
+  transition: border-color 0.2s ease-in-out;
+  box-sizing: border-box;
+}
+
+.code-display-value {
+  width: 60%;
+  padding: 3px 10px;
   color: var(--accent-color);
   font-size: 18px;
   font-weight: bolder;
-  -webkit-box-shadow: 0px 7px 18px 0px rgb(27, 27, 27);
-  -moz-box-shadow: 0px 7px 18px 0px rgb(27, 27, 27);
-  box-shadow: 0px 7px 18px 0px rgb(27, 27, 27);
-  overflow-y: scroll;
-  border-radius: 5px;
-  transition: box-shadow 0.2s ease-in-out;
+  line-height: 18px;
+  border-width: 0 3px;
 }
-
-.code-name:focus {
-  -webkit-box-shadow: 0px 7px 18px 0px var(--accent-color);
-  -moz-box-shadow: 0px 7px 18px 0px var(--accent-color);
-  box-shadow: 0px 7px 18px 0px var(--accent-color);
+.code-display-value:last-child {
+  width: 40%;
+  margin-left: 15px;
 }
 
 .coder,
 .query {
+  width: 90%;
   font-family: monospace;
   line-height: 22px;
-  margin-top: 1%;
-  width: 90%;
+  margin-top: 15px;
   height: 55%;
-  background-color: var(--neutral0-color);
   padding: 10px;
   color: var(--font-color);
   font-size: 16px;
-  -webkit-box-shadow: 0px 7px 18px 0px rgb(27, 27, 27);
-  -moz-box-shadow: 0px 7px 18px 0px rgb(27, 27, 27);
-  box-shadow: 0px 7px 18px 0px rgb(27, 27, 27);
-  border-radius: 5px;
-  transition: box-shadow 0.2s ease-in-out;
-  overflow-y: scroll;
+  border-width: 3px 0;
 }
 
 .coder::-webkit-scrollbar,
@@ -158,11 +162,10 @@ button:focus {
   display: none;
 }
 
+.code-display-value:focus,
 .coder:focus,
 .query:focus {
-  -webkit-box-shadow: 0px 7px 18px 0px var(--accent-color);
-  -moz-box-shadow: 0px 7px 18px 0px var(--accent-color);
-  box-shadow: 0px 7px 18px 0px var(--accent-color);
+  border-color: var(--accent-color);
 }
 
 .query {

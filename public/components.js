@@ -1,41 +1,37 @@
 (function initializeComponents(global) {
   const ScriptSubOption = ({ options }) => {
-    const scriptContainer = document.createElement("div");
-    scriptContainer.classList = ["script-sub-options closed"];
+    const $scriptContainer = $("<div></div>")
+      .addClass("script-sub-options")
+      .addClass("closed");
 
     options.forEach(({ text, callback }) => {
-      const scriptButton = document.createElement("button");
-      scriptButton.onclick = callback;
+      const $scriptButton = $("<button></button>")
+        .on("click", callback)
+        .text(text);
 
-      const textNode = document.createTextNode(text);
-      scriptButton.appendChild(textNode);
-
-      scriptContainer.appendChild(scriptButton);
+      $scriptContainer.append($scriptButton);
     });
 
-    return scriptContainer;
+    return $scriptContainer;
   };
   const inputText = ({ title, defaultValue, name, saveEnvChanges }) => {
-    const inputWrapper = document.createElement("div");
-    inputWrapper.className = "input-wrapper";
+    const $header = $("<h3></h3>").addClass("configuration-title").text(title);
 
-    const header = document.createElement("h3");
-    header.className = "configuration-title";
-    const headerNode = document.createTextNode(title);
-    header.appendChild(headerNode);
+    const $input = $("<input></input>")
+      .addClass("configuration-input")
+      .on("change", () => saveEnvChanges($input.val(), name))
+      .val(defaultValue);
 
-    const inputContainer = document.createElement("div");
-    inputContainer.className = "configuration-input-container";
-    const input = document.createElement("input");
-    input.className = "configuration-input";
-    input.value = defaultValue;
-    input.onchange = () => saveEnvChanges(input.value, name);
-    inputContainer.appendChild(input);
+    const $inputContainer = $("<div></div>")
+      .addClass("configuration-input-container")
+      .append($input);
 
-    inputWrapper.appendChild(header);
-    inputWrapper.appendChild(inputContainer);
+    const $inputWrapper = $("<div></div>")
+      .addClass("input-wrapper")
+      .append($header)
+      .append($inputContainer);
 
-    return inputWrapper;
+    return $inputWrapper;
   };
 
   const componentsPrototype = {
@@ -51,79 +47,75 @@
     Script: ({ text = "script", callback, options }) => {
       const hasOptions = Boolean(options);
 
-      const scriptContainer = document.createElement("div");
-      scriptContainer.classList = ["script-option"];
+      const $scriptButton = $("<button></button>")
+        .on("click", callback)
+        .text(text);
 
-      const scriptButton = document.createElement("button");
-      scriptButton.onclick = callback;
-
-      const textNode = document.createTextNode(text);
-      scriptButton.appendChild(textNode);
-
-      scriptContainer.appendChild(scriptButton);
+      const $scriptContainer = $("<div></div>")
+        .addClass("script-option")
+        .append($scriptButton);
 
       if (hasOptions) {
-        const subOptions = ScriptSubOption({ options });
+        const $subOption = ScriptSubOption({ options });
 
-        scriptButton.onclick = () => {
-          const allSubOptions = Array.from(
-            document.getElementsByClassName("script-sub-options")
-          );
+        $scriptButton.on("click", () => {
+          const $allSubOptions = $(".script-sub-options");
 
-          allSubOptions &&
-            allSubOptions.forEach((subOption) => {
-              subOption.className = "script-sub-options closed";
-            });
+          $allSubOptions.each(function (index) {
+            $allSubOptions.eq(index).addClass("closed");
+          });
 
-          subOptions.className = "script-sub-options";
+          $subOption.removeClass("closed");
 
           callback && callback();
-        };
+        });
 
-        scriptContainer.appendChild(subOptions);
+        $scriptContainer.append($subOption);
       }
 
-      return scriptContainer;
+      return $scriptContainer;
     },
     SnackBar: () => {
-      const snackbar = document.createElement("div");
-      snackbar.className = "main-snackbar";
+      const $snackbarMessage = $("<p></p>").addClass("message");
 
-      const snackbarMessage = document.createElement("p");
-      snackbarMessage.className = "message";
-
-      snackbar.appendChild(snackbarMessage);
+      const $snackbar = $("<div></div>")
+        .addClass("main-snackbar")
+        .append($snackbarMessage);
 
       let messagesCounter = 0;
       let isSnackBarOpen = false;
       const showMessage = (theme, text) => {
         if (!isSnackBarOpen) {
-          snackbar.className = `main-snackbar ${theme} open`;
+          $snackbar.removeClass(["success", "error"]).addClass([theme, "open"]);
+          $snackbarMessage.text(text);
+
           isSnackBarOpen = true;
-          snackbarMessage.innerText = text;
         }
 
         messagesCounter++;
 
         setTimeout(() => {
-          snackbar.className = `main-snackbar ${theme} open`;
+          $snackbar.removeClass(["success", "error"]).addClass([theme, "open"]);
 
           if (messagesCounter - 1 >= 0) {
             messagesCounter--;
           }
 
-          snackbarMessage.innerText = text;
+          $snackbarMessage.text(text);
 
           if (!messagesCounter) {
             setTimeout(() => {
-              snackbar.className = `main-snackbar ${theme}`;
+              $snackbar
+                .removeClass(["success", "error", "open"])
+                .addClass(theme);
+
               isSnackBarOpen = false;
             }, 1000);
           }
         }, 1000 * messagesCounter);
       };
 
-      return [snackbar, showMessage];
+      return [$snackbar, showMessage];
     },
   };
 

@@ -7,7 +7,8 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["content.js", "packages/jquery-3.5.1.min.js"]
+      "js": ["packages/jquery-3.5.1.min.js", "content.ui.js", "content.js"],
+      "css": ["content.css"]
     }
   ],
   "background": {

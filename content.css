@@ -1,0 +1,60 @@
+.web-bots-terminal-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: all;
+  background-color: #444;
+  width: 100vw;
+  box-sizing: border-box;
+  padding: 5px 30vw 5px 10px;
+  border-bottom: 3px solid darkorchid;
+  box-shadow: inset 0 0 9px 4px #11111133, 0 0px 10px 10px #11111133;
+}
+
+.web-bots-terminal-chevron {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+}
+.web-bots-terminal-chevron::before,
+.web-bots-terminal-chevron::after {
+  content: "";
+  position: absolute;
+  background-color: darkorchid;
+  left: 0;
+  height: 5px;
+  width: 50%;
+  border-radius: 2.5px;
+}
+.web-bots-terminal-chevron::before {
+  bottom: 30%;
+  transform: rotateZ(-45deg);
+}
+.web-bots-terminal-chevron::after {
+  top: 30%;
+  transform: rotateZ(45deg);
+}
+
+.web-bots-terminal-input {
+  width: calc(100% - 40px) !important;
+  font-family: "monospace" !important;
+  background-color: #222 !important;
+  color: #ddd !important;
+  color: 5 !important;
+  padding: 5px 10px !important;
+  font-size: 20 !important;
+  border-radius: 5px !important;
+  box-sizing: border-box !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+  border: solid #333 !important;
+  border-width: 0 3px !important;
+}
+.web-bots-terminal-input:focus {
+  border-color: darkorchid !important;
+}
+.web-bots-terminal-input:focus {
+  outline: none !important;
+}

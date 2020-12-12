@@ -1,6 +1,7 @@
 import Broker from "../../libs/easy-broker";
 import { generateNewNameFromScripts } from "./helpers/generator.helpers";
 import { scriptEvents } from "./constants/events.constants";
+import { SCRIPTS_STORE } from "../../constants/localStorage.constants";
 
 const broker = new Broker();
 let scripts = [];
@@ -65,6 +66,6 @@ broker.on(scriptEvents.DELETE_SCRIPT, ({ request: { data } }) => {
   return successResponse;
 });
 
-chrome.storage.local.get(["scriptsBagKey"], function (result) {
+chrome.storage.local.get([SCRIPTS_STORE], function (result) {
   scripts = JSON.parse(result.scriptsBagKey) || [];
 });

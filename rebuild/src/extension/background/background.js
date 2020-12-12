@@ -1,5 +1,6 @@
 import Broker from "../../libs/easy-broker";
 import { generateNewNameFromScripts } from "./helpers/generator.helpers";
+import { scriptEvents } from "./constants/events.constants";
 
 const broker = new Broker();
 let scripts = [];
@@ -8,11 +9,11 @@ const updateStoredScripts = (scripts) => {
   chrome.storage.local.set({ scriptsBagKey: JSON.stringify(scripts) });
 };
 
-broker.on("get_scripts", () => {
+broker.on(scriptEvents.GET_SCRIPTS, () => {
   return { ...successResponse, response: scripts };
 });
 
-broker.on("create_script", () => {
+broker.on(scriptEvents.CREATE_SCRIPT, () => {
   const availableName = generateNewNameFromScripts(scripts);
   const newScript = {
     name: availableName,
@@ -28,7 +29,7 @@ broker.on("create_script", () => {
   return { successResponse, response: newScript };
 });
 
-broker.on("update_script", ({ request: { data } }) => {
+broker.on(scriptEvents.UPDATE_SCRIPT, ({ request: { data } }) => {
   const { oldName, updatedScript } = data;
   const newName = updatedScript.name;
 
@@ -52,7 +53,7 @@ broker.on("update_script", ({ request: { data } }) => {
   return successResponse;
 });
 
-broker.on("delete_script", ({ request: { data } }) => {
+broker.on(scriptEvents.DELETE_SCRIPT, ({ request: { data } }) => {
   const name = data.name;
 
   scripts = scripts.filter((script) => {

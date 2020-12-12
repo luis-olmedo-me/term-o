@@ -1,6 +1,7 @@
 const path = require("path");
 
 module.exports = {
+  mode: "development",
   entry: {
     background: "./src/extension/background/background.js",
     content: "./src/extension/content/content.js",

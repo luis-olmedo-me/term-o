@@ -1,4 +1,4 @@
-import Broker from "../../libs/easy-broker";
+import Broker from "../../libs/easy-broker/easyBroker.service";
 import { generateNewNameFromScripts } from "./helpers/generator.helpers";
 
 import { SCRIPTS_STORE } from "../../constants/localStorage.constants";

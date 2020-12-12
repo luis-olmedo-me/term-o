@@ -1,5 +1,9 @@
+import React from "react";
+import ReactDOM from "react-dom";
+
 import { scriptEvents } from "../../constants/events.constants";
 import { executeCode } from "../../helpers/execution.helper";
+import { Snackbar } from "../shared-components/Snackbar/Snackbar.component";
 
 chrome.runtime.onMessage.addListener(function ({ message, customCode, query }) {
   if (message == scriptEvents.EXECUTE_SCRIPT) {
@@ -26,3 +30,10 @@ const rootDiv = document.createElement("div");
 
 rootDiv.setAttribute("id", "easy_console_content");
 body.appendChild(rootDiv);
+
+ReactDOM.render(
+  <React.StrictMode>
+    <Snackbar />
+  </React.StrictMode>,
+  rootDiv
+);

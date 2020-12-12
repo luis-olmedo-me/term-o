@@ -1,7 +1,8 @@
 import Broker from "../../libs/easy-broker";
 import { generateNewNameFromScripts } from "./helpers/generator.helpers";
-import { scriptEvents } from "./constants/events.constants";
+
 import { SCRIPTS_STORE } from "../../constants/localStorage.constants";
+import { scriptEvents } from "../../constants/events.constants";
 
 const broker = new Broker();
 let scripts = [];

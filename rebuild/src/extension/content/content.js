@@ -1,4 +1,5 @@
 import { scriptEvents } from "../../constants/events.constants";
+import { executeCode } from "../../helpers/execution.helper";
 
 chrome.runtime.onMessage.addListener(function ({ message, customCode, query }) {
   if (message == scriptEvents.EXECUTE_SCRIPT) {
@@ -11,14 +12,11 @@ chrome.runtime.onMessage.addListener(function ({ message, customCode, query }) {
 
     const scope = { window, contentSnackBarAPI, environment };
 
-    try {
-      (function webBot(code) {
-        eval(code);
-      }.call(scope, customCode));
-    } catch ({ stack, message }) {
+    executeCode(customCode, scope, ({ stack, message }) => {
       const stackFirstPart = stack.split("\n")[0];
 
-      contentSnackBarAPI.setMessage(stackFirstPart, message, "error");
-    }
+      // FIXME: Add snackbar API
+      // contentSnackBarAPI.setMessage(stackFirstPart, message, "error");
+    });
   }
 });

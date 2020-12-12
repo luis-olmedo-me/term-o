@@ -1,0 +1,1 @@
+export const REQUEST_EVENT_KEY = "WEB_BOTS_REQUEST";

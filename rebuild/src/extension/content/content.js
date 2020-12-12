@@ -1,5 +1,7 @@
+import { scriptEvents } from "../../constants/events.constants";
+
 chrome.runtime.onMessage.addListener(function ({ message, customCode, query }) {
-  if (message == "EXECUTE_SCRIPT_BAG") {
+  if (message == scriptEvents.EXECUTE_SCRIPT) {
     const options = JSON.parse(query);
     const environment = Object.keys(options).reduce((environment, name) => {
       const env = options[name];

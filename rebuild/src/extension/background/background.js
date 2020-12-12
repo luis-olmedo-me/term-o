@@ -67,5 +67,7 @@ broker.on(scriptEvents.DELETE_SCRIPT, ({ request: { data } }) => {
 });
 
 chrome.storage.local.get([SCRIPTS_STORE], function (result) {
-  scripts = JSON.parse(result.scriptsBagKey) || [];
+  const scriptStore = result[SCRIPTS_STORE] || "[]";
+
+  scripts = JSON.parse(scriptStore);
 });

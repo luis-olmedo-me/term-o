@@ -2,13 +2,17 @@ import React, { useEffect, useState } from "react";
 import { SNACKBAR_UPDATE } from "../constants/eventsKeys.constants";
 
 export const useEasySnackbar = () => {
-  const [, setUpdate] = useState({});
+  const [values, setValues] = useState({});
 
   useEffect(function updateWhenEventIsTriggered() {
-    const update = () => setUpdate({});
+    const updateValues = ({ details: { theme, title, message } }) => {
+      setValues({ theme, title, message });
+    };
 
-    addEventListener(SNACKBAR_UPDATE, update);
+    addEventListener(SNACKBAR_UPDATE, updateValues);
 
-    return removeEventListener(SNACKBAR_UPDATE, update);
+    return removeEventListener(SNACKBAR_UPDATE, updateValues);
   }, []);
+
+  return values;
 };

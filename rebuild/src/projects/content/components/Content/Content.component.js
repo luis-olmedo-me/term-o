@@ -1,7 +1,7 @@
 import React from "react";
 
-import "./Content.styles.scss";
+import styles from "./Content.styles.scss";
 
 export const Content = () => {
-  return <div className="content-wrapper">content</div>;
+  return <div className={styles.content_wrapper}>content</div>;
 };

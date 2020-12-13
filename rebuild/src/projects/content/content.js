@@ -28,7 +28,7 @@ chrome.runtime.onMessage.addListener(function ({ message, customCode, query }) {
 const body = document.getElementsByTagName("body")[0];
 const rootDiv = document.createElement("div");
 
-rootDiv.setAttribute("id", "easy_console_content");
+rootDiv.setAttribute("id", "easy_console_content_wrapper");
 body.appendChild(rootDiv);
 
 ReactDOM.render(

@@ -1,7 +1,8 @@
 .content_wrapper {
   width: 100vw;
   height: 100vh;
-  position: relative;
+  position: absolute;
   z-index: 1000000;
   pointer-events: none;
+  transform: translateZ(0);
 }

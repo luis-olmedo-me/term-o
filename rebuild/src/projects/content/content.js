@@ -31,7 +31,7 @@ const body = document.getElementsByTagName("body")[0];
 const rootDiv = document.createElement("div");
 
 rootDiv.setAttribute("id", EASY_DOM_CONTENT_WRAPPER_ID);
-body.appendChild(rootDiv);
+body.prepend(rootDiv);
 
 ReactDOM.render(
   <React.StrictMode>

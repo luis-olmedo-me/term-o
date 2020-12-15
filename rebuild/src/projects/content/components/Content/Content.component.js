@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { EASY_DOM_CONTENT_WRAPPER_ID } from "../../content.constants";
 
 import styles from "./Content.styles.scss";

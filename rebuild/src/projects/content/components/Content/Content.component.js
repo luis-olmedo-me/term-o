@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { EASY_DOM_CONTENT_ID } from "../../content.constants";
+import { EASY_DOM_CONTENT_WRAPPER_ID } from "../../content.constants";
 
 import styles from "./Content.styles.scss";
 
@@ -22,7 +22,7 @@ export const Content = () => {
 
   return (
     <div
-      id={EASY_DOM_CONTENT_ID}
+      id={EASY_DOM_CONTENT_WRAPPER_ID}
       className={styles.content_wrapper}
       style={{ top: topPosition }}
     >

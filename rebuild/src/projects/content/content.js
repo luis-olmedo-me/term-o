@@ -1,8 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { EASY_DOM_CONTENT_WRAPPER_ID } from "./content.constants";
-
 import { scriptEvents } from "../../constants/events.constants";
 import { executeCode } from "../../helpers/execution.helper";
 import { Content } from "./components/Content/Content.component";
@@ -30,7 +28,6 @@ chrome.runtime.onMessage.addListener(function ({ message, customCode, query }) {
 const body = document.getElementsByTagName("body")[0];
 const rootDiv = document.createElement("div");
 
-rootDiv.setAttribute("id", EASY_DOM_CONTENT_WRAPPER_ID);
 body.prepend(rootDiv);
 
 ReactDOM.render(

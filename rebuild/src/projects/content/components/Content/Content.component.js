@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Snackbar } from "../../../../libs/easy-snackbar/components/Snackbar/Snackbar.component";
 import { EASY_DOM_CONTENT_WRAPPER_ID } from "../../content.constants";
 
 import styles from "./Content.styles.scss";
@@ -26,7 +27,7 @@ export const Content = () => {
       className={styles.content_wrapper}
       style={{ top: topPosition }}
     >
-      content
+      <Snackbar />
     </div>
   );
 };

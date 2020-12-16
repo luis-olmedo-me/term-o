@@ -8,7 +8,7 @@ module.exports = {
     popup: "./src/projects/popup/popup.js",
   },
   output: {
-    path: path.resolve("extension"),
+    path: path.resolve("extension/scripts"),
     filename: "[name].js",
   },
   module: {

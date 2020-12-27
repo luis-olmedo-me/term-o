@@ -1,16 +1,17 @@
-import { useCallback, useState } from "react";
+import { useEffect, useState } from "react";
+import { broker } from "../../easy-broker/easyBroker.service";
 import { SNACKBAR_UPDATE } from "../constants/eventsKeys.constants";
 
 export const useEasySnackbar = () => {
-  const [values, setValues] = useState(["", "", ""]);
+  const [values, setValues] = useState([]);
 
-  const updateValues = useCallback(({ detail: { theme, title, message } }) => {
-    setValues([theme, title, message]);
+  useEffect(function setUpBrokerEvent() {
+    const updateValues = ({ theme, title, message }) => {
+      setValues([theme, title, message]);
+    };
 
-    window.removeEventListener(SNACKBAR_UPDATE, updateValues);
+    broker.on(SNACKBAR_UPDATE, ({ data }) => updateValues(data || {}));
   }, []);
-
-  window.addEventListener(SNACKBAR_UPDATE, updateValues);
 
   return values;
 };

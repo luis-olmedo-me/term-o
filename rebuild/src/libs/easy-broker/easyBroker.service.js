@@ -35,6 +35,20 @@ class Broker {
       }
     });
   }
+
+  send(key, data, callback) {
+    if (key) {
+      const requestData = {
+        [REQUEST_EVENT_KEY]: key,
+        data,
+      };
+
+      chrome.runtime.sendMessage(
+        requestData,
+        (response) => callback && callback(response)
+      );
+    }
+  }
 }
 
 export const broker = new Broker();

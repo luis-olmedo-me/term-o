@@ -1,6 +1,6 @@
 import { REQUEST_EVENT_KEY } from "./constants/eventKeys.constants";
 
-export default class Broker {
+class Broker {
   constructor() {
     this.keysListening = [];
 
@@ -36,3 +36,5 @@ export default class Broker {
     });
   }
 }
+
+export const broker = new Broker();

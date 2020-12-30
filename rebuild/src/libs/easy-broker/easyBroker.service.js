@@ -9,12 +9,16 @@ class Broker {
 
   init() {
     chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-      if (request[this.requestKey]) {
-        this.matchKey(REQUEST_EVENT_KEY, sendResponse, {
+      const key = request[REQUEST_EVENT_KEY];
+
+      if (key) {
+        this.matchKey(key, sendResponse, {
           request,
           sender,
         });
       }
+
+      return true;
     });
   }
 

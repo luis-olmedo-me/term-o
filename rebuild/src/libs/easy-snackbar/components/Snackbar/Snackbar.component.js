@@ -1,24 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useEasySnackbar } from "../../hooks/useEasySnackbar.hook";
+import React, { useState } from "react";
 
 import styles from "./Snackbar.styles.scss";
 
 export const Snackbar = () => {
   const [messages, setMessages] = useState([]);
-  const snackbarMessage = useEasySnackbar();
-
-  useEffect(
-    function addMessageToList() {
-      setMessages((oldSnackbarMessages) =>
-        snackbarMessage.length
-          ? [...oldSnackbarMessages, snackbarMessage]
-          : oldSnackbarMessages
-      );
-    },
-    [snackbarMessage]
-  );
-
-  console.log("messages", messages);
 
   return messages.map((messageFromHook, index) => {
     const [theme, title, message] = messageFromHook;

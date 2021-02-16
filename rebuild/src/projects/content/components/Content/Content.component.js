@@ -1,33 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { Snackbar } from "../../../../libs/easy-snackbar/components/Snackbar/Snackbar.component";
 import { EASY_DOM_CONTENT_WRAPPER_ID } from "../../content.constants";
 
 import styles from "./Content.styles.scss";
 
 export const Content = () => {
-  const [topPosition, setTopPosition] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(function updateTop() {
-    let animationEventId = null;
+  useEffect(
+    function updateTop() {
+      if (isOpen) {
+        const handleMouseMove = () => {
+          setIsOpen(false);
+        };
 
-    const updatePosition = () => {
-      setTopPosition(window.scrollY);
+        window.addEventListener("scroll", handleMouseMove);
 
-      animationEventId = window.requestAnimationFrame(updatePosition);
-    };
-
-    animationEventId = window.requestAnimationFrame(updatePosition);
-
-    return () => window.cancelAnimationFrame(animationEventId);
-  }, []);
+        return () => window.removeEventListener("scroll", handleMouseMove);
+      }
+    },
+    [isOpen]
+  );
 
   return (
     <div
       id={EASY_DOM_CONTENT_WRAPPER_ID}
       className={styles.content_wrapper}
-      style={{ top: topPosition }}
+      style={{ top: window.scrollY, display: isOpen ? "block": "none" }} 
     >
-      <Snackbar />
+      <p>hola</p>
     </div>
   );
 };

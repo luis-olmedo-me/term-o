@@ -1,4 +1,5 @@
 import React from "react";
+import { Terminal } from "../../../../modules/icons/Terminal.icon";
 import styles from "./Console.styles.scss";
 
 export const Console = ({ isOpen }) => {
@@ -7,7 +8,13 @@ export const Console = ({ isOpen }) => {
       <div className={styles.console_wrapper}>
         <div className={styles.console}>
           <div className={styles.console_command_input_wrapper}>
-            <input className={styles.console_command_input} type="text" placeholder="Write your commands here!"/>
+            <Terminal />
+
+            <input
+              className={styles.console_command_input}
+              type="text"
+              placeholder="Write your commands here!"
+            />
 
             <button className={styles.console_command_button}>Save</button>
           </div>

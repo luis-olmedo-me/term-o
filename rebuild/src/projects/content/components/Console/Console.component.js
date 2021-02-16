@@ -1,5 +1,6 @@
 import React from "react";
 import { Terminal } from "../../../../modules/icons/Terminal.icon";
+import { Tick } from "../../../../modules/icons/Tick.icon";
 import styles from "./Console.styles.scss";
 
 export const Console = ({ isOpen }) => {
@@ -18,7 +19,9 @@ export const Console = ({ isOpen }) => {
               placeholder="Write your commands here!"
             />
 
-            <button className={styles.console_command_button}>Save</button>
+            <button className={styles.console_command_button}>
+              <Tick />
+            </button>
           </div>
         </div>
       </div>

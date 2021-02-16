@@ -1,0 +1,16 @@
+.button {
+  border: none;
+  border-radius: 5px;
+  background-color: #555;
+  color: #f0f0f0;
+  cursor: pointer;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    background-color: #777;
+  }
+}

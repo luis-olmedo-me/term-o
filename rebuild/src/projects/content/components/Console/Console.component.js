@@ -8,7 +8,9 @@ export const Console = ({ isOpen }) => {
       <div className={styles.console_wrapper}>
         <div className={styles.console}>
           <div className={styles.console_command_input_wrapper}>
-            <Terminal />
+            <div className={styles.console_icon_wrapper}>
+              <Terminal className={styles.console_icon} />
+            </div>
 
             <input
               className={styles.console_command_input}

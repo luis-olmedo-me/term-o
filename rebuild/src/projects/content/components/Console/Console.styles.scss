@@ -1,0 +1,17 @@
+.console_wrapper {
+  height: 100%;
+  position: relative;
+  pointer-events: all;
+}
+
+.console {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 105px;
+  width: 650px;
+  background-color: #333;
+  border-radius: 5px;
+  box-shadow: 0 4px 4px 0 rgba(#000, 25%);
+}

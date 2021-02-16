@@ -1,6 +1,7 @@
 import React from "react";
 import { Terminal } from "../../../../modules/icons/Terminal.icon";
 import { Tick } from "../../../../modules/icons/Tick.icon";
+import { Button } from "../../../../modules/shared-components/Button/Button.component";
 import styles from "./Console.styles.scss";
 
 export const Console = ({ isOpen }) => {
@@ -19,14 +20,16 @@ export const Console = ({ isOpen }) => {
               placeholder="Write your commands here!"
             />
 
-            <button className={styles.console_command_button}>
-              <Tick />
-            </button>
+            <Button icon={<Tick />} />
           </div>
 
           <div className={styles.console_history_wrapper}>
-            <textarea value="git status"/>
-            <button>toggle history</button>
+            <textarea className={styles.console_history} value="git status" />
+
+            <Button
+              className={styles.console_history_button}
+              text="toggle history"
+            />
           </div>
         </div>
       </div>

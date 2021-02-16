@@ -23,6 +23,11 @@ export const Console = ({ isOpen }) => {
               <Tick />
             </button>
           </div>
+
+          <div className={styles.console_history_wrapper}>
+            <textarea value="git status"/>
+            <button>toggle history</button>
+          </div>
         </div>
       </div>
     )

@@ -21,6 +21,12 @@ export const Console = ({ isOpen }) => {
     setCurrentCommand(newValue);
   };
 
+  const handleKeyPressed = ({ key }) => {
+    if (key.toLowerCase() === "enter") {
+      handleCommandRun();
+    }
+  };
+
   return (
     isOpen && (
       <div className={styles.console_wrapper}>
@@ -36,6 +42,7 @@ export const Console = ({ isOpen }) => {
               placeholder="Write your commands here!"
               value={currentCommand}
               onChange={handleCommandChange}
+              onKeyUp={handleKeyPressed}
             />
 
             <Button iconBefore={<Tick />} onClick={handleCommandRun} />

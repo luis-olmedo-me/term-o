@@ -7,11 +7,12 @@ import styles from "./Console.styles.scss";
 
 export const Console = ({ isOpen }) => {
   const [histories, setHistories] = useState([]);
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [currentCommand, setCurrentCommand] = useState("");
 
   const handleCommandRun = () => {
     setHistories([...histories, currentCommand]);
-
+    setIsHistoryOpen(true);
     setCurrentCommand("");
   };
 
@@ -48,16 +49,19 @@ export const Console = ({ isOpen }) => {
             <Button iconBefore={<Tick />} onClick={handleCommandRun} />
           </div>
 
-          <textarea
-            className={styles.console_history}
-            value={histories.join("\n")}
-            disabled
-          />
+          {isHistoryOpen && (
+            <textarea
+              className={styles.console_history}
+              value={histories.join("\n")}
+              disabled
+            />
+          )}
 
           <Button
             className={styles.console_history_button}
             text="History"
             iconAfter={<DoubleChevronDown />}
+            onClick={() => setIsHistoryOpen((state) => !state)}
           />
         </div>
       </div>

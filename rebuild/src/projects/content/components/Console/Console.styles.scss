@@ -68,4 +68,15 @@
 .console_history_button {
   border-radius: 0 0 5px 5px;
   width: 100%;
+
+  & span {
+    font-size: 10px;
+    line-height: 10px;
+    vertical-align: middle;
+  }
+
+  & svg {
+    vertical-align: middle;
+    margin-left: 4px;
+  }
 }

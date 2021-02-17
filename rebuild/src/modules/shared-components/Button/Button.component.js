@@ -10,7 +10,7 @@ export const Button = ({ className, iconBefore, iconAfter, text }) => {
       `}
     >
       {iconBefore}
-      {text}
+      <span>{text}</span>
       {iconAfter}
     </button>
   );

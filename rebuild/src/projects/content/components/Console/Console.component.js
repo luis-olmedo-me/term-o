@@ -1,4 +1,5 @@
 import React from "react";
+import { DoubleChevronDown } from "../../../../modules/icons/DoubleChevronDown.icon";
 import { Terminal } from "../../../../modules/icons/Terminal.icon";
 import { Tick } from "../../../../modules/icons/Tick.icon";
 import { Button } from "../../../../modules/shared-components/Button/Button.component";
@@ -20,21 +21,20 @@ export const Console = ({ isOpen }) => {
               placeholder="Write your commands here!"
             />
 
-            <Button icon={<Tick />} />
+            <Button iconBefore={<Tick />} />
           </div>
 
-          <div className={styles.console_history_wrapper}>
-            <textarea
-              className={styles.console_history}
-              value={["git status", "git add ."].join("\n")}
-              disabled
-            />
+          <textarea
+            className={styles.console_history}
+            value={["git status", "git add ."].join("\n")}
+            disabled
+          />
 
-            <Button
-              className={styles.console_history_button}
-              text="toggle history"
-            />
-          </div>
+          <Button
+            className={styles.console_history_button}
+            text="history"
+            iconAfter={<DoubleChevronDown />}
+          />
         </div>
       </div>
     )

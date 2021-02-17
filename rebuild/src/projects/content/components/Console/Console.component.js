@@ -24,7 +24,11 @@ export const Console = ({ isOpen }) => {
           </div>
 
           <div className={styles.console_history_wrapper}>
-            <textarea className={styles.console_history} value="git status" />
+            <textarea
+              className={styles.console_history}
+              value={["git status", "git add ."].join("\n")}
+              disabled
+            />
 
             <Button
               className={styles.console_history_button}

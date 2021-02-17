@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { DoubleChevronDown } from "../../../../modules/icons/DoubleChevronDown.icon";
 import { Terminal } from "../../../../modules/icons/Terminal.icon";
 import { Tick } from "../../../../modules/icons/Tick.icon";
@@ -9,6 +9,7 @@ export const Console = ({ isOpen }) => {
   const [histories, setHistories] = useState([]);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [currentCommand, setCurrentCommand] = useState("");
+  const inputRef = useRef(null);
 
   const handleCommandRun = () => {
     setHistories([...histories, currentCommand]);
@@ -28,6 +29,15 @@ export const Console = ({ isOpen }) => {
     }
   };
 
+  useEffect(
+    function focusOnTheInput() {
+      if (isOpen) {
+        inputRef.current.focus();
+      }
+    },
+    [isOpen]
+  );
+
   return (
     isOpen && (
       <div className={styles.console_wrapper}>
@@ -40,6 +50,7 @@ export const Console = ({ isOpen }) => {
             <input
               className={styles.console_command_input}
               type="text"
+              ref={inputRef}
               placeholder="Write your commands here!"
               value={currentCommand}
               onChange={handleCommandChange}

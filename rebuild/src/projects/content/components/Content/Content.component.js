@@ -37,7 +37,7 @@ export const Content = () => {
     <div
       id={EASY_DOM_CONTENT_WRAPPER_ID}
       className={styles.content_wrapper}
-      style={{ top: window.scrollY, opacity: isOpen ? 1 : 0 }}
+      style={{ top: isOpen ? window.scrollY : 0, opacity: isOpen ? 1 : 0 }}
     >
       <Console isOpen={isOpen} />
     </div>

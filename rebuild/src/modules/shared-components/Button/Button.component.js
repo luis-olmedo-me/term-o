@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Button.styles.scss";
 
-export const Button = ({ className, icon, text }) => {
+export const Button = ({ className, iconBefore, iconAfter, text }) => {
   return (
     <button
       className={`
@@ -9,8 +9,9 @@ export const Button = ({ className, icon, text }) => {
         ${className}
       `}
     >
-      {icon}
+      {iconBefore}
       {text}
+      {iconAfter}
     </button>
   );
 };

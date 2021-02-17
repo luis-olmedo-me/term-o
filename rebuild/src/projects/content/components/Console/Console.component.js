@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { DoubleChevronDown } from "../../../../modules/icons/DoubleChevronDown.icon";
 import { Terminal } from "../../../../modules/icons/Terminal.icon";
 import { Tick } from "../../../../modules/icons/Tick.icon";
@@ -6,6 +6,21 @@ import { Button } from "../../../../modules/shared-components/Button/Button.comp
 import styles from "./Console.styles.scss";
 
 export const Console = ({ isOpen }) => {
+  const [histories, setHistories] = useState([]);
+  const [currentCommand, setCurrentCommand] = useState("");
+
+  const handleCommandRun = () => {
+    setHistories([...histories, currentCommand]);
+
+    setCurrentCommand("");
+  };
+
+  const handleCommandChange = (event) => {
+    const newValue = event.target.value;
+
+    setCurrentCommand(newValue);
+  };
+
   return (
     isOpen && (
       <div className={styles.console_wrapper}>
@@ -19,20 +34,22 @@ export const Console = ({ isOpen }) => {
               className={styles.console_command_input}
               type="text"
               placeholder="Write your commands here!"
+              value={currentCommand}
+              onChange={handleCommandChange}
             />
 
-            <Button iconBefore={<Tick />} />
+            <Button iconBefore={<Tick />} onClick={handleCommandRun} />
           </div>
 
           <textarea
             className={styles.console_history}
-            value={["git status", "git add ."].join("\n")}
+            value={histories.join("\n")}
             disabled
           />
 
           <Button
             className={styles.console_history_button}
-            text="history"
+            text="History"
             iconAfter={<DoubleChevronDown />}
           />
         </div>

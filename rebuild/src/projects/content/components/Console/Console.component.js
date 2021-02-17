@@ -60,7 +60,11 @@ export const Console = ({ isOpen }) => {
           <Button
             className={styles.console_history_button}
             text="History"
-            iconAfter={<DoubleChevronDown />}
+            iconAfter={
+              <DoubleChevronDown
+                className={isHistoryOpen ? styles.inverted : ""}
+              />
+            }
             onClick={() => setIsHistoryOpen((state) => !state)}
           />
         </div>

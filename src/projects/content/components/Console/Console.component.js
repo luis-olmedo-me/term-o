@@ -1,8 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
+import { terminal } from "../../../../libs/easy-terminal/easyTerminal.service";
 import { DoubleChevronDown } from "../../../../modules/icons/DoubleChevronDown.icon";
 import { Terminal } from "../../../../modules/icons/Terminal.icon";
 import { Button } from "../../../../modules/shared-components/Button/Button.component";
+import { commands } from "./Commands";
 import styles from "./Console.styles.scss";
+
+terminal.setValidCommands(commands);
 
 export const Console = ({ isOpen }) => {
   const [histories, setHistories] = useState([]);
@@ -11,7 +15,8 @@ export const Console = ({ isOpen }) => {
   const inputRef = useRef(null);
 
   const handleCommandRun = () => {
-    setHistories([...histories, currentCommand]);
+    const parsedCurrentCommand = terminal.execute(currentCommand);
+    setHistories([...histories, ...parsedCurrentCommand]);
     setIsHistoryOpen(true);
     setCurrentCommand("");
   };

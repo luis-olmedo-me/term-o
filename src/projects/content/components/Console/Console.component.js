@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { DoubleChevronDown } from "../../../../modules/icons/DoubleChevronDown.icon";
 import { Terminal } from "../../../../modules/icons/Terminal.icon";
-import { Tick } from "../../../../modules/icons/Tick.icon";
 import { Button } from "../../../../modules/shared-components/Button/Button.component";
 import styles from "./Console.styles.scss";
 

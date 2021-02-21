@@ -13,12 +13,19 @@ export const Console = ({ isOpen }) => {
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [currentCommand, setCurrentCommand] = useState("");
   const inputRef = useRef(null);
+  const historyRef = useRef(null);
 
   const handleCommandRun = () => {
     const parsedCurrentCommand = terminal.execute(currentCommand);
+
     setHistories([...histories, ...parsedCurrentCommand]);
     setIsHistoryOpen(true);
     setCurrentCommand("");
+
+    setTimeout(
+      () => historyRef.current.scrollTo(0, historyRef.current.scrollHeight),
+      0
+    );
   };
 
   const handleCommandChange = (event) => {
@@ -64,6 +71,7 @@ export const Console = ({ isOpen }) => {
 
           {isHistoryOpen && (
             <textarea
+              ref={historyRef}
               className={styles.console_history}
               value={histories.join("\n")}
               disabled

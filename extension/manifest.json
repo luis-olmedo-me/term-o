@@ -1,0 +1,21 @@
+{
+  "name": "Easy Console",
+  "version": "1.0",
+  "description": "Temporally description",
+  "manifest_version": 2,
+  "permissions": ["tabs", "activeTab", "storage"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["./scripts/content.js"]
+    }
+  ],
+  "background": {
+    "scripts": ["./scripts/background.js"]
+  },
+  "browser_action": {
+    "default_popup": "./popup.html",
+    "default_title": "easy-console"
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self';"
+}

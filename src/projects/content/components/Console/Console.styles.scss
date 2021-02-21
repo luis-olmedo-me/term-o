@@ -1,0 +1,82 @@
+.console_wrapper {
+  height: 100%;
+  position: relative;
+  pointer-events: all;
+}
+
+.console {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 650px;
+  background-color: #333;
+  border-radius: 5px;
+  box-shadow: 0 4px 4px 0 rgba(#000, 25%);
+}
+
+.console_command_input_wrapper {
+  display: flex;
+  padding: 20px;
+}
+
+.console_icon_wrapper {
+  background-color: #666;
+  border-radius: 5px 0 0 5px;
+  color: #f0f0f0;
+  display: grid;
+  place-items: center;
+  padding: 0 5px;
+}
+
+.console_command_input {
+  height: 40px;
+  background-color: #555;
+  border-radius: 0 5px 5px 0;
+  border: none;
+  color: #f0f0f0;
+  width: 100%;
+  padding: 0 10px;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+}
+
+.console_history {
+  padding: 10px;
+  width: 100%;
+  height: 150px;
+  border: none;
+  box-sizing: border-box;
+  background-color: #c4c4c4;
+  color: #333;
+  display: block;
+  resize: none;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+}
+
+.console_history_button {
+  border-radius: 0 0 5px 5px;
+  width: 100%;
+
+  & span {
+    font-size: 10px;
+    line-height: 10px;
+    vertical-align: middle;
+  }
+
+  & svg {
+    vertical-align: middle;
+    margin-left: 4px;
+  }
+}
+
+.inverted {
+  transform: rotateZ(180deg);
+}

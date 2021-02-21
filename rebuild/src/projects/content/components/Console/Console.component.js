@@ -56,8 +56,6 @@ export const Console = ({ isOpen }) => {
               onChange={handleCommandChange}
               onKeyUp={handleKeyPressed}
             />
-
-            <Button iconBefore={<Tick />} onClick={handleCommandRun} />
           </div>
 
           {isHistoryOpen && (

@@ -19,12 +19,12 @@
   },
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self';",
   "commands": {
-    "open-terminal": {
+    "toggle-terminal": {
       "suggested_key": {
         "default": "Alt+T",
         "mac": "Alt+T"
       },
-      "description": "Open the terminal"
+      "description": "Toggle the terminal"
     }
   }
 }

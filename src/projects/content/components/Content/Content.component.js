@@ -29,7 +29,7 @@ export const Content = () => {
 
   useEffect(function openConsoleByKeyCommands() {
     keysManager.onNewCommand((command) => {
-      if (command === extensionKeyEvents.OPEN_TERMINAL) {
+      if (command === extensionKeyEvents.TOGGLE_TERMINAL) {
         setIsConsoleOpen((state) => !state);
       }
     });

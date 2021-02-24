@@ -25,7 +25,7 @@ const callback = (searches) => {
 
   return elementsReached?.length
     ? elementsReached
-    : ["Error: DOM elements not Found"];
+    : [{ label: "Error: DOM elements not Found" }];
 };
 
 export const domGet = {

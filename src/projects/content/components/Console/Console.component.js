@@ -23,7 +23,7 @@ export const Console = ({ isOpen }) => {
     setCurrentCommand("");
 
     setTimeout(
-      () => historyRef.current.scrollTo(0, historyRef.current.scrollHeight),
+      () => historyRef?.current?.scrollTo(0, historyRef.current.scrollHeight),
       0
     );
   };
@@ -49,6 +49,10 @@ export const Console = ({ isOpen }) => {
     [isOpen]
   );
 
+  const parsedHistories = histories.map((history) => {
+    return history.map(({ label }) => label);
+  });
+
   return (
     isOpen && (
       <div className={styles.console_wrapper}>
@@ -73,7 +77,7 @@ export const Console = ({ isOpen }) => {
             <textarea
               ref={historyRef}
               className={styles.console_history}
-              value={histories.join("\n")}
+              value={parsedHistories.join("\n")}
               disabled
             />
           )}

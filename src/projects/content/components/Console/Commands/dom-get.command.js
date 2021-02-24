@@ -10,20 +10,22 @@ const callback = (searches) => {
         : found;
     }, []);
 
-    elementsReached = elementsFound.reduce((finalString, elementFound) => {
+    elementsReached = elementsFound.reduce((reached, elementFound) => {
       const tagName = elementFound.tagName;
       const id = elementFound.id ? `#${elementFound.id}` : "";
       const className = elementFound.className
         ? `.${elementFound.className}`
         : "";
 
-      const output = `${tagName}${id || className}`;
+      const label = `${tagName}${id || className}`;
 
-      return finalString ? `${finalString} ${output}` : output;
-    }, "");
+      return [...reached, { label, value: elementFound }];
+    }, []);
   }
 
-  return elementsReached ? elementsReached : "Error: DOM elements not Found";
+  return elementsReached?.length
+    ? elementsReached
+    : ["Error: DOM elements not Found"];
 };
 
 export const domGet = {

@@ -7,13 +7,21 @@ class Terminal {
     this.validCommands = validCommands;
   }
 
-  execute(commandLine = "") {
-    const [command, ...commandArguments] = commandLine.split(" ");
-    const validCommand = this.validCommands[command];
+  execute(line = "") {
+    const commandLines = line.split("|").map((line) => line.trim());
 
-    return validCommand
-      ? [commandLine, validCommand.callback(commandArguments), ""]
-      : [commandLine, "Error: command not exist", ""];
+    const finalValue = commandLines.reduce((carriedArguments, commandLine) => {
+      const [command, ...commandArguments] = commandLine.split(" ");
+      const validCommand = this.validCommands[command];
+      const carried = carriedArguments.length ? [carriedArguments] : [];
+
+      return validCommand?.callback([...carried, ...commandArguments]);
+    }, []);
+
+    return [
+      [{ label: line }],
+      finalValue ? finalValue : [{ label: "Error: command not exist" }],
+    ];
   }
 }
 

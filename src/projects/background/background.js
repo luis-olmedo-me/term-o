@@ -3,6 +3,7 @@ import { generateNewNameFromScripts } from "./helpers/generator.helpers";
 
 import { SCRIPTS_STORE } from "../../constants/localStorage.constants";
 import { scriptEvents } from "../../constants/events.constants";
+import { NEW_COMMAND } from "../../libs/easy-key-manager/KeysManager.constants";
 
 let scripts = [];
 
@@ -73,5 +74,5 @@ chrome.storage.local.get([SCRIPTS_STORE], function (result) {
 });
 
 chrome.commands.onCommand.addListener(function (command) {
-  broker.send(scriptEvents.NEW_COMMAND, { command }, null, true);
+  broker.send(NEW_COMMAND, { command }, null, true);
 });

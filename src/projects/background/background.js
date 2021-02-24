@@ -71,3 +71,7 @@ chrome.storage.local.get([SCRIPTS_STORE], function (result) {
 
   scripts = JSON.parse(scriptStore);
 });
+
+chrome.commands.onCommand.addListener(function (command) {
+  broker.send(scriptEvents.NEW_COMMAND, { command }, null, true);
+});

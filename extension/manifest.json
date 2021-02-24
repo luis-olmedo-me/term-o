@@ -17,5 +17,14 @@
     "default_popup": "./popup.html",
     "default_title": "easy-console"
   },
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self';"
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self';",
+  "commands": {
+    "open-terminal": {
+      "suggested_key": {
+        "default": "Alt+T",
+        "mac": "Alt+T"
+      },
+      "description": "Open the terminal"
+    }
+  }
 }

@@ -1,53 +1,28 @@
+import { scriptEvents } from "../../constants/events.constants";
+
 class KeysManager {
   constructor() {
-    this.keysListening = [];
-    this.keysPressing = [];
-    this.nextId = 0;
-
-    this.init();
+    this.connectionProvider = {};
+    this.callbacks = [];
   }
 
   init() {
-    window.addEventListener("keydown", ({ key }) => {
-      this.keysPressing = this.keysPressing.includes(key)
-        ? this.keysPressing
-        : [...this.keysPressing, key.toLowerCase()];
-
-      const keysCombination = this.keysPressing.join("+");
-
-      this.matchKey(keysCombination);
-    });
-
-    window.addEventListener("keyup", ({ key }) => {
-      const keyFormatted = key.toLowerCase();
-
-      this.keysPressing = this.keysPressing.filter(
-        (keyPressing) => keyFormatted !== keyPressing
-      );
-    });
-  }
-
-  matchKey(keyCombination) {
-    const matches = this.keysListening.filter(
-      ({ keyMatch }) => keyMatch === keyCombination
+    this.connectionProvider.on(
+      scriptEvents.NEW_COMMAND,
+      ({ request: { data } }) => {
+        this.callbacks.forEach((callback) => callback(data?.command));
+      }
     );
-
-    matches.forEach(({ callback }) => callback());
   }
 
-  on(keyMatch, callback) {
-    this.keysListening = [
-      ...this.keysListening,
-      { keyMatch, callback, id: this.nextId },
-    ];
+  setConnectionProvider(connectionProvider) {
+    this.connectionProvider = connectionProvider;
 
-    this.nextId++;
+    return this;
   }
 
-  off(idRemoved) {
-    this.keysListening = this.keysListening.filter(
-      ({ id }) => id !== idRemoved
-    );
+  onNewCommand(callback) {
+    this.callbacks = [...this.callbacks, callback];
   }
 }
 

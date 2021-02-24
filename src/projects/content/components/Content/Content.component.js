@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { broker } from "../../../../libs/easy-broker/easyBroker.service";
 import { keysManager } from "../../../../libs/easy-key-manager/KeyManager.service";
 import { EASY_DOM_CONTENT_WRAPPER_ID } from "../../content.constants";
 import { Console } from "../Console/Console.component";
 
 import styles from "./Content.styles.scss";
+
+keysManager.setConnectionProvider(broker).init();
 
 export const Content = () => {
   const [isOpen, setIsOpen] = useState(false);

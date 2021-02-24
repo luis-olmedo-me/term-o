@@ -27,16 +27,11 @@ export const Content = () => {
   );
 
   useEffect(function openConsoleByKeyCommands() {
-    const toggleConsole = () => setIsOpen((state) => !state);
-    const closeConsole = () => setIsOpen(false);
+    keysManager.onNewCommand((command) => {
+      console.log("command", command);
+    });
 
-    const toggleKeyEventId = keysManager.on("alt+t", toggleConsole);
-    const closeKeyEventId = keysManager.on("escape", closeConsole);
-
-    return () => {
-      keysManager.off(toggleKeyEventId);
-      keysManager.off(closeKeyEventId);
-    };
+    return () => {};
   }, []);
 
   return (

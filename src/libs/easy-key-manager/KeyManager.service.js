@@ -1,4 +1,4 @@
-import { scriptEvents } from "../../constants/events.constants";
+import { NEW_COMMAND } from "./KeysManager.constants";
 
 class KeysManager {
   constructor() {
@@ -7,12 +7,9 @@ class KeysManager {
   }
 
   init() {
-    this.connectionProvider.on(
-      scriptEvents.NEW_COMMAND,
-      ({ request: { data } }) => {
-        this.callbacks.forEach((callback) => callback(data?.command));
-      }
-    );
+    this.connectionProvider.on(NEW_COMMAND, ({ request: { data } }) => {
+      this.callbacks.forEach((callback) => callback(data?.command));
+    });
   }
 
   setConnectionProvider(connectionProvider) {

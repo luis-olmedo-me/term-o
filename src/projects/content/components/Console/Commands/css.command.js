@@ -13,8 +13,9 @@ const parseStylesInArray = (arrayStyles) => {
 
 const callback = ([elements, ...styles]) => {
   const parsedStyles = parseStylesInArray(styles);
+  const hasElements = Boolean(elements?.length);
 
-  if (elements?.length) {
+  if (!hasElements) {
     return [{ label: "Error: Not valid elements to apply styles", value: {} }];
   }
 

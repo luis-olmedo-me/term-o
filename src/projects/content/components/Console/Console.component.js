@@ -1,19 +1,31 @@
 import React, { useEffect, useRef, useState } from "react";
+import { terminal } from "../../../../libs/easy-terminal/easyTerminal.service";
 import { DoubleChevronDown } from "../../../../modules/icons/DoubleChevronDown.icon";
 import { Terminal } from "../../../../modules/icons/Terminal.icon";
 import { Button } from "../../../../modules/shared-components/Button/Button.component";
+import { commands } from "./Commands";
 import styles from "./Console.styles.scss";
+
+terminal.setValidCommands(commands);
 
 export const Console = ({ isOpen }) => {
   const [histories, setHistories] = useState([]);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [currentCommand, setCurrentCommand] = useState("");
   const inputRef = useRef(null);
+  const historyRef = useRef(null);
 
   const handleCommandRun = () => {
-    setHistories([...histories, currentCommand]);
+    const parsedCurrentCommand = terminal.execute(currentCommand);
+
+    setHistories([...histories, ...parsedCurrentCommand]);
     setIsHistoryOpen(true);
     setCurrentCommand("");
+
+    setTimeout(
+      () => historyRef?.current?.scrollTo(0, historyRef.current.scrollHeight),
+      0
+    );
   };
 
   const handleCommandChange = (event) => {
@@ -37,6 +49,10 @@ export const Console = ({ isOpen }) => {
     [isOpen]
   );
 
+  const parsedHistories = histories.map((history) => {
+    return history.map(({ label }) => label);
+  });
+
   return (
     isOpen && (
       <div className={styles.console_wrapper}>
@@ -59,8 +75,9 @@ export const Console = ({ isOpen }) => {
 
           {isHistoryOpen && (
             <textarea
+              ref={historyRef}
               className={styles.console_history}
-              value={histories.join("\n")}
+              value={parsedHistories.join("\n")}
               disabled
             />
           )}

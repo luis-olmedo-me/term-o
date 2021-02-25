@@ -8,7 +8,7 @@ class Broker {
   }
 
   init() {
-    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    const receiveEvent = (request, sender, sendResponse) => {
       const key = request[REQUEST_EVENT_KEY];
 
       if (key) {
@@ -19,7 +19,10 @@ class Broker {
       }
 
       return true;
-    });
+    };
+
+    chrome.runtime?.onMessage?.addListener(receiveEvent);
+    chrome.extension?.onRequest?.addListener(receiveEvent);
   }
 
   on(keyMatch, callback) {
@@ -40,17 +43,29 @@ class Broker {
     });
   }
 
-  send(key, data, callback) {
+  send(key, data, callback, sendToTab = false) {
     if (key) {
       const requestData = {
         [REQUEST_EVENT_KEY]: key,
         data,
       };
 
-      chrome.runtime.sendMessage(
-        requestData,
-        (response) => callback && callback(response)
-      );
+      if (sendToTab) {
+        const sendToActiveTab = ({ id }) => {
+          chrome.tabs.sendRequest(
+            id,
+            requestData,
+            (response) => callback && callback(response)
+          );
+        };
+
+        chrome.tabs.getSelected(null, sendToActiveTab);
+      } else {
+        chrome.runtime.sendMessage(
+          requestData,
+          (response) => callback && callback(response)
+        );
+      }
     }
   }
 }

@@ -1,53 +1,25 @@
+import { NEW_COMMAND } from "./KeysManager.constants";
+
 class KeysManager {
   constructor() {
-    this.keysListening = [];
-    this.keysPressing = [];
-    this.nextId = 0;
-
-    this.init();
+    this.connectionProvider = {};
+    this.callbacks = [];
   }
 
   init() {
-    window.addEventListener("keydown", ({ key }) => {
-      this.keysPressing = this.keysPressing.includes(key)
-        ? this.keysPressing
-        : [...this.keysPressing, key.toLowerCase()];
-
-      const keysCombination = this.keysPressing.join("+");
-
-      this.matchKey(keysCombination);
-    });
-
-    window.addEventListener("keyup", ({ key }) => {
-      const keyFormatted = key.toLowerCase();
-
-      this.keysPressing = this.keysPressing.filter(
-        (keyPressing) => keyFormatted !== keyPressing
-      );
+    this.connectionProvider.on(NEW_COMMAND, ({ request: { data } }) => {
+      this.callbacks.forEach((callback) => callback(data?.command));
     });
   }
 
-  matchKey(keyCombination) {
-    const matches = this.keysListening.filter(
-      ({ keyMatch }) => keyMatch === keyCombination
-    );
+  setConnectionProvider(connectionProvider) {
+    this.connectionProvider = connectionProvider;
 
-    matches.forEach(({ callback }) => callback());
+    return this;
   }
 
-  on(keyMatch, callback) {
-    this.keysListening = [
-      ...this.keysListening,
-      { keyMatch, callback, id: this.nextId },
-    ];
-
-    this.nextId++;
-  }
-
-  off(idRemoved) {
-    this.keysListening = this.keysListening.filter(
-      ({ id }) => id !== idRemoved
-    );
+  onNewCommand(callback) {
+    this.callbacks = [...this.callbacks, callback];
   }
 }
 

@@ -17,17 +17,20 @@ export const ElementSelector = ({ onSelection }) => {
     return () => document.removeEventListener("click", callback);
   }, []);
 
-  useEffect(() => {
-    if (shouldHideBackground) {
-      const element = document.elementFromPoint(
-        coordinates.mousePositionX,
-        coordinates.mousePositionY
-      );
+  useEffect(
+    function findElementFromCoordinates() {
+      if (shouldHideBackground) {
+        const element = document.elementFromPoint(
+          coordinates.mousePositionX,
+          coordinates.mousePositionY
+        );
 
-      onSelection(element);
-      setShouldHideBackground(false);
-    }
-  }, [coordinates, shouldHideBackground]);
+        onSelection(element);
+        setShouldHideBackground(false);
+      }
+    },
+    [coordinates, shouldHideBackground]
+  );
 
   return (
     <div

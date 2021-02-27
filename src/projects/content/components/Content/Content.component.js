@@ -15,7 +15,7 @@ keysManager.setConnectionProvider(broker).init();
 export const Content = () => {
   const [isConsoleOpen, setIsConsoleOpen] = useState(false);
   const [isElementSelectorActive, setIsElementSelectorActive] = useState(false);
-  const [injectedCommand, setInjectedCommand] = useState({});
+  const [injectedData, setInjectedData] = useState({});
 
   const isContentActive = isConsoleOpen || isElementSelectorActive;
 
@@ -52,7 +52,7 @@ export const Content = () => {
     setIsElementSelectorActive(false);
     setIsConsoleOpen(true);
 
-    setInjectedCommand({ element: `${tagName}.${className}` });
+    setInjectedData({ element: `${tagName}.${className}` });
   };
 
   return (
@@ -66,7 +66,7 @@ export const Content = () => {
     >
       <Console
         isOpen={isConsoleOpen}
-        injectedCommand={injectedCommand.element || ""}
+        injectedData={injectedData.element}
         options={
           <Button
             className={styles.option_button}

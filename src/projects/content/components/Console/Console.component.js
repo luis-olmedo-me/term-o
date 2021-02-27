@@ -9,7 +9,7 @@ import styles from "./Console.styles.scss";
 
 terminal.setValidCommands(commands);
 
-export const Console = ({ isOpen, options, injectedCommand }) => {
+export const Console = ({ isOpen, options, injectedData }) => {
   const [histories, setHistories] = useState([]);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [currentCommand, setCurrentCommand] = useState("");
@@ -43,13 +43,15 @@ export const Console = ({ isOpen, options, injectedCommand }) => {
 
   useEffect(
     function injectCommand() {
+      const injectedElement = injectedData.element || "";
+
       setCurrentCommand((currentCommand) => {
         return currentCommand
-          ? `${currentCommand} ${injectedCommand}`
-          : injectedCommand;
+          ? `${currentCommand} ${injectedElement}`
+          : injectedElement;
       });
     },
-    [injectedCommand]
+    [injectedData]
   );
 
   useEffect(

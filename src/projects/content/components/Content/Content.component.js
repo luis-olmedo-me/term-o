@@ -67,7 +67,14 @@ export const Content = () => {
         }
       />
 
-      <ElementSelector isActive={isElementSelectorActive} />
+      <ElementSelector
+        isActive={isElementSelectorActive}
+        onSelection={(selectedElement) => {
+          console.log("element", selectedElement);
+          setIsElementSelectorActive(false);
+          setIsConsoleOpen(true);
+        }}
+      />
     </div>
   );
 };

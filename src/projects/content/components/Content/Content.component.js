@@ -45,6 +45,16 @@ export const Content = () => {
     return () => {};
   }, []);
 
+  const handleOnSelection = (selectedElement) => {
+    const className = Array.from(selectedElement.classList).join(".");
+    const tagName = selectedElement.tagName;
+
+    setIsElementSelectorActive(false);
+    setIsConsoleOpen(true);
+
+    setInjectedCommand(`${tagName}.${className}`);
+  };
+
   return (
     <div
       id={EASY_DOM_CONTENT_WRAPPER_ID}
@@ -71,15 +81,7 @@ export const Content = () => {
 
       <ElementSelector
         isActive={isElementSelectorActive}
-        onSelection={(selectedElement) => {
-          const className = selectedElement.className.replace(" ", ".");
-          const tagName = selectedElement.tagName;
-
-          setIsElementSelectorActive(false);
-          setIsConsoleOpen(true);
-
-          setInjectedCommand(`dom-get ${tagName}.${className}`);
-        }}
+        onSelection={handleOnSelection}
       />
     </div>
   );

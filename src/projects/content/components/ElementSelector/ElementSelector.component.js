@@ -19,15 +19,15 @@ export const ElementSelector = ({ onSelection }) => {
 
   useEffect(
     function findElementFromCoordinates() {
-      if (shouldHideBackground) {
-        const element = document.elementFromPoint(
-          coordinates.mousePositionX,
-          coordinates.mousePositionY
-        );
+      if (!shouldHideBackground) return;
 
-        onSelection(element);
-        setShouldHideBackground(false);
-      }
+      const element = document.elementFromPoint(
+        coordinates.mousePositionX,
+        coordinates.mousePositionY
+      );
+
+      onSelection(element);
+      setShouldHideBackground(false);
     },
     [coordinates, shouldHideBackground]
   );

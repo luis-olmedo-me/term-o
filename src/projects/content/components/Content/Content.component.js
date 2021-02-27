@@ -66,7 +66,7 @@ export const Content = () => {
     >
       <Console
         isOpen={isConsoleOpen}
-        injectedCommand={injectedCommand.element}
+        injectedCommand={injectedCommand.element || ""}
         options={
           <Button
             className={styles.option_button}
@@ -79,10 +79,9 @@ export const Content = () => {
         }
       />
 
-      <ElementSelector
-        isActive={isElementSelectorActive}
-        onSelection={handleOnSelection}
-      />
+      {isElementSelectorActive && (
+        <ElementSelector onSelection={handleOnSelection} />
+      )}
     </div>
   );
 };

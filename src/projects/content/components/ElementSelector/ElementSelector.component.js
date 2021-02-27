@@ -2,28 +2,23 @@ import React, { useEffect, useState } from "react";
 
 import styles from "./ElementSelector.styles.scss";
 
-export const ElementSelector = ({ isActive, onSelection }) => {
+export const ElementSelector = ({ onSelection }) => {
   const [coordinates, setCoordinates] = useState({});
   const [shouldHideBackground, setShouldHideBackground] = useState(false);
 
-  useEffect(
-    function listenToClicks() {
-      if (isActive) {
-        const callback = ({ clientX, clientY }) => {
-          setCoordinates({ mousePositionX: clientX, mousePositionY: clientY });
-          setShouldHideBackground(true);
-        };
+  useEffect(function listenToClicks() {
+    const callback = ({ clientX, clientY }) => {
+      setCoordinates({ mousePositionX: clientX, mousePositionY: clientY });
+      setShouldHideBackground(true);
+    };
 
-        document.addEventListener("click", callback, true);
+    document.addEventListener("click", callback, true);
 
-        return () => document.removeEventListener("click", callback);
-      }
-    },
-    [isActive]
-  );
+    return () => document.removeEventListener("click", callback);
+  }, []);
 
   useEffect(() => {
-    if (isActive && shouldHideBackground) {
+    if (shouldHideBackground) {
       const element = document.elementFromPoint(
         coordinates.mousePositionX,
         coordinates.mousePositionY
@@ -32,14 +27,12 @@ export const ElementSelector = ({ isActive, onSelection }) => {
       onSelection(element);
       setShouldHideBackground(false);
     }
-  }, [coordinates, shouldHideBackground, isActive]);
+  }, [coordinates, shouldHideBackground]);
 
   return (
-    isActive && (
-      <div
-        className={styles.selector_wrapper}
-        style={{ pointerEvents: shouldHideBackground ? "none" : "all" }}
-      ></div>
-    )
+    <div
+      className={styles.selector_wrapper}
+      style={{ pointerEvents: shouldHideBackground ? "none" : "all" }}
+    ></div>
   );
 };

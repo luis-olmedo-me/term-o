@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { broker } from "../../../../libs/easy-broker/easyBroker.service";
 import { keysManager } from "../../../../libs/easy-key-manager/KeyManager.service";
 import { extensionKeyEvents } from "../../../../libs/easy-key-manager/KeysManager.constants";
+import { Selection } from "../../../../modules/icons/Selection.icon";
+import { Button } from "../../../../modules/shared-components/Button/Button.component";
 import { EASY_DOM_CONTENT_WRAPPER_ID } from "../../content.constants";
 import { Console } from "../Console/Console.component";
 
@@ -46,7 +48,12 @@ export const Content = () => {
         opacity: isConsoleOpen ? 1 : 0,
       }}
     >
-      <Console isOpen={isConsoleOpen} />
+      <Console
+        isOpen={isConsoleOpen}
+        options={
+          <Button className={styles.option_button} iconBefore={<Selection />} />
+        }
+      />
     </div>
   );
 };

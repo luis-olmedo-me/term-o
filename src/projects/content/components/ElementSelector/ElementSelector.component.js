@@ -12,7 +12,7 @@ export const ElementSelector = ({ onSelection }) => {
       setShouldHideBackground(true);
     };
 
-    document.addEventListener("click", callback, true);
+    document.addEventListener("click", callback);
 
     return () => document.removeEventListener("click", callback);
   }, []);

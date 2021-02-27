@@ -9,7 +9,7 @@ import styles from "./Console.styles.scss";
 
 terminal.setValidCommands(commands);
 
-export const Console = ({ isOpen }) => {
+export const Console = ({ isOpen, options }) => {
   const [histories, setHistories] = useState([]);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [currentCommand, setCurrentCommand] = useState("");
@@ -71,6 +71,8 @@ export const Console = ({ isOpen }) => {
               onKeyUp={handleKeyPressed}
             />
           </div>
+
+          <div className={styles.console_options}>{options}</div>
 
           {isHistoryOpen && (
             <textarea

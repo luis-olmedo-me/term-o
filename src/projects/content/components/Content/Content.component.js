@@ -66,7 +66,7 @@ export const Content = () => {
     >
       <Console
         isOpen={isConsoleOpen}
-        injectedData={injectedData.element}
+        injectedData={injectedData}
         options={
           <Button
             className={styles.option_button}

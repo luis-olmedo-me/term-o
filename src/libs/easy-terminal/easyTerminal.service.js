@@ -8,7 +8,10 @@ class Terminal {
   }
 
   execute(line = "") {
-    const commandLines = line.split("|").map((line) => line.trim());
+    const commandLines = line
+      .trim()
+      .split("|")
+      .map((line) => line.trim());
 
     const finalValue = commandLines.reduce((carriedArguments, commandLine) => {
       const [command, ...commandArguments] = commandLine.split(" ");

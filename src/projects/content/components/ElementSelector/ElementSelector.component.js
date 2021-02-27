@@ -18,5 +18,5 @@ export const ElementSelector = ({ isActive, onSelection }) => {
     [isActive]
   );
 
-  return isActive && <div className={styles.selector_wrapper}>holas</div>;
+  return isActive && <div className={styles.selector_wrapper}></div>;
 };

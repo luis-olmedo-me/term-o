@@ -15,6 +15,7 @@ keysManager.setConnectionProvider(broker).init();
 export const Content = () => {
   const [isConsoleOpen, setIsConsoleOpen] = useState(false);
   const [isElementSelectorActive, setIsElementSelectorActive] = useState(false);
+  const [injectedCommand, setInjectedCommand] = useState("");
 
   const isContentActive = isConsoleOpen || isElementSelectorActive;
 
@@ -55,6 +56,7 @@ export const Content = () => {
     >
       <Console
         isOpen={isConsoleOpen}
+        injectedCommand={injectedCommand}
         options={
           <Button
             className={styles.option_button}
@@ -70,9 +72,13 @@ export const Content = () => {
       <ElementSelector
         isActive={isElementSelectorActive}
         onSelection={(selectedElement) => {
-          console.log("element", selectedElement);
+          const className = selectedElement.className.replace(" ", ".");
+          const tagName = selectedElement.tagName;
+
           setIsElementSelectorActive(false);
           setIsConsoleOpen(true);
+
+          setInjectedCommand(`dom-get ${tagName}.${className}`);
         }}
       />
     </div>

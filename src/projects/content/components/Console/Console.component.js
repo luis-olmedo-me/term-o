@@ -9,7 +9,7 @@ import styles from "./Console.styles.scss";
 
 terminal.setValidCommands(commands);
 
-export const Console = ({ isOpen, options }) => {
+export const Console = ({ isOpen, options, injectedCommand }) => {
   const [histories, setHistories] = useState([]);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [currentCommand, setCurrentCommand] = useState("");
@@ -40,6 +40,17 @@ export const Console = ({ isOpen, options }) => {
       handleCommandRun();
     }
   };
+
+  useEffect(
+    function injectCommand() {
+      setCurrentCommand((currentCommand) => {
+        return currentCommand
+          ? `${currentCommand} ${injectedCommand}`
+          : injectedCommand;
+      });
+    },
+    [injectedCommand]
+  );
 
   useEffect(
     function focusOnTheInput() {

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { broker } from "libs/easy-broker/easyBroker.service";
-import { keysManager } from "libs/easy-key-manager/KeyManager.service";
+
+import broker from "libs/easy-broker";
+import { keysManager, extensionKeyEvents } from "libs/easy-key-manager";
 import { Button } from "modules/shared-components/Button/Button.component";
-import { extensionKeyEvents } from "libs/easy-key-manager/KeysManager.constants";
 import { Selection } from "modules/icons/Selection.icon";
 
 import { EASY_DOM_CONTENT_WRAPPER_ID } from "projects/content/content.constants";

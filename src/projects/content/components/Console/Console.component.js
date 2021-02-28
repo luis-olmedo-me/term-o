@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { terminal } from "libs/easy-terminal/easyTerminal.service";
+import terminal from "libs/easy-terminal";
 import { Button } from "modules/shared-components/Button/Button.component";
 import { DoubleChevronDown } from "modules/icons/DoubleChevronDown.icon";
 import { Terminal } from "modules/icons/Terminal.icon";

@@ -4,17 +4,17 @@ import { LineInterpreter } from "./sub-components/LineInterpreter/LineInterprete
 
 import styles from "./HistoryInterpreter.styles.scss";
 
-export const HistoryInterpreter = ({ histories }) => {
+export const HistoryInterpreter = ({ historyRef, histories }) => {
   console.log("histories", histories);
   return (
-    <div className={styles.interpreter_wrapper}>
+    <div ref={historyRef} className={styles.interpreter_wrapper}>
       {histories.map((history, historyIndex) => {
         return (
-          <p key={historyIndex}>
+          <div key={historyIndex}>
             {history.map((line, lineIndex) => (
               <LineInterpreter key={`${historyIndex}-${lineIndex}`} {...line} />
             ))}
-          </p>
+          </div>
         );
       })}
     </div>

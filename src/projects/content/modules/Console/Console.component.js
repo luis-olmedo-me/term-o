@@ -8,6 +8,7 @@ import { Terminal } from "modules/icons/Terminal.icon";
 import { commands } from "./Commands";
 import { getLabelsFromHistories } from "./Console.helpers";
 import styles from "./Console.styles.scss";
+import { HistoryInterpreter } from "./components/HistoryInterpreter/HistoryInterpreter.component";
 
 terminal.setValidCommands(commands);
 
@@ -90,12 +91,14 @@ export const Console = ({ isOpen, options, injectedData }) => {
           <div className={styles.console_options}>{options}</div>
 
           {isHistoryOpen && (
-            <textarea
-              ref={historyRef}
-              className={styles.console_history}
-              value={labelsFromHistories.join("\n")}
-              disabled
-            />
+            <HistoryInterpreter historyRef={historyRef} histories={histories} />
+
+            // <textarea
+            //   ref={historyRef}
+            //   className={styles.console_history}
+            //   value={<span style={{ color: "red" }}>testing</span>}
+            //   disabled
+            // />
           )}
 
           <Button

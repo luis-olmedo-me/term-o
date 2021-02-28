@@ -9,9 +9,11 @@ export const HistoryInterpreter = ({ historyRef, histories, className }) => {
       {histories.map((history, historyIndex) => {
         return (
           <div key={historyIndex}>
-            {history.map((line, lineIndex) => (
-              <LineInterpreter {...line} key={`${historyIndex}-${lineIndex}`} />
-            ))}
+            {history.map((line, lineIndex) => {
+              const id = `${historyIndex}-${lineIndex}`;
+
+              return <LineInterpreter {...line} key={id} id={id} />;
+            })}
           </div>
         );
       })}

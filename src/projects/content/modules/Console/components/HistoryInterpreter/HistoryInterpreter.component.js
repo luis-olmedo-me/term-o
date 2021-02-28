@@ -2,8 +2,12 @@ import React from "react";
 
 import { LineInterpreter } from "./sub-components/LineInterpreter/LineInterpreter.component";
 
-export const HistoryInterpreter = ({ historyRef, histories, className }) => {
-  console.log("histories", histories);
+export const HistoryInterpreter = ({
+  historyRef,
+  histories,
+  className,
+  commandKeywords,
+}) => {
   return (
     <div ref={historyRef} className={className}>
       {histories.map((history, historyIndex) => {
@@ -12,7 +16,14 @@ export const HistoryInterpreter = ({ historyRef, histories, className }) => {
             {history.map((line, lineIndex) => {
               const id = `${historyIndex}-${lineIndex}`;
 
-              return <LineInterpreter {...line} key={id} id={id} />;
+              return (
+                <LineInterpreter
+                  {...line}
+                  key={id}
+                  id={id}
+                  commandKeywords={commandKeywords}
+                />
+              );
             })}
           </div>
         );

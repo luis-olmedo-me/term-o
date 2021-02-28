@@ -5,7 +5,7 @@ import { Button } from "modules/shared-components/Button/Button.component";
 import { DoubleChevronDown } from "modules/icons/DoubleChevronDown.icon";
 import { Terminal } from "modules/icons/Terminal.icon";
 
-import { commands } from "./Commands";
+import { commands, keywords } from "./Commands";
 import styles from "./Console.styles.scss";
 import { HistoryInterpreter } from "./components/HistoryInterpreter/HistoryInterpreter.component";
 
@@ -92,6 +92,7 @@ export const Console = ({ isOpen, options, injectedData }) => {
               className={styles.console_history}
               historyRef={historyRef}
               histories={histories}
+              commandKeywords={keywords}
             />
           )}
 

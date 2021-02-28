@@ -8,11 +8,11 @@ export const HistoryInterpreter = ({ histories }) => {
   console.log("histories", histories);
   return (
     <div className={styles.interpreter_wrapper}>
-      {histories.map((history, index) => {
+      {histories.map((history, historyIndex) => {
         return (
-          <p key={index}>
-            {history.map((line) => (
-              <LineInterpreter {...line} />
+          <p key={historyIndex}>
+            {history.map((line, lineIndex) => (
+              <LineInterpreter key={`${historyIndex}-${lineIndex}`} {...line} />
             ))}
           </p>
         );

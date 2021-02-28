@@ -1,1 +1,0 @@
-export const SNACKBAR_UPDATE = "EASY_SNACKBAR_UPDATE";

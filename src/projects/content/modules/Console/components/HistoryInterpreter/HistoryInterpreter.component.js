@@ -7,9 +7,10 @@ export const HistoryInterpreter = ({
   histories,
   className,
   commandKeywords,
+  onClick,
 }) => {
   return (
-    <div ref={historyRef} className={className}>
+    <div ref={historyRef} className={className} onClick={onClick}>
       {histories.map((history, historyIndex) => {
         return (
           <div key={historyIndex}>

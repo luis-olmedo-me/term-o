@@ -1,6 +1,7 @@
 .input_wrapper {
   width: 100%;
   position: relative;
+  cursor: text;
 }
 
 .input {
@@ -10,4 +11,5 @@
   opacity: 0;
   border: none;
   box-sizing: border-box;
+  pointer-events: none;
 }

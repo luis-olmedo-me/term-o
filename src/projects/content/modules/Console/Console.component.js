@@ -84,7 +84,7 @@ export const Console = ({ isOpen, options, injectedData }) => {
               onChange={handleCommandChange}
               onKeyUp={handleKeyPressed}
             /> */}
-            <CommandInput />
+            <CommandInput interpreterClassName={styles.console_command_input} />
           </div>
 
           <div className={styles.console_options}>{options}</div>

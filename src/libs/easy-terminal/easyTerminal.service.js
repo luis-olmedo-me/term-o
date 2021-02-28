@@ -1,3 +1,5 @@
+import { historyTypes } from "projects/content/modules/Console/components/HistoryInterpreter/HistoryInterpreter.constants";
+
 class Terminal {
   constructor() {
     this.validCommands = {};
@@ -22,7 +24,7 @@ class Terminal {
     }, []);
 
     return [
-      [{ label: line }],
+      [{ label: line, type: historyTypes.COMMAND }],
       finalValue ? finalValue : [{ label: "Error: command not exist" }],
     ];
   }

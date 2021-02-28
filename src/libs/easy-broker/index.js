@@ -3,4 +3,4 @@ import { broker } from "./easyBroker.service";
 
 export default broker;
 
-export default { broker, REQUEST_EVENT_KEY };
+export { broker, REQUEST_EVENT_KEY };

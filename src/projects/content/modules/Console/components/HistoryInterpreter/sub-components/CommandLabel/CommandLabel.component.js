@@ -1,10 +1,10 @@
 import React from "react";
 
-export const CommandLabel = ({ label, id }) => {
-  const words = label ? label.split(" ") : [];
+export const CommandLabel = ({ value, id, keywords }) => {
+  const words = value ? value.split(" ") : [];
 
   return words.map((word, index) => {
-    const isKeyWord = ["dom-get", "css"].includes(word);
+    const isKeyWord = keywords.includes(word);
 
     return (
       <span
@@ -14,7 +14,7 @@ export const CommandLabel = ({ label, id }) => {
           fontWeight: isKeyWord ? "bold" : "normal",
         }}
       >
-        {word}{" "}
+        {`${word} `}
       </span>
     );
   });

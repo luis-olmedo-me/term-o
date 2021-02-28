@@ -1,6 +1,6 @@
 import React from "react";
 
-import styles from "./TextInterpreter.styles.scss";
+import styles from "./HistoryInterpreter.styles.scss";
 
 export const HistoryInterpreter = ({ texts }) => {
   console.log("texts", texts);

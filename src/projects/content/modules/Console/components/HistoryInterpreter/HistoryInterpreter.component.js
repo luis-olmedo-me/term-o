@@ -10,7 +10,7 @@ export const HistoryInterpreter = ({ historyRef, histories, className }) => {
         return (
           <div key={historyIndex}>
             {history.map((line, lineIndex) => (
-              <LineInterpreter key={`${historyIndex}-${lineIndex}`} {...line} />
+              <LineInterpreter {...line} key={`${historyIndex}-${lineIndex}`} />
             ))}
           </div>
         );

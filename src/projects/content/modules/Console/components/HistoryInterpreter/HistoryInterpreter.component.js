@@ -2,7 +2,7 @@ import React from "react";
 
 import styles from "./TextInterpreter.styles.scss";
 
-export const TextInterpreter = ({ texts }) => {
+export const HistoryInterpreter = ({ texts }) => {
   console.log("texts", texts);
   return (
     <div className={styles.interpreter_wrapper}>

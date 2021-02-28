@@ -92,7 +92,7 @@ export const Console = ({ isOpen, options, injectedData }) => {
 
           {isHistoryOpen && (
             <HistoryInterpreter
-              className={console_history}
+              className={styles.console_history}
               historyRef={historyRef}
               histories={histories}
             />

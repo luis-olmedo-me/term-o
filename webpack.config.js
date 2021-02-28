@@ -29,4 +29,12 @@ module.exports = {
       },
     ],
   },
+  resolve: {
+    alias: {
+      libs: path.resolve(__dirname, "src/libs"),
+      modules: path.resolve(__dirname, "src/modules"),
+      projects: path.resolve(__dirname, "src/projects"),
+      src: path.resolve(__dirname, "src"),
+    },
+  },
 };

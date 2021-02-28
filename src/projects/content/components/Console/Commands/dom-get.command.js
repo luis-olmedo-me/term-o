@@ -1,9 +1,13 @@
+import { tryCatch } from "./commands.helpers";
+
 const callback = (searches) => {
   let elementsReached = "";
 
   if (searches) {
     const elementsFound = searches.reduce((found, search) => {
-      const elementsFoundByQuery = document.querySelectorAll(search);
+      const elementsFoundByQuery = tryCatch(() =>
+        document.querySelectorAll(search)
+      );
 
       return elementsFoundByQuery
         ? [...found, ...Array.from(elementsFoundByQuery)]

@@ -1,4 +1,4 @@
-import { tryCatch } from "./commands.helpers";
+import { tryCatch } from "./helpers/prevention.helpers";
 
 const callback = (searches) => {
   let elementsReached = "";

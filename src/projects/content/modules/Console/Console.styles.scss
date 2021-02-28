@@ -57,12 +57,7 @@
   background-color: #c4c4c4;
   color: #333;
   display: block;
-  resize: none;
-
-  &:active,
-  &:focus {
-    outline: none;
-  }
+  overflow: hidden scroll;
 }
 
 .console_history_button {

@@ -91,14 +91,11 @@ export const Console = ({ isOpen, options, injectedData }) => {
           <div className={styles.console_options}>{options}</div>
 
           {isHistoryOpen && (
-            <HistoryInterpreter historyRef={historyRef} histories={histories} />
-
-            // <textarea
-            //   ref={historyRef}
-            //   className={styles.console_history}
-            //   value={<span style={{ color: "red" }}>testing</span>}
-            //   disabled
-            // />
+            <HistoryInterpreter
+              className={console_history}
+              historyRef={historyRef}
+              histories={histories}
+            />
           )}
 
           <Button

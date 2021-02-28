@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { scriptEvents } from "../../constants/events.constants";
-import { executeCode } from "../../helpers/execution.helper";
+import { scriptEvents } from "src/constants/events.constants";
+import { executeCode } from "src/helpers/execution.helper";
 import { Content } from "./components/Content/Content.component";
 
 chrome.runtime.onMessage.addListener(function ({ message, customCode, query }) {

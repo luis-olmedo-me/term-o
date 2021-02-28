@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { terminal } from "../../../../libs/easy-terminal/easyTerminal.service";
-import { DoubleChevronDown } from "../../../../modules/icons/DoubleChevronDown.icon";
-import { Terminal } from "../../../../modules/icons/Terminal.icon";
-import { Button } from "../../../../modules/shared-components/Button/Button.component";
+
+import { terminal } from "libs/easy-terminal/easyTerminal.service";
+import { Button } from "modules/shared-components/Button/Button.component";
+import { DoubleChevronDown } from "modules/icons/DoubleChevronDown.icon";
+import { Terminal } from "modules/icons/Terminal.icon";
+
 import { commands } from "./Commands";
 import { getLabelsFromHistories } from "./Console.helpers";
 import styles from "./Console.styles.scss";

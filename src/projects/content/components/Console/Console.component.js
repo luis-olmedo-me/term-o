@@ -4,11 +4,12 @@ import { DoubleChevronDown } from "../../../../modules/icons/DoubleChevronDown.i
 import { Terminal } from "../../../../modules/icons/Terminal.icon";
 import { Button } from "../../../../modules/shared-components/Button/Button.component";
 import { commands } from "./Commands";
+import { getLabelsFromHistories } from "./Console.helpers";
 import styles from "./Console.styles.scss";
 
 terminal.setValidCommands(commands);
 
-export const Console = ({ isOpen }) => {
+export const Console = ({ isOpen, options, injectedData }) => {
   const [histories, setHistories] = useState([]);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [currentCommand, setCurrentCommand] = useState("");
@@ -41,6 +42,19 @@ export const Console = ({ isOpen }) => {
   };
 
   useEffect(
+    function injectCommand() {
+      const injectedElement = injectedData.element || "";
+
+      setCurrentCommand((currentCommand) => {
+        return currentCommand
+          ? `${currentCommand} ${injectedElement}`
+          : injectedElement;
+      });
+    },
+    [injectedData]
+  );
+
+  useEffect(
     function focusOnTheInput() {
       if (isOpen) {
         inputRef.current.focus();
@@ -49,9 +63,7 @@ export const Console = ({ isOpen }) => {
     [isOpen]
   );
 
-  const parsedHistories = histories.map((history) => {
-    return history.map(({ label }) => label);
-  });
+  const labelsFromHistories = getLabelsFromHistories(histories);
 
   return (
     isOpen && (
@@ -73,11 +85,13 @@ export const Console = ({ isOpen }) => {
             />
           </div>
 
+          <div className={styles.console_options}>{options}</div>
+
           {isHistoryOpen && (
             <textarea
               ref={historyRef}
               className={styles.console_history}
-              value={parsedHistories.join("\n")}
+              value={labelsFromHistories.join("\n")}
               disabled
             />
           )}

@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import { broker } from "../../../../libs/easy-broker/easyBroker.service";
 import { keysManager } from "../../../../libs/easy-key-manager/KeyManager.service";
 import { extensionKeyEvents } from "../../../../libs/easy-key-manager/KeysManager.constants";
+import { Selection } from "../../../../modules/icons/Selection.icon";
+import { Button } from "../../../../modules/shared-components/Button/Button.component";
 import { EASY_DOM_CONTENT_WRAPPER_ID } from "../../content.constants";
 import { Console } from "../Console/Console.component";
+import { ElementSelector } from "../ElementSelector/ElementSelector.component";
 
 import styles from "./Content.styles.scss";
 
@@ -11,20 +14,25 @@ keysManager.setConnectionProvider(broker).init();
 
 export const Content = () => {
   const [isConsoleOpen, setIsConsoleOpen] = useState(false);
+  const [isElementSelectorActive, setIsElementSelectorActive] = useState(false);
+  const [injectedData, setInjectedData] = useState({});
+
+  const isContentActive = isConsoleOpen || isElementSelectorActive;
 
   useEffect(
     function updateTop() {
-      if (isConsoleOpen) {
+      if (isContentActive) {
         const handleMouseMove = () => {
           setIsConsoleOpen(false);
+          setIsElementSelectorActive(false);
         };
 
-        window.addEventListener("scroll", handleMouseMove);
+        document.addEventListener("scroll", handleMouseMove);
 
-        return () => window.removeEventListener("scroll", handleMouseMove);
+        return () => document.removeEventListener("scroll", handleMouseMove);
       }
     },
-    [isConsoleOpen]
+    [isContentActive]
   );
 
   useEffect(function openConsoleByKeyCommands() {
@@ -37,16 +45,43 @@ export const Content = () => {
     return () => {};
   }, []);
 
+  const handleOnSelection = (selectedElement) => {
+    const className = Array.from(selectedElement.classList).join(".");
+    const tagName = selectedElement.tagName;
+
+    setIsElementSelectorActive(false);
+    setIsConsoleOpen(true);
+
+    setInjectedData({ element: `${tagName}.${className}` });
+  };
+
   return (
     <div
       id={EASY_DOM_CONTENT_WRAPPER_ID}
       className={styles.content_wrapper}
       style={{
-        top: isConsoleOpen ? window.scrollY : 0,
-        opacity: isConsoleOpen ? 1 : 0,
+        top: isContentActive ? window.scrollY : 0,
+        opacity: isContentActive ? 1 : 0,
       }}
     >
-      <Console isOpen={isConsoleOpen} />
+      <Console
+        isOpen={isConsoleOpen}
+        injectedData={injectedData}
+        options={
+          <Button
+            className={styles.option_button}
+            iconBefore={<Selection />}
+            onClick={() => {
+              setIsElementSelectorActive(true);
+              setIsConsoleOpen(false);
+            }}
+          />
+        }
+      />
+
+      {isElementSelectorActive && (
+        <ElementSelector onSelection={handleOnSelection} />
+      )}
     </div>
   );
 };

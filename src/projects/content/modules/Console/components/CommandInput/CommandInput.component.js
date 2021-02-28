@@ -23,7 +23,6 @@ export const CommandInput = ({ interpreterClassName }) => {
         ref={inputRef}
         type="text"
         onChange={handleCommandChange}
-        onFocusCapture={(event) => console.log(event)}
         value={command}
       />
 

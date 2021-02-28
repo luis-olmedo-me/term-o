@@ -8,6 +8,7 @@ import { Terminal } from "modules/icons/Terminal.icon";
 import { commands, keywords } from "./Commands";
 import styles from "./Console.styles.scss";
 import { HistoryInterpreter } from "./components/HistoryInterpreter/HistoryInterpreter.component";
+import { CommandInput } from "./components/CommandInput/CommandInput.component";
 
 terminal.setValidCommands(commands);
 
@@ -59,7 +60,7 @@ export const Console = ({ isOpen, options, injectedData }) => {
   useEffect(
     function focusOnTheInput() {
       if (isOpen) {
-        inputRef.current.focus();
+        inputRef?.current?.focus();
       }
     },
     [isOpen]
@@ -74,7 +75,7 @@ export const Console = ({ isOpen, options, injectedData }) => {
               <Terminal className={styles.console_icon} />
             </div>
 
-            <input
+            {/* <input
               className={styles.console_command_input}
               type="text"
               ref={inputRef}
@@ -82,7 +83,8 @@ export const Console = ({ isOpen, options, injectedData }) => {
               value={currentCommand}
               onChange={handleCommandChange}
               onKeyUp={handleKeyPressed}
-            />
+            /> */}
+            <CommandInput />
           </div>
 
           <div className={styles.console_options}>{options}</div>

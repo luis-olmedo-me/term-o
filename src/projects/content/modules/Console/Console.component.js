@@ -6,7 +6,6 @@ import { DoubleChevronDown } from "modules/icons/DoubleChevronDown.icon";
 import { Terminal } from "modules/icons/Terminal.icon";
 
 import { commands } from "./Commands";
-import { getLabelsFromHistories } from "./Console.helpers";
 import styles from "./Console.styles.scss";
 import { HistoryInterpreter } from "./components/HistoryInterpreter/HistoryInterpreter.component";
 
@@ -65,8 +64,6 @@ export const Console = ({ isOpen, options, injectedData }) => {
     },
     [isOpen]
   );
-
-  const labelsFromHistories = getLabelsFromHistories(histories);
 
   return (
     isOpen && (

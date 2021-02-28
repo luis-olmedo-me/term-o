@@ -1,4 +1,5 @@
 import { tryCatch } from "./helpers/prevention.helpers";
+import { historyTypes } from "../components/HistoryInterpreter/HistoryInterpreter.constants";
 
 const callback = (searches) => {
   let elementsReached = "";
@@ -23,13 +24,16 @@ const callback = (searches) => {
 
       const label = `${tagName}${id || className}`;
 
-      return [...reached, { label, value: elementFound }];
+      return [
+        ...reached,
+        { label, value: elementFound, type: historyTypes.ELEMENT },
+      ];
     }, []);
   }
 
   return elementsReached?.length
     ? elementsReached
-    : [{ label: "Error: DOM elements not Found" }];
+    : [{ label: "Error: DOM elements not Found", type: historyTypes.PLAIN }];
 };
 
 export const domGet = {

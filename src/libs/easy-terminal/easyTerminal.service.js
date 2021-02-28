@@ -24,7 +24,7 @@ class Terminal {
     }, []);
 
     return [
-      [{ label: line, type: historyTypes.COMMAND }],
+      [{ label: line, value: line, type: historyTypes.COMMAND }],
       finalValue ? finalValue : [{ label: "Error: command not exist" }],
     ];
   }

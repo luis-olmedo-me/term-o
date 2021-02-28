@@ -1,9 +1,10 @@
-import { broker } from "../../libs/easy-broker/easyBroker.service";
-import { generateNewNameFromScripts } from "./helpers/generator.helpers";
+import broker from "libs/easy-broker";
+import { NEW_COMMAND } from "libs/easy-key-manager";
 
-import { SCRIPTS_STORE } from "../../constants/localStorage.constants";
-import { scriptEvents } from "../../constants/events.constants";
-import { NEW_COMMAND } from "../../libs/easy-key-manager/KeysManager.constants";
+import { SCRIPTS_STORE } from "src/constants/localStorage.constants";
+import { scriptEvents } from "src/constants/events.constants";
+
+import { generateNewNameFromScripts } from "./helpers/generator.helpers";
 
 let scripts = [];
 

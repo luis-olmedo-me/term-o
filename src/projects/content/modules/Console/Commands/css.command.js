@@ -1,4 +1,4 @@
-import { parseStylesInArray } from "./commands.helpers";
+import { parseStylesInArray } from "./helpers/styles.helpers";
 
 const callback = ([elements, ...styles]) => {
   const parsedStyles = parseStylesInArray(styles);

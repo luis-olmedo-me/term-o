@@ -1,4 +1,4 @@
-export const textTypes = {
+export const historyTypes = {
   PLAIN: "plain",
   ELEMENT: "element",
 };

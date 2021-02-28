@@ -3,7 +3,8 @@ import ReactDOM from "react-dom";
 
 import { scriptEvents } from "src/constants/events.constants";
 import { executeCode } from "src/helpers/execution.helper";
-import { Content } from "./components/Content/Content.component";
+
+import { Content } from "./view/Content.view";
 
 chrome.runtime.onMessage.addListener(function ({ message, customCode, query }) {
   if (message == scriptEvents.EXECUTE_SCRIPT) {

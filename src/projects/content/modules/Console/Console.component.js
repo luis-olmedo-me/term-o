@@ -38,8 +38,8 @@ export const Console = ({ isOpen, options, injectedData }) => {
     setCurrentCommand(newValue);
   };
 
-  const handleKeyPressed = ({ key }) => {
-    if (key.toLowerCase() === "enter") {
+  const handleKeyPressed = (key) => {
+    if (key === "enter") {
       handleCommandRun();
     }
   };
@@ -75,16 +75,14 @@ export const Console = ({ isOpen, options, injectedData }) => {
               <Terminal className={styles.console_icon} />
             </div>
 
-            {/* <input
-              className={styles.console_command_input}
-              type="text"
-              ref={inputRef}
-              placeholder="Write your commands here!"
-              value={currentCommand}
+            <CommandInput
+              inputRef={inputRef}
+              interpreterClassName={styles.console_command_input}
+              placeHolder="Write your commands here!"
               onChange={handleCommandChange}
-              onKeyUp={handleKeyPressed}
-            /> */}
-            <CommandInput interpreterClassName={styles.console_command_input} />
+              onKeyDown={handleKeyPressed}
+              value={currentCommand}
+            />
           </div>
 
           <div className={styles.console_options}>{options}</div>

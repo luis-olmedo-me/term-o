@@ -1,15 +1,20 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 
 import { HistoryInterpreter } from "../HistoryInterpreter/HistoryInterpreter.component";
 import styles from "./CommandInput.styles.scss";
 
-export const CommandInput = ({ interpreterClassName }) => {
-  const [command, setCommand] = useState("dom-get a");
+export const CommandInput = ({
+  interpreterClassName,
+  inputRef,
+  value,
+  placeHolder,
+  onChange,
+  onKeyDown,
+}) => {
+  const handleInputKeyDown = ({ key }) => {
+    const keyInLowerCase = key.toLowerCase();
 
-  const inputRef = useRef(null);
-
-  const handleCommandChange = ({ target: { value } }) => {
-    setCommand(value);
+    onKeyDown(keyInLowerCase);
   };
 
   const enableInput = () => {
@@ -22,13 +27,14 @@ export const CommandInput = ({ interpreterClassName }) => {
         className={styles.input}
         ref={inputRef}
         type="text"
-        onChange={handleCommandChange}
-        value={command}
+        onChange={onChange}
+        onKeyDown={handleInputKeyDown}
+        value={value}
       />
 
       <HistoryInterpreter
         className={interpreterClassName}
-        histories={[[{ value: command, type: "command" }]]}
+        histories={[[{ value: value || placeHolder, type: "command" }]]}
         commandKeywords={["dom-get"]}
         onClick={enableInput}
       />

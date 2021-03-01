@@ -82,6 +82,7 @@ export const Console = ({ isOpen, options, injectedData }) => {
               onChange={handleCommandChange}
               onKeyDown={handleKeyPressed}
               value={currentCommand}
+              commandKeywords={commandKeywords}
             />
           </div>
 

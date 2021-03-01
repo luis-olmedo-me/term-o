@@ -10,6 +10,7 @@ export const CommandInput = ({
   placeHolder,
   onChange,
   onKeyDown,
+  commandKeywords,
 }) => {
   const handleInputKeyDown = ({ key }) => {
     const keyInLowerCase = key.toLowerCase();
@@ -35,7 +36,7 @@ export const CommandInput = ({
       <HistoryInterpreter
         className={interpreterClassName}
         histories={[[{ value: value || placeHolder, type: "command" }]]}
-        commandKeywords={["dom-get"]}
+        commandKeywords={commandKeywords}
         onClick={enableInput}
       />
     </div>

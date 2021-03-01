@@ -8,6 +8,7 @@ export const HistoryInterpreter = ({
   className,
   commandKeywords,
   onClick,
+  palette,
 }) => {
   return (
     <div ref={historyRef} className={className} onClick={onClick}>
@@ -19,6 +20,7 @@ export const HistoryInterpreter = ({
 
               return (
                 <LineInterpreter
+                  palette={palette}
                   {...line}
                   key={id}
                   id={id}

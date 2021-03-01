@@ -11,6 +11,7 @@ export const CommandInput = ({
   onChange,
   onKeyDown,
   commandKeywords,
+  palette,
 }) => {
   const handleInputKeyDown = ({ key }) => {
     const keyInLowerCase = key.toLowerCase();
@@ -38,6 +39,7 @@ export const CommandInput = ({
         histories={[[{ value: value || placeHolder, type: "command" }]]}
         commandKeywords={commandKeywords}
         onClick={enableInput}
+        palette={palette}
       />
     </div>
   );

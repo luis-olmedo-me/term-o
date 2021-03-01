@@ -1,14 +1,14 @@
 import React from "react";
 
-export const ElementLabel = ({ value }) => {
+export const ElementLabel = ({ value, theme: { color, tagNameFontWeight } }) => {
   const { localName, classList, id } = value;
   const classNames = classList && Array.from(classList).join(".");
 
   return (
     <>
-      <span style={{ color: "#EC00E2", fontWeight: "bold" }}>{localName}</span>
-      <span style={{ color: "#EC00E2" }}>{classNames && `.${classNames}`}</span>
-      <span style={{ color: "#EC00E2" }}>{id && `#${id}`} </span>
+      <span style={{ color, fontWeight: tagNameFontWeight }}>{localName}</span>
+      <span style={{ color }}>{classNames && `.${classNames}`}</span>
+      <span style={{ color }}>{id && `#${id}`} </span>
     </>
   );
 };

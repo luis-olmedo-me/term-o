@@ -1,6 +1,11 @@
 import React from "react";
 
-export const CommandLabel = ({ value, id, keywords }) => {
+export const CommandLabel = ({
+  value,
+  id,
+  keywords,
+  theme: { keywordColor, color, keywordFontWeight, fontWeight },
+}) => {
   const words = value ? value.split(" ") : [];
 
   return words.map((word, index) => {
@@ -10,8 +15,8 @@ export const CommandLabel = ({ value, id, keywords }) => {
       <span
         key={`${id}-word-${index}`}
         style={{
-          color: isKeyWord ? "#E46000" : "#111",
-          fontWeight: isKeyWord ? "bold" : "normal",
+          color: isKeyWord ? keywordColor : color,
+          fontWeight: isKeyWord ? keywordFontWeight : fontWeight,
         }}
       >
         {`${word} `}

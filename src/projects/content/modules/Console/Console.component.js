@@ -5,7 +5,7 @@ import { Button } from "modules/shared-components/Button/Button.component";
 import { DoubleChevronDown } from "modules/icons/DoubleChevronDown.icon";
 import { Terminal } from "modules/icons/Terminal.icon";
 
-import { commands, keywords } from "./Commands";
+import { commands, keywords, darkTheme, lightTheme } from "./Commands";
 import styles from "./Console.styles.scss";
 import { HistoryInterpreter } from "./components/HistoryInterpreter/HistoryInterpreter.component";
 import { CommandInput } from "./components/CommandInput/CommandInput.component";
@@ -83,6 +83,7 @@ export const Console = ({ isOpen, options, injectedData }) => {
               onKeyDown={handleKeyPressed}
               value={currentCommand}
               commandKeywords={keywords}
+              palette={lightTheme}
             />
           </div>
 
@@ -94,6 +95,7 @@ export const Console = ({ isOpen, options, injectedData }) => {
               historyRef={historyRef}
               histories={histories}
               commandKeywords={keywords}
+              palette={darkTheme}
             />
           )}
 

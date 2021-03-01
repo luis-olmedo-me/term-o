@@ -9,10 +9,13 @@ export const LineInterpreter = ({
   type,
   value,
   commandKeywords,
+  palette: themeObject,
 }) => {
+  const theme = themeObject[type];
   const commonProps = {
     value,
     id,
+    theme,
   };
 
   switch (type) {
@@ -23,6 +26,6 @@ export const LineInterpreter = ({
       return <CommandLabel {...commonProps} keywords={commandKeywords} />;
 
     default:
-      return <span>{label} </span>;
+      return <span style={{ color: theme.color }}>{label} </span>;
   }
 };

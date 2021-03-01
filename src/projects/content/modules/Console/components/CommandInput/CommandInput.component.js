@@ -23,6 +23,8 @@ export const CommandInput = ({
     inputRef?.current?.focus();
   };
 
+  const hasValue = Boolean(value);
+
   return (
     <div className={styles.input_wrapper}>
       <input
@@ -35,7 +37,10 @@ export const CommandInput = ({
       />
 
       <HistoryInterpreter
-        className={interpreterClassName}
+        className={`
+          ${interpreterClassName}
+          ${!hasValue ? styles.place_holder : ""}
+        `}
         histories={[[{ value: value || placeHolder, type: "command" }]]}
         commandKeywords={commandKeywords}
         onClick={enableInput}

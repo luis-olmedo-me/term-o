@@ -11,7 +11,7 @@ export const LineInterpreter = ({
   commandKeywords,
   palette: themeObject,
 }) => {
-  const theme = themeObject[type];
+  const theme = themeObject[type] || themeObject[historyTypes.PLAIN];
   const commonProps = {
     value,
     id,

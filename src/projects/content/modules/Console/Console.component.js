@@ -32,9 +32,7 @@ export const Console = ({ isOpen, options, injectedData }) => {
     );
   };
 
-  const handleCommandChange = (event) => {
-    const newValue = event.target.value;
-
+  const handleCommandChange = ({ target: { value: newValue } }) => {
     setCurrentCommand(newValue);
   };
 

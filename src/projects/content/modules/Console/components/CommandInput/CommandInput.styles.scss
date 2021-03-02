@@ -1,0 +1,19 @@
+.input_wrapper {
+  width: 100%;
+  position: relative;
+  cursor: text;
+}
+
+.input {
+  width: 100%;
+  position: absolute;
+  height: 100%;
+  opacity: 0;
+  border: none;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.place_holder span {
+  color: #888 !important;
+}

@@ -5,9 +5,10 @@ import { Button } from "modules/shared-components/Button/Button.component";
 import { DoubleChevronDown } from "modules/icons/DoubleChevronDown.icon";
 import { Terminal } from "modules/icons/Terminal.icon";
 
-import { commands } from "./Commands";
-import { getLabelsFromHistories } from "./Console.helpers";
+import { commands, keywords, darkTheme, lightTheme } from "./Commands";
 import styles from "./Console.styles.scss";
+import { HistoryInterpreter } from "./components/HistoryInterpreter/HistoryInterpreter.component";
+import { CommandInput } from "./components/CommandInput/CommandInput.component";
 
 terminal.setValidCommands(commands);
 
@@ -31,14 +32,12 @@ export const Console = ({ isOpen, options, injectedData }) => {
     );
   };
 
-  const handleCommandChange = (event) => {
-    const newValue = event.target.value;
-
+  const handleCommandChange = ({ target: { value: newValue } }) => {
     setCurrentCommand(newValue);
   };
 
-  const handleKeyPressed = ({ key }) => {
-    if (key.toLowerCase() === "enter") {
+  const handleKeyPressed = (key) => {
+    if (key === "enter") {
       handleCommandRun();
     }
   };
@@ -59,13 +58,11 @@ export const Console = ({ isOpen, options, injectedData }) => {
   useEffect(
     function focusOnTheInput() {
       if (isOpen) {
-        inputRef.current.focus();
+        inputRef?.current?.focus();
       }
     },
     [isOpen]
   );
-
-  const labelsFromHistories = getLabelsFromHistories(histories);
 
   return (
     isOpen && (
@@ -76,25 +73,27 @@ export const Console = ({ isOpen, options, injectedData }) => {
               <Terminal className={styles.console_icon} />
             </div>
 
-            <input
-              className={styles.console_command_input}
-              type="text"
-              ref={inputRef}
-              placeholder="Write your commands here!"
-              value={currentCommand}
+            <CommandInput
+              inputRef={inputRef}
+              interpreterClassName={styles.console_command_input}
+              placeHolder="Write your commands here!"
               onChange={handleCommandChange}
-              onKeyUp={handleKeyPressed}
+              onKeyDown={handleKeyPressed}
+              value={currentCommand}
+              commandKeywords={keywords}
+              palette={lightTheme}
             />
           </div>
 
           <div className={styles.console_options}>{options}</div>
 
           {isHistoryOpen && (
-            <textarea
-              ref={historyRef}
+            <HistoryInterpreter
               className={styles.console_history}
-              value={labelsFromHistories.join("\n")}
-              disabled
+              historyRef={historyRef}
+              histories={histories}
+              commandKeywords={keywords}
+              palette={darkTheme}
             />
           )}
 

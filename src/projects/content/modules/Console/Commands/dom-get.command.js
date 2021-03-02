@@ -1,17 +1,22 @@
 import { tryCatch } from "./helpers/prevention.helpers";
+import { historyTypes } from "../components/HistoryInterpreter/HistoryInterpreter.constants";
+import { EASY_DOM_CONTENT_WRAPPER_ID } from "projects/content/content.constants.js";
 
 const callback = (searches) => {
   let elementsReached = "";
 
   if (searches) {
+    const easyContainer = document.getElementById(EASY_DOM_CONTENT_WRAPPER_ID);
     const elementsFound = searches.reduce((found, search) => {
-      const elementsFoundByQuery = tryCatch(() =>
+      const elementsFromQuery = tryCatch(() =>
         document.querySelectorAll(search)
       );
+      const elements = elementsFromQuery ? Array.from(elementsFromQuery) : [];
+      const filteredElements = elements.filter(
+        (element) => !easyContainer.contains(element)
+      );
 
-      return elementsFoundByQuery
-        ? [...found, ...Array.from(elementsFoundByQuery)]
-        : found;
+      return elements ? [...found, ...filteredElements] : found;
     }, []);
 
     elementsReached = elementsFound.reduce((reached, elementFound) => {
@@ -23,13 +28,16 @@ const callback = (searches) => {
 
       const label = `${tagName}${id || className}`;
 
-      return [...reached, { label, value: elementFound }];
+      return [
+        ...reached,
+        { label, value: elementFound, type: historyTypes.ELEMENT },
+      ];
     }, []);
   }
 
   return elementsReached?.length
     ? elementsReached
-    : [{ label: "Error: DOM elements not Found" }];
+    : [{ label: "Error: DOM elements not Found", type: historyTypes.PLAIN }];
 };
 
 export const domGet = {

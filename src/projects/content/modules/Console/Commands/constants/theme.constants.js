@@ -2,17 +2,16 @@ import { historyTypes } from "../../components/HistoryInterpreter/HistoryInterpr
 
 export const darkTheme = {
   [historyTypes.COMMAND]: {
-    keywordColor: "#E46000",
-    keywordFontWeight: "bold",
-    color: "#111111",
-    fontWeight: "normal",
+    keyword: { color: "#E46000", fontWeight: "bold" },
+    normal: { color: "#111111", fontWeight: "normal" },
   },
   [historyTypes.ELEMENT]: {
-    color: "#EC00E2",
-    tagNameFontWeight: "bold",
+    tag: { color: "#EC00E2", fontWeight: "bold" },
+    class: { color: "#EC00E2" },
+    id: { color: "#EC00E2" },
   },
   [historyTypes.PLAIN]: {
-    color: "#111111",
+    plain: { color: "#111111" },
   },
 };
 
@@ -20,10 +19,10 @@ export const lightTheme = {
   ...darkTheme,
   [historyTypes.COMMAND]: {
     ...darkTheme[historyTypes.COMMAND],
-    color: "#CCCCCC",
+    normal: { color: "#CCCCCC" },
   },
   [historyTypes.PLAIN]: {
     ...darkTheme[historyTypes.PLAIN],
-    color: "#CCCCCC",
+    plain: { color: "#CCCCCC" },
   },
 };

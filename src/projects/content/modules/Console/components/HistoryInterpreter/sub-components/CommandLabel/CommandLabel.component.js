@@ -4,7 +4,7 @@ export const CommandLabel = ({
   value,
   id,
   keywords,
-  theme: { keywordColor, color, keywordFontWeight, fontWeight },
+  theme: { keyword, normal },
 }) => {
   const words = value ? value.split(" ") : [];
 
@@ -12,13 +12,7 @@ export const CommandLabel = ({
     const isKeyWord = keywords.includes(word);
 
     return (
-      <span
-        key={`${id}-word-${index}`}
-        style={{
-          color: isKeyWord ? keywordColor : color,
-          fontWeight: isKeyWord ? keywordFontWeight : fontWeight,
-        }}
-      >
+      <span key={`${id}-word-${index}`} style={isKeyWord ? keyword : normal}>
         {`${word} `}
       </span>
     );

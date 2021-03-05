@@ -12,8 +12,16 @@ import { CommandInput } from "./components/CommandInput/CommandInput.component";
 
 terminal.setValidCommands(commands);
 
+const range = (minimum, maximum, value) => {
+  if (value > maximum) return maximum;
+  else if (value < minimum) return minimum;
+  else return value;
+};
+
 export const Console = ({ isOpen, options, injectedData }) => {
   const [histories, setHistories] = useState([]);
+  const [commandHistory, setCommandHistory] = useState([]);
+  const [commandHistoryId, setCommandHistoryId] = useState(0);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [currentCommand, setCurrentCommand] = useState("");
   const inputRef = useRef(null);
@@ -21,7 +29,11 @@ export const Console = ({ isOpen, options, injectedData }) => {
 
   const handleCommandRun = () => {
     const parsedCurrentCommand = terminal.execute(currentCommand);
+    // const oldCommandsMatched = commandHistory
+    //   .filter(([{ value }]) => value.includes(currentCommand))
+    //   .map(([{ value }]) => value);
 
+    setCommandHistory([...commandHistory, parsedCurrentCommand[0]]);
     setHistories([...histories, ...parsedCurrentCommand]);
     setIsHistoryOpen(true);
     setCurrentCommand("");
@@ -39,6 +51,16 @@ export const Console = ({ isOpen, options, injectedData }) => {
   const handleKeyPressed = (key) => {
     if (key === "enter") {
       handleCommandRun();
+    } else if (key === "arrowup" || key === "arrowdown") {
+      const direction = key === "arrowup" ? -1 : 1;
+      const nextId = commandHistoryId + direction;
+      const maximum = commandHistory.length - 1;
+      const nextIdInRange = range(0, maximum, nextId);
+      console.log({ nextIdInRange, commandHistory });
+      const [command] = commandHistory[nextIdInRange] || [];
+
+      setCommandHistoryId(nextIdInRange || 0);
+      setCurrentCommand(command ? command.value : currentCommand);
     }
   };
 

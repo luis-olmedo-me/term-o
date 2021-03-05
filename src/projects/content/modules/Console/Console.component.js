@@ -9,14 +9,9 @@ import { commands, keywords, darkTheme, lightTheme } from "./Commands";
 import styles from "./Console.styles.scss";
 import { HistoryInterpreter } from "./components/HistoryInterpreter/HistoryInterpreter.component";
 import { CommandInput } from "./components/CommandInput/CommandInput.component";
+import { range } from "./Helpers/range.helpers";
 
 terminal.setValidCommands(commands);
-
-const range = (minimum, maximum, value) => {
-  if (value > maximum) return maximum;
-  else if (value < minimum) return minimum;
-  else return value;
-};
 
 export const Console = ({ isOpen, options, injectedData }) => {
   const [histories, setHistories] = useState([]);

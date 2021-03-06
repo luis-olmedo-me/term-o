@@ -10,10 +10,11 @@ export const CommandLabel = ({
 
   return words.map((word, index) => {
     const isKeyWord = keywords.includes(word);
+    const isLastWord = words.length - 1 === index;
 
     return (
       <span key={`${id}-word-${index}`} style={isKeyWord ? keyword : normal}>
-        {`${word} `}
+        {isLastWord ? word : `${word} `}
       </span>
     );
   });

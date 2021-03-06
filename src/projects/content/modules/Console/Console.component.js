@@ -14,11 +14,14 @@ import { range } from "./Helpers/range.helpers";
 terminal.setValidCommands(commands);
 
 export const Console = ({ isOpen, options, injectedData }) => {
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [histories, setHistories] = useState([]);
+
   const [commandHistory, setCommandHistory] = useState([]);
   const [commandHistoryId, setCommandHistoryId] = useState(-1);
-  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+
   const [currentCommand, setCurrentCommand] = useState("");
+
   const inputRef = useRef(null);
   const historyRef = useRef(null);
 

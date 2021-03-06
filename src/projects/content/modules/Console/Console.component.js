@@ -9,22 +9,30 @@ import { commands, keywords, darkTheme, lightTheme } from "./Commands";
 import styles from "./Console.styles.scss";
 import { HistoryInterpreter } from "./components/HistoryInterpreter/HistoryInterpreter.component";
 import { CommandInput } from "./components/CommandInput/CommandInput.component";
+import { range } from "./Helpers/range.helpers";
 
 terminal.setValidCommands(commands);
 
 export const Console = ({ isOpen, options, injectedData }) => {
-  const [histories, setHistories] = useState([]);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [histories, setHistories] = useState([]);
+
+  const [commandHistory, setCommandHistory] = useState([]);
+  const [commandHistoryId, setCommandHistoryId] = useState(-1);
+
   const [currentCommand, setCurrentCommand] = useState("");
+
   const inputRef = useRef(null);
   const historyRef = useRef(null);
 
   const handleCommandRun = () => {
     const parsedCurrentCommand = terminal.execute(currentCommand);
 
+    setCommandHistory([parsedCurrentCommand[0], ...commandHistory]);
     setHistories([...histories, ...parsedCurrentCommand]);
     setIsHistoryOpen(true);
     setCurrentCommand("");
+    setCommandHistoryId(-1);
 
     setTimeout(
       () => historyRef?.current?.scrollTo(0, historyRef.current.scrollHeight),
@@ -39,6 +47,19 @@ export const Console = ({ isOpen, options, injectedData }) => {
   const handleKeyPressed = (key) => {
     if (key === "enter") {
       handleCommandRun();
+    } else if (key === "arrowup" || key === "arrowdown") {
+      const direction = key !== "arrowup" ? -1 : 1;
+      const nextId = commandHistoryId + direction;
+
+      const maximum = commandHistory.length;
+      const nextIdInRange = range(0, maximum, nextId);
+
+      const [command] = commandHistory[nextIdInRange] || [];
+
+      setCommandHistoryId(nextIdInRange || 0);
+      setCurrentCommand(command ? command.value : currentCommand);
+    } else {
+      setCommandHistoryId(-1);
     }
   };
 

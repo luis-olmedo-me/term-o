@@ -26,6 +26,6 @@ export const LineInterpreter = ({
       return <CommandLabel {...commonProps} keywords={commandKeywords} />;
 
     default:
-      return <span style={{ color: theme.color }}>{label} </span>;
+      return <span style={theme.plain}>{label} </span>;
   }
 };

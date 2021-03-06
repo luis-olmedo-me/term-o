@@ -43,23 +43,19 @@ class Broker {
     });
   }
 
-  send(key, data, callback, sendToTab = false) {
+  send(key, data, callback, tabId) {
     if (key) {
       const requestData = {
         [REQUEST_EVENT_KEY]: key,
         data,
       };
 
-      if (sendToTab) {
-        const sendToActiveTab = ({ id }) => {
-          chrome.tabs.sendRequest(
-            id,
-            requestData,
-            (response) => callback && callback(response)
-          );
-        };
-
-        chrome.tabs.getSelected(null, sendToActiveTab);
+      if (typeof tabId === "number") {
+        chrome.tabs.sendRequest(
+          tabId,
+          requestData,
+          (response) => callback && callback(response)
+        );
       } else {
         chrome.runtime.sendMessage(
           requestData,

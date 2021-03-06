@@ -11,7 +11,12 @@ export const HistoryInterpreter = ({
   palette,
 }) => {
   return (
-    <div ref={historyRef} className={className} onClick={onClick}>
+    <div
+      ref={historyRef}
+      className={className}
+      onClick={onClick}
+      style={{ lineHeight: "20px" }}
+    >
       {histories.map((history, historyIndex) => {
         return (
           <div key={historyIndex}>

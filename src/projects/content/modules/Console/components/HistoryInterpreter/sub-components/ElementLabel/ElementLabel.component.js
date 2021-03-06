@@ -8,10 +8,10 @@ export const ElementLabel = ({
   const classNames = classList && Array.from(classList).join(".");
 
   return (
-    <>
+    <span>
       <span style={tagStyle}>{localName}</span>
       <span style={classStyle}>{classNames && `.${classNames}`}</span>
-      <span style={idStyle}>{id && `#${id}`} </span>
-    </>
+      <span style={idStyle}>{id && `#${id}`}</span>
+    </span>
   );
 };

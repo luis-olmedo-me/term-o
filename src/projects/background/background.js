@@ -75,7 +75,7 @@ chrome.storage.local.get([SCRIPTS_STORE], function (result) {
 });
 
 chrome.commands.onCommand.addListener(function (command) {
-  chrome.tabs.getSelected(null, ({ id }) => {
+  chrome.tabs.query({ active: true }, ([{ id }]) => {
     broker.send(NEW_COMMAND, { command }, null, id);
   });
 });

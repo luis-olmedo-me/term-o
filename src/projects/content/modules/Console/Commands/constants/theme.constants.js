@@ -6,6 +6,11 @@ export const darkTheme = {
     normal: { color: "#111111", fontWeight: "normal" },
   },
   [historyTypes.ELEMENT]: {
+    wrapper: {
+      backgroundColor: "#EC00E226",
+      padding: "3px 10px",
+      borderRadius: "4px",
+    },
     tag: { color: "#EC00E2", fontWeight: "bold" },
     class: { color: "#EC00E2" },
     id: { color: "#EC00E2" },

@@ -2,6 +2,8 @@ import React from "react";
 
 import { LineInterpreter } from "./sub-components/LineInterpreter/LineInterpreter.component";
 
+import styles from "./HistoryInterpreter.styles.scss";
+
 export const HistoryInterpreter = ({
   historyRef,
   histories,
@@ -13,9 +15,8 @@ export const HistoryInterpreter = ({
   return (
     <div
       ref={historyRef}
-      className={className}
+      className={`${styles.history_wrapper} ${className}`}
       onClick={onClick}
-      style={{ lineHeight: "20px" }}
     >
       {histories.map((history, historyIndex) => {
         return (

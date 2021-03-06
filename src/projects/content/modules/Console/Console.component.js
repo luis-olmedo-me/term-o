@@ -55,6 +55,8 @@ export const Console = ({ isOpen, options, injectedData }) => {
 
       setCommandHistoryId(nextIdInRange || 0);
       setCurrentCommand(command ? command.value : currentCommand);
+    } else {
+      setCommandHistoryId(-1);
     }
   };
 

@@ -13,8 +13,11 @@ export const CommandInput = ({
   commandKeywords,
   palette,
 }) => {
-  const handleInputKeyDown = ({ key }) => {
+  const handleInputKeyDown = ({ key, target }) => {
     const keyInLowerCase = key.toLowerCase();
+
+    target.selectionStart = target.value.length;
+    target.selectionEnd = target.value.length;
 
     onKeyDown(keyInLowerCase);
   };

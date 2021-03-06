@@ -16,7 +16,7 @@ terminal.setValidCommands(commands);
 export const Console = ({ isOpen, options, injectedData }) => {
   const [histories, setHistories] = useState([]);
   const [commandHistory, setCommandHistory] = useState([]);
-  const [commandHistoryId, setCommandHistoryId] = useState(0);
+  const [commandHistoryId, setCommandHistoryId] = useState(-1);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [currentCommand, setCurrentCommand] = useState("");
   const inputRef = useRef(null);
@@ -24,14 +24,12 @@ export const Console = ({ isOpen, options, injectedData }) => {
 
   const handleCommandRun = () => {
     const parsedCurrentCommand = terminal.execute(currentCommand);
-    // const oldCommandsMatched = commandHistory
-    //   .filter(([{ value }]) => value.includes(currentCommand))
-    //   .map(([{ value }]) => value);
 
-    setCommandHistory([...commandHistory, parsedCurrentCommand[0]]);
+    setCommandHistory([parsedCurrentCommand[0], ...commandHistory]);
     setHistories([...histories, ...parsedCurrentCommand]);
     setIsHistoryOpen(true);
     setCurrentCommand("");
+    setCommandHistoryId(-1);
 
     setTimeout(
       () => historyRef?.current?.scrollTo(0, historyRef.current.scrollHeight),
@@ -47,10 +45,10 @@ export const Console = ({ isOpen, options, injectedData }) => {
     if (key === "enter") {
       handleCommandRun();
     } else if (key === "arrowup" || key === "arrowdown") {
-      const direction = key === "arrowup" ? -1 : 1;
+      const direction = key !== "arrowup" ? -1 : 1;
       const nextId = commandHistoryId + direction;
 
-      const maximum = commandHistory.length - 1;
+      const maximum = commandHistory.length;
       const nextIdInRange = range(0, maximum, nextId);
 
       const [command] = commandHistory[nextIdInRange] || [];

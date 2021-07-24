@@ -13,15 +13,18 @@
   min-width: 650px;
   background-color: #333;
   border-radius: 5px;
-  box-shadow: 0 4px 4px 0 rgba(#000, 25%);
+  box-shadow: 0px 0 40px 10px rgb(#000, 25%);
+  border: 1px solid #444;
   font-family: monospace;
 }
 
 .title {
-  margin: 10px 0;
+  padding: 10px 0;
+  margin: 0;
   text-align: center;
   font-weight: normal;
   font-size: 20px;
+  border-bottom: 1px solid #444;
 }
 
 .console_icon_wrapper {

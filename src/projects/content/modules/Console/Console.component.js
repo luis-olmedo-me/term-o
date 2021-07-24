@@ -92,7 +92,7 @@ export const Console = ({ isOpen, options, injectedData }) => {
             historyRef={historyRef}
             histories={histories}
             commandKeywords={keywords}
-            palette={darkTheme}
+            palette={lightTheme}
           />
 
           <CommandInput

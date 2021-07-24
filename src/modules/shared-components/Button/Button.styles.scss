@@ -1,11 +1,10 @@
 .button {
   border: none;
-  border-radius: 5px;
-  background-color: #555;
+  background-color: #333;
   color: #f0f0f0;
   cursor: pointer;
   min-height: 16px;
-  padding: 0 8px;
+  padding: 3px 8px;
 
   &:active,
   &:focus {
@@ -13,6 +12,6 @@
   }
 
   &:hover {
-    background-color: #777;
+    background-color: #444;
   }
 }

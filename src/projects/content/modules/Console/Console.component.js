@@ -87,6 +87,8 @@ export const Console = ({ isOpen, options, injectedData }) => {
     isOpen && (
       <div className={styles.console_wrapper}>
         <div className={styles.console}>
+          <h1 className={styles.title}>Console</h1>
+
           <HistoryInterpreter
             className={styles.console_history}
             historyRef={historyRef}

@@ -9,11 +9,19 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 650px;
+  width: 70vw;
+  min-width: 650px;
   background-color: #333;
   border-radius: 5px;
   box-shadow: 0 4px 4px 0 rgba(#000, 25%);
   font-family: monospace;
+}
+
+.title {
+  margin: 10px 0;
+  text-align: center;
+  font-weight: normal;
+  font-size: 20px;
 }
 
 .console_icon_wrapper {
@@ -41,7 +49,7 @@
 .console_history {
   padding: 10px;
   width: 100%;
-  height: 150px;
+  height: 250px;
   border: none;
   box-sizing: border-box;
   background-color: #333;

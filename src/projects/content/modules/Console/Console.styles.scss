@@ -48,6 +48,10 @@
   color: #eee;
   display: block;
   overflow: hidden scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .console_history_button {

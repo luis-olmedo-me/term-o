@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { HistoryInterpreter } from '../HistoryInterpreter/HistoryInterpreter.component'
 import styles from './CommandInput.styles.scss'
@@ -11,8 +11,7 @@ export const CommandInput = ({
   onChange,
   onKeyDown,
   commandKeywords,
-  palette,
-  className
+  palette
 }) => {
   const handleInputKeyDown = ({ key, target }) => {
     const keyInLowerCase = key.toLowerCase()
@@ -30,7 +29,7 @@ export const CommandInput = ({
   const hasValue = Boolean(value)
 
   return (
-    <div className={`${styles.input_wrapper} ${className}`}>
+    <div className={styles.input_wrapper}>
       <input
         className={styles.input}
         ref={inputRef}

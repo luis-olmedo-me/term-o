@@ -1,11 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 
 import terminal from 'libs/easy-terminal'
-import { Button } from 'modules/shared-components/Button/Button.component'
-import { DoubleChevronDown } from 'modules/icons/DoubleChevronDown.icon'
-import { Terminal } from 'modules/icons/Terminal.icon'
 
-import { commands, keywords, darkTheme, lightTheme } from './Commands'
+import { commands, keywords, lightTheme } from './Commands'
 import styles from './Console.styles.scss'
 import { HistoryInterpreter } from './components/HistoryInterpreter/HistoryInterpreter.component'
 import { CommandInput } from './components/CommandInput/CommandInput.component'
@@ -99,7 +96,6 @@ export const Console = ({ isOpen, options, injectedData }) => {
 
           <CommandInput
             inputRef={inputRef}
-            className={styles.console_command_input_wrapper}
             interpreterClassName={styles.console_command_input}
             placeHolder='Write your commands here!'
             onChange={handleCommandChange}

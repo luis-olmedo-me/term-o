@@ -2,6 +2,15 @@
   width: 100%;
   position: relative;
   cursor: text;
+  padding: 10px 0;
+
+  &::before {
+    content: '> ';
+    position: absolute;
+    line-height: 30px;
+    text-indent: 1ch;
+    font-size: 1.2em;
+  }
 }
 
 .input {

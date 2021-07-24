@@ -95,12 +95,9 @@ export const Console = ({ isOpen, options, injectedData }) => {
             palette={darkTheme}
           />
 
-          <div className={styles.console_icon_wrapper}>
-            <Terminal className={styles.console_icon} />
-          </div>
-
           <CommandInput
             inputRef={inputRef}
+            className={styles.console_command_input_wrapper}
             interpreterClassName={styles.console_command_input}
             placeHolder='Write your commands here!'
             onChange={handleCommandChange}

@@ -16,27 +16,19 @@
   font-family: monospace;
 }
 
-.console_command_input_wrapper {
-  display: flex;
-  padding: 20px;
+.console_icon_wrapper {
+  display: inline-block;
+  margin: 0;
+  text-align: center;
 }
 
-.console_icon_wrapper {
-  background-color: #666;
-  border-radius: 5px 0 0 5px;
-  color: #f0f0f0;
-  display: grid;
-  place-items: center;
-  padding: 0 5px;
+.console_command_input_wrapper {
+  display: inline-block;
 }
 
 .console_command_input {
-  height: 40px;
-  padding: 0 10px;
   box-sizing: border-box;
-  display: flex;
   align-items: center;
-  background-color: #555;
   border-radius: 0 5px 5px 0;
 }
 

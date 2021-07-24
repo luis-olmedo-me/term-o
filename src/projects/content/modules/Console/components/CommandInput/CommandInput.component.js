@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState } from 'react'
 
-import { HistoryInterpreter } from "../HistoryInterpreter/HistoryInterpreter.component";
-import styles from "./CommandInput.styles.scss";
+import { HistoryInterpreter } from '../HistoryInterpreter/HistoryInterpreter.component'
+import styles from './CommandInput.styles.scss'
 
 export const CommandInput = ({
   interpreterClassName,
@@ -12,28 +12,29 @@ export const CommandInput = ({
   onKeyDown,
   commandKeywords,
   palette,
+  className
 }) => {
   const handleInputKeyDown = ({ key, target }) => {
-    const keyInLowerCase = key.toLowerCase();
+    const keyInLowerCase = key.toLowerCase()
 
-    target.selectionStart = target.value.length;
-    target.selectionEnd = target.value.length;
+    target.selectionStart = target.value.length
+    target.selectionEnd = target.value.length
 
-    onKeyDown(keyInLowerCase);
-  };
+    onKeyDown(keyInLowerCase)
+  }
 
   const enableInput = () => {
-    inputRef?.current?.focus();
-  };
+    inputRef?.current?.focus()
+  }
 
-  const hasValue = Boolean(value);
+  const hasValue = Boolean(value)
 
   return (
-    <div className={styles.input_wrapper}>
+    <div className={`${styles.input_wrapper} ${className}`}>
       <input
         className={styles.input}
         ref={inputRef}
-        type="text"
+        type='text'
         onChange={onChange}
         onKeyDown={handleInputKeyDown}
         value={value}
@@ -42,13 +43,13 @@ export const CommandInput = ({
       <HistoryInterpreter
         className={`
           ${interpreterClassName}
-          ${!hasValue ? styles.place_holder : ""}
+          ${!hasValue ? styles.place_holder : ''}
         `}
-        histories={[[{ value: value || placeHolder, type: "command" }]]}
+        histories={[[{ value: value || placeHolder, type: 'command' }]]}
         commandKeywords={commandKeywords}
         onClick={enableInput}
         palette={palette}
       />
     </div>
-  );
-};
+  )
+}

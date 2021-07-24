@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 
 import terminal from 'libs/easy-terminal'
 
-import { commands, keywords, lightTheme } from './Commands'
+import { commands, keywords, theme } from './Commands'
 import styles from './Console.styles.scss'
 import { HistoryInterpreter } from './components/HistoryInterpreter/HistoryInterpreter.component'
 import { CommandInput } from './components/CommandInput/CommandInput.component'
@@ -91,7 +91,7 @@ export const Console = ({ isOpen, options, injectedData }) => {
             historyRef={historyRef}
             histories={histories}
             commandKeywords={keywords}
-            palette={lightTheme}
+            palette={theme}
           />
 
           <CommandInput
@@ -102,7 +102,7 @@ export const Console = ({ isOpen, options, injectedData }) => {
             onKeyDown={handleKeyPressed}
             value={currentCommand}
             commandKeywords={keywords}
-            palette={lightTheme}
+            palette={theme}
           />
 
           <div className={styles.console_options}>{options}</div>

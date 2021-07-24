@@ -1,6 +1,6 @@
 import { domGet } from './dom-get.command'
 import { css } from './css.command'
-import { lightTheme } from './constants/theme.constants'
+import { theme } from './constants/theme.constants'
 
 const commands = {
   ...domGet,
@@ -9,4 +9,4 @@ const commands = {
 
 const keywords = Object.keys(commands)
 
-export { commands, keywords, lightTheme }
+export { commands, keywords, theme }

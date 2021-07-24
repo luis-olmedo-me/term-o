@@ -1,6 +1,6 @@
 import { historyTypes } from '../../components/HistoryInterpreter/HistoryInterpreter.constants'
 
-export const lightTheme = {
+export const theme = {
   [historyTypes.COMMAND]: {
     keyword: { color: '#E46000', fontWeight: 'bold' },
     normal: { color: '#111111', fontWeight: 'normal' },

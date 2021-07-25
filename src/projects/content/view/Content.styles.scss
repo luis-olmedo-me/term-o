@@ -1,10 +1,4 @@
-@font-face {
-  font-family: 'Share-TechMono';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Share-TechMono'),
-    url('https://fonts.cdnfonts.com/s/19948/ShareTechMono.woff') format('woff');
-}
+@import 'src/styles/Fonts.styles.scss';
 
 .content_wrapper {
   all: initial;

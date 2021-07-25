@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'Share-TechMono';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Share-TechMono'),
+    url('https://fonts.cdnfonts.com/s/19948/ShareTechMono.woff') format('woff');
+}
+
 .content_wrapper {
   all: initial;
   width: 100vw;
@@ -7,6 +15,11 @@
   pointer-events: none;
   transform: translateZ(0);
   background-color: rgba($color: #000000, $alpha: 0.15);
+  font-family: 'Share-TechMono';
+
+  & * {
+    font-family: 'Share-TechMono';
+  }
 }
 
 .option_button svg {

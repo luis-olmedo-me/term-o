@@ -1,9 +1,9 @@
-import React from "react";
-import { historyTypes } from "../../HistoryInterpreter.constants";
-import { CommandLabel } from "../CommandLabel/CommandLabel.component";
-import { ElementLabel } from "../ElementLabel/ElementLabel.component";
+import React from 'react'
+import { historyTypes } from '../../HistoryInterpreter.constants'
+import { CommandLabel } from '../CommandLabel/CommandLabel.component'
+import { ElementLabel } from '../ElementLabel/ElementLabel.component'
 
-const space = " ";
+const space = ' '
 
 export const LineInterpreter = ({
   id,
@@ -11,14 +11,14 @@ export const LineInterpreter = ({
   type,
   value,
   commandKeywords,
-  palette: themeObject,
+  palette: themeObject
 }) => {
-  const theme = themeObject[type] || themeObject[historyTypes.PLAIN];
+  const theme = themeObject[type] || themeObject[historyTypes.PLAIN]
   const commonProps = {
     value,
     id,
-    theme,
-  };
+    theme
+  }
 
   switch (type) {
     case historyTypes.ELEMENT:
@@ -27,7 +27,7 @@ export const LineInterpreter = ({
           <ElementLabel {...commonProps} />
           {space}
         </>
-      );
+      )
 
     case historyTypes.COMMAND:
       return (
@@ -35,7 +35,7 @@ export const LineInterpreter = ({
           <CommandLabel {...commonProps} keywords={commandKeywords} />
           {space}
         </>
-      );
+      )
 
     default:
       return (
@@ -43,6 +43,6 @@ export const LineInterpreter = ({
           <span style={theme.plain}>{label}</span>
           {space}
         </>
-      );
+      )
   }
-};
+}

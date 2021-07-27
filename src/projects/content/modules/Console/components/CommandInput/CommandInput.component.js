@@ -40,10 +40,8 @@ export const CommandInput = ({
       />
 
       <HistoryInterpreter
-        className={`
-          ${interpreterClassName}
-          ${!hasValue ? styles.place_holder : ''}
-        `}
+        className={!hasValue ? styles.place_holder : ''}
+        lineClassName={interpreterClassName}
         histories={[[{ value: value || placeHolder, type: 'command' }]]}
         commandKeywords={commandKeywords}
         onClick={enableInput}

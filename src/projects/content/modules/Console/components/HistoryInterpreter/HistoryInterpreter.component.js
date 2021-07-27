@@ -1,42 +1,37 @@
-import React from "react";
+import React from 'react'
 
-import { LineInterpreter } from "./sub-components/LineInterpreter/LineInterpreter.component";
-
-import styles from "./HistoryInterpreter.styles.scss";
+import { LineInterpreter } from './sub-components/LineInterpreter/LineInterpreter.component'
 
 export const HistoryInterpreter = ({
   historyRef,
   histories,
   className,
+  lineClassName,
   commandKeywords,
   onClick,
-  palette,
+  palette
 }) => {
   return (
-    <div
-      ref={historyRef}
-      className={`${styles.history_wrapper} ${className}`}
-      onClick={onClick}
-    >
+    <div ref={historyRef} className={className} onClick={onClick}>
       {histories.map((history, historyIndex) => {
         return (
-          <div key={historyIndex}>
+          <div className={lineClassName} key={historyIndex}>
             {history.map((line, lineIndex) => {
-              const id = `${historyIndex}-${lineIndex}`;
+              const id = `${historyIndex}-${lineIndex}`
 
               return (
                 <LineInterpreter
-                  palette={palette}
                   {...line}
+                  palette={palette}
                   key={id}
                   id={id}
                   commandKeywords={commandKeywords}
                 />
-              );
+              )
             })}
           </div>
-        );
+        )
       })}
     </div>
-  );
-};
+  )
+}

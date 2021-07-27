@@ -1,19 +1,20 @@
 .input_wrapper {
+  all: initial;
   width: 100%;
   position: relative;
   cursor: text;
   padding: 10px 0;
 
   &::before {
-    content: '> ';
+    color: #f0f0f0;
+    content: '>';
     position: absolute;
-    line-height: 30px;
     text-indent: 1ch;
-    font-size: 1.2em;
   }
 }
 
 .input {
+  all: initial;
   width: 100%;
   position: absolute;
   height: 100%;

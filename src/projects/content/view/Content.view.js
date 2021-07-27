@@ -71,8 +71,7 @@ export const Content = () => {
         injectedData={injectedData}
         options={
           <Button
-            className={styles.option_button}
-            iconBefore={<Selection />}
+            iconBefore={<Selection className={styles.option_button_icon} />}
             onClick={() => {
               setIsElementSelectorActive(true)
               setIsConsoleOpen(false)

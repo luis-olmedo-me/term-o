@@ -1,4 +1,5 @@
 .input_wrapper {
+  all: initial;
   width: 100%;
   position: relative;
   cursor: text;
@@ -8,12 +9,12 @@
     color: #f0f0f0;
     content: '>';
     position: absolute;
-    line-height: 30px;
     text-indent: 1ch;
   }
 }
 
 .input {
+  all: initial;
   width: 100%;
   position: absolute;
   height: 100%;

@@ -2,7 +2,7 @@
 
 .content_wrapper {
   all: initial;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   position: absolute;
   z-index: 1000000;
@@ -18,7 +18,6 @@
 
 .option_button_icon {
   width: 12px;
-  height: 12px;
   display: inline-block;
   vertical-align: middle;
   padding: 4px 1px;

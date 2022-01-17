@@ -8,8 +8,6 @@ import { HistoryInterpreter } from './components/HistoryInterpreter/HistoryInter
 import { CommandInput } from './components/CommandInput/CommandInput.component'
 import { range } from './Helpers/range.helpers'
 
-import resetStyles from 'src/styles/Reset.styles.scss'
-
 terminal.setValidCommands(commands)
 
 export const Console = ({ isOpen, options, injectedData }) => {
@@ -84,7 +82,7 @@ export const Console = ({ isOpen, options, injectedData }) => {
 
   return (
     isOpen && (
-      <div className={`${styles.console_wrapper} ${resetStyles.reset_wrapper}`}>
+      <div className={styles.console_wrapper}>
         <div className={styles.console}>
           <h1 className={styles.title}>Console</h1>
 

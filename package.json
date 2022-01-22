@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "start": "webpack-dev-server",
-    "build": "webpack"
+    "build": "webpack",
+    "scss": "node-sass projects/content/ --output=\"styles.css\""
   },
   "author": "olmedoluis012@gmail.com",
   "license": "ISC",
@@ -30,6 +31,7 @@
     "webpack": "^4.44.2"
   },
   "dependencies": {
+    "mini-css-extract-plugin": "^0.8.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   }

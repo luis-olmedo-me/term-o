@@ -29,6 +29,11 @@ chrome.runtime.onMessage.addListener(function ({ message, customCode, query }) {
 
 const body = document.getElementsByTagName('body')[0]
 const rootDiv = document.createElement('div')
+rootDiv.style = `
+  position: absolute;
+  width: 100%;
+  left: 0;
+`
 
 body.prepend(rootDiv)
 

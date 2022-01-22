@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
 
 import broker from 'libs/easy-broker'
 import { keysManager, extensionKeyEvents } from 'libs/easy-key-manager'
@@ -10,11 +9,7 @@ import { EASY_DOM_CONTENT_WRAPPER_ID } from 'projects/content/content.constants'
 import { Console } from '../modules/Console/Console.component'
 import { ElementSelector } from '../modules/ElementSelector/ElementSelector.component'
 
-import styles from './Content.styles.scss'
-
-const Divaso = styled.div`
-  background: blueviolet;
-`
+import { ContentWrapper, selectionIconStyles } from './Content.styles.js'
 
 keysManager.setConnectionProvider(broker).init()
 
@@ -61,26 +56,24 @@ export const Content = () => {
     setInjectedData({ element: `${tagName}.${className}` })
   }
 
+  const handleTrigeredSelection = () => {
+    setIsElementSelectorActive(true)
+    setIsConsoleOpen(false)
+  }
+
   return (
-    <Divaso
+    <ContentWrapper
       id={EASY_DOM_CONTENT_WRAPPER_ID}
-      className={styles.content_wrapper}
-      style={{
-        top: isContentActive ? window.scrollY : 0,
-        opacity: isContentActive ? 1 : 0
-      }}
+      top={isContentActive ? window.scrollY : 0}
+      opacity={isContentActive ? 1 : 0}
     >
       <Console
         isOpen={isConsoleOpen}
         injectedData={injectedData}
         options={
           <Button
-            className={styles.option_button}
-            iconBefore={<Selection />}
-            onClick={() => {
-              setIsElementSelectorActive(true)
-              setIsConsoleOpen(false)
-            }}
+            iconBefore={<Selection cssStyles={selectionIconStyles} />}
+            onClick={handleTrigeredSelection}
           />
         }
       />
@@ -88,6 +81,6 @@ export const Content = () => {
       {isElementSelectorActive && (
         <ElementSelector onSelection={handleOnSelection} />
       )}
-    </Divaso>
+    </ContentWrapper>
   )
 }

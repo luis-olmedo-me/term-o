@@ -8,6 +8,13 @@ import { HistoryInterpreter } from './components/HistoryInterpreter/HistoryInter
 import { CommandInput } from './components/CommandInput/CommandInput.component'
 import { range } from './Helpers/range.helpers'
 
+import {
+  ConsoleWrapper,
+  Console,
+  ConsoleTitle,
+  ConsoleOptions
+} from './Console.styles.js'
+
 terminal.setValidCommands(commands)
 
 export const Console = ({ isOpen, options, injectedData }) => {
@@ -82,9 +89,9 @@ export const Console = ({ isOpen, options, injectedData }) => {
 
   return (
     isOpen && (
-      <div className={styles.console_wrapper}>
-        <div className={styles.console}>
-          <h1 className={styles.title}>Console</h1>
+      <ConsoleWrapper>
+        <Console>
+          <ConsoleTitle>Console</ConsoleTitle>
 
           <HistoryInterpreter
             className={styles.console_history}
@@ -105,9 +112,9 @@ export const Console = ({ isOpen, options, injectedData }) => {
             palette={theme}
           />
 
-          <div className={styles.console_options}>{options}</div>
-        </div>
-      </div>
+          <ConsoleOptions>{options}</ConsoleOptions>
+        </Console>
+      </ConsoleWrapper>
     )
   )
 }

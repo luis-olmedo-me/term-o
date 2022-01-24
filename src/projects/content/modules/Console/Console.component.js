@@ -10,7 +10,7 @@ import { range } from './Helpers/range.helpers'
 
 import {
   ConsoleWrapper,
-  Console,
+  ConsoleContent,
   ConsoleTitle,
   ConsoleOptions
 } from './Console.styles.js'
@@ -90,11 +90,10 @@ export const Console = ({ isOpen, options, injectedData }) => {
   return (
     isOpen && (
       <ConsoleWrapper>
-        <Console>
+        <ConsoleContent>
           <ConsoleTitle>Console</ConsoleTitle>
 
           <HistoryInterpreter
-            className={styles.console_history}
             historyRef={historyRef}
             histories={histories}
             commandKeywords={keywords}
@@ -113,7 +112,7 @@ export const Console = ({ isOpen, options, injectedData }) => {
           />
 
           <ConsoleOptions>{options}</ConsoleOptions>
-        </Console>
+        </ConsoleContent>
       </ConsoleWrapper>
     )
   )

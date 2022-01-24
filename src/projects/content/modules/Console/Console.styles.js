@@ -1,10 +1,12 @@
+import styled from 'styled-components'
+
 export const ConsoleWrapper = styled.div`
   height: 100%;
   position: relative;
   pointer-events: all;
 `
 
-export const Console = styled.div`
+export const ConsoleContent = styled.div`
   position: absolute;
   left: 50%;
   top: 50%;
@@ -16,6 +18,22 @@ export const Console = styled.div`
   box-shadow: 0px 0 40px 10px rgba(#000, 25%);
   border: 1px solid #444;
   font-family: monospace;
+
+  .histoy-interpreter--wrapper {
+    padding: 10px;
+    width: 100%;
+    height: 250px;
+    border: none;
+    box-sizing: border-box;
+    background-color: #333;
+    color: #eee;
+    display: block;
+    overflow: hidden scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 `
 
 export const ConsoleTitle = styled.h1`

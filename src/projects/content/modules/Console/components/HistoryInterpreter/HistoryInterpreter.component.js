@@ -2,7 +2,7 @@ import React from 'react'
 
 import { LineInterpreter } from './sub-components/LineInterpreter/LineInterpreter.component'
 
-import styles from './HistoryInterpreter.styles.scss'
+import { HistoryInterpreterWrapper } from './HistoryInterpreter.styles.js'
 
 export const HistoryInterpreter = ({
   historyRef,
@@ -13,9 +13,9 @@ export const HistoryInterpreter = ({
   palette
 }) => {
   return (
-    <div
+    <HistoryInterpreterWrapper
       ref={historyRef}
-      className={`${styles.history_wrapper} ${className} histoy-interpreter--wrapper`}
+      className={className}
       onClick={onClick}
     >
       {histories.map((history, historyIndex) => {
@@ -37,6 +37,6 @@ export const HistoryInterpreter = ({
           </div>
         )
       })}
-    </div>
+    </HistoryInterpreterWrapper>
   )
 }

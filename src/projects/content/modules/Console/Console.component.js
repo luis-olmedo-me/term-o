@@ -37,7 +37,10 @@ export const Console = ({ isOpen }) => {
 
     if (!knownCommand) return console.log('error')
 
-    setHistories([...histories, knownCommand.output({ props, id: commandId })])
+    setHistories([
+      ...histories,
+      knownCommand.output({ ...props, id: commandId })
+    ])
     setCurrentCommand('')
     setCcommandId((id) => ++id)
 

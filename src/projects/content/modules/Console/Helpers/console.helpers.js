@@ -1,6 +1,6 @@
-export const buildProps = ({ _: values = [], ...props }) => {
+export const buildProps = ({ _, ...props }) => {
   return {
-    values: values.splice(1),
+    values: _,
     ...props
   }
 }

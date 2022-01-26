@@ -61,7 +61,7 @@ export const ConsoleInput = styled.input`
   color: #eee;
   border: none;
   border-top: 1px solid #444;
-  border-radius: 0 5px 5px 0;
+  border-radius: 0 0 5px 5px;
 
   &:active,
   &:focus,

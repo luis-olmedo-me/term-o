@@ -1,7 +1,10 @@
 import React from 'react'
 
 import { HistoryInterpreter } from '../HistoryInterpreter/HistoryInterpreter.component'
-import styles from './CommandInput.styles.scss'
+import {
+  CommandInputWrapper,
+  CommandInputContent
+} from './CommandInput.styles.js'
 
 export const CommandInput = ({
   interpreterClassName,
@@ -29,9 +32,8 @@ export const CommandInput = ({
   const hasValue = Boolean(value)
 
   return (
-    <div className={styles.input_wrapper}>
-      <input
-        className={styles.input}
+    <CommandInputWrapper>
+      <CommandInputContent
         ref={inputRef}
         type='text'
         onChange={onChange}
@@ -42,13 +44,13 @@ export const CommandInput = ({
       <HistoryInterpreter
         className={`
           ${interpreterClassName}
-          ${!hasValue ? styles.place_holder : ''}
+          ${!hasValue ? 'empty-interpeter' : ''}
         `}
         histories={[[{ value: value || placeHolder, type: 'command' }]]}
         commandKeywords={commandKeywords}
         onClick={enableInput}
         palette={palette}
       />
-    </div>
+    </CommandInputWrapper>
   )
 }

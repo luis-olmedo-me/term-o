@@ -3,14 +3,19 @@ import React, { useEffect, useRef, useState } from 'react'
 import terminal from 'libs/easy-terminal'
 
 import { commands, keywords, theme } from './Commands'
-import styles from './Console.styles.scss'
 import { HistoryInterpreter } from './components/HistoryInterpreter/HistoryInterpreter.component'
 import { CommandInput } from './components/CommandInput/CommandInput.component'
 import { range } from './Helpers/range.helpers'
 
+import {
+  ConsoleWrapper,
+  ConsoleContent,
+  ConsoleTitle
+} from './Console.styles.js'
+
 terminal.setValidCommands(commands)
 
-export const Console = ({ isOpen, options, injectedData }) => {
+export const Console = ({ isOpen }) => {
   const [histories, setHistories] = useState([])
 
   const [commandHistory, setCommandHistory] = useState([])
@@ -59,19 +64,6 @@ export const Console = ({ isOpen, options, injectedData }) => {
   }
 
   useEffect(
-    function injectCommand() {
-      const injectedElement = injectedData.element || ''
-
-      setCurrentCommand((currentCommand) => {
-        return currentCommand
-          ? `${currentCommand} ${injectedElement}`
-          : injectedElement
-      })
-    },
-    [injectedData]
-  )
-
-  useEffect(
     function focusOnTheInput() {
       if (isOpen) {
         inputRef?.current?.focus()
@@ -82,12 +74,12 @@ export const Console = ({ isOpen, options, injectedData }) => {
 
   return (
     isOpen && (
-      <div className={styles.console_wrapper}>
-        <div className={styles.console}>
-          <h1 className={styles.title}>Console</h1>
+      <ConsoleWrapper>
+        <ConsoleContent>
+          <ConsoleTitle>Console</ConsoleTitle>
 
           <HistoryInterpreter
-            className={styles.console_history}
+            className='console-history'
             historyRef={historyRef}
             histories={histories}
             commandKeywords={keywords}
@@ -96,7 +88,7 @@ export const Console = ({ isOpen, options, injectedData }) => {
 
           <CommandInput
             inputRef={inputRef}
-            interpreterClassName={styles.console_command_input}
+            interpreterClassName='console-input'
             placeHolder='Write your commands here!'
             onChange={handleCommandChange}
             onKeyDown={handleKeyPressed}
@@ -104,10 +96,8 @@ export const Console = ({ isOpen, options, injectedData }) => {
             commandKeywords={keywords}
             palette={theme}
           />
-
-          <div className={styles.console_options}>{options}</div>
-        </div>
-      </div>
+        </ConsoleContent>
+      </ConsoleWrapper>
     )
   )
 }

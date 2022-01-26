@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 
 import terminal from 'libs/easy-terminal'
 
-import { commands, keywords, theme } from './Commands'
+import { commands, consoleCommands, keywords, theme } from './Commands'
 import { HistoryInterpreter } from './components/HistoryInterpreter/HistoryInterpreter.component'
 import { CommandInput } from './components/CommandInput/CommandInput.component'
 import { range } from './Helpers/range.helpers'
@@ -16,22 +16,30 @@ import {
   ConsoleInput,
   ConsoleLogs
 } from './Console.styles.js'
+import { buildProps } from './Helpers/console.helpers'
 
 terminal.setValidCommands(commands)
 
 export const Console = ({ isOpen }) => {
   const [histories, setHistories] = useState([])
   const [currentCommand, setCurrentCommand] = useState('')
+  const [commandId, setCcommandId] = useState(0)
 
   const inputRef = useRef(null)
   const historyRef = useRef(null)
 
   const handleCommandRun = () => {
-    const command = commandParser(currentCommand.split(' ').slice())
-    console.debug('command', command)
+    const [command, ...args] = currentCommand.split(' ')
+    const data = commandParser(args)
+    const props = buildProps(data)
 
-    setHistories([...histories, currentCommand])
+    const knownCommand = consoleCommands[command]
+
+    if (!knownCommand) return console.log('error')
+
+    setHistories([...histories, knownCommand.output({ props, id: commandId })])
     setCurrentCommand('')
+    setCcommandId((id) => ++id)
 
     setTimeout(() => {
       historyRef?.current?.scrollTo(0, historyRef.current.scrollHeight)
@@ -63,11 +71,7 @@ export const Console = ({ isOpen }) => {
         <ConsoleContent>
           <ConsoleTitle>Console</ConsoleTitle>
 
-          <ConsoleLogs ref={historyRef}>
-            {histories.map((history, index) => {
-              return <p key={index}>{history}</p>
-            })}
-          </ConsoleLogs>
+          <ConsoleLogs ref={historyRef}>{histories}</ConsoleLogs>
 
           <ConsoleInput
             type='text'

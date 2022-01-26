@@ -4,6 +4,7 @@ export const ConsoleWrapper = styled.div`
   height: 100%;
   position: relative;
   pointer-events: all;
+  color: #fff;
 `
 
 export const ConsoleContent = styled.div`

@@ -1,4 +1,6 @@
-.input_wrapper {
+import styled from 'styled-components'
+
+export const CommandInputWrapper = styled.div`
   width: 100%;
   position: relative;
   cursor: text;
@@ -11,9 +13,12 @@
     text-indent: 1ch;
     font-size: 1.2em;
   }
-}
 
-.input {
+  .empty-interpeter span {
+    color: #888 !important;
+  }
+`
+export const CommandInputContent = styled.input`
   width: 100%;
   position: absolute;
   height: 100%;
@@ -21,8 +26,4 @@
   border: none;
   box-sizing: border-box;
   pointer-events: none;
-}
-
-.place_holder span {
-  color: #888 !important;
-}
+`

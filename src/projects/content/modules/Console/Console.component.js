@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import terminal from 'libs/easy-terminal'
 
 import { commands, keywords, theme } from './Commands'
-import styles from './Console.styles.scss'
 import { HistoryInterpreter } from './components/HistoryInterpreter/HistoryInterpreter.component'
 import { CommandInput } from './components/CommandInput/CommandInput.component'
 import { range } from './Helpers/range.helpers'

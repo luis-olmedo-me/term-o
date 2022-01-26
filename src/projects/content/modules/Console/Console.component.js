@@ -7,6 +7,8 @@ import { HistoryInterpreter } from './components/HistoryInterpreter/HistoryInter
 import { CommandInput } from './components/CommandInput/CommandInput.component'
 import { range } from './Helpers/range.helpers'
 
+import commandParser from 'minimist'
+
 import {
   ConsoleWrapper,
   ConsoleContent,
@@ -23,6 +25,9 @@ export const Console = ({ isOpen }) => {
   // const historyRef = useRef(null)
 
   const handleCommandRun = () => {
+    const command = commandParser(currentCommand.split(' ').slice())
+    console.log({ command })
+
     setHistories([...histories, currentCommand])
     setCurrentCommand('')
 

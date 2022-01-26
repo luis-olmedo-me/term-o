@@ -25,6 +25,7 @@
     "webpack": "^4.44.2"
   },
   "dependencies": {
+    "minimist": "^1.2.5",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   }

@@ -94,6 +94,7 @@ export const Console = ({ isOpen, options, injectedData }) => {
           <ConsoleTitle>Console</ConsoleTitle>
 
           <HistoryInterpreter
+            className='console-history'
             historyRef={historyRef}
             histories={histories}
             commandKeywords={keywords}
@@ -102,7 +103,7 @@ export const Console = ({ isOpen, options, injectedData }) => {
 
           <CommandInput
             inputRef={inputRef}
-            interpreterClassName={styles.console_command_input}
+            interpreterClassName='console-input'
             placeHolder='Write your commands here!'
             onChange={handleCommandChange}
             onKeyDown={handleKeyPressed}

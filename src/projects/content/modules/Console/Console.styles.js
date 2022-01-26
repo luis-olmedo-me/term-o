@@ -19,7 +19,7 @@ export const ConsoleContent = styled.div`
   border: 1px solid #444;
   font-family: monospace;
 
-  .histoy-interpreter--wrapper {
+  .console-history {
     padding: 10px;
     width: 100%;
     height: 250px;
@@ -33,6 +33,13 @@ export const ConsoleContent = styled.div`
     &::-webkit-scrollbar {
       display: none;
     }
+  }
+
+  .console-input {
+    box-sizing: border-box;
+    align-items: center;
+    border-radius: 0 5px 5px 0;
+    text-indent: 3ch;
   }
 `
 

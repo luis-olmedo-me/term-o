@@ -2,14 +2,11 @@ import React, { useEffect, useState } from 'react'
 
 import broker from 'libs/easy-broker'
 import { keysManager, extensionKeyEvents } from 'libs/easy-key-manager'
-import { Button } from 'modules/shared-components/Button/Button.component'
-import { Selection } from 'modules/icons/Selection.icon'
 
 import { EASY_DOM_CONTENT_WRAPPER_ID } from 'projects/content/content.constants'
 import { Console } from '../modules/Console/Console.component'
-import { ElementSelector } from '../modules/ElementSelector/ElementSelector.component'
 
-import { ContentWrapper, selectionIconStyles } from './Content.styles.js'
+import { ContentWrapper } from './Content.styles.js'
 
 keysManager.setConnectionProvider(broker).init()
 

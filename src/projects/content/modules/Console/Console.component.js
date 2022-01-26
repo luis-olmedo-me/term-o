@@ -10,13 +10,12 @@ import { range } from './Helpers/range.helpers'
 import {
   ConsoleWrapper,
   ConsoleContent,
-  ConsoleTitle,
-  ConsoleOptions
+  ConsoleTitle
 } from './Console.styles.js'
 
 terminal.setValidCommands(commands)
 
-export const Console = ({ isOpen, options, injectedData }) => {
+export const Console = ({ isOpen }) => {
   const [histories, setHistories] = useState([])
 
   const [commandHistory, setCommandHistory] = useState([])
@@ -65,19 +64,6 @@ export const Console = ({ isOpen, options, injectedData }) => {
   }
 
   useEffect(
-    function injectCommand() {
-      const injectedElement = injectedData.element || ''
-
-      setCurrentCommand((currentCommand) => {
-        return currentCommand
-          ? `${currentCommand} ${injectedElement}`
-          : injectedElement
-      })
-    },
-    [injectedData]
-  )
-
-  useEffect(
     function focusOnTheInput() {
       if (isOpen) {
         inputRef?.current?.focus()
@@ -110,8 +96,6 @@ export const Console = ({ isOpen, options, injectedData }) => {
             commandKeywords={keywords}
             palette={theme}
           />
-
-          <ConsoleOptions>{options}</ConsoleOptions>
         </ConsoleContent>
       </ConsoleWrapper>
     )

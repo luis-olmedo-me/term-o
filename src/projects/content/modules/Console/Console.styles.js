@@ -52,8 +52,3 @@ export const ConsoleTitle = styled.h1`
   font-size: 20px;
   border-bottom: 1px solid #444;
 `
-
-export const ConsoleOptions = styled.div`
-  border-top: 1px solid #444;
-  padding: 0 5px;
-`

@@ -15,17 +15,14 @@ keysManager.setConnectionProvider(broker).init()
 
 export const Content = () => {
   const [isConsoleOpen, setIsConsoleOpen] = useState(false)
-  const [isElementSelectorActive, setIsElementSelectorActive] = useState(false)
-  const [injectedData, setInjectedData] = useState({})
 
-  const isContentActive = isConsoleOpen || isElementSelectorActive
+  const isContentActive = isConsoleOpen
 
   useEffect(
     function updateTop() {
       if (isContentActive) {
         const handleMouseMove = () => {
           setIsConsoleOpen(false)
-          setIsElementSelectorActive(false)
         }
 
         document.addEventListener('scroll', handleMouseMove)
@@ -46,41 +43,13 @@ export const Content = () => {
     return () => {}
   }, [])
 
-  const handleOnSelection = (selectedElement) => {
-    const className = Array.from(selectedElement.classList).join('.')
-    const tagName = selectedElement.tagName
-
-    setIsElementSelectorActive(false)
-    setIsConsoleOpen(true)
-
-    setInjectedData({ element: `${tagName}.${className}` })
-  }
-
-  const handleTrigeredSelection = () => {
-    setIsElementSelectorActive(true)
-    setIsConsoleOpen(false)
-  }
-
   return (
     <ContentWrapper
       id={EASY_DOM_CONTENT_WRAPPER_ID}
       top={isContentActive ? window.scrollY : 0}
       opacity={isContentActive ? 1 : 0}
     >
-      <Console
-        isOpen={isConsoleOpen}
-        injectedData={injectedData}
-        options={
-          <Button
-            iconBefore={<Selection cssStyles={selectionIconStyles} />}
-            onClick={handleTrigeredSelection}
-          />
-        }
-      />
-
-      {isElementSelectorActive && (
-        <ElementSelector onSelection={handleOnSelection} />
-      )}
+      <Console isOpen={isConsoleOpen} />
     </ContentWrapper>
   )
 }

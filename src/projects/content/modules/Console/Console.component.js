@@ -23,8 +23,8 @@ export const Console = ({ isOpen }) => {
   const [histories, setHistories] = useState([])
   const [currentCommand, setCurrentCommand] = useState('')
 
-  // const inputRef = useRef(null)
-  // const historyRef = useRef(null)
+  const inputRef = useRef(null)
+  const historyRef = useRef(null)
 
   const handleCommandRun = () => {
     const command = commandParser(currentCommand.split(' ').slice())
@@ -34,7 +34,7 @@ export const Console = ({ isOpen }) => {
     setCurrentCommand('')
 
     setTimeout(() => {
-      // historyRef?.current?.scrollTo(0, historyRef.current.scrollHeight)
+      historyRef?.current?.scrollTo(0, historyRef.current.scrollHeight)
     })
   }
 
@@ -51,7 +51,7 @@ export const Console = ({ isOpen }) => {
   useEffect(
     function focusOnTheInput() {
       if (isOpen) {
-        // inputRef?.current?.focus()
+        inputRef?.current?.focus()
       }
     },
     [isOpen]
@@ -63,7 +63,7 @@ export const Console = ({ isOpen }) => {
         <ConsoleContent>
           <ConsoleTitle>Console</ConsoleTitle>
 
-          <ConsoleLogs>
+          <ConsoleLogs ref={historyRef}>
             {histories.map((history, index) => {
               return <p key={index}>{history}</p>
             })}
@@ -71,7 +71,7 @@ export const Console = ({ isOpen }) => {
 
           <ConsoleInput
             type='text'
-            // inputRef={inputRef}
+            ref={inputRef}
             onChange={handleCommandChange}
             onKeyDown={handleKeyPressed}
             value={currentCommand}

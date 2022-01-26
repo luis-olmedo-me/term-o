@@ -52,3 +52,35 @@ export const ConsoleTitle = styled.h1`
   font-size: 20px;
   border-bottom: 1px solid #444;
 `
+
+export const ConsoleInput = styled.input`
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #333;
+  color: #eee;
+  border: none;
+  border-top: 1px solid #444;
+  border-radius: 0 5px 5px 0;
+
+  &:active,
+  &:focus,
+  &:focus-visible {
+    outline: none;
+  }
+`
+export const ConsoleLogs = styled.div`
+  padding: 10px;
+  width: 100%;
+  height: 250px;
+  border: none;
+  box-sizing: border-box;
+  background-color: #333;
+  color: #eee;
+  display: block;
+  overflow: hidden scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`

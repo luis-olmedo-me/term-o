@@ -12,7 +12,9 @@ import commandParser from 'minimist'
 import {
   ConsoleWrapper,
   ConsoleContent,
-  ConsoleTitle
+  ConsoleTitle,
+  ConsoleInput,
+  ConsoleLogs
 } from './Console.styles.js'
 
 terminal.setValidCommands(commands)
@@ -26,7 +28,7 @@ export const Console = ({ isOpen }) => {
 
   const handleCommandRun = () => {
     const command = commandParser(currentCommand.split(' ').slice())
-    console.log({ command })
+    console.debug('command', command)
 
     setHistories([...histories, currentCommand])
     setCurrentCommand('')
@@ -61,13 +63,13 @@ export const Console = ({ isOpen }) => {
         <ConsoleContent>
           <ConsoleTitle>Console</ConsoleTitle>
 
-          <div>
+          <ConsoleLogs>
             {histories.map((history, index) => {
               return <p key={index}>{history}</p>
             })}
-          </div>
+          </ConsoleLogs>
 
-          <input
+          <ConsoleInput
             type='text'
             // inputRef={inputRef}
             onChange={handleCommandChange}

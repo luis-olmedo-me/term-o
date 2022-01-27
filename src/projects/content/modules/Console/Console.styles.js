@@ -38,6 +38,7 @@ export const ConsoleInput = styled.input`
   color: #eee;
   border: none;
   border-radius: 0 0 5px 5px;
+  vertical-align: middle;
 
   &:active,
   &:focus,
@@ -70,5 +71,5 @@ export const ConsoleHash = styled.span`
   width: 20px;
   display: inline-block;
   vertical-align: middle;
-  text-align: center;
+  text-align: end;
 `

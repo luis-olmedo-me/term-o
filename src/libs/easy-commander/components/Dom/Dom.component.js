@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Element } from '../Element/Element.component'
 
 export const Dom = ({ id, get = [], values, command }) => {
   const [elements, setElements] = useState([])
@@ -22,8 +23,8 @@ export const Dom = ({ id, get = [], values, command }) => {
     <div>
       <p>{command}</p>
       <p>
-        {elements.map((element) => {
-          return `${element.tagName} `
+        {elements.map((element, indexId) => {
+          return <Element key={indexId} htmlElement={element} />
         })}
       </p>
     </div>

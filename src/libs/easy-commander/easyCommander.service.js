@@ -47,6 +47,7 @@ class Commander {
     const knownCommand = this.commands[command]
 
     const propValues = this.parser(args)
+
     const props = {
       ...this.buildProps(propValues, knownCommand?.props),
       command: line

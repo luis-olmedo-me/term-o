@@ -14,7 +14,9 @@ import {
   ConsoleContent,
   ConsoleTitle,
   ConsoleInput,
-  ConsoleLogs
+  ConsoleLogs,
+  ConsoleInputWrapper,
+  ConsoleHash
 } from './Console.styles.js'
 import { commander } from 'libs/easy-commander/easyCommander.service'
 
@@ -66,17 +68,21 @@ export const Console = ({ isOpen }) => {
     isOpen && (
       <ConsoleWrapper>
         <ConsoleContent>
-          <ConsoleTitle>Console</ConsoleTitle>
+          <ConsoleTitle>TERM-O</ConsoleTitle>
 
           <ConsoleLogs ref={historyRef}>{histories}</ConsoleLogs>
 
-          <ConsoleInput
-            type='text'
-            ref={inputRef}
-            onChange={handleCommandChange}
-            onKeyDown={handleKeyPressed}
-            value={currentCommand}
-          />
+          <ConsoleInputWrapper>
+            <ConsoleHash>$</ConsoleHash>
+
+            <ConsoleInput
+              type='text'
+              ref={inputRef}
+              onChange={handleCommandChange}
+              onKeyDown={handleKeyPressed}
+              value={currentCommand}
+            />
+          </ConsoleInputWrapper>
         </ConsoleContent>
       </ConsoleWrapper>
     )

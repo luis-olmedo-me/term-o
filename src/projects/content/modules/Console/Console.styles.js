@@ -32,12 +32,11 @@ export const ConsoleTitle = styled.h1`
 
 export const ConsoleInput = styled.input`
   padding: 10px;
-  width: 100%;
+  width: calc(100% - 20px);
   box-sizing: border-box;
   background-color: #333;
   color: #eee;
   border: none;
-  border-top: 1px solid #444;
   border-radius: 0 0 5px 5px;
 
   &:active,
@@ -60,4 +59,16 @@ export const ConsoleLogs = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+`
+
+export const ConsoleInputWrapper = styled.div`
+  border-radius: 0 0 5px 5px;
+  border-top: 1px solid #444;
+`
+
+export const ConsoleHash = styled.span`
+  width: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
 `

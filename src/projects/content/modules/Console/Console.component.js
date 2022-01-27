@@ -16,7 +16,10 @@ import {
   ConsoleInput,
   ConsoleLogs
 } from './Console.styles.js'
-import { buildProps } from './Helpers/console.helpers'
+import { commander } from 'libs/easy-commander/easyCommander.service'
+
+commander.setParser(commandParser)
+commander.setCommands(consoleCommands)
 
 terminal.setValidCommands(commands)
 
@@ -29,19 +32,9 @@ export const Console = ({ isOpen }) => {
   const historyRef = useRef(null)
 
   const handleCommandRun = () => {
-    const [command, ...args] = currentCommand.split(' ')
-    const data = commandParser(args)
-    const props = { ...buildProps(data), command: currentCommand }
-    console.log('props', props)
+    const logOutput = commander.getLogOutput(commandId, currentCommand)
 
-    const knownCommand = consoleCommands[command]
-
-    if (!knownCommand) return console.log('error')
-
-    setHistories([
-      ...histories,
-      knownCommand.output({ ...props, id: commandId })
-    ])
+    setHistories([...histories, logOutput])
     setCurrentCommand('')
     setCcommandId((id) => ++id)
 

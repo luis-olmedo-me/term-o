@@ -4,7 +4,7 @@ export const ConsoleWrapper = styled.div`
   height: 100%;
   position: relative;
   pointer-events: all;
-  color: #fff;
+  color: #eee;
 `
 
 export const ConsoleContent = styled.div`
@@ -19,29 +19,6 @@ export const ConsoleContent = styled.div`
   box-shadow: 0px 0 40px 10px rgba(#000, 25%);
   border: 1px solid #444;
   font-family: monospace;
-
-  .console-history {
-    padding: 10px;
-    width: 100%;
-    height: 250px;
-    border: none;
-    box-sizing: border-box;
-    background-color: #333;
-    color: #eee;
-    display: block;
-    overflow: hidden scroll;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
-  .console-input {
-    box-sizing: border-box;
-    align-items: center;
-    border-radius: 0 5px 5px 0;
-    text-indent: 3ch;
-  }
 `
 
 export const ConsoleTitle = styled.h1`

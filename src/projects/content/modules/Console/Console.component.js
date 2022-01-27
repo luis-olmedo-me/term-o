@@ -31,7 +31,8 @@ export const Console = ({ isOpen }) => {
   const handleCommandRun = () => {
     const [command, ...args] = currentCommand.split(' ')
     const data = commandParser(args)
-    const props = buildProps(data)
+    const props = { ...buildProps(data), command: currentCommand }
+    console.log('props', props)
 
     const knownCommand = consoleCommands[command]
 

@@ -17,7 +17,7 @@ export { commands, keywords, theme }
 export const consoleCommands = {
   dom: {
     props: {
-      get: {}
+      get: { type: 'array', defaultValue: [] }
     },
     output: (props) => <Dom key={props.id} {...props} />
   }

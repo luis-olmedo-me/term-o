@@ -1,14 +1,31 @@
-import React from 'react'
-import { commandNames } from '../commands.constants'
+import React, { useEffect, useState } from 'react'
 
-export const Dom = ({ id, get, values }) => {
-  const valuesAsString = values?.join(' ')
-  const command = `${commandNames.DOM} ${valuesAsString}`
+export const Dom = ({ id, get = [], values, command }) => {
+  const [elements, setElements] = useState([])
+
+  useEffect(
+    function searchElements() {
+      const newElements = get.reduce((allElements, pattern) => {
+        const foundElements = pattern
+          ? window.document.querySelectorAll(pattern)
+          : []
+
+        return [...allElements, ...foundElements]
+      }, [])
+
+      setElements(newElements)
+    },
+    [get]
+  )
 
   return (
     <div>
       <p>{command}</p>
-      <p>element-output</p>
+      <p>
+        {elements.map((element) => {
+          return `${element.tagName} `
+        })}
+      </p>
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Element } from '../Element/Element.component'
+import { ElementsWrapper } from './Dom.styles'
 
 export const Dom = ({ id, get = [], values, command }) => {
   const [elements, setElements] = useState([])
@@ -22,11 +23,11 @@ export const Dom = ({ id, get = [], values, command }) => {
   return (
     <div>
       <p>{command}</p>
-      <p>
+      <ElementsWrapper>
         {elements.map((element, indexId) => {
           return <Element key={indexId} htmlElement={element} />
         })}
-      </p>
+      </ElementsWrapper>
     </div>
   )
 }

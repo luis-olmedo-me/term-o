@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import commandParser from 'minimist'
 
-import { consoleCommands } from './Commands'
 import { commander } from 'libs/easy-commander/easyCommander.service'
 
 import {
@@ -15,7 +14,6 @@ import {
 } from './Console.styles.js'
 
 commander.setParser(commandParser)
-commander.setCommands(consoleCommands)
 
 export const Console = ({ isOpen }) => {
   const [histories, setHistories] = useState([])

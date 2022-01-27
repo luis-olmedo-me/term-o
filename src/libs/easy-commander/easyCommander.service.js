@@ -1,16 +1,13 @@
+import { consoleCommands } from './easyCommander.constants'
 class Commander {
   constructor() {
     this.parser = null
 
-    this.commands = {}
+    this.commands = consoleCommands
   }
 
   setParser(parser) {
     this.parser = parser
-  }
-
-  setCommands(commands) {
-    this.commands = commands
   }
 
   validatePropValue(value, type, defaultValue) {
@@ -54,7 +51,6 @@ class Commander {
       ...this.buildProps(propValues, knownCommand?.props),
       command: line
     }
-    console.log('props', props)
 
     return knownCommand?.output({ ...props, id }) || null
   }

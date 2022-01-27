@@ -1,13 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
-
-import terminal from 'libs/easy-terminal'
-
-import { commands, consoleCommands, keywords, theme } from './Commands'
-import { HistoryInterpreter } from './components/HistoryInterpreter/HistoryInterpreter.component'
-import { CommandInput } from './components/CommandInput/CommandInput.component'
-import { range } from './Helpers/range.helpers'
-
 import commandParser from 'minimist'
+
+import { consoleCommands } from './Commands'
+import { commander } from 'libs/easy-commander/easyCommander.service'
 
 import {
   ConsoleWrapper,
@@ -18,12 +13,9 @@ import {
   ConsoleInputWrapper,
   ConsoleHash
 } from './Console.styles.js'
-import { commander } from 'libs/easy-commander/easyCommander.service'
 
 commander.setParser(commandParser)
 commander.setCommands(consoleCommands)
-
-terminal.setValidCommands(commands)
 
 export const Console = ({ isOpen }) => {
   const [histories, setHistories] = useState([])

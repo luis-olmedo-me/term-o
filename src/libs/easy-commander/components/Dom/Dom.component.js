@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Element } from '../Element/Element.component'
+import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { ElementsWrapper } from './Dom.styles'
 
 export const Dom = ({ id, get = [], values, command }) => {
@@ -22,12 +23,14 @@ export const Dom = ({ id, get = [], values, command }) => {
 
   return (
     <div>
-      <p>{command}</p>
-      <ElementsWrapper>
-        {elements.map((element, indexId) => {
-          return <Element key={indexId} htmlElement={element} />
-        })}
-      </ElementsWrapper>
+      <LogWrapper variant='command'>{command}</LogWrapper>
+      <LogWrapper variant='element'>
+        <ElementsWrapper>
+          {elements.map((element, indexId) => {
+            return <Element key={indexId} htmlElement={element} />
+          })}
+        </ElementsWrapper>
+      </LogWrapper>
     </div>
   )
 }

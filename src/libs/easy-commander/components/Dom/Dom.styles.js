@@ -2,6 +2,6 @@ import styled from 'styled-components'
 
 export const ElementsWrapper = styled.div`
   display: flex;
-  gap: 5px;
+  gap: 10px;
   flex-wrap: wrap;
 `

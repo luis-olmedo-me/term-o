@@ -1,6 +1,11 @@
 import React from 'react'
-import { Log } from './LogWrapper.styles'
+import { Hash, Log } from './LogWrapper.styles'
 
-export const LogWrapper = ({ children }) => {
-  return <Log>{children}</Log>
+export const LogWrapper = ({ children, variant }) => {
+  return (
+    <Log className={variant}>
+      {variant === 'command' ? <Hash>$</Hash> : null}
+      {children}
+    </Log>
+  )
 }

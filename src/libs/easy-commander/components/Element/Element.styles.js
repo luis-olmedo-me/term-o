@@ -6,6 +6,7 @@ export const ElementWrapper = styled.span`
   color: #d6d6d6;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
 
   &:hover {
     background-color: #ae96d8;

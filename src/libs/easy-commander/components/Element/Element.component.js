@@ -12,7 +12,7 @@ export const Element = ({ htmlElement }) => {
     htmlElement.style.display === 'none'
 
   const highlightElement = () => {
-    htmlElement.style.boxShadow = '0 0 0 3px #ff0 inset'
+    htmlElement.style.boxShadow = '0 0 0 3px #e5b567 inset'
   }
 
   const unhighlightElement = () => {

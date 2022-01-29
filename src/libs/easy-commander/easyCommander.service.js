@@ -41,19 +41,24 @@ class Commander {
     }
   }
 
-  getLogOutput(id, line) {
-    const [command, ...args] = line.split(' ')
+  getLogOutput(id, fullLine) {
+    const lines = fullLine.split('|')
 
-    const knownCommand = this.commands[command]
+    return lines.map((line) => {
+      const [command, ...args] = line.split(' ')
 
-    const propValues = this.parser(args)
+      const knownCommand = this.commands[command]
 
-    const props = {
-      ...this.buildProps(propValues, knownCommand?.props),
-      command: line
-    }
+      const propValues = this.parser(args)
 
-    return knownCommand?.output({ ...props, id }) || null
+      const props = {
+        ...this.buildProps(propValues, knownCommand?.props),
+        command: line,
+        id
+      }
+
+      return knownCommand?.output(props) || null
+    })
   }
 }
 

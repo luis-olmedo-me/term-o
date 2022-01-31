@@ -46,7 +46,6 @@ class Commander {
 
   getLogOutput(id, fullLine) {
     const lines = fullLine.split('|').map((line) => line.trim())
-    console.log({ lines })
 
     const setOfOutputs = lines.map((line) => {
       const [command, ...args] = line.split(' ')
@@ -65,7 +64,6 @@ class Commander {
         knownCommand?.output({ ...props, ...providerProps }) || null
     })
 
-    console.log({ setOfOutputs })
     return <Outputs key={id} components={setOfOutputs} />
   }
 }

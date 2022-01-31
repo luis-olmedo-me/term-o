@@ -29,7 +29,7 @@ export const Dom = ({ id, get = [], values, command }) => {
   const textForIncreasing = `Ver mas (${elementsShown}/${elements.length})`
 
   return (
-    <div>
+    <>
       <LogWrapper variant='command'>{command}</LogWrapper>
 
       <LogWrapper variant='element'>
@@ -45,6 +45,6 @@ export const Dom = ({ id, get = [], values, command }) => {
           </MoreContentButton>
         )}
       </LogWrapper>
-    </div>
+    </>
   )
 }

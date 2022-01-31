@@ -2,7 +2,6 @@ import styled from 'styled-components'
 
 export const Log = styled.div`
   padding: 10px;
-  border-radius: 10px;
 
   &:first-child {
     border-radius: 10px 10px 0 0;

@@ -1,3 +1,6 @@
+import React from 'react'
+
+import { Outputs } from './components/Outputs/Outputs.component'
 import { consoleCommands } from './easyCommander.constants'
 class Commander {
   constructor() {
@@ -42,9 +45,10 @@ class Commander {
   }
 
   getLogOutput(id, fullLine) {
-    const lines = fullLine.split('|')
+    const lines = fullLine.split('|').map((line) => line.trim())
+    console.log({ lines })
 
-    return lines.map((line) => {
+    const setOfOutputs = lines.map((line) => {
       const [command, ...args] = line.split(' ')
 
       const knownCommand = this.commands[command]
@@ -57,8 +61,12 @@ class Commander {
         id
       }
 
-      return knownCommand?.output(props) || null
+      return (providerProps) =>
+        knownCommand?.output({ ...props, ...providerProps }) || null
     })
+
+    console.log({ setOfOutputs })
+    return <Outputs key={id} components={setOfOutputs} />
   }
 }
 

@@ -26,7 +26,6 @@ export const Dom = ({
     function searchElements() {
       const patternsCarriedValues =
         carriedValue?.type === 'elements' ? carriedValue.value : []
-      console.log('carriedValue', carriedValue)
 
       const newElements = patterns.reduce((allElements, pattern) => {
         const foundElements = pattern

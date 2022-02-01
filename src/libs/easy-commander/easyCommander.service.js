@@ -56,8 +56,7 @@ class Commander {
 
       const props = {
         ...this.buildProps(propValues, knownCommand?.props),
-        command: line,
-        id
+        command: line
       }
 
       return (providerProps) =>

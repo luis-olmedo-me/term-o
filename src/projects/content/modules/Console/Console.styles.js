@@ -50,7 +50,7 @@ export const ConsoleInput = styled.input`
 export const ConsoleLogs = styled.div`
   padding: 10px;
   width: 100%;
-  height: 250px;
+  height: 40vh;
   border: none;
   box-sizing: border-box;
   background-color: #2e2e2e;

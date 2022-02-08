@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import { useMemo } from 'react/cjs/react.development'
+import React, { useEffect, useState, useMemo } from 'react'
 import { Element } from '../Element/Element.component'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { ElementsWrapper, MoreContentButton } from './Dom.styles'

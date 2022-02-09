@@ -26,16 +26,22 @@ export const Dom = ({
       const patternsCarriedValues =
         carriedValue?.type === 'elements' ? carriedValue.value : []
 
-      const newElements = patterns.reduce((allElements, pattern) => {
-        const foundElements = pattern
-          ? window.document.querySelectorAll(pattern)
-          : []
+      const elementsSearch = new Promise((resolve) => {
+        const newElements = patterns.reduce((allElements, pattern) => {
+          const foundElements = pattern
+            ? window.document.querySelectorAll(pattern)
+            : []
 
-        return [...allElements, ...foundElements]
-      }, patternsCarriedValues)
+          return [...allElements, ...foundElements]
+        }, patternsCarriedValues)
 
-      setElements(newElements)
-      setCarriedValue({ value: newElements, type: 'elements' })
+        resolve(newElements)
+      })
+
+      elementsSearch.then((newElements) => {
+        setElements(newElements)
+        setCarriedValue({ value: newElements, type: 'elements' })
+      })
     },
     [patterns, carriedValue]
   )

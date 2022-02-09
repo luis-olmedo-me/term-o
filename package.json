@@ -1,7 +1,7 @@
 {
-  "name": "easy-console",
-  "version": "1.0.0",
-  "description": "",
+  "name": "term-o",
+  "version": "1.1.0",
+  "description": "Simple terminal for browser",
   "scripts": {
     "start": "webpack-dev-server",
     "build": "webpack"

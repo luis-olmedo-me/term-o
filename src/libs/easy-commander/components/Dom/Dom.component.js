@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react'
 import { Element } from '../Element/Element.component'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { ElementsWrapper, MoreContentButton } from './Dom.styles'
+import { getElements } from '../../easyCommander.promises'
 
 export const Dom = ({
   id,
@@ -23,20 +24,10 @@ export const Dom = ({
 
   useEffect(
     function searchElements() {
-      const patternsCarriedValues =
+      const defaultElements =
         carriedValue?.type === 'elements' ? carriedValue.value : []
 
-      const elementsSearch = new Promise((resolve) => {
-        const newElements = patterns.reduce((allElements, pattern) => {
-          const foundElements = pattern
-            ? window.document.querySelectorAll(pattern)
-            : []
-
-          return [...allElements, ...foundElements]
-        }, patternsCarriedValues)
-
-        resolve(newElements)
-      })
+      const elementsSearch = getElements({ patterns, defaultElements })
 
       elementsSearch.then((newElements) => {
         setElements(newElements)

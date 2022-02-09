@@ -3,6 +3,7 @@ import { Element } from '../Element/Element.component'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { ElementsWrapper, MoreContentButton } from './Dom.styles'
 import { getElements } from '../../easyCommander.promises'
+import { parameterTypes } from '../../easyCommander.constants'
 
 export const Dom = ({
   id,
@@ -24,14 +25,14 @@ export const Dom = ({
 
   useEffect(
     function searchElements() {
-      const defaultElements =
-        carriedValue?.type === 'elements' ? carriedValue.value : []
+      const hasDefaultElements = carriedValue?.type === parameterTypes.ELEMENTS
+      const defaultElements = hasDefaultElements ? carriedValue.value : []
 
       const elementsSearch = getElements({ patterns, defaultElements })
 
       elementsSearch.then((newElements) => {
         setElements(newElements)
-        setCarriedValue({ value: newElements, type: 'elements' })
+        setCarriedValue({ value: newElements, type: parameterTypes.ELEMENTS })
       })
     },
     [patterns, carriedValue]
@@ -45,9 +46,9 @@ export const Dom = ({
 
   return (
     <>
-      <LogWrapper variant='command'>{command}</LogWrapper>
+      <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-      <LogWrapper variant='element'>
+      <LogWrapper variant={parameterTypes.ELEMENT}>
         <ElementsWrapper>
           {limitedElements.map((element, indexId) => {
             return <Element key={indexId} htmlElement={element} />
@@ -56,7 +57,7 @@ export const Dom = ({
       </LogWrapper>
 
       {hasMoreElements && (
-        <LogWrapper variant='button-group'>
+        <LogWrapper variant={parameterTypes.BUTTON_GROUP}>
           <MoreContentButton onClick={increaseElementsShown}>
             {textForIncreasing}
           </MoreContentButton>

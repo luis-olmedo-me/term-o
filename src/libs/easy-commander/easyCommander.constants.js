@@ -17,3 +17,11 @@ export const consoleCommands = {
     output: (props) => <Styler key={props.id} {...props} />
   }
 }
+
+export const parameterTypes = {
+  ELEMENTS: 'elements',
+  ELEMENT: 'element',
+  STYLES: 'styles',
+  COMMAND: 'command',
+  BUTTON_GROUP: 'button-group'
+}

@@ -56,13 +56,15 @@ export const Dom = ({
             return <Element key={indexId} htmlElement={element} />
           })}
         </ElementsWrapper>
+      </LogWrapper>
 
-        {hasMoreElements && (
+      {hasMoreElements && (
+        <LogWrapper variant='button-group'>
           <MoreContentButton onClick={increaseElementsShown}>
             {textForIncreasing}
           </MoreContentButton>
-        )}
-      </LogWrapper>
+        </LogWrapper>
+      )}
     </>
   )
 }

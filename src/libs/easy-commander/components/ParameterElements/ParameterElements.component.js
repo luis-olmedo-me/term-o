@@ -1,5 +1,5 @@
 import React from 'react'
-import { ElementsWrapper } from '../Dom/Dom.styles'
+import { ElementsWrapper } from './ParameterElements.styles'
 import { Element } from '../Element/Element.component'
 
 export const ParameterElements = ({ elements }) => {

@@ -4,7 +4,8 @@ export const ConsoleWrapper = styled.div`
   height: 100%;
   position: relative;
   pointer-events: all;
-  color: #fff;
+  color: #d6d6d6;
+  font-size: 14px;
 `
 
 export const ConsoleContent = styled.div`
@@ -14,34 +15,11 @@ export const ConsoleContent = styled.div`
   transform: translate(-50%, -50%);
   width: 70vw;
   min-width: 650px;
-  background-color: #333;
+  background-color: #2e2e2e;
   border-radius: 5px;
   box-shadow: 0px 0 40px 10px rgba(#000, 25%);
-  border: 1px solid #444;
+  border: 1px solid #505050;
   font-family: monospace;
-
-  .console-history {
-    padding: 10px;
-    width: 100%;
-    height: 250px;
-    border: none;
-    box-sizing: border-box;
-    background-color: #333;
-    color: #eee;
-    display: block;
-    overflow: hidden scroll;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
-  .console-input {
-    box-sizing: border-box;
-    align-items: center;
-    border-radius: 0 5px 5px 0;
-    text-indent: 3ch;
-  }
 `
 
 export const ConsoleTitle = styled.h1`
@@ -50,5 +28,49 @@ export const ConsoleTitle = styled.h1`
   text-align: center;
   font-weight: normal;
   font-size: 20px;
-  border-bottom: 1px solid #444;
+  border-bottom: 1px solid #505050;
+`
+
+export const ConsoleInput = styled.input`
+  padding: 10px;
+  width: calc(100% - 20px);
+  box-sizing: border-box;
+  background-color: #2e2e2e;
+  color: #d6d6d6;
+  border: none;
+  border-radius: 0 0 5px 5px;
+  vertical-align: middle;
+
+  &:active,
+  &:focus,
+  &:focus-visible {
+    outline: none;
+  }
+`
+export const ConsoleLogs = styled.div`
+  padding: 10px;
+  width: 100%;
+  height: 40vh;
+  border: none;
+  box-sizing: border-box;
+  background-color: #2e2e2e;
+  color: #d6d6d6;
+  display: block;
+  overflow: hidden scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`
+
+export const ConsoleInputWrapper = styled.div`
+  border-radius: 0 0 5px 5px;
+  border-top: 1px solid #505050;
+`
+
+export const ConsoleHash = styled.span`
+  width: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: end;
 `

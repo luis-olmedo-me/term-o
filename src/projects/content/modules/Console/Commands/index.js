@@ -1,12 +1,12 @@
-import { domGet } from './dom-get.command'
-import { css } from './css.command'
-import { theme } from './constants/theme.constants'
+import React from 'react'
 
-const commands = {
-  ...domGet,
-  ...css
+import { Dom } from './Dom/Dom.component'
+
+export const consoleCommands = {
+  dom: {
+    props: {
+      get: { type: 'array', defaultValue: [] }
+    },
+    output: (props) => <Dom key={props.id} {...props} />
+  }
 }
-
-const keywords = Object.keys(commands)
-
-export { commands, keywords, theme }

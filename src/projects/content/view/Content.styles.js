@@ -7,7 +7,7 @@ export const ContentWrapper = styled.div`
   z-index: 1000000;
   pointer-events: none;
   transform: translateZ(0);
-  background-color: rgba($color: #000000, $alpha: 0.15);
+  background-color: rgba($color: #2e2e2e, $alpha: 0.15);
   top: ${(props) => props.top || 0}px;
   opacity: ${(props) => props.opacity || 0};
 `

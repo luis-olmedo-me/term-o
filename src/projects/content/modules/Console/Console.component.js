@@ -1,65 +1,47 @@
 import React, { useEffect, useRef, useState } from 'react'
+import commandParser from 'minimist'
 
-import terminal from 'libs/easy-terminal'
-
-import { commands, keywords, theme } from './Commands'
-import { HistoryInterpreter } from './components/HistoryInterpreter/HistoryInterpreter.component'
-import { CommandInput } from './components/CommandInput/CommandInput.component'
-import { range } from './Helpers/range.helpers'
+import { commander } from 'libs/easy-commander/easyCommander.service'
 
 import {
   ConsoleWrapper,
   ConsoleContent,
-  ConsoleTitle
+  ConsoleTitle,
+  ConsoleInput,
+  ConsoleLogs,
+  ConsoleInputWrapper,
+  ConsoleHash
 } from './Console.styles.js'
 
-terminal.setValidCommands(commands)
+commander.setParser(commandParser)
 
 export const Console = ({ isOpen }) => {
   const [histories, setHistories] = useState([])
-
-  const [commandHistory, setCommandHistory] = useState([])
-  const [commandHistoryId, setCommandHistoryId] = useState(-1)
-
   const [currentCommand, setCurrentCommand] = useState('')
+  const [commandId, setCcommandId] = useState(0)
 
   const inputRef = useRef(null)
   const historyRef = useRef(null)
 
   const handleCommandRun = () => {
-    const parsedCurrentCommand = terminal.execute(currentCommand)
+    const logOutput = commander.getLogOutput(commandId, currentCommand)
 
-    setCommandHistory([parsedCurrentCommand[0], ...commandHistory])
-    setHistories([...histories, ...parsedCurrentCommand])
+    setHistories([...histories, logOutput])
     setCurrentCommand('')
-    setCommandHistoryId(-1)
+    setCcommandId((id) => ++id)
 
-    setTimeout(
-      () => historyRef?.current?.scrollTo(0, historyRef.current.scrollHeight),
-      0
-    )
+    setTimeout(() => {
+      historyRef?.current?.scrollTo(0, historyRef.current.scrollHeight)
+    })
   }
 
   const handleCommandChange = ({ target: { value: newValue } }) => {
     setCurrentCommand(newValue)
   }
 
-  const handleKeyPressed = (key) => {
-    if (key === 'enter') {
+  const handleKeyPressed = ({ key }) => {
+    if (key === 'Enter') {
       handleCommandRun()
-    } else if (key === 'arrowup' || key === 'arrowdown') {
-      const direction = key !== 'arrowup' ? -1 : 1
-      const nextId = commandHistoryId + direction
-
-      const maximum = commandHistory.length
-      const nextIdInRange = range(0, maximum, nextId)
-
-      const [command] = commandHistory[nextIdInRange] || []
-
-      setCommandHistoryId(nextIdInRange || 0)
-      setCurrentCommand(command ? command.value : currentCommand)
-    } else {
-      setCommandHistoryId(-1)
     }
   }
 
@@ -76,26 +58,21 @@ export const Console = ({ isOpen }) => {
     isOpen && (
       <ConsoleWrapper>
         <ConsoleContent>
-          <ConsoleTitle>Console</ConsoleTitle>
+          <ConsoleTitle>TERM-O</ConsoleTitle>
 
-          <HistoryInterpreter
-            className='console-history'
-            historyRef={historyRef}
-            histories={histories}
-            commandKeywords={keywords}
-            palette={theme}
-          />
+          <ConsoleLogs ref={historyRef}>{histories}</ConsoleLogs>
 
-          <CommandInput
-            inputRef={inputRef}
-            interpreterClassName='console-input'
-            placeHolder='Write your commands here!'
-            onChange={handleCommandChange}
-            onKeyDown={handleKeyPressed}
-            value={currentCommand}
-            commandKeywords={keywords}
-            palette={theme}
-          />
+          <ConsoleInputWrapper>
+            <ConsoleHash>$</ConsoleHash>
+
+            <ConsoleInput
+              type='text'
+              ref={inputRef}
+              onChange={handleCommandChange}
+              onKeyDown={handleKeyPressed}
+              value={currentCommand}
+            />
+          </ConsoleInputWrapper>
         </ConsoleContent>
       </ConsoleWrapper>
     )

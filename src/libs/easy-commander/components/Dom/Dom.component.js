@@ -10,8 +10,8 @@ export const Dom = ({
   get,
   values,
   command,
-  carriedValue,
-  setCarriedValue
+  parameters,
+  setParameters
 }) => {
   const [elements, setElements] = useState([])
   const [elementsShown, setElementsShown] = useState(80)
@@ -25,17 +25,17 @@ export const Dom = ({
 
   useEffect(
     function searchElements() {
-      const hasDefaultElements = carriedValue?.type === parameterTypes.ELEMENTS
-      const defaultElements = hasDefaultElements ? carriedValue.value : []
+      const hasDefaultElements = parameters?.type === parameterTypes.ELEMENTS
+      const defaultElements = hasDefaultElements ? parameters.value : []
 
       const elementsSearch = getElements({ patterns, defaultElements })
 
       elementsSearch.then((newElements) => {
         setElements(newElements)
-        setCarriedValue({ value: newElements, type: parameterTypes.ELEMENTS })
+        setParameters({ value: newElements, type: parameterTypes.ELEMENTS })
       })
     },
-    [patterns, carriedValue]
+    [patterns, parameters]
   )
 
   const hasMoreElements = elements.length > elementsShown

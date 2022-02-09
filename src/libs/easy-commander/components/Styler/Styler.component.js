@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Element } from '../Element/Element.component'
+import { styleElements } from '../../easyCommander.promises'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
-import { ElementsWrapper, MoreContentButton } from './Styler.styles'
 
 function parseStyles(inlineStyles) {
   const regex = /([\w-]*)\s*:\s*([^;]*)/g
@@ -29,11 +28,7 @@ export const Styler = ({
 
   useEffect(
     function applyStyles() {
-      elementsToStyle.forEach((element) => {
-        Object.entries(inlineStyles).forEach(([key, value]) => {
-          element.style[key] = value
-        })
-      })
+      styleElements({ styles: inlineStyles, elements: elementsToStyle })
     },
     [carriedValue]
   )

@@ -11,3 +11,15 @@ export const getElements = ({ patterns, defaultElements }) => {
     resolve(newElements)
   })
 }
+
+export const styleElements = ({ styles, elements }) => {
+  return new Promise((resolve) => {
+    elements.forEach((element) => {
+      Object.entries(styles).forEach(([key, value]) => {
+        element.style[key] = value
+      })
+    })
+
+    resolve(elements)
+  })
+}

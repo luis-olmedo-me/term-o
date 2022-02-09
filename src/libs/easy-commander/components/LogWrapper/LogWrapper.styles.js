@@ -11,12 +11,17 @@ export const Log = styled.div`
   }
 
   &&.command {
-    background-color: #494949;
+    background-color: #454545;
     color: #d6d6d6;
   }
 
   &&.element {
-    background-color: #707070;
+    background-color: #777070;
+    color: #d6d6d6;
+  }
+
+  &&.styles {
+    background-color: #707077;
     color: #d6d6d6;
   }
 `

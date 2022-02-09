@@ -42,7 +42,7 @@ export const Styler = ({
     <>
       <LogWrapper variant='command'>{command}</LogWrapper>
 
-      <LogWrapper variant='element'>
+      <LogWrapper variant='styles'>
         {JSON.stringify(inlineStyles, null, 1)}
       </LogWrapper>
     </>

@@ -15,6 +15,12 @@ export const Log = styled.div`
     color: #d6d6d6;
   }
 
+  &&.button-group {
+    background-color: #505050;
+    color: #d6d6d6;
+    padding: 0;
+  }
+
   &&.element {
     background-color: #777070;
     color: #d6d6d6;

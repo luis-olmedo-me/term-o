@@ -7,9 +7,11 @@ export const ElementsWrapper = styled.div`
 `
 
 export const MoreContentButton = styled.button`
-  margin: 10px auto 0;
   display: block;
-  border-radius: 3px;
   border: none;
   padding: 5px 10px;
+  margin: 0 auto;
+  cursor: pointer;
+  background-color: #424242;
+  color: #d6d6d6;
 `

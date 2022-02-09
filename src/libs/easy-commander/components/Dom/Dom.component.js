@@ -2,14 +2,16 @@ import React, { useEffect, useState, useMemo } from 'react'
 import { Element } from '../Element/Element.component'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { ElementsWrapper, MoreContentButton } from './Dom.styles'
+import { getElements } from '../../easyCommander.promises'
+import { parameterTypes } from '../../easyCommander.constants'
 
 export const Dom = ({
   id,
   get,
   values,
   command,
-  carriedValue,
-  setCarriedValue
+  parameters,
+  setParameters
 }) => {
   const [elements, setElements] = useState([])
   const [elementsShown, setElementsShown] = useState(80)
@@ -23,21 +25,17 @@ export const Dom = ({
 
   useEffect(
     function searchElements() {
-      const patternsCarriedValues =
-        carriedValue?.type === 'elements' ? carriedValue.value : []
+      const hasDefaultElements = parameters?.type === parameterTypes.ELEMENTS
+      const defaultElements = hasDefaultElements ? parameters.value : []
 
-      const newElements = patterns.reduce((allElements, pattern) => {
-        const foundElements = pattern
-          ? window.document.querySelectorAll(pattern)
-          : []
+      const elementsSearch = getElements({ patterns, defaultElements })
 
-        return [...allElements, ...foundElements]
-      }, patternsCarriedValues)
-
-      setElements(newElements)
-      setCarriedValue({ value: newElements, type: 'elements' })
+      elementsSearch.then((newElements) => {
+        setElements(newElements)
+        setParameters({ value: newElements, type: parameterTypes.ELEMENTS })
+      })
     },
-    [patterns, carriedValue]
+    [patterns, parameters]
   )
 
   const hasMoreElements = elements.length > elementsShown
@@ -48,21 +46,23 @@ export const Dom = ({
 
   return (
     <>
-      <LogWrapper variant='command'>{command}</LogWrapper>
+      <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-      <LogWrapper variant='element'>
+      <LogWrapper variant={parameterTypes.ELEMENT}>
         <ElementsWrapper>
           {limitedElements.map((element, indexId) => {
             return <Element key={indexId} htmlElement={element} />
           })}
         </ElementsWrapper>
+      </LogWrapper>
 
-        {hasMoreElements && (
+      {hasMoreElements && (
+        <LogWrapper variant={parameterTypes.BUTTON_GROUP}>
           <MoreContentButton onClick={increaseElementsShown}>
             {textForIncreasing}
           </MoreContentButton>
-        )}
-      </LogWrapper>
+        </LogWrapper>
+      )}
     </>
   )
 }

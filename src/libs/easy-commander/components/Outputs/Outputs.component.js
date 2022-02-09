@@ -2,26 +2,34 @@ import React, { useState } from 'react'
 import { OutputWrapper } from './Outputs.styles'
 
 export const Outputs = ({ components, id }) => {
-  const [carriedValues, setCarriedValues] = useState([{}])
-  const [componentsShownCount, setComponentsShownCount] = useState(1)
+  const defaultData = components.map((Component, index) => ({
+    Component,
+    parameters: {},
+    isVisible: index === 0
+  }))
 
-  const setCarriedValueWithId = (value) => {
-    const newCount = componentsShownCount + 1
+  const [data, setData] = useState(defaultData)
 
-    setComponentsShownCount(newCount)
-    setCarriedValues([...carriedValues, value])
+  const setParametersWithId = (indexId, value) => {
+    const newData = data.map((dataForComponent, index) => {
+      return indexId === index
+        ? { ...dataForComponent, parameters: value, isVisible: true }
+        : dataForComponent
+    })
+
+    setData(newData)
   }
 
-  const componentsShown = components.slice(0, componentsShownCount)
+  const componentsShown = data.filter((item) => item.isVisible)
 
   return (
     <OutputWrapper>
-      {componentsShown.map((Component, indexId) => {
-        const carriedValue = indexId ? carriedValues[indexId] : null
+      {componentsShown.map(({ Component, parameters }, indexId) => {
+        const nextId = indexId + 1
 
         const providerProps = {
-          carriedValue: carriedValue || null,
-          setCarriedValue: setCarriedValueWithId
+          parameters,
+          setParameters: (value) => setParametersWithId(nextId, value)
         }
 
         return <Component key={`${id}-${indexId}`} {...providerProps} />

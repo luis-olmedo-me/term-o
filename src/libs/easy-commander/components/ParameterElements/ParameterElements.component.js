@@ -2,7 +2,7 @@ import React from 'react'
 import { ElementsWrapper } from '../Dom/Dom.styles'
 import { Element } from '../Element/Element.component'
 
-export const ParameterrElements = ({ elements }) => {
+export const ParameterElements = ({ elements }) => {
   return (
     <ElementsWrapper>
       {elements.map((element, indexId) => {

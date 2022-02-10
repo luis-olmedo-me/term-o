@@ -1,8 +1,10 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useRef } from 'react'
 import { Tooltip } from 'modules/components/Tooltip/Tooltip.component'
 import { ElementWrapper } from './Element.styles'
 
 export const Element = ({ htmlElement }) => {
+  const tooltipContentRef = useRef(null)
+
   const orinalBoxShadow = useMemo(
     () => htmlElement.style.boxShadow,
     [htmlElement]
@@ -14,20 +16,29 @@ export const Element = ({ htmlElement }) => {
 
   const highlightElement = () => {
     htmlElement.style.boxShadow = '0 0 0 3px #e5b567 inset'
+
+    const consoleLogsElement = document.getElementById('term-o-console-logs')
+    console.log('consoleLogsElement', consoleLogsElement)
+    console.log('tooltipContentRef', tooltipContentRef)
   }
 
   const unhighlightElement = () => {
     htmlElement.style.boxShadow = orinalBoxShadow
   }
 
+  const { id, className } = htmlElement
+
+  const idLabel = `id: ${id}`
+  const classNameLabel = `class: ${className}`
+
   return (
     <Tooltip
       side={'bottom'}
       contentTriggered={
-        <>
-          <p>id: {htmlElement.id}</p>
-          <p>class: {htmlElement.className}</p>
-        </>
+        <div ref={tooltipContentRef}>
+          {id && <p>{idLabel}</p>}
+          {className && <p>{classNameLabel}</p>}
+        </div>
       }
       content={
         <ElementWrapper

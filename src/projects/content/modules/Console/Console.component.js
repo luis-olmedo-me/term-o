@@ -60,7 +60,9 @@ export const Console = ({ isOpen }) => {
         <ConsoleContent>
           <ConsoleTitle>TERM-O</ConsoleTitle>
 
-          <ConsoleLogs ref={historyRef}>{histories}</ConsoleLogs>
+          <ConsoleLogs id='term-o-console-logs' ref={historyRef}>
+            {histories}
+          </ConsoleLogs>
 
           <ConsoleInputWrapper>
             <ConsoleHash>$</ConsoleHash>

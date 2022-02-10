@@ -7,6 +7,8 @@ export const TooltipContentTriggered = styled.div`
   color: #dedede;
   border-radius: 3px;
   padding: 5px 10px;
+  z-index: 1;
+  height: max-content;
 
   &&.top {
     bottom: calc(100% + 10px);

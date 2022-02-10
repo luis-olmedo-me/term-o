@@ -1,6 +1,6 @@
 import React, { useMemo, useRef } from 'react'
 import { Tooltip } from 'modules/components/Tooltip/Tooltip.component'
-import { ElementWrapper } from './Element.styles'
+import { ElementWrapper, ElementTooltip } from './Element.styles'
 
 export const Element = ({ htmlElement }) => {
   const tooltipContentRef = useRef(null)
@@ -36,8 +36,8 @@ export const Element = ({ htmlElement }) => {
       side={'bottom'}
       contentTriggered={
         <div ref={tooltipContentRef}>
-          {id && <p>{idLabel}</p>}
-          {className && <p>{classNameLabel}</p>}
+          {id && <ElementTooltip>{idLabel}</ElementTooltip>}
+          {className && <ElementTooltip>{classNameLabel}</ElementTooltip>}
         </div>
       }
       content={

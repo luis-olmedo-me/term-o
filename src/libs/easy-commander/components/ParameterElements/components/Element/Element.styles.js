@@ -13,3 +13,7 @@ export const ElementWrapper = styled.span`
     box-shadow: 0 0 0 4px #a0a0a0;
   }
 `
+
+export const ElementTooltip = styled.p`
+  white-space: nowrap;
+`

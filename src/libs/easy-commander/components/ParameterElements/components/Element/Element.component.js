@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react'
+import { Tooltip } from 'modules/components/Tooltip/Tooltip.component'
 import { ElementWrapper } from './Element.styles'
 
 export const Element = ({ htmlElement }) => {
@@ -20,12 +21,22 @@ export const Element = ({ htmlElement }) => {
   }
 
   return (
-    <ElementWrapper
-      onMouseEnter={highlightElement}
-      onMouseLeave={unhighlightElement}
-      isHidden={isHidden}
-    >
-      {htmlElement.tagName.toLowerCase()}
-    </ElementWrapper>
+    <Tooltip
+      contentTriggered={
+        <>
+          <p>id: {htmlElement.id}</p>
+          <p>class: {htmlElement.className}</p>
+        </>
+      }
+      content={
+        <ElementWrapper
+          onMouseEnter={highlightElement}
+          onMouseLeave={unhighlightElement}
+          isHidden={isHidden}
+        >
+          {htmlElement.tagName.toLowerCase()}
+        </ElementWrapper>
+      }
+    />
   )
 }

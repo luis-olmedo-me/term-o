@@ -5,17 +5,17 @@ export const Tooltip = ({ content, contentTriggered }) => {
   const [isHidden, setIsHidden] = useState(true)
 
   return (
-    <>
-      {isHidden && (
+    <TooltipTrigger>
+      {!isHidden && (
         <TooltipContentTriggered>{contentTriggered}</TooltipContentTriggered>
       )}
 
-      <TooltipTrigger
+      <div
         onMouseEnter={() => setIsHidden(false)}
         onMouseLeave={() => setIsHidden(true)}
       >
         {content}
-      </TooltipTrigger>
-    </>
+      </div>
+    </TooltipTrigger>
   )
 }

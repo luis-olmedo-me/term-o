@@ -7,6 +7,14 @@ export const TooltipContentTriggered = styled.div`
   color: #dedede;
   border-radius: 3px;
   padding: 5px 10px;
+
+  &&.top {
+    bottom: calc(100% + 10px);
+  }
+
+  &&.bottom {
+    top: calc(100% + 10px);
+  }
 `
 
 export const TooltipTrigger = styled.div`

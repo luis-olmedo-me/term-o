@@ -22,6 +22,7 @@ export const Element = ({ htmlElement }) => {
 
   return (
     <Tooltip
+      side={'bottom'}
       contentTriggered={
         <>
           <p>id: {htmlElement.id}</p>

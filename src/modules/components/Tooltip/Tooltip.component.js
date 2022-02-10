@@ -1,10 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { TooltipContentTriggered } from './Tooltip.styles'
 
 export const Tooltip = ({ content, contentTriggered }) => {
+  const [isHidden, setIsHidden] = useState(true)
+
   return (
     <>
-      <div>{contentTriggered}</div>
-      <div>{content}</div>
+      {isHidden && (
+        <TooltipContentTriggered>{contentTriggered}</TooltipContentTriggered>
+      )}
+
+      <div
+        onMouseEnter={() => setIsHidden(false)}
+        onMouseLeave={() => setIsHidden(true)}
+      >
+        {content}
+      </div>
     </>
   )
 }

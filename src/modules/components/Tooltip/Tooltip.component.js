@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TooltipContentTriggered } from './Tooltip.styles'
+import { TooltipContentTriggered, TooltipTrigger } from './Tooltip.styles'
 
 export const Tooltip = ({ content, contentTriggered }) => {
   const [isHidden, setIsHidden] = useState(true)
@@ -10,12 +10,12 @@ export const Tooltip = ({ content, contentTriggered }) => {
         <TooltipContentTriggered>{contentTriggered}</TooltipContentTriggered>
       )}
 
-      <div
+      <TooltipTrigger
         onMouseEnter={() => setIsHidden(false)}
         onMouseLeave={() => setIsHidden(true)}
       >
         {content}
-      </div>
+      </TooltipTrigger>
     </>
   )
 }

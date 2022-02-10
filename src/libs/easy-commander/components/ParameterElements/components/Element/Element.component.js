@@ -1,9 +1,9 @@
-import React, { useMemo, useRef } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Tooltip } from 'modules/components/Tooltip/Tooltip.component'
 import { ElementWrapper, ElementTooltip } from './Element.styles'
 
 export const Element = ({ htmlElement }) => {
-  const tooltipContentRef = useRef(null)
+  const [side, setSide] = useState('top')
 
   const orinalBoxShadow = useMemo(
     () => htmlElement.style.boxShadow,
@@ -14,12 +14,13 @@ export const Element = ({ htmlElement }) => {
     htmlElement.style.visibility === 'hidden' ||
     htmlElement.style.display === 'none'
 
-  const highlightElement = () => {
+  const highlightElement = (event) => {
     htmlElement.style.boxShadow = '0 0 0 3px #e5b567 inset'
 
-    const consoleLogsElement = document.getElementById('term-o-console-logs')
-    console.log('consoleLogsElement', consoleLogsElement)
-    console.log('tooltipContentRef', tooltipContentRef)
+    const distanceFromTop = event.target.getBoundingClientRect().top
+    const distanceFromBottom = window.screen.height - distanceFromTop
+
+    setSide(distanceFromTop > distanceFromBottom ? 'top' : 'bottom')
   }
 
   const unhighlightElement = () => {
@@ -33,9 +34,9 @@ export const Element = ({ htmlElement }) => {
 
   return (
     <Tooltip
-      side={'bottom'}
+      side={side}
       contentTriggered={
-        <div ref={tooltipContentRef}>
+        <div>
           {id && <ElementTooltip>{idLabel}</ElementTooltip>}
           {className && <ElementTooltip>{classNameLabel}</ElementTooltip>}
         </div>

@@ -6,6 +6,7 @@ export const TooltipContentTriggered = styled.div`
   background-color: #333;
   color: #dedede;
   border-radius: 3px;
+  padding: 5px 10px;
 `
 
 export const TooltipTrigger = styled.div`

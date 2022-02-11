@@ -31,6 +31,7 @@ export const Element = ({ htmlElement }) => {
       onMouseEnter={highlightElement}
       onMouseLeave={unhighlightElement}
       isHidden={isHidden}
+      onClick={() => navigator.clipboard.writeText(elementLabel)}
     >
       {elementLabel}
     </ElementWrapper>

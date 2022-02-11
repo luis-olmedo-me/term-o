@@ -1,5 +1,4 @@
-import React, { useMemo, useState } from 'react'
-import { Tooltip } from 'modules/components/Tooltip/Tooltip.component'
+import React, { useMemo } from 'react'
 import { ElementWrapper } from './Element.styles'
 
 export const Element = ({ htmlElement }) => {

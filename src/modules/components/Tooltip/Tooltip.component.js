@@ -1,23 +1,22 @@
 import React, { useState } from 'react'
 import { TooltipContentTriggered, TooltipTrigger } from './Tooltip.styles'
 
-export const Tooltip = ({ content, contentTriggered, side }) => {
-  const [isHidden, setIsHidden] = useState(true)
-
+export const Tooltip = ({
+  content,
+  contentTriggered,
+  side,
+  isOpen,
+  className
+}) => {
   return (
-    <TooltipTrigger>
-      {!isHidden && (
+    <TooltipTrigger className='tooltip-wrapper'>
+      {isOpen && (
         <TooltipContentTriggered className={side}>
           {contentTriggered}
         </TooltipContentTriggered>
       )}
 
-      <div
-        onMouseEnter={() => setIsHidden(false)}
-        onMouseLeave={() => setIsHidden(true)}
-      >
-        {content}
-      </div>
+      <div>{content}</div>
     </TooltipTrigger>
   )
 }

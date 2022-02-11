@@ -1,10 +1,8 @@
 import React, { useMemo, useState } from 'react'
 import { Tooltip } from 'modules/components/Tooltip/Tooltip.component'
-import { ElementWrapper, ElementTooltip } from './Element.styles'
+import { ElementWrapper } from './Element.styles'
 
 export const Element = ({ htmlElement }) => {
-  const [side, setSide] = useState('top')
-
   const orinalBoxShadow = useMemo(
     () => htmlElement.style.boxShadow,
     [htmlElement]
@@ -14,13 +12,8 @@ export const Element = ({ htmlElement }) => {
     htmlElement.style.visibility === 'hidden' ||
     htmlElement.style.display === 'none'
 
-  const highlightElement = (event) => {
+  const highlightElement = () => {
     htmlElement.style.boxShadow = '0 0 0 3px #e5b567 inset'
-
-    const distanceFromTop = event.target.getBoundingClientRect().top
-    const distanceFromBottom = window.screen.height - distanceFromTop
-
-    setSide(distanceFromTop > distanceFromBottom ? 'top' : 'bottom')
   }
 
   const unhighlightElement = () => {
@@ -29,27 +22,18 @@ export const Element = ({ htmlElement }) => {
 
   const { id, className } = htmlElement
 
-  const idLabel = `id: ${id}`
-  const classNameLabel = `class: ${className}`
+  const idLabel = id && `#${id}`
+  const classNameLabel = className && `.${className.replaceAll(/\s/g, '.')}`
+  const tagNameLabel = htmlElement.tagName.toLowerCase()
+  const elementLabel = `${tagNameLabel}${idLabel || classNameLabel}`
 
   return (
-    <Tooltip
-      side={side}
-      contentTriggered={
-        <div>
-          {id && <ElementTooltip>{idLabel}</ElementTooltip>}
-          {className && <ElementTooltip>{classNameLabel}</ElementTooltip>}
-        </div>
-      }
-      content={
-        <ElementWrapper
-          onMouseEnter={highlightElement}
-          onMouseLeave={unhighlightElement}
-          isHidden={isHidden}
-        >
-          {htmlElement.tagName.toLowerCase()}
-        </ElementWrapper>
-      }
-    />
+    <ElementWrapper
+      onMouseEnter={highlightElement}
+      onMouseLeave={unhighlightElement}
+      isHidden={isHidden}
+    >
+      {elementLabel}
+    </ElementWrapper>
   )
 }

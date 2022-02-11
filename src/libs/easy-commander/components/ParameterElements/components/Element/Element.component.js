@@ -19,13 +19,21 @@ export const Element = ({ htmlElement }) => {
     htmlElement.style.boxShadow = orinalBoxShadow
   }
 
+  const { id, className } = htmlElement
+
+  const idLabel = id && `#${id}`
+  const classNameLabel = className && `.${className.replaceAll(/\s/g, '.')}`
+  const tagNameLabel = htmlElement.tagName.toLowerCase()
+  const elementLabel = `${tagNameLabel}${idLabel || classNameLabel}`
+
   return (
     <ElementWrapper
       onMouseEnter={highlightElement}
       onMouseLeave={unhighlightElement}
       isHidden={isHidden}
+      onClick={() => navigator.clipboard.writeText(elementLabel)}
     >
-      {htmlElement.tagName.toLowerCase()}
+      {elementLabel}
     </ElementWrapper>
   )
 }

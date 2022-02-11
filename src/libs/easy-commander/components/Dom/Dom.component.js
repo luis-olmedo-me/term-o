@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useMemo } from 'react'
-import { Element } from '../Element/Element.component'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
-import { ElementsWrapper, MoreContentButton } from './Dom.styles'
+import { MoreContentButton } from './Dom.styles'
 import { getElements } from '../../easyCommander.promises'
 import { parameterTypes } from '../../easyCommander.constants'
+import { ParameterElements } from '../ParameterElements/ParameterElements.component'
 
 export const Dom = ({
   id,
@@ -49,11 +49,7 @@ export const Dom = ({
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
       <LogWrapper variant={parameterTypes.ELEMENT}>
-        <ElementsWrapper>
-          {limitedElements.map((element, indexId) => {
-            return <Element key={indexId} htmlElement={element} />
-          })}
-        </ElementsWrapper>
+        <ParameterElements elements={limitedElements} />
       </LogWrapper>
 
       {hasMoreElements && (

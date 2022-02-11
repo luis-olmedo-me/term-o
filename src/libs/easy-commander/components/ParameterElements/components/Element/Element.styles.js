@@ -8,6 +8,8 @@ export const ElementWrapper = styled.span`
   cursor: pointer;
   transition: box-shadow 0.2s ease-in-out;
   box-shadow: 0 0 0 2px #a0a0a0;
+  flex: auto;
+  text-align: center;
 
   &:hover {
     box-shadow: 0 0 0 4px #a0a0a0;

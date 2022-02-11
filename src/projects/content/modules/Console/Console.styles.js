@@ -56,7 +56,7 @@ export const ConsoleLogs = styled.div`
   background-color: #2e2e2e;
   color: #d6d6d6;
   display: block;
-  overflow: hidden scroll;
+  overflow-y: scroll;
 
   &::-webkit-scrollbar {
     display: none;

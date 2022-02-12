@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const ElementWrapper = styled.span`
   padding: 2px 10px;
-  background-color: ${(props) => (props.isHidden ? '#bdbdbd' : '#ededed')};
+  background-color: ${(props) => (props.isHidden ? '#cbbdbd' : '#fbeded')};
   color: #707070;
   border-radius: 4px;
   cursor: pointer;

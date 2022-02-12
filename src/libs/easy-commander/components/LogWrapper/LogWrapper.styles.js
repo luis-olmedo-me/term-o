@@ -23,16 +23,19 @@ export const Log = styled.div`
 
   &&.element {
     background-color: #777070;
-    color: #d6d6d6;
   }
 
   &&.styles {
     background-color: #707077;
-    color: #d6d6d6;
+    color: #d6d6e7;
+  }
+
+  &&.error {
+    background-color: #887070;
+    color: #e7d6d6;
   }
 `
 
 export const Hash = styled.span`
-  color: #d6d6d6;
   margin-right: 1ch;
 `

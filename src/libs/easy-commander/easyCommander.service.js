@@ -1,5 +1,5 @@
 import React from 'react'
-import { ErrorCommand } from './components/ErrorCommand/ErrorCommand.component'
+import { MessageCommand } from './components/MessageCommand/MessageCommand.component'
 
 import { Outputs } from './components/Outputs/Outputs.component'
 import { consoleCommands } from './easyCommander.constants'
@@ -68,7 +68,7 @@ class Commander {
         !providerProps.messageData.message ? (
           knownCommand?.output({ ...props, ...providerProps }) || null
         ) : (
-          <ErrorCommand {...props} {...providerProps} />
+          <MessageCommand {...props} {...providerProps} />
         )
     })
 

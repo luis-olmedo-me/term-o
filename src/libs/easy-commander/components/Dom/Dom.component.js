@@ -13,7 +13,7 @@ export const Dom = ({
   command,
   parameters,
   setParameters,
-  setErrorMessage
+  setMessageData
 }) => {
   const [elements, setElements] = useState([])
   const [elementsShown, setElementsShown] = useState(80)
@@ -47,13 +47,15 @@ export const Dom = ({
       })
 
       elementsSearch.then(({ elements: newElements, error }) => {
-        if (error) return setErrorMessage(error)
+        if (error) {
+          return setMessageData({ message: error, type: parameterTypes.ERROR })
+        }
 
         setElements(newElements)
         setParameters({ value: newElements, type: parameterTypes.ELEMENTS })
       })
     },
-    [patterns, parameters, setErrorMessage]
+    [patterns, parameters, setMessageData]
   )
 
   const hasMoreElements = elements.length > elementsShown

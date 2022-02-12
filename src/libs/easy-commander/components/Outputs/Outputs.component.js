@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { parameterTypes } from '../../easyCommander.constants'
 import { OutputWrapper } from './Outputs.styles'
 
 export const Outputs = ({ components, id }) => {
@@ -9,7 +10,7 @@ export const Outputs = ({ components, id }) => {
   }))
 
   const [data, setData] = useState(defaultData)
-  const [errorMessage, setErrorMessage] = useState('')
+  const [messageData, setMessageData] = useState({ message: '', type: '' })
 
   const setParametersWithId = (indexId, value) => {
     const newData = data.map((dataForComponent, index) => {
@@ -33,8 +34,8 @@ export const Outputs = ({ components, id }) => {
           key: `${id}-${indexId}`,
           parameters,
           setParameters: (value) => setParametersWithId(nextId, value),
-          setErrorMessage,
-          errorMessage: isLastComponent ? errorMessage : ''
+          setMessageData,
+          messageData: isLastComponent ? messageData : {}
         }
 
         return <Component {...providerProps} />

@@ -2,12 +2,12 @@ import React from 'react'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { parameterTypes } from '../../easyCommander.constants'
 
-export const ErrorCommand = ({ errorMessage, command }) => {
+export const ErrorCommand = ({ messageData: { message, type }, command }) => {
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-      <LogWrapper variant={parameterTypes.ERROR}>{errorMessage}</LogWrapper>
+      <LogWrapper variant={type}>{message}</LogWrapper>
     </>
   )
 }

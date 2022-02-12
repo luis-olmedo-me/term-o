@@ -65,7 +65,7 @@ class Commander {
       }
 
       return (providerProps) =>
-        !providerProps.errorMessage ? (
+        !providerProps.messageData.message ? (
           knownCommand?.output({ ...props, ...providerProps }) || null
         ) : (
           <ErrorCommand {...props} {...providerProps} />

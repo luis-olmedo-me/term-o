@@ -6,15 +6,15 @@ import { Styler } from './components/Styler/Styler.component'
 export const consoleCommands = {
   dom: {
     props: {
-      get: { type: 'array', defaultValue: [] }
+      get: { key: 'get', type: 'array', defaultValue: [] },
+      'has-id': { key: 'hasId', type: 'boolean', defaultValue: false },
+      'has-class': { key: 'hasClass', type: 'boolean', defaultValue: false }
     },
     output: (props) => <Dom key={props.id} {...props} />
   },
   css: {
     props: {
-      styles: { key: 'styles', type: 'string', defaultValue: '' },
-      'has-id': { key: 'hasId', type: 'boolean', defaultValue: false },
-      'has-class': { key: 'hasClass', type: 'boolean', defaultValue: false }
+      styles: { key: 'styles', type: 'string', defaultValue: '' }
     },
     output: (props) => <Styler key={props.id} {...props} />
   }

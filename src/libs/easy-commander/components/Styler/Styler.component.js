@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { parameterTypes } from '../../easyCommander.constants'
-import { styleElements } from '../../easyCommander.promises'
+import { styleElements, validateStyles } from '../../easyCommander.promises'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { parseStyles } from './Styler.helpers'
 
-export const Styler = ({ id, styles, command, parameters }) => {
+export const Styler = ({ id, styles, command, parameters, setMessageData }) => {
   const inlineStyles = parseStyles(styles)
 
   useEffect(
@@ -12,7 +12,19 @@ export const Styler = ({ id, styles, command, parameters }) => {
       const hasDefaultElements = parameters?.type === parameterTypes.ELEMENTS
       const elementsToStyle = hasDefaultElements ? parameters.value : []
 
-      styleElements({ styles: inlineStyles, elements: elementsToStyle })
+      const { validStyles, invalidStyles } = validateStyles(inlineStyles)
+
+      const invalidStylesNames = Object.keys(invalidStyles)
+      const hasInvalidatedStyles = invalidStylesNames.length > 0
+
+      if (!hasInvalidatedStyles) {
+        styleElements({ styles: validStyles, elements: elementsToStyle })
+      } else {
+        const stringifiedInvalidatedStyles = invalidStylesNames.join(', ')
+        const message = `Some of the styles you provided are invalid: "${stringifiedInvalidatedStyles}".`
+
+        return setMessageData({ message, type: parameterTypes.ERROR })
+      }
     },
     [parameters]
   )

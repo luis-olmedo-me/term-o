@@ -9,7 +9,7 @@ const getElementsFromDOM = (patterns) => {
 
     return {
       elements: [],
-      error: `Some of the folowing parameters are not valid: "${stringifiedPatterns}".`
+      error: `No elements where found in DOM for: "${stringifiedPatterns}".`
     }
   }
 }
@@ -25,6 +25,27 @@ export const getElements = ({ patterns, defaultElements, filter }) => {
 
     resolve({ elements: elementsFound, error })
   })
+}
+
+const divElement = document.createElement('div')
+export const validStyleKeys = Object.keys(divElement.style)
+console.log('validStyleKeys', validStyleKeys)
+
+export const validateStyles = (styles) => {
+  let invalidStyles = {}
+  let validStyles = {}
+
+  for (const styleKey in styles) {
+    const styleValue = styles[styleKey]
+
+    if (validStyleKeys.includes(styleKey)) {
+      validStyles = { ...validStyles, [styleKey]: styleValue }
+    } else {
+      invalidStyles = { ...invalidStyles, [styleKey]: styleValue }
+    }
+  }
+
+  return { validStyles, invalidStyles }
 }
 
 export const styleElements = ({ styles, elements }) => {

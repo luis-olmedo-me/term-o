@@ -50,10 +50,10 @@ export const Dom = ({
         if (error) {
           return setMessageData({ message: error, type: parameterTypes.ERROR })
         } else if (!newElements.lenght) {
-          const stringifiedPatterns = patterns.join(',')
+          const stringifiedPatterns = patterns.join(', ')
 
           return setMessageData({
-            message: `No elements where found in DOM for: ${stringifiedPatterns}.`,
+            message: `No elements where found in DOM for: "${stringifiedPatterns}".`,
             type: parameterTypes.INFO
           })
         }

@@ -4,8 +4,13 @@ const getElementsFromDOM = (patterns) => {
       (patterns?.length && window.document.querySelectorAll(patterns)) || []
 
     return { elements: [...elementsFromDOM], error: '' }
-  } catch (error) {
-    return { elements: [], error: 'errorsinio' }
+  } catch {
+    const stringifiedPatterns = patterns.join(', ')
+
+    return {
+      elements: [],
+      error: `Some of the folowing parameters are not valid: "${stringifiedPatterns}".`
+    }
   }
 }
 

@@ -27,9 +27,19 @@ export const getElements = ({ patterns, defaultElements, filter }) => {
   })
 }
 
+export const kebabize = (string) => {
+  return string
+    .split('')
+    .map((letter, index) => {
+      return letter.toUpperCase() === letter
+        ? `${index !== 0 ? '-' : ''}${letter.toLowerCase()}`
+        : letter
+    })
+    .join('')
+}
+
 const divElement = document.createElement('div')
 export const validStyleKeys = Object.keys(divElement.style)
-console.log('validStyleKeys', validStyleKeys)
 
 export const validateStyles = (styles) => {
   let invalidStyles = {}

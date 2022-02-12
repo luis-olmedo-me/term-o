@@ -11,20 +11,25 @@ export const consoleCommands = {
         key: 'hasId',
         type: 'boolean',
         defaultValue: false,
-        aliases: []
+        aliases: ['hi']
       },
       'has-class': {
         key: 'hasClass',
         type: 'boolean',
         defaultValue: false,
-        aliases: []
+        aliases: ['hc']
       }
     },
     output: (props) => <Dom key={props.id} {...props} />
   },
   css: {
     props: {
-      styles: { key: 'styles', type: 'string', defaultValue: '', aliases: [] }
+      styles: {
+        key: 'styles',
+        type: 'string',
+        defaultValue: '',
+        aliases: ['s']
+      }
     },
     output: (props) => <Styler key={props.id} {...props} />
   }

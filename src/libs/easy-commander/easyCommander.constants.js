@@ -41,5 +41,6 @@ export const parameterTypes = {
   STYLES: 'styles',
   COMMAND: 'command',
   BUTTON_GROUP: 'button-group',
-  ERROR: 'error'
+  ERROR: 'error',
+  INFO: 'info'
 }

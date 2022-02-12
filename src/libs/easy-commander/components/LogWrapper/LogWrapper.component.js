@@ -4,7 +4,8 @@ import { Hash, Log } from './LogWrapper.styles'
 
 const preIconsByVariants = {
   [parameterTypes.COMMAND]: '＄',
-  [parameterTypes.ERROR]: '✖'
+  [parameterTypes.ERROR]: '✖',
+  [parameterTypes.INFO]: 'ℹ'
 }
 
 export const LogWrapper = ({ children, variant }) => {

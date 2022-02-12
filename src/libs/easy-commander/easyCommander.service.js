@@ -29,8 +29,12 @@ class Commander {
 
   buildProps({ _, ...propValues }, propsConfig = {}) {
     const validatedProps = Object.entries(propsConfig).reduce(
-      (allProps, [propName, { key, type, defaultValue }]) => {
-        const value = propValues[propName]
+      (allProps, [propName, { key, type, defaultValue, aliases }]) => {
+        const aliasName = Object.keys(propValues).find((name) => {
+          return aliases.includes(name)
+        })
+
+        const value = propValues[propName] || propValues[aliasName]
         const validatedValue = this.validatePropValue(value, type, defaultValue)
 
         return { ...allProps, [key]: validatedValue }

@@ -49,7 +49,7 @@ export const Dom = ({
       elementsSearch.then(({ elements: newElements, error }) => {
         if (error) {
           return setMessageData({ message: error, type: parameterTypes.ERROR })
-        } else if (!newElements.lenght) {
+        } else if (!newElements.length) {
           const stringifiedPatterns = patterns.join(', ')
 
           return setMessageData({

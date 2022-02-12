@@ -22,7 +22,7 @@ export const Element = ({ htmlElement }) => {
   const { id, className } = htmlElement
 
   const idLabel = id && `#${id}`
-  const classNameLabel = className && `.${className.replaceAll(/\s/g, '.')}`
+  const classNameLabel = className && `.${className.replaceAll?.(/\s/g, '.')}`
   const tagNameLabel = htmlElement.tagName.toLowerCase()
   const elementLabel = `${tagNameLabel}${idLabel || classNameLabel}`
 

@@ -1,7 +1,14 @@
 import React from 'react'
+import { MessageCommand } from './components/MessageCommand/MessageCommand.component'
 
 import { Outputs } from './components/Outputs/Outputs.component'
-import { consoleCommands } from './easyCommander.constants'
+import { consoleCommands, parameterTypes } from './easyCommander.constants'
+
+const unknownCommandError = {
+  message: 'The command you entered is not recognized. Please try again.',
+  type: parameterTypes.ERROR
+}
+
 class Commander {
   constructor() {
     this.parser = null
@@ -63,8 +70,24 @@ class Commander {
         command: line
       }
 
-      return (providerProps) =>
-        knownCommand?.output({ ...props, ...providerProps }) || null
+      const hasKnownCommand = Boolean(knownCommand)
+
+      return (providerProps) => {
+        const commonProps = { ...props, ...providerProps }
+
+        if (!hasKnownCommand) {
+          const errorProps = {
+            ...commonProps,
+            messageData: unknownCommandError
+          }
+
+          return <MessageCommand {...errorProps} />
+        } else if (!providerProps.messageData.message) {
+          return knownCommand?.output(commonProps) || null
+        } else {
+          return <MessageCommand {...commonProps} />
+        }
+      }
     })
 
     return <Outputs key={id} components={setOfOutputs} />

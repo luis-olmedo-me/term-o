@@ -12,7 +12,8 @@ export const Dom = ({
   values,
   command,
   parameters,
-  setParameters
+  setParameters,
+  setMessageData
 }) => {
   const [elements, setElements] = useState([])
   const [elementsShown, setElementsShown] = useState(80)
@@ -45,12 +46,23 @@ export const Dom = ({
         filter: hasFilters ? filterElements : null
       })
 
-      elementsSearch.then((newElements) => {
+      elementsSearch.then(({ elements: newElements, error }) => {
+        if (error) {
+          return setMessageData({ message: error, type: parameterTypes.ERROR })
+        } else if (!newElements.length) {
+          const stringifiedPatterns = patterns.join(', ')
+
+          return setMessageData({
+            message: `No elements where found in DOM for: "${stringifiedPatterns}".`,
+            type: parameterTypes.INFO
+          })
+        }
+
         setElements(newElements)
         setParameters({ value: newElements, type: parameterTypes.ELEMENTS })
       })
     },
-    [patterns, parameters]
+    [patterns, parameters, setMessageData]
   )
 
   const hasMoreElements = elements.length > elementsShown

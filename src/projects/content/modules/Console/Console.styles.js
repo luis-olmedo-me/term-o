@@ -6,6 +6,7 @@ export const ConsoleWrapper = styled.div`
   pointer-events: all;
   color: #d6d6d6;
   font-size: 14px;
+  font-family: system-ui;
 `
 
 export const ConsoleContent = styled.div`

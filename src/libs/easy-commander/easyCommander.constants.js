@@ -11,13 +11,13 @@ export const consoleCommands = {
         key: 'hasId',
         type: 'boolean',
         defaultValue: false,
-        aliases: ['hi']
+        aliases: ['i']
       },
       'has-class': {
         key: 'hasClass',
         type: 'boolean',
         defaultValue: false,
-        aliases: ['hc']
+        aliases: ['c']
       }
     },
     output: (props) => <Dom key={props.id} {...props} />

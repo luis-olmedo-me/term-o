@@ -30,16 +30,14 @@ export const Outputs = ({ components, id }) => {
         const isLastComponent = indexId === componentsShown.length - 1
 
         const providerProps = {
+          key: `${id}-${indexId}`,
           parameters,
           setParameters: (value) => setParametersWithId(nextId, value),
-          setErrorMessage
+          setErrorMessage,
+          errorMessage: isLastComponent ? errorMessage : ''
         }
 
-        return isLastComponent && errorMessage ? (
-          <span key={`${id}-error-message`}>{errorMessage}</span>
-        ) : (
-          <Component key={`${id}-${indexId}`} {...providerProps} />
-        )
+        return <Component {...providerProps} />
       })}
     </OutputWrapper>
   )

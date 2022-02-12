@@ -1,4 +1,5 @@
 import React from 'react'
+import { ErrorCommand } from './components/ErrorCommand/ErrorCommand.component'
 
 import { Outputs } from './components/Outputs/Outputs.component'
 import { consoleCommands } from './easyCommander.constants'
@@ -64,7 +65,11 @@ class Commander {
       }
 
       return (providerProps) =>
-        knownCommand?.output({ ...props, ...providerProps }) || null
+        !providerProps.errorMessage ? (
+          knownCommand?.output({ ...props, ...providerProps }) || null
+        ) : (
+          <ErrorCommand {...props} {...providerProps} />
+        )
     })
 
     return <Outputs key={id} components={setOfOutputs} />

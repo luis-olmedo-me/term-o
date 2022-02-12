@@ -9,6 +9,7 @@ export const Outputs = ({ components, id }) => {
   }))
 
   const [data, setData] = useState(defaultData)
+  const [errorMessage, setErrorMessage] = useState('')
 
   const setParametersWithId = (indexId, value) => {
     const newData = data.map((dataForComponent, index) => {
@@ -26,13 +27,19 @@ export const Outputs = ({ components, id }) => {
     <OutputWrapper>
       {componentsShown.map(({ Component, parameters }, indexId) => {
         const nextId = indexId + 1
+        const isLastComponent = indexId === componentsShown.length
 
         const providerProps = {
           parameters,
-          setParameters: (value) => setParametersWithId(nextId, value)
+          setParameters: (value) => setParametersWithId(nextId, value),
+          setErrorMessage
         }
 
-        return <Component key={`${id}-${indexId}`} {...providerProps} />
+        return isLastComponent && errorMessage ? (
+          <span key={`${id}-error-message`}>{errorMessage}</span>
+        ) : (
+          <Component key={`${id}-${indexId}`} {...providerProps} />
+        )
       })}
     </OutputWrapper>
   )

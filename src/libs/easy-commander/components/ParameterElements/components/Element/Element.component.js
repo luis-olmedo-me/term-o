@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { ElementWrapper } from './Element.styles'
 
-export const Element = ({ htmlElement }) => {
+export const Element = ({ htmlElement = {} }) => {
   const orinalBoxShadow = useMemo(
     () => htmlElement.style.boxShadow,
     [htmlElement]

@@ -1,12 +1,21 @@
+const getElementsFromDOM = (pattern) => {
+  try {
+    const elementsFromDOM =
+      (pattern && window.document.querySelectorAll(pattern)) || []
+
+    return [...elementsFromDOM]
+  } catch (error) {
+    return []
+  }
+}
+
 export const getElements = ({ patterns, defaultElements, filter }) => {
   return new Promise((resolve) => {
     const newElements = patterns.reduce((allElements, pattern) => {
-      let foundElements = pattern
-        ? window.document.querySelectorAll(pattern) || []
-        : []
+      let foundElements = getElementsFromDOM(pattern)
 
       if (filter) {
-        foundElements = [...foundElements].filter(filter)
+        foundElements = foundElements.filter(filter)
       }
 
       return [...allElements, ...foundElements]

@@ -6,8 +6,9 @@ import { parameterTypes } from '../../easyCommander.constants'
 import { ParameterElements } from '../ParameterElements/ParameterElements.component'
 
 export const Dom = ({
-  id,
   get,
+  hasId,
+  hasClass,
   values,
   command,
   parameters,
@@ -21,14 +22,28 @@ export const Dom = ({
     const patternsFromValues = values || []
 
     return [...patternToGet, ...patternsFromValues]
-  }, [get, command])
+  }, [get])
 
   useEffect(
     function searchElements() {
       const hasDefaultElements = parameters?.type === parameterTypes.ELEMENTS
       const defaultElements = hasDefaultElements ? parameters.value : []
 
-      const elementsSearch = getElements({ patterns, defaultElements })
+      const hasFilters = hasId || hasClass
+      const filterElements = (element) => {
+        let validations = []
+
+        if (hasId) validations.push((element) => Boolean(element.id))
+        if (hasClass) validations.push((element) => Boolean(element.className))
+
+        return validations.some((validation) => validation(element))
+      }
+
+      const elementsSearch = getElements({
+        patterns,
+        defaultElements,
+        filter: hasFilters ? filterElements : null
+      })
 
       elementsSearch.then((newElements) => {
         setElements(newElements)

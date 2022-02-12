@@ -1,9 +1,13 @@
-export const getElements = ({ patterns, defaultElements }) => {
+export const getElements = ({ patterns, defaultElements, filter }) => {
   return new Promise((resolve) => {
     const newElements = patterns.reduce((allElements, pattern) => {
-      const foundElements = pattern
-        ? window.document.querySelectorAll(pattern)
+      let foundElements = pattern
+        ? window.document.querySelectorAll(pattern) || []
         : []
+
+      if (filter) {
+        foundElements = [...foundElements].filter(filter)
+      }
 
       return [...allElements, ...foundElements]
     }, defaultElements)

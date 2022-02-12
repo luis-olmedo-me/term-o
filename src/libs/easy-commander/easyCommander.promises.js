@@ -1,27 +1,24 @@
-const getElementsFromDOM = (pattern) => {
+const getElementsFromDOM = (patterns) => {
   try {
     const elementsFromDOM =
-      (pattern && window.document.querySelectorAll(pattern)) || []
+      (patterns?.length && window.document.querySelectorAll(patterns)) || []
 
-    return [...elementsFromDOM]
+    return { elements: [...elementsFromDOM], error: '' }
   } catch (error) {
-    return []
+    return { elements: [], error: 'errorsinio' }
   }
 }
 
 export const getElements = ({ patterns, defaultElements, filter }) => {
   return new Promise((resolve) => {
-    const newElements = patterns.reduce((allElements, pattern) => {
-      let foundElements = getElementsFromDOM(pattern)
+    const { elements, error } = getElementsFromDOM(patterns)
+    let elementsFound = [...elements, ...defaultElements]
 
-      if (filter) {
-        foundElements = foundElements.filter(filter)
-      }
+    if (filter) {
+      elementsFound = elementsFound.filter(filter)
+    }
 
-      return [...allElements, ...foundElements]
-    }, defaultElements)
-
-    resolve(newElements)
+    resolve({ elements: elementsFound, error })
   })
 }
 

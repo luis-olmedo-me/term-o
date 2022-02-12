@@ -27,7 +27,7 @@ export const Outputs = ({ components, id }) => {
     <OutputWrapper>
       {componentsShown.map(({ Component, parameters }, indexId) => {
         const nextId = indexId + 1
-        const isLastComponent = indexId === componentsShown.length
+        const isLastComponent = indexId === componentsShown.length - 1
 
         const providerProps = {
           parameters,

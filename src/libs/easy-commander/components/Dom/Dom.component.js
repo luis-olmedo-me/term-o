@@ -44,11 +44,11 @@ export const Dom = ({
         patterns,
         defaultElements,
         filter: hasFilters ? filterElements : null
-      }).catch((error) => {
-        setErrorMessage(error)
       })
 
-      elementsSearch.then((newElements) => {
+      elementsSearch.then(({ elements: newElements, error }) => {
+        if (error) return setErrorMessage(error)
+
         setElements(newElements)
         setParameters({ value: newElements, type: parameterTypes.ELEMENTS })
       })

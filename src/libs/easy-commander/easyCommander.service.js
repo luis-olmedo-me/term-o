@@ -3,6 +3,7 @@ import { MessageCommand } from './components/MessageCommand/MessageCommand.compo
 
 import { Outputs } from './components/Outputs/Outputs.component'
 import { consoleCommands, parameterTypes } from './easyCommander.constants'
+import { parseArgsIntoCommands } from './easyCommander.helpers'
 
 const unknownCommandError = {
   message: 'The command you entered is not recognized. Please try again.',
@@ -11,13 +12,7 @@ const unknownCommandError = {
 
 class Commander {
   constructor() {
-    this.parser = null
-
     this.commands = consoleCommands
-  }
-
-  setParser(parser) {
-    this.parser = parser
   }
 
   validatePropValue(value, type, defaultValue) {
@@ -84,11 +79,9 @@ class Commander {
 
     const setOfOutputs = lines.map((line) => {
       const [command, ...args] = line.split(' ')
-
       const knownCommand = this.commands[command]
 
-      const propValues = this.parser(args)
-
+      const propValues = parseArgsIntoCommands(args)
       const props = {
         ...this.buildProps(propValues, knownCommand?.props),
         command: line

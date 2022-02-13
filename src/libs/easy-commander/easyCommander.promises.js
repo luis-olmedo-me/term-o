@@ -38,6 +38,9 @@ export const kebabize = (string) => {
     .join('')
 }
 
+export const camelize = (string) =>
+  string.replace(/-./g, ([_, secondLetter]) => secondLetter.toUpperCase())
+
 const divElement = document.createElement('div')
 export const validStyleKeys = Object.keys(divElement.style)
 

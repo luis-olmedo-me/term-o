@@ -46,7 +46,7 @@ class Commander {
         groupConfig.defaultValue
       )
 
-      return { ...allProps, [name]: validatedValue }
+      return { ...allProps, [groupConfig.key]: validatedValue }
     }, {})
   }
 

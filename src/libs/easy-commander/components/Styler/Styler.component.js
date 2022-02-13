@@ -4,8 +4,15 @@ import { styleElements, validateStyles } from '../../easyCommander.promises'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { parseStyles } from './Styler.helpers'
 
-export const Styler = ({ id, styles, command, parameters, setMessageData }) => {
-  const inlineStyles = parseStyles(styles)
+export const Styler = ({
+  id,
+  styles,
+  manualStyles,
+  command,
+  parameters,
+  setMessageData
+}) => {
+  const inlineStyles = { ...parseStyles(styles), ...manualStyles }
 
   useEffect(
     function applyStyles() {

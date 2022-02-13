@@ -1,11 +1,19 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { parameterTypes } from '../../easyCommander.constants'
 import { styleElements, validateStyles } from '../../easyCommander.promises'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { parseStyles } from './Styler.helpers'
 
-export const Styler = ({ id, styles, command, parameters, setMessageData }) => {
-  const inlineStyles = parseStyles(styles)
+export const Styler = ({
+  id,
+  styles,
+  manualStyles,
+  command,
+  parameters,
+  setMessageData
+}) => {
+  const [stylesApplied, setStylesApplied] = useState({})
+  const inlineStyles = { ...parseStyles(styles), ...manualStyles }
 
   useEffect(
     function applyStyles() {
@@ -19,6 +27,7 @@ export const Styler = ({ id, styles, command, parameters, setMessageData }) => {
 
       if (!hasInvalidatedStyles) {
         styleElements({ styles: validStyles, elements: elementsToStyle })
+        setStylesApplied(validStyles)
       } else {
         const stringifiedInvalidatedStyles = invalidStylesNames.join(', ')
         const message = `Some of the styles you provided are invalid: "${stringifiedInvalidatedStyles}".`
@@ -34,7 +43,7 @@ export const Styler = ({ id, styles, command, parameters, setMessageData }) => {
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
       <LogWrapper variant={parameterTypes.STYLES}>
-        {JSON.stringify(inlineStyles, null, 1)}
+        {JSON.stringify(stylesApplied, null, 1)}
       </LogWrapper>
     </>
   )

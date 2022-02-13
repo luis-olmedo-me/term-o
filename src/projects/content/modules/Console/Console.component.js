@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react'
-import commandParser from 'minimist'
 
 import { commander } from 'libs/easy-commander/easyCommander.service'
 
@@ -13,14 +12,11 @@ import {
   ConsoleHash
 } from './Console.styles.js'
 
-commander.setParser(commandParser)
-
 export const Console = ({ isOpen }) => {
   const [histories, setHistories] = useState([])
   const [currentCommand, setCurrentCommand] = useState('')
   const [commandId, setCcommandId] = useState(0)
 
-  const inputRef = useRef(null)
   const historyRef = useRef(null)
 
   const handleCommandRun = () => {
@@ -45,15 +41,6 @@ export const Console = ({ isOpen }) => {
     }
   }
 
-  useEffect(
-    function focusOnTheInput() {
-      if (isOpen) {
-        inputRef?.current?.focus()
-      }
-    },
-    [isOpen]
-  )
-
   return (
     isOpen && (
       <ConsoleWrapper>
@@ -69,10 +56,10 @@ export const Console = ({ isOpen }) => {
 
             <ConsoleInput
               type='text'
-              ref={inputRef}
               onChange={handleCommandChange}
               onKeyDown={handleKeyPressed}
               value={currentCommand}
+              autoFocus
             />
           </ConsoleInputWrapper>
         </ConsoleContent>

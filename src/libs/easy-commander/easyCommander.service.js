@@ -34,14 +34,38 @@ class Commander {
     }
   }
 
+  buildGroupProps({ _, ...propValues }, groupPropConfigs = {}) {
+    return Object.entries(propValues).reduce((allProps, [name, value]) => {
+      const groupConfig = groupPropConfigs[name]
+
+      if (!groupConfig) return allProps
+
+      const validatedValue = this.validatePropValue(
+        value,
+        groupConfig.type,
+        groupConfig.defaultValue
+      )
+
+      return { ...allProps, [name]: validatedValue }
+    }, {})
+  }
+
   buildProps({ _, ...propValues }, propsConfig = {}) {
     const validatedProps = Object.entries(propsConfig).reduce(
-      (allProps, [propName, { key, type, defaultValue, aliases }]) => {
+      (
+        allProps,
+        [propName, { key, type, defaultValue, aliases, groupProps }]
+      ) => {
         const aliasName = Object.keys(propValues).find((name) => {
           return aliases.includes(name)
         })
 
-        const value = propValues[propName] || propValues[aliasName]
+        const groupValue = groupProps
+          ? this.buildGroupProps(propValues, groupProps)
+          : null
+
+        const value =
+          propValues[propName] || propValues[aliasName] || groupValue
         const validatedValue = this.validatePropValue(value, type, defaultValue)
 
         return { ...allProps, [key]: validatedValue }

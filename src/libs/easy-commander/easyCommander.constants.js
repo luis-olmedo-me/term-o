@@ -2,6 +2,7 @@ import React from 'react'
 
 import { Dom } from './components/Dom/Dom.component'
 import { Styler } from './components/Styler/Styler.component'
+import { cssProps } from './components/Styler/Styler.constants'
 
 export const consoleCommands = {
   dom: {
@@ -24,6 +25,14 @@ export const consoleCommands = {
   },
   css: {
     props: {
+      'manual-styles': {
+        key: 'manualStyles',
+        internal: true,
+        type: 'object',
+        groupProps: cssProps,
+        defaultValue: {},
+        aliases: []
+      },
       styles: {
         key: 'styles',
         type: 'string',

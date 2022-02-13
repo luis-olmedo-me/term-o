@@ -17,7 +17,6 @@ export const Console = ({ isOpen }) => {
   const [currentCommand, setCurrentCommand] = useState('')
   const [commandId, setCcommandId] = useState(0)
 
-  const inputRef = useRef(null)
   const historyRef = useRef(null)
 
   const handleCommandRun = () => {
@@ -42,15 +41,6 @@ export const Console = ({ isOpen }) => {
     }
   }
 
-  useEffect(
-    function focusOnTheInput() {
-      if (isOpen) {
-        inputRef?.current?.focus()
-      }
-    },
-    [isOpen]
-  )
-
   return (
     isOpen && (
       <ConsoleWrapper>
@@ -66,10 +56,10 @@ export const Console = ({ isOpen }) => {
 
             <ConsoleInput
               type='text'
-              ref={inputRef}
               onChange={handleCommandChange}
               onKeyDown={handleKeyPressed}
               value={currentCommand}
+              autoFocus
             />
           </ConsoleInputWrapper>
         </ConsoleContent>

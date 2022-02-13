@@ -49,12 +49,13 @@ export const validateStyles = (styles) => {
   let validStyles = {}
 
   for (const styleKey in styles) {
+    const styleKeyKebab = kebabize(styleKey)
     const styleValue = styles[styleKey]
 
     if (validStyleKeys.includes(styleKey)) {
-      validStyles = { ...validStyles, [styleKey]: styleValue }
+      validStyles = { ...validStyles, [styleKeyKebab]: styleValue }
     } else {
-      invalidStyles = { ...invalidStyles, [styleKey]: styleValue }
+      invalidStyles = { ...invalidStyles, [styleKeyKebab]: styleValue }
     }
   }
 

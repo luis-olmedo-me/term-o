@@ -61,28 +61,26 @@ export const Console = ({ isOpen }) => {
   }
 
   return (
-    isOpen && (
-      <ConsoleWrapper>
-        <ConsoleContent>
-          <ConsoleTitle>TERM-O</ConsoleTitle>
+    <ConsoleWrapper isOpen={isOpen}>
+      <ConsoleContent>
+        <ConsoleTitle>TERM-O</ConsoleTitle>
 
-          <ConsoleLogs id='term-o-console-logs' ref={historyRef}>
-            {histories}
-          </ConsoleLogs>
+        <ConsoleLogs id='term-o-console-logs' ref={historyRef}>
+          {histories}
+        </ConsoleLogs>
 
-          <ConsoleInputWrapper>
-            <ConsoleHash>$</ConsoleHash>
+        <ConsoleInputWrapper>
+          <ConsoleHash>$</ConsoleHash>
 
-            <ConsoleInput
-              type='text'
-              onChange={handleCommandChange}
-              onKeyDown={handleKeyPressed}
-              value={currentCommand}
-              autoFocus
-            />
-          </ConsoleInputWrapper>
-        </ConsoleContent>
-      </ConsoleWrapper>
-    )
+          <ConsoleInput
+            type='text'
+            onChange={handleCommandChange}
+            onKeyDown={handleKeyPressed}
+            value={currentCommand}
+            autoFocus
+          />
+        </ConsoleInputWrapper>
+      </ConsoleContent>
+    </ConsoleWrapper>
   )
 }

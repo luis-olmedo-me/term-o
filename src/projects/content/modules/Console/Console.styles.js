@@ -3,10 +3,11 @@ import styled from 'styled-components'
 export const ConsoleWrapper = styled.div`
   height: 100%;
   position: relative;
-  pointer-events: all;
   color: #d6d6d6;
   font-size: 14px;
   font-family: system-ui;
+  pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
+  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
 `
 
 export const ConsoleContent = styled.div`

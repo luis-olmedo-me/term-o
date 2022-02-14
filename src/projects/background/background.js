@@ -11,6 +11,10 @@ const pageEvents = [
   {
     url: 'https://www.google.com',
     command: 'dom -g a | css --background red'
+  },
+  {
+    url: 'https://www.google.com',
+    command: 'dom -g a | css --color violet'
   }
 ]
 

@@ -1,7 +1,3 @@
-export const scriptEvents = {
-  GET_SCRIPTS: "EASY_GET_SCRIPTS",
-  CREATE_SCRIPT: "EASY_CREATE_SCRIPT",
-  UPDATE_SCRIPT: "EASY_UPDATE_SCRIPT",
-  DELETE_SCRIPT: "EASY_DELETE_SCRIPT",
-  EXECUTE_SCRIPT: "EASY_EXECUTE_SCRIPT",
-};
+export const eventTypes = {
+  GET_PAGE_EVENTS: 'term-o-get-page-events'
+}

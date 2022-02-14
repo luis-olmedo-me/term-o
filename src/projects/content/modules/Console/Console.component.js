@@ -11,6 +11,8 @@ import {
   ConsoleInputWrapper,
   ConsoleHash
 } from './Console.styles.js'
+import { backgroundRequest } from 'src/helpers/event.helpers.js'
+import { eventTypes } from 'src/constants/events.constants.js'
 
 export const Console = ({ isOpen }) => {
   const [histories, setHistories] = useState([])
@@ -34,7 +36,6 @@ export const Console = ({ isOpen }) => {
   useEffect(
     function getPageEvents() {
       const receivePageEvents = ({ response: pageEvents }) => {
-        console.log({ pageEvents })
         pageEvents.forEach((pageEvent) => {
           if (window.location.origin !== pageEvent.url) return
 
@@ -42,10 +43,7 @@ export const Console = ({ isOpen }) => {
         })
       }
 
-      chrome.runtime.sendMessage(
-        { type: 'term-o-get-page-events' },
-        receivePageEvents
-      )
+      backgroundRequest(eventTypes.GET_PAGE_EVENTS, receivePageEvents)
     },
     [handleCommandRun]
   )

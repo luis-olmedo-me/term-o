@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 
 import { commander } from 'libs/easy-commander/easyCommander.service'
 
@@ -15,21 +15,40 @@ import {
 export const Console = ({ isOpen }) => {
   const [histories, setHistories] = useState([])
   const [currentCommand, setCurrentCommand] = useState('')
-  const [commandId, setCcommandId] = useState(0)
+  const [commandId, setCommandId] = useState(0)
 
   const historyRef = useRef(null)
 
-  const handleCommandRun = () => {
-    const logOutput = commander.getLogOutput(commandId, currentCommand)
+  const handleCommandRun = useCallback((command) => {
+    const logOutput = commander.getLogOutput(commandId, command)
 
-    setHistories([...histories, logOutput])
+    setHistories((histories) => [...histories, logOutput])
     setCurrentCommand('')
-    setCcommandId((id) => ++id)
+    setCommandId((id) => ++id)
 
     setTimeout(() => {
       historyRef?.current?.scrollTo(0, historyRef.current.scrollHeight)
     })
-  }
+  }, [])
+
+  useEffect(
+    function getPageEvents() {
+      const receivePageEvents = ({ response: pageEvents }) => {
+        console.log({ pageEvents })
+        pageEvents.forEach((pageEvent) => {
+          if (window.location.origin !== pageEvent.url) return
+
+          handleCommandRun(pageEvent.command)
+        })
+      }
+
+      chrome.runtime.sendMessage(
+        { type: 'term-o-get-page-events' },
+        receivePageEvents
+      )
+    },
+    [handleCommandRun]
+  )
 
   const handleCommandChange = ({ target: { value: newValue } }) => {
     setCurrentCommand(newValue)
@@ -37,7 +56,7 @@ export const Console = ({ isOpen }) => {
 
   const handleKeyPressed = ({ key }) => {
     if (key === 'Enter') {
-      handleCommandRun()
+      handleCommandRun(currentCommand)
     }
   }
 

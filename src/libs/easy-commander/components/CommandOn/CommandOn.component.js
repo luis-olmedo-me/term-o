@@ -3,7 +3,7 @@ import { parameterTypes } from '../../easyCommander.constants'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 // import { parseStyles } from './Styler.helpers'
 
-export const Styler = ({ command, parameters, setMessageData }) => {
+export const CommandOn = ({ command, parameters, setMessageData }) => {
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>

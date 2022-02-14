@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { CommandOn } from './components/CommandOn/CommandOn.component'
 import { Dom } from './components/Dom/Dom.component'
 import { Styler } from './components/Styler/Styler.component'
 import { cssProps } from './components/Styler/Styler.constants'
@@ -41,6 +42,17 @@ export const consoleCommands = {
       }
     },
     output: (props) => <Styler key={props.id} {...props} />
+  },
+  on: {
+    props: {
+      url: {
+        key: 'url',
+        type: 'array',
+        defaultValue: [],
+        aliases: ['u']
+      }
+    },
+    output: (props) => <CommandOn key={props.id} {...props} />
   }
 }
 

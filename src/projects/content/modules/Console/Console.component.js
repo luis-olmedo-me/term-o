@@ -18,15 +18,18 @@ export const Console = ({ isOpen }) => {
   const [histories, setHistories] = useState([])
   const [currentCommand, setCurrentCommand] = useState('')
   const [commandId, setCommandId] = useState(0)
+  let auxiliarId = 0
 
   const historyRef = useRef(null)
 
   const handleCommandRun = useCallback((command) => {
-    const logOutput = commander.getLogOutput(commandId, command)
+    const generatedId = `${commandId}-${auxiliarId}`
+    const logOutput = commander.getLogOutput(generatedId, command)
 
     setHistories((histories) => [...histories, logOutput])
     setCurrentCommand('')
     setCommandId((id) => ++id)
+    auxiliarId++
 
     setTimeout(() => {
       historyRef?.current?.scrollTo(0, historyRef.current.scrollHeight)
@@ -37,13 +40,20 @@ export const Console = ({ isOpen }) => {
     function getPageEvents() {
       const receivePageEvents = ({ response: pageEvents }) => {
         pageEvents.forEach((pageEvent) => {
-          if (window.location.origin !== pageEvent.url) return
+          const validURL = window.location.origin.match(
+            new RegExp(pageEvent.url)
+          )
+
+          if (!validURL) return
 
           handleCommandRun(pageEvent.command)
         })
       }
 
-      backgroundRequest(eventTypes.GET_PAGE_EVENTS, receivePageEvents)
+      backgroundRequest({
+        eventType: eventTypes.GET_PAGE_EVENTS,
+        callback: receivePageEvents
+      })
     },
     [handleCommandRun]
   )

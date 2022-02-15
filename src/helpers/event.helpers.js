@@ -1,3 +1,3 @@
-export const backgroundRequest = (eventType, callback) => {
-  chrome.runtime.sendMessage({ type: eventType }, callback)
+export const backgroundRequest = ({ eventType, callback, data }) => {
+  chrome.runtime.sendMessage({ type: eventType, data }, callback)
 }

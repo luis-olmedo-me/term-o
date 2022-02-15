@@ -1,10 +1,22 @@
 import broker from 'libs/easy-broker'
 import { NEW_COMMAND } from 'libs/easy-key-manager'
 import { eventTypes } from 'src/constants/events.constants.js'
+import { REQUEST_EVENT_KEY } from '../../libs/easy-broker/constants/eventKeys.constants'
+
+// chrome.commands.onCommand.addListener(function (command) {
+//   chrome.tabs.query({ active: true }, ([{ id }]) => {
+//     broker.send(NEW_COMMAND, { command }, null, id)
+//   })
+// })
 
 chrome.commands.onCommand.addListener(function (command) {
-  chrome.tabs.query({ active: true }, ([{ id }]) => {
-    broker.send(NEW_COMMAND, { command }, null, id)
+  const requestData = {
+    action: eventTypes.NEW_COMMAND,
+    data: { command }
+  }
+
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, requestData)
   })
 })
 

@@ -7,6 +7,7 @@ import { EASY_DOM_CONTENT_WRAPPER_ID } from 'projects/content/content.constants'
 import { Console } from '../modules/Console/Console.component'
 
 import { ContentWrapper } from './Content.styles.js'
+import { eventTypes } from 'src/constants/events.constants.js'
 
 keysManager.setConnectionProvider(broker).init()
 
@@ -31,13 +32,21 @@ export const Content = () => {
   )
 
   useEffect(function openConsoleByKeyCommands() {
-    keysManager.onNewCommand((command) => {
-      if (command === extensionKeyEvents.TOGGLE_TERMINAL) {
-        setIsConsoleOpen((state) => !state)
-      }
-    })
+    const toggleTerminal = (message, sender, sendResponse) => {
+      if (message.action !== eventTypes.NEW_COMMAND) return
 
-    return () => {}
+      switch (message.data.command) {
+        case extensionKeyEvents.TOGGLE_TERMINAL:
+          setIsConsoleOpen((state) => !state)
+          break
+      }
+
+      sendResponse({ status: 'ok' })
+    }
+
+    chrome.extension.onMessage.addListener(toggleTerminal)
+
+    return () => chrome.extension.onMessage.removeListener(toggleTerminal)
   }, [])
 
   return (

@@ -1,5 +1,6 @@
 import broker from 'libs/easy-broker'
 import { NEW_COMMAND } from 'libs/easy-key-manager'
+import { eventTypes } from 'src/constants/events.constants.js'
 
 chrome.commands.onCommand.addListener(function (command) {
   chrome.tabs.query({ active: true }, ([{ id }]) => {
@@ -22,14 +23,20 @@ const setPageEvents = (events) => {
 }
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  if (request.type === 'term-o-add-page-event') {
-    const newData = { pageEvents: [...pageEvents, request.data] }
+  switch (request.type) {
+    case eventTypes.GET_PAGE_EVENTS: {
+      sendResponse({ status: 'ok', response: pageEvents })
+      break
+    }
 
-    setPageEvents(newData)
-    updatePageEvents()
-    sendResponse({ status: 'ok' })
-  } else if (request.type === 'term-o-get-page-events') {
-    sendResponse({ status: 'ok', response: pageEvents })
+    case eventTypes.ADD_PAGE_EVENT: {
+      const newData = { pageEvents: [...pageEvents, request.data] }
+
+      setPageEvents(newData)
+      updatePageEvents()
+      sendResponse({ status: 'ok' })
+      break
+    }
   }
 })
 

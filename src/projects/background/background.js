@@ -7,23 +7,30 @@ chrome.commands.onCommand.addListener(function (command) {
   })
 })
 
-const pageEvents = [
-  {
-    url: 'https://www.google.com',
-    command: 'dom -g a | css --background red'
-  },
-  {
-    url: 'https://www.google.com',
-    command: 'dom -g a | css --color violet'
+let pageEvents = []
+
+const updatePageEvents = () => {
+  const receivePageEvents = ({ pageEvents: pageEventsFromLocalStorage }) => {
+    pageEvents = pageEventsFromLocalStorage || []
   }
-]
+
+  chrome.storage.sync.get('pageEvents', receivePageEvents)
+}
+
+const setPageEvents = (events) => {
+  chrome.storage.sync.set({ pageEvents: events })
+}
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.type === 'term-o-add-page-event') {
-    pageEvents.push(request.data)
+    const newData = { pageEvents: [...pageEvents, request.data] }
 
+    setPageEvents(newData)
+    updatePageEvents()
     sendResponse({ status: 'ok' })
   } else if (request.type === 'term-o-get-page-events') {
     sendResponse({ status: 'ok', response: pageEvents })
   }
 })
+
+updatePageEvents()

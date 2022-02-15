@@ -3,3 +3,7 @@ export const eventTypes = {
   ADD_PAGE_EVENT: 'term-o-add-page-event',
   NEW_COMMAND: 'term-o-new-command'
 }
+
+export const extensionKeyEvents = {
+  TOGGLE_TERMINAL: 'toggle-terminal'
+}

@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react'
 
-import broker from 'libs/easy-broker'
-import { keysManager, extensionKeyEvents } from 'libs/easy-key-manager'
-
 import { EASY_DOM_CONTENT_WRAPPER_ID } from 'projects/content/content.constants'
 import { Console } from '../modules/Console/Console.component'
 
 import { ContentWrapper } from './Content.styles.js'
-import { eventTypes } from 'src/constants/events.constants.js'
-
-keysManager.setConnectionProvider(broker).init()
+import {
+  eventTypes,
+  extensionKeyEvents
+} from 'src/constants/events.constants.js'
 
 export const Content = () => {
   const [isConsoleOpen, setIsConsoleOpen] = useState(false)

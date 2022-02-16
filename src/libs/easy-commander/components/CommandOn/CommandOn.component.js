@@ -16,23 +16,29 @@ export const CommandOn = ({
     function setUpEventByURL() {
       if (!url.length) return
 
-      backgroundRequest(eventTypes.ADD_PAGE_EVENT, {})
+      const urlForEvent = url.join('|')
+      const commandsToRun = run.map((commandToRun) => {
+        return { command: commandToRun, url: urlForEvent }
+      })
 
       backgroundRequest({
-        eventType: eventTypes.ADD_PAGE_EVENT,
-        data: { command: run, url: url.join('|') }
+        eventType: eventTypes.ADD_PAGES_EVENT,
+        data: commandsToRun
       })
     },
     [url, run]
   )
 
+  const urlsApplied = url.includes('.') ? 'ANY' : `"${url.join('", "')}"`
+  const commandsApplied = `"${run.join('", "')}"`
+
+  const label = `Set ${commandsApplied} to run on ${urlsApplied} urls.`
+
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-      <LogWrapper variant={parameterTypes.INFO}>
-        configuring event...
-      </LogWrapper>
+      <LogWrapper variant={parameterTypes.INFO}>{label}</LogWrapper>
     </>
   )
 }

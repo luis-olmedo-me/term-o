@@ -53,8 +53,8 @@ export const consoleCommands = {
       },
       run: {
         key: 'run',
-        type: 'string',
-        defaultValue: '',
+        type: 'array',
+        defaultValue: [],
         aliases: ['r']
       }
     },

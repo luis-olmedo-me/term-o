@@ -38,7 +38,7 @@ export const Console = ({ isOpen }) => {
 
   useEffect(
     function getPageEvents() {
-      const receivePageEvents = ({ response: { pageEvents } }) => {
+      const receivePageEvents = ({ response: pageEvents }) => {
         pageEvents.forEach((pageEvent) => {
           const validURL = window.location.origin.match(
             new RegExp(pageEvent.url)

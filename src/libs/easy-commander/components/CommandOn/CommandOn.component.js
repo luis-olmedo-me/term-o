@@ -51,7 +51,7 @@ export const CommandOn = ({
 
       {list && (
         <LogWrapper variant={parameterTypes.INFO}>
-          <Table headers={['url', 'command']} rows={pageEventsRows} />
+          <Table headers={['command', 'url']} rows={pageEventsRows} />
         </LogWrapper>
       )}
     </>

@@ -39,6 +39,11 @@ export const Log = styled.div`
     background-color: #707088;
     color: #d6d6e7;
   }
+
+  &&.table {
+    background-color: #706090;
+    color: #d6d6e7;
+  }
 `
 
 export const Hash = styled.span`

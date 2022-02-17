@@ -75,5 +75,6 @@ export const parameterTypes = {
   COMMAND: 'command',
   BUTTON_GROUP: 'button-group',
   ERROR: 'error',
-  INFO: 'info'
+  INFO: 'info',
+  TABLE: 'table'
 }

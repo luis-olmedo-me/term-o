@@ -33,7 +33,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 
     case eventTypes.ADD_PAGES_EVENT: {
-      const newData = [...pageEvents, ...request.data]
+      const newPageEvents = request.data.map((newEvent) => ({
+        ...newEvent,
+        id: Date.now()
+      }))
+
+      const newData = [...pageEvents, ...newPageEvents]
 
       setPageEvents(newData)
       updatePageEvents()

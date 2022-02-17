@@ -74,7 +74,7 @@ class Commander {
     }
   }
 
-  getLogOutput(id, fullLine) {
+  getLogOutput(id, fullLine, customProps) {
     const lines = fullLine.split('|').map((line) => line.trim())
 
     const setOfOutputs = lines.map((line) => {
@@ -90,7 +90,11 @@ class Commander {
       const hasKnownCommand = Boolean(knownCommand)
 
       return (providerProps) => {
-        const commonProps = { ...props, ...providerProps }
+        const commonProps = {
+          ...props,
+          ...providerProps,
+          ...customProps
+        }
 
         if (!hasKnownCommand) {
           const errorProps = {

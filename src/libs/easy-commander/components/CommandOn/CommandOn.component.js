@@ -9,6 +9,7 @@ export const CommandOn = ({
   command,
   url,
   run,
+  list,
   parameters,
   setMessageData
 }) => {
@@ -29,6 +30,7 @@ export const CommandOn = ({
     [url, run]
   )
 
+  const hasCommandsApplied = run.length > 0
   const urlsApplied = url.includes('.') ? 'ANY' : `"${url.join('", "')}"`
   const commandsApplied = `"${run.join('", "')}"`
 
@@ -38,7 +40,9 @@ export const CommandOn = ({
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-      <LogWrapper variant={parameterTypes.INFO}>{label}</LogWrapper>
+      {hasCommandsApplied && (
+        <LogWrapper variant={parameterTypes.INFO}>{label}</LogWrapper>
+      )}
     </>
   )
 }

@@ -18,13 +18,15 @@ export const Console = ({ isOpen }) => {
   const [histories, setHistories] = useState([])
   const [currentCommand, setCurrentCommand] = useState('')
   const [commandId, setCommandId] = useState(0)
+  const [pageEvents, setPageEvents] = useState([])
   let auxiliarId = 0
 
   const historyRef = useRef(null)
 
   const handleCommandRun = useCallback((command) => {
     const generatedId = `${commandId}-${auxiliarId}`
-    const logOutput = commander.getLogOutput(generatedId, command)
+    const customProps = { pageEvents }
+    const logOutput = commander.getLogOutput(generatedId, command, customProps)
 
     setHistories((histories) => [...histories, logOutput])
     setCurrentCommand('')
@@ -54,6 +56,8 @@ export const Console = ({ isOpen }) => {
         eventType: eventTypes.GET_PAGE_EVENTS,
         callback: receivePageEvents
       })
+
+      setPageEvents(pageEvents)
     },
     [handleCommandRun]
   )

@@ -61,7 +61,7 @@ export const CommandEvent = ({
       })
 
       setMessageData({
-        type: parameterTypes.INFO,
+        type: parameterTypes.SUCCESS,
         message: `Deleted ${idsToDelete.length} page events.`
       })
     },

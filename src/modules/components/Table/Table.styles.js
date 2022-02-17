@@ -1,24 +1,10 @@
 import styled from 'styled-components'
 
-export const TooltipContentTriggered = styled.div`
-  position: absolute;
-  bottom: calc(100% + 10px);
-  background-color: #333;
-  color: #dedede;
-  border-radius: 3px;
-  padding: 5px 10px;
-  z-index: 1;
-  height: max-content;
-
-  &&.top {
-    bottom: calc(100% + 10px);
-  }
-
-  &&.bottom {
-    top: calc(100% + 10px);
-  }
+export const TableWrapper = styled.table`
+  width: 100%;
+  border-collapse: collapse;
 `
 
-export const TooltipTrigger = styled.div`
-  position: relative;
+export const TableHeaderRow = styled.tr`
+  border-bottom: 1px solid #d6d6d6;
 `

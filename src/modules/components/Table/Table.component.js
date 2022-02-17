@@ -1,14 +1,15 @@
 import React from 'react'
+import { TableHeaderRow, TableWrapper } from './Table.styles'
 
 export const Table = ({ headers, rows }) => {
   return (
-    <table>
+    <TableWrapper>
       <thead>
-        <tr>
+        <TableHeaderRow>
           {headers.map((header) => (
             <th key={`header-${header}`}>{header}</th>
           ))}
-        </tr>
+        </TableHeaderRow>
       </thead>
       <tbody>
         {rows.map((row, index) => (
@@ -19,6 +20,6 @@ export const Table = ({ headers, rows }) => {
           </tr>
         ))}
       </tbody>
-    </table>
+    </TableWrapper>
   )
 }

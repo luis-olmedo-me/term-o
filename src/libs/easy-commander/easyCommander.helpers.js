@@ -29,7 +29,11 @@ export const parseArgsIntoCommands = (args) => {
       case 'array':
         return {
           ...parsedObject,
-          [key]: value?.map(decodeStringValue)
+          [key]: value?.map((item) => {
+            const itemStringified = item.toString()
+
+            return decodeStringValue(itemStringified)
+          })
         }
 
       default:

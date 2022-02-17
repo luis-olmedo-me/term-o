@@ -9,8 +9,6 @@ export const CommandOn = ({
   command,
   url,
   run,
-  list,
-  pageEvents,
   parameters,
   setMessageData
 }) => {
@@ -37,22 +35,12 @@ export const CommandOn = ({
 
   const label = `Set ${commandsApplied} to run on ${urlsApplied} urls.`
 
-  const pageEventsRows = pageEvents.map((pageEvent) => {
-    return Object.values(pageEvent)
-  })
-
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
       {hasCommandsApplied && (
         <LogWrapper variant={parameterTypes.INFO}>{label}</LogWrapper>
-      )}
-
-      {list && (
-        <LogWrapper variant={parameterTypes.TABLE}>
-          <Table headers={['command', 'url']} rows={pageEventsRows} />
-        </LogWrapper>
       )}
     </>
   )

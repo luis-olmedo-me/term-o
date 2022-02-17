@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { CommandOn } from './components/CommandOn/CommandOn.component'
+import { CommandEvent } from './components/CommandEvent/CommandEvent.component'
 import { Dom } from './components/Dom/Dom.component'
 import { Styler } from './components/Styler/Styler.component'
 import { cssProps } from './components/Styler/Styler.constants'
@@ -56,7 +57,12 @@ export const consoleCommands = {
         type: 'array',
         defaultValue: [],
         aliases: ['r']
-      },
+      }
+    },
+    output: (props) => <CommandOn key={props.id} {...props} />
+  },
+  event: {
+    props: {
       list: {
         key: 'list',
         type: 'boolean',
@@ -64,7 +70,7 @@ export const consoleCommands = {
         aliases: ['l']
       }
     },
-    output: (props) => <CommandOn key={props.id} {...props} />
+    output: (props) => <CommandEvent key={props.id} {...props} />
   }
 }
 

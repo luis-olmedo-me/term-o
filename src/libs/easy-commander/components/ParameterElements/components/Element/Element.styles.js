@@ -10,6 +10,7 @@ export const ElementWrapper = styled.span`
   box-shadow: 0 0 0 2px #a0a0a0;
   flex: auto;
   text-align: center;
+  line-height: 1.75;
 
   &:hover {
     box-shadow: 0 0 0 4px #a0a0a0;

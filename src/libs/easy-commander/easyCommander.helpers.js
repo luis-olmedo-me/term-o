@@ -1,15 +1,52 @@
 import commandParser from 'minimist'
 
+const decodeStringValue = (value) => {
+  return decodeURI(value).replace(/^"|"$/g, '')
+}
+
 export const parseArgsIntoCommands = (args) => {
-  const line = args.join(' ').replace(/".+"/g, encodeURI).split(' ')
+  const line = args
+    .join(' ')
+    .replace(/"(\w|\s|-)+"/g, encodeURI)
+    .split(' ')
+
   const object = commandParser(line)
 
   return Object.entries(object).reduce((parsedObject, [key, value]) => {
-    const isValueString = typeof value === 'string'
+    const valueType = typeof value
+    const isObject = typeof value === 'object'
 
-    return {
-      ...parsedObject,
-      [key]: isValueString ? decodeURI(value).replace(/^"|"$/g, '') : value
+    const objectValidatedType = Array.isArray(value) ? 'array' : valueType
+    const validatedValueType = isObject ? objectValidatedType : valueType
+
+    switch (validatedValueType) {
+      case 'string':
+        return {
+          ...parsedObject,
+          [key]: decodeStringValue(value)
+        }
+
+      case 'array':
+        return {
+          ...parsedObject,
+          [key]: value?.map((item) => {
+            const itemStringified = String(item)
+
+            return decodeStringValue(itemStringified)
+          })
+        }
+
+      case 'number':
+        return {
+          ...parsedObject,
+          [key]: String(value)
+        }
+
+      default:
+        return {
+          ...parsedObject,
+          [key]: value
+        }
     }
   }, {})
 }

@@ -1,6 +1,6 @@
 {
   "name": "Easy Console",
-  "version": "1.0",
+  "version": "0.0.1",
   "description": "Temporally description",
   "manifest_version": 2,
   "permissions": ["tabs", "activeTab", "storage"],

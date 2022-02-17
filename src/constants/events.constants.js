@@ -1,7 +1,10 @@
-export const scriptEvents = {
-  GET_SCRIPTS: "EASY_GET_SCRIPTS",
-  CREATE_SCRIPT: "EASY_CREATE_SCRIPT",
-  UPDATE_SCRIPT: "EASY_UPDATE_SCRIPT",
-  DELETE_SCRIPT: "EASY_DELETE_SCRIPT",
-  EXECUTE_SCRIPT: "EASY_EXECUTE_SCRIPT",
-};
+export const eventTypes = {
+  GET_PAGE_EVENTS: 'term-o-get-page-events',
+  ADD_PAGES_EVENT: 'term-o-add-pages-event',
+  DELETE_PAGES_EVENT: 'term-o-delete-pages-event',
+  NEW_COMMAND: 'term-o-new-command'
+}
+
+export const extensionKeyEvents = {
+  TOGGLE_TERMINAL: 'toggle-terminal'
+}

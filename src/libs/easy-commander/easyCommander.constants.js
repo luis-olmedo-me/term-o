@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { CommandOn } from './components/CommandOn/CommandOn.component'
+import { CommandEvent } from './components/CommandEvent/CommandEvent.component'
 import { Dom } from './components/Dom/Dom.component'
 import { Styler } from './components/Styler/Styler.component'
 import { cssProps } from './components/Styler/Styler.constants'
@@ -41,6 +43,40 @@ export const consoleCommands = {
       }
     },
     output: (props) => <Styler key={props.id} {...props} />
+  },
+  on: {
+    props: {
+      url: {
+        key: 'url',
+        type: 'array',
+        defaultValue: [],
+        aliases: ['u']
+      },
+      run: {
+        key: 'run',
+        type: 'array',
+        defaultValue: [],
+        aliases: ['r']
+      }
+    },
+    output: (props) => <CommandOn key={props.id} {...props} />
+  },
+  event: {
+    props: {
+      list: {
+        key: 'list',
+        type: 'boolean',
+        defaultValue: false,
+        aliases: ['l']
+      },
+      delete: {
+        key: 'delete',
+        type: 'array',
+        defaultValue: [],
+        aliases: ['d']
+      }
+    },
+    output: (props) => <CommandEvent key={props.id} {...props} />
   }
 }
 
@@ -51,5 +87,7 @@ export const parameterTypes = {
   COMMAND: 'command',
   BUTTON_GROUP: 'button-group',
   ERROR: 'error',
-  INFO: 'info'
+  INFO: 'info',
+  SUCCESS: 'success',
+  TABLE: 'table'
 }

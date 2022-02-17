@@ -11,15 +11,13 @@ export const Table = ({ headers, rows }) => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          {rows.map((row, index) => (
-            <tr key={`row-${index}`}>
-              {row.map((column, index) => (
-                <td key={`row-item-${index}`}>{column}</td>
-              ))}
-            </tr>
-          ))}
-        </tr>
+        {rows.map((row, index) => (
+          <tr key={`row-${index}`}>
+            {row.map((column, index) => (
+              <td key={`row-item-${index}`}>{column}</td>
+            ))}
+          </tr>
+        ))}
       </tbody>
     </table>
   )

@@ -69,9 +69,6 @@ class Commander {
       {}
     )
 
-    console.log('propValues', propValues)
-    console.log('validated props', validatedProps)
-
     return {
       values: _,
       ...validatedProps

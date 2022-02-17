@@ -14,7 +14,6 @@ export const CommandEvent = ({
   parameters,
   setMessageData
 }) => {
-  console.log('deletedIds', deletedIds)
   const [idsToDelete, setIdsToDelete] = useState([])
   const pageEventsRows = pageEvents.map((pageEvent) => {
     return eventRows.map((eventRow) => pageEvent[eventRow])
@@ -61,7 +60,6 @@ export const CommandEvent = ({
         data: { ids: idsToDelete }
       })
 
-      console.log('Deleted page events:', idsToDelete)
       setMessageData({
         type: parameterTypes.INFO,
         message: `Deleted ${idsToDelete.length} page events.`

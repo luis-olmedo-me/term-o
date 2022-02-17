@@ -25,8 +25,7 @@ export const Console = ({ isOpen }) => {
 
   const handleCommandRun = useCallback((command) => {
     const generatedId = `${commandId}-${auxiliarId}`
-    const customProps = { pageEvents }
-    const logOutput = commander.getLogOutput(generatedId, command, customProps)
+    const logOutput = commander.getLogOutput(generatedId, command)
 
     setHistories((histories) => [...histories, logOutput])
     setCurrentCommand('')
@@ -40,8 +39,8 @@ export const Console = ({ isOpen }) => {
 
   useEffect(
     function getPageEvents() {
-      const receivePageEvents = ({ response: pageEvents }) => {
-        pageEvents.forEach((pageEvent) => {
+      const receivePageEvents = ({ response: newPageEvents }) => {
+        newPageEvents.forEach((pageEvent) => {
           const validURL = window.location.origin.match(
             new RegExp(pageEvent.url)
           )
@@ -50,14 +49,14 @@ export const Console = ({ isOpen }) => {
 
           handleCommandRun(pageEvent.command)
         })
+
+        setPageEvents(newPageEvents)
       }
 
       backgroundRequest({
         eventType: eventTypes.GET_PAGE_EVENTS,
         callback: receivePageEvents
       })
-
-      setPageEvents(pageEvents)
     },
     [handleCommandRun]
   )
@@ -72,13 +71,15 @@ export const Console = ({ isOpen }) => {
     }
   }
 
+  const outsideProps = { pageEvents }
+
   return (
     <ConsoleWrapper isOpen={isOpen}>
       <ConsoleContent>
         <ConsoleTitle>TERM-O</ConsoleTitle>
 
         <ConsoleLogs id='term-o-console-logs' ref={historyRef}>
-          {histories}
+          {histories.map((history) => history(outsideProps))}
         </ConsoleLogs>
 
         <ConsoleInputWrapper>

@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react'
 import { parameterTypes } from '../../easyCommander.constants'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
-// import { parseStyles } from './Styler.helpers'
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
 import { eventTypes } from 'src/constants/events.constants.js'
+import { Table } from 'modules/components/Table/Table.component'
 
 export const CommandOn = ({
   command,
   url,
   run,
   list,
+  pageEvents,
   parameters,
   setMessageData
 }) => {
@@ -36,12 +37,22 @@ export const CommandOn = ({
 
   const label = `Set ${commandsApplied} to run on ${urlsApplied} urls.`
 
+  const pageEventsRows = pageEvents.map((pageEvent) => {
+    return Object.values(pageEvent)
+  })
+
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
       {hasCommandsApplied && (
         <LogWrapper variant={parameterTypes.INFO}>{label}</LogWrapper>
+      )}
+
+      {list && (
+        <LogWrapper variant={parameterTypes.INFO}>
+          <Table headers={['url', 'command']} rows={pageEventsRows} />
+        </LogWrapper>
       )}
     </>
   )

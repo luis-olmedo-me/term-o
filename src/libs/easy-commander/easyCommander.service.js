@@ -74,7 +74,7 @@ class Commander {
     }
   }
 
-  getLogOutput(id, fullLine, customProps) {
+  getLogOutput(id, fullLine) {
     const lines = fullLine.split('|').map((line) => line.trim())
 
     const setOfOutputs = lines.map((line) => {
@@ -92,8 +92,7 @@ class Commander {
       return (providerProps) => {
         const commonProps = {
           ...props,
-          ...providerProps,
-          ...customProps
+          ...providerProps
         }
 
         if (!hasKnownCommand) {
@@ -111,7 +110,9 @@ class Commander {
       }
     })
 
-    return <Outputs key={id} components={setOfOutputs} />
+    return (outsideProps) => (
+      <Outputs {...outsideProps} key={id} components={setOfOutputs} />
+    )
   }
 }
 

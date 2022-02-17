@@ -56,6 +56,12 @@ export const consoleCommands = {
         type: 'array',
         defaultValue: [],
         aliases: ['r']
+      },
+      list: {
+        key: 'list',
+        type: 'boolean',
+        defaultValue: false,
+        aliases: ['l']
       }
     },
     output: (props) => <CommandOn key={props.id} {...props} />

@@ -68,6 +68,12 @@ export const consoleCommands = {
         type: 'boolean',
         defaultValue: false,
         aliases: ['l']
+      },
+      delete: {
+        key: 'delete',
+        type: 'array',
+        defaultValue: [],
+        aliases: ['d']
       }
     },
     output: (props) => <CommandEvent key={props.id} {...props} />

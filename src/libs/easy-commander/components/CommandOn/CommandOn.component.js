@@ -3,7 +3,6 @@ import { parameterTypes } from '../../easyCommander.constants'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
 import { eventTypes } from 'src/constants/events.constants.js'
-import { Table } from 'modules/components/Table/Table.component'
 
 export const CommandOn = ({
   command,

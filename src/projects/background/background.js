@@ -46,6 +46,17 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       sendResponse({ status: 'ok' })
       break
     }
+
+    case eventTypes.DELETE_PAGES_EVENT: {
+      const newData = pageEvents.filter(
+        ({ id }) => !request.data.ids.includes(id)
+      )
+
+      setPageEvents(newData)
+      updatePageEvents()
+      sendResponse({ status: 'ok' })
+      break
+    }
   }
 })
 

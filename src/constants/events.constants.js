@@ -1,6 +1,7 @@
 export const eventTypes = {
   GET_PAGE_EVENTS: 'term-o-get-page-events',
   ADD_PAGES_EVENT: 'term-o-add-pages-event',
+  DELETE_PAGES_EVENT: 'term-o-delete-pages-event',
   NEW_COMMAND: 'term-o-new-command'
 }
 

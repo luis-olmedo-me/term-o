@@ -18,10 +18,11 @@ class Commander {
   validatePropValue(value, type, defaultValue) {
     switch (type) {
       case 'array': {
-        const parsedString = typeof value === 'string' ? [value] : null
+        const isTrickyType = ['string', 'number'].includes(typeof value)
+        const parsedValue = isTrickyType ? [value] : null
         const parsedArray = Array.isArray(value) ? value : null
 
-        return parsedString || parsedArray || defaultValue
+        return parsedValue || parsedArray || defaultValue
       }
 
       default:
@@ -67,6 +68,9 @@ class Commander {
       },
       {}
     )
+
+    console.log('propValues', propValues)
+    console.log('validated props', validatedProps)
 
     return {
       values: _,

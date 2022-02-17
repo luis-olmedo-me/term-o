@@ -1,16 +1,21 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { parameterTypes } from '../../easyCommander.constants'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { Table } from 'modules/components/Table/Table.component'
 import { eventRows } from './CommandEvent.constants'
+import { eventTypes } from 'src/constants/events.constants.js'
+import { backgroundRequest } from 'src/helpers/event.helpers.js'
 
 export const CommandEvent = ({
   command,
   list,
+  delete: deletedIds,
   pageEvents,
   parameters,
   setMessageData
 }) => {
+  console.log('deletedIds', deletedIds)
+  const [idsToDelete, setIdsToDelete] = useState([])
   const pageEventsRows = pageEvents.map((pageEvent) => {
     return eventRows.map((eventRow) => pageEvent[eventRow])
   })
@@ -27,6 +32,45 @@ export const CommandEvent = ({
       })
     },
     [hasPageEvents, list]
+  )
+
+  useEffect(
+    function validateDeletedIds() {
+      const validDeltedIds = deletedIds.filter((id) => {
+        return pageEvents.some((pageEvent) => pageEvent.id === id)
+      })
+
+      console.log('pageEvents', pageEvents)
+      console.log('validDeltedIds', validDeltedIds)
+
+      if (deletedIds.length !== validDeltedIds.length) {
+        setMessageData({
+          type: parameterTypes.ERROR,
+          message: `The following ids were not found: ${deletedIds.join(', ')}`
+        })
+      }
+
+      setIdsToDelete(validDeltedIds)
+    },
+    [deletedIds, pageEvents]
+  )
+
+  useEffect(
+    function deletePageEvents() {
+      if (!idsToDelete.length) return
+
+      backgroundRequest({
+        eventType: eventTypes.DELETE_PAGES_EVENT,
+        data: { ids: idsToDelete }
+      })
+
+      console.log('Deleted page events:', idsToDelete)
+      setMessageData({
+        type: parameterTypes.INFO,
+        message: `Deleted ${idsToDelete.length} page events.`
+      })
+    },
+    [hasPageEvents, list, idsToDelete]
   )
 
   return (

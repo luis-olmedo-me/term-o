@@ -39,6 +39,10 @@ export const CommandEvent = ({
         return pageEvents.some((pageEvent) => pageEvent.id === id)
       })
 
+      console.log('deletedIds', deletedIds)
+      console.log('validDeltedIds', validDeltedIds)
+      console.log('pageEvents', pageEvents)
+
       if (deletedIds.length !== validDeltedIds.length) {
         setMessageData({
           type: parameterTypes.ERROR,

@@ -18,10 +18,8 @@ import { resizeTypes } from './hooks/useResize/useResize.constants'
 
 export const Content = () => {
   const [isConsoleOpen, setIsConsoleOpen] = useState(false)
-  const wrapperReference = useRef(null)
-  const { setResizingFrom, resizeData, setMovingFrom, isMoving } = useResize({
-    wrapperReference
-  })
+
+  const isContentActive = isConsoleOpen
 
   useEffect(function openConsoleByKeyCommands() {
     const toggleTerminal = (message, _sender, sendResponse) => {
@@ -50,41 +48,8 @@ export const Content = () => {
   }
 
   return (
-    <ContentWrapper
-      ref={wrapperReference}
-      opacity={isConsoleOpen ? 1 : 0}
-      style={resizeData}
-    >
-      {!isMoving ? (
-        <>
-          <ResizerLeft
-            onMouseDown={() => resizeConsole(resizeTypes.LEFT)}
-            onMouseUp={stopResizeConsole}
-          />
-
-          <ResizerRight
-            onMouseDown={() => resizeConsole(resizeTypes.RIGHT)}
-            onMouseUp={stopResizeConsole}
-          />
-          <ResizerTop
-            onMouseDown={() => resizeConsole(resizeTypes.TOP)}
-            onMouseUp={stopResizeConsole}
-          />
-          <ResizerBottom
-            onMouseDown={() => resizeConsole(resizeTypes.BOTTOM)}
-            onMouseUp={stopResizeConsole}
-          />
-        </>
-      ) : null}
-
-      <Console
-        isOpen={isConsoleOpen}
-        isMoving={isMoving}
-        onTitleClick={(event) => {
-          resizeConsole(resizeTypes.MOVING)
-          setMovingFrom({ x: event.clientX, y: event.clientY })
-        }}
-      />
+    <ContentWrapper opacity={isContentActive ? 1 : 0}>
+      <Console isOpen={isConsoleOpen} />
     </ContentWrapper>
   )
 }

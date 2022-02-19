@@ -3,7 +3,13 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { EASY_DOM_CONTENT_WRAPPER_ID } from 'projects/content/content.constants'
 import { Console } from '../modules/Console/Console.component'
 
-import { ContentWrapper, ResizerLeft } from './Content.styles.js'
+import {
+  ContentWrapper,
+  ResizerLeft,
+  ResizerRight,
+  ResizerTop,
+  ResizerBottom
+} from './Content.styles.js'
 import {
   eventTypes,
   extensionKeyEvents
@@ -64,14 +70,30 @@ export const Content = () => {
         let newResizeData = {}
 
         switch (resizingFrom) {
-          case 'left':
+          case 'left': {
             const wrapperOffsetLeft = wrapperReference.current.offsetLeft
             const newDistance = event.clientX - wrapperOffsetLeft
+
             newResizeData = { left: newDistance + wrapperOffsetLeft }
-            console.log('newDistance', newDistance)
-            console.log('wrapperOffsetLeft', wrapperOffsetLeft)
-            console.log('newResizeData.left', newResizeData.left)
             break
+          }
+
+          case 'right': {
+            newResizeData = { right: innerWidth - event.clientX - 1 }
+            break
+          }
+
+          case 'top': {
+            const wrapperOffsetTop = wrapperReference.current.offsetTop
+            const newDistance = event.clientY - wrapperOffsetTop
+
+            newResizeData = { top: newDistance + wrapperOffsetTop }
+            break
+          }
+          case 'bottom': {
+            newResizeData = { bottom: innerHeight - event.clientY - 1 }
+            break
+          }
         }
 
         setResizeData((oldResizeData) => ({
@@ -106,6 +128,20 @@ export const Content = () => {
         onMouseDown={() => resizeConsole('left')}
         onMouseUp={stopResizeConsole}
       />
+
+      <ResizerRight
+        onMouseDown={() => resizeConsole('right')}
+        onMouseUp={stopResizeConsole}
+      />
+      <ResizerTop
+        onMouseDown={() => resizeConsole('top')}
+        onMouseUp={stopResizeConsole}
+      />
+      <ResizerBottom
+        onMouseDown={() => resizeConsole('bottom')}
+        onMouseUp={stopResizeConsole}
+      />
+
       <Console isOpen={isConsoleOpen} />
     </ContentWrapper>
   )

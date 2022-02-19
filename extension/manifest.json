@@ -1,7 +1,7 @@
 {
-  "name": "Easy Console",
-  "version": "0.0.1",
-  "description": "Temporally description",
+  "name": "Term-O",
+  "version": "0.1.0",
+  "description": "Simple terminal for browser",
   "manifest_version": 2,
   "permissions": ["tabs", "activeTab", "storage"],
   "icons": {

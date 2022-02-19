@@ -74,26 +74,24 @@ export const Console = ({ isOpen }) => {
   const outsideProps = { pageEvents }
 
   return (
-    <ConsoleWrapper isOpen={isOpen}>
-      <ConsoleContent>
-        <ConsoleTitle>TERM-O</ConsoleTitle>
+    <ConsoleContent isOpen={isOpen}>
+      <ConsoleTitle>TERM-O</ConsoleTitle>
 
-        <ConsoleLogs id='term-o-console-logs' ref={historyRef}>
-          {histories.map((history) => history(outsideProps))}
-        </ConsoleLogs>
+      <ConsoleLogs id='term-o-console-logs' ref={historyRef}>
+        {histories.map((history) => history(outsideProps))}
+      </ConsoleLogs>
 
-        <ConsoleInputWrapper>
-          <ConsoleHash>$</ConsoleHash>
+      <ConsoleInputWrapper>
+        <ConsoleHash>$</ConsoleHash>
 
-          <ConsoleInput
-            type='text'
-            onChange={handleCommandChange}
-            onKeyDown={handleKeyPressed}
-            value={currentCommand}
-            autoFocus
-          />
-        </ConsoleInputWrapper>
-      </ConsoleContent>
-    </ConsoleWrapper>
+        <ConsoleInput
+          type='text'
+          onChange={handleCommandChange}
+          onKeyDown={handleKeyPressed}
+          value={currentCommand}
+          autoFocus
+        />
+      </ConsoleInputWrapper>
+    </ConsoleContent>
   )
 }

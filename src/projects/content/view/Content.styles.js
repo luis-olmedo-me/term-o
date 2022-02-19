@@ -5,17 +5,28 @@ export const ContentWrapper = styled.div`
   height: 100vh;
   position: absolute;
   z-index: 1000000;
-  pointer-events: none;
-  transform: translateZ(0);
-  background-color: rgba($color: #2e2e2e, $alpha: 0.15);
-  top: ${(props) => props.top || 0}px;
-  opacity: ${(props) => props.opacity || 0};
+  opacity: ${(props) => props.opacity};
+  right: ${(props) => `${props.right}px`};
+  left: ${(props) => `${props.left}px`};
+  top: ${(props) => `${props.top}px`};
+  bottom: ${(props) => `${props.bottom}px`};
+  display: flex;
+  flex-flow: column;
 `
 
-export const selectionIconStyles = `
-  width: 12px;
-  height: 12px;
-  display: inline-block;
-  vertical-align: middle;
-  padding: 4px 1px;
+export const ResizerLeft = styled.button`
+  border: none;
+  background-color: transparent;
+  border-radius: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+
+  &&:hover {
+    cursor: col-resize;
+    background-color: #aaa;
+    width: 8px;
+  }
 `

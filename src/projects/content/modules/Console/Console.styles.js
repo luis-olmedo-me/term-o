@@ -1,27 +1,15 @@
 import styled from 'styled-components'
 
-export const ConsoleWrapper = styled.div`
-  height: 100%;
-  position: relative;
-  color: #d6d6d6;
-  font-size: 14px;
-  font-family: system-ui;
-  pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
-  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
-`
-
 export const ConsoleContent = styled.div`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 70vw;
-  min-width: 650px;
   background-color: #2e2e2e;
   border-radius: 5px;
   box-shadow: 0px 0 40px 10px rgba(#000, 25%);
   border: 1px solid #505050;
-  font-family: monospace;
+  pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
+  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
+  flex: 1;
+  display: flex;
+  flex-flow: column;
 `
 
 export const ConsoleTitle = styled.h1`
@@ -59,6 +47,7 @@ export const ConsoleLogs = styled.div`
   color: #d6d6d6;
   display: block;
   overflow-y: scroll;
+  flex: 1;
 
   &::-webkit-scrollbar {
     display: none;

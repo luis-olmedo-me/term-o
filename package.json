@@ -1,10 +1,10 @@
 {
   "name": "term-o",
-  "version": "1.1.0",
+  "version": "0.1.0",
   "description": "Simple terminal for browser",
   "repository": "https://github.com/olmedoluis/term-o",
   "scripts": {
-    "start": "webpack-dev-server",
+    "start": "nodemon --exec npm run build",
     "build": "webpack"
   },
   "author": "olmedoluis012@gmail.com",
@@ -27,7 +27,19 @@
   },
   "dependencies": {
     "minimist": "^1.2.5",
+    "nodemon": "^2.0.15",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "extension/",
+      "node_modules"
+    ],
+    "execMap": {
+      "js": "node"
+    },
+    "ext": "js html css",
+    "verbose": true
   }
 }

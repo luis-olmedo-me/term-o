@@ -4,6 +4,11 @@
   "description": "Temporally description",
   "manifest_version": 2,
   "permissions": ["tabs", "activeTab", "storage"],
+  "icons": {
+    "16": "images/logo-16_x_16.png",
+    "48": "images/logo-48_x_48.png",
+    "128": "images/logo-128_x_128.png"
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],

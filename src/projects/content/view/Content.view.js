@@ -14,35 +14,14 @@ import {
   eventTypes,
   extensionKeyEvents
 } from 'src/constants/events.constants.js'
+import { useResize } from './hooks/useResize.hook'
 
 export const Content = () => {
   const [isConsoleOpen, setIsConsoleOpen] = useState(false)
   const wrapperReference = useRef(null)
-  const [isResizing, setIsResizing] = useState(false)
-  const [resizingFrom, setResizingFrom] = useState('')
-  const [resizeData, setResizeData] = useState({
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0
+  const { setIsResizing, setResizingFrom, resizeData } = useResize({
+    wrapperReference
   })
-
-  const isContentActive = isConsoleOpen
-
-  useEffect(
-    function updateTop() {
-      if (isContentActive) {
-        const handleMouseMove = () => {
-          setIsConsoleOpen(false)
-        }
-
-        document.addEventListener('scroll', handleMouseMove)
-
-        return () => document.removeEventListener('scroll', handleMouseMove)
-      }
-    },
-    [isContentActive]
-  )
 
   useEffect(function openConsoleByKeyCommands() {
     const toggleTerminal = (message, sender, sendResponse) => {
@@ -62,53 +41,6 @@ export const Content = () => {
     return () => chrome.extension.onMessage.removeListener(toggleTerminal)
   }, [])
 
-  useEffect(
-    function setUpResizeEvent() {
-      if (!isResizing) return
-
-      const mouseHandler = (event) => {
-        let newResizeData = {}
-
-        switch (resizingFrom) {
-          case 'left': {
-            const wrapperOffsetLeft = wrapperReference.current.offsetLeft
-            const newDistance = event.clientX - wrapperOffsetLeft
-
-            newResizeData = { left: newDistance + wrapperOffsetLeft }
-            break
-          }
-
-          case 'right': {
-            newResizeData = { right: innerWidth - event.clientX - 1 }
-            break
-          }
-
-          case 'top': {
-            const wrapperOffsetTop = wrapperReference.current.offsetTop
-            const newDistance = event.clientY - wrapperOffsetTop
-
-            newResizeData = { top: newDistance + wrapperOffsetTop }
-            break
-          }
-          case 'bottom': {
-            newResizeData = { bottom: innerHeight - event.clientY - 1 }
-            break
-          }
-        }
-
-        setResizeData((oldResizeData) => ({
-          ...oldResizeData,
-          ...newResizeData
-        }))
-      }
-
-      addEventListener('mousemove', mouseHandler)
-
-      return () => removeEventListener('mousemove', mouseHandler)
-    },
-    [isResizing]
-  )
-
   const resizeConsole = (newResizingFrom) => {
     setResizingFrom(newResizingFrom)
     setIsResizing(true)
@@ -121,7 +53,7 @@ export const Content = () => {
   return (
     <ContentWrapper
       ref={wrapperReference}
-      opacity={isContentActive ? 1 : 0}
+      opacity={isConsoleOpen ? 1 : 0}
       {...resizeData}
     >
       <ResizerLeft

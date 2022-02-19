@@ -1,0 +1,66 @@
+import { useEffect, useState } from 'react'
+
+export const useResize = ({ wrapperReference }) => {
+  const [isResizing, setIsResizing] = useState(false)
+  const [resizingFrom, setResizingFrom] = useState('')
+  const [resizeData, setResizeData] = useState({
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0
+  })
+
+  useEffect(
+    function setUpResizeEvent() {
+      if (!isResizing || !wrapperReference) return
+
+      const mouseHandler = (event) => {
+        let newResizeData = {}
+
+        switch (resizingFrom) {
+          case 'left': {
+            const wrapperOffsetLeft = wrapperReference.current.offsetLeft
+            const newDistance = event.clientX - wrapperOffsetLeft
+
+            newResizeData = { left: newDistance + wrapperOffsetLeft }
+            break
+          }
+
+          case 'right': {
+            newResizeData = { right: innerWidth - event.clientX - 1 }
+            break
+          }
+
+          case 'top': {
+            const wrapperOffsetTop = wrapperReference.current.offsetTop
+            const newDistance = event.clientY - wrapperOffsetTop
+
+            newResizeData = { top: newDistance + wrapperOffsetTop }
+            break
+          }
+          case 'bottom': {
+            newResizeData = { bottom: innerHeight - event.clientY - 1 }
+            break
+          }
+        }
+
+        setResizeData((oldResizeData) => ({
+          ...oldResizeData,
+          ...newResizeData
+        }))
+      }
+      const removeResizeListener = () => {
+        window.removeEventListener('mousemove', mouseHandler)
+        window.removeEventListener('mouseup', removeResizeListener)
+      }
+
+      addEventListener('mousemove', mouseHandler)
+      addEventListener('mouseup', removeResizeListener)
+
+      return removeResizeListener
+    },
+    [isResizing]
+  )
+
+  return { setIsResizing, setResizingFrom, resizeData }
+}

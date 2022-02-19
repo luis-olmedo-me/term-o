@@ -39,7 +39,11 @@ To just build the files without the development server:
 npm build
 ```
 
-Both commands will create a `dist/` directory, it will contain the built files that should be loaded into the browser or packed.
+Both commands will create a `extension/` directory, it will contain the built files that should be loaded into the browser or packed.
+
+Then go to any page outside internal browser pages and type "alt + t":
+
+![Developer Mode Checkbox](extension/images/tutorial-usage.png)
 
 ## Load into Chrome
 

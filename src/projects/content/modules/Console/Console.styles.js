@@ -1,12 +1,15 @@
 import styled from 'styled-components'
 
 export const ConsoleContent = styled.div`
-  width: 70vw;
-  min-width: 650px;
   background-color: #2e2e2e;
   border-radius: 5px;
   box-shadow: 0px 0 40px 10px rgba(#000, 25%);
   border: 1px solid #505050;
+  pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
+  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
+  flex: 1;
+  display: flex;
+  flex-flow: column;
 `
 
 export const ConsoleTitle = styled.h1`
@@ -55,8 +58,6 @@ export const ConsoleLogs = styled.div`
   color: #d6d6d6;
   display: block;
   overflow-y: scroll;
-  border: solid #505050;
-  border-width: 0 1px;
   flex: 1;
 
   &::-webkit-scrollbar {

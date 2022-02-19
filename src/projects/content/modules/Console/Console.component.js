@@ -81,20 +81,14 @@ export const Console = ({ isOpen, onTitleClick, isMoving }) => {
   }
 
   return (
-    <ConsoleContent isOpen={isOpen} isMoving={isMoving}>
-      <ConsoleTitle ref={titleReference} onMouseDown={onTitleClick}>
-        TERM-O
-      </ConsoleTitle>
+    <ConsoleContent isOpen={isOpen}>
+      <ConsoleTitle>TERM-O</ConsoleTitle>
 
-      <ConsoleLogs
-        id='term-o-console-logs'
-        ref={historyRef}
-        style={consoleStyles}
-      >
+      <ConsoleLogs id='term-o-console-logs' ref={historyRef}>
         {histories.map((history) => history(outsideProps))}
       </ConsoleLogs>
 
-      <ConsoleInputWrapper ref={inputReference}>
+      <ConsoleInputWrapper>
         <ConsoleHash>$</ConsoleHash>
 
         <ConsoleInput

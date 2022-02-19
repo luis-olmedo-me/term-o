@@ -19,7 +19,7 @@ import { useResize } from './hooks/useResize.hook'
 export const Content = () => {
   const [isConsoleOpen, setIsConsoleOpen] = useState(false)
   const wrapperReference = useRef(null)
-  const { setIsResizing, setResizingFrom, resizeData } = useResize({
+  const { setResizingFrom, resizeData } = useResize({
     wrapperReference
   })
 
@@ -43,11 +43,10 @@ export const Content = () => {
 
   const resizeConsole = (newResizingFrom) => {
     setResizingFrom(newResizingFrom)
-    setIsResizing(true)
   }
 
   const stopResizeConsole = () => {
-    setIsResizing(false)
+    setResizingFrom('')
   }
 
   return (

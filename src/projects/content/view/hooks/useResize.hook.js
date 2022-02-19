@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 
 export const useResize = ({ wrapperReference }) => {
-  const [isResizing, setIsResizing] = useState(false)
   const [resizingFrom, setResizingFrom] = useState('')
   const [resizeData, setResizeData] = useState({
     left: 0,
@@ -12,7 +11,7 @@ export const useResize = ({ wrapperReference }) => {
 
   useEffect(
     function setUpResizeEvent() {
-      if (!isResizing || !wrapperReference) return
+      if (!resizingFrom || !wrapperReference) return
 
       const mouseHandler = (event) => {
         let newResizeData = {}
@@ -59,8 +58,8 @@ export const useResize = ({ wrapperReference }) => {
 
       return removeResizeListener
     },
-    [isResizing]
+    [resizingFrom, wrapperReference]
   )
 
-  return { setIsResizing, setResizingFrom, resizeData }
+  return { setResizingFrom, resizeData }
 }

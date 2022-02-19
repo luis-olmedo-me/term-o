@@ -54,7 +54,7 @@ export const Content = () => {
     <ContentWrapper
       ref={wrapperReference}
       opacity={isConsoleOpen ? 1 : 0}
-      {...resizeData}
+      style={resizeData}
     >
       <ResizerLeft
         onMouseDown={() => resizeConsole('left')}

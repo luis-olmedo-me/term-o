@@ -30,13 +30,13 @@ npm install # or yarn install
 To run a development server that will watch for file changes and rebuild the scripts, run:
 
 ```
-npm  start
+npm run start
 ```
 
 To just build the files without the development server:
 
 ```
-npm build
+npm run build
 ```
 
 Both commands will create a `extension/` directory, it will contain the built files that should be loaded into the browser or packed.

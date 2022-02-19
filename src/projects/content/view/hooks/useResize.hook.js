@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 
+const bodyWidth = document.body.clientWidth
+
 export const useResize = ({ wrapperReference }) => {
   const [resizingFrom, setResizingFrom] = useState('')
   const [resizeData, setResizeData] = useState({
@@ -26,7 +28,7 @@ export const useResize = ({ wrapperReference }) => {
           }
 
           case 'right': {
-            newResizeData = { right: innerWidth - event.clientX - 1 }
+            newResizeData = { right: bodyWidth - event.clientX - 1 }
             break
           }
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 const bodyWidth = document.body.clientWidth
+const bodyHeight = document.body.clientHeight
 
 export const useResize = ({ wrapperReference }) => {
   const [resizingFrom, setResizingFrom] = useState('')
@@ -20,10 +21,7 @@ export const useResize = ({ wrapperReference }) => {
 
         switch (resizingFrom) {
           case 'left': {
-            const wrapperOffsetLeft = wrapperReference.current.offsetLeft
-            const newDistance = event.clientX - wrapperOffsetLeft
-
-            newResizeData = { left: newDistance + wrapperOffsetLeft }
+            newResizeData = { left: event.clientX }
             break
           }
 
@@ -33,14 +31,12 @@ export const useResize = ({ wrapperReference }) => {
           }
 
           case 'top': {
-            const wrapperOffsetTop = wrapperReference.current.offsetTop
-            const newDistance = event.clientY - wrapperOffsetTop
-
-            newResizeData = { top: newDistance + wrapperOffsetTop }
+            newResizeData = { top: event.clientY }
             break
           }
+
           case 'bottom': {
-            newResizeData = { bottom: innerHeight - event.clientY - 1 }
+            newResizeData = { bottom: bodyHeight - event.clientY - 1 }
             break
           }
         }

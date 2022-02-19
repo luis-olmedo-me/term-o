@@ -6,6 +6,7 @@ export const ContentWrapper = styled.div`
   position: absolute;
   z-index: 1000000;
   opacity: ${(props) => props.opacity};
+  pointer-events: ${(props) => (props.opacity === 0 ? 'none' : 'all')};
   display: flex;
   flex-flow: column;
 `

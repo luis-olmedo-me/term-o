@@ -4,10 +4,6 @@ export const ContentWrapper = styled.div`
   position: fixed;
   z-index: 1000000;
   opacity: ${(props) => props.opacity};
-  right: ${(props) => `${props.right}px`};
-  left: ${(props) => `${props.left}px`};
-  top: ${(props) => `${props.top}px`};
-  bottom: ${(props) => `${props.bottom}px`};
   display: flex;
   flex-flow: column;
 `

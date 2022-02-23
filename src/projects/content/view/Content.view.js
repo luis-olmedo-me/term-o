@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
-import { EASY_DOM_CONTENT_WRAPPER_ID } from 'projects/content/content.constants'
 import { Console } from '../modules/Console/Console.component'
 
 import {

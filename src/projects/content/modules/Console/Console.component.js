@@ -3,7 +3,6 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { commander } from 'libs/easy-commander/easyCommander.service'
 
 import {
-  ConsoleWrapper,
   ConsoleContent,
   ConsoleTitle,
   ConsoleInput,

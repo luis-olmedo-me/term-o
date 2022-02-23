@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 const bodyWidth = document.body.clientWidth
 const bodyHeight = document.body.clientHeight
 
-const minimumValueAllowed = 100
+const minimumValueAllowed = 0
 
 export const useResize = ({ wrapperReference }) => {
   const [resizingFrom, setResizingFrom] = useState('')

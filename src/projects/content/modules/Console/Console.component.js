@@ -14,7 +14,10 @@ import {
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
 import { eventTypes } from 'src/constants/events.constants.js'
 
-export const Console = ({ isOpen }) => {
+export const Console = ({ isOpen, totalHeight }) => {
+  const titleReference = useRef(null)
+  const inputReference = useRef(null)
+
   const [histories, setHistories] = useState([])
   const [currentCommand, setCurrentCommand] = useState('')
   const [commandId, setCommandId] = useState(0)
@@ -73,15 +76,26 @@ export const Console = ({ isOpen }) => {
 
   const outsideProps = { pageEvents }
 
+  const titleHeight = titleReference.current?.offsetHeight || 0
+  const inputHeight = inputReference.current?.offsetHeight || 0
+
+  const consoleStyles = {
+    height: totalHeight - titleHeight - inputHeight
+  }
+
   return (
     <ConsoleContent isOpen={isOpen}>
-      <ConsoleTitle>TERM-O</ConsoleTitle>
+      <ConsoleTitle ref={titleReference}>TERM-O</ConsoleTitle>
 
-      <ConsoleLogs id='term-o-console-logs' ref={historyRef}>
+      <ConsoleLogs
+        id='term-o-console-logs'
+        ref={historyRef}
+        style={consoleStyles}
+      >
         {histories.map((history) => history(outsideProps))}
       </ConsoleLogs>
 
-      <ConsoleInputWrapper>
+      <ConsoleInputWrapper ref={inputReference}>
         <ConsoleHash>$</ConsoleHash>
 
         <ConsoleInput

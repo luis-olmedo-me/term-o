@@ -16,6 +16,8 @@ import {
 } from 'src/constants/events.constants.js'
 import { useResize } from './hooks/useResize.hook'
 
+const bodyHeight = document.body.clientHeight
+
 export const Content = () => {
   const [isConsoleOpen, setIsConsoleOpen] = useState(false)
   const wrapperReference = useRef(null)
@@ -73,7 +75,10 @@ export const Content = () => {
         onMouseUp={stopResizeConsole}
       />
 
-      <Console isOpen={isConsoleOpen} />
+      <Console
+        isOpen={isConsoleOpen}
+        totalHeight={bodyHeight - resizeData.top - resizeData.bottom}
+      />
     </ContentWrapper>
   )
 }

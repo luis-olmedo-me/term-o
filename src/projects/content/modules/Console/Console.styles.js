@@ -4,12 +4,8 @@ export const ConsoleContent = styled.div`
   background-color: #2e2e2e;
   border-radius: 5px;
   box-shadow: 0px 0 40px 10px rgba(#000, 25%);
-  border: 1px solid #505050;
   pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
   opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
-  flex: 1;
-  display: flex;
-  flex-flow: column;
 `
 
 export const ConsoleTitle = styled.h1`
@@ -20,18 +16,6 @@ export const ConsoleTitle = styled.h1`
   font-size: 20px;
   border: 1px solid #505050;
   box-sizing: border-box;
-  color: #d6d6d6;
-  cursor: pointer;
-  user-select: none;
-  position: absolute;
-  width: 100%;
-  top: 0;
-  transition: background-color 0.2s ease-in-out;
-
-  &&:hover,
-  &&:active {
-    background-color: #292929;
-  }
 `
 
 export const ConsoleInput = styled.input`
@@ -58,7 +42,8 @@ export const ConsoleLogs = styled.div`
   color: #d6d6d6;
   display: block;
   overflow-y: scroll;
-  flex: 1;
+  border: solid #505050;
+  border-width: 0 1px;
 
   &::-webkit-scrollbar {
     display: none;
@@ -66,12 +51,9 @@ export const ConsoleLogs = styled.div`
 `
 
 export const ConsoleInputWrapper = styled.div`
+  border-radius: 0 0 5px 5px;
   box-sizing: border-box;
   border: 1px solid #505050;
-  background-color: #2e2e2e;
-  position: absolute;
-  width: 100%;
-  bottom: 0;
 `
 
 export const ConsoleHash = styled.span`

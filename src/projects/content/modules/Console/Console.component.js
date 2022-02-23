@@ -13,7 +13,7 @@ import {
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
 import { eventTypes } from 'src/constants/events.constants.js'
 
-export const Console = ({ isOpen, onTitleClick, isMoving }) => {
+export const Console = ({ isOpen, totalHeight }) => {
   const titleReference = useRef(null)
   const inputReference = useRef(null)
 
@@ -75,20 +75,26 @@ export const Console = ({ isOpen, onTitleClick, isMoving }) => {
 
   const outsideProps = { pageEvents }
 
+  const titleHeight = titleReference.current?.offsetHeight || 0
+  const inputHeight = inputReference.current?.offsetHeight || 0
+
   const consoleStyles = {
-    paddingTop: parseInt(titleReference.current?.offsetHeight || 0) + 10,
-    paddingBottom: parseInt(inputReference.current?.offsetHeight || 0) + 10
+    height: totalHeight - titleHeight - inputHeight
   }
 
   return (
     <ConsoleContent isOpen={isOpen}>
-      <ConsoleTitle>TERM-O</ConsoleTitle>
+      <ConsoleTitle ref={titleReference}>TERM-O</ConsoleTitle>
 
-      <ConsoleLogs id='term-o-console-logs' ref={historyRef}>
+      <ConsoleLogs
+        id='term-o-console-logs'
+        ref={historyRef}
+        style={consoleStyles}
+      >
         {histories.map((history) => history(outsideProps))}
       </ConsoleLogs>
 
-      <ConsoleInputWrapper>
+      <ConsoleInputWrapper ref={inputReference}>
         <ConsoleHash>$</ConsoleHash>
 
         <ConsoleInput

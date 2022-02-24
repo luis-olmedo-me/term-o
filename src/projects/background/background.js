@@ -77,16 +77,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       break
     }
 
-    case eventTypes.UPDATE_CONFIG_CONSOLE_POSITION: {
-      const oldConsolePosition = configuration.consolePosition || {}
-
-      setConfiguration({
-        ...configuration,
-        consolePosition: {
-          ...oldConsolePosition,
-          ...request.data
-        }
-      })
+    case eventTypes.SET_CONFIGURATION: {
+      setConfiguration({ ...configuration, ...request.data.config })
       updateConfiguration()
       sendResponse({ status: 'ok' })
       break

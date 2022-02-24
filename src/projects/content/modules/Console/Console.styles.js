@@ -2,7 +2,6 @@ import styled from 'styled-components'
 
 export const ConsoleContent = styled.div`
   background-color: #2e2e2e;
-  border-radius: 5px;
   box-shadow: 0px 0 40px 10px rgba(#000, 25%);
   pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
   opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
@@ -51,7 +50,6 @@ export const ConsoleLogs = styled.div`
 `
 
 export const ConsoleInputWrapper = styled.div`
-  border-radius: 0 0 5px 5px;
   box-sizing: border-box;
   border: 1px solid #505050;
 `

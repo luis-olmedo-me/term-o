@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const ConsoleContent = styled.div`
   background-color: #2e2e2e;
-  box-shadow: 0px 0 40px 10px rgba(0, 0, 0, 25%);
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.15);
   pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
   opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
 `

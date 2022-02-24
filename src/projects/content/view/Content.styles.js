@@ -57,7 +57,7 @@ export const ResizerTop = styled.button`
   top: 0;
   left: 0;
   right: 0;
-  height: 2px;
+  height: 6px;
   transition: 0.1s ease-in-out;
   transition-property: background-color, height;
 
@@ -76,7 +76,7 @@ export const ResizerBottom = styled.button`
   bottom: 0;
   left: 0;
   right: 0;
-  height: 2px;
+  height: 6px;
   transition: 0.1s ease-in-out;
   transition-property: background-color, height;
 

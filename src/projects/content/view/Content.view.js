@@ -15,7 +15,7 @@ import {
 } from 'src/constants/events.constants.js'
 import { useResize } from './hooks/useResize.hook'
 
-const bodyHeight = document.body.clientHeight
+const bodyHeight = Math.min(document.body.clientHeight, window.innerHeight - 1)
 
 export const Content = () => {
   const [isConsoleOpen, setIsConsoleOpen] = useState(false)

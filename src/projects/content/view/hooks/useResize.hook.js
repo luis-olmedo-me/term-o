@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { backgroundRequest } from 'src/helpers/event.helpers.js'
 
 const bodyWidth = document.body.clientWidth
 const bodyHeight = document.body.clientHeight
@@ -13,6 +14,22 @@ export const useResize = ({ wrapperReference }) => {
     top: 0,
     bottom: 0
   })
+
+  useEffect(function getConfigurationFromBackground() {
+    const receiveConfiguration = ({ response: receivedConfiguration }) => {
+      setResizeData({
+        left: receivedConfiguration?.consolePosition?.left || 0,
+        right: receivedConfiguration?.consolePosition?.right || 0,
+        top: receivedConfiguration?.consolePosition?.top || 0,
+        bottom: receivedConfiguration?.consolePosition?.bottom || 0
+      })
+    }
+
+    backgroundRequest({
+      eventType: eventTypes.GET_CONFIGURATION,
+      callback: receiveConfiguration
+    })
+  }, [])
 
   useEffect(
     function setUpResizeEvent() {

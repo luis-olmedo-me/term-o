@@ -56,7 +56,7 @@ export const ResizerTop = styled.button`
   &&:hover {
     cursor: row-resize;
     background-color: #aaa;
-    height: 8px;
+    height: 12px;
   }
 `
 
@@ -73,6 +73,6 @@ export const ResizerBottom = styled.button`
   &&:hover {
     cursor: row-resize;
     background-color: #aaa;
-    height: 8px;
+    height: 12px;
   }
 `

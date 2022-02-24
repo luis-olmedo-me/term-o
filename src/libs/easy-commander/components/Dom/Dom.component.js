@@ -16,7 +16,7 @@ export const Dom = ({
   setMessageData
 }) => {
   const [elements, setElements] = useState([])
-  const [elementsShown, setElementsShown] = useState(80)
+  const [elementsShown, setElementsShown] = useState(40)
 
   const patterns = useMemo(() => {
     const patternToGet = get || []
@@ -68,7 +68,7 @@ export const Dom = ({
   const hasMoreElements = elements.length > elementsShown
   const limitedElements = elements.slice(0, elementsShown)
 
-  const increaseElementsShown = () => setElementsShown(elementsShown + 80)
+  const increaseElementsShown = () => setElementsShown(elementsShown + 40)
   const textForIncreasing = `Ver mas (${elementsShown}/${elements.length})`
 
   return (

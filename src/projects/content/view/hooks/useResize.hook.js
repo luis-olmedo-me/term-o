@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
+import { eventTypes } from 'src/constants/events.constants.js'
 
 const bodyWidth = document.body.clientWidth
 const bodyHeight = document.body.clientHeight

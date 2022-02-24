@@ -1,11 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
 import { eventTypes } from 'src/constants/events.constants.js'
+import { debounce } from 'src/helpers/utils.helpers.js'
 
 const bodyWidth = document.body.clientWidth
 const bodyHeight = document.body.clientHeight
 
 const minimumValueAllowed = 0
+
+const updateConfig = debounce(function updateResizeData(data) {
+  backgroundRequest({
+    eventType: eventTypes.UPDATE_CONFIG_CONSOLE_POSITION,
+    data
+  })
+}, 800)
 
 export const useResize = ({ wrapperReference }) => {
   const [resizingFrom, setResizingFrom] = useState('')
@@ -18,6 +26,7 @@ export const useResize = ({ wrapperReference }) => {
 
   useEffect(function getConfigurationFromBackground() {
     const receiveConfiguration = ({ response: receivedConfiguration }) => {
+      console.log('receivedConfiguration', receivedConfiguration)
       setResizeData({
         left: receivedConfiguration?.consolePosition?.left || 0,
         right: receivedConfiguration?.consolePosition?.right || 0,
@@ -75,7 +84,10 @@ export const useResize = ({ wrapperReference }) => {
           ...oldResizeData,
           ...newResizeData
         }))
+
+        updateConfig(newResizeData)
       }
+
       const removeResizeListener = () => {
         window.removeEventListener('mousemove', mouseHandler)
         window.removeEventListener('mouseup', removeResizeListener)

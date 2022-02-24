@@ -79,7 +79,7 @@ export const Console = ({ isOpen, totalHeight }) => {
   const inputHeight = inputReference.current?.offsetHeight || 0
 
   const consoleStyles = {
-    height: totalHeight - titleHeight - inputHeight - 1
+    height: totalHeight - titleHeight - inputHeight
   }
 
   return (

@@ -2,9 +2,17 @@ import styled from 'styled-components'
 
 export const ConsoleContent = styled.div`
   background-color: #2e2e2e;
-  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.15);
   pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
   opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
+
+  box-shadow: ${({ isMoving }) =>
+    isMoving
+      ? '0px 20px 15px -3px rgba(0, 0, 0, 0.5)'
+      : '0px 10px 15px -3px rgba(0, 0, 0, 0.15)'};
+  transform: translateY(${({ isMoving }) => (isMoving ? '-5px' : 0)});
+
+  transition: 0.2s ease-in-out;
+  transition-property: transform box-shadow opacity;
 `
 
 export const ConsoleTitle = styled.h1`

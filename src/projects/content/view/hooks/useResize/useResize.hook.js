@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
 import { eventTypes } from 'src/constants/events.constants.js'
 import { debounce } from 'src/helpers/utils.helpers.js'
+import { getResizeData } from './useResize.helpers'
 
 const bodyWidth = document.body.clientWidth
 const bodyHeight = document.body.clientHeight
@@ -47,52 +48,11 @@ export const useResize = ({ wrapperReference }) => {
       if (!resizingFrom || !wrapperReference) return
 
       const mouseHandler = (event) => {
-        let newResizeData = {}
-
-        switch (resizingFrom) {
-          case 'left': {
-            const shouldFixLeft = minimumValueAllowed > event.clientX
-
-            newResizeData = { left: shouldFixLeft ? 0 : event.clientX }
-            break
-          }
-
-          case 'right': {
-            const right = bodyWidth - event.clientX - 1
-            const shouldFixRight = minimumValueAllowed > right
-
-            newResizeData = { right: shouldFixRight ? 0 : right }
-            break
-          }
-
-          case 'top': {
-            const shouldFixTop = minimumValueAllowed > event.clientY
-
-            newResizeData = { top: shouldFixTop ? 0 : event.clientY }
-            break
-          }
-
-          case 'bottom': {
-            const bottom = bodyHeight - event.clientY - 1
-            const shouldFixBottom = minimumValueAllowed > bottom
-
-            newResizeData = { bottom: shouldFixBottom ? 0 : bottom }
-            break
-          }
-
-          case 'moving': {
-            const offsetX = event.x - movingFrom.x
-            const offsetY = event.y - movingFrom.y
-
-            const left = offsetX + resizeData.left
-            const top = offsetY + resizeData.top
-            const right = resizeData.right - offsetX
-            const bottom = resizeData.bottom - offsetY
-
-            newResizeData = { left, top, right, bottom }
-            break
-          }
-        }
+        const newResizeData = getResizeData({
+          mousePositionX: event.clientX,
+          mousePositionY: event.clientY,
+          resizeType: resizingFrom
+        })
 
         setResizeData((oldResizeData) => ({
           ...oldResizeData,

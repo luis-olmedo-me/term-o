@@ -14,17 +14,18 @@ import {
   extensionKeyEvents
 } from 'src/constants/events.constants.js'
 import { useResize } from './hooks/useResize/useResize.hook'
-import { resizeTypes, bodyHeight } from './hooks/useResize/useResize.constants'
+import { resizeTypes } from './hooks/useResize/useResize.constants'
 
 export const Content = () => {
   const [isConsoleOpen, setIsConsoleOpen] = useState(false)
   const wrapperReference = useRef(null)
-  const { setResizingFrom, resizeData, setMovingFrom, isMoving } = useResize({
-    wrapperReference
-  })
+  const { setResizingFrom, resizeData, setMovingFrom, isMoving, bodyData } =
+    useResize({
+      wrapperReference
+    })
 
   useEffect(function openConsoleByKeyCommands() {
-    const toggleTerminal = (message, sender, sendResponse) => {
+    const toggleTerminal = (message, _sender, sendResponse) => {
       if (message.action !== eventTypes.NEW_COMMAND) return
 
       switch (message.data.command) {
@@ -75,7 +76,7 @@ export const Content = () => {
 
       <Console
         isOpen={isConsoleOpen}
-        totalHeight={bodyHeight - resizeData.top - resizeData.bottom}
+        totalHeight={bodyData.height - resizeData.top - resizeData.bottom}
         isMoving={isMoving}
         onTitleClick={(event) => {
           resizeConsole(resizeTypes.MOVING)

@@ -1,36 +1,38 @@
+import { resizeTypes } from './useResize.constants'
+
 export const getResizeData = ({
   mousePositionX,
   mousePositionY,
   resizeType
 }) => {
   switch (resizeType) {
-    case 'left': {
+    case resizeTypes.LEFT: {
       const shouldFixLeft = minimumValueAllowed > mousePositionX
 
       return { left: shouldFixLeft ? 0 : mousePositionX }
     }
 
-    case 'right': {
+    case resizeTypes.RIGHT: {
       const right = bodyWidth - mousePositionX - 1
       const shouldFixRight = minimumValueAllowed > right
 
       return { right: shouldFixRight ? 0 : right }
     }
 
-    case 'top': {
+    case resizeTypes.TOP: {
       const shouldFixTop = minimumValueAllowed > mousePositionY
 
       return { top: shouldFixTop ? 0 : mousePositionY }
     }
 
-    case 'bottom': {
+    case resizeTypes.BOTTOM: {
       const bottom = bodyHeight - mousePositionY - 1
       const shouldFixBottom = minimumValueAllowed > bottom
 
       return { bottom: shouldFixBottom ? 0 : bottom }
     }
 
-    case 'moving': {
+    case resizeTypes.MOVING: {
       const offsetX = mousePositionX - movingFrom.x
       const offsetY = mousePositionX - movingFrom.y
 

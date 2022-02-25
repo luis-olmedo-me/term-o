@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
 import { eventTypes } from 'src/constants/events.constants.js'
 import { getNewResizeData, updateConfig } from './useResize.helpers'
+import { debounce } from 'src/helpers/utils.helpers.js'
+import { defaultBodyData } from './useResize.constants'
 
 export const useResize = ({ wrapperReference }) => {
   const [resizingFrom, setResizingFrom] = useState('')
@@ -13,9 +15,25 @@ export const useResize = ({ wrapperReference }) => {
     bottom: 0
   })
 
+  const [bodyData, setBodyData] = useState(defaultBodyData)
+
+  useEffect(function expectForBodyChanges() {
+    const updateBodyData = debounce(function outputsize() {
+      setBodyData({
+        width: Math.min(document.body.clientWidth, window.innerWidth - 1),
+        height: Math.min(document.body.clientHeight, window.innerHeight - 1)
+      })
+    }, 500)
+
+    const obsever = new ResizeObserver(updateBodyData)
+
+    obsever.observe(document.body)
+
+    return () => obsever.unobserve(document.body)
+  }, [])
+
   useEffect(function getConfigurationFromBackground() {
     const receiveConfiguration = ({ response: receivedConfiguration }) => {
-      console.log('receivedConfiguration', receivedConfiguration)
       setResizeData({
         left: receivedConfiguration?.consolePosition?.left || 0,
         right: receivedConfiguration?.consolePosition?.right || 0,
@@ -41,7 +59,8 @@ export const useResize = ({ wrapperReference }) => {
           tripodPositionX: movingFrom?.x,
           tripodPositionY: movingFrom?.y,
           resizeType: resizingFrom,
-          resizeData
+          resizeData,
+          bodyData
         })
 
         setResizeData((oldResizeData) => ({
@@ -62,13 +81,14 @@ export const useResize = ({ wrapperReference }) => {
 
       return removeResizeListener
     },
-    [resizingFrom, wrapperReference]
+    [resizingFrom, wrapperReference, bodyData]
   )
 
   return {
     setResizingFrom,
     resizeData,
     setMovingFrom,
-    isMoving: Boolean(movingFrom)
+    isMoving: Boolean(movingFrom),
+    bodyData
   }
 }

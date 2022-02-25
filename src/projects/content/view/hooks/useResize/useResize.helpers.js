@@ -1,9 +1,4 @@
-import {
-  bodyHeight,
-  bodyWidth,
-  minimumValueAllowed,
-  resizeTypes
-} from './useResize.constants'
+import { minimumValueAllowed, resizeTypes } from './useResize.constants'
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
 import { eventTypes } from 'src/constants/events.constants.js'
 import { debounce } from 'src/helpers/utils.helpers.js'
@@ -14,7 +9,8 @@ export const getNewResizeData = ({
   tripodPositionX,
   tripodPositionY,
   resizeType,
-  resizeData
+  resizeData,
+  bodyData: { width: bodyWidth, height: bodyHeight }
 }) => {
   switch (resizeType) {
     case resizeTypes.LEFT: {

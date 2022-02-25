@@ -17,6 +17,33 @@ export const useResize = ({ wrapperReference }) => {
 
   const [bodyData, setBodyData] = useState(defaultBodyData)
 
+  useEffect(
+    function expectForBodyChanges() {
+      if (!wrapperReference?.current) return
+
+      const updateData = debounce(() => {
+        setResizeData({
+          left: parseInt(wrapperReference.current.style.left),
+          right: parseInt(wrapperReference.current.style.right),
+          top: parseInt(wrapperReference.current.style.top),
+          bottom: parseInt(wrapperReference.current.style.bottom)
+        })
+
+        setBodyData({
+          width: Math.min(document.body.clientWidth, window.innerWidth - 1),
+          height: Math.min(document.body.clientHeight, window.innerHeight - 1)
+        })
+      }, 1000)
+
+      const obsever = new ResizeObserver(updateData)
+
+      obsever.observe(document.body)
+
+      return () => obsever.unobserve(document.body)
+    },
+    [wrapperReference]
+  )
+
   useEffect(function expectForBodyChanges() {
     const updateBodyData = debounce(function outputsize() {
       setBodyData({

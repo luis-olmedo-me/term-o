@@ -14,6 +14,7 @@ export const ResizerLeft = styled.button`
   background-color: transparent;
   border-radius: 0;
   position: absolute;
+  z-index: 1;
   top: 0;
   bottom: 0;
   left: 0;
@@ -33,6 +34,7 @@ export const ResizerRight = styled.button`
   background-color: transparent;
   border-radius: 0;
   position: absolute;
+  z-index: 1;
   top: 0;
   bottom: 0;
   right: 0;
@@ -52,6 +54,7 @@ export const ResizerTop = styled.button`
   background-color: transparent;
   border-radius: 0;
   position: absolute;
+  z-index: 1;
   top: 0;
   left: 0;
   right: 0;
@@ -71,6 +74,7 @@ export const ResizerBottom = styled.button`
   background-color: transparent;
   border-radius: 0;
   position: absolute;
+  z-index: 1;
   bottom: 0;
   left: 0;
   right: 0;

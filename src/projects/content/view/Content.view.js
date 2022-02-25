@@ -20,7 +20,7 @@ const bodyHeight = Math.min(document.body.clientHeight, window.innerHeight - 1)
 export const Content = () => {
   const [isConsoleOpen, setIsConsoleOpen] = useState(false)
   const wrapperReference = useRef(null)
-  const { setResizingFrom, resizeData } = useResize({
+  const { setResizingFrom, resizeData, setMovingFrom } = useResize({
     wrapperReference
   })
 
@@ -77,6 +77,14 @@ export const Content = () => {
       <Console
         isOpen={isConsoleOpen}
         totalHeight={bodyHeight - resizeData.top - resizeData.bottom}
+        onTitleClick={(event) => {
+          resizeConsole('moving')
+          setMovingFrom({ x: event.clientX, y: event.clientY })
+        }}
+        onTitleRelease={() => {
+          stopResizeConsole()
+          setMovingFrom(null)
+        }}
       />
     </ContentWrapper>
   )

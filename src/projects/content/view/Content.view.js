@@ -14,6 +14,7 @@ import {
   extensionKeyEvents
 } from 'src/constants/events.constants.js'
 import { useResize } from './hooks/useResize/useResize.hook'
+import { resizeTypes } from './hooks/useResize/useResize.constants'
 
 const bodyHeight = Math.min(document.body.clientHeight, window.innerHeight - 1)
 
@@ -57,20 +58,20 @@ export const Content = () => {
       style={resizeData}
     >
       <ResizerLeft
-        onMouseDown={() => resizeConsole('left')}
+        onMouseDown={() => resizeConsole(resizeTypes.LEFT)}
         onMouseUp={stopResizeConsole}
       />
 
       <ResizerRight
-        onMouseDown={() => resizeConsole('right')}
+        onMouseDown={() => resizeConsole(resizeTypes.RIGHT)}
         onMouseUp={stopResizeConsole}
       />
       <ResizerTop
-        onMouseDown={() => resizeConsole('top')}
+        onMouseDown={() => resizeConsole(resizeTypes.TOP)}
         onMouseUp={stopResizeConsole}
       />
       <ResizerBottom
-        onMouseDown={() => resizeConsole('bottom')}
+        onMouseDown={() => resizeConsole(resizeTypes.BOTTOM)}
         onMouseUp={stopResizeConsole}
       />
 
@@ -78,7 +79,7 @@ export const Content = () => {
         isOpen={isConsoleOpen}
         totalHeight={bodyHeight - resizeData.top - resizeData.bottom}
         onTitleClick={(event) => {
-          resizeConsole('moving')
+          resizeConsole(resizeTypes.MOVING)
           setMovingFrom({ x: event.clientX, y: event.clientY })
         }}
         onTitleRelease={() => {

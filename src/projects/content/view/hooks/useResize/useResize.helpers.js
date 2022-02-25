@@ -4,6 +4,9 @@ import {
   minimumValueAllowed,
   resizeTypes
 } from './useResize.constants'
+import { backgroundRequest } from 'src/helpers/event.helpers.js'
+import { eventTypes } from 'src/constants/events.constants.js'
+import { debounce } from 'src/helpers/utils.helpers.js'
 
 export const getNewResizeData = ({
   mousePositionX,
@@ -53,3 +56,10 @@ export const getNewResizeData = ({
     }
   }
 }
+
+export const updateConfig = debounce(function updateResizeData(data) {
+  backgroundRequest({
+    eventType: eventTypes.UPDATE_CONFIG_CONSOLE_POSITION,
+    data
+  })
+}, 800)

@@ -1,15 +1,7 @@
 import { useEffect, useState } from 'react'
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
 import { eventTypes } from 'src/constants/events.constants.js'
-import { debounce } from 'src/helpers/utils.helpers.js'
-import { getNewResizeData } from './useResize.helpers'
-
-const updateConfig = debounce(function updateResizeData(data) {
-  backgroundRequest({
-    eventType: eventTypes.UPDATE_CONFIG_CONSOLE_POSITION,
-    data
-  })
-}, 800)
+import { getNewResizeData, updateConfig } from './useResize.helpers'
 
 export const useResize = ({ wrapperReference }) => {
   const [resizingFrom, setResizingFrom] = useState('')

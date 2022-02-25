@@ -1,10 +1,17 @@
-import { resizeTypes } from './useResize.constants'
+import {
+  bodyHeight,
+  bodyWidth,
+  minimumValueAllowed,
+  resizeTypes
+} from './useResize.constants'
 
-export const getResizeData = ({
+export const getNewResizeData = ({
   mousePositionX,
   mousePositionY,
+  tripodPositionX,
+  tripodPositionY,
   resizeType,
-  movingFrom
+  resizeData
 }) => {
   switch (resizeType) {
     case resizeTypes.LEFT: {
@@ -34,8 +41,8 @@ export const getResizeData = ({
     }
 
     case resizeTypes.MOVING: {
-      const offsetX = mousePositionX - movingFrom.x
-      const offsetY = mousePositionX - movingFrom.y
+      const offsetX = mousePositionX - tripodPositionX
+      const offsetY = mousePositionY - tripodPositionY
 
       const left = offsetX + resizeData.left
       const top = offsetY + resizeData.top

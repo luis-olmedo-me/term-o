@@ -3,7 +3,8 @@ import { resizeTypes } from './useResize.constants'
 export const getResizeData = ({
   mousePositionX,
   mousePositionY,
-  resizeType
+  resizeType,
+  movingFrom
 }) => {
   switch (resizeType) {
     case resizeTypes.LEFT: {

@@ -65,5 +65,10 @@ export const useResize = ({ wrapperReference }) => {
     [resizingFrom, wrapperReference]
   )
 
-  return { setResizingFrom, resizeData, setMovingFrom }
+  return {
+    setResizingFrom,
+    resizeData,
+    setMovingFrom,
+    isMoving: Boolean(movingFrom)
+  }
 }

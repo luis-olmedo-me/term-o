@@ -17,6 +17,7 @@ const updateConfig = debounce(function updateResizeData(data) {
 
 export const useResize = ({ wrapperReference }) => {
   const [resizingFrom, setResizingFrom] = useState('')
+  const [movingFrom, setMovingFrom] = useState(null)
   const [resizeData, setResizeData] = useState({
     left: 0,
     right: 0,
@@ -78,6 +79,19 @@ export const useResize = ({ wrapperReference }) => {
             newResizeData = { bottom: shouldFixBottom ? 0 : bottom }
             break
           }
+
+          case 'moving': {
+            const offsetX = event.x - movingFrom.x
+            const offsetY = event.y - movingFrom.y
+
+            const left = offsetX + resizeData.left
+            const top = offsetY + resizeData.top
+            const right = resizeData.right - offsetX
+            const bottom = resizeData.bottom - offsetY
+
+            newResizeData = { left, top, right, bottom }
+            break
+          }
         }
 
         setResizeData((oldResizeData) => ({
@@ -101,5 +115,5 @@ export const useResize = ({ wrapperReference }) => {
     [resizingFrom, wrapperReference]
   )
 
-  return { setResizingFrom, resizeData }
+  return { setResizingFrom, resizeData, setMovingFrom }
 }

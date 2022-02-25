@@ -24,6 +24,8 @@ export const ConsoleTitle = styled.h1`
   border: 1px solid #505050;
   box-sizing: border-box;
   color: #d6d6d6;
+  cursor: pointer;
+  user-select: none;
 `
 
 export const ConsoleInput = styled.input`

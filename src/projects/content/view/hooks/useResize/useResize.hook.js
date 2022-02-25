@@ -2,12 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
 import { eventTypes } from 'src/constants/events.constants.js'
 import { debounce } from 'src/helpers/utils.helpers.js'
-import { getResizeData } from './useResize.helpers'
-
-const bodyWidth = document.body.clientWidth
-const bodyHeight = document.body.clientHeight
-
-const minimumValueAllowed = 0
+import { getNewResizeData } from './useResize.helpers'
 
 const updateConfig = debounce(function updateResizeData(data) {
   backgroundRequest({
@@ -48,11 +43,13 @@ export const useResize = ({ wrapperReference }) => {
       if (!resizingFrom || !wrapperReference) return
 
       const mouseHandler = (event) => {
-        const newResizeData = getResizeData({
+        const newResizeData = getNewResizeData({
           mousePositionX: event.clientX,
           mousePositionY: event.clientY,
+          tripodPositionX: movingFrom?.x,
+          tripodPositionY: movingFrom?.y,
           resizeType: resizingFrom,
-          movingFrom
+          resizeData
         })
 
         setResizeData((oldResizeData) => ({

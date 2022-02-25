@@ -13,7 +13,7 @@ import {
   eventTypes,
   extensionKeyEvents
 } from 'src/constants/events.constants.js'
-import { useResize } from './hooks/useResize.hook'
+import { useResize } from './hooks/useResize/useResize.hook'
 
 const bodyHeight = Math.min(document.body.clientHeight, window.innerHeight - 1)
 

@@ -1,9 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
 import { eventTypes } from 'src/constants/events.constants.js'
-import { getNewResizeData, updateConfig } from './useResize.helpers'
 import { debounce } from 'src/helpers/utils.helpers.js'
-import { defaultBodyData } from './useResize.constants'
+
+const bodyWidth = document.body.clientWidth
+const bodyHeight = document.body.clientHeight
+
+const minimumValueAllowed = 0
+
+const updateConfig = debounce(function updateResizeData(data) {
+  backgroundRequest({
+    eventType: eventTypes.UPDATE_CONFIG_CONSOLE_POSITION,
+    data
+  })
+}, 800)
 
 export const useResize = ({ wrapperReference }) => {
   const [resizingFrom, setResizingFrom] = useState('')
@@ -15,64 +25,9 @@ export const useResize = ({ wrapperReference }) => {
     bottom: 0
   })
 
-  const [bodyData, setBodyData] = useState(defaultBodyData)
-
-  useEffect(
-    function expectForBodyChanges() {
-      if (!wrapperReference?.current) return
-
-      const updateData = debounce(() => {
-        const newBodyData = {
-          width: Math.min(document.body.clientWidth, window.innerWidth - 1),
-          height: Math.min(document.body.clientHeight, window.innerHeight - 1)
-        }
-        const newResizeData = {
-          left: parseInt(wrapperReference.current.style.left),
-          right: parseInt(wrapperReference.current.style.right),
-          top: parseInt(wrapperReference.current.style.top),
-          bottom: parseInt(wrapperReference.current.style.bottom)
-        }
-
-        const isBelowMiniumWidth =
-          newBodyData.width - (newResizeData.left + newResizeData.right) < 400
-        const isBelowMiniumHeight =
-          newBodyData.height - (newResizeData.top + newResizeData.bottom) < 400
-
-        setResizeData({
-          left: isBelowMiniumWidth ? 0 : newResizeData.left,
-          right: isBelowMiniumWidth ? 0 : newResizeData.right,
-          top: isBelowMiniumHeight ? 0 : newResizeData.top,
-          bottom: isBelowMiniumHeight ? 0 : newResizeData.bottom
-        })
-        setBodyData(newBodyData)
-      }, 1000)
-
-      const obsever = new ResizeObserver(updateData)
-
-      obsever.observe(document.body)
-
-      return () => obsever.unobserve(document.body)
-    },
-    [wrapperReference]
-  )
-
-  useEffect(function expectForBodyChanges() {
-    const updateBodyData = debounce(function outputsize() {
-      setBodyData({
-        width: Math.min(document.body.clientWidth, window.innerWidth - 1),
-        height: Math.min(document.body.clientHeight, window.innerHeight - 1)
-      })
-    }, 500)
-
-    const obsever = new ResizeObserver(updateBodyData)
-
-    obsever.observe(document.body)
-
-    return () => obsever.unobserve(document.body)
-  }, [])
-
   useEffect(function getConfigurationFromBackground() {
     const receiveConfiguration = ({ response: receivedConfiguration }) => {
+      console.log('receivedConfiguration', receivedConfiguration)
       setResizeData({
         left: receivedConfiguration?.consolePosition?.left || 0,
         right: receivedConfiguration?.consolePosition?.right || 0,
@@ -91,65 +46,74 @@ export const useResize = ({ wrapperReference }) => {
     function setUpResizeEvent() {
       if (!resizingFrom || !wrapperReference) return
 
-      let animationId = null
-      let mousePosition = null
-      const mockDistance = {
-        x: bodyData.width - wrapperReference.current.clientWidth,
-        y: bodyData.height - wrapperReference.current.clientHeight
-      }
-
       const mouseHandler = (event) => {
-        mousePosition = {
-          x: event.clientX,
-          y: event.clientY
+        let newResizeData = {}
+
+        switch (resizingFrom) {
+          case 'left': {
+            const shouldFixLeft = minimumValueAllowed > event.clientX
+
+            newResizeData = { left: shouldFixLeft ? 0 : event.clientX }
+            break
+          }
+
+          case 'right': {
+            const right = bodyWidth - event.clientX - 1
+            const shouldFixRight = minimumValueAllowed > right
+
+            newResizeData = { right: shouldFixRight ? 0 : right }
+            break
+          }
+
+          case 'top': {
+            const shouldFixTop = minimumValueAllowed > event.clientY
+
+            newResizeData = { top: shouldFixTop ? 0 : event.clientY }
+            break
+          }
+
+          case 'bottom': {
+            const bottom = bodyHeight - event.clientY - 1
+            const shouldFixBottom = minimumValueAllowed > bottom
+
+            newResizeData = { bottom: shouldFixBottom ? 0 : bottom }
+            break
+          }
+
+          case 'moving': {
+            const offsetX = event.x - movingFrom.x
+            const offsetY = event.y - movingFrom.y
+
+            const left = offsetX + resizeData.left
+            const top = offsetY + resizeData.top
+            const right = resizeData.right - offsetX
+            const bottom = resizeData.bottom - offsetY
+
+            newResizeData = { left, top, right, bottom }
+            break
+          }
         }
-      }
 
-      const onAnimationFrame = () => {
-        if (mousePosition) {
-          const newResizeData = getNewResizeData({
-            mockDistance,
-            mousePosition: { x: mousePosition.x, y: mousePosition.y },
-            pivotPosition: { x: movingFrom?.x, y: movingFrom?.y },
-            resizeType: resizingFrom,
-            resizeData,
-            bodyData
-          })
+        setResizeData((oldResizeData) => ({
+          ...oldResizeData,
+          ...newResizeData
+        }))
 
-          setResizeData((oldResizeData) => ({
-            ...oldResizeData,
-            ...newResizeData
-          }))
-          updateConfig(newResizeData)
-
-          mousePosition = null
-        }
-
-        animationId = window.requestAnimationFrame(onAnimationFrame)
+        updateConfig(newResizeData)
       }
 
       const removeResizeListener = () => {
-        window.removeEventListener('mouseup', removeResizeListener)
         window.removeEventListener('mousemove', mouseHandler)
-        window.cancelAnimationFrame(animationId)
-
-        setMovingFrom(null)
-        setResizingFrom('')
+        window.removeEventListener('mouseup', removeResizeListener)
       }
 
-      animationId = window.requestAnimationFrame(onAnimationFrame)
-      window.addEventListener('mouseup', removeResizeListener)
-      window.addEventListener('mousemove', mouseHandler)
+      addEventListener('mousemove', mouseHandler)
+      addEventListener('mouseup', removeResizeListener)
 
       return removeResizeListener
     },
-    [resizingFrom, wrapperReference, bodyData]
+    [resizingFrom, wrapperReference]
   )
 
-  return {
-    setResizingFrom,
-    resizeData,
-    setMovingFrom,
-    isMoving: Boolean(movingFrom)
-  }
+  return { setResizingFrom, resizeData, setMovingFrom }
 }

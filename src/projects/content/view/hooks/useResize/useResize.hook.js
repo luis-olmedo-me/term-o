@@ -51,7 +51,8 @@ export const useResize = ({ wrapperReference }) => {
         const newResizeData = getResizeData({
           mousePositionX: event.clientX,
           mousePositionY: event.clientY,
-          resizeType: resizingFrom
+          resizeType: resizingFrom,
+          movingFrom
         })
 
         setResizeData((oldResizeData) => ({

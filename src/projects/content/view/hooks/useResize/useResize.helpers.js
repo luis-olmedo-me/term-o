@@ -14,28 +14,40 @@ export const getNewResizeData = ({
   switch (resizeType) {
     case resizeTypes.LEFT: {
       const shouldFixLeft = minimumValueAllowed > mousePositionX
+      const isBelowMiniumWidth =
+        bodyWidth - (mousePositionX + resizeData.right) < 400
 
-      return { left: shouldFixLeft ? 0 : mousePositionX }
+      return !isBelowMiniumWidth
+        ? { left: shouldFixLeft ? 0 : mousePositionX }
+        : {}
     }
 
     case resizeTypes.RIGHT: {
       const right = bodyWidth - mousePositionX - 1
       const shouldFixRight = minimumValueAllowed > right
+      const isBelowMiniumWidth = bodyWidth - (resizeData.left + right) < 400
 
-      return { right: shouldFixRight ? 0 : right }
+      return !isBelowMiniumWidth ? { right: shouldFixRight ? 0 : right } : {}
     }
 
     case resizeTypes.TOP: {
       const shouldFixTop = minimumValueAllowed > mousePositionY
+      const isBelowMiniumHeight =
+        bodyHeight - (mousePositionY + resizeData.bottom) < 400
 
-      return { top: shouldFixTop ? 0 : mousePositionY }
+      return !isBelowMiniumHeight
+        ? { top: shouldFixTop ? 0 : mousePositionY }
+        : {}
     }
 
     case resizeTypes.BOTTOM: {
       const bottom = bodyHeight - mousePositionY - 1
       const shouldFixBottom = minimumValueAllowed > bottom
+      const isBelowMiniumHeight = bodyHeight - (resizeData.top + bottom) < 400
 
-      return { bottom: shouldFixBottom ? 0 : bottom }
+      return !isBelowMiniumHeight
+        ? { bottom: shouldFixBottom ? 0 : bottom }
+        : {}
     }
 
     case resizeTypes.MOVING: {
@@ -62,7 +74,7 @@ export const getNewResizeData = ({
   }
 }
 
-export const updateConfig = debounce(function updateResizeData(data) {
+export const updateConfig = debounce((data) => {
   backgroundRequest({
     eventType: eventTypes.UPDATE_CONFIG_CONSOLE_POSITION,
     data

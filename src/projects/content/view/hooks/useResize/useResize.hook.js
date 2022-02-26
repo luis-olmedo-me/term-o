@@ -103,6 +103,7 @@ export const useResize = ({ wrapperReference }) => {
             resizeData,
             bodyData
           })
+          console.log('newResizeData', newResizeData)
 
           setResizeData((oldResizeData) => ({
             ...oldResizeData,

@@ -19,10 +19,9 @@ import { resizeTypes } from './hooks/useResize/useResize.constants'
 export const Content = () => {
   const [isConsoleOpen, setIsConsoleOpen] = useState(false)
   const wrapperReference = useRef(null)
-  const { setResizingFrom, resizeData, setMovingFrom, isMoving, bodyData } =
-    useResize({
-      wrapperReference
-    })
+  const { setResizingFrom, resizeData, setMovingFrom, isMoving } = useResize({
+    wrapperReference
+  })
 
   useEffect(function openConsoleByKeyCommands() {
     const toggleTerminal = (message, _sender, sendResponse) => {
@@ -80,7 +79,6 @@ export const Content = () => {
 
       <Console
         isOpen={isConsoleOpen}
-        totalHeight={bodyData.height - resizeData.top - resizeData.bottom}
         isMoving={isMoving}
         onTitleClick={(event) => {
           resizeConsole(resizeTypes.MOVING)

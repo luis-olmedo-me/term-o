@@ -22,17 +22,29 @@ export const useResize = ({ wrapperReference }) => {
       if (!wrapperReference?.current) return
 
       const updateData = debounce(() => {
-        setResizeData({
+        const newBodyData = {
+          width: Math.min(document.body.clientWidth, window.innerWidth - 1),
+          height: Math.min(document.body.clientHeight, window.innerHeight - 1)
+        }
+        const newResizeData = {
           left: parseInt(wrapperReference.current.style.left),
           right: parseInt(wrapperReference.current.style.right),
           top: parseInt(wrapperReference.current.style.top),
           bottom: parseInt(wrapperReference.current.style.bottom)
-        })
+        }
 
-        setBodyData({
-          width: Math.min(document.body.clientWidth, window.innerWidth - 1),
-          height: Math.min(document.body.clientHeight, window.innerHeight - 1)
+        const isBelowMiniumWidth =
+          newBodyData.width - (newResizeData.left + newResizeData.right) < 400
+        const isBelowMiniumHeight =
+          newBodyData.height - (newResizeData.top + newResizeData.bottom) < 400
+
+        setResizeData({
+          left: isBelowMiniumWidth ? 0 : newResizeData.left,
+          right: isBelowMiniumWidth ? 0 : newResizeData.right,
+          top: isBelowMiniumHeight ? 0 : newResizeData.top,
+          bottom: isBelowMiniumHeight ? 0 : newResizeData.bottom
         })
+        setBodyData(newBodyData)
       }, 1000)
 
       const obsever = new ResizeObserver(updateData)
@@ -103,7 +115,6 @@ export const useResize = ({ wrapperReference }) => {
             resizeData,
             bodyData
           })
-          console.log('newResizeData', newResizeData)
 
           setResizeData((oldResizeData) => ({
             ...oldResizeData,

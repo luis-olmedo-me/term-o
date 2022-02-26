@@ -33,7 +33,8 @@ export const ConsoleTitle = styled.h1`
   top: 0;
   transition: background-color 0.2s ease-in-out;
 
-  &&:hover {
+  &&:hover,
+  &&:active {
     background-color: #292929;
   }
 `

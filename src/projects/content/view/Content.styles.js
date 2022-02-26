@@ -26,6 +26,7 @@ export const ResizerLeft = styled.button`
   transition: 0.1s ease-in-out;
   transition-property: background-color, width;
 
+  &&:active,
   &&:hover {
     cursor: col-resize;
     background-color: #aaa;
@@ -46,6 +47,7 @@ export const ResizerRight = styled.button`
   transition: 0.1s ease-in-out;
   transition-property: background-color, width;
 
+  &&:active,
   &&:hover {
     cursor: col-resize;
     background-color: #aaa;
@@ -66,6 +68,7 @@ export const ResizerTop = styled.button`
   transition: 0.1s ease-in-out;
   transition-property: background-color, height;
 
+  &&:active,
   &&:hover {
     cursor: row-resize;
     background-color: #aaa;
@@ -86,6 +89,7 @@ export const ResizerBottom = styled.button`
   transition: 0.1s ease-in-out;
   transition-property: background-color, height;
 
+  &&:active,
   &&:hover {
     cursor: row-resize;
     background-color: #aaa;

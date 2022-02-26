@@ -48,7 +48,16 @@ export const getNewResizeData = ({
       const right = resizeData.right - offsetX
       const bottom = resizeData.bottom - offsetY
 
-      return { left, top, right, bottom }
+      const shouldStopSideResizing = left < 0 || right < 0
+      const shouldStopTopResizing = top < 0 || bottom < 0
+
+      const horizontalSides = shouldStopSideResizing ? {} : { left, right }
+      const verticalSides = shouldStopTopResizing ? {} : { top, bottom }
+
+      return {
+        ...horizontalSides,
+        ...verticalSides
+      }
     }
   }
 }

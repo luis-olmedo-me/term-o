@@ -1,36 +1,30 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
-import { EASY_DOM_CONTENT_WRAPPER_ID } from 'projects/content/content.constants'
 import { Console } from '../modules/Console/Console.component'
 
-import { ContentWrapper } from './Content.styles.js'
+import {
+  ContentWrapper,
+  ResizerLeft,
+  ResizerRight,
+  ResizerTop,
+  ResizerBottom
+} from './Content.styles.js'
 import {
   eventTypes,
   extensionKeyEvents
 } from 'src/constants/events.constants.js'
+import { useResize } from './hooks/useResize/useResize.hook'
+import { resizeTypes } from './hooks/useResize/useResize.constants'
 
 export const Content = () => {
   const [isConsoleOpen, setIsConsoleOpen] = useState(false)
-
-  const isContentActive = isConsoleOpen
-
-  useEffect(
-    function updateTop() {
-      if (isContentActive) {
-        const handleMouseMove = () => {
-          setIsConsoleOpen(false)
-        }
-
-        document.addEventListener('scroll', handleMouseMove)
-
-        return () => document.removeEventListener('scroll', handleMouseMove)
-      }
-    },
-    [isContentActive]
-  )
+  const wrapperReference = useRef(null)
+  const { setResizingFrom, resizeData, setMovingFrom, isMoving } = useResize({
+    wrapperReference
+  })
 
   useEffect(function openConsoleByKeyCommands() {
-    const toggleTerminal = (message, sender, sendResponse) => {
+    const toggleTerminal = (message, _sender, sendResponse) => {
       if (message.action !== eventTypes.NEW_COMMAND) return
 
       switch (message.data.command) {
@@ -47,13 +41,50 @@ export const Content = () => {
     return () => chrome.extension.onMessage.removeListener(toggleTerminal)
   }, [])
 
+  const resizeConsole = (newResizingFrom) => {
+    setResizingFrom(newResizingFrom)
+  }
+
+  const stopResizeConsole = () => {
+    setResizingFrom('')
+  }
+
   return (
     <ContentWrapper
-      id={EASY_DOM_CONTENT_WRAPPER_ID}
-      top={isContentActive ? window.scrollY : 0}
-      opacity={isContentActive ? 1 : 0}
+      ref={wrapperReference}
+      opacity={isConsoleOpen ? 1 : 0}
+      style={resizeData}
     >
-      <Console isOpen={isConsoleOpen} />
+      {!isMoving ? (
+        <>
+          <ResizerLeft
+            onMouseDown={() => resizeConsole(resizeTypes.LEFT)}
+            onMouseUp={stopResizeConsole}
+          />
+
+          <ResizerRight
+            onMouseDown={() => resizeConsole(resizeTypes.RIGHT)}
+            onMouseUp={stopResizeConsole}
+          />
+          <ResizerTop
+            onMouseDown={() => resizeConsole(resizeTypes.TOP)}
+            onMouseUp={stopResizeConsole}
+          />
+          <ResizerBottom
+            onMouseDown={() => resizeConsole(resizeTypes.BOTTOM)}
+            onMouseUp={stopResizeConsole}
+          />
+        </>
+      ) : null}
+
+      <Console
+        isOpen={isConsoleOpen}
+        isMoving={isMoving}
+        onTitleClick={(event) => {
+          resizeConsole(resizeTypes.MOVING)
+          setMovingFrom({ x: event.clientX, y: event.clientY })
+        }}
+      />
     </ContentWrapper>
   )
 }

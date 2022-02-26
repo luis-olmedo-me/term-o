@@ -3,7 +3,6 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { commander } from 'libs/easy-commander/easyCommander.service'
 
 import {
-  ConsoleWrapper,
   ConsoleContent,
   ConsoleTitle,
   ConsoleInput,
@@ -14,7 +13,10 @@ import {
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
 import { eventTypes } from 'src/constants/events.constants.js'
 
-export const Console = ({ isOpen }) => {
+export const Console = ({ isOpen, onTitleClick, isMoving }) => {
+  const titleReference = useRef(null)
+  const inputReference = useRef(null)
+
   const [histories, setHistories] = useState([])
   const [currentCommand, setCurrentCommand] = useState('')
   const [commandId, setCommandId] = useState(0)
@@ -73,27 +75,36 @@ export const Console = ({ isOpen }) => {
 
   const outsideProps = { pageEvents }
 
+  const consoleStyles = {
+    paddingTop: parseInt(titleReference.current?.offsetHeight || 0) + 10,
+    paddingBottom: parseInt(inputReference.current?.offsetHeight || 0) + 10
+  }
+
   return (
-    <ConsoleWrapper isOpen={isOpen}>
-      <ConsoleContent>
-        <ConsoleTitle>TERM-O</ConsoleTitle>
+    <ConsoleContent isOpen={isOpen} isMoving={isMoving}>
+      <ConsoleTitle ref={titleReference} onMouseDown={onTitleClick}>
+        TERM-O
+      </ConsoleTitle>
 
-        <ConsoleLogs id='term-o-console-logs' ref={historyRef}>
-          {histories.map((history) => history(outsideProps))}
-        </ConsoleLogs>
+      <ConsoleLogs
+        id='term-o-console-logs'
+        ref={historyRef}
+        style={consoleStyles}
+      >
+        {histories.map((history) => history(outsideProps))}
+      </ConsoleLogs>
 
-        <ConsoleInputWrapper>
-          <ConsoleHash>$</ConsoleHash>
+      <ConsoleInputWrapper ref={inputReference}>
+        <ConsoleHash>$</ConsoleHash>
 
-          <ConsoleInput
-            type='text'
-            onChange={handleCommandChange}
-            onKeyDown={handleKeyPressed}
-            value={currentCommand}
-            autoFocus
-          />
-        </ConsoleInputWrapper>
-      </ConsoleContent>
-    </ConsoleWrapper>
+        <ConsoleInput
+          type='text'
+          onChange={handleCommandChange}
+          onKeyDown={handleKeyPressed}
+          value={currentCommand}
+          autoFocus
+        />
+      </ConsoleInputWrapper>
+    </ConsoleContent>
   )
 }

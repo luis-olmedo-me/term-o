@@ -24,7 +24,7 @@ export const Element = ({ htmlElement = {} }) => {
   const idLabel = id && `#${id}`
   const classNameLabel = className && `.${className.replaceAll?.(/\s/g, '.')}`
   const tagNameLabel = htmlElement.tagName.toLowerCase()
-  const elementLabel = `${tagNameLabel}${idLabel || classNameLabel}`
+  const elementLabel = `${tagNameLabel}${idLabel || classNameLabel || ''}`
 
   return (
     <ElementWrapper

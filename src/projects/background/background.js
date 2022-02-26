@@ -11,6 +11,20 @@ chrome.commands.onCommand.addListener(function (command) {
   })
 })
 
+let configuration = {}
+
+const updateConfiguration = () => {
+  const receiveConfiguration = ({ configuration: receivedConfiguration }) => {
+    configuration = receivedConfiguration || {}
+  }
+
+  chrome.storage.sync.get('configuration', receiveConfiguration)
+}
+
+const setConfiguration = (config) => {
+  chrome.storage.sync.set({ configuration: config })
+}
+
 let pageEvents = []
 
 const updatePageEvents = () => {
@@ -57,7 +71,28 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       sendResponse({ status: 'ok' })
       break
     }
+
+    case eventTypes.GET_CONFIGURATION: {
+      sendResponse({ status: 'ok', response: configuration })
+      break
+    }
+
+    case eventTypes.UPDATE_CONFIG_CONSOLE_POSITION: {
+      const oldConsolePosition = configuration.consolePosition || {}
+
+      setConfiguration({
+        ...configuration,
+        consolePosition: {
+          ...oldConsolePosition,
+          ...request.data
+        }
+      })
+      updateConfiguration()
+      sendResponse({ status: 'ok' })
+      break
+    }
   }
 })
 
 updatePageEvents()
+updateConfiguration()

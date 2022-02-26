@@ -1,27 +1,20 @@
 import styled from 'styled-components'
 
-export const ConsoleWrapper = styled.div`
-  height: 100%;
-  position: relative;
-  color: #d6d6d6;
-  font-size: 14px;
-  font-family: system-ui;
-  pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
-  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
-`
-
 export const ConsoleContent = styled.div`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 70vw;
-  min-width: 650px;
   background-color: #2e2e2e;
-  border-radius: 5px;
-  box-shadow: 0px 0 40px 10px rgba(#000, 25%);
-  border: 1px solid #505050;
-  font-family: monospace;
+  pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
+
+  box-shadow: ${({ isMoving }) =>
+    isMoving
+      ? '0px 20px 15px -3px rgba(0, 0, 0, 0.5)'
+      : '0px 10px 15px -3px rgba(0, 0, 0, 0.15)'};
+  transform: translateY(${({ isMoving }) => (isMoving ? '-5px' : 0)});
+
+  transition: 0.2s ease-in-out;
+  transition-property: transform box-shadow;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 `
 
 export const ConsoleTitle = styled.h1`
@@ -30,18 +23,30 @@ export const ConsoleTitle = styled.h1`
   text-align: center;
   font-weight: normal;
   font-size: 20px;
-  border-bottom: 1px solid #505050;
+  border: 1px solid #505050;
+  box-sizing: border-box;
+  color: #d6d6d6;
+  cursor: pointer;
+  user-select: none;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  transition: background-color 0.2s ease-in-out;
+
+  &&:hover,
+  &&:active {
+    background-color: #292929;
+  }
 `
 
 export const ConsoleInput = styled.input`
   padding: 10px;
   width: calc(100% - 20px);
   box-sizing: border-box;
-  background-color: #2e2e2e;
   color: #d6d6d6;
   border: none;
-  border-radius: 0 0 5px 5px;
   vertical-align: middle;
+  background-color: #2e2e2e;
 
   &:active,
   &:focus,
@@ -52,13 +57,15 @@ export const ConsoleInput = styled.input`
 export const ConsoleLogs = styled.div`
   padding: 10px;
   width: 100%;
-  height: 40vh;
   border: none;
   box-sizing: border-box;
   background-color: #2e2e2e;
   color: #d6d6d6;
   display: block;
   overflow-y: scroll;
+  border: solid #505050;
+  border-width: 0 1px;
+  flex: 1;
 
   &::-webkit-scrollbar {
     display: none;
@@ -66,8 +73,12 @@ export const ConsoleLogs = styled.div`
 `
 
 export const ConsoleInputWrapper = styled.div`
-  border-radius: 0 0 5px 5px;
-  border-top: 1px solid #505050;
+  box-sizing: border-box;
+  border: 1px solid #505050;
+  background-color: #2e2e2e;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
 `
 
 export const ConsoleHash = styled.span`
@@ -75,4 +86,5 @@ export const ConsoleHash = styled.span`
   display: inline-block;
   vertical-align: middle;
   text-align: end;
+  color: #d6d6d6;
 `

@@ -79,32 +79,48 @@ export const useResize = ({ wrapperReference }) => {
     function setUpResizeEvent() {
       if (!resizingFrom || !wrapperReference) return
 
+      let animationId = null
+      let mousePosition = null
+
       const mouseHandler = (event) => {
-        const newResizeData = getNewResizeData({
-          mousePositionX: event.clientX,
-          mousePositionY: event.clientY,
-          tripodPositionX: movingFrom?.x,
-          tripodPositionY: movingFrom?.y,
-          resizeType: resizingFrom,
-          resizeData,
-          bodyData
-        })
+        mousePosition = {
+          x: event.clientX,
+          y: event.clientY
+        }
+      }
 
-        setResizeData((oldResizeData) => ({
-          ...oldResizeData,
-          ...newResizeData
-        }))
+      const onAnimationFrame = () => {
+        if (mousePosition) {
+          const newResizeData = getNewResizeData({
+            mousePositionX: mousePosition.x,
+            mousePositionY: mousePosition.y,
+            tripodPositionX: movingFrom?.x,
+            tripodPositionY: movingFrom?.y,
+            resizeType: resizingFrom,
+            resizeData,
+            bodyData
+          })
 
-        updateConfig(newResizeData)
+          setResizeData((oldResizeData) => ({
+            ...oldResizeData,
+            ...newResizeData
+          }))
+
+          updateConfig(newResizeData)
+        }
+
+        animationId = window.requestAnimationFrame(onAnimationFrame)
       }
 
       const removeResizeListener = () => {
-        window.removeEventListener('mousemove', mouseHandler)
         window.removeEventListener('mouseup', removeResizeListener)
+        window.removeEventListener('mousemove', mouseHandler)
+        window.cancelAnimationFrame(animationId)
       }
 
-      addEventListener('mousemove', mouseHandler)
+      animationId = window.requestAnimationFrame(onAnimationFrame)
       addEventListener('mouseup', removeResizeListener)
+      addEventListener('mousemove', mouseHandler)
 
       return removeResizeListener
     },

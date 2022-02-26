@@ -117,7 +117,7 @@ export const useResize = ({ wrapperReference }) => {
         animationId = window.requestAnimationFrame(onAnimationFrame)
       }
 
-      const removeResizeListener = (event) => {
+      const removeResizeListener = () => {
         window.removeEventListener('mouseup', removeResizeListener)
         window.removeEventListener('mousemove', mouseHandler)
         window.cancelAnimationFrame(animationId)
@@ -139,7 +139,6 @@ export const useResize = ({ wrapperReference }) => {
     setResizingFrom,
     resizeData,
     setMovingFrom,
-    isMoving: Boolean(movingFrom),
-    bodyData
+    isMoving: Boolean(movingFrom)
   }
 }

@@ -76,8 +76,8 @@ export const Console = ({ isOpen, onTitleClick, isMoving }) => {
   const outsideProps = { pageEvents }
 
   const consoleStyles = {
-    paddingTop: parseInt(titleReference.current?.offsetHeight) + 10,
-    paddingBottom: parseInt(inputReference.current?.offsetHeight) + 10
+    paddingTop: parseInt(titleReference.current?.offsetHeight || 0) + 10,
+    paddingBottom: parseInt(inputReference.current?.offsetHeight || 0) + 10
   }
 
   return (

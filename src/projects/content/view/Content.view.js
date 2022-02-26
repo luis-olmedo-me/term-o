@@ -86,10 +86,6 @@ export const Content = () => {
           resizeConsole(resizeTypes.MOVING)
           setMovingFrom({ x: event.clientX, y: event.clientY })
         }}
-        onTitleRelease={() => {
-          stopResizeConsole()
-          setMovingFrom(null)
-        }}
       />
     </ContentWrapper>
   )

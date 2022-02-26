@@ -5,9 +5,9 @@ import { debounce } from 'src/helpers/utils.helpers.js'
 
 export const getNewResizeData = ({
   mousePosition: { x: mousePositionX, y: mousePositionY },
-  tripodPosition: { x: tripodPositionX, y: tripodPositionY },
+  pivotPosition: { x: pivotPositionX, y: pivotPositionY },
   bodyData: { width: bodyWidth, height: bodyHeight },
-  wrapper: { width: wrapperWidth, height: wrapperHeight },
+  mockDistance: { x: mockDistanceX, y: mockDistanceY },
   resizeType,
   resizeData
 }) => {
@@ -39,8 +39,8 @@ export const getNewResizeData = ({
     }
 
     case resizeTypes.MOVING: {
-      const offsetX = mousePositionX - tripodPositionX
-      const offsetY = mousePositionY - tripodPositionY
+      const offsetX = mousePositionX - pivotPositionX
+      const offsetY = mousePositionY - pivotPositionY
 
       const left = offsetX + resizeData.left
       const top = offsetY + resizeData.top
@@ -51,9 +51,6 @@ export const getNewResizeData = ({
       const isRightOutside = right < 0
       const isTopOutside = top < 0
       const isBottomOutside = bottom < 0
-
-      const mockDistanceX = bodyWidth - wrapperWidth
-      const mockDistanceY = bodyHeight - wrapperHeight
 
       return {
         left: isLeftOutside ? 0 : isRightOutside ? mockDistanceX : left,

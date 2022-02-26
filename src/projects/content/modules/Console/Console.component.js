@@ -13,13 +13,7 @@ import {
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
 import { eventTypes } from 'src/constants/events.constants.js'
 
-export const Console = ({
-  isOpen,
-  totalHeight,
-  onTitleClick,
-  onTitleRelease,
-  isMoving
-}) => {
+export const Console = ({ isOpen, totalHeight, onTitleClick, isMoving }) => {
   const titleReference = useRef(null)
   const inputReference = useRef(null)
 
@@ -90,11 +84,7 @@ export const Console = ({
 
   return (
     <ConsoleContent isOpen={isOpen} isMoving={isMoving}>
-      <ConsoleTitle
-        ref={titleReference}
-        onMouseDown={onTitleClick}
-        onMouseUp={onTitleRelease}
-      >
+      <ConsoleTitle ref={titleReference} onMouseDown={onTitleClick}>
         TERM-O
       </ConsoleTitle>
 

@@ -81,6 +81,10 @@ export const useResize = ({ wrapperReference }) => {
 
       let animationId = null
       let mousePosition = null
+      const mockDistance = {
+        x: bodyData.width - wrapperReference.current.clientWidth,
+        y: bodyData.height - wrapperReference.current.clientHeight
+      }
 
       const mouseHandler = (event) => {
         mousePosition = {
@@ -92,12 +96,9 @@ export const useResize = ({ wrapperReference }) => {
       const onAnimationFrame = () => {
         if (mousePosition) {
           const newResizeData = getNewResizeData({
-            wrapper: {
-              height: wrapperReference.current.clientHeight,
-              width: wrapperReference.current.clientWidth
-            },
+            mockDistance,
             mousePosition: { x: mousePosition.x, y: mousePosition.y },
-            tripodPosition: { x: movingFrom?.x, y: movingFrom?.y },
+            pivotPosition: { x: movingFrom?.x, y: movingFrom?.y },
             resizeType: resizingFrom,
             resizeData,
             bodyData
@@ -115,15 +116,18 @@ export const useResize = ({ wrapperReference }) => {
         animationId = window.requestAnimationFrame(onAnimationFrame)
       }
 
-      const removeResizeListener = () => {
+      const removeResizeListener = (event) => {
         window.removeEventListener('mouseup', removeResizeListener)
         window.removeEventListener('mousemove', mouseHandler)
         window.cancelAnimationFrame(animationId)
+
+        setMovingFrom(null)
+        setResizingFrom('')
       }
 
       animationId = window.requestAnimationFrame(onAnimationFrame)
-      addEventListener('mouseup', removeResizeListener)
-      addEventListener('mousemove', mouseHandler)
+      window.addEventListener('mouseup', removeResizeListener)
+      window.addEventListener('mousemove', mouseHandler)
 
       return removeResizeListener
     },

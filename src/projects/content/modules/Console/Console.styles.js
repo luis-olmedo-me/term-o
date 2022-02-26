@@ -12,6 +12,9 @@ export const ConsoleContent = styled.div`
 
   transition: 0.2s ease-in-out;
   transition-property: transform box-shadow;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 `
 
 export const ConsoleTitle = styled.h1`
@@ -25,6 +28,9 @@ export const ConsoleTitle = styled.h1`
   color: #d6d6d6;
   cursor: pointer;
   user-select: none;
+  position: absolute;
+  width: 100%;
+  top: 0;
 `
 
 export const ConsoleInput = styled.input`
@@ -53,6 +59,7 @@ export const ConsoleLogs = styled.div`
   overflow-y: scroll;
   border: solid #505050;
   border-width: 0 1px;
+  flex: 1;
 
   &::-webkit-scrollbar {
     display: none;
@@ -62,6 +69,10 @@ export const ConsoleLogs = styled.div`
 export const ConsoleInputWrapper = styled.div`
   box-sizing: border-box;
   border: 1px solid #505050;
+  background-color: #2e2e2e;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
 `
 
 export const ConsoleHash = styled.span`

@@ -13,7 +13,7 @@ import {
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
 import { eventTypes } from 'src/constants/events.constants.js'
 
-export const Console = ({ isOpen, totalHeight, onTitleClick, isMoving }) => {
+export const Console = ({ isOpen, onTitleClick, isMoving }) => {
   const titleReference = useRef(null)
   const inputReference = useRef(null)
 
@@ -75,11 +75,9 @@ export const Console = ({ isOpen, totalHeight, onTitleClick, isMoving }) => {
 
   const outsideProps = { pageEvents }
 
-  const titleHeight = titleReference.current?.offsetHeight || 0
-  const inputHeight = inputReference.current?.offsetHeight || 0
-
   const consoleStyles = {
-    height: totalHeight - titleHeight - inputHeight
+    paddingTop: parseInt(titleReference.current?.offsetHeight) + 10,
+    paddingBottom: parseInt(inputReference.current?.offsetHeight) + 10
   }
 
   return (

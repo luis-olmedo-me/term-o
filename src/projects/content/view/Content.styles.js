@@ -8,6 +8,7 @@ export const ContentWrapper = styled.div`
   display: flex;
   flex-flow: column;
   transition: inset 0.05s ease-in-out, opacity 0.1s ease-in-out;
+  min-height: 400px;
 `
 
 export const ResizerLeft = styled.button`

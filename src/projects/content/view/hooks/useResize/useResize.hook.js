@@ -92,12 +92,12 @@ export const useResize = ({ wrapperReference }) => {
       const onAnimationFrame = () => {
         if (mousePosition) {
           const newResizeData = getNewResizeData({
-            wrapperWidth: wrapperReference.current.clientWidth,
-            wrapperHeight: wrapperReference.current.clientHeight,
-            mousePositionX: mousePosition.x,
-            mousePositionY: mousePosition.y,
-            tripodPositionX: movingFrom?.x,
-            tripodPositionY: movingFrom?.y,
+            wrapper: {
+              height: wrapperReference.current.clientHeight,
+              width: wrapperReference.current.clientWidth
+            },
+            mousePosition: { x: mousePosition.x, y: mousePosition.y },
+            tripodPosition: { x: movingFrom?.x, y: movingFrom?.y },
             resizeType: resizingFrom,
             resizeData,
             bodyData

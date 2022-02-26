@@ -4,15 +4,12 @@ import { eventTypes } from 'src/constants/events.constants.js'
 import { debounce } from 'src/helpers/utils.helpers.js'
 
 export const getNewResizeData = ({
-  mousePositionX,
-  mousePositionY,
-  tripodPositionX,
-  tripodPositionY,
-  resizeType,
-  resizeData,
+  mousePosition: { x: mousePositionX, y: mousePositionY },
+  tripodPosition: { x: tripodPositionX, y: tripodPositionY },
   bodyData: { width: bodyWidth, height: bodyHeight },
-  wrapperWidth,
-  wrapperHeight
+  wrapper: { width: wrapperWidth, height: wrapperHeight },
+  resizeType,
+  resizeData
 }) => {
   switch (resizeType) {
     case resizeTypes.LEFT: {

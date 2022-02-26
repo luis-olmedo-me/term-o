@@ -3,7 +3,6 @@ import styled from 'styled-components'
 export const ConsoleContent = styled.div`
   background-color: #2e2e2e;
   pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
-  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
 
   box-shadow: ${({ isMoving }) =>
     isMoving
@@ -12,7 +11,7 @@ export const ConsoleContent = styled.div`
   transform: translateY(${({ isMoving }) => (isMoving ? '-5px' : 0)});
 
   transition: 0.2s ease-in-out;
-  transition-property: transform box-shadow opacity;
+  transition-property: transform box-shadow;
 `
 
 export const ConsoleTitle = styled.h1`

@@ -9,8 +9,7 @@ export const ContentWrapper = styled.div`
   pointer-events: ${(props) => (props.opacity === 0 ? 'none' : 'all')};
   display: flex;
   flex-flow: column;
-  transition: 0.05s ease-in-out;
-  transition-property: inset;
+  transition: inset 0.05s ease-in-out, opacity 0.1s ease-in-out;
 `
 
 export const ResizerLeft = styled.button`

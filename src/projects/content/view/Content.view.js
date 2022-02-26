@@ -56,7 +56,7 @@ export const Content = () => {
       opacity={isConsoleOpen ? 1 : 0}
       style={resizeData}
     >
-      {isMoving ? (
+      {!isMoving ? (
         <>
           <ResizerLeft
             onMouseDown={() => resizeConsole(resizeTypes.LEFT)}

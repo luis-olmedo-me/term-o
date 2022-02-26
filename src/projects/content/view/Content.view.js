@@ -56,23 +56,27 @@ export const Content = () => {
       opacity={isConsoleOpen ? 1 : 0}
       style={resizeData}
     >
-      <ResizerLeft
-        onMouseDown={() => resizeConsole(resizeTypes.LEFT)}
-        onMouseUp={stopResizeConsole}
-      />
+      {isMoving ? (
+        <>
+          <ResizerLeft
+            onMouseDown={() => resizeConsole(resizeTypes.LEFT)}
+            onMouseUp={stopResizeConsole}
+          />
 
-      <ResizerRight
-        onMouseDown={() => resizeConsole(resizeTypes.RIGHT)}
-        onMouseUp={stopResizeConsole}
-      />
-      <ResizerTop
-        onMouseDown={() => resizeConsole(resizeTypes.TOP)}
-        onMouseUp={stopResizeConsole}
-      />
-      <ResizerBottom
-        onMouseDown={() => resizeConsole(resizeTypes.BOTTOM)}
-        onMouseUp={stopResizeConsole}
-      />
+          <ResizerRight
+            onMouseDown={() => resizeConsole(resizeTypes.RIGHT)}
+            onMouseUp={stopResizeConsole}
+          />
+          <ResizerTop
+            onMouseDown={() => resizeConsole(resizeTypes.TOP)}
+            onMouseUp={stopResizeConsole}
+          />
+          <ResizerBottom
+            onMouseDown={() => resizeConsole(resizeTypes.BOTTOM)}
+            onMouseUp={stopResizeConsole}
+          />
+        </>
+      ) : null}
 
       <Console
         isOpen={isConsoleOpen}

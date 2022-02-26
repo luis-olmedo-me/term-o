@@ -10,7 +10,9 @@ export const getNewResizeData = ({
   tripodPositionY,
   resizeType,
   resizeData,
-  bodyData: { width: bodyWidth, height: bodyHeight }
+  bodyData: { width: bodyWidth, height: bodyHeight },
+  wrapperWidth,
+  wrapperHeight
 }) => {
   switch (resizeType) {
     case resizeTypes.LEFT: {
@@ -53,16 +55,15 @@ export const getNewResizeData = ({
       const isTopOutside = top < 0
       const isBottomOutside = bottom < 0
 
-      const tempData = {
-        left: isLeftOutside ? 0 : isRightOutside ? null : left,
-        right: isRightOutside ? 0 : isLeftOutside ? null : right,
-        top: isTopOutside ? 0 : isBottomOutside ? null : top,
-        bottom: isBottomOutside ? 0 : isTopOutside ? null : bottom
-      }
+      const mockDistanceX = bodyWidth - wrapperWidth
+      const mockDistanceY = bodyHeight - wrapperHeight
 
-      return Object.entries(tempData).reduce((allSides, [side, value]) => {
-        return value !== null ? { ...allSides, [side]: value } : allSides
-      }, {})
+      return {
+        left: isLeftOutside ? 0 : isRightOutside ? mockDistanceX : left,
+        right: isRightOutside ? 0 : isLeftOutside ? mockDistanceX : right,
+        top: isTopOutside ? 0 : isBottomOutside ? mockDistanceY : top,
+        bottom: isBottomOutside ? 0 : isTopOutside ? mockDistanceY : bottom
+      }
     }
   }
 }

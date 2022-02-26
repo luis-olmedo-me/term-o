@@ -31,6 +31,11 @@ export const ConsoleTitle = styled.h1`
   position: absolute;
   width: 100%;
   top: 0;
+  transition: background-color 0.2s ease-in-out;
+
+  &&:hover {
+    background-color: #292929;
+  }
 `
 
 export const ConsoleInput = styled.input`

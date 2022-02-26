@@ -105,8 +105,9 @@ export const useResize = ({ wrapperReference }) => {
             ...oldResizeData,
             ...newResizeData
           }))
-
           updateConfig(newResizeData)
+
+          mousePosition = null
         }
 
         animationId = window.requestAnimationFrame(onAnimationFrame)

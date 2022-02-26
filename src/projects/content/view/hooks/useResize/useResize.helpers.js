@@ -48,16 +48,21 @@ export const getNewResizeData = ({
       const right = resizeData.right - offsetX
       const bottom = resizeData.bottom - offsetY
 
-      const shouldStopSideResizing = left < 0 || right < 0
-      const shouldStopTopResizing = top < 0 || bottom < 0
+      const isLeftOutside = left < 0
+      const isRightOutside = right < 0
+      const isTopOutside = top < 0
+      const isBottomOutside = bottom < 0
 
-      const horizontalSides = shouldStopSideResizing ? {} : { left, right }
-      const verticalSides = shouldStopTopResizing ? {} : { top, bottom }
-
-      return {
-        ...horizontalSides,
-        ...verticalSides
+      const tempData = {
+        left: isLeftOutside ? 0 : isRightOutside ? null : left,
+        right: isRightOutside ? 0 : isLeftOutside ? null : right,
+        top: isTopOutside ? 0 : isBottomOutside ? null : top,
+        bottom: isBottomOutside ? 0 : isTopOutside ? null : bottom
       }
+
+      return Object.entries(tempData).reduce((allSides, [side, value]) => {
+        return value !== null ? { ...allSides, [side]: value } : allSides
+      }, {})
     }
   }
 }

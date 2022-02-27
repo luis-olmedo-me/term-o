@@ -1,3 +1,4 @@
+import { clearConfig } from './components/CommandClear/CommandClear.constants'
 import { cssConfig } from './components/CommandCss/CommandCss.constants'
 import { domConfig } from './components/CommandDom/CommandDom.constants'
 import { eventConfig } from './components/CommandEvent/CommandEvent.constants'
@@ -7,7 +8,8 @@ export const consoleCommands = {
   dom: domConfig,
   css: cssConfig,
   on: onConfig,
-  event: eventConfig
+  event: eventConfig,
+  clear: clearConfig
 }
 
 export const parameterTypes = {

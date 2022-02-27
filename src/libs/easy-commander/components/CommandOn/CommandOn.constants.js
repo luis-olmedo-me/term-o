@@ -1,7 +1,7 @@
 import React from 'react'
 import { CommandOn } from './CommandOn.component'
 
-export const domConfig = {
+export const onConfig = {
   props: {
     url: {
       key: 'url',

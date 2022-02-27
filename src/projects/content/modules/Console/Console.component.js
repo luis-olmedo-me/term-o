@@ -1,11 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 
 import { commander } from 'libs/easy-commander/easyCommander.service'
-
-import { ConsoleContent, ConsoleTitle, ConsoleLogs } from './Console.styles.js'
-import { backgroundRequest } from 'src/helpers/event.helpers.js'
-import { eventTypes } from 'src/constants/events.constants.js'
 import { CommandInput } from './components/CommandInput/CommandInput.component.js'
+import { usePageEvents } from './hooks/usePageEvents.hook.js'
+import { ConsoleContent, ConsoleTitle, ConsoleLogs } from './Console.styles.js'
 
 export const Console = ({ isOpen, onTitleClick, isMoving }) => {
   const titleReference = useRef(null)
@@ -14,8 +12,9 @@ export const Console = ({ isOpen, onTitleClick, isMoving }) => {
 
   const [histories, setHistories] = useState([])
   const [commandId, setCommandId] = useState(0)
-  const [pageEvents, setPageEvents] = useState([])
   let auxiliarId = 0
+
+  const { pageEvents, appliedPageEvents } = usePageEvents()
 
   const handleCommandRun = useCallback((command) => {
     const generatedId = `${commandId}-${auxiliarId}`
@@ -31,27 +30,10 @@ export const Console = ({ isOpen, onTitleClick, isMoving }) => {
   }, [])
 
   useEffect(
-    function getPageEvents() {
-      const receivePageEvents = ({ response: newPageEvents }) => {
-        newPageEvents.forEach((pageEvent) => {
-          const validURL = window.location.origin.match(
-            new RegExp(pageEvent.url)
-          )
-
-          if (!validURL) return
-
-          handleCommandRun(pageEvent.command)
-        })
-
-        setPageEvents(newPageEvents)
-      }
-
-      backgroundRequest({
-        eventType: eventTypes.GET_PAGE_EVENTS,
-        callback: receivePageEvents
-      })
+    function applyPageEvents() {
+      appliedPageEvents.forEach(({ command }) => handleCommandRun(command))
     },
-    [handleCommandRun]
+    [appliedPageEvents, handleCommandRun]
   )
 
   const outsideProps = { pageEvents }

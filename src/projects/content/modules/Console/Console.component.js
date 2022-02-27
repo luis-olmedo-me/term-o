@@ -21,7 +21,7 @@ import {
 } from './Console.styles.js'
 
 import { usePageEvents } from './hooks/usePageEvents.hook.js'
-import { useResize } from '../../view/hooks/useResize/useResize.hook.js'
+import { useResize } from './hooks/useResize/useResize.hook.js'
 
 import { resizeTypes } from '../../view/hooks/useResize/useResize.constants.js'
 

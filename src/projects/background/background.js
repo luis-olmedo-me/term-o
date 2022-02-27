@@ -1,49 +1,6 @@
+import { configManager } from 'libs/config-manager'
+
 import { eventTypes } from 'src/constants/events.constants.js'
-
-class ConfigManager {
-  constructor() {
-    this.consolePosition = {}
-    this.pageEvents = []
-  }
-
-  setConsolePosition(newConfig) {
-    this.consolePosition = { ...this.consolePosition, ...newConfig }
-    this.setConfigInLocalStorage()
-
-    return this
-  }
-
-  setPageEvents(newConfig) {
-    this.pageEvents = newConfig
-    this.setConfigInLocalStorage()
-
-    return this
-  }
-
-  init() {
-    this.getConfigFromLocalStorage()
-
-    return this
-  }
-
-  getConfigFromLocalStorage() {
-    const receiveConfiguration = ({ configuration: receivedConfiguration }) => {
-      this.consolePosition = receivedConfiguration?.consolePosition || {}
-      this.pageEvents = receivedConfiguration?.pageEvents || []
-    }
-
-    chrome.storage.sync.get('configuration', receiveConfiguration)
-  }
-
-  setConfigInLocalStorage() {
-    chrome.storage.sync.set({
-      configuration: {
-        consolePosition: this.consolePosition,
-        pageEvents: this.pageEvents
-      }
-    })
-  }
-}
 
 chrome.commands.onCommand.addListener(function (command) {
   const requestData = {
@@ -55,8 +12,6 @@ chrome.commands.onCommand.addListener(function (command) {
     chrome.tabs.sendMessage(tabs[0].id, requestData)
   })
 })
-
-const configManager = new ConfigManager().init()
 
 chrome.runtime.onMessage.addListener(function (request, _sender, sendResponse) {
   switch (request.type) {

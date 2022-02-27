@@ -80,7 +80,7 @@ export const Console = () => {
   return (
     <ConsoleWrapper
       ref={wrapperReference}
-      opacity={isOpen ? 1 : 0}
+      isOpen={isOpen}
       style={resizeData}
       ondragstart='return false;'
       ondrop='return false;'

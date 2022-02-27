@@ -3,8 +3,16 @@ import styled from 'styled-components'
 export const ConsoleWrapper = styled.div`
   position: fixed;
   z-index: 1000000;
-  opacity: ${(props) => props.opacity};
-  pointer-events: ${(props) => (props.opacity === 0 ? 'none' : 'all')};
+
+  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
+  pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
+
+  pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
+  box-shadow: ${({ isMoving }) =>
+    isMoving
+      ? '0px 20px 15px -3px rgba(0, 0, 0, 0.5)'
+      : '0px 10px 15px -3px rgba(0, 0, 0, 0.15)'};
+
   transition: inset 0.05s ease-in-out, opacity 0.1s ease-in-out;
   min-height: 400px;
   display: flex;
@@ -13,12 +21,6 @@ export const ConsoleWrapper = styled.div`
 
 export const ConsoleContent = styled.div`
   background-color: #2e2e2e;
-  pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
-
-  box-shadow: ${({ isMoving }) =>
-    isMoving
-      ? '0px 20px 15px -3px rgba(0, 0, 0, 0.5)'
-      : '0px 10px 15px -3px rgba(0, 0, 0, 0.15)'};
   transform: translateY(${({ isMoving }) => (isMoving ? '-5px' : 0)});
 
   transition: 0.2s ease-in-out;
@@ -36,6 +38,7 @@ export const ConsoleTitle = styled.h1`
   font-size: 20px;
   border: 1px solid #505050;
   box-sizing: border-box;
+  background-color: #2e2e2e;
   color: #d6d6d6;
   cursor: pointer;
   user-select: none;

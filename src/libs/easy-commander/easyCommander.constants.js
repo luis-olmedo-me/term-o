@@ -1,31 +1,12 @@
-import React from 'react'
-
-import { CommandOn } from './components/CommandOn/CommandOn.component'
-
 import { cssConfig } from './components/CommandCss/CommandCss.constants'
 import { domConfig } from './components/CommandDom/CommandDom.constants'
 import { eventConfig } from './components/CommandEvent/CommandEvent.constants'
+import { onConfig } from './components/CommandOn/CommandOn.constants'
 
 export const consoleCommands = {
   dom: domConfig,
   css: cssConfig,
-  on: {
-    props: {
-      url: {
-        key: 'url',
-        type: 'array',
-        defaultValue: [],
-        aliases: ['u']
-      },
-      run: {
-        key: 'run',
-        type: 'array',
-        defaultValue: [],
-        aliases: ['r']
-      }
-    },
-    output: (props) => <CommandOn key={props.id} {...props} />
-  },
+  on: onConfig,
   event: eventConfig
 }
 

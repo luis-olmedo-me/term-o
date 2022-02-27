@@ -19,17 +19,6 @@ export const ConsoleWrapper = styled.div`
   flex-flow: column;
 `
 
-export const ConsoleContent = styled.div`
-  background-color: #2e2e2e;
-  transform: translateY(${({ isMoving }) => (isMoving ? '-5px' : 0)});
-
-  transition: 0.2s ease-in-out;
-  transition-property: transform box-shadow;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-`
-
 export const ConsoleTitle = styled.h1`
   padding: 10px 0;
   margin: 0;

@@ -54,6 +54,8 @@ export const Content = () => {
       ref={wrapperReference}
       opacity={isConsoleOpen ? 1 : 0}
       style={resizeData}
+      ondragstart='return false;'
+      ondrop='return false;'
     >
       {!isMoving ? (
         <>

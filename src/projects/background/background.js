@@ -1,5 +1,36 @@
 import { eventTypes } from 'src/constants/events.constants.js'
 
+class ConfigManager {
+  constructor() {
+    this.consolePosition = {}
+  }
+
+  setConsolePosition(newConfig) {
+    this.consolePosition = { ...this.consolePosition, ...newConfig }
+    this.setConfigInLocalStorage()
+
+    return this
+  }
+
+  init() {
+    this.getConfigFromLocalStorage()
+
+    return this
+  }
+
+  getConfigFromLocalStorage() {
+    const receiveConfiguration = ({ configuration: receivedConfiguration }) => {
+      this.consolePosition = receivedConfiguration?.consolePosition || {}
+    }
+
+    chrome.storage.sync.get('configuration', receiveConfiguration)
+  }
+
+  setConfigInLocalStorage() {
+    chrome.storage.sync.set({ configuration: { ...this.consolePosition } })
+  }
+}
+
 chrome.commands.onCommand.addListener(function (command) {
   const requestData = {
     action: eventTypes.NEW_COMMAND,
@@ -11,19 +42,8 @@ chrome.commands.onCommand.addListener(function (command) {
   })
 })
 
-let configuration = {}
-
-const updateConfiguration = () => {
-  const receiveConfiguration = ({ configuration: receivedConfiguration }) => {
-    configuration = receivedConfiguration || {}
-  }
-
-  chrome.storage.sync.get('configuration', receiveConfiguration)
-}
-
-const setConfiguration = (config) => {
-  chrome.storage.sync.set({ configuration: config })
-}
+const configManager = new ConfigManager().init()
+configManager.setConsolePosition({})
 
 let pageEvents = []
 
@@ -73,21 +93,13 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 
     case eventTypes.GET_CONFIGURATION: {
-      sendResponse({ status: 'ok', response: configuration })
+      sendResponse({ status: 'ok', response: configManager.consolePosition })
       break
     }
 
     case eventTypes.UPDATE_CONFIG_CONSOLE_POSITION: {
-      const oldConsolePosition = configuration.consolePosition || {}
+      configManager.setConsolePosition(request.data)
 
-      setConfiguration({
-        ...configuration,
-        consolePosition: {
-          ...oldConsolePosition,
-          ...request.data
-        }
-      })
-      updateConfiguration()
       sendResponse({ status: 'ok' })
       break
     }
@@ -95,4 +107,3 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 })
 
 updatePageEvents()
-updateConfiguration()

@@ -14,19 +14,10 @@ import {
   singleResizeTypes
 } from './hooks/useResize/useResize.constants.js'
 
-import {
-  ConsoleContent,
-  ConsoleTitle,
-  ConsoleLogs,
-  ConsoleWrapper,
-  ResizerBottom,
-  ResizerLeft,
-  ResizerRight,
-  ResizerTop
-} from './Console.styles.js'
-
 import { usePageEvents } from './hooks/usePageEvents.hook.js'
 import { useResize } from './hooks/useResize/useResize.hook.js'
+
+import { ConsoleTitle, ConsoleLogs, ConsoleWrapper } from './Console.styles.js'
 
 export const Console = () => {
   const wrapperReference = useRef(null)
@@ -104,28 +95,24 @@ export const Console = () => {
           ))
         : null}
 
-      <ConsoleContent isOpen={isOpen} isMoving={isMoving}>
-        <ConsoleTitle
-          ref={titleReference}
-          onMouseDown={(event) => {
-            setResizingFrom(resizeTypes.MOVING)
-            setMovingFrom({ x: event.clientX, y: event.clientY })
-          }}
-        >
-          TERM-O
-        </ConsoleTitle>
+      <ConsoleTitle
+        ref={titleReference}
+        onMouseDown={(event) => {
+          setResizingFrom(resizeTypes.MOVING)
+          setMovingFrom({ x: event.clientX, y: event.clientY })
+        }}
+      >
+        TERM-O
+      </ConsoleTitle>
 
-        <ConsoleLogs ref={historyRef} style={consoleStyles}>
-          {histories.map((history) => history(outsideProps))}
-        </ConsoleLogs>
+      <ConsoleLogs ref={historyRef} style={consoleStyles}>
+        {histories.map((history) => history(outsideProps))}
+      </ConsoleLogs>
 
-        <CommandInput
-          inputReference={inputReference}
-          handleOnEnter={(command) =>
-            handleCommandRun(command, histories.length)
-          }
-        />
-      </ConsoleContent>
+      <CommandInput
+        inputReference={inputReference}
+        handleOnEnter={(command) => handleCommandRun(command, histories.length)}
+      />
     </ConsoleWrapper>
   )
 }

@@ -5,10 +5,10 @@ export const ConsoleWrapper = styled.div`
   z-index: 1000000;
   opacity: ${(props) => props.opacity};
   pointer-events: ${(props) => (props.opacity === 0 ? 'none' : 'all')};
-  display: flex;
-  flex-flow: column;
   transition: inset 0.05s ease-in-out, opacity 0.1s ease-in-out;
   min-height: 400px;
+  display: flex;
+  flex-flow: column;
 `
 
 export const ConsoleContent = styled.div`
@@ -42,6 +42,7 @@ export const ConsoleTitle = styled.h1`
   position: absolute;
   width: 100%;
   top: 0;
+  z-index: 1;
   transition: background-color 0.2s ease-in-out;
 
   &&:hover,

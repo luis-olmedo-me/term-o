@@ -5,7 +5,7 @@ export const ResizerWrapper = styled.button`
   background-color: transparent;
   border-radius: 0;
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   transition: 0.1s ease-in-out;
   transition-property: background-color, width;
 

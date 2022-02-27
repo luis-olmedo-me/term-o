@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
-import { MoreContentButton } from './Dom.styles'
+import { MoreContentButton } from './CommandDom.styles'
 import { getElements } from '../../easyCommander.promises'
 import { parameterTypes } from '../../easyCommander.constants'
 import { ParameterElements } from '../ParameterElements/ParameterElements.component'
 
-export const Dom = ({
+export const CommandDom = ({
   get,
   hasId,
   hasClass,

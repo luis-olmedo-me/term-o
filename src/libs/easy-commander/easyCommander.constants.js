@@ -2,7 +2,7 @@ import React from 'react'
 
 import { CommandOn } from './components/CommandOn/CommandOn.component'
 import { CommandEvent } from './components/CommandEvent/CommandEvent.component'
-import { Dom } from './components/Dom/Dom.component'
+import { CommandDom } from './components/CommandDom/CommandDom.component'
 import { Styler } from './components/Styler/Styler.component'
 import { cssProps } from './components/Styler/Styler.constants'
 
@@ -23,7 +23,7 @@ export const consoleCommands = {
         aliases: ['c']
       }
     },
-    output: (props) => <Dom key={props.id} {...props} />
+    output: (props) => <CommandDom key={props.id} {...props} />
   },
   css: {
     props: {

@@ -9,18 +9,20 @@ import {
   extensionKeyEvents
 } from 'src/constants/events.constants.js'
 
-import { ConsoleContent, ConsoleTitle, ConsoleLogs } from './Console.styles.js'
-
-import { usePageEvents } from './hooks/usePageEvents.hook.js'
-import { useResize } from '../../view/hooks/useResize/useResize.hook.js'
-
 import {
+  ConsoleContent,
+  ConsoleTitle,
+  ConsoleLogs,
   ContentWrapper,
   ResizerBottom,
   ResizerLeft,
   ResizerRight,
   ResizerTop
-} from '../../view/Content.styles.js'
+} from './Console.styles.js'
+
+import { usePageEvents } from './hooks/usePageEvents.hook.js'
+import { useResize } from '../../view/hooks/useResize/useResize.hook.js'
+
 import { resizeTypes } from '../../view/hooks/useResize/useResize.constants.js'
 
 export const Console = () => {

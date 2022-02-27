@@ -11,18 +11,13 @@ export const Console = ({ isOpen, onTitleClick, isMoving }) => {
   const inputReference = useRef(null)
 
   const [histories, setHistories] = useState([])
-  const [commandId, setCommandId] = useState(0)
-  let auxiliarId = 0
 
   const { pageEvents, appliedPageEvents } = usePageEvents()
 
-  const handleCommandRun = useCallback((command) => {
-    const generatedId = `${commandId}-${auxiliarId}`
-    const logOutput = commander.getLogOutput(generatedId, command)
+  const handleCommandRun = useCallback((command, id) => {
+    const logOutput = commander.getLogOutput(id, command)
 
     setHistories((histories) => [...histories, logOutput])
-    setCommandId((id) => ++id)
-    auxiliarId++
 
     setTimeout(() => {
       historyRef?.current?.scrollTo(0, historyRef.current.scrollHeight)
@@ -31,7 +26,9 @@ export const Console = ({ isOpen, onTitleClick, isMoving }) => {
 
   useEffect(
     function applyPageEvents() {
-      appliedPageEvents.forEach(({ command }) => handleCommandRun(command))
+      appliedPageEvents.forEach(({ command }, id) => {
+        handleCommandRun(command, id)
+      })
     },
     [appliedPageEvents, handleCommandRun]
   )
@@ -59,7 +56,7 @@ export const Console = ({ isOpen, onTitleClick, isMoving }) => {
 
       <CommandInput
         inputReference={inputReference}
-        handleOnEnter={handleCommandRun}
+        handleOnEnter={(command) => handleCommandRun(command, histories.length)}
       />
     </ConsoleContent>
   )

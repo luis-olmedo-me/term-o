@@ -3,8 +3,8 @@ import React from 'react'
 import { CommandOn } from './components/CommandOn/CommandOn.component'
 import { CommandEvent } from './components/CommandEvent/CommandEvent.component'
 import { CommandDom } from './components/CommandDom/CommandDom.component'
-import { Styler } from './components/CommandCss/CommandCss.component'
-import { cssProps } from './components/CommandCss/CommandCss.constants'
+
+import { cssConfig } from './components/CommandCss/CommandCss.constants'
 
 export const consoleCommands = {
   dom: {
@@ -25,25 +25,7 @@ export const consoleCommands = {
     },
     output: (props) => <CommandDom key={props.id} {...props} />
   },
-  css: {
-    props: {
-      'manual-styles': {
-        key: 'manualStyles',
-        internal: true,
-        type: 'object',
-        groupProps: cssProps,
-        defaultValue: {},
-        aliases: []
-      },
-      styles: {
-        key: 'styles',
-        type: 'string',
-        defaultValue: '',
-        aliases: ['s']
-      }
-    },
-    output: (props) => <Styler key={props.id} {...props} />
-  },
+  css: cssConfig,
   on: {
     props: {
       url: {

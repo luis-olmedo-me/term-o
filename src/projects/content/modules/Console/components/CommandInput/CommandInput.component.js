@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   ConsoleHash,
   ConsoleInput,
@@ -27,7 +27,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
         type='text'
         onChange={handleCommandChange}
         onKeyDown={handleKeyPressed}
-        value={currentCommand}
+        value={command}
         autoFocus
       />
     </ConsoleInputWrapper>

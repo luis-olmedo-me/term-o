@@ -2,23 +2,16 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 
 import { commander } from 'libs/easy-commander/easyCommander.service'
 
-import {
-  ConsoleContent,
-  ConsoleTitle,
-  ConsoleInput,
-  ConsoleLogs,
-  ConsoleInputWrapper,
-  ConsoleHash
-} from './Console.styles.js'
+import { ConsoleContent, ConsoleTitle, ConsoleLogs } from './Console.styles.js'
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
 import { eventTypes } from 'src/constants/events.constants.js'
+import { CommandInput } from './components/CommandInput/CommandInput.component.js'
 
 export const Console = ({ isOpen, onTitleClick, isMoving }) => {
   const titleReference = useRef(null)
   const inputReference = useRef(null)
 
   const [histories, setHistories] = useState([])
-  const [currentCommand, setCurrentCommand] = useState('')
   const [commandId, setCommandId] = useState(0)
   const [pageEvents, setPageEvents] = useState([])
   let auxiliarId = 0
@@ -30,7 +23,6 @@ export const Console = ({ isOpen, onTitleClick, isMoving }) => {
     const logOutput = commander.getLogOutput(generatedId, command)
 
     setHistories((histories) => [...histories, logOutput])
-    setCurrentCommand('')
     setCommandId((id) => ++id)
     auxiliarId++
 
@@ -63,16 +55,6 @@ export const Console = ({ isOpen, onTitleClick, isMoving }) => {
     [handleCommandRun]
   )
 
-  const handleCommandChange = ({ target: { value: newValue } }) => {
-    setCurrentCommand(newValue)
-  }
-
-  const handleKeyPressed = ({ key }) => {
-    if (key === 'Enter') {
-      handleCommandRun(currentCommand)
-    }
-  }
-
   const outsideProps = { pageEvents }
 
   const consoleStyles = {
@@ -94,17 +76,10 @@ export const Console = ({ isOpen, onTitleClick, isMoving }) => {
         {histories.map((history) => history(outsideProps))}
       </ConsoleLogs>
 
-      <ConsoleInputWrapper ref={inputReference}>
-        <ConsoleHash>$</ConsoleHash>
-
-        <ConsoleInput
-          type='text'
-          onChange={handleCommandChange}
-          onKeyDown={handleKeyPressed}
-          value={currentCommand}
-          autoFocus
-        />
-      </ConsoleInputWrapper>
+      <CommandInput
+        inputReference={inputReference}
+        handleOnEnter={handleCommandRun}
+      />
     </ConsoleContent>
   )
 }

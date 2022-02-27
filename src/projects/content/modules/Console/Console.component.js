@@ -86,14 +86,6 @@ export const Console = () => {
     paddingBottom: parseInt(inputReference.current?.offsetHeight || 0) + 10
   }
 
-  const resizeConsole = (newResizingFrom) => {
-    setResizingFrom(newResizingFrom)
-  }
-
-  const stopResizeConsole = () => {
-    setResizingFrom('')
-  }
-
   return (
     <ConsoleWrapper
       ref={wrapperReference}
@@ -116,7 +108,7 @@ export const Console = () => {
         <ConsoleTitle
           ref={titleReference}
           onMouseDown={(event) => {
-            resizeConsole(resizeTypes.MOVING)
+            setResizingFrom(resizeTypes.MOVING)
             setMovingFrom({ x: event.clientX, y: event.clientY })
           }}
         >

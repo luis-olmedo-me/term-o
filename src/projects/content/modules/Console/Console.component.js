@@ -46,11 +46,7 @@ export const Console = ({ isOpen, onTitleClick, isMoving }) => {
         TERM-O
       </ConsoleTitle>
 
-      <ConsoleLogs
-        id='term-o-console-logs'
-        ref={historyRef}
-        style={consoleStyles}
-      >
+      <ConsoleLogs ref={historyRef} style={consoleStyles}>
         {histories.map((history) => history(outsideProps))}
       </ConsoleLogs>
 

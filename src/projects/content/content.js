@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import { Content } from './view/Content.view'
+import { Console } from './modules/Console/Console.component'
 import root from 'react-shadow/styled-components'
 
 const body = document.getElementsByTagName('body')[0]
@@ -12,7 +12,7 @@ body.prepend(rootDiv)
 ReactDOM.render(
   <React.StrictMode>
     <root.div>
-      <Content />
+      <Console />
     </root.div>
   </React.StrictMode>,
   rootDiv

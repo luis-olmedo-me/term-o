@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import { parameterTypes } from '../../easyCommander.constants'
 import { OutputWrapper } from './Outputs.styles'
 
-export const Outputs = ({ components, id, pageEvents }) => {
+export const Outputs = ({ components, id, pageEvents, clearTerminal }) => {
   const defaultData = components.map((Component, index) => ({
     Component,
     parameters: {},
@@ -36,7 +35,8 @@ export const Outputs = ({ components, id, pageEvents }) => {
           setParameters: (value) => setParametersWithId(nextId, value),
           setMessageData,
           messageData: isLastComponent ? messageData : {},
-          pageEvents
+          pageEvents,
+          clearTerminal
         }
 
         return <Component {...providerProps} />

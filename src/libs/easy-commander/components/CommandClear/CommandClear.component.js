@@ -1,13 +1,7 @@
-import React from 'react'
-import { parameterTypes } from '../../easyCommander.constants'
-import { LogWrapper } from '../LogWrapper/LogWrapper.component'
+import { useEffect } from 'react'
 
-export const CommandClear = ({ command }) => {
-  return (
-    <>
-      <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
+export const CommandClear = ({ clearTerminal }) => {
+  useEffect(clearTerminal, [clearTerminal])
 
-      <LogWrapper variant={parameterTypes.SUCCESS}>clearing...</LogWrapper>
-    </>
-  )
+  return null
 }

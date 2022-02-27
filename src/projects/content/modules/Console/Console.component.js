@@ -70,7 +70,11 @@ export const Console = () => {
     [appliedPageEvents, handleCommandRun]
   )
 
-  const outsideProps = { pageEvents }
+  const outsideProps = {
+    pageEvents,
+    clearTerminal: () => setHistories([]),
+    setHistories
+  }
 
   const consoleStyles = {
     paddingTop: parseInt(titleReference.current?.offsetHeight || 0) + 10,

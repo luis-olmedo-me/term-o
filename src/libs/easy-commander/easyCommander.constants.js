@@ -1,10 +1,10 @@
 import React from 'react'
 
 import { CommandOn } from './components/CommandOn/CommandOn.component'
-import { CommandEvent } from './components/CommandEvent/CommandEvent.component'
 
 import { cssConfig } from './components/CommandCss/CommandCss.constants'
 import { domConfig } from './components/CommandDom/CommandDom.constants'
+import { eventConfig } from './components/CommandEvent/CommandEvent.constants'
 
 export const consoleCommands = {
   dom: domConfig,
@@ -26,23 +26,7 @@ export const consoleCommands = {
     },
     output: (props) => <CommandOn key={props.id} {...props} />
   },
-  event: {
-    props: {
-      list: {
-        key: 'list',
-        type: 'boolean',
-        defaultValue: false,
-        aliases: ['l']
-      },
-      delete: {
-        key: 'delete',
-        type: 'array',
-        defaultValue: [],
-        aliases: ['d']
-      }
-    },
-    output: (props) => <CommandEvent key={props.id} {...props} />
-  }
+  event: eventConfig
 }
 
 export const parameterTypes = {

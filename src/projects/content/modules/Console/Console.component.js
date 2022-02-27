@@ -13,7 +13,7 @@ import {
   ConsoleContent,
   ConsoleTitle,
   ConsoleLogs,
-  ContentWrapper,
+  ConsoleWrapper,
   ResizerBottom,
   ResizerLeft,
   ResizerRight,
@@ -92,7 +92,7 @@ export const Console = () => {
   }
 
   return (
-    <ContentWrapper
+    <ConsoleWrapper
       ref={wrapperReference}
       opacity={isOpen ? 1 : 0}
       style={resizeData}
@@ -143,6 +143,6 @@ export const Console = () => {
           }
         />
       </ConsoleContent>
-    </ContentWrapper>
+    </ConsoleWrapper>
   )
 }

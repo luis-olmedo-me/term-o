@@ -57,7 +57,7 @@ export const ConsoleLogs = styled.div`
   }
 `
 
-export const ContentWrapper = styled.div`
+export const ConsoleWrapper = styled.div`
   position: fixed;
   z-index: 1000000;
   opacity: ${(props) => props.opacity};

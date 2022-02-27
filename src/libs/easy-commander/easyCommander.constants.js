@@ -3,8 +3,8 @@ import React from 'react'
 import { CommandOn } from './components/CommandOn/CommandOn.component'
 import { CommandEvent } from './components/CommandEvent/CommandEvent.component'
 import { CommandDom } from './components/CommandDom/CommandDom.component'
-import { Styler } from './components/Styler/Styler.component'
-import { cssProps } from './components/Styler/Styler.constants'
+import { Styler } from './components/CommandCss/CommandCss.component'
+import { cssProps } from './components/CommandCss/CommandCss.constants'
 
 export const consoleCommands = {
   dom: {

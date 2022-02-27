@@ -3,10 +3,18 @@ import { eventTypes } from 'src/constants/events.constants.js'
 class ConfigManager {
   constructor() {
     this.consolePosition = {}
+    this.pageEvents = []
   }
 
   setConsolePosition(newConfig) {
     this.consolePosition = { ...this.consolePosition, ...newConfig }
+    this.setConfigInLocalStorage()
+
+    return this
+  }
+
+  setPageEvents(newConfig) {
+    this.pageEvents = newConfig
     this.setConfigInLocalStorage()
 
     return this
@@ -21,13 +29,19 @@ class ConfigManager {
   getConfigFromLocalStorage() {
     const receiveConfiguration = ({ configuration: receivedConfiguration }) => {
       this.consolePosition = receivedConfiguration?.consolePosition || {}
+      this.pageEvents = receivedConfiguration?.pageEvents || []
     }
 
     chrome.storage.sync.get('configuration', receiveConfiguration)
   }
 
   setConfigInLocalStorage() {
-    chrome.storage.sync.set({ configuration: { ...this.consolePosition } })
+    chrome.storage.sync.set({
+      configuration: {
+        consolePosition: this.consolePosition,
+        pageEvents: this.pageEvents
+      }
+    })
   }
 }
 
@@ -43,26 +57,11 @@ chrome.commands.onCommand.addListener(function (command) {
 })
 
 const configManager = new ConfigManager().init()
-configManager.setConsolePosition({})
 
-let pageEvents = []
-
-const updatePageEvents = () => {
-  const receivePageEvents = ({ pageEvents: pageEventsFromLocalStorage }) => {
-    pageEvents = pageEventsFromLocalStorage || []
-  }
-
-  chrome.storage.sync.get('pageEvents', receivePageEvents)
-}
-
-const setPageEvents = (events) => {
-  chrome.storage.sync.set({ pageEvents: events })
-}
-
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function (request, _sender, sendResponse) {
   switch (request.type) {
     case eventTypes.GET_PAGE_EVENTS: {
-      sendResponse({ status: 'ok', response: pageEvents })
+      sendResponse({ status: 'ok', response: configManager.pageEvents })
       break
     }
 
@@ -73,21 +72,19 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         id: initialId + index
       }))
 
-      const newData = [...pageEvents, ...newPageEvents]
+      const newData = [...configManager.pageEvents, ...newPageEvents]
 
-      setPageEvents(newData)
-      updatePageEvents()
+      configManager.setPageEvents(newData)
       sendResponse({ status: 'ok' })
       break
     }
 
     case eventTypes.DELETE_PAGES_EVENT: {
-      const newData = pageEvents.filter(
+      const newData = configManager.pageEvents.filter(
         ({ id }) => !request.data.ids.includes(id)
       )
 
-      setPageEvents(newData)
-      updatePageEvents()
+      configManager.setPageEvents(newData)
       sendResponse({ status: 'ok' })
       break
     }
@@ -105,5 +102,3 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
   }
 })
-
-updatePageEvents()

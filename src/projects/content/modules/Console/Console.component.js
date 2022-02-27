@@ -9,14 +9,13 @@ import { CommandInput } from './components/CommandInput/CommandInput.component.j
 
 export const Console = ({ isOpen, onTitleClick, isMoving }) => {
   const titleReference = useRef(null)
+  const historyRef = useRef(null)
   const inputReference = useRef(null)
 
   const [histories, setHistories] = useState([])
   const [commandId, setCommandId] = useState(0)
   const [pageEvents, setPageEvents] = useState([])
   let auxiliarId = 0
-
-  const historyRef = useRef(null)
 
   const handleCommandRun = useCallback((command) => {
     const generatedId = `${commandId}-${auxiliarId}`

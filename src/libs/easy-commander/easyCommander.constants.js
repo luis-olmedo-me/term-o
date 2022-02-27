@@ -2,29 +2,12 @@ import React from 'react'
 
 import { CommandOn } from './components/CommandOn/CommandOn.component'
 import { CommandEvent } from './components/CommandEvent/CommandEvent.component'
-import { CommandDom } from './components/CommandDom/CommandDom.component'
 
 import { cssConfig } from './components/CommandCss/CommandCss.constants'
+import { domConfig } from './components/CommandDom/CommandDom.constants'
 
 export const consoleCommands = {
-  dom: {
-    props: {
-      get: { key: 'get', type: 'array', defaultValue: ['*'], aliases: ['g'] },
-      'has-id': {
-        key: 'hasId',
-        type: 'boolean',
-        defaultValue: false,
-        aliases: ['i']
-      },
-      'has-class': {
-        key: 'hasClass',
-        type: 'boolean',
-        defaultValue: false,
-        aliases: ['c']
-      }
-    },
-    output: (props) => <CommandDom key={props.id} {...props} />
-  },
+  dom: domConfig,
   css: cssConfig,
   on: {
     props: {

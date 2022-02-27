@@ -8,6 +8,7 @@ import {
   eventTypes,
   extensionKeyEvents
 } from 'src/constants/events.constants.js'
+import { resizeTypes } from './hooks/useResize/useResize.constants.js'
 
 import {
   ConsoleContent,
@@ -22,8 +23,6 @@ import {
 
 import { usePageEvents } from './hooks/usePageEvents.hook.js'
 import { useResize } from './hooks/useResize/useResize.hook.js'
-
-import { resizeTypes } from './hooks/useResize/useResize.constants.js'
 
 export const Console = () => {
   const wrapperReference = useRef(null)

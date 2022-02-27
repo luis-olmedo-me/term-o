@@ -44,7 +44,7 @@ chrome.runtime.onMessage.addListener(function (request, _sender, sendResponse) {
       break
     }
 
-    case eventTypes.GET_CONFIGURATION: {
+    case eventTypes.GET_CONSOLE_POSITION: {
       sendResponse({ status: 'ok', response: configManager.consolePosition })
       break
     }

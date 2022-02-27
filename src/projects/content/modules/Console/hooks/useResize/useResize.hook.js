@@ -82,7 +82,7 @@ export const useResize = ({ wrapperReference }) => {
     }
 
     backgroundRequest({
-      eventType: eventTypes.GET_CONFIGURATION,
+      eventType: eventTypes.GET_CONSOLE_POSITION,
       callback: receiveConfiguration
     })
   }, [])

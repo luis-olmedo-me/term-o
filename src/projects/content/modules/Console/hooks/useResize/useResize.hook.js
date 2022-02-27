@@ -72,17 +72,17 @@ export const useResize = ({ wrapperReference }) => {
   }, [])
 
   useEffect(function getConfigurationFromBackground() {
-    const receiveConfiguration = ({ response: receivedConfiguration }) => {
+    const receiveConfiguration = ({ response: receivedConsolePosition }) => {
       setResizeData({
-        left: receivedConfiguration?.consolePosition?.left || 0,
-        right: receivedConfiguration?.consolePosition?.right || 0,
-        top: receivedConfiguration?.consolePosition?.top || 0,
-        bottom: receivedConfiguration?.consolePosition?.bottom || 0
+        left: receivedConsolePosition?.left || 0,
+        right: receivedConsolePosition?.right || 0,
+        top: receivedConsolePosition?.top || 0,
+        bottom: receivedConsolePosition?.bottom || 0
       })
     }
 
     backgroundRequest({
-      eventType: eventTypes.GET_CONFIGURATION,
+      eventType: eventTypes.GET_CONSOLE_POSITION,
       callback: receiveConfiguration
     })
   }, [])

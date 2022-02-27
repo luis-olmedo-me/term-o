@@ -1,3 +1,5 @@
+import { configManager } from 'libs/config-manager'
+
 import { eventTypes } from 'src/constants/events.constants.js'
 
 chrome.commands.onCommand.addListener(function (command) {
@@ -11,38 +13,10 @@ chrome.commands.onCommand.addListener(function (command) {
   })
 })
 
-let configuration = {}
-
-const updateConfiguration = () => {
-  const receiveConfiguration = ({ configuration: receivedConfiguration }) => {
-    configuration = receivedConfiguration || {}
-  }
-
-  chrome.storage.sync.get('configuration', receiveConfiguration)
-}
-
-const setConfiguration = (config) => {
-  chrome.storage.sync.set({ configuration: config })
-}
-
-let pageEvents = []
-
-const updatePageEvents = () => {
-  const receivePageEvents = ({ pageEvents: pageEventsFromLocalStorage }) => {
-    pageEvents = pageEventsFromLocalStorage || []
-  }
-
-  chrome.storage.sync.get('pageEvents', receivePageEvents)
-}
-
-const setPageEvents = (events) => {
-  chrome.storage.sync.set({ pageEvents: events })
-}
-
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function (request, _sender, sendResponse) {
   switch (request.type) {
     case eventTypes.GET_PAGE_EVENTS: {
-      sendResponse({ status: 'ok', response: pageEvents })
+      sendResponse({ status: 'ok', response: configManager.pageEvents })
       break
     }
 
@@ -53,46 +27,33 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         id: initialId + index
       }))
 
-      const newData = [...pageEvents, ...newPageEvents]
+      const newData = [...configManager.pageEvents, ...newPageEvents]
 
-      setPageEvents(newData)
-      updatePageEvents()
+      configManager.setPageEvents(newData)
       sendResponse({ status: 'ok' })
       break
     }
 
     case eventTypes.DELETE_PAGES_EVENT: {
-      const newData = pageEvents.filter(
+      const newData = configManager.pageEvents.filter(
         ({ id }) => !request.data.ids.includes(id)
       )
 
-      setPageEvents(newData)
-      updatePageEvents()
+      configManager.setPageEvents(newData)
       sendResponse({ status: 'ok' })
       break
     }
 
-    case eventTypes.GET_CONFIGURATION: {
-      sendResponse({ status: 'ok', response: configuration })
+    case eventTypes.GET_CONSOLE_POSITION: {
+      sendResponse({ status: 'ok', response: configManager.consolePosition })
       break
     }
 
     case eventTypes.UPDATE_CONFIG_CONSOLE_POSITION: {
-      const oldConsolePosition = configuration.consolePosition || {}
+      configManager.setConsolePosition(request.data)
 
-      setConfiguration({
-        ...configuration,
-        consolePosition: {
-          ...oldConsolePosition,
-          ...request.data
-        }
-      })
-      updateConfiguration()
       sendResponse({ status: 'ok' })
       break
     }
   }
 })
-
-updatePageEvents()
-updateConfiguration()

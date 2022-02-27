@@ -3,12 +3,16 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { commander } from 'libs/easy-commander/easyCommander.service'
 
 import { CommandInput } from './components/CommandInput/CommandInput.component.js'
+import { Resizer } from './components/Resizer/Resizer.component.js'
 
 import {
   eventTypes,
   extensionKeyEvents
 } from 'src/constants/events.constants.js'
-import { resizeTypes } from './hooks/useResize/useResize.constants.js'
+import {
+  resizeTypes,
+  singleResizeTypes
+} from './hooks/useResize/useResize.constants.js'
 
 import {
   ConsoleContent,
@@ -98,27 +102,15 @@ export const Console = () => {
       ondragstart='return false;'
       ondrop='return false;'
     >
-      {!isMoving ? (
-        <>
-          <ResizerLeft
-            onMouseDown={() => resizeConsole(resizeTypes.LEFT)}
-            onMouseUp={stopResizeConsole}
-          />
-
-          <ResizerRight
-            onMouseDown={() => resizeConsole(resizeTypes.RIGHT)}
-            onMouseUp={stopResizeConsole}
-          />
-          <ResizerTop
-            onMouseDown={() => resizeConsole(resizeTypes.TOP)}
-            onMouseUp={stopResizeConsole}
-          />
-          <ResizerBottom
-            onMouseDown={() => resizeConsole(resizeTypes.BOTTOM)}
-            onMouseUp={stopResizeConsole}
-          />
-        </>
-      ) : null}
+      {!isMoving
+        ? singleResizeTypes.map((resizeType) => (
+            <Resizer
+              key={resizeType}
+              resizeType={resizeType}
+              setResizingFrom={setResizingFrom}
+            />
+          ))
+        : null}
 
       <ConsoleContent isOpen={isOpen} isMoving={isMoving}>
         <ConsoleTitle

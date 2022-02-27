@@ -6,6 +6,13 @@ export const resizeTypes = {
   MOVING: 'moving'
 }
 
+export const singleResizeTypes = [
+  resizeTypes.LEFT,
+  resizeTypes.RIGHT,
+  resizeTypes.TOP,
+  resizeTypes.BOTTOM
+]
+
 const bodyHeight = Math.min(document.body.clientHeight, window.innerHeight - 1)
 const bodyWidth = Math.min(document.body.clientWidth, window.innerWidth - 1)
 

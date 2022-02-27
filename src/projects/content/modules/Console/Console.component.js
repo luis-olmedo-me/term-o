@@ -2,37 +2,59 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 
 import { commander } from 'libs/easy-commander/easyCommander.service'
 
-import {
-  ConsoleContent,
-  ConsoleTitle,
-  ConsoleInput,
-  ConsoleLogs,
-  ConsoleInputWrapper,
-  ConsoleHash
-} from './Console.styles.js'
-import { backgroundRequest } from 'src/helpers/event.helpers.js'
-import { eventTypes } from 'src/constants/events.constants.js'
+import { CommandInput } from './components/CommandInput/CommandInput.component.js'
+import { Resizer } from './components/Resizer/Resizer.component.js'
 
-export const Console = ({ isOpen, onTitleClick, isMoving }) => {
+import {
+  eventTypes,
+  extensionKeyEvents
+} from 'src/constants/events.constants.js'
+import {
+  resizeTypes,
+  singleResizeTypes
+} from './hooks/useResize/useResize.constants.js'
+
+import { usePageEvents } from './hooks/usePageEvents.hook.js'
+import { useResize } from './hooks/useResize/useResize.hook.js'
+
+import { ConsoleTitle, ConsoleLogs, ConsoleWrapper } from './Console.styles.js'
+
+export const Console = () => {
+  const wrapperReference = useRef(null)
   const titleReference = useRef(null)
+  const historyRef = useRef(null)
   const inputReference = useRef(null)
 
   const [histories, setHistories] = useState([])
-  const [currentCommand, setCurrentCommand] = useState('')
-  const [commandId, setCommandId] = useState(0)
-  const [pageEvents, setPageEvents] = useState([])
-  let auxiliarId = 0
+  const [isOpen, setIsOpen] = useState(false)
 
-  const historyRef = useRef(null)
+  const { setResizingFrom, resizeData, setMovingFrom, isMoving } = useResize({
+    wrapperReference
+  })
+  const { pageEvents, appliedPageEvents } = usePageEvents()
 
-  const handleCommandRun = useCallback((command) => {
-    const generatedId = `${commandId}-${auxiliarId}`
-    const logOutput = commander.getLogOutput(generatedId, command)
+  useEffect(function openConsoleByKeyCommands() {
+    const toggleTerminal = (message, _sender, sendResponse) => {
+      if (message.action !== eventTypes.NEW_COMMAND) return
+
+      switch (message.data.command) {
+        case extensionKeyEvents.TOGGLE_TERMINAL:
+          setIsOpen((state) => !state)
+          break
+      }
+
+      sendResponse({ status: 'ok' })
+    }
+
+    chrome.extension.onMessage.addListener(toggleTerminal)
+
+    return () => chrome.extension.onMessage.removeListener(toggleTerminal)
+  }, [])
+
+  const handleCommandRun = useCallback((command, id) => {
+    const logOutput = commander.getLogOutput(id, command)
 
     setHistories((histories) => [...histories, logOutput])
-    setCurrentCommand('')
-    setCommandId((id) => ++id)
-    auxiliarId++
 
     setTimeout(() => {
       historyRef?.current?.scrollTo(0, historyRef.current.scrollHeight)
@@ -40,38 +62,13 @@ export const Console = ({ isOpen, onTitleClick, isMoving }) => {
   }, [])
 
   useEffect(
-    function getPageEvents() {
-      const receivePageEvents = ({ response: newPageEvents }) => {
-        newPageEvents.forEach((pageEvent) => {
-          const validURL = window.location.origin.match(
-            new RegExp(pageEvent.url)
-          )
-
-          if (!validURL) return
-
-          handleCommandRun(pageEvent.command)
-        })
-
-        setPageEvents(newPageEvents)
-      }
-
-      backgroundRequest({
-        eventType: eventTypes.GET_PAGE_EVENTS,
-        callback: receivePageEvents
+    function applyPageEvents() {
+      appliedPageEvents.forEach(({ command }, id) => {
+        handleCommandRun(command, id)
       })
     },
-    [handleCommandRun]
+    [appliedPageEvents, handleCommandRun]
   )
-
-  const handleCommandChange = ({ target: { value: newValue } }) => {
-    setCurrentCommand(newValue)
-  }
-
-  const handleKeyPressed = ({ key }) => {
-    if (key === 'Enter') {
-      handleCommandRun(currentCommand)
-    }
-  }
 
   const outsideProps = { pageEvents }
 
@@ -81,30 +78,41 @@ export const Console = ({ isOpen, onTitleClick, isMoving }) => {
   }
 
   return (
-    <ConsoleContent isOpen={isOpen} isMoving={isMoving}>
-      <ConsoleTitle ref={titleReference} onMouseDown={onTitleClick}>
+    <ConsoleWrapper
+      ref={wrapperReference}
+      isOpen={isOpen}
+      style={resizeData}
+      ondragstart='return false;'
+      ondrop='return false;'
+    >
+      {!isMoving
+        ? singleResizeTypes.map((resizeType) => (
+            <Resizer
+              key={resizeType}
+              resizeType={resizeType}
+              setResizingFrom={setResizingFrom}
+            />
+          ))
+        : null}
+
+      <ConsoleTitle
+        ref={titleReference}
+        onMouseDown={(event) => {
+          setResizingFrom(resizeTypes.MOVING)
+          setMovingFrom({ x: event.clientX, y: event.clientY })
+        }}
+      >
         TERM-O
       </ConsoleTitle>
 
-      <ConsoleLogs
-        id='term-o-console-logs'
-        ref={historyRef}
-        style={consoleStyles}
-      >
+      <ConsoleLogs ref={historyRef} style={consoleStyles}>
         {histories.map((history) => history(outsideProps))}
       </ConsoleLogs>
 
-      <ConsoleInputWrapper ref={inputReference}>
-        <ConsoleHash>$</ConsoleHash>
-
-        <ConsoleInput
-          type='text'
-          onChange={handleCommandChange}
-          onKeyDown={handleKeyPressed}
-          value={currentCommand}
-          autoFocus
-        />
-      </ConsoleInputWrapper>
-    </ConsoleContent>
+      <CommandInput
+        inputReference={inputReference}
+        handleOnEnter={(command) => handleCommandRun(command, histories.length)}
+      />
+    </ConsoleWrapper>
   )
 }

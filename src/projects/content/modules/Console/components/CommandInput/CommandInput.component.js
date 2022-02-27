@@ -1,9 +1,5 @@
 import React, { useState } from 'react'
-import {
-  ConsoleHash,
-  ConsoleInput,
-  ConsoleInputWrapper
-} from './CommandInput.styles'
+import { Hash, Input, InputWrapper } from './CommandInput.styles'
 
 export const CommandInput = ({ inputReference, handleOnEnter }) => {
   const [command, setCommand] = useState('')
@@ -20,16 +16,16 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
   }
 
   return (
-    <ConsoleInputWrapper ref={inputReference}>
-      <ConsoleHash>$</ConsoleHash>
+    <InputWrapper ref={inputReference}>
+      <Hash>$</Hash>
 
-      <ConsoleInput
+      <Input
         type='text'
         onChange={handleCommandChange}
         onKeyDown={handleKeyPressed}
         value={command}
         autoFocus
       />
-    </ConsoleInputWrapper>
+    </InputWrapper>
   )
 }

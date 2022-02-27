@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const ConsoleInput = styled.input`
+export const Input = styled.input`
   padding: 10px;
   width: calc(100% - 20px);
   box-sizing: border-box;
@@ -16,7 +16,7 @@ export const ConsoleInput = styled.input`
   }
 `
 
-export const ConsoleInputWrapper = styled.div`
+export const InputWrapper = styled.div`
   box-sizing: border-box;
   border: 1px solid #505050;
   background-color: #2e2e2e;
@@ -25,7 +25,7 @@ export const ConsoleInputWrapper = styled.div`
   bottom: 0;
 `
 
-export const ConsoleHash = styled.span`
+export const Hash = styled.span`
   width: 20px;
   display: inline-block;
   vertical-align: middle;

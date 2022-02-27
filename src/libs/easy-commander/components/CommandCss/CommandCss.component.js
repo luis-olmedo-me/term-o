@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { parameterTypes } from '../../easyCommander.constants'
 import { styleElements, validateStyles } from '../../easyCommander.promises'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
-import { parseStyles } from './Styler.helpers'
+import { parseStyles } from './CommandCss.helpers'
 
-export const Styler = ({
+export const CommandCss = ({
   id,
   styles,
   manualStyles,

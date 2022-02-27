@@ -1,83 +1,15 @@
-import React from 'react'
-
-import { CommandOn } from './components/CommandOn/CommandOn.component'
-import { CommandEvent } from './components/CommandEvent/CommandEvent.component'
-import { Dom } from './components/Dom/Dom.component'
-import { Styler } from './components/Styler/Styler.component'
-import { cssProps } from './components/Styler/Styler.constants'
+import { clearConfig } from './components/CommandClear/CommandClear.constants'
+import { cssConfig } from './components/CommandCss/CommandCss.constants'
+import { domConfig } from './components/CommandDom/CommandDom.constants'
+import { eventConfig } from './components/CommandEvent/CommandEvent.constants'
+import { onConfig } from './components/CommandOn/CommandOn.constants'
 
 export const consoleCommands = {
-  dom: {
-    props: {
-      get: { key: 'get', type: 'array', defaultValue: ['*'], aliases: ['g'] },
-      'has-id': {
-        key: 'hasId',
-        type: 'boolean',
-        defaultValue: false,
-        aliases: ['i']
-      },
-      'has-class': {
-        key: 'hasClass',
-        type: 'boolean',
-        defaultValue: false,
-        aliases: ['c']
-      }
-    },
-    output: (props) => <Dom key={props.id} {...props} />
-  },
-  css: {
-    props: {
-      'manual-styles': {
-        key: 'manualStyles',
-        internal: true,
-        type: 'object',
-        groupProps: cssProps,
-        defaultValue: {},
-        aliases: []
-      },
-      styles: {
-        key: 'styles',
-        type: 'string',
-        defaultValue: '',
-        aliases: ['s']
-      }
-    },
-    output: (props) => <Styler key={props.id} {...props} />
-  },
-  on: {
-    props: {
-      url: {
-        key: 'url',
-        type: 'array',
-        defaultValue: [],
-        aliases: ['u']
-      },
-      run: {
-        key: 'run',
-        type: 'array',
-        defaultValue: [],
-        aliases: ['r']
-      }
-    },
-    output: (props) => <CommandOn key={props.id} {...props} />
-  },
-  event: {
-    props: {
-      list: {
-        key: 'list',
-        type: 'boolean',
-        defaultValue: false,
-        aliases: ['l']
-      },
-      delete: {
-        key: 'delete',
-        type: 'array',
-        defaultValue: [],
-        aliases: ['d']
-      }
-    },
-    output: (props) => <CommandEvent key={props.id} {...props} />
-  }
+  dom: domConfig,
+  css: cssConfig,
+  on: onConfig,
+  event: eventConfig,
+  clear: clearConfig
 }
 
 export const parameterTypes = {

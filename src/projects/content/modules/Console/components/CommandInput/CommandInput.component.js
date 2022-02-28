@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Hash, Input, InputWrapper } from './CommandInput.styles'
+import { Hash, Input, InputWrapper, Suggestions } from './CommandInput.styles'
 
 export const CommandInput = ({ inputReference, handleOnEnter }) => {
   const [command, setCommand] = useState('')
@@ -16,16 +16,21 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
   }
 
   return (
-    <InputWrapper ref={inputReference}>
-      <Hash>$</Hash>
+    <InputWrapper>
+      {command && <Suggestions>suggestions...</Suggestions>}
 
-      <Input
-        type='text'
-        onChange={handleCommandChange}
-        onKeyDown={handleKeyPressed}
-        value={command}
-        autoFocus
-      />
+      <div>
+        <Hash>$</Hash>
+
+        <Input
+          ref={inputReference}
+          type='text'
+          onChange={handleCommandChange}
+          onKeyDown={handleKeyPressed}
+          value={command}
+          autoFocus
+        />
+      </div>
     </InputWrapper>
   )
 }

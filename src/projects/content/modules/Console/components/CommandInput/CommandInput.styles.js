@@ -26,6 +26,10 @@ export const InputWrapper = styled.div`
   z-index: 1;
 `
 
+export const Suggestions = styled.div`
+  border-bottom: 1px solid #505050;
+`
+
 export const Hash = styled.span`
   width: 20px;
   display: inline-block;

@@ -1,11 +1,16 @@
 import React, { useState } from 'react'
 import { Hash, Input, InputWrapper, Suggestions } from './CommandInput.styles'
+import { commander } from 'libs/easy-commander/easyCommander.service'
 
 export const CommandInput = ({ inputReference, handleOnEnter }) => {
   const [command, setCommand] = useState('')
+  const [suggestions, setSuggestions] = useState({})
 
   const handleCommandChange = ({ target: { value: newValue } }) => {
+    const newSuggestions = commander.getSuggestions(newValue)
+
     setCommand(newValue)
+    setSuggestions(newSuggestions)
   }
 
   const handleKeyPressed = ({ key }) => {
@@ -17,7 +22,13 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
 
   return (
     <InputWrapper>
-      {command && <Suggestions>suggestions...</Suggestions>}
+      {command && (
+        <Suggestions>
+          {Object.entries(suggestions).map(([key, _options]) => {
+            return <p key={key}>{key}</p>
+          })}
+        </Suggestions>
+      )}
 
       <div>
         <Hash>$</Hash>

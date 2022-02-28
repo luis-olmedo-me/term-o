@@ -15,6 +15,28 @@ class Commander {
     this.commands = consoleCommands
   }
 
+  get defaultSuggestions() {
+    return Object.keys(this.commands).reduce((suggestions, command) => {
+      return { ...suggestions, [command]: { type: 'command' } }
+    }, {})
+  }
+
+  getSuggestions(command) {
+    const [lastCommand] = command.split('|').reverse()
+    const [commandName] = lastCommand.split(' ')
+
+    const defaultSuggestions = this.defaultSuggestions
+
+    const suggestions = this.commands[commandName]
+    const parsedSuggestions =
+      suggestions &&
+      Object.entries(suggestions.props).reduce((suggestions, [key, value]) => {
+        return { ...suggestions, [`--${key}`]: value }
+      }, {})
+
+    return suggestions ? parsedSuggestions : defaultSuggestions
+  }
+
   validatePropValue(value, type, defaultValue) {
     switch (type) {
       case 'array': {

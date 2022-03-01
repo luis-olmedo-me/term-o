@@ -28,6 +28,8 @@ export const InputWrapper = styled.div`
 
 export const Suggestions = styled.div`
   border-bottom: 1px solid #505050;
+  overflow-y: scroll;
+  max-height: 108px;
 `
 
 export const Suggestion = styled.span`

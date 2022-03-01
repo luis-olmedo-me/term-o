@@ -18,7 +18,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
 
     setCommand(newValue)
     setSuggestions(newValue ? newSuggestions : [])
-    setSelectedSuggestionId(newValue ? newSuggestions.length - 1 : 0)
+    setSelectedSuggestionId(0)
   }
 
   const handleKeyPressed = (event) => {
@@ -42,7 +42,6 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
         const newSuggestions = commander.getSuggestions(newCommand)
 
         setCommand(newCommand)
-        setSelectedSuggestionId(newSuggestions.length - 1)
         setSuggestions(newSuggestions)
       }
     } else if (key === 'ArrowUp') {
@@ -67,7 +66,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
   }
 
   const [lastCommand] = command.split('|').reverse()
-  const lastArgs = lastCommand.split(' ')
+  const lastArgs = lastCommand.trim().split(' ')
 
   const areSuggestionsAvailable =
     lastArgs.at(-1).startsWith('-') || lastArgs.length === 1
@@ -80,15 +79,10 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
         <Suggestions>
           {suggestions.map((suggestion, index) => {
             const isSelected = selectedSuggestionId === index
-            const styles = isSelected ? { color: '#9af' } : {}
             const aliases = suggestion.aliases || []
 
             return (
-              <Suggestion
-                key={suggestion.value}
-                style={styles}
-                selected={isSelected}
-              >
+              <Suggestion key={suggestion.value} selected={isSelected}>
                 <span>{suggestion.value}</span>
                 <span>{aliases.join(', ')}</span>
               </Suggestion>

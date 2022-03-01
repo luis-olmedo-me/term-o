@@ -130,7 +130,7 @@ class Commander {
 
       return (providerProps) => {
         const commonProps = {
-          ...props,
+          props,
           ...providerProps
         }
 

@@ -8,10 +8,8 @@ import { backgroundRequest } from 'src/helpers/event.helpers.js'
 
 export const CommandEvent = ({
   command,
-  list,
-  delete: deletedIds,
+  props: { list, delete: deletedIds },
   pageEvents,
-  parameters,
   setMessageData
 }) => {
   const [idsToDelete, setIdsToDelete] = useState([])

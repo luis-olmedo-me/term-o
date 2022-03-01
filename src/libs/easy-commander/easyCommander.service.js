@@ -39,7 +39,14 @@ class Commander {
           propConfig.aliases.some((alias) => propsInUse.includes(alias))
 
         return !isInUse
-          ? [...result, { ...propConfig, value: `--${key}` }]
+          ? [
+              ...result,
+              {
+                ...propConfig,
+                aliases: propConfig.aliases.map((alias) => `-${alias}`),
+                value: `--${key}`
+              }
+            ]
           : result
       }, [])
 

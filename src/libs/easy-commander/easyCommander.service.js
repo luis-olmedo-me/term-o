@@ -27,16 +27,20 @@ class Commander {
     }, [])
 
     const knownCommand = this.commands[commandName]
-    const values = parseArgsIntoCommands(commandArgs)
-    const { values: _values, ...props } = this.buildProps(
-      values,
-      knownCommand?.props
-    )
+    const { _: _values, ...props } = parseArgsIntoCommands(commandArgs)
+    const propsInUse = Object.keys(props)
 
     const parsedProps =
       knownCommand &&
-      Object.keys(props).reduce((result, key) => {
-        return [...result, { ...knownCommand.props[key], value: `--${key}` }]
+      Object.keys(knownCommand.props).reduce((result, key) => {
+        const propConfig = knownCommand.props[key]
+        const isInUse =
+          propsInUse.includes(key) ||
+          propConfig.aliases.some((alias) => propsInUse.includes(alias))
+
+        return !isInUse
+          ? [...result, { ...propConfig, value: `--${key}` }]
+          : result
       }, [])
 
     return knownCommand ? parsedProps : defaultProps

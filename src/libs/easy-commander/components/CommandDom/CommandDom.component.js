@@ -6,10 +6,7 @@ import { parameterTypes } from '../../easyCommander.constants'
 import { ParameterElements } from '../ParameterElements/ParameterElements.component'
 
 export const CommandDom = ({
-  get,
-  hasId,
-  hasClass,
-  values,
+  props: { get, hasId, hasClass, values },
   command,
   parameters,
   setParameters,

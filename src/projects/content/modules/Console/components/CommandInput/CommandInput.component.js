@@ -83,7 +83,11 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
             const styles = isSelected ? { color: '#9af' } : {}
 
             return (
-              <Suggestion key={suggestion.value} style={styles}>
+              <Suggestion
+                key={suggestion.value}
+                style={styles}
+                selected={isSelected}
+              >
                 {suggestion.value}
               </Suggestion>
             )

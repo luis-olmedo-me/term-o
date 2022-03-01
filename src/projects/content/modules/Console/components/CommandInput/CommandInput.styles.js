@@ -30,6 +30,11 @@ export const Suggestions = styled.div`
   border-bottom: 1px solid #505050;
 `
 
+export const Suggestion = styled.span`
+  padding: 10px;
+  display: block;
+`
+
 export const Hash = styled.span`
   width: 20px;
   display: inline-block;

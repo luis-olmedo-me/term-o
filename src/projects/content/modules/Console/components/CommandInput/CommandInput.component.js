@@ -1,10 +1,16 @@
 import React, { useState } from 'react'
-import { Hash, Input, InputWrapper, Suggestions } from './CommandInput.styles'
+import {
+  Hash,
+  Input,
+  InputWrapper,
+  Suggestion,
+  Suggestions
+} from './CommandInput.styles'
 import { commander } from 'libs/easy-commander/easyCommander.service'
 
 export const CommandInput = ({ inputReference, handleOnEnter }) => {
   const [command, setCommand] = useState('')
-  const [suggestions, setSuggestions] = useState({})
+  const [suggestions, setSuggestions] = useState([])
   const [selectedSuggestionId, setSelectedSuggestionId] = useState(0)
 
   const handleCommandChange = ({ target: { value: newValue } }) => {
@@ -59,7 +65,13 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     }
   }
 
-  const shouldShowSuggestions = command && Boolean(suggestions.length)
+  const [lastCommand] = command.split('|').reverse()
+  const lastArgs = lastCommand.split(' ')
+
+  const areSuggestionsAvailable =
+    lastArgs.at(-1).startsWith('-') || lastArgs.length === 1
+  const shouldShowSuggestions =
+    Boolean(suggestions.length) && areSuggestionsAvailable
 
   return (
     <InputWrapper>
@@ -70,9 +82,9 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
             const styles = isSelected ? { color: '#9af' } : {}
 
             return (
-              <p key={suggestion.value} style={styles}>
+              <Suggestion key={suggestion.value} style={styles}>
                 {suggestion.value}
-              </p>
+              </Suggestion>
             )
           })}
         </Suggestions>

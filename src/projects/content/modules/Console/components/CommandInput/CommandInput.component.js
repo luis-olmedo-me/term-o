@@ -29,8 +29,8 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
         const firstArguments = args.splice(0, args.length - 1)
 
         const newCommand = firstArguments.length
-          ? `${firstArguments.join(' ')} ${selectedSuggestion.value}`
-          : selectedSuggestion.value
+          ? `${firstArguments.join(' ')} ${selectedSuggestion.value} `
+          : `${selectedSuggestion.value} `
 
         const newSuggestions = commander.getSuggestions(newCommand)
 
@@ -59,15 +59,12 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     }
   }
 
-  const selectedIdInRange =
-    selectedSuggestionId !== null && selectedSuggestionId % suggestions.length
-
   return (
     <InputWrapper>
       {command && (
         <Suggestions>
           {suggestions.map((suggestion, index) => {
-            const isSelected = selectedIdInRange === index
+            const isSelected = selectedSuggestionId === index
             const styles = isSelected ? { color: '#9af' } : {}
 
             return (

@@ -12,6 +12,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
 
     setCommand(newValue)
     setSuggestions(newSuggestions)
+    setSelectedSuggestionId(newSuggestions.length - 1)
   }
 
   const handleKeyPressed = (event) => {
@@ -34,7 +35,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
         const newSuggestions = commander.getSuggestions(newCommand)
 
         setCommand(newCommand)
-        setSelectedSuggestionId(0)
+        setSelectedSuggestionId(newSuggestions.length - 1)
         setSuggestions(newSuggestions)
       }
     } else if (key === 'ArrowUp') {

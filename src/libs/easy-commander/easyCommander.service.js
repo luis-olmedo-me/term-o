@@ -21,7 +21,9 @@ class Commander {
     const commandNames = Object.keys(this.commands)
 
     const defaultProps = commandNames.reduce((finalProps, command) => {
-      return [...finalProps, { value: command }]
+      const isMatch = command.includes(commandName)
+
+      return isMatch ? [...finalProps, { value: command }] : finalProps
     }, [])
 
     const knownCommand = this.commands[commandName]

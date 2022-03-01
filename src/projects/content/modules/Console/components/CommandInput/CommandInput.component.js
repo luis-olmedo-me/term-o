@@ -5,7 +5,7 @@ import { commander } from 'libs/easy-commander/easyCommander.service'
 export const CommandInput = ({ inputReference, handleOnEnter }) => {
   const [command, setCommand] = useState('')
   const [suggestions, setSuggestions] = useState({})
-  const [selectedSuggestionId, setSelectedSuggestionId] = useState(null)
+  const [selectedSuggestionId, setSelectedSuggestionId] = useState(0)
 
   const handleCommandChange = ({ target: { value: newValue } }) => {
     const newSuggestions = commander.getSuggestions(newValue)
@@ -32,21 +32,25 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
           : selectedSuggestion.value
 
         setCommand(newCommand)
-        setSelectedSuggestionId(null)
+        setSelectedSuggestionId(0)
       }
     } else if (key === 'ArrowUp') {
       event.preventDefault()
-      setSelectedSuggestionId((indexId) => {
-        let numberId = Number(indexId)
 
-        return --numberId
+      setSelectedSuggestionId((indexId) => {
+        const nextId = Number(indexId) - 1
+        const validatedId = nextId < 0 ? suggestions.length - 1 : nextId
+
+        return validatedId
       })
     } else if (key === 'ArrowDown') {
       event.preventDefault()
-      setSelectedSuggestionId((indexId) => {
-        let numberId = Number(indexId)
 
-        return ++numberId
+      setSelectedSuggestionId((indexId) => {
+        const nextId = Number(indexId) + 1
+        const validatedId = nextId > suggestions.length - 1 ? 0 : nextId
+
+        return validatedId
       })
     }
   }

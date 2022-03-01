@@ -43,7 +43,7 @@ class Commander {
           : result
       }, [])
 
-    return knownCommand ? parsedProps : defaultProps
+    return knownCommand && commandArgs.length ? parsedProps : defaultProps
   }
 
   validatePropValue(value, type, defaultValue) {

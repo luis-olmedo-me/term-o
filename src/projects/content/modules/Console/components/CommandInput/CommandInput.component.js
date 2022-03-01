@@ -5,6 +5,7 @@ import { commander } from 'libs/easy-commander/easyCommander.service'
 export const CommandInput = ({ inputReference, handleOnEnter }) => {
   const [command, setCommand] = useState('')
   const [suggestions, setSuggestions] = useState({})
+  const [selectedSuggestionId, setSelectedSuggestionId] = useState(null)
 
   const handleCommandChange = ({ target: { value: newValue } }) => {
     const newSuggestions = commander.getSuggestions(newValue)
@@ -13,19 +14,59 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     setSuggestions(newSuggestions)
   }
 
-  const handleKeyPressed = ({ key }) => {
+  const handleKeyPressed = (event) => {
+    const { key } = event
+
     if (key === 'Enter') {
-      handleOnEnter(command)
-      setCommand('')
+      const selectedSuggestion = suggestions[suggestions.length - 1]
+
+      if (!selectedSuggestion) {
+        handleOnEnter(command)
+        setCommand('')
+      } else {
+        const args = command.split(' ')
+        const firstArguments = args.splice(0, args.length - 1)
+
+        const newCommand = firstArguments.length
+          ? `${firstArguments.join(' ')} ${selectedSuggestion.value}`
+          : selectedSuggestion.value
+
+        setCommand(newCommand)
+        setSelectedSuggestionId(null)
+      }
+    } else if (key === 'ArrowUp') {
+      event.preventDefault()
+      setSelectedSuggestionId((indexId) => {
+        let numberId = Number(indexId)
+
+        return --numberId
+      })
+    } else if (key === 'ArrowDown') {
+      event.preventDefault()
+      setSelectedSuggestionId((indexId) => {
+        let numberId = Number(indexId)
+
+        return ++numberId
+      })
     }
   }
+
+  const selectedIdInRange =
+    selectedSuggestionId !== null && selectedSuggestionId % suggestions.length
 
   return (
     <InputWrapper>
       {command && (
         <Suggestions>
-          {suggestions.map((suggestion) => {
-            return <p key={suggestion.value}>{suggestion.value}</p>
+          {suggestions.map((suggestion, index) => {
+            const isSelected = selectedIdInRange === index
+            const styles = isSelected ? { color: '#9af' } : {}
+
+            return (
+              <p key={suggestion.value} style={styles}>
+                {suggestion.value}
+              </p>
+            )
           })}
         </Suggestions>
       )}

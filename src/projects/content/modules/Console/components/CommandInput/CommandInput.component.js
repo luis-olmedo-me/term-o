@@ -25,7 +25,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     const { key } = event
 
     if (key === 'Enter') {
-      if (!areSuggestionsAvailable) {
+      if (!shouldShowSuggestions) {
         handleOnEnter(command)
         setCommand('')
         setSuggestions([])

@@ -29,6 +29,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
         handleOnEnter(command)
         setCommand('')
         setSuggestions([])
+        setSelectedSuggestionId(0)
       } else {
         const selectedSuggestion = suggestions[selectedSuggestionId]
 
@@ -75,7 +76,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
   }
 
   const [lastCommand] = command.split('|').reverse()
-  const lastArgs = lastCommand.trim().split(' ')
+  const lastArgs = lastCommand.trimLeft().split(' ')
 
   const areSuggestionsAvailable =
     lastArgs.at(-1).startsWith('-') || lastArgs.length === 1

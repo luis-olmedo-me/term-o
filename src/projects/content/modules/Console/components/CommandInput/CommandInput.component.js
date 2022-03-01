@@ -22,6 +22,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
   }
 
   const handleKeyPressed = (event) => {
+    event.stopPropagation()
     const { key } = event
 
     if (key === 'Enter') {

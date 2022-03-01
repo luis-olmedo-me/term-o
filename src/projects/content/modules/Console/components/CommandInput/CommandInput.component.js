@@ -17,8 +17,8 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     const newSuggestions = commander.getSuggestions(newValue)
 
     setCommand(newValue)
-    setSuggestions(newSuggestions)
-    setSelectedSuggestionId(newSuggestions.length - 1)
+    setSuggestions(newValue ? newSuggestions : [])
+    setSelectedSuggestionId(newValue ? newSuggestions.length - 1 : 0)
   }
 
   const handleKeyPressed = (event) => {

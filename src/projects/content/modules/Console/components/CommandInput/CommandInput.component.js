@@ -25,12 +25,13 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     const { key } = event
 
     if (key === 'Enter') {
-      const selectedSuggestion = suggestions[selectedSuggestionId]
-
-      if (!selectedSuggestion) {
+      if (!areSuggestionsAvailable) {
         handleOnEnter(command)
         setCommand('')
+        setSuggestions([])
       } else {
+        const selectedSuggestion = suggestions[selectedSuggestionId]
+
         const args = command.split(' ')
         const firstArguments = args.splice(0, args.length - 1)
 

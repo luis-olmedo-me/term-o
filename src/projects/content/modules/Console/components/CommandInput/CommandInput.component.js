@@ -81,6 +81,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
           {suggestions.map((suggestion, index) => {
             const isSelected = selectedSuggestionId === index
             const styles = isSelected ? { color: '#9af' } : {}
+            const aliases = suggestion.aliases || []
 
             return (
               <Suggestion
@@ -88,7 +89,8 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
                 style={styles}
                 selected={isSelected}
               >
-                {suggestion.value}
+                <span>{suggestion.value}</span>
+                <span>{aliases.join(', ')}</span>
               </Suggestion>
             )
           })}

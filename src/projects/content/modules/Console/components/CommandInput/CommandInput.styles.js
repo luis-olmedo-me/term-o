@@ -31,10 +31,12 @@ export const Suggestions = styled.div`
 `
 
 export const Suggestion = styled.span`
-  padding: 10px;
+  padding: 10px 30px;
   display: block;
   color: ${({ selected }) => (selected ? '#9cf' : '#d6d6d6')};
-  font-weight: ${({ selected }) => (selected ? 'bold' : 'normal')}; ;
+  font-weight: ${({ selected }) => (selected ? 'bold' : 'normal')};
+  display: flex;
+  justify-content: space-between;
 `
 
 export const Hash = styled.span`

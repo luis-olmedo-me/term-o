@@ -62,6 +62,15 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
 
         return validatedId
       })
+    } else if (key === '|') {
+      event.preventDefault()
+
+      const newCommand = `${command}| `
+      const newSuggestions = commander.getSuggestions(newCommand)
+
+      setCommand(newCommand)
+      setSuggestions(newCommand ? newSuggestions : [])
+      setSelectedSuggestionId(0)
     }
   }
 

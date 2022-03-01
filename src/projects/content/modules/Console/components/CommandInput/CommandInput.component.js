@@ -24,8 +24,8 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     <InputWrapper>
       {command && (
         <Suggestions>
-          {Object.entries(suggestions).map(([key, _options]) => {
-            return <p key={key}>{key}</p>
+          {suggestions.map((suggestion) => {
+            return <p key={suggestion.value}>{suggestion.value}</p>
           })}
         </Suggestions>
       )}

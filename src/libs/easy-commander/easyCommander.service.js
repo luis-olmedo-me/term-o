@@ -121,17 +121,15 @@ class Commander {
       const knownCommand = this.commands[command]
 
       const propValues = parseArgsIntoCommands(args)
-      const props = {
-        ...this.buildProps(propValues, knownCommand?.props),
-        command: line
-      }
+      const props = this.buildProps(propValues, knownCommand?.props)
 
       const hasKnownCommand = Boolean(knownCommand)
 
       return (providerProps) => {
         const commonProps = {
-          ...props,
-          ...providerProps
+          props,
+          ...providerProps,
+          command: line
         }
 
         if (!hasKnownCommand) {

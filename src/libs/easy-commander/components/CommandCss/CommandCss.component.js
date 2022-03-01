@@ -5,9 +5,7 @@ import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { parseStyles } from './CommandCss.helpers'
 
 export const CommandCss = ({
-  id,
-  styles,
-  manualStyles,
+  props: { styles, manualStyles },
   command,
   parameters,
   setMessageData

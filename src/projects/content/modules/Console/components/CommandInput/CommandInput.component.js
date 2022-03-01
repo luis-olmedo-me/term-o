@@ -18,7 +18,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     const { key } = event
 
     if (key === 'Enter') {
-      const selectedSuggestion = suggestions[suggestions.length - 1]
+      const selectedSuggestion = suggestions[selectedSuggestionId]
 
       if (!selectedSuggestion) {
         handleOnEnter(command)
@@ -31,8 +31,11 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
           ? `${firstArguments.join(' ')} ${selectedSuggestion.value}`
           : selectedSuggestion.value
 
+        const newSuggestions = commander.getSuggestions(newCommand)
+
         setCommand(newCommand)
         setSelectedSuggestionId(0)
+        setSuggestions(newSuggestions)
       }
     } else if (key === 'ArrowUp') {
       event.preventDefault()

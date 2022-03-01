@@ -10,7 +10,6 @@ export const CommandHistory = ({ command, props: { goto, protocol } }) => {
       goto.forEach((url) => {
         const formattedUrl = url.startsWith('www') ? url : `www.${url}`
 
-        console.log('Pushing into URL: ', url)
         window.open(`${protocol}://${formattedUrl}`, '_blank')
       })
     },

@@ -59,9 +59,11 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     }
   }
 
+  const shouldShowSuggestions = command && Boolean(suggestions.length)
+
   return (
     <InputWrapper>
-      {command && (
+      {shouldShowSuggestions && (
         <Suggestions>
           {suggestions.map((suggestion, index) => {
             const isSelected = selectedSuggestionId === index

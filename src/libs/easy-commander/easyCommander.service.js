@@ -15,6 +15,44 @@ class Commander {
     this.commands = consoleCommands
   }
 
+  getSuggestions(command) {
+    const [lastCommand] = command.split('|').reverse()
+    const [commandName, ...commandArgs] = lastCommand.split(' ')
+    const commandNames = Object.keys(this.commands)
+
+    const defaultProps = commandNames.reduce((finalProps, command) => {
+      const isMatch = command.includes(commandName)
+
+      return isMatch ? [...finalProps, { value: command }] : finalProps
+    }, [])
+
+    const knownCommand = this.commands[commandName]
+    const { _: _values, ...props } = parseArgsIntoCommands(commandArgs)
+    const propsInUse = Object.keys(props)
+
+    const parsedProps =
+      knownCommand &&
+      Object.keys(knownCommand.props).reduce((result, key) => {
+        const propConfig = knownCommand.props[key]
+        const isInUse =
+          propsInUse.includes(key) ||
+          propConfig.aliases.some((alias) => propsInUse.includes(alias))
+
+        return !isInUse
+          ? [
+              ...result,
+              {
+                ...propConfig,
+                aliases: propConfig.aliases.map((alias) => `-${alias}`),
+                value: `--${key}`
+              }
+            ]
+          : result
+      }, [])
+
+    return knownCommand && commandArgs.length ? parsedProps : defaultProps
+  }
+
   validatePropValue(value, type, defaultValue) {
     switch (type) {
       case 'array': {

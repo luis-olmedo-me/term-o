@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
   Hash,
   Input,
@@ -9,6 +9,8 @@ import {
 import { commander } from 'libs/easy-commander/easyCommander.service'
 
 export const CommandInput = ({ inputReference, handleOnEnter }) => {
+  const selectedSuggestionReference = useRef(null)
+
   const [command, setCommand] = useState('')
   const [suggestions, setSuggestions] = useState([])
   const [selectedSuggestionId, setSelectedSuggestionId] = useState(0)
@@ -84,10 +86,32 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
   const shouldShowSuggestions =
     Boolean(suggestions.length) && areSuggestionsAvailable
 
+  useEffect(
+    function scrollIntoSelectedSuggestion() {
+      const scrollTop = selectedSuggestionReference.current?.scrollTop
+      const hasScrollTop = typeof scrollTop !== 'undefined'
+
+      if (!suggestions.length) return
+      if (!hasScrollTop) return
+
+      const newScrollTopValue = selectedSuggestionId * 36
+      const isInRange =
+        newScrollTopValue > scrollTop && newScrollTopValue < scrollTop + 108
+
+      if (isInRange) return
+
+      selectedSuggestionReference.current.scrollTop = Math.max(
+        newScrollTopValue - 72,
+        0
+      )
+    },
+    [suggestions, selectedSuggestionId]
+  )
+
   return (
     <InputWrapper>
       {shouldShowSuggestions && (
-        <Suggestions>
+        <Suggestions ref={selectedSuggestionReference}>
           {suggestions.map((suggestion, index) => {
             const isSelected = selectedSuggestionId === index
             const aliases = suggestion.aliases || []

@@ -50,3 +50,30 @@ export const parseArgsIntoCommands = (args) => {
     }
   }, {})
 }
+
+export const parsePropsIntoSuggestions = (propsConfigs, props) => {
+  if (!propsConfigs) return []
+
+  const propsInUse = Object.keys(props)
+
+  return Object.keys(propsConfigs).reduce((result, key) => {
+    const propConfig = propsConfigs[key]
+    const isInUse =
+      propsInUse.includes(key) ||
+      propConfig.aliases.some((alias) => propsInUse.includes(alias))
+
+    const groupProps = parsePropsIntoSuggestions(propConfig.groupProps, props)
+
+    const newValue = groupProps.length
+      ? groupProps
+      : [
+          {
+            ...propConfig,
+            aliases: propConfig.aliases.map((alias) => `-${alias}`),
+            value: `--${key}`
+          }
+        ]
+
+    return !isInUse ? [...result, ...newValue] : result
+  }, [])
+}

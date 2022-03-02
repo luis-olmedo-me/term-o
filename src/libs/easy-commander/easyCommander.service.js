@@ -15,6 +15,36 @@ class Commander {
     this.commands = consoleCommands
   }
 
+  parsePropsIntoSuggestions(propsConfigs, props) {
+    if (!propsConfigs) return []
+
+    const propsInUse = Object.keys(props)
+
+    return Object.keys(propsConfigs).reduce((result, key) => {
+      const propConfig = propsConfigs[key]
+      const isInUse =
+        propsInUse.includes(key) ||
+        propConfig.aliases.some((alias) => propsInUse.includes(alias))
+
+      const groupProps = this.parsePropsIntoSuggestions(
+        propConfig.groupProps,
+        props
+      )
+
+      const newValue = groupProps.length
+        ? groupProps
+        : [
+            {
+              ...propConfig,
+              aliases: propConfig.aliases.map((alias) => `-${alias}`),
+              value: `--${key}`
+            }
+          ]
+
+      return !isInUse ? [...result, ...newValue] : result
+    }, [])
+  }
+
   getSuggestions(command) {
     const [lastCommand] = command.split('|').reverse()
     const [commandName, ...commandArgs] = lastCommand.trim().split(' ')
@@ -28,27 +58,11 @@ class Commander {
 
     const knownCommand = this.commands[commandName]
     const { _: _values, ...props } = parseArgsIntoCommands(commandArgs)
-    const propsInUse = Object.keys(props)
 
-    const parsedProps =
-      knownCommand &&
-      Object.keys(knownCommand.props).reduce((result, key) => {
-        const propConfig = knownCommand.props[key]
-        const isInUse =
-          propsInUse.includes(key) ||
-          propConfig.aliases.some((alias) => propsInUse.includes(alias))
-
-        return !isInUse
-          ? [
-              ...result,
-              {
-                ...propConfig,
-                aliases: propConfig.aliases.map((alias) => `-${alias}`),
-                value: `--${key}`
-              }
-            ]
-          : result
-      }, [])
+    const parsedProps = this.parsePropsIntoSuggestions(
+      knownCommand?.props,
+      props
+    )
 
     return knownCommand && commandArgs.length ? parsedProps : defaultProps
   }

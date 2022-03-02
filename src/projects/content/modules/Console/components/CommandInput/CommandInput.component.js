@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
-import {
-  Hash,
-  Input,
-  InputWrapper,
-  Suggestion,
-  Suggestions
-} from './CommandInput.styles'
+
 import { commander } from 'libs/easy-commander/easyCommander.service'
+
+import { Suggestions } from '../Suggestions/Suggestions.component'
+
+import { Hash, Input, InputWrapper } from './CommandInput.styles'
 
 export const CommandInput = ({ inputReference, handleOnEnter }) => {
   const [command, setCommand] = useState('')
@@ -87,19 +85,10 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
   return (
     <InputWrapper>
       {shouldShowSuggestions && (
-        <Suggestions>
-          {suggestions.map((suggestion, index) => {
-            const isSelected = selectedSuggestionId === index
-            const aliases = suggestion.aliases || []
-
-            return (
-              <Suggestion key={suggestion.value} selected={isSelected}>
-                <span>{suggestion.value}</span>
-                <span>{aliases.join(', ')}</span>
-              </Suggestion>
-            )
-          })}
-        </Suggestions>
+        <Suggestions
+          suggestions={suggestions}
+          selectedSuggestionId={selectedSuggestionId}
+        />
       )}
 
       <div>

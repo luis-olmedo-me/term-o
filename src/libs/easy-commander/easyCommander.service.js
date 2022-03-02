@@ -17,13 +17,13 @@ class Commander {
 
   getSuggestions(command) {
     const [lastCommand] = command.split('|').reverse()
-    const [commandName, ...commandArgs] = lastCommand.split(' ')
+    const [commandName, ...commandArgs] = lastCommand.trim().split(' ')
     const commandNames = Object.keys(this.commands)
 
-    const defaultProps = commandNames.reduce((finalProps, command) => {
-      const isMatch = command.includes(commandName)
+    const defaultProps = commandNames.reduce((finalProps, name) => {
+      const isMatch = name.includes(commandName)
 
-      return isMatch ? [...finalProps, { value: command }] : finalProps
+      return isMatch ? [...finalProps, { value: name }] : finalProps
     }, [])
 
     const knownCommand = this.commands[commandName]

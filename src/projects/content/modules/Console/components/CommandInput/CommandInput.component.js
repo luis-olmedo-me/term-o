@@ -1,16 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react'
-import {
-  Hash,
-  Input,
-  InputWrapper,
-  Suggestion,
-  Suggestions
-} from './CommandInput.styles'
+import React, { useState } from 'react'
+
 import { commander } from 'libs/easy-commander/easyCommander.service'
 
-export const CommandInput = ({ inputReference, handleOnEnter }) => {
-  const selectedSuggestionReference = useRef(null)
+import { Suggestions } from '../Suggestions/Suggestions.component'
 
+import { Hash, Input, InputWrapper } from './CommandInput.styles'
+
+export const CommandInput = ({ inputReference, handleOnEnter }) => {
   const [command, setCommand] = useState('')
   const [suggestions, setSuggestions] = useState([])
   const [selectedSuggestionId, setSelectedSuggestionId] = useState(0)
@@ -86,44 +82,13 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
   const shouldShowSuggestions =
     Boolean(suggestions.length) && areSuggestionsAvailable
 
-  useEffect(
-    function scrollIntoSelectedSuggestion() {
-      const scrollTop = selectedSuggestionReference.current?.scrollTop
-      const hasScrollTop = typeof scrollTop !== 'undefined'
-
-      if (!suggestions.length) return
-      if (!hasScrollTop) return
-
-      const newScrollTopValue = selectedSuggestionId * 36
-      const isInRange =
-        newScrollTopValue > scrollTop && newScrollTopValue < scrollTop + 108
-
-      if (isInRange) return
-
-      selectedSuggestionReference.current.scrollTop = Math.max(
-        newScrollTopValue - 72,
-        0
-      )
-    },
-    [suggestions, selectedSuggestionId]
-  )
-
   return (
     <InputWrapper>
       {shouldShowSuggestions && (
-        <Suggestions ref={selectedSuggestionReference}>
-          {suggestions.map((suggestion, index) => {
-            const isSelected = selectedSuggestionId === index
-            const aliases = suggestion.aliases || []
-
-            return (
-              <Suggestion key={suggestion.value} selected={isSelected}>
-                <span>{suggestion.value}</span>
-                <span>{aliases.join(', ')}</span>
-              </Suggestion>
-            )
-          })}
-        </Suggestions>
+        <Suggestions
+          suggestions={suggestions}
+          selectedSuggestionId={selectedSuggestionId}
+        />
       )}
 
       <div>

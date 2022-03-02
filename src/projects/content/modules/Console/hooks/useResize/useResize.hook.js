@@ -45,7 +45,7 @@ export const useResize = ({ wrapperReference }) => {
           bottom: isBelowMiniumHeight ? 0 : newResizeData.bottom
         })
         setBodyData(newBodyData)
-      }, 1000)
+      }, 500)
 
       const obsever = new ResizeObserver(updateData)
 

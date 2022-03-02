@@ -46,9 +46,9 @@ export const Console = () => {
       sendResponse({ status: 'ok' })
     }
 
-    chrome.extension.onMessage.addListener(toggleTerminal)
+    chrome.runtime.onMessage.addListener(toggleTerminal)
 
-    return () => chrome.extension.onMessage.removeListener(toggleTerminal)
+    return () => chrome.runtime.onMessage.removeListener(toggleTerminal)
   }, [])
 
   const handleCommandRun = useCallback((command, id) => {

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const SuggestionsWrapper = styled.div`
   overflow-y: scroll;
-  max-height: 108px;
+  max-height: 120px;
   border-top: 1px solid #333;
 
   &::-webkit-scrollbar {

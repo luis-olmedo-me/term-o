@@ -6,7 +6,7 @@ export const onConfig = {
     url: {
       key: 'url',
       type: 'array',
-      defaultValue: [],
+      defaultValue: ['.'],
       aliases: ['u']
     },
     run: {

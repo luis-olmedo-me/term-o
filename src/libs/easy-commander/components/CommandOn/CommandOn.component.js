@@ -3,6 +3,7 @@ import { parameterTypes } from '../../easyCommander.constants'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
 import { eventTypes } from 'src/constants/events.constants.js'
+import { checkIfRegExpIsValid } from './CommandOn.helpers'
 
 export const CommandOn = ({ command, props: { url, run }, setMessageData }) => {
   useEffect(
@@ -11,6 +12,15 @@ export const CommandOn = ({ command, props: { url, run }, setMessageData }) => {
       if (!run.length) {
         return setMessageData({
           message: 'Must provide a command to run',
+          type: parameterTypes.ERROR
+        })
+      }
+
+      const areURLsValid = checkIfRegExpIsValid(url)
+
+      if (!areURLsValid) {
+        return setMessageData({
+          message: 'URLs must be valid regular expressions',
           type: parameterTypes.ERROR
         })
       }

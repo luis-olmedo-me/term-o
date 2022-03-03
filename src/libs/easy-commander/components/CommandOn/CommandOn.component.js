@@ -4,16 +4,16 @@ import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
 import { eventTypes } from 'src/constants/events.constants.js'
 
-export const CommandOn = ({
-  command,
-  url,
-  run,
-  parameters,
-  setMessageData
-}) => {
+export const CommandOn = ({ command, props: { url, run }, setMessageData }) => {
   useEffect(
     function setUpEventByURL() {
       if (!url.length) return
+      if (!run.length) {
+        return setMessageData({
+          message: 'Must provide a command to run',
+          type: parameterTypes.ERROR
+        })
+      }
 
       const urlForEvent = url.join('|')
       const commandsToRun = run.map((commandToRun) => {

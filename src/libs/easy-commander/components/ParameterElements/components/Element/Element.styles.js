@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const ElementWrapper = styled.span`
-  padding: 2px 10px;
+  padding: 5px 10px;
   background-color: ${(props) => (props.isHidden ? '#eaeaea' : '#fafafa')};
   color: ${(props) => (props.isHidden ? '#888' : '#0070f3')};
   font-weight: bold;

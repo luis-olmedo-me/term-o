@@ -3,6 +3,7 @@ import styled from 'styled-components'
 export const ConsoleWrapper = styled.div`
   position: fixed;
   z-index: 1000000;
+  background-color: #2e2e2e;
 
   opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
   pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
@@ -48,7 +49,6 @@ export const ConsoleLogs = styled.div`
   width: 100%;
   border: none;
   box-sizing: border-box;
-  background-color: #2e2e2e;
   color: #d6d6d6;
   display: block;
   overflow-y: scroll;

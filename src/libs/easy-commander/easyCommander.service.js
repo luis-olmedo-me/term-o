@@ -3,7 +3,10 @@ import { MessageCommand } from './components/MessageCommand/MessageCommand.compo
 
 import { Outputs } from './components/Outputs/Outputs.component'
 import { consoleCommands, parameterTypes } from './easyCommander.constants'
-import { parseArgsIntoCommands } from './easyCommander.helpers'
+import {
+  parseArgsIntoCommands,
+  parsePropsIntoSuggestions
+} from './easyCommander.helpers'
 
 const unknownCommandError = {
   message: 'The command you entered is not recognized. Please try again.',
@@ -28,27 +31,8 @@ class Commander {
 
     const knownCommand = this.commands[commandName]
     const { _: _values, ...props } = parseArgsIntoCommands(commandArgs)
-    const propsInUse = Object.keys(props)
 
-    const parsedProps =
-      knownCommand &&
-      Object.keys(knownCommand.props).reduce((result, key) => {
-        const propConfig = knownCommand.props[key]
-        const isInUse =
-          propsInUse.includes(key) ||
-          propConfig.aliases.some((alias) => propsInUse.includes(alias))
-
-        return !isInUse
-          ? [
-              ...result,
-              {
-                ...propConfig,
-                aliases: propConfig.aliases.map((alias) => `-${alias}`),
-                value: `--${key}`
-              }
-            ]
-          : result
-      }, [])
+    const parsedProps = parsePropsIntoSuggestions(knownCommand?.props, props)
 
     return knownCommand && commandArgs.length ? parsedProps : defaultProps
   }

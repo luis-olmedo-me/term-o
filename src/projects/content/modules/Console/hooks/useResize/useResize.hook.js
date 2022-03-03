@@ -38,12 +38,15 @@ export const useResize = ({ wrapperReference }) => {
         const isBelowMiniumHeight =
           newBodyData.height - (newResizeData.top + newResizeData.bottom) < 400
 
-        setResizeData({
+        const formattedData = {
           left: isBelowMiniumWidth ? 0 : newResizeData.left,
           right: isBelowMiniumWidth ? 0 : newResizeData.right,
           top: isBelowMiniumHeight ? 0 : newResizeData.top,
           bottom: isBelowMiniumHeight ? 0 : newResizeData.bottom
-        })
+        }
+
+        setResizeData(formattedData)
+        updateConfig(formattedData)
         setBodyData(newBodyData)
       }, 500)
 

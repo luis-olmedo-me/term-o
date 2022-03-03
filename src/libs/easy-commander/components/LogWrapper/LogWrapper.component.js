@@ -3,7 +3,7 @@ import { parameterTypes } from '../../easyCommander.constants'
 import { Hash, Log } from './LogWrapper.styles'
 
 const preIconsByVariants = {
-  [parameterTypes.COMMAND]: '＄',
+  [parameterTypes.COMMAND]: '$',
   [parameterTypes.ERROR]: '✖',
   [parameterTypes.INFO]: 'ℹ',
   [parameterTypes.SUCCESS]: '✔'

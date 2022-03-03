@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { ElementWrapper } from './Element.styles'
+import { ElementWrapper, Specification } from './Element.styles'
 
 export const Element = ({ htmlElement = {} }) => {
   const orinalBoxShadow = useMemo(
@@ -24,7 +24,8 @@ export const Element = ({ htmlElement = {} }) => {
   const idLabel = id && `#${id}`
   const classNameLabel = className && `.${className.replaceAll?.(/\s/g, '.')}`
   const tagNameLabel = htmlElement.tagName.toLowerCase()
-  const elementLabel = `${tagNameLabel}${idLabel || classNameLabel || ''}`
+
+  const specification = idLabel || classNameLabel
 
   return (
     <ElementWrapper
@@ -33,7 +34,10 @@ export const Element = ({ htmlElement = {} }) => {
       isHidden={isHidden}
       onClick={() => navigator.clipboard.writeText(elementLabel)}
     >
-      {elementLabel}
+      {tagNameLabel}
+      {specification && (
+        <Specification isHidden={isHidden}>{specification}</Specification>
+      )}
     </ElementWrapper>
   )
 }

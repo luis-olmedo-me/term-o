@@ -11,12 +11,12 @@ export const Log = styled.div`
   }
 
   &&.command {
-    background-color: #333;
+    background-color: #222;
     color: #fff;
   }
 
   &&.button-group {
-    background-color: #3a3a3a;
+    background-color: #2a2a2a;
     color: #fff;
     padding: 0;
   }

@@ -34,6 +34,7 @@ export const ResizerWrapper = styled.button`
     left: 0;
     right: 0;
     height: 6px;
+    width: 100%;
 
     &&:active,
     &&:hover {

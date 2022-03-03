@@ -39,7 +39,7 @@ export const ConsoleTitle = styled.h1`
 
   &&:hover,
   &&:active {
-    background-color: #292929;
+    background-color: #0d0d0d;
   }
 `
 

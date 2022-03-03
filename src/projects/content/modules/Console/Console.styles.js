@@ -3,6 +3,7 @@ import styled from 'styled-components'
 export const ConsoleWrapper = styled.div`
   position: fixed;
   z-index: 1000000;
+  font-family: 'Coda', monospace;
 
   opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
   pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};

@@ -3,7 +3,6 @@ import styled from 'styled-components'
 export const ConsoleWrapper = styled.div`
   position: fixed;
   z-index: 1000000;
-  background-color: #2e2e2e;
 
   opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
   pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
@@ -26,9 +25,9 @@ export const ConsoleTitle = styled.h1`
   text-align: center;
   font-weight: normal;
   font-size: 20px;
-  border: 1px solid #505050;
+  border: 1px solid #333;
   box-sizing: border-box;
-  background-color: #2e2e2e;
+  background-color: #111;
   color: #d6d6d6;
   cursor: pointer;
   user-select: none;
@@ -49,10 +48,11 @@ export const ConsoleLogs = styled.div`
   width: 100%;
   border: none;
   box-sizing: border-box;
+  background-color: #111;
   color: #d6d6d6;
   display: block;
   overflow-y: scroll;
-  border: solid #505050;
+  border: solid #333;
   border-width: 0 1px;
   flex: 1;
 

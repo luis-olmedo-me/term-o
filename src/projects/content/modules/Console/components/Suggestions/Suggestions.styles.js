@@ -1,9 +1,13 @@
 import styled from 'styled-components'
 
 export const SuggestionsWrapper = styled.div`
-  border-bottom: 1px solid #505050;
   overflow-y: scroll;
   max-height: 108px;
+  border-top: 1px solid #333;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 export const Suggestion = styled.span`

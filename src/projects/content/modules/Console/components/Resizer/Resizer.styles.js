@@ -18,7 +18,7 @@ export const ResizerWrapper = styled.button`
     &&:active,
     &&:hover {
       cursor: col-resize;
-      background-color: #aaa;
+      background-color: #333;
       width: 8px;
     }
   }
@@ -38,7 +38,7 @@ export const ResizerWrapper = styled.button`
     &&:active,
     &&:hover {
       cursor: row-resize;
-      background-color: #aaa;
+      background-color: #333;
       height: 12px;
     }
   }

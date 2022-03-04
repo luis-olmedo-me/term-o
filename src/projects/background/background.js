@@ -15,11 +15,6 @@ chrome.commands.onCommand.addListener(function (command) {
 
 chrome.runtime.onMessage.addListener(function (request, _sender, sendResponse) {
   switch (request.type) {
-    case eventTypes.GET_PAGE_EVENTS: {
-      sendResponse({ status: 'ok', response: configManager.pageEvents })
-      break
-    }
-
     case eventTypes.GET_CONFIGURATION: {
       sendResponse({ status: 'ok', response: configManager.getConfiguration() })
       break
@@ -46,11 +41,6 @@ chrome.runtime.onMessage.addListener(function (request, _sender, sendResponse) {
 
       configManager.setPageEvents(newData)
       sendResponse({ status: 'ok' })
-      break
-    }
-
-    case eventTypes.GET_CONSOLE_POSITION: {
-      sendResponse({ status: 'ok', response: configManager.consolePosition })
       break
     }
 

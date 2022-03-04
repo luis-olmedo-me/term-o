@@ -2,7 +2,7 @@ class ConfigManager {
   constructor() {
     this.consolePosition = {}
     this.pageEvents = []
-    this.aliases = []
+    this.aliases = {}
   }
 
   setConsolePosition(newConfig) {
@@ -36,7 +36,7 @@ class ConfigManager {
     const receiveConfiguration = ({ configuration: receivedConfiguration }) => {
       this.consolePosition = receivedConfiguration?.consolePosition || {}
       this.pageEvents = receivedConfiguration?.pageEvents || []
-      this.aliases = receiveConfiguration?.aliases || []
+      this.aliases = receiveConfiguration?.aliases || {}
     }
 
     chrome.storage.sync.get('configuration', receiveConfiguration)

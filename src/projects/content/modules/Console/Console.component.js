@@ -114,6 +114,7 @@ export const Console = () => {
           setResizingFrom(resizeTypes.MOVING)
           setMovingFrom({ x: event.clientX, y: event.clientY })
         }}
+        onClick={() => inputReference.current?.focus()}
       >
         TERM-O
       </ConsoleTitle>

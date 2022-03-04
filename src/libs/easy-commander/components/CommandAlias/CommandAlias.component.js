@@ -8,7 +8,7 @@ import { backgroundRequest } from 'src/helpers/event.helpers.js'
 
 export const CommandAlias = ({
   command,
-  props: { list, delete: deletedIds },
+  props: { list, delete: deletedIds, add: aliasesToAdd },
   aliases,
   setMessageData
 }) => {
@@ -18,7 +18,7 @@ export const CommandAlias = ({
   const hasAliases = aliasesRows.length > 0
 
   useEffect(
-    function handleEmptyPageEvents() {
+    function handleAliases() {
       if (hasAliases || !list) return
 
       setMessageData({
@@ -26,7 +26,36 @@ export const CommandAlias = ({
         message: 'There are no aliases registered.'
       })
     },
-    [hasAliases, list]
+    [hasAliases, aliasesToAdd]
+  )
+
+  useEffect(
+    function handleAliases() {
+      if (!aliasesToAdd.length) return
+
+      const newAliases = aliasesToAdd.reduce((parsedAliases, alias) => {
+        const [name, value] = alias.split('=')
+
+        parsedAliases[name] = value
+
+        return parsedAliases
+      }, {})
+      console.log('background request', {
+        eventType: eventTypes.ADD_ALIAS,
+        data: newAliases
+      })
+
+      backgroundRequest({
+        eventType: eventTypes.ADD_ALIAS,
+        data: newAliases
+      })
+
+      setMessageData({
+        type: parameterTypes.SUCCESS,
+        message: `Aliases added: ${Object.keys(newAliases).join(', ')}`
+      })
+    },
+    [aliasesToAdd]
   )
 
   useEffect(

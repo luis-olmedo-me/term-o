@@ -21,6 +21,12 @@ export const aliasConfig = {
       type: 'array',
       defaultValue: [],
       aliases: ['d']
+    },
+    add: {
+      key: 'add',
+      type: 'array',
+      defaultValue: [],
+      aliases: ['a']
     }
   },
   output: (props) => <CommandAlias key={props.id} {...props} />

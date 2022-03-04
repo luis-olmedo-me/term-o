@@ -12,14 +12,14 @@ export const Suggestions = ({ suggestions, selectedSuggestionId }) => {
       if (!suggestions.length) return
       if (!hasScrollTop) return
 
-      const newScrollTopValue = selectedSuggestionId * 36
+      const newScrollTopValue = selectedSuggestionId * 40
       const isInRange =
-        newScrollTopValue > scrollTop && newScrollTopValue < scrollTop + 108
+        newScrollTopValue > scrollTop && newScrollTopValue < scrollTop + 120
 
       if (isInRange) return
 
       selectedSuggestionReference.current.scrollTop = Math.max(
-        newScrollTopValue - 72,
+        newScrollTopValue - 80,
         0
       )
     },

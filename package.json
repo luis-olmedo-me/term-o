@@ -5,8 +5,8 @@
   "repository": "https://github.com/olmedoluis/term-o",
   "scripts": {
     "start": "nodemon --exec npm run build-dev",
-    "build-prod": "webpack --mode=production",
-    "build-dev": "webpack --mode=development --devtool=cheap-module-source-map"
+    "build-prod": "webpack --mode production",
+    "build-dev": "webpack --mode development --devtool cheap-module-source-map"
   },
   "author": "olmedoluis012@gmail.com",
   "license": "ISC",

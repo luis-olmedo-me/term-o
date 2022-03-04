@@ -4,50 +4,50 @@ export const Log = styled.div`
   padding: 10px;
 
   &:first-child {
-    border-radius: 10px 10px 0 0;
+    border-radius: 3px 3px 0 0;
   }
   &:last-child {
-    border-radius: 0 0 10px 10px;
+    border-radius: 0 0 3px 3px;
   }
 
   &&.command {
-    background-color: #454545;
-    color: #d6d6d6;
+    background-color: #222;
+    color: #fff;
   }
 
   &&.button-group {
-    background-color: #505050;
-    color: #d6d6d6;
+    background-color: #2a2a2a;
+    color: #fff;
     padding: 0;
   }
 
   &&.element {
-    background-color: #777070;
+    background-color: #ff4ecd;
   }
 
   &&.styles {
-    background-color: #707077;
-    color: #d6d6e7;
+    background-color: #0056d0;
+    color: #fff;
   }
 
   &&.error {
-    background-color: #887070;
-    color: #e7d6d6;
+    background-color: #f21361;
+    color: #fff;
   }
 
   &&.info {
-    background-color: #707088;
-    color: #d6d6e7;
+    background-color: #0070f3;
+    color: #fff;
   }
 
   &&.table {
-    background-color: #706090;
-    color: #d6d6e7;
+    background-color: #7928ca;
+    color: #fff;
   }
 
   &&.success {
-    background-color: #708888;
-    color: #d6d6e7;
+    background-color: #17c964;
+    color: #fff;
   }
 `
 

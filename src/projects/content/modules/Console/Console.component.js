@@ -26,31 +26,12 @@ export const Console = () => {
   const inputReference = useRef(null)
 
   const [histories, setHistories] = useState([])
-  const [isOpen, setIsOpen] = useState(false)
 
-  const { pageEvents, appliedPageEvents, consolePosition } = useConfig()
+  const { isOpen, pageEvents, appliedPageEvents, consolePosition } = useConfig()
   const { setResizingFrom, resizeData, setMovingFrom, isMoving } = useResize({
     wrapperReference,
     consolePosition
   })
-
-  useEffect(function openConsoleByKeyCommands() {
-    const toggleTerminal = (message, _sender, sendResponse) => {
-      if (message.action !== eventTypes.NEW_COMMAND) return
-
-      switch (message.data.command) {
-        case extensionKeyEvents.TOGGLE_TERMINAL:
-          setIsOpen((state) => !state)
-          break
-      }
-
-      sendResponse({ status: 'ok' })
-    }
-
-    chrome.runtime.onMessage.addListener(toggleTerminal)
-
-    return () => chrome.runtime.onMessage.removeListener(toggleTerminal)
-  }, [])
 
   const handleCommandRun = useCallback((command, id) => {
     const logOutput = commander.getLogOutput(id, command)

@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react'
 
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
-import { eventTypes } from 'src/constants/events.constants.js'
+import {
+  eventTypes,
+  extensionKeyEvents
+} from 'src/constants/events.constants.js'
 
 const defaultConfiguration = {
+  isOpen: false,
   appliedPageEvents: [],
   pageEvents: [],
   consolePosition: {}
@@ -11,6 +15,27 @@ const defaultConfiguration = {
 
 export const useConfig = () => {
   const [config, setConfig] = useState(defaultConfiguration)
+
+  useEffect(function openConsoleByKeyCommands() {
+    const toggleTerminal = (message, _sender, sendResponse) => {
+      const isActionNewCommand = message.action === eventTypes.NEW_COMMAND
+      const isCommandToggleTerminal =
+        message.data.command === extensionKeyEvents.TOGGLE_TERMINAL
+
+      if (isActionNewCommand && isCommandToggleTerminal) {
+        setConfig((oldConfig) => ({
+          ...oldConfig,
+          isOpen: !oldConfig.isOpen
+        }))
+      }
+
+      sendResponse({ status: 'ok' })
+    }
+
+    chrome.runtime.onMessage.addListener(toggleTerminal)
+
+    return () => chrome.runtime.onMessage.removeListener(toggleTerminal)
+  }, [])
 
   useEffect(function getConfiguration() {
     const receiveConfiguration = ({ response: newConfig }) => {

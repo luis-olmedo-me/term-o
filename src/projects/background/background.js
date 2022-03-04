@@ -34,6 +34,29 @@ chrome.runtime.onMessage.addListener(function (request, _sender, sendResponse) {
       break
     }
 
+    case eventTypes.ADD_ALIAS: {
+      configManager.setAliases({ ...configManager.aliases, ...request.data })
+      sendResponse({ status: 'ok' })
+      break
+    }
+
+    case eventTypes.DELETE_ALIAS: {
+      const aliasesKeysToDelete = request.data?.aliasesKeysToDelete || []
+
+      const newAliases = aliasesKeysToDelete.reduce(
+        (filteredAliases, aliasKeyToDelete) => {
+          const { [aliasKeyToDelete]: removed, ...aliases } = filteredAliases
+
+          return aliases
+        },
+        configManager.aliases
+      )
+
+      configManager.setAliases(newAliases)
+      sendResponse({ status: 'ok' })
+      break
+    }
+
     case eventTypes.DELETE_PAGES_EVENT: {
       const newData = configManager.pageEvents.filter(
         ({ id }) => !request.data.ids.includes(id)

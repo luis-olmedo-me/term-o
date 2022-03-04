@@ -3,7 +3,9 @@ export const eventTypes = {
   DELETE_PAGES_EVENT: 'term-o-delete-pages-event',
   NEW_COMMAND: 'term-o-new-command',
   UPDATE_CONFIG_CONSOLE_POSITION: 'term-o-update-config-console-position',
-  GET_CONFIGURATION: 'term-o-get-configuration'
+  GET_CONFIGURATION: 'term-o-get-configuration',
+  ADD_ALIAS: 'term-o-add-alias',
+  DELETE_ALIAS: 'term-o-delete-alias'
 }
 
 export const extensionKeyEvents = {

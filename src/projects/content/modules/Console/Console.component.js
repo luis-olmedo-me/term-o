@@ -28,9 +28,10 @@ export const Console = () => {
   const [histories, setHistories] = useState([])
   const [isOpen, setIsOpen] = useState(false)
 
-  const { pageEvents, appliedPageEvents } = useConfig()
+  const { pageEvents, appliedPageEvents, consolePosition } = useConfig()
   const { setResizingFrom, resizeData, setMovingFrom, isMoving } = useResize({
-    wrapperReference
+    wrapperReference,
+    consolePosition
   })
 
   useEffect(function openConsoleByKeyCommands() {

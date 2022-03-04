@@ -30,15 +30,23 @@ class Commander {
   }
 
   getSuggestions(command) {
-    const [lastCommand] = command.split('|').reverse()
+    const [lastCommand] = this.getCommandWithAliases(command)
+      .split('|')
+      .reverse()
     const [commandName, ...commandArgs] = lastCommand.trim().split(' ')
     const commandNames = Object.keys(this.commands)
+    const aliasNames = Object.keys(this.aliases)
 
-    const defaultProps = commandNames.reduce((finalProps, name) => {
+    const aliasAsProps = aliasNames.reduce((finalProps, name) => {
       const isMatch = name.includes(commandName)
 
       return isMatch ? [...finalProps, { value: name }] : finalProps
     }, [])
+    const defaultProps = commandNames.reduce((finalProps, name) => {
+      const isMatch = name.includes(commandName)
+
+      return isMatch ? [...finalProps, { value: name }] : finalProps
+    }, aliasAsProps)
 
     const knownCommand = this.commands[commandName]
     const { _: _values, ...props } = parseArgsIntoCommands(commandArgs)

@@ -1,7 +1,13 @@
 import React, { useState } from 'react'
 import { OutputWrapper } from './Outputs.styles'
 
-export const Outputs = ({ components, id, pageEvents, clearTerminal }) => {
+export const Outputs = ({
+  components,
+  id,
+  pageEvents,
+  clearTerminal,
+  aliases
+}) => {
   const defaultData = components.map((Component, index) => ({
     Component,
     parameters: {},
@@ -36,7 +42,8 @@ export const Outputs = ({ components, id, pageEvents, clearTerminal }) => {
           setMessageData,
           messageData: isLastComponent ? messageData : {},
           pageEvents,
-          clearTerminal
+          clearTerminal,
+          aliases
         }
 
         return <Component {...providerProps} />

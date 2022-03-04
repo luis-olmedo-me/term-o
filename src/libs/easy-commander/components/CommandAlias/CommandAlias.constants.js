@@ -6,7 +6,7 @@ export const aliasKeys = {
   VALUE: 'value'
 }
 
-export const aliasRows = [aliasKeys.ALIAS, aliasKeys.VALUE]
+export const aliasHeaders = [aliasKeys.ALIAS, aliasKeys.VALUE]
 
 export const aliasConfig = {
   props: {

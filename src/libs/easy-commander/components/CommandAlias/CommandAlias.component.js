@@ -2,35 +2,31 @@ import React, { useEffect, useState } from 'react'
 import { parameterTypes } from '../../easyCommander.constants'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { Table } from 'modules/components/Table/Table.component'
-import { aliasRows } from './CommandAlias.constants'
+import { aliasHeaders } from './CommandAlias.constants'
 import { eventTypes } from 'src/constants/events.constants.js'
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
-
-const aliasesTemp = []
 
 export const CommandAlias = ({
   command,
   props: { list, delete: deletedIds },
-  aliases = aliasesTemp,
+  aliases,
   setMessageData
 }) => {
   const [idsToDelete, setIdsToDelete] = useState([])
-  const pageEventsRows = aliases.map((pageEvent) => {
-    return aliasRows.map((eventRow) => pageEvent[eventRow])
-  })
+  const aliasesRows = Object.entries(aliases)
 
-  const hasPageEvents = aliases.length > 0
+  const hasAliases = aliasesRows.length > 0
 
   useEffect(
     function handleEmptyPageEvents() {
-      if (hasPageEvents || !list) return
+      if (hasAliases || !list) return
 
       setMessageData({
         type: parameterTypes.INFO,
         message: 'There are no aliases registered.'
       })
     },
-    [hasPageEvents, list]
+    [hasAliases, list]
   )
 
   useEffect(
@@ -65,7 +61,7 @@ export const CommandAlias = ({
         message: `Deleted ${idsToDelete.length} aliases.`
       })
     },
-    [hasPageEvents, list, idsToDelete]
+    [hasAliases, list, idsToDelete]
   )
 
   return (
@@ -74,7 +70,7 @@ export const CommandAlias = ({
 
       {list && (
         <LogWrapper variant={parameterTypes.TABLE}>
-          <Table headers={aliasRows} rows={pageEventsRows} />
+          <Table headers={aliasHeaders} rows={aliasesRows} />
         </LogWrapper>
       )}
     </>

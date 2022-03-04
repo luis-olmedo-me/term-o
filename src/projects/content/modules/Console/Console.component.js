@@ -14,7 +14,7 @@ import {
   singleResizeTypes
 } from './hooks/useResize/useResize.constants.js'
 
-import { usePageEvents } from './hooks/usePageEvents.hook.js'
+import { useConfig } from './hooks/useConfig.hook.js'
 import { useResize } from './hooks/useResize/useResize.hook.js'
 
 import { ConsoleTitle, ConsoleLogs, ConsoleWrapper } from './Console.styles.js'
@@ -28,10 +28,10 @@ export const Console = () => {
   const [histories, setHistories] = useState([])
   const [isOpen, setIsOpen] = useState(false)
 
+  const { pageEvents, appliedPageEvents } = useConfig()
   const { setResizingFrom, resizeData, setMovingFrom, isMoving } = useResize({
     wrapperReference
   })
-  const { pageEvents, appliedPageEvents } = usePageEvents()
 
   useEffect(function openConsoleByKeyCommands() {
     const toggleTerminal = (message, _sender, sendResponse) => {

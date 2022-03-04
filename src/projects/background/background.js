@@ -20,6 +20,11 @@ chrome.runtime.onMessage.addListener(function (request, _sender, sendResponse) {
       break
     }
 
+    case eventTypes.GET_CONFIGURATION: {
+      sendResponse({ status: 'ok', response: configManager.getConfiguration() })
+      break
+    }
+
     case eventTypes.ADD_PAGES_EVENT: {
       const initialId = Date.now().toString()
       const newPageEvents = request.data.map((newEvent, index) => ({

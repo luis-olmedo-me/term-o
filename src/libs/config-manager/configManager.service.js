@@ -41,6 +41,13 @@ class ConfigManager {
       }
     })
   }
+
+  getConfiguration() {
+    return {
+      consolePosition: this.consolePosition,
+      pageEvents: this.pageEvents
+    }
+  }
 }
 
 export const configManager = new ConfigManager().init()

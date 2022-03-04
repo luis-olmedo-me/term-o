@@ -16,6 +16,17 @@ const unknownCommandError = {
 class Commander {
   constructor() {
     this.commands = consoleCommands
+    this.aliases = {}
+  }
+
+  setAliases(aliases) {
+    this.aliases = aliases || {}
+  }
+
+  getCommandWithAliases(command) {
+    return Object.entries(this.aliases).reduce((newCommand, [alias, value]) => {
+      return newCommand.replaceAll(alias, value)
+    }, command)
   }
 
   getSuggestions(command) {

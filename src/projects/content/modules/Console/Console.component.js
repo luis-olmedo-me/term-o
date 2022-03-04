@@ -30,15 +30,20 @@ export const Console = () => {
     consolePosition
   })
 
-  const handleCommandRun = useCallback((command, id) => {
-    const logOutput = commander.getLogOutput(id, command)
+  const handleCommandRun = useCallback(
+    (command, id) => {
+      const formmatedCommand = commander.getCommandWithAliases(command)
 
-    setHistories((histories) => [...histories, logOutput])
+      const logOutput = commander.getLogOutput(id, formmatedCommand)
 
-    setTimeout(() => {
-      historyRef?.current?.scrollTo(0, historyRef.current.scrollHeight)
-    })
-  }, [])
+      setHistories((histories) => [...histories, logOutput])
+
+      setTimeout(() => {
+        historyRef?.current?.scrollTo(0, historyRef.current.scrollHeight)
+      })
+    },
+    [aliases]
+  )
 
   useEffect(
     function applyPageEvents() {

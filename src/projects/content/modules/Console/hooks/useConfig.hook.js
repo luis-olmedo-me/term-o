@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 
+import { commander } from 'libs/easy-commander/easyCommander.service'
+
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
 import {
   eventTypes,
@@ -52,6 +54,8 @@ export const useConfig = () => {
         consolePosition: newConfig?.consolePosition || {},
         aliases: newConfig?.aliases || {}
       })
+
+      commander.setAliases(newConfig?.aliases)
     }
 
     backgroundRequest({

@@ -31,8 +31,9 @@ export const CommandAlias = ({
 
   useEffect(
     function validateDeletedIds() {
-      const validDeltedIds = deletedIds.filter((id) => {
-        return aliases.some((pageEvent) => pageEvent.id === id)
+      const aliasesKeys = Object.keys(aliases)
+      const validDeltedIds = deletedIds.filter((keyToDelete) => {
+        return aliasesKeys.includes(keyToDelete)
       })
 
       if (deletedIds.length !== validDeltedIds.length) {
@@ -51,10 +52,10 @@ export const CommandAlias = ({
     function deletePageEvents() {
       if (!idsToDelete.length) return
 
-      // backgroundRequest({
-      //   eventType: eventTypes.DELETE_PAGES_EVENT,
-      //   data: { ids: idsToDelete }
-      // })
+      backgroundRequest({
+        eventType: eventTypes.DELETE_ALIAS,
+        data: { aliasesKeysToDelete: idsToDelete }
+      })
 
       setMessageData({
         type: parameterTypes.SUCCESS,

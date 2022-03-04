@@ -7,7 +7,7 @@ export const Input = styled.input`
   color: #d6d6d6;
   border: none;
   vertical-align: middle;
-  background-color: #2e2e2e;
+  background-color: transparent;
 
   &:active,
   &:focus,
@@ -17,13 +17,15 @@ export const Input = styled.input`
 `
 
 export const InputWrapper = styled.div`
+  background-color: transparent;
   box-sizing: border-box;
-  border: 1px solid #505050;
-  background-color: #2e2e2e;
   position: absolute;
   width: 100%;
   bottom: 0;
   z-index: 1;
+  border: solid #333;
+  border-width: 0 1px 1px;
+  background-color: #111;
 `
 
 export const Hash = styled.span`

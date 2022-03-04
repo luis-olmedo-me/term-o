@@ -6,10 +6,6 @@ import { CommandInput } from './components/CommandInput/CommandInput.component.j
 import { Resizer } from './components/Resizer/Resizer.component.js'
 
 import {
-  eventTypes,
-  extensionKeyEvents
-} from 'src/constants/events.constants.js'
-import {
   resizeTypes,
   singleResizeTypes
 } from './hooks/useResize/useResize.constants.js'

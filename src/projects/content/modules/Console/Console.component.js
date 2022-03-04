@@ -97,6 +97,7 @@ export const Console = () => {
       style={resizeData}
       ondragstart='return false;'
       ondrop='return false;'
+      onClick={() => inputReference.current?.focus()}
     >
       {!isMoving
         ? singleResizeTypes.map((resizeType) => (
@@ -114,16 +115,11 @@ export const Console = () => {
           setResizingFrom(resizeTypes.MOVING)
           setMovingFrom({ x: event.clientX, y: event.clientY })
         }}
-        onClick={() => inputReference.current?.focus()}
       >
         TERM-O
       </ConsoleTitle>
 
-      <ConsoleLogs
-        ref={historyRef}
-        style={consoleStyles}
-        onClick={() => inputReference.current?.focus()}
-      >
+      <ConsoleLogs ref={historyRef} style={consoleStyles}>
         {histories.map((history) => history(outsideProps))}
       </ConsoleLogs>
 

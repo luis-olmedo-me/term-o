@@ -25,14 +25,18 @@ export const Element = ({ htmlElement = {} }) => {
   const classNameLabel = className && `.${className.replaceAll?.(/\s/g, '.')}`
   const tagNameLabel = htmlElement.tagName.toLowerCase()
 
-  const specification = idLabel || classNameLabel
+  const specification = idLabel || classNameLabel || ''
+
+  const handleElementClick = () => {
+    navigator.clipboard.writeText(`${tagNameLabel}${specification}`)
+  }
 
   return (
     <ElementWrapper
       onMouseEnter={highlightElement}
       onMouseLeave={unhighlightElement}
       isHidden={isHidden}
-      onClick={() => navigator.clipboard.writeText(elementLabel)}
+      onClick={handleElementClick}
     >
       {tagNameLabel}
       {specification && (

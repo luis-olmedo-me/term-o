@@ -70,6 +70,15 @@ export const Console = () => {
     [appliedPageEvents, handleCommandRun]
   )
 
+  useEffect(
+    function focusOnInputWhenConsoleIsOpen() {
+      if (isOpen) {
+        inputReference.current?.focus()
+      }
+    },
+    [isOpen]
+  )
+
   const outsideProps = {
     pageEvents,
     clearTerminal: () => setHistories([]),
@@ -109,7 +118,11 @@ export const Console = () => {
         TERM-O
       </ConsoleTitle>
 
-      <ConsoleLogs ref={historyRef} style={consoleStyles}>
+      <ConsoleLogs
+        ref={historyRef}
+        style={consoleStyles}
+        onClick={() => inputReference.current?.focus()}
+      >
         {histories.map((history) => history(outsideProps))}
       </ConsoleLogs>
 

@@ -10,7 +10,8 @@ const defaultConfiguration = {
   isOpen: false,
   appliedPageEvents: [],
   pageEvents: [],
-  consolePosition: {}
+  consolePosition: {},
+  aliases: {}
 }
 
 export const useConfig = () => {
@@ -48,7 +49,8 @@ export const useConfig = () => {
       setConfig({
         appliedPageEvents: newAppliedPageEvents || [],
         pageEvents: newConfig?.pageEvents || [],
-        consolePosition: newConfig?.consolePosition || {}
+        consolePosition: newConfig?.consolePosition || {},
+        aliases: newConfig?.aliases || {}
       })
     }
 

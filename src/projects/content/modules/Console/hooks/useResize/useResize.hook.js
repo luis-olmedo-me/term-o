@@ -140,7 +140,7 @@ export const useResize = ({ wrapperReference, consolePosition }) => {
 
       animationId = window.requestAnimationFrame(onAnimationFrame)
       window.addEventListener('mouseup', removeResizeListener)
-      window.addEventListener('mousemove', mouseHandler)
+      window.addEventListener('mousemove', mouseHandler, { passive: true })
 
       return removeResizeListener
     },

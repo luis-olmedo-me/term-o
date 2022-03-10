@@ -40,10 +40,6 @@ export const CommandAlias = ({
 
         return parsedAliases
       }, {})
-      console.log('background request', {
-        eventType: eventTypes.ADD_ALIAS,
-        data: newAliases
-      })
 
       backgroundRequest({
         eventType: eventTypes.ADD_ALIAS,

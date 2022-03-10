@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react'
-import { backgroundRequest } from 'src/helpers/event.helpers.js'
-import { eventTypes } from 'src/constants/events.constants.js'
 import { getNewResizeData, updateConfig } from './useResize.helpers'
 import { debounce } from 'src/helpers/utils.helpers.js'
 import { defaultBodyData } from './useResize.constants'
 
-export const useResize = ({ wrapperReference }) => {
+export const useResize = ({ wrapperReference, consolePosition }) => {
   const [resizingFrom, setResizingFrom] = useState('')
   const [movingFrom, setMovingFrom] = useState(null)
   const [resizeData, setResizeData] = useState({
@@ -74,21 +72,21 @@ export const useResize = ({ wrapperReference }) => {
     return () => obsever.unobserve(document.body)
   }, [])
 
-  useEffect(function getConfigurationFromBackground() {
-    const receiveConfiguration = ({ response: receivedConsolePosition }) => {
-      setResizeData({
-        left: receivedConsolePosition?.left || 0,
-        right: receivedConsolePosition?.right || 0,
-        top: receivedConsolePosition?.top || 0,
-        bottom: receivedConsolePosition?.bottom || 0
-      })
-    }
+  useEffect(
+    function getConfigurationFromBackground() {
+      const hasConsolePosition = Object.keys(consolePosition).length > 0
 
-    backgroundRequest({
-      eventType: eventTypes.GET_CONSOLE_POSITION,
-      callback: receiveConfiguration
-    })
-  }, [])
+      if (!hasConsolePosition) return
+
+      setResizeData({
+        left: consolePosition?.left || 0,
+        right: consolePosition?.right || 0,
+        top: consolePosition?.top || 0,
+        bottom: consolePosition?.bottom || 0
+      })
+    },
+    [consolePosition]
+  )
 
   useEffect(
     function setUpResizeEvent() {
@@ -142,7 +140,7 @@ export const useResize = ({ wrapperReference }) => {
 
       animationId = window.requestAnimationFrame(onAnimationFrame)
       window.addEventListener('mouseup', removeResizeListener)
-      window.addEventListener('mousemove', mouseHandler)
+      window.addEventListener('mousemove', mouseHandler, { passive: true })
 
       return removeResizeListener
     },

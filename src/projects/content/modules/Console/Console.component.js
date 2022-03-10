@@ -81,7 +81,7 @@ export const Console = () => {
       style={resizeData}
       ondragstart='return false;'
       ondrop='return false;'
-      onClick={() => inputReference.current?.focus()}
+      onMouseDown={() => setTimeout(() => inputReference.current?.focus())}
     >
       {!isMoving
         ? singleResizeTypes.map((resizeType) => (

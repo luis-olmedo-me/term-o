@@ -6,15 +6,11 @@ import { CommandInput } from './components/CommandInput/CommandInput.component.j
 import { Resizer } from './components/Resizer/Resizer.component.js'
 
 import {
-  eventTypes,
-  extensionKeyEvents
-} from 'src/constants/events.constants.js'
-import {
   resizeTypes,
   singleResizeTypes
 } from './hooks/useResize/useResize.constants.js'
 
-import { usePageEvents } from './hooks/usePageEvents.hook.js'
+import { useConfig } from './hooks/useConfig.hook.js'
 import { useResize } from './hooks/useResize/useResize.hook.js'
 
 import { ConsoleTitle, ConsoleLogs, ConsoleWrapper } from './Console.styles.js'
@@ -26,40 +22,28 @@ export const Console = () => {
   const inputReference = useRef(null)
 
   const [histories, setHistories] = useState([])
-  const [isOpen, setIsOpen] = useState(false)
 
+  const { isOpen, pageEvents, appliedPageEvents, consolePosition, aliases } =
+    useConfig()
   const { setResizingFrom, resizeData, setMovingFrom, isMoving } = useResize({
-    wrapperReference
+    wrapperReference,
+    consolePosition
   })
-  const { pageEvents, appliedPageEvents } = usePageEvents()
 
-  useEffect(function openConsoleByKeyCommands() {
-    const toggleTerminal = (message, _sender, sendResponse) => {
-      if (message.action !== eventTypes.NEW_COMMAND) return
+  const handleCommandRun = useCallback(
+    (command, id) => {
+      const formmatedCommand = commander.getCommandWithAliases(command)
 
-      switch (message.data.command) {
-        case extensionKeyEvents.TOGGLE_TERMINAL:
-          setIsOpen((state) => !state)
-          break
-      }
+      const logOutput = commander.getLogOutput(id, formmatedCommand)
 
-      sendResponse({ status: 'ok' })
-    }
+      setHistories((histories) => [...histories, logOutput])
 
-    chrome.runtime.onMessage.addListener(toggleTerminal)
-
-    return () => chrome.runtime.onMessage.removeListener(toggleTerminal)
-  }, [])
-
-  const handleCommandRun = useCallback((command, id) => {
-    const logOutput = commander.getLogOutput(id, command)
-
-    setHistories((histories) => [...histories, logOutput])
-
-    setTimeout(() => {
-      historyRef?.current?.scrollTo(0, historyRef.current.scrollHeight)
-    })
-  }, [])
+      setTimeout(() => {
+        historyRef?.current?.scrollTo(0, historyRef.current.scrollHeight)
+      })
+    },
+    [aliases]
+  )
 
   useEffect(
     function applyPageEvents() {
@@ -70,10 +54,19 @@ export const Console = () => {
     [appliedPageEvents, handleCommandRun]
   )
 
+  useEffect(
+    function focusOnInputWhenConsoleIsOpen() {
+      if (isOpen) {
+        inputReference.current?.focus()
+      }
+    },
+    [isOpen]
+  )
+
   const outsideProps = {
+    aliases,
     pageEvents,
-    clearTerminal: () => setHistories([]),
-    setHistories
+    clearTerminal: () => setHistories([])
   }
 
   const consoleStyles = {
@@ -88,6 +81,7 @@ export const Console = () => {
       style={resizeData}
       ondragstart='return false;'
       ondrop='return false;'
+      onMouseDown={() => setTimeout(() => inputReference.current?.focus())}
     >
       {!isMoving
         ? singleResizeTypes.map((resizeType) => (

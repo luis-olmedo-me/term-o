@@ -21,11 +21,11 @@ export const ConsoleWrapper = styled.div`
 `
 
 export const ConsoleTitle = styled.h1`
-  padding: 10px 0;
+  padding: 5px 0 2px;
   margin: 0;
   text-align: center;
   font-weight: normal;
-  font-size: 20px;
+  font-size: 25px;
   border: 1px solid #333;
   box-sizing: border-box;
   background-color: #111;

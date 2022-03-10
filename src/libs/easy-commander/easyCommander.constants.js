@@ -1,3 +1,4 @@
+import { aliasConfig } from './components/CommandAlias/CommandAlias.constants'
 import { clearConfig } from './components/CommandClear/CommandClear.constants'
 import { cssConfig } from './components/CommandCss/CommandCss.constants'
 import { domConfig } from './components/CommandDom/CommandDom.constants'
@@ -11,7 +12,8 @@ export const consoleCommands = {
   on: onConfig,
   event: eventConfig,
   clear: clearConfig,
-  history: historyConfig
+  history: historyConfig,
+  alias: aliasConfig
 }
 
 export const parameterTypes = {

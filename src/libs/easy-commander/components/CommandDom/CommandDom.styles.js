@@ -8,4 +8,5 @@ export const MoreContentButton = styled.button`
   cursor: pointer;
   background-color: #424242;
   color: #d6d6d6;
+  font-family: Coda;
 `

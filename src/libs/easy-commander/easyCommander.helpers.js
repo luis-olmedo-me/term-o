@@ -77,3 +77,45 @@ export const parsePropsIntoSuggestions = (propsConfigs, props) => {
     return !isInUse ? [...result, ...newValue] : result
   }, [])
 }
+
+export const splitArgsTakingInCountQuotes = (line) => {
+  const args = line.split(' ')
+
+  let carriedArgsWithQuotes = []
+  let shouldCarryArgs = false
+
+  return args.reduce((parsedArguments, argument) => {
+    const hasQuotes = argument.includes('"')
+
+    if (hasQuotes) {
+      carriedArgsWithQuotes = [...carriedArgsWithQuotes, argument]
+      shouldCarryArgs = !shouldCarryArgs
+
+      if (shouldCarryArgs) return parsedArguments
+      else {
+        const newParsedArguments = [
+          ...parsedArguments,
+          carriedArgsWithQuotes.join(' ')
+        ]
+
+        carriedArgsWithQuotes = []
+
+        return newParsedArguments
+      }
+    } else if (shouldCarryArgs) {
+      carriedArgsWithQuotes = [...carriedArgsWithQuotes, argument]
+
+      return parsedArguments
+    } else if (!hasQuotes && shouldCarryArgs) {
+      carriedArgsWithQuotes = [...carriedArgsWithQuotes, argument]
+
+      return parsedArguments
+    }
+
+    return [...parsedArguments, argument]
+  }, [])
+}
+
+export const parseArgsIntoCommands1 = (line) => {
+  const args = splitArgsTakingInCountQuotes(line)
+}

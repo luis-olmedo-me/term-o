@@ -5,7 +5,6 @@ import { Outputs } from './components/Outputs/Outputs.component'
 import { consoleCommands, parameterTypes } from './easyCommander.constants'
 import {
   getOptionsFromArgs,
-  parseArgsIntoCommands,
   parsePropsIntoSuggestions
 } from './easyCommander.helpers'
 
@@ -50,7 +49,7 @@ class Commander {
     }, aliasAsProps)
 
     const knownCommand = this.commands[commandName]
-    const { _: _values, ...props } = parseArgsIntoCommands(commandArgs)
+    const { values: _values, ...props } = getOptionsFromArgs(commandArgs)
 
     const parsedProps = parsePropsIntoSuggestions(knownCommand?.props, props)
 

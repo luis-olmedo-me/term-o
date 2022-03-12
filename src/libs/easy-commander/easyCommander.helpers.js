@@ -92,27 +92,17 @@ export const splitArgsTakingInCountQuotes = (line) => {
       carriedArgsWithQuotes = [...carriedArgsWithQuotes, argument]
       shouldCarryArgs = !shouldCarryArgs
 
-      if (shouldCarryArgs) {
-        return isLastArgument
+      const newParsedArguments =
+        isLastArgument || !shouldCarryArgs
           ? [...parsedArguments, carriedArgsWithQuotes.join(' ')]
           : parsedArguments
-      } else {
-        const newParsedArguments = [
-          ...parsedArguments,
-          carriedArgsWithQuotes.join(' ')
-        ]
 
+      if (!shouldCarryArgs) {
         carriedArgsWithQuotes = []
-
-        return newParsedArguments
       }
-    } else if (shouldCarryArgs) {
-      carriedArgsWithQuotes = [...carriedArgsWithQuotes, argument]
 
-      return isLastArgument
-        ? [...parsedArguments, carriedArgsWithQuotes.join(' ')]
-        : parsedArguments
-    } else if (!hasQuotes && shouldCarryArgs) {
+      return newParsedArguments
+    } else if (shouldCarryArgs) {
       carriedArgsWithQuotes = [...carriedArgsWithQuotes, argument]
 
       return isLastArgument

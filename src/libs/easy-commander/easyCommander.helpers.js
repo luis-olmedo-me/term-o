@@ -131,7 +131,7 @@ const getRowDataFromOption = (option) => {
 export const getOptionsFromLine = (line) => {
   const args = splitArgsTakingInCountQuotes(line)
 
-  const parsedArguments = {}
+  const parsedArguments = { values: [] }
 
   for (let argIndex = 0; argIndex < args.length; argIndex++) {
     const arg = args[argIndex]
@@ -157,6 +157,10 @@ export const getOptionsFromLine = (line) => {
       const carriedParsedArguments = parsedArguments[formattedKey] || []
 
       parsedArguments[formattedKey] = [...carriedParsedArguments, nextArg]
+    } else {
+      const carriedParsedArguments = parsedArguments.values
+
+      parsedArguments.values = [...carriedParsedArguments, arg]
     }
   }
 

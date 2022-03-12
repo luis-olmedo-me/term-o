@@ -114,6 +114,40 @@ export const splitArgsTakingInCountQuotes = (line) => {
   }, [])
 }
 
+const getRowDataFromOption = (option) => {
+  const rowDataReversedPattern = /(?<value>.+)=(?<key>.+)/g
+  const reversedOption = option.split('').reverse().join('')
+
+  const {
+    groups: { key, value }
+  } = rowDataReversedPattern.exec(reversedOption)
+
+  const restoredKey = key.split('').reverse().join('')
+  const restoredValue = value.split('').reverse().join('')
+
+  return [restoredKey, restoredValue]
+}
+
 export const parseArgsIntoCommands1 = (line) => {
   const args = splitArgsTakingInCountQuotes(line)
+
+  const parsedArguments = {}
+
+  for (let argIndex = 0; argIndex < args.length; argIndex++) {
+    const arg = args[argIndex]
+
+    const isOption = arg.startsWith('-')
+    const isOptionWithRowValue = isOption && arg.includes('=')
+
+    if (isOptionWithRowValue) {
+      const [key, value] = getRowDataFromOption(arg)
+
+      const formattedKey = key.replace(/^--|^-/, '')
+      const carriedParsedArguments = parsedArguments[formattedKey] || []
+
+      parsedArguments[formattedKey] = [...carriedParsedArguments, value]
+    }
+  }
+
+  return parsedArguments
 }

@@ -128,16 +128,18 @@ const getRowDataFromOption = (option) => {
   return [restoredKey, restoredValue]
 }
 
-export const parseArgsIntoCommands1 = (line) => {
+export const getOptionsFromLine = (line) => {
   const args = splitArgsTakingInCountQuotes(line)
 
   const parsedArguments = {}
 
   for (let argIndex = 0; argIndex < args.length; argIndex++) {
     const arg = args[argIndex]
+    const nextArg = args[argIndex + 1] || ''
 
     const isOption = arg.startsWith('-')
     const isOptionWithRowValue = isOption && arg.includes('=')
+    const isOptionBoolean = isOption && (nextArg.startsWith('-') || !nextArg)
 
     if (isOptionWithRowValue) {
       const [key, value] = getRowDataFromOption(arg)
@@ -146,6 +148,15 @@ export const parseArgsIntoCommands1 = (line) => {
       const carriedParsedArguments = parsedArguments[formattedKey] || []
 
       parsedArguments[formattedKey] = [...carriedParsedArguments, value]
+    } else if (isOptionBoolean) {
+      const formattedKey = arg.replace(/^--|^-/, '')
+
+      parsedArguments[formattedKey] = true
+    } else if (isOption) {
+      const formattedKey = arg.replace(/^--|^-/, '')
+      const carriedParsedArguments = parsedArguments[formattedKey] || []
+
+      parsedArguments[formattedKey] = [...carriedParsedArguments, nextArg]
     }
   }
 

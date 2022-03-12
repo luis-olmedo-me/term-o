@@ -4,6 +4,7 @@ import { MessageCommand } from './components/MessageCommand/MessageCommand.compo
 import { Outputs } from './components/Outputs/Outputs.component'
 import { consoleCommands, parameterTypes } from './easyCommander.constants'
 import {
+  getOptionsFromArgs,
   parseArgsIntoCommands,
   parsePropsIntoSuggestions
 } from './easyCommander.helpers'
@@ -58,13 +59,8 @@ class Commander {
 
   validatePropValue(value, type, defaultValue) {
     switch (type) {
-      case 'array': {
-        const isTrickyType = ['string', 'number'].includes(typeof value)
-        const parsedValue = isTrickyType ? [value] : null
-        const parsedArray = Array.isArray(value) ? value : null
-
-        return parsedValue || parsedArray || defaultValue
-      }
+      case 'array':
+        return Array.isArray(value) ? value : defaultValue
 
       default:
         return typeof value === type ? value : defaultValue
@@ -87,8 +83,8 @@ class Commander {
     }, {})
   }
 
-  buildProps({ _, ...propValues }, propsConfig = {}) {
-    const validatedProps = Object.entries(propsConfig).reduce(
+  buildProps(propValues, propsConfig = {}) {
+    return Object.entries(propsConfig).reduce(
       (
         allProps,
         [propName, { key, type, defaultValue, aliases, groupProps }]
@@ -109,11 +105,6 @@ class Commander {
       },
       {}
     )
-
-    return {
-      values: _,
-      ...validatedProps
-    }
   }
 
   getLogOutput(id, fullLine) {
@@ -123,7 +114,7 @@ class Commander {
       const [command, ...args] = line.split(' ')
       const knownCommand = this.commands[command]
 
-      const propValues = parseArgsIntoCommands(args)
+      const propValues = getOptionsFromArgs(args)
       const props = this.buildProps(propValues, knownCommand?.props)
 
       const hasKnownCommand = Boolean(knownCommand)

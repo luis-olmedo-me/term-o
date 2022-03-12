@@ -78,9 +78,7 @@ export const parsePropsIntoSuggestions = (propsConfigs, props) => {
   }, [])
 }
 
-export const splitArgsTakingInCountQuotes = (line) => {
-  const args = line.split(' ')
-
+export const splitArgsTakingInCountQuotes = (args) => {
   let carriedArgsWithQuotes = []
   let shouldCarryArgs = false
 
@@ -128,14 +126,14 @@ const getRowDataFromOption = (option) => {
   return [restoredKey, restoredValue]
 }
 
-export const getOptionsFromLine = (line) => {
-  const args = splitArgsTakingInCountQuotes(line)
+export const getOptionsFromArgs = (args) => {
+  const parsedArgs = splitArgsTakingInCountQuotes(args)
 
   const parsedArguments = { values: [] }
 
-  for (let argIndex = 0; argIndex < args.length; argIndex++) {
-    const arg = args[argIndex]
-    const nextArg = args[argIndex + 1] || ''
+  for (let argIndex = 0; argIndex < parsedArgs.length; argIndex++) {
+    const arg = parsedArgs[argIndex]
+    const nextArg = parsedArgs[argIndex + 1] || ''
 
     const isOption = arg.startsWith('-')
     const isOptionWithRowValue = isOption && arg.includes('=')

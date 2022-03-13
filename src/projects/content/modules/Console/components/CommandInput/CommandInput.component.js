@@ -100,7 +100,6 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
           onChange={handleCommandChange}
           onKeyDown={handleKeyPressed}
           value={command}
-          autoFocus
         />
       </div>
     </InputWrapper>

@@ -5,7 +5,8 @@ export const eventTypes = {
   UPDATE_CONFIG_CONSOLE_POSITION: 'term-o-update-config-console-position',
   GET_CONFIGURATION: 'term-o-get-configuration',
   ADD_ALIAS: 'term-o-add-alias',
-  DELETE_ALIAS: 'term-o-delete-alias'
+  DELETE_ALIAS: 'term-o-delete-alias',
+  UPDATE_CONFIG: 'term-o-update-config'
 }
 
 export const extensionKeyEvents = {

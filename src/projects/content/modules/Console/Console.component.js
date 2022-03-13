@@ -22,6 +22,7 @@ export const Console = () => {
   const inputReference = useRef(null)
 
   const [histories, setHistories] = useState([])
+  const [hasPageEventsBeenRunned, setHasPageEventsBeenRunned] = useState(false)
 
   const { isOpen, pageEvents, appliedPageEvents, consolePosition, aliases } =
     useConfig()
@@ -47,11 +48,15 @@ export const Console = () => {
 
   useEffect(
     function applyPageEvents() {
+      if (hasPageEventsBeenRunned) return
+
       appliedPageEvents.forEach(({ command }, id) => {
         handleCommandRun(command, id)
       })
+
+      if (appliedPageEvents.length) setHasPageEventsBeenRunned(true)
     },
-    [appliedPageEvents, handleCommandRun]
+    [appliedPageEvents, handleCommandRun, hasPageEventsBeenRunned]
   )
 
   useEffect(

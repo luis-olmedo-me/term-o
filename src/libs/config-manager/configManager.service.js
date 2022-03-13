@@ -3,6 +3,7 @@ class ConfigManager {
     this.consolePosition = {}
     this.pageEvents = []
     this.aliases = {}
+    this.onChange = () => {}
   }
 
   setConsolePosition(newConfig) {
@@ -50,6 +51,8 @@ class ConfigManager {
         aliases: this.aliases
       }
     })
+
+    this.onChange()
   }
 
   getConfiguration() {

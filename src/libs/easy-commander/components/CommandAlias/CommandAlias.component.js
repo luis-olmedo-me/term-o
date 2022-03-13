@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { Table } from 'modules/components/Table/Table.component'
@@ -13,7 +13,9 @@ export const CommandAlias = ({
   setMessageData
 }) => {
   const [idsToDelete, setIdsToDelete] = useState([])
-  const aliasesRows = Object.entries(aliases)
+  const staticAliases = useMemo(() => aliases, [])
+
+  const aliasesRows = Object.entries(staticAliases)
 
   const hasAliases = aliasesRows.length > 0
 
@@ -52,7 +54,7 @@ export const CommandAlias = ({
 
   useEffect(
     function validateDeletedIds() {
-      const aliasesKeys = Object.keys(aliases)
+      const aliasesKeys = Object.keys(staticAliases)
       const validDeltedIds = deletedIds.filter((keyToDelete) => {
         return aliasesKeys.includes(keyToDelete)
       })
@@ -66,7 +68,7 @@ export const CommandAlias = ({
 
       setIdsToDelete(validDeltedIds)
     },
-    [deletedIds, aliases]
+    [deletedIds, staticAliases]
   )
 
   useEffect(

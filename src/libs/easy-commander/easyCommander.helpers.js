@@ -97,6 +97,10 @@ const getRowDataFromOption = (option) => {
   return [restoredKey, restoredValue]
 }
 
+const removeQuotesFromValue = (value) => {
+  return value.replace(/^'|'$/g, '').replace(/^"|"$/g, '')
+}
+
 export const getOptionsFromArgs = (args) => {
   const parsedArguments = { values: [] }
 
@@ -114,7 +118,10 @@ export const getOptionsFromArgs = (args) => {
       const formattedKey = key.replace(/^--|^-/, '')
       const carriedParsedArguments = parsedArguments[formattedKey] || []
 
-      parsedArguments[formattedKey] = [...carriedParsedArguments, value]
+      parsedArguments[formattedKey] = [
+        ...carriedParsedArguments,
+        removeQuotesFromValue(value)
+      ]
     } else if (isOptionBoolean) {
       const formattedKey = arg.replace(/^--|^-/, '')
 
@@ -124,7 +131,10 @@ export const getOptionsFromArgs = (args) => {
       const carriedParsedArguments = parsedArguments[formattedKey] || []
 
       argIndex++
-      parsedArguments[formattedKey] = [...carriedParsedArguments, nextArg]
+      parsedArguments[formattedKey] = [
+        ...carriedParsedArguments,
+        removeQuotesFromValue(nextArg)
+      ]
     } else {
       const carriedParsedArguments = parsedArguments.values
 

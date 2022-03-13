@@ -8,7 +8,8 @@ import { parameterTypes } from './constants/commands.constants'
 import {
   getOptionsFromArgs,
   parsePropsIntoSuggestions,
-  splitArgsTakingInCountSymbols
+  splitArgsTakingInCountSymbols,
+  validatePropValue
 } from './easyCommander.helpers'
 
 const unknownCommandError = {
@@ -59,46 +60,13 @@ class Commander {
     return knownCommand && commandArgs.length ? parsedProps : defaultProps
   }
 
-  validatePropValue(value, type, defaultValue) {
-    switch (type) {
-      case 'array-of-objects': {
-        const isArray = Array.isArray(value)
-        const hasAllObjects =
-          isArray && value.every((item) => typeof item === 'object')
-
-        return hasAllObjects ? value : defaultValue
-      }
-
-      case 'array-of-strings': {
-        const isArray = Array.isArray(value)
-        const hasAllStrings =
-          isArray && value.every((item) => typeof item === 'string')
-
-        return hasAllStrings ? value : defaultValue
-      }
-
-      case 'string': {
-        const isArray = Array.isArray(value)
-        const lastItem = isArray ? value[value.length - 1] : ''
-
-        return lastItem || defaultValue
-      }
-
-      case 'array':
-        return Array.isArray(value) ? value : defaultValue
-
-      default:
-        return typeof value === type ? value : defaultValue
-    }
-  }
-
   buildGroupProps({ values: _values, ...propValues }, groupPropConfigs = {}) {
     return Object.entries(propValues).reduce((allProps, [name, value]) => {
       const groupConfig = groupPropConfigs[name]
 
       if (!groupConfig) return allProps
 
-      const validatedValue = this.validatePropValue(
+      const validatedValue = validatePropValue(
         value,
         groupConfig.type,
         groupConfig.defaultValue
@@ -124,7 +92,7 @@ class Commander {
 
         const value =
           propValues[propName] || propValues[aliasName] || groupValue
-        const validatedValue = this.validatePropValue(value, type, defaultValue)
+        const validatedValue = validatePropValue(value, type, defaultValue)
 
         return { ...allProps, [key]: validatedValue }
       },

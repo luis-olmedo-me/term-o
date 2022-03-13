@@ -173,3 +173,36 @@ export const getOptionsFromArgs = (args) => {
 
   return parsedArguments
 }
+
+export const validatePropValue = (value, type, defaultValue) => {
+  switch (type) {
+    case 'array-of-objects': {
+      const isArray = Array.isArray(value)
+      const hasAllObjects =
+        isArray && value.every((item) => typeof item === 'object')
+
+      return hasAllObjects ? value : defaultValue
+    }
+
+    case 'array-of-strings': {
+      const isArray = Array.isArray(value)
+      const hasAllStrings =
+        isArray && value.every((item) => typeof item === 'string')
+
+      return hasAllStrings ? value : defaultValue
+    }
+
+    case 'string': {
+      const isArray = Array.isArray(value)
+      const lastItem = isArray ? value[value.length - 1] : ''
+
+      return lastItem || defaultValue
+    }
+
+    case 'array':
+      return Array.isArray(value) ? value : defaultValue
+
+    default:
+      return typeof value === type ? value : defaultValue
+  }
+}

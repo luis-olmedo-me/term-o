@@ -5,7 +5,8 @@ import { Outputs } from './components/Outputs/Outputs.component'
 import { consoleCommands, parameterTypes } from './easyCommander.constants'
 import {
   getOptionsFromArgs,
-  parsePropsIntoSuggestions
+  parsePropsIntoSuggestions,
+  splitArgsTakingInCountSymbols
 } from './easyCommander.helpers'
 
 const unknownCommandError = {
@@ -107,10 +108,11 @@ class Commander {
   }
 
   getLogOutput(id, fullLine) {
-    const lines = fullLine.split('|').map((line) => line.trim())
+    const rawLines = fullLine.split(' ').filter(Boolean)
+    const lines = splitArgsTakingInCountSymbols(rawLines)
 
     const setOfOutputs = lines.map((line) => {
-      const [command, ...args] = line.split(' ')
+      const [command, ...args] = line
       const knownCommand = this.commands[command]
 
       const propValues = getOptionsFromArgs(args)
@@ -122,7 +124,7 @@ class Commander {
         const commonProps = {
           props,
           ...providerProps,
-          command: line
+          command: line.join(' ')
         }
 
         if (!hasKnownCommand) {

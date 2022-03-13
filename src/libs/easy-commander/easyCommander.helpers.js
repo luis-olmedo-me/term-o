@@ -59,6 +59,64 @@ export const splitArgsTakingInCountQuotes = (args) => {
   }, [])
 }
 
+const breakArrayInCertainIndexes = (array, indexes) => {
+  if (!indexes.length) return [array]
+
+  return indexes.reduce((arrayBroken, index, currentIndex) => {
+    const isFirstElement = currentIndex === 0
+    const isLastElement = currentIndex === indexes.length - 1
+
+    const lastIndex = indexes[currentIndex - 1] || 0
+    const previousIndex = isFirstElement ? lastIndex : lastIndex + 1
+
+    const newResult = array.slice(previousIndex, index)
+
+    return isLastElement
+      ? [...arrayBroken, newResult, array.slice(index + 1)]
+      : [...arrayBroken, newResult]
+  }, [])
+}
+
+export const splitArgsTakingInCountSymbols = (args) => {
+  let carriedArgsWithQuotes = []
+  let indexesToBreak = []
+  let shouldCarryArgs = false
+
+  const argsByQuotes = args.reduce((parsedArguments, argument, index) => {
+    const hasQuotes = argument.includes('"')
+    const isVerticalLine = argument.includes('|')
+    const isLastArgument = index === args.length - 1
+
+    if (hasQuotes) {
+      carriedArgsWithQuotes = [...carriedArgsWithQuotes, argument]
+      shouldCarryArgs = !shouldCarryArgs
+
+      const newParsedArguments =
+        isLastArgument || !shouldCarryArgs
+          ? [...parsedArguments, carriedArgsWithQuotes.join(' ')]
+          : parsedArguments
+
+      if (!shouldCarryArgs) {
+        carriedArgsWithQuotes = []
+      }
+
+      return newParsedArguments
+    } else if (shouldCarryArgs) {
+      carriedArgsWithQuotes = [...carriedArgsWithQuotes, argument]
+
+      return isLastArgument
+        ? [...parsedArguments, carriedArgsWithQuotes.join(' ')]
+        : parsedArguments
+    } else if (isVerticalLine) {
+      indexesToBreak = [...indexesToBreak, index]
+    }
+
+    return [...parsedArguments, argument]
+  }, [])
+
+  return breakArrayInCertainIndexes(argsByQuotes, indexesToBreak)
+}
+
 const getRowDataFromOption = (option) => {
   const rowDataReversedPattern = /(?<value>.+)=(?<key>.+)/g
   const reversedOption = option.split('').reverse().join('')
@@ -74,13 +132,11 @@ const getRowDataFromOption = (option) => {
 }
 
 export const getOptionsFromArgs = (args) => {
-  const parsedArgs = splitArgsTakingInCountQuotes(args)
-
   const parsedArguments = { values: [] }
 
-  for (let argIndex = 0; argIndex < parsedArgs.length; argIndex++) {
-    const arg = parsedArgs[argIndex]
-    const nextArg = parsedArgs[argIndex + 1] || ''
+  for (let argIndex = 0; argIndex < args.length; argIndex++) {
+    const arg = args[argIndex]
+    const nextArg = args[argIndex + 1] || ''
 
     const isOption = arg.startsWith('-')
     const isOptionWithRowValue = isOption && arg.includes('=')

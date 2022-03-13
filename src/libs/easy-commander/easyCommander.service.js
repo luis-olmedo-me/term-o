@@ -2,10 +2,14 @@ import React from 'react'
 import { MessageCommand } from './components/MessageCommand/MessageCommand.component'
 
 import { Outputs } from './components/Outputs/Outputs.component'
-import { consoleCommands, parameterTypes } from './easyCommander.constants'
+import { consoleCommands } from './easyCommander.constants'
+import { parameterTypes } from './constants/commands.constants'
+
 import {
-  parseArgsIntoCommands,
-  parsePropsIntoSuggestions
+  buildProps,
+  getOptionsFromArgs,
+  parsePropsIntoSuggestions,
+  splitArgsTakingInCountSymbols
 } from './easyCommander.helpers'
 
 const unknownCommandError = {
@@ -49,82 +53,23 @@ class Commander {
     }, aliasAsProps)
 
     const knownCommand = this.commands[commandName]
-    const { _: _values, ...props } = parseArgsIntoCommands(commandArgs)
+    const { values: _values, ...props } = getOptionsFromArgs(commandArgs)
 
     const parsedProps = parsePropsIntoSuggestions(knownCommand?.props, props)
 
     return knownCommand && commandArgs.length ? parsedProps : defaultProps
   }
 
-  validatePropValue(value, type, defaultValue) {
-    switch (type) {
-      case 'array': {
-        const isTrickyType = ['string', 'number'].includes(typeof value)
-        const parsedValue = isTrickyType ? [value] : null
-        const parsedArray = Array.isArray(value) ? value : null
-
-        return parsedValue || parsedArray || defaultValue
-      }
-
-      default:
-        return typeof value === type ? value : defaultValue
-    }
-  }
-
-  buildGroupProps({ _, ...propValues }, groupPropConfigs = {}) {
-    return Object.entries(propValues).reduce((allProps, [name, value]) => {
-      const groupConfig = groupPropConfigs[name]
-
-      if (!groupConfig) return allProps
-
-      const validatedValue = this.validatePropValue(
-        value,
-        groupConfig.type,
-        groupConfig.defaultValue
-      )
-
-      return { ...allProps, [groupConfig.key]: validatedValue }
-    }, {})
-  }
-
-  buildProps({ _, ...propValues }, propsConfig = {}) {
-    const validatedProps = Object.entries(propsConfig).reduce(
-      (
-        allProps,
-        [propName, { key, type, defaultValue, aliases, groupProps }]
-      ) => {
-        const aliasName = Object.keys(propValues).find((name) => {
-          return aliases.includes(name)
-        })
-
-        const groupValue = groupProps
-          ? this.buildGroupProps(propValues, groupProps)
-          : null
-
-        const value =
-          propValues[propName] || propValues[aliasName] || groupValue
-        const validatedValue = this.validatePropValue(value, type, defaultValue)
-
-        return { ...allProps, [key]: validatedValue }
-      },
-      {}
-    )
-
-    return {
-      values: _,
-      ...validatedProps
-    }
-  }
-
   getLogOutput(id, fullLine) {
-    const lines = fullLine.split('|').map((line) => line.trim())
+    const rawLines = fullLine.split(' ').filter(Boolean)
+    const lines = splitArgsTakingInCountSymbols(rawLines)
 
     const setOfOutputs = lines.map((line) => {
-      const [command, ...args] = line.split(' ')
+      const [command, ...args] = line
       const knownCommand = this.commands[command]
 
-      const propValues = parseArgsIntoCommands(args)
-      const props = this.buildProps(propValues, knownCommand?.props)
+      const propValues = getOptionsFromArgs(args)
+      const props = buildProps(propValues, knownCommand?.props)
 
       const hasKnownCommand = Boolean(knownCommand)
 
@@ -132,7 +77,7 @@ class Commander {
         const commonProps = {
           props,
           ...providerProps,
-          command: line
+          command: line.join(' ')
         }
 
         if (!hasKnownCommand) {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { parameterTypes } from '../../easyCommander.constants'
+import { parameterTypes } from '../../constants/commands.constants'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { Table } from 'modules/components/Table/Table.component'
 import { eventRows } from './CommandEvent.constants'

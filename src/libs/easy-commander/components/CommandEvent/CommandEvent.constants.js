@@ -1,5 +1,6 @@
 import React from 'react'
 import { CommandEvent } from './CommandEvent.component'
+import { optionTypes } from '../../constants/commands.constants'
 
 export const eventKeys = {
   ID: 'id',
@@ -13,13 +14,13 @@ export const eventConfig = {
   props: {
     list: {
       key: 'list',
-      type: 'boolean',
+      type: optionTypes.BOOLEAN,
       defaultValue: false,
       aliases: ['l']
     },
     delete: {
       key: 'delete',
-      type: 'array',
+      type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
       aliases: ['d']
     }

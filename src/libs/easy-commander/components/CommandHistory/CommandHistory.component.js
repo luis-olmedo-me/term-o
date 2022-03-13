@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 
-import { parameterTypes } from '../../easyCommander.constants'
+import { parameterTypes } from '../../constants/commands.constants'
 
 export const CommandHistory = ({
   command,

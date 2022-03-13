@@ -8,6 +8,7 @@ export const Input = styled.input`
   border: none;
   vertical-align: middle;
   background-color: transparent;
+  font-family: 'Coda';
 
   &:active,
   &:focus,

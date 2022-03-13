@@ -7,7 +7,7 @@ module.exports = {
     popup: './src/projects/popup/popup.js'
   },
   output: {
-    path: path.resolve('extension/scripts'),
+    path: path.resolve('build/scripts'),
     filename: '[name].js'
   },
   module: {
@@ -22,5 +22,9 @@ module.exports = {
       projects: path.resolve(__dirname, 'src/projects'),
       src: path.resolve(__dirname, 'src')
     }
+  },
+  performance: {
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000
   }
 }

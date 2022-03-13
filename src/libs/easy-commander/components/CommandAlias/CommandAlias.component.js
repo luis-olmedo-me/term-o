@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { parameterTypes } from '../../easyCommander.constants'
+import { parameterTypes } from '../../constants/commands.constants'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { Table } from 'modules/components/Table/Table.component'
 import { aliasHeaders } from './CommandAlias.constants'
@@ -33,12 +33,8 @@ export const CommandAlias = ({
     function handleAliases() {
       if (!aliasesToAdd.length) return
 
-      const newAliases = aliasesToAdd.reduce((parsedAliases, alias) => {
-        const [name, value] = alias.split('=')
-
-        parsedAliases[name] = value
-
-        return parsedAliases
+      const newAliases = aliasesToAdd.reduce((totalAliases, alias) => {
+        return { ...totalAliases, ...alias }
       }, {})
 
       backgroundRequest({

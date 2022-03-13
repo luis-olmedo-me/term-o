@@ -1,4 +1,7 @@
 import React from 'react'
+
+import { optionTypes } from 'libs/easy-commander/constants/commands.constants'
+
 import { CommandAlias } from './CommandAlias.component'
 
 export const aliasKeys = {
@@ -12,19 +15,19 @@ export const aliasConfig = {
   props: {
     list: {
       key: 'list',
-      type: 'boolean',
+      type: optionTypes.BOOLEAN,
       defaultValue: false,
       aliases: ['l']
     },
     delete: {
       key: 'delete',
-      type: 'array-of-strings',
+      type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
       aliases: ['d']
     },
     add: {
       key: 'add',
-      type: 'array-of-objects',
+      type: optionTypes.ARRAY_OF_OBJECTS,
       defaultValue: [],
       aliases: ['a']
     }

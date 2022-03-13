@@ -9,3 +9,10 @@ export const parameterTypes = {
   SUCCESS: 'success',
   TABLE: 'table'
 }
+
+export const optionTypes = {
+  BOOLEAN: 'boolean',
+  ARRAY: 'array',
+  ARRAY_OF_OBJECTS: 'array-of-objects',
+  ARRAY_OF_STRINGS: 'array-of-strings'
+}

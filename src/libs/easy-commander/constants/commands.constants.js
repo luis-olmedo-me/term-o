@@ -14,5 +14,6 @@ export const optionTypes = {
   BOOLEAN: 'boolean',
   ARRAY: 'array',
   ARRAY_OF_OBJECTS: 'array-of-objects',
-  ARRAY_OF_STRINGS: 'array-of-strings'
+  ARRAY_OF_STRINGS: 'array-of-strings',
+  OBJECT: 'object'
 }

@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { optionTypes } from 'libs/easy-commander/constants/commands.constants'
+
 import { CommandCss } from './CommandCss.component'
 
 import { kebabize, validStyleKeys } from '../../easyCommander.promises'
@@ -16,14 +18,14 @@ export const cssConfig = {
     'manual-styles': {
       key: 'manualStyles',
       internal: true,
-      type: 'object',
+      type: optionTypes.OBJECT,
       groupProps: cssProps,
       defaultValue: {},
       aliases: []
     },
     styles: {
       key: 'styles',
-      type: 'string',
+      type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: '',
       aliases: ['s']
     }

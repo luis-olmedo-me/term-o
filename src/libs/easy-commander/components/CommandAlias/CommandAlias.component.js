@@ -33,12 +33,8 @@ export const CommandAlias = ({
     function handleAliases() {
       if (!aliasesToAdd.length) return
 
-      const newAliases = aliasesToAdd.reduce((parsedAliases, alias) => {
-        const [name, value] = alias.split('=')
-
-        parsedAliases[name] = value
-
-        return parsedAliases
+      const newAliases = aliasesToAdd.reduce((totalAliases, alias) => {
+        return { ...totalAliases, ...alias }
       }, {})
 
       backgroundRequest({

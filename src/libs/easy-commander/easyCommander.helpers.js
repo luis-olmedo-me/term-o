@@ -88,8 +88,8 @@ const getRowDataFromOption = (option) => {
   const reversedOption = option.split('').reverse().join('')
 
   const {
-    groups: { key, value }
-  } = rowDataReversedPattern.exec(reversedOption)
+    groups: { key = '', value = '' }
+  } = rowDataReversedPattern.exec(reversedOption) || { groups: {} }
 
   const restoredKey = key.split('').reverse().join('')
   const restoredValue = value.split('').reverse().join('')

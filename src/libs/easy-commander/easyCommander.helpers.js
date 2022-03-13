@@ -118,26 +118,40 @@ export const getOptionsFromArgs = (args) => {
     if (isArgOptionWithRowValue) {
       const [key, value] = getRowDataFromOption(arg)
 
+      const isNextArgOptionWithRowValue =
+        !isNextArgOption && nextArg.includes('=')
+      const [nextKey, nextValue] = isNextArgOptionWithRowValue
+        ? getRowDataFromOption(nextArg)
+        : []
+
       const formattedKey = key.replace(/^--|^-/, '')
       const carriedParsedArguments = parsedArguments[formattedKey] || []
 
-      parsedArguments[formattedKey] = [
-        ...carriedParsedArguments,
-        removeQuotesFromValue(value)
-      ]
+      const newValue = isNextArgOptionWithRowValue
+        ? { [nextKey]: removeQuotesFromValue(nextValue) }
+        : removeQuotesFromValue(value)
+
+      parsedArguments[formattedKey] = [...carriedParsedArguments, newValue]
     } else if (isArgOptionBoolean) {
       const formattedKey = arg.replace(/^--|^-/, '')
 
       parsedArguments[formattedKey] = true
     } else if (isArgOption) {
+      const isNextArgOptionWithRowValue =
+        !isNextArgOption && nextArg.includes('=')
+      const [nextKey, nextValue] = isNextArgOptionWithRowValue
+        ? getRowDataFromOption(nextArg)
+        : []
+
       const formattedKey = arg.replace(/^--|^-/, '')
       const carriedParsedArguments = parsedArguments[formattedKey] || []
 
+      const newValue = isNextArgOptionWithRowValue
+        ? { [nextKey]: removeQuotesFromValue(nextValue) }
+        : removeQuotesFromValue(nextArg)
+
       argIndex++
-      parsedArguments[formattedKey] = [
-        ...carriedParsedArguments,
-        removeQuotesFromValue(nextArg)
-      ]
+      parsedArguments[formattedKey] = [...carriedParsedArguments, newValue]
     } else {
       const carriedParsedArguments = parsedArguments.values
 

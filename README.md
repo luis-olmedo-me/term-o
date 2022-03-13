@@ -1,4 +1,4 @@
-# <img src="extension/images/logo-16_x_16.png" style="box-shadow: 0 0 15px #11111122;" width="20"/> TERM-O
+# <img src="build/images/logo-16_x_16.png" style="box-shadow: 0 0 15px #11111122;" width="20"/> TERM-O
 
 ## Introduction
 
@@ -39,11 +39,11 @@ To just build the files without the development server:
 npm run build
 ```
 
-Both commands will create a `extension/` directory, it will contain the built files that should be loaded into the browser or packed.
+Both commands will create a `build/` directory, it will contain the built files that should be loaded into the browser or packed.
 
 Then go to any page outside internal browser pages and type "alt + t":
 
-![Developer Mode Checkbox](extension/images/tutorial-usage.png)
+![Developer Mode Checkbox](build/images/tutorial-usage.png)
 
 ## Load into Chrome
 
@@ -51,14 +51,14 @@ To load the built files into Chrome, open [chrome://extensions/](chrome://extens
 
 Enable "Developer mode" if it's not enabled yet:
 
-![Developer Mode Checkbox](extension/images/tutorial-step-1.png)
+![Developer Mode Checkbox](build/images/tutorial-step-1.png)
 
 Click on "Load unpacked":
 
-![Load Unpacked Button](extension/images/tutorial-step-2.png)
+![Load Unpacked Button](build/images/tutorial-step-2.png)
 
 Find the `dist/` directory on your system and open it.
 
 The extension should be now at the top of the page:
 
-![Extension Loaded](extension/images/tutorial-step-3.png)
+![Extension Loaded](build/images/tutorial-step-3.png)

@@ -33,7 +33,7 @@
   },
   "nodemonConfig": {
     "ignore": [
-      "extension/",
+      "build/",
       "node_modules"
     ],
     "execMap": {

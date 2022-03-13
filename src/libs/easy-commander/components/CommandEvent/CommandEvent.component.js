@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { Table } from 'modules/components/Table/Table.component'
@@ -13,11 +13,14 @@ export const CommandEvent = ({
   setMessageData
 }) => {
   const [idsToDelete, setIdsToDelete] = useState([])
-  const pageEventsRows = pageEvents.map((pageEvent) => {
+
+  const staticPageEvents = useMemo(() => pageEvents, [])
+
+  const pageEventsRows = staticPageEvents.map((pageEvent) => {
     return eventRows.map((eventRow) => pageEvent[eventRow])
   })
 
-  const hasPageEvents = pageEvents.length > 0
+  const hasPageEvents = staticPageEvents.length > 0
 
   useEffect(
     function handleEmptyPageEvents() {
@@ -34,7 +37,7 @@ export const CommandEvent = ({
   useEffect(
     function validateDeletedIds() {
       const validDeltedIds = deletedIds.filter((id) => {
-        return pageEvents.some((pageEvent) => pageEvent.id === id)
+        return staticPageEvents.some((pageEvent) => pageEvent.id === id)
       })
 
       if (deletedIds.length !== validDeltedIds.length) {
@@ -46,7 +49,7 @@ export const CommandEvent = ({
 
       setIdsToDelete(validDeltedIds)
     },
-    [deletedIds, pageEvents]
+    [deletedIds, staticPageEvents]
   )
 
   useEffect(

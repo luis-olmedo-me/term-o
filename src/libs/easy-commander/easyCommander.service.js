@@ -77,6 +77,13 @@ class Commander {
         return hasAllStrings ? value : defaultValue
       }
 
+      case 'string': {
+        const isArray = Array.isArray(value)
+        const lastItem = isArray ? value[value.length - 1] : ''
+
+        return lastItem || defaultValue
+      }
+
       case 'array':
         return Array.isArray(value) ? value : defaultValue
 

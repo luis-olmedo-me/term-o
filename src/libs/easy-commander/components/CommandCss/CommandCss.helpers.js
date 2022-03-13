@@ -1,6 +1,6 @@
 import { camelize } from '../../easyCommander.promises'
 
-const parseStyleElement = (inlineStyles) => {
+export const parseStyles = (inlineStyles) => {
   const regex = /([\w-]*)\s*:\s*([^;]*)/g
   var match,
     properties = {}
@@ -12,17 +12,6 @@ const parseStyleElement = (inlineStyles) => {
   }
 
   return properties
-}
-
-export const parseStyles = (inlineStyles) => {
-  return inlineStyles.reduce((parsedStyles, inlineStyle) => {
-    const styleElement = parseStyleElement(inlineStyle)
-
-    return {
-      ...parsedStyles,
-      ...styleElement
-    }
-  }, {})
 }
 
 export const parseManualStyles = (manualStyles) => {

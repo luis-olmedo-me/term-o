@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { optionTypes } from 'libs/easy-commander/constants/commands.constants'
+import { optionTypes } from '../../constants/commands.constants'
 
 import { CommandCss } from './CommandCss.component'
 
@@ -25,7 +25,7 @@ export const cssConfig = {
     },
     styles: {
       key: 'styles',
-      type: optionTypes.ARRAY_OF_STRINGS,
+      type: optionTypes.STRING,
       defaultValue: '',
       aliases: ['s']
     }

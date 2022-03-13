@@ -1,17 +1,18 @@
 import React from 'react'
+import { optionTypes } from '../../constants/commands.constants'
 import { CommandOn } from './CommandOn.component'
 
 export const onConfig = {
   props: {
     url: {
       key: 'url',
-      type: 'array',
+      type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: ['.'],
       aliases: ['u']
     },
     run: {
       key: 'run',
-      type: 'array',
+      type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
       aliases: ['r']
     }

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { optionTypes } from 'libs/easy-commander/constants/commands.constants'
+import { optionTypes } from '../../constants/commands.constants'
 
 import { CommandAlias } from './CommandAlias.component'
 

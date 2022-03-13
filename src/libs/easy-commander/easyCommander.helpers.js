@@ -1,3 +1,5 @@
+import { optionTypes } from './constants/commands.constants'
+
 export const parsePropsIntoSuggestions = (propsConfigs, props) => {
   if (!propsConfigs) return []
 
@@ -176,7 +178,7 @@ export const getOptionsFromArgs = (args) => {
 
 export const validatePropValue = (value, type, defaultValue) => {
   switch (type) {
-    case 'array-of-objects': {
+    case optionTypes.ARRAY_OF_OBJECTS: {
       const isArray = Array.isArray(value)
       const hasAllObjects =
         isArray && value.every((item) => typeof item === 'object')
@@ -184,7 +186,7 @@ export const validatePropValue = (value, type, defaultValue) => {
       return hasAllObjects ? value : defaultValue
     }
 
-    case 'array-of-strings': {
+    case optionTypes.ARRAY_OF_STRINGS: {
       const isArray = Array.isArray(value)
       const hasAllStrings =
         isArray && value.every((item) => typeof item === 'string')
@@ -192,14 +194,14 @@ export const validatePropValue = (value, type, defaultValue) => {
       return hasAllStrings ? value : defaultValue
     }
 
-    case 'string': {
+    case optionTypes.STRING: {
       const isArray = Array.isArray(value)
       const lastItem = isArray ? value[value.length - 1] : ''
 
       return lastItem || defaultValue
     }
 
-    case 'array':
+    case optionTypes.ARRAY:
       return Array.isArray(value) ? value : defaultValue
 
     default:

@@ -43,13 +43,13 @@ const breakArrayInCertainIndexes = (array, indexes) => {
   }, [])
 }
 
-export const splitArgsTakingInCountSymbols = (args) => {
+export const splitArgsTakingInCountSymbols = (args, _quotes) => {
   let carriedArgsWithQuotes = []
   let indexesToBreak = []
   let shouldCarryArgs = false
 
   const argsByQuotes = args.reduce((parsedArguments, argument, index) => {
-    const hasQuotes = argument.includes('"')
+    const hasQuotes = argument.includes(_quotes || '"')
     const isVerticalLine = argument.includes('|')
     const isLastArgument = index === args.length - 1
 
@@ -80,7 +80,9 @@ export const splitArgsTakingInCountSymbols = (args) => {
     return [...parsedArguments, argument]
   }, [])
 
-  return breakArrayInCertainIndexes(argsByQuotes, indexesToBreak)
+  return _quotes
+    ? breakArrayInCertainIndexes(argsByQuotes, indexesToBreak)
+    : splitArgsTakingInCountSymbols(argsByQuotes, "'")
 }
 
 const getRowDataFromOption = (option) => {

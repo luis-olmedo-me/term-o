@@ -49,6 +49,8 @@ export const useConfig = () => {
         }))
       }
 
+      commander.setAliases(message.data?.aliases)
+
       sendResponse({ status: 'ok' })
     }
 

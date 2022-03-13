@@ -2,6 +2,8 @@ import { configManager } from 'libs/config-manager'
 
 import { eventTypes } from 'src/constants/events.constants.js'
 
+import { debounce } from 'src/helpers/utils.helpers.js'
+
 chrome.commands.onCommand.addListener(function (command) {
   const requestData = {
     action: eventTypes.NEW_COMMAND,
@@ -15,7 +17,7 @@ chrome.commands.onCommand.addListener(function (command) {
   })
 })
 
-configManager.onChange = () => {
+configManager.onChange = debounce(() => {
   const requestData = {
     action: eventTypes.UPDATE_CONFIG,
     data: configManager.getConfiguration()
@@ -26,7 +28,7 @@ configManager.onChange = () => {
 
     if (currentTab) chrome.tabs.sendMessage(currentTab.id, requestData)
   })
-}
+}, 500)
 
 chrome.runtime.onMessage.addListener(function (request, _sender, sendResponse) {
   switch (request.type) {

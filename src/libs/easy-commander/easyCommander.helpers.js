@@ -110,11 +110,10 @@ export const getOptionsFromArgs = (args) => {
 
     const isArgOption = arg.startsWith('-')
     const isNextArgOption = nextArg.startsWith('-')
+
     const isArgOptionWithRowValue = isArgOption && arg.includes('=')
-    const isNextArgOptionWithRowValue =
-      nextArg.startsWith('-') && nextArg.includes('=')
-    const isArgOptionBoolean =
-      isArgOption && (nextArg.startsWith('-') || !nextArg)
+
+    const isArgOptionBoolean = isArgOption && (isNextArgOption || !nextArg)
 
     if (isArgOptionWithRowValue) {
       const [key, value] = getRowDataFromOption(arg)

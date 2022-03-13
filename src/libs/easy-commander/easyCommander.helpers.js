@@ -25,40 +25,6 @@ export const parsePropsIntoSuggestions = (propsConfigs, props) => {
   }, [])
 }
 
-export const splitArgsTakingInCountQuotes = (args) => {
-  let carriedArgsWithQuotes = []
-  let shouldCarryArgs = false
-
-  return args.reduce((parsedArguments, argument, index) => {
-    const hasQuotes = argument.includes('"')
-    const isLastArgument = index === args.length - 1
-
-    if (hasQuotes) {
-      carriedArgsWithQuotes = [...carriedArgsWithQuotes, argument]
-      shouldCarryArgs = !shouldCarryArgs
-
-      const newParsedArguments =
-        isLastArgument || !shouldCarryArgs
-          ? [...parsedArguments, carriedArgsWithQuotes.join(' ')]
-          : parsedArguments
-
-      if (!shouldCarryArgs) {
-        carriedArgsWithQuotes = []
-      }
-
-      return newParsedArguments
-    } else if (shouldCarryArgs) {
-      carriedArgsWithQuotes = [...carriedArgsWithQuotes, argument]
-
-      return isLastArgument
-        ? [...parsedArguments, carriedArgsWithQuotes.join(' ')]
-        : parsedArguments
-    }
-
-    return [...parsedArguments, argument]
-  }, [])
-}
-
 const breakArrayInCertainIndexes = (array, indexes) => {
   if (!indexes.length) return [array]
 
@@ -157,6 +123,7 @@ export const getOptionsFromArgs = (args) => {
       const formattedKey = arg.replace(/^--|^-/, '')
       const carriedParsedArguments = parsedArguments[formattedKey] || []
 
+      argIndex++
       parsedArguments[formattedKey] = [...carriedParsedArguments, nextArg]
     } else {
       const carriedParsedArguments = parsedArguments.values

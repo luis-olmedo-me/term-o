@@ -176,7 +176,7 @@ export const getOptionsFromArgs = (args) => {
   return parsedArguments
 }
 
-export const validatePropValue = (value, type, defaultValue) => {
+const validatePropValue = (value, type, defaultValue) => {
   switch (type) {
     case optionTypes.ARRAY_OF_OBJECTS: {
       const isArray = Array.isArray(value)
@@ -207,4 +207,46 @@ export const validatePropValue = (value, type, defaultValue) => {
     default:
       return typeof value === type ? value : defaultValue
   }
+}
+
+const buildGroupProps = (
+  { values: _values, ...propValues },
+  groupPropConfigs = {}
+) => {
+  return Object.entries(propValues).reduce((allProps, [name, value]) => {
+    const groupConfig = groupPropConfigs[name]
+
+    if (!groupConfig) return allProps
+
+    const validatedValue = validatePropValue(
+      value,
+      groupConfig.type,
+      groupConfig.defaultValue
+    )
+
+    return { ...allProps, [groupConfig.key]: validatedValue }
+  }, {})
+}
+
+export const buildProps = (propValues, propsConfig = {}) => {
+  return Object.entries(propsConfig).reduce(
+    (
+      allProps,
+      [propName, { key, type, defaultValue, aliases, groupProps }]
+    ) => {
+      const aliasName = Object.keys(propValues).find((name) => {
+        return aliases.includes(name)
+      })
+
+      const groupValue = groupProps
+        ? buildGroupProps(propValues, groupProps)
+        : null
+
+      const value = propValues[propName] || propValues[aliasName] || groupValue
+      const validatedValue = validatePropValue(value, type, defaultValue)
+
+      return { ...allProps, [key]: validatedValue }
+    },
+    {}
+  )
 }

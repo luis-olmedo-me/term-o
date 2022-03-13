@@ -6,10 +6,10 @@ import { consoleCommands } from './easyCommander.constants'
 import { parameterTypes } from './constants/commands.constants'
 
 import {
+  buildProps,
   getOptionsFromArgs,
   parsePropsIntoSuggestions,
-  splitArgsTakingInCountSymbols,
-  validatePropValue
+  splitArgsTakingInCountSymbols
 } from './easyCommander.helpers'
 
 const unknownCommandError = {
@@ -60,46 +60,6 @@ class Commander {
     return knownCommand && commandArgs.length ? parsedProps : defaultProps
   }
 
-  buildGroupProps({ values: _values, ...propValues }, groupPropConfigs = {}) {
-    return Object.entries(propValues).reduce((allProps, [name, value]) => {
-      const groupConfig = groupPropConfigs[name]
-
-      if (!groupConfig) return allProps
-
-      const validatedValue = validatePropValue(
-        value,
-        groupConfig.type,
-        groupConfig.defaultValue
-      )
-
-      return { ...allProps, [groupConfig.key]: validatedValue }
-    }, {})
-  }
-
-  buildProps(propValues, propsConfig = {}) {
-    return Object.entries(propsConfig).reduce(
-      (
-        allProps,
-        [propName, { key, type, defaultValue, aliases, groupProps }]
-      ) => {
-        const aliasName = Object.keys(propValues).find((name) => {
-          return aliases.includes(name)
-        })
-
-        const groupValue = groupProps
-          ? this.buildGroupProps(propValues, groupProps)
-          : null
-
-        const value =
-          propValues[propName] || propValues[aliasName] || groupValue
-        const validatedValue = validatePropValue(value, type, defaultValue)
-
-        return { ...allProps, [key]: validatedValue }
-      },
-      {}
-    )
-  }
-
   getLogOutput(id, fullLine) {
     const rawLines = fullLine.split(' ').filter(Boolean)
     const lines = splitArgsTakingInCountSymbols(rawLines)
@@ -109,7 +69,7 @@ class Commander {
       const knownCommand = this.commands[command]
 
       const propValues = getOptionsFromArgs(args)
-      const props = this.buildProps(propValues, knownCommand?.props)
+      const props = buildProps(propValues, knownCommand?.props)
 
       const hasKnownCommand = Boolean(knownCommand)
 

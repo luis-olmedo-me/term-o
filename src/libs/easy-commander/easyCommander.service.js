@@ -59,6 +59,22 @@ class Commander {
 
   validatePropValue(value, type, defaultValue) {
     switch (type) {
+      case 'array-of-objects': {
+        const isArray = Array.isArray(value)
+        const hasAllObjects =
+          isArray && value.every((item) => typeof item === 'object')
+
+        return hasAllObjects ? value : defaultValue
+      }
+
+      case 'array-of-strings': {
+        const isArray = Array.isArray(value)
+        const hasAllStrings =
+          isArray && value.every((item) => typeof item === 'string')
+
+        return hasAllStrings ? value : defaultValue
+      }
+
       case 'array':
         return Array.isArray(value) ? value : defaultValue
 

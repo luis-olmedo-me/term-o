@@ -18,13 +18,13 @@ export const aliasConfig = {
     },
     delete: {
       key: 'delete',
-      type: 'array',
+      type: 'array-of-strings',
       defaultValue: [],
       aliases: ['d']
     },
     add: {
       key: 'add',
-      type: 'array',
+      type: 'array-of-objects',
       defaultValue: [],
       aliases: ['a']
     }

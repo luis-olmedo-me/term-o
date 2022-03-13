@@ -103,6 +103,14 @@ const removeQuotesFromValue = (value) => {
   return value.replace(/^'|'$/g, '').replace(/^"|"$/g, '')
 }
 
+const checkURLValidation = (value) => {
+  try {
+    return !!new URL(value)
+  } catch (error) {
+    return false
+  }
+}
+
 export const getOptionsFromArgs = (args) => {
   const parsedArguments = { values: [] }
 
@@ -120,16 +128,16 @@ export const getOptionsFromArgs = (args) => {
     if (isArgOptionWithRowValue) {
       const [key, value] = getRowDataFromOption(arg)
 
-      const isNextArgOptionWithRowValue =
-        !isNextArgOption && nextArg.includes('=')
-      const [nextKey, nextValue] = isNextArgOptionWithRowValue
-        ? getRowDataFromOption(nextArg)
+      const isValueWithRowValue =
+        value.includes('=') && !checkURLValidation(value)
+      const [nextKey, nextValue] = isValueWithRowValue
+        ? getRowDataFromOption(value)
         : []
 
       const formattedKey = key.replace(/^--|^-/, '')
       const carriedParsedArguments = parsedArguments[formattedKey] || []
 
-      const newValue = isNextArgOptionWithRowValue
+      const newValue = isValueWithRowValue
         ? { [nextKey]: removeQuotesFromValue(nextValue) }
         : removeQuotesFromValue(value)
 
@@ -140,7 +148,9 @@ export const getOptionsFromArgs = (args) => {
       parsedArguments[formattedKey] = true
     } else if (isArgOption) {
       const isNextArgOptionWithRowValue =
-        !isNextArgOption && nextArg.includes('=')
+        !isNextArgOption &&
+        nextArg.includes('=') &&
+        !checkURLValidation(nextArg)
       const [nextKey, nextValue] = isNextArgOptionWithRowValue
         ? getRowDataFromOption(nextArg)
         : []

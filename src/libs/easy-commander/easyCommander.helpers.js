@@ -108,11 +108,15 @@ export const getOptionsFromArgs = (args) => {
     const arg = args[argIndex]
     const nextArg = args[argIndex + 1] || ''
 
-    const isOption = arg.startsWith('-')
-    const isOptionWithRowValue = isOption && arg.includes('=')
-    const isOptionBoolean = isOption && (nextArg.startsWith('-') || !nextArg)
+    const isArgOption = arg.startsWith('-')
+    const isNextArgOption = nextArg.startsWith('-')
+    const isArgOptionWithRowValue = isArgOption && arg.includes('=')
+    const isNextArgOptionWithRowValue =
+      nextArg.startsWith('-') && nextArg.includes('=')
+    const isArgOptionBoolean =
+      isArgOption && (nextArg.startsWith('-') || !nextArg)
 
-    if (isOptionWithRowValue) {
+    if (isArgOptionWithRowValue) {
       const [key, value] = getRowDataFromOption(arg)
 
       const formattedKey = key.replace(/^--|^-/, '')
@@ -122,11 +126,11 @@ export const getOptionsFromArgs = (args) => {
         ...carriedParsedArguments,
         removeQuotesFromValue(value)
       ]
-    } else if (isOptionBoolean) {
+    } else if (isArgOptionBoolean) {
       const formattedKey = arg.replace(/^--|^-/, '')
 
       parsedArguments[formattedKey] = true
-    } else if (isOption) {
+    } else if (isArgOption) {
       const formattedKey = arg.replace(/^--|^-/, '')
       const carriedParsedArguments = parsedArguments[formattedKey] || []
 

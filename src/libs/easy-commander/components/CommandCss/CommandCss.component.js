@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { parameterTypes } from '../../easyCommander.constants'
 import { styleElements, validateStyles } from '../../easyCommander.promises'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
-import { parseStyles } from './CommandCss.helpers'
+import { parseManualStyles, parseStyles } from './CommandCss.helpers'
 
 export const CommandCss = ({
   props: { styles, manualStyles },
@@ -11,7 +11,10 @@ export const CommandCss = ({
   setMessageData
 }) => {
   const [stylesApplied, setStylesApplied] = useState({})
-  const inlineStyles = { ...parseStyles(styles), ...manualStyles }
+  const inlineStyles = {
+    ...parseStyles(styles),
+    ...parseManualStyles(manualStyles)
+  }
 
   useEffect(
     function applyStyles() {

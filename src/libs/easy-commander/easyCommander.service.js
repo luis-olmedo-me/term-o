@@ -67,7 +67,7 @@ class Commander {
     }
   }
 
-  buildGroupProps({ _, ...propValues }, groupPropConfigs = {}) {
+  buildGroupProps({ values: _values, ...propValues }, groupPropConfigs = {}) {
     return Object.entries(propValues).reduce((allProps, [name, value]) => {
       const groupConfig = groupPropConfigs[name]
 

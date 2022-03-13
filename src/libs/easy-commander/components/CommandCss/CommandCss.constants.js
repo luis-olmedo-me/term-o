@@ -7,7 +7,7 @@ import { kebabize, validStyleKeys } from '../../easyCommander.promises'
 const cssProps = validStyleKeys.reduce((props, key) => {
   return {
     ...props,
-    [kebabize(key)]: { key, type: 'string', defaultValue: '', aliases: [] }
+    [kebabize(key)]: { key, type: 'array', defaultValue: '', aliases: [] }
   }
 }, {})
 

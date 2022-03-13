@@ -2,7 +2,9 @@ import React from 'react'
 import { MessageCommand } from './components/MessageCommand/MessageCommand.component'
 
 import { Outputs } from './components/Outputs/Outputs.component'
-import { consoleCommands, parameterTypes } from './easyCommander.constants'
+import { consoleCommands } from './easyCommander.constants'
+import { parameterTypes } from './constants/commands.constants'
+
 import {
   getOptionsFromArgs,
   parsePropsIntoSuggestions,

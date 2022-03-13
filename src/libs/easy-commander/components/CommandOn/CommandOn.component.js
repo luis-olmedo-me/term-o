@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { parameterTypes } from '../../easyCommander.constants'
+import { parameterTypes } from '../../constants/commands.constants'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
 import { eventTypes } from 'src/constants/events.constants.js'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { parameterTypes } from '../../easyCommander.constants'
+import { parameterTypes } from '../../constants/commands.constants'
 import { Hash, Log } from './LogWrapper.styles'
 
 const preIconsByVariants = {

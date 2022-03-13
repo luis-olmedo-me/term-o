@@ -22,5 +22,9 @@ module.exports = {
       projects: path.resolve(__dirname, 'src/projects'),
       src: path.resolve(__dirname, 'src')
     }
+  },
+  performance: {
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000
   }
 }

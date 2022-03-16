@@ -24,8 +24,14 @@ export const Console = () => {
   const [histories, setHistories] = useState([])
   const [hasPageEventsBeenRunned, setHasPageEventsBeenRunned] = useState(false)
 
-  const { isOpen, pageEvents, appliedPageEvents, consolePosition, aliases } =
-    useConfig()
+  const {
+    isOpen,
+    pageEvents,
+    appliedPageEvents,
+    consolePosition,
+    aliases,
+    setConfig
+  } = useConfig()
   const { setResizingFrom, resizeData, setMovingFrom, isMoving } = useResize({
     wrapperReference,
     consolePosition
@@ -71,7 +77,8 @@ export const Console = () => {
   const outsideProps = {
     aliases,
     pageEvents,
-    clearTerminal: () => setHistories([])
+    clearTerminal: () => setHistories([]),
+    setConfig
   }
 
   const consoleStyles = {

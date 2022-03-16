@@ -6,7 +6,8 @@ export const Outputs = ({
   id,
   pageEvents,
   clearTerminal,
-  aliases
+  aliases,
+  setConfig
 }) => {
   const defaultData = components.map((Component, index) => ({
     Component,
@@ -43,7 +44,8 @@ export const Outputs = ({
           messageData: isLastComponent ? messageData : {},
           pageEvents,
           clearTerminal,
-          aliases
+          aliases,
+          setConfig
         }
 
         return <Component {...providerProps} />

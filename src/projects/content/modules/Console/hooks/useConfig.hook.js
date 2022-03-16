@@ -18,6 +18,21 @@ const defaultConfiguration = {
 
 export const useConfig = () => {
   const [config, setConfig] = useState(defaultConfiguration)
+  const [configToUpdate, setConfigToUpdate] = useState({})
+
+  useEffect(() => {
+    const hasConfigToUpdate = Object.keys(configToUpdate).length > 0
+
+    if (!hasConfigToUpdate) return
+
+    const newConfig = { ...config, ...configToUpdate }
+    const data = { eventType: eventTypes.UPDATE_CONFIG, data: newConfig }
+
+    backgroundRequest(data, () => {
+      setConfig(newConfig)
+      setConfigToUpdate({})
+    })
+  }, [configToUpdate, config])
 
   useEffect(function openConsoleByKeyCommands() {
     const toggleTerminal = (message, _sender, sendResponse) => {
@@ -83,5 +98,5 @@ export const useConfig = () => {
     })
   }, [])
 
-  return config
+  return { ...config, ...configToUpdate, setConfig: setConfigToUpdate }
 }

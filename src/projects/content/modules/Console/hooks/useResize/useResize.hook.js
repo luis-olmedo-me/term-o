@@ -3,7 +3,7 @@ import { getNewResizeData, updateConfig } from './useResize.helpers'
 import { debounce } from 'src/helpers/utils.helpers.js'
 import { defaultBodyData } from './useResize.constants'
 
-export const useResize = ({ wrapperReference, consolePosition }) => {
+export const useResize = ({ wrapperReference, consolePosition, setConfig }) => {
   const [resizingFrom, setResizingFrom] = useState('')
   const [movingFrom, setMovingFrom] = useState(null)
   const [resizeData, setResizeData] = useState({
@@ -44,7 +44,7 @@ export const useResize = ({ wrapperReference, consolePosition }) => {
         }
 
         setResizeData(formattedData)
-        updateConfig(formattedData)
+        setConfig(formattedData)
         setBodyData(newBodyData)
       }, 500)
 

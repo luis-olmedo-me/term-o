@@ -34,7 +34,8 @@ export const Console = () => {
   } = useConfig()
   const { setResizingFrom, resizeData, setMovingFrom, isMoving } = useResize({
     wrapperReference,
-    consolePosition
+    consolePosition,
+    setConfig
   })
 
   const handleCommandRun = useCallback(

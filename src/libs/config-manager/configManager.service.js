@@ -3,7 +3,30 @@ class ConfigManager {
     this.consolePosition = {}
     this.pageEvents = []
     this.aliases = {}
+
+    this.config = {
+      consolePosition: {},
+      pageEvents: [],
+      aliases: {}
+    }
     this.onChange = () => {}
+  }
+
+  get aliases() {
+    return this.config.aliases
+  }
+  get pageEvents() {
+    return this.config.pageEvents
+  }
+  get consolePosition() {
+    return this.config.consolePosition
+  }
+
+  setConfig(newConfig, sender) {
+    this.config = { ...this.config, ...newConfig }
+    this.setConfigInLocalStorage(sender)
+
+    return this
   }
 
   setConsolePosition(newConfig, sender) {
@@ -34,10 +57,8 @@ class ConfigManager {
   }
 
   getConfigFromLocalStorage() {
-    const receiveConfiguration = ({ configuration: receivedConfiguration }) => {
-      this.consolePosition = receivedConfiguration?.consolePosition || {}
-      this.pageEvents = receivedConfiguration?.pageEvents || []
-      this.aliases = receiveConfiguration?.aliases || {}
+    const receiveConfiguration = ({ configuration = {} }) => {
+      this.config = { ...this.config, ...configuration }
     }
 
     chrome.storage.sync.get('configuration', receiveConfiguration)

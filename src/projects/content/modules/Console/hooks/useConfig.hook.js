@@ -29,13 +29,14 @@ export const useConfig = () => {
     if (!hasConfigToUpdate || isUpdating) return
 
     const newConfig = { ...config, ...configToUpdate }
-    const data = { eventType: eventTypes.UPDATE_CONFIG, data: newConfig }
 
     setIsUpdating(true)
 
     backgroundRequest({
-      data,
-      callback: () => {
+      eventType: 'testingeo',
+      data: newConfig,
+      callback: (event) => {
+        console.log('config updated', event)
         setConfig(newConfig)
         setConfigToUpdate((oldConfig) =>
           oldConfig === configToUpdate ? {} : oldConfig
@@ -113,7 +114,11 @@ export const useConfig = () => {
     debounce((newConfig) => {
       setConfigToUpdate((oldConfig) => ({
         ...oldConfig,
-        ...newConfig
+        ...newConfig,
+        consolePosition: {
+          ...oldConfig.consolePosition,
+          ...(newConfig.consolePosition || {})
+        }
       }))
     }, 500),
     []

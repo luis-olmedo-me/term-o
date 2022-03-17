@@ -1,9 +1,5 @@
 import { useEffect, useState } from 'react'
-import {
-  getNewResizeData,
-  limitLowValue,
-  updateConfig
-} from './useResize.helpers'
+import { getNewResizeData, limitLowValue } from './useResize.helpers'
 import { debounce } from 'src/helpers/utils.helpers.js'
 import { defaultBodyData } from './useResize.constants'
 
@@ -58,7 +54,7 @@ export const useResize = ({ wrapperReference, consolePosition, setConfig }) => {
 
       return () => obsever.unobserve(document.body)
     },
-    [wrapperReference]
+    [wrapperReference, setConfig]
   )
 
   useEffect(function expectForBodyChanges() {
@@ -125,7 +121,7 @@ export const useResize = ({ wrapperReference, consolePosition, setConfig }) => {
             ...oldResizeData,
             ...newResizeData
           }))
-          updateConfig(newResizeData)
+          setConfig({ consolePosition: newResizeData })
 
           mousePosition = null
         }

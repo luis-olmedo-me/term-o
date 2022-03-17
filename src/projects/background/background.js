@@ -95,5 +95,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       sendResponse({ status: 'ok' })
       break
     }
+
+    case 'testingeo': {
+      configManager.setConfig(request.data, sender, false)
+      sendResponse({ status: 'ok' })
+      break
+    }
   }
 })

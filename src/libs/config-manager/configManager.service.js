@@ -1,9 +1,5 @@
 class ConfigManager {
   constructor() {
-    this.consolePosition = {}
-    this.pageEvents = []
-    this.aliases = {}
-
     this.config = {
       consolePosition: {},
       pageEvents: [],
@@ -29,27 +25,6 @@ class ConfigManager {
     return this
   }
 
-  setConsolePosition(newConfig, sender) {
-    this.consolePosition = { ...this.consolePosition, ...newConfig }
-    this.setConfigInLocalStorage(sender)
-
-    return this
-  }
-
-  setAliases(newConfig, sender) {
-    this.aliases = newConfig
-    this.setConfigInLocalStorage(sender)
-
-    return this
-  }
-
-  setPageEvents(newConfig, sender) {
-    this.pageEvents = newConfig
-    this.setConfigInLocalStorage(sender)
-
-    return this
-  }
-
   init() {
     this.getConfigFromLocalStorage()
 
@@ -70,14 +45,6 @@ class ConfigManager {
     })
 
     this.onChange(sender)
-  }
-
-  getConfiguration() {
-    return {
-      consolePosition: this.consolePosition,
-      pageEvents: this.pageEvents,
-      aliases: this.aliases
-    }
   }
 }
 

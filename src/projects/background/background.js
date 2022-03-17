@@ -24,7 +24,7 @@ configManager.onChange = debounce((sender) => {
 
     const requestData = {
       action: eventTypes.UPDATE_CONFIG,
-      data: configManager.getConfiguration()
+      data: configManager.config
     }
 
     if (currentTab && !isSameTab) {
@@ -36,7 +36,7 @@ configManager.onChange = debounce((sender) => {
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   switch (request.type) {
     case eventTypes.GET_CONFIGURATION: {
-      sendResponse({ status: 'ok', response: configManager.getConfiguration() })
+      sendResponse({ status: 'ok', response: configManager.config })
       break
     }
 
@@ -49,16 +49,25 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
       const newData = [...configManager.pageEvents, ...newPageEvents]
 
-      configManager.setPageEvents(newData, sender)
+      configManager.setConfig({ pageEvents: newData }, sender)
+      sendResponse({ status: 'ok' })
+      break
+    }
+
+    case eventTypes.DELETE_PAGES_EVENT: {
+      const newData = configManager.pageEvents.filter(
+        ({ id }) => !request.data.ids.includes(id)
+      )
+
+      configManager.setConfig({ pageEvents: newData }, sender)
       sendResponse({ status: 'ok' })
       break
     }
 
     case eventTypes.ADD_ALIAS: {
-      configManager.setAliases(
-        { ...configManager.aliases, ...request.data },
-        sender
-      )
+      const newData = { ...configManager.aliases, ...request.data }
+
+      configManager.setConfig({ aliases: newData }, sender)
       sendResponse({ status: 'ok' })
       break
     }
@@ -75,24 +84,13 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         configManager.aliases
       )
 
-      configManager.setAliases(newAliases, sender)
-      sendResponse({ status: 'ok' })
-      break
-    }
-
-    case eventTypes.DELETE_PAGES_EVENT: {
-      const newData = configManager.pageEvents.filter(
-        ({ id }) => !request.data.ids.includes(id)
-      )
-
-      configManager.setPageEvents(newData, sender)
+      configManager.setConfig({ aliases: newAliases }, sender)
       sendResponse({ status: 'ok' })
       break
     }
 
     case eventTypes.UPDATE_CONFIG_CONSOLE_POSITION: {
-      configManager.setConsolePosition(request.data, sender)
-
+      configManager.setConfig({ consolePosition: request.data }, sender)
       sendResponse({ status: 'ok' })
       break
     }

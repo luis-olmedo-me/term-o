@@ -66,11 +66,7 @@ class ConfigManager {
 
   setConfigInLocalStorage(sender) {
     chrome.storage.sync.set({
-      configuration: {
-        consolePosition: this.consolePosition,
-        pageEvents: this.pageEvents,
-        aliases: this.aliases
-      }
+      configuration: this.config
     })
 
     this.onChange(sender)

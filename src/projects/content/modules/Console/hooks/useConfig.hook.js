@@ -30,7 +30,9 @@ export const useConfig = () => {
 
     backgroundRequest(data, () => {
       setConfig(newConfig)
-      setConfigToUpdate({})
+      setConfigToUpdate((oldConfig) =>
+        oldConfig === configToUpdate ? {} : oldConfig
+      )
     })
   }, [configToUpdate, config])
 

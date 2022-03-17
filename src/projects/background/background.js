@@ -17,20 +17,23 @@ chrome.commands.onCommand.addListener(function (command) {
   })
 })
 
-configManager.onChange = debounce(() => {
-  const requestData = {
-    action: eventTypes.UPDATE_CONFIG,
-    data: configManager.getConfiguration()
-  }
-
+configManager.onChange = debounce((sender) => {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     const [currentTab] = tabs
+    const isSameTab = currentTab.id === sender.tab?.id
 
-    if (currentTab) chrome.tabs.sendMessage(currentTab.id, requestData)
+    const requestData = {
+      action: eventTypes.UPDATE_CONFIG,
+      data: configManager.getConfiguration()
+    }
+
+    if (currentTab && !isSameTab) {
+      chrome.tabs.sendMessage(currentTab.id, requestData)
+    }
   })
-}, 500)
+}, 100)
 
-chrome.runtime.onMessage.addListener(function (request, _sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   switch (request.type) {
     case eventTypes.GET_CONFIGURATION: {
       sendResponse({ status: 'ok', response: configManager.getConfiguration() })
@@ -46,13 +49,16 @@ chrome.runtime.onMessage.addListener(function (request, _sender, sendResponse) {
 
       const newData = [...configManager.pageEvents, ...newPageEvents]
 
-      configManager.setPageEvents(newData)
+      configManager.setPageEvents(newData, sender)
       sendResponse({ status: 'ok' })
       break
     }
 
     case eventTypes.ADD_ALIAS: {
-      configManager.setAliases({ ...configManager.aliases, ...request.data })
+      configManager.setAliases(
+        { ...configManager.aliases, ...request.data },
+        sender
+      )
       sendResponse({ status: 'ok' })
       break
     }
@@ -69,7 +75,7 @@ chrome.runtime.onMessage.addListener(function (request, _sender, sendResponse) {
         configManager.aliases
       )
 
-      configManager.setAliases(newAliases)
+      configManager.setAliases(newAliases, sender)
       sendResponse({ status: 'ok' })
       break
     }
@@ -79,13 +85,13 @@ chrome.runtime.onMessage.addListener(function (request, _sender, sendResponse) {
         ({ id }) => !request.data.ids.includes(id)
       )
 
-      configManager.setPageEvents(newData)
+      configManager.setPageEvents(newData, sender)
       sendResponse({ status: 'ok' })
       break
     }
 
     case eventTypes.UPDATE_CONFIG_CONSOLE_POSITION: {
-      configManager.setConsolePosition(request.data)
+      configManager.setConsolePosition(request.data, sender)
 
       sendResponse({ status: 'ok' })
       break

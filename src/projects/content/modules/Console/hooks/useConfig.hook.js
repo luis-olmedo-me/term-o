@@ -21,14 +21,17 @@ const defaultConfiguration = {
 export const useConfig = () => {
   const [config, setConfig] = useState(defaultConfiguration)
   const [configToUpdate, setConfigToUpdate] = useState({})
+  const [isUpdating, setIsUpdating] = useState(false)
 
   useEffect(() => {
     const hasConfigToUpdate = Object.keys(configToUpdate).length > 0
 
-    if (!hasConfigToUpdate) return
+    if (!hasConfigToUpdate || isUpdating) return
 
     const newConfig = { ...config, ...configToUpdate }
     const data = { eventType: eventTypes.UPDATE_CONFIG, data: newConfig }
+
+    setIsUpdating(true)
 
     backgroundRequest({
       data,
@@ -37,9 +40,10 @@ export const useConfig = () => {
         setConfigToUpdate((oldConfig) =>
           oldConfig === configToUpdate ? {} : oldConfig
         )
+        setIsUpdating(false)
       }
     })
-  }, [configToUpdate, config])
+  }, [configToUpdate, config, isUpdating])
 
   useEffect(function openConsoleByKeyCommands() {
     const toggleTerminal = (message, _sender, sendResponse) => {

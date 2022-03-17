@@ -3,6 +3,8 @@ import { backgroundRequest } from 'src/helpers/event.helpers.js'
 import { eventTypes } from 'src/constants/events.constants.js'
 import { debounce } from 'src/helpers/utils.helpers.js'
 
+export const limitLowValue = (value) => (value < 0 ? 0 : value)
+
 export const getNewResizeData = ({
   mousePosition: { x: mousePositionX, y: mousePositionY },
   pivotPosition: { x: pivotPositionX, y: pivotPositionY },
@@ -65,10 +67,26 @@ export const getNewResizeData = ({
       const isBottomOutside = bottom < 0
 
       return {
-        left: isLeftOutside ? 0 : isRightOutside ? mockDistanceX : left,
-        right: isRightOutside ? 0 : isLeftOutside ? mockDistanceX : right,
-        top: isTopOutside ? 0 : isBottomOutside ? mockDistanceY : top,
-        bottom: isBottomOutside ? 0 : isTopOutside ? mockDistanceY : bottom
+        left: isLeftOutside
+          ? 0
+          : isRightOutside
+          ? mockDistanceX
+          : limitLowValue(left),
+        right: isRightOutside
+          ? 0
+          : isLeftOutside
+          ? mockDistanceX
+          : limitLowValue(right),
+        top: isTopOutside
+          ? 0
+          : isBottomOutside
+          ? mockDistanceY
+          : limitLowValue(top),
+        bottom: isBottomOutside
+          ? 0
+          : isTopOutside
+          ? mockDistanceY
+          : limitLowValue(bottom)
       }
     }
   }

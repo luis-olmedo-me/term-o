@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react'
-import { getNewResizeData, updateConfig } from './useResize.helpers'
+import {
+  getNewResizeData,
+  limitLowValue,
+  updateConfig
+} from './useResize.helpers'
 import { debounce } from 'src/helpers/utils.helpers.js'
 import { defaultBodyData } from './useResize.constants'
 
@@ -37,10 +41,10 @@ export const useResize = ({ wrapperReference, consolePosition, setConfig }) => {
           newBodyData.height - (newResizeData.top + newResizeData.bottom) < 400
 
         const formattedData = {
-          left: isBelowMiniumWidth ? 0 : newResizeData.left,
-          right: isBelowMiniumWidth ? 0 : newResizeData.right,
-          top: isBelowMiniumHeight ? 0 : newResizeData.top,
-          bottom: isBelowMiniumHeight ? 0 : newResizeData.bottom
+          left: isBelowMiniumWidth ? 0 : limitLowValue(newResizeData.left),
+          right: isBelowMiniumWidth ? 0 : limitLowValue(newResizeData.right),
+          top: isBelowMiniumHeight ? 0 : limitLowValue(newResizeData.top),
+          bottom: isBelowMiniumHeight ? 0 : limitLowValue(newResizeData.bottom)
         }
 
         setConfig({ consolePosition: formattedData })
@@ -116,6 +120,7 @@ export const useResize = ({ wrapperReference, consolePosition, setConfig }) => {
             resizeData,
             bodyData
           })
+          console.log('newResizeData', newResizeData)
 
           setResizeData((oldResizeData) => ({
             ...oldResizeData,

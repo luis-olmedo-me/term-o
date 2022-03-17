@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 
 import { commander } from 'libs/easy-commander/easyCommander.service'
 
@@ -7,6 +7,8 @@ import {
   eventTypes,
   extensionKeyEvents
 } from 'src/constants/events.constants.js'
+
+import { debounce } from 'src/helpers/utils.helpers.js'
 
 const defaultConfiguration = {
   isOpen: false,
@@ -103,5 +105,15 @@ export const useConfig = () => {
     })
   }, [])
 
-  return { ...config, ...configToUpdate, setConfig: setConfigToUpdate }
+  const overwriteConfigToUpdate = useCallback(
+    debounce((newConfig) => {
+      setConfigToUpdate((oldConfig) => ({
+        ...oldConfig,
+        ...newConfig
+      }))
+    }, 500),
+    []
+  )
+
+  return { ...config, ...configToUpdate, setConfig: overwriteConfigToUpdate }
 }

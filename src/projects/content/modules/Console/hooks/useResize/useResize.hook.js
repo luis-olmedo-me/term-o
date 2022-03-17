@@ -43,10 +43,7 @@ export const useResize = ({ wrapperReference, consolePosition, setConfig }) => {
           bottom: isBelowMiniumHeight ? 0 : newResizeData.bottom
         }
 
-        setConfig((oldConfig) => ({
-          ...oldConfig,
-          consolePosition: formattedData
-        }))
+        setConfig({ consolePosition: formattedData })
         setResizeData(formattedData)
         setBodyData(newBodyData)
       }, 500)

@@ -17,17 +17,18 @@ chrome.commands.onCommand.addListener(function (command) {
   })
 })
 
-configManager.onChange = debounce((sender) => {
+configManager.onChange = debounce((sender, shouldUpdateCurrentTab) => {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     const [currentTab] = tabs
-    const isSameTab = currentTab.id === sender.tab?.id
+    const shouldUpdate =
+      shouldUpdateCurrentTab && currentTab.id === sender.tab?.id
 
     const requestData = {
       action: eventTypes.UPDATE_CONFIG,
       data: configManager.config
     }
 
-    if (currentTab && !isSameTab) {
+    if (currentTab && shouldUpdate) {
       chrome.tabs.sendMessage(currentTab.id, requestData)
     }
   })
@@ -90,7 +91,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 
     case eventTypes.UPDATE_CONFIG_CONSOLE_POSITION: {
-      configManager.setConfig({ consolePosition: request.data }, sender)
+      configManager.setConfig({ consolePosition: request.data }, sender, false)
       sendResponse({ status: 'ok' })
       break
     }

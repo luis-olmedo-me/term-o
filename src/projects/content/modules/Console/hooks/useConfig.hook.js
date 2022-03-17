@@ -28,11 +28,14 @@ export const useConfig = () => {
     const newConfig = { ...config, ...configToUpdate }
     const data = { eventType: eventTypes.UPDATE_CONFIG, data: newConfig }
 
-    backgroundRequest(data, () => {
-      setConfig(newConfig)
-      setConfigToUpdate((oldConfig) =>
-        oldConfig === configToUpdate ? {} : oldConfig
-      )
+    backgroundRequest({
+      data,
+      callback: () => {
+        setConfig(newConfig)
+        setConfigToUpdate((oldConfig) =>
+          oldConfig === configToUpdate ? {} : oldConfig
+        )
+      }
     })
   }, [configToUpdate, config])
 

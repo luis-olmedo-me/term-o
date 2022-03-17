@@ -28,21 +28,33 @@ export const useConfig = () => {
 
     if (!hasConfigToUpdate || isUpdating) return
 
-    const newConfig = { ...config, ...configToUpdate }
+    const { pageEvents, aliases } = config
+
+    const newConfig = {
+      pageEvents,
+      aliases,
+      ...configToUpdate,
+      consolePosition: {
+        ...config.consolePosition,
+        ...(configToUpdate.consolePosition || {})
+      }
+    }
 
     setIsUpdating(true)
+
+    const onFinish = () => {
+      setConfig((oldConfig) => ({ ...oldConfig, ...newConfig }))
+      setConfigToUpdate((oldConfig) =>
+        oldConfig === configToUpdate ? {} : oldConfig
+      )
+
+      setIsUpdating(false)
+    }
 
     backgroundRequest({
       eventType: eventTypes.UPDATE_CONFIG,
       data: newConfig,
-      callback: (event) => {
-        console.log('config updated', event)
-        setConfig(newConfig)
-        setConfigToUpdate((oldConfig) =>
-          oldConfig === configToUpdate ? {} : oldConfig
-        )
-        setIsUpdating(false)
-      }
+      callback: onFinish
     })
   }, [configToUpdate, config, isUpdating])
 

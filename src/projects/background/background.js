@@ -24,7 +24,7 @@ configManager.onChange = debounce((sender, shouldUpdateCurrentTab) => {
       shouldUpdateCurrentTab && currentTab.id === sender.tab?.id
 
     const requestData = {
-      action: eventTypes.UPDATE_CONFIG,
+      action: eventTypes.CONFIG_UPDATE,
       data: configManager.config
     }
 
@@ -96,7 +96,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       break
     }
 
-    case 'testingeo': {
+    case eventTypes.UPDATE_CONFIG: {
       configManager.setConfig(request.data, sender, false)
       sendResponse({ status: 'ok' })
       break

@@ -33,7 +33,7 @@ export const useConfig = () => {
     setIsUpdating(true)
 
     backgroundRequest({
-      eventType: 'testingeo',
+      eventType: eventTypes.UPDATE_CONFIG,
       data: newConfig,
       callback: (event) => {
         console.log('config updated', event)
@@ -69,7 +69,7 @@ export const useConfig = () => {
 
   useEffect(function expectForConfigChanges() {
     const receiveConfiguration = (message, _sender, sendResponse) => {
-      if (message.action === eventTypes.UPDATE_CONFIG) {
+      if (message.action === eventTypes.CONFIG_UPDATE) {
         setConfig((oldConfig) => ({
           ...oldConfig,
           ...message.data

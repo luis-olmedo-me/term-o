@@ -19,7 +19,15 @@ class ConfigManager {
   }
 
   setConfig(newConfig, sender, shouldUpdateCurrentTab = true) {
-    this.config = { ...this.config, ...newConfig }
+    this.config = {
+      ...this.config,
+      ...newConfig,
+      consolePosition: {
+        ...this.consolePosition,
+        ...(newConfig.consolePosition || {})
+      }
+    }
+
     this.setConfigInLocalStorage(sender, shouldUpdateCurrentTab)
 
     return this

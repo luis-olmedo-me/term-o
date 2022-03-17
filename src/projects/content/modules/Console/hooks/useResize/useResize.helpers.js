@@ -81,10 +81,3 @@ export const getNewResizeData = ({
     }
   }
 }
-
-export const updateConfig = debounce((data) => {
-  backgroundRequest({
-    eventType: eventTypes.UPDATE_CONFIG_CONSOLE_POSITION,
-    data
-  })
-}, 800)

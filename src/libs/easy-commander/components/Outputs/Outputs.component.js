@@ -1,14 +1,7 @@
 import React, { useState } from 'react'
 import { OutputWrapper } from './Outputs.styles'
 
-export const Outputs = ({
-  components,
-  id,
-  pageEvents,
-  clearTerminal,
-  aliases,
-  setConfig
-}) => {
+export const Outputs = ({ components, id, consoleProps }) => {
   const defaultData = components.map((Component, index) => ({
     Component,
     parameters: {},
@@ -39,13 +32,12 @@ export const Outputs = ({
         const providerProps = {
           key: `${id}-${indexId}`,
           parameters,
-          setParameters: (value) => setParametersWithId(nextId, value),
-          setMessageData,
-          messageData: isLastComponent ? messageData : {},
-          pageEvents,
-          clearTerminal,
-          aliases,
-          setConfig
+          terminal: {
+            ...consoleProps,
+            setParameters: (value) => setParametersWithId(nextId, value),
+            setMessageData,
+            messageData: isLastComponent ? messageData : {}
+          }
         }
 
         return <Component terminal={providerProps} />

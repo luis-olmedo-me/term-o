@@ -2,7 +2,12 @@ import React from 'react'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { parameterTypes } from '../../constants/commands.constants'
 
-export const MessageCommand = ({ messageData: { message, type }, command }) => {
+export const MessageCommand = ({
+  terminal: {
+    messageData: { message, type },
+    command
+  }
+}) => {
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>

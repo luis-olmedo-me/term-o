@@ -7,10 +7,7 @@ import { ParameterElements } from '../ParameterElements/ParameterElements.compon
 
 export const CommandDom = ({
   props: { get, hasId, hasClass, values },
-  command,
-  parameters,
-  setParameters,
-  setMessageData
+  terminal: { command, parameters, setParameters, setMessageData }
 }) => {
   const [elements, setElements] = useState([])
   const [elementsShown, setElementsShown] = useState(40)

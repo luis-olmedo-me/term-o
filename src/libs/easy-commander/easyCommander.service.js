@@ -76,14 +76,19 @@ class Commander {
       return (providerProps) => {
         const commonProps = {
           props,
-          ...providerProps,
-          command: line.join(' ')
+          terminal: {
+            ...providerProps,
+            command: line.join(' ')
+          }
         }
 
         if (!hasKnownCommand) {
           const errorProps = {
             ...commonProps,
-            messageData: unknownCommandError
+            terminal: {
+              ...commonProps.terminal,
+              messageData: unknownCommandError
+            }
           }
 
           return <MessageCommand {...errorProps} />

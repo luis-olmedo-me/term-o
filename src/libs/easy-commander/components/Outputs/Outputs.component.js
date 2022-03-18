@@ -48,7 +48,7 @@ export const Outputs = ({
           setConfig
         }
 
-        return <Component {...providerProps} />
+        return <Component terminal={providerProps} />
       })}
     </OutputWrapper>
   )

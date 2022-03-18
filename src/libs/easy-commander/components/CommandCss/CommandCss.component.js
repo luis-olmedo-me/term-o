@@ -6,9 +6,7 @@ import { parseManualStyles, parseStyles } from './CommandCss.helpers'
 
 export const CommandCss = ({
   props: { styles, manualStyles },
-  command,
-  parameters,
-  setMessageData
+  terminal: { command, parameters, setMessageData }
 }) => {
   const [stylesApplied, setStylesApplied] = useState({})
   const inlineStyles = {

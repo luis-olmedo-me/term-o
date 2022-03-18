@@ -7,10 +7,8 @@ import { eventTypes } from 'src/constants/events.constants.js'
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
 
 export const CommandAlias = ({
-  command,
   props: { list, delete: deletedIds, add: aliasesToAdd },
-  aliases,
-  setMessageData
+  terminal: { aliases, setMessageData, command }
 }) => {
   const [idsToDelete, setIdsToDelete] = useState([])
   const staticAliases = useMemo(() => aliases, [])

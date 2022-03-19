@@ -23,6 +23,10 @@ class Commander {
     this.aliases = {}
   }
 
+  get commandNames() {
+    return Object.keys(this.commands)
+  }
+
   setAliases(aliases) {
     this.aliases = aliases || {}
   }
@@ -73,17 +77,19 @@ class Commander {
 
       const hasKnownCommand = Boolean(knownCommand)
 
-      return (providerProps) => {
+      return ({ providerProps }) => {
         const commonProps = {
           props,
-          ...providerProps,
-          command: line.join(' ')
+          terminal: { ...providerProps, command: line.join(' ') }
         }
 
         if (!hasKnownCommand) {
           const errorProps = {
             ...commonProps,
-            messageData: unknownCommandError
+            terminal: {
+              ...commonProps.terminal,
+              messageData: unknownCommandError
+            }
           }
 
           return <MessageCommand {...errorProps} />
@@ -96,7 +102,7 @@ class Commander {
     })
 
     return (outsideProps) => (
-      <Outputs {...outsideProps} key={id} components={setOfOutputs} />
+      <Outputs key={id} components={setOfOutputs} outsideProps={outsideProps} />
     )
   }
 }

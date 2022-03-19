@@ -5,43 +5,75 @@ import { Table } from 'modules/components/Table/Table.component'
 import { aliasHeaders } from './CommandAlias.constants'
 import { eventTypes } from 'src/constants/events.constants.js'
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
+import { commander } from '../../easyCommander.service'
 
 export const CommandAlias = ({
-  command,
   props: { list, delete: deletedIds, add: aliasesToAdd },
-  aliases,
-  setMessageData
+  terminal: { setMessageData, command }
 }) => {
   const [idsToDelete, setIdsToDelete] = useState([])
-  const staticAliases = useMemo(() => aliases, [])
+  const [aliases, setAliases] = useState({})
+  const [isLoading, setIsLoading] = useState(true)
 
-  const aliasesRows = Object.entries(staticAliases)
+  useEffect(function getAliases() {
+    const receivedAliases = (response) => {
+      const updatedAliases = response?.response?.aliases || {}
+
+      setAliases(updatedAliases)
+      setIsLoading(false)
+    }
+
+    backgroundRequest({
+      eventType: eventTypes.GET_CONFIGURATION,
+      callback: receivedAliases
+    })
+  }, [])
+
+  const aliasesRows = Object.entries(aliases)
 
   const hasAliases = aliasesRows.length > 0
 
   useEffect(
     function handleAliases() {
-      if (hasAliases || !list) return
+      if (isLoading || hasAliases || !list) return
 
       setMessageData({
         type: parameterTypes.INFO,
         message: 'There are no aliases registered.'
       })
     },
-    [hasAliases, aliasesToAdd]
+    [hasAliases, aliasesToAdd, isLoading]
   )
 
   useEffect(
     function handleAliases() {
-      if (!aliasesToAdd.length) return
+      if (isLoading || !aliasesToAdd.length) return
 
       const newAliases = aliasesToAdd.reduce((totalAliases, alias) => {
         return { ...totalAliases, ...alias }
       }, {})
 
+      const validatedAliases = Object.entries(newAliases).reduce(
+        (totalAliases, [alias, command]) => {
+          return commander.commandNames.includes(alias)
+            ? totalAliases
+            : { ...totalAliases, [alias]: command }
+        },
+        {}
+      )
+
+      const hasValidAliases = Object.keys(validatedAliases).length > 0
+
+      if (!hasValidAliases) {
+        return setMessageData({
+          type: parameterTypes.ERROR,
+          message: 'Invalid alias(es).'
+        })
+      }
+
       backgroundRequest({
         eventType: eventTypes.ADD_ALIAS,
-        data: newAliases
+        data: validatedAliases
       })
 
       setMessageData({
@@ -49,12 +81,12 @@ export const CommandAlias = ({
         message: `Aliases added: ${Object.keys(newAliases).join(', ')}`
       })
     },
-    [aliasesToAdd]
+    [aliasesToAdd, isLoading]
   )
 
   useEffect(
     function validateDeletedIds() {
-      const aliasesKeys = Object.keys(staticAliases)
+      const aliasesKeys = Object.keys(aliases)
       const validDeltedIds = deletedIds.filter((keyToDelete) => {
         return aliasesKeys.includes(keyToDelete)
       })
@@ -68,7 +100,7 @@ export const CommandAlias = ({
 
       setIdsToDelete(validDeltedIds)
     },
-    [deletedIds, staticAliases]
+    [deletedIds, aliases]
   )
 
   useEffect(
@@ -89,14 +121,16 @@ export const CommandAlias = ({
   )
 
   return (
-    <>
-      <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
+    !isLoading && (
+      <>
+        <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-      {list && (
-        <LogWrapper variant={parameterTypes.TABLE}>
-          <Table headers={aliasHeaders} rows={aliasesRows} />
-        </LogWrapper>
-      )}
-    </>
+        {list && (
+          <LogWrapper variant={parameterTypes.TABLE}>
+            <Table headers={aliasHeaders} rows={aliasesRows} />
+          </LogWrapper>
+        )}
+      </>
+    )
   )
 }

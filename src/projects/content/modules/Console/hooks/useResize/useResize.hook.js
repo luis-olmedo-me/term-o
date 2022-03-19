@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react'
-import { getNewResizeData, updateConfig } from './useResize.helpers'
+import {
+  getNewResizeData,
+  limitLowValue,
+  updateConfig
+} from './useResize.helpers'
 import { debounce } from 'src/helpers/utils.helpers.js'
 import { defaultBodyData } from './useResize.constants'
 
@@ -7,10 +11,10 @@ export const useResize = ({ wrapperReference, consolePosition }) => {
   const [resizingFrom, setResizingFrom] = useState('')
   const [movingFrom, setMovingFrom] = useState(null)
   const [resizeData, setResizeData] = useState({
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0
+    left: 10,
+    right: 10,
+    top: 10,
+    bottom: 10
   })
 
   const [bodyData, setBodyData] = useState(defaultBodyData)
@@ -37,14 +41,14 @@ export const useResize = ({ wrapperReference, consolePosition }) => {
           newBodyData.height - (newResizeData.top + newResizeData.bottom) < 400
 
         const formattedData = {
-          left: isBelowMiniumWidth ? 0 : newResizeData.left,
-          right: isBelowMiniumWidth ? 0 : newResizeData.right,
-          top: isBelowMiniumHeight ? 0 : newResizeData.top,
-          bottom: isBelowMiniumHeight ? 0 : newResizeData.bottom
+          left: isBelowMiniumWidth ? 10 : limitLowValue(newResizeData.left),
+          right: isBelowMiniumWidth ? 10 : limitLowValue(newResizeData.right),
+          top: isBelowMiniumHeight ? 10 : limitLowValue(newResizeData.top),
+          bottom: isBelowMiniumHeight ? 10 : limitLowValue(newResizeData.bottom)
         }
 
-        setResizeData(formattedData)
         updateConfig(formattedData)
+        setResizeData(formattedData)
         setBodyData(newBodyData)
       }, 500)
 
@@ -79,10 +83,10 @@ export const useResize = ({ wrapperReference, consolePosition }) => {
       if (!hasConsolePosition) return
 
       setResizeData({
-        left: consolePosition?.left || 0,
-        right: consolePosition?.right || 0,
-        top: consolePosition?.top || 0,
-        bottom: consolePosition?.bottom || 0
+        left: consolePosition?.left || 10,
+        right: consolePosition?.right || 10,
+        top: consolePosition?.top || 10,
+        bottom: consolePosition?.bottom || 10
       })
     },
     [consolePosition]

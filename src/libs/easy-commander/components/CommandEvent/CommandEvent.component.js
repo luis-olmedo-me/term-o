@@ -7,37 +7,49 @@ import { eventTypes } from 'src/constants/events.constants.js'
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
 
 export const CommandEvent = ({
-  command,
   props: { list, delete: deletedIds },
-  pageEvents,
-  setMessageData
+  terminal: { command, setMessageData }
 }) => {
   const [idsToDelete, setIdsToDelete] = useState([])
+  const [pageEvents, setPageEvents] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
-  const staticPageEvents = useMemo(() => pageEvents, [])
-
-  const pageEventsRows = staticPageEvents.map((pageEvent) => {
+  const pageEventsRows = pageEvents.map((pageEvent) => {
     return eventRows.map((eventRow) => pageEvent[eventRow])
   })
 
-  const hasPageEvents = staticPageEvents.length > 0
+  const hasPageEvents = pageEvents.length > 0
+
+  useEffect(function getPageEvents() {
+    const receivedPageEvents = (response) => {
+      const updatedPageEvents = response?.response?.pageEvents || []
+
+      setPageEvents(updatedPageEvents)
+      setIsLoading(false)
+    }
+
+    backgroundRequest({
+      eventType: eventTypes.GET_CONFIGURATION,
+      callback: receivedPageEvents
+    })
+  }, [])
 
   useEffect(
     function handleEmptyPageEvents() {
-      if (hasPageEvents || !list) return
+      if (isLoading || hasPageEvents || !list) return
 
       setMessageData({
         type: parameterTypes.INFO,
         message: 'There are no page events registered.'
       })
     },
-    [hasPageEvents, list]
+    [hasPageEvents, list, isLoading]
   )
 
   useEffect(
     function validateDeletedIds() {
       const validDeltedIds = deletedIds.filter((id) => {
-        return staticPageEvents.some((pageEvent) => pageEvent.id === id)
+        return pageEvents.some((pageEvent) => pageEvent.id === id)
       })
 
       if (deletedIds.length !== validDeltedIds.length) {
@@ -49,7 +61,7 @@ export const CommandEvent = ({
 
       setIdsToDelete(validDeltedIds)
     },
-    [deletedIds, staticPageEvents]
+    [deletedIds, pageEvents]
   )
 
   useEffect(
@@ -70,14 +82,16 @@ export const CommandEvent = ({
   )
 
   return (
-    <>
-      <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
+    !isLoading && (
+      <>
+        <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-      {list && (
-        <LogWrapper variant={parameterTypes.TABLE}>
-          <Table headers={eventRows} rows={pageEventsRows} />
-        </LogWrapper>
-      )}
-    </>
+        {list && (
+          <LogWrapper variant={parameterTypes.TABLE}>
+            <Table headers={eventRows} rows={pageEventsRows} />
+          </LogWrapper>
+        )}
+      </>
+    )
   )
 }

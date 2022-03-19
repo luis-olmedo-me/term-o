@@ -13,27 +13,31 @@ chrome.commands.onCommand.addListener(function (command) {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     const [currentTab] = tabs
 
-    if (currentTab) chrome.tabs.sendMessage(currentTab.id, requestData)
+    if (currentTab) chrome.tabs.sendMessage(currentTab.id, requestData, null)
   })
 })
 
-configManager.onChange = debounce(() => {
-  const requestData = {
-    action: eventTypes.UPDATE_CONFIG,
-    data: configManager.getConfiguration()
-  }
-
+configManager.onChange = debounce((sender, shouldUpdateCurrentTab) => {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     const [currentTab] = tabs
+    const shouldUpdate =
+      shouldUpdateCurrentTab && currentTab.id === sender.tab?.id
 
-    if (currentTab) chrome.tabs.sendMessage(currentTab.id, requestData)
+    const requestData = {
+      action: eventTypes.CONFIG_UPDATE,
+      data: configManager.config
+    }
+
+    if (currentTab && shouldUpdate) {
+      chrome.tabs.sendMessage(currentTab.id, requestData, null)
+    }
   })
-}, 500)
+}, 100)
 
-chrome.runtime.onMessage.addListener(function (request, _sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   switch (request.type) {
     case eventTypes.GET_CONFIGURATION: {
-      sendResponse({ status: 'ok', response: configManager.getConfiguration() })
+      sendResponse({ status: 'ok', response: configManager.config })
       break
     }
 
@@ -46,13 +50,25 @@ chrome.runtime.onMessage.addListener(function (request, _sender, sendResponse) {
 
       const newData = [...configManager.pageEvents, ...newPageEvents]
 
-      configManager.setPageEvents(newData)
+      configManager.setConfig({ pageEvents: newData }, sender)
+      sendResponse({ status: 'ok' })
+      break
+    }
+
+    case eventTypes.DELETE_PAGES_EVENT: {
+      const newData = configManager.pageEvents.filter(
+        ({ id }) => !request.data.ids.includes(id)
+      )
+
+      configManager.setConfig({ pageEvents: newData }, sender)
       sendResponse({ status: 'ok' })
       break
     }
 
     case eventTypes.ADD_ALIAS: {
-      configManager.setAliases({ ...configManager.aliases, ...request.data })
+      const newData = { ...configManager.aliases, ...request.data }
+
+      configManager.setConfig({ aliases: newData }, sender)
       sendResponse({ status: 'ok' })
       break
     }
@@ -69,24 +85,13 @@ chrome.runtime.onMessage.addListener(function (request, _sender, sendResponse) {
         configManager.aliases
       )
 
-      configManager.setAliases(newAliases)
-      sendResponse({ status: 'ok' })
-      break
-    }
-
-    case eventTypes.DELETE_PAGES_EVENT: {
-      const newData = configManager.pageEvents.filter(
-        ({ id }) => !request.data.ids.includes(id)
-      )
-
-      configManager.setPageEvents(newData)
+      configManager.setConfig({ aliases: newAliases }, sender)
       sendResponse({ status: 'ok' })
       break
     }
 
     case eventTypes.UPDATE_CONFIG_CONSOLE_POSITION: {
-      configManager.setConsolePosition(request.data)
-
+      configManager.setConfig({ consolePosition: request.data }, sender, false)
       sendResponse({ status: 'ok' })
       break
     }

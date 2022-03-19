@@ -1,28 +1,34 @@
 class ConfigManager {
   constructor() {
-    this.consolePosition = {}
-    this.pageEvents = []
-    this.aliases = {}
+    this.config = {
+      consolePosition: {},
+      pageEvents: [],
+      aliases: {}
+    }
     this.onChange = () => {}
   }
 
-  setConsolePosition(newConfig) {
-    this.consolePosition = { ...this.consolePosition, ...newConfig }
-    this.setConfigInLocalStorage()
-
-    return this
+  get aliases() {
+    return this.config.aliases
+  }
+  get pageEvents() {
+    return this.config.pageEvents
+  }
+  get consolePosition() {
+    return this.config.consolePosition
   }
 
-  setAliases(newConfig) {
-    this.aliases = newConfig
-    this.setConfigInLocalStorage()
+  setConfig(newConfig, sender, shouldUpdateCurrentTab = true) {
+    this.config = {
+      ...this.config,
+      ...newConfig,
+      consolePosition: {
+        ...this.consolePosition,
+        ...(newConfig.consolePosition || {})
+      }
+    }
 
-    return this
-  }
-
-  setPageEvents(newConfig) {
-    this.pageEvents = newConfig
-    this.setConfigInLocalStorage()
+    this.setConfigInLocalStorage(sender, shouldUpdateCurrentTab)
 
     return this
   }
@@ -34,33 +40,19 @@ class ConfigManager {
   }
 
   getConfigFromLocalStorage() {
-    const receiveConfiguration = ({ configuration: receivedConfiguration }) => {
-      this.consolePosition = receivedConfiguration?.consolePosition || {}
-      this.pageEvents = receivedConfiguration?.pageEvents || []
-      this.aliases = receiveConfiguration?.aliases || {}
+    const receiveConfiguration = ({ configuration = {} }) => {
+      this.config = { ...this.config, ...configuration }
     }
 
     chrome.storage.sync.get('configuration', receiveConfiguration)
   }
 
-  setConfigInLocalStorage() {
+  setConfigInLocalStorage(sender, shouldUpdateCurrentTab) {
     chrome.storage.sync.set({
-      configuration: {
-        consolePosition: this.consolePosition,
-        pageEvents: this.pageEvents,
-        aliases: this.aliases
-      }
+      configuration: this.config
     })
 
-    this.onChange()
-  }
-
-  getConfiguration() {
-    return {
-      consolePosition: this.consolePosition,
-      pageEvents: this.pageEvents,
-      aliases: this.aliases
-    }
+    this.onChange(sender, shouldUpdateCurrentTab)
   }
 }
 

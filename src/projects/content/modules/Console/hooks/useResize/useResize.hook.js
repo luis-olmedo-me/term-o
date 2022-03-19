@@ -41,10 +41,10 @@ export const useResize = ({ wrapperReference, consolePosition }) => {
           newBodyData.height - (newResizeData.top + newResizeData.bottom) < 400
 
         const formattedData = {
-          left: isBelowMiniumWidth ? 0 : limitLowValue(newResizeData.left),
-          right: isBelowMiniumWidth ? 0 : limitLowValue(newResizeData.right),
-          top: isBelowMiniumHeight ? 0 : limitLowValue(newResizeData.top),
-          bottom: isBelowMiniumHeight ? 0 : limitLowValue(newResizeData.bottom)
+          left: isBelowMiniumWidth ? 10 : limitLowValue(newResizeData.left),
+          right: isBelowMiniumWidth ? 10 : limitLowValue(newResizeData.right),
+          top: isBelowMiniumHeight ? 10 : limitLowValue(newResizeData.top),
+          bottom: isBelowMiniumHeight ? 10 : limitLowValue(newResizeData.bottom)
         }
 
         updateConfig(formattedData)
@@ -83,10 +83,10 @@ export const useResize = ({ wrapperReference, consolePosition }) => {
       if (!hasConsolePosition) return
 
       setResizeData({
-        left: consolePosition?.left || 0,
-        right: consolePosition?.right || 0,
-        top: consolePosition?.top || 0,
-        bottom: consolePosition?.bottom || 0
+        left: consolePosition?.left || 10,
+        right: consolePosition?.right || 10,
+        top: consolePosition?.top || 10,
+        bottom: consolePosition?.bottom || 10
       })
     },
     [consolePosition]

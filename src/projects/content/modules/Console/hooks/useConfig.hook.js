@@ -18,7 +18,7 @@ export const useConfig = () => {
   const [config, setConfig] = useState(defaultConfiguration)
 
   useEffect(function openConsoleByKeyCommands() {
-    const toggleTerminal = (message) => {
+    const toggleTerminal = (message, _sender, sendResponse) => {
       const isActionNewCommand = message.action === eventTypes.NEW_COMMAND
       const isCommandToggleTerminal =
         message.data.command === extensionKeyEvents.TOGGLE_TERMINAL
@@ -29,6 +29,8 @@ export const useConfig = () => {
           isOpen: !oldConfig.isOpen
         }))
       }
+
+      sendResponse({ status: 'ok' })
     }
 
     chrome.runtime.onMessage.addListener(toggleTerminal)

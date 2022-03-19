@@ -13,7 +13,7 @@ chrome.commands.onCommand.addListener(function (command) {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     const [currentTab] = tabs
 
-    if (currentTab) chrome.tabs.sendMessage(currentTab.id, requestData)
+    if (currentTab) chrome.tabs.sendMessage(currentTab.id, requestData, null)
   })
 })
 

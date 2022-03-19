@@ -29,7 +29,7 @@ configManager.onChange = debounce((sender, shouldUpdateCurrentTab) => {
     }
 
     if (currentTab && shouldUpdate) {
-      chrome.tabs.sendMessage(currentTab.id, requestData)
+      chrome.tabs.sendMessage(currentTab.id, requestData, null)
     }
   })
 }, 100)

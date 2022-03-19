@@ -39,10 +39,12 @@ export const useConfig = () => {
   }, [])
 
   useEffect(function expectForConfigChanges() {
-    const receiveConfiguration = (message) => {
+    const receiveConfiguration = (message, _sender, sendResponse) => {
       if (message.action === eventTypes.CONFIG_UPDATE) {
         commander.setAliases(message.data?.aliases)
       }
+
+      sendResponse({ status: 'ok' })
     }
 
     chrome.runtime.onMessage.addListener(receiveConfiguration)

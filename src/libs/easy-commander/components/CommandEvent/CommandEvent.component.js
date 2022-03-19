@@ -82,7 +82,7 @@ export const CommandEvent = ({
   )
 
   return (
-    isLoading && (
+    !isLoading && (
       <>
         <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 

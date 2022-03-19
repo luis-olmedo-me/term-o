@@ -102,7 +102,7 @@ export const CommandAlias = ({
   )
 
   return (
-    isLoading && (
+    !isLoading && (
       <>
         <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 

@@ -76,10 +76,7 @@ export const Console = () => {
   )
 
   const outsideProps = {
-    aliases,
-    pageEvents,
-    clearTerminal: () => setHistories([]),
-    setConfig
+    clearTerminal: () => setHistories([])
   }
 
   const consoleStyles = {

@@ -21,7 +21,7 @@ configManager.onChange = debounce((sender, shouldUpdateCurrentTab) => {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     const [currentTab] = tabs
     const shouldUpdate =
-      shouldUpdateCurrentTab && currentTab.id === sender.tab?.id
+      shouldUpdateCurrentTab && currentTab.id === sender?.tab?.id
 
     const requestData = {
       action: eventTypes.CONFIG_UPDATE,
@@ -66,7 +66,13 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 
     case eventTypes.ADD_ALIAS: {
-      const newData = { ...configManager.aliases, ...request.data }
+      const initialId = Date.now().toString()
+      const newAliases = request.data.map((newAlias, index) => ({
+        ...newAlias,
+        id: initialId + index
+      }))
+
+      const newData = [...configManager.aliases, ...newAliases]
 
       configManager.setConfig({ aliases: newData }, sender)
       sendResponse({ status: 'ok' })
@@ -74,15 +80,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 
     case eventTypes.DELETE_ALIAS: {
-      const aliasesKeysToDelete = request.data?.aliasesKeysToDelete || []
+      const aliasIdsToDelete = request.data?.aliasIdsToDelete || []
 
-      const newAliases = aliasesKeysToDelete.reduce(
-        (filteredAliases, aliasKeyToDelete) => {
-          const { [aliasKeyToDelete]: removed, ...aliases } = filteredAliases
-
-          return aliases
-        },
-        configManager.aliases
+      const newAliases = configManager.aliases.filter(
+        ({ id }) => !aliasIdsToDelete.includes(id)
       )
 
       configManager.setConfig({ aliases: newAliases }, sender)

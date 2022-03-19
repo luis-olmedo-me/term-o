@@ -3,7 +3,7 @@ class ConfigManager {
     this.config = {
       consolePosition: {},
       pageEvents: [],
-      aliases: {}
+      aliases: []
     }
     this.onChange = () => {}
   }

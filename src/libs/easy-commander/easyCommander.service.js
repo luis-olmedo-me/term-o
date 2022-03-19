@@ -20,21 +20,29 @@ const unknownCommandError = {
 class Commander {
   constructor() {
     this.commands = consoleCommands
-    this.aliases = {}
+    this.aliases = []
   }
 
   get commandNames() {
     return Object.keys(this.commands)
   }
+  get aliasesAsObject() {
+    return this.aliases.reduce((finalObject, { name, command }) => {
+      return { ...finalObject, [name]: command }
+    }, {})
+  }
 
   setAliases(aliases) {
-    this.aliases = aliases || {}
+    this.aliases = aliases || []
   }
 
   getCommandWithAliases(command) {
-    return Object.entries(this.aliases).reduce((newCommand, [alias, value]) => {
-      return newCommand.replaceAll(alias, value)
-    }, command)
+    return Object.entries(this.aliasesAsObject).reduce(
+      (newCommand, [alias, value]) => {
+        return newCommand.replaceAll(alias, value)
+      },
+      command
+    )
   }
 
   getSuggestions(command) {
@@ -43,7 +51,7 @@ class Commander {
       .reverse()
     const [commandName, ...commandArgs] = lastCommand.trim().split(' ')
     const commandNames = Object.keys(this.commands)
-    const aliasNames = Object.keys(this.aliases)
+    const aliasNames = Object.keys(this.aliasesAsObject)
 
     const aliasAsProps = aliasNames.reduce((finalProps, name) => {
       const isMatch = name.includes(commandName)

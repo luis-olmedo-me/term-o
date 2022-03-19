@@ -86,13 +86,15 @@ export const CommandAlias = ({
 
   useEffect(
     function validateDeletedIds() {
+      if (isLoading) return
+
       const aliasesKeys = Object.keys(aliases)
       const validDeltedIds = deletedIds.filter((keyToDelete) => {
         return aliasesKeys.includes(keyToDelete)
       })
 
       if (deletedIds.length !== validDeltedIds.length) {
-        setMessageData({
+        return setMessageData({
           type: parameterTypes.ERROR,
           message: `The following ids were not found: ${deletedIds.join(', ')}`
         })
@@ -100,7 +102,7 @@ export const CommandAlias = ({
 
       setIdsToDelete(validDeltedIds)
     },
-    [deletedIds, aliases]
+    [deletedIds, aliases, isLoading]
   )
 
   useEffect(

@@ -23,6 +23,10 @@ class Commander {
     this.aliases = {}
   }
 
+  get commandNames() {
+    return Object.keys(this.commands)
+  }
+
   setAliases(aliases) {
     this.aliases = aliases || {}
   }

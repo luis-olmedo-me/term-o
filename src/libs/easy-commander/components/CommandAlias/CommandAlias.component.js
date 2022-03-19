@@ -5,6 +5,7 @@ import { Table } from 'modules/components/Table/Table.component'
 import { aliasHeaders } from './CommandAlias.constants'
 import { eventTypes } from 'src/constants/events.constants.js'
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
+import { commander } from '../../easyCommander.service'
 
 export const CommandAlias = ({
   props: { list, delete: deletedIds, add: aliasesToAdd },
@@ -52,9 +53,27 @@ export const CommandAlias = ({
         return { ...totalAliases, ...alias }
       }, {})
 
+      const validatedAliases = Object.entries(newAliases).reduce(
+        (totalAliases, [alias, command]) => {
+          return commander.commandNames.includes(alias)
+            ? totalAliases
+            : { ...totalAliases, [alias]: command }
+        },
+        {}
+      )
+
+      const hasValidAliases = Object.keys(validatedAliases).length > 0
+
+      if (!hasValidAliases) {
+        return setMessageData({
+          type: parameterTypes.ERROR,
+          message: 'Invalid alias(es).'
+        })
+      }
+
       backgroundRequest({
         eventType: eventTypes.ADD_ALIAS,
-        data: newAliases
+        data: validatedAliases
       })
 
       setMessageData({

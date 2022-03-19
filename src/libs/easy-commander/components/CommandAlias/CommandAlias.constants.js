@@ -4,12 +4,13 @@ import { optionTypes } from '../../constants/commands.constants'
 
 import { CommandAlias } from './CommandAlias.component'
 
-export const aliasKeys = {
+const aliasKeys = {
+  ID: 'id',
   ALIAS: 'alias',
   VALUE: 'value'
 }
 
-export const aliasHeaders = [aliasKeys.ALIAS, aliasKeys.VALUE]
+export const aliasHeaders = [aliasKeys.ID, aliasKeys.ALIAS, aliasKeys.VALUE]
 
 export const aliasConfig = {
   props: {

@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react'
-import { getNewResizeData, limitLowValue } from './useResize.helpers'
+import {
+  getNewResizeData,
+  limitLowValue,
+  updateConfig
+} from './useResize.helpers'
 import { debounce } from 'src/helpers/utils.helpers.js'
 import { defaultBodyData } from './useResize.constants'
 
-export const useResize = ({ wrapperReference, consolePosition, setConfig }) => {
+export const useResize = ({ wrapperReference, consolePosition }) => {
   const [resizingFrom, setResizingFrom] = useState('')
   const [movingFrom, setMovingFrom] = useState(null)
   const [resizeData, setResizeData] = useState({
@@ -43,7 +47,7 @@ export const useResize = ({ wrapperReference, consolePosition, setConfig }) => {
           bottom: isBelowMiniumHeight ? 0 : limitLowValue(newResizeData.bottom)
         }
 
-        setConfig({ consolePosition: formattedData })
+        updateConfig(formattedData)
         setResizeData(formattedData)
         setBodyData(newBodyData)
       }, 500)
@@ -54,7 +58,7 @@ export const useResize = ({ wrapperReference, consolePosition, setConfig }) => {
 
       return () => obsever.unobserve(document.body)
     },
-    [wrapperReference, setConfig]
+    [wrapperReference]
   )
 
   useEffect(function expectForBodyChanges() {
@@ -121,7 +125,7 @@ export const useResize = ({ wrapperReference, consolePosition, setConfig }) => {
             ...oldResizeData,
             ...newResizeData
           }))
-          setConfig({ consolePosition: newResizeData })
+          updateConfig(newResizeData)
 
           mousePosition = null
         }

@@ -11,10 +11,10 @@ export const useResize = ({ wrapperReference, consolePosition }) => {
   const [resizingFrom, setResizingFrom] = useState('')
   const [movingFrom, setMovingFrom] = useState(null)
   const [resizeData, setResizeData] = useState({
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0
+    left: 10,
+    right: 10,
+    top: 10,
+    bottom: 10
   })
 
   const [bodyData, setBodyData] = useState(defaultBodyData)

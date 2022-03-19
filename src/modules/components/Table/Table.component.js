@@ -11,12 +11,19 @@ export const Table = ({ headers, rows }) => {
           ))}
         </TableHeaderRow>
       </thead>
+
       <tbody>
         {rows.map((row, index) => (
           <tr key={`row-${index}`}>
-            {row.map((column, index) => (
-              <td key={`row-item-${index}`}>{column}</td>
-            ))}
+            {row.map((column, index) => {
+              const copyColumn = navigator.clipboard.writeText(column)
+
+              return (
+                <td key={`row-item-${index}`} onClick={copyColumn}>
+                  {column}
+                </td>
+              )
+            })}
           </tr>
         ))}
       </tbody>

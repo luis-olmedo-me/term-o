@@ -92,17 +92,14 @@ export const CommandAlias = ({
       if (isLoading) return
 
       const aliasIds = aliases.map(({ id }) => id)
-      const aliasesToDelete = deletedIds.filter(({ id }) =>
-        aliasIds.includes(id)
-      )
+      const aliasIdsToDelete = deletedIds.filter((id) => aliasIds.includes(id))
 
-      if (deletedIds.length !== aliasesToDelete.length) {
+      if (deletedIds.length !== aliasIdsToDelete.length) {
         return setMessageData({
           type: parameterTypes.ERROR,
           message: `The following ids were not found: ${deletedIds.join(', ')}`
         })
       }
-      const aliasIdsToDelete = aliasesToDelete.map(({ id }) => id)
 
       setIdsToDelete(aliasIdsToDelete)
     },
@@ -120,7 +117,7 @@ export const CommandAlias = ({
 
       setMessageData({
         type: parameterTypes.SUCCESS,
-        message: `Deleted ${idsToDelete.length} aliases.`
+        message: `Deleted ${idsToDelete.length} alias(es).`
       })
     },
     [hasAliases, list, idsToDelete]

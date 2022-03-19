@@ -11,9 +11,7 @@ import {
 const defaultConfiguration = {
   isOpen: false,
   appliedPageEvents: [],
-  pageEvents: [],
-  consolePosition: {},
-  aliases: {}
+  consolePosition: {}
 }
 
 export const useConfig = () => {
@@ -42,14 +40,9 @@ export const useConfig = () => {
 
   useEffect(function expectForConfigChanges() {
     const receiveConfiguration = (message, _sender, sendResponse) => {
-      if (message.action === eventTypes.UPDATE_CONFIG) {
-        setConfig((oldConfig) => ({
-          ...oldConfig,
-          ...message.data
-        }))
+      if (message.action === eventTypes.CONFIG_UPDATE) {
+        commander.setAliases(message.data?.aliases)
       }
-
-      commander.setAliases(message.data?.aliases)
 
       sendResponse({ status: 'ok' })
     }
@@ -63,16 +56,15 @@ export const useConfig = () => {
     const receiveConfiguration = ({ response: newConfig }) => {
       if (!newConfig) return
 
-      const newAppliedPageEvents = newConfig?.pageEvents?.filter((pageEvent) =>
+      const updatedPageEvents = newConfig?.pageEvents?.filter((pageEvent) =>
         window.location.origin.match(new RegExp(pageEvent.url))
       )
 
-      setConfig({
-        appliedPageEvents: newAppliedPageEvents || [],
-        pageEvents: newConfig?.pageEvents || [],
-        consolePosition: newConfig?.consolePosition || {},
-        aliases: newConfig?.aliases || {}
-      })
+      setConfig((oldConfig) => ({
+        ...oldConfig,
+        appliedPageEvents: updatedPageEvents || [],
+        consolePosition: newConfig?.consolePosition || {}
+      }))
 
       commander.setAliases(newConfig?.aliases)
     }

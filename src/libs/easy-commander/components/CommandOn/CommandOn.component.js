@@ -5,7 +5,10 @@ import { backgroundRequest } from 'src/helpers/event.helpers.js'
 import { eventTypes } from 'src/constants/events.constants.js'
 import { checkIfRegExpIsValid } from './CommandOn.helpers'
 
-export const CommandOn = ({ command, props: { url, run }, setMessageData }) => {
+export const CommandOn = ({
+  props: { url, run },
+  terminal: { command, setMessageData }
+}) => {
   useEffect(
     function setUpEventByURL() {
       if (!url.length) return

@@ -5,9 +5,8 @@ import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { parameterTypes } from '../../constants/commands.constants'
 
 export const CommandHistory = ({
-  command,
   props: { goto, protocol },
-  setMessageData
+  terminal: { command, setMessageData }
 }) => {
   useEffect(
     function pushIntoURL() {

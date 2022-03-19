@@ -3,6 +3,19 @@ import { backgroundRequest } from 'src/helpers/event.helpers.js'
 import { eventTypes } from 'src/constants/events.constants.js'
 import { debounce } from 'src/helpers/utils.helpers.js'
 
+export const limitLowValue = (value) => (value < 0 ? 0 : value)
+
+const validateSide = (side, oppositeSide, mockDistance) => {
+  const isSideOutside = side < 0
+  const isOppositeSideOutside = oppositeSide < 0
+
+  return isSideOutside
+    ? 0
+    : isOppositeSideOutside
+    ? mockDistance
+    : limitLowValue(side)
+}
+
 export const getNewResizeData = ({
   mousePosition: { x: mousePositionX, y: mousePositionY },
   pivotPosition: { x: pivotPositionX, y: pivotPositionY },
@@ -59,16 +72,11 @@ export const getNewResizeData = ({
       const right = resizeData.right - offsetX
       const bottom = resizeData.bottom - offsetY
 
-      const isLeftOutside = left < 0
-      const isRightOutside = right < 0
-      const isTopOutside = top < 0
-      const isBottomOutside = bottom < 0
-
       return {
-        left: isLeftOutside ? 0 : isRightOutside ? mockDistanceX : left,
-        right: isRightOutside ? 0 : isLeftOutside ? mockDistanceX : right,
-        top: isTopOutside ? 0 : isBottomOutside ? mockDistanceY : top,
-        bottom: isBottomOutside ? 0 : isTopOutside ? mockDistanceY : bottom
+        left: validateSide(left, right, mockDistanceX),
+        right: validateSide(right, left, mockDistanceX),
+        top: validateSide(top, bottom, mockDistanceY),
+        bottom: validateSide(bottom, top, mockDistanceY)
       }
     }
   }

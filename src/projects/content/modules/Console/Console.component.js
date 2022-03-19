@@ -24,34 +24,23 @@ export const Console = () => {
   const [histories, setHistories] = useState([])
   const [hasPageEventsBeenRunned, setHasPageEventsBeenRunned] = useState(false)
 
-  const {
-    isOpen,
-    pageEvents,
-    appliedPageEvents,
-    consolePosition,
-    aliases,
-    setConfig
-  } = useConfig()
+  const { isOpen, appliedPageEvents, consolePosition } = useConfig()
   const { setResizingFrom, resizeData, setMovingFrom, isMoving } = useResize({
     wrapperReference,
-    consolePosition,
-    setConfig
+    consolePosition
   })
 
-  const handleCommandRun = useCallback(
-    (command, id) => {
-      const formmatedCommand = commander.getCommandWithAliases(command)
+  const handleCommandRun = useCallback((command, id) => {
+    const formmatedCommand = commander.getCommandWithAliases(command)
 
-      const logOutput = commander.getLogOutput(id, formmatedCommand)
+    const logOutput = commander.getLogOutput(id, formmatedCommand)
 
-      setHistories((histories) => [...histories, logOutput])
+    setHistories((histories) => [...histories, logOutput])
 
-      setTimeout(() => {
-        historyRef?.current?.scrollTo(0, historyRef.current.scrollHeight)
-      })
-    },
-    [aliases]
-  )
+    setTimeout(() => {
+      historyRef?.current?.scrollTo(0, historyRef.current.scrollHeight)
+    })
+  }, [])
 
   useEffect(
     function applyPageEvents() {

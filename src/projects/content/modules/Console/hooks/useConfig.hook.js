@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 
 import { commander } from 'libs/easy-commander/easyCommander.service'
 
@@ -8,58 +8,17 @@ import {
   extensionKeyEvents
 } from 'src/constants/events.constants.js'
 
-import { debounce } from 'src/helpers/utils.helpers.js'
-
 const defaultConfiguration = {
   isOpen: false,
   appliedPageEvents: [],
-  pageEvents: [],
-  consolePosition: {},
-  aliases: {}
+  consolePosition: {}
 }
 
 export const useConfig = () => {
   const [config, setConfig] = useState(defaultConfiguration)
-  const [configToUpdate, setConfigToUpdate] = useState({})
-  const [isUpdating, setIsUpdating] = useState(false)
-
-  useEffect(() => {
-    const hasConfigToUpdate = Object.keys(configToUpdate).length > 0
-
-    if (!hasConfigToUpdate || isUpdating) return
-
-    const { pageEvents, aliases } = config
-
-    const newConfig = {
-      pageEvents,
-      aliases,
-      ...configToUpdate,
-      consolePosition: {
-        ...config.consolePosition,
-        ...(configToUpdate.consolePosition || {})
-      }
-    }
-
-    setIsUpdating(true)
-
-    const onFinish = () => {
-      setConfig((oldConfig) => ({ ...oldConfig, ...newConfig }))
-      setConfigToUpdate((oldConfig) =>
-        oldConfig === configToUpdate ? {} : oldConfig
-      )
-
-      setIsUpdating(false)
-    }
-
-    backgroundRequest({
-      eventType: eventTypes.UPDATE_CONFIG,
-      data: newConfig,
-      callback: onFinish
-    })
-  }, [configToUpdate, config, isUpdating])
 
   useEffect(function openConsoleByKeyCommands() {
-    const toggleTerminal = (message, _sender, sendResponse) => {
+    const toggleTerminal = (message) => {
       const isActionNewCommand = message.action === eventTypes.NEW_COMMAND
       const isCommandToggleTerminal =
         message.data.command === extensionKeyEvents.TOGGLE_TERMINAL
@@ -70,8 +29,6 @@ export const useConfig = () => {
           isOpen: !oldConfig.isOpen
         }))
       }
-
-      sendResponse({ status: 'ok' })
     }
 
     chrome.runtime.onMessage.addListener(toggleTerminal)
@@ -80,17 +37,10 @@ export const useConfig = () => {
   }, [])
 
   useEffect(function expectForConfigChanges() {
-    const receiveConfiguration = (message, _sender, sendResponse) => {
+    const receiveConfiguration = (message) => {
       if (message.action === eventTypes.CONFIG_UPDATE) {
-        setConfig((oldConfig) => ({
-          ...oldConfig,
-          ...message.data
-        }))
+        commander.setAliases(message.data?.aliases)
       }
-
-      commander.setAliases(message.data?.aliases)
-
-      sendResponse({ status: 'ok' })
     }
 
     chrome.runtime.onMessage.addListener(receiveConfiguration)
@@ -102,16 +52,15 @@ export const useConfig = () => {
     const receiveConfiguration = ({ response: newConfig }) => {
       if (!newConfig) return
 
-      const newAppliedPageEvents = newConfig?.pageEvents?.filter((pageEvent) =>
+      const updatedPageEvents = newConfig?.pageEvents?.filter((pageEvent) =>
         window.location.origin.match(new RegExp(pageEvent.url))
       )
 
-      setConfig({
-        appliedPageEvents: newAppliedPageEvents || [],
-        pageEvents: newConfig?.pageEvents || [],
-        consolePosition: newConfig?.consolePosition || {},
-        aliases: newConfig?.aliases || {}
-      })
+      setConfig((oldConfig) => ({
+        ...oldConfig,
+        appliedPageEvents: updatedPageEvents || [],
+        consolePosition: newConfig?.consolePosition || {}
+      }))
 
       commander.setAliases(newConfig?.aliases)
     }
@@ -122,19 +71,5 @@ export const useConfig = () => {
     })
   }, [])
 
-  const overwriteConfigToUpdate = useCallback(
-    debounce((newConfig) => {
-      setConfigToUpdate((oldConfig) => ({
-        ...oldConfig,
-        ...newConfig,
-        consolePosition: {
-          ...oldConfig.consolePosition,
-          ...(newConfig.consolePosition || {})
-        }
-      }))
-    }, 500),
-    []
-  )
-
-  return { ...config, ...configToUpdate, setConfig: overwriteConfigToUpdate }
+  return config
 }

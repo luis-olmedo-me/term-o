@@ -27,8 +27,8 @@ class Commander {
     return Object.keys(this.commands)
   }
   get aliasesAsObject() {
-    return this.aliases.reduce((finalObject, { alias, command }) => {
-      return { ...finalObject, [alias]: command }
+    return this.aliases.reduce((finalObject, { name, command }) => {
+      return { ...finalObject, [name]: command }
     }, {})
   }
 

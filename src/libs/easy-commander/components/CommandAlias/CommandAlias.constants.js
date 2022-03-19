@@ -6,11 +6,11 @@ import { CommandAlias } from './CommandAlias.component'
 
 const aliasKeys = {
   ID: 'id',
-  ALIAS: 'alias',
-  VALUE: 'value'
+  NAME: 'name',
+  COMMAND: 'command'
 }
 
-export const aliasHeaders = [aliasKeys.ID, aliasKeys.ALIAS, aliasKeys.VALUE]
+export const aliasHeaders = [aliasKeys.ID, aliasKeys.NAME, aliasKeys.COMMAND]
 
 export const aliasConfig = {
   props: {

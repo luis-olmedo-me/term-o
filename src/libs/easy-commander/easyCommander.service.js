@@ -73,13 +73,10 @@ class Commander {
 
       const hasKnownCommand = Boolean(knownCommand)
 
-      return (providerProps) => {
+      return ({ providerProps }) => {
         const commonProps = {
           props,
-          terminal: {
-            ...providerProps,
-            command: line.join(' ')
-          }
+          terminal: { ...providerProps, command: line.join(' ') }
         }
 
         if (!hasKnownCommand) {
@@ -101,7 +98,7 @@ class Commander {
     })
 
     return (outsideProps) => (
-      <Outputs {...outsideProps} key={id} components={setOfOutputs} />
+      <Outputs key={id} components={setOfOutputs} outsideProps={outsideProps} />
     )
   }
 }

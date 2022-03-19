@@ -117,7 +117,7 @@ export const Console = () => {
       </ConsoleTitle>
 
       <ConsoleLogs ref={historyRef} style={consoleStyles}>
-        {histories.map((history) => history({ consoleProps: outsideProps }))}
+        {histories.map((history) => history(outsideProps))}
       </ConsoleLogs>
 
       <CommandInput

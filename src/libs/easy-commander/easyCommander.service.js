@@ -50,7 +50,6 @@ class Commander {
       .split('|')
       .reverse()
     const [commandName, ...commandArgs] = lastCommand.trim().split(' ')
-    const commandNames = Object.keys(this.commands)
     const aliasNames = Object.keys(this.aliasesAsObject)
 
     const aliasAsProps = aliasNames.reduce((finalProps, name) => {
@@ -58,7 +57,7 @@ class Commander {
 
       return isMatch ? [...finalProps, { value: name }] : finalProps
     }, [])
-    const defaultProps = commandNames.reduce((finalProps, name) => {
+    const defaultProps = this.commandNames.reduce((finalProps, name) => {
       const isMatch = name.includes(commandName)
 
       return isMatch ? [...finalProps, { value: name }] : finalProps

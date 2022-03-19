@@ -15,8 +15,10 @@ export const CommandAlias = ({
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(function getAliases() {
-    const receivedAliases = ({ response: { aliases } }) => {
-      setAliases(aliases)
+    const receivedAliases = (response) => {
+      const updatedAliases = response?.response?.aliases || {}
+
+      setAliases(updatedAliases)
       setIsLoading(false)
     }
 
@@ -100,14 +102,16 @@ export const CommandAlias = ({
   )
 
   return (
-    <>
-      <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
+    isLoading && (
+      <>
+        <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-      {list && (
-        <LogWrapper variant={parameterTypes.TABLE}>
-          <Table headers={aliasHeaders} rows={aliasesRows} />
-        </LogWrapper>
-      )}
-    </>
+        {list && (
+          <LogWrapper variant={parameterTypes.TABLE}>
+            <Table headers={aliasHeaders} rows={aliasesRows} />
+          </LogWrapper>
+        )}
+      </>
+    )
   )
 }

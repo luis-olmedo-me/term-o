@@ -21,14 +21,16 @@ export const CommandEvent = ({
   const hasPageEvents = pageEvents.length > 0
 
   useEffect(function getPageEvents() {
-    const receivedAliases = ({ response: { pageEvents } }) => {
-      setPageEvents(pageEvents)
+    const receivedPageEvents = (response) => {
+      const updatedPageEvents = response?.response?.pageEvents || []
+
+      setPageEvents(updatedPageEvents)
       setIsLoading(false)
     }
 
     backgroundRequest({
       eventType: eventTypes.GET_CONFIGURATION,
-      callback: receivedAliases
+      callback: receivedPageEvents
     })
   }, [])
 
@@ -80,14 +82,16 @@ export const CommandEvent = ({
   )
 
   return (
-    <>
-      <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
+    isLoading && (
+      <>
+        <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-      {list && (
-        <LogWrapper variant={parameterTypes.TABLE}>
-          <Table headers={eventRows} rows={pageEventsRows} />
-        </LogWrapper>
-      )}
-    </>
+        {list && (
+          <LogWrapper variant={parameterTypes.TABLE}>
+            <Table headers={eventRows} rows={pageEventsRows} />
+          </LogWrapper>
+        )}
+      </>
+    )
   )
 }

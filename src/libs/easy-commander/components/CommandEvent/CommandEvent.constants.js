@@ -2,7 +2,7 @@ import React from 'react'
 import { CommandEvent } from './CommandEvent.component'
 import { optionTypes } from '../../constants/commands.constants'
 
-export const eventKeys = {
+const eventKeys = {
   ID: 'id',
   URL: 'url',
   COMMAND: 'command'

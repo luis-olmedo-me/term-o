@@ -12,12 +12,12 @@ export const CommandAlias = ({
   terminal: { setMessageData, command }
 }) => {
   const [idsToDelete, setIdsToDelete] = useState([])
-  const [aliases, setAliases] = useState({})
+  const [aliases, setAliases] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(function getAliases() {
     const receivedAliases = (response) => {
-      const updatedAliases = response?.response?.aliases || {}
+      const updatedAliases = response?.response?.aliases || []
 
       setAliases(updatedAliases)
       setIsLoading(false)
@@ -29,9 +29,10 @@ export const CommandAlias = ({
     })
   }, [])
 
-  const aliasesRows = Object.entries(aliases)
-
-  const hasAliases = aliasesRows.length > 0
+  const aliasesRows = aliases.map((alias) => {
+    return aliasHeaders.map((aliasHeader) => alias[aliasHeader])
+  })
+  const hasAliases = aliases.length > 0
 
   useEffect(
     function handleAliases() {
@@ -49,20 +50,22 @@ export const CommandAlias = ({
     function handleAliases() {
       if (isLoading || !aliasesToAdd.length) return
 
-      const newAliases = aliasesToAdd.reduce((totalAliases, alias) => {
+      const newAliasesAsObject = aliasesToAdd.reduce((totalAliases, alias) => {
         return { ...totalAliases, ...alias }
       }, {})
 
-      const validatedAliases = Object.entries(newAliases).reduce(
-        (totalAliases, [alias, command]) => {
-          return commander.commandNames.includes(alias)
+      const validatedAliases = Object.entries(newAliasesAsObject).reduce(
+        (totalAliases, [name, command]) => {
+          return commander.commandNames.includes(name)
             ? totalAliases
-            : { ...totalAliases, [alias]: command }
+            : [...totalAliases, { name, command }]
         },
-        {}
+        []
       )
 
-      const hasValidAliases = Object.keys(validatedAliases).length > 0
+      const newAliasesCount = Object.keys(validatedAliases).length
+      const hasValidAliases =
+        newAliasesCount && newAliasesCount === validatedAliases.length
 
       if (!hasValidAliases) {
         return setMessageData({
@@ -78,7 +81,7 @@ export const CommandAlias = ({
 
       setMessageData({
         type: parameterTypes.SUCCESS,
-        message: `Aliases added: ${Object.keys(newAliases).join(', ')}`
+        message: `Aliases added: ${Object.keys(newAliasesAsObject).join(', ')}`
       })
     },
     [aliasesToAdd, isLoading]
@@ -86,35 +89,35 @@ export const CommandAlias = ({
 
   useEffect(
     function validateDeletedIds() {
-      const aliasesKeys = Object.keys(aliases)
-      const validDeltedIds = deletedIds.filter((keyToDelete) => {
-        return aliasesKeys.includes(keyToDelete)
-      })
+      if (isLoading) return
 
-      if (deletedIds.length !== validDeltedIds.length) {
-        setMessageData({
+      const aliasIds = aliases.map(({ id }) => id)
+      const aliasIdsToDelete = deletedIds.filter((id) => aliasIds.includes(id))
+
+      if (deletedIds.length !== aliasIdsToDelete.length) {
+        return setMessageData({
           type: parameterTypes.ERROR,
           message: `The following ids were not found: ${deletedIds.join(', ')}`
         })
       }
 
-      setIdsToDelete(validDeltedIds)
+      setIdsToDelete(aliasIdsToDelete)
     },
-    [deletedIds, aliases]
+    [deletedIds, aliases, isLoading]
   )
 
   useEffect(
-    function deletePageEvents() {
+    function deleteAliases() {
       if (!idsToDelete.length) return
 
       backgroundRequest({
         eventType: eventTypes.DELETE_ALIAS,
-        data: { aliasesKeysToDelete: idsToDelete }
+        data: { aliasIdsToDelete: idsToDelete }
       })
 
       setMessageData({
         type: parameterTypes.SUCCESS,
-        message: `Deleted ${idsToDelete.length} aliases.`
+        message: `Deleted ${idsToDelete.length} alias(es).`
       })
     },
     [hasAliases, list, idsToDelete]

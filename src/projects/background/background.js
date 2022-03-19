@@ -95,11 +95,5 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       sendResponse({ status: 'ok' })
       break
     }
-
-    case eventTypes.UPDATE_CONFIG: {
-      configManager.setConfig(request.data, sender, false)
-      sendResponse({ status: 'ok' })
-      break
-    }
   }
 })

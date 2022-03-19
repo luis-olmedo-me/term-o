@@ -1,5 +1,5 @@
 import React from 'react'
-import { TableHeaderRow, TableWrapper } from './Table.styles'
+import { TableHeaderRow, TableWrapper, TableRowValue } from './Table.styles'
 
 export const Table = ({ headers, rows }) => {
   return (
@@ -16,12 +16,12 @@ export const Table = ({ headers, rows }) => {
         {rows.map((row, index) => (
           <tr key={`row-${index}`}>
             {row.map((column, index) => {
-              const copyColumn = navigator.clipboard.writeText(column)
+              const copyColumn = () => navigator.clipboard.writeText(column)
 
               return (
-                <td key={`row-item-${index}`} onClick={copyColumn}>
+                <TableRowValue key={`row-item-${index}`} onClick={copyColumn}>
                   {column}
-                </td>
+                </TableRowValue>
               )
             })}
           </tr>

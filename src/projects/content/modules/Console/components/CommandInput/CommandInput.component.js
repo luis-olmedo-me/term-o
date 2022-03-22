@@ -9,9 +9,11 @@ import { Hash, Input, InputWrapper } from './CommandInput.styles'
 export const CommandInput = ({ inputReference, handleOnEnter }) => {
   const [command, setCommand] = useState('')
   const [suggestions, setSuggestions] = useState([])
-  const [selectedSuggestionId, setSelectedSuggestionId] = useState(0)
+  const [selectedSuggestionId, setSelectedSuggestionId] = useState(-1)
 
   const handleKeyUp = ({ target: { selectionEnd, key } }) => {
+    if (key === 'Enter') return
+
     const temporalCommand = command.slice(0, selectionEnd)
     const newSuggestions = commander.getSuggestions(temporalCommand)
 
@@ -20,7 +22,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     setSuggestions(temporalCommand ? newSuggestions : [])
     setSelectedSuggestionId(
       selectedSuggestionId > newSuggestions.length - 1
-        ? 0
+        ? -1
         : selectedSuggestionId
     )
   }
@@ -30,11 +32,11 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     const { key } = event
 
     if (key === 'Enter') {
-      if (!shouldShowSuggestions) {
+      if (selectedSuggestionId === -1) {
         handleOnEnter(command)
         setCommand('')
         setSuggestions([])
-        setSelectedSuggestionId(0)
+        setSelectedSuggestionId(-1)
       } else {
         const selectedSuggestion = suggestions[selectedSuggestionId]
 
@@ -45,17 +47,14 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
           ? `${firstArguments.join(' ')} ${selectedSuggestion.value} `
           : `${selectedSuggestion.value} `
 
-        const newSuggestions = commander.getSuggestions(newCommand)
-
         setCommand(newCommand)
-        setSuggestions(newSuggestions)
       }
     } else if (key === 'ArrowUp') {
       event.preventDefault()
 
       setSelectedSuggestionId((indexId) => {
         const nextId = Number(indexId) - 1
-        const validatedId = nextId < 0 ? suggestions.length - 1 : nextId
+        const validatedId = nextId < -1 ? suggestions.length - 1 : nextId
 
         return validatedId
       })
@@ -80,16 +79,12 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     }
   }
 
-  const shouldShowSuggestions = Boolean(suggestions.length)
-
   return (
     <InputWrapper>
-      {shouldShowSuggestions && (
-        <Suggestions
-          suggestions={suggestions}
-          selectedSuggestionId={selectedSuggestionId}
-        />
-      )}
+      <Suggestions
+        suggestions={suggestions}
+        selectedSuggestionId={selectedSuggestionId}
+      />
 
       <div>
         <Hash>$</Hash>

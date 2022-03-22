@@ -52,16 +52,10 @@ class Commander {
     const [commandName, ...commandArgs] = lastCommand.trim().split(' ')
     const aliasNames = Object.keys(this.aliasesAsObject)
 
-    const aliasAsProps = aliasNames.reduce((finalProps, name) => {
-      const isMatch = name.includes(commandName)
-
-      return isMatch ? [...finalProps, { value: name }] : finalProps
-    }, [])
-    const defaultProps = this.commandNames.reduce((finalProps, name) => {
-      const isMatch = name.includes(commandName)
-
-      return isMatch ? [...finalProps, { value: name }] : finalProps
-    }, aliasAsProps)
+    const aliasAsProps = aliasNames.map((alias) => ({ value: alias }))
+    const defaultProps = this.commandNames
+      .map((name) => ({ value: name }))
+      .concat(aliasAsProps)
 
     const knownCommand = this.commands[commandName]
     const { values: _values, ...props } = getOptionsFromArgs(commandArgs)

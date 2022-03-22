@@ -11,12 +11,18 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
   const [suggestions, setSuggestions] = useState([])
   const [selectedSuggestionId, setSelectedSuggestionId] = useState(0)
 
-  const handleKeyUp = ({ target: { selectionEnd } }) => {
+  const handleKeyUp = ({ target: { selectionEnd, key } }) => {
     const temporalCommand = command.slice(0, selectionEnd)
     const newSuggestions = commander.getSuggestions(temporalCommand)
 
+    const [lastArg] = temporalCommand.split(' ').reverse()
+
     setSuggestions(temporalCommand ? newSuggestions : [])
-    setSelectedSuggestionId(0)
+    setSelectedSuggestionId(
+      selectedSuggestionId > newSuggestions.length - 1
+        ? 0
+        : selectedSuggestionId
+    )
   }
 
   const handleKeyPressed = (event) => {
@@ -74,13 +80,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     }
   }
 
-  const [lastCommand] = command.split('|').reverse()
-  const lastArgs = lastCommand.trimLeft().split(' ')
-
-  const areSuggestionsAvailable =
-    lastArgs.at(-1).startsWith('-') || lastArgs.length === 1
-  const shouldShowSuggestions =
-    Boolean(suggestions.length) && areSuggestionsAvailable
+  const shouldShowSuggestions = Boolean(suggestions.length)
 
   return (
     <InputWrapper>

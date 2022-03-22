@@ -11,11 +11,11 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
   const [suggestions, setSuggestions] = useState([])
   const [selectedSuggestionId, setSelectedSuggestionId] = useState(0)
 
-  const handleCommandChange = ({ target: { value: newValue } }) => {
-    const newSuggestions = commander.getSuggestions(newValue)
+  const handleKeyUp = ({ target: { selectionEnd } }) => {
+    const temporalCommand = command.slice(0, selectionEnd)
+    const newSuggestions = commander.getSuggestions(temporalCommand)
 
-    setCommand(newValue)
-    setSuggestions(newValue ? newSuggestions : [])
+    setSuggestions(temporalCommand ? newSuggestions : [])
     setSelectedSuggestionId(0)
   }
 
@@ -97,8 +97,9 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
         <Input
           ref={inputReference}
           type='text'
-          onChange={handleCommandChange}
           onKeyDown={handleKeyPressed}
+          onKeyUp={handleKeyUp}
+          onChange={(event) => setCommand(event.target.value)}
           value={command}
         />
       </div>

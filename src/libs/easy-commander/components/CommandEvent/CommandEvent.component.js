@@ -48,6 +48,8 @@ export const CommandEvent = ({
 
   useEffect(
     function validateDeletedIds() {
+      if (isLoading) return
+
       const validDeltedIds = deletedIds.filter((id) => {
         return pageEvents.some((pageEvent) => pageEvent.id === id)
       })
@@ -61,7 +63,7 @@ export const CommandEvent = ({
 
       setIdsToDelete(validDeltedIds)
     },
-    [deletedIds, pageEvents]
+    [deletedIds, pageEvents, isLoading]
   )
 
   useEffect(

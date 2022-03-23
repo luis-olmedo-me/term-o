@@ -17,4 +17,7 @@ export const Suggestion = styled.span`
   font-weight: ${({ selected }) => (selected ? 'bold' : 'normal')};
   display: flex;
   justify-content: space-between;
+  height: 40px;
+  box-sizing: border-box;
+  font-size: 16px;
 `

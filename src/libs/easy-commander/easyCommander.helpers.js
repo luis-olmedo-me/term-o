@@ -1,17 +1,12 @@
 import { optionTypes } from './constants/commands.constants'
 
-export const parsePropsIntoSuggestions = (propsConfigs, props) => {
+export const parsePropsIntoSuggestions = (propsConfigs) => {
   if (!propsConfigs) return []
-
-  const propsInUse = Object.keys(props)
 
   return Object.keys(propsConfigs).reduce((result, key) => {
     const propConfig = propsConfigs[key]
-    const isInUse =
-      propsInUse.includes(key) ||
-      propConfig.aliases.some((alias) => propsInUse.includes(alias))
 
-    const groupProps = parsePropsIntoSuggestions(propConfig.groupProps, props)
+    const groupProps = parsePropsIntoSuggestions(propConfig.groupProps)
 
     const newValue = groupProps.length
       ? groupProps
@@ -23,7 +18,7 @@ export const parsePropsIntoSuggestions = (propsConfigs, props) => {
           }
         ]
 
-    return !isInUse ? [...result, ...newValue] : result
+    return [...result, ...newValue]
   }, [])
 }
 

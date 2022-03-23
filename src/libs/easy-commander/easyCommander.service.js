@@ -26,6 +26,9 @@ class Commander {
   get commandNames() {
     return Object.keys(this.commands)
   }
+  get aliasNames() {
+    return Object.keys(this.aliasesAsObject)
+  }
   get aliasesAsObject() {
     return this.aliases.reduce((finalObject, { name, command }) => {
       return { ...finalObject, [name]: command }
@@ -45,31 +48,24 @@ class Commander {
     )
   }
 
+  isKeyword(arg) {
+    return this.commandNames.includes(arg) || this.aliasNames.includes(arg)
+  }
+
   getSuggestions(command) {
-    const [lastCommand] = this.getCommandWithAliases(command)
-      .split('|')
-      .reverse()
-    const [commandName, ...commandArgs] = lastCommand.trim().split(' ')
-    const commandNames = Object.keys(this.commands)
-    const aliasNames = Object.keys(this.aliasesAsObject)
+    const [lastCommand] = command.split('|').reverse()
+    const allArgsReversed = lastCommand.split(' ').reverse()
+    const commandName = allArgsReversed.find((arg) => this.isKeyword(arg))
 
-    const aliasAsProps = aliasNames.reduce((finalProps, name) => {
-      const isMatch = name.includes(commandName)
-
-      return isMatch ? [...finalProps, { value: name }] : finalProps
-    }, [])
-    const defaultProps = commandNames.reduce((finalProps, name) => {
-      const isMatch = name.includes(commandName)
-
-      return isMatch ? [...finalProps, { value: name }] : finalProps
-    }, aliasAsProps)
+    const defaultProps = this.commandNames
+      .concat(this.aliasNames)
+      .map((name) => ({ value: name }))
 
     const knownCommand = this.commands[commandName]
-    const { values: _values, ...props } = getOptionsFromArgs(commandArgs)
 
-    const parsedProps = parsePropsIntoSuggestions(knownCommand?.props, props)
+    const parsedProps = parsePropsIntoSuggestions(knownCommand?.props)
 
-    return knownCommand && commandArgs.length ? parsedProps : defaultProps
+    return [...parsedProps, ...defaultProps]
   }
 
   getLogOutput(id, fullLine) {

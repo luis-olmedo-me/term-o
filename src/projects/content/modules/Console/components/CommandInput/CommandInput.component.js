@@ -40,16 +40,9 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
   const [suggestions, setSuggestions] = useState([])
   const [selectedSuggestionId, setSelectedSuggestionId] = useState(0)
 
-  const handleKeyUp = (event) => {
-    const {
-      target: { selectionEnd },
-      key
-    } = event
-
+  const handleKeyUp = ({ target: { selectionEnd }, key }) => {
     const temporalCommand = command.slice(0, selectionEnd)
     const isLastLetterSpecial = [' ', '|'].includes(temporalCommand.at(-1))
-
-    event.stopPropagation()
 
     if (key === 'Enter') {
       if (selectedSuggestionId === 0) {
@@ -94,7 +87,6 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
   }
 
   const handleKeyPressed = (event) => {
-    event.stopPropagation()
     const { key } = event
 
     if (key === 'ArrowUp') {

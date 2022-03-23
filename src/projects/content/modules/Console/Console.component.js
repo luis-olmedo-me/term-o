@@ -73,6 +73,10 @@ export const Console = () => {
     paddingBottom: parseInt(inputReference.current?.offsetHeight || 0) + 10
   }
 
+  const cancelEventPropagation = (event) => {
+    event.stopPropagation()
+  }
+
   return (
     <ConsoleWrapper
       ref={wrapperReference}
@@ -81,6 +85,9 @@ export const Console = () => {
       ondragstart='return false;'
       ondrop='return false;'
       onMouseDown={() => setTimeout(() => inputReference.current?.focus())}
+      onKeyDown={cancelEventPropagation}
+      onKeyUp={cancelEventPropagation}
+      onKeyPress={cancelEventPropagation}
     >
       {!isMoving
         ? singleResizeTypes.map((resizeType) => (

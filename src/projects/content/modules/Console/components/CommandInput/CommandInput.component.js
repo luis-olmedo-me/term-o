@@ -24,7 +24,7 @@ const spliceArg = function (myString, index, value) {
 
   for (const wordIndex in words) {
     const word = words[wordIndex]
-    letterCounter += word.length
+    letterCounter += word.length + 1
 
     if (letterCounter >= index) {
       words[wordIndex] = value
@@ -61,8 +61,8 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
         const { value } = suggestions[selectedSuggestionId]
 
         const newCommand = isLastLetterSpecial
-          ? splice(temporalCommand, selectionEnd, value)
-          : spliceArg(temporalCommand, selectionEnd, value)
+          ? splice(command, selectionEnd, value)
+          : spliceArg(command, selectionEnd, value)
 
         setCommand(newCommand)
         setSelectedSuggestionId(0)

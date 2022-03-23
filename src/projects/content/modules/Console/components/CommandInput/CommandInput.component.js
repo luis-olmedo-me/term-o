@@ -65,6 +65,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
           : spliceArg(temporalCommand, selectionEnd, value)
 
         setCommand(newCommand)
+        setSelectedSuggestionId(0)
       }
 
       return

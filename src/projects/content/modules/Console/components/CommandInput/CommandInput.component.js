@@ -10,6 +10,29 @@ const splice = function (myString, index, value) {
   return myString.slice(0, index) + value + myString.slice(index)
 }
 
+const spliceArg = function (myString, index, value) {
+  let words = myString.split(' ')
+  let letterCounter = 0
+
+  if (myString.length === index) {
+    words[words.length - 1] = value
+
+    return words.join(' ')
+  }
+
+  for (const wordIndex in words) {
+    const word = words[wordIndex]
+    letterCounter += word.length
+
+    if (letterCounter >= index) {
+      words[wordIndex] = value
+      break
+    }
+  }
+
+  return words.join(' ')
+}
+
 export const CommandInput = ({ inputReference, handleOnEnter }) => {
   const [command, setCommand] = useState('')
   const [suggestions, setSuggestions] = useState([])
@@ -17,6 +40,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
 
   const handleKeyUp = ({ target: { selectionEnd }, key }) => {
     const temporalCommand = command.slice(0, selectionEnd)
+    const isLastLetterSpace = temporalCommand.at(-1) === ' '
 
     if (key === 'Enter') {
       if (selectedSuggestionId === 0) {
@@ -27,7 +51,9 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
       } else {
         const { value } = suggestions[selectedSuggestionId]
 
-        const newCommand = splice(temporalCommand, selectionEnd, value)
+        const newCommand = isLastLetterSpace
+          ? splice(temporalCommand, selectionEnd, value)
+          : spliceArg(temporalCommand, selectionEnd, value)
 
         setCommand(newCommand)
       }

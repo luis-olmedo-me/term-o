@@ -38,9 +38,16 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
   const [suggestions, setSuggestions] = useState([])
   const [selectedSuggestionId, setSelectedSuggestionId] = useState(0)
 
-  const handleKeyUp = ({ target: { selectionEnd }, key }) => {
+  const handleKeyUp = (event) => {
+    const {
+      target: { selectionEnd },
+      key
+    } = event
+
     const temporalCommand = command.slice(0, selectionEnd)
     const isLastLetterSpace = temporalCommand.at(-1) === ' '
+
+    event.stopPropagation()
 
     if (key === 'Enter') {
       if (selectedSuggestionId === 0) {
@@ -59,6 +66,19 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
       }
 
       return
+    } else if (key === 'ArrowUp' || key === 'ArrowDown') {
+      return
+    } else if (key === '|') {
+      event.preventDefault()
+
+      const newCommand = `${command}| `
+      const newSuggestions = commander.getSuggestions(newCommand)
+
+      setCommand(newCommand)
+      setSuggestions(newCommand ? newSuggestions : [])
+      setSelectedSuggestionId(0)
+
+      return
     }
 
     const newSuggestions = [
@@ -70,9 +90,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
       selectedSuggestionId > newSuggestions.length - 1
 
     setSuggestions(temporalCommand && !isLastLetterSpace ? newSuggestions : [])
-    setSelectedSuggestionId(
-      isSelectedIndexOutOfRange ? 0 : selectedSuggestionId
-    )
+    setSelectedSuggestionId(0)
   }
 
   const handleKeyPressed = (event) => {
@@ -97,15 +115,6 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
 
         return validatedId
       })
-    } else if (key === '|') {
-      event.preventDefault()
-
-      const newCommand = `${command}| `
-      const newSuggestions = commander.getSuggestions(newCommand)
-
-      setCommand(newCommand)
-      setSuggestions(newCommand ? newSuggestions : [])
-      setSelectedSuggestionId(0)
     }
   }
 

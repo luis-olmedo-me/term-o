@@ -6,6 +6,8 @@ import { Suggestions } from '../Suggestions/Suggestions.component'
 
 import { Hash, Input, InputWrapper } from './CommandInput.styles'
 
+const defaultSuggestion = { value: 'Hit enter to execute' }
+
 const splice = function (myString, index, value) {
   return myString.slice(0, index) + value + myString.slice(index)
 }
@@ -81,10 +83,12 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
       return
     }
 
-    const newSuggestions = [
-      { value: 'Hit enter to execute' },
-      ...commander.getSuggestions(temporalCommand)
-    ]
+    const [lastWord] = temporalCommand.split(' ').reverse()
+    const filteredSuggestions = commander
+      .getSuggestions(temporalCommand)
+      .filter((suggestion) => suggestion.value.includes(lastWord))
+
+    const newSuggestions = [defaultSuggestion, ...filteredSuggestions]
 
     const isSelectedIndexOutOfRange =
       selectedSuggestionId > newSuggestions.length - 1

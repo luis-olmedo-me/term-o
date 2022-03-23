@@ -47,7 +47,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     } = event
 
     const temporalCommand = command.slice(0, selectionEnd)
-    const isLastLetterSpace = temporalCommand.at(-1) === ' '
+    const isLastLetterSpecial = [' ', '|'].includes(temporalCommand.at(-1))
 
     event.stopPropagation()
 
@@ -60,7 +60,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
       } else {
         const { value } = suggestions[selectedSuggestionId]
 
-        const newCommand = isLastLetterSpace
+        const newCommand = isLastLetterSpecial
           ? splice(temporalCommand, selectionEnd, value)
           : spliceArg(temporalCommand, selectionEnd, value)
 
@@ -69,17 +69,6 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
 
       return
     } else if (key === 'ArrowUp' || key === 'ArrowDown') {
-      return
-    } else if (key === '|') {
-      event.preventDefault()
-
-      const newCommand = `${command}| `
-      const newSuggestions = commander.getSuggestions(newCommand)
-
-      setCommand(newCommand)
-      setSuggestions(newCommand ? newSuggestions : [])
-      setSelectedSuggestionId(0)
-
       return
     }
 
@@ -97,7 +86,9 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     const isSelectedIndexOutOfRange =
       selectedSuggestionId > newSuggestions.length - 1
 
-    setSuggestions(temporalCommand && !isLastLetterSpace ? newSuggestions : [])
+    setSuggestions(
+      temporalCommand && !isLastLetterSpecial ? newSuggestions : []
+    )
     setSelectedSuggestionId(0)
   }
 

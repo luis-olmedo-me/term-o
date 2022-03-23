@@ -53,7 +53,8 @@ class Commander {
   }
 
   getSuggestions(command) {
-    const allArgsReversed = command.split(' ').reverse()
+    const [lastCommand] = command.split('|').reverse()
+    const allArgsReversed = lastCommand.split(' ').reverse()
     const commandName = allArgsReversed.find((arg) => this.isKeyword(arg))
 
     const defaultProps = this.commandNames

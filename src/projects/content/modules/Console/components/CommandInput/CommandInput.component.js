@@ -6,24 +6,46 @@ import { Suggestions } from '../Suggestions/Suggestions.component'
 
 import { Hash, Input, InputWrapper } from './CommandInput.styles'
 
+const splice = function (myString, index, value) {
+  return myString.slice(0, index) + value + myString.slice(index)
+}
+
 export const CommandInput = ({ inputReference, handleOnEnter }) => {
   const [command, setCommand] = useState('')
   const [suggestions, setSuggestions] = useState([])
-  const [selectedSuggestionId, setSelectedSuggestionId] = useState(-1)
+  const [selectedSuggestionId, setSelectedSuggestionId] = useState(0)
 
-  const handleKeyUp = ({ target: { selectionEnd, key } }) => {
-    if (key === 'Enter') return
-
+  const handleKeyUp = ({ target: { selectionEnd }, key }) => {
     const temporalCommand = command.slice(0, selectionEnd)
-    const newSuggestions = commander.getSuggestions(temporalCommand)
 
-    const [lastArg] = temporalCommand.split(' ').reverse()
+    if (key === 'Enter') {
+      if (selectedSuggestionId === 0) {
+        handleOnEnter(command)
+        setCommand('')
+        setSuggestions([])
+        setSelectedSuggestionId(0)
+      } else {
+        const { value } = suggestions[selectedSuggestionId]
 
-    setSuggestions(temporalCommand ? newSuggestions : [])
-    setSelectedSuggestionId(
+        const newCommand = splice(temporalCommand, selectionEnd, value)
+
+        setCommand(newCommand)
+      }
+
+      return
+    }
+
+    const newSuggestions = [
+      { value: 'Hit enter to execute' },
+      ...commander.getSuggestions(temporalCommand)
+    ]
+
+    const isSelectedIndexOutOfRange =
       selectedSuggestionId > newSuggestions.length - 1
-        ? -1
-        : selectedSuggestionId
+
+    setSuggestions(temporalCommand && !isLastLetterSpace ? newSuggestions : [])
+    setSelectedSuggestionId(
+      isSelectedIndexOutOfRange ? 0 : selectedSuggestionId
     )
   }
 
@@ -31,30 +53,12 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     event.stopPropagation()
     const { key } = event
 
-    if (key === 'Enter') {
-      if (selectedSuggestionId === -1) {
-        handleOnEnter(command)
-        setCommand('')
-        setSuggestions([])
-        setSelectedSuggestionId(-1)
-      } else {
-        const selectedSuggestion = suggestions[selectedSuggestionId]
-
-        const args = command.split(' ')
-        const firstArguments = args.splice(0, args.length - 1)
-
-        const newCommand = firstArguments.length
-          ? `${firstArguments.join(' ')} ${selectedSuggestion.value} `
-          : `${selectedSuggestion.value} `
-
-        setCommand(newCommand)
-      }
-    } else if (key === 'ArrowUp') {
+    if (key === 'ArrowUp') {
       event.preventDefault()
 
       setSelectedSuggestionId((indexId) => {
         const nextId = Number(indexId) - 1
-        const validatedId = nextId < -1 ? suggestions.length - 1 : nextId
+        const validatedId = nextId < 0 ? suggestions.length - 1 : nextId
 
         return validatedId
       })

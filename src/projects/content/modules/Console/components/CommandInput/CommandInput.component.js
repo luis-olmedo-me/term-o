@@ -5,35 +5,9 @@ import { commander } from 'libs/easy-commander/easyCommander.service'
 import { Suggestions } from '../Suggestions/Suggestions.component'
 
 import { Hash, Input, InputWrapper } from './CommandInput.styles'
+import { splice, spliceArg } from './CommandInput.helpers'
 
 const defaultSuggestion = { value: 'Hit enter to execute' }
-
-const splice = function (myString, index, value) {
-  return myString.slice(0, index) + value + myString.slice(index)
-}
-
-const spliceArg = function (myString, index, value) {
-  let words = myString.split(' ')
-  let letterCounter = 0
-
-  if (myString.length === index) {
-    words[words.length - 1] = value
-
-    return words.join(' ')
-  }
-
-  for (const wordIndex in words) {
-    const word = words[wordIndex]
-    letterCounter += word.length + 1
-
-    if (letterCounter >= index) {
-      words[wordIndex] = value
-      break
-    }
-  }
-
-  return words.join(' ')
-}
 
 export const CommandInput = ({ inputReference, handleOnEnter }) => {
   const [command, setCommand] = useState('')
@@ -76,9 +50,6 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
       .filter((suggestion) => suggestion.value.includes(lastWord))
 
     const newSuggestions = [defaultSuggestion, ...filteredSuggestions]
-
-    const isSelectedIndexOutOfRange =
-      selectedSuggestionId > newSuggestions.length - 1
 
     setSuggestions(
       temporalCommand && !isLastLetterSpecial ? newSuggestions : []

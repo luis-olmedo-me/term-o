@@ -9,6 +9,7 @@ export const Input = styled.input`
   vertical-align: middle;
   background-color: transparent;
   font-family: 'Coda';
+  font-size: 16px;
 
   &:active,
   &:focus,

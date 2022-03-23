@@ -83,9 +83,13 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
       return
     }
 
-    const [lastWord] = temporalCommand.split(' ').reverse()
+    const temporalSpacedCommand = temporalCommand
+      .replace(/"/g, ' " ')
+      .replace(/'/g, " ' ")
+    const lastWord = temporalCommand.split(' ').at(-1)
+
     const filteredSuggestions = commander
-      .getSuggestions(temporalCommand)
+      .getSuggestions(temporalSpacedCommand)
       .filter((suggestion) => suggestion.value.includes(lastWord))
 
     const newSuggestions = [defaultSuggestion, ...filteredSuggestions]

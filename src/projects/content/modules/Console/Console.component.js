@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 
-import { commander } from 'libs/easy-commander/easyCommander.service'
+import { commander } from 'libs/easy-commander/commander.service'
 
 import { CommandInput } from './components/CommandInput/CommandInput.component.js'
 import { Resizer } from './components/Resizer/Resizer.component.js'

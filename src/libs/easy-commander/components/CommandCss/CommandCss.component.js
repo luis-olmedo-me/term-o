@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
-import { styleElements, validateStyles } from '../../easyCommander.promises'
+import { styleElements, validateStyles } from '../../commander.promises'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { parseManualStyles, parseStyles } from './CommandCss.helpers'
 import { cssMessages } from './CommandCss.messages'

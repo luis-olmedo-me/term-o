@@ -1,4 +1,4 @@
-import { camelize } from '../../easyCommander.promises'
+import { camelize } from '../../commander.promises'
 
 export const parseStyles = (inlineStyles) => {
   const regex = /([\w-]*)\s*:\s*([^;]*)/g

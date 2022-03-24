@@ -20,5 +20,9 @@ export const optionTypes = {
 }
 
 export const actionTypes = {
-  GET_DOM_ELEMENTS: 'GET_DOM_ELEMENTS'
+  GET_DOM_ELEMENTS: 'GET_DOM_ELEMENTS',
+  SHOW_LIST: 'SHOW_LIST',
+  DELETE_ALIAS: 'DELETE_ALIAS',
+  ADD_ALIAS: 'ADD_ALIAS',
+  NONE: 'NONE'
 }

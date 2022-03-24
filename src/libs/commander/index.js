@@ -1,5 +1,5 @@
-import { commander } from './easyCommander.service'
-import { consoleCommands } from './easyCommander.constants'
+import { commander } from './commander.service'
+import { consoleCommands } from './commander.constants'
 import { optionTypes } from './constants/commands.constants'
 
 export { commander, consoleCommands, optionTypes }

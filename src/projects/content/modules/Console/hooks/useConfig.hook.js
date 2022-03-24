@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { commander } from 'libs/easy-commander/easyCommander.service'
+import { commander } from 'libs/commander/commander.service'
 
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
 import {

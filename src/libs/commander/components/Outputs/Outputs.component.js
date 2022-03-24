@@ -1,5 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { OutputWrapper } from './Outputs.styles'
+
+const replaceByParams = (message, params) => {
+  return message.replace(/\{([^\}]+)?\}/g, (_, paramKey) => params[paramKey])
+}
 
 export const Outputs = ({ components, id, outsideProps }) => {
   const defaultData = components.map((Component, index) => ({
@@ -23,6 +27,15 @@ export const Outputs = ({ components, id, outsideProps }) => {
 
   const componentsShown = data.filter((item) => item.isVisible)
 
+  const setMessageDataWithParams = useCallback((messageData, params = {}) => {
+    const newMessageData = {
+      ...messageData,
+      message: replaceByParams(messageData.message, params)
+    }
+
+    setMessageData(newMessageData)
+  }, [])
+
   return (
     <OutputWrapper>
       {componentsShown.map(({ Component, parameters }, indexId) => {
@@ -31,7 +44,7 @@ export const Outputs = ({ components, id, outsideProps }) => {
 
         const providerProps = {
           ...outsideProps,
-          setMessageData,
+          setMessageData: setMessageDataWithParams,
           messageData: isLastComponent ? messageData : {},
           setParameters: (value) => setParametersWithId(nextId, value),
           parameters

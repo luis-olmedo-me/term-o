@@ -5,6 +5,7 @@ import { Table } from 'modules/components/Table/Table.component'
 import { eventRows } from './CommandEvent.constants'
 import { eventTypes } from 'src/constants/events.constants.js'
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
+import { eventMessages } from './CommandEvent.messages'
 
 export const CommandEvent = ({
   props: { list, delete: deletedIds },
@@ -55,9 +56,8 @@ export const CommandEvent = ({
       })
 
       if (deletedIds.length !== validDeltedIds.length) {
-        setMessageData({
-          type: parameterTypes.ERROR,
-          message: `The following ids were not found: ${deletedIds.join(', ')}`
+        return setMessageData(eventMessages.invalidEventIds, {
+          invalidIds: deletedIds.join(', ')
         })
       }
 
@@ -75,10 +75,7 @@ export const CommandEvent = ({
         data: { ids: idsToDelete }
       })
 
-      setMessageData({
-        type: parameterTypes.SUCCESS,
-        message: `Deleted ${idsToDelete.length} page events.`
-      })
+      setMessageData(eventMessages.eventDeleteSuccess)
     },
     [hasPageEvents, list, idsToDelete]
   )

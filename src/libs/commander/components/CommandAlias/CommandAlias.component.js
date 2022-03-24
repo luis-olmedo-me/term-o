@@ -5,7 +5,7 @@ import { Table } from 'modules/components/Table/Table.component'
 import { aliasHeaders } from './CommandAlias.constants'
 import { eventTypes } from 'src/constants/events.constants.js'
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
-import { commander } from '../../easyCommander.service'
+import { commander } from '../../commander.service'
 
 export const CommandAlias = ({
   props: { list, delete: deletedIds, add: aliasesToAdd },

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
-import { styleElements, validateStyles } from '../../easyCommander.promises'
+import { styleElements, validateStyles } from '../../commander.promises'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { parseManualStyles, parseStyles } from './CommandCss.helpers'
+import { cssMessages } from './CommandCss.messages'
 
 export const CommandCss = ({
   props: { styles, manualStyles },
@@ -28,10 +29,9 @@ export const CommandCss = ({
         styleElements({ styles: validStyles, elements: elementsToStyle })
         setStylesApplied(validStyles)
       } else {
-        const stringifiedInvalidatedStyles = invalidStylesNames.join(', ')
-        const message = `Some of the styles you provided are invalid: "${stringifiedInvalidatedStyles}".`
-
-        return setMessageData({ message, type: parameterTypes.ERROR })
+        setMessageData(cssMessages.invalidStyle, {
+          invalidStyleNames: invalidStylesNames.join(', ')
+        })
       }
     },
     [parameters]

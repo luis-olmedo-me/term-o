@@ -4,7 +4,7 @@ import { optionTypes } from '../../constants/commands.constants'
 
 import { CommandCss } from './CommandCss.component'
 
-import { kebabize, validStyleKeys } from '../../easyCommander.promises'
+import { kebabize, validStyleKeys } from '../../commander.promises'
 
 const cssProps = validStyleKeys.reduce((props, key) => {
   return {

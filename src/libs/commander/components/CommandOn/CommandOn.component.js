@@ -4,6 +4,7 @@ import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
 import { eventTypes } from 'src/constants/events.constants.js'
 import { checkIfRegExpIsValid } from './CommandOn.helpers'
+import { onMessages } from './CommandOn.messages'
 
 export const CommandOn = ({
   props: { url, run },
@@ -12,20 +13,12 @@ export const CommandOn = ({
   useEffect(
     function setUpEventByURL() {
       if (!url.length) return
-      if (!run.length) {
-        return setMessageData({
-          message: 'Must provide a command to run',
-          type: parameterTypes.ERROR
-        })
-      }
+      if (!run.length) return setMessageData(onMessages.missingCommand)
 
       const areURLsValid = checkIfRegExpIsValid(url)
 
       if (!areURLsValid) {
-        return setMessageData({
-          message: 'URLs must be valid regular expressions',
-          type: parameterTypes.ERROR
-        })
+        return setMessageData(onMessages.invalidURLRegularExpressions)
       }
 
       const urlForEvent = url.join('|')
@@ -37,23 +30,11 @@ export const CommandOn = ({
         eventType: eventTypes.ADD_PAGES_EVENT,
         data: commandsToRun
       })
+
+      setMessageData(onMessages.eventSaveSuccess)
     },
     [url, run]
   )
 
-  const hasCommandsApplied = run.length > 0
-  const urlsApplied = url.includes('.') ? 'ANY' : `"${url.join('", "')}"`
-  const commandsApplied = `"${run.join('", "')}"`
-
-  const label = `Set ${commandsApplied} to run on ${urlsApplied} urls.`
-
-  return (
-    <>
-      <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
-
-      {hasCommandsApplied && (
-        <LogWrapper variant={parameterTypes.INFO}>{label}</LogWrapper>
-      )}
-    </>
-  )
+  return <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { commander } from 'libs/easy-commander/easyCommander.service'
+import { commander } from 'libs/commander/commander.service'
 
 import { Suggestions } from '../Suggestions/Suggestions.component'
 

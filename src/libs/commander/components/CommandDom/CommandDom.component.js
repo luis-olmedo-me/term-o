@@ -13,13 +13,6 @@ export const CommandDom = ({
   const [elements, setElements] = useState([])
   const [elementsShown, setElementsShown] = useState(40)
 
-  const patterns = useMemo(() => {
-    const patternToGet = get || []
-    const patternsFromValues = values || []
-
-    return [...patternToGet, ...patternsFromValues]
-  }, [get])
-
   useEffect(
     function searchElements() {
       const hasDefaultElements = parameters?.type === parameterTypes.ELEMENTS
@@ -36,17 +29,17 @@ export const CommandDom = ({
       }
 
       const elementsSearch = getElements({
-        patterns,
+        patterns: get,
         defaultElements,
         filter: hasFilters ? filterElements : null
       })
 
       elementsSearch.then(({ elements: newElements, error }) => {
         if (error) {
-          return setMessageData(error, { patterns: patterns.join(', ') })
+          return setMessageData(error, { patterns: get.join(', ') })
         } else if (!newElements.length) {
           return setMessageData(domMessages.noElementsFound, {
-            patterns: patterns.join(', ')
+            patterns: get.join(', ')
           })
         }
 
@@ -54,7 +47,7 @@ export const CommandDom = ({
         setParameters({ value: newElements, type: parameterTypes.ELEMENTS })
       })
     },
-    [patterns, parameters, setMessageData]
+    [get, parameters, setMessageData]
   )
 
   const hasMoreElements = elements.length > elementsShown

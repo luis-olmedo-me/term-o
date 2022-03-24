@@ -3,7 +3,6 @@ import { MessageCommand } from './components/MessageCommand/MessageCommand.compo
 
 import { Outputs } from './components/Outputs/Outputs.component'
 import { consoleCommands } from './easyCommander.constants'
-import { parameterTypes } from './constants/commands.constants'
 
 import {
   buildProps,
@@ -11,11 +10,7 @@ import {
   parsePropsIntoSuggestions,
   splitArgsTakingInCountSymbols
 } from './easyCommander.helpers'
-
-const unknownCommandError = {
-  message: 'The command you entered is not recognized. Please try again.',
-  type: parameterTypes.ERROR
-}
+import { commanderMessages } from './commander.messages'
 
 class Commander {
   constructor() {
@@ -92,7 +87,7 @@ class Commander {
             ...commonProps,
             terminal: {
               ...commonProps.terminal,
-              messageData: unknownCommandError
+              messageData: commanderMessages.unknownCommandError
             }
           }
 

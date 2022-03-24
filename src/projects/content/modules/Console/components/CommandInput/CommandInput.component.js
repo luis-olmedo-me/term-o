@@ -5,46 +5,62 @@ import { commander } from 'libs/easy-commander/easyCommander.service'
 import { Suggestions } from '../Suggestions/Suggestions.component'
 
 import { Hash, Input, InputWrapper } from './CommandInput.styles'
+import { splice, spliceArg } from './CommandInput.helpers'
+
+const defaultSuggestion = { value: 'Hit enter to execute' }
 
 export const CommandInput = ({ inputReference, handleOnEnter }) => {
   const [command, setCommand] = useState('')
   const [suggestions, setSuggestions] = useState([])
   const [selectedSuggestionId, setSelectedSuggestionId] = useState(0)
 
-  const handleCommandChange = ({ target: { value: newValue } }) => {
-    const newSuggestions = commander.getSuggestions(newValue)
-
-    setCommand(newValue)
-    setSuggestions(newValue ? newSuggestions : [])
-    setSelectedSuggestionId(0)
-  }
-
-  const handleKeyPressed = (event) => {
-    event.stopPropagation()
-    const { key } = event
+  const handleKeyUp = ({ target: { selectionEnd }, key }) => {
+    const temporalCommand = command.slice(0, selectionEnd)
+    const isLastLetterSpecial = [' ', '|'].includes(temporalCommand.at(-1))
 
     if (key === 'Enter') {
-      if (!shouldShowSuggestions) {
+      if (selectedSuggestionId === 0) {
         handleOnEnter(command)
         setCommand('')
         setSuggestions([])
         setSelectedSuggestionId(0)
       } else {
-        const selectedSuggestion = suggestions[selectedSuggestionId]
+        const { value } = suggestions[selectedSuggestionId]
 
-        const args = command.split(' ')
-        const firstArguments = args.splice(0, args.length - 1)
-
-        const newCommand = firstArguments.length
-          ? `${firstArguments.join(' ')} ${selectedSuggestion.value} `
-          : `${selectedSuggestion.value} `
-
-        const newSuggestions = commander.getSuggestions(newCommand)
+        const newCommand = isLastLetterSpecial
+          ? splice(command, selectionEnd, value)
+          : spliceArg(command, selectionEnd, value)
 
         setCommand(newCommand)
-        setSuggestions(newSuggestions)
+        setSelectedSuggestionId(0)
       }
-    } else if (key === 'ArrowUp') {
+
+      return
+    } else if (key === 'ArrowUp' || key === 'ArrowDown') {
+      return
+    }
+
+    const temporalSpacedCommand = temporalCommand
+      .replace(/"/g, ' " ')
+      .replace(/'/g, " ' ")
+    const lastWord = temporalCommand.split(' ').at(-1)
+
+    const filteredSuggestions = commander
+      .getSuggestions(temporalSpacedCommand)
+      .filter((suggestion) => suggestion.value.includes(lastWord))
+
+    const newSuggestions = [defaultSuggestion, ...filteredSuggestions]
+
+    setSuggestions(
+      temporalCommand && !isLastLetterSpecial ? newSuggestions : []
+    )
+    setSelectedSuggestionId(0)
+  }
+
+  const handleKeyPressed = (event) => {
+    const { key } = event
+
+    if (key === 'ArrowUp') {
       event.preventDefault()
 
       setSelectedSuggestionId((indexId) => {
@@ -62,34 +78,15 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
 
         return validatedId
       })
-    } else if (key === '|') {
-      event.preventDefault()
-
-      const newCommand = `${command}| `
-      const newSuggestions = commander.getSuggestions(newCommand)
-
-      setCommand(newCommand)
-      setSuggestions(newCommand ? newSuggestions : [])
-      setSelectedSuggestionId(0)
     }
   }
 
-  const [lastCommand] = command.split('|').reverse()
-  const lastArgs = lastCommand.trimLeft().split(' ')
-
-  const areSuggestionsAvailable =
-    lastArgs.at(-1).startsWith('-') || lastArgs.length === 1
-  const shouldShowSuggestions =
-    Boolean(suggestions.length) && areSuggestionsAvailable
-
   return (
     <InputWrapper>
-      {shouldShowSuggestions && (
-        <Suggestions
-          suggestions={suggestions}
-          selectedSuggestionId={selectedSuggestionId}
-        />
-      )}
+      <Suggestions
+        suggestions={suggestions}
+        selectedSuggestionId={selectedSuggestionId}
+      />
 
       <div>
         <Hash>$</Hash>
@@ -97,8 +94,9 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
         <Input
           ref={inputReference}
           type='text'
-          onChange={handleCommandChange}
           onKeyDown={handleKeyPressed}
+          onKeyUp={handleKeyUp}
+          onChange={(event) => setCommand(event.target.value)}
           value={command}
         />
       </div>

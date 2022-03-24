@@ -18,6 +18,7 @@ export const ConsoleWrapper = styled.div`
   min-height: 400px;
   display: flex;
   flex-flow: column;
+  font-size: 16px;
 `
 
 export const ConsoleTitle = styled.h1`

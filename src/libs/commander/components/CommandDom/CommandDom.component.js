@@ -1,53 +1,68 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { MoreContentButton } from './CommandDom.styles'
-import { getElements } from './CommandDom.helpers'
+import { actionTypes, getActionType, getElements } from './CommandDom.helpers'
 import { parameterTypes } from '../../constants/commands.constants'
 import { ParameterElements } from '../ParameterElements/ParameterElements.component'
 import { domMessages } from './CommandDom.messages'
 
 export const CommandDom = ({
-  props: { get, hasId, hasClass, values },
+  props,
   terminal: { command, parameters, setParameters, setMessageData }
 }) => {
+  const { get, hasId, hasClass } = props
+
   const [elements, setElements] = useState([])
   const [elementsShown, setElementsShown] = useState(40)
 
-  useEffect(
-    function searchElements() {
-      const hasDefaultElements = parameters?.type === parameterTypes.ELEMENTS
-      const defaultElements = hasDefaultElements ? parameters.value : []
+  const actionType = getActionType({ props })
 
-      const hasFilters = hasId || hasClass
-      const filterElements = (element) => {
-        let validations = []
+  const handleGetDomElements = useCallback(() => {
+    const hasDefaultElements = parameters?.type === parameterTypes.ELEMENTS
+    const defaultElements = hasDefaultElements ? parameters.value : []
 
-        if (hasId) validations.push((element) => Boolean(element.id))
-        if (hasClass) validations.push((element) => Boolean(element.className))
+    const hasFilters = hasId || hasClass
+    const filterElements = (element) => {
+      let validations = []
 
-        return validations.some((validation) => validation(element))
+      if (hasId) validations.push((element) => Boolean(element.id))
+      if (hasClass) validations.push((element) => Boolean(element.className))
+
+      return validations.some((validation) => validation(element))
+    }
+
+    const elementsSearch = getElements({
+      patterns: get,
+      defaultElements,
+      filter: hasFilters ? filterElements : null
+    })
+
+    elementsSearch.then(({ elements: newElements, error }) => {
+      if (error) {
+        return setMessageData(error, { patterns: get.join(', ') })
+      } else if (!newElements.length) {
+        return setMessageData(domMessages.noElementsFound, {
+          patterns: get.join(', ')
+        })
       }
 
-      const elementsSearch = getElements({
-        patterns: get,
-        defaultElements,
-        filter: hasFilters ? filterElements : null
-      })
+      setElements(newElements)
+      setParameters({ value: newElements, type: parameterTypes.ELEMENTS })
+    })
+  }, [get, hasId, hasClass, parameters, setParameters, setMessageData])
 
-      elementsSearch.then(({ elements: newElements, error }) => {
-        if (error) {
-          return setMessageData(error, { patterns: get.join(', ') })
-        } else if (!newElements.length) {
-          return setMessageData(domMessages.noElementsFound, {
-            patterns: get.join(', ')
-          })
-        }
+  useEffect(
+    function handleActionType() {
+      switch (actionType) {
+        case actionTypes.GET_DOM_ELEMENTS:
+          handleGetDomElements()
+          break
 
-        setElements(newElements)
-        setParameters({ value: newElements, type: parameterTypes.ELEMENTS })
-      })
+        default:
+          break
+      }
     },
-    [get, parameters, setMessageData]
+    [actionType, handleGetDomElements]
   )
 
   const hasMoreElements = elements.length > elementsShown

@@ -43,7 +43,7 @@ export const CommandDom = ({
 
       elementsSearch.then(({ elements: newElements, error }) => {
         if (error) {
-          return setMessageData({ message: error, type: parameterTypes.ERROR })
+          return setMessageData(error, { patterns: patterns.join(', ') })
         } else if (!newElements.length) {
           return setMessageData(domMessages.noElementsFound, {
             patterns: patterns.join(', ')

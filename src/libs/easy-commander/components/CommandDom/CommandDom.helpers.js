@@ -1,3 +1,5 @@
+import { domMessages } from './CommandDom.messages'
+
 const getElementsFromDOM = (patterns) => {
   try {
     const elementsFromDOM =
@@ -5,11 +7,9 @@ const getElementsFromDOM = (patterns) => {
 
     return { elements: [...elementsFromDOM], error: '' }
   } catch {
-    const stringifiedPatterns = patterns.join(', ')
-
     return {
       elements: [],
-      error: `No elements where found in DOM for: "${stringifiedPatterns}".`
+      error: domMessages.noElementsFound
     }
   }
 }

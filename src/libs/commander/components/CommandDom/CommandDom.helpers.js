@@ -27,10 +27,6 @@ export const getElements = ({ patterns, defaultElements, filter }) => {
   })
 }
 
-export const actionTypes = {
-  GET_DOM_ELEMENTS: 'GET_DOM_ELEMENTS'
-}
-
 export const getActionType = () => {
   return actionTypes.GET_DOM_ELEMENTS
 }

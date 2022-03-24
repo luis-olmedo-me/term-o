@@ -18,3 +18,7 @@ export const optionTypes = {
   OBJECT: 'object',
   STRING: 'string'
 }
+
+export const actionTypes = {
+  GET_DOM_ELEMENTS: 'GET_DOM_ELEMENTS'
+}

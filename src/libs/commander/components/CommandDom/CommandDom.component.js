@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { MoreContentButton } from './CommandDom.styles'
-import { actionTypes, getActionType, getElements } from './CommandDom.helpers'
-import { parameterTypes } from '../../constants/commands.constants'
+import { getActionType, getElements } from './CommandDom.helpers'
+import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { ParameterElements } from '../ParameterElements/ParameterElements.component'
 import { domMessages } from './CommandDom.messages'
 

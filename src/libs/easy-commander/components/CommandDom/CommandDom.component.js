@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { MoreContentButton } from './CommandDom.styles'
-import { getElements } from '../../easyCommander.promises'
+import { getElements } from './CommandDom.helpers'
 import { parameterTypes } from '../../constants/commands.constants'
 import { ParameterElements } from '../ParameterElements/ParameterElements.component'
+import { domMessages } from './CommandDom.messages'
 
 export const CommandDom = ({
   props: { get, hasId, hasClass, values },
@@ -44,11 +45,8 @@ export const CommandDom = ({
         if (error) {
           return setMessageData({ message: error, type: parameterTypes.ERROR })
         } else if (!newElements.length) {
-          const stringifiedPatterns = patterns.join(', ')
-
-          return setMessageData({
-            message: `No elements where found in DOM for: "${stringifiedPatterns}".`,
-            type: parameterTypes.INFO
+          return setMessageData(domMessages.noElementsFound, {
+            patterns: patterns.join(', ')
           })
         }
 

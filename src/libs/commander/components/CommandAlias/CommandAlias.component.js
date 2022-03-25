@@ -10,6 +10,7 @@ import {
 } from 'src/helpers/event.helpers.js'
 import { commander } from '../../commander.service'
 import { getActionType } from './CommandAlias.helpers'
+import { aliasMessages } from './CommandAlias.messages'
 
 export const CommandAlias = ({
   props,
@@ -23,12 +24,7 @@ export const CommandAlias = ({
 
   const handleShowList = useCallback(
     ({ aliases = [] }) => {
-      if (!aliases.length) {
-        return setMessageData({
-          type: parameterTypes.INFO,
-          message: 'There are no aliases registered.'
-        })
-      }
+      if (!aliases.length) return setMessageData(aliasMessages.noAliasesFound)
 
       const aliasRows = aliases.map((alias) => {
         return aliasHeaders.map((aliasHeader) => alias[aliasHeader])
@@ -54,48 +50,32 @@ export const CommandAlias = ({
     )
 
     const newAliasesCount = Object.keys(validatedAliases).length
-    const hasValidAliases =
-      newAliasesCount && newAliasesCount === validatedAliases.length
+    const hasValidAliases = newAliasesCount === validatedAliases.length
 
-    if (!hasValidAliases) {
-      return setMessageData({
-        type: parameterTypes.ERROR,
-        message: 'Invalid alias(es).'
-      })
-    }
+    if (!hasValidAliases) return setMessageData(aliasMessages.invalidAliases)
 
     backgroundRequest({
       eventType: eventTypes.ADD_ALIAS,
       data: validatedAliases
     })
 
-    setMessageData({
-      type: parameterTypes.SUCCESS,
-      message: `Aliases added: ${Object.keys(newAliasesAsObject).join(', ')}`
-    })
+    setMessageData(aliasMessages.aliasAdditionSuccess)
   }, [aliasesToAdd, setMessageData])
 
   const handleDeleteAliases = useCallback(
     ({ aliases = [] }) => {
       const aliasIds = aliases.map(({ id }) => id)
-      const idsToDelete = deletedIds.filter((id) => aliasIds.includes(id))
+      const validIds = deletedIds.filter((id) => aliasIds.includes(id))
+      const hasInvalidIds = deletedIds.length !== validIds.length
 
-      if (deletedIds.length !== idsToDelete.length) {
-        return setMessageData({
-          type: parameterTypes.ERROR,
-          message: `The following ids were not found: ${deletedIds.join(', ')}`
-        })
-      }
+      if (hasInvalidIds) return setMessageData(aliasMessages.noAliasIdsFound)
 
       backgroundRequest({
         eventType: eventTypes.DELETE_ALIAS,
-        data: { aliasIdsToDelete: idsToDelete }
+        data: { aliasIdsToDelete: validIds }
       })
 
-      setMessageData({
-        type: parameterTypes.SUCCESS,
-        message: `Deleted ${idsToDelete.length} alias(es).`
-      })
+      setMessageData(aliasMessages.aliasDeletionSuccess)
     },
     [deletedIds]
   )

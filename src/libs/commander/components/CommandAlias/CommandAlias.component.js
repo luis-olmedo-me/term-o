@@ -9,7 +9,7 @@ import {
   fetchConfiguration
 } from 'src/helpers/event.helpers.js'
 import { commander } from '../../commander.service'
-import { getActionType } from './CommandAlias.helpers'
+import { getActionType, validateAliasesToAdd } from './CommandAlias.helpers'
 import { aliasMessages } from './CommandAlias.messages'
 
 export const CommandAlias = ({
@@ -36,27 +36,16 @@ export const CommandAlias = ({
   )
 
   const handleAddAliases = useCallback(() => {
-    const newAliasesAsObject = aliasesToAdd.reduce((totalAliases, alias) => {
-      return { ...totalAliases, ...alias }
-    }, {})
+    const validAliases = validateAliasesToAdd(aliasesToAdd)
 
-    const validatedAliases = Object.entries(newAliasesAsObject).reduce(
-      (totalAliases, [name, command]) => {
-        return commander.commandNames.includes(name)
-          ? totalAliases
-          : [...totalAliases, { name, command }]
-      },
-      []
-    )
-
-    const newAliasesCount = Object.keys(validatedAliases).length
-    const hasValidAliases = newAliasesCount === validatedAliases.length
+    const newAliasesCount = Object.keys(validAliases).length
+    const hasValidAliases = newAliasesCount === validAliases.length
 
     if (!hasValidAliases) return setMessageData(aliasMessages.invalidAliases)
 
     backgroundRequest({
       eventType: eventTypes.ADD_ALIAS,
-      data: validatedAliases
+      data: validAliases
     })
 
     setMessageData(aliasMessages.aliasAdditionSuccess)

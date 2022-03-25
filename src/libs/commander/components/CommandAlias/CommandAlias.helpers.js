@@ -10,3 +10,18 @@ export const getActionType = ({
   else if (newAliases.length) return actionTypes.ADD_ALIAS
   else return actionTypes.NONE
 }
+
+export const validateAliasesToAdd = ({ aliasesToAdd }) => {
+  const newAliasesAsObject = aliasesToAdd.reduce((totalAliases, alias) => {
+    return { ...totalAliases, ...alias }
+  }, {})
+
+  return Object.entries(newAliasesAsObject).reduce(
+    (totalAliases, [name, command]) => {
+      return commander.commandNames.includes(name)
+        ? totalAliases
+        : [...totalAliases, { name, command }]
+    },
+    []
+  )
+}

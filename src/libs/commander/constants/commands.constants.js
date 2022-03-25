@@ -24,5 +24,6 @@ export const actionTypes = {
   SHOW_LIST: 'SHOW_LIST',
   DELETE_ALIAS: 'DELETE_ALIAS',
   ADD_ALIAS: 'ADD_ALIAS',
+  CLEAR_TERMINAL: 'CLEAR_TERMINAL',
   NONE: 'NONE'
 }

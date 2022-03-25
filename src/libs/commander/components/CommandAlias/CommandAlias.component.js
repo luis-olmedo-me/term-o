@@ -8,7 +8,6 @@ import {
   backgroundRequest,
   fetchConfiguration
 } from 'src/helpers/event.helpers.js'
-import { commander } from '../../commander.service'
 import { getActionType, validateAliasesToAdd } from './CommandAlias.helpers'
 import { aliasMessages } from './CommandAlias.messages'
 

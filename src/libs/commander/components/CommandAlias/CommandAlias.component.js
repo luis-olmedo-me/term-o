@@ -6,6 +6,7 @@ import { aliasHeaders } from './CommandAlias.constants'
 import { eventTypes } from 'src/constants/events.constants.js'
 import {
   backgroundRequest,
+  addAliases,
   fetchConfiguration
 } from 'src/helpers/event.helpers.js'
 import { getActionType, validateAliasesToAdd } from './CommandAlias.helpers'
@@ -35,19 +36,16 @@ export const CommandAlias = ({
   )
 
   const handleAddAliases = useCallback(() => {
-    const validAliases = validateAliasesToAdd(aliasesToAdd)
+    const validAliases = validateAliasesToAdd({ aliasesToAdd })
 
     const newAliasesCount = Object.keys(validAliases).length
     const hasValidAliases = newAliasesCount === validAliases.length
 
     if (!hasValidAliases) return setMessageData(aliasMessages.invalidAliases)
 
-    backgroundRequest({
-      eventType: eventTypes.ADD_ALIAS,
-      data: validAliases
-    })
-
-    setMessageData(aliasMessages.aliasAdditionSuccess)
+    addAliases(validAliases)
+      .catch(() => setMessageData(aliasMessages.unexpectedError))
+      .then(() => setMessageData(aliasMessages.aliasAdditionSuccess))
   }, [aliasesToAdd, setMessageData])
 
   const handleDeleteAliases = useCallback(

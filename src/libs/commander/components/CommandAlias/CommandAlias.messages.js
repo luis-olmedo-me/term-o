@@ -1,6 +1,8 @@
 import { parameterTypes } from '../../constants/commands.constants'
+import { commanderMessages } from '../../commander.messages.js'
 
 export const aliasMessages = {
+  ...commanderMessages,
   noAliasesFound: {
     message: 'There are no aliases registered.',
     type: parameterTypes.INFO

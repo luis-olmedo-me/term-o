@@ -17,3 +17,21 @@ export const fetchConfiguration = () => {
     backgroundRequest({ eventType: eventTypes.GET_CONFIGURATION, callback })
   })
 }
+
+export const addAliases = (newAliases) => {
+  return new Promise((resolve, reject) => {
+    const callback = (response) => {
+      if (response?.status === 'ok') {
+        resolve()
+      } else {
+        reject(response?.error)
+      }
+    }
+
+    backgroundRequest({
+      eventType: eventTypes.ADD_ALIAS,
+      callback,
+      data: newAliases
+    })
+  })
+}

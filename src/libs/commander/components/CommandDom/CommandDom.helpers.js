@@ -1,3 +1,4 @@
+import { actionTypes } from '../../constants/commands.constants'
 import { domMessages } from './CommandDom.messages'
 
 const getElementsFromDOM = (patterns) => {
@@ -25,4 +26,8 @@ export const getElements = ({ patterns, defaultElements, filter }) => {
 
     resolve({ elements: elementsFound, error })
   })
+}
+
+export const getActionType = () => {
+  return actionTypes.GET_DOM_ELEMENTS
 }

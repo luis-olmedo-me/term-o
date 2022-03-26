@@ -18,3 +18,16 @@ export const optionTypes = {
   OBJECT: 'object',
   STRING: 'string'
 }
+
+export const actionTypes = {
+  GET_DOM_ELEMENTS: 'GET_DOM_ELEMENTS',
+  SHOW_LIST: 'SHOW_LIST',
+  DELETE_ALIAS: 'DELETE_ALIAS',
+  ADD_ALIAS: 'ADD_ALIAS',
+  CLEAR_TERMINAL: 'CLEAR_TERMINAL',
+  SET_STYLES: 'SET_STYLES',
+  DELETE_EVENT: 'DELETE_EVENT',
+  ADD_EVENT: 'ADD_EVENT',
+  REDIRECT: 'REDIRECT',
+  NONE: 'NONE'
+}

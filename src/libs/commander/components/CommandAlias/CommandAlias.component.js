@@ -1,139 +1,98 @@
-import React, { useEffect, useState, useMemo } from 'react'
-import { parameterTypes } from '../../constants/commands.constants'
+import React, { useEffect, useState, useCallback } from 'react'
+import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { Table } from 'modules/components/Table/Table.component'
 import { aliasHeaders } from './CommandAlias.constants'
-import { eventTypes } from 'src/constants/events.constants.js'
-import { backgroundRequest } from 'src/helpers/event.helpers.js'
-import { commander } from '../../commander.service'
+import {
+  fetchConfiguration,
+  addAliases,
+  deleteAliases
+} from 'src/helpers/event.helpers.js'
+import { getActionType, validateAliasesToAdd } from './CommandAlias.helpers'
+import { aliasMessages } from './CommandAlias.messages'
 
 export const CommandAlias = ({
-  props: { list, delete: deletedIds, add: aliasesToAdd },
+  props,
   terminal: { setMessageData, command }
 }) => {
-  const [idsToDelete, setIdsToDelete] = useState([])
-  const [aliases, setAliases] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
+  const { list, delete: deletedIds, add: aliasesToAdd } = props
 
-  useEffect(function getAliases() {
-    const receivedAliases = (response) => {
-      const updatedAliases = response?.response?.aliases || []
+  const [tableData, setTableData] = useState([])
 
-      setAliases(updatedAliases)
-      setIsLoading(false)
-    }
+  const actionType = getActionType(props)
 
-    backgroundRequest({
-      eventType: eventTypes.GET_CONFIGURATION,
-      callback: receivedAliases
-    })
-  }, [])
+  const handleShowList = useCallback(
+    ({ aliases = [] }) => {
+      if (!aliases.length) return setMessageData(aliasMessages.noAliasesFound)
 
-  const aliasesRows = aliases.map((alias) => {
-    return aliasHeaders.map((aliasHeader) => alias[aliasHeader])
-  })
-  const hasAliases = aliases.length > 0
-
-  useEffect(
-    function handleAliases() {
-      if (isLoading || hasAliases || !list) return
-
-      setMessageData({
-        type: parameterTypes.INFO,
-        message: 'There are no aliases registered.'
+      const aliasRows = aliases.map((alias) => {
+        return aliasHeaders.map((aliasHeader) => alias[aliasHeader])
       })
+
+      setTableData(aliasRows)
     },
-    [hasAliases, aliasesToAdd, isLoading]
+    [setMessageData]
   )
 
-  useEffect(
-    function handleAliases() {
-      if (isLoading || !aliasesToAdd.length) return
+  const handleAddAliases = useCallback(() => {
+    const validAliases = validateAliasesToAdd({ aliasesToAdd })
 
-      const newAliasesAsObject = aliasesToAdd.reduce((totalAliases, alias) => {
-        return { ...totalAliases, ...alias }
-      }, {})
+    const newAliasesCount = Object.keys(validAliases).length
+    const hasValidAliases = newAliasesCount === validAliases.length
 
-      const validatedAliases = Object.entries(newAliasesAsObject).reduce(
-        (totalAliases, [name, command]) => {
-          return commander.commandNames.includes(name)
-            ? totalAliases
-            : [...totalAliases, { name, command }]
-        },
-        []
-      )
+    if (!hasValidAliases) return setMessageData(aliasMessages.invalidAliases)
 
-      const newAliasesCount = Object.keys(validatedAliases).length
-      const hasValidAliases =
-        newAliasesCount && newAliasesCount === validatedAliases.length
+    addAliases(validAliases)
+      .catch(() => setMessageData(aliasMessages.unexpectedError))
+      .then(() => setMessageData(aliasMessages.aliasAdditionSuccess))
+  }, [aliasesToAdd, setMessageData])
 
-      if (!hasValidAliases) {
-        return setMessageData({
-          type: parameterTypes.ERROR,
-          message: 'Invalid alias(es).'
-        })
-      }
-
-      backgroundRequest({
-        eventType: eventTypes.ADD_ALIAS,
-        data: validatedAliases
-      })
-
-      setMessageData({
-        type: parameterTypes.SUCCESS,
-        message: `Aliases added: ${Object.keys(newAliasesAsObject).join(', ')}`
-      })
-    },
-    [aliasesToAdd, isLoading]
-  )
-
-  useEffect(
-    function validateDeletedIds() {
-      if (isLoading) return
-
+  const handleDeleteAliases = useCallback(
+    ({ aliases = [] }) => {
       const aliasIds = aliases.map(({ id }) => id)
-      const aliasIdsToDelete = deletedIds.filter((id) => aliasIds.includes(id))
+      const validIds = deletedIds.filter((id) => aliasIds.includes(id))
+      const hasInvalidIds = deletedIds.length !== validIds.length
 
-      if (deletedIds.length !== aliasIdsToDelete.length) {
-        return setMessageData({
-          type: parameterTypes.ERROR,
-          message: `The following ids were not found: ${deletedIds.join(', ')}`
-        })
-      }
+      if (hasInvalidIds) return setMessageData(aliasMessages.noAliasIdsFound)
 
-      setIdsToDelete(aliasIdsToDelete)
+      deleteAliases(validIds)
+        .catch(() => setMessageData(aliasMessages.unexpectedError))
+        .then(() => setMessageData(aliasMessages.aliasDeletionSuccess))
     },
-    [deletedIds, aliases, isLoading]
+    [deletedIds]
   )
 
   useEffect(
-    function deleteAliases() {
-      if (!idsToDelete.length) return
+    function handleActionType() {
+      switch (actionType) {
+        case actionTypes.SHOW_LIST:
+          fetchConfiguration().then(handleShowList)
+          break
 
-      backgroundRequest({
-        eventType: eventTypes.DELETE_ALIAS,
-        data: { aliasIdsToDelete: idsToDelete }
-      })
+        case actionTypes.DELETE_ALIAS:
+          fetchConfiguration().then(handleDeleteAliases)
+          break
 
-      setMessageData({
-        type: parameterTypes.SUCCESS,
-        message: `Deleted ${idsToDelete.length} alias(es).`
-      })
+        case actionTypes.ADD_ALIAS:
+          handleAddAliases()
+          break
+
+        default:
+          break
+      }
     },
-    [hasAliases, list, idsToDelete]
+    [actionType, handleAddAliases, handleDeleteAliases, handleShowList]
   )
 
   return (
-    !isLoading && (
-      <>
-        <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
+    <>
+      <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-        {list && (
-          <LogWrapper variant={parameterTypes.TABLE}>
-            <Table headers={aliasHeaders} rows={aliasesRows} />
-          </LogWrapper>
-        )}
-      </>
-    )
+      {list && (
+        <LogWrapper variant={parameterTypes.TABLE}>
+          <Table headers={aliasHeaders} rows={tableData} />
+        </LogWrapper>
+      )}
+    </>
   )
 }

@@ -1,96 +1,86 @@
-import React, { useEffect, useState, useMemo } from 'react'
-import { parameterTypes } from '../../constants/commands.constants'
+import React, { useEffect, useState, useCallback } from 'react'
+import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { Table } from 'modules/components/Table/Table.component'
 import { eventRows } from './CommandEvent.constants'
-import { eventTypes } from 'src/constants/events.constants.js'
-import { backgroundRequest } from 'src/helpers/event.helpers.js'
+import {
+  fetchConfiguration,
+  deletePageEvents
+} from 'src/helpers/event.helpers.js'
 import { eventMessages } from './CommandEvent.messages'
+import { getActionType } from './CommandEvent.helpers'
 
 export const CommandEvent = ({
-  props: { list, delete: deletedIds },
+  props,
   terminal: { command, setMessageData }
 }) => {
-  const [idsToDelete, setIdsToDelete] = useState([])
-  const [pageEvents, setPageEvents] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
+  const { list, delete: deletedIds } = props
 
-  const pageEventsRows = pageEvents.map((pageEvent) => {
-    return eventRows.map((eventRow) => pageEvent[eventRow])
-  })
+  const [tableData, setTableData] = useState([])
 
-  const hasPageEvents = pageEvents.length > 0
+  const actionType = getActionType(props)
 
-  useEffect(function getPageEvents() {
-    const receivedPageEvents = (response) => {
-      const updatedPageEvents = response?.response?.pageEvents || []
+  const handleShowList = useCallback(
+    ({ pageEvents = [] }) => {
+      if (!pageEvents.length) return setMessageData(eventMessages.noEventsFound)
 
-      setPageEvents(updatedPageEvents)
-      setIsLoading(false)
-    }
-
-    backgroundRequest({
-      eventType: eventTypes.GET_CONFIGURATION,
-      callback: receivedPageEvents
-    })
-  }, [])
-
-  useEffect(
-    function handleEmptyPageEvents() {
-      if (isLoading || hasPageEvents || !list) return
-
-      setMessageData({
-        type: parameterTypes.INFO,
-        message: 'There are no page events registered.'
+      const pageEventsRows = pageEvents.map((pageEvent) => {
+        return eventRows.map((eventRow) => pageEvent[eventRow])
       })
+
+      setTableData(pageEventsRows)
     },
-    [hasPageEvents, list, isLoading]
+    [setMessageData]
   )
 
-  useEffect(
-    function validateDeletedIds() {
-      if (isLoading) return
+  const handleDeleteEvent = useCallback(
+    ({ pageEvents = [] }) => {
+      if (!pageEvents.length) return setMessageData(eventMessages.noEventsFound)
 
-      const validDeltedIds = deletedIds.filter((id) => {
+      const idsToDelete = deletedIds.filter((id) => {
         return pageEvents.some((pageEvent) => pageEvent.id === id)
       })
 
-      if (deletedIds.length !== validDeltedIds.length) {
+      if (deletedIds.length !== idsToDelete.length) {
         return setMessageData(eventMessages.invalidEventIds, {
           invalidIds: deletedIds.join(', ')
         })
       }
 
-      setIdsToDelete(validDeltedIds)
+      deletePageEvents(idsToDelete)
+        .catch(() => setMessageData(eventMessages.unexpectedError))
+        .then(() => setMessageData(eventMessages.eventDeleteSuccess))
     },
-    [deletedIds, pageEvents, isLoading]
+    [deletedIds, setMessageData]
   )
 
   useEffect(
-    function deletePageEvents() {
-      if (!idsToDelete.length) return
+    function handleActionType() {
+      switch (actionType) {
+        case actionTypes.SHOW_LIST:
+          fetchConfiguration().then(handleShowList)
+          break
 
-      backgroundRequest({
-        eventType: eventTypes.DELETE_PAGES_EVENT,
-        data: { ids: idsToDelete }
-      })
+        case actionTypes.DELETE_EVENT:
+          fetchConfiguration().then(handleDeleteEvent)
+          break
 
-      setMessageData(eventMessages.eventDeleteSuccess)
+        default:
+          break
+      }
     },
-    [hasPageEvents, list, idsToDelete]
+    [actionType, handleDeleteEvent, handleShowList]
   )
 
   return (
-    !isLoading && (
-      <>
-        <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
+    <>
+      <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-        {list && (
-          <LogWrapper variant={parameterTypes.TABLE}>
-            <Table headers={eventRows} rows={pageEventsRows} />
-          </LogWrapper>
-        )}
-      </>
-    )
+      {list && (
+        <LogWrapper variant={parameterTypes.TABLE}>
+          <Table headers={eventRows} rows={tableData} />
+        </LogWrapper>
+      )}
+    </>
   )
 }

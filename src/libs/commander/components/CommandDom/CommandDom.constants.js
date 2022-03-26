@@ -9,13 +9,19 @@ export const domConfig = {
       key: 'hasId',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
-      aliases: ['i']
+      aliases: ['hi']
     },
     'has-class': {
       key: 'hasClass',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
-      aliases: ['c']
+      aliases: ['hc']
+    },
+    'by-id': {
+      key: 'byId',
+      type: optionTypes.ARRAY_OF_STRINGS,
+      defaultValue: false,
+      aliases: ['bi']
     }
   },
   output: (props) => <CommandDom key={props.id} {...props} />

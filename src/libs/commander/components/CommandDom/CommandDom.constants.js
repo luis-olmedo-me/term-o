@@ -40,6 +40,12 @@ export const domConfig = {
       type: optionTypes.ARRAY_OF_OBJECTS,
       defaultValue: [],
       aliases: ['bs']
+    },
+    'by-attribute': {
+      key: 'byAttribute',
+      type: optionTypes.ARRAY_OF_OBJECTS,
+      defaultValue: [],
+      aliases: ['ba']
     }
   },
   output: (props) => <CommandDom key={props.id} {...props} />

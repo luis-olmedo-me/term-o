@@ -10,7 +10,8 @@ export const CommandDom = ({
   props,
   terminal: { command, parameters, setParameters, setMessageData }
 }) => {
-  const { get, hasId, hasClass, byId, byClass, byText, byStyle } = props
+  const { get, hasId, hasClass, byId, byClass, byText, byStyle, byAttribute } =
+    props
 
   const [elements, setElements] = useState([])
   const [elementsShown, setElementsShown] = useState(40)
@@ -27,7 +28,8 @@ export const CommandDom = ({
       byId.length ||
       byClass.length ||
       byText.length ||
-      byStyle.length
+      byStyle.length ||
+      byAttribute.length
 
     const filterElements = (element) => {
       let validations = []
@@ -58,6 +60,15 @@ export const CommandDom = ({
           })
         )
       }
+      if (byAttribute.length) {
+        validations.push((element) =>
+          byAttribute.some((attribute) => {
+            const [[attributeName, attributeValue]] = Object.entries(attribute)
+
+            return element.getAttribute(attributeName) === attributeValue
+          })
+        )
+      }
 
       return validations.some((validation) => validation(element))
     }
@@ -80,7 +91,16 @@ export const CommandDom = ({
       setElements(newElements)
       setParameters({ value: newElements, type: parameterTypes.ELEMENTS })
     })
-  }, [get, hasId, hasClass, byId, byClass, byStyle, setMessageData])
+  }, [
+    get,
+    hasId,
+    hasClass,
+    byId,
+    byClass,
+    byStyle,
+    byAttribute,
+    setMessageData
+  ])
 
   useEffect(
     function handleActionType() {

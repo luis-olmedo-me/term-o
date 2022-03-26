@@ -10,7 +10,8 @@ export const CommandDom = ({
   props,
   terminal: { command, parameters, setParameters, setMessageData }
 }) => {
-  const { get, hasId, hasClass } = props
+  const { get, hasId, hasClass, byId, byClass, byText, byStyle, byAttribute } =
+    props
 
   const [elements, setElements] = useState([])
   const [elementsShown, setElementsShown] = useState(40)
@@ -21,12 +22,53 @@ export const CommandDom = ({
     const hasDefaultElements = parameters?.type === parameterTypes.ELEMENTS
     const defaultElements = hasDefaultElements ? parameters.value : []
 
-    const hasFilters = hasId || hasClass
+    const hasFilters =
+      hasId ||
+      hasClass ||
+      byId.length ||
+      byClass.length ||
+      byText.length ||
+      byStyle.length ||
+      byAttribute.length
+
     const filterElements = (element) => {
       let validations = []
 
       if (hasId) validations.push((element) => Boolean(element.id))
       if (hasClass) validations.push((element) => Boolean(element.className))
+      if (byId.length) {
+        validations.push((element) =>
+          byId.some((id) => element.id.includes(id))
+        )
+      }
+      if (byClass.length) {
+        validations.push((element) =>
+          byClass.some((className) => element.className?.includes?.(className))
+        )
+      }
+      if (byText.length) {
+        validations.push((element) =>
+          byText.some((text) => element.textContent?.includes?.(text))
+        )
+      }
+      if (byStyle.length) {
+        validations.push((element) =>
+          byStyle.some((style) => {
+            const [[styleName, styleValue]] = Object.entries(style)
+
+            return element.style[styleName] === styleValue
+          })
+        )
+      }
+      if (byAttribute.length) {
+        validations.push((element) =>
+          byAttribute.some((attribute) => {
+            const [[attributeName, attributeValue]] = Object.entries(attribute)
+
+            return element.getAttribute(attributeName)?.includes(attributeValue)
+          })
+        )
+      }
 
       return validations.some((validation) => validation(element))
     }
@@ -49,7 +91,16 @@ export const CommandDom = ({
       setElements(newElements)
       setParameters({ value: newElements, type: parameterTypes.ELEMENTS })
     })
-  }, [get, hasId, hasClass, setMessageData])
+  }, [
+    get,
+    hasId,
+    hasClass,
+    byId,
+    byClass,
+    byStyle,
+    byAttribute,
+    setMessageData
+  ])
 
   useEffect(
     function handleActionType() {

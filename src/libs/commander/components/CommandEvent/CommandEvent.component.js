@@ -39,31 +39,34 @@ export const CommandEvent = ({
     [setMessageData]
   )
 
-  const handleDeleteEvent = useCallback(({ pageEvents = [] }) => {
-    if (!pageEvents.length) {
-      setMessageData({
-        type: parameterTypes.INFO,
-        message: 'There are no page events registered.'
+  const handleDeleteEvent = useCallback(
+    ({ pageEvents = [] }) => {
+      if (!pageEvents.length) {
+        setMessageData({
+          type: parameterTypes.INFO,
+          message: 'There are no page events registered.'
+        })
+      }
+
+      const idsToDelete = deletedIds.filter((id) => {
+        return pageEvents.some((pageEvent) => pageEvent.id === id)
       })
-    }
 
-    const idsToDelete = deletedIds.filter((id) => {
-      return pageEvents.some((pageEvent) => pageEvent.id === id)
-    })
+      if (deletedIds.length !== idsToDelete.length) {
+        return setMessageData(eventMessages.invalidEventIds, {
+          invalidIds: deletedIds.join(', ')
+        })
+      }
 
-    if (deletedIds.length !== idsToDelete.length) {
-      return setMessageData(eventMessages.invalidEventIds, {
-        invalidIds: deletedIds.join(', ')
+      backgroundRequest({
+        eventType: eventTypes.DELETE_PAGES_EVENT,
+        data: { ids: idsToDelete }
       })
-    }
 
-    backgroundRequest({
-      eventType: eventTypes.DELETE_PAGES_EVENT,
-      data: { ids: idsToDelete }
-    })
-
-    setMessageData(eventMessages.eventDeleteSuccess)
-  }, [])
+      setMessageData(eventMessages.eventDeleteSuccess)
+    },
+    [deletedIds, setMessageData]
+  )
 
   useEffect(
     function handleActionType() {

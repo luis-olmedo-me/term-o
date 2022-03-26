@@ -1,96 +1,97 @@
-import React, { useEffect, useState } from 'react'
-import { parameterTypes } from '../../constants/commands.constants'
+import React, { useEffect, useState, useCallback } from 'react'
+import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { Table } from 'modules/components/Table/Table.component'
 import { eventRows } from './CommandEvent.constants'
 import { eventTypes } from 'src/constants/events.constants.js'
-import { backgroundRequest } from 'src/helpers/event.helpers.js'
+import {
+  backgroundRequest,
+  fetchConfiguration
+} from 'src/helpers/event.helpers.js'
 import { eventMessages } from './CommandEvent.messages'
+import { getActionType } from './CommandEvent.helpers'
 
 export const CommandEvent = ({
-  props: { list, delete: deletedIds },
+  props,
   terminal: { command, setMessageData }
 }) => {
-  const [idsToDelete, setIdsToDelete] = useState([])
-  const [pageEvents, setPageEvents] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
+  const { list, delete: deletedIds } = props
 
-  const pageEventsRows = pageEvents.map((pageEvent) => {
-    return eventRows.map((eventRow) => pageEvent[eventRow])
-  })
+  const [tableData, setTableData] = useState([])
 
-  const hasPageEvents = pageEvents.length > 0
+  const actionType = getActionType(props)
 
-  useEffect(function getPageEvents() {
-    const receivedPageEvents = (response) => {
-      const updatedPageEvents = response?.response?.pageEvents || []
+  const handleShowList = useCallback(
+    ({ pageEvents = [] }) => {
+      if (!pageEvents.length) {
+        return setMessageData({
+          type: parameterTypes.INFO,
+          message: 'There are no page events registered.'
+        })
+      }
 
-      setPageEvents(updatedPageEvents)
-      setIsLoading(false)
-    }
+      const pageEventsRows = pageEvents.map((pageEvent) => {
+        return eventRows.map((eventRow) => pageEvent[eventRow])
+      })
 
-    backgroundRequest({
-      eventType: eventTypes.GET_CONFIGURATION,
-      callback: receivedPageEvents
-    })
-  }, [])
+      setTableData(pageEventsRows)
+    },
+    [setMessageData]
+  )
 
-  useEffect(
-    function handleEmptyPageEvents() {
-      if (isLoading || hasPageEvents || !list) return
-
+  const handleDeleteEvent = useCallback(({ pageEvents = [] }) => {
+    if (!pageEvents.length) {
       setMessageData({
         type: parameterTypes.INFO,
         message: 'There are no page events registered.'
       })
-    },
-    [hasPageEvents, list, isLoading]
-  )
+    }
+
+    const idsToDelete = deletedIds.filter((id) => {
+      return pageEvents.some((pageEvent) => pageEvent.id === id)
+    })
+
+    if (deletedIds.length !== idsToDelete.length) {
+      return setMessageData(eventMessages.invalidEventIds, {
+        invalidIds: deletedIds.join(', ')
+      })
+    }
+
+    backgroundRequest({
+      eventType: eventTypes.DELETE_PAGES_EVENT,
+      data: { ids: idsToDelete }
+    })
+
+    setMessageData(eventMessages.eventDeleteSuccess)
+  }, [])
 
   useEffect(
-    function validateDeletedIds() {
-      if (isLoading) return
+    function handleActionType() {
+      switch (actionType) {
+        case actionTypes.SHOW_LIST:
+          fetchConfiguration().then(handleShowList)
+          break
 
-      const validDeltedIds = deletedIds.filter((id) => {
-        return pageEvents.some((pageEvent) => pageEvent.id === id)
-      })
+        case actionTypes.DELETE_EVENT:
+          fetchConfiguration().then(handleDeleteEvent)
+          break
 
-      if (deletedIds.length !== validDeltedIds.length) {
-        return setMessageData(eventMessages.invalidEventIds, {
-          invalidIds: deletedIds.join(', ')
-        })
+        default:
+          break
       }
-
-      setIdsToDelete(validDeltedIds)
     },
-    [deletedIds, pageEvents, isLoading]
-  )
-
-  useEffect(
-    function deletePageEvents() {
-      if (!idsToDelete.length) return
-
-      backgroundRequest({
-        eventType: eventTypes.DELETE_PAGES_EVENT,
-        data: { ids: idsToDelete }
-      })
-
-      setMessageData(eventMessages.eventDeleteSuccess)
-    },
-    [hasPageEvents, list, idsToDelete]
+    [actionType, handleDeleteEvent, handleShowList]
   )
 
   return (
-    !isLoading && (
-      <>
-        <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
+    <>
+      <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-        {list && (
-          <LogWrapper variant={parameterTypes.TABLE}>
-            <Table headers={eventRows} rows={pageEventsRows} />
-          </LogWrapper>
-        )}
-      </>
-    )
+      {list && (
+        <LogWrapper variant={parameterTypes.TABLE}>
+          <Table headers={eventRows} rows={tableData} />
+        </LogWrapper>
+      )}
+    </>
   )
 }

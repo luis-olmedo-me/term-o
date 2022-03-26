@@ -34,6 +34,12 @@ export const domConfig = {
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
       aliases: ['bt']
+    },
+    'by-style': {
+      key: 'byStyle',
+      type: optionTypes.ARRAY_OF_OBJECTS,
+      defaultValue: [],
+      aliases: ['bs']
     }
   },
   output: (props) => <CommandDom key={props.id} {...props} />

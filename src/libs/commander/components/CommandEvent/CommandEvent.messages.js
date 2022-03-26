@@ -1,6 +1,8 @@
 import { parameterTypes } from '../../constants/commands.constants'
+import { commanderMessages } from '../../commander.messages.js'
 
 export const eventMessages = {
+  ...commanderMessages,
   invalidEventIds: {
     message: 'The following ids were not found: {invalidIds}',
     type: parameterTypes.ERROR

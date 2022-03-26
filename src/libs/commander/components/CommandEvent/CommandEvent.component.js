@@ -3,10 +3,9 @@ import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { Table } from 'modules/components/Table/Table.component'
 import { eventRows } from './CommandEvent.constants'
-import { eventTypes } from 'src/constants/events.constants.js'
 import {
-  backgroundRequest,
-  fetchConfiguration
+  fetchConfiguration,
+  deletePageEvents
 } from 'src/helpers/event.helpers.js'
 import { eventMessages } from './CommandEvent.messages'
 import { getActionType } from './CommandEvent.helpers'
@@ -48,12 +47,9 @@ export const CommandEvent = ({
         })
       }
 
-      backgroundRequest({
-        eventType: eventTypes.DELETE_PAGES_EVENT,
-        data: { ids: idsToDelete }
-      })
-
-      setMessageData(eventMessages.eventDeleteSuccess)
+      deletePageEvents(idsToDelete)
+        .catch(() => setMessageData(eventMessages.unexpectedError))
+        .then(() => setMessageData(eventMessages.eventDeleteSuccess))
     },
     [deletedIds, setMessageData]
   )

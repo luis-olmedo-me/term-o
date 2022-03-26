@@ -53,3 +53,21 @@ export const deleteAliases = (aliasIds) => {
     })
   })
 }
+
+export const deletePageEvents = (ids) => {
+  return new Promise((resolve, reject) => {
+    const callback = (response) => {
+      if (response?.status === 'ok') {
+        resolve()
+      } else {
+        reject(response?.error)
+      }
+    }
+
+    backgroundRequest({
+      eventType: eventTypes.DELETE_PAGES_EVENT,
+      callback,
+      data: { ids }
+    })
+  })
+}

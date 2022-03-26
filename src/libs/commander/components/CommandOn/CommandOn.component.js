@@ -12,7 +12,6 @@ export const CommandOn = ({ props, terminal: { command, setMessageData } }) => {
   const actionType = getActionType(props)
 
   const handleAddEvent = useCallback(() => {
-    if (!url.length) return
     if (!run.length) return setMessageData(onMessages.missingCommand)
 
     const areURLsValid = url.every(checkIfRegExpIsValid)

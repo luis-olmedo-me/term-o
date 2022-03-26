@@ -1,29 +1,45 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 
-import { parameterTypes } from '../../constants/commands.constants'
-import { historyMessages } from './CommandHistory.helpers'
+import { actionTypes, parameterTypes } from '../../constants/commands.constants'
+import { historyMessages } from './CommandHistory.messages'
+import { getActionType } from './CommandHistory.helpers'
 
 export const CommandHistory = ({
-  props: { goto, protocol },
+  props,
   terminal: { command, setMessageData }
 }) => {
+  const { goto, protocol } = props
+
+  const actionType = getActionType(props)
+
+  const handleRedirect = useCallback(() => {
+    if (!goto.length) return setMessageData(historyMessages.missingURL)
+
+    goto.forEach((url) => {
+      const formattedUrl = url.startsWith('www') ? url : `www.${url}`
+
+      window.open(`${protocol}://${formattedUrl}`, '_blank')
+    })
+
+    setMessageData(historyMessages.redirectionSuccess, {
+      urlCount: goto.length
+    })
+  }, [goto, setMessageData, protocol])
+
   useEffect(
-    function pushIntoURL() {
-      if (!goto.length) return setMessageData(historyMessages.missingURL)
+    function handleActionType() {
+      switch (actionType) {
+        case actionTypes.REDIRECT:
+          handleRedirect()
+          break
 
-      goto.forEach((url) => {
-        const formattedUrl = url.startsWith('www') ? url : `www.${url}`
-
-        window.open(`${protocol}://${formattedUrl}`, '_blank')
-      })
-
-      setMessageData(historyMessages.redirectionSuccess, {
-        urlCount: goto.length
-      })
+        default:
+          break
+      }
     },
-    [goto, protocol]
+    [actionType, handleRedirect]
   )
 
   return <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>

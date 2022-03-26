@@ -1,12 +1,7 @@
-import { parameterTypes } from '../../constants/commands.constants'
+import { actionTypes } from '../../constants/commands.constants'
 
-export const historyMessages = {
-  missingURL: {
-    message: 'No url has been provided.',
-    type: parameterTypes.ERROR
-  },
-  redirectionSuccess: {
-    message: 'Successfully opened {urlCount} url(s).',
-    type: parameterTypes.SUCCESS
-  }
+export const getActionType = ({ goto, protocol }) => {
+  if (goto.length) return actionTypes.REDIRECT
+  else if (protocol) return actionTypes.SHOW_LIST
+  else return actionTypes.NONE
 }

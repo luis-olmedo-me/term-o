@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 export const ConsoleWrapper = styled.div`
+  all: initial;
   position: fixed;
   z-index: 1000000;
   font-family: 'Coda', monospace;

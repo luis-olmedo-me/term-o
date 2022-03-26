@@ -10,7 +10,7 @@ export const CommandDom = ({
   props,
   terminal: { command, parameters, setParameters, setMessageData }
 }) => {
-  const { get, hasId, hasClass, byId, byClass } = props
+  const { get, hasId, hasClass, byId, byClass, byText } = props
 
   const [elements, setElements] = useState([])
   const [elementsShown, setElementsShown] = useState(40)
@@ -21,7 +21,8 @@ export const CommandDom = ({
     const hasDefaultElements = parameters?.type === parameterTypes.ELEMENTS
     const defaultElements = hasDefaultElements ? parameters.value : []
 
-    const hasFilters = hasId || hasClass || byId.length || byClass.length
+    const hasFilters =
+      hasId || hasClass || byId.length || byClass.length || byText.length
     const filterElements = (element) => {
       let validations = []
 
@@ -35,6 +36,11 @@ export const CommandDom = ({
       if (byClass.length) {
         validations.push((element) =>
           byClass.some((className) => element.className?.includes?.(className))
+        )
+      }
+      if (byText.length) {
+        validations.push((element) =>
+          byText.some((text) => element.textContent?.includes?.(text))
         )
       }
 

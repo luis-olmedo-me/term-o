@@ -28,6 +28,12 @@ export const domConfig = {
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
       aliases: ['bc']
+    },
+    'by-text': {
+      key: 'byText',
+      type: optionTypes.ARRAY_OF_STRINGS,
+      defaultValue: [],
+      aliases: ['bt']
     }
   },
   output: (props) => <CommandDom key={props.id} {...props} />

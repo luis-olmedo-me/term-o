@@ -65,7 +65,7 @@ export const CommandDom = ({
           byAttribute.some((attribute) => {
             const [[attributeName, attributeValue]] = Object.entries(attribute)
 
-            return element.getAttribute(attributeName) === attributeValue
+            return element.getAttribute(attributeName)?.includes(attributeValue)
           })
         )
       }

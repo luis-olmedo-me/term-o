@@ -71,3 +71,21 @@ export const deletePageEvents = (ids) => {
     })
   })
 }
+
+export const addPageEvents = (newPageEvents) => {
+  return new Promise((resolve, reject) => {
+    const callback = (response) => {
+      if (response?.status === 'ok') {
+        resolve()
+      } else {
+        reject(response?.error)
+      }
+    }
+
+    backgroundRequest({
+      eventType: eventTypes.ADD_PAGES_EVENT,
+      callback,
+      data: newPageEvents
+    })
+  })
+}

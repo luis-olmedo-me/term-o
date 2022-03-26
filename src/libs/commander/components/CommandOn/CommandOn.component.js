@@ -1,8 +1,7 @@
 import React, { useEffect, useCallback } from 'react'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
-import { backgroundRequest } from 'src/helpers/event.helpers.js'
-import { eventTypes } from 'src/constants/events.constants.js'
+import { addPageEvents } from 'src/helpers/event.helpers.js'
 import { checkIfRegExpIsValid, getActionType } from './CommandOn.helpers'
 import { onMessages } from './CommandOn.messages'
 
@@ -25,12 +24,9 @@ export const CommandOn = ({ props, terminal: { command, setMessageData } }) => {
       return { command: commandToRun, url: urlForEvent }
     })
 
-    backgroundRequest({
-      eventType: eventTypes.ADD_PAGES_EVENT,
-      data: commandsToRun
-    })
-
-    setMessageData(onMessages.eventSaveSuccess)
+    addPageEvents(commandsToRun)
+      .catch(() => setMessageData(onMessages.unexpectedError))
+      .then(() => setMessageData(onMessages.eventSaveSuccess))
   }, [url, run, setMessageData])
 
   useEffect(

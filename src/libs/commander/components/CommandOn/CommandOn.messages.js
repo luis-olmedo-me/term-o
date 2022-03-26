@@ -1,6 +1,8 @@
 import { parameterTypes } from '../../constants/commands.constants'
+import { commanderMessages } from '../../commander.messages.js'
 
 export const onMessages = {
+  ...commanderMessages,
   invalidURLRegularExpressions: {
     message: 'URLs must be valid regular expressions',
     type: parameterTypes.ERROR

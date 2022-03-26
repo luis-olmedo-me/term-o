@@ -1,3 +1,4 @@
+import { actionTypes } from '../../constants/commands.constants'
 import { domMessages } from './CommandDom.messages'
 
 const getElementsFromDOM = (patterns) => {

@@ -1,4 +1,5 @@
 import { camelize } from '../../commander.promises'
+import { actionTypes } from '../../constants/commands.constants'
 
 export const parseStyles = (inlineStyles) => {
   const regex = /([\w-]*)\s*:\s*([^;]*)/g
@@ -23,4 +24,10 @@ export const parseManualStyles = (manualStyles) => {
     },
     {}
   )
+}
+
+export const getActionType = ({ styles, manualStyles }) => {
+  if (styles) return actionTypes.SET_STYLES
+  else if (Object.keys(manualStyles).length) return actionTypes.SET_STYLES
+  else return actionTypes.NONE
 }

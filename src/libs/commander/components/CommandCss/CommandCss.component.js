@@ -1,40 +1,60 @@
-import React, { useEffect, useState } from 'react'
-import { parameterTypes } from '../../constants/commands.constants'
+import React, { useEffect, useState, useCallback } from 'react'
+import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { styleElements, validateStyles } from '../../commander.promises'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
-import { parseManualStyles, parseStyles } from './CommandCss.helpers'
+import {
+  getActionType,
+  parseManualStyles,
+  parseStyles
+} from './CommandCss.helpers'
 import { cssMessages } from './CommandCss.messages'
 
 export const CommandCss = ({
-  props: { styles, manualStyles },
+  props,
   terminal: { command, parameters, setMessageData }
 }) => {
+  const { styles, manualStyles } = props
+
   const [stylesApplied, setStylesApplied] = useState({})
-  const inlineStyles = {
-    ...parseStyles(styles),
-    ...parseManualStyles(manualStyles)
-  }
+
+  const actionType = getActionType(props)
+
+  const applyStyles = useCallback(() => {
+    const inlineStyles = {
+      ...parseStyles(styles),
+      ...parseManualStyles(manualStyles)
+    }
+
+    const hasDefaultElements = parameters?.type === parameterTypes.ELEMENTS
+    const elementsToStyle = hasDefaultElements ? parameters.value : []
+
+    const { validStyles, invalidStyles } = validateStyles(inlineStyles)
+
+    const invalidStylesNames = Object.keys(invalidStyles)
+    const hasInvalidatedStyles = invalidStylesNames.length > 0
+
+    if (hasInvalidatedStyles) {
+      return setMessageData(cssMessages.invalidStyle, {
+        invalidStyleNames: invalidStylesNames.join(', ')
+      })
+    }
+
+    styleElements({ styles: validStyles, elements: elementsToStyle })
+    setStylesApplied(validStyles)
+  }, [styles, manualStyles, setMessageData])
 
   useEffect(
-    function applyStyles() {
-      const hasDefaultElements = parameters?.type === parameterTypes.ELEMENTS
-      const elementsToStyle = hasDefaultElements ? parameters.value : []
+    function handleActionType() {
+      switch (actionType) {
+        case actionTypes.SET_STYLES:
+          applyStyles()
+          break
 
-      const { validStyles, invalidStyles } = validateStyles(inlineStyles)
-
-      const invalidStylesNames = Object.keys(invalidStyles)
-      const hasInvalidatedStyles = invalidStylesNames.length > 0
-
-      if (!hasInvalidatedStyles) {
-        styleElements({ styles: validStyles, elements: elementsToStyle })
-        setStylesApplied(validStyles)
-      } else {
-        setMessageData(cssMessages.invalidStyle, {
-          invalidStyleNames: invalidStylesNames.join(', ')
-        })
+        default:
+          break
       }
     },
-    [parameters]
+    [actionType, applyStyles]
   )
 
   return (

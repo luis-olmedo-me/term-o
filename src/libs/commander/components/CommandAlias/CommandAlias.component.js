@@ -3,11 +3,10 @@ import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { Table } from 'modules/components/Table/Table.component'
 import { aliasHeaders } from './CommandAlias.constants'
-import { eventTypes } from 'src/constants/events.constants.js'
 import {
-  backgroundRequest,
+  fetchConfiguration,
   addAliases,
-  fetchConfiguration
+  deleteAliases
 } from 'src/helpers/event.helpers.js'
 import { getActionType, validateAliasesToAdd } from './CommandAlias.helpers'
 import { aliasMessages } from './CommandAlias.messages'
@@ -56,12 +55,9 @@ export const CommandAlias = ({
 
       if (hasInvalidIds) return setMessageData(aliasMessages.noAliasIdsFound)
 
-      backgroundRequest({
-        eventType: eventTypes.DELETE_ALIAS,
-        data: { aliasIdsToDelete: validIds }
-      })
-
-      setMessageData(aliasMessages.aliasDeletionSuccess)
+      deleteAliases(validIds)
+        .catch(() => setMessageData(aliasMessages.unexpectedError))
+        .then(() => setMessageData(aliasMessages.aliasDeletionSuccess))
     },
     [deletedIds]
   )

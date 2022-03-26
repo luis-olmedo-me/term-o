@@ -35,3 +35,21 @@ export const addAliases = (newAliases) => {
     })
   })
 }
+
+export const deleteAliases = (aliasIds) => {
+  return new Promise((resolve, reject) => {
+    const callback = (response) => {
+      if (response?.status === 'ok') {
+        resolve()
+      } else {
+        reject(response?.error)
+      }
+    }
+
+    backgroundRequest({
+      eventType: eventTypes.DELETE_ALIAS,
+      callback,
+      data: { aliasIdsToDelete: aliasIds }
+    })
+  })
+}

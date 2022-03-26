@@ -23,12 +23,7 @@ export const CommandEvent = ({
 
   const handleShowList = useCallback(
     ({ pageEvents = [] }) => {
-      if (!pageEvents.length) {
-        return setMessageData({
-          type: parameterTypes.INFO,
-          message: 'There are no page events registered.'
-        })
-      }
+      if (!pageEvents.length) return setMessageData(eventMessages.noEventsFound)
 
       const pageEventsRows = pageEvents.map((pageEvent) => {
         return eventRows.map((eventRow) => pageEvent[eventRow])
@@ -41,12 +36,7 @@ export const CommandEvent = ({
 
   const handleDeleteEvent = useCallback(
     ({ pageEvents = [] }) => {
-      if (!pageEvents.length) {
-        setMessageData({
-          type: parameterTypes.INFO,
-          message: 'There are no page events registered.'
-        })
-      }
+      if (!pageEvents.length) return setMessageData(eventMessages.noEventsFound)
 
       const idsToDelete = deletedIds.filter((id) => {
         return pageEvents.some((pageEvent) => pageEvent.id === id)

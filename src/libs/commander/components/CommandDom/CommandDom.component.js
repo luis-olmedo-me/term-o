@@ -49,7 +49,7 @@ export const CommandDom = ({
       setElements(newElements)
       setParameters({ value: newElements, type: parameterTypes.ELEMENTS })
     })
-  }, [get, hasId, hasClass, parameters, setParameters, setMessageData])
+  }, [get, hasId, hasClass, setMessageData])
 
   useEffect(
     function handleActionType() {

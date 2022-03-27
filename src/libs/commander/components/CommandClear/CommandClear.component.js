@@ -1,4 +1,5 @@
 import { useEffect, useCallback } from 'react'
+import { resetConfiguration } from 'src/helpers/event.helpers.js'
 import { actionTypes } from '../../constants/commands.constants'
 import { getActionType } from './CommandClear.helpers'
 
@@ -17,7 +18,7 @@ export const CommandClear = ({ props, terminal: { clearTerminal } }) => {
           break
 
         case actionTypes.CLEAR_CONFIG:
-          handleClearConfig()
+          resetConfiguration()
           break
 
         default:

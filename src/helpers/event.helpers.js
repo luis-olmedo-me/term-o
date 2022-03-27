@@ -89,3 +89,20 @@ export const addPageEvents = (newPageEvents) => {
     })
   })
 }
+
+export const resetConfiguration = () => {
+  return new Promise((resolve, reject) => {
+    const callback = (response) => {
+      if (response?.status === 'ok') {
+        resolve()
+      } else {
+        reject(response?.error)
+      }
+    }
+
+    backgroundRequest({
+      eventType: eventTypes.RESET_CONFIGURATION,
+      callback
+    })
+  })
+}

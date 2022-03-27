@@ -4,7 +4,10 @@ import { actionTypes } from '../../constants/commands.constants'
 import { getActionType } from './CommandClear.helpers'
 import { clearMessages } from './CommandClear.messages'
 
-export const CommandClear = ({ props, terminal: { clearTerminal } }) => {
+export const CommandClear = ({
+  props,
+  terminal: { clearTerminal, setMessageData }
+}) => {
   const actionType = getActionType(props)
 
   useEffect(
@@ -24,7 +27,7 @@ export const CommandClear = ({ props, terminal: { clearTerminal } }) => {
           break
       }
     },
-    [actionType, clearTerminal]
+    [actionType, clearTerminal, setMessageData]
   )
 
   return null

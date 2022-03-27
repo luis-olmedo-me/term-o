@@ -1,30 +1,25 @@
 import { actionTypes } from '../../constants/commands.constants'
-import { domMessages } from './CommandDom.messages'
 
 const getElementsFromDOM = (patterns) => {
   try {
     const elementsFromDOM =
       (patterns?.length && window.document.querySelectorAll(patterns)) || []
 
-    return { elements: [...elementsFromDOM], error: '' }
+    return [...elementsFromDOM]
   } catch {
-    return {
-      elements: [],
-      error: domMessages.noElementsFound
-    }
+    return []
   }
 }
 
 export const getElements = ({ patterns, defaultElements, filter }) => {
-  return new Promise((resolve) => {
-    const { elements, error } = getElementsFromDOM(patterns)
-    let elementsFound = [...elements, ...defaultElements]
+  return new Promise((resolve, reject) => {
+    const elements = getElementsFromDOM(patterns)
+    const elementsFound = filter
+      ? [...elements, ...defaultElements].filter(filter)
+      : [...elements, ...defaultElements]
 
-    if (filter) {
-      elementsFound = elementsFound.filter(filter)
-    }
-
-    resolve({ elements: elementsFound, error })
+    if (!elementsFound.length) reject()
+    else resolve({ elementsFound })
   })
 }
 

@@ -79,18 +79,12 @@ export const CommandDom = ({
       filter: hasFilters ? filterElements : null
     })
 
-    elementsSearch.then(({ elements: newElements, error }) => {
-      if (error) {
-        return setMessageData(error, { patterns: get.join(', ') })
-      } else if (!newElements.length) {
-        return setMessageData(domMessages.noElementsFound, {
-          patterns: get.join(', ')
-        })
-      }
-
-      setElements(newElements)
-      setParameters({ value: newElements, type: parameterTypes.ELEMENTS })
-    })
+    elementsSearch
+      .then(({ elementsFound }) => {
+        setElements(elementsFound)
+        setParameters({ value: elementsFound, type: parameterTypes.ELEMENTS })
+      })
+      .catch(() => setMessageData(domMessages.noElementsFound))
   }, [
     get,
     hasId,

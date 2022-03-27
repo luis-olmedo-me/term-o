@@ -5,7 +5,7 @@ import { Console } from './modules/Console/Console.component'
 import root from 'react-shadow/styled-components'
 import { FontFamilies } from './fonts/Fonts.styles'
 
-const body = document.getElementsByTagName('body')[0]
+const body = document.body
 const rootDiv = document.createElement('div')
 
 body.prepend(rootDiv)

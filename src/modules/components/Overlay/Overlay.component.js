@@ -1,9 +1,10 @@
 import React from 'react'
+import { Portal } from '../Portal/Portal.component'
 
 export const Overlay = () => {
   return (
-    <div>
-      <h1>Overlay</h1>
-    </div>
+    <Portal>
+      <h1>hola</h1>
+    </Portal>
   )
 }

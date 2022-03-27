@@ -54,6 +54,16 @@ class ConfigManager {
 
     this.onChange(sender, shouldUpdateCurrentTab)
   }
+
+  reset(sender, shouldUpdateCurrentTab = true) {
+    this.config = {
+      consolePosition: {},
+      pageEvents: [],
+      aliases: []
+    }
+
+    this.setConfigInLocalStorage(sender, shouldUpdateCurrentTab)
+  }
 }
 
 export const configManager = new ConfigManager().init()

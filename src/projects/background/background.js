@@ -41,6 +41,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       break
     }
 
+    case eventTypes.RESET_CONFIGURATION:
+      configManager.reset(sender)
+      sendResponse({ status: 'ok' })
+      break
+
     case eventTypes.ADD_PAGES_EVENT: {
       const initialId = Date.now().toString()
       const newPageEvents = request.data.map((newEvent, index) => ({

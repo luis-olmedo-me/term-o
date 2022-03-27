@@ -1,6 +1,5 @@
-const body = document.body
-const rootDiv = document.createElement('div')
+import shadowRoot from 'react-shadow/styled-components'
 
-body.prepend(rootDiv)
+const appRoot = document.createElement('div')
 
-export { rootDiv }
+export { appRoot, shadowRoot }

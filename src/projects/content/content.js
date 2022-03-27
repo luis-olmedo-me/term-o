@@ -2,17 +2,18 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import { Console } from './modules/Console/Console.component'
-import root from 'react-shadow/styled-components'
 import { FontFamilies } from './fonts/Fonts.styles'
-import { rootDiv } from './content.constants'
+import { appRoot, shadowRoot } from './content.constants'
+
+document.body.prepend(appRoot)
 
 ReactDOM.render(
   <React.StrictMode>
     <FontFamilies />
 
-    <root.div>
+    <shadowRoot.div>
       <Console />
-    </root.div>
+    </shadowRoot.div>
   </React.StrictMode>,
-  rootDiv
+  appRoot
 )

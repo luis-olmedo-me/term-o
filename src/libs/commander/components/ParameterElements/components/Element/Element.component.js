@@ -1,22 +1,27 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
+import { Overlay } from '../../../../../../modules/components/Overlay/Overlay.component'
 import { ElementWrapper, Specification } from './Element.styles'
 
 export const Element = ({ htmlElement = {} }) => {
-  const orinalBoxShadow = useMemo(
-    () => htmlElement.style.boxShadow,
-    [htmlElement]
-  )
+  const [isHighlighting, setIsHighlighting] = useState(false)
+
+  // const orinalBoxShadow = useMemo(
+  //   () => htmlElement.style.boxShadow,
+  //   [htmlElement]
+  // )
 
   const isHidden =
     htmlElement.style.visibility === 'hidden' ||
     htmlElement.style.display === 'none'
 
   const highlightElement = () => {
-    htmlElement.style.boxShadow = '0 0 0 3px #e5b567 inset'
+    // htmlElement.style.boxShadow = '0 0 0 3px #e5b567 inset'
+    setIsHighlighting(true)
   }
 
   const unhighlightElement = () => {
-    htmlElement.style.boxShadow = orinalBoxShadow
+    // htmlElement.style.boxShadow = orinalBoxShadow
+    setIsHighlighting(false)
   }
 
   const { id, className } = htmlElement
@@ -42,6 +47,8 @@ export const Element = ({ htmlElement = {} }) => {
       {specification && (
         <Specification isHidden={isHidden}>{specification}</Specification>
       )}
+
+      <Overlay highlitedElement={isHighlighting ? htmlElement : null} />
     </ElementWrapper>
   )
 }

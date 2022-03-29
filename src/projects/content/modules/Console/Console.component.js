@@ -14,7 +14,6 @@ import { useConfig } from './hooks/useConfig.hook.js'
 import { useResize } from './hooks/useResize/useResize.hook.js'
 
 import { ConsoleTitle, ConsoleLogs, ConsoleWrapper } from './Console.styles.js'
-import { Overlay } from '../../../../modules/components/Overlay/Overlay.component.js'
 
 export const Console = () => {
   const wrapperReference = useRef(null)
@@ -90,8 +89,6 @@ export const Console = () => {
       onKeyUp={cancelEventPropagation}
       onKeyPress={cancelEventPropagation}
     >
-      <Overlay />
-
       {!isMoving
         ? singleResizeTypes.map((resizeType) => (
             <Resizer

@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { render } from 'react-dom'
 
 import { Console } from './modules/Console/Console.component'
 import { FontFamilies } from './fonts/Fonts.styles'
@@ -8,7 +8,7 @@ import { PortalProvider } from '../../modules/components/Portal/Portal.provider'
 
 document.body.prepend(appRoot)
 
-ReactDOM.render(
+render(
   <React.StrictMode>
     <FontFamilies />
 

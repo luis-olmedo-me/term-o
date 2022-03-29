@@ -1,11 +1,11 @@
-import ReactDOM from 'react-dom'
 import React from 'react'
+import { createPortal } from 'react-dom'
 import { PortalContext } from './Portal.contexts'
 
 export const Portal = ({ children }) => {
   return (
     <PortalContext.Consumer>
-      {(root) => root && ReactDOM.createPortal(children, root)}
+      {(root) => root && createPortal(children, root)}
     </PortalContext.Consumer>
   )
 }

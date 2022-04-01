@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react'
 import { ElementWrapper, Specification } from './Element.styles'
-import { OverlayContext } from 'modules/components/Overlay/Overlay.contexts'
+import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 
-export const Element = ({ htmlElement = {} }) => {
+const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
   const { height, width } = useMemo(() => {
     return htmlElement.getBoundingClientRect() || {}
   }, [htmlElement])
@@ -26,23 +26,19 @@ export const Element = ({ htmlElement = {} }) => {
   }
 
   return (
-    <OverlayContext.Consumer>
-      {(setHighlitedElement) => {
-        return (
-          <ElementWrapper
-            onMouseEnter={() => !isHidden && setHighlitedElement(htmlElement)}
-            onMouseLeave={() => !isHidden && setHighlitedElement(null)}
-            isHidden={isHidden}
-            onClick={handleElementClick}
-          >
-            {tagNameLabel}
+    <ElementWrapper
+      onMouseEnter={() => !isHidden && setHighlitedElement(htmlElement)}
+      onMouseLeave={() => !isHidden && setHighlitedElement(null)}
+      isHidden={isHidden}
+      onClick={handleElementClick}
+    >
+      {tagNameLabel}
 
-            {specification && (
-              <Specification isHidden={isHidden}>{specification}</Specification>
-            )}
-          </ElementWrapper>
-        )
-      }}
-    </OverlayContext.Consumer>
+      {specification && (
+        <Specification isHidden={isHidden}>{specification}</Specification>
+      )}
+    </ElementWrapper>
   )
 }
+
+export const Element = withOverlayContext(ElementWithoutContext)

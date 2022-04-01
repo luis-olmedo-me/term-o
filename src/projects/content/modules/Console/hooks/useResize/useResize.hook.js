@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import {
   getNewResizeData,
+  isNumber,
   limitLowValue,
   updateConfig
 } from './useResize.helpers'
@@ -61,21 +62,6 @@ export const useResize = ({ wrapperReference, consolePosition }) => {
     [wrapperReference]
   )
 
-  useEffect(function expectForBodyChanges() {
-    const updateBodyData = debounce(function outputsize() {
-      setBodyData({
-        width: Math.min(document.body.clientWidth, window.innerWidth - 1),
-        height: Math.min(document.body.clientHeight, window.innerHeight - 1)
-      })
-    }, 500)
-
-    const obsever = new ResizeObserver(updateBodyData)
-
-    obsever.observe(document.body)
-
-    return () => obsever.unobserve(document.body)
-  }, [])
-
   useEffect(
     function getConfigurationFromBackground() {
       const hasConsolePosition = Object.keys(consolePosition).length > 0
@@ -83,10 +69,10 @@ export const useResize = ({ wrapperReference, consolePosition }) => {
       if (!hasConsolePosition) return
 
       setResizeData({
-        left: consolePosition?.left || 10,
-        right: consolePosition?.right || 10,
-        top: consolePosition?.top || 10,
-        bottom: consolePosition?.bottom || 10
+        left: isNumber(consolePosition?.left) ? consolePosition.left : 10,
+        right: isNumber(consolePosition?.right) ? consolePosition.right : 10,
+        top: isNumber(consolePosition?.top) ? consolePosition.top : 10,
+        bottom: isNumber(consolePosition?.bottom) ? consolePosition.bottom : 10
       })
     },
     [consolePosition]

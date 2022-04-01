@@ -1,22 +1,25 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { render } from 'react-dom'
 
 import { Console } from './modules/Console/Console.component'
-import root from 'react-shadow/styled-components'
 import { FontFamilies } from './fonts/Fonts.styles'
+import { appRoot, shadowRoot } from './content.constants'
+import { PortalProvider } from 'modules/components/Portal/Portal.provider'
+import { OverlayProvider } from 'modules/components/Overlay/Overlay.provider'
 
-const body = document.getElementsByTagName('body')[0]
-const rootDiv = document.createElement('div')
+document.body.prepend(appRoot)
 
-body.prepend(rootDiv)
-
-ReactDOM.render(
+render(
   <React.StrictMode>
     <FontFamilies />
 
-    <root.div>
-      <Console />
-    </root.div>
+    <shadowRoot.div>
+      <PortalProvider>
+        <OverlayProvider>
+          <Console />
+        </OverlayProvider>
+      </PortalProvider>
+    </shadowRoot.div>
   </React.StrictMode>,
-  rootDiv
+  appRoot
 )

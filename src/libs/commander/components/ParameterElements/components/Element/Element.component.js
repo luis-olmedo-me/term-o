@@ -25,10 +25,18 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
     navigator.clipboard.writeText(`${tagNameLabel}${specification}`)
   }
 
+  const handleElementMouseEnter = () => {
+    setHighlitedElement(htmlElement)
+  }
+
+  const handleElementMouseLeave = () => {
+    setHighlitedElement(null)
+  }
+
   return (
     <ElementWrapper
-      onMouseEnter={() => !isHidden && setHighlitedElement(htmlElement)}
-      onMouseLeave={() => !isHidden && setHighlitedElement(null)}
+      onMouseEnter={isHidden ? null : handleElementMouseEnter}
+      onMouseLeave={isHidden ? null : handleElementMouseLeave}
       isHidden={isHidden}
       onClick={handleElementClick}
     >

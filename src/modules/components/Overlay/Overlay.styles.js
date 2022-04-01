@@ -13,8 +13,7 @@ export const OverlayWrapper = styled.div`
 `
 
 export const HighlightedElement = styled.div`
-  position: fixed;
-  z-index: 100001;
+  position: absolute;
   opacity: 0.5;
   background-color: transparent;
   inset: 0;

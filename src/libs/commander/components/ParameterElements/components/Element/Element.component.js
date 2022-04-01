@@ -2,9 +2,15 @@ import React, { useMemo } from 'react'
 import { ElementWrapper, Specification } from './Element.styles'
 
 export const Element = ({ htmlElement = {}, setHighlitedElement }) => {
+  const { height, width } = useMemo(() => {
+    return htmlElement.getBoundingClientRect() || {}
+  }, [htmlElement])
+
   const isHidden =
     htmlElement.style.visibility === 'hidden' ||
-    htmlElement.style.display === 'none'
+    htmlElement.style.display === 'none' ||
+    height === 0 ||
+    width === 0
 
   const highlightElement = () => {
     setHighlitedElement(htmlElement)

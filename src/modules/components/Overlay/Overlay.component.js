@@ -7,25 +7,27 @@ export const Overlay = ({ highlitedElement }) => {
     return highlitedElement?.getBoundingClientRect() || {}
   }, [highlitedElement])
 
+  const isHighliting = Boolean(highlitedElement)
+
   return (
     <Portal>
-      <OverlayWrapper isHighlighting={!!highlitedElement}>
+      <OverlayWrapper isHighlighting={isHighliting}>
         <HighlightedElement
           className='horizontal-limit'
-          isHighlighting={!!highlitedElement}
-          style={highlitedElement ? { top, height } : null}
+          isHighlighting={isHighliting}
+          style={isHighliting ? { top, height } : null}
         />
 
         <HighlightedElement
           className='vertical-limit'
-          isHighlighting={!!highlitedElement}
-          style={highlitedElement ? { left, width } : null}
+          isHighlighting={isHighliting}
+          style={isHighliting ? { left, width } : null}
         />
 
         <HighlightedElement
-          isHighlighting={!!highlitedElement}
+          isHighlighting={isHighliting}
           className='box'
-          style={highlitedElement ? { top, left, width, height } : null}
+          style={isHighliting ? { top, left, width, height } : null}
         />
       </OverlayWrapper>
     </Portal>

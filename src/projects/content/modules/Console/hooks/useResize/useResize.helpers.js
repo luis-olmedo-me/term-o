@@ -5,6 +5,8 @@ import { debounce } from 'src/helpers/utils.helpers.js'
 
 export const limitLowValue = (value) => (value < 0 ? 0 : value)
 
+export const isNumber = (value) => typeof value === 'number'
+
 const validateSide = (side, oppositeSide, mockDistance) => {
   const isSideOutside = side < 0
   const isOppositeSideOutside = oppositeSide < 0

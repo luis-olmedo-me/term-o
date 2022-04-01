@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import {
   getNewResizeData,
+  isNumber,
   limitLowValue,
   updateConfig
 } from './useResize.helpers'
 import { debounce } from 'src/helpers/utils.helpers.js'
 import { defaultBodyData } from './useResize.constants'
-const isNumber = (value) => typeof value === 'number'
 
 export const useResize = ({ wrapperReference, consolePosition }) => {
   const [resizingFrom, setResizingFrom] = useState('')

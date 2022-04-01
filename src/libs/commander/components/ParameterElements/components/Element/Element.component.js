@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react'
 import { ElementWrapper, Specification } from './Element.styles'
+import { OverlayContext } from 'modules/components/Overlay/Overlay.contexts'
 
-export const Element = ({ htmlElement = {}, setHighlitedElement }) => {
+export const Element = ({ htmlElement = {} }) => {
   const { height, width } = useMemo(() => {
     return htmlElement.getBoundingClientRect() || {}
   }, [htmlElement])
@@ -11,14 +12,6 @@ export const Element = ({ htmlElement = {}, setHighlitedElement }) => {
     htmlElement.style.display === 'none' ||
     height === 0 ||
     width === 0
-
-  const highlightElement = () => {
-    setHighlitedElement(htmlElement)
-  }
-
-  const unhighlightElement = () => {
-    setHighlitedElement(null)
-  }
 
   const { id, className } = htmlElement
 
@@ -33,16 +26,23 @@ export const Element = ({ htmlElement = {}, setHighlitedElement }) => {
   }
 
   return (
-    <ElementWrapper
-      onMouseEnter={highlightElement}
-      onMouseLeave={unhighlightElement}
-      isHidden={isHidden}
-      onClick={handleElementClick}
-    >
-      {tagNameLabel}
-      {specification && (
-        <Specification isHidden={isHidden}>{specification}</Specification>
-      )}
-    </ElementWrapper>
+    <OverlayContext.Consumer>
+      {(setHighlitedElement) => {
+        return (
+          <ElementWrapper
+            onMouseEnter={() => setHighlitedElement(htmlElement)}
+            onMouseLeave={() => setHighlitedElement(null)}
+            isHidden={isHidden}
+            onClick={handleElementClick}
+          >
+            {tagNameLabel}
+
+            {specification && (
+              <Specification isHidden={isHidden}>{specification}</Specification>
+            )}
+          </ElementWrapper>
+        )
+      }}
+    </OverlayContext.Consumer>
   )
 }

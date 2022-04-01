@@ -30,8 +30,8 @@ export const Element = ({ htmlElement = {} }) => {
       {(setHighlitedElement) => {
         return (
           <ElementWrapper
-            onMouseEnter={() => setHighlitedElement(htmlElement)}
-            onMouseLeave={() => setHighlitedElement(null)}
+            onMouseEnter={() => !isHidden && setHighlitedElement(htmlElement)}
+            onMouseLeave={() => !isHidden && setHighlitedElement(null)}
             isHidden={isHidden}
             onClick={handleElementClick}
           >

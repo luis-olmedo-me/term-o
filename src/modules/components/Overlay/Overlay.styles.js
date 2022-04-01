@@ -19,6 +19,21 @@ export const HighlightedElement = styled.div`
   background-color: transparent;
   inset: 0;
   width: 100%;
-  border: 2px dashed #9cf;
   box-sizing: border-box;
+  opacity: ${(props) => (props.isHighlighting ? 1 : 0)};
+
+  &&.horizontal-limit,
+  &&.vertical-limit {
+    border: dashed #9cf;
+  }
+  &&.horizontal-limit {
+    border-width: 1px 0;
+  }
+  &&.vertical-limit {
+    border-width: 0 1px;
+  }
+
+  &&.box {
+    background-color: #99ccff33;
+  }
 `

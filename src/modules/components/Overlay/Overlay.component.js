@@ -10,9 +10,23 @@ export const Overlay = ({ highlitedElement }) => {
   return (
     <Portal>
       <OverlayWrapper isHighlighting={!!highlitedElement}>
-        {highlitedElement && (
-          <HighlightedElement style={{ top, left, height, width }} />
-        )}
+        <HighlightedElement
+          className='horizontal-limit'
+          isHighlighting={!!highlitedElement}
+          style={highlitedElement ? { top, height } : null}
+        />
+
+        <HighlightedElement
+          className='vertical-limit'
+          isHighlighting={!!highlitedElement}
+          style={highlitedElement ? { left, width } : null}
+        />
+
+        <HighlightedElement
+          isHighlighting={!!highlitedElement}
+          className='box'
+          style={highlitedElement ? { top, left, width, height } : null}
+        />
       </OverlayWrapper>
     </Portal>
   )

@@ -3,10 +3,12 @@ import { resetConfiguration } from 'src/helpers/event.helpers.js'
 import { actionTypes } from '../../constants/commands.constants'
 import { getActionType } from './CommandClear.helpers'
 import { clearMessages } from './CommandClear.messages'
+import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 
-export const CommandClear = ({
+export const CommandClearWithoutContext = ({
   props,
-  terminal: { clearTerminal, setMessageData }
+  terminal: { clearTerminal, setMessageData },
+  setHighlitedElement
 }) => {
   const actionType = getActionType(props)
 
@@ -15,6 +17,7 @@ export const CommandClear = ({
       switch (actionType) {
         case actionTypes.CLEAR_TERMINAL:
           clearTerminal()
+          setHighlitedElement(null)
           break
 
         case actionTypes.CLEAR_CONFIG:
@@ -27,8 +30,10 @@ export const CommandClear = ({
           break
       }
     },
-    [actionType, clearTerminal, setMessageData]
+    [actionType, clearTerminal, setMessageData, setHighlitedElement]
   )
 
   return null
 }
+
+export const CommandClear = withOverlayContext(CommandClearWithoutContext)

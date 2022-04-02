@@ -9,7 +9,7 @@ const preIconsByVariants = {
   [parameterTypes.SUCCESS]: '✔'
 }
 
-export const LogWrapper = ({ children, variant, buttonGroups = [] }) => {
+export const LogWrapper = ({ children, variant, buttonGroups }) => {
   const icon = preIconsByVariants[variant]
   return (
     <Log className={variant}>
@@ -17,7 +17,7 @@ export const LogWrapper = ({ children, variant, buttonGroups = [] }) => {
 
       {children}
 
-      {buttonGroups.map(({ id, text, onClick }) => {
+      {buttonGroups?.map(({ id, text, onClick }) => {
         return (
           <GroupButton key={id} onClick={onClick}>
             {text}

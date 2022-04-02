@@ -22,7 +22,8 @@ const generateButtonGroupsFromPages = (pages, selectedPage, setPageNumber) => {
       id: `page-${index + 1}`,
       text: `${index + 1}`,
       onClick: () => setPageNumber(index + 1),
-      disabled: false
+      disabled: false,
+      selected: index + 1 === selectedPage
     })
   })
 

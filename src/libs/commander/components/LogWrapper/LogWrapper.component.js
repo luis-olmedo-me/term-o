@@ -29,9 +29,14 @@ export const LogWrapper = ({ children, variant, buttonGroups }) => {
 
       {hasButtonGroups && (
         <GroupButtons>
-          {buttonGroups.map(({ id, text, onClick, disabled }) => {
+          {buttonGroups.map(({ id, text, onClick, disabled, selected }) => {
             return (
-              <GroupButton key={id} onClick={onClick} disabled={disabled}>
+              <GroupButton
+                key={id}
+                onClick={onClick}
+                disabled={disabled}
+                selected={selected}
+              >
                 {text}
               </GroupButton>
             )

@@ -68,7 +68,9 @@ export const GroupButton = styled.button`
   border: none;
   padding: 5px 10px;
   cursor: pointer;
-  background-color: transparent;
+  background-color: ${(props) =>
+    props.selected ? '#ffffff55' : 'transparent'};
+  transition: background-color 0.2s ease-in-out;
   font-family: Coda;
   color: #fff;
   border: solid #fff;

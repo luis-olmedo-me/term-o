@@ -10,8 +10,12 @@ const divideElementsIntoPages = (elements, pageSize) => {
   return pages
 }
 
-const generateButtonGroupsFromPages = (pages) => {
+const generateButtonGroupsFromPages = (pages, selectedPage, setPageNumber) => {
   const buttonGroups = []
+
+  const isFirstPage = selectedPage === 1
+  const isLastPage = selectedPage === pages.length
+  const pageIndexes = [selectedPage - 1, selectedPage, selectedPage + 1]
 
   pages.forEach((_page, index) => {
     buttonGroups.push({
@@ -21,7 +25,9 @@ const generateButtonGroupsFromPages = (pages) => {
     })
   })
 
-  return buttonGroups
+  if (isFirstPage) return buttonGroups.slice(0, 3)
+  else if (isLastPage) return buttonGroups.slice(-3, 0)
+  else return buttonGroups.filter((_, index) => pageIndexes.includes(index + 1))
 }
 
 export const usePaginationGroups = ({ elements }) => {
@@ -30,10 +36,14 @@ export const usePaginationGroups = ({ elements }) => {
   const elementsDividedIntoPages = divideElementsIntoPages(elements, 30)
   const currentPage = elementsDividedIntoPages[pageNumber - 1] || []
   const pagesAsButtonGroups = generateButtonGroupsFromPages(
-    elementsDividedIntoPages
+    elementsDividedIntoPages,
+    pageNumber,
+    setPageNumber
   )
   const hasMoreElements = elementsDividedIntoPages.length > 0
   const shouldDisplayGroups = elementsDividedIntoPages.length > 1
+
+  console.log('totalPages', elementsDividedIntoPages.length)
 
   const buttonGroups = [
     {

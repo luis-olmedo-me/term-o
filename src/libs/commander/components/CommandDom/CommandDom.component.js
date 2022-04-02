@@ -108,11 +108,7 @@ export const CommandDom = ({
         setElements(elementsFound)
         setParameters({ value: elementsFound, type: parameterTypes.ELEMENTS })
       })
-      .catch(
-        (error) =>
-          console.log('error', error) ||
-          setMessageData(domMessages.noElementsFound)
-      )
+      .catch(() => setMessageData(domMessages.noElementsFound))
   }, [
     get,
     hasId,

@@ -1,22 +1,19 @@
 import React, { useMemo } from 'react'
 import { ElementWrapper, Specification } from './Element.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
+import { isElementHidden } from '../../../CommandDom/CommandDom.helpers'
 
 const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
   const { height, width } = useMemo(() => {
     return htmlElement.getBoundingClientRect() || {}
   }, [htmlElement])
 
-  const isHidden =
-    htmlElement.style.visibility === 'hidden' ||
-    htmlElement.style.display === 'none' ||
-    height === 0 ||
-    width === 0
+  const isHidden = isElementHidden(htmlElement, { height, width })
 
-  const { id, className } = htmlElement
+  const { id, classList } = htmlElement
 
   const idLabel = id && `#${id}`
-  const classNameLabel = className && `.${className.replaceAll?.(/\s/g, '.')}`
+  const classNameLabel = !!classList.length && `.${[...classList].join('.')}`
   const tagNameLabel = htmlElement.tagName.toLowerCase()
 
   const specification = idLabel || classNameLabel || ''

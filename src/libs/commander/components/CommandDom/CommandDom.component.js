@@ -1,7 +1,13 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { MoreContentButton } from './CommandDom.styles'
-import { getActionType, getElements } from './CommandDom.helpers'
+import {
+  generateFilterByEvery,
+  generateFilterBySome,
+  getActionType,
+  getElements,
+  isElementHidden
+} from './CommandDom.helpers'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { ParameterElements } from '../ParameterElements/ParameterElements.component'
 import { domMessages } from './CommandDom.messages'
@@ -10,19 +16,28 @@ export const CommandDom = ({
   props,
   terminal: { command, parameters, setParameters, setMessageData }
 }) => {
-  const { get, hasId, hasClass, byId, byClass, byText, byStyle, byAttribute } =
-    props
+  const {
+    get,
+    hasId,
+    hasClass,
+    byId,
+    byClass,
+    byText,
+    byStyle,
+    byAttribute,
+    hidden
+  } = props
 
   const [elements, setElements] = useState([])
   const [elementsShown, setElementsShown] = useState(40)
 
-  const actionType = getActionType({ props })
+  const actionType = getActionType(props)
 
   const handleGetDomElements = useCallback(() => {
     const hasDefaultElements = parameters?.type === parameterTypes.ELEMENTS
     const defaultElements = hasDefaultElements ? parameters.value : []
 
-    const hasFilters =
+    const hasFiltersBySome =
       hasId ||
       hasClass ||
       byId.length ||
@@ -31,52 +46,25 @@ export const CommandDom = ({
       byStyle.length ||
       byAttribute.length
 
-    const filterElements = (element) => {
-      let validations = []
+    const hasFiltersByAll = !hidden
 
-      if (hasId) validations.push((element) => Boolean(element.id))
-      if (hasClass) validations.push((element) => Boolean(element.className))
-      if (byId.length) {
-        validations.push((element) =>
-          byId.some((id) => element.id.includes(id))
-        )
-      }
-      if (byClass.length) {
-        validations.push((element) =>
-          byClass.some((className) => element.className?.includes?.(className))
-        )
-      }
-      if (byText.length) {
-        validations.push((element) =>
-          byText.some((text) => element.textContent?.includes?.(text))
-        )
-      }
-      if (byStyle.length) {
-        validations.push((element) =>
-          byStyle.some((style) => {
-            const [[styleName, styleValue]] = Object.entries(style)
+    const filterElementsBySome = generateFilterBySome({
+      hasId,
+      hasClass,
+      byId,
+      byClass,
+      byText,
+      byStyle,
+      byAttribute
+    })
 
-            return element.style[styleName] === styleValue
-          })
-        )
-      }
-      if (byAttribute.length) {
-        validations.push((element) =>
-          byAttribute.some((attribute) => {
-            const [[attributeName, attributeValue]] = Object.entries(attribute)
-
-            return element.getAttribute(attributeName)?.includes(attributeValue)
-          })
-        )
-      }
-
-      return validations.some((validation) => validation(element))
-    }
+    const filterElementsByEvery = generateFilterByEvery({ hidden })
 
     const elementsSearch = getElements({
       patterns: get,
       defaultElements,
-      filter: hasFilters ? filterElements : null
+      filterBySome: hasFiltersBySome ? filterElementsBySome : null,
+      filterByEvery: hasFiltersByAll ? filterElementsByEvery : null
     })
 
     elementsSearch
@@ -93,6 +81,7 @@ export const CommandDom = ({
     byClass,
     byStyle,
     byAttribute,
+    hidden,
     setMessageData
   ])
 

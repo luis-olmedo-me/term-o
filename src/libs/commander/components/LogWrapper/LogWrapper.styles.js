@@ -1,8 +1,6 @@
 import styled from 'styled-components'
 
 export const Log = styled.div`
-  padding: 10px;
-
   &:first-child {
     border-radius: 3px 3px 0 0;
   }
@@ -53,4 +51,33 @@ export const Log = styled.div`
 
 export const Hash = styled.span`
   margin-right: 1ch;
+`
+
+export const LogContent = styled.div`
+  padding: 10px;
+`
+
+export const GroupButtons = styled.div`
+  background-color: #00000022;
+  display: flex;
+  justify-content: center;
+`
+
+export const GroupButton = styled.button`
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  background-color: transparent;
+  transition: background-color 0.2s ease-in-out;
+  font-family: Coda;
+  color: #fff;
+  border-width: 0 0 0 1px;
+
+  &&.selected {
+    background-color: #ffffff55;
+  }
+
+  &&.disabled {
+    background-color: #00000033;
+  }
 `

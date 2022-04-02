@@ -1,16 +1,15 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
-import { MoreContentButton } from './CommandDom.styles'
 import {
   generateFilterByEvery,
   generateFilterBySome,
   getActionType,
-  getElements,
-  isElementHidden
+  getElements
 } from './CommandDom.helpers'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { ParameterElements } from '../ParameterElements/ParameterElements.component'
 import { domMessages } from './CommandDom.messages'
+import { usePaginationGroups } from './hooks/usePaginationGroups.hook'
 
 export const CommandDom = ({
   props,
@@ -29,9 +28,10 @@ export const CommandDom = ({
   } = props
 
   const [elements, setElements] = useState([])
-  const [elementsShown, setElementsShown] = useState(40)
 
   const actionType = getActionType(props)
+
+  const { pageData, buttonGroups } = usePaginationGroups({ elements })
 
   const handleGetDomElements = useCallback(() => {
     const hasDefaultElements = parameters?.type === parameterTypes.ELEMENTS
@@ -99,27 +99,13 @@ export const CommandDom = ({
     [actionType, handleGetDomElements]
   )
 
-  const hasMoreElements = elements.length > elementsShown
-  const limitedElements = elements.slice(0, elementsShown)
-
-  const increaseElementsShown = () => setElementsShown(elementsShown + 40)
-  const textForIncreasing = `Ver mas (${elementsShown}/${elements.length})`
-
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-      <LogWrapper variant={parameterTypes.ELEMENT}>
-        <ParameterElements elements={limitedElements} />
+      <LogWrapper variant={parameterTypes.ELEMENT} buttonGroups={buttonGroups}>
+        <ParameterElements elements={pageData} />
       </LogWrapper>
-
-      {hasMoreElements && (
-        <LogWrapper variant={parameterTypes.BUTTON_GROUP}>
-          <MoreContentButton onClick={increaseElementsShown}>
-            {textForIncreasing}
-          </MoreContentButton>
-        </LogWrapper>
-      )}
     </>
   )
 }

@@ -19,6 +19,12 @@ export const usePaginationGroups = ({ elements }) => {
 
   const buttonGroups = [
     {
+      id: 'go-to-first-page',
+      text: '<<',
+      disabled: pageNumber === 1,
+      onClick: () => setPageNumber(1)
+    },
+    {
       id: 'go-to-previous-page',
       text: '<',
       onClick: () => setPageNumber(pageNumber - 1),
@@ -30,6 +36,12 @@ export const usePaginationGroups = ({ elements }) => {
       text: '>',
       onClick: () => setPageNumber(pageNumber + 1),
       disabled: pageNumber === elementsDividedIntoPages.length
+    },
+    {
+      id: 'go-to-last-page',
+      text: '>>',
+      disabled: pageNumber === elementsDividedIntoPages.length,
+      onClick: () => setPageNumber(elementsDividedIntoPages.length)
     }
   ]
 

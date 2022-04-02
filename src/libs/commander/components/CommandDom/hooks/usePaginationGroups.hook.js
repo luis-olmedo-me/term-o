@@ -21,12 +21,13 @@ const generateButtonGroupsFromPages = (pages, selectedPage, setPageNumber) => {
     buttonGroups.push({
       id: `page-${index + 1}`,
       text: `${index + 1}`,
-      onClick: () => setPageNumber(index + 1)
+      onClick: () => setPageNumber(index + 1),
+      disabled: false
     })
   })
 
   if (isFirstPage) return buttonGroups.slice(0, 3)
-  else if (isLastPage) return buttonGroups.slice(-3, 0)
+  else if (isLastPage) return buttonGroups.slice(-3)
   else return buttonGroups.filter((_, index) => pageIndexes.includes(index + 1))
 }
 
@@ -43,19 +44,19 @@ export const usePaginationGroups = ({ elements }) => {
   const hasMoreElements = elementsDividedIntoPages.length > 0
   const shouldDisplayGroups = elementsDividedIntoPages.length > 1
 
-  console.log('totalPages', elementsDividedIntoPages.length)
-
   const buttonGroups = [
     {
       id: 'go-to-previous-page',
       text: '<',
-      onClick: () => setPageNumber(pageNumber - 1)
+      onClick: () => setPageNumber(pageNumber - 1),
+      disabled: pageNumber === 1
     },
     ...pagesAsButtonGroups,
     {
       id: 'go-to-next-page',
       text: '>',
-      onClick: () => setPageNumber(pageNumber + 1)
+      onClick: () => setPageNumber(pageNumber + 1),
+      disabled: pageNumber === elementsDividedIntoPages.length
     }
   ]
 

@@ -34,8 +34,11 @@ export const LogWrapper = ({ children, variant, buttonGroups }) => {
               <GroupButton
                 key={id}
                 onClick={onClick}
+                className={`
+                  ${selected ? 'selected' : ''}
+                  ${disabled ? 'disabled' : ''}
+                `}
                 disabled={disabled}
-                selected={selected}
               >
                 {text}
               </GroupButton>

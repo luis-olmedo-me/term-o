@@ -60,19 +60,19 @@ export const LogContent = styled.div`
 export const GroupButtons = styled.div`
   border-top: 1px solid #fff;
   background-color: #00000033;
+  display: flex;
+  justify-content: center;
 `
 
 export const GroupButton = styled.button`
-  display: block;
   border: none;
   padding: 5px 10px;
-  margin: 0 auto;
   cursor: pointer;
   background-color: transparent;
   font-family: Coda;
   color: #fff;
   border: solid #fff;
-  border-width: 0 1px 0 0;
+  border-width: 0 0 0 1px;
 
   &:last-child {
     border-width: 0 1px;

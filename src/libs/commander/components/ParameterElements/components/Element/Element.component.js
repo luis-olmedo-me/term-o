@@ -10,10 +10,10 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
 
   const isHidden = isElementHidden(htmlElement, { height, width })
 
-  const { id, className } = htmlElement
+  const { id, classList } = htmlElement
 
   const idLabel = id && `#${id}`
-  const classNameLabel = className && `.${className.replaceAll?.(/\s/g, '.')}`
+  const classNameLabel = !!classList.length && `.${[...classList].join('.')}`
   const tagNameLabel = htmlElement.tagName.toLowerCase()
 
   const specification = idLabel || classNameLabel || ''

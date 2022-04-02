@@ -12,6 +12,16 @@ import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { ParameterElements } from '../ParameterElements/ParameterElements.component'
 import { domMessages } from './CommandDom.messages'
 
+const divideElementsIntoPages = (elements, pageSize) => {
+  const pages = []
+
+  for (let index = 0; index < elements.length; index += pageSize) {
+    pages.push(elements.slice(index, index + pageSize))
+  }
+
+  return pages
+}
+
 export const CommandDom = ({
   props,
   terminal: { command, parameters, setParameters, setMessageData }
@@ -30,6 +40,7 @@ export const CommandDom = ({
 
   const [elements, setElements] = useState([])
   const [elementsShown, setElementsShown] = useState(40)
+  const [pageNumber, setPageNumber] = useState(1)
 
   const actionType = getActionType(props)
 
@@ -99,17 +110,38 @@ export const CommandDom = ({
     [actionType, handleGetDomElements]
   )
 
-  const hasMoreElements = elements.length > elementsShown
-  const limitedElements = elements.slice(0, elementsShown)
+  const generateButtonGroupsFromPages = (pages) => {
+    const buttonGroups = []
 
-  const increaseElementsShown = () => setElementsShown(elementsShown + 40)
-  const textForIncreasing = `Ver mas (${elementsShown}/${elements.length})`
+    pages.forEach((_page, index) => {
+      buttonGroups.push({
+        id: `page-${index + 1}`,
+        text: `${index + 1}`,
+        onClick: () => setPageNumber(index + 1)
+      })
+    })
+
+    return buttonGroups
+  }
+
+  const elementsDividedIntoPages = divideElementsIntoPages(elements, 40)
+  const currentPage = elementsDividedIntoPages[pageNumber - 1] || []
+  const pagesAsButtonGroups = generateButtonGroupsFromPages(
+    elementsDividedIntoPages
+  )
+  const hasMoreElements = elementsDividedIntoPages.length > 0
 
   const buttonGroups = [
     {
-      id: 'increase-elements',
-      text: textForIncreasing,
-      onClick: increaseElementsShown
+      id: 'go-to-previous-page',
+      text: '<',
+      onClick: () => setPageNumber(pageNumber - 1)
+    },
+    ...pagesAsButtonGroups,
+    {
+      id: 'go-to-next-page',
+      text: '>',
+      onClick: () => setPageNumber(pageNumber + 1)
     }
   ]
 
@@ -121,7 +153,7 @@ export const CommandDom = ({
         variant={parameterTypes.ELEMENT}
         buttonGroups={hasMoreElements ? buttonGroups : null}
       >
-        <ParameterElements elements={limitedElements} />
+        <ParameterElements elements={currentPage} />
       </LogWrapper>
     </>
   )

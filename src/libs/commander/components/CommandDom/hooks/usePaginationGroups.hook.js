@@ -27,12 +27,13 @@ const generateButtonGroupsFromPages = (pages) => {
 export const usePaginationGroups = ({ elements }) => {
   const [pageNumber, setPageNumber] = useState(1)
 
-  const elementsDividedIntoPages = divideElementsIntoPages(elements, 40)
+  const elementsDividedIntoPages = divideElementsIntoPages(elements, 30)
   const currentPage = elementsDividedIntoPages[pageNumber - 1] || []
   const pagesAsButtonGroups = generateButtonGroupsFromPages(
     elementsDividedIntoPages
   )
   const hasMoreElements = elementsDividedIntoPages.length > 0
+  const shouldDisplayGroups = elementsDividedIntoPages.length > 1
 
   const buttonGroups = [
     {
@@ -50,6 +51,6 @@ export const usePaginationGroups = ({ elements }) => {
 
   return {
     pageData: hasMoreElements ? currentPage : [],
-    buttonGroups
+    buttonGroups: shouldDisplayGroups ? buttonGroups : []
   }
 }

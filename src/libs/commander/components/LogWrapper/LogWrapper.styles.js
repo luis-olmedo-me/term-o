@@ -58,7 +58,8 @@ export const LogContent = styled.div`
 `
 
 export const GroupButtons = styled.div`
-  border-top: 1px solid #2a2a2a;
+  border-top: 1px solid #fff;
+  background-color: #00000033;
 `
 
 export const GroupButton = styled.button`
@@ -67,7 +68,13 @@ export const GroupButton = styled.button`
   padding: 5px 10px;
   margin: 0 auto;
   cursor: pointer;
-  background-color: #424242;
-  color: #d6d6d6;
+  background-color: transparent;
   font-family: Coda;
+  color: #fff;
+  border: solid #fff;
+  border-width: 0 1px 0 0;
+
+  &:last-child {
+    border-width: 0 1px;
+  }
 `

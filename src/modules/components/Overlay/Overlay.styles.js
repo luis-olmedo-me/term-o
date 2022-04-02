@@ -5,7 +5,7 @@ export const OverlayWrapper = styled.div`
   position: fixed;
   z-index: 100000;
   background-color: ${(props) =>
-    props.isHighlighting ? '#00000033' : 'transparent'};
+    props.isHighlighting ? '#00000077' : 'transparent'};
   inset: 0;
   width: 100%;
   pointer-events: none;

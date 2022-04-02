@@ -1,8 +1,6 @@
 import styled from 'styled-components'
 
 export const Log = styled.div`
-  padding: 10px;
-
   &:first-child {
     border-radius: 3px 3px 0 0;
   }
@@ -53,6 +51,14 @@ export const Log = styled.div`
 
 export const Hash = styled.span`
   margin-right: 1ch;
+`
+
+export const LogContent = styled.div`
+  padding: 10px;
+`
+
+export const GroupButtons = styled.div`
+  border-top: 1px solid #2a2a2a;
 `
 
 export const GroupButton = styled.button`

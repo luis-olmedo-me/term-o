@@ -24,13 +24,9 @@ export const getElements = ({
       ? [...elements, ...defaultElements].filter(filterByEvery)
       : [...elements, ...defaultElements]
 
-    console.log('elementsFoundByEvery', elementsFoundByEvery)
-
     const elementsFoundBySome = filterBySome
       ? elementsFoundByEvery.filter(filterBySome)
       : elementsFoundByEvery
-
-    console.log('elementsFoundBySome', elementsFoundBySome)
 
     if (!elementsFoundBySome.length) reject()
     else resolve({ elementsFound: elementsFoundBySome })

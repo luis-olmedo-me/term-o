@@ -105,21 +105,20 @@ export const CommandDom = ({
   const increaseElementsShown = () => setElementsShown(elementsShown + 40)
   const textForIncreasing = `Ver mas (${elementsShown}/${elements.length})`
 
+  const buttonGroups = [
+    { text: textForIncreasing, onClick: increaseElementsShown }
+  ]
+
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-      <LogWrapper variant={parameterTypes.ELEMENT}>
+      <LogWrapper
+        variant={parameterTypes.ELEMENT}
+        buttonGroups={hasMoreElements ? buttonGroups : null}
+      >
         <ParameterElements elements={limitedElements} />
       </LogWrapper>
-
-      {hasMoreElements && (
-        <LogWrapper variant={parameterTypes.BUTTON_GROUP}>
-          <MoreContentButton onClick={increaseElementsShown}>
-            {textForIncreasing}
-          </MoreContentButton>
-        </LogWrapper>
-      )}
     </>
   )
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
-import { Hash, Log } from './LogWrapper.styles'
+import { GroupButton, Hash, Log } from './LogWrapper.styles'
 
 const preIconsByVariants = {
   [parameterTypes.COMMAND]: '$',
@@ -9,12 +9,18 @@ const preIconsByVariants = {
   [parameterTypes.SUCCESS]: '✔'
 }
 
-export const LogWrapper = ({ children, variant }) => {
+export const LogWrapper = ({ children, variant, buttonGroups }) => {
   const icon = preIconsByVariants[variant]
   return (
     <Log className={variant}>
       {icon && <Hash>{icon}</Hash>}
+
       {children}
+
+      {buttonGroups &&
+        buttonGroups.map(() => {
+          return <GroupButton>button</GroupButton>
+        })}
     </Log>
   )
 }

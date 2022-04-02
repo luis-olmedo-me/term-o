@@ -31,7 +31,7 @@ export const CommandDom = ({
   const [elements, setElements] = useState([])
   const [elementsShown, setElementsShown] = useState(40)
 
-  const actionType = getActionType({ props })
+  const actionType = getActionType(props)
 
   const handleGetDomElements = useCallback(() => {
     const hasDefaultElements = parameters?.type === parameterTypes.ELEMENTS

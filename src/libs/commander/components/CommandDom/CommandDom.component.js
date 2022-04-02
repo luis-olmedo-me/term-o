@@ -1,12 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
-import { MoreContentButton } from './CommandDom.styles'
 import {
   generateFilterByEvery,
   generateFilterBySome,
   getActionType,
-  getElements,
-  isElementHidden
+  getElements
 } from './CommandDom.helpers'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { ParameterElements } from '../ParameterElements/ParameterElements.component'

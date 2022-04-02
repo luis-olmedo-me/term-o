@@ -11,16 +11,7 @@ import {
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { ParameterElements } from '../ParameterElements/ParameterElements.component'
 import { domMessages } from './CommandDom.messages'
-
-const divideElementsIntoPages = (elements, pageSize) => {
-  const pages = []
-
-  for (let index = 0; index < elements.length; index += pageSize) {
-    pages.push(elements.slice(index, index + pageSize))
-  }
-
-  return pages
-}
+import { usePaginationGroups } from './hooks/usePaginationGroups.hook'
 
 export const CommandDom = ({
   props,
@@ -39,10 +30,11 @@ export const CommandDom = ({
   } = props
 
   const [elements, setElements] = useState([])
-  const [elementsShown, setElementsShown] = useState(40)
-  const [pageNumber, setPageNumber] = useState(1)
 
   const actionType = getActionType(props)
+
+  const { pageData, buttonGroups } = usePaginationGroups({ elements })
+  console.log('{ pageData, buttonGroups } ', { pageData, buttonGroups })
 
   const handleGetDomElements = useCallback(() => {
     const hasDefaultElements = parameters?.type === parameterTypes.ELEMENTS
@@ -110,50 +102,12 @@ export const CommandDom = ({
     [actionType, handleGetDomElements]
   )
 
-  const generateButtonGroupsFromPages = (pages) => {
-    const buttonGroups = []
-
-    pages.forEach((_page, index) => {
-      buttonGroups.push({
-        id: `page-${index + 1}`,
-        text: `${index + 1}`,
-        onClick: () => setPageNumber(index + 1)
-      })
-    })
-
-    return buttonGroups
-  }
-
-  const elementsDividedIntoPages = divideElementsIntoPages(elements, 40)
-  const currentPage = elementsDividedIntoPages[pageNumber - 1] || []
-  const pagesAsButtonGroups = generateButtonGroupsFromPages(
-    elementsDividedIntoPages
-  )
-  const hasMoreElements = elementsDividedIntoPages.length > 0
-
-  const buttonGroups = [
-    {
-      id: 'go-to-previous-page',
-      text: '<',
-      onClick: () => setPageNumber(pageNumber - 1)
-    },
-    ...pagesAsButtonGroups,
-    {
-      id: 'go-to-next-page',
-      text: '>',
-      onClick: () => setPageNumber(pageNumber + 1)
-    }
-  ]
-
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-      <LogWrapper
-        variant={parameterTypes.ELEMENT}
-        buttonGroups={hasMoreElements ? buttonGroups : null}
-      >
-        <ParameterElements elements={currentPage} />
+      <LogWrapper variant={parameterTypes.ELEMENT} buttonGroups={buttonGroups}>
+        <ParameterElements elements={pageData} />
       </LogWrapper>
     </>
   )

@@ -46,6 +46,12 @@ export const domConfig = {
       type: optionTypes.ARRAY_OF_OBJECTS,
       defaultValue: [],
       aliases: ['ba']
+    },
+    hidden: {
+      key: 'hidden',
+      type: optionTypes.BOOLEAN,
+      defaultValue: false,
+      aliases: ['h']
     }
   },
   output: (props) => <CommandDom key={props.id} {...props} />

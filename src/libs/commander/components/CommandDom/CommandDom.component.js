@@ -1,7 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { MoreContentButton } from './CommandDom.styles'
-import { getActionType, getElements } from './CommandDom.helpers'
+import {
+  getActionType,
+  getElements,
+  isElementHidden
+} from './CommandDom.helpers'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { ParameterElements } from '../ParameterElements/ParameterElements.component'
 import { domMessages } from './CommandDom.messages'
@@ -10,8 +14,17 @@ export const CommandDom = ({
   props,
   terminal: { command, parameters, setParameters, setMessageData }
 }) => {
-  const { get, hasId, hasClass, byId, byClass, byText, byStyle, byAttribute } =
-    props
+  const {
+    get,
+    hasId,
+    hasClass,
+    byId,
+    byClass,
+    byText,
+    byStyle,
+    byAttribute,
+    hidden
+  } = props
 
   const [elements, setElements] = useState([])
   const [elementsShown, setElementsShown] = useState(40)
@@ -22,7 +35,7 @@ export const CommandDom = ({
     const hasDefaultElements = parameters?.type === parameterTypes.ELEMENTS
     const defaultElements = hasDefaultElements ? parameters.value : []
 
-    const hasFilters =
+    const hasFiltersBySome =
       hasId ||
       hasClass ||
       byId.length ||
@@ -31,7 +44,9 @@ export const CommandDom = ({
       byStyle.length ||
       byAttribute.length
 
-    const filterElements = (element) => {
+    const hasFiltersByAll = !hidden
+
+    const filterElementsBySome = (element) => {
       let validations = []
 
       if (hasId) validations.push((element) => Boolean(element.id))
@@ -73,10 +88,19 @@ export const CommandDom = ({
       return validations.some((validation) => validation(element))
     }
 
+    const filterElementsByEvery = (element) => {
+      let validations = []
+
+      if (!hidden) validations.push((element) => !isElementHidden(element))
+
+      return validations.every((validation) => validation(element))
+    }
+
     const elementsSearch = getElements({
       patterns: get,
       defaultElements,
-      filter: hasFilters ? filterElements : null
+      filterBySome: hasFiltersBySome ? filterElementsBySome : null,
+      filterByEvery: hasFiltersByAll ? filterElementsByEvery : null
     })
 
     elementsSearch
@@ -84,7 +108,11 @@ export const CommandDom = ({
         setElements(elementsFound)
         setParameters({ value: elementsFound, type: parameterTypes.ELEMENTS })
       })
-      .catch(() => setMessageData(domMessages.noElementsFound))
+      .catch(
+        (error) =>
+          console.log('error', error) ||
+          setMessageData(domMessages.noElementsFound)
+      )
   }, [
     get,
     hasId,
@@ -93,6 +121,7 @@ export const CommandDom = ({
     byClass,
     byStyle,
     byAttribute,
+    hidden,
     setMessageData
   ])
 

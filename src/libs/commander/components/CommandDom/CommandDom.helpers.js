@@ -11,18 +11,43 @@ const getElementsFromDOM = (patterns) => {
   }
 }
 
-export const getElements = ({ patterns, defaultElements, filter }) => {
+export const getElements = ({
+  patterns,
+  defaultElements,
+  filterBySome,
+  filterByEvery
+}) => {
   return new Promise((resolve, reject) => {
     const elements = getElementsFromDOM(patterns)
-    const elementsFound = filter
-      ? [...elements, ...defaultElements].filter(filter)
+
+    const elementsFoundByEvery = filterByEvery
+      ? [...elements, ...defaultElements].filter(filterByEvery)
       : [...elements, ...defaultElements]
 
-    if (!elementsFound.length) reject()
-    else resolve({ elementsFound })
+    console.log('elementsFoundByEvery', elementsFoundByEvery)
+
+    const elementsFoundBySome = filterBySome
+      ? elementsFoundByEvery.filter(filterBySome)
+      : elementsFoundByEvery
+
+    console.log('elementsFoundBySome', elementsFoundBySome)
+
+    if (!elementsFoundBySome.length) reject()
+    else resolve({ elementsFound: elementsFoundBySome })
   })
 }
 
 export const getActionType = () => {
   return actionTypes.GET_DOM_ELEMENTS
+}
+
+export const isElementHidden = (element, bounds) => {
+  const { height, width } = bounds || element.getBoundingClientRect()
+
+  return (
+    element.style.visibility === 'hidden' ||
+    element.style.display === 'none' ||
+    height === 0 ||
+    width === 0
+  )
 }

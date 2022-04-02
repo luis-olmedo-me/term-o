@@ -106,7 +106,11 @@ export const CommandDom = ({
   const textForIncreasing = `Ver mas (${elementsShown}/${elements.length})`
 
   const buttonGroups = [
-    { text: textForIncreasing, onClick: increaseElementsShown }
+    {
+      id: 'increase-elements',
+      text: textForIncreasing,
+      onClick: increaseElementsShown
+    }
   ]
 
   return (

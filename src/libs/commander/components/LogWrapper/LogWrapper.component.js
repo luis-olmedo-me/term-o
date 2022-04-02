@@ -17,8 +17,12 @@ export const LogWrapper = ({ children, variant, buttonGroups = [] }) => {
 
       {children}
 
-      {buttonGroups.map(() => {
-        return <GroupButton>button</GroupButton>
+      {buttonGroups.map(({ id, text, onClick }) => {
+        return (
+          <GroupButton key={id} onClick={onClick}>
+            {text}
+          </GroupButton>
+        )
       })}
     </Log>
   )

@@ -58,8 +58,7 @@ export const LogContent = styled.div`
 `
 
 export const GroupButtons = styled.div`
-  border-top: 1px solid #fff;
-  background-color: #00000033;
+  background-color: #00000022;
   display: flex;
   justify-content: center;
 `
@@ -72,7 +71,6 @@ export const GroupButton = styled.button`
   transition: background-color 0.2s ease-in-out;
   font-family: Coda;
   color: #fff;
-  border: solid #fff;
   border-width: 0 0 0 1px;
 
   &&.selected {
@@ -81,9 +79,5 @@ export const GroupButton = styled.button`
 
   &&.disabled {
     background-color: #00000033;
-  }
-
-  &:last-child {
-    border-width: 0 1px;
   }
 `

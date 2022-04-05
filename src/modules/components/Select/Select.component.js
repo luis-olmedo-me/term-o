@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Portal } from '../Portal/Portal.component'
+import { SelectOption, SelectOptionsWrapper } from './Select.styles'
 
 export const Select = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -26,11 +27,11 @@ export const Select = () => {
 
       <Portal>
         {isOpen && (
-          <div>
-            <p onClick={closeSelect}>option 1</p>
-            <p onClick={closeSelect}>option 2</p>
-            <p onClick={closeSelect}>option 3</p>
-          </div>
+          <SelectOptionsWrapper>
+            <SelectOption onClick={closeSelect}>option 1</SelectOption>
+            <SelectOption onClick={closeSelect}>option 2</SelectOption>
+            <SelectOption onClick={closeSelect}>option 3</SelectOption>
+          </SelectOptionsWrapper>
         )}
       </Portal>
     </div>

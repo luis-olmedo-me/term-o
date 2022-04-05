@@ -44,13 +44,18 @@ export const splitArgsTakingInCountSymbols = (args, _quotes) => {
   let carriedArgsWithQuotes = []
   let indexesToBreak = []
   let shouldCarryArgs = false
+  const quotesToUse = _quotes || '"'
 
   const argsByQuotes = args.reduce((parsedArguments, argument, index) => {
-    const hasQuotes = argument.includes(_quotes || '"')
-    const isVerticalLine = argument.includes('|')
+    const hasQuotes = argument.includes(quotesToUse)
+    const hasAllQuotes =
+      argument.startsWith(quotesToUse) && argument.endsWith(quotesToUse)
+    const isVerticalLine = argument === '|'
     const isLastArgument = index === args.length - 1
 
-    if (hasQuotes) {
+    if (hasAllQuotes) {
+      return [...parsedArguments, argument]
+    } else if (hasQuotes) {
       carriedArgsWithQuotes = [...carriedArgsWithQuotes, argument]
       shouldCarryArgs = !shouldCarryArgs
 

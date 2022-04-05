@@ -1,7 +1,8 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { ElementWrapper, Specification } from './Element.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { isElementHidden } from '../../../CommandDom/CommandDom.helpers'
+import { Select } from 'modules/components/Select/Select.component'
 
 const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
   const { height, width } = useMemo(() => {
@@ -31,17 +32,14 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
   }
 
   return (
-    <ElementWrapper
-      onMouseEnter={isHidden ? null : handleElementMouseEnter}
-      onMouseLeave={isHidden ? null : handleElementMouseLeave}
-      isHidden={isHidden}
-      onClick={handleElementClick}
-    >
+    <ElementWrapper isHidden={isHidden} onClick={handleElementClick}>
       {tagNameLabel}
 
       {specification && (
         <Specification isHidden={isHidden}>{specification}</Specification>
       )}
+
+      <Select />
     </ElementWrapper>
   )
 }

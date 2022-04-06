@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 
 export const ElementWrapper = styled.span`
-  padding: 5px 10px;
+  position: relative;
+  padding: 5px 40px 5px 10px;
   background-color: ${(props) => (props.isHidden ? '#eaeaea' : '#fafafa')};
   color: ${(props) => (props.isHidden ? '#888' : '#0070f3')};
   font-weight: bold;
@@ -19,4 +20,11 @@ export const ElementWrapper = styled.span`
 
 export const Specification = styled.span`
   color: ${(props) => (props.isHidden ? '#888' : '#f5a623')};
+`
+
+export const ThreeDotsOptionsWrapper = styled.span`
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: -webkit-fill-available;
 `

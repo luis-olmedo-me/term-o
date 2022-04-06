@@ -1,5 +1,9 @@
 import React, { useMemo, useState } from 'react'
-import { ElementWrapper, Specification } from './Element.styles'
+import {
+  ElementWrapper,
+  Specification,
+  ThreeDotsOptionsWrapper
+} from './Element.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { isElementHidden } from '../../../CommandDom/CommandDom.helpers'
 import { Select } from 'modules/components/Select/Select.component'
@@ -39,7 +43,9 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
         <Specification isHidden={isHidden}>{specification}</Specification>
       )}
 
-      <Select />
+      <ThreeDotsOptionsWrapper>
+        <Select />
+      </ThreeDotsOptionsWrapper>
     </ElementWrapper>
   )
 }

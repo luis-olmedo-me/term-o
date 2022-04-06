@@ -1,5 +1,10 @@
 import styled from 'styled-components'
 
+export const Trigger = styled.button`
+  height: -webkit-fill-available;
+  display: block;
+`
+
 export const SelectOptionsWrapper = styled.div`
   all: initial;
   position: fixed;

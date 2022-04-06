@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Portal } from '../Portal/Portal.component'
-import { SelectOption, SelectOptionsWrapper } from './Select.styles'
+import { SelectOption, SelectOptionsWrapper, Trigger } from './Select.styles'
 
 export const Select = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -49,8 +49,8 @@ export const Select = () => {
   }
 
   return (
-    <div onMouseEnter={stopPropagation} onMouseLeave={stopPropagation}>
-      <button onClick={openSelect}>:</button>
+    <>
+      <Trigger onClick={openSelect}>:</Trigger>
 
       <Portal>
         {isOpen && (
@@ -63,6 +63,6 @@ export const Select = () => {
           </SelectOptionsWrapper>
         )}
       </Portal>
-    </div>
+    </>
   )
 }

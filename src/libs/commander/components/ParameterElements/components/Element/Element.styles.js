@@ -28,3 +28,7 @@ export const ThreeDotsOptionsWrapper = styled.span`
   right: 0;
   height: -webkit-fill-available;
 `
+
+export const triggerButtonStyles = `
+  border-left: 1px solid #eaeaea;
+`

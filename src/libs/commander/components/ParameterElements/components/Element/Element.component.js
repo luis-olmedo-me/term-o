@@ -2,7 +2,8 @@ import React, { useMemo } from 'react'
 import {
   ElementWrapper,
   Specification,
-  ThreeDotsOptionsWrapper
+  ThreeDotsOptionsWrapper,
+  triggerButtonStyles
 } from './Element.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { isElementHidden } from '../../../CommandDom/CommandDom.helpers'
@@ -44,7 +45,7 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
       )}
 
       <ThreeDotsOptionsWrapper>
-        <Select />
+        <Select triggerInlineStyles={triggerButtonStyles} />
       </ThreeDotsOptionsWrapper>
     </ElementWrapper>
   )

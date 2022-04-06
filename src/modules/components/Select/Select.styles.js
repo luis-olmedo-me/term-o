@@ -7,6 +7,8 @@ export const Trigger = styled.button`
   background-color: transparent;
   cursor: pointer;
   padding: 0 10px;
+
+  ${(props) => props.triggerInlineStyles || ''}
 `
 
 export const SelectOptionsWrapper = styled.div`
@@ -36,4 +38,6 @@ export const SelectOption = styled.div`
   &&:last-child {
     border-bottom: none;
   }
+
+  ${(props) => props.optionInlineStyles || ''}
 `

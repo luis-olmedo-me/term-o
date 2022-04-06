@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const Trigger = styled.button`
-  height: -webkit-fill-available;
+  height: 100%;
   display: block;
   border: none;
   background-color: transparent;

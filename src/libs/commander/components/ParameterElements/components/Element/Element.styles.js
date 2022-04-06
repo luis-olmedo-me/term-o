@@ -12,10 +12,6 @@ export const ElementWrapper = styled.span`
   flex: auto;
   text-align: center;
   line-height: 1.75;
-
-  &:hover {
-    background-color: ${(props) => (props.isHidden ? '#eaeaea' : '#ffdbe7')};
-  }
 `
 
 export const Specification = styled.span`
@@ -31,4 +27,11 @@ export const ThreeDotsOptionsWrapper = styled.span`
 
 export const triggerButtonStyles = `
   border-left: 1px solid #eaeaea;
+  border-radius: 0 3px 3px 0;
+  font-weight: bold;
+
+  &:hover {
+    background-color: #ffdbe7;
+    border-color: #888;
+  }
 `

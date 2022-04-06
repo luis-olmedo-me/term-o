@@ -7,6 +7,7 @@ export const Trigger = styled.button`
   background-color: transparent;
   cursor: pointer;
   padding: 0 10px;
+  transition: all 0.2s ease-in-out;
 
   ${(props) => props.triggerInlineStyles || ''}
 `

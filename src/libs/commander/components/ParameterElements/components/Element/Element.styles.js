@@ -32,6 +32,6 @@ export const triggerButtonStyles = `
 
   &:hover {
     background-color: #ffdbe7;
-    border-color: #888;
+    border-color: transparent;
   }
 `

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const ElementWrapper = styled.span`
   position: relative;
-  padding: 5px 40px 5px 10px;
+  padding: 5px 2em 5px 10px;
   background-color: ${(props) => (props.isHidden ? '#eaeaea' : '#fafafa')};
   color: ${(props) => (props.isHidden ? '#888' : '#0070f3')};
   font-weight: bold;

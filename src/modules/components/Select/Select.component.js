@@ -1,10 +1,25 @@
-import React, { useState, useRef, useMemo } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Portal } from '../Portal/Portal.component'
 import { SelectOption, SelectOptionsWrapper } from './Select.styles'
 
 export const Select = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [bounds, setBounds] = useState({})
+
+  useEffect(
+    function closeSelectWhenUserClicksOutside() {
+      if (!isOpen) return
+
+      const handleClickOutside = () => {
+        setIsOpen(false)
+      }
+
+      document.addEventListener('click', handleClickOutside)
+
+      return () => document.removeEventListener('click', handleClickOutside)
+    },
+    [isOpen]
+  )
 
   console.log('bounds', bounds)
 

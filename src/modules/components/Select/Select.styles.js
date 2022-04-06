@@ -3,6 +3,10 @@ import styled from 'styled-components'
 export const Trigger = styled.button`
   height: -webkit-fill-available;
   display: block;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 0 10px;
 `
 
 export const SelectOptionsWrapper = styled.div`

@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import {
   ElementWrapper,
+  selectOptionStyles,
   Specification,
   ThreeDotsOptionsWrapper,
   triggerButtonStyles
@@ -45,7 +46,10 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
       )}
 
       <ThreeDotsOptionsWrapper>
-        <Select triggerInlineStyles={triggerButtonStyles} />
+        <Select
+          triggerInlineStyles={triggerButtonStyles}
+          optionInlineStyles={selectOptionStyles}
+        />
       </ThreeDotsOptionsWrapper>
     </ElementWrapper>
   )

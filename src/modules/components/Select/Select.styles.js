@@ -35,9 +35,14 @@ export const SelectOption = styled.div`
   border-bottom: 1px solid #eaeaea;
   cursor: pointer;
   color: #333;
+  transition: all 0.2s ease-in-out;
 
+  &&:first-child {
+    border-radius: 3px 3px 0 0;
+  }
   &&:last-child {
     border-bottom: none;
+    border-radius: 0 0 3px 3px;
   }
 
   ${(props) => props.optionInlineStyles || ''}

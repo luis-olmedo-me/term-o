@@ -35,3 +35,10 @@ export const triggerButtonStyles = `
     border-color: transparent;
   }
 `
+
+export const selectOptionStyles = `
+  &:hover {
+    background-color: #ff4ecd;
+    color: #fafafa;
+  }
+`

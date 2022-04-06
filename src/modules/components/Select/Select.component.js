@@ -14,9 +14,13 @@ export const Select = () => {
         setIsOpen(false)
       }
 
-      document.addEventListener('click', handleClickOutside)
+      window.addEventListener('click', handleClickOutside)
+      window.addEventListener('open-term-o-select', handleClickOutside)
 
-      return () => document.removeEventListener('click', handleClickOutside)
+      return () => {
+        window.removeEventListener('click', handleClickOutside)
+        window.removeEventListener('open-term-o-select', handleClickOutside)
+      }
     },
     [isOpen]
   )
@@ -26,8 +30,12 @@ export const Select = () => {
   const openSelect = (event) => {
     event.stopPropagation()
 
+    const openSelectEvent = new Event('open-term-o-select')
+
     setBounds(event.currentTarget.getBoundingClientRect())
     setIsOpen(true)
+
+    dispatchEvent(openSelectEvent)
   }
 
   const closeSelect = (event) => {

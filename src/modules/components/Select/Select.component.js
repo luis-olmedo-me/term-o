@@ -7,21 +7,19 @@ import {
 } from './Select.styles'
 
 export const Select = ({
+  isOpen,
+  handleClickOutside,
+  handleOpenSelect,
   Option = SelectDefaultOption,
   ButtonTrigger = DefaultTrigger,
   className,
   options
 }) => {
-  const [isOpen, setIsOpen] = useState(false)
   const [bounds, setBounds] = useState({})
 
   useEffect(
     function closeSelectWhenUserClicksOutside() {
       if (!isOpen) return
-
-      const handleClickOutside = () => {
-        setIsOpen(false)
-      }
 
       window.addEventListener('click', handleClickOutside)
       window.addEventListener('open-term-o-select', handleClickOutside)
@@ -31,7 +29,7 @@ export const Select = ({
         window.removeEventListener('open-term-o-select', handleClickOutside)
       }
     },
-    [isOpen]
+    [isOpen, handleClickOutside]
   )
 
   const openSelect = (event) => {
@@ -40,7 +38,7 @@ export const Select = ({
     const openSelectEvent = new Event('open-term-o-select')
 
     setBounds(event.currentTarget.getBoundingClientRect())
-    setIsOpen(true)
+    handleOpenSelect()
 
     dispatchEvent(openSelectEvent)
   }
@@ -59,7 +57,6 @@ export const Select = ({
                 event.stopPropagation()
 
                 onClick()
-                setIsOpen(false)
               }
 
               return (

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState, useCallback } from 'react'
 import {
   ElementWrapper,
   Specification,
@@ -10,6 +10,12 @@ import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { isElementHidden } from '../../../CommandDom/CommandDom.helpers'
 
 const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
+  const [isSelectOpen, setIsSelectOpen] = useState(false)
+
+  const closeSelect = useCallback(() => {
+    setIsSelectOpen(false)
+  }, [])
+
   const { height, width } = useMemo(() => {
     return htmlElement.getBoundingClientRect() || {}
   }, [htmlElement])
@@ -26,12 +32,16 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
 
   const handleCopy = () => {
     navigator.clipboard.writeText(`${tagNameLabel}${specification}`)
+
+    handleClickOutside()
   }
 
   const handleScrollIntoView = () => {
     htmlElement.scrollIntoView({
       behavior: 'smooth'
     })
+
+    handleClickOutside()
   }
 
   const handleElementMouseEnter = () => {
@@ -52,7 +62,11 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
   ]
 
   return (
-    <ElementWrapper isHidden={isHidden} onClick={handleCopy}>
+    <ElementWrapper
+      isHidden={isHidden}
+      onMouseEnter={handleElementMouseEnter}
+      onMouseLeave={handleElementMouseLeave}
+    >
       {tagNameLabel}
 
       {specification && (
@@ -60,6 +74,9 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
       )}
 
       <TwoDotsOptions
+        isOpen={isSelectOpen}
+        handleClickOutside={closeSelect}
+        handleOpenSelect={() => setIsSelectOpen(true)}
         ButtonTrigger={SelectTrigger}
         Option={SelectOption}
         options={options}

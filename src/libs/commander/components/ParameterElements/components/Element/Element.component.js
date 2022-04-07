@@ -24,8 +24,14 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
 
   const specification = idLabel || classNameLabel || ''
 
-  const handleElementClick = () => {
+  const handleCopy = () => {
     navigator.clipboard.writeText(`${tagNameLabel}${specification}`)
+  }
+
+  const handleScrollIntoView = () => {
+    htmlElement.scrollIntoView({
+      behavior: 'smooth'
+    })
   }
 
   const handleElementMouseEnter = () => {
@@ -36,15 +42,28 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
     setHighlitedElement(null)
   }
 
+  const options = [
+    { id: 'copy-option', displayText: 'Copy', onClick: handleCopy },
+    {
+      id: 'scroll-into-view-option',
+      displayText: 'Scroll Into View',
+      onClick: handleScrollIntoView
+    }
+  ]
+
   return (
-    <ElementWrapper isHidden={isHidden} onClick={handleElementClick}>
+    <ElementWrapper isHidden={isHidden} onClick={handleCopy}>
       {tagNameLabel}
 
       {specification && (
         <Specification isHidden={isHidden}>{specification}</Specification>
       )}
 
-      <TwoDotsOptions ButtonTrigger={SelectTrigger} Option={SelectOption} />
+      <TwoDotsOptions
+        ButtonTrigger={SelectTrigger}
+        Option={SelectOption}
+        options={options}
+      />
     </ElementWrapper>
   )
 }

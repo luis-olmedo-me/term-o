@@ -9,7 +9,8 @@ import {
 export const Select = ({
   Option = SelectDefaultOption,
   ButtonTrigger = DefaultTrigger,
-  className
+  className,
+  options
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [bounds, setBounds] = useState({})
@@ -44,16 +45,6 @@ export const Select = ({
     dispatchEvent(openSelectEvent)
   }
 
-  const closeSelect = (event) => {
-    event.stopPropagation()
-
-    setIsOpen(false)
-  }
-
-  const stopPropagation = (event) => {
-    event.stopPropagation()
-  }
-
   return (
     <div className={className}>
       <ButtonTrigger onClick={openSelect}>:</ButtonTrigger>
@@ -63,9 +54,20 @@ export const Select = ({
           <SelectOptionsWrapper
             style={bounds && { left: bounds.left, top: bounds.top }}
           >
-            <Option onClick={closeSelect}>option 1</Option>
-            <Option onClick={closeSelect}>option 2</Option>
-            <Option onClick={closeSelect}>option 3</Option>
+            {options.map(({ id, displayText, onClick }) => {
+              const handleClick = (event) => {
+                event.stopPropagation()
+
+                onClick()
+                setIsOpen(false)
+              }
+
+              return (
+                <Option key={id} onClick={handleClick}>
+                  {displayText}
+                </Option>
+              )
+            })}
           </SelectOptionsWrapper>
         )}
       </Portal>

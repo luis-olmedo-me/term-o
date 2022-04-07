@@ -33,7 +33,7 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
   const handleCopy = () => {
     navigator.clipboard.writeText(`${tagNameLabel}${specification}`)
 
-    handleClickOutside()
+    closeSelect()
   }
 
   const handleScrollIntoView = () => {
@@ -41,7 +41,20 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
       behavior: 'smooth'
     })
 
-    handleClickOutside()
+    let scrollTimeout
+    addEventListener(
+      'scroll',
+      function (e) {
+        clearTimeout(scrollTimeout)
+
+        scrollTimeout = setTimeout(function () {
+          highlightElement()
+        }, 100)
+      },
+      { passive: true }
+    )
+
+    closeSelect()
   }
 
   const highlightElement = () => {

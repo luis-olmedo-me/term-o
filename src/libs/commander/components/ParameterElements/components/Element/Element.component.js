@@ -8,6 +8,7 @@ import {
 } from './Element.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { isElementHidden } from '../../../CommandDom/CommandDom.helpers'
+import { onScrollEnd } from 'src/helpers/event.helpers.js'
 
 const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
   const [isSelectOpen, setIsSelectOpen] = useState(false)
@@ -41,18 +42,7 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
       behavior: 'smooth'
     })
 
-    let scrollTimeout
-    addEventListener(
-      'scroll',
-      function (e) {
-        clearTimeout(scrollTimeout)
-
-        scrollTimeout = setTimeout(function () {
-          highlightElement()
-        }, 100)
-      },
-      { passive: true }
-    )
+    onScrollEnd(highlightElement)
 
     closeSelect()
   }

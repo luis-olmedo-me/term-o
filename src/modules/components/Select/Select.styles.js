@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const Trigger = styled.button`
+export const DefaultTrigger = styled.button`
   height: 100%;
   display: block;
   border: none;
@@ -8,8 +8,6 @@ export const Trigger = styled.button`
   cursor: pointer;
   padding: 0 10px;
   transition: all 0.2s ease-in-out;
-
-  ${(props) => props.triggerInlineStyles || ''}
 `
 
 export const SelectOptionsWrapper = styled.div`
@@ -28,7 +26,7 @@ export const SelectOptionsWrapper = styled.div`
   box-shadow: 0 0 3px 1px #00000020;
 `
 
-export const SelectOption = styled.div`
+export const SelectDefaultOption = styled.div`
   line-height: 40px;
   vertical-align: middle;
   text-align: center;
@@ -44,6 +42,4 @@ export const SelectOption = styled.div`
     border-bottom: none;
     border-radius: 0 0 3px 3px;
   }
-
-  ${(props) => props.optionInlineStyles || ''}
 `

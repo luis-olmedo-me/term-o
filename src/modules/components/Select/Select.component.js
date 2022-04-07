@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { Portal } from '../Portal/Portal.component'
-import { SelectOption, SelectOptionsWrapper, Trigger } from './Select.styles'
+import {
+  SelectDefaultOption,
+  SelectOptionsWrapper,
+  DefaultTrigger
+} from './Select.styles'
 
-export const Select = ({ triggerInlineStyles, optionInlineStyles }) => {
+export const Select = ({
+  Option = SelectDefaultOption,
+  ButtonTrigger = DefaultTrigger,
+  className
+}) => {
   const [isOpen, setIsOpen] = useState(false)
   const [bounds, setBounds] = useState({})
 
@@ -47,37 +55,20 @@ export const Select = ({ triggerInlineStyles, optionInlineStyles }) => {
   }
 
   return (
-    <>
-      <Trigger triggerInlineStyles={triggerInlineStyles} onClick={openSelect}>
-        :
-      </Trigger>
+    <div className={className}>
+      <ButtonTrigger onClick={openSelect}>:</ButtonTrigger>
 
       <Portal>
         {isOpen && (
           <SelectOptionsWrapper
             style={bounds && { left: bounds.left, top: bounds.top }}
           >
-            <SelectOption
-              onClick={closeSelect}
-              optionInlineStyles={optionInlineStyles}
-            >
-              option 1
-            </SelectOption>
-            <SelectOption
-              onClick={closeSelect}
-              optionInlineStyles={optionInlineStyles}
-            >
-              option 2
-            </SelectOption>
-            <SelectOption
-              onClick={closeSelect}
-              optionInlineStyles={optionInlineStyles}
-            >
-              option 3
-            </SelectOption>
+            <Option onClick={closeSelect}>option 1</Option>
+            <Option onClick={closeSelect}>option 2</Option>
+            <Option onClick={closeSelect}>option 3</Option>
           </SelectOptionsWrapper>
         )}
       </Portal>
-    </>
+    </div>
   )
 }

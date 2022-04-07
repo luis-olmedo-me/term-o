@@ -1,14 +1,13 @@
 import React, { useMemo } from 'react'
 import {
   ElementWrapper,
-  selectOptionStyles,
   Specification,
-  ThreeDotsOptionsWrapper,
-  triggerButtonStyles
+  SelectTrigger,
+  SelectOption,
+  TwoDotsOptions
 } from './Element.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { isElementHidden } from '../../../CommandDom/CommandDom.helpers'
-import { Select } from 'modules/components/Select/Select.component'
 
 const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
   const { height, width } = useMemo(() => {
@@ -45,12 +44,7 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
         <Specification isHidden={isHidden}>{specification}</Specification>
       )}
 
-      <ThreeDotsOptionsWrapper>
-        <Select
-          triggerInlineStyles={triggerButtonStyles}
-          optionInlineStyles={selectOptionStyles}
-        />
-      </ThreeDotsOptionsWrapper>
+      <TwoDotsOptions ButtonTrigger={SelectTrigger} Option={SelectOption} />
     </ElementWrapper>
   )
 }

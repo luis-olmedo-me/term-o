@@ -1,4 +1,9 @@
 import styled from 'styled-components'
+import {
+  SelectDefaultOption,
+  DefaultTrigger
+} from 'modules/components/Select/Select.styles'
+import { Select } from 'modules/components/Select/Select.component'
 
 export const ElementWrapper = styled.span`
   position: relative;
@@ -18,14 +23,13 @@ export const Specification = styled.span`
   color: ${(props) => (props.isHidden ? '#888' : '#f5a623')};
 `
 
-export const ThreeDotsOptionsWrapper = styled.span`
+export const TwoDotsOptions = styled(Select)`
   position: absolute;
   top: 0;
   right: 0;
   height: -webkit-fill-available;
 `
-
-export const triggerButtonStyles = `
+export const SelectTrigger = styled(DefaultTrigger)`
   border-left: 1px solid #eaeaea;
   border-radius: 0 3px 3px 0;
   font-weight: bold;
@@ -35,8 +39,7 @@ export const triggerButtonStyles = `
     border-color: transparent;
   }
 `
-
-export const selectOptionStyles = `
+export const SelectOption = styled(SelectDefaultOption)`
   &:hover {
     background-color: #ff4ecd;
     color: #fafafa;

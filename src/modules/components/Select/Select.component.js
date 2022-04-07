@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Portal } from '../Portal/Portal.component'
 import {
   SelectDefaultOption,
@@ -17,6 +17,7 @@ export const Select = ({
   options
 }) => {
   const [bounds, setBounds] = useState({})
+  const optionsWrapperRef = useRef()
 
   useEffect(
     function closeSelectWhenUserClicksOutside() {
@@ -33,6 +34,46 @@ export const Select = ({
     [isOpen, handleClickOutside]
   )
 
+  useEffect(
+    function checkOptionsWrapperBounds() {
+      if (!optionsWrapperRef.current && !isOpen) return
+
+      const { top, left, right, bottom, width, height } =
+        optionsWrapperRef.current.getBoundingClientRect()
+      const { clientHeight: bodyHeight, clientWidth: bodyWidth } = document.body
+
+      const halfWidth = width / 2
+      const halfHeight = height / 2
+
+      const isRightOutside = right + halfWidth > bodyWidth
+      const isLeftOutside = left - halfWidth < 0
+      const isBottomOutside = bottom + halfHeight > bodyHeight
+      const isTopOutside = top - halfHeight < 0
+
+      if (
+        !isRightOutside &&
+        !isLeftOutside &&
+        !isBottomOutside &&
+        !isTopOutside
+      ) {
+        return
+      }
+
+      setBounds(
+        isLeftOutside || isTopOutside
+          ? {
+              left: isLeftOutside ? halfWidth + 20 : left,
+              top: isTopOutside ? halfHeight + 20 : top
+            }
+          : {
+              left: isRightOutside ? bodyWidth - halfWidth - 20 : right,
+              top: isBottomOutside ? bodyHeight - halfHeight - 20 : bottom
+            }
+      )
+    },
+    [isOpen]
+  )
+
   const openSelect = (event) => {
     event.stopPropagation()
 
@@ -42,6 +83,10 @@ export const Select = ({
     handleOpenSelect()
 
     dispatchEvent(openSelectEvent)
+    console.log({
+      bounds,
+      newBounds: event.currentTarget.getBoundingClientRect()
+    })
   }
 
   return (
@@ -51,6 +96,7 @@ export const Select = ({
       <Portal>
         {isOpen && (
           <SelectOptionsWrapper
+            ref={optionsWrapperRef}
             onMouseEnter={handleOnMouseEnter}
             style={bounds && { left: bounds.left, top: bounds.top }}
           >

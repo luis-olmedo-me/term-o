@@ -44,11 +44,11 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
     handleClickOutside()
   }
 
-  const handleElementMouseEnter = () => {
+  const highlightElement = () => {
     setHighlitedElement(htmlElement)
   }
 
-  const handleElementMouseLeave = () => {
+  const unhighlightElement = () => {
     setHighlitedElement(null)
   }
 
@@ -64,8 +64,8 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
   return (
     <ElementWrapper
       isHidden={isHidden}
-      onMouseEnter={handleElementMouseEnter}
-      onMouseLeave={handleElementMouseLeave}
+      onMouseEnter={highlightElement}
+      onMouseLeave={unhighlightElement}
     >
       {tagNameLabel}
 
@@ -77,6 +77,7 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
         isOpen={isSelectOpen}
         handleClickOutside={closeSelect}
         handleOpenSelect={() => setIsSelectOpen(true)}
+        handleOnMouseEnter={unhighlightElement}
         ButtonTrigger={SelectTrigger}
         Option={SelectOption}
         options={options}

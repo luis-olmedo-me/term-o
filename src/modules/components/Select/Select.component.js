@@ -10,6 +10,7 @@ export const Select = ({
   isOpen,
   handleClickOutside,
   handleOpenSelect,
+  handleOnMouseEnter,
   Option = SelectDefaultOption,
   ButtonTrigger = DefaultTrigger,
   className,
@@ -50,6 +51,7 @@ export const Select = ({
       <Portal>
         {isOpen && (
           <SelectOptionsWrapper
+            onMouseEnter={handleOnMouseEnter}
             style={bounds && { left: bounds.left, top: bounds.top }}
           >
             {options.map(({ id, displayText, onClick }) => {

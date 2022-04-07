@@ -45,7 +45,7 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
     onScrollEnd(() => {
       highlightElement()
 
-      setTimeout(unhighlightElement, 700)
+      setTimeout(unhighlightElement, 1000)
     })
 
     closeSelect()

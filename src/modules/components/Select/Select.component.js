@@ -83,10 +83,6 @@ export const Select = ({
     handleOpenSelect()
 
     dispatchEvent(openSelectEvent)
-    console.log({
-      bounds,
-      newBounds: event.currentTarget.getBoundingClientRect()
-    })
   }
 
   return (

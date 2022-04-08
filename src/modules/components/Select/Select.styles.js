@@ -27,7 +27,7 @@ export const SelectOptionsWrapper = styled.div`
   border-radius: 3px;
   transform: translate(-50%, -50%);
   font-family: Coda;
-  box-shadow: 0 0 3px 1px #00000020;
+  box-shadow: 0px 10px 15px -3px #0000001a;
   padding: 10px 0;
 `
 

@@ -20,7 +20,7 @@ export const useConfig = () => {
 
   useEffect(function setUpConnectionWithBackgroundScript() {
     const recieveConnection = (data) => {
-      console.log('recieveConnection', data)
+      setIsConnected(data?.status === 'ok')
     }
 
     const requestData = {
@@ -31,26 +31,31 @@ export const useConfig = () => {
     backgroundRequest(requestData)
   }, [])
 
-  useEffect(function openConsoleByKeyCommands() {
-    const toggleTerminal = (message, _sender, sendResponse) => {
-      const isActionNewCommand = message.action === eventTypes.NEW_COMMAND
-      const isCommandToggleTerminal =
-        message.data.command === extensionKeyEvents.TOGGLE_TERMINAL
+  useEffect(
+    function openConsoleByKeyCommands() {
+      if (!isConnected) return
 
-      if (isActionNewCommand && isCommandToggleTerminal) {
-        setConfig((oldConfig) => ({
-          ...oldConfig,
-          isOpen: !oldConfig.isOpen
-        }))
+      const toggleTerminal = (message, _sender, sendResponse) => {
+        const isActionNewCommand = message.action === eventTypes.NEW_COMMAND
+        const isCommandToggleTerminal =
+          message.data.command === extensionKeyEvents.TOGGLE_TERMINAL
+
+        if (isActionNewCommand && isCommandToggleTerminal) {
+          setConfig((oldConfig) => ({
+            ...oldConfig,
+            isOpen: !oldConfig.isOpen
+          }))
+        }
+
+        sendResponse({ status: 'ok' })
       }
 
-      sendResponse({ status: 'ok' })
-    }
+      chrome.runtime.onMessage.addListener(toggleTerminal)
 
-    chrome.runtime.onMessage.addListener(toggleTerminal)
-
-    return () => chrome.runtime.onMessage.removeListener(toggleTerminal)
-  }, [])
+      return () => chrome.runtime.onMessage.removeListener(toggleTerminal)
+    },
+    [isConnected]
+  )
 
   useEffect(function expectForConfigChanges() {
     const receiveConfiguration = (message, _sender, sendResponse) => {

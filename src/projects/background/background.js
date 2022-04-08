@@ -4,16 +4,33 @@ import { eventTypes } from 'src/constants/events.constants.js'
 
 import { debounce } from 'src/helpers/utils.helpers.js'
 
+class ConnectedTabs {
+  constructor() {
+    this.idList = []
+
+    chrome.tabs.onRemoved.addListener(this.removeIdFromList.bind(this))
+  }
+
+  addIdToList(id) {
+    this.idList = this.idList.includes(id) ? this.idList : [...this.idList, id]
+  }
+
+  removeIdFromList(id) {
+    this.idList = this.idList.filter((item) => item !== id)
+  }
+}
+
+export const connectedTabs = new ConnectedTabs()
+
 chrome.commands.onCommand.addListener(function (command) {
   const requestData = {
     action: eventTypes.NEW_COMMAND,
     data: { command }
   }
 
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    const [currentTab] = tabs
-
-    if (currentTab) chrome.tabs.sendMessage(currentTab.id, requestData, null)
+  console.log('connectedTabs.idList', connectedTabs.idList)
+  connectedTabs.idList.forEach((tabId) => {
+    chrome.tabs.sendMessage(tabId, requestData)
   })
 })
 
@@ -38,6 +55,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   switch (request.type) {
     case eventTypes.SET_UP_CONNECTION: {
       console.log('sender', sender)
+      connectedTabs.addIdToList(sender.tab.id)
+      console.log('connectedTabs.idList', connectedTabs.idList)
+
       sendResponse({ status: 'ok' })
       break
     }

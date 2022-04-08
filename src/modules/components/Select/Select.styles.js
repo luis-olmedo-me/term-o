@@ -11,6 +11,7 @@ export const DefaultTrigger = styled.button`
   padding: 0 10px;
   transition: all 0.2s ease-in-out;
   font-size: 1em;
+  color: #444;
 `
 
 export const SelectOptionsWrapper = styled.div`
@@ -27,31 +28,28 @@ export const SelectOptionsWrapper = styled.div`
   transform: translate(-50%, -50%);
   font-family: Coda;
   box-shadow: 0 0 3px 1px #00000020;
+  padding: 10px 0;
 `
 
 export const SelectDefaultOption = styled.div`
   line-height: 40px;
   vertical-align: middle;
   text-align: center;
-  border-bottom: 1px solid #eaeaea;
+  border-top: 1px solid #eaeaea;
   cursor: pointer;
   color: #333;
   transition: all 0.2s ease-in-out;
 
   &&.disabled {
     color: #888;
-    background-color: #00000007;
+    background-color: #eaeaea;
 
     &:hover {
-      background-color: transparent;
+      background-color: #eaeaea;
     }
   }
 
-  &&:first-child {
-    border-radius: 3px 3px 0 0;
-  }
   &&:last-child {
-    border-bottom: none;
-    border-radius: 0 0 3px 3px;
+    border-bottom: 1px solid #eaeaea;
   }
 `

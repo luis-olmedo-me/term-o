@@ -96,7 +96,7 @@ export const Select = ({
             onMouseEnter={handleOnMouseEnter}
             style={bounds && { left: bounds.left, top: bounds.top }}
           >
-            {options.map(({ id, displayText, onClick }) => {
+            {options.map(({ id, displayText, onClick, disabled }) => {
               const handleClick = (event) => {
                 event.stopPropagation()
 
@@ -104,7 +104,11 @@ export const Select = ({
               }
 
               return (
-                <Option key={id} onClick={handleClick}>
+                <Option
+                  key={id}
+                  className={disabled ? 'disabled' : ''}
+                  onClick={!disabled ? handleClick : null}
+                >
                   {displayText}
                 </Option>
               )

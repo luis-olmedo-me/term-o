@@ -64,7 +64,8 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
     {
       id: 'scroll-into-view-option',
       displayText: 'Scroll Into View',
-      onClick: handleScrollIntoView
+      onClick: handleScrollIntoView,
+      disabled: isHidden
     }
   ]
 

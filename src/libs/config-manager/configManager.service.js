@@ -18,7 +18,7 @@ class ConfigManager {
     return this.config.consolePosition
   }
 
-  setConfig(newConfig, sender, shouldUpdateCurrentTab = true) {
+  setConfig(newConfig, shouldUpdateTabs = true) {
     this.config = {
       ...this.config,
       ...newConfig,
@@ -28,7 +28,7 @@ class ConfigManager {
       }
     }
 
-    this.setConfigInLocalStorage(sender, shouldUpdateCurrentTab)
+    this.setConfigInLocalStorage(shouldUpdateTabs)
 
     return this
   }
@@ -47,22 +47,22 @@ class ConfigManager {
     chrome.storage.sync.get('configuration', receiveConfiguration)
   }
 
-  setConfigInLocalStorage(sender, shouldUpdateCurrentTab) {
+  setConfigInLocalStorage(shouldUpdateTabs) {
     chrome.storage.sync.set({
       configuration: this.config
     })
 
-    this.onChange(sender, shouldUpdateCurrentTab)
+    this.onChange(shouldUpdateTabs)
   }
 
-  reset(sender, shouldUpdateCurrentTab = true) {
+  reset() {
     this.config = {
       consolePosition: {},
       pageEvents: [],
       aliases: []
     }
 
-    this.setConfigInLocalStorage(sender, shouldUpdateCurrentTab)
+    this.setConfigInLocalStorage()
   }
 }
 

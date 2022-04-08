@@ -6,17 +6,24 @@ import { debounce } from 'src/helpers/utils.helpers.js'
 
 class ConnectedTabs {
   constructor() {
-    this.idList = []
+    this.list = []
 
     chrome.tabs.onRemoved.addListener(this.removeIdFromList.bind(this))
+    chrome.tabs.onUpdated.addListener(this.removeReloadedTabs.bind(this))
   }
 
   addIdToList(id) {
-    this.idList = this.idList.includes(id) ? this.idList : [...this.idList, id]
+    this.list = this.list.includes(id) ? this.list : [...this.list, id]
   }
 
   removeIdFromList(id) {
-    this.idList = this.idList.filter((item) => item !== id)
+    this.list = this.list.filter((item) => item !== id)
+  }
+
+  removeReloadedTabs(id, { status }) {
+    if (status !== 'loading') return
+
+    this.removeIdFromList(id)
   }
 }
 
@@ -28,9 +35,13 @@ chrome.commands.onCommand.addListener(function (command) {
     data: { command }
   }
 
-  console.log('connectedTabs.idList', connectedTabs.idList)
-  connectedTabs.idList.forEach((tabId) => {
-    chrome.tabs.sendMessage(tabId, requestData)
+  chrome.tabs.query({ active: true }, function (tabs) {
+    const tab = tabs[0]
+    const { id } = tab
+
+    if (connectedTabs.list.includes(id)) {
+      chrome.tabs.sendMessage(id, requestData)
+    }
   })
 })
 
@@ -54,10 +65,7 @@ configManager.onChange = debounce((sender, shouldUpdateCurrentTab) => {
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   switch (request.type) {
     case eventTypes.SET_UP_CONNECTION: {
-      console.log('sender', sender)
       connectedTabs.addIdToList(sender.tab.id)
-      console.log('connectedTabs.idList', connectedTabs.idList)
-
       sendResponse({ status: 'ok' })
       break
     }

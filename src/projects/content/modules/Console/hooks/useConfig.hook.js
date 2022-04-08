@@ -16,45 +16,44 @@ const defaultConfiguration = {
 
 export const useConfig = () => {
   const [config, setConfig] = useState(defaultConfiguration)
-  const [isConnected, setIsConnected] = useState(false)
+  const [isListeningCommand, setIsListeningCommand] = useState(false)
 
-  useEffect(function setUpConnectionWithBackgroundScript() {
-    const recieveConnection = (data) => {
-      setIsConnected(data?.status === 'ok')
+  useEffect(function openConsoleByKeyCommands() {
+    const toggleTerminal = (message, _sender, sendResponse) => {
+      const isActionNewCommand = message.action === eventTypes.NEW_COMMAND
+      const isCommandToggleTerminal =
+        message.data.command === extensionKeyEvents.TOGGLE_TERMINAL
+
+      if (isActionNewCommand && isCommandToggleTerminal) {
+        setConfig((oldConfig) => ({
+          ...oldConfig,
+          isOpen: !oldConfig.isOpen
+        }))
+      }
+
+      sendResponse({ status: 'ok' })
     }
 
-    const requestData = {
-      eventType: eventTypes.SET_UP_CONNECTION,
-      callback: recieveConnection
-    }
+    chrome.runtime.onMessage.addListener(toggleTerminal)
+    setIsListeningCommand(true)
 
-    backgroundRequest(requestData)
+    return () => {
+      chrome.runtime.onMessage.removeListener(toggleTerminal)
+      setIsListeningCommand(false)
+    }
   }, [])
 
   useEffect(
-    function openConsoleByKeyCommands() {
-      if (!isConnected) return
+    function setUpConnectionWithBackgroundScript() {
+      if (!isListeningCommand) return
 
-      const toggleTerminal = (message, _sender, sendResponse) => {
-        const isActionNewCommand = message.action === eventTypes.NEW_COMMAND
-        const isCommandToggleTerminal =
-          message.data.command === extensionKeyEvents.TOGGLE_TERMINAL
-
-        if (isActionNewCommand && isCommandToggleTerminal) {
-          setConfig((oldConfig) => ({
-            ...oldConfig,
-            isOpen: !oldConfig.isOpen
-          }))
-        }
-
-        sendResponse({ status: 'ok' })
+      const requestData = {
+        eventType: eventTypes.SET_UP_CONNECTION
       }
 
-      chrome.runtime.onMessage.addListener(toggleTerminal)
-
-      return () => chrome.runtime.onMessage.removeListener(toggleTerminal)
+      backgroundRequest(requestData)
     },
-    [isConnected]
+    [isListeningCommand]
   )
 
   useEffect(function expectForConfigChanges() {

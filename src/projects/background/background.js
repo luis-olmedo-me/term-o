@@ -3,31 +3,7 @@ import { configManager } from 'libs/config-manager'
 import { eventTypes } from 'src/constants/events.constants.js'
 
 import { debounce } from 'src/helpers/utils.helpers.js'
-
-class ConnectedTabs {
-  constructor() {
-    this.list = []
-
-    chrome.tabs.onRemoved.addListener(this.removeIdFromList.bind(this))
-    chrome.tabs.onUpdated.addListener(this.removeReloadedTabs.bind(this))
-  }
-
-  addIdToList(id) {
-    this.list = this.list.includes(id) ? this.list : [...this.list, id]
-  }
-
-  removeIdFromList(id) {
-    this.list = this.list.filter((item) => item !== id)
-  }
-
-  removeReloadedTabs(id, { status }) {
-    if (status !== 'loading') return
-
-    this.removeIdFromList(id)
-  }
-}
-
-export const connectedTabs = new ConnectedTabs()
+import { connectedTabs } from 'libs/connected-tabs'
 
 chrome.commands.onCommand.addListener(function (command) {
   const requestData = {

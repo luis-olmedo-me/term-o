@@ -1,9 +1,9 @@
 import { configManager } from 'libs/config-manager'
+import { connectedTabs } from 'libs/connected-tabs'
 
 import { eventTypes } from 'src/constants/events.constants.js'
 
 import { debounce } from 'src/helpers/utils.helpers.js'
-import { connectedTabs } from 'libs/connected-tabs'
 
 chrome.commands.onCommand.addListener(function (command) {
   const requestData = {

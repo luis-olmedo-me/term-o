@@ -4,7 +4,7 @@ import {
   Specification,
   SelectTrigger,
   SelectOption,
-  TwoDotsOptions
+  ThreeDotsOptions
 } from './Element.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { isElementHidden } from '../../../CommandDom/CommandDom.helpers'
@@ -80,7 +80,7 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
         <Specification isHidden={isHidden}>{specification}</Specification>
       )}
 
-      <TwoDotsOptions
+      <ThreeDotsOptions
         isOpen={isSelectOpen}
         handleClickOutside={closeSelect}
         handleOpenSelect={() => setIsSelectOpen(true)}

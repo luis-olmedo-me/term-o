@@ -2,12 +2,15 @@ import styled from 'styled-components'
 
 export const DefaultTrigger = styled.button`
   height: 100%;
-  display: block;
+  line-height: 100%;
+  display: inline-block;
+  vertical-align: middle;
   border: none;
   background-color: transparent;
   cursor: pointer;
   padding: 0 10px;
   transition: all 0.2s ease-in-out;
+  font-size: 1em;
 `
 
 export const SelectOptionsWrapper = styled.div`

@@ -23,7 +23,7 @@ export const Specification = styled.span`
   color: ${(props) => (props.isHidden ? '#888' : '#f5a623')};
 `
 
-export const TwoDotsOptions = styled(Select)`
+export const ThreeDotsOptions = styled(Select)`
   position: absolute;
   top: 0;
   right: 0;

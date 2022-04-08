@@ -87,7 +87,7 @@ export const Select = ({
 
   return (
     <div className={className}>
-      <ButtonTrigger onClick={openSelect}>:</ButtonTrigger>
+      <ButtonTrigger onClick={openSelect}>⋮</ButtonTrigger>
 
       <Portal>
         {isOpen && (

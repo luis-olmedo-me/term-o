@@ -16,6 +16,20 @@ const defaultConfiguration = {
 
 export const useConfig = () => {
   const [config, setConfig] = useState(defaultConfiguration)
+  const [isConnected, setIsConnected] = useState(false)
+
+  useEffect(function setUpConnectionWithBackgroundScript() {
+    const recieveConnection = (data) => {
+      console.log('recieveConnection', data)
+    }
+
+    const requestData = {
+      eventType: eventTypes.SET_UP_CONNECTION,
+      callback: recieveConnection
+    }
+
+    backgroundRequest(requestData)
+  }, [])
 
   useEffect(function openConsoleByKeyCommands() {
     const toggleTerminal = (message, _sender, sendResponse) => {

@@ -1,7 +1,13 @@
 import styled from 'styled-components'
+import {
+  SelectDefaultOption,
+  DefaultTrigger
+} from 'modules/components/Select/Select.styles'
+import { Select } from 'modules/components/Select/Select.component'
 
 export const ElementWrapper = styled.span`
-  padding: 5px 10px;
+  position: relative;
+  padding: 5px 2em 5px 10px;
   background-color: ${(props) => (props.isHidden ? '#eaeaea' : '#fafafa')};
   color: ${(props) => (props.isHidden ? '#888' : '#0070f3')};
   font-weight: bold;
@@ -11,12 +17,31 @@ export const ElementWrapper = styled.span`
   flex: auto;
   text-align: center;
   line-height: 1.75;
-
-  &:hover {
-    background-color: ${(props) => (props.isHidden ? '#eaeaea' : '#ffdbe7')};
-  }
 `
 
 export const Specification = styled.span`
   color: ${(props) => (props.isHidden ? '#888' : '#f5a623')};
+`
+
+export const ThreeDotsOptions = styled(Select)`
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: -webkit-fill-available;
+`
+export const SelectTrigger = styled(DefaultTrigger)`
+  border-left: 1px solid #eaeaea;
+  border-radius: 0 3px 3px 0;
+  font-weight: bold;
+
+  &:hover {
+    background-color: #ffdbe7;
+    border-color: transparent;
+  }
+`
+export const SelectOption = styled(SelectDefaultOption)`
+  &:hover {
+    background-color: #ff4ecd;
+    color: #fafafa;
+  }
 `

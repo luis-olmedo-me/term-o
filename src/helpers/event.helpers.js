@@ -106,3 +106,18 @@ export const resetConfiguration = () => {
     })
   })
 }
+
+export const onScrollEnd = (callback) => {
+  let scrollTimeout
+  const handleOnScroll = () => {
+    clearTimeout(scrollTimeout)
+
+    scrollTimeout = setTimeout(() => {
+      callback()
+
+      window.removeEventListener('scroll', handleOnScroll)
+    }, 100)
+  }
+
+  window.addEventListener('scroll', handleOnScroll, { passive: true })
+}

@@ -38,6 +38,15 @@ export const SelectDefaultOption = styled.div`
   color: #333;
   transition: all 0.2s ease-in-out;
 
+  &&.disabled {
+    color: #888;
+    background-color: #00000007;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+
   &&:first-child {
     border-radius: 3px 3px 0 0;
   }

@@ -72,8 +72,8 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
   return (
     <ElementWrapper
       isHidden={isHidden}
-      onMouseEnter={highlightElement}
-      onMouseLeave={unhighlightElement}
+      onMouseEnter={!isHidden ? highlightElement : null}
+      onMouseLeave={!isHidden ? unhighlightElement : null}
     >
       {tagNameLabel}
 

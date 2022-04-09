@@ -28,6 +28,7 @@ export const CommandDom = ({
   } = props
 
   const [elements, setElements] = useState([])
+  const [pinnedElements, setPinnedElements] = useState([])
 
   const actionType = getActionType(props)
 
@@ -107,7 +108,11 @@ export const CommandDom = ({
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
       <LogWrapper variant={parameterTypes.ELEMENT} buttonGroups={buttonGroups}>
-        <ParameterElements elements={pageData} />
+        <ParameterElements
+          elements={pageData}
+          setPinnedElements={setPinnedElements}
+          pinnedElements={pinnedElements}
+        />
       </LogWrapper>
     </>
   )

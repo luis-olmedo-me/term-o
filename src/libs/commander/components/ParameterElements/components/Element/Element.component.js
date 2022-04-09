@@ -10,7 +10,12 @@ import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { isElementHidden } from '../../../CommandDom/CommandDom.helpers'
 import { onScrollEnd } from 'src/helpers/event.helpers.js'
 
-const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
+const ElementWithoutContext = ({
+  htmlElement = {},
+  setHighlitedElement,
+  setPinnedElements,
+  pinnedElements
+}) => {
   const [isSelectOpen, setIsSelectOpen] = useState(false)
   const triggerRef = useRef(null)
 
@@ -52,6 +57,12 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
     closeSelect()
   }
 
+  const handlePinElement = () => {
+    setPinnedElements([...pinnedElements, htmlElement])
+
+    closeSelect()
+  }
+
   const highlightElement = () => {
     setHighlitedElement(htmlElement)
   }
@@ -64,7 +75,7 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
     {
       id: 'pin-element-option',
       displayText: 'Pin Element',
-      onClick: () => console.log('pin element')
+      onClick: handlePinElement
     },
     { id: 'copy-option', displayText: 'Copy', onClick: handleCopy },
     {

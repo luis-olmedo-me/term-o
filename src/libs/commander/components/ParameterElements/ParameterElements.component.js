@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  ElementsWrapper,
-  PinnedElement,
-  PinnedElementsWrapper
-} from './ParameterElements.styles'
+import { ElementsWrapper } from './ParameterElements.styles'
 import { Element } from './components/Element/Element.component'
 
 export const ParameterElements = ({
@@ -16,16 +12,17 @@ export const ParameterElements = ({
   return (
     <>
       {hasPinnedElements && (
-        <PinnedElementsWrapper>
+        <ElementsWrapper className='pinned'>
           {pinnedElements.map((pinnedElement, indexId) => (
-            <PinnedElement
+            <Element
               key={`pinned-element-${indexId}`}
               htmlElement={pinnedElement}
               setPinnedElements={setPinnedElements}
               pinnedElements={pinnedElements}
+              variant='pinned'
             />
           ))}
-        </PinnedElementsWrapper>
+        </ElementsWrapper>
       )}
 
       <ElementsWrapper>

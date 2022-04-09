@@ -7,12 +7,17 @@ export const ParameterElements = ({
   setPinnedElements,
   pinnedElements
 }) => {
+  const elementsWithoutPinned = elements.filter(
+    (element) => !pinnedElements.includes(element)
+  )
+
   const hasPinnedElements = Boolean(pinnedElements.length)
+  const hasElements = Boolean(elementsWithoutPinned.length)
 
   return (
     <>
       {hasPinnedElements && (
-        <ElementsWrapper className='pinned'>
+        <ElementsWrapper>
           {pinnedElements.map((pinnedElement, indexId) => (
             <Element
               key={`pinned-element-${indexId}`}
@@ -25,18 +30,24 @@ export const ParameterElements = ({
         </ElementsWrapper>
       )}
 
-      <ElementsWrapper>
-        {elements.map((element, indexId) => {
-          return (
-            <Element
-              key={`element-${indexId}`}
-              htmlElement={element}
-              setPinnedElements={setPinnedElements}
-              pinnedElements={pinnedElements}
-            />
-          )
-        })}
-      </ElementsWrapper>
+      {hasElements && (
+        <ElementsWrapper>
+          {elements.map((element, indexId) => {
+            const isPinned = pinnedElements.includes(element)
+
+            return (
+              !isPinned && (
+                <Element
+                  key={`element-${indexId}`}
+                  htmlElement={element}
+                  setPinnedElements={setPinnedElements}
+                  pinnedElements={pinnedElements}
+                />
+              )
+            )
+          })}
+        </ElementsWrapper>
+      )}
     </>
   )
 }

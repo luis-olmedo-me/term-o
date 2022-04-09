@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useCallback, useRef } from 'react'
+import React, { useMemo, useState, useCallback, useRef, useEffect } from 'react'
 import {
   ElementWrapper,
   Specification,
@@ -18,10 +18,18 @@ const ElementWithoutContext = ({
   className
 }) => {
   const [isSelectOpen, setIsSelectOpen] = useState(false)
+  const [wrapperPaddingRight, setWrapperPaddingRight] = useState(10)
   const triggerRef = useRef(null)
 
   const closeSelect = useCallback(() => {
     setIsSelectOpen(false)
+  }, [])
+
+  useEffect(function checkWrapperPadding() {
+    const { offsetWidth } = triggerRef.current
+    const paddingRight = offsetWidth + 10
+
+    setWrapperPaddingRight(paddingRight)
   }, [])
 
   const { height, width } = useMemo(() => {
@@ -87,14 +95,12 @@ const ElementWithoutContext = ({
     }
   ]
 
-  const triggerWidth = triggerRef.current?.clientWidth || 0
-
   return (
     <ElementWrapper
       isHidden={isHidden}
       onMouseEnter={!isHidden ? highlightElement : null}
       onMouseLeave={!isHidden ? unhighlightElement : null}
-      paddingRight={triggerWidth + 10}
+      paddingRight={wrapperPaddingRight}
       className={className}
     >
       {tagNameLabel}

@@ -1,4 +1,4 @@
-export const divideElementsIntoPages = (elements, pageSize) => {
+export const divideItemsIntoPages = (elements, pageSize) => {
   const pages = []
 
   for (let index = 0; index < elements.length; index += pageSize) {

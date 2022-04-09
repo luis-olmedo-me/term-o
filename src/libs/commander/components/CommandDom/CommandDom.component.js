@@ -9,7 +9,7 @@ import {
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { ParameterElements } from '../ParameterElements/ParameterElements.component'
 import { domMessages } from './CommandDom.messages'
-import { usePaginationGroups } from './hooks/usePaginationGroups.hook'
+import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 
 export const CommandDom = ({
   props,

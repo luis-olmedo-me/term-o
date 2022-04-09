@@ -12,6 +12,7 @@ export const DefaultTrigger = styled.button`
   transition: all 0.2s ease-in-out;
   font-size: 1em;
   color: #444;
+  background-color: #fafafa;
 `
 
 export const SelectOptionsWrapper = styled.div`

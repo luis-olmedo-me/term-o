@@ -14,7 +14,8 @@ const ElementWithoutContext = ({
   htmlElement = {},
   setHighlitedElement,
   setPinnedElements,
-  pinnedElements
+  pinnedElements,
+  className
 }) => {
   const [isSelectOpen, setIsSelectOpen] = useState(false)
   const triggerRef = useRef(null)
@@ -94,6 +95,7 @@ const ElementWithoutContext = ({
       onMouseEnter={!isHidden ? highlightElement : null}
       onMouseLeave={!isHidden ? unhighlightElement : null}
       paddingRight={triggerWidth + 10}
+      className={className}
     >
       {tagNameLabel}
 

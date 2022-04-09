@@ -17,6 +17,7 @@ export const ElementWrapper = styled.span`
   flex: auto;
   text-align: center;
   line-height: 1.75;
+  padding-right: ${(props) => props.paddingRight}px;
 `
 
 export const Specification = styled.span`

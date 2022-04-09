@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useCallback } from 'react'
+import React, { useMemo, useState, useCallback, useRef } from 'react'
 import {
   ElementWrapper,
   Specification,
@@ -12,6 +12,7 @@ import { onScrollEnd } from 'src/helpers/event.helpers.js'
 
 const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
   const [isSelectOpen, setIsSelectOpen] = useState(false)
+  const triggerRef = useRef(null)
 
   const closeSelect = useCallback(() => {
     setIsSelectOpen(false)
@@ -69,11 +70,14 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
     }
   ]
 
+  const triggerWidth = triggerRef.current?.clientWidth || 0
+
   return (
     <ElementWrapper
       isHidden={isHidden}
       onMouseEnter={!isHidden ? highlightElement : null}
       onMouseLeave={!isHidden ? unhighlightElement : null}
+      paddingRight={triggerWidth + 10}
     >
       {tagNameLabel}
 
@@ -89,6 +93,7 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
         ButtonTrigger={SelectTrigger}
         Option={SelectOption}
         options={options}
+        triggerRef={triggerRef}
       />
     </ElementWrapper>
   )

@@ -10,6 +10,7 @@ import {
 } from 'src/helpers/event.helpers.js'
 import { getActionType, validateAliasesToAdd } from './CommandAlias.helpers'
 import { aliasMessages } from './CommandAlias.messages'
+import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 
 export const CommandAlias = ({
   props,
@@ -17,7 +18,12 @@ export const CommandAlias = ({
 }) => {
   const { list, delete: deletedIds, add: aliasesToAdd } = props
 
-  const [tableData, setTableData] = useState([])
+  const [tableItems, setTableItems] = useState([])
+
+  const { pageData, buttonGroups } = usePaginationGroups({
+    items: tableItems,
+    maxItems: 10
+  })
 
   const actionType = getActionType(props)
 
@@ -29,7 +35,7 @@ export const CommandAlias = ({
         return aliasHeaders.map((aliasHeader) => alias[aliasHeader])
       })
 
-      setTableData(aliasRows)
+      setTableItems(aliasRows)
     },
     [setMessageData]
   )
@@ -89,8 +95,8 @@ export const CommandAlias = ({
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
       {list && (
-        <LogWrapper variant={parameterTypes.TABLE}>
-          <Table headers={aliasHeaders} rows={tableData} />
+        <LogWrapper variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
+          <Table headers={aliasHeaders} rows={pageData} />
         </LogWrapper>
       )}
     </>

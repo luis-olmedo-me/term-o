@@ -9,7 +9,7 @@ import {
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { ParameterElements } from '../ParameterElements/ParameterElements.component'
 import { domMessages } from './CommandDom.messages'
-import { usePaginationGroups } from './hooks/usePaginationGroups.hook'
+import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 
 export const CommandDom = ({
   props,
@@ -31,7 +31,10 @@ export const CommandDom = ({
 
   const actionType = getActionType(props)
 
-  const { pageData, buttonGroups } = usePaginationGroups({ elements })
+  const { pageData, buttonGroups } = usePaginationGroups({
+    items: elements,
+    maxItems: 30
+  })
 
   const handleGetDomElements = useCallback(() => {
     const hasDefaultElements = parameters?.type === parameterTypes.ELEMENTS

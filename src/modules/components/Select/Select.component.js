@@ -14,7 +14,8 @@ export const Select = ({
   Option = SelectDefaultOption,
   ButtonTrigger = DefaultTrigger,
   className,
-  options
+  options,
+  triggerRef
 }) => {
   const [bounds, setBounds] = useState({})
   const optionsWrapperRef = useRef()
@@ -87,7 +88,9 @@ export const Select = ({
 
   return (
     <div className={className}>
-      <ButtonTrigger onClick={openSelect}>⋮</ButtonTrigger>
+      <ButtonTrigger ref={triggerRef} onClick={openSelect}>
+        ⋮
+      </ButtonTrigger>
 
       <Portal>
         {isOpen && (

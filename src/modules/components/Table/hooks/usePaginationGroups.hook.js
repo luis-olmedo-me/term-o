@@ -1,21 +1,21 @@
 import { useState } from 'react'
 import {
-  divideElementsIntoPages,
+  divideItemsIntoPages,
   generateButtonGroupsFromPages
-} from '../CommandDom.helpers'
+} from '../Table.helpers'
 
-export const usePaginationGroups = ({ elements }) => {
+export const usePaginationGroups = ({ items, maxItems }) => {
   const [pageNumber, setPageNumber] = useState(1)
 
-  const elementsDividedIntoPages = divideElementsIntoPages(elements, 30)
-  const currentPage = elementsDividedIntoPages[pageNumber - 1] || []
+  const itemsDividedIntoPages = divideItemsIntoPages(items, maxItems)
+  const currentPage = itemsDividedIntoPages[pageNumber - 1] || []
   const pagesAsButtonGroups = generateButtonGroupsFromPages(
-    elementsDividedIntoPages,
+    itemsDividedIntoPages,
     pageNumber,
     setPageNumber
   )
-  const hasMoreElements = elementsDividedIntoPages.length > 0
-  const shouldDisplayGroups = elementsDividedIntoPages.length > 1
+  const hasMoreItems = itemsDividedIntoPages.length > 0
+  const shouldDisplayGroups = itemsDividedIntoPages.length > 1
 
   const buttonGroups = [
     {
@@ -35,18 +35,18 @@ export const usePaginationGroups = ({ elements }) => {
       id: 'go-to-next-page',
       text: '>',
       onClick: () => setPageNumber(pageNumber + 1),
-      disabled: pageNumber === elementsDividedIntoPages.length
+      disabled: pageNumber === itemsDividedIntoPages.length
     },
     {
       id: 'go-to-last-page',
       text: '>>',
-      disabled: pageNumber === elementsDividedIntoPages.length,
-      onClick: () => setPageNumber(elementsDividedIntoPages.length)
+      disabled: pageNumber === itemsDividedIntoPages.length,
+      onClick: () => setPageNumber(itemsDividedIntoPages.length)
     }
   ]
 
   return {
-    pageData: hasMoreElements ? currentPage : [],
+    pageData: hasMoreItems ? currentPage : [],
     buttonGroups: shouldDisplayGroups ? buttonGroups : []
   }
 }

@@ -61,6 +61,11 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
   }
 
   const options = [
+    {
+      id: 'pin-element-option',
+      displayText: 'Pin Element',
+      onClick: () => console.log('pin element')
+    },
     { id: 'copy-option', displayText: 'Copy', onClick: handleCopy },
     {
       id: 'scroll-into-view-option',

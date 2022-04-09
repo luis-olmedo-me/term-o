@@ -16,6 +16,7 @@ const defaultConfiguration = {
 
 export const useConfig = () => {
   const [config, setConfig] = useState(defaultConfiguration)
+  const [isListeningCommand, setIsListeningCommand] = useState(false)
 
   useEffect(function openConsoleByKeyCommands() {
     const toggleTerminal = (message, _sender, sendResponse) => {
@@ -34,9 +35,26 @@ export const useConfig = () => {
     }
 
     chrome.runtime.onMessage.addListener(toggleTerminal)
+    setIsListeningCommand(true)
 
-    return () => chrome.runtime.onMessage.removeListener(toggleTerminal)
+    return () => {
+      chrome.runtime.onMessage.removeListener(toggleTerminal)
+      setIsListeningCommand(false)
+    }
   }, [])
+
+  useEffect(
+    function setUpConnectionWithBackgroundScript() {
+      if (!isListeningCommand) return
+
+      const requestData = {
+        eventType: eventTypes.SET_UP_CONNECTION
+      }
+
+      backgroundRequest(requestData)
+    },
+    [isListeningCommand]
+  )
 
   useEffect(function expectForConfigChanges() {
     const receiveConfiguration = (message, _sender, sendResponse) => {

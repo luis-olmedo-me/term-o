@@ -31,7 +31,7 @@ export const CommandDom = ({
 
   const actionType = getActionType(props)
 
-  const { pageData, buttonGroups } = usePaginationGroups({ elements })
+  const { pageData, buttonGroups } = usePaginationGroups({ items: elements })
 
   const handleGetDomElements = useCallback(() => {
     const hasDefaultElements = parameters?.type === parameterTypes.ELEMENTS

@@ -72,6 +72,14 @@ const ElementWithoutContext = ({
     closeSelect()
   }
 
+  const handleUnpinElement = () => {
+    setPinnedElements(
+      pinnedElements.filter((element) => element !== htmlElement)
+    )
+
+    closeSelect()
+  }
+
   const highlightElement = () => {
     setHighlitedElement(htmlElement)
   }
@@ -80,11 +88,13 @@ const ElementWithoutContext = ({
     setHighlitedElement(null)
   }
 
+  const isElementPinned = pinnedElements.includes(htmlElement)
+
   const options = [
     {
-      id: 'pin-element-option',
-      displayText: 'Pin Element',
-      onClick: handlePinElement
+      id: isElementPinned ? 'unpin-element-option' : 'pin-element-option',
+      displayText: isElementPinned ? 'Unpin Element' : 'Pin Element',
+      onClick: isElementPinned ? handleUnpinElement : handlePinElement
     },
     { id: 'copy-option', displayText: 'Copy', onClick: handleCopy },
     {

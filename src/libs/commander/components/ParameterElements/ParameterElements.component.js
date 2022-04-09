@@ -1,12 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ElementsWrapper } from './ParameterElements.styles'
 import { Element } from './components/Element/Element.component'
 
-export const ParameterElements = ({
-  elements,
-  setPinnedElements,
-  pinnedElements
-}) => {
+export const ParameterElements = ({ elements }) => {
+  const [pinnedElements, setPinnedElements] = useState([])
+
   const elementsWithoutPinned = elements.filter(
     (element) => !pinnedElements.includes(element)
   )

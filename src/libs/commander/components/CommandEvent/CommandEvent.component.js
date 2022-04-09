@@ -19,7 +19,10 @@ export const CommandEvent = ({
 
   const [tableItems, setTableItems] = useState([])
 
-  const { pageData, buttonGroups } = usePaginationGroups({ items: tableItems })
+  const { pageData, buttonGroups } = usePaginationGroups({
+    items: tableItems,
+    maxItems: 10
+  })
 
   const actionType = getActionType(props)
 

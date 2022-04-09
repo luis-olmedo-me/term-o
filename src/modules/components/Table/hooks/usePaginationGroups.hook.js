@@ -4,10 +4,10 @@ import {
   generateButtonGroupsFromPages
 } from '../Table.helpers'
 
-export const usePaginationGroups = ({ items }) => {
+export const usePaginationGroups = ({ items, maxItems }) => {
   const [pageNumber, setPageNumber] = useState(1)
 
-  const itemsDividedIntoPages = divideItemsIntoPages(items, 30)
+  const itemsDividedIntoPages = divideItemsIntoPages(items, maxItems)
   const currentPage = itemsDividedIntoPages[pageNumber - 1] || []
   const pagesAsButtonGroups = generateButtonGroupsFromPages(
     itemsDividedIntoPages,

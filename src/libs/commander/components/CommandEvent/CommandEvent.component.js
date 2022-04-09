@@ -9,6 +9,7 @@ import {
 } from 'src/helpers/event.helpers.js'
 import { eventMessages } from './CommandEvent.messages'
 import { getActionType } from './CommandEvent.helpers'
+import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 
 export const CommandEvent = ({
   props,
@@ -16,7 +17,9 @@ export const CommandEvent = ({
 }) => {
   const { list, delete: deletedIds } = props
 
-  const [tableData, setTableData] = useState([])
+  const [tableItems, setTableItems] = useState([])
+
+  const { pageData, buttonGroups } = usePaginationGroups({ items: tableItems })
 
   const actionType = getActionType(props)
 
@@ -28,7 +31,7 @@ export const CommandEvent = ({
         return eventRows.map((eventRow) => pageEvent[eventRow])
       })
 
-      setTableData(pageEventsRows)
+      setTableItems(pageEventsRows)
     },
     [setMessageData]
   )
@@ -77,8 +80,8 @@ export const CommandEvent = ({
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
       {list && (
-        <LogWrapper variant={parameterTypes.TABLE}>
-          <Table headers={eventRows} rows={tableData} />
+        <LogWrapper variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
+          <Table headers={eventRows} rows={pageData} />
         </LogWrapper>
       )}
     </>

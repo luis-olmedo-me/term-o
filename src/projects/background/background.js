@@ -11,7 +11,7 @@ chrome.commands.onCommand.addListener(function (command) {
     data: { command }
   }
 
-  chrome.tabs.query({ active: true }, function (tabs) {
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     const tab = tabs[0]
     const { id } = tab || {}
 

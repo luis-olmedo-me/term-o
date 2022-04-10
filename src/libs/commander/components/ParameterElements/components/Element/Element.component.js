@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useCallback, useRef } from 'react'
+import React, { useMemo, useState, useCallback, useRef, useEffect } from 'react'
 import {
   ElementWrapper,
   Specification,
@@ -10,12 +10,27 @@ import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { isElementHidden } from '../../../CommandDom/CommandDom.helpers'
 import { onScrollEnd } from 'src/helpers/event.helpers.js'
 
-const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
+const ElementWithoutContext = ({
+  htmlElement = {},
+  setHighlitedElement,
+  setPinnedElements,
+  pinnedElements,
+  className = '',
+  variant = ''
+}) => {
   const [isSelectOpen, setIsSelectOpen] = useState(false)
+  const [wrapperPaddingRight, setWrapperPaddingRight] = useState(10)
   const triggerRef = useRef(null)
 
   const closeSelect = useCallback(() => {
     setIsSelectOpen(false)
+  }, [])
+
+  useEffect(function checkWrapperPadding() {
+    const { offsetWidth } = triggerRef.current
+    const paddingRight = offsetWidth + 10
+
+    setWrapperPaddingRight(paddingRight)
   }, [])
 
   const { height, width } = useMemo(() => {
@@ -52,6 +67,20 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
     closeSelect()
   }
 
+  const handlePinElement = () => {
+    setPinnedElements([...pinnedElements, htmlElement])
+
+    closeSelect()
+  }
+
+  const handleUnpinElement = () => {
+    setPinnedElements(
+      pinnedElements.filter((element) => element !== htmlElement)
+    )
+
+    closeSelect()
+  }
+
   const highlightElement = () => {
     setHighlitedElement(htmlElement)
   }
@@ -60,7 +89,14 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
     setHighlitedElement(null)
   }
 
+  const isElementPinned = pinnedElements.includes(htmlElement)
+
   const options = [
+    {
+      id: isElementPinned ? 'unpin-element-option' : 'pin-element-option',
+      displayText: isElementPinned ? 'Unpin Element' : 'Pin Element',
+      onClick: isElementPinned ? handleUnpinElement : handlePinElement
+    },
     { id: 'copy-option', displayText: 'Copy', onClick: handleCopy },
     {
       id: 'scroll-into-view-option',
@@ -70,14 +106,13 @@ const ElementWithoutContext = ({ htmlElement = {}, setHighlitedElement }) => {
     }
   ]
 
-  const triggerWidth = triggerRef.current?.clientWidth || 0
-
   return (
     <ElementWrapper
       isHidden={isHidden}
       onMouseEnter={!isHidden ? highlightElement : null}
       onMouseLeave={!isHidden ? unhighlightElement : null}
-      paddingRight={triggerWidth + 10}
+      paddingRight={wrapperPaddingRight}
+      className={`${className} ${variant}`}
     >
       {tagNameLabel}
 

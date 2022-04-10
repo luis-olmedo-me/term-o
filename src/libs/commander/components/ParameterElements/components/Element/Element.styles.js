@@ -18,6 +18,20 @@ export const ElementWrapper = styled.span`
   text-align: center;
   line-height: 1.75;
   padding-right: ${(props) => props.paddingRight}px;
+
+  &&.pinned {
+    border-left: 10px solid #fcd57a;
+    background-color: #fee7a6;
+
+    && button {
+      background-color: #fee7a6;
+      border-left: 1px solid #eed99d;
+
+      &:hover {
+        background-color: #fce6c7;
+      }
+    }
+  }
 `
 
 export const Specification = styled.span`

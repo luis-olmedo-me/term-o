@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Portal } from '../Portal/Portal.component'
 import {
   SelectDefaultOption,
-  SelectOptionsWrapper,
+  SelectDefaultOptionsWrapper,
   DefaultTrigger
 } from './Select.styles'
 
@@ -11,6 +11,7 @@ export const Select = ({
   handleClickOutside,
   handleOpenSelect,
   handleOnMouseEnter,
+  OptionsWrapper = SelectDefaultOptionsWrapper,
   Option = SelectDefaultOption,
   ButtonTrigger = DefaultTrigger,
   className,
@@ -94,7 +95,7 @@ export const Select = ({
 
       <Portal>
         {isOpen && (
-          <SelectOptionsWrapper
+          <OptionsWrapper
             ref={optionsWrapperRef}
             onMouseEnter={handleOnMouseEnter}
             style={bounds && { left: bounds.left, top: bounds.top }}
@@ -116,7 +117,7 @@ export const Select = ({
                 </Option>
               )
             })}
-          </SelectOptionsWrapper>
+          </OptionsWrapper>
         )}
       </Portal>
     </div>

@@ -4,7 +4,8 @@ import {
   Specification,
   SelectTrigger,
   SelectOption,
-  ThreeDotsOptions
+  ThreeDotsOptions,
+  SelectOptionsWrapper
 } from './Element.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { isElementHidden } from '../../../CommandDom/CommandDom.helpers'
@@ -141,6 +142,7 @@ const ElementWithoutContext = ({
         handleOpenSelect={() => setIsSelectOpen(true)}
         handleOnMouseEnter={unhighlightElement}
         ButtonTrigger={SelectTrigger}
+        OptionsWrapper={SelectOptionsWrapper}
         Option={SelectOption}
         options={options}
         triggerRef={triggerRef}

@@ -15,7 +15,7 @@ export const DefaultTrigger = styled.button`
   background-color: #fafafa;
 `
 
-export const SelectOptionsWrapper = styled.div`
+export const SelectDefaultOptionsWrapper = styled.div`
   all: initial;
   position: fixed;
   z-index: 1000003;
@@ -49,7 +49,7 @@ export const SelectOptionsWrapper = styled.div`
 
   &&::-webkit-scrollbar-thumb {
     background-color: #333;
-    border-radius: 6px;
+    border-radius: 5px;
     border: 3px solid #ffffff;
   }
 `

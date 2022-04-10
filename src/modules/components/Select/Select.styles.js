@@ -31,7 +31,7 @@ export const SelectDefaultOptionsWrapper = styled.div`
   box-shadow: 0 0 15px 5px #00000044;
   padding: 10px 0;
   overflow-y: scroll;
-  font-size: 1.1em;
+  font-size: 1em;
 
   && {
     scrollbar-width: auto;
@@ -39,12 +39,13 @@ export const SelectDefaultOptionsWrapper = styled.div`
   }
 
   &&::-webkit-scrollbar {
-    width: 16px;
+    width: 12px;
   }
 
   &&::-webkit-scrollbar-track {
     background: #ffffff;
     border-radius: 0 3px 3px 0;
+    border-left: 1px solid #eaeaea;
   }
 
   &&::-webkit-scrollbar-thumb {
@@ -55,7 +56,7 @@ export const SelectDefaultOptionsWrapper = styled.div`
 `
 
 export const SelectDefaultOption = styled.div`
-  line-height: 40px;
+  line-height: 2.4em;
   vertical-align: middle;
   text-align: center;
   border-top: 1px solid #eaeaea;

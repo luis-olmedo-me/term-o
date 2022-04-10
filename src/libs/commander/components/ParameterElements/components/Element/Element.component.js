@@ -7,7 +7,10 @@ import {
   ThreeDotsOptions
 } from './Element.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
-import { isElementHidden } from '../../../CommandDom/CommandDom.helpers'
+import {
+  createXPathFromElement,
+  isElementHidden
+} from '../../../CommandDom/CommandDom.helpers'
 import { onScrollEnd } from 'src/helpers/event.helpers.js'
 
 const ElementWithoutContext = ({
@@ -81,6 +84,15 @@ const ElementWithoutContext = ({
     closeSelect()
   }
 
+  const handleCopyXPath = () => {
+    const xPath = createXPathFromElement(htmlElement)
+    console.log('xPath', xPath)
+
+    navigator.clipboard.writeText(xPath)
+
+    closeSelect()
+  }
+
   const highlightElement = () => {
     setHighlitedElement(htmlElement)
   }
@@ -97,12 +109,17 @@ const ElementWithoutContext = ({
       displayText: isElementPinned ? 'Unpin Element' : 'Pin Element',
       onClick: isElementPinned ? handleUnpinElement : handlePinElement
     },
-    { id: 'copy-option', displayText: 'Copy', onClick: handleCopy },
     {
       id: 'scroll-into-view-option',
       displayText: 'Scroll Into View',
       onClick: handleScrollIntoView,
       disabled: isHidden
+    },
+    { id: 'copy-option', displayText: 'Copy', onClick: handleCopy },
+    {
+      id: 'copy-xpath-option',
+      displayText: 'Copy XPath',
+      onClick: handleCopyXPath
     }
   ]
 

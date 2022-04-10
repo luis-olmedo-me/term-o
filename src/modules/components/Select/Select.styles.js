@@ -30,6 +30,11 @@ export const SelectOptionsWrapper = styled.div`
   font-family: Coda;
   box-shadow: 0px 10px 15px -3px #0000001a;
   padding: 10px 0;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 export const SelectDefaultOption = styled.div`

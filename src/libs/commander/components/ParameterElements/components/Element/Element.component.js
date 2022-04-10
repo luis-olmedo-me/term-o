@@ -7,11 +7,9 @@ import {
   ThreeDotsOptions
 } from './Element.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
-import {
-  createXPathFromElement,
-  isElementHidden
-} from '../../../CommandDom/CommandDom.helpers'
+import { isElementHidden } from '../../../CommandDom/CommandDom.helpers'
 import { onScrollEnd } from 'src/helpers/event.helpers.js'
+import { createXPathFromElement } from './Element.helpers'
 
 const ElementWithoutContext = ({
   htmlElement = {},

@@ -23,7 +23,7 @@ export const SelectOptionsWrapper = styled.div`
   inset: 0;
   width: 100%;
   height: fit-content;
-  max-width: 150px;
+  max-width: 220px;
   max-height: 150px;
   border-radius: 3px;
   transform: translate(-50%, -50%);
@@ -32,8 +32,23 @@ export const SelectOptionsWrapper = styled.div`
   padding: 10px 0;
   overflow-y: scroll;
 
-  &::-webkit-scrollbar {
-    display: none;
+  && {
+    scrollbar-width: auto;
+    scrollbar-color: #8f54a0 #ffffff;
+  }
+
+  &&::-webkit-scrollbar {
+    width: 16px;
+  }
+
+  &&::-webkit-scrollbar-track {
+    background: #ffffff;
+  }
+
+  &&::-webkit-scrollbar-thumb {
+    background-color: #8f54a0;
+    border-radius: 10px;
+    border: 3px solid #ffffff;
   }
 `
 

@@ -15,7 +15,7 @@ export const DefaultTrigger = styled.button`
   background-color: #fafafa;
 `
 
-export const SelectOptionsWrapper = styled.div`
+export const SelectDefaultOptionsWrapper = styled.div`
   all: initial;
   position: fixed;
   z-index: 1000003;
@@ -23,17 +23,41 @@ export const SelectOptionsWrapper = styled.div`
   inset: 0;
   width: 100%;
   height: fit-content;
-  max-width: 150px;
+  max-width: 220px;
   max-height: 150px;
   border-radius: 3px;
   transform: translate(-50%, -50%);
   font-family: Coda;
-  box-shadow: 0px 10px 15px -3px #0000001a;
+  box-shadow: 0 0 15px 5px #0000002a;
   padding: 10px 0;
+  overflow-y: scroll;
+  font-size: 1em;
+  opacity: ${(props) => (props.areBoundsCalculated ? 1 : 0)};
+
+  && {
+    scrollbar-width: auto;
+    scrollbar-color: #333 #ffffff;
+  }
+
+  &&::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &&::-webkit-scrollbar-track {
+    background: #ffffff;
+    border-radius: 0 3px 3px 0;
+    border-left: 1px solid #eaeaea;
+  }
+
+  &&::-webkit-scrollbar-thumb {
+    background-color: #333;
+    border-radius: 5px;
+    border: 3px solid #ffffff;
+  }
 `
 
 export const SelectDefaultOption = styled.div`
-  line-height: 40px;
+  line-height: 2.4em;
   vertical-align: middle;
   text-align: center;
   border-top: 1px solid #eaeaea;

@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 import {
   SelectDefaultOption,
-  DefaultTrigger
+  DefaultTrigger,
+  SelectDefaultOptionsWrapper
 } from 'modules/components/Select/Select.styles'
 import { Select } from 'modules/components/Select/Select.component'
 
@@ -43,6 +44,15 @@ export const ThreeDotsOptions = styled(Select)`
   top: 0;
   right: 0;
   height: -webkit-fill-available;
+`
+export const SelectOptionsWrapper = styled(SelectDefaultOptionsWrapper)`
+  && {
+    scrollbar-color: #dd44b2 #ffffff;
+  }
+
+  &&::-webkit-scrollbar-thumb {
+    background-color: #dd44b2;
+  }
 `
 export const SelectTrigger = styled(DefaultTrigger)`
   border-left: 1px solid #eaeaea;

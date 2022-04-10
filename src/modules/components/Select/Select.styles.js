@@ -28,13 +28,14 @@ export const SelectOptionsWrapper = styled.div`
   border-radius: 3px;
   transform: translate(-50%, -50%);
   font-family: Coda;
-  box-shadow: 0px 10px 15px -3px #0000001a;
+  box-shadow: 0 0 15px 5px #00000044;
   padding: 10px 0;
   overflow-y: scroll;
+  font-size: 1.1em;
 
   && {
     scrollbar-width: auto;
-    scrollbar-color: #8f54a0 #ffffff;
+    scrollbar-color: #333 #ffffff;
   }
 
   &&::-webkit-scrollbar {
@@ -43,11 +44,12 @@ export const SelectOptionsWrapper = styled.div`
 
   &&::-webkit-scrollbar-track {
     background: #ffffff;
+    border-radius: 0 3px 3px 0;
   }
 
   &&::-webkit-scrollbar-thumb {
-    background-color: #8f54a0;
-    border-radius: 10px;
+    background-color: #333;
+    border-radius: 6px;
     border: 3px solid #ffffff;
   }
 `

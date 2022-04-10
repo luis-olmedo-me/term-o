@@ -5,12 +5,10 @@ import { Element } from './components/Element/Element.component'
 export const ParameterElements = ({ elements }) => {
   const [pinnedElements, setPinnedElements] = useState([])
 
-  const elementsWithoutPinned = elements.filter(
+  const hasPinnedElements = Boolean(pinnedElements.length)
+  const hasElements = elements.some(
     (element) => !pinnedElements.includes(element)
   )
-
-  const hasPinnedElements = Boolean(pinnedElements.length)
-  const hasElements = Boolean(elementsWithoutPinned.length)
 
   return (
     <>

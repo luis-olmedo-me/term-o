@@ -32,6 +32,7 @@ export const SelectDefaultOptionsWrapper = styled.div`
   padding: 10px 0;
   overflow-y: scroll;
   font-size: 1em;
+  opacity: ${(props) => (props.areBoundsCalculated ? 1 : 0)};
 
   && {
     scrollbar-width: auto;

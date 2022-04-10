@@ -19,18 +19,24 @@ export const Select = ({
   triggerRef
 }) => {
   const [bounds, setBounds] = useState({})
+  const [areBoundsCalculated, setAreBoundsCalculated] = useState(false)
   const optionsWrapperRef = useRef()
 
   useEffect(
     function closeSelectWhenUserClicksOutside() {
       if (!isOpen) return
 
-      window.addEventListener('click', handleClickOutside)
-      window.addEventListener('open-term-o-select', handleClickOutside)
+      const clickOutside = (event) => {
+        setAreBoundsCalculated(false)
+        handleClickOutside(event)
+      }
+
+      window.addEventListener('click', clickOutside)
+      window.addEventListener('open-term-o-select', clickOutside)
 
       return () => {
-        window.removeEventListener('click', handleClickOutside)
-        window.removeEventListener('open-term-o-select', handleClickOutside)
+        window.removeEventListener('click', clickOutside)
+        window.removeEventListener('open-term-o-select', clickOutside)
       }
     },
     [isOpen, handleClickOutside]
@@ -51,6 +57,8 @@ export const Select = ({
       const isLeftOutside = left - halfWidth < 0
       const isBottomOutside = bottom + halfHeight > bodyHeight
       const isTopOutside = top - halfHeight < 0
+
+      setAreBoundsCalculated(true)
 
       if (
         !isRightOutside &&
@@ -79,6 +87,12 @@ export const Select = ({
   const openSelect = (event) => {
     event.stopPropagation()
 
+    if (isOpen) {
+      setAreBoundsCalculated(false)
+      handleClickOutside(event)
+      return
+    }
+
     const openSelectEvent = new Event('open-term-o-select')
 
     setBounds(event.currentTarget.getBoundingClientRect())
@@ -99,10 +113,12 @@ export const Select = ({
             ref={optionsWrapperRef}
             onMouseEnter={handleOnMouseEnter}
             style={bounds && { left: bounds.left, top: bounds.top }}
+            areBoundsCalculated={areBoundsCalculated}
           >
             {options.map(({ id, displayText, onClick, disabled }) => {
               const handleClick = (event) => {
                 event.stopPropagation()
+                setAreBoundsCalculated(false)
 
                 onClick()
               }

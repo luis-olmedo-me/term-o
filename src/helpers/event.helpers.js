@@ -1,7 +1,7 @@
 import { eventTypes } from 'src/constants/events.constants.js'
 
 export const backgroundRequest = ({ eventType, callback = () => {}, data }) => {
-  chrome.runtime.sendMessage({ type: eventType, data }, callback)
+  chrome.runtime?.sendMessage?.({ type: eventType, data }, callback)
 }
 
 export const fetchConfiguration = () => {

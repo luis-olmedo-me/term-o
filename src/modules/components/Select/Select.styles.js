@@ -40,19 +40,19 @@ export const SelectDefaultOptionsWrapper = styled.div`
   }
 
   &&::-webkit-scrollbar {
-    width: 12px;
+    width: 9px;
   }
 
   &&::-webkit-scrollbar-track {
     background: #ffffff;
     border-radius: 0 3px 3px 0;
     border-left: 1px solid #eaeaea;
+    padding: 0 3px;
   }
 
   &&::-webkit-scrollbar-thumb {
     background-color: #333;
-    border-radius: 5px;
-    border: 3px solid #ffffff;
+    border-radius: 3px;
   }
 `
 

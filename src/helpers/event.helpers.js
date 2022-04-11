@@ -1,7 +1,7 @@
 import { eventTypes } from 'src/constants/events.constants.js'
 
 export const backgroundRequest = ({ eventType, callback = () => {}, data }) => {
-  chrome.runtime.sendMessage({ type: eventType, data }, callback)
+  chrome.runtime?.sendMessage?.({ type: eventType, data }, callback)
 }
 
 export const fetchConfiguration = () => {
@@ -107,17 +107,34 @@ export const resetConfiguration = () => {
   })
 }
 
-export const onScrollEnd = (callback) => {
-  let scrollTimeout
-  const handleOnScroll = () => {
-    clearTimeout(scrollTimeout)
+export const onLocationChange = (callback) => {
+  let oldHref = document.location.href,
+    bodyDOM = document.body
 
-    scrollTimeout = setTimeout(() => {
+  const observer = new MutationObserver(function (_mutations) {
+    if (oldHref != document.location.href) {
+      oldHref = document.location.href
+
       callback()
 
-      window.removeEventListener('scroll', handleOnScroll)
-    }, 100)
+      window.requestAnimationFrame(function () {
+        let temporalBodyDOM = document.body
+
+        if (temporalBodyDOM !== bodyDOM) {
+          bodyDOM = temporalBodyDOM
+
+          observer.observe(bodyDOM, config)
+        }
+      })
+    }
+  })
+
+  const config = {
+    childList: true,
+    subtree: true
   }
 
-  window.addEventListener('scroll', handleOnScroll, { passive: true })
+  observer.observe(bodyDOM, config)
+
+  return observer
 }

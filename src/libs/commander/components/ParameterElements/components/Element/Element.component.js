@@ -9,7 +9,6 @@ import {
 } from './Element.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { isElementHidden } from '../../../CommandDom/CommandDom.helpers'
-import { onScrollEnd } from 'src/helpers/event.helpers.js'
 import { createXPathFromElement } from './Element.helpers'
 
 const ElementWithoutContext = ({
@@ -60,12 +59,6 @@ const ElementWithoutContext = ({
       behavior: 'smooth'
     })
 
-    onScrollEnd(() => {
-      highlightElement()
-
-      setTimeout(unhighlightElement, 1000)
-    })
-
     closeSelect()
   }
 
@@ -85,7 +78,6 @@ const ElementWithoutContext = ({
 
   const handleCopyXPath = () => {
     const xPath = createXPathFromElement(htmlElement)
-    console.log('xPath', xPath)
 
     navigator.clipboard.writeText(xPath)
 

@@ -2,7 +2,10 @@ import { useEffect, useState } from 'react'
 
 import { commander } from 'libs/commander/commander.service'
 
-import { backgroundRequest } from 'src/helpers/event.helpers.js'
+import {
+  backgroundRequest,
+  onLocationChange
+} from 'src/helpers/event.helpers.js'
 import {
   eventTypes,
   extensionKeyEvents
@@ -47,11 +50,15 @@ export const useConfig = () => {
     function setUpConnectionWithBackgroundScript() {
       if (!isListeningCommand) return
 
-      const requestData = {
-        eventType: eventTypes.SET_UP_CONNECTION
-      }
+      const requestData = { eventType: eventTypes.SET_UP_CONNECTION }
 
       backgroundRequest(requestData)
+
+      const locationListener = onLocationChange(() => {
+        backgroundRequest(requestData)
+      })
+
+      return () => locationListener.disconnect()
     },
     [isListeningCommand]
   )

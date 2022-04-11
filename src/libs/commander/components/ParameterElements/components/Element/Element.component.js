@@ -78,7 +78,6 @@ const ElementWithoutContext = ({
 
   const handleCopyXPath = () => {
     const xPath = createXPathFromElement(htmlElement)
-    console.log('xPath', xPath)
 
     navigator.clipboard.writeText(xPath)
 

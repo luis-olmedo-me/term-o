@@ -13,16 +13,18 @@ const getElementsFromDOM = (patterns) => {
 
 export const getElements = ({
   patterns,
-  defaultElements,
+  xpaths,
   filterBySome,
   filterByEvery
 }) => {
   return new Promise((resolve, reject) => {
-    const elements = getElementsFromDOM(patterns)
+    const elements = xpaths.length
+      ? xpaths.map(lookupElementByXPath)
+      : getElementsFromDOM(patterns)
 
     const elementsFoundByEvery = filterByEvery
-      ? [...elements, ...defaultElements].filter(filterByEvery)
-      : [...elements, ...defaultElements]
+      ? elements.filter(filterByEvery)
+      : elements
 
     const elementsFoundBySome = filterBySome
       ? elementsFoundByEvery.filter(filterBySome)

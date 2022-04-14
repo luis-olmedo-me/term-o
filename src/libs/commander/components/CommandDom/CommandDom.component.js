@@ -4,7 +4,8 @@ import {
   generateFilterByEvery,
   generateFilterBySome,
   getActionType,
-  getElements
+  getElements,
+  lookupElementByXPath
 } from './CommandDom.helpers'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { ParameterElements } from '../ParameterElements/ParameterElements.component'
@@ -13,7 +14,7 @@ import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginatio
 
 export const CommandDom = ({
   props,
-  terminal: { command, parameters, setParameters, setMessageData }
+  terminal: { command, setParameters, setMessageData }
 }) => {
   const {
     get,
@@ -38,9 +39,6 @@ export const CommandDom = ({
   })
 
   const handleGetDomElements = useCallback(() => {
-    const hasDefaultElements = parameters?.type === parameterTypes.ELEMENTS
-    const defaultElements = hasDefaultElements ? parameters.value : []
-
     const hasFiltersBySome =
       hasId ||
       hasClass ||
@@ -50,7 +48,7 @@ export const CommandDom = ({
       byStyle.length ||
       byAttribute.length
 
-    const hasFiltersByAll = !hidden || byXpath.length
+    const hasFiltersByAll = !hidden
 
     const filterElementsBySome = generateFilterBySome({
       hasId,
@@ -62,11 +60,11 @@ export const CommandDom = ({
       byAttribute
     })
 
-    const filterElementsByEvery = generateFilterByEvery({ hidden, byXpath })
+    const filterElementsByEvery = generateFilterByEvery({ hidden })
 
     const elementsSearch = getElements({
       patterns: get,
-      defaultElements,
+      xpaths: byXpath,
       filterBySome: hasFiltersBySome ? filterElementsBySome : null,
       filterByEvery: hasFiltersByAll ? filterElementsByEvery : null
     })

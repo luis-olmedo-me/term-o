@@ -42,6 +42,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       break
     }
 
+    case eventTypes.REMOVE_CONNECTION: {
+      connectedTabs.removeIdFromList(sender.tab.id)
+      sendResponse({ status: 'ok' })
+      break
+    }
+
     case eventTypes.GET_CONFIGURATION: {
       sendResponse({ status: 'ok', response: configManager.config })
       break

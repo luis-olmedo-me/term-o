@@ -50,15 +50,17 @@ export const useConfig = () => {
     function setUpConnectionWithBackgroundScript() {
       if (!isListeningCommand) return
 
-      const requestData = { eventType: eventTypes.SET_UP_CONNECTION }
+      const requestDataForSetUp = { eventType: eventTypes.SET_UP_CONNECTION }
+      const requestDataForRemove = {
+        eventType: eventTypes.REMOVE_CONNECTION,
+        callback: null
+      }
 
-      backgroundRequest(requestData)
+      const handleBeforeUnload = () => backgroundRequest(requestDataForRemove)
 
-      const locationListener = onLocationChange(() => {
-        backgroundRequest(requestData)
-      })
+      backgroundRequest(requestDataForSetUp)
 
-      return () => locationListener.disconnect()
+      window.addEventListener('beforeunload', handleBeforeUnload, false)
     },
     [isListeningCommand]
   )

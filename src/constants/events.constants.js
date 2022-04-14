@@ -8,7 +8,8 @@ export const eventTypes = {
   DELETE_ALIAS: 'term-o-delete-alias',
   CONFIG_UPDATE: 'term-o-config-update',
   RESET_CONFIGURATION: 'term-o-update-configuration',
-  SET_UP_CONNECTION: 'term-o-set-up-connection'
+  SET_UP_CONNECTION: 'term-o-set-up-connection',
+  REMOVE_CONNECTION: 'term-o-remove-connection'
 }
 
 export const extensionKeyEvents = {

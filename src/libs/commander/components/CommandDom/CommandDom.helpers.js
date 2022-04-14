@@ -107,3 +107,16 @@ export const generateFilterByEvery = ({ hidden }) => {
     return validations.every((validation) => validation(element))
   }
 }
+
+export const lookupElementByXPath = (xpath) => {
+  const evaluator = new XPathEvaluator()
+  const result = evaluator.evaluate(
+    xpath,
+    document.documentElement,
+    null,
+    XPathResult.FIRST_ORDERED_NODE_TYPE,
+    null
+  )
+
+  return result.singleNodeValue
+}

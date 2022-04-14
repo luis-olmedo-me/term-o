@@ -24,7 +24,8 @@ export const CommandDom = ({
     byText,
     byStyle,
     byAttribute,
-    hidden
+    hidden,
+    byXpath
   } = props
 
   const [elements, setElements] = useState([])
@@ -49,7 +50,7 @@ export const CommandDom = ({
       byStyle.length ||
       byAttribute.length
 
-    const hasFiltersByAll = !hidden
+    const hasFiltersByAll = !hidden || byXpath.length
 
     const filterElementsBySome = generateFilterBySome({
       hasId,
@@ -61,7 +62,7 @@ export const CommandDom = ({
       byAttribute
     })
 
-    const filterElementsByEvery = generateFilterByEvery({ hidden })
+    const filterElementsByEvery = generateFilterByEvery({ hidden, byXpath })
 
     const elementsSearch = getElements({
       patterns: get,
@@ -85,6 +86,7 @@ export const CommandDom = ({
     byStyle,
     byAttribute,
     hidden,
+    byXpath,
     setMessageData
   ])
 

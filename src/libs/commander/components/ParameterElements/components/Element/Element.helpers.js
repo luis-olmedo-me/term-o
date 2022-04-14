@@ -38,16 +38,16 @@ export const createXPathFromElement = (element) => {
       const id = element.getAttribute('id')
 
       if (isUniqueId) {
-        paths.unshift(`id("${id}")`)
+        paths.unshift(`id('${id}')`)
 
         return paths.join('/')
       } else {
-        paths.unshift(`${localName}[@id="${id}"]`)
+        paths.unshift(`${localName}[@id='${id}']`)
       }
     } else if (element.hasAttribute('class')) {
       const className = element.getAttribute('class')
 
-      paths.unshift(`${localName}[@class="${className}"]`)
+      paths.unshift(`${localName}[@class='${className}']`)
     } else {
       const index = getElementSiblingIndex(element)
 

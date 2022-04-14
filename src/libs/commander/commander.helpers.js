@@ -123,7 +123,8 @@ export const getOptionsFromArgs = (args) => {
     const isArgOption = arg.startsWith('-')
     const isNextArgOption = nextArg.startsWith('-')
 
-    const isArgOptionWithRowValue = isArgOption && arg.includes('=')
+    const isArgOptionWithRowValue =
+      isArgOption && arg.includes('=') && /^\w+=.+/.test(arg)
 
     const isArgOptionBoolean = isArgOption && (isNextArgOption || !nextArg)
 
@@ -152,7 +153,8 @@ export const getOptionsFromArgs = (args) => {
       const isNextArgOptionWithRowValue =
         !isNextArgOption &&
         nextArg.includes('=') &&
-        !checkURLValidation(nextArg)
+        !checkURLValidation(nextArg) &&
+        /^\w+=.+/.test(nextArg)
       const [nextKey, nextValue] = isNextArgOptionWithRowValue
         ? getRowDataFromOption(nextArg)
         : []

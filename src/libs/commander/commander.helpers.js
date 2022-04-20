@@ -40,6 +40,13 @@ const breakArrayInCertainIndexes = (array, indexes) => {
   }, [])
 }
 
+const isOdd = (number) => number % 2 !== 0
+const hasDoubleQuoteType = (string, quote) => {
+  const quoteTypeCount = string.match(new RegExp(quote, 'g'))?.length || -1
+
+  return !isOdd(quoteTypeCount)
+}
+
 export const splitArgsTakingInCountSymbols = (args, _quotes) => {
   let carriedArgsWithQuotes = []
   let indexesToBreak = []
@@ -49,7 +56,7 @@ export const splitArgsTakingInCountSymbols = (args, _quotes) => {
   const argsByQuotes = args.reduce((parsedArguments, argument, index) => {
     const hasQuotes = argument.includes(quotesToUse)
     const hasAllQuotes =
-      argument.startsWith(quotesToUse) && argument.endsWith(quotesToUse)
+      hasDoubleQuoteType(argument, quotesToUse) && !shouldCarryArgs
     const isVerticalLine = argument === '|'
     const isLastArgument = index === args.length - 1
 
@@ -123,7 +130,8 @@ export const getOptionsFromArgs = (args) => {
     const isArgOption = arg.startsWith('-')
     const isNextArgOption = nextArg.startsWith('-')
 
-    const isArgOptionWithRowValue = isArgOption && arg.includes('=')
+    const isArgOptionWithRowValue =
+      isArgOption && arg.includes('=') && /^\w+=.+/.test(arg)
 
     const isArgOptionBoolean = isArgOption && (isNextArgOption || !nextArg)
 
@@ -152,7 +160,8 @@ export const getOptionsFromArgs = (args) => {
       const isNextArgOptionWithRowValue =
         !isNextArgOption &&
         nextArg.includes('=') &&
-        !checkURLValidation(nextArg)
+        !checkURLValidation(nextArg) &&
+        /^\w+=.+/.test(nextArg)
       const [nextKey, nextValue] = isNextArgOptionWithRowValue
         ? getRowDataFromOption(nextArg)
         : []

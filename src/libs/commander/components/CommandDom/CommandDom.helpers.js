@@ -13,16 +13,18 @@ const getElementsFromDOM = (patterns) => {
 
 export const getElements = ({
   patterns,
-  defaultElements,
+  xpaths,
   filterBySome,
   filterByEvery
 }) => {
   return new Promise((resolve, reject) => {
-    const elements = getElementsFromDOM(patterns)
+    const elements = xpaths.length
+      ? xpaths.map(lookupElementByXPath)
+      : getElementsFromDOM(patterns)
 
     const elementsFoundByEvery = filterByEvery
-      ? [...elements, ...defaultElements].filter(filterByEvery)
-      : [...elements, ...defaultElements]
+      ? elements.filter(filterByEvery)
+      : elements
 
     const elementsFoundBySome = filterBySome
       ? elementsFoundByEvery.filter(filterBySome)
@@ -106,4 +108,17 @@ export const generateFilterByEvery = ({ hidden }) => {
 
     return validations.every((validation) => validation(element))
   }
+}
+
+export const lookupElementByXPath = (xpath) => {
+  const evaluator = new XPathEvaluator()
+  const result = evaluator.evaluate(
+    xpath,
+    document.documentElement,
+    null,
+    XPathResult.FIRST_ORDERED_NODE_TYPE,
+    null
+  )
+
+  return result.singleNodeValue
 }

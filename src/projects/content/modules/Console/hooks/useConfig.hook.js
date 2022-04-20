@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 
 import { commander } from 'libs/commander/commander.service'
 
@@ -19,10 +19,9 @@ const defaultConfiguration = {
 
 export const useConfig = () => {
   const [config, setConfig] = useState(defaultConfiguration)
-  const [isListeningCommand, setIsListeningCommand] = useState(false)
 
-  useEffect(function openConsoleByKeyCommands() {
-    const toggleTerminal = (message, _sender, sendResponse) => {
+  const handleBackgroundMessage = useCallback(
+    (message, _sender, sendResponse) => {
       const isActionNewCommand = message.action === eventTypes.NEW_COMMAND
       const isCommandToggleTerminal =
         message.data.command === extensionKeyEvents.TOGGLE_TERMINAL
@@ -35,34 +34,33 @@ export const useConfig = () => {
       }
 
       sendResponse({ status: 'ok' })
-    }
-
-    chrome.runtime.onMessage.addListener(toggleTerminal)
-    setIsListeningCommand(true)
-
-    return () => {
-      chrome.runtime.onMessage.removeListener(toggleTerminal)
-      setIsListeningCommand(false)
-    }
-  }, [])
+    },
+    []
+  )
 
   useEffect(
     function setUpConnectionWithBackgroundScript() {
-      if (!isListeningCommand) return
-
       const requestDataForSetUp = { eventType: eventTypes.SET_UP_CONNECTION }
       const requestDataForRemove = {
         eventType: eventTypes.REMOVE_CONNECTION,
         callback: null
       }
 
-      const handleBeforeUnload = () => backgroundRequest(requestDataForRemove)
+      const setUpConnection = () => {
+        backgroundRequest(requestDataForSetUp)
+        chrome.runtime.onMessage.addListener(handleBackgroundMessage)
+      }
+      const removeConnection = () => {
+        backgroundRequest(requestDataForRemove)
+        chrome.runtime.onMessage.removeListener(handleBackgroundMessage)
+      }
 
-      backgroundRequest(requestDataForSetUp)
+      setUpConnection()
 
-      window.addEventListener('beforeunload', handleBeforeUnload, false)
+      window.addEventListener('beforeunload', removeConnection, false)
+      window.addEventListener('load', setUpConnection, false)
     },
-    [isListeningCommand]
+    [handleBackgroundMessage]
   )
 
   useEffect(function expectForConfigChanges() {

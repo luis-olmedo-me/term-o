@@ -52,6 +52,12 @@ export const domConfig = {
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       aliases: ['h']
+    },
+    'by-xpath': {
+      key: 'byXpath',
+      type: optionTypes.ARRAY_OF_STRINGS,
+      defaultValue: [],
+      aliases: ['bx']
     }
   },
   output: (props) => <CommandDom key={props.id} {...props} />

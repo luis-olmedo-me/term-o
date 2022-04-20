@@ -40,6 +40,13 @@ const breakArrayInCertainIndexes = (array, indexes) => {
   }, [])
 }
 
+const hasDoubleQuoteType = (string, quote) => {
+  const quoteTypeCount = string.match(new RegExp(quote, 'g'))?.length || -1
+  const isCountOdd = quoteTypeCount % 2 !== 0
+
+  return isCountOdd
+}
+
 export const splitArgsTakingInCountSymbols = (args, _quotes) => {
   let carriedArgsWithQuotes = []
   let indexesToBreak = []
@@ -49,7 +56,7 @@ export const splitArgsTakingInCountSymbols = (args, _quotes) => {
   const argsByQuotes = args.reduce((parsedArguments, argument, index) => {
     const hasQuotes = argument.includes(quotesToUse)
     const hasAllQuotes =
-      argument.startsWith(quotesToUse) && argument.endsWith(quotesToUse)
+      hasDoubleQuoteType(argument, quotesToUse) && !shouldCarryArgs
     const isVerticalLine = argument === '|'
     const isLastArgument = index === args.length - 1
 

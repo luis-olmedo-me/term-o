@@ -79,7 +79,7 @@ const ElementWithoutContext = ({
   const handleCopyXPath = () => {
     const xPath = createXPathFromElement(htmlElement)
 
-    navigator.clipboard.writeText(xPath)
+    navigator.clipboard.writeText(xPath.includes(' ') ? `"${xPath}"` : xPath)
 
     closeSelect()
   }

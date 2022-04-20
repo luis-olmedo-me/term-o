@@ -40,11 +40,11 @@ const breakArrayInCertainIndexes = (array, indexes) => {
   }, [])
 }
 
+const isOdd = (number) => number % 2 !== 0
 const hasDoubleQuoteType = (string, quote) => {
   const quoteTypeCount = string.match(new RegExp(quote, 'g'))?.length || -1
-  const isCountOdd = quoteTypeCount % 2 !== 0
 
-  return isCountOdd
+  return !isOdd(quoteTypeCount)
 }
 
 export const splitArgsTakingInCountSymbols = (args, _quotes) => {

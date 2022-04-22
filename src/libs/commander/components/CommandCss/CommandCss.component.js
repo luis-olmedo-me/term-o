@@ -11,7 +11,7 @@ import { cssMessages } from './CommandCss.messages'
 
 export const CommandCss = ({
   props,
-  terminal: { command, parameters, setMessageData }
+  terminal: { command, params, setMessageData }
 }) => {
   const { styles, manualStyles } = props
 
@@ -25,8 +25,10 @@ export const CommandCss = ({
       ...parseManualStyles(manualStyles)
     }
 
-    const hasDefaultElements = parameters?.type === parameterTypes.ELEMENTS
-    const elementsToStyle = hasDefaultElements ? parameters.value : []
+    const paramElements = params.filter(
+      (param) => param.type === parameterTypes.ELEMENTS
+    )
+    const elementsToStyle = paramElements.map((param) => param.value)
 
     const { validStyles, invalidStyles } = validateStyles(inlineStyles)
 

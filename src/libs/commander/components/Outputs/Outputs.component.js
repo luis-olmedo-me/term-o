@@ -13,6 +13,7 @@ export const Outputs = ({ components, id, outsideProps }) => {
   }))
 
   const [data, setData] = useState(defaultData)
+  const [params, setParams] = useState([])
   const [messageData, setMessageData] = useState({ message: '', type: '' })
 
   const setParametersWithId = (indexId, value) => {
@@ -47,11 +48,16 @@ export const Outputs = ({ components, id, outsideProps }) => {
           setMessageData: setMessageDataWithParams,
           messageData: isLastComponent ? messageData : {},
           setParameters: (value) => setParametersWithId(nextId, value),
-          parameters
+          parameters,
+          setParams
         }
 
         return (
-          <Component key={`${id}-${indexId}`} providerProps={providerProps} />
+          <Component
+            key={`${id}-${indexId}`}
+            providerProps={providerProps}
+            possibleParams={params}
+          />
         )
       })}
     </OutputWrapper>

@@ -12,6 +12,22 @@ import {
 } from './commander.helpers'
 import { commanderMessages } from './commander.messages'
 
+const paramSyntaxPattern = /^\$\d+$/
+const parseValuesIntoParams = (values, posibleParams) => {
+  return values.reduce((params, value) => {
+    if (paramSyntaxPattern.test(value)) {
+      const paramIndex = Number(value.replace('$', ''))
+      const isParamIndexValid = paramIndex + 1 <= posibleParams.length
+
+      return isParamIndexValid
+        ? params.concat(posibleParams[paramIndex])
+        : params
+    }
+
+    return params
+  }, [])
+}
+
 class Commander {
   constructor() {
     this.commands = consoleCommands
@@ -71,15 +87,16 @@ class Commander {
       const [command, ...args] = line
       const knownCommand = this.commands[command]
 
-      const propValues = getOptionsFromArgs(args)
+      const { values, ...propValues } = getOptionsFromArgs(args)
       const props = buildProps(propValues, knownCommand?.props)
 
       const hasKnownCommand = Boolean(knownCommand)
 
-      return ({ providerProps }) => {
+      return ({ providerProps, possibleParams }) => {
+        const params = parseValuesIntoParams(values, possibleParams)
         const commonProps = {
           props,
-          terminal: { ...providerProps, command: line.join(' ') }
+          terminal: { ...providerProps, command: line.join(' '), params }
         }
 
         if (!hasKnownCommand) {

@@ -56,7 +56,6 @@ export const Outputs = ({ components, id, outsideProps }) => {
           setMessageData: setMessageDataWithParams,
           messageData: isLastComponent ? messageData : {},
           setParams,
-          params,
           finish: showNextVisibleComponent
         }
 

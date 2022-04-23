@@ -64,6 +64,7 @@ export const Outputs = ({ components, id, outsideProps }) => {
             key={`${id}-${indexId}`}
             providerProps={providerProps}
             possibleParams={params}
+            id={indexId}
           />
         )
       })}

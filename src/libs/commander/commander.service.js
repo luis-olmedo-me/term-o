@@ -92,11 +92,12 @@ class Commander {
 
       const hasKnownCommand = Boolean(knownCommand)
 
-      return ({ providerProps, possibleParams }) => {
+      return ({ providerProps, possibleParams, id }) => {
         const params = parseValuesIntoParams(values, possibleParams)
         const commonProps = {
           props,
-          terminal: { ...providerProps, command: line.join(' '), params }
+          terminal: { ...providerProps, command: line.join(' '), params },
+          id
         }
 
         if (!hasKnownCommand) {

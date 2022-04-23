@@ -8,7 +8,6 @@ const replaceByParams = (message, params) => {
 export const Outputs = ({ components, id, outsideProps }) => {
   const defaultData = components.map((Component, index) => ({
     Component,
-    parameters: {},
     isVisible: index === 0
   }))
 
@@ -16,15 +15,25 @@ export const Outputs = ({ components, id, outsideProps }) => {
   const [params, setParams] = useState([])
   const [messageData, setMessageData] = useState({ message: '', type: '' })
 
-  const setParametersWithId = (indexId, value) => {
-    const newData = data.map((dataForComponent, index) => {
-      return indexId === index
-        ? { ...dataForComponent, parameters: value, isVisible: true }
-        : dataForComponent
-    })
+  const showNextVisibleComponent = useCallback(() => {
+    setData((oldData) => {
+      const nextVisibleComponentIndex =
+        oldData.findIndex((component) => component.isVisible) + 1
 
-    setData(newData)
-  }
+      if (nextVisibleComponentIndex < oldData.length) {
+        const nextVisibleComponent = oldData[nextVisibleComponentIndex]
+        const nextVisibleComponentData = [
+          ...oldData.slice(0, nextVisibleComponentIndex),
+          { ...nextVisibleComponent, isVisible: true },
+          ...oldData.slice(nextVisibleComponentIndex + 1)
+        ]
+
+        return nextVisibleComponentData
+      }
+
+      return oldData
+    })
+  }, [])
 
   const componentsShown = data.filter((item) => item.isVisible)
 
@@ -39,17 +48,16 @@ export const Outputs = ({ components, id, outsideProps }) => {
 
   return (
     <OutputWrapper>
-      {componentsShown.map(({ Component, parameters }, indexId) => {
-        const nextId = indexId + 1
+      {componentsShown.map(({ Component }, indexId) => {
         const isLastComponent = indexId === componentsShown.length - 1
 
         const providerProps = {
           ...outsideProps,
           setMessageData: setMessageDataWithParams,
           messageData: isLastComponent ? messageData : {},
-          setParameters: (value) => setParametersWithId(nextId, value),
-          parameters,
-          setParams
+          setParams,
+          params,
+          finish: showNextVisibleComponent
         }
 
         return (

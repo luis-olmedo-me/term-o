@@ -9,6 +9,12 @@ import {
 } from './CommandCss.helpers'
 import { cssMessages } from './CommandCss.messages'
 
+const getParamsByType = (type, params) => {
+  return params.reduce((acc, param) => {
+    return param.type === type ? [...acc, ...param.value] : acc
+  }, [])
+}
+
 export const CommandCss = ({
   props,
   terminal: { command, params, setMessageData }
@@ -25,10 +31,7 @@ export const CommandCss = ({
       ...parseManualStyles(manualStyles)
     }
 
-    const paramElements = params.filter(
-      (param) => param.type === parameterTypes.ELEMENTS
-    )
-    const elementsToStyle = paramElements.map((param) => param.value)
+    const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
 
     const { validStyles, invalidStyles } = validateStyles(inlineStyles)
 
@@ -41,7 +44,7 @@ export const CommandCss = ({
       })
     }
 
-    styleElements({ styles: validStyles, elements: elementsToStyle })
+    styleElements({ styles: validStyles, elements: paramElements })
     setStylesApplied(validStyles)
   }, [styles, manualStyles, setMessageData])
 

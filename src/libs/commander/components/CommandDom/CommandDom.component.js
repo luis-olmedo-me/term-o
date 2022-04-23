@@ -11,7 +11,7 @@ import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { ParameterElements } from '../ParameterElements/ParameterElements.component'
 import { domMessages } from './CommandDom.messages'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
-import { replaceParams } from '../../commander.helpers'
+import { insertParams } from '../../commander.helpers'
 
 export const CommandDom = ({
   props,
@@ -80,7 +80,7 @@ export const CommandDom = ({
         }
 
         setElements(elementsFound)
-        setParams(replaceParams(id, elementsAsParam))
+        setParams(insertParams(id, elementsAsParam))
         finish()
       })
       .catch(() => setMessageData(domMessages.noElementsFound))

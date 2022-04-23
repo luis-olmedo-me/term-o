@@ -282,7 +282,7 @@ export const parseValuesIntoParams = (values, posibleParams) => {
   }, [])
 }
 
-export const replaceParams = (id, newParam) => {
+export const insertParams = (id, newParam) => {
   return (oldParams) => {
     const hasOldParam = oldParams.some((param) => param.id === id)
 

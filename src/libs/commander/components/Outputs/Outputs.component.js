@@ -17,18 +17,18 @@ export const Outputs = ({ components, id, outsideProps }) => {
 
   const showNextVisibleComponent = useCallback(() => {
     setData((oldData) => {
-      const nextVisibleComponentIndex =
-        oldData.findIndex((component) => component.isVisible) + 1
+      const nextInvisibleComponentIndex = oldData.findIndex(
+        (component) => !component.isVisible
+      )
 
-      if (nextVisibleComponentIndex < oldData.length) {
-        const nextVisibleComponent = oldData[nextVisibleComponentIndex]
-        const nextVisibleComponentData = [
-          ...oldData.slice(0, nextVisibleComponentIndex),
-          { ...nextVisibleComponent, isVisible: true },
-          ...oldData.slice(nextVisibleComponentIndex + 1)
-        ]
+      if (nextInvisibleComponentIndex !== -1) {
+        const oldDataCopy = [...oldData]
+        const newData = oldDataCopy.map((data, index) => ({
+          ...data,
+          isVisible: data.isVisible || index === nextInvisibleComponentIndex
+        }))
 
-        return nextVisibleComponentData
+        return newData
       }
 
       return oldData

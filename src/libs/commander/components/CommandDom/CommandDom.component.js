@@ -14,7 +14,7 @@ import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginatio
 
 export const CommandDom = ({
   props,
-  terminal: { command, setParameters, setMessageData }
+  terminal: { command, setParams, setMessageData }
 }) => {
   const {
     get,
@@ -71,8 +71,13 @@ export const CommandDom = ({
 
     elementsSearch
       .then(({ elementsFound }) => {
+        const elementsAsParam = {
+          value: elementsFound,
+          type: parameterTypes.ELEMENTS
+        }
+
         setElements(elementsFound)
-        setParameters({ value: elementsFound, type: parameterTypes.ELEMENTS })
+        setParams((oldParams) => [...oldParams, elementsAsParam])
       })
       .catch(() => setMessageData(domMessages.noElementsFound))
   }, [
@@ -85,7 +90,8 @@ export const CommandDom = ({
     byAttribute,
     hidden,
     byXpath,
-    setMessageData
+    setMessageData,
+    setParams
   ])
 
   useEffect(

@@ -281,3 +281,15 @@ export const parseValuesIntoParams = (values, posibleParams) => {
     return params
   }, [])
 }
+
+export const replaceParams = (id, newParam) => {
+  return (oldParams) => {
+    const hasOldParam = oldParams.some((param) => param.id === id)
+
+    const overwrittenParams = oldParams.map((param) =>
+      param.id === id ? newParam : param
+    )
+
+    return hasOldParam ? overwrittenParams : [...oldParams, newParam]
+  }
+}

@@ -11,6 +11,7 @@ import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { ParameterElements } from '../ParameterElements/ParameterElements.component'
 import { domMessages } from './CommandDom.messages'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
+import { replaceParams } from '../../commander.helpers'
 
 export const CommandDom = ({
   props,
@@ -79,18 +80,10 @@ export const CommandDom = ({
         }
 
         setElements(elementsFound)
-        setParams((oldParams) => {
-          const hasOldParam = oldParams.some((param) => param.id === id)
-
-          const newParams = oldParams.map((param) =>
-            param.id === id ? elementsAsParam : param
-          )
-
-          return hasOldParam ? newParams : [...oldParams, elementsAsParam]
-        })
+        setParams(replaceParams(id, elementsAsParam))
+        finish()
       })
       .catch(() => setMessageData(domMessages.noElementsFound))
-      .finally(finish)
   }, [
     get,
     hasId,
@@ -103,7 +96,8 @@ export const CommandDom = ({
     byXpath,
     setMessageData,
     setParams,
-    finish
+    finish,
+    id
   ])
 
   useEffect(

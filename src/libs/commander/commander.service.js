@@ -8,25 +8,10 @@ import {
   buildProps,
   getOptionsFromArgs,
   parsePropsIntoSuggestions,
+  parseValuesIntoParams,
   splitArgsTakingInCountSymbols
 } from './commander.helpers'
 import { commanderMessages } from './commander.messages'
-
-const paramSyntaxPattern = /^\$\d+$/
-const parseValuesIntoParams = (values, posibleParams) => {
-  return values.reduce((params, value) => {
-    if (paramSyntaxPattern.test(value)) {
-      const paramIndex = Number(value.replace('$', ''))
-      const isParamIndexValid = paramIndex + 1 <= posibleParams.length
-
-      return isParamIndexValid
-        ? params.concat(posibleParams[paramIndex])
-        : params
-    }
-
-    return params
-  }, [])
-}
 
 class Commander {
   constructor() {

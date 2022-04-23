@@ -259,3 +259,25 @@ export const buildProps = (propValues, propsConfig = {}) => {
     {}
   )
 }
+
+export const getParamsByType = (type, params) => {
+  return params.reduce((acc, param) => {
+    return param.type === type ? [...acc, ...param.value] : acc
+  }, [])
+}
+
+const paramSyntaxPattern = /^\$\d+$/
+export const parseValuesIntoParams = (values, posibleParams) => {
+  return values.reduce((params, value) => {
+    if (paramSyntaxPattern.test(value)) {
+      const paramIndex = Number(value.replace('$', ''))
+      const isParamIndexValid = paramIndex + 1 <= posibleParams.length
+
+      return isParamIndexValid
+        ? params.concat(posibleParams[paramIndex])
+        : params
+    }
+
+    return params
+  }, [])
+}

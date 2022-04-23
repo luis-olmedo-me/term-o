@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { styleElements, validateStyles } from '../../commander.promises'
+import { getParamsByType } from '../../commander.helpers'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import {
   getActionType,
@@ -8,12 +9,6 @@ import {
   parseStyles
 } from './CommandCss.helpers'
 import { cssMessages } from './CommandCss.messages'
-
-const getParamsByType = (type, params) => {
-  return params.reduce((acc, param) => {
-    return param.type === type ? [...acc, ...param.value] : acc
-  }, [])
-}
 
 export const CommandCss = ({
   props,

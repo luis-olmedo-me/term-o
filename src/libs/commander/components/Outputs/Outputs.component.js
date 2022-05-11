@@ -8,22 +8,32 @@ const replaceByParams = (message, params) => {
 export const Outputs = ({ components, id, outsideProps }) => {
   const defaultData = components.map((Component, index) => ({
     Component,
-    parameters: {},
     isVisible: index === 0
   }))
 
   const [data, setData] = useState(defaultData)
+  const [params, setParams] = useState([])
   const [messageData, setMessageData] = useState({ message: '', type: '' })
 
-  const setParametersWithId = (indexId, value) => {
-    const newData = data.map((dataForComponent, index) => {
-      return indexId === index
-        ? { ...dataForComponent, parameters: value, isVisible: true }
-        : dataForComponent
-    })
+  const showNextVisibleComponent = useCallback(() => {
+    setData((oldData) => {
+      const nextInvisibleComponentIndex = oldData.findIndex(
+        (component) => !component.isVisible
+      )
 
-    setData(newData)
-  }
+      if (nextInvisibleComponentIndex !== -1) {
+        const oldDataCopy = [...oldData]
+        const newData = oldDataCopy.map((data, index) => ({
+          ...data,
+          isVisible: data.isVisible || index === nextInvisibleComponentIndex
+        }))
+
+        return newData
+      }
+
+      return oldData
+    })
+  }, [])
 
   const componentsShown = data.filter((item) => item.isVisible)
 
@@ -38,20 +48,24 @@ export const Outputs = ({ components, id, outsideProps }) => {
 
   return (
     <OutputWrapper>
-      {componentsShown.map(({ Component, parameters }, indexId) => {
-        const nextId = indexId + 1
+      {componentsShown.map(({ Component }, indexId) => {
         const isLastComponent = indexId === componentsShown.length - 1
 
         const providerProps = {
           ...outsideProps,
           setMessageData: setMessageDataWithParams,
           messageData: isLastComponent ? messageData : {},
-          setParameters: (value) => setParametersWithId(nextId, value),
-          parameters
+          setParams,
+          finish: showNextVisibleComponent
         }
 
         return (
-          <Component key={`${id}-${indexId}`} providerProps={providerProps} />
+          <Component
+            key={`${id}-${indexId}`}
+            providerProps={providerProps}
+            possibleParams={params}
+            id={indexId}
+          />
         )
       })}
     </OutputWrapper>

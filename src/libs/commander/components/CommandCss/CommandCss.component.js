@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { styleElements, validateStyles } from '../../commander.promises'
+import { getParamsByType } from '../../commander.helpers'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import {
   getActionType,
@@ -11,7 +12,7 @@ import { cssMessages } from './CommandCss.messages'
 
 export const CommandCss = ({
   props,
-  terminal: { command, parameters, setMessageData }
+  terminal: { command, params, setMessageData }
 }) => {
   const { styles, manualStyles } = props
 
@@ -25,8 +26,7 @@ export const CommandCss = ({
       ...parseManualStyles(manualStyles)
     }
 
-    const hasDefaultElements = parameters?.type === parameterTypes.ELEMENTS
-    const elementsToStyle = hasDefaultElements ? parameters.value : []
+    const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
 
     const { validStyles, invalidStyles } = validateStyles(inlineStyles)
 
@@ -39,7 +39,7 @@ export const CommandCss = ({
       })
     }
 
-    styleElements({ styles: validStyles, elements: elementsToStyle })
+    styleElements({ styles: validStyles, elements: paramElements })
     setStylesApplied(validStyles)
   }, [styles, manualStyles, setMessageData])
 

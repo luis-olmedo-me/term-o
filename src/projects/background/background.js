@@ -36,18 +36,6 @@ configManager.onChange = debounce((shouldUpdateTabs) => {
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   switch (request.type) {
-    case eventTypes.SET_UP_CONNECTION: {
-      connectedTabs.addIdToList(sender.tab.id)
-      sendResponse({ status: 'ok' })
-      break
-    }
-
-    case eventTypes.REMOVE_CONNECTION: {
-      connectedTabs.removeIdFromList(sender.tab.id)
-      sendResponse({ status: 'ok' })
-      break
-    }
-
     case eventTypes.GET_CONFIGURATION: {
       sendResponse({ status: 'ok', response: configManager.config })
       break

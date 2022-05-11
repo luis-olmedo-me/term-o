@@ -8,6 +8,7 @@ import {
   buildProps,
   getOptionsFromArgs,
   parsePropsIntoSuggestions,
+  parseValuesIntoParams,
   splitArgsTakingInCountSymbols
 } from './commander.helpers'
 import { commanderMessages } from './commander.messages'
@@ -71,15 +72,17 @@ class Commander {
       const [command, ...args] = line
       const knownCommand = this.commands[command]
 
-      const propValues = getOptionsFromArgs(args)
+      const { values, ...propValues } = getOptionsFromArgs(args)
       const props = buildProps(propValues, knownCommand?.props)
 
       const hasKnownCommand = Boolean(knownCommand)
 
-      return ({ providerProps }) => {
+      return ({ providerProps, possibleParams, id }) => {
+        const params = parseValuesIntoParams(values, possibleParams)
         const commonProps = {
           props,
-          terminal: { ...providerProps, command: line.join(' ') }
+          terminal: { ...providerProps, command: line.join(' '), params },
+          id
         }
 
         if (!hasKnownCommand) {

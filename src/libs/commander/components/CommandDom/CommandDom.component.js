@@ -11,10 +11,12 @@ import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { ParameterElements } from '../ParameterElements/ParameterElements.component'
 import { domMessages } from './CommandDom.messages'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
+import { insertParams } from '../../commander.helpers'
 
 export const CommandDom = ({
   props,
-  terminal: { command, setParameters, setMessageData }
+  terminal: { command, setParams, setMessageData, finish },
+  id
 }) => {
   const {
     get,
@@ -71,8 +73,15 @@ export const CommandDom = ({
 
     elementsSearch
       .then(({ elementsFound }) => {
+        const elementsAsParam = {
+          id,
+          value: elementsFound,
+          type: parameterTypes.ELEMENTS
+        }
+
         setElements(elementsFound)
-        setParameters({ value: elementsFound, type: parameterTypes.ELEMENTS })
+        setParams(insertParams(id, elementsAsParam))
+        finish()
       })
       .catch(() => setMessageData(domMessages.noElementsFound))
   }, [
@@ -85,7 +94,10 @@ export const CommandDom = ({
     byAttribute,
     hidden,
     byXpath,
-    setMessageData
+    setMessageData,
+    setParams,
+    finish,
+    id
   ])
 
   useEffect(

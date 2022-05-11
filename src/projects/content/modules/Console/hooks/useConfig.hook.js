@@ -10,6 +10,7 @@ import {
   eventTypes,
   extensionKeyEvents
 } from 'src/constants/events.constants.js'
+import { connectedTab } from 'libs/connected-tab'
 
 const defaultConfiguration = {
   isOpen: false,
@@ -40,25 +41,9 @@ export const useConfig = () => {
 
   useEffect(
     function setUpConnectionWithBackgroundScript() {
-      const requestDataForSetUp = { eventType: eventTypes.SET_UP_CONNECTION }
-      const requestDataForRemove = {
-        eventType: eventTypes.REMOVE_CONNECTION,
-        callback: null
-      }
+      connectedTab.addMessageListener(handleBackgroundMessage)
 
-      const setUpConnection = () => {
-        backgroundRequest(requestDataForSetUp)
-        chrome.runtime.onMessage.addListener(handleBackgroundMessage)
-      }
-      const removeConnection = () => {
-        backgroundRequest(requestDataForRemove)
-        chrome.runtime.onMessage.removeListener(handleBackgroundMessage)
-      }
-
-      setUpConnection()
-
-      window.addEventListener('beforeunload', removeConnection, false)
-      window.addEventListener('load', setUpConnection, false)
+      return () => connectedTab.removeMessageListener(handleBackgroundMessage)
     },
     [handleBackgroundMessage]
   )

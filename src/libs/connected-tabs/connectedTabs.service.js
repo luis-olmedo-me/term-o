@@ -3,6 +3,7 @@ class ConnectedTabs {
     this.list = []
 
     chrome.tabs.onRemoved.addListener(this.removeIdFromList.bind(this))
+    chrome.tabs.onUpdated.addListener(this.expectForTabUpdate.bind(this))
   }
 
   addIdToList(id) {
@@ -11,6 +12,11 @@ class ConnectedTabs {
 
   removeIdFromList(id) {
     this.list = this.list.filter((item) => item !== id)
+  }
+
+  expectForTabUpdate(id, { status }) {
+    if (status === 'complete') this.addIdToList(id)
+    else if (status === 'loading') this.removeIdFromList(id)
   }
 }
 

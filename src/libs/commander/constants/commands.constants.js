@@ -30,5 +30,6 @@ export const actionTypes = {
   DELETE_EVENT: 'DELETE_EVENT',
   ADD_EVENT: 'ADD_EVENT',
   REDIRECT: 'REDIRECT',
-  NONE: 'NONE'
+  NONE: 'NONE',
+  LOCAL_STORAGE: 'LOCAL_STORAGE'
 }

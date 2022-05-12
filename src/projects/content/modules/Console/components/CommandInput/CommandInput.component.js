@@ -98,6 +98,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
           onKeyUp={handleKeyUp}
           onChange={(event) => setCommand(event.target.value)}
           value={command}
+          spellcheck='false'
         />
       </div>
     </InputWrapper>

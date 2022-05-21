@@ -28,7 +28,7 @@ export const Tree = ({ content, title, hasComa }) => {
         {isCollapsed
           ? null
           : Object.entries(content).map(([key, value]) => (
-              <div>
+              <div style={{ marginLeft: 20 }}>
                 <Tree content={value} title={key} />
               </div>
             ))}
@@ -54,7 +54,7 @@ export const Tree = ({ content, title, hasComa }) => {
         {isCollapsed
           ? null
           : Object.entries(content).map(([key, value]) => (
-              <div>
+              <div style={{ marginLeft: 20 }}>
                 <Tree content={value} title={key} />
               </div>
             ))}

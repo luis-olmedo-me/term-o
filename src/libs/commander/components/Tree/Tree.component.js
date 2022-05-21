@@ -1,44 +1,68 @@
 import React from 'react'
 
+const collapsedObjectLabel = '{ ... }'
+const collapsedArrayLabel = '[ ... ]'
+
 export const Tree = ({ content, title, hasComa }) => {
+  const [isCollapsed, setIsCollapsed] = React.useState(true)
+
   const isContentObject = typeof content === 'object'
   const isContentArray = Array.isArray(content)
   const isContentOnlyObject = isContentObject && !isContentArray
 
-  const contentParsed = isContentObject
-    ? Object.entries(content).map(([key, value], index) => {
-        const isLastIndex = index === Object.keys(content).length - 1
+  if (isContentOnlyObject) {
+    const collapsingLabel = isCollapsed ? collapsedObjectLabel : '{'
+    const labelTitle = title ? `${title}: ${collapsingLabel}` : collapsingLabel
 
-        return (
-          <Tree
-            key={key}
-            content={value}
-            title={isContentOnlyObject ? key : ''}
-            hasComa={!isLastIndex}
-          />
-        )
-      })
-    : [content]
+    return (
+      <div>
+        {labelTitle}
 
-  const coma = hasComa ? ',' : ''
+        <button
+          style={{ marginLeft: 5 }}
+          onClick={() => setIsCollapsed(!isCollapsed)}
+        >
+          {isCollapsed ? '+' : '-'}
+        </button>
 
-  console.log('title', title)
-  console.log('content', content)
-  console.log('hasComa', hasComa)
+        {isCollapsed
+          ? null
+          : Object.entries(content).map(([key, value]) => (
+              <div>
+                <Tree content={value} title={key} />
+              </div>
+            ))}
 
-  return (
-    <>
-      {isContentOnlyObject && <span>{`{`}</span>}
-      {isContentArray && <span>{`[`}</span>}
-
-      <div style={{ marginLeft: 20 }}>
-        {title && <span>{title}: </span>}
-        {contentParsed}
-        {!isContentObject && coma}
+        {!isCollapsed && '}'}
       </div>
+    )
+  } else if (isContentArray) {
+    const collapsingLabel = isCollapsed ? collapsedArrayLabel : '['
+    const labelTitle = title ? `${title}: ${collapsingLabel}` : collapsingLabel
 
-      {isContentOnlyObject && <p style={{ margin: 0 }}>{`}${coma}`}</p>}
-      {isContentArray && <p style={{ margin: 0 }}>{`]${coma}`}</p>}
-    </>
-  )
+    return (
+      <div>
+        {labelTitle}
+
+        <button
+          style={{ marginLeft: 5 }}
+          onClick={() => setIsCollapsed(!isCollapsed)}
+        >
+          {isCollapsed ? '+' : '-'}
+        </button>
+
+        {isCollapsed
+          ? null
+          : Object.entries(content).map(([key, value]) => (
+              <div>
+                <Tree content={value} title={key} />
+              </div>
+            ))}
+
+        {!isCollapsed && ']'}
+      </div>
+    )
+  }
+
+  return <span>{title ? `${title}: ${content}` : content}</span>
 }

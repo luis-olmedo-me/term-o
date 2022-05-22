@@ -1,9 +1,12 @@
 import React from 'react'
+import { CollapseButton, IdentedWrapper } from './Tree.styles'
 
 const collapsedObjectLabel = '{ ... }'
 const collapsedArrayLabel = '[ ... ]'
 
-export const Tree = ({ content, title, hasComa }) => {
+const DefaultWrapper = ({ children }) => <div>{children}</div>
+
+export const Tree = ({ content, title, Wrapper = DefaultWrapper }) => {
   const [isCollapsed, setIsCollapsed] = React.useState(true)
 
   const isContentObject = typeof content === 'object'
@@ -15,57 +18,51 @@ export const Tree = ({ content, title, hasComa }) => {
     const labelTitle = title ? `${title}: ${collapsingLabel}` : collapsingLabel
 
     return (
-      <div>
+      <Wrapper>
         {labelTitle}
 
-        <button
-          style={{ marginLeft: 5 }}
-          onClick={() => setIsCollapsed(!isCollapsed)}
-        >
+        <CollapseButton onClick={() => setIsCollapsed(!isCollapsed)}>
           {isCollapsed ? '+' : '-'}
-        </button>
+        </CollapseButton>
 
         {isCollapsed
           ? null
           : Object.entries(content).map(([key, value]) => (
-              <div style={{ marginLeft: 20 }}>
-                <Tree content={value} title={key} />
-              </div>
+              <Tree title={key} content={value} Wrapper={IdentedWrapper} />
             ))}
 
         {!isCollapsed && '}'}
-      </div>
+      </Wrapper>
     )
   } else if (isContentArray) {
     const collapsingLabel = isCollapsed ? collapsedArrayLabel : '['
     const labelTitle = title ? `${title}: ${collapsingLabel}` : collapsingLabel
 
     return (
-      <div>
+      <Wrapper>
         {labelTitle}
 
-        <button
-          style={{ marginLeft: 5 }}
-          onClick={() => setIsCollapsed(!isCollapsed)}
-        >
+        <CollapseButton onClick={() => setIsCollapsed(!isCollapsed)}>
           {isCollapsed ? '+' : '-'}
-        </button>
+        </CollapseButton>
 
         {isCollapsed
           ? null
           : Object.entries(content).map(([key, value]) => (
-              <div style={{ marginLeft: 20 }}>
-                <Tree content={value} title={key} />
-              </div>
+              <Tree title={key} content={value} Wrapper={IdentedWrapper} />
             ))}
 
         {!isCollapsed && ']'}
-      </div>
+      </Wrapper>
     )
   }
 
   const isContentString = typeof content === 'string'
   const quotedContent = isContentString ? `"${content}"` : content
 
-  return <span>{title ? `${title}: ${quotedContent}` : quotedContent}</span>
+  return (
+    <Wrapper>
+      <span>{title ? `${title}: ${quotedContent}` : quotedContent}</span>
+    </Wrapper>
+  )
 }

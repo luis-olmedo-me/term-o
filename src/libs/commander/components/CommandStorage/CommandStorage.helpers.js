@@ -1,10 +1,10 @@
 import React from 'react'
-import { actionTypes } from '../../constants/commands.constants'
 import { Tree } from '../Tree/Tree.component'
+import { storageActionTypes } from './CommandStorage.constants'
 
 export const getActionType = ({ local }) => {
-  if (local) return actionTypes.LOCAL_STORAGE
-  return actionTypes.NONE
+  if (local) return storageActionTypes.LOCAL_STORAGE
+  return storageActionTypes.NONE
 }
 
 const evaluateStorage = ({ storage = {} }) => {

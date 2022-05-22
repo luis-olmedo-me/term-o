@@ -16,7 +16,8 @@ export const storageConfig = {
 }
 
 export const storageActionTypes = {
-  SHOW_LOCAL_STORAGE: 'SHOW_LOCAL_STORAGE'
+  SHOW_LOCAL_STORAGE: 'SHOW_LOCAL_STORAGE',
+  NONE: 'NONE'
 }
 
 export const storageHeaders = ['key', 'values']

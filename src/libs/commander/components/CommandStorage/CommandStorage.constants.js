@@ -15,4 +15,8 @@ export const storageConfig = {
   output: (props) => <CommandStorage key={props.id} {...props} />
 }
 
+export const storageActionTypes = {
+  SHOW_LOCAL_STORAGE: 'SHOW_LOCAL_STORAGE'
+}
+
 export const storageHeaders = ['key', 'values']

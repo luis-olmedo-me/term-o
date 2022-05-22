@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { actionTypes, parameterTypes } from '../../constants/commands.constants'
+import { parameterTypes } from '../../constants/commands.constants'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { Table } from 'modules/components/Table/Table.component'
 import {
@@ -8,7 +8,7 @@ import {
 } from './CommandStorage.helpers'
 import { storageMessages } from './CommandStorage.messages'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
-import { storageHeaders } from './CommandStorage.constants'
+import { storageActionTypes, storageHeaders } from './CommandStorage.constants'
 
 export const CommandStorage = ({ props, terminal: { command } }) => {
   const actionType = getActionType(props)
@@ -31,7 +31,7 @@ export const CommandStorage = ({ props, terminal: { command } }) => {
   useEffect(
     function handleActionType() {
       switch (actionType) {
-        case actionTypes.LOCAL_STORAGE:
+        case storageActionTypes.SHOW_LOCAL_STORAGE:
           handleShowLocalStorage()
           break
 

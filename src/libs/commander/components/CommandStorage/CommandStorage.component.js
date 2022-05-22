@@ -1,39 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { Table } from 'modules/components/Table/Table.component'
-import { getActionType } from './CommandStorage.helpers'
+import {
+  getActionType,
+  turnStorageToTableItems
+} from './CommandStorage.helpers'
 import { storageMessages } from './CommandStorage.messages'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
-import { Tree } from '../Tree/Tree.component'
-
-const storageHeaders = ['key', 'values']
-
-const evaluateStorage = ({ storage = {} }) => {
-  return Object.entries(storage).reduce((evaluatedStorage, [key, value]) => {
-    const isValueStringifiedObject =
-      typeof value === 'string' && value.startsWith('{') && value.endsWith('}')
-    const isValueStringifiedArray =
-      typeof value === 'string' && value.startsWith('[') && value.endsWith(']')
-
-    return {
-      ...evaluatedStorage,
-      [key]:
-        isValueStringifiedObject || isValueStringifiedArray
-          ? JSON.parse(value)
-          : value
-    }
-  }, {})
-}
-
-const turnStorageToTableItems = ({ storage = {} }) => {
-  const parsedStorage = evaluateStorage({ storage })
-
-  return Object.keys(parsedStorage).map((key) => {
-    const values = parsedStorage[key]
-    return [key, <Tree content={values} />]
-  })
-}
+import { storageHeaders } from './CommandStorage.constants'
 
 export const CommandStorage = ({ props, terminal: { command } }) => {
   const actionType = getActionType(props)
@@ -45,22 +20,26 @@ export const CommandStorage = ({ props, terminal: { command } }) => {
     maxItems: 10
   })
 
+  const handleShowLocalStorage = useCallback(() => {
+    const localStorageAsTableItems = turnStorageToTableItems({
+      storage: window.localStorage
+    })
+
+    setTableItems(localStorageAsTableItems)
+  }, [])
+
   useEffect(
     function handleActionType() {
       switch (actionType) {
         case actionTypes.LOCAL_STORAGE:
-          const localStorageAsTableItems = turnStorageToTableItems({
-            storage: window.localStorage
-          })
-
-          setTableItems(localStorageAsTableItems)
+          handleShowLocalStorage()
           break
 
         default:
           break
       }
     },
-    [actionType]
+    [actionType, handleShowLocalStorage]
   )
 
   return (

@@ -14,3 +14,5 @@ export const storageConfig = {
   },
   output: (props) => <CommandStorage key={props.id} {...props} />
 }
+
+export const storageHeaders = ['key', 'values']

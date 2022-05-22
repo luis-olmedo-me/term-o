@@ -6,7 +6,7 @@ const collapsedArrayLabel = '[ ... ]'
 
 const DefaultWrapper = ({ children }) => <div>{children}</div>
 
-export const Tree = ({ content, title, Wrapper = DefaultWrapper }) => {
+export const Tree = ({ content, title, Wrapper = DefaultWrapper, hasComa }) => {
   const [isCollapsed, setIsCollapsed] = React.useState(true)
 
   const isContentObject = typeof content === 'object'
@@ -20,6 +20,7 @@ export const Tree = ({ content, title, Wrapper = DefaultWrapper }) => {
     return (
       <Wrapper>
         {labelTitle}
+        {hasComa && ','}
 
         <CollapseButton onClick={() => setIsCollapsed(!isCollapsed)}>
           {isCollapsed ? '+' : '-'}
@@ -27,9 +28,18 @@ export const Tree = ({ content, title, Wrapper = DefaultWrapper }) => {
 
         {isCollapsed
           ? null
-          : Object.entries(content).map(([key, value]) => (
-              <Tree title={key} content={value} Wrapper={IdentedWrapper} />
-            ))}
+          : Object.entries(content).map(([key, value], index) => {
+              const isLastItem = index === Object.keys(content).length - 1
+
+              return (
+                <Tree
+                  title={key}
+                  content={value}
+                  Wrapper={IdentedWrapper}
+                  hasComa={!isLastItem}
+                />
+              )
+            })}
 
         {!isCollapsed && '}'}
       </Wrapper>
@@ -41,6 +51,7 @@ export const Tree = ({ content, title, Wrapper = DefaultWrapper }) => {
     return (
       <Wrapper>
         {labelTitle}
+        {hasComa && isCollapsed && ','}
 
         <CollapseButton onClick={() => setIsCollapsed(!isCollapsed)}>
           {isCollapsed ? '+' : '-'}
@@ -48,11 +59,21 @@ export const Tree = ({ content, title, Wrapper = DefaultWrapper }) => {
 
         {isCollapsed
           ? null
-          : Object.entries(content).map(([key, value]) => (
-              <Tree title={key} content={value} Wrapper={IdentedWrapper} />
-            ))}
+          : Object.entries(content).map(([key, value], index) => {
+              const isLastItem = index === Object.keys(content).length - 1
+
+              return (
+                <Tree
+                  title={key}
+                  content={value}
+                  Wrapper={IdentedWrapper}
+                  hasComa={!isLastItem}
+                />
+              )
+            })}
 
         {!isCollapsed && ']'}
+        {hasComa && !isCollapsed && ','}
       </Wrapper>
     )
   }
@@ -62,7 +83,10 @@ export const Tree = ({ content, title, Wrapper = DefaultWrapper }) => {
 
   return (
     <Wrapper>
-      <span>{title ? `${title}: ${quotedContent}` : quotedContent}</span>
+      <span>
+        {title ? `${title}: ${quotedContent}` : quotedContent}
+        {hasComa && ','}
+      </span>
     </Wrapper>
   )
 }

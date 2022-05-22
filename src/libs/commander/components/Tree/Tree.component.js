@@ -64,5 +64,8 @@ export const Tree = ({ content, title, hasComa }) => {
     )
   }
 
-  return <span>{title ? `${title}: ${content}` : content}</span>
+  const isContentString = typeof content === 'string'
+  const quotedContent = isContentString ? `"${content}"` : content
+
+  return <span>{title ? `${title}: ${quotedContent}` : quotedContent}</span>
 }

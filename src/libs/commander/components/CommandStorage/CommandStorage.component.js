@@ -24,30 +24,38 @@ export const CommandStorage = ({
     maxItems: 10
   })
 
-  const handleShowLocalStorage = useCallback(() => {
-    const localStorageAsTableItems = turnStorageToTableItems({
-      storage: window.localStorage
-    })
+  const handleShowStorage = useCallback(
+    (storage) => {
+      const localStorageAsTableItems = turnStorageToTableItems({
+        storage
+      })
 
-    const isEmptyStorage = localStorageAsTableItems.length === 0
+      const isEmptyStorage = localStorageAsTableItems.length === 0
 
-    if (isEmptyStorage) return setMessageData(storageMessages.emptyStorage)
+      if (isEmptyStorage) return setMessageData(storageMessages.emptyStorage)
 
-    setTableItems(localStorageAsTableItems)
-  }, [setMessageData])
+      setTableItems(localStorageAsTableItems)
+    },
+    [setMessageData]
+  )
 
   useEffect(
     function handleActionType() {
       switch (actionType) {
         case storageActionTypes.SHOW_LOCAL_STORAGE:
-          handleShowLocalStorage()
+          handleShowStorage(window.localStorage)
+          break
+
+        case storageActionTypes.SHOW_SESSION_STORAGE:
+          handleShowStorage(window.sessionStorage)
           break
 
         default:
+          handleShowStorage(window.localStorage)
           break
       }
     },
-    [actionType, handleShowLocalStorage]
+    [actionType, handleShowStorage]
   )
 
   return (

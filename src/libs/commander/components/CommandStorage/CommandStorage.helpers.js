@@ -3,8 +3,10 @@ import { Tree } from '../Tree/Tree.component'
 import { storageActionTypes } from './CommandStorage.constants'
 import { TableValueWrapper } from './CommandStorage.styles'
 
-export const getActionType = ({ local }) => {
+export const getActionType = ({ local, cookies, session }) => {
   if (local) return storageActionTypes.SHOW_LOCAL_STORAGE
+  else if (session) return storageActionTypes.SHOW_SESSION_STORAGE
+  else if (cookies) return storageActionTypes.SHOW_COOKIES
   return storageActionTypes.NONE
 }
 

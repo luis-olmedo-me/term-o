@@ -1,14 +1,6 @@
 import React from 'react'
+import { objectLabels, arrayLabels } from './Tree.constants'
 import { CollapseButton, IdentedWrapper } from './Tree.styles'
-
-const objectLabels = {
-  OPEN: '{',
-  CLOSE: '}'
-}
-const arrayLabels = {
-  OPEN: '[',
-  CLOSE: ']'
-}
 
 const DefaultWrapper = ({ children }) => <div>{children}</div>
 

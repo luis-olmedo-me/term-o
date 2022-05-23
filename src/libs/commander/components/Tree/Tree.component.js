@@ -7,7 +7,7 @@ const DefaultWrapper = ({ children }) => <div>{children}</div>
 export const Tree = ({ content, title, Wrapper = DefaultWrapper, hasComa }) => {
   const [isCollapsed, setIsCollapsed] = React.useState(true)
 
-  const isContentObject = typeof content === 'object'
+  const isContentObject = typeof content === 'object' && content !== null
   const isContentArray = Array.isArray(content)
   const isContentOnlyObject = isContentObject && !isContentArray
 

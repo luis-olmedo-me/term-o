@@ -20,7 +20,7 @@ export const Table = ({ headers, rows, parseValue }) => {
 
               return (
                 <TableRowValue key={`row-item-${index}`} onClick={copyColumn}>
-                  {parseValue ? parseValue(column) : column}
+                  {parseValue ? parseValue(column, index) : column}
                 </TableRowValue>
               )
             })}

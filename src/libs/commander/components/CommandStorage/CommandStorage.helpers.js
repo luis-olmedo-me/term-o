@@ -23,6 +23,6 @@ export const turnStorageToTableItems = ({ storage = {} }) => {
   })
 }
 
-export const parseValue = (value) => (
-  <Tree content={evaluateStringifiedValue(value)} />
+export const parseValue = (value, index) => (
+  <Tree key={index} content={evaluateStringifiedValue(value)} />
 )

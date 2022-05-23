@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const CollapseButton = styled.button`
-  margin-left: 5px;
+  margin: 0 0 3px 5px;
   font-family: Coda;
   border: none;
   background: #00000020;

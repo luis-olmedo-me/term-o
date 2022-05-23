@@ -1,6 +1,7 @@
 import React from 'react'
 import { Tree } from '../Tree/Tree.component'
 import { storageActionTypes } from './CommandStorage.constants'
+import { TableValueWrapper } from './CommandStorage.styles'
 
 export const getActionType = ({ local }) => {
   if (local) return storageActionTypes.SHOW_LOCAL_STORAGE
@@ -23,6 +24,16 @@ export const turnStorageToTableItems = ({ storage = {} }) => {
   })
 }
 
-export const parseValue = (value, index) => (
-  <Tree key={index} content={evaluateStringifiedValue(value)} />
-)
+export const parseValue = (value, index) => {
+  const isValueRow = index === 1
+
+  return isValueRow ? (
+    <Tree
+      key={index}
+      content={evaluateStringifiedValue(value)}
+      Wrapper={TableValueWrapper}
+    />
+  ) : (
+    value
+  )
+}

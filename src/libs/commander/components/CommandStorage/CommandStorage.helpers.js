@@ -27,8 +27,7 @@ const evaluateStorage = ({ storage = {} }) => {
 export const turnStorageToTableItems = ({ storage = {} }) => {
   const parsedStorage = evaluateStorage({ storage })
 
-  return Object.keys(parsedStorage).map((key) => {
-    const values = parsedStorage[key]
-    return [key, <Tree content={values} />]
+  return Object.entries(parsedStorage).map(([key, value]) => {
+    return [key, <Tree content={value} />]
   })
 }

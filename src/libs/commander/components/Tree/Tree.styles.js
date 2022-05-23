@@ -5,7 +5,7 @@ export const CollapseButton = styled.button`
   font-family: Coda;
   border: none;
   background: #00000020;
-  color: white;
+  color: ${(props) => (props.disabled ? '#ffffff60' : '#ffffff')};
   border-radius: 3px;
   vertical-align: middle;
   cursor: pointer;

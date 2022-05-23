@@ -3,7 +3,7 @@ import { Tree } from '../Tree/Tree.component'
 import { storageActionTypes } from './CommandStorage.constants'
 
 export const getActionType = ({ local }) => {
-  if (local) return storageActionTypes.LOCAL_STORAGE
+  if (local) return storageActionTypes.SHOW_LOCAL_STORAGE
   return storageActionTypes.NONE
 }
 

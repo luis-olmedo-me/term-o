@@ -10,7 +10,10 @@ import { storageMessages } from './CommandStorage.messages'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 import { storageActionTypes, storageHeaders } from './CommandStorage.constants'
 
-export const CommandStorage = ({ props, terminal: { command } }) => {
+export const CommandStorage = ({
+  props,
+  terminal: { command, setMessageData }
+}) => {
   const actionType = getActionType(props)
 
   const [tableItems, setTableItems] = useState([])
@@ -25,8 +28,12 @@ export const CommandStorage = ({ props, terminal: { command } }) => {
       storage: window.localStorage
     })
 
+    const isEmptyStorage = localStorageAsTableItems.length === 0
+
+    if (isEmptyStorage) return setMessageData(storageMessages.emptyStorage)
+
     setTableItems(localStorageAsTableItems)
-  }, [])
+  }, [setMessageData])
 
   useEffect(
     function handleActionType() {

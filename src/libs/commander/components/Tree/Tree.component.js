@@ -21,15 +21,18 @@ export const Tree = ({ content, title, Wrapper = DefaultWrapper, hasComa }) => {
     const collapsingLabel = isCollapsed ? collapsedLabel : labels.OPEN
     const labelTitle = title ? `${title}: ${collapsingLabel}` : collapsingLabel
 
+    const handleCollapse = (event) => {
+      event.stopPropagation()
+
+      setIsCollapsed(!isCollapsed)
+    }
+
     return (
       <Wrapper>
         {labelTitle}
         {hasComa && isCollapsed && ','}
 
-        <CollapseButton
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          disabled={!hasRichContent}
-        >
+        <CollapseButton onClick={handleCollapse} disabled={!hasRichContent}>
           {isCollapsed ? '+' : '-'}
         </CollapseButton>
 

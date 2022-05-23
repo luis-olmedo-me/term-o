@@ -7,27 +7,22 @@ export const getActionType = ({ local }) => {
   return storageActionTypes.NONE
 }
 
-const evaluateStorage = ({ storage = {} }) => {
-  return Object.entries(storage).reduce((evaluatedStorage, [key, value]) => {
-    const isValueStringifiedObject =
-      typeof value === 'string' && value.startsWith('{') && value.endsWith('}')
-    const isValueStringifiedArray =
-      typeof value === 'string' && value.startsWith('[') && value.endsWith(']')
+export const evaluateStringifiedValue = (value) => {
+  if (typeof value !== 'string') return value
 
-    return {
-      ...evaluatedStorage,
-      [key]:
-        isValueStringifiedObject || isValueStringifiedArray
-          ? JSON.parse(value)
-          : value
-    }
-  }, {})
+  try {
+    return JSON.parse(value)
+  } catch (error) {
+    return value
+  }
 }
 
 export const turnStorageToTableItems = ({ storage = {} }) => {
-  const parsedStorage = evaluateStorage({ storage })
-
-  return Object.entries(parsedStorage).map(([key, value]) => {
-    return [key, <Tree content={value} />]
+  return Object.entries(storage).map(([key, value]) => {
+    return [key, value]
   })
 }
+
+export const parseValue = (value) => (
+  <Tree content={evaluateStringifiedValue(value)} />
+)

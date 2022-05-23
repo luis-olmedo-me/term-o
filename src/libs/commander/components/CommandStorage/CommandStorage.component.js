@@ -4,6 +4,7 @@ import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { Table } from 'modules/components/Table/Table.component'
 import {
   getActionType,
+  parseValue,
   turnStorageToTableItems
 } from './CommandStorage.helpers'
 import { storageMessages } from './CommandStorage.messages'
@@ -54,7 +55,11 @@ export const CommandStorage = ({
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
       <LogWrapper variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
-        <Table headers={storageHeaders} rows={pageData} />
+        <Table
+          headers={storageHeaders}
+          rows={pageData}
+          parseValue={parseValue}
+        />
       </LogWrapper>
     </>
   )

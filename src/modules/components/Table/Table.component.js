@@ -1,7 +1,7 @@
 import React from 'react'
 import { TableHeaderRow, TableWrapper, TableRowValue } from './Table.styles'
 
-export const Table = ({ headers, rows }) => {
+export const Table = ({ headers, rows, parseValue }) => {
   return (
     <TableWrapper>
       <thead>
@@ -20,7 +20,7 @@ export const Table = ({ headers, rows }) => {
 
               return (
                 <TableRowValue key={`row-item-${index}`} onClick={copyColumn}>
-                  {column}
+                  {parseValue ? parseValue(column) : column}
                 </TableRowValue>
               )
             })}

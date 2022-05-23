@@ -29,7 +29,6 @@ export const parseValue = (value, index) => {
 
   return isValueRow ? (
     <Tree
-      key={index}
       content={evaluateStringifiedValue(value)}
       Wrapper={TableValueWrapper}
     />

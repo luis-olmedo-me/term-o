@@ -43,6 +43,7 @@ export const Tree = ({ content, title, Wrapper = DefaultWrapper, hasComa }) => {
 
               return (
                 <Tree
+                  key={`${key}-${index}`}
                   title={key}
                   content={value}
                   Wrapper={IdentedWrapper}

@@ -67,6 +67,7 @@ export const CommandStorage = ({
           headers={storageHeaders}
           rows={pageData}
           parseValue={parseValue}
+          widths={[20, 80]}
         />
       </LogWrapper>
     </>

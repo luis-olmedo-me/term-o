@@ -17,3 +17,11 @@ export const TableRowValue = styled.td`
     background-color: #f5f5f512;
   }
 `
+
+export const TableBody = styled.tbody`
+  word-break: break-all;
+`
+
+export const TableRow = styled.tr`
+  vertical-align: baseline;
+`

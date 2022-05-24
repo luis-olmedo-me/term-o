@@ -38,3 +38,13 @@ export const parseValue = (value, index) => {
     value
   )
 }
+
+export const parseCookies = (cookies) => {
+  if (!cookies) return {}
+
+  return cookies.split('; ').reduce((parsedCookies, cookie) => {
+    const [key, value] = cookie.split('=')
+
+    return { ...parsedCookies, [key]: value }
+  }, {})
+}

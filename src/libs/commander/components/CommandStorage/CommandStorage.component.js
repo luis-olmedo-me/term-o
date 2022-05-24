@@ -5,21 +5,12 @@ import { Table } from 'modules/components/Table/Table.component'
 import {
   getActionType,
   parseValue,
-  turnStorageToTableItems
+  turnStorageToTableItems,
+  parseCookies
 } from './CommandStorage.helpers'
 import { storageMessages } from './CommandStorage.messages'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 import { storageActionTypes, storageHeaders } from './CommandStorage.constants'
-
-const parseCookies = (cookies) => {
-  if (!cookies) return {}
-
-  return cookies.split('; ').reduce((parsedCookies, cookie) => {
-    const [key, value] = cookie.split('=')
-
-    return { ...parsedCookies, [key]: value }
-  }, {})
-}
 
 export const CommandStorage = ({
   props,

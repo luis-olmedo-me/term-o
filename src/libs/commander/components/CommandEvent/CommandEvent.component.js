@@ -84,7 +84,7 @@ export const CommandEvent = ({
 
       {list && (
         <LogWrapper variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
-          <Table headers={eventRows} rows={pageData} />
+          <Table headers={eventRows} rows={pageData} widths={[20, 20, 60]} />
         </LogWrapper>
       )}
     </>

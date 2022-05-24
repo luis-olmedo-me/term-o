@@ -11,6 +11,17 @@ import { storageMessages } from './CommandStorage.messages'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 import { storageActionTypes, storageHeaders } from './CommandStorage.constants'
 
+const parseCookies = (cookies) => {
+  const parsedCookies = {}
+
+  cookies.split('; ').forEach((cookie) => {
+    const [key, value] = cookie.split('=')
+    parsedCookies[key] = value
+  })
+
+  return parsedCookies
+}
+
 export const CommandStorage = ({
   props,
   terminal: { command, setMessageData }
@@ -48,6 +59,10 @@ export const CommandStorage = ({
 
         case storageActionTypes.SHOW_SESSION_STORAGE:
           handleShowStorage(window.sessionStorage)
+          break
+
+        case storageActionTypes.SHOW_COOKIES:
+          handleShowStorage(parseCookies(document.cookie))
           break
 
         default:

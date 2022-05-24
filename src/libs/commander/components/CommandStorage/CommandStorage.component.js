@@ -21,7 +21,7 @@ export const CommandStorage = ({
 
   const { pageData, buttonGroups } = usePaginationGroups({
     items: tableItems,
-    maxItems: 10
+    maxItems: 15
   })
 
   const handleShowStorage = useCallback(

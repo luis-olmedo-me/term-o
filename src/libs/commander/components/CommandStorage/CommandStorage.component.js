@@ -12,14 +12,13 @@ import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginatio
 import { storageActionTypes, storageHeaders } from './CommandStorage.constants'
 
 const parseCookies = (cookies) => {
-  const parsedCookies = {}
+  if (!cookies) return {}
 
-  cookies.split('; ').forEach((cookie) => {
+  return cookies.split('; ').reduce((parsedCookies, cookie) => {
     const [key, value] = cookie.split('=')
-    parsedCookies[key] = value
-  })
 
-  return parsedCookies
+    return { ...parsedCookies, [key]: value }
+  }, {})
 }
 
 export const CommandStorage = ({

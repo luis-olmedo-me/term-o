@@ -96,7 +96,7 @@ export const CommandAlias = ({
 
       {list && (
         <LogWrapper variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
-          <Table headers={aliasHeaders} rows={pageData} />
+          <Table headers={aliasHeaders} rows={pageData} widths={[20, 20, 60]} />
         </LogWrapper>
       )}
     </>

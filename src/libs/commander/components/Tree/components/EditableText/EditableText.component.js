@@ -1,4 +1,5 @@
 import React from 'react'
+import { TextInput } from './EditableText.styles'
 
 export const EditableText = ({ title }) => {
   const [value, setValue] = React.useState(title)
@@ -17,7 +18,7 @@ export const EditableText = ({ title }) => {
   }
 
   return isEditing ? (
-    <input
+    <TextInput
       type='text'
       value={value}
       onChange={(event) => setValue(event.target.value)}

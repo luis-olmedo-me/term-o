@@ -11,7 +11,3 @@ export const CollapseButton = styled.button`
   cursor: pointer;
   line-height: 1.2em;
 `
-
-export const IdentedWrapper = styled.div`
-  margin-left: 20px;
-`

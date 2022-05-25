@@ -1,6 +1,7 @@
 import React from 'react'
+import styled from 'styled-components'
 import { objectLabels, arrayLabels } from './Tree.constants'
-import { CollapseButton, IdentedWrapper } from './Tree.styles'
+import { CollapseButton } from './Tree.styles'
 
 export const Tree = ({ content, title, className, hasComa }) => {
   const [isCollapsed, setIsCollapsed] = React.useState(true)
@@ -40,11 +41,10 @@ export const Tree = ({ content, title, className, hasComa }) => {
               const isLastItem = index === Object.keys(content).length - 1
 
               return (
-                <Tree
+                <IdentedTree
                   key={`${key}-${index}`}
                   title={key}
                   content={value}
-                  Wrapper={IdentedWrapper}
                   hasComa={!isLastItem}
                 />
               )
@@ -68,3 +68,7 @@ export const Tree = ({ content, title, className, hasComa }) => {
     </div>
   )
 }
+
+const IdentedTree = styled(Tree)`
+  margin-left: 20px;
+`

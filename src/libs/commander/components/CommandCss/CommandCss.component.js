@@ -10,7 +10,7 @@ import {
 } from './CommandCss.helpers'
 import { cssMessages } from './CommandCss.messages'
 import { Tree } from '../Tree/Tree.component'
-import { TableValueWrapper } from '../CommandStorage/CommandStorage.styles'
+import { MaterialTree } from '../CommandStorage/CommandStorage.styles'
 
 export const CommandCss = ({
   props,
@@ -64,7 +64,7 @@ export const CommandCss = ({
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
       <LogWrapper variant={parameterTypes.STYLES}>
-        <Tree content={stylesApplied} Wrapper={TableValueWrapper} />
+        <MaterialTree content={stylesApplied} />
       </LogWrapper>
     </>
   )

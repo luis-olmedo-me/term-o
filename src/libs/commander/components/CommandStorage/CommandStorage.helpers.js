@@ -1,7 +1,6 @@
 import React from 'react'
-import { Tree } from '../Tree/Tree.component'
 import { storageActionTypes } from './CommandStorage.constants'
-import { TableValueWrapper } from './CommandStorage.styles'
+import { MaterialTree } from './CommandStorage.styles'
 
 export const getActionType = ({ local, cookies, session }) => {
   if (local) return storageActionTypes.SHOW_LOCAL_STORAGE
@@ -30,10 +29,7 @@ export const parseValue = (value, index) => {
   const isValueRow = index === 1
 
   return isValueRow ? (
-    <Tree
-      content={evaluateStringifiedValue(value)}
-      Wrapper={TableValueWrapper}
-    />
+    <MaterialTree content={evaluateStringifiedValue(value)} />
   ) : (
     value
   )

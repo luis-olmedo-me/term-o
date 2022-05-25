@@ -1,10 +1,9 @@
 import React from 'react'
+import styled from 'styled-components'
 import { objectLabels, arrayLabels } from './Tree.constants'
-import { CollapseButton, IdentedWrapper } from './Tree.styles'
+import { CollapseButton } from './Tree.styles'
 
-const DefaultWrapper = ({ children }) => <div>{children}</div>
-
-export const Tree = ({ content, title, Wrapper = DefaultWrapper, hasComa }) => {
+export const Tree = ({ content, title, className, hasComa }) => {
   const [isCollapsed, setIsCollapsed] = React.useState(true)
 
   const isContentObject = typeof content === 'object' && content !== null
@@ -28,7 +27,7 @@ export const Tree = ({ content, title, Wrapper = DefaultWrapper, hasComa }) => {
     }
 
     return (
-      <Wrapper>
+      <div className={className}>
         {labelTitle}
         {hasComa && isCollapsed && ','}
 
@@ -42,11 +41,10 @@ export const Tree = ({ content, title, Wrapper = DefaultWrapper, hasComa }) => {
               const isLastItem = index === Object.keys(content).length - 1
 
               return (
-                <Tree
+                <IdentedTree
                   key={`${key}-${index}`}
                   title={key}
                   content={value}
-                  Wrapper={IdentedWrapper}
                   hasComa={!isLastItem}
                 />
               )
@@ -54,7 +52,7 @@ export const Tree = ({ content, title, Wrapper = DefaultWrapper, hasComa }) => {
 
         {!isCollapsed && labels.CLOSE}
         {hasComa && !isCollapsed && ','}
-      </Wrapper>
+      </div>
     )
   }
 
@@ -62,11 +60,15 @@ export const Tree = ({ content, title, Wrapper = DefaultWrapper, hasComa }) => {
   const quotedContent = isContentString ? `"${content}"` : content
 
   return (
-    <Wrapper>
+    <div className={className}>
       <span>
         {title ? `${title}: ${quotedContent}` : quotedContent}
         {hasComa && ','}
       </span>
-    </Wrapper>
+    </div>
   )
 }
+
+const IdentedTree = styled(Tree)`
+  margin-left: 20px;
+`

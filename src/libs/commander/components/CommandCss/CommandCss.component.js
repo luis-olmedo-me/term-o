@@ -9,6 +9,8 @@ import {
   parseStyles
 } from './CommandCss.helpers'
 import { cssMessages } from './CommandCss.messages'
+import { Tree } from '../Tree/Tree.component'
+import { TableValueWrapper } from '../CommandStorage/CommandStorage.styles'
 
 export const CommandCss = ({
   props,
@@ -62,7 +64,7 @@ export const CommandCss = ({
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
       <LogWrapper variant={parameterTypes.STYLES}>
-        {JSON.stringify(stylesApplied, null, 1)}
+        <Tree content={stylesApplied} Wrapper={TableValueWrapper} />
       </LogWrapper>
     </>
   )

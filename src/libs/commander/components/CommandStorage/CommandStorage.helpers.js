@@ -29,7 +29,11 @@ export const parseValue = (value, index) => {
   const isValueRow = index === 1
 
   return isValueRow ? (
-    <MaterialTree content={evaluateStringifiedValue(value)} />
+    <MaterialTree
+      content={evaluateStringifiedValue(value)}
+      isKeyEditionEnabled
+      isValueEditionEnabled
+    />
   ) : (
     value
   )

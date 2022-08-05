@@ -4,7 +4,14 @@ import { EditableText } from './components/EditableText/EditableText.component'
 import { objectLabels, arrayLabels } from './Tree.constants'
 import { CollapseButton } from './Tree.styles'
 
-export const Tree = ({ content, title, className, hasComa }) => {
+export const Tree = ({
+  content,
+  title,
+  className,
+  hasComa,
+  isKeyEditionEnabled,
+  isValueEditionEnabled
+}) => {
   const [isCollapsed, setIsCollapsed] = React.useState(true)
 
   const isContentObject = typeof content === 'object' && content !== null
@@ -47,6 +54,8 @@ export const Tree = ({ content, title, className, hasComa }) => {
                   title={key}
                   content={value}
                   hasComa={!isLastItem}
+                  isKeyEditionEnabled={isContentOnlyObject}
+                  isValueEditionEnabled={isValueEditionEnabled}
                 />
               )
             })}
@@ -65,12 +74,21 @@ export const Tree = ({ content, title, className, hasComa }) => {
       <span>
         {title ? (
           <>
-            <EditableText title={title} />
+            <EditableText
+              title={title}
+              isEditionEnabled={isKeyEditionEnabled}
+            />
             {':'}
-            <EditableText title={quotedContent} />
+            <EditableText
+              title={quotedContent}
+              isEditionEnabled={isValueEditionEnabled}
+            />
           </>
         ) : (
-          <EditableText title={quotedContent} />
+          <EditableText
+            title={quotedContent}
+            isEditionEnabled={isValueEditionEnabled}
+          />
         )}
         {hasComa && ','}
       </span>

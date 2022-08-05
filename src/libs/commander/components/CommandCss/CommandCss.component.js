@@ -9,7 +9,6 @@ import {
   parseStyles
 } from './CommandCss.helpers'
 import { cssMessages } from './CommandCss.messages'
-import { Tree } from '../Tree/Tree.component'
 import { MaterialTree } from '../CommandStorage/CommandStorage.styles'
 
 export const CommandCss = ({
@@ -64,7 +63,11 @@ export const CommandCss = ({
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
       <LogWrapper variant={parameterTypes.STYLES}>
-        <MaterialTree content={stylesApplied} />
+        <MaterialTree
+          content={stylesApplied}
+          isKeyEditionEnabled
+          isValueEditionEnabled
+        />
       </LogWrapper>
     </>
   )

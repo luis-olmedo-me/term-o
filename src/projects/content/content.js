@@ -7,19 +7,21 @@ import { appRoot, shadowRoot } from './content.constants'
 import { PortalProvider } from 'modules/components/Portal/Portal.provider'
 import { OverlayProvider } from 'modules/components/Overlay/Overlay.provider'
 
-document.body.prepend(appRoot)
+setTimeout(() => {
+  document.body.prepend(appRoot)
 
-render(
-  <React.StrictMode>
-    <FontFamilies />
+  render(
+    <React.StrictMode>
+      <FontFamilies />
 
-    <shadowRoot.div>
-      <PortalProvider>
-        <OverlayProvider>
-          <Console />
-        </OverlayProvider>
-      </PortalProvider>
-    </shadowRoot.div>
-  </React.StrictMode>,
-  appRoot
-)
+      <shadowRoot.div>
+        <PortalProvider>
+          <OverlayProvider>
+            <Console />
+          </OverlayProvider>
+        </PortalProvider>
+      </shadowRoot.div>
+    </React.StrictMode>,
+    appRoot
+  )
+}, 1000)

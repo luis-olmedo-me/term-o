@@ -15,8 +15,8 @@ class ConnectedTabs {
   }
 
   expectForTabUpdate(id, { status }) {
-    if (status === 'loading') this.removeIdFromList(id)
-    else this.addIdToList(id)
+    if (status === 'complete') this.addIdToList(id)
+    else if (status === 'loading') this.removeIdFromList(id)
   }
 }
 

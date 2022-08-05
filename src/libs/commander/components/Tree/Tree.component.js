@@ -10,7 +10,8 @@ export const Tree = ({
   className,
   hasComa,
   isKeyEditionEnabled,
-  isValueEditionEnabled
+  isValueEditionEnabled,
+  handleChange
 }) => {
   const [isCollapsed, setIsCollapsed] = React.useState(true)
 
@@ -34,6 +35,39 @@ export const Tree = ({
       setIsCollapsed(!isCollapsed)
     }
 
+    const handleChangeForArrays = (newValue, index) => {
+      const formatedContent = content.map((contentValue, contentIndex) => {
+        const isSelectedIndex = contentIndex === index
+
+        return isSelectedIndex ? newValue : contentValue
+      })
+
+      console.log({ formatedContent, content, newValue, index })
+
+      handleChange(formatedContent)
+    }
+
+    const handleChangeForObjects = (newValue, index, key) => {
+      const formatedContent = Object.entries(content).reduce(
+        (finalContent, _, contentIndex) => {
+          const isSelectedIndex = contentIndex === index
+
+          return isSelectedIndex
+            ? { ...finalContent, [key]: newValue }
+            : finalContent
+        },
+        { ...content }
+      )
+
+      console.log({ formatedContent, content, newValue, index, key })
+
+      handleChange(formatedContent)
+    }
+
+    const handleChangeByType = isContentOnlyObject
+      ? handleChangeForObjects
+      : handleChangeForArrays
+
     return (
       <div className={className}>
         {labelTitle}
@@ -56,6 +90,9 @@ export const Tree = ({
                   hasComa={!isLastItem}
                   isKeyEditionEnabled={isContentOnlyObject}
                   isValueEditionEnabled={isValueEditionEnabled}
+                  handleChange={(newValue) =>
+                    handleChangeByType(newValue, index, key)
+                  }
                 />
               )
             })}
@@ -77,17 +114,20 @@ export const Tree = ({
             <EditableText
               title={title}
               isEditionEnabled={isKeyEditionEnabled}
+              onChange={handleChange}
             />
             {':'}
             <EditableText
               title={quotedContent}
               isEditionEnabled={isValueEditionEnabled}
+              onChange={handleChange}
             />
           </>
         ) : (
           <EditableText
             title={quotedContent}
             isEditionEnabled={isValueEditionEnabled}
+            onChange={handleChange}
           />
         )}
         {hasComa && ','}

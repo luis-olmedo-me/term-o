@@ -25,7 +25,11 @@ export const turnStorageToTableItems = ({ storage = {} }) => {
   })
 }
 
-export const parseTableValuesForLocalStoageItems = (row, columnIndex) => {
+export const parseTableValuesForLocalStoageItems = (
+  row,
+  columnIndex,
+  onChange
+) => {
   const isValueRow = columnIndex === 1
   const [key, value] = row
   const currentValue = row[columnIndex]
@@ -35,13 +39,16 @@ export const parseTableValuesForLocalStoageItems = (row, columnIndex) => {
       content={evaluateStringifiedValue(value)}
       isKeyEditionEnabled
       isValueEditionEnabled
-      handleChange={(newValue) => {
-        console.log(key, newValue)
-      }}
+      handleChange={(newValue) => onChange({ key, newValue })}
     />
   ) : (
     currentValue
   )
+}
+
+export const getParseTableValuesForLocalStoageItems = (onChange) => {
+  return (row, columnIndex) =>
+    parseTableValuesForLocalStoageItems(row, columnIndex, onChange)
 }
 
 export const parseCookies = (cookies) => {

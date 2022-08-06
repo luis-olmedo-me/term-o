@@ -4,7 +4,7 @@ import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { Table } from 'modules/components/Table/Table.component'
 import {
   getActionType,
-  parseTableValuesForLocalStoageItems,
+  getParseTableValuesForLocalStoageItems,
   turnStorageToTableItems,
   parseCookies
 } from './CommandStorage.helpers'
@@ -63,6 +63,10 @@ export const CommandStorage = ({
     [actionType, handleShowStorage]
   )
 
+  const handleTreeChange = ({ key, newValue }) => {
+    console.log({ key, newValue })
+  }
+
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
@@ -71,7 +75,7 @@ export const CommandStorage = ({
         <Table
           headers={storageHeaders}
           rows={pageData}
-          parseValue={parseTableValuesForLocalStoageItems}
+          parseValue={getParseTableValuesForLocalStoageItems(handleTreeChange)}
           widths={[20, 80]}
         />
       </LogWrapper>

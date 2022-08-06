@@ -16,6 +16,7 @@ export const Tree = ({
   const [isCollapsed, setIsCollapsed] = React.useState(true)
 
   const isContentObject = typeof content === 'object' && content !== null
+  const isContentString = typeof content === 'string'
   const isContentArray = Array.isArray(content)
   const isContentOnlyObject = isContentObject && !isContentArray
 
@@ -103,9 +104,6 @@ export const Tree = ({
     )
   }
 
-  const isContentString = typeof content === 'string'
-  const quotedContent = isContentString ? `"${content}"` : content
-
   return (
     <div className={className}>
       <span>
@@ -118,16 +116,18 @@ export const Tree = ({
             />
             {':'}
             <EditableText
-              title={quotedContent}
+              title={content}
               isEditionEnabled={isValueEditionEnabled}
               onChange={handleChange}
+              showTitleWithQuotes={isContentString}
             />
           </>
         ) : (
           <EditableText
-            title={quotedContent}
+            title={content}
             isEditionEnabled={isValueEditionEnabled}
             onChange={handleChange}
+            showTitleWithQuotes={isContentString}
           />
         )}
         {hasComa && ','}

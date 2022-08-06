@@ -1,7 +1,12 @@
 import React from 'react'
 import { TextInput } from './EditableText.styles'
 
-export const EditableText = ({ title, isEditionEnabled, onChange }) => {
+export const EditableText = ({
+  title,
+  isEditionEnabled,
+  onChange,
+  showTitleWithQuotes
+}) => {
   const [value, setValue] = React.useState(title)
   const [isEditing, setIsEditing] = React.useState(false)
 
@@ -27,7 +32,7 @@ export const EditableText = ({ title, isEditionEnabled, onChange }) => {
     />
   ) : (
     <span onClick={isEditionEnabled ? () => setIsEditing(true) : null}>
-      {title}
+      {showTitleWithQuotes ? `"${title}"` : title}
     </span>
   )
 }

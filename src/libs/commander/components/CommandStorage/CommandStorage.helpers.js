@@ -25,17 +25,22 @@ export const turnStorageToTableItems = ({ storage = {} }) => {
   })
 }
 
-export const parseValue = (value, index) => {
-  const isValueRow = index === 1
+export const parseValue = (row, columnIndex) => {
+  const isValueRow = columnIndex === 1
+  const [key, value] = row
+  const currentValue = row[columnIndex]
 
   return isValueRow ? (
     <MaterialTree
       content={evaluateStringifiedValue(value)}
       isKeyEditionEnabled
       isValueEditionEnabled
+      handleChange={(newValue) => {
+        console.log(key, newValue)
+      }}
     />
   ) : (
-    value
+    currentValue
   )
 }
 

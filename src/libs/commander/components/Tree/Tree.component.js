@@ -28,7 +28,6 @@ export const Tree = ({
     const collapsedLabel = `${labels.OPEN} ${labelContent} ${labels.CLOSE}`
 
     const collapsingLabel = isCollapsed ? collapsedLabel : labels.OPEN
-    const labelTitle = title ? `${title}: ${collapsingLabel}` : collapsingLabel
 
     const handleCollapse = (event) => {
       event.stopPropagation()
@@ -71,7 +70,18 @@ export const Tree = ({
 
     return (
       <div className={className}>
-        {labelTitle}
+        {title ? (
+          <>
+            <EditableText
+              title={title}
+              isEditionEnabled={isKeyEditionEnabled}
+              onChange={(newTitle) => handleChange(content, newTitle)}
+            />
+            {`: ${collapsingLabel}`}
+          </>
+        ) : (
+          collapsingLabel
+        )}
         {hasComa && isCollapsed && ','}
 
         <CollapseButton onClick={handleCollapse} disabled={!hasRichContent}>

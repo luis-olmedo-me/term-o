@@ -21,6 +21,7 @@ export const EditableText = ({
       setIsEditing(false)
     }
   }
+  const valueCharacters = String(value).length
 
   return isEditing ? (
     <TextInput
@@ -29,6 +30,7 @@ export const EditableText = ({
       onChange={(event) => setValue(event.target.value)}
       onKeyPress={handleKeyPress}
       onMouseDown={(event) => event.stopPropagation()}
+      style={{ width: `${valueCharacters}ch` }}
     />
   ) : (
     <span onClick={isEditionEnabled ? () => setIsEditing(true) : null}>

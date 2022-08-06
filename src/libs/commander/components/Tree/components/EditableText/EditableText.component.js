@@ -30,7 +30,7 @@ export const EditableText = ({
       onChange={(event) => setValue(event.target.value)}
       onKeyPress={handleKeyPress}
       onMouseDown={(event) => event.stopPropagation()}
-      style={{ width: `${valueCharacters}ch` }}
+      style={{ width: `${valueCharacters + 2}ch` }}
     />
   ) : (
     <span onClick={isEditionEnabled ? () => setIsEditing(true) : null}>

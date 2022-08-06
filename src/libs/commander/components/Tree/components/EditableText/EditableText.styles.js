@@ -7,7 +7,8 @@ export const TextInput = styled.input`
   margin: 0;
   background-color: #00000033;
   color: white;
-  min-width: 1ch;
+  min-width: 3ch;
+  text-align: center;
 
   &:focus,
   &:active {

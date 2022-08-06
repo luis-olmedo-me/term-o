@@ -4,7 +4,7 @@ import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { Table } from 'modules/components/Table/Table.component'
 import {
   getActionType,
-  parseValue,
+  parseTableValuesForLocalStoageItems,
   turnStorageToTableItems,
   parseCookies
 } from './CommandStorage.helpers'
@@ -71,7 +71,7 @@ export const CommandStorage = ({
         <Table
           headers={storageHeaders}
           rows={pageData}
-          parseValue={parseValue}
+          parseValue={parseTableValuesForLocalStoageItems}
           widths={[20, 80]}
         />
       </LogWrapper>

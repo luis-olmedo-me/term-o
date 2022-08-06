@@ -50,8 +50,10 @@ export const Tree = ({
 
     const handleChangeForObjects = (newValue, index, key) => {
       const formatedContent = Object.entries(content).reduce(
-        (finalContent, _, contentIndex) => {
+        (finalContent, [contentKey], contentIndex) => {
           const isSelectedIndex = contentIndex === index
+
+          if (isSelectedIndex) delete finalContent[contentKey]
 
           return isSelectedIndex
             ? { ...finalContent, [key]: newValue }
@@ -59,8 +61,6 @@ export const Tree = ({
         },
         { ...content }
       )
-
-      console.log({ formatedContent, content, newValue, index, key })
 
       handleChange(formatedContent)
     }
@@ -91,8 +91,8 @@ export const Tree = ({
                   hasComa={!isLastItem}
                   isKeyEditionEnabled={isContentOnlyObject}
                   isValueEditionEnabled={isValueEditionEnabled}
-                  handleChange={(newValue) =>
-                    handleChangeByType(newValue, index, key)
+                  handleChange={(newValue, newKey) =>
+                    handleChangeByType(newValue, index, newKey || key)
                   }
                 />
               )
@@ -112,13 +112,13 @@ export const Tree = ({
             <EditableText
               title={title}
               isEditionEnabled={isKeyEditionEnabled}
-              onChange={handleChange}
+              onChange={(newTitle) => handleChange(content, newTitle)}
             />
             {':'}
             <EditableText
               title={content}
               isEditionEnabled={isValueEditionEnabled}
-              onChange={handleChange}
+              onChange={(newContent) => handleChange(newContent, title)}
               showTitleWithQuotes={isContentString}
             />
           </>

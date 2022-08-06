@@ -21,28 +21,32 @@ export const CommandCss = ({
 
   const actionType = getActionType(props)
 
-  const applyStyles = useCallback(() => {
-    const inlineStyles = {
-      ...parseStyles(styles),
-      ...parseManualStyles(manualStyles)
-    }
+  const applyStyles = useCallback(
+    (customStyles = {}) => {
+      const inlineStyles = {
+        ...parseStyles(styles),
+        ...parseManualStyles(manualStyles),
+        ...customStyles
+      }
 
-    const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
+      const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
 
-    const { validStyles, invalidStyles } = validateStyles(inlineStyles)
+      const { validStyles, invalidStyles } = validateStyles(inlineStyles)
 
-    const invalidStylesNames = Object.keys(invalidStyles)
-    const hasInvalidatedStyles = invalidStylesNames.length > 0
+      const invalidStylesNames = Object.keys(invalidStyles)
+      const hasInvalidatedStyles = invalidStylesNames.length > 0
 
-    if (hasInvalidatedStyles) {
-      return setMessageData(cssMessages.invalidStyle, {
-        invalidStyleNames: invalidStylesNames.join(', ')
-      })
-    }
+      if (hasInvalidatedStyles) {
+        return setMessageData(cssMessages.invalidStyle, {
+          invalidStyleNames: invalidStylesNames.join(', ')
+        })
+      }
 
-    styleElements({ styles: validStyles, elements: paramElements })
-    setStylesApplied(validStyles)
-  }, [styles, manualStyles, setMessageData])
+      styleElements({ styles: validStyles, elements: paramElements })
+      setStylesApplied(validStyles)
+    },
+    [styles, manualStyles, setMessageData]
+  )
 
   useEffect(
     function handleActionType() {
@@ -67,6 +71,7 @@ export const CommandCss = ({
           content={stylesApplied}
           isKeyEditionEnabled
           isValueEditionEnabled
+          handleChange={applyStyles}
         />
       </LogWrapper>
     </>

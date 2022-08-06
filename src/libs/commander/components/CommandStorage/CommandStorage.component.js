@@ -64,7 +64,29 @@ export const CommandStorage = ({
   )
 
   const handleTreeChange = ({ key, newValue }) => {
-    console.log({ key, newValue })
+    const stringifiedNewValue = JSON.stringify(newValue)
+
+    switch (actionType) {
+      case storageActionTypes.SHOW_LOCAL_STORAGE:
+        window.localStorage.setItem(key, stringifiedNewValue)
+        handleShowStorage(window.localStorage)
+        break
+
+      case storageActionTypes.SHOW_SESSION_STORAGE:
+        window.sessionStorage.setItem(key, stringifiedNewValue)
+        handleShowStorage(window.sessionStorage)
+        break
+
+      case storageActionTypes.SHOW_COOKIES:
+        document.cookie = `${key}=${stringifiedNewValue}`
+        handleShowStorage(parseCookies(document.cookie))
+        break
+
+      default:
+        window.localStorage.setItem(key, stringifiedNewValue)
+        handleShowStorage(window.localStorage)
+        break
+    }
   }
 
   return (

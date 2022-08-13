@@ -77,11 +77,13 @@ export const Console = () => {
     event.stopPropagation()
   }
 
+  const movingEffect = isMoving ? { opacity: 0.3 } : {}
+
   return (
     <ConsoleWrapper
       ref={wrapperReference}
       isOpen={isOpen}
-      style={resizeData}
+      style={{ ...resizeData, ...movingEffect }}
       ondragstart='return false;'
       ondrop='return false;'
       onMouseDown={() => setTimeout(() => inputReference.current?.focus())}

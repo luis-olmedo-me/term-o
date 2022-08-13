@@ -79,7 +79,6 @@ export const CommandEvent = ({
       return setMessageData(eventMessages.elementsClickedSuccess)
     }
   }, [eventToTrigger])
-  console.log({ eventToTrigger, supportedEvents })
 
   useEffect(
     function handleActionType() {

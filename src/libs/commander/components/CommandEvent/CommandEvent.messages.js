@@ -16,7 +16,7 @@ export const eventMessages = {
     type: parameterTypes.INFO
   },
   elementsClickedSuccess: {
-    message: 'All DOM elements has been clicked.',
+    message: 'All DOM elements provided has been clicked.',
     type: parameterTypes.SUCCESS
   },
   invalidEventName: {

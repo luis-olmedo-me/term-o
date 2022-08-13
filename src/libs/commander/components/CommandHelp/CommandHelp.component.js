@@ -5,6 +5,7 @@ import { getActionType } from './CommandHelp.helpers'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { consoleCommands } from '../../commander.constants'
 import { List } from 'modules/components/Table/List/List.component'
+import { Title } from './CommandHelp.styles'
 
 export const CommandHelp = ({ props, terminal: { command } }) => {
   const actionType = getActionType(props)
@@ -74,7 +75,7 @@ export const CommandHelp = ({ props, terminal: { command } }) => {
 
           return (
             <div key={id}>
-              <h4 style={{ margin: 0 }}>{title}</h4>
+              <Title>{title}</Title>
 
               {showList && <List items={items} warning={warning} />}
             </div>

@@ -1,13 +1,15 @@
+import { Warning } from './List.styles'
+
 export const List = ({ items, warning }) => {
   const hasItems = items?.length > 0
 
   return (
-    <ul style={{ margin: 0 }}>
-      {warning && <li style={{ color: 'yellow' }}>{warning}</li>}
+    <ListContainer>
+      {warning && <Warning>{warning}</Warning>}
 
       {items?.map(({ id, text }) => (
         <li key={id}>{text}</li>
       ))}
-    </ul>
+    </ListContainer>
   )
 }

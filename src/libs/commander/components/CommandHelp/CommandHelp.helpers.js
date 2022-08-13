@@ -1,6 +1,6 @@
-import { actionTypes } from '../../constants/commands.constants'
+import { helpActionTypes } from './CommandHelp.constants'
 
-export const getActionType = ({ config }) => {
-  if (config) return actionTypes.CLEAR_CONFIG
-  else return actionTypes.CLEAR_TERMINAL
+export const getActionType = ({ about }) => {
+  if (about.length) return helpActionTypes.HELP
+  else return helpActionTypes.NONE
 }

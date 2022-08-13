@@ -6,6 +6,7 @@ import { eventConfig } from './components/CommandEvent/CommandEvent.constants'
 import { historyConfig } from './components/CommandHistory/CommandHistory.constants'
 import { onConfig } from './components/CommandOn/CommandOn.constants'
 import { storageConfig } from './components/CommandStorage/CommandStorage.constants'
+import { helpConfig } from './components/CommandHelp/CommandHelp.constants'
 
 export const consoleCommands = {
   dom: domConfig,
@@ -15,5 +16,6 @@ export const consoleCommands = {
   clear: clearConfig,
   history: historyConfig,
   alias: aliasConfig,
-  storage: storageConfig
+  storage: storageConfig,
+  help: helpConfig
 }

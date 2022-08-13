@@ -47,6 +47,16 @@ export const Log = styled.div`
     background-color: #17c964;
     color: #fff;
   }
+
+  &&.help {
+    background: linear-gradient(
+      112deg,
+      #06b7db -63.59%,
+      #ff4ecd -20.3%,
+      #0072f5 70.46%
+    );
+    color: #fff;
+  }
 `
 
 export const Hash = styled.span`

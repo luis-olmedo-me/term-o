@@ -66,7 +66,7 @@ export const CommandHelp = ({ props, terminal: { command } }) => {
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-      <LogWrapper variant={parameterTypes.INFO}>
+      <LogWrapper variant={parameterTypes.HELP}>
         {localMessages.map(({ id, title, items, warning }) => {
           const hasItems = items?.length > 0
           const showList = hasItems || warning

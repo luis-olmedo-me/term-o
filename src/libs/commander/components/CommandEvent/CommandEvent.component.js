@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { actionTypes, parameterTypes } from '../../constants/commands.constants'
+import { parameterTypes } from '../../constants/commands.constants'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { Table } from 'modules/components/Table/Table.component'
-import { eventRows } from './CommandEvent.constants'
+import { eventActionTypes, eventRows } from './CommandEvent.constants'
 import {
   fetchConfiguration,
   deletePageEvents
@@ -63,11 +63,11 @@ export const CommandEvent = ({
   useEffect(
     function handleActionType() {
       switch (actionType) {
-        case actionTypes.SHOW_LIST:
+        case eventActionTypes.SHOW_LIST:
           fetchConfiguration().then(handleShowList)
           break
 
-        case actionTypes.DELETE_EVENT:
+        case eventActionTypes.DELETE_EVENT:
           fetchConfiguration().then(handleDeleteEvent)
           break
 

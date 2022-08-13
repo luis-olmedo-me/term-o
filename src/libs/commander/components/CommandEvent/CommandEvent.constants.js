@@ -29,3 +29,8 @@ export const eventConfig = {
   },
   output: (props) => <CommandEvent key={props.id} {...props} />
 }
+
+export const eventActionTypes = {
+  SHOW_LIST: 'SHOW_LIST',
+  DELETE_EVENT: 'DELETE_EVENT'
+}

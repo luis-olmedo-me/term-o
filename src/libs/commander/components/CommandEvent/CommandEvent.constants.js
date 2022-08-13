@@ -25,7 +25,25 @@ export const eventConfig = {
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
       aliases: ['d']
+    },
+    trigger: {
+      key: 'trigger',
+      description: 'Trigger an event',
+      type: optionTypes.STRING,
+      defaultValue: [],
+      aliases: ['t']
     }
   },
   output: (props) => <CommandEvent key={props.id} {...props} />
+}
+
+export const supportedEvents = {
+  CLICK: 'click'
+}
+export const supportedEventNames = Object.values(supportedEvents)
+
+export const eventActionTypes = {
+  SHOW_LIST: 'SHOW_LIST',
+  DELETE_EVENT: 'DELETE_EVENT',
+  TRIGGER: 'TRIGGER'
 }

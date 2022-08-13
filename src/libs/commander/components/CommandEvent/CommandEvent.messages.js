@@ -14,5 +14,13 @@ export const eventMessages = {
   noEventsFound: {
     message: 'There are no page events registered.',
     type: parameterTypes.INFO
+  },
+  elementsClickedSuccess: {
+    message: 'All DOM elements provided has been clicked.',
+    type: parameterTypes.SUCCESS
+  },
+  invalidEventName: {
+    message: 'The event name provided is not supported.',
+    type: parameterTypes.ERROR
   }
 }

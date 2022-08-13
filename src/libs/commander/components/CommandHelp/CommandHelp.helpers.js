@@ -1,3 +1,4 @@
+import { consoleCommands } from '../../commander.constants'
 import { helpActionTypes } from './CommandHelp.constants'
 
 export const getActionType = ({ about }) => {
@@ -26,7 +27,7 @@ export const getMessagesFromCommandsToCheck = ({ commands }) => {
 
     return [
       ...messages,
-      commandData
+      knownCommand
         ? { ...commonProps, items: getItemsFromProps({ props }) }
         : { ...commonProps, warning: 'Command not found' }
     ]

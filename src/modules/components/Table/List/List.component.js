@@ -1,4 +1,5 @@
-import { Warning } from './List.styles'
+import React from 'react'
+import { ListContainer, Warning } from './List.styles'
 
 export const List = ({ items, warning }) => {
   return (

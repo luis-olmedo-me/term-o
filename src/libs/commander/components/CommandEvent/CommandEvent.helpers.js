@@ -1,7 +1,8 @@
-import { actionTypes } from '../../constants/commands.constants'
+import { eventActionTypes } from './CommandEvent.constants'
 
-export const getActionType = ({ list, delete: deletedIds }) => {
-  if (deletedIds.length) return actionTypes.DELETE_EVENT
-  else if (list) return actionTypes.SHOW_LIST
-  else return actionTypes.NONE
+export const getActionType = ({ list, delete: deletedIds, trigger }) => {
+  if (trigger) return eventActionTypes.TRIGGER
+  else if (deletedIds.length) return eventActionTypes.DELETE_EVENT
+  else if (list) return eventActionTypes.SHOW_LIST
+  else return eventActionTypes.NONE
 }

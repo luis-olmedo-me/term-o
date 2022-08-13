@@ -2,15 +2,8 @@ import { useEffect, useState, useCallback } from 'react'
 
 import { commander } from 'libs/commander/commander.service'
 
-import {
-  backgroundRequest,
-  onLocationChange
-} from 'src/helpers/event.helpers.js'
-import {
-  eventTypes,
-  extensionKeyEvents
-} from 'src/constants/events.constants.js'
-import { connectedTab } from 'libs/connected-tab'
+import { backgroundRequest } from 'src/helpers/event.helpers.js'
+import { eventTypes } from 'src/constants/events.constants.js'
 import { appRoot } from '../../../content.constants'
 
 const defaultConfiguration = {

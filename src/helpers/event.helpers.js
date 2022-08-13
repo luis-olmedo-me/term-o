@@ -106,35 +106,3 @@ export const resetConfiguration = () => {
     })
   })
 }
-
-export const onLocationChange = (callback) => {
-  let oldHref = document.location.href,
-    bodyDOM = document.body
-
-  const observer = new MutationObserver(function (_mutations) {
-    if (oldHref != document.location.href) {
-      oldHref = document.location.href
-
-      callback()
-
-      window.requestAnimationFrame(function () {
-        let temporalBodyDOM = document.body
-
-        if (temporalBodyDOM !== bodyDOM) {
-          bodyDOM = temporalBodyDOM
-
-          observer.observe(bodyDOM, config)
-        }
-      })
-    }
-  })
-
-  const config = {
-    childList: true,
-    subtree: true
-  }
-
-  observer.observe(bodyDOM, config)
-
-  return observer
-}

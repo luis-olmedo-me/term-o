@@ -16,7 +16,11 @@ export const CommandHelp = ({ props, terminal: { command } }) => {
   const [localMessages, setLocalMessages] = useState([])
 
   const handleHelp = useCallback((commands) => {
-    const messagesForHelp = getMessagesFromCommandsToCheck({ commands })
+    const commandsNoRepeated = Array.from(new Set(commands))
+
+    const messagesForHelp = getMessagesFromCommandsToCheck({
+      commands: commandsNoRepeated
+    })
 
     setLocalMessages(messagesForHelp)
   }, [])

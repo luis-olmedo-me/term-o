@@ -16,18 +16,21 @@ export const aliasConfig = {
   props: {
     list: {
       key: 'list',
+      description: 'List all aliases',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       aliases: ['l']
     },
     delete: {
       key: 'delete',
+      description: 'Delete an alias',
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
       aliases: ['d']
     },
     add: {
       key: 'add',
+      description: 'Add an alias',
       type: optionTypes.ARRAY_OF_OBJECTS,
       defaultValue: [],
       aliases: ['a']

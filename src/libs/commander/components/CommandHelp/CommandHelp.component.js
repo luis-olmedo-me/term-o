@@ -4,6 +4,7 @@ import { helpActionTypes } from './CommandHelp.constants'
 import { getActionType } from './CommandHelp.helpers'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { consoleCommands } from '../../commander.constants'
+import { List } from 'modules/components/Table/List/List.component'
 
 export const CommandHelp = ({ props, terminal: { command } }) => {
   const actionType = getActionType(props)
@@ -75,15 +76,7 @@ export const CommandHelp = ({ props, terminal: { command } }) => {
             <div key={id}>
               <h4 style={{ margin: 0 }}>{title}</h4>
 
-              {showList && (
-                <ul style={{ margin: 0 }}>
-                  {warning && <li style={{ color: 'yellow' }}>{warning}</li>}
-
-                  {items?.map(({ id, text }) => (
-                    <li key={id}>{text}</li>
-                  ))}
-                </ul>
-              )}
+              {showList && <List items={items} warning={warning} />}
             </div>
           )
         })}

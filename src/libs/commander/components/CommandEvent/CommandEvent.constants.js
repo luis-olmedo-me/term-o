@@ -14,12 +14,14 @@ export const eventConfig = {
   props: {
     list: {
       key: 'list',
+      description: 'List all events',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       aliases: ['l']
     },
     delete: {
       key: 'delete',
+      description: 'Delete an event',
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
       aliases: ['d']

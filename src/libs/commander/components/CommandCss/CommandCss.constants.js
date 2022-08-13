@@ -17,6 +17,7 @@ export const cssConfig = {
   props: {
     'manual-styles': {
       key: 'manualStyles',
+      description: 'Apply any CSS property you want to set',
       internal: true,
       type: optionTypes.OBJECT,
       groupProps: cssProps,
@@ -25,6 +26,7 @@ export const cssConfig = {
     },
     styles: {
       key: 'styles',
+      description: 'Apply inline CSS',
       type: optionTypes.STRING,
       defaultValue: '',
       aliases: ['s']

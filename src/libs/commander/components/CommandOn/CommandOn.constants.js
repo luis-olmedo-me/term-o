@@ -6,12 +6,14 @@ export const onConfig = {
   props: {
     url: {
       key: 'url',
+      description: 'URL to listen to',
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: ['.'],
       aliases: ['u']
     },
     run: {
       key: 'run',
+      description: 'Command to run when the event is defined',
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
       aliases: ['r']

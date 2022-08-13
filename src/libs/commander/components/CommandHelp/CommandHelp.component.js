@@ -5,16 +5,13 @@ import { getActionType } from './CommandHelp.helpers'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { consoleCommands } from '../../commander.constants'
 
-export const CommandHelp = ({
-  props,
-  terminal: { command, setMessageData }
-}) => {
+export const CommandHelp = ({ props, terminal: { command } }) => {
   const actionType = getActionType(props)
   const { about } = props
   const [localMessages, setLocalMessages] = useState([])
 
-  const handleHelp = useCallback(() => {
-    const messagesForHelp = about.reduce((messages, commandToHelpWith) => {
+  const handleHelp = useCallback((commands) => {
+    const messagesForHelp = commands.reduce((messages, commandToHelpWith) => {
       const commandData = consoleCommands[commandToHelpWith]
 
       if (commandData) {
@@ -46,21 +43,23 @@ export const CommandHelp = ({
     }, [])
 
     setLocalMessages(messagesForHelp)
-  }, [about])
+  }, [])
 
   useEffect(
     function handleActionType() {
       switch (actionType) {
         case helpActionTypes.HELP:
-          handleHelp()
+          handleHelp(about)
           break
 
-        case helpActionTypes.NONE:
-          console.log('default')
+        case helpActionTypes.NONE: {
+          const allCommandNames = Object.keys(consoleCommands)
+          handleHelp(allCommandNames)
           break
+        }
       }
     },
-    [actionType, handleHelp]
+    [actionType, handleHelp, about]
   )
 
   return (

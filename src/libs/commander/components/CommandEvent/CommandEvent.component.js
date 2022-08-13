@@ -69,12 +69,14 @@ export const CommandEvent = ({
   const handleTriggerEvent = useCallback(() => {
     const isEventValid = supportedEventNames.includes(eventToTrigger)
 
-    if (!isEventValid) return setMessageData(eventMessages.noEventsFound)
+    if (!isEventValid) return setMessageData(eventMessages.invalidEventName)
 
     const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
 
     if (eventToTrigger === supportedEvents.CLICK) {
       paramElements.forEach((element) => element.click())
+
+      return setMessageData(eventMessages.elementsClickedSuccess)
     }
   }, [eventToTrigger])
   console.log({ eventToTrigger, supportedEvents })

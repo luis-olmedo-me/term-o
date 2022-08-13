@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { EditableText } from './components/EditableText/EditableText.component'
 import { objectLabels, arrayLabels } from './Tree.constants'
-import { CollapseButton } from './Tree.styles'
+import { CollapseButton, TwoDots } from './Tree.styles'
 
 export const Tree = ({
   content,
@@ -72,12 +72,13 @@ export const Tree = ({
       <div className={className}>
         {title ? (
           <>
-            <EditableText
+            <HighlightedEditableText
               title={title}
               isEditionEnabled={isKeyEditionEnabled}
               onChange={(newTitle) => handleChange(content, newTitle)}
             />
-            {`: ${collapsingLabel}`}
+            <TwoDots>:</TwoDots>
+            {` ${collapsingLabel}`}
           </>
         ) : (
           collapsingLabel
@@ -119,12 +120,12 @@ export const Tree = ({
       <span>
         {title ? (
           <>
-            <EditableText
+            <HighlightedEditableText
               title={title}
               isEditionEnabled={isKeyEditionEnabled}
               onChange={(newTitle) => handleChange(content, newTitle)}
             />
-            {':'}
+            <TwoDots>:</TwoDots>
             <EditableText
               title={content}
               isEditionEnabled={isValueEditionEnabled}
@@ -148,4 +149,7 @@ export const Tree = ({
 
 const IdentedTree = styled(Tree)`
   margin-left: 20px;
+`
+const HighlightedEditableText = styled(EditableText)`
+  color: turquoise;
 `

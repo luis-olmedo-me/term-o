@@ -5,9 +5,12 @@ export const EditableText = ({
   title,
   isEditionEnabled,
   onChange,
-  showTitleWithQuotes
+  showTitleWithQuotes,
+  className
 }) => {
-  const [value, setValue] = React.useState(title)
+  const titleAsString = String(title)
+
+  const [value, setValue] = React.useState(titleAsString)
   const [isEditing, setIsEditing] = React.useState(false)
 
   const handleKeyPress = (event) => {
@@ -31,10 +34,14 @@ export const EditableText = ({
       onKeyPress={handleKeyPress}
       onMouseDown={(event) => event.stopPropagation()}
       style={{ width: `${valueCharacters + 2}ch` }}
+      className={className}
     />
   ) : (
-    <span onClick={isEditionEnabled ? () => setIsEditing(true) : null}>
-      {showTitleWithQuotes ? `"${title}"` : title}
+    <span
+      onClick={isEditionEnabled ? () => setIsEditing(true) : null}
+      className={className}
+    >
+      {showTitleWithQuotes ? `"${titleAsString}"` : titleAsString}
     </span>
   )
 }

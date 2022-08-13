@@ -2,7 +2,12 @@ import React, { useEffect, useState, useCallback } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { Table } from 'modules/components/Table/Table.component'
-import { eventActionTypes, eventRows } from './CommandEvent.constants'
+import {
+  eventActionTypes,
+  eventRows,
+  supportedEventNames,
+  supportedEvents
+} from './CommandEvent.constants'
 import {
   fetchConfiguration,
   deletePageEvents
@@ -10,12 +15,13 @@ import {
 import { eventMessages } from './CommandEvent.messages'
 import { getActionType } from './CommandEvent.helpers'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
+import { getParamsByType } from '../../commander.helpers'
 
 export const CommandEvent = ({
   props,
-  terminal: { command, setMessageData }
+  terminal: { command, setMessageData, params }
 }) => {
-  const { list, delete: deletedIds } = props
+  const { list, delete: deletedIds, trigger: eventToTrigger } = props
 
   const [tableItems, setTableItems] = useState([])
 
@@ -60,6 +66,19 @@ export const CommandEvent = ({
     [deletedIds, setMessageData]
   )
 
+  const handleTriggerEvent = useCallback(() => {
+    const isEventValid = supportedEventNames.includes(eventToTrigger)
+
+    if (!isEventValid) return setMessageData(eventMessages.noEventsFound)
+
+    const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
+
+    if (eventToTrigger === supportedEvents.CLICK) {
+      paramElements.forEach((element) => element.click())
+    }
+  }, [eventToTrigger])
+  console.log({ eventToTrigger, supportedEvents })
+
   useEffect(
     function handleActionType() {
       switch (actionType) {
@@ -71,11 +90,15 @@ export const CommandEvent = ({
           fetchConfiguration().then(handleDeleteEvent)
           break
 
+        case eventActionTypes.TRIGGER:
+          handleTriggerEvent()
+          break
+
         default:
           break
       }
     },
-    [actionType, handleDeleteEvent, handleShowList]
+    [actionType, handleDeleteEvent, handleShowList, handleTriggerEvent]
   )
 
   return (

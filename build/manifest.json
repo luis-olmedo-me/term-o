@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Simple terminal for browser",
   "manifest_version": 3,
-  "permissions": ["tabs", "activeTab", "storage"],
+  "permissions": ["tabs", "activeTab", "storage", "scripting"],
   "icons": {
     "16": "images/logo-16_x_16.png",
     "48": "images/logo-48_x_48.png",

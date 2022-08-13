@@ -1,23 +1,33 @@
 import { configManager } from 'libs/config-manager'
 import { connectedTabs } from 'libs/connected-tabs'
 
-import { eventTypes } from 'src/constants/events.constants.js'
+import {
+  eventTypes,
+  extensionKeyEvents
+} from 'src/constants/events.constants.js'
 
 import { debounce } from 'src/helpers/utils.helpers.js'
 
-chrome.commands.onCommand.addListener(function (command) {
-  const requestData = {
-    action: eventTypes.NEW_COMMAND,
-    data: { command }
+const toggleTerminal = () => {
+  const root = window.document.getElementById('term-o-root')
+
+  if (root) {
+    const oldValue = root.dataset.isOpen === 'true'
+
+    root.dataset.isOpen = !oldValue
   }
+}
+
+chrome.commands.onCommand.addListener(function (command) {
+  if (command !== extensionKeyEvents.TOGGLE_TERMINAL) return
 
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    const tab = tabs[0]
-    const { id } = tab || {}
+    const [{ id }] = tabs
 
-    if (connectedTabs.list.includes(id)) {
-      chrome.tabs.sendMessage(id, requestData)
-    }
+    chrome.scripting.executeScript({
+      target: { tabId: id, allFrames: true },
+      func: toggleTerminal
+    })
   })
 })
 

@@ -11,3 +11,6 @@ export const CollapseButton = styled.button`
   cursor: pointer;
   line-height: 1.2em;
 `
+export const TwoDots = styled.span`
+  color: orange;
+`

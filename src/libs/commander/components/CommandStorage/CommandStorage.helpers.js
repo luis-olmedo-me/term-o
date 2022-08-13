@@ -25,14 +25,30 @@ export const turnStorageToTableItems = ({ storage = {} }) => {
   })
 }
 
-export const parseValue = (value, index) => {
-  const isValueRow = index === 1
+export const parseTableValuesForLocalStoageItems = (
+  row,
+  columnIndex,
+  onChange
+) => {
+  const isValueRow = columnIndex === 1
+  const [key, value] = row
+  const currentValue = row[columnIndex]
 
   return isValueRow ? (
-    <MaterialTree content={evaluateStringifiedValue(value)} />
+    <MaterialTree
+      content={evaluateStringifiedValue(value)}
+      isKeyEditionEnabled
+      isValueEditionEnabled
+      handleChange={(newValue) => onChange({ key, newValue })}
+    />
   ) : (
-    value
+    currentValue
   )
+}
+
+export const getParseTableValuesForLocalStoageItems = (onChange) => {
+  return (row, columnIndex) =>
+    parseTableValuesForLocalStoageItems(row, columnIndex, onChange)
 }
 
 export const parseCookies = (cookies) => {

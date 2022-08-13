@@ -2,15 +2,9 @@ import { useEffect, useState, useCallback } from 'react'
 
 import { commander } from 'libs/commander/commander.service'
 
-import {
-  backgroundRequest,
-  onLocationChange
-} from 'src/helpers/event.helpers.js'
-import {
-  eventTypes,
-  extensionKeyEvents
-} from 'src/constants/events.constants.js'
-import { connectedTab } from 'libs/connected-tab'
+import { backgroundRequest } from 'src/helpers/event.helpers.js'
+import { eventTypes } from 'src/constants/events.constants.js'
+import { appRoot } from '../../../content.constants'
 
 const defaultConfiguration = {
   isOpen: false,
@@ -21,32 +15,22 @@ const defaultConfiguration = {
 export const useConfig = () => {
   const [config, setConfig] = useState(defaultConfiguration)
 
-  const handleBackgroundMessage = useCallback(
-    (message, _sender, sendResponse) => {
-      const isActionNewCommand = message.action === eventTypes.NEW_COMMAND
-      const isCommandToggleTerminal =
-        message.data.command === extensionKeyEvents.TOGGLE_TERMINAL
+  useEffect(function checkConsoleToggle() {
+    const observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        if (mutation.type === 'attributes') {
+          setConfig((oldConfig) => ({
+            ...oldConfig,
+            isOpen: appRoot.dataset.isOpen === 'true'
+          }))
+        }
+      })
+    })
 
-      if (isActionNewCommand && isCommandToggleTerminal) {
-        setConfig((oldConfig) => ({
-          ...oldConfig,
-          isOpen: !oldConfig.isOpen
-        }))
-      }
+    observer.observe(appRoot, { attributes: true })
 
-      sendResponse({ status: 'ok' })
-    },
-    []
-  )
-
-  useEffect(
-    function setUpConnectionWithBackgroundScript() {
-      connectedTab.addMessageListener(handleBackgroundMessage)
-
-      return () => connectedTab.removeMessageListener(handleBackgroundMessage)
-    },
-    [handleBackgroundMessage]
-  )
+    return () => observer.disconnect()
+  })
 
   useEffect(function expectForConfigChanges() {
     const receiveConfiguration = (message, _sender, sendResponse) => {

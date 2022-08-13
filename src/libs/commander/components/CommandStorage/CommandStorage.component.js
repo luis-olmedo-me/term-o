@@ -4,7 +4,7 @@ import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { Table } from 'modules/components/Table/Table.component'
 import {
   getActionType,
-  parseValue,
+  getParseTableValuesForLocalStoageItems,
   turnStorageToTableItems,
   parseCookies
 } from './CommandStorage.helpers'
@@ -63,6 +63,32 @@ export const CommandStorage = ({
     [actionType, handleShowStorage]
   )
 
+  const handleTreeChange = ({ key, newValue }) => {
+    const stringifiedNewValue = JSON.stringify(newValue)
+
+    switch (actionType) {
+      case storageActionTypes.SHOW_LOCAL_STORAGE:
+        window.localStorage.setItem(key, stringifiedNewValue)
+        handleShowStorage(window.localStorage)
+        break
+
+      case storageActionTypes.SHOW_SESSION_STORAGE:
+        window.sessionStorage.setItem(key, stringifiedNewValue)
+        handleShowStorage(window.sessionStorage)
+        break
+
+      case storageActionTypes.SHOW_COOKIES:
+        document.cookie = `${key}=${stringifiedNewValue}`
+        handleShowStorage(parseCookies(document.cookie))
+        break
+
+      default:
+        window.localStorage.setItem(key, stringifiedNewValue)
+        handleShowStorage(window.localStorage)
+        break
+    }
+  }
+
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
@@ -71,7 +97,7 @@ export const CommandStorage = ({
         <Table
           headers={storageHeaders}
           rows={pageData}
-          parseValue={parseValue}
+          parseValue={getParseTableValuesForLocalStoageItems(handleTreeChange)}
           widths={[20, 80]}
         />
       </LogWrapper>

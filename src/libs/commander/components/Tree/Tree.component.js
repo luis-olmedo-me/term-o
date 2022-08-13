@@ -1,12 +1,22 @@
 import React from 'react'
 import styled from 'styled-components'
+import { EditableText } from './components/EditableText/EditableText.component'
 import { objectLabels, arrayLabels } from './Tree.constants'
-import { CollapseButton } from './Tree.styles'
+import { CollapseButton, TwoDots } from './Tree.styles'
 
-export const Tree = ({ content, title, className, hasComa }) => {
+export const Tree = ({
+  content,
+  title,
+  className,
+  hasComa,
+  isKeyEditionEnabled,
+  isValueEditionEnabled,
+  handleChange
+}) => {
   const [isCollapsed, setIsCollapsed] = React.useState(true)
 
   const isContentObject = typeof content === 'object' && content !== null
+  const isContentString = typeof content === 'string'
   const isContentArray = Array.isArray(content)
   const isContentOnlyObject = isContentObject && !isContentArray
 
@@ -18,7 +28,6 @@ export const Tree = ({ content, title, className, hasComa }) => {
     const collapsedLabel = `${labels.OPEN} ${labelContent} ${labels.CLOSE}`
 
     const collapsingLabel = isCollapsed ? collapsedLabel : labels.OPEN
-    const labelTitle = title ? `${title}: ${collapsingLabel}` : collapsingLabel
 
     const handleCollapse = (event) => {
       event.stopPropagation()
@@ -26,9 +35,54 @@ export const Tree = ({ content, title, className, hasComa }) => {
       setIsCollapsed(!isCollapsed)
     }
 
+    const handleChangeForArrays = (newValue, index) => {
+      const formatedContent = content.map((contentValue, contentIndex) => {
+        const isSelectedIndex = contentIndex === index
+
+        return isSelectedIndex ? newValue : contentValue
+      })
+
+      console.log({ formatedContent, content, newValue, index })
+
+      handleChange(formatedContent)
+    }
+
+    const handleChangeForObjects = (newValue, index, key) => {
+      const formatedContent = Object.entries(content).reduce(
+        (finalContent, [contentKey], contentIndex) => {
+          const isSelectedIndex = contentIndex === index
+
+          if (isSelectedIndex) delete finalContent[contentKey]
+
+          return isSelectedIndex
+            ? { ...finalContent, [key]: newValue }
+            : finalContent
+        },
+        { ...content }
+      )
+
+      handleChange(formatedContent)
+    }
+
+    const handleChangeByType = isContentOnlyObject
+      ? handleChangeForObjects
+      : handleChangeForArrays
+
     return (
       <div className={className}>
-        {labelTitle}
+        {title ? (
+          <>
+            <HighlightedEditableText
+              title={title}
+              isEditionEnabled={isKeyEditionEnabled}
+              onChange={(newTitle) => handleChange(content, newTitle)}
+            />
+            <TwoDots>:</TwoDots>
+            {` ${collapsingLabel}`}
+          </>
+        ) : (
+          collapsingLabel
+        )}
         {hasComa && isCollapsed && ','}
 
         <CollapseButton onClick={handleCollapse} disabled={!hasRichContent}>
@@ -46,6 +100,11 @@ export const Tree = ({ content, title, className, hasComa }) => {
                   title={key}
                   content={value}
                   hasComa={!isLastItem}
+                  isKeyEditionEnabled={isContentOnlyObject}
+                  isValueEditionEnabled={isValueEditionEnabled}
+                  handleChange={(newValue, newKey) =>
+                    handleChangeByType(newValue, index, newKey || key)
+                  }
                 />
               )
             })}
@@ -56,13 +115,32 @@ export const Tree = ({ content, title, className, hasComa }) => {
     )
   }
 
-  const isContentString = typeof content === 'string'
-  const quotedContent = isContentString ? `"${content}"` : content
-
   return (
     <div className={className}>
       <span>
-        {title ? `${title}: ${quotedContent}` : quotedContent}
+        {title ? (
+          <>
+            <HighlightedEditableText
+              title={title}
+              isEditionEnabled={isKeyEditionEnabled}
+              onChange={(newTitle) => handleChange(content, newTitle)}
+            />
+            <TwoDots>:</TwoDots>
+            <EditableText
+              title={content}
+              isEditionEnabled={isValueEditionEnabled}
+              onChange={(newContent) => handleChange(newContent, title)}
+              showTitleWithQuotes={isContentString}
+            />
+          </>
+        ) : (
+          <EditableText
+            title={content}
+            isEditionEnabled={isValueEditionEnabled}
+            onChange={handleChange}
+            showTitleWithQuotes={isContentString}
+          />
+        )}
         {hasComa && ','}
       </span>
     </div>
@@ -71,4 +149,7 @@ export const Tree = ({ content, title, className, hasComa }) => {
 
 const IdentedTree = styled(Tree)`
   margin-left: 20px;
+`
+const HighlightedEditableText = styled(EditableText)`
+  color: turquoise;
 `

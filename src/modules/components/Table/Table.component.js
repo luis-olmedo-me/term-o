@@ -25,19 +25,19 @@ export const Table = ({ headers, rows, parseValue, widths }) => {
       </thead>
 
       <TableBody>
-        {rows.map((row, index) => (
-          <TableRow key={`row-${index}`}>
-            {row.map((column, index) => {
+        {rows.map((row, rowIndex) => (
+          <TableRow key={`row-${rowIndex}`}>
+            {row.map((column, columnIndex) => {
               const copyColumn = () => navigator.clipboard.writeText(column)
-              const width = widths[index]
+              const width = widths[columnIndex]
 
               return (
                 <TableRowValue
-                  key={`row-item-${index}`}
+                  key={`row-column-${columnIndex}`}
                   onClick={copyColumn}
                   width={`${width}%`}
                 >
-                  {parseValue ? parseValue(column, index) : column}
+                  {parseValue ? parseValue(row, columnIndex) : column}
                 </TableRowValue>
               )
             })}

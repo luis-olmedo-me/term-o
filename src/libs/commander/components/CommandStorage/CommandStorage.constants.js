@@ -7,18 +7,21 @@ export const storageConfig = {
   props: {
     local: {
       key: 'local',
+      description: 'Show the local storage of the current context',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       aliases: ['l']
     },
     session: {
       key: 'session',
+      description: 'Show the session storage of the current context',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       aliases: ['s']
     },
     cookies: {
       key: 'cookies',
+      description: 'Show the cookies of the current context',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       aliases: ['c']

@@ -5,10 +5,13 @@ export const Carousel = ({ itemInView, children }) => {
   const wrapperReference = React.useRef(null)
 
   React.useEffect(() => {
-    wrapperReference.current.scrollBy({
-      left: wrapperReference.current.clientWidth,
-      behavior: 'smooth'
-    })
+    const childToScroll = wrapperReference.current.children[itemInView]
+
+    if (childToScroll?.scrollIntoView) {
+      childToScroll.scrollIntoView({
+        behavior: 'smooth'
+      })
+    }
   }, [itemInView])
 
   return <CarouselWrapper ref={wrapperReference}>{children}</CarouselWrapper>

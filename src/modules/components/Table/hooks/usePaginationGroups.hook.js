@@ -47,6 +47,8 @@ export const usePaginationGroups = ({ items, maxItems }) => {
 
   return {
     pageData: hasMoreItems ? currentPage : [],
-    buttonGroups: shouldDisplayGroups ? buttonGroups : []
+    buttonGroups: shouldDisplayGroups ? buttonGroups : [],
+    pages: itemsDividedIntoPages,
+    pageNumber: pageNumber - 1
   }
 }

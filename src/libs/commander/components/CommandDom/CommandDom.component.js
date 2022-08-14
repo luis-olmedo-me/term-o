@@ -4,14 +4,15 @@ import {
   generateFilterByEvery,
   generateFilterBySome,
   getActionType,
-  getElements,
-  lookupElementByXPath
+  getElements
 } from './CommandDom.helpers'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { ParameterElements } from '../ParameterElements/ParameterElements.component'
 import { domMessages } from './CommandDom.messages'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 import { insertParams } from '../../commander.helpers'
+import { Carousel } from '../../../../modules/components/Carousel/Carousel.component'
+import { CarouselItem } from '../../../../modules/components/Carousel/Carousel.styles'
 
 export const CommandDom = ({
   props,
@@ -35,9 +36,9 @@ export const CommandDom = ({
 
   const actionType = getActionType(props)
 
-  const { pageData, buttonGroups } = usePaginationGroups({
+  const { buttonGroups, pages, pageNumber } = usePaginationGroups({
     items: elements,
-    maxItems: 30
+    maxItems: 10
   })
 
   const handleGetDomElements = useCallback(() => {
@@ -119,7 +120,15 @@ export const CommandDom = ({
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
       <LogWrapper variant={parameterTypes.ELEMENT} buttonGroups={buttonGroups}>
-        <ParameterElements elements={pageData} />
+        <Carousel itemInView={pageNumber}>
+          {pages.map((page, currentPageNumber) => {
+            return (
+              <CarouselItem key={currentPageNumber}>
+                <ParameterElements elements={page} />
+              </CarouselItem>
+            )
+          })}
+        </Carousel>
       </LogWrapper>
     </>
   )

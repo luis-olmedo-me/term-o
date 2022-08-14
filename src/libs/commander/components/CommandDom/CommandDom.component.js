@@ -11,8 +11,8 @@ import { ParameterElements } from '../ParameterElements/ParameterElements.compon
 import { domMessages } from './CommandDom.messages'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 import { insertParams } from '../../commander.helpers'
-import { Carousel } from '../../../../modules/components/Carousel/Carousel.component'
-import { CarouselItem } from '../../../../modules/components/Carousel/Carousel.styles'
+import { Carousel } from 'modules/components/Carousel/Carousel.component'
+import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 
 export const CommandDom = ({
   props,

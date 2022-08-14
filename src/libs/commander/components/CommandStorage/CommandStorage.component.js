@@ -11,6 +11,8 @@ import {
 import { storageMessages } from './CommandStorage.messages'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 import { storageActionTypes, storageHeaders } from './CommandStorage.constants'
+import { Carousel } from 'modules/components/Carousel/Carousel.component'
+import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 
 export const CommandStorage = ({
   props,
@@ -20,7 +22,7 @@ export const CommandStorage = ({
 
   const [tableItems, setTableItems] = useState([])
 
-  const { pageData, buttonGroups } = usePaginationGroups({
+  const { buttonGroups, pages, pageNumber } = usePaginationGroups({
     items: tableItems,
     maxItems: 10
   })
@@ -89,17 +91,28 @@ export const CommandStorage = ({
     }
   }
 
+  const parseTableValuesForLocalStoageItems =
+    getParseTableValuesForLocalStoageItems(handleTreeChange)
+
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
       <LogWrapper variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
-        <Table
-          headers={storageHeaders}
-          rows={pageData}
-          parseValue={getParseTableValuesForLocalStoageItems(handleTreeChange)}
-          widths={[20, 80]}
-        />
+        <Carousel itemInView={pageNumber}>
+          {pages.map((page, currentPageNumber) => {
+            return (
+              <CarouselItem key={currentPageNumber}>
+                <Table
+                  headers={storageHeaders}
+                  rows={page}
+                  parseValue={parseTableValuesForLocalStoageItems}
+                  widths={[20, 80]}
+                />
+              </CarouselItem>
+            )
+          })}
+        </Carousel>
       </LogWrapper>
     </>
   )

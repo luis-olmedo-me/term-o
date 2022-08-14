@@ -7,7 +7,7 @@ export const ConsoleWrapper = styled.div`
   font-family: 'Coda', monospace;
 
   opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
-  pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
+  transform: scale(${({ isOpen }) => (isOpen ? '1' : '0')});
 
   pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
   box-shadow: ${({ isMoving }) =>
@@ -15,7 +15,8 @@ export const ConsoleWrapper = styled.div`
       ? '0px 20px 15px -3px rgba(0, 0, 0, 0.5)'
       : '0px 10px 15px -3px rgba(0, 0, 0, 0.15)'};
 
-  transition: inset 0.05s ease-in-out, opacity 0.1s ease-in-out;
+  transition: inset 0.05s ease-in-out, opacity 0.2s ease-in-out,
+    transform 0.2s ease-in-out;
   min-height: 400px;
   display: flex;
   flex-flow: column;

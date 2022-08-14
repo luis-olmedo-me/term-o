@@ -11,6 +11,7 @@ const defaultSuggestion = { value: 'Hit enter to execute' }
 
 export const CommandInput = ({ inputReference, handleOnEnter }) => {
   const [command, setCommand] = useState('')
+  const [commands, setCommands] = useState([])
   const [suggestions, setSuggestions] = useState([])
   const [selectedSuggestionId, setSelectedSuggestionId] = useState(0)
 
@@ -21,6 +22,10 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     if (key === 'Enter') {
       if (selectedSuggestionId === 0) {
         handleOnEnter(command)
+        setCommands([
+          ...commands,
+          { command, id: commands.length, selected: false }
+        ])
         setCommand('')
         setSuggestions([])
         setSelectedSuggestionId(0)
@@ -63,6 +68,35 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     if (key === 'ArrowUp') {
       event.preventDefault()
 
+      if (!suggestions.length && commands.length) {
+        const commandSelected = commands.find((command) => command.selected)
+
+        if (commandSelected) {
+          const { id } = commandSelected
+          const newId = id - 1
+          const isValidId = newId >= 0 && newId < commands.length
+
+          if (isValidId) {
+            const newCommands = commands.map((command) => ({
+              ...command,
+              selected: command.id === newId
+            }))
+
+            setCommands(newCommands)
+            setCommand(newCommands[newId].command)
+          }
+        } else {
+          const defaultCommandSelected = commands.at(-1)
+          const newCommands = commands.map((command) => ({
+            ...command,
+            selected: command.id === defaultCommandSelected.id
+          }))
+
+          setCommand(defaultCommandSelected.command)
+          setCommands(newCommands)
+        }
+      }
+
       setSelectedSuggestionId((indexId) => {
         const nextId = Number(indexId) - 1
         const validatedId = nextId < 0 ? suggestions.length - 1 : nextId
@@ -72,12 +106,43 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     } else if (key === 'ArrowDown') {
       event.preventDefault()
 
+      if (!suggestions.length && commands.length) {
+        const commandSelected = commands.find((command) => command.selected)
+
+        if (commandSelected) {
+          const { id } = commandSelected
+          const newId = id + 1
+          const isValidId = newId >= 0 && newId < commands.length
+
+          if (isValidId) {
+            const newCommands = commands.map((command) => ({
+              ...command,
+              selected: command.id === newId
+            }))
+
+            setCommands(newCommands)
+            setCommand(newCommands[newId].command)
+          }
+        }
+      }
+
       setSelectedSuggestionId((indexId) => {
         const nextId = Number(indexId) + 1
         const validatedId = nextId > suggestions.length - 1 ? 0 : nextId
 
         return validatedId
       })
+    } else {
+      const hasCommandSelected = commands.find((command) => command.selected)
+
+      if (hasCommandSelected) {
+        const commandWithNoSelected = commands.map((command) => ({
+          ...command,
+          selected: false
+        }))
+
+        setCommands(commandWithNoSelected)
+      }
     }
   }
 

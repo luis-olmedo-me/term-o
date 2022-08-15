@@ -15,10 +15,13 @@ export const ElementWrapper = styled.span`
   border-radius: 3px;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
-  flex: auto;
   text-align: center;
   line-height: 1.75;
   padding-right: ${(props) => props.paddingRight}px;
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 
   &&.pinned {
     border-left: 10px solid #fcd57a;

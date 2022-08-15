@@ -8,13 +8,11 @@ export const usePaginationGroups = ({ items, maxItems }) => {
   const [pageNumber, setPageNumber] = useState(1)
 
   const itemsDividedIntoPages = divideItemsIntoPages(items, maxItems)
-  const currentPage = itemsDividedIntoPages[pageNumber - 1] || []
   const pagesAsButtonGroups = generateButtonGroupsFromPages(
     itemsDividedIntoPages,
     pageNumber,
     setPageNumber
   )
-  const hasMoreItems = itemsDividedIntoPages.length > 0
   const shouldDisplayGroups = itemsDividedIntoPages.length > 1
 
   const buttonGroups = [
@@ -46,7 +44,8 @@ export const usePaginationGroups = ({ items, maxItems }) => {
   ]
 
   return {
-    pageData: hasMoreItems ? currentPage : [],
-    buttonGroups: shouldDisplayGroups ? buttonGroups : []
+    buttonGroups: shouldDisplayGroups ? buttonGroups : [],
+    pages: itemsDividedIntoPages,
+    pageNumber: pageNumber - 1
   }
 }

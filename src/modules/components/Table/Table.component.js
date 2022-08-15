@@ -1,49 +1,39 @@
 import React from 'react'
-import {
-  TableHeaderRow,
-  TableWrapper,
-  TableRowValue,
-  TableBody,
-  TableRow
-} from './Table.styles'
+import { TableWrapper, TableRowValue, TableRow } from './Table.styles'
 
 export const Table = ({ headers, rows, parseValue, widths }) => {
   return (
     <TableWrapper>
-      <thead>
-        <TableHeaderRow>
-          {headers.map((header, index) => {
-            const width = widths[index]
+      <TableRow header>
+        {headers.map((header, index) => {
+          const width = widths[index]
+
+          return (
+            <span key={`header-${header}`} style={{ flex: width / 100 }}>
+              {header}
+            </span>
+          )
+        })}
+      </TableRow>
+
+      {rows.map((row, rowIndex) => (
+        <TableRow key={`row-${rowIndex}`}>
+          {row.map((column, columnIndex) => {
+            const copyColumn = () => navigator.clipboard.writeText(column)
+            const width = widths[columnIndex]
 
             return (
-              <th key={`header-${header}`} width={`${width}%`}>
-                {header}
-              </th>
+              <TableRowValue
+                key={`row-column-${columnIndex}`}
+                onClick={copyColumn}
+                style={{ flex: width / 100 }}
+              >
+                {parseValue ? parseValue(row, columnIndex) : column}
+              </TableRowValue>
             )
           })}
-        </TableHeaderRow>
-      </thead>
-
-      <TableBody>
-        {rows.map((row, rowIndex) => (
-          <TableRow key={`row-${rowIndex}`}>
-            {row.map((column, columnIndex) => {
-              const copyColumn = () => navigator.clipboard.writeText(column)
-              const width = widths[columnIndex]
-
-              return (
-                <TableRowValue
-                  key={`row-column-${columnIndex}`}
-                  onClick={copyColumn}
-                  width={`${width}%`}
-                >
-                  {parseValue ? parseValue(row, columnIndex) : column}
-                </TableRowValue>
-              )
-            })}
-          </TableRow>
-        ))}
-      </TableBody>
+        </TableRow>
+      ))}
     </TableWrapper>
   )
 }

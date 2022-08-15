@@ -11,6 +11,8 @@ import {
 import { getActionType, validateAliasesToAdd } from './CommandAlias.helpers'
 import { aliasMessages } from './CommandAlias.messages'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
+import { Carousel } from 'modules/components/Carousel/Carousel.component'
+import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 
 export const CommandAlias = ({
   props,
@@ -20,7 +22,7 @@ export const CommandAlias = ({
 
   const [tableItems, setTableItems] = useState([])
 
-  const { pageData, buttonGroups } = usePaginationGroups({
+  const { buttonGroups, pages, pageNumber } = usePaginationGroups({
     items: tableItems,
     maxItems: 10
   })
@@ -96,7 +98,19 @@ export const CommandAlias = ({
 
       {list && (
         <LogWrapper variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
-          <Table headers={aliasHeaders} rows={pageData} widths={[20, 20, 60]} />
+          <Carousel itemInView={pageNumber}>
+            {pages.map((page, currentPageNumber) => {
+              return (
+                <CarouselItem key={currentPageNumber}>
+                  <Table
+                    headers={aliasHeaders}
+                    rows={page}
+                    widths={[20, 20, 60]}
+                  />
+                </CarouselItem>
+              )
+            })}
+          </Carousel>
         </LogWrapper>
       )}
     </>

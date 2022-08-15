@@ -8,6 +8,7 @@ export const ElementsWrapper = styled.div`
   padding-bottom: 10px;
   border-bottom: 1px dashed #ccc;
   margin-bottom: 10px;
+  width: 100%;
 
   &&:last-child {
     padding-bottom: 0;

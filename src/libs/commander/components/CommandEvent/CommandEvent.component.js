@@ -27,7 +27,7 @@ export const CommandEvent = ({
 
   const [tableItems, setTableItems] = useState([])
 
-  const { pageData, buttonGroups, pages, pageNumber } = usePaginationGroups({
+  const { buttonGroups, pages, pageNumber } = usePaginationGroups({
     items: tableItems,
     maxItems: 10
   })

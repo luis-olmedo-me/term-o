@@ -95,6 +95,8 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
           setCommand(defaultCommandSelected.command)
           setCommands(newCommands)
         }
+
+        return
       }
 
       setSelectedSuggestionId((indexId) => {
@@ -124,6 +126,8 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
             setCommand(newCommands[newId].command)
           }
         }
+
+        return
       }
 
       setSelectedSuggestionId((indexId) => {

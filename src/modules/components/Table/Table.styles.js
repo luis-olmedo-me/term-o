@@ -20,6 +20,9 @@ export const TableRow = styled.div`
 export const TableRowValue = styled.span`
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 
   &&:hover {
     background-color: #f5f5f512;

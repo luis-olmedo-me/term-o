@@ -16,6 +16,8 @@ import { eventMessages } from './CommandEvent.messages'
 import { getActionType } from './CommandEvent.helpers'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 import { getParamsByType } from '../../commander.helpers'
+import { Carousel } from 'modules/components/Carousel/Carousel.component'
+import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 
 export const CommandEvent = ({
   props,
@@ -25,7 +27,7 @@ export const CommandEvent = ({
 
   const [tableItems, setTableItems] = useState([])
 
-  const { pageData, buttonGroups } = usePaginationGroups({
+  const { pageData, buttonGroups, pages, pageNumber } = usePaginationGroups({
     items: tableItems,
     maxItems: 10
   })
@@ -108,7 +110,19 @@ export const CommandEvent = ({
 
       {list && (
         <LogWrapper variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
-          <Table headers={eventRows} rows={pageData} widths={[20, 20, 60]} />
+          <Carousel itemInView={pageNumber}>
+            {pages.map((page, currentPageNumber) => {
+              return (
+                <CarouselItem key={currentPageNumber}>
+                  <Table
+                    headers={eventRows}
+                    rows={page}
+                    widths={[20, 20, 60]}
+                  />
+                </CarouselItem>
+              )
+            })}
+          </Carousel>
         </LogWrapper>
       )}
     </>

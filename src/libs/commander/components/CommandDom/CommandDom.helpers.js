@@ -82,7 +82,9 @@ export const generateFilterBySome = ({
             return isTextMatch && isTextNode
           })
 
-          return hasTextMatch
+          const hasValueMatch = element.value?.includes?.(text)
+
+          return hasTextMatch || hasValueMatch
         })
       )
     }

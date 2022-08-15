@@ -74,7 +74,16 @@ export const generateFilterBySome = ({
     }
     if (byText.length) {
       validations.push((element) =>
-        byText.some((text) => element.textContent?.includes?.(text))
+        byText.some((text) => {
+          const hasTextMatch = Array.from(element.childNodes).some((child) => {
+            const isTextNode = child.nodeType === 3
+            const isTextMatch = !!child?.data?.includes(text)
+
+            return isTextMatch && isTextNode
+          })
+
+          return hasTextMatch
+        })
       )
     }
     if (byStyle.length) {

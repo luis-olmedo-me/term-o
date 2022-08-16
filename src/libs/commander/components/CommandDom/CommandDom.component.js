@@ -33,6 +33,7 @@ export const CommandDom = ({
   } = props
 
   const [elements, setElements] = useState([])
+  const [pinnedElements, setPinnedElements] = useState([])
 
   const actionType = getActionType(props)
 
@@ -120,11 +121,21 @@ export const CommandDom = ({
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
       <LogWrapper variant={parameterTypes.ELEMENT} buttonGroups={buttonGroups}>
+        <ParameterElements
+          elements={pinnedElements}
+          pinnedElements={pinnedElements}
+          setPinnedElements={setPinnedElements}
+        />
+
         <Carousel itemInView={pageNumber}>
           {pages.map((page, currentPageNumber) => {
             return (
               <CarouselItem key={currentPageNumber}>
-                <ParameterElements elements={page} />
+                <ParameterElements
+                  elements={page}
+                  pinnedElements={pinnedElements}
+                  setPinnedElements={setPinnedElements}
+                />
               </CarouselItem>
             )
           })}

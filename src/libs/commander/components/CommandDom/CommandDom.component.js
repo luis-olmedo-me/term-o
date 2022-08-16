@@ -116,16 +116,20 @@ export const CommandDom = ({
     [actionType, handleGetDomElements]
   )
 
+  const hasPinnedElements = pinnedElements.length > 0
+
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
       <LogWrapper variant={parameterTypes.ELEMENT} buttonGroups={buttonGroups}>
-        <ParameterElements
-          elements={pinnedElements}
-          pinnedElements={pinnedElements}
-          setPinnedElements={setPinnedElements}
-        />
+        {hasPinnedElements && (
+          <ParameterElements
+            elements={pinnedElements}
+            pinnedElements={pinnedElements}
+            setPinnedElements={setPinnedElements}
+          />
+        )}
 
         <Carousel itemInView={pageNumber}>
           {pages.map((page, currentPageNumber) => {

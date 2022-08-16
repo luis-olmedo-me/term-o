@@ -1,10 +1,22 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import {
   SelectDefaultOption,
   DefaultTrigger,
   SelectDefaultOptionsWrapper
 } from 'modules/components/Select/Select.styles'
 import { Select } from 'modules/components/Select/Select.component'
+
+const Birth = keyframes`
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+`
 
 export const ElementWrapper = styled.span`
   position: relative;
@@ -22,6 +34,9 @@ export const ElementWrapper = styled.span`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  animation-name: ${Birth};
+  animation-duration: 0.5s;
+  transform-origin: right;
 
   &&.pinned {
     border-left: 10px solid #fcd57a;

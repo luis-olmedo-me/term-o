@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { resetConfiguration } from 'src/helpers/event.helpers.js'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { getActionType } from './CommandClear.helpers'
@@ -8,7 +8,7 @@ import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 
 export const CommandClearWithoutContext = ({
   props,
-  terminal: { clearTerminal, setMessageData },
+  terminal: { clearTerminal, setMessageData, command },
   setHighlitedElement
 }) => {
   const actionType = getActionType(props)

@@ -21,6 +21,7 @@ export const CommandStorage = ({
   const actionType = getActionType(props)
 
   const [tableItems, setTableItems] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   const { buttonGroups, pages, pageNumber } = usePaginationGroups({
     items: tableItems,
@@ -38,6 +39,7 @@ export const CommandStorage = ({
       if (isEmptyStorage) return setMessageData(storageMessages.emptyStorage)
 
       setTableItems(localStorageAsTableItems)
+      setIsLoading(false)
     },
     [setMessageData]
   )
@@ -98,7 +100,11 @@ export const CommandStorage = ({
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-      <LogWrapper variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
+      <LogWrapper
+        isLoading={isLoading}
+        variant={parameterTypes.TABLE}
+        buttonGroups={buttonGroups}
+      >
         <Carousel itemInView={pageNumber}>
           {pages.map((page, currentPageNumber) => {
             return (

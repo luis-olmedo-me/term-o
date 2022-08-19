@@ -18,6 +18,7 @@ export const CommandCss = ({
   const { styles, manualStyles } = props
 
   const [stylesApplied, setStylesApplied] = useState({})
+  const [isLoading, setIsLoading] = useState(true)
 
   const actionType = getActionType(props)
 
@@ -44,6 +45,7 @@ export const CommandCss = ({
 
       styleElements({ styles: validStyles, elements: paramElements })
       setStylesApplied(validStyles)
+      setIsLoading(false)
     },
     [styles, manualStyles, setMessageData]
   )
@@ -66,7 +68,7 @@ export const CommandCss = ({
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-      <LogWrapper variant={parameterTypes.STYLES}>
+      <LogWrapper isLoading={isLoading} variant={parameterTypes.STYLES}>
         <MaterialTree
           content={stylesApplied}
           isKeyEditionEnabled

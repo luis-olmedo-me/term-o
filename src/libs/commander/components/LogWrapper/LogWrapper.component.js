@@ -7,7 +7,8 @@ import {
   Log,
   LogContent,
   AnimatedLoader,
-  LoaderText
+  LoaderText,
+  LoaderWrapper
 } from './LogWrapper.styles'
 
 const preIconsByVariants = {
@@ -24,10 +25,10 @@ export const LogWrapper = ({ children, variant, buttonGroups, isLoading }) => {
   return (
     <Log className={variant}>
       {isLoading && (
-        <>
+        <LoaderWrapper>
           <AnimatedLoader />
           <LoaderText>Loading</LoaderText>
-        </>
+        </LoaderWrapper>
       )}
 
       <LogContent>

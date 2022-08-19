@@ -116,3 +116,6 @@ export const LoaderText = styled.span`
   vertical-align: middle;
   font-weight: bold;
 `
+export const LoaderWrapper = styled.div`
+  text-align: center;
+`

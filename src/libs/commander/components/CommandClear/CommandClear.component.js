@@ -1,9 +1,10 @@
 import { useEffect } from 'react'
 import { resetConfiguration } from 'src/helpers/event.helpers.js'
-import { actionTypes } from '../../constants/commands.constants'
+import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { getActionType } from './CommandClear.helpers'
 import { clearMessages } from './CommandClear.messages'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
+import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 
 export const CommandClearWithoutContext = ({
   props,
@@ -11,6 +12,7 @@ export const CommandClearWithoutContext = ({
   setHighlitedElement
 }) => {
   const actionType = getActionType(props)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(
     function handleActionType() {
@@ -18,12 +20,14 @@ export const CommandClearWithoutContext = ({
         case actionTypes.CLEAR_TERMINAL:
           clearTerminal()
           setHighlitedElement(null)
+          setIsLoading(false)
           break
 
         case actionTypes.CLEAR_CONFIG:
           resetConfiguration()
             .catch(() => setMessageData(clearMessages.unexpectedError))
             .then(() => setMessageData(clearMessages.configurationResetSuccess))
+            .finally(() => setIsLoading(false))
           break
 
         default:
@@ -33,7 +37,13 @@ export const CommandClearWithoutContext = ({
     [actionType, clearTerminal, setMessageData, setHighlitedElement]
   )
 
-  return null
+  return (
+    <>
+      <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
+
+      <LogWrapper isLoading={isLoading} variant={parameterTypes.INFO} />
+    </>
+  )
 }
 
 export const CommandClear = withOverlayContext(CommandClearWithoutContext)

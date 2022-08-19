@@ -5,7 +5,9 @@ import {
   GroupButton,
   Hash,
   Log,
-  LogContent
+  LogContent,
+  AnimatedLoader,
+  LoaderText
 } from './LogWrapper.styles'
 
 const preIconsByVariants = {
@@ -15,12 +17,19 @@ const preIconsByVariants = {
   [parameterTypes.SUCCESS]: '✔'
 }
 
-export const LogWrapper = ({ children, variant, buttonGroups }) => {
+export const LogWrapper = ({ children, variant, buttonGroups, isLoading }) => {
   const icon = preIconsByVariants[variant]
   const hasButtonGroups = Boolean(buttonGroups?.length)
 
   return (
     <Log className={variant}>
+      {isLoading && (
+        <>
+          <AnimatedLoader />
+          <LoaderText>Loading</LoaderText>
+        </>
+      )}
+
       <LogContent>
         {icon && <Hash>{icon}</Hash>}
 

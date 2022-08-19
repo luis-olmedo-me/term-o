@@ -34,6 +34,7 @@ export const CommandDom = ({
 
   const [elements, setElements] = useState([])
   const [pinnedElements, setPinnedElements] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   const actionType = getActionType(props)
 
@@ -86,6 +87,7 @@ export const CommandDom = ({
         finish()
       })
       .catch(() => setMessageData(domMessages.noElementsFound))
+      .finally(() => setIsLoading(false))
   }, [
     get,
     hasId,
@@ -122,7 +124,11 @@ export const CommandDom = ({
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-      <LogWrapper variant={parameterTypes.ELEMENT} buttonGroups={buttonGroups}>
+      <LogWrapper
+        variant={parameterTypes.ELEMENT}
+        buttonGroups={buttonGroups}
+        isLoading={isLoading}
+      >
         {hasPinnedElements && (
           <ParameterElements
             elements={pinnedElements}

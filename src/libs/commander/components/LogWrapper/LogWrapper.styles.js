@@ -91,3 +91,27 @@ export const GroupButton = styled.button`
     background-color: #00000033;
   }
 `
+
+const Loading = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`
+
+export const AnimatedLoader = styled(Loader)`
+  animation: ${Loading} 1.5s linear infinite;
+  animation-timing-function: ease-in-out;
+  color: white;
+  padding: 10px;
+  width: 35px;
+  height: 35px;
+  vertical-align: middle;
+`
+export const LoaderText = styled.span`
+  color: white;
+  vertical-align: middle;
+  font-weight: bold;
+`

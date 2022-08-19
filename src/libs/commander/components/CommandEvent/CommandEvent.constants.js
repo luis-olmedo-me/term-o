@@ -30,7 +30,7 @@ export const eventConfig = {
       key: 'trigger',
       description: 'Trigger an event',
       type: optionTypes.STRING,
-      defaultValue: [],
+      defaultValue: '',
       aliases: ['t']
     }
   },

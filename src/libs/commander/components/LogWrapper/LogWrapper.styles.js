@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components'
+import { Loader } from 'modules/icons/loader.icon'
 
 export const Log = styled.div`
   &:first-child {

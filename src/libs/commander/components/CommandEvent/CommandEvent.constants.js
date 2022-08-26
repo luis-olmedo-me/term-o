@@ -47,7 +47,7 @@ export const eventConfig = {
 
 export const supportedEvents = {
   CLICK: 'click',
-  VALUE_CHANGE: 'valuechange'
+  CHANGE: 'change'
 }
 export const supportedEventNames = Object.values(supportedEvents)
 

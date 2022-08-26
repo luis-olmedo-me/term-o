@@ -85,7 +85,7 @@ export const CommandEvent = ({
 
       return setMessageData(eventMessages.elementsClickedSuccess)
     }
-    if (eventToTrigger === supportedEvents.VALUE_CHANGE) {
+    if (eventToTrigger === supportedEvents.CHANGE) {
       const hasAllInputs = paramElements.every(
         (element) => element.tagName === 'INPUT'
       )

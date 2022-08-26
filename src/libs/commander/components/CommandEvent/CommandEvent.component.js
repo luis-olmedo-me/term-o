@@ -95,6 +95,8 @@ export const CommandEvent = ({
       paramElements.forEach((element) => {
         element.value = valueToInsert
       })
+
+      return setMessageData(eventMessages.elementsChangedSuccess)
     }
   }, [eventToTrigger, valueToInsert])
 

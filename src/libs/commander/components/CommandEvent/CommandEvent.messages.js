@@ -19,6 +19,10 @@ export const eventMessages = {
     message: 'All DOM elements provided has been clicked.',
     type: parameterTypes.SUCCESS
   },
+  elementsChangedSuccess: {
+    message: 'All DOM elements provided has been changed.',
+    type: parameterTypes.SUCCESS
+  },
   invalidEventName: {
     message: 'The event name provided is not supported.',
     type: parameterTypes.ERROR

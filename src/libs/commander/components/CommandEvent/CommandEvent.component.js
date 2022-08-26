@@ -31,6 +31,7 @@ export const CommandEvent = ({
   } = props
 
   const [tableItems, setTableItems] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   const { buttonGroups, pages, pageNumber } = usePaginationGroups({
     items: tableItems,
@@ -48,6 +49,7 @@ export const CommandEvent = ({
       })
 
       setTableItems(pageEventsRows)
+      setIsLoading(false)
     },
     [setMessageData]
   )
@@ -69,6 +71,7 @@ export const CommandEvent = ({
       deletePageEvents(idsToDelete)
         .catch(() => setMessageData(eventMessages.unexpectedError))
         .then(() => setMessageData(eventMessages.eventDeleteSuccess))
+        .finally(() => setIsLoading(false))
     },
     [deletedIds, setMessageData]
   )
@@ -98,6 +101,8 @@ export const CommandEvent = ({
 
       return setMessageData(eventMessages.elementsChangedSuccess)
     }
+
+    setIsLoading(false)
   }, [eventToTrigger, valueToInsert])
 
   useEffect(

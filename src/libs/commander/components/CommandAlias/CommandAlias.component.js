@@ -21,6 +21,7 @@ export const CommandAlias = ({
   const { list, delete: deletedIds, add: aliasesToAdd } = props
 
   const [tableItems, setTableItems] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   const { buttonGroups, pages, pageNumber } = usePaginationGroups({
     items: tableItems,
@@ -38,6 +39,7 @@ export const CommandAlias = ({
       })
 
       setTableItems(aliasRows)
+      setIsLoading(false)
     },
     [setMessageData]
   )
@@ -53,6 +55,7 @@ export const CommandAlias = ({
     addAliases(validAliases)
       .catch(() => setMessageData(aliasMessages.unexpectedError))
       .then(() => setMessageData(aliasMessages.aliasAdditionSuccess))
+      .finally(() => setIsLoading(false))
   }, [aliasesToAdd, setMessageData])
 
   const handleDeleteAliases = useCallback(
@@ -66,6 +69,7 @@ export const CommandAlias = ({
       deleteAliases(validIds)
         .catch(() => setMessageData(aliasMessages.unexpectedError))
         .then(() => setMessageData(aliasMessages.aliasDeletionSuccess))
+        .finally(() => setIsLoading(false))
     },
     [deletedIds]
   )
@@ -95,6 +99,8 @@ export const CommandAlias = ({
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
+
+      {isLoading && <LogWrapper isLoading variant={parameterTypes.INFO} />}
 
       {list && (
         <LogWrapper variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>

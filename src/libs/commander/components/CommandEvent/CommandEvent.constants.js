@@ -36,7 +36,7 @@ export const eventConfig = {
     value: {
       key: 'value',
       description:
-        'Insert this value when "valuechange" event is triggered on inputs elements',
+        'Insert this value when "change" event is triggered on inputs elements',
       type: optionTypes.STRING,
       defaultValue: '',
       aliases: ['v']

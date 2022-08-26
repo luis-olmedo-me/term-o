@@ -23,7 +23,12 @@ export const CommandEvent = ({
   props,
   terminal: { command, setMessageData, params }
 }) => {
-  const { list, delete: deletedIds, trigger: eventToTrigger } = props
+  const {
+    list,
+    delete: deletedIds,
+    trigger: eventToTrigger,
+    value: valueToInsert
+  } = props
 
   const [tableItems, setTableItems] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -81,11 +86,24 @@ export const CommandEvent = ({
     if (eventToTrigger === supportedEvents.CLICK) {
       paramElements.forEach((element) => element.click())
 
-      setMessageData(eventMessages.elementsClickedSuccess)
+      return setMessageData(eventMessages.elementsClickedSuccess)
+    }
+    if (eventToTrigger === supportedEvents.CHANGE) {
+      const hasAllInputs = paramElements.every(
+        (element) => element.tagName === 'INPUT'
+      )
+
+      if (!hasAllInputs) return setMessageData(eventMessages.invalidElements)
+
+      paramElements.forEach((element) => {
+        element.value = valueToInsert
+      })
+
+      return setMessageData(eventMessages.elementsChangedSuccess)
     }
 
     setIsLoading(false)
-  }, [eventToTrigger])
+  }, [eventToTrigger, valueToInsert])
 
   useEffect(
     function handleActionType() {

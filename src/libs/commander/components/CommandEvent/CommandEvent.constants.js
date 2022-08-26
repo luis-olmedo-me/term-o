@@ -32,13 +32,22 @@ export const eventConfig = {
       type: optionTypes.STRING,
       defaultValue: '',
       aliases: ['t']
+    },
+    value: {
+      key: 'value',
+      description:
+        'Insert this value when "valuechange" event is triggered on inputs elements.',
+      type: optionTypes.STRING,
+      defaultValue: '',
+      aliases: ['v']
     }
   },
   output: (props) => <CommandEvent key={props.id} {...props} />
 }
 
 export const supportedEvents = {
-  CLICK: 'click'
+  CLICK: 'click',
+  VALUE_CHANGE: 'valuechange'
 }
 export const supportedEventNames = Object.values(supportedEvents)
 

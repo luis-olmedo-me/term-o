@@ -22,5 +22,9 @@ export const eventMessages = {
   invalidEventName: {
     message: 'The event name provided is not supported.',
     type: parameterTypes.ERROR
+  },
+  invalidElements: {
+    message: 'The elements provided are not inputs.',
+    type: parameterTypes.ERROR
   }
 }

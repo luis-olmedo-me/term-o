@@ -14,12 +14,15 @@ import { useConfig } from './hooks/useConfig.hook.js'
 import { useResize } from './hooks/useResize/useResize.hook.js'
 
 import { ConsoleTitle, ConsoleLogs, ConsoleWrapper } from './Console.styles.js'
+import { Notifications } from '../../../../libs/commander/components/Notifications/Notifications.component.js'
 
 export const Console = () => {
   const wrapperReference = useRef(null)
   const titleReference = useRef(null)
   const historyRef = useRef(null)
   const inputReference = useRef(null)
+
+  const [notifications, setNotifications] = useState([])
 
   const [histories, setHistories] = useState([])
   const [hasPageEventsBeenRunned, setHasPageEventsBeenRunned] = useState(false)
@@ -64,8 +67,19 @@ export const Console = () => {
     [isOpen]
   )
 
+  const addNotification = useCallback((id, message) => {
+    setNotifications((oldNotifications) => {
+      return [...oldNotifications, { id, message }]
+    })
+  }, [])
+
+  const clearTerminal = useCallback(() => {
+    setHistories([])
+  }, [])
+
   const outsideProps = {
-    clearTerminal: () => setHistories([])
+    clearTerminal,
+    addNotification
   }
 
   const consoleStyles = {
@@ -119,6 +133,8 @@ export const Console = () => {
         inputReference={inputReference}
         handleOnEnter={(command) => handleCommandRun(command, histories.length)}
       />
+
+      <Notifications messages={notifications} />
     </ConsoleWrapper>
   )
 }

@@ -31,7 +31,25 @@ export const useNotifications = () => {
     return () => clearTimeout(clearLastNotificationTimeoutId)
   }, [notifications])
 
-  const firstThreeNotifications = notifications.slice(0, 2)
+  const firstThreeNotifications = notifications.reduce(
+    (filteredNotifications, notification) => {
+      const expectedNotifications = filteredNotifications.reduce(
+        (count, filteredNotification) => {
+          const isDead = filteredNotification.isDead
+
+          return isDead ? count : count + 1
+        },
+        0
+      )
+
+      const hasEnoughNotifications = expectedNotifications > 2
+
+      return !hasEnoughNotifications
+        ? [...filteredNotifications, notification]
+        : filteredNotifications
+    },
+    []
+  )
 
   return { notifications: firstThreeNotifications, addNotification }
 }

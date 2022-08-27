@@ -11,7 +11,6 @@ export const Carousel = ({ itemInView, children }) => {
   const wrapperReference = React.useRef(null)
   const [oldItemInView, setOldItemInView] = useState(itemInView)
   const [minimumHeight, setMinimumHeight] = useState(0)
-  console.log({ minimumHeight })
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {

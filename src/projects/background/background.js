@@ -15,15 +15,6 @@ const toggleTerminal = () => {
 
   if (isInitiated) {
     root.dataset.isOpen = !isOpen
-  } else {
-    const loadingNotification = new CustomEvent('term-o-notification', {
-      detail: {
-        id: Date.now().toString(),
-        message: 'Please wait until TERM-O is properly loaded.'
-      }
-    })
-
-    window.dispatchEvent(loadingNotification)
   }
 }
 

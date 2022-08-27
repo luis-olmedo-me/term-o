@@ -29,7 +29,7 @@ export const CommandNotify = ({
           break
 
         default:
-          setMessageData(notifyMessages.notificationSuccess)
+          setMessageData(notifyMessages.unexpectedError)
           break
       }
     },

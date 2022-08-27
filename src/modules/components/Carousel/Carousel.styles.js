@@ -24,7 +24,6 @@ const birth = keyframes`
   }
 `
 export const AnimatedEffect = styled.div`
-  transform-origin: ${(props) => (props.isGoingRight ? 'right' : 'left')};
+  transform-origin: ${(props) => props.direction};
   animation: ${birth} 0.2s ease-in-out;
-  transform: scaleX(0);
 `

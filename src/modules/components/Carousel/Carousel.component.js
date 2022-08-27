@@ -1,6 +1,12 @@
 import React, { useState } from 'react'
 import { CarouselWrapper, AnimatedEffect } from './Carousel.styles'
 
+const getAnimationDirection = (isGoingRight, isTheSame) => {
+  if (isTheSame) return 'center'
+  else if (isGoingRight) return 'right'
+  else return 'left'
+}
+
 export const Carousel = ({ itemInView, children }) => {
   const wrapperReference = React.useRef(null)
   const [oldItemInView, setOldItemInView] = useState(itemInView)
@@ -10,6 +16,9 @@ export const Carousel = ({ itemInView, children }) => {
   }, [itemInView])
 
   const isGoingRight = oldItemInView < itemInView
+  const isTheSame = oldItemInView === itemInView
+
+  const direction = getAnimationDirection(isGoingRight, isTheSame)
 
   return (
     <CarouselWrapper ref={wrapperReference}>
@@ -18,11 +27,7 @@ export const Carousel = ({ itemInView, children }) => {
 
         return (
           isSelected && (
-            <AnimatedEffect
-              key={index}
-              style={{ transform: 'scaleX(1)' }}
-              isGoingRight={isGoingRight}
-            >
+            <AnimatedEffect key={index} direction={direction}>
               {child}
             </AnimatedEffect>
           )

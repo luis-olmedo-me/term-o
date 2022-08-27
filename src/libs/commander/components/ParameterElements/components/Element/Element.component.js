@@ -17,7 +17,8 @@ const ElementWithoutContext = ({
   setPinnedElements,
   pinnedElements,
   className = '',
-  variant = ''
+  variant = '',
+  shouldAnimate = false
 }) => {
   const [isSelectOpen, setIsSelectOpen] = useState(false)
   const [wrapperPaddingRight, setWrapperPaddingRight] = useState(10)
@@ -121,6 +122,7 @@ const ElementWithoutContext = ({
       onMouseLeave={!isHidden ? unhighlightElement : null}
       paddingRight={wrapperPaddingRight}
       className={`${className} ${variant}`}
+      shouldAnimate={shouldAnimate}
     >
       {tagNameLabel}
 

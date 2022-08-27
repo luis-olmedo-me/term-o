@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 export const CarouselWrapper = styled.div`
   width: 100%;
@@ -13,4 +13,18 @@ export const CarouselItem = styled.div`
   width: 100%;
   justify-content: center;
   scroll-snap-align: center;
+`
+
+const birth = keyframes`
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+`
+export const AnimatedEffect = styled.div`
+  transform-origin: ${(props) => (props.isGoingRight ? 'right' : 'left')};
+  animation: ${birth} 0.2s ease-in-out;
+  transform: scaleX(0);
 `

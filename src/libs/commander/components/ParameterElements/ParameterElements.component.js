@@ -5,7 +5,8 @@ import { Element } from './components/Element/Element.component'
 export const ParameterElements = ({
   elements,
   pinnedElements,
-  setPinnedElements
+  setPinnedElements,
+  shouldAnimate
 }) => {
   return (
     <ElementsWrapper>
@@ -19,6 +20,7 @@ export const ParameterElements = ({
             setPinnedElements={setPinnedElements}
             pinnedElements={pinnedElements}
             variant={isPinned ? 'pinned' : 'default'}
+            shouldAnimate={shouldAnimate}
           />
         )
       })}

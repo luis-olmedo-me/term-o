@@ -134,6 +134,7 @@ export const CommandDom = ({
             elements={pinnedElements}
             pinnedElements={pinnedElements}
             setPinnedElements={setPinnedElements}
+            shouldAnimate
           />
         )}
 

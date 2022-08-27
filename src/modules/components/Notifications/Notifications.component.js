@@ -5,17 +5,18 @@ import {
   Description,
   NotificationWrapper,
   LogoWrapper,
-  NotificationsWrapper
+  NotificationsWrapper,
+  Image
 } from './Notifications.styles'
 
 export const Notifications = ({ messages }) => {
   return (
     <Portal>
       <NotificationsWrapper>
-        {messages.map(({ id, message, isDead }) => {
+        {messages.map(({ id, message, isDead, image }) => {
           return (
             <NotificationWrapper key={id} isDead={isDead}>
-              <Logo Wrapper={LogoWrapper} />
+              {image ? <Image src={image} /> : <Logo Wrapper={LogoWrapper} />}
 
               <Description>{message}</Description>
             </NotificationWrapper>

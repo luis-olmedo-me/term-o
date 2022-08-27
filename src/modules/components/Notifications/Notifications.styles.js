@@ -37,6 +37,14 @@ export const NotificationWrapper = styled.div`
 
 export const Description = styled.p`
   margin: 0;
+  color: white;
+`
+
+export const Image = styled.img`
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  background-size: cover;
 `
 
 export const LogoWrapper = styled.svg`

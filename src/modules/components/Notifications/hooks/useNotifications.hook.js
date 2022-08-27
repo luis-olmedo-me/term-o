@@ -3,9 +3,9 @@ import { useCallback, useEffect, useState } from 'react'
 export const useNotifications = () => {
   const [notifications, setNotifications] = useState([])
 
-  const addNotification = useCallback((id, message) => {
+  const addNotification = useCallback((id, message, image) => {
     setNotifications((oldNotifications) => {
-      return [...oldNotifications, { id, message, isDead: false }]
+      return [...oldNotifications, { id, message, image, isDead: false }]
     })
   }, [])
 

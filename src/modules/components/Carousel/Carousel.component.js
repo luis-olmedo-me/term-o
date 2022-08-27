@@ -10,8 +10,15 @@ const getAnimationDirection = (isGoingRight, isTheSame) => {
 export const Carousel = ({ itemInView, children }) => {
   const wrapperReference = React.useRef(null)
   const [oldItemInView, setOldItemInView] = useState(itemInView)
+  const [minimumHeight, setMinimumHeight] = useState(0)
 
   React.useEffect(() => {
+    const newHeight = wrapperReference.current.clientHeight
+
+    setMinimumHeight((oldHeight) =>
+      newHeight > oldHeight ? newHeight : oldHeight
+    )
+
     return () => setOldItemInView(itemInView)
   }, [itemInView])
 
@@ -27,7 +34,11 @@ export const Carousel = ({ itemInView, children }) => {
 
         return (
           isSelected && (
-            <AnimatedEffect key={index} direction={direction}>
+            <AnimatedEffect
+              key={index}
+              direction={direction}
+              style={{ minHeight: minimumHeight }}
+            >
               {child}
             </AnimatedEffect>
           )

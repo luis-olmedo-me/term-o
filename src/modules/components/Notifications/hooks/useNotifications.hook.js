@@ -2,11 +2,10 @@ import { useCallback, useEffect, useState } from 'react'
 
 export const useNotifications = () => {
   const [notifications, setNotifications] = useState([])
-  console.log({ notifications })
 
   const addNotification = useCallback((id, message) => {
     setNotifications((oldNotifications) => {
-      return [...oldNotifications, { id, message }]
+      return [...oldNotifications, { id, message, isDead: false }]
     })
   }, [])
 
@@ -15,14 +14,24 @@ export const useNotifications = () => {
 
     const clearLastNotificationTimeoutId = setTimeout(() => {
       setNotifications((oldNotifications) => {
-        return oldNotifications.slice(1)
+        const oldNotificationsAlive = oldNotifications.filter(
+          ({ isDead }) => !isDead
+        )
+
+        return oldNotificationsAlive.map((notification, index) => {
+          const isFirstNotification = index === 0
+
+          return isFirstNotification
+            ? { ...notification, isDead: true }
+            : notification
+        })
       })
     }, 3000)
 
     return () => clearTimeout(clearLastNotificationTimeoutId)
   }, [notifications])
 
-  const firstThreeNotifications = oldNotifications.slice(0, 2)
+  const firstThreeNotifications = notifications.slice(0, 2)
 
   return { notifications: firstThreeNotifications, addNotification }
 }

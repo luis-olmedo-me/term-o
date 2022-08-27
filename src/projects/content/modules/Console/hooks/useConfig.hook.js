@@ -32,20 +32,6 @@ export const useConfig = () => {
     return () => observer.disconnect()
   })
 
-  useEffect(function expectForConfigChanges() {
-    const receiveConfiguration = (message, _sender, sendResponse) => {
-      if (message.action === eventTypes.CONFIG_UPDATE) {
-        commander.setAliases(message.data?.aliases)
-      }
-
-      sendResponse({ status: 'ok' })
-    }
-
-    chrome.runtime.onMessage.addListener(receiveConfiguration)
-
-    return () => chrome.runtime.onMessage.removeListener(receiveConfiguration)
-  }, [])
-
   useEffect(function getConfiguration() {
     const receiveConfiguration = ({ response: newConfig }) => {
       if (!newConfig) return

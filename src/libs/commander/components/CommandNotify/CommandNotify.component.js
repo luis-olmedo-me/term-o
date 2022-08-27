@@ -4,6 +4,7 @@ import { getActionType } from './CommandNotify.helpers'
 import { notifyMessages } from './CommandNotify.messages'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { notifyActionTypes } from './CommandNotify.constants'
+import { Notification } from '../Notification/Notification.component'
 
 export const CommandNotify = ({ props, terminal: { command } }) => {
   const actionType = getActionType(props)
@@ -27,6 +28,8 @@ export const CommandNotify = ({ props, terminal: { command } }) => {
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
       <LogWrapper isLoading variant={parameterTypes.TABLE} />
+
+      <Notification />
     </>
   )
 }

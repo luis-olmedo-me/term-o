@@ -11,6 +11,13 @@ export const notifyConfig = {
       type: optionTypes.STRING,
       defaultValue: '',
       aliases: ['m']
+    },
+    image: {
+      key: 'image',
+      description: 'Set image URL as icon in notification',
+      type: optionTypes.STRING,
+      defaultValue: '',
+      aliases: ['i']
     }
   },
   output: (props) => <CommandNotify key={props.id} {...props} />

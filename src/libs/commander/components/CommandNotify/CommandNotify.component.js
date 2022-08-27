@@ -9,17 +9,17 @@ export const CommandNotify = ({
   props,
   terminal: { command, addNotification, setMessageData }
 }) => {
-  const { message } = props
+  const { message, image } = props
 
   const actionType = getActionType(props)
 
   const handleNotify = useCallback(() => {
     const initialId = Date.now().toString()
 
-    addNotification(initialId, message)
+    addNotification(initialId, message, image)
 
     setMessageData(notifyMessages.notificationSuccess)
-  }, [handleNotify, message, setMessageData])
+  }, [handleNotify, message, image, setMessageData])
 
   useEffect(
     function handleActionType() {

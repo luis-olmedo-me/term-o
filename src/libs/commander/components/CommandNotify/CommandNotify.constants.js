@@ -4,10 +4,19 @@ import { optionTypes } from '../../constants/commands.constants'
 import { CommandNotify } from './CommandNotify.component'
 
 export const notifyConfig = {
-  props: {},
+  props: {
+    message: {
+      key: 'message',
+      description: 'Trigger a notification with a message',
+      type: optionTypes.STRING,
+      defaultValue: '',
+      aliases: ['m']
+    }
+  },
   output: (props) => <CommandNotify key={props.id} {...props} />
 }
 
 export const notifyActionTypes = {
-  NOTIFY: 'NOTIFY'
+  NOTIFY: 'NOTIFY',
+  NONE: 'NONE'
 }

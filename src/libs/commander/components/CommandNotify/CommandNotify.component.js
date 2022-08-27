@@ -7,15 +7,19 @@ import { notifyActionTypes } from './CommandNotify.constants'
 
 export const CommandNotify = ({
   props,
-  terminal: { command, addNotification }
+  terminal: { command, addNotification, setMessageData }
 }) => {
+  const { message } = props
+
   const actionType = getActionType(props)
 
   const handleNotify = useCallback(() => {
     const initialId = Date.now().toString()
 
-    addNotification(initialId, 'Test')
-  }, [handleNotify])
+    addNotification(initialId, message)
+
+    setMessageData(notifyMessages.notificationSuccess)
+  }, [handleNotify, message, setMessageData])
 
   useEffect(
     function handleActionType() {
@@ -25,10 +29,11 @@ export const CommandNotify = ({
           break
 
         default:
+          setMessageData(notifyMessages.notificationSuccess)
           break
       }
     },
-    [actionType, handleNotify]
+    [actionType, handleNotify, setMessageData]
   )
 
   return (

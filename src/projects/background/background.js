@@ -1,12 +1,9 @@
 import { configManager } from 'libs/config-manager'
-import { connectedTabs } from 'libs/connected-tabs'
 
 import {
   eventTypes,
   extensionKeyEvents
 } from 'src/constants/events.constants.js'
-
-import { debounce } from 'src/helpers/utils.helpers.js'
 
 const toggleTerminal = () => {
   const root = window.document.getElementById('term-o-root')
@@ -30,19 +27,6 @@ chrome.commands.onCommand.addListener(function (command) {
     })
   })
 })
-
-configManager.onChange = debounce((shouldUpdateTabs) => {
-  if (!shouldUpdateTabs) return
-
-  const requestData = {
-    action: eventTypes.CONFIG_UPDATE,
-    data: configManager.config
-  }
-
-  connectedTabs.list.forEach((tabId) => {
-    chrome.tabs.sendMessage(tabId, requestData)
-  })
-}, 100)
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   switch (request.type) {
@@ -107,7 +91,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 
     case eventTypes.UPDATE_CONFIG_CONSOLE_POSITION: {
-      configManager.setConfig({ consolePosition: request.data }, false)
+      configManager.setConfig({ consolePosition: request.data })
       sendResponse({ status: 'ok' })
       break
     }

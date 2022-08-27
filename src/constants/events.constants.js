@@ -5,7 +5,6 @@ export const eventTypes = {
   GET_CONFIGURATION: 'term-o-get-configuration',
   ADD_ALIAS: 'term-o-add-alias',
   DELETE_ALIAS: 'term-o-delete-alias',
-  CONFIG_UPDATE: 'term-o-config-update',
   RESET_CONFIGURATION: 'term-o-update-configuration'
 }
 

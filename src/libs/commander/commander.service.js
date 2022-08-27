@@ -36,12 +36,13 @@ class Commander {
   }
 
   getCommandWithAliases(command) {
-    return Object.entries(this.aliasesAsObject).reduce(
-      (newCommand, [alias, value]) => {
-        return newCommand.replaceAll(alias, value)
-      },
-      command
-    )
+    return Object.entries(this.aliasesAsObject)
+      .reduce((separatedCommandBySpaces, [alias, value]) => {
+        return separatedCommandBySpaces.map((commandWord) =>
+          commandWord === alias ? value : commandWord
+        )
+      }, command.split(' '))
+      .join(' ')
   }
 
   isKeyword(arg) {

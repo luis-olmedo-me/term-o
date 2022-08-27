@@ -34,7 +34,7 @@ export const ElementWrapper = styled.span`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  animation-name: ${Birth};
+  animation-name: ${(props) => (props.shouldAnimate ? Birth : '')};
   animation-duration: 0.5s;
   transform-origin: right;
 

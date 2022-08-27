@@ -1,18 +1,38 @@
-import React from 'react'
-import { CarouselWrapper } from './Carousel.styles'
+import React, { useState } from 'react'
+import { CarouselWrapper, AnimatedEffect } from './Carousel.styles'
+
+const getAnimationDirection = (isGoingRight, isTheSame) => {
+  if (isTheSame) return 'center'
+  else if (isGoingRight) return 'right'
+  else return 'left'
+}
 
 export const Carousel = ({ itemInView, children }) => {
   const wrapperReference = React.useRef(null)
+  const [oldItemInView, setOldItemInView] = useState(itemInView)
 
   React.useEffect(() => {
-    const childToScroll = wrapperReference.current.children[itemInView]
-
-    if (childToScroll?.scrollIntoView) {
-      childToScroll.scrollIntoView({
-        behavior: 'smooth'
-      })
-    }
+    return () => setOldItemInView(itemInView)
   }, [itemInView])
 
-  return <CarouselWrapper ref={wrapperReference}>{children}</CarouselWrapper>
+  const isGoingRight = oldItemInView < itemInView
+  const isTheSame = oldItemInView === itemInView
+
+  const direction = getAnimationDirection(isGoingRight, isTheSame)
+
+  return (
+    <CarouselWrapper ref={wrapperReference}>
+      {children.map((child, index) => {
+        const isSelected = index === itemInView
+
+        return (
+          isSelected && (
+            <AnimatedEffect key={index} direction={direction}>
+              {child}
+            </AnimatedEffect>
+          )
+        )
+      })}
+    </CarouselWrapper>
+  )
 }

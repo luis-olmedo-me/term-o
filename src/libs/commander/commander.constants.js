@@ -7,6 +7,7 @@ import { historyConfig } from './components/CommandHistory/CommandHistory.consta
 import { onConfig } from './components/CommandOn/CommandOn.constants'
 import { storageConfig } from './components/CommandStorage/CommandStorage.constants'
 import { helpConfig } from './components/CommandHelp/CommandHelp.constants'
+import { notifyConfig } from './components/CommandNotify/CommandNotify.constants'
 
 export const consoleCommands = {
   dom: domConfig,
@@ -17,5 +18,6 @@ export const consoleCommands = {
   history: historyConfig,
   alias: aliasConfig,
   storage: storageConfig,
-  help: helpConfig
+  help: helpConfig,
+  notify: notifyConfig
 }

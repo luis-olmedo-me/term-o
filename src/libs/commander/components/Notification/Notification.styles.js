@@ -22,3 +22,9 @@ export const NotificationWrapper = styled.div`
 export const Description = styled.p`
   margin: 0;
 `
+
+export const LogoWrapper = styled.svg`
+  background: #ffffff20;
+  border-radius: 15px;
+  padding: 6px;
+`

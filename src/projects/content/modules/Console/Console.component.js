@@ -14,7 +14,7 @@ import { useConfig } from './hooks/useConfig.hook.js'
 import { useResize } from './hooks/useResize/useResize.hook.js'
 
 import { ConsoleTitle, ConsoleLogs, ConsoleWrapper } from './Console.styles.js'
-import { Notifications } from '../../../../libs/commander/components/Notifications/Notifications.component.js'
+import { Notifications } from 'src/modules/components/Notifications/Notifications.component.js'
 
 export const Console = () => {
   const wrapperReference = useRef(null)

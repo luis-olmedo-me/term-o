@@ -23,7 +23,7 @@ export const NotificationWrapper = styled.div`
   box-sizing: content-box;
 
   &:last-child {
-    margin-bottom: none;
+    margin-bottom: 0;
   }
 `
 
@@ -33,6 +33,6 @@ export const Description = styled.p`
 
 export const LogoWrapper = styled.svg`
   background: #ffffff20;
-  border-radius: 15px;
+  border-radius: 8px;
   padding: 6px;
 `

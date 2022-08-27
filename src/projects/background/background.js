@@ -8,10 +8,22 @@ import {
 const toggleTerminal = () => {
   const root = window.document.getElementById('term-o-root')
 
-  if (root) {
-    const oldValue = root.dataset.isOpen === 'true'
+  if (!root) return
 
-    root.dataset.isOpen = !oldValue
+  const isInitiated = root.dataset.isInitiated === 'true'
+  const isOpen = root.dataset.isOpen === 'true'
+
+  if (isInitiated) {
+    root.dataset.isOpen = !isOpen
+  } else {
+    const loadingNotification = new CustomEvent('term-o-notification', {
+      detail: {
+        id: Date.now().toString(),
+        message: 'Please wait until TERM-O is properly loaded.'
+      }
+    })
+
+    window.dispatchEvent(loadingNotification)
   }
 }
 

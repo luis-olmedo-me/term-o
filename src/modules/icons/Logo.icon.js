@@ -1,11 +1,10 @@
 import React from 'react'
-import { Icon } from './Icon.styles.js'
 
-export const Logo = () => {
+export const Logo = ({ size }) => {
   return (
-    <Icon
-      width='24'
-      height='24'
+    <svg
+      width={size}
+      height={size}
       viewBox='0 0 512 512'
       xmlns='http://www.w3.org/2000/svg'
     >
@@ -25,6 +24,6 @@ export const Logo = () => {
         d='m172.332 159.989-66.735-70.681c-1.919-2.33-4.604-8.632 0-15.209 4.603-6.577 22.095-24.706 30.247-32.995 8.289-8.152 26.324-25.55 32.901-30.153 6.576-4.604 12.879-1.918 15.208 0l70.682 66.736-82.303 82.302Z'
         fill='#E2E2E2'
       />
-    </Icon>
+    </svg>
   )
 }

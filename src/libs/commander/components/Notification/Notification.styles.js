@@ -19,6 +19,6 @@ export const NotificationWrapper = styled.div`
   box-sizing: content-box;
 `
 
-export const Metadata = styled.p`
-  width: 70%;
+export const Description = styled.p`
+  margin: 0;
 `

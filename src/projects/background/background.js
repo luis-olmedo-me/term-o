@@ -8,10 +8,13 @@ import {
 const toggleTerminal = () => {
   const root = window.document.getElementById('term-o-root')
 
-  if (root) {
-    const oldValue = root.dataset.isOpen === 'true'
+  if (!root) return
 
-    root.dataset.isOpen = !oldValue
+  const isInitiated = root.dataset.isInitiated === 'true'
+  const isOpen = root.dataset.isOpen === 'true'
+
+  if (isInitiated) {
+    root.dataset.isOpen = !isOpen
   }
 }
 

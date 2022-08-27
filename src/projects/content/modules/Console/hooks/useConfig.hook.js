@@ -27,9 +27,15 @@ export const useConfig = () => {
       })
     })
 
+    appRoot.dataset.isInitiated = 'true'
+
     observer.observe(appRoot, { attributes: true })
 
-    return () => observer.disconnect()
+    return () => {
+      appRoot.dataset.isInitiated = 'false'
+
+      observer.disconnect()
+    }
   })
 
   useEffect(function getConfiguration() {

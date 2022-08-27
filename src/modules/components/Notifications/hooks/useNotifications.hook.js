@@ -22,5 +22,7 @@ export const useNotifications = () => {
     return () => clearTimeout(clearLastNotificationTimeoutId)
   }, [notifications])
 
-  return { notifications, addNotification }
+  const firstThreeNotifications = oldNotifications.slice(0, 2)
+
+  return { notifications: firstThreeNotifications, addNotification }
 }

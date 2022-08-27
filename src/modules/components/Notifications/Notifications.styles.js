@@ -21,6 +21,14 @@ export const NotificationWrapper = styled.div`
   border-radius: 3px;
   align-items: center;
   box-sizing: content-box;
+  overflow: hidden;
+  transition: height 0.4s ease-in-out, opacity 0.3s ease-in-out,
+    padding 0.4s ease-in-out, transform 0.4s ease-in-out;
+
+  height: ${(props) => (props.isDead ? '0' : '100%')};
+  opacity: ${(props) => (props.isDead ? '0' : '1')};
+  padding: ${(props) => (props.isDead ? '0' : '10px')};
+  transform: scaleX(${(props) => (props.isDead ? '1.5' : '1')});
 
   &:last-child {
     margin-bottom: 0;
@@ -35,4 +43,6 @@ export const LogoWrapper = styled.svg`
   background: #ffffff20;
   border-radius: 8px;
   padding: 6px;
+  max-width: 50px;
+  max-height: 50px;
 `

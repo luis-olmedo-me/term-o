@@ -12,10 +12,10 @@ export const Notifications = ({ messages }) => {
   return (
     <Portal>
       <NotificationsWrapper>
-        {messages.map(({ id, message }) => {
+        {messages.map(({ id, message, isDead }) => {
           return (
-            <NotificationWrapper key={id}>
-              <Logo size={50} Wrapper={LogoWrapper} />
+            <NotificationWrapper key={id} isDead={isDead}>
+              <Logo Wrapper={LogoWrapper} />
 
               <Description>{message}</Description>
             </NotificationWrapper>

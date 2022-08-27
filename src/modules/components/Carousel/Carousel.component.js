@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CarouselWrapper, AnimatedEffect } from './Carousel.styles'
 
 const getAnimationDirection = (isGoingRight, isTheSame) => {
@@ -11,15 +11,21 @@ export const Carousel = ({ itemInView, children }) => {
   const wrapperReference = React.useRef(null)
   const [oldItemInView, setOldItemInView] = useState(itemInView)
   const [minimumHeight, setMinimumHeight] = useState(0)
+  console.log({ minimumHeight })
 
-  React.useEffect(() => {
-    const newHeight = wrapperReference.current.clientHeight
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      const newHeight = wrapperReference.current?.clientHeight
 
-    setMinimumHeight((oldHeight) =>
-      newHeight > oldHeight ? newHeight : oldHeight
-    )
+      setMinimumHeight((oldHeight) =>
+        newHeight > oldHeight ? newHeight : oldHeight
+      )
+    })
 
-    return () => setOldItemInView(itemInView)
+    return () => {
+      clearTimeout(timeoutId)
+      setOldItemInView(itemInView)
+    }
   }, [itemInView])
 
   const isGoingRight = oldItemInView < itemInView

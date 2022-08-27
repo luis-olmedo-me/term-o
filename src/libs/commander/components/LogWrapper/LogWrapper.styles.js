@@ -66,6 +66,7 @@ export const Hash = styled.span`
 
 export const LogContent = styled.div`
   padding: 10px;
+  word-break: break-all;
 `
 
 export const GroupButtons = styled.div`

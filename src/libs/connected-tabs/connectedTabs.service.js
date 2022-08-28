@@ -6,17 +6,26 @@ class ConnectedTabs {
     chrome.tabs.onUpdated.addListener(this.expectForTabUpdate.bind(this))
   }
 
-  addIdToList(id) {
-    this.list = this.list.includes(id) ? this.list : [...this.list, id]
+  addIdToList(newId, { favIconUrl, title, url }) {
+    const isAlreadyInList = this.list.some(({ id }) => newId === id)
+
+    this.list = isAlreadyInList
+      ? this.list.map((otherTab) => {
+          return otherTab.id === newId
+            ? { ...otherTab, favIconUrl, title, url }
+            : otherTab
+        })
+      : [...this.list, { favIconUrl, title, url, id: newId }]
   }
 
   removeIdFromList(id) {
     this.list = this.list.filter((item) => item !== id)
   }
 
-  expectForTabUpdate(id, { status }) {
-    if (status === 'complete') this.addIdToList(id)
-    else if (status === 'loading') this.removeIdFromList(id)
+  expectForTabUpdate(id, _changeInfo, tab) {
+    this.addIdToList(id, tab)
+
+    console.log('this.list', this.list)
   }
 }
 

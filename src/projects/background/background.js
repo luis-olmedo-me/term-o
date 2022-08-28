@@ -4,6 +4,7 @@ import {
   eventTypes,
   extensionKeyEvents
 } from 'src/constants/events.constants.js'
+import { connectedTabs } from '../../libs/connected-tabs/connectedTabs.service'
 
 const toggleTerminal = () => {
   const root = window.document.getElementById('term-o-root')
@@ -96,6 +97,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     case eventTypes.UPDATE_CONFIG_CONSOLE_POSITION: {
       configManager.setConfig({ consolePosition: request.data })
       sendResponse({ status: 'ok' })
+      break
+    }
+
+    case eventTypes.GET_TABS_INFO: {
+      configManager.setConfig({ consolePosition: request.data })
+      sendResponse({ status: 'ok', data: connectedTabs.list })
       break
     }
   }

@@ -27,7 +27,6 @@ export const ElementWrapper = styled.span`
   border-radius: 3px;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
-  text-align: center;
   line-height: 1.75;
   padding-right: ${(props) => props.paddingRight}px;
   width: 100%;

@@ -1,7 +1,7 @@
 import React from 'react'
 
 export const ElementLabel = ({ element }) => {
-  const { id, classList } = element
+  const { id, classList, href } = element
 
   const tagName = element.tagName.toLowerCase()
   const classes = [...classList].join(' ')
@@ -25,6 +25,14 @@ export const ElementLabel = ({ element }) => {
           <span style={{ color: '#F8C572' }}>{` class`}</span>
           <span style={{ color: '#F6AD37' }}>{`=`}</span>
           <span style={{ color: '#F5A524' }}>{`"${classes}"`}</span>
+        </>
+      )}
+
+      {href && (
+        <>
+          <span style={{ color: '#F8C572' }}>{` href`}</span>
+          <span style={{ color: '#F6AD37' }}>{`=`}</span>
+          <span style={{ color: '#F5A524' }}>{`"${href}"`}</span>
         </>
       )}
 

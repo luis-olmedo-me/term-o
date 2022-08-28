@@ -1,18 +1,31 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
 import { getActionType } from './CommandInspect.helpers'
 import { inspectMessages } from './CommandInspect.messages'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { inspectActionTypes } from './CommandInspect.constants'
+import { getElements } from '../CommandDom/CommandDom.helpers'
+import { ElementLabel } from '../ParameterElements/components/ElementLabel/ElementLabel.component'
 
 export const CommandInspect = ({
   props,
   terminal: { command, setMessageData }
 }) => {
   const actionType = getActionType(props)
+  const [HTMLRoot, setHTMLRoot] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
 
   const handleInspect = useCallback(() => {
-    setMessageData(inspectMessages.notificationSuccess)
+    const elementsSearch = getElements({
+      patterns: ['html'],
+      filterBySome: null,
+      filterByEvery: null
+    })
+
+    elementsSearch
+      .then(({ elementsFound: [foundHTMLRoot] }) => setHTMLRoot(foundHTMLRoot))
+      .catch(() => setMessageData(domMessages.noElementsFound))
+      .finally(() => setIsLoading(false))
   }, [handleInspect, setMessageData])
 
   useEffect(
@@ -34,7 +47,9 @@ export const CommandInspect = ({
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-      <LogWrapper isLoading variant={parameterTypes.TABLE} />
+      <LogWrapper isLoading={isLoading} variant={parameterTypes.ELEMENTS}>
+        {HTMLRoot && <ElementLabel element={HTMLRoot} />}
+      </LogWrapper>
     </>
   )
 }

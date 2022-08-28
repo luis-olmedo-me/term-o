@@ -5,7 +5,7 @@ import { inspectMessages } from './CommandInspect.messages'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { inspectActionTypes } from './CommandInspect.constants'
 import { getElements } from '../CommandDom/CommandDom.helpers'
-import { ElementLabel } from '../ParameterElements/components/ElementLabel/ElementLabel.component'
+import { NodeTree } from '../NodeTree/NodeTree.component'
 
 export const CommandInspect = ({
   props,
@@ -48,7 +48,7 @@ export const CommandInspect = ({
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
       <LogWrapper isLoading={isLoading} variant={parameterTypes.ELEMENT}>
-        {HTMLRoot && <ElementLabel element={HTMLRoot} />}
+        {HTMLRoot && <NodeTree root={HTMLRoot} />}
       </LogWrapper>
     </>
   )

@@ -70,7 +70,9 @@ const ElementWithoutContext = ({
   }
 
   const handleUnpinElement = () => {
-    setPinnedElements(pinnedElements.filter((element) => element !== element))
+    setPinnedElements(
+      pinnedElements.filter((pinnedElement) => pinnedElement !== element)
+    )
 
     closeSelect()
   }

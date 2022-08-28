@@ -1,9 +1,20 @@
 class ConnectedTabs {
   constructor() {
-    this.list = []
+    const self = this
+    self.list = []
 
-    chrome.tabs.onRemoved.addListener(this.removeIdFromList.bind(this))
-    chrome.tabs.onUpdated.addListener(this.expectForTabUpdate.bind(this))
+    chrome.tabs.onRemoved.addListener(self.removeIdFromList.bind(self))
+    chrome.tabs.onUpdated.addListener(self.expectForTabUpdate.bind(self))
+
+    chrome.tabs.query({}, function (tabs) {
+      console.log({ tabs })
+      self.list = tabs.map(({ favIconUrl, title, url, id }) => ({
+        favIconUrl,
+        title,
+        url,
+        id
+      }))
+    })
   }
 
   addIdToList(newId, { favIconUrl, title, url }) {

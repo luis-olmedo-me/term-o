@@ -57,6 +57,18 @@ export const Favicon = styled.img`
   border-radius: 6px;
   box-sizing: border-box;
 `
+export const FaviconSVG = styled.svg`
+  display: inline-block;
+  vertical-align: middle;
+  background-size: cover;
+  width: 28px;
+  height: 28px;
+  margin-right: 10px;
+  padding: 5px;
+  background-color: #00000030;
+  border-radius: 6px;
+  box-sizing: border-box;
+`
 
 export const Title = styled.span`
   vertical-align: middle;

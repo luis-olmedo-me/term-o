@@ -1,5 +1,6 @@
-import React from 'react'
-import { Favicon, TabWrapper, Title } from './Tab.styles'
+import React, { useState } from 'react'
+import { Favicon, FaviconSVG, TabWrapper, Title } from './Tab.styles'
+import { Logo } from 'src/modules/icons/Logo.icon'
 
 export const Tab = ({
   element = {},
@@ -7,12 +8,18 @@ export const Tab = ({
   variant = '',
   shouldAnimate = false
 }) => {
+  const [hasError, setHasError] = useState(false)
+
   return (
     <TabWrapper
       className={`${className} ${variant}`}
       shouldAnimate={shouldAnimate}
     >
-      <Favicon src={element.favIconUrl} alt='favicon' />
+      {hasError ? (
+        <Logo size={28} Wrapper={FaviconSVG} />
+      ) : (
+        <Favicon src={element.favIconUrl} onError={() => setHasError(true)} />
+      )}
 
       <Title>{element.title}</Title>
     </TabWrapper>

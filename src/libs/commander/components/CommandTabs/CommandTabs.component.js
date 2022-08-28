@@ -13,7 +13,7 @@ import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginatio
 
 export const CommandTabs = ({
   props,
-  terminal: { command, addNotification, setMessageData }
+  terminal: { command, setMessageData }
 }) => {
   const [tabs, setTabs] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -26,14 +26,11 @@ export const CommandTabs = ({
   })
 
   const handleShowTabList = useCallback(() => {
-    const initialId = Date.now().toString()
     setIsLoading(true)
 
     getTabsInfo()
       .then(setTabs)
       .then(() => setIsLoading(false))
-
-    addNotification(initialId, 'showing tabs...')
   }, [])
 
   useEffect(

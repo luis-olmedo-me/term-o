@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+export const DefaultWrapper = styled.span('')
+
 export const Tag = styled.span`
   color: #9ba1a6;
 `

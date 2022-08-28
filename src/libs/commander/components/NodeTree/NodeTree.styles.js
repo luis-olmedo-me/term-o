@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
-export const TagWrapper = styled.span`
-  background: #00000095;
-  padding: 3px 7px;
+export const TreeWrapper = styled.div`
+  padding: 10px;
+  background: #00000020;
   border-radius: 3px;
 `

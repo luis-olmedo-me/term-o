@@ -6,7 +6,6 @@ import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { inspectActionTypes } from './CommandInspect.constants'
 import { getElements } from '../CommandDom/CommandDom.helpers'
 import { NodeTree } from '../NodeTree/NodeTree.component'
-import { appRoot } from 'src/projects/content/content.constants.js'
 
 export const CommandInspect = ({
   props,
@@ -24,7 +23,7 @@ export const CommandInspect = ({
       filterByEvery: null
     })
 
-    setObjetive(appRoot)
+    setObjetive(document.body)
 
     elementsSearch
       .then(({ elementsFound: [foundHTMLRoot] }) => setHTMLRoot(foundHTMLRoot))

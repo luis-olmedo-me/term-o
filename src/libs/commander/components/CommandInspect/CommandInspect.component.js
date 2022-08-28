@@ -5,7 +5,7 @@ import { inspectMessages } from './CommandInspect.messages'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { inspectActionTypes } from './CommandInspect.constants'
 import { getElements } from '../CommandDom/CommandDom.helpers'
-import { NodeTree } from '../NodeTree/NodeTree.component'
+import { NodeTree } from '../../modules/NodeTree/NodeTree.component'
 
 export const CommandInspect = ({
   props,

@@ -1,5 +1,5 @@
 import React from 'react'
-import { ElementLabel } from '../ParameterElements/components/ElementLabel/ElementLabel.component'
+import { ElementLabel } from '../../../../components/ParameterElements/components/ElementLabel/ElementLabel.component'
 import { TagWrapper } from './NodeLabel.styles'
 
 const supportedNodeTypes = [Node.ELEMENT_NODE]

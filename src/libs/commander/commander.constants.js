@@ -8,6 +8,7 @@ import { onConfig } from './components/CommandOn/CommandOn.constants'
 import { storageConfig } from './components/CommandStorage/CommandStorage.constants'
 import { helpConfig } from './components/CommandHelp/CommandHelp.constants'
 import { notifyConfig } from './components/CommandNotify/CommandNotify.constants'
+import { tabsConfig } from './components/CommandTabs/CommandTabs.constants'
 
 export const consoleCommands = {
   dom: domConfig,
@@ -19,5 +20,6 @@ export const consoleCommands = {
   alias: aliasConfig,
   storage: storageConfig,
   help: helpConfig,
-  notify: notifyConfig
+  notify: notifyConfig,
+  tabs: tabsConfig
 }

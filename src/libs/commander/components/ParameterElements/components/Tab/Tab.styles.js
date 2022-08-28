@@ -14,7 +14,7 @@ const Birth = keyframes`
 
 export const TabWrapper = styled.span`
   position: relative;
-  padding: 5px 2em 5px 10px;
+  padding: 5px 10px;
   background-color: #fafafa;
   color: #16181a;
   font-weight: bold;

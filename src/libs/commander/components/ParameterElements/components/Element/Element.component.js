@@ -1,7 +1,6 @@
 import React, { useMemo, useState, useCallback, useRef, useEffect } from 'react'
 import {
   ElementWrapper,
-  Specification,
   SelectTrigger,
   SelectOption,
   ThreeDotsOptions,
@@ -10,6 +9,7 @@ import {
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { isElementHidden } from '../../../CommandDom/CommandDom.helpers'
 import { createXPathFromElement } from './Element.helpers'
+import { ElementLabel } from '../ElementLabel/ElementLabel.component'
 
 const ElementWithoutContext = ({
   element = {},
@@ -122,11 +122,7 @@ const ElementWithoutContext = ({
       className={`${className} ${variant}`}
       shouldAnimate={shouldAnimate}
     >
-      {tagNameLabel}
-
-      {specification && (
-        <Specification isHidden={isHidden}>{specification}</Specification>
-      )}
+      <ElementLabel element={element}></ElementLabel>
 
       <ThreeDotsOptions
         isOpen={isSelectOpen}

@@ -1,6 +1,13 @@
 import React from 'react'
+import {
+  AttributeName,
+  AttributeValue,
+  Equal,
+  Tag,
+  TagName
+} from './ElementLabel.styles'
 
-export const ElementLabel = ({ element }) => {
+export const ElementLabel = ({ element, isHidden }) => {
   const { id, classList, href, type, fill } = element
 
   const tagName = element.tagName.toLowerCase()
@@ -12,74 +19,74 @@ export const ElementLabel = ({ element }) => {
 
   return (
     <span>
-      <span style={{ color: '#9BA1A6' }}>{'<'}</span>
+      <Tag>{'<'}</Tag>
 
-      <span style={{ color: '#0070f3' }}>{tagName}</span>
+      <TagName isHidden={isHidden}>{tagName}</TagName>
 
       {id && (
         <>
-          <span style={{ color: '#F8C572' }}>{` id`}</span>
-          <span style={{ color: '#F6AD37' }}>{`=`}</span>
-          <span style={{ color: '#F5A524' }}>{`"${id}"`}</span>
+          <AttributeName isHidden={isHidden}>{` id`}</AttributeName>
+          <Equal isHidden={isHidden}>{`=`}</Equal>
+          <AttributeValue isHidden={isHidden}>{`"${id}"`}</AttributeValue>
         </>
       )}
 
       {classes && (
         <>
-          <span style={{ color: '#F8C572' }}>{` class`}</span>
-          <span style={{ color: '#F6AD37' }}>{`=`}</span>
-          <span style={{ color: '#F5A524' }}>{`"${classes}"`}</span>
+          <AttributeName isHidden={isHidden}>{` class`}</AttributeName>
+          <Equal isHidden={isHidden}>{`=`}</Equal>
+          <AttributeValue isHidden={isHidden}>{`"${classes}"`}</AttributeValue>
         </>
       )}
 
       {href && (
         <>
-          <span style={{ color: '#F8C572' }}>{` href`}</span>
-          <span style={{ color: '#F6AD37' }}>{`=`}</span>
-          <span style={{ color: '#F5A524' }}>{`"${href}"`}</span>
+          <AttributeName isHidden={isHidden}>{` href`}</AttributeName>
+          <Equal isHidden={isHidden}>{`=`}</Equal>
+          <AttributeValue isHidden={isHidden}>{`"${href}"`}</AttributeValue>
         </>
       )}
 
       {type && (
         <>
-          <span style={{ color: '#F8C572' }}>{` type`}</span>
-          <span style={{ color: '#F6AD37' }}>{`=`}</span>
-          <span style={{ color: '#F5A524' }}>{`"${type}"`}</span>
+          <AttributeName isHidden={isHidden}>{` type`}</AttributeName>
+          <Equal isHidden={isHidden}>{`=`}</Equal>
+          <AttributeValue isHidden={isHidden}>{`"${type}"`}</AttributeValue>
         </>
       )}
 
       {fill && (
         <>
-          <span style={{ color: '#F8C572' }}>{` fill`}</span>
-          <span style={{ color: '#F6AD37' }}>{`=`}</span>
-          <span style={{ color: '#F5A524' }}>{`"${fill}"`}</span>
+          <AttributeName isHidden={isHidden}>{` fill`}</AttributeName>
+          <Equal isHidden={isHidden}>{`=`}</Equal>
+          <AttributeValue isHidden={isHidden}>{`"${fill}"`}</AttributeValue>
         </>
       )}
 
       {width && (
         <>
-          <span style={{ color: '#F8C572' }}>{` width`}</span>
-          <span style={{ color: '#F6AD37' }}>{`=`}</span>
-          <span style={{ color: '#F5A524' }}>{`"${width}"`}</span>
+          <AttributeName isHidden={isHidden}>{` width`}</AttributeName>
+          <Equal isHidden={isHidden}>{`=`}</Equal>
+          <AttributeValue isHidden={isHidden}>{`"${width}"`}</AttributeValue>
         </>
       )}
       {height && (
         <>
-          <span style={{ color: '#F8C572' }}>{` height`}</span>
-          <span style={{ color: '#F6AD37' }}>{`=`}</span>
-          <span style={{ color: '#F5A524' }}>{`"${height}"`}</span>
+          <AttributeName isHidden={isHidden}>{` height`}</AttributeName>
+          <Equal isHidden={isHidden}>{`=`}</Equal>
+          <AttributeValue isHidden={isHidden}>{`"${height}"`}</AttributeValue>
         </>
       )}
 
       {viewBox && (
         <>
-          <span style={{ color: '#F8C572' }}>{` viewBox`}</span>
-          <span style={{ color: '#F6AD37' }}>{`=`}</span>
-          <span style={{ color: '#F5A524' }}>{`"${viewBox}"`}</span>
+          <AttributeName isHidden={isHidden}>{` viewBox`}</AttributeName>
+          <Equal isHidden={isHidden}>{`=`}</Equal>
+          <AttributeValue isHidden={isHidden}>{`"${viewBox}"`}</AttributeValue>
         </>
       )}
 
-      <span style={{ color: '#9BA1A6' }}>{' />'}</span>
+      <Tag>{' />'}</Tag>
     </span>
   )
 }

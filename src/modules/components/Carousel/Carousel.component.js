@@ -13,19 +13,26 @@ export const Carousel = ({ itemInView, children }) => {
   const [minimumHeight, setMinimumHeight] = useState(0)
 
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
+    return () => {
+      setOldItemInView(itemInView)
+    }
+  }, [itemInView])
+
+  useEffect(() => {
+    const updateMinimumHeight = () => {
       const newHeight = wrapperReference.current?.clientHeight
 
       setMinimumHeight((oldHeight) =>
         newHeight > oldHeight ? newHeight : oldHeight
       )
-    })
-
-    return () => {
-      clearTimeout(timeoutId)
-      setOldItemInView(itemInView)
     }
-  }, [itemInView])
+
+    const obsever = new ResizeObserver(updateMinimumHeight)
+
+    obsever.observe(wrapperReference.current)
+
+    return () => obsever.unobserve(wrapperReference.current)
+  }, [])
 
   const isGoingRight = oldItemInView < itemInView
   const isTheSame = oldItemInView === itemInView

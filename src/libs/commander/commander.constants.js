@@ -9,6 +9,7 @@ import { storageConfig } from './components/CommandStorage/CommandStorage.consta
 import { helpConfig } from './components/CommandHelp/CommandHelp.constants'
 import { notifyConfig } from './components/CommandNotify/CommandNotify.constants'
 import { tabsConfig } from './components/CommandTabs/CommandTabs.constants'
+import { inspectConfig } from './components/CommandInspect/CommandInspect.constants'
 
 export const consoleCommands = {
   dom: domConfig,
@@ -21,5 +22,6 @@ export const consoleCommands = {
   storage: storageConfig,
   help: helpConfig,
   notify: notifyConfig,
-  tabs: tabsConfig
+  tabs: tabsConfig,
+  inspect: inspectConfig
 }

@@ -5,6 +5,11 @@ import { tabsMessages } from './CommandTabs.messages'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { tabsActionTypes } from './CommandTabs.constants'
 import { getTabsInfo } from 'src/helpers/event.helpers.js'
+import { ParameterElements } from '../ParameterElements/ParameterElements.component'
+import { Tab } from '../ParameterElements/components/Tab/Tab.component'
+import { Carousel } from 'modules/components/Carousel/Carousel.component'
+import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
+import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 
 export const CommandTabs = ({
   props,
@@ -14,6 +19,11 @@ export const CommandTabs = ({
   const [isLoading, setIsLoading] = useState(true)
 
   const actionType = getActionType(props)
+
+  const { buttonGroups, pages, pageNumber } = usePaginationGroups({
+    items: tabs,
+    maxItems: 10
+  })
 
   const handleShowTabList = useCallback(() => {
     const initialId = Date.now().toString()
@@ -45,16 +55,24 @@ export const CommandTabs = ({
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-      <LogWrapper isLoading={isLoading} variant={parameterTypes.TABS}>
-        {tabs.map((tab) => {
-          return (
-            <div key={tab.id}>
-              <img src={tab.favIconUrl} alt='' />
-
-              <span>{tab.title}</span>
-            </div>
-          )
-        })}
+      <LogWrapper
+        isLoading={isLoading}
+        variant={parameterTypes.TABS}
+        buttonGroups={buttonGroups}
+      >
+        <Carousel itemInView={pageNumber}>
+          {pages.map((page, currentPageNumber) => {
+            return (
+              <CarouselItem key={currentPageNumber}>
+                <ParameterElements
+                  elements={page}
+                  pinnedElements={[]}
+                  Child={Tab}
+                />
+              </CarouselItem>
+            )
+          })}
+        </Carousel>
       </LogWrapper>
     </>
   )

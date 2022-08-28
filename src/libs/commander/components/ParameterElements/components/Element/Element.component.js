@@ -12,7 +12,7 @@ import { isElementHidden } from '../../../CommandDom/CommandDom.helpers'
 import { createXPathFromElement } from './Element.helpers'
 
 const ElementWithoutContext = ({
-  htmlElement = {},
+  element = {},
   setHighlitedElement,
   setPinnedElements,
   pinnedElements,
@@ -36,16 +36,16 @@ const ElementWithoutContext = ({
   }, [])
 
   const { height, width } = useMemo(() => {
-    return htmlElement.getBoundingClientRect() || {}
-  }, [htmlElement])
+    return element.getBoundingClientRect() || {}
+  }, [element])
 
-  const isHidden = isElementHidden(htmlElement, { height, width })
+  const isHidden = isElementHidden(element, { height, width })
 
-  const { id, classList } = htmlElement
+  const { id, classList } = element
 
   const idLabel = id && `#${id}`
   const classNameLabel = !!classList.length && `.${[...classList].join('.')}`
-  const tagNameLabel = htmlElement.tagName.toLowerCase()
+  const tagNameLabel = element.tagName.toLowerCase()
 
   const specification = idLabel || classNameLabel || ''
 
@@ -56,7 +56,7 @@ const ElementWithoutContext = ({
   }
 
   const handleScrollIntoView = () => {
-    htmlElement.scrollIntoView({
+    element.scrollIntoView({
       behavior: 'smooth'
     })
 
@@ -64,21 +64,19 @@ const ElementWithoutContext = ({
   }
 
   const handlePinElement = () => {
-    setPinnedElements([...pinnedElements, htmlElement])
+    setPinnedElements([...pinnedElements, element])
 
     closeSelect()
   }
 
   const handleUnpinElement = () => {
-    setPinnedElements(
-      pinnedElements.filter((element) => element !== htmlElement)
-    )
+    setPinnedElements(pinnedElements.filter((element) => element !== element))
 
     closeSelect()
   }
 
   const handleCopyXPath = () => {
-    const xPath = createXPathFromElement(htmlElement)
+    const xPath = createXPathFromElement(element)
 
     navigator.clipboard.writeText(xPath.includes(' ') ? `"${xPath}"` : xPath)
 
@@ -86,14 +84,14 @@ const ElementWithoutContext = ({
   }
 
   const highlightElement = () => {
-    setHighlitedElement(htmlElement)
+    setHighlitedElement(element)
   }
 
   const unhighlightElement = () => {
     setHighlitedElement(null)
   }
 
-  const isElementPinned = pinnedElements.includes(htmlElement)
+  const isElementPinned = pinnedElements.includes(element)
 
   const options = [
     {

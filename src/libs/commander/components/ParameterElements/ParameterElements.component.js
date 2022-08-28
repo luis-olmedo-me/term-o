@@ -6,7 +6,8 @@ export const ParameterElements = ({
   elements,
   pinnedElements,
   setPinnedElements,
-  shouldAnimate
+  shouldAnimate,
+  Child = Element
 }) => {
   return (
     <ElementsWrapper>
@@ -14,9 +15,9 @@ export const ParameterElements = ({
         const isPinned = pinnedElements.includes(element)
 
         return (
-          <Element
+          <Child
             key={`element-${indexId}`}
-            htmlElement={element}
+            element={element}
             setPinnedElements={setPinnedElements}
             pinnedElements={pinnedElements}
             variant={isPinned ? 'pinned' : 'default'}

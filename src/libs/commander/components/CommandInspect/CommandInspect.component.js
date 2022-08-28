@@ -47,7 +47,7 @@ export const CommandInspect = ({
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-      <LogWrapper isLoading={isLoading} variant={parameterTypes.ELEMENTS}>
+      <LogWrapper isLoading={isLoading} variant={parameterTypes.ELEMENT}>
         {HTMLRoot && <ElementLabel element={HTMLRoot} />}
       </LogWrapper>
     </>

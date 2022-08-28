@@ -52,10 +52,6 @@ export const ElementWrapper = styled.span`
   }
 `
 
-export const Specification = styled.span`
-  color: ${(props) => (props.isHidden ? '#888' : '#f5a623')};
-`
-
 export const ThreeDotsOptions = styled(Select)`
   position: absolute;
   top: 0;

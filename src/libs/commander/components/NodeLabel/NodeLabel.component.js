@@ -6,13 +6,10 @@ const supportedNodeTypes = [Node.ELEMENT_NODE]
 
 export const NodeLabel = ({ node, level = 0, objetive }) => {
   const childNodes = [...node.childNodes]
+  const shouldShowChildren = node === objetive || node.contains(objetive)
   const hasSupportedNodes = childNodes.some((child) => {
     return supportedNodeTypes.includes(child.nodeType)
   })
-  const shouldShowChildren =
-    node === objetive ||
-    node.contains(objetive) ||
-    node.parentElement == objetive
 
   switch (node.nodeType) {
     case Node.ELEMENT_NODE:

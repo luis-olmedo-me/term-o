@@ -19,8 +19,10 @@ export const Carousel = ({ itemInView, children }) => {
   }, [itemInView])
 
   useEffect(() => {
+    const wrapper = wrapperReference.current
+
     const updateMinimumHeight = () => {
-      const newHeight = wrapperReference.current?.clientHeight
+      const newHeight = wrapper?.clientHeight
 
       setMinimumHeight((oldHeight) =>
         newHeight > oldHeight ? newHeight : oldHeight
@@ -29,9 +31,9 @@ export const Carousel = ({ itemInView, children }) => {
 
     const obsever = new ResizeObserver(updateMinimumHeight)
 
-    obsever.observe(wrapperReference.current)
+    obsever.observe(wrapper)
 
-    return () => obsever.unobserve(wrapperReference.current)
+    return () => obsever.unobserve(wrapper)
   }, [])
 
   const isGoingRight = oldItemInView < itemInView

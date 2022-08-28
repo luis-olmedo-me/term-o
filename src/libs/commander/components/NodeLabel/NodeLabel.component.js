@@ -4,25 +4,38 @@ import { TagWrapper } from './NodeLabel.styles'
 
 const supportedNodeTypes = [Node.ELEMENT_NODE]
 
-export const NodeLabel = ({ node, level = 0 }) => {
+export const NodeLabel = ({ node, level = 0, objetive }) => {
   const childNodes = [...node.childNodes]
+  const hasSupportedNodes = childNodes.some((child) => {
+    return supportedNodeTypes.includes(child.nodeType)
+  })
+  const shouldShowChildren =
+    node === objetive ||
+    node.contains(objetive) ||
+    node.parentElement == objetive
 
   switch (node.nodeType) {
     case Node.ELEMENT_NODE:
       return (
         <div>
-          <ElementLabel element={node} Wrapper={TagWrapper}>
+          <ElementLabel
+            element={node}
+            Wrapper={TagWrapper}
+            isHidden={!hasSupportedNodes}
+          >
             {childNodes.map((childNode, index) => {
               const isSupportedChildNode = supportedNodeTypes.includes(
                 childNode.nodeType
               )
 
               return (
-                isSupportedChildNode && (
+                isSupportedChildNode &&
+                shouldShowChildren && (
                   <NodeLabel
                     key={`${level}-${index}`}
                     level={level + 1}
                     node={childNode}
+                    objetive={objetive}
                   />
                 )
               )

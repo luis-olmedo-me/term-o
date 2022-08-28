@@ -6,6 +6,7 @@ import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { inspectActionTypes } from './CommandInspect.constants'
 import { getElements } from '../CommandDom/CommandDom.helpers'
 import { NodeTree } from '../NodeTree/NodeTree.component'
+import { appRoot } from 'src/projects/content/content.constants.js'
 
 export const CommandInspect = ({
   props,
@@ -13,6 +14,7 @@ export const CommandInspect = ({
 }) => {
   const actionType = getActionType(props)
   const [HTMLRoot, setHTMLRoot] = useState(null)
+  const [objetive, setObjetive] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
 
   const handleInspect = useCallback(() => {
@@ -21,6 +23,8 @@ export const CommandInspect = ({
       filterBySome: null,
       filterByEvery: null
     })
+
+    setObjetive(appRoot)
 
     elementsSearch
       .then(({ elementsFound: [foundHTMLRoot] }) => setHTMLRoot(foundHTMLRoot))
@@ -48,7 +52,7 @@ export const CommandInspect = ({
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
       <LogWrapper isLoading={isLoading} variant={parameterTypes.ELEMENT}>
-        {HTMLRoot && <NodeTree root={HTMLRoot} />}
+        {HTMLRoot && <NodeTree root={HTMLRoot} objetive={objetive} />}
       </LogWrapper>
     </>
   )

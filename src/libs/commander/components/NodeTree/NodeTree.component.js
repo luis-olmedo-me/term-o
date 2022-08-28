@@ -2,10 +2,10 @@ import React from 'react'
 import { NodeLabel } from '../NodeLabel/NodeLabel.component'
 import { TreeWrapper } from './NodeTree.styles'
 
-export const NodeTree = ({ root }) => {
+export const NodeTree = ({ root, objetive }) => {
   return (
     <TreeWrapper>
-      <NodeLabel node={root} />
+      <NodeLabel node={root} objetive={objetive} />
     </TreeWrapper>
   )
 }

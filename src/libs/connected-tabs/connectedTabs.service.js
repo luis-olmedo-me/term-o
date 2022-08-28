@@ -5,9 +5,7 @@ class ConnectedTabs {
 
     chrome.tabs.onRemoved.addListener(self.removeIdFromList.bind(self))
     chrome.tabs.onUpdated.addListener(self.expectForTabUpdate.bind(self))
-
     chrome.tabs.query({}, function (tabs) {
-      console.log({ tabs })
       self.list = tabs.map(({ favIconUrl, title, url, id }) => ({
         favIconUrl,
         title,
@@ -35,8 +33,6 @@ class ConnectedTabs {
 
   expectForTabUpdate(id, _changeInfo, tab) {
     this.addIdToList(id, tab)
-
-    console.log('this.list', this.list)
   }
 }
 

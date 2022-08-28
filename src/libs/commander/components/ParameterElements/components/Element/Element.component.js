@@ -9,7 +9,7 @@ import {
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { isElementHidden } from '../../../CommandDom/CommandDom.helpers'
 import { createXPathFromElement } from './Element.helpers'
-import { ElementLabel } from '../ElementLabel/ElementLabel.component'
+import { ElementLabel } from '../../../../modules/NodeTree/components/ElementLabel/ElementLabel.component'
 
 const ElementWithoutContext = ({
   element = {},

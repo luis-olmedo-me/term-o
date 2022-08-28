@@ -6,7 +6,7 @@ const supportedNodeTypes = [Node.ELEMENT_NODE]
 
 export const NodeLabel = ({ node, level = 0, objetive }) => {
   const childNodes = [...node.childNodes]
-  const shouldShowChildren = node === objetive || node.contains(objetive)
+  const nodeIncludesObjetive = node === objetive || node.contains(objetive)
   const hasSupportedNodes = childNodes.some((child) => {
     return supportedNodeTypes.includes(child.nodeType)
   })
@@ -27,7 +27,7 @@ export const NodeLabel = ({ node, level = 0, objetive }) => {
 
               return (
                 isSupportedChildNode &&
-                shouldShowChildren && (
+                nodeIncludesObjetive && (
                   <NodeLabel
                     key={`${level}-${index}`}
                     level={level + 1}

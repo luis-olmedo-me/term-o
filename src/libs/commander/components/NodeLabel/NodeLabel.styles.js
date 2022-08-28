@@ -5,4 +5,5 @@ export const TagWrapper = styled.span`
   padding: 3px 7px;
   border-radius: 3px;
   line-height: 2rem;
+  cursor: pointer;
 `

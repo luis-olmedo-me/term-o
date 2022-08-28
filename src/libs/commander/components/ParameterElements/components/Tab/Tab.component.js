@@ -1,5 +1,5 @@
 import React from 'react'
-import { TabWrapper } from './Tab.styles'
+import { Favicon, TabWrapper, Title } from './Tab.styles'
 
 export const Tab = ({
   element = {},
@@ -12,9 +12,9 @@ export const Tab = ({
       className={`${className} ${variant}`}
       shouldAnimate={shouldAnimate}
     >
-      <img src={element.favIconUrl} alt='' />
+      <Favicon src={element.favIconUrl} alt='favicon' />
 
-      <span>{element.title}</span>
+      <Title>{element.title}</Title>
     </TabWrapper>
   )
 }

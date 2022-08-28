@@ -49,6 +49,11 @@ export const Log = styled.div`
     color: #fff;
   }
 
+  &&.tabs {
+    background-color: #06b7db;
+    color: #fff;
+  }
+
   &&.help {
     background: linear-gradient(
       112deg,

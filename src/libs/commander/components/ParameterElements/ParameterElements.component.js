@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { ElementsWrapper } from './ParameterElements.styles'
 import { Element } from './components/Element/Element.component'
 

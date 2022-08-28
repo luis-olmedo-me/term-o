@@ -21,8 +21,7 @@ const Birth = keyframes`
 export const ElementWrapper = styled.span`
   position: relative;
   padding: 5px 2em 5px 10px;
-  background-color: ${(props) => (props.isHidden ? '#eaeaea' : '#fafafa')};
-  color: ${(props) => (props.isHidden ? '#888' : '#0070f3')};
+  background-color: #fafafa;
   font-weight: bold;
   border-radius: 3px;
   cursor: pointer;

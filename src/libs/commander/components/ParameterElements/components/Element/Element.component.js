@@ -115,14 +115,13 @@ const ElementWithoutContext = ({
 
   return (
     <ElementWrapper
-      isHidden={isHidden}
       onMouseEnter={!isHidden ? highlightElement : null}
       onMouseLeave={!isHidden ? unhighlightElement : null}
       paddingRight={wrapperPaddingRight}
       className={`${className} ${variant}`}
       shouldAnimate={shouldAnimate}
     >
-      <ElementLabel element={element}></ElementLabel>
+      <ElementLabel element={element} isHidden={isHidden} />
 
       <ThreeDotsOptions
         isOpen={isSelectOpen}

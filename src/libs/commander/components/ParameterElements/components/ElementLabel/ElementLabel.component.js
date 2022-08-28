@@ -5,7 +5,8 @@ import {
   Equal,
   Tag,
   TagName,
-  DefaultWrapper
+  DefaultWrapper,
+  ChildWrapper
 } from './ElementLabel.styles'
 
 export const ElementLabel = ({
@@ -104,9 +105,9 @@ export const ElementLabel = ({
 
       {hasChildren && (
         <>
-          <div style={{ paddingLeft: '2ch' }}>
+          <ChildWrapper>
             <span>{children}</span>
-          </div>
+          </ChildWrapper>
 
           <Wrapper>
             <Tag>{`</`}</Tag>

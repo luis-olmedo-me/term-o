@@ -21,3 +21,8 @@ export const Equal = styled.span`
 export const AttributeValue = styled.span`
   color: ${(props) => (props.isHidden ? '#787F85' : '#F5A524')};
 `
+
+export const ChildWrapper = styled.div`
+  padding-left: 2ch;
+  border-left: 1px solid #00000020;
+`

@@ -18,7 +18,7 @@ export const ElementLabel = ({ element, isHidden }) => {
   const height = element.getAttribute('height')
 
   return (
-    <span>
+    <>
       <Tag>{'<'}</Tag>
 
       <TagName isHidden={isHidden}>{tagName}</TagName>
@@ -87,6 +87,6 @@ export const ElementLabel = ({ element, isHidden }) => {
       )}
 
       <Tag>{' />'}</Tag>
-    </span>
+    </>
   )
 }

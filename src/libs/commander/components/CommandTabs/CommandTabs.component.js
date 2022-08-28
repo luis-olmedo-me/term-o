@@ -25,19 +25,19 @@ export const CommandTabs = ({
     maxItems: 10
   })
 
-  const handleShowTabList = useCallback(() => {
-    setIsLoading(true)
+  const handleShowTabList = useCallback((tabsInfo) => {
+    setTabs(tabsInfo)
 
-    getTabsInfo()
-      .then(setTabs)
-      .then(() => setIsLoading(false))
+    setIsLoading(false)
   }, [])
 
   useEffect(
     function handleActionType() {
       switch (actionType) {
         case tabsActionTypes.SHOW_TAB_LIST:
-          handleShowTabList()
+          getTabsInfo()
+            .then(handleShowTabList)
+            .catch(() => setMessageData(tabsMessages.unexpectedError))
           break
 
         default:

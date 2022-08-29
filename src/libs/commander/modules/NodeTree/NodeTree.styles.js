@@ -7,6 +7,7 @@ export const TreeWrapper = styled.div`
   overflow: scroll;
   white-space: nowrap;
   max-height: 550px;
+  font-weight: bold;
 
   &::-webkit-scrollbar {
     display: none;

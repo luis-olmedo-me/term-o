@@ -6,4 +6,6 @@ export const TagWrapper = styled.span`
   border-radius: 3px;
   line-height: 2rem;
   cursor: pointer;
+  position: relative;
+  padding-right: ${(props) => props.paddingRight || 3}px;
 `

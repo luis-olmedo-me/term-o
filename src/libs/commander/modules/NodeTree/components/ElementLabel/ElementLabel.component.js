@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
   AttributeName,
   AttributeValue,
@@ -7,7 +7,9 @@ import {
   TagName,
   DefaultWrapper,
   ChildWrapper,
-  DirectionSign
+  DirectionSign,
+  ActionButtons,
+  ActionButton
 } from './ElementLabel.styles'
 
 export const ElementLabel = ({
@@ -15,8 +17,19 @@ export const ElementLabel = ({
   isHidden,
   children,
   Wrapper = DefaultWrapper,
-  showDirection
+  showDirection,
+  actions
 }) => {
+  const actionsRef = useRef(null)
+  const [actionsPaddingRight, setActionsPaddingRight] = useState(0)
+
+  useEffect(function checkWrapperPadding() {
+    const { offsetWidth } = actionsRef.current
+    const paddingRight = offsetWidth + 10
+
+    setActionsPaddingRight(paddingRight)
+  }, [])
+
   const { id, classList, href, type, fill } = element
 
   const tagName = element.tagName.toLowerCase()
@@ -30,7 +43,7 @@ export const ElementLabel = ({
 
   return (
     <>
-      <Wrapper>
+      <Wrapper paddingRight={actionsPaddingRight}>
         <Tag>{'<'}</Tag>
 
         <TagName isHidden={isHidden}>{tagName}</TagName>
@@ -116,6 +129,16 @@ export const ElementLabel = ({
             </span>
           </DirectionSign>
         )}
+
+        <ActionButtons ref={actionsRef}>
+          {actions?.map((action) => {
+            return (
+              <ActionButton key={action.id} onClick={action.onClick}>
+                {action.Component}
+              </ActionButton>
+            )
+          })}
+        </ActionButtons>
       </Wrapper>
 
       {hasChildren && (

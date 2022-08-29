@@ -15,11 +15,33 @@ export const Nodes = ({ node, level = 0, objetive }) => {
     setIsOpen(!isOpen)
   }
 
+  const actions = [
+    {
+      id: 'toggle-element',
+      onClick: () => setIsOpen(!isOpen),
+      Component: (
+        <span
+          style={{
+            display: 'inline-block',
+            transform: `rotate(${isOpen ? '-90deg' : '90deg'})`
+          }}
+        >
+          {'<'}
+        </span>
+      )
+    }
+  ]
+
   switch (node.nodeType) {
     case Node.ELEMENT_NODE:
       return (
         <div onClick={handleWrapperClick}>
-          <ElementLabel element={node} Wrapper={TagWrapper} showDirection>
+          <ElementLabel
+            element={node}
+            Wrapper={TagWrapper}
+            actions={actions}
+            showDirection
+          >
             {childNodes.map((childNode, index) => {
               const isSupportedChildNode = supportedNodeTypes.includes(
                 childNode.nodeType

@@ -1,6 +1,9 @@
 import styled from 'styled-components'
 
-export const DefaultWrapper = styled.span('')
+export const DefaultWrapper = styled.span`
+  position: relative;
+  padding-right: ${(props) => props.paddingRight || 3}px;
+`
 
 export const Tag = styled.span`
   color: #9ba1a6;
@@ -32,4 +35,16 @@ export const DirectionSign = styled.span`
   border-left: 2px solid ${(props) => (props.disabled ? '#9BA1A6' : '#787f85')};
   padding: 0 3px 0 10px;
   color: ${(props) => (props.disabled ? '#9BA1A6' : '#787f85')};
+`
+
+export const ActionButtons = styled.div`
+  display: inline-block;
+  height: -webkit-fill-available;
+  position: absolute;
+  top: -2px;
+  bottom: 0;
+  right: 0;
+`
+export const ActionButton = styled.button`
+  height: -webkit-fill-available;
 `

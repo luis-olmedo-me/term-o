@@ -22,6 +22,7 @@ export const ElementLabel = ({
   const [actionsPaddingRight, setActionsPaddingRight] = useState(0)
 
   useEffect(function checkWrapperPadding() {
+    if (!actionsRef.current) return
     const { offsetWidth } = actionsRef.current
     const paddingRight = offsetWidth + 10
 

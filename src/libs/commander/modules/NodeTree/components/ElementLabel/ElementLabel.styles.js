@@ -34,10 +34,22 @@ export const ActionButtons = styled.div`
   display: inline-block;
   height: -webkit-fill-available;
   position: absolute;
-  top: -2px;
+  top: 0;
   bottom: 0;
   right: 0;
+  border-left: 1px solid #eaeaea;
 `
 export const ActionButton = styled.button`
   height: -webkit-fill-available;
+  background-color: white;
+  border: none;
+  color: black;
+  font-weight: bold;
+  font-family: Coda;
+  padding: 0 10px;
+  cursor: pointer;
+
+  &&:last-child {
+    border-radius: 0 3px 3px 0;
+  }
 `

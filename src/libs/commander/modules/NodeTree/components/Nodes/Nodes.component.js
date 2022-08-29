@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { ElementLabel } from '../ElementLabel/ElementLabel.component'
-import { TagWrapper } from './Nodes.styles'
+import { TagWrapper, ActionButtonText, GapNodesWrapper } from './Nodes.styles'
 
 const supportedNodeTypes = [Node.ELEMENT_NODE]
 
@@ -19,23 +19,14 @@ export const Nodes = ({ node, level = 0, objetive }) => {
     {
       id: 'toggle-element',
       onClick: () => setIsOpen(!isOpen),
-      Component: (
-        <span
-          style={{
-            display: 'inline-block',
-            transform: `rotate(${isOpen ? '-90deg' : '90deg'})`
-          }}
-        >
-          {'<'}
-        </span>
-      )
+      Component: <ActionButtonText isOpen={isOpen}>{'<'}</ActionButtonText>
     }
   ]
 
   switch (node.nodeType) {
     case Node.ELEMENT_NODE:
       return (
-        <div onClick={handleWrapperClick}>
+        <GapNodesWrapper onClick={handleWrapperClick}>
           <ElementLabel element={node} Wrapper={TagWrapper} actions={actions}>
             {childNodes.map((childNode, index) => {
               const isSupportedChildNode = supportedNodeTypes.includes(
@@ -55,7 +46,7 @@ export const Nodes = ({ node, level = 0, objetive }) => {
               )
             })}
           </ElementLabel>
-        </div>
+        </GapNodesWrapper>
       )
 
     default:

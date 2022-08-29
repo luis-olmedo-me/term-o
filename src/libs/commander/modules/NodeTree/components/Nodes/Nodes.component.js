@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { ElementLabel } from '../ElementLabel/ElementLabel.component'
 import { TagWrapper, ActionButtonText, GapNodesWrapper } from './Nodes.styles'
 
-const supportedNodeTypes = [Node.ELEMENT_NODE]
+const supportedNodeTypes = [Node.ELEMENT_NODE, Node.TEXT_NODE]
 
 export const Nodes = ({ node, level = 0, objetive }) => {
   const childNodes = [...node.childNodes]
@@ -12,11 +12,6 @@ export const Nodes = ({ node, level = 0, objetive }) => {
   })
 
   const [isOpen, setIsOpen] = useState(nodeIncludesObjetive)
-
-  const handleWrapperClick = (event) => {
-    event.stopPropagation()
-    setIsOpen(!isOpen)
-  }
 
   const actions = [
     {
@@ -50,6 +45,13 @@ export const Nodes = ({ node, level = 0, objetive }) => {
               )
             })}
           </ElementLabel>
+        </GapNodesWrapper>
+      )
+
+    case Node.TEXT_NODE:
+      return (
+        <GapNodesWrapper>
+          <TagWrapper>"{node.textContent}"</TagWrapper>
         </GapNodesWrapper>
       )
 

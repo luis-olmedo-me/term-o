@@ -2,7 +2,7 @@ import styled, { keyframes } from 'styled-components'
 
 export const DefaultWrapper = styled.span`
   position: relative;
-  padding-right: ${(props) => props.paddingRight || 3}px;
+  padding-right: ${(props) => props.paddingRight || 7}px;
 `
 
 export const Tag = styled.span`

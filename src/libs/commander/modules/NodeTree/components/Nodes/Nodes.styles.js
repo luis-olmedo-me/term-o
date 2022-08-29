@@ -2,11 +2,12 @@ import styled from 'styled-components'
 
 export const TagWrapper = styled.span`
   background: #fafafa;
+  color: #17c964;
   padding: 3px 7px;
   border-radius: 3px;
   cursor: pointer;
   position: relative;
-  padding-right: ${(props) => props.paddingRight || 3}px;
+  padding-right: ${(props) => props.paddingRight || 7}px;
 `
 
 export const GapNodesWrapper = styled.div`

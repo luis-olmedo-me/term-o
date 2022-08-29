@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 export const DefaultWrapper = styled.span`
   position: relative;
@@ -25,9 +25,19 @@ export const AttributeValue = styled.span`
   color: ${(props) => (props.isHidden ? '#787F85' : '#F5A524')};
 `
 
+const birth = keyframes`
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+`
 export const ChildWrapper = styled.div`
   padding-left: 2ch;
   border-left: 1px solid #00000020;
+  animation: ${birth} 0.2s ease-in-out;
+  transform-origin: top;
 `
 
 export const ActionButtons = styled.div`

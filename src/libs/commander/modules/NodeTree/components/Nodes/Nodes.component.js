@@ -7,9 +7,6 @@ const supportedNodeTypes = [Node.ELEMENT_NODE]
 export const Nodes = ({ node, level = 0, objetive }) => {
   const childNodes = [...node.childNodes]
   const nodeIncludesObjetive = node === objetive || node.contains(objetive)
-  const hasSupportedNodes = childNodes.some((child) => {
-    return supportedNodeTypes.includes(child.nodeType)
-  })
 
   const [isOpen, setIsOpen] = useState(nodeIncludesObjetive)
 
@@ -22,11 +19,7 @@ export const Nodes = ({ node, level = 0, objetive }) => {
     case Node.ELEMENT_NODE:
       return (
         <div onClick={handleWrapperClick}>
-          <ElementLabel
-            element={node}
-            Wrapper={TagWrapper}
-            isHidden={!hasSupportedNodes}
-          >
+          <ElementLabel element={node} Wrapper={TagWrapper} showDirection>
             {childNodes.map((childNode, index) => {
               const isSupportedChildNode = supportedNodeTypes.includes(
                 childNode.nodeType

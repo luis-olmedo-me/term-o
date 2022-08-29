@@ -6,14 +6,16 @@ import {
   Tag,
   TagName,
   DefaultWrapper,
-  ChildWrapper
+  ChildWrapper,
+  DirectionSign
 } from './ElementLabel.styles'
 
 export const ElementLabel = ({
   element,
   isHidden,
   children,
-  Wrapper = DefaultWrapper
+  Wrapper = DefaultWrapper,
+  showDirection
 }) => {
   const { id, classList, href, type, fill } = element
 
@@ -101,6 +103,19 @@ export const ElementLabel = ({
         )}
 
         {<Tag>{hasChildren ? ' >' : ' />'}</Tag>}
+
+        {showDirection && (
+          <DirectionSign disabled={!hasChildren}>
+            <span
+              style={{
+                display: 'inline-block',
+                transform: `rotate(${hasChildren ? '-90deg' : '90deg'})`
+              }}
+            >
+              {'<'}
+            </span>
+          </DirectionSign>
+        )}
       </Wrapper>
 
       {hasChildren && (

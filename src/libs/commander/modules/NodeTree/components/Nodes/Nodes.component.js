@@ -1,20 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ElementLabel } from '../ElementLabel/ElementLabel.component'
-import { TagWrapper } from './NodeLabel.styles'
+import { TagWrapper } from './Nodes.styles'
 
 const supportedNodeTypes = [Node.ELEMENT_NODE]
 
-export const NodeLabel = ({ node, level = 0, objetive }) => {
+export const Nodes = ({ node, level = 0, objetive }) => {
   const childNodes = [...node.childNodes]
   const nodeIncludesObjetive = node === objetive || node.contains(objetive)
   const hasSupportedNodes = childNodes.some((child) => {
     return supportedNodeTypes.includes(child.nodeType)
   })
 
+  const [isOpen, setIsOpen] = useState(nodeIncludesObjetive)
+
+  const handleWrapperClick = (event) => {
+    event.stopPropagation()
+    setIsOpen(!isOpen)
+  }
+
   switch (node.nodeType) {
     case Node.ELEMENT_NODE:
       return (
-        <div>
+        <div onClick={handleWrapperClick}>
           <ElementLabel
             element={node}
             Wrapper={TagWrapper}
@@ -27,8 +34,8 @@ export const NodeLabel = ({ node, level = 0, objetive }) => {
 
               return (
                 isSupportedChildNode &&
-                nodeIncludesObjetive && (
-                  <NodeLabel
+                isOpen && (
+                  <Nodes
                     key={`${level}-${index}`}
                     level={level + 1}
                     node={childNode}

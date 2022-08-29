@@ -29,14 +29,21 @@ export const ElementLabel = ({
     setActionsPaddingRight(paddingRight)
   }, [])
 
-  const { id, classList, href, type, fill } = element
+  const { id, classList, type, fill } = element
 
   const tagName = element.tagName.toLowerCase()
   const classes = [...classList].join(' ')
 
+  const largeHref = element.getAttribute('href')
+  const href =
+    largeHref?.length > 50 ? `${largeHref.slice(0, 47)}...` : largeHref
+
   const viewBox = element.getAttribute('viewBox')
   const width = element.getAttribute('width')
   const height = element.getAttribute('height')
+
+  const largeSrc = element.getAttribute('src')
+  const src = largeSrc?.length > 50 ? `${largeSrc.slice(0, 47)}...` : largeSrc
 
   const hasChildren = children?.some(Boolean)
   const hasActions = actions?.length > 0
@@ -112,6 +119,14 @@ export const ElementLabel = ({
             <AttributeValue isHidden={isHidden}>
               {`"${viewBox}"`}
             </AttributeValue>
+          </>
+        )}
+
+        {src && (
+          <>
+            <AttributeName isHidden={isHidden}>{` src`}</AttributeName>
+            <Equal isHidden={isHidden}>{`=`}</Equal>
+            <AttributeValue isHidden={isHidden}>{`"${src}"`}</AttributeValue>
           </>
         )}
 

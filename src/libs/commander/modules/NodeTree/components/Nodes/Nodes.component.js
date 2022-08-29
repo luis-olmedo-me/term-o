@@ -30,7 +30,7 @@ export const Nodes = ({ node, level = 0, objetive }) => {
   switch (node.nodeType) {
     case Node.ELEMENT_NODE:
       return (
-        <GapNodesWrapper onClick={handleWrapperClick}>
+        <GapNodesWrapper>
           <ElementLabel element={node} Wrapper={TagWrapper} actions={actions}>
             {childNodes.map((childNode, index) => {
               const isSupportedChildNode = supportedNodeTypes.includes(

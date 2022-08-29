@@ -64,5 +64,6 @@ export const ActionButton = styled.button`
   }
   &&:disabled {
     background-color: #eaeaea;
+    color: #aaa;
   }
 `

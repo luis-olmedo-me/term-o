@@ -121,7 +121,11 @@ export const ElementLabel = ({
           <ActionButtons ref={actionsRef}>
             {actions.map((action) => {
               return (
-                <ActionButton key={action.id} onClick={action.onClick}>
+                <ActionButton
+                  key={action.id}
+                  onClick={action.disabled ? null : action.onClick}
+                  disabled={action.disabled}
+                >
                   {action.Component}
                 </ActionButton>
               )

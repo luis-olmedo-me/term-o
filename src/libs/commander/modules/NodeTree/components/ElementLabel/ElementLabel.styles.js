@@ -52,4 +52,7 @@ export const ActionButton = styled.button`
   &&:last-child {
     border-radius: 0 3px 3px 0;
   }
+  &&:disabled {
+    background-color: #eaeaea;
+  }
 `

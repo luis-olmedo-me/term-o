@@ -7,6 +7,9 @@ const supportedNodeTypes = [Node.ELEMENT_NODE]
 export const Nodes = ({ node, level = 0, objetive }) => {
   const childNodes = [...node.childNodes]
   const nodeIncludesObjetive = node === objetive || node.contains(objetive)
+  const hasSupportedNodes = childNodes.some((child) => {
+    return supportedNodeTypes.includes(child.nodeType)
+  })
 
   const [isOpen, setIsOpen] = useState(nodeIncludesObjetive)
 
@@ -19,6 +22,7 @@ export const Nodes = ({ node, level = 0, objetive }) => {
     {
       id: 'toggle-element',
       onClick: () => setIsOpen(!isOpen),
+      disabled: !hasSupportedNodes,
       Component: <ActionButtonText isOpen={isOpen}>{'<'}</ActionButtonText>
     }
   ]

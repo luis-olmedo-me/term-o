@@ -36,12 +36,7 @@ export const Nodes = ({ node, level = 0, objetive }) => {
     case Node.ELEMENT_NODE:
       return (
         <div onClick={handleWrapperClick}>
-          <ElementLabel
-            element={node}
-            Wrapper={TagWrapper}
-            actions={actions}
-            showDirection
-          >
+          <ElementLabel element={node} Wrapper={TagWrapper} actions={actions}>
             {childNodes.map((childNode, index) => {
               const isSupportedChildNode = supportedNodeTypes.includes(
                 childNode.nodeType

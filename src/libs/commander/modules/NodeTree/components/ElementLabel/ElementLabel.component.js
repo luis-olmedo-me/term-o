@@ -7,7 +7,6 @@ import {
   TagName,
   DefaultWrapper,
   ChildWrapper,
-  DirectionSign,
   ActionButtons,
   ActionButton
 } from './ElementLabel.styles'
@@ -17,7 +16,6 @@ export const ElementLabel = ({
   isHidden,
   children,
   Wrapper = DefaultWrapper,
-  showDirection,
   actions
 }) => {
   const actionsRef = useRef(null)
@@ -40,6 +38,7 @@ export const ElementLabel = ({
   const height = element.getAttribute('height')
 
   const hasChildren = children?.some(Boolean)
+  const hasActions = actions?.length > 0
 
   return (
     <>
@@ -117,28 +116,17 @@ export const ElementLabel = ({
 
         {<Tag>{hasChildren ? ' >' : ' />'}</Tag>}
 
-        {showDirection && (
-          <DirectionSign disabled={!hasChildren}>
-            <span
-              style={{
-                display: 'inline-block',
-                transform: `rotate(${hasChildren ? '-90deg' : '90deg'})`
-              }}
-            >
-              {'<'}
-            </span>
-          </DirectionSign>
+        {hasActions && (
+          <ActionButtons ref={actionsRef}>
+            {actions.map((action) => {
+              return (
+                <ActionButton key={action.id} onClick={action.onClick}>
+                  {action.Component}
+                </ActionButton>
+              )
+            })}
+          </ActionButtons>
         )}
-
-        <ActionButtons ref={actionsRef}>
-          {actions?.map((action) => {
-            return (
-              <ActionButton key={action.id} onClick={action.onClick}>
-                {action.Component}
-              </ActionButton>
-            )
-          })}
-        </ActionButtons>
       </Wrapper>
 
       {hasChildren && (

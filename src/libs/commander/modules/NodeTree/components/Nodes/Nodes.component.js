@@ -5,16 +5,15 @@ import { TagWrapper, ActionButtonText, GapNodesWrapper } from './Nodes.styles'
 const supportedNodeTypes = [Node.ELEMENT_NODE, Node.TEXT_NODE]
 
 export const Nodes = ({ node, level = 0, objetives, setObjetives }) => {
-  const childNodes = [...node.childNodes]
+  const childNodes = [...node.childNodes].filter(
+    (node) => !supportedNodeTypes.includes(node)
+  )
 
   const nodeIncludesObjetive = objetives.some((objetive) =>
     node.contains(objetive)
   )
   const isNodeObjetive = objetives.some((objetive) => node === objetive)
-
-  const hasSupportedNodes = childNodes.some((child) => {
-    return supportedNodeTypes.includes(child.nodeType)
-  })
+  const hasNodes = childNodes.length > 0
 
   const [isOpen, setIsOpen] = useState(nodeIncludesObjetive)
 
@@ -22,7 +21,7 @@ export const Nodes = ({ node, level = 0, objetives, setObjetives }) => {
     {
       id: 'toggle-element',
       onClick: () => setIsOpen(!isOpen),
-      disabled: !hasSupportedNodes,
+      disabled: !hasNodes,
       Component: <ActionButtonText isOpen={isOpen}>{'<'}</ActionButtonText>
     }
   ]
@@ -40,12 +39,7 @@ export const Nodes = ({ node, level = 0, objetives, setObjetives }) => {
             wrapperProps={{ isNodeObjetive, onClick: handleNodeClick }}
           >
             {childNodes.map((childNode, index) => {
-              const isSupportedChildNode = supportedNodeTypes.includes(
-                childNode.nodeType
-              )
-
               return (
-                isSupportedChildNode &&
                 isOpen && (
                   <Nodes
                     key={`${level}-${index}`}

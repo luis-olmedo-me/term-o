@@ -16,6 +16,7 @@ export const ElementLabel = ({
   isHidden,
   children,
   Wrapper = DefaultWrapper,
+  wrapperProps = {},
   actions
 }) => {
   const actionsRef = useRef(null)
@@ -50,7 +51,7 @@ export const ElementLabel = ({
 
   return (
     <>
-      <Wrapper paddingRight={actionsPaddingRight}>
+      <Wrapper paddingRight={actionsPaddingRight} {...wrapperProps}>
         <Tag>{'<'}</Tag>
 
         <TagName isHidden={isHidden}>{tagName}</TagName>
@@ -155,7 +156,7 @@ export const ElementLabel = ({
             <span>{children}</span>
           </ChildWrapper>
 
-          <Wrapper>
+          <Wrapper {...wrapperProps}>
             <Tag>{`</`}</Tag>
             <TagName isHidden={isHidden}>{tagName}</TagName>
             <Tag>{`>`}</Tag>

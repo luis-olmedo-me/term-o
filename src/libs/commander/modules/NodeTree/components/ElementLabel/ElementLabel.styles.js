@@ -47,11 +47,11 @@ export const ActionButtons = styled.div`
   top: 0;
   bottom: 0;
   right: 0;
-  border-left: 1px solid #eaeaea;
+  border-left: 1px solid #00000015;
 `
 export const ActionButton = styled.button`
   height: -webkit-fill-available;
-  background-color: white;
+  background-color: transparent;
   border: none;
   color: black;
   font-weight: bold;
@@ -63,7 +63,7 @@ export const ActionButton = styled.button`
     border-radius: 0 3px 3px 0;
   }
   &&:disabled {
-    background-color: #eaeaea;
+    background-color: #00000015;
     color: #aaa;
   }
 `

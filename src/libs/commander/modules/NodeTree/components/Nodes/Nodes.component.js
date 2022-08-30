@@ -10,6 +10,8 @@ export const Nodes = ({ node, level = 0, objetives }) => {
   const nodeIncludesObjetive = objetives.some((objetive) =>
     node.contains(objetive)
   )
+  const isNodeObjetive = objetives.some((objetive) => node === objetive)
+
   const hasSupportedNodes = childNodes.some((child) => {
     return supportedNodeTypes.includes(child.nodeType)
   })
@@ -29,7 +31,12 @@ export const Nodes = ({ node, level = 0, objetives }) => {
     case Node.ELEMENT_NODE:
       return (
         <GapNodesWrapper>
-          <ElementLabel element={node} Wrapper={TagWrapper} actions={actions}>
+          <ElementLabel
+            element={node}
+            Wrapper={TagWrapper}
+            actions={actions}
+            wrapperProps={{ isNodeObjetive }}
+          >
             {childNodes.map((childNode, index) => {
               const isSupportedChildNode = supportedNodeTypes.includes(
                 childNode.nodeType

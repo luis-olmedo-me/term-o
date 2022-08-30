@@ -18,7 +18,7 @@ export const getElements = ({
   filterByEvery
 }) => {
   return new Promise((resolve, reject) => {
-    const elements = xpaths.length
+    const elements = xpaths?.length
       ? xpaths.map(lookupElementByXPath)
       : getElementsFromDOM(patterns)
 

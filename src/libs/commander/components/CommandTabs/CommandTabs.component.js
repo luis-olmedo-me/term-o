@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
 import { getActionType } from './CommandTabs.helpers'
-import { tabsMessages } from './CommandTabs.messages'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { tabsActionTypes } from './CommandTabs.constants'
 import { getTabsInfo } from 'src/helpers/event.helpers.js'
-import { ParameterElements } from '../ParameterElements/ParameterElements.component'
-import { Tab } from '../ParameterElements/components/Tab/Tab.component'
+import { ParameterElements } from '../../modules/ParameterElements/ParameterElements.component'
+import { Tab } from '../../modules/ParameterElements/components/Tab/Tab.component'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
+import { commanderMessages } from '../../commander.messages'
 
 export const CommandTabs = ({
   props,
@@ -37,11 +37,11 @@ export const CommandTabs = ({
         case tabsActionTypes.SHOW_TAB_LIST:
           getTabsInfo()
             .then(handleShowTabList)
-            .catch(() => setMessageData(tabsMessages.unexpectedError))
+            .catch(() => setMessageData(commanderMessages.unexpectedError))
           break
 
         default:
-          setMessageData(tabsMessages.unexpectedError)
+          setMessageData(commanderMessages.unexpectedError)
           break
       }
     },

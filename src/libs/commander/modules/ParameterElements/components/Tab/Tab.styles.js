@@ -65,7 +65,7 @@ export const FaviconSVG = styled.svg`
   height: 28px;
   margin-right: 10px;
   padding: 5px;
-  background-color: #00000035;
+  background-color: #fafafa;
   border-radius: 6px;
   box-sizing: border-box;
 `

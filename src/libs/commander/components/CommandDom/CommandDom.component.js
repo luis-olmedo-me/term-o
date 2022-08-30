@@ -7,7 +7,7 @@ import {
   getElements
 } from './CommandDom.helpers'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
-import { ParameterElements } from '../ParameterElements/ParameterElements.component'
+import { ParameterElements } from '../../modules/ParameterElements/ParameterElements.component'
 import { domMessages } from './CommandDom.messages'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 import { insertParams } from '../../commander.helpers'

@@ -7,9 +7,9 @@ import {
   SelectOptionsWrapper
 } from './Element.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
-import { isElementHidden } from '../../../CommandDom/CommandDom.helpers'
+import { isElementHidden } from '../../../../components/CommandDom/CommandDom.helpers'
 import { createXPathFromElement } from './Element.helpers'
-import { ElementLabel } from '../ElementLabel/ElementLabel.component'
+import { ElementLabel } from '../../../NodeTree/components/ElementLabel/ElementLabel.component'
 
 const ElementWithoutContext = ({
   element = {},

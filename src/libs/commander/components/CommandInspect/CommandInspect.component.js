@@ -16,7 +16,6 @@ export const CommandInspect = ({
   const [HTMLRoot, setHTMLRoot] = useState(null)
   const [objetives, setObjetives] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  console.log('objetives', objetives)
 
   const handleInspect = useCallback(() => {
     const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
@@ -54,7 +53,13 @@ export const CommandInspect = ({
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
       <LogWrapper isLoading={isLoading} variant={parameterTypes.ELEMENT}>
-        {HTMLRoot && <NodeTree root={HTMLRoot} objetives={objetives} />}
+        {HTMLRoot && (
+          <NodeTree
+            root={HTMLRoot}
+            objetives={objetives}
+            setObjetives={setObjetives}
+          />
+        )}
       </LogWrapper>
     </>
   )

@@ -4,7 +4,7 @@ import { TagWrapper, ActionButtonText, GapNodesWrapper } from './Nodes.styles'
 
 const supportedNodeTypes = [Node.ELEMENT_NODE, Node.TEXT_NODE]
 
-export const Nodes = ({ node, level = 0, objetives }) => {
+export const Nodes = ({ node, level = 0, objetives, setObjetives }) => {
   const childNodes = [...node.childNodes]
 
   const nodeIncludesObjetive = objetives.some((objetive) =>
@@ -27,6 +27,8 @@ export const Nodes = ({ node, level = 0, objetives }) => {
     }
   ]
 
+  const handleNodeClick = () => setObjetives([node])
+
   switch (node.nodeType) {
     case Node.ELEMENT_NODE:
       return (
@@ -35,7 +37,7 @@ export const Nodes = ({ node, level = 0, objetives }) => {
             element={node}
             Wrapper={TagWrapper}
             actions={actions}
-            wrapperProps={{ isNodeObjetive }}
+            wrapperProps={{ isNodeObjetive, onClick: handleNodeClick }}
           >
             {childNodes.map((childNode, index) => {
               const isSupportedChildNode = supportedNodeTypes.includes(
@@ -50,6 +52,7 @@ export const Nodes = ({ node, level = 0, objetives }) => {
                     level={level + 1}
                     node={childNode}
                     objetives={objetives}
+                    setObjetives={setObjetives}
                   />
                 )
               )
@@ -61,7 +64,9 @@ export const Nodes = ({ node, level = 0, objetives }) => {
     case Node.TEXT_NODE:
       return (
         <GapNodesWrapper>
-          <TagWrapper>"{node.textContent}"</TagWrapper>
+          <TagWrapper onClick={handleNodeClick} isNodeObjetive={isNodeObjetive}>
+            "{node.textContent}"
+          </TagWrapper>
         </GapNodesWrapper>
       )
 

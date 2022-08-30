@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const TagWrapper = styled.span`
-  background: ${(props) => (props.isNodeObjetive ? '#ff3' : '#fafafa')};
+  background: ${(props) => (props.isNodeObjetive ? '#fee7a6' : '#fafafa')};
   color: #17c964;
   padding: 3px 7px;
   border-radius: 3px;

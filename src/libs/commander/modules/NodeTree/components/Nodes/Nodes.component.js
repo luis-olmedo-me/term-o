@@ -4,9 +4,12 @@ import { TagWrapper, ActionButtonText, GapNodesWrapper } from './Nodes.styles'
 
 const supportedNodeTypes = [Node.ELEMENT_NODE, Node.TEXT_NODE]
 
-export const Nodes = ({ node, level = 0, objetive }) => {
+export const Nodes = ({ node, level = 0, objetives }) => {
   const childNodes = [...node.childNodes]
-  const nodeIncludesObjetive = node === objetive || node.contains(objetive)
+
+  const nodeIncludesObjetive = objetives.some((objetive) =>
+    node.contains(objetive)
+  )
   const hasSupportedNodes = childNodes.some((child) => {
     return supportedNodeTypes.includes(child.nodeType)
   })
@@ -39,7 +42,7 @@ export const Nodes = ({ node, level = 0, objetive }) => {
                     key={`${level}-${index}`}
                     level={level + 1}
                     node={childNode}
-                    objetive={objetive}
+                    objetives={objetives}
                   />
                 )
               )

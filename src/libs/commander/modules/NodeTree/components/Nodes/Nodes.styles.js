@@ -8,6 +8,7 @@ export const TagWrapper = styled.span`
   cursor: pointer;
   position: relative;
   padding-right: ${(props) => props.paddingRight || 7}px;
+  transition: background-color 0.2s ease-in-out;
 `
 
 export const GapNodesWrapper = styled.div`

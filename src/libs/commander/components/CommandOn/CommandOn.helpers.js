@@ -1,4 +1,4 @@
-import { actionTypes } from '../../constants/commands.constants'
+import { onActionTypes } from './CommandOn.constants'
 
 export const checkIfRegExpIsValid = (regExp) => {
   try {
@@ -9,7 +9,7 @@ export const checkIfRegExpIsValid = (regExp) => {
   }
 }
 
-export const getActionType = ({ url, run }) => {
-  if (run.length || url.length) return actionTypes.ADD_EVENT
-  else return actionTypes.NONE
+export const getActionType = ({ url, run, event }) => {
+  if (run.length || url.length || event) return onActionTypes.ADD_EVENT
+  else return onActionTypes.NONE
 }

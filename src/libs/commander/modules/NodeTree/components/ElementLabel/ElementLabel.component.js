@@ -46,6 +46,11 @@ export const ElementLabel = ({
         <TagName isHidden={isHidden}>{tagName}</TagName>
 
         {Object.entries(attributes).map(([attributeName, attributeValue]) => {
+          const attributeValueShorten =
+            attributeValue.length > 50
+              ? `${attributeValue.slice(0, 47)}...`
+              : attributeValue
+
           return (
             <span key={attributeName}>
               <AttributeName isHidden={isHidden}>
@@ -54,8 +59,8 @@ export const ElementLabel = ({
 
               <Equal isHidden={isHidden}>{`=`}</Equal>
 
-              <AttributeValue isHidden={isHidden}>
-                {`"${attributeValue}"`}
+              <AttributeValue isHidden={isHidden} title={attributeValue}>
+                {`"${attributeValueShorten}"`}
               </AttributeValue>
             </span>
           )

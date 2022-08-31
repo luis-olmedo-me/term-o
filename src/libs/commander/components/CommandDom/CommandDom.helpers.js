@@ -133,3 +133,14 @@ export const lookupElementByXPath = (xpath) => {
 
   return result.singleNodeValue
 }
+
+export const getAttributes = (element) => {
+  const attributeNames = element.getAttributeNames(element)
+
+  return attributeNames.reduce((allAttributes, attributeName) => {
+    return {
+      ...allAttributes,
+      [attributeName]: element.getAttribute(attributeName)
+    }
+  }, {})
+}

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { ElementLabel } from '../ElementLabel/ElementLabel.component'
 import { TagWrapper, ActionButtonText, GapNodesWrapper } from './Nodes.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
+import { isElementHidden } from '../../../../components/CommandDom/CommandDom.helpers'
 
 const supportedNodeTypes = [Node.ELEMENT_NODE, Node.TEXT_NODE]
 
@@ -58,17 +59,20 @@ const NodesWithoutContext = ({
 
   switch (node.nodeType) {
     case Node.ELEMENT_NODE:
+      const isHidden = isElementHidden(node)
+
       return (
         <GapNodesWrapper ref={nodeWrapperRef}>
           <ElementLabel
             element={node}
             Wrapper={TagWrapper}
             actions={actions}
+            isHidden={isHidden}
             wrapperProps={{
               isNodeObjetive,
               onClick: handleNodeClick,
-              onMouseEnter: () => setHighlitedElement(node),
-              onMouseLeave: () => setHighlitedElement(null)
+              onMouseEnter: !isHidden ? () => setHighlitedElement(node) : null,
+              onMouseLeave: !isHidden ? () => setHighlitedElement(null) : null
             }}
           >
             {childNodes.map((childNode, index) => {

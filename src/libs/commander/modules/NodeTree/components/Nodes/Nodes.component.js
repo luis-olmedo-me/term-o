@@ -7,6 +7,7 @@ const supportedNodeTypes = [Node.ELEMENT_NODE, Node.TEXT_NODE]
 export const Nodes = ({
   node,
   level = 0,
+  root,
   objetives,
   setObjetives,
   handleRootChange
@@ -21,6 +22,7 @@ export const Nodes = ({
     node.contains(objetive)
   )
   const isNodeObjetive = objetives.some((objetive) => node === objetive)
+  const isNodeRoot = root === node
   const hasNodes = childNodes.length > 0
 
   const [isOpen, setIsOpen] = useState(nodeIncludesObjetive)
@@ -46,7 +48,7 @@ export const Nodes = ({
       id: 'change-root',
       onClick: () => handleRootChange(node),
       disabled: !hasNodes,
-      Component: isOpen ? '✽' : '⚬'
+      Component: isNodeRoot ? '✽' : '⚬'
     }
   ]
 
@@ -69,6 +71,7 @@ export const Nodes = ({
                     key={`${level}-${index}`}
                     level={level + 1}
                     node={childNode}
+                    root={root}
                     objetives={objetives}
                     setObjetives={setObjetives}
                     handleRootChange={handleRootChange}

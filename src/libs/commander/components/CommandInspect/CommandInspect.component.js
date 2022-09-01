@@ -58,7 +58,6 @@ export const CommandInspect = ({
       newRoot === HTMLRoot ? defaultRoot.current : newRoot
 
     setHTMLRoot(sanitazedNewRoot)
-    setObjetives([sanitazedNewRoot])
   }
 
   return (

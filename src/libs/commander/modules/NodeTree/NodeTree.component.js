@@ -12,6 +12,7 @@ export const NodeTree = ({
     <TreeWrapper>
       <Nodes
         node={root}
+        root={root}
         objetives={objetives}
         setObjetives={setObjetives}
         handleRootChange={handleRootChange}

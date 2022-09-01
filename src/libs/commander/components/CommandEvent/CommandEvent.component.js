@@ -140,7 +140,7 @@ export const CommandEvent = ({
                   <Table
                     headers={eventRows}
                     rows={page}
-                    widths={[20, 20, 60]}
+                    widths={[20, 15, 15, 50]}
                   />
                 </CarouselItem>
               )

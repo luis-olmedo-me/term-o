@@ -27,7 +27,8 @@ export const Console = () => {
   const [hasPageEventsBeenRunned, setHasPageEventsBeenRunned] = useState(false)
 
   const { notifications, addNotification } = useNotifications()
-  const { isOpen, appliedPageEvents, consolePosition } = useConfig()
+  const { isOpen, appliedPageEvents, customPageEvents, consolePosition } =
+    useConfig()
   const { setResizingFrom, resizeData, setMovingFrom, isMoving } = useResize({
     wrapperReference,
     consolePosition
@@ -56,6 +57,32 @@ export const Console = () => {
       if (appliedPageEvents.length) setHasPageEventsBeenRunned(true)
     },
     [appliedPageEvents, handleCommandRun, hasPageEventsBeenRunned]
+  )
+
+  useEffect(
+    function setUpCustomEvents() {
+      const customEventsWithCallbacks = customPageEvents.map((customEvent) => {
+        return {
+          ...customEvent,
+          callback: () => {
+            const id = Date.now().toString()
+
+            handleCommandRun(customEvent.command, id)
+          }
+        }
+      })
+
+      customEventsWithCallbacks.forEach((customEvent) => {
+        window.addEventListener(customEvent.event, customEvent.callback)
+      })
+
+      return () => {
+        customEventsWithCallbacks.forEach((customEvent) => {
+          window.removeEventListener(customEvent.event, customEvent.callback)
+        })
+      }
+    },
+    [handleCommandRun, customPageEvents]
   )
 
   useEffect(

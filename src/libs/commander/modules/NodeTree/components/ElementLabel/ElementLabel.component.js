@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { getAttributes } from '../../../../components/CommandDom/CommandDom.helpers'
 import {
   AttributeName,
   AttributeValue,
@@ -30,21 +31,9 @@ export const ElementLabel = ({
     setActionsPaddingRight(paddingRight)
   }, [])
 
-  const { id, classList, type, fill } = element
-
   const tagName = element.tagName.toLowerCase()
-  const classes = [...classList].join(' ')
 
-  const largeHref = element.getAttribute('href')
-  const href =
-    largeHref?.length > 50 ? `${largeHref.slice(0, 47)}...` : largeHref
-
-  const viewBox = element.getAttribute('viewBox')
-  const width = element.getAttribute('width')
-  const height = element.getAttribute('height')
-
-  const largeSrc = element.getAttribute('src')
-  const src = largeSrc?.length > 50 ? `${largeSrc.slice(0, 47)}...` : largeSrc
+  const attributes = getAttributes(element)
 
   const hasChildren = children?.some(Boolean)
   const hasActions = actions?.length > 0
@@ -56,80 +45,26 @@ export const ElementLabel = ({
 
         <TagName isHidden={isHidden}>{tagName}</TagName>
 
-        {id && (
-          <>
-            <AttributeName isHidden={isHidden}>{` id`}</AttributeName>
-            <Equal isHidden={isHidden}>{`=`}</Equal>
-            <AttributeValue isHidden={isHidden}>{`"${id}"`}</AttributeValue>
-          </>
-        )}
+        {Object.entries(attributes).map(([attributeName, attributeValue]) => {
+          const attributeValueShorten =
+            attributeValue.length > 50
+              ? `${attributeValue.slice(0, 47)}...`
+              : attributeValue
 
-        {classes && (
-          <>
-            <AttributeName isHidden={isHidden}>{` class`}</AttributeName>
-            <Equal isHidden={isHidden}>{`=`}</Equal>
-            <AttributeValue
-              isHidden={isHidden}
-            >{`"${classes}"`}</AttributeValue>
-          </>
-        )}
+          return (
+            <span key={attributeName}>
+              <AttributeName isHidden={isHidden}>
+                {` ${attributeName}`}
+              </AttributeName>
 
-        {href && (
-          <>
-            <AttributeName isHidden={isHidden}>{` href`}</AttributeName>
-            <Equal isHidden={isHidden}>{`=`}</Equal>
-            <AttributeValue isHidden={isHidden}>{`"${href}"`}</AttributeValue>
-          </>
-        )}
+              <Equal isHidden={isHidden}>{`=`}</Equal>
 
-        {type && (
-          <>
-            <AttributeName isHidden={isHidden}>{` type`}</AttributeName>
-            <Equal isHidden={isHidden}>{`=`}</Equal>
-            <AttributeValue isHidden={isHidden}>{`"${type}"`}</AttributeValue>
-          </>
-        )}
-
-        {fill && (
-          <>
-            <AttributeName isHidden={isHidden}>{` fill`}</AttributeName>
-            <Equal isHidden={isHidden}>{`=`}</Equal>
-            <AttributeValue isHidden={isHidden}>{`"${fill}"`}</AttributeValue>
-          </>
-        )}
-
-        {width && (
-          <>
-            <AttributeName isHidden={isHidden}>{` width`}</AttributeName>
-            <Equal isHidden={isHidden}>{`=`}</Equal>
-            <AttributeValue isHidden={isHidden}>{`"${width}"`}</AttributeValue>
-          </>
-        )}
-        {height && (
-          <>
-            <AttributeName isHidden={isHidden}>{` height`}</AttributeName>
-            <Equal isHidden={isHidden}>{`=`}</Equal>
-            <AttributeValue isHidden={isHidden}>{`"${height}"`}</AttributeValue>
-          </>
-        )}
-
-        {viewBox && (
-          <>
-            <AttributeName isHidden={isHidden}>{` viewBox`}</AttributeName>
-            <Equal isHidden={isHidden}>{`=`}</Equal>
-            <AttributeValue isHidden={isHidden}>
-              {`"${viewBox}"`}
-            </AttributeValue>
-          </>
-        )}
-
-        {src && (
-          <>
-            <AttributeName isHidden={isHidden}>{` src`}</AttributeName>
-            <Equal isHidden={isHidden}>{`=`}</Equal>
-            <AttributeValue isHidden={isHidden}>{`"${src}"`}</AttributeValue>
-          </>
-        )}
+              <AttributeValue isHidden={isHidden} title={attributeValue}>
+                {`"${attributeValueShorten}"`}
+              </AttributeValue>
+            </span>
+          )
+        })}
 
         {<Tag>{hasChildren ? ' >' : ' />'}</Tag>}
 

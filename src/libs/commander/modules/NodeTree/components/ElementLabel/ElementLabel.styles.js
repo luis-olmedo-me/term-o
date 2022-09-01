@@ -66,4 +66,7 @@ export const ActionButton = styled.button`
     background-color: #00000015;
     color: #aaa;
   }
+  &:hover {
+    background-color: #ffffff15;
+  }
 `

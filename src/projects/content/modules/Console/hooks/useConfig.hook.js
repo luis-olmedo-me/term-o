@@ -1,6 +1,6 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 
-import { commander } from 'libs/commander/commander.service'
+import { commander, customPageEventNames } from 'libs/commander'
 
 import { backgroundRequest } from 'src/helpers/event.helpers.js'
 import { eventTypes } from 'src/constants/events.constants.js'
@@ -9,6 +9,7 @@ import { appRoot } from '../../../content.constants'
 const defaultConfiguration = {
   isOpen: false,
   appliedPageEvents: [],
+  customPageEvents: [],
   consolePosition: {}
 }
 
@@ -42,13 +43,19 @@ export const useConfig = () => {
     const receiveConfiguration = ({ response: newConfig }) => {
       if (!newConfig) return
 
-      const updatedPageEvents = newConfig?.pageEvents?.filter((pageEvent) =>
-        window.location.origin.match(new RegExp(pageEvent.url))
+      const updatedPageEvents = newConfig?.pageEvents?.filter(
+        ({ url, event }) =>
+          window.location.origin.match(new RegExp(url)) &&
+          !customPageEventNames.includes(event)
+      )
+      const customEvents = newConfig?.pageEvents?.filter(({ event }) =>
+        customPageEventNames.includes(event)
       )
 
       setConfig((oldConfig) => ({
         ...oldConfig,
         appliedPageEvents: updatedPageEvents || [],
+        customPageEvents: customEvents || [],
         consolePosition: newConfig?.consolePosition || {}
       }))
 

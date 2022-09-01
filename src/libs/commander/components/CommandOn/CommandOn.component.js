@@ -1,12 +1,16 @@
 import React, { useEffect, useCallback } from 'react'
-import { actionTypes, parameterTypes } from '../../constants/commands.constants'
+import {
+  customPageEventNames,
+  parameterTypes
+} from '../../constants/commands.constants'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { addPageEvents } from 'src/helpers/event.helpers.js'
 import { checkIfRegExpIsValid, getActionType } from './CommandOn.helpers'
 import { onMessages } from './CommandOn.messages'
+import { onActionTypes } from './CommandOn.constants'
 
 export const CommandOn = ({ props, terminal: { command, setMessageData } }) => {
-  const { url, run } = props
+  const { url, run, event } = props
 
   const actionType = getActionType(props)
 
@@ -19,9 +23,13 @@ export const CommandOn = ({ props, terminal: { command, setMessageData } }) => {
       return setMessageData(onMessages.invalidURLRegularExpressions)
     }
 
+    if (event && !customPageEventNames.includes(event)) {
+      return setMessageData(onMessages.invalidEventType)
+    }
+
     const urlForEvent = url.join('|')
     const commandsToRun = run.map((commandToRun) => {
-      return { command: commandToRun, url: urlForEvent }
+      return { command: commandToRun, url: urlForEvent, event }
     })
 
     addPageEvents(commandsToRun)
@@ -32,15 +40,16 @@ export const CommandOn = ({ props, terminal: { command, setMessageData } }) => {
   useEffect(
     function handleActionType() {
       switch (actionType) {
-        case actionTypes.ADD_EVENT:
+        case onActionTypes.ADD_EVENT:
           handleAddEvent()
           break
 
-        default:
+        case onActionTypes.NONE:
+          setMessageData(onMessages.unexpectedError)
           break
       }
     },
-    [actionType, handleAddEvent]
+    [actionType, handleAddEvent, setMessageData]
   )
 
   return <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>

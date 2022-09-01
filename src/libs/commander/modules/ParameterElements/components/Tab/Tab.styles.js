@@ -31,15 +31,15 @@ export const TabWrapper = styled.span`
   transform-origin: right;
 
   &&.pinned {
-    border-left: 10px solid #fcd57a;
-    background-color: #fee7a6;
+    border-left: 10px solid #f8c572;
+    background-color: #ffeecc;
 
     && button {
-      background-color: #fee7a6;
-      border-left: 1px solid #eed99d;
+      background-color: transparent;
+      border-left: 1px solid #00000015;
 
       &:hover {
-        background-color: #fce6c7;
+        background-color: #ffffff30;
       }
     }
   }

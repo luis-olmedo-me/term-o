@@ -5,10 +5,16 @@ import { optionTypes } from '../../constants/commands.constants'
 const eventKeys = {
   ID: 'id',
   URL: 'url',
-  COMMAND: 'command'
+  COMMAND: 'command',
+  EVENT: 'event'
 }
 
-export const eventRows = [eventKeys.ID, eventKeys.URL, eventKeys.COMMAND]
+export const eventRows = [
+  eventKeys.ID,
+  eventKeys.URL,
+  eventKeys.EVENT,
+  eventKeys.COMMAND
+]
 
 export const eventConfig = {
   props: {

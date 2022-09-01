@@ -4,7 +4,13 @@ import { TagWrapper, ActionButtonText, GapNodesWrapper } from './Nodes.styles'
 
 const supportedNodeTypes = [Node.ELEMENT_NODE, Node.TEXT_NODE]
 
-export const Nodes = ({ node, level = 0, objetives, setObjetives }) => {
+export const Nodes = ({
+  node,
+  level = 0,
+  objetives,
+  setObjetives,
+  handleRootChange
+}) => {
   const nodeWrapperRef = useRef(null)
 
   const childNodes = [...node.childNodes].filter(
@@ -38,7 +44,7 @@ export const Nodes = ({ node, level = 0, objetives, setObjetives }) => {
     },
     {
       id: 'change-root',
-      onClick: () => setIsOpen(!isOpen),
+      onClick: () => handleRootChange(node),
       disabled: !hasNodes,
       Component: isOpen ? '✽' : '⚬'
     }
@@ -65,6 +71,7 @@ export const Nodes = ({ node, level = 0, objetives, setObjetives }) => {
                     node={childNode}
                     objetives={objetives}
                     setObjetives={setObjetives}
+                    handleRootChange={handleRootChange}
                   />
                 )
               )

@@ -35,6 +35,12 @@ export const Nodes = ({ node, level = 0, objetives, setObjetives }) => {
       onClick: () => setIsOpen(!isOpen),
       disabled: !hasNodes,
       Component: <ActionButtonText isOpen={isOpen}>{'<'}</ActionButtonText>
+    },
+    {
+      id: 'change-root',
+      onClick: () => setIsOpen(!isOpen),
+      disabled: !hasNodes,
+      Component: isOpen ? '✽' : '⚬'
     }
   ]
 

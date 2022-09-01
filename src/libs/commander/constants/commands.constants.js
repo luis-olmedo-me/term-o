@@ -37,6 +37,6 @@ export const actionTypes = {
 }
 
 export const customPageEvents = {
-  ERROR: 'error'
+  CLICK: 'click'
 }
 export const customPageEventNames = Object.values(customPageEvents)

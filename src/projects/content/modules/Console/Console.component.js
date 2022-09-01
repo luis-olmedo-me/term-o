@@ -67,7 +67,7 @@ export const Console = () => {
           callback: () => {
             const id = Date.now().toString()
 
-            handleCommandRun(command, id)
+            handleCommandRun(customEvent.command, id)
           }
         }
       })

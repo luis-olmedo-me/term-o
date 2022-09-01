@@ -1,10 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ElementLabel } from '../ElementLabel/ElementLabel.component'
 import { TagWrapper, ActionButtonText, GapNodesWrapper } from './Nodes.styles'
 
 const supportedNodeTypes = [Node.ELEMENT_NODE, Node.TEXT_NODE]
 
-export const Nodes = ({ node, level = 0, objetives, setObjetives }) => {
+export const Nodes = ({
+  node,
+  level = 0,
+  root,
+  objetives,
+  setObjetives,
+  handleRootChange
+}) => {
+  const nodeWrapperRef = useRef(null)
+
   const childNodes = [...node.childNodes].filter(
     (node) => !supportedNodeTypes.includes(node)
   )
@@ -13,9 +22,20 @@ export const Nodes = ({ node, level = 0, objetives, setObjetives }) => {
     node.contains(objetive)
   )
   const isNodeObjetive = objetives.some((objetive) => node === objetive)
+  const isNodeRoot = root === node
   const hasNodes = childNodes.length > 0
 
   const [isOpen, setIsOpen] = useState(nodeIncludesObjetive)
+
+  useEffect(() => {
+    if (!isNodeObjetive || objetives.length > 1) return
+
+    nodeWrapperRef.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+      inline: 'center'
+    })
+  }, [isNodeObjetive, objetives])
 
   const actions = [
     {
@@ -23,6 +43,12 @@ export const Nodes = ({ node, level = 0, objetives, setObjetives }) => {
       onClick: () => setIsOpen(!isOpen),
       disabled: !hasNodes,
       Component: <ActionButtonText isOpen={isOpen}>{'<'}</ActionButtonText>
+    },
+    {
+      id: 'change-root',
+      onClick: () => handleRootChange(node),
+      disabled: !hasNodes,
+      Component: isNodeRoot ? '✽' : '⚬'
     }
   ]
 
@@ -31,7 +57,7 @@ export const Nodes = ({ node, level = 0, objetives, setObjetives }) => {
   switch (node.nodeType) {
     case Node.ELEMENT_NODE:
       return (
-        <GapNodesWrapper>
+        <GapNodesWrapper ref={nodeWrapperRef}>
           <ElementLabel
             element={node}
             Wrapper={TagWrapper}
@@ -45,8 +71,10 @@ export const Nodes = ({ node, level = 0, objetives, setObjetives }) => {
                     key={`${level}-${index}`}
                     level={level + 1}
                     node={childNode}
+                    root={root}
                     objetives={objetives}
                     setObjetives={setObjetives}
+                    handleRootChange={handleRootChange}
                   />
                 )
               )
@@ -57,7 +85,7 @@ export const Nodes = ({ node, level = 0, objetives, setObjetives }) => {
 
     case Node.TEXT_NODE:
       return (
-        <GapNodesWrapper>
+        <GapNodesWrapper ref={nodeWrapperRef}>
           <TagWrapper onClick={handleNodeClick} isNodeObjetive={isNodeObjetive}>
             "{node.textContent}"
           </TagWrapper>

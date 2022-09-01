@@ -58,9 +58,11 @@ export const ActionButton = styled.button`
   font-family: Coda;
   padding: 0 10px;
   cursor: pointer;
+  border-right: 1px solid #00000015;
 
   &&:last-child {
     border-radius: 0 3px 3px 0;
+    border-right: 0;
   }
   &&:disabled {
     background-color: #00000015;

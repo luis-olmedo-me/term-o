@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
 import { getActionType } from './CommandInspect.helpers'
 import { inspectMessages } from './CommandInspect.messages'
@@ -17,6 +17,8 @@ export const CommandInspect = ({
   const [objetives, setObjetives] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
+  const defaultRoot = useRef(null)
+
   const handleInspect = useCallback(() => {
     const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
     const elementsSearch = getElements({
@@ -28,7 +30,10 @@ export const CommandInspect = ({
     setObjetives(paramElements.length ? paramElements : [document.body])
 
     elementsSearch
-      .then(({ elementsFound: [foundHTMLRoot] }) => setHTMLRoot(foundHTMLRoot))
+      .then(({ elementsFound: [foundHTMLRoot] }) => {
+        defaultRoot.current = foundHTMLRoot
+        setHTMLRoot(foundHTMLRoot)
+      })
       .catch(() => setMessageData(domMessages.noElementsFound))
       .finally(() => setIsLoading(false))
   }, [handleInspect, setMessageData, params])
@@ -48,6 +53,13 @@ export const CommandInspect = ({
     [actionType, handleInspect, setMessageData]
   )
 
+  const handleRootChange = (newRoot) => {
+    const sanitazedNewRoot =
+      newRoot === HTMLRoot ? defaultRoot.current : newRoot
+
+    setHTMLRoot(sanitazedNewRoot)
+  }
+
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
@@ -58,6 +70,7 @@ export const CommandInspect = ({
             root={HTMLRoot}
             objetives={objetives}
             setObjetives={setObjetives}
+            handleRootChange={handleRootChange}
           />
         )}
       </LogWrapper>

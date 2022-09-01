@@ -1,16 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { ElementLabel } from '../ElementLabel/ElementLabel.component'
 import { TagWrapper, ActionButtonText, GapNodesWrapper } from './Nodes.styles'
+import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 
 const supportedNodeTypes = [Node.ELEMENT_NODE, Node.TEXT_NODE]
 
-export const Nodes = ({
+const NodesWithoutContext = ({
   node,
   level = 0,
   root,
   objetives,
   setObjetives,
-  handleRootChange
+  handleRootChange,
+  setHighlitedElement
 }) => {
   const nodeWrapperRef = useRef(null)
 
@@ -62,7 +64,12 @@ export const Nodes = ({
             element={node}
             Wrapper={TagWrapper}
             actions={actions}
-            wrapperProps={{ isNodeObjetive, onClick: handleNodeClick }}
+            wrapperProps={{
+              isNodeObjetive,
+              onClick: handleNodeClick,
+              onMouseEnter: () => setHighlitedElement(node),
+              onMouseLeave: () => setHighlitedElement(null)
+            }}
           >
             {childNodes.map((childNode, index) => {
               return (
@@ -96,3 +103,5 @@ export const Nodes = ({
       return null
   }
 }
+
+export const Nodes = withOverlayContext(NodesWithoutContext)

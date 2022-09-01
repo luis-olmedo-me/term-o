@@ -33,8 +33,3 @@ export const onActionTypes = {
   ADD_EVENT: 'ADD_EVENT',
   NONE: 'NONE'
 }
-
-export const events = {
-  ERROR: 'error'
-}
-export const supportedEvents = Object.values(events)

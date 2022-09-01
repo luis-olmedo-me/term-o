@@ -1,5 +1,8 @@
 import { commander } from './commander.service'
 import { consoleCommands } from './commander.constants'
-import { optionTypes } from './constants/commands.constants'
+import {
+  customPageEventNames,
+  optionTypes
+} from './constants/commands.constants'
 
-export { commander, consoleCommands, optionTypes }
+export { commander, consoleCommands, optionTypes, customPageEventNames }

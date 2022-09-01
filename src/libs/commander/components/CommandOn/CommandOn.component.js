@@ -1,10 +1,13 @@
 import React, { useEffect, useCallback } from 'react'
-import { parameterTypes } from '../../constants/commands.constants'
+import {
+  customPageEventNames,
+  parameterTypes
+} from '../../constants/commands.constants'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { addPageEvents } from 'src/helpers/event.helpers.js'
 import { checkIfRegExpIsValid, getActionType } from './CommandOn.helpers'
 import { onMessages } from './CommandOn.messages'
-import { supportedEvents, onActionTypes } from './CommandOn.constants'
+import { onActionTypes } from './CommandOn.constants'
 
 export const CommandOn = ({ props, terminal: { command, setMessageData } }) => {
   const { url, run, event } = props
@@ -20,7 +23,7 @@ export const CommandOn = ({ props, terminal: { command, setMessageData } }) => {
       return setMessageData(onMessages.invalidURLRegularExpressions)
     }
 
-    if (event && !supportedEvents.includes(event)) {
+    if (event && !customPageEventNames.includes(event)) {
       return setMessageData(onMessages.invalidEventType)
     }
 

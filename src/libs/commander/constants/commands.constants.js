@@ -35,3 +35,8 @@ export const actionTypes = {
   NONE: 'NONE',
   LOCAL_STORAGE: 'LOCAL_STORAGE'
 }
+
+export const customPageEvents = {
+  ERROR: 'error'
+}
+export const customPageEventNames = Object.values(customPageEvents)

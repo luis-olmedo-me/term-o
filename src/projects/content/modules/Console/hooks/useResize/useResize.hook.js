@@ -65,7 +65,12 @@ export const useResize = ({ wrapperReference, consolePosition }) => {
 
   useEffect(() => {
     const resizeCommandHandler = () => {
-      console.log('hi')
+      setResizeData({
+        left: bodyData.width - 460,
+        top: 10,
+        right: 10,
+        bottom: 10
+      })
     }
 
     window.addEventListener(
@@ -78,7 +83,7 @@ export const useResize = ({ wrapperReference, consolePosition }) => {
         eventTypes.TERM_O_RESIZE_RIGHT,
         resizeCommandHandler
       )
-  })
+  }, [bodyData])
 
   useEffect(
     function getConfigurationFromBackground() {

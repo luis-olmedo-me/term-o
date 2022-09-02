@@ -2,33 +2,50 @@ import { configManager } from 'libs/config-manager'
 
 import {
   eventTypes,
-  extensionKeyEvents
+  extensionKeyEvents,
+  extensionKeyEventNames
 } from 'src/constants/events.constants.js'
 import { connectedTabs } from '../../libs/connected-tabs/connectedTabs.service'
-
-const toggleTerminal = () => {
-  const root = window.document.getElementById('term-o-root')
-
-  if (!root) return
-
-  const isInitiated = root.dataset.isInitiated === 'true'
-  const isOpen = root.dataset.isOpen === 'true'
-
-  if (isInitiated) {
-    root.dataset.isOpen = !isOpen
-  }
-}
+import {
+  resizeFull,
+  resizeLeft,
+  resizeRight,
+  toggleTerminal
+} from './background.helpers'
 
 chrome.commands.onCommand.addListener(function (command) {
-  if (command !== extensionKeyEvents.TOGGLE_TERMINAL) return
+  if (!extensionKeyEventNames.includes(command)) return
 
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     const [{ id }] = tabs
 
-    chrome.scripting.executeScript({
-      target: { tabId: id, allFrames: true },
-      func: toggleTerminal
-    })
+    if (command === extensionKeyEvents.TOGGLE_TERMINAL) {
+      chrome.scripting.executeScript({
+        target: { tabId: id, allFrames: true },
+        func: toggleTerminal
+      })
+    }
+
+    if (command === extensionKeyEvents.RESIZE_RIGHT) {
+      chrome.scripting.executeScript({
+        target: { tabId: id, allFrames: true },
+        func: resizeRight
+      })
+    }
+
+    if (command === extensionKeyEvents.RESIZE_LEFT) {
+      chrome.scripting.executeScript({
+        target: { tabId: id, allFrames: true },
+        func: resizeLeft
+      })
+    }
+
+    if (command === extensionKeyEvents.RESIZE_FULL) {
+      chrome.scripting.executeScript({
+        target: { tabId: id, allFrames: true },
+        func: resizeFull
+      })
+    }
   })
 })
 

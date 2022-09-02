@@ -33,6 +33,24 @@
         "mac": "Alt+T"
       },
       "description": "Toggle the terminal"
+    },
+    "resize-right": {
+      "suggested_key": {
+        "default": "Ctrl+Right"
+      },
+      "description": "Resize terminal to the right"
+    },
+    "resize-left": {
+      "suggested_key": {
+        "default": "Ctrl+Left"
+      },
+      "description": "Resize terminal to the left"
+    },
+    "resize-full": {
+      "suggested_key": {
+        "default": "Ctrl+Up"
+      },
+      "description": "Resize terminal to its full size"
     }
   }
 }

@@ -7,6 +7,7 @@ import {
 } from './useResize.helpers'
 import { debounce } from 'src/helpers/utils.helpers.js'
 import { defaultBodyData } from './useResize.constants'
+import { eventTypes } from 'src/constants/events.constants.js'
 
 export const useResize = ({ wrapperReference, consolePosition }) => {
   const [resizingFrom, setResizingFrom] = useState('')
@@ -61,6 +62,46 @@ export const useResize = ({ wrapperReference, consolePosition }) => {
     },
     [wrapperReference]
   )
+
+  useEffect(() => {
+    const resizeCommandHandler = (event) => {
+      const side = event.detail.side
+
+      switch (side) {
+        case 'right':
+          setResizeData({
+            left: bodyData.width - 460,
+            top: 10,
+            right: 10,
+            bottom: 10
+          })
+          break
+
+        case 'left':
+          setResizeData({
+            left: 10,
+            top: 10,
+            right: bodyData.width - 460,
+            bottom: 10
+          })
+          break
+
+        case 'full':
+          setResizeData({
+            left: 10,
+            top: 10,
+            right: 10,
+            bottom: 10
+          })
+          break
+      }
+    }
+
+    window.addEventListener(eventTypes.TERM_O_RESIZE, resizeCommandHandler)
+
+    return () =>
+      window.removeEventListener(eventTypes.TERM_O_RESIZE, resizeCommandHandler)
+  }, [bodyData])
 
   useEffect(
     function getConfigurationFromBackground() {

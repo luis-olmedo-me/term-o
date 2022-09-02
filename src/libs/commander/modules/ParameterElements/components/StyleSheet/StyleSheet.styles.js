@@ -46,4 +46,10 @@ export const Property = styled.div`
   cursor: pointer;
   color: #111;
   font-weight: bold;
+  margin-bottom: 5px;
+  width: fit-content;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 `

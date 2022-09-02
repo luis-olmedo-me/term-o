@@ -36,4 +36,8 @@ export const ActionButton = styled.button`
 export const ItemsWrapper = styled.div`
   display: inline-block;
   height: -webkit-fill-available;
+
+  &&:first-child {
+    border-right: 1px solid #00000015;
+  }
 `

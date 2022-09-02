@@ -10,5 +10,7 @@ export const eventTypes = {
 }
 
 export const extensionKeyEvents = {
-  TOGGLE_TERMINAL: 'toggle-terminal'
+  TOGGLE_TERMINAL: 'toggle-terminal',
+  RESIZE_RIGHT: 'resize-right'
 }
+export const extensionKeyEventNames = Object.values(extensionKeyEvents)

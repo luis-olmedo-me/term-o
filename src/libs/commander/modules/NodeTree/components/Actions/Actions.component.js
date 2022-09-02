@@ -29,8 +29,8 @@ export const Actions = ({ wrapperRef, actions }) => {
         return action.items ? (
           <ItemsWrapper
             key={action.id}
-            onMouseOver={() => setIsOpen(true)}
-            onMouseOut={() => setIsOpen(false)}
+            onMouseEnter={() => setIsOpen(true)}
+            onMouseLeave={() => setIsOpen(false)}
           >
             {items.map((item) => {
               return (

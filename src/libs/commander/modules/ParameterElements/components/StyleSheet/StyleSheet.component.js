@@ -1,6 +1,9 @@
 import React from 'react'
 import {
+  Equal,
   Property,
+  PropertyName,
+  PropertyValue,
   PropertyWrapper,
   StyleSheetWrapper,
   Title
@@ -18,9 +21,9 @@ export const StyleSheet = ({ element = {}, className = '' }) => {
           ([CSSPropertyName, CSSPropertyValue]) => {
             return (
               <Property key={CSSPropertyName}>
-                <span>{CSSPropertyName}</span>
-                <span>: </span>
-                <span>{CSSPropertyValue}</span>
+                <PropertyName>{CSSPropertyName}</PropertyName>
+                <Equal>: </Equal>
+                <PropertyValue>{CSSPropertyValue}</PropertyValue>
               </Property>
             )
           }

@@ -53,3 +53,15 @@ export const Property = styled.div`
     margin-bottom: 0;
   }
 `
+
+export const PropertyName = styled.span`
+  color: #f4256d;
+`
+
+export const Equal = styled.span`
+  color: #b583e7;
+`
+
+export const PropertyValue = styled.span`
+  color: #7828c8;
+`

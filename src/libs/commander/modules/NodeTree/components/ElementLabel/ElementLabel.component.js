@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { getAttributes } from '../../../../components/CommandDom/CommandDom.helpers'
+import { Actions } from '../Actions/Action.component'
 import {
   AttributeName,
   AttributeValue,
@@ -7,9 +8,7 @@ import {
   Tag,
   TagName,
   DefaultWrapper,
-  ChildWrapper,
-  ActionButtons,
-  ActionButton
+  ChildWrapper
 } from './ElementLabel.styles'
 
 export const ElementLabel = ({
@@ -78,58 +77,7 @@ export const ElementLabel = ({
 
         {<Tag>{hasChildren ? ' >' : ' />'}</Tag>}
 
-        {hasActions && (
-          <ActionButtons ref={actionsRef}>
-            {actions.map((action) => {
-              const [isOpen, setIsOpen] = useState(false)
-
-              const handleToggleItems = (event) => {
-                event.stopPropagation()
-                setIsOpen(!isOpen)
-              }
-
-              const items = action.items
-                ? [
-                    {
-                      id: 'toggle-items',
-                      title: 'Toggle menu',
-                      onClick: handleToggleItems,
-                      Component: isOpen ? '⚙>' : '⚙'
-                    },
-                    ...action.items.map((item) => ({
-                      ...item,
-                      hidden: !isOpen
-                    }))
-                  ]
-                : []
-
-              return action.items ? (
-                items.map((item) => {
-                  return (
-                    <ActionButton
-                      key={item.id}
-                      onClick={item.disabled ? null : item.onClick}
-                      disabled={item.disabled}
-                      title={item.title}
-                      style={{ display: item.hidden ? 'none' : 'inline-block' }}
-                    >
-                      {item.Component}
-                    </ActionButton>
-                  )
-                })
-              ) : (
-                <ActionButton
-                  key={action.id}
-                  onClick={action.disabled ? null : action.onClick}
-                  title={action.title}
-                  disabled={action.disabled}
-                >
-                  {action.Component}
-                </ActionButton>
-              )
-            })}
-          </ActionButtons>
-        )}
+        {hasActions && <Actions wrapperRef={actionsRef} actions={actions} />}
       </Wrapper>
 
       {hasChildren && (

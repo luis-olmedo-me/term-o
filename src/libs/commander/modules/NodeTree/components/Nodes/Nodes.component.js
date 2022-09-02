@@ -42,18 +42,25 @@ const NodesWithoutContext = ({
   const actions = [
     {
       id: 'toggle-element',
-      onClick: () =>
+      onClick: (event) => {
+        event.stopPropagation()
+
         setOpenNodes((openNodes) =>
           isNodeOpen
             ? openNodes.filter((openNode) => openNode !== node)
             : [...openNodes, node]
-        ),
+        )
+      },
       disabled: !hasNodes,
       Component: <ActionButtonText isOpen={isNodeOpen}>{'<'}</ActionButtonText>
     },
     {
       id: 'change-root',
-      onClick: () => handleRootChange(node),
+      onClick: (event) => {
+        event.stopPropagation()
+
+        handleRootChange(node)
+      },
       disabled: !hasNodes,
       Component: isNodeRoot ? '✽' : '⚬'
     }

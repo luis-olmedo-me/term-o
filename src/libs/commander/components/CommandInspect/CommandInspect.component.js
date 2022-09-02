@@ -16,7 +16,7 @@ const getOpenNodesFromObjetive = (objetive) => {
   let currentObjetive = objetive
 
   while (currentObjetive) {
-    openNodes.concat(currentObjetive)
+    openNodes = [...openNodes, currentObjetive]
     currentObjetive = currentObjetive.parentElement
   }
 

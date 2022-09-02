@@ -83,15 +83,17 @@ export const ElementLabel = ({
             {actions.map((action) => {
               const [isOpen, setIsOpen] = useState(false)
 
+              const handleToggleItems = (event) => {
+                event.stopPropagation()
+                setIsOpen(!isOpen)
+              }
+
               const items = action.items
                 ? [
                     {
                       id: 'toggle-items',
-                      onClick: (event) => {
-                        event.stopPropagation()
-                        setIsOpen(!isOpen)
-                      },
                       title: 'Toggle menu',
+                      onClick: handleToggleItems,
                       Component: isOpen ? '⚙>' : '⚙'
                     },
                     ...action.items.map((item) => ({

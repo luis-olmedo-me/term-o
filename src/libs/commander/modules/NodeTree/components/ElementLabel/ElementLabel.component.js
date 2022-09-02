@@ -25,10 +25,18 @@ export const ElementLabel = ({
 
   useEffect(function checkWrapperPadding() {
     if (!actionsRef.current) return
-    const { offsetWidth } = actionsRef.current
-    const paddingRight = offsetWidth + 10
 
-    setActionsPaddingRight(paddingRight)
+    const updatePadding = () => {
+      const { offsetWidth } = actionsRef.current
+      const paddingRight = offsetWidth + 10
+
+      setActionsPaddingRight(paddingRight)
+    }
+
+    const obsever = new ResizeObserver(updatePadding)
+    obsever.observe(actionsRef.current)
+
+    return () => obsever.unobserve(actionsRef.current)
   }, [])
 
   const tagName = element.tagName.toLowerCase()
@@ -71,7 +79,36 @@ export const ElementLabel = ({
         {hasActions && (
           <ActionButtons ref={actionsRef}>
             {actions.map((action) => {
-              return (
+              const [isOpen, setIsOpen] = useState(false)
+
+              const items = action.items
+                ? [
+                    {
+                      id: 'toggle-items',
+                      onClick: () => setIsOpen(!isOpen),
+                      Component: isOpen ? '☉' : '⚙'
+                    },
+                    ...action.items.map((item) => ({
+                      ...item,
+                      hidden: !isOpen
+                    }))
+                  ]
+                : []
+
+              return action.items ? (
+                items.map((item) => {
+                  return (
+                    <ActionButton
+                      key={item.id}
+                      onClick={item.disabled ? null : item.onClick}
+                      disabled={item.disabled}
+                      style={{ display: item.hidden ? 'none' : 'inline-block' }}
+                    >
+                      {item.Component}
+                    </ActionButton>
+                  )
+                })
+              ) : (
                 <ActionButton
                   key={action.id}
                   onClick={action.disabled ? null : action.onClick}

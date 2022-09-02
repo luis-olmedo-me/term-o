@@ -66,6 +66,23 @@ const NodesWithoutContext = ({
       onClick: handleChangeRoot,
       disabled: !hasNodes,
       Component: isNodeRoot ? '✽' : '⚬'
+    },
+    {
+      id: 'group',
+      items: [
+        {
+          id: 'change-root.2',
+          onClick: () => console.log('test'),
+          disabled: !hasNodes,
+          Component: 'T'
+        },
+        {
+          id: 'change-root.3',
+          onClick: () => console.log('test'),
+          disabled: !hasNodes,
+          Component: 'Q'
+        }
+      ]
     }
   ]
 

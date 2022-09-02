@@ -28,7 +28,7 @@ const resizeRight = () => {
   const isOpen = root.dataset.isOpen === 'true'
 
   if (isInitiated && isOpen) {
-    const resizeEvent = new Event('term-o-resize-right')
+    const resizeEvent = new Event(eventTypes.TERM_O_RESIZE_RIGHT)
 
     dispatchEvent(resizeEvent)
   }

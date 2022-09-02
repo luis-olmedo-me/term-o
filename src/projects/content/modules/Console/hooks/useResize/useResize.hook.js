@@ -64,25 +64,25 @@ export const useResize = ({ wrapperReference, consolePosition }) => {
   )
 
   useEffect(() => {
-    const resizeCommandHandler = () => {
-      setResizeData({
-        left: bodyData.width - 460,
-        top: 10,
-        right: 10,
-        bottom: 10
-      })
+    const resizeCommandHandler = (event) => {
+      const side = event.detail.side
+
+      switch (side) {
+        case 'right':
+          setResizeData({
+            left: bodyData.width - 460,
+            top: 10,
+            right: 10,
+            bottom: 10
+          })
+          break
+      }
     }
 
-    window.addEventListener(
-      eventTypes.TERM_O_RESIZE_RIGHT,
-      resizeCommandHandler
-    )
+    window.addEventListener(eventTypes.TERM_O_RESIZE, resizeCommandHandler)
 
     return () =>
-      window.removeEventListener(
-        eventTypes.TERM_O_RESIZE_RIGHT,
-        resizeCommandHandler
-      )
+      window.removeEventListener(eventTypes.TERM_O_RESIZE, resizeCommandHandler)
   }, [bodyData])
 
   useEffect(

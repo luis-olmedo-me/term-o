@@ -28,7 +28,25 @@ const resizeRight = () => {
   const isOpen = root.dataset.isOpen === 'true'
 
   if (isInitiated && isOpen) {
-    const resizeEvent = new Event('term-o-resize-right')
+    const resizeEvent = new CustomEvent('term-o-resize', {
+      detail: { side: 'right' }
+    })
+
+    dispatchEvent(resizeEvent)
+  }
+}
+const resizeLeft = () => {
+  const root = window.document.getElementById('term-o-root')
+
+  if (!root) return
+
+  const isInitiated = root.dataset.isInitiated === 'true'
+  const isOpen = root.dataset.isOpen === 'true'
+
+  if (isInitiated && isOpen) {
+    const resizeEvent = new CustomEvent('term-o-resize', {
+      detail: { side: 'left' }
+    })
 
     dispatchEvent(resizeEvent)
   }

@@ -59,6 +59,7 @@ const NodesWithoutContext = ({
       id: 'toggle-element',
       onClick: handleToggleElement,
       disabled: !hasNodes,
+      title: 'Toggle children',
       Component: <ActionButtonText isOpen={isNodeOpen}>{'<'}</ActionButtonText>
     },
     {
@@ -66,6 +67,7 @@ const NodesWithoutContext = ({
       items: [
         {
           id: 'change-root',
+          title: 'Change root',
           onClick: handleChangeRoot,
           disabled: !hasNodes,
           Component: isNodeRoot ? '✽' : '⚬'

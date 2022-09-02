@@ -24,19 +24,21 @@ export const ElementLabel = ({
   const [actionsPaddingRight, setActionsPaddingRight] = useState(0)
 
   useEffect(function checkWrapperPadding() {
-    if (!actionsRef.current) return
+    const currentActionRef = actionsRef.current
+
+    if (!currentActionRef) return
 
     const updatePadding = () => {
-      const { offsetWidth } = actionsRef.current
+      const { offsetWidth } = currentActionRef
       const paddingRight = offsetWidth + 10
 
       setActionsPaddingRight(paddingRight)
     }
 
     const obsever = new ResizeObserver(updatePadding)
-    obsever.observe(actionsRef.current)
+    obsever.observe(currentActionRef)
 
-    return () => obsever.unobserve(actionsRef.current)
+    return () => obsever.unobserve(currentActionRef)
   }, [])
 
   const tagName = element.tagName.toLowerCase()
@@ -89,6 +91,7 @@ export const ElementLabel = ({
                         event.stopPropagation()
                         setIsOpen(!isOpen)
                       },
+                      title: 'Toggle menu',
                       Component: isOpen ? '⚙>' : '⚙'
                     },
                     ...action.items.map((item) => ({
@@ -105,6 +108,7 @@ export const ElementLabel = ({
                       key={item.id}
                       onClick={item.disabled ? null : item.onClick}
                       disabled={item.disabled}
+                      title={item.title}
                       style={{ display: item.hidden ? 'none' : 'inline-block' }}
                     >
                       {item.Component}
@@ -115,6 +119,7 @@ export const ElementLabel = ({
                 <ActionButton
                   key={action.id}
                   onClick={action.disabled ? null : action.onClick}
+                  title={action.title}
                   disabled={action.disabled}
                 >
                   {action.Component}

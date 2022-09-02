@@ -6,67 +6,12 @@ import {
   extensionKeyEventNames
 } from 'src/constants/events.constants.js'
 import { connectedTabs } from '../../libs/connected-tabs/connectedTabs.service'
-
-const toggleTerminal = () => {
-  const root = window.document.getElementById('term-o-root')
-
-  if (!root) return
-
-  const isInitiated = root.dataset.isInitiated === 'true'
-  const isOpen = root.dataset.isOpen === 'true'
-
-  if (isInitiated) {
-    root.dataset.isOpen = !isOpen
-  }
-}
-const resizeRight = () => {
-  const root = window.document.getElementById('term-o-root')
-
-  if (!root) return
-
-  const isInitiated = root.dataset.isInitiated === 'true'
-  const isOpen = root.dataset.isOpen === 'true'
-
-  if (isInitiated && isOpen) {
-    const resizeEvent = new CustomEvent('term-o-resize', {
-      detail: { side: 'right' }
-    })
-
-    dispatchEvent(resizeEvent)
-  }
-}
-const resizeLeft = () => {
-  const root = window.document.getElementById('term-o-root')
-
-  if (!root) return
-
-  const isInitiated = root.dataset.isInitiated === 'true'
-  const isOpen = root.dataset.isOpen === 'true'
-
-  if (isInitiated && isOpen) {
-    const resizeEvent = new CustomEvent('term-o-resize', {
-      detail: { side: 'left' }
-    })
-
-    dispatchEvent(resizeEvent)
-  }
-}
-const resizeFull = () => {
-  const root = window.document.getElementById('term-o-root')
-
-  if (!root) return
-
-  const isInitiated = root.dataset.isInitiated === 'true'
-  const isOpen = root.dataset.isOpen === 'true'
-
-  if (isInitiated && isOpen) {
-    const resizeEvent = new CustomEvent('term-o-resize', {
-      detail: { side: 'full' }
-    })
-
-    dispatchEvent(resizeEvent)
-  }
-}
+import {
+  resizeFull,
+  resizeLeft,
+  resizeRight,
+  toggleTerminal
+} from './background.helpers'
 
 chrome.commands.onCommand.addListener(function (command) {
   if (!extensionKeyEventNames.includes(command)) return

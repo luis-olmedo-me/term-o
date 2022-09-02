@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { getAttributes } from '../../../../components/CommandDom/CommandDom.helpers'
-import { Actions } from '../Actions/Action.component'
+import { Actions } from '../Actions/Actions.component'
 import {
   AttributeName,
   AttributeValue,

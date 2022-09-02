@@ -32,3 +32,8 @@ export const ActionButton = styled.button`
     background-color: #ffffff15;
   }
 `
+
+export const ItemsWrapper = styled.div`
+  display: inline-block;
+  height: -webkit-fill-available;
+`

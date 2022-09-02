@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ActionButton, ActionButtons } from './Actions.styles'
+import { ActionButton, ActionButtons, ItemsWrapper } from './Actions.styles'
 
 export const Actions = ({ wrapperRef, actions }) => {
   return (
@@ -28,19 +28,21 @@ export const Actions = ({ wrapperRef, actions }) => {
           : []
 
         return action.items ? (
-          items.map((item) => {
-            return (
-              <ActionButton
-                key={item.id}
-                onClick={item.disabled ? null : item.onClick}
-                disabled={item.disabled}
-                title={item.title}
-                style={{ display: item.hidden ? 'none' : 'inline-block' }}
-              >
-                {item.Component}
-              </ActionButton>
-            )
-          })
+          <ItemsWrapper key={action.id}>
+            {items.map((item) => {
+              return (
+                <ActionButton
+                  key={item.id}
+                  onClick={item.disabled ? null : item.onClick}
+                  disabled={item.disabled}
+                  title={item.title}
+                  style={{ display: item.hidden ? 'none' : 'inline-block' }}
+                >
+                  {item.Component}
+                </ActionButton>
+              )
+            })}
+          </ItemsWrapper>
         ) : (
           <ActionButton
             key={action.id}

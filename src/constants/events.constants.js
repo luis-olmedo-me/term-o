@@ -6,9 +6,14 @@ export const eventTypes = {
   ADD_ALIAS: 'term-o-add-alias',
   DELETE_ALIAS: 'term-o-delete-alias',
   RESET_CONFIGURATION: 'term-o-reset-configuration',
-  GET_TABS_INFO: 'term-o-get-tabs-info'
+  GET_TABS_INFO: 'term-o-get-tabs-info',
+  TERM_O_RESIZE: 'term-o-resize'
 }
 
 export const extensionKeyEvents = {
-  TOGGLE_TERMINAL: 'toggle-terminal'
+  TOGGLE_TERMINAL: 'toggle-terminal',
+  RESIZE_RIGHT: 'resize-right',
+  RESIZE_LEFT: 'resize-left',
+  RESIZE_FULL: 'resize-full'
 }
+export const extensionKeyEventNames = Object.values(extensionKeyEvents)

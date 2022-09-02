@@ -62,25 +62,13 @@ const NodesWithoutContext = ({
       Component: <ActionButtonText isOpen={isNodeOpen}>{'<'}</ActionButtonText>
     },
     {
-      id: 'change-root',
-      onClick: handleChangeRoot,
-      disabled: !hasNodes,
-      Component: isNodeRoot ? '✽' : '⚬'
-    },
-    {
       id: 'group',
       items: [
         {
-          id: 'change-root.2',
-          onClick: () => console.log('test'),
+          id: 'change-root',
+          onClick: handleChangeRoot,
           disabled: !hasNodes,
-          Component: 'T'
-        },
-        {
-          id: 'change-root.3',
-          onClick: () => console.log('test'),
-          disabled: !hasNodes,
-          Component: 'Q'
+          Component: isNodeRoot ? '✽' : '⚬'
         }
       ]
     }

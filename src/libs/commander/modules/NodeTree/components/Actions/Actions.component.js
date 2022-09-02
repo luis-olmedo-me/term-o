@@ -9,7 +9,6 @@ export const Actions = ({ wrapperRef, actions }) => {
 
         const handleToggleItems = (event) => {
           event.stopPropagation()
-          setIsOpen(!isOpen)
         }
 
         const items = action.items
@@ -28,18 +27,23 @@ export const Actions = ({ wrapperRef, actions }) => {
           : []
 
         return action.items ? (
-          <ItemsWrapper key={action.id}>
+          <ItemsWrapper
+            key={action.id}
+            onMouseOver={() => setIsOpen(true)}
+            onMouseOut={() => setIsOpen(false)}
+          >
             {items.map((item) => {
               return (
-                <ActionButton
-                  key={item.id}
-                  onClick={item.disabled ? null : item.onClick}
-                  disabled={item.disabled}
-                  title={item.title}
-                  style={{ display: item.hidden ? 'none' : 'inline-block' }}
-                >
-                  {item.Component}
-                </ActionButton>
+                !item.hidden && (
+                  <ActionButton
+                    key={item.id}
+                    onClick={item.disabled ? null : item.onClick}
+                    disabled={item.disabled}
+                    title={item.title}
+                  >
+                    {item.Component}
+                  </ActionButton>
+                )
               )
             })}
           </ItemsWrapper>

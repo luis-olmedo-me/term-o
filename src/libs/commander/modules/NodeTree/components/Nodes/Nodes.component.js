@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { ElementLabel } from '../ElementLabel/ElementLabel.component'
 import { TagWrapper, ActionButtonText, GapNodesWrapper } from './Nodes.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
@@ -12,6 +12,8 @@ const NodesWithoutContext = ({
   root,
   objetives,
   setObjetives,
+  openNodes,
+  setOpenNodes,
   handleRootChange,
   setHighlitedElement
 }) => {
@@ -21,14 +23,11 @@ const NodesWithoutContext = ({
     (node) => !supportedNodeTypes.includes(node)
   )
 
-  const nodeIncludesObjetive = objetives.some((objetive) =>
-    node.contains(objetive)
-  )
   const isNodeObjetive = objetives.some((objetive) => node === objetive)
+  const isNodeOpen = openNodes.some((openNode) => node === openNode)
   const isNodeRoot = root === node
-  const hasNodes = childNodes.length > 0
 
-  const [isOpen, setIsOpen] = useState(nodeIncludesObjetive)
+  const hasNodes = childNodes.length > 0
 
   useEffect(() => {
     if (!isNodeObjetive || objetives.length > 1) return
@@ -43,9 +42,14 @@ const NodesWithoutContext = ({
   const actions = [
     {
       id: 'toggle-element',
-      onClick: () => setIsOpen(!isOpen),
+      onClick: () =>
+        setOpenNodes((openNodes) =>
+          isNodeOpen
+            ? openNodes.filter((openNode) => openNode !== node)
+            : [...openNodes, node]
+        ),
       disabled: !hasNodes,
-      Component: <ActionButtonText isOpen={isOpen}>{'<'}</ActionButtonText>
+      Component: <ActionButtonText isOpen={isNodeOpen}>{'<'}</ActionButtonText>
     },
     {
       id: 'change-root',
@@ -77,7 +81,7 @@ const NodesWithoutContext = ({
           >
             {childNodes.map((childNode, index) => {
               return (
-                isOpen && (
+                isNodeOpen && (
                   <Nodes
                     key={`${level}-${index}`}
                     level={level + 1}
@@ -86,6 +90,8 @@ const NodesWithoutContext = ({
                     objetives={objetives}
                     setObjetives={setObjetives}
                     handleRootChange={handleRootChange}
+                    openNodes={openNodes}
+                    setOpenNodes={setOpenNodes}
                   />
                 )
               )

@@ -8,6 +8,28 @@ import { getElements } from '../CommandDom/CommandDom.helpers'
 import { NodeTree } from '../../modules/NodeTree/NodeTree.component'
 import { getParamsByType } from '../../commander.helpers'
 
+const removeDuplicatedFromArray = (array) => {
+  return [...new Set(array)]
+}
+const getOpenNodesFromObjetive = (objetive) => {
+  let openNodes = []
+  let currentObjetive = objetive
+
+  while (currentObjetive) {
+    openNodes.concat(currentObjetive)
+    currentObjetive = currentObjetive.parentElement
+  }
+
+  return openNodes
+}
+const getOpenNodesFromObjetives = (objetives) => {
+  const openNodes = objetives.reduce((allOpenNodes, objetive) => {
+    return [...allOpenNodes, ...getOpenNodesFromObjetive(objetive)]
+  }, [])
+
+  return removeDuplicatedFromArray(openNodes)
+}
+
 export const CommandInspect = ({
   props,
   terminal: { command, setMessageData, params }
@@ -15,6 +37,7 @@ export const CommandInspect = ({
   const actionType = getActionType(props)
   const [HTMLRoot, setHTMLRoot] = useState(null)
   const [objetives, setObjetives] = useState([])
+  const [openNodes, setOpenNodes] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
   const defaultRoot = useRef(null)
@@ -26,8 +49,11 @@ export const CommandInspect = ({
       filterBySome: null,
       filterByEvery: null
     })
+    const newObjetives = paramElements.length ? paramElements : [document.body]
+    const newOpenNodes = getOpenNodesFromObjetives(newObjetives)
 
-    setObjetives(paramElements.length ? paramElements : [document.body])
+    setObjetives(newObjetives)
+    setOpenNodes(newOpenNodes)
 
     elementsSearch
       .then(({ elementsFound: [foundHTMLRoot] }) => {
@@ -70,6 +96,8 @@ export const CommandInspect = ({
             root={HTMLRoot}
             objetives={objetives}
             setObjetives={setObjetives}
+            openNodes={openNodes}
+            setOpenNodes={setOpenNodes}
             handleRootChange={handleRootChange}
           />
         )}

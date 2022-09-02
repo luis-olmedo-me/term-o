@@ -6,7 +6,9 @@ export const NodeTree = ({
   root,
   objetives,
   setObjetives,
-  handleRootChange
+  handleRootChange,
+  openNodes,
+  setOpenNodes
 }) => {
   return (
     <TreeWrapper>
@@ -16,6 +18,8 @@ export const NodeTree = ({
         objetives={objetives}
         setObjetives={setObjetives}
         handleRootChange={handleRootChange}
+        openNodes={openNodes}
+        setOpenNodes={setOpenNodes}
       />
     </TreeWrapper>
   )

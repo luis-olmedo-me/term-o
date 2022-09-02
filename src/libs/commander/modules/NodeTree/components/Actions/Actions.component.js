@@ -19,10 +19,7 @@ export const Actions = ({ wrapperRef, actions }) => {
                 onClick: handleToggleItems,
                 Component: isOpen ? '⚙>' : '⚙'
               },
-              ...action.items.map((item) => ({
-                ...item,
-                hidden: !isOpen
-              }))
+              ...action.items.map((item) => ({ ...item, hidden: !isOpen }))
             ]
           : []
 

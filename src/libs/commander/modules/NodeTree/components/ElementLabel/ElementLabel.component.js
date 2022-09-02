@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { getAttributes } from '../../../../components/CommandDom/CommandDom.helpers'
+import { Actions } from '../Actions/Actions.component'
 import {
   AttributeName,
   AttributeValue,
@@ -7,9 +8,7 @@ import {
   Tag,
   TagName,
   DefaultWrapper,
-  ChildWrapper,
-  ActionButtons,
-  ActionButton
+  ChildWrapper
 } from './ElementLabel.styles'
 
 export const ElementLabel = ({
@@ -24,11 +23,21 @@ export const ElementLabel = ({
   const [actionsPaddingRight, setActionsPaddingRight] = useState(0)
 
   useEffect(function checkWrapperPadding() {
-    if (!actionsRef.current) return
-    const { offsetWidth } = actionsRef.current
-    const paddingRight = offsetWidth + 10
+    const currentActionRef = actionsRef.current
 
-    setActionsPaddingRight(paddingRight)
+    if (!currentActionRef) return
+
+    const updatePadding = () => {
+      const { offsetWidth } = currentActionRef
+      const paddingRight = offsetWidth + 10
+
+      setActionsPaddingRight(paddingRight)
+    }
+
+    const obsever = new ResizeObserver(updatePadding)
+    obsever.observe(currentActionRef)
+
+    return () => obsever.unobserve(currentActionRef)
   }, [])
 
   const tagName = element.tagName.toLowerCase()
@@ -68,21 +77,7 @@ export const ElementLabel = ({
 
         {<Tag>{hasChildren ? ' >' : ' />'}</Tag>}
 
-        {hasActions && (
-          <ActionButtons ref={actionsRef}>
-            {actions.map((action) => {
-              return (
-                <ActionButton
-                  key={action.id}
-                  onClick={action.disabled ? null : action.onClick}
-                  disabled={action.disabled}
-                >
-                  {action.Component}
-                </ActionButton>
-              )
-            })}
-          </ActionButtons>
-        )}
+        {hasActions && <Actions wrapperRef={actionsRef} actions={actions} />}
       </Wrapper>
 
       {hasChildren && (

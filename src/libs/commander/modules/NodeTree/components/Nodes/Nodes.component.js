@@ -39,28 +39,31 @@ const NodesWithoutContext = ({
     })
   }, [isNodeObjetive, objetives])
 
+  const handleToggleElement = (event) => {
+    event.stopPropagation()
+
+    setOpenNodes((openNodes) =>
+      isNodeOpen
+        ? openNodes.filter((openNode) => openNode !== node)
+        : [...openNodes, node]
+    )
+  }
+  const handleChangeRoot = (event) => {
+    event.stopPropagation()
+
+    handleRootChange(node)
+  }
+
   const actions = [
     {
       id: 'toggle-element',
-      onClick: (event) => {
-        event.stopPropagation()
-
-        setOpenNodes((openNodes) =>
-          isNodeOpen
-            ? openNodes.filter((openNode) => openNode !== node)
-            : [...openNodes, node]
-        )
-      },
+      onClick: handleToggleElement,
       disabled: !hasNodes,
       Component: <ActionButtonText isOpen={isNodeOpen}>{'<'}</ActionButtonText>
     },
     {
       id: 'change-root',
-      onClick: (event) => {
-        event.stopPropagation()
-
-        handleRootChange(node)
-      },
+      onClick: handleChangeRoot,
       disabled: !hasNodes,
       Component: isNodeRoot ? '✽' : '⚬'
     }

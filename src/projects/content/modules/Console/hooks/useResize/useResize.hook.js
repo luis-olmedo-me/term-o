@@ -76,6 +76,24 @@ export const useResize = ({ wrapperReference, consolePosition }) => {
             bottom: 10
           })
           break
+
+        case 'left':
+          setResizeData({
+            left: 10,
+            top: 10,
+            right: bodyData.width - 460,
+            bottom: 10
+          })
+          break
+
+        case 'full':
+          setResizeData({
+            left: 10,
+            top: 10,
+            right: 10,
+            bottom: 10
+          })
+          break
       }
     }
 

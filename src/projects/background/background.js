@@ -51,6 +51,22 @@ const resizeLeft = () => {
     dispatchEvent(resizeEvent)
   }
 }
+const resizeFull = () => {
+  const root = window.document.getElementById('term-o-root')
+
+  if (!root) return
+
+  const isInitiated = root.dataset.isInitiated === 'true'
+  const isOpen = root.dataset.isOpen === 'true'
+
+  if (isInitiated && isOpen) {
+    const resizeEvent = new CustomEvent('term-o-resize', {
+      detail: { side: 'full' }
+    })
+
+    dispatchEvent(resizeEvent)
+  }
+}
 
 chrome.commands.onCommand.addListener(function (command) {
   if (!extensionKeyEventNames.includes(command)) return
@@ -69,6 +85,20 @@ chrome.commands.onCommand.addListener(function (command) {
       chrome.scripting.executeScript({
         target: { tabId: id, allFrames: true },
         func: resizeRight
+      })
+    }
+
+    if (command === extensionKeyEvents.RESIZE_LEFT) {
+      chrome.scripting.executeScript({
+        target: { tabId: id, allFrames: true },
+        func: resizeLeft
+      })
+    }
+
+    if (command === extensionKeyEvents.RESIZE_FULL) {
+      chrome.scripting.executeScript({
+        target: { tabId: id, allFrames: true },
+        func: resizeFull
       })
     }
   })

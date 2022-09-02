@@ -12,7 +12,7 @@ const Birth = keyframes`
   }
 `
 
-export const StyleSheetWrapper = styled.span`
+export const StyleSheetWrapper = styled.div`
   position: relative;
   padding: 5px 10px;
   background-color: #fafafa;
@@ -33,4 +33,17 @@ export const StyleSheetWrapper = styled.span`
 
 export const Title = styled.span`
   vertical-align: middle;
+`
+
+export const PropertyWrapper = styled.div`
+  border-left: 5px solid #00000030;
+  padding-left: 2ch;
+`
+export const Property = styled.div`
+  background-color: #fafafa;
+  padding: 3px 7px;
+  border-radius: 3px;
+  cursor: pointer;
+  color: #111;
+  font-weight: bold;
 `

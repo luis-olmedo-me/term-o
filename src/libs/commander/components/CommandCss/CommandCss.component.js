@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { actionTypes, parameterTypes } from '../../constants/commands.constants'
+import { parameterTypes } from '../../constants/commands.constants'
 import { styleElements, validateStyles } from '../../commander.promises'
 import { getParamsByType } from '../../commander.helpers'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
@@ -14,6 +14,7 @@ import { ParameterElements } from '../../modules/ParameterElements/ParameterElem
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
+import { cssActionTypes } from './CommandCss.constants'
 
 export const CommandCss = ({
   props,
@@ -31,7 +32,7 @@ export const CommandCss = ({
     maxItems: 10
   })
 
-  const applyStyles = useCallback(
+  const handleApplyStyles = useCallback(
     (customStyles = {}) => {
       const inlineStyles = {
         ...parseStyles(styles),
@@ -59,18 +60,26 @@ export const CommandCss = ({
     [styles, manualStyles, setMessageData]
   )
 
+  const handleGetStyles = useCallback(() => {
+    console.log('hi')
+  }, [])
+
   useEffect(
     function handleActionType() {
       switch (actionType) {
-        case actionTypes.SET_STYLES:
-          applyStyles()
+        case cssActionTypes.SET_STYLES:
+          handleApplyStyles()
+          break
+
+        case cssActionTypes.GET_STYLES:
+          handleGetStyles()
           break
 
         default:
           break
       }
     },
-    [actionType, applyStyles]
+    [actionType, handleApplyStyles, handleGetStyles]
   )
 
   return (

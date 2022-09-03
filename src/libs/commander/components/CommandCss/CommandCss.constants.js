@@ -9,7 +9,12 @@ import { kebabize, validStyleKeys } from '../../commander.promises'
 const cssProps = validStyleKeys.reduce((props, key) => {
   return {
     ...props,
-    [kebabize(key)]: { key, type: 'array', defaultValue: '', aliases: [] }
+    [kebabize(key)]: {
+      key,
+      type: optionTypes.STRING,
+      defaultValue: '',
+      aliases: []
+    }
   }
 }, {})
 

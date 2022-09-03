@@ -18,9 +18,7 @@ export const parseStyles = (inlineStyles) => {
 export const parseManualStyles = (manualStyles) => {
   return Object.entries(manualStyles).reduce(
     (parsedManualStyles, [name, value]) => {
-      const [lastValue] = value.reverse()
-
-      return { ...parsedManualStyles, [name]: lastValue }
+      return { ...parsedManualStyles, [name]: value }
     },
     {}
   )

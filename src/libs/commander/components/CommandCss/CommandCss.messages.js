@@ -1,6 +1,8 @@
 import { parameterTypes } from '../../constants/commands.constants'
+import { commanderMessages } from '../../commander.messages.js'
 
 export const cssMessages = {
+  ...commanderMessages,
   invalidStyle: {
     message: `Some of the styles you provided are invalid: "{invalidStyleNames}".`,
     type: parameterTypes.ERROR

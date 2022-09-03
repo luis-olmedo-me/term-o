@@ -84,8 +84,8 @@ export const CommandCss = ({
           handleGetStyles()
           break
 
-        default:
-          break
+        case cssActionTypes.NONE:
+          return setMessageData(cssMessages.unexpectedError)
       }
     },
     [actionType, handleApplyStyles, handleGetStyles]

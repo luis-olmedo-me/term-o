@@ -62,6 +62,7 @@ export const CommandCss = ({
 
   const handleGetStyles = useCallback(() => {
     console.log('hi')
+    setIsLoading(false)
   }, [])
 
   useEffect(

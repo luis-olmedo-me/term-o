@@ -34,3 +34,8 @@ export const cssConfig = {
   },
   output: (props) => <CommandCss key={props.id} {...props} />
 }
+
+export const cssActionTypes = {
+  SET_STYLES: 'SET_STYLES',
+  NONE: 'NONE'
+}

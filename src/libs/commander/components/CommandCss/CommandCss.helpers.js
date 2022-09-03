@@ -26,9 +26,10 @@ export const parseManualStyles = (manualStyles) => {
   )
 }
 
-export const getActionType = ({ styles, manualStyles }) => {
+export const getActionType = ({ styles, manualStyles, get }) => {
   const hasManualStyles = Object.keys(manualStyles).length
 
   if (styles || hasManualStyles) return cssActionTypes.SET_STYLES
+  else if (get) return cssActionTypes.GET_STYLES
   else return cssActionTypes.NONE
 }

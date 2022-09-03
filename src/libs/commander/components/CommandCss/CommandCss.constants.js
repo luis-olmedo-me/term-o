@@ -30,6 +30,13 @@ export const cssConfig = {
       type: optionTypes.STRING,
       defaultValue: '',
       aliases: ['s']
+    },
+    get: {
+      key: 'get',
+      description: 'Get styles from parameter elements',
+      type: optionTypes.BOOLEAN,
+      defaultValue: '',
+      aliases: ['g']
     }
   },
   output: (props) => <CommandCss key={props.id} {...props} />
@@ -37,5 +44,6 @@ export const cssConfig = {
 
 export const cssActionTypes = {
   SET_STYLES: 'SET_STYLES',
+  GET_STYLES: 'GET_STYLES',
   NONE: 'NONE'
 }

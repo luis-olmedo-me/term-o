@@ -51,7 +51,7 @@ export const Property = styled.div`
   font-weight: bold;
   width: fit-content;
   display: inline-flex;
-  justify-content: center;
+  align-items: center;
 `
 
 export const PropertyName = styled.span`
@@ -64,7 +64,8 @@ export const Equal = styled.span`
 export const PropertyColor = styled.span`
   color: ${(props) => props.fontColor};
   border: 2px solid #00000020;
-  padding: 8px;
+  height: 14px;
+  width: 14px;
   background-color: currentColor;
   margin-left: 5px;
   border-radius: 3px;

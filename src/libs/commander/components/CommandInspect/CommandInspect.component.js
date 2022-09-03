@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
-import { getActionType } from './CommandInspect.helpers'
+import { getActionType, getDefaultHTMlRoot } from './CommandInspect.helpers'
 import { inspectMessages } from './CommandInspect.messages'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { inspectActionTypes } from './CommandInspect.constants'
-import { getElements } from '../CommandDom/CommandDom.helpers'
 import { NodeTree } from '../../modules/NodeTree/NodeTree.component'
 import { getParamsByType } from '../../commander.helpers'
 
@@ -38,37 +37,30 @@ export const CommandInspect = ({
   const [HTMLRoot, setHTMLRoot] = useState(null)
   const [objetives, setObjetives] = useState([])
   const [openNodes, setOpenNodes] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
 
   const defaultRoot = useRef(null)
 
-  const handleInspect = useCallback(() => {
-    const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
-    const elementsSearch = getElements({
-      patterns: ['html'],
-      filterBySome: null,
-      filterByEvery: null
-    })
-    const newObjetives = paramElements.length ? paramElements : [document.body]
-    const newOpenNodes = getOpenNodesFromObjetives(newObjetives)
+  const handleInspect = useCallback(
+    ({ elementsFound: [foundHTMLRoot] }) => {
+      const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
+      const newObjetives = paramElements.length
+        ? paramElements
+        : [document.body]
+      const newOpenNodes = getOpenNodesFromObjetives(newObjetives)
 
-    setObjetives(newObjetives)
-    setOpenNodes(newOpenNodes)
-
-    elementsSearch
-      .then(({ elementsFound: [foundHTMLRoot] }) => {
-        defaultRoot.current = foundHTMLRoot
-        setHTMLRoot(foundHTMLRoot)
-      })
-      .catch(() => setMessageData(domMessages.noElementsFound))
-      .finally(() => setIsLoading(false))
-  }, [handleInspect, setMessageData, params])
+      setObjetives(newObjetives)
+      setOpenNodes(newOpenNodes)
+      setHTMLRoot(foundHTMLRoot)
+      defaultRoot.current = foundHTMLRoot
+    },
+    [handleInspect, setMessageData, params]
+  )
 
   useEffect(
     function handleActionType() {
       switch (actionType) {
         case inspectActionTypes.INSPECT:
-          handleInspect()
+          getDefaultHTMlRoot().then(handleInspect)
           break
 
         default:
@@ -90,7 +82,7 @@ export const CommandInspect = ({
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-      <LogWrapper isLoading={isLoading} variant={parameterTypes.ELEMENT}>
+      <LogWrapper variant={parameterTypes.ELEMENT}>
         {HTMLRoot && (
           <NodeTree
             root={HTMLRoot}

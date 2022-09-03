@@ -73,7 +73,10 @@ class Commander {
       const [command, ...args] = line
       const knownCommand = this.commands[command]
 
-      const { values, ...propValues } = getOptionsFromArgs(args)
+      const { values, ...propValues } = getOptionsFromArgs(
+        args,
+        knownCommand?.props
+      )
       const props = buildProps(propValues, knownCommand?.props)
 
       const hasKnownCommand = Boolean(knownCommand)

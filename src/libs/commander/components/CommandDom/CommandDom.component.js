@@ -34,7 +34,6 @@ export const CommandDom = ({
 
   const [elements, setElements] = useState([])
   const [pinnedElements, setPinnedElements] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
 
   const actionType = getActionType(props)
 
@@ -87,7 +86,6 @@ export const CommandDom = ({
         finish()
       })
       .catch(() => setMessageData(domMessages.noElementsFound))
-      .finally(() => setIsLoading(false))
   }, [
     get,
     hasId,
@@ -119,16 +117,13 @@ export const CommandDom = ({
   )
 
   const hasPinnedElements = pinnedElements.length > 0
+  const hasPages = pages.length > 0
 
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-      <LogWrapper
-        variant={parameterTypes.ELEMENT}
-        buttonGroups={buttonGroups}
-        isLoading={isLoading}
-      >
+      <LogWrapper variant={parameterTypes.ELEMENT} buttonGroups={buttonGroups}>
         {hasPinnedElements && (
           <ParameterElements
             elements={pinnedElements}
@@ -138,19 +133,21 @@ export const CommandDom = ({
           />
         )}
 
-        <Carousel itemInView={pageNumber}>
-          {pages.map((page, currentPageNumber) => {
-            return (
-              <CarouselItem key={currentPageNumber}>
-                <ParameterElements
-                  elements={page}
-                  pinnedElements={pinnedElements}
-                  setPinnedElements={setPinnedElements}
-                />
-              </CarouselItem>
-            )
-          })}
-        </Carousel>
+        {hasPages && (
+          <Carousel itemInView={pageNumber}>
+            {pages.map((page, currentPageNumber) => {
+              return (
+                <CarouselItem key={currentPageNumber}>
+                  <ParameterElements
+                    elements={page}
+                    pinnedElements={pinnedElements}
+                    setPinnedElements={setPinnedElements}
+                  />
+                </CarouselItem>
+              )
+            })}
+          </Carousel>
+        )}
       </LogWrapper>
     </>
   )

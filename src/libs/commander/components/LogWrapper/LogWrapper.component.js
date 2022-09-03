@@ -7,8 +7,7 @@ import {
   Log,
   LogContent,
   AnimatedLoader,
-  LoaderText,
-  LoaderWrapper
+  LoaderText
 } from './LogWrapper.styles'
 
 const preIconsByVariants = {
@@ -18,17 +17,22 @@ const preIconsByVariants = {
   [parameterTypes.SUCCESS]: '✔'
 }
 
-export const LogWrapper = ({ children, variant, buttonGroups, isLoading }) => {
+export const LogWrapper = ({ children, variant, buttonGroups }) => {
   const icon = preIconsByVariants[variant]
   const hasButtonGroups = Boolean(buttonGroups?.length)
 
+  const hideLoader =
+    Boolean(children) ||
+    children?.some?.(Boolean) ||
+    variant === parameterTypes.COMMAND
+
   return (
-    <Log className={variant}>
-      {isLoading && (
-        <LoaderWrapper>
+    <Log className={hideLoader ? variant : parameterTypes.INFO}>
+      {!hideLoader && (
+        <div>
           <AnimatedLoader />
           <LoaderText>Loading</LoaderText>
-        </LoaderWrapper>
+        </div>
       )}
 
       <LogContent>

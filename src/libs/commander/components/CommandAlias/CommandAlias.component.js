@@ -18,10 +18,9 @@ export const CommandAlias = ({
   props,
   terminal: { setMessageData, command }
 }) => {
-  const { list, delete: deletedIds, add: aliasesToAdd } = props
+  const { delete: deletedIds, add: aliasesToAdd } = props
 
   const [tableItems, setTableItems] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
 
   const { buttonGroups, pages, pageNumber } = usePaginationGroups({
     items: tableItems,
@@ -39,7 +38,6 @@ export const CommandAlias = ({
       })
 
       setTableItems(aliasRows)
-      setIsLoading(false)
     },
     [setMessageData]
   )
@@ -55,7 +53,6 @@ export const CommandAlias = ({
     addAliases(validAliases)
       .catch(() => setMessageData(aliasMessages.unexpectedError))
       .then(() => setMessageData(aliasMessages.aliasAdditionSuccess))
-      .finally(() => setIsLoading(false))
   }, [aliasesToAdd, setMessageData])
 
   const handleDeleteAliases = useCallback(
@@ -69,7 +66,6 @@ export const CommandAlias = ({
       deleteAliases(validIds)
         .catch(() => setMessageData(aliasMessages.unexpectedError))
         .then(() => setMessageData(aliasMessages.aliasDeletionSuccess))
-        .finally(() => setIsLoading(false))
     },
     [deletedIds]
   )
@@ -96,14 +92,14 @@ export const CommandAlias = ({
     [actionType, handleAddAliases, handleDeleteAliases, handleShowList]
   )
 
+  const hasPages = pages.length > 0
+
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-      {isLoading && <LogWrapper isLoading variant={parameterTypes.INFO} />}
-
-      {list && (
-        <LogWrapper variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
+      <LogWrapper variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
+        {hasPages && (
           <Carousel itemInView={pageNumber}>
             {pages.map((page, currentPageNumber) => {
               return (
@@ -117,8 +113,8 @@ export const CommandAlias = ({
               )
             })}
           </Carousel>
-        </LogWrapper>
-      )}
+        )}
+      </LogWrapper>
     </>
   )
 }

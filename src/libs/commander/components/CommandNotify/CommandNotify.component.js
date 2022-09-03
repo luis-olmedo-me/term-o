@@ -36,11 +36,5 @@ export const CommandNotify = ({
     [actionType, handleNotify, setMessageData]
   )
 
-  return (
-    <>
-      <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
-
-      <LogWrapper isLoading variant={parameterTypes.TABLE} />
-    </>
-  )
+  return <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 }

@@ -2,6 +2,8 @@ import styled, { keyframes } from 'styled-components'
 import { Loader } from 'modules/icons/loader.icon'
 
 export const Log = styled.div`
+  transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out;
+
   &:first-child {
     border-radius: 3px 3px 0 0;
   }
@@ -113,15 +115,11 @@ export const AnimatedLoader = styled(Loader)`
   animation-timing-function: ease-in-out;
   color: white;
   padding: 10px;
-  width: 35px;
-  height: 35px;
+  width: 16px;
+  height: 16px;
   vertical-align: middle;
 `
 export const LoaderText = styled.span`
   color: white;
   vertical-align: middle;
-  font-weight: bold;
-`
-export const LoaderWrapper = styled.div`
-  text-align: center;
 `

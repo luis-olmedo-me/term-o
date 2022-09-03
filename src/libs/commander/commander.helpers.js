@@ -120,8 +120,16 @@ const checkURLValidation = (value) => {
   }
 }
 
-export const getOptionsFromArgs = (args) => {
+export const getOptionsFromArgs = (args, propsConfig = {}) => {
   const parsedArguments = { values: [] }
+  const booleanOptionNames = Object.keys(propsConfig).filter((propName) => {
+    return propsConfig[propName].type === optionTypes.BOOLEAN
+  })
+  const booleanOptionAliasesNames = booleanOptionNames.reduce(
+    (aliases, optionName) => [...aliases, ...propsConfig[optionName].aliases],
+    []
+  )
+  const booleanOptions = [...booleanOptionNames, ...booleanOptionAliasesNames]
 
   for (let argIndex = 0; argIndex < args.length; argIndex++) {
     const arg = args[argIndex]
@@ -133,9 +141,15 @@ export const getOptionsFromArgs = (args) => {
     const isArgOptionWithRowValue =
       isArgOption && arg.includes('=') && /^\w+=.+/.test(arg)
 
-    const isArgOptionBoolean = isArgOption && (isNextArgOption || !nextArg)
+    const formattedArg = arg.replace(/^--|^-/, '')
 
-    if (isArgOptionWithRowValue) {
+    const isArgOptionBoolean = isArgOption && (isNextArgOption || !nextArg)
+    const isArgOptionSetBoolean =
+      isArgOption && booleanOptions.includes(formattedArg)
+
+    if (isArgOptionBoolean || isArgOptionSetBoolean) {
+      parsedArguments[formattedArg] = true
+    } else if (isArgOptionWithRowValue) {
       const [key, value] = getRowDataFromOption(arg)
 
       const isValueWithRowValue =
@@ -152,10 +166,6 @@ export const getOptionsFromArgs = (args) => {
         : removeQuotesFromValue(value)
 
       parsedArguments[formattedKey] = [...carriedParsedArguments, newValue]
-    } else if (isArgOptionBoolean) {
-      const formattedKey = arg.replace(/^--|^-/, '')
-
-      parsedArguments[formattedKey] = true
     } else if (isArgOption) {
       const isNextArgOptionWithRowValue =
         !isNextArgOption &&
@@ -166,15 +176,14 @@ export const getOptionsFromArgs = (args) => {
         ? getRowDataFromOption(nextArg)
         : []
 
-      const formattedKey = arg.replace(/^--|^-/, '')
-      const carriedParsedArguments = parsedArguments[formattedKey] || []
+      const carriedParsedArguments = parsedArguments[formattedArg] || []
 
       const newValue = isNextArgOptionWithRowValue
         ? { [nextKey]: removeQuotesFromValue(nextValue) }
         : removeQuotesFromValue(nextArg)
 
       argIndex++
-      parsedArguments[formattedKey] = [...carriedParsedArguments, newValue]
+      parsedArguments[formattedArg] = [...carriedParsedArguments, newValue]
     } else {
       const carriedParsedArguments = parsedArguments.values
 

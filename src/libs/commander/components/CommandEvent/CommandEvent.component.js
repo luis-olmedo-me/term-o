@@ -24,14 +24,12 @@ export const CommandEvent = ({
   terminal: { command, setMessageData, params }
 }) => {
   const {
-    list,
     delete: deletedIds,
     trigger: eventToTrigger,
     value: valueToInsert
   } = props
 
   const [tableItems, setTableItems] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
 
   const { buttonGroups, pages, pageNumber } = usePaginationGroups({
     items: tableItems,
@@ -49,7 +47,6 @@ export const CommandEvent = ({
       })
 
       setTableItems(pageEventsRows)
-      setIsLoading(false)
     },
     [setMessageData]
   )
@@ -71,7 +68,6 @@ export const CommandEvent = ({
       deletePageEvents(idsToDelete)
         .catch(() => setMessageData(eventMessages.unexpectedError))
         .then(() => setMessageData(eventMessages.eventDeleteSuccess))
-        .finally(() => setIsLoading(false))
     },
     [deletedIds, setMessageData]
   )
@@ -101,8 +97,6 @@ export const CommandEvent = ({
 
       return setMessageData(eventMessages.elementsChangedSuccess)
     }
-
-    setIsLoading(false)
   }, [eventToTrigger, valueToInsert])
 
   useEffect(
@@ -127,12 +121,14 @@ export const CommandEvent = ({
     [actionType, handleDeleteEvent, handleShowList, handleTriggerEvent]
   )
 
+  const hasPages = pages.length > 0
+
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-      {list && (
-        <LogWrapper variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
+      <LogWrapper variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
+        {hasPages && (
           <Carousel itemInView={pageNumber}>
             {pages.map((page, currentPageNumber) => {
               return (
@@ -146,8 +142,8 @@ export const CommandEvent = ({
               )
             })}
           </Carousel>
-        </LogWrapper>
-      )}
+        )}
+      </LogWrapper>
     </>
   )
 }

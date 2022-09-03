@@ -113,6 +113,7 @@ export const CommandCss = ({
                     elements={page}
                     pinnedElements={[]}
                     Child={StyleSheet}
+                    customProps={{ styleSheets: page }}
                   />
                 </CarouselItem>
               )

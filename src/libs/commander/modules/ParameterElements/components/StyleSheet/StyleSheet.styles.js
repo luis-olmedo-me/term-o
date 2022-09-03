@@ -52,6 +52,8 @@ export const Property = styled.div`
   width: fit-content;
   display: inline-flex;
   align-items: center;
+
+  opacity: ${(props) => (props.isOverwritten ? '.5' : '1')}; ;
 `
 
 export const PropertyName = styled.span`

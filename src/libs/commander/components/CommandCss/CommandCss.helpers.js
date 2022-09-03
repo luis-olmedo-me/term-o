@@ -32,13 +32,17 @@ export const getActionType = ({ styles, manualStyles, get }) => {
   else return cssActionTypes.NONE
 }
 
-const parseStringStyles = (stringStyles) => {
-  return stringStyles.map((stringStyle) => {
-    const startStylesIndex = stringStyle.indexOf('{')
+const parseRules = (rules) => {
+  return rules.map(({ cssText, selectorText }) => {
+    const startStylesIndex = cssText.indexOf('{')
+    const inlineStyles = cssText.substring(
+      startStylesIndex + 1,
+      cssText.length - 1
+    )
 
     return {
-      title: stringStyle.substring(0, startStylesIndex),
-      style: stringStyle.substring(startStylesIndex + 1, stringStyle.length - 1)
+      title: selectorText,
+      styles: parseStyles(inlineStyles)
     }
   })
 }
@@ -67,12 +71,14 @@ export const getStylesFrom = (element) => {
     if (rules === null) continue
 
     for (const rule in rules) {
-      if (matches.apply(element, [rules[rule].selectorText])) {
-        console.log('rules[rule]', rules[rule])
-        ret = [...ret, rules[rule].cssText]
+      const selectorText = rules[rule].selectorText
+      const cssText = rules[rule].cssText
+
+      if (matches.apply(element, [selectorText])) {
+        ret = [...ret, { cssText, selectorText }]
       }
     }
   }
 
-  return parseStringStyles(ret)
+  return parseRules(ret)
 }

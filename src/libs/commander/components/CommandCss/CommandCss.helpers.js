@@ -76,7 +76,7 @@ export const getStylesFrom = (element) => {
       const cssText = rules[rule].cssText
 
       if (matches.apply(element, [selectorText])) {
-        ret = [...ret, { cssText, selectorText }]
+        ret = [{ cssText, selectorText }, ...ret]
       }
     }
   }

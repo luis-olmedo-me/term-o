@@ -11,7 +11,10 @@ import {
   Title
 } from './StyleSheet.styles'
 
-export const StyleSheet = ({ element = {}, className = '' }) => {
+export const StyleSheet = ({ element = {}, className = '', styleSheets }) => {
+  const indexOfCurrentStyleSheet = styleSheets.indexOf(element)
+  const styleSheetsAbove = styleSheets.slice(0, indexOfCurrentStyleSheet)
+
   return (
     <>
       <StyleSheetWrapper className={className}>
@@ -22,18 +25,19 @@ export const StyleSheet = ({ element = {}, className = '' }) => {
         {Object.entries(element.styles).map(
           ([CSSPropertyName, CSSPropertyValue]) => {
             const isColor = isValidColor(CSSPropertyValue)
+            const isOverwritten = styleSheetsAbove.some((styleSheet) => {
+              return styleSheet.styles.hasOwnProperty(CSSPropertyName)
+            })
 
             return (
-              <Property key={CSSPropertyName}>
+              <Property key={CSSPropertyName} isOverwritten={isOverwritten}>
                 <PropertyName>{CSSPropertyName}</PropertyName>
 
                 <Equal>: </Equal>
 
                 {isColor && <PropertyColor fontColor={CSSPropertyValue} />}
 
-                <PropertyValue color={isColor ? CSSPropertyValue : ''}>
-                  {CSSPropertyValue}
-                </PropertyValue>
+                <PropertyValue>{CSSPropertyValue}</PropertyValue>
               </Property>
             )
           }

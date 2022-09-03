@@ -62,8 +62,10 @@ export const CommandCss = ({
   const handleGetStyles = useCallback(() => {
     const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
 
-    if (paramElements.length > 1) return console.log('have many')
-    if (paramElements.length === 0) return console.log('have nothing')
+    if (paramElements.length > 1)
+      return setMessageData(cssMessages.parameterOverflow)
+    if (paramElements.length === 0)
+      return setMessageData(cssMessages.noParameters)
 
     const [firstParamElement] = paramElements
     const newStylesApplied = getStylesFrom(firstParamElement)

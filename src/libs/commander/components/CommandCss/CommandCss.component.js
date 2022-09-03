@@ -9,7 +9,6 @@ import {
   parseStyles
 } from './CommandCss.helpers'
 import { cssMessages } from './CommandCss.messages'
-import { MaterialTree } from '../CommandStorage/CommandStorage.styles'
 import { StyleSheet } from '../../modules/ParameterElements/components/StyleSheet/StyleSheet.component'
 import { ParameterElements } from '../../modules/ParameterElements/ParameterElements.component'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'

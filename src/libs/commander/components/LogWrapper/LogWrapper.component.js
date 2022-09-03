@@ -22,11 +22,14 @@ export const LogWrapper = ({ children, variant, buttonGroups }) => {
   const icon = preIconsByVariants[variant]
   const hasButtonGroups = Boolean(buttonGroups?.length)
 
-  const hasChildren = Boolean(children) || children?.some?.(Boolean)
+  const hideLoader =
+    Boolean(children) ||
+    children?.some?.(Boolean) ||
+    variant === parameterTypes.COMMAND
 
   return (
     <Log className={variant}>
-      {!hasChildren && (
+      {!hideLoader && (
         <LoaderWrapper>
           <AnimatedLoader />
           <LoaderText>Loading</LoaderText>

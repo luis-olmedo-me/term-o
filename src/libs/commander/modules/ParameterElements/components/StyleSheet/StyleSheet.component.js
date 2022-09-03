@@ -1,7 +1,9 @@
 import React from 'react'
+import { isValidColor } from './StyleSheet.helpers'
 import {
   Equal,
   Property,
+  PropertyColor,
   PropertyName,
   PropertyValue,
   PropertyWrapper,
@@ -19,11 +21,19 @@ export const StyleSheet = ({ element = {}, className = '' }) => {
       <PropertyWrapper>
         {Object.entries(element.styles).map(
           ([CSSPropertyName, CSSPropertyValue]) => {
+            const isColor = isValidColor(CSSPropertyValue)
+
             return (
               <Property key={CSSPropertyName}>
                 <PropertyName>{CSSPropertyName}</PropertyName>
+
                 <Equal>: </Equal>
-                <PropertyValue>{CSSPropertyValue}</PropertyValue>
+
+                <PropertyValue color={isColor ? CSSPropertyValue : ''}>
+                  {isColor && <PropertyColor fontColor={CSSPropertyValue} />}
+
+                  {CSSPropertyValue}
+                </PropertyValue>
               </Property>
             )
           }

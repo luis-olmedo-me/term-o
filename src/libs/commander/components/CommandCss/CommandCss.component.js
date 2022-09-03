@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { actionTypes, parameterTypes } from '../../constants/commands.constants'
+import { parameterTypes } from '../../constants/commands.constants'
 import { styleElements, validateStyles } from '../../commander.promises'
 import { getParamsByType } from '../../commander.helpers'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import {
   getActionType,
+  getStylesFrom,
   parseManualStyles,
   parseStyles
 } from './CommandCss.helpers'
@@ -14,6 +15,7 @@ import { ParameterElements } from '../../modules/ParameterElements/ParameterElem
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
+import { cssActionTypes } from './CommandCss.constants'
 
 export const CommandCss = ({
   props,
@@ -21,17 +23,16 @@ export const CommandCss = ({
 }) => {
   const { styles, manualStyles } = props
 
-  const [stylesApplied, setStylesApplied] = useState({})
-  const [isLoading, setIsLoading] = useState(true)
+  const [stylesApplied, setStylesApplied] = useState([])
 
   const actionType = getActionType(props)
 
   const { buttonGroups, pages, pageNumber } = usePaginationGroups({
-    items: [{ title: 'Styles', styles: stylesApplied }],
+    items: stylesApplied,
     maxItems: 10
   })
 
-  const applyStyles = useCallback(
+  const handleApplyStyles = useCallback(
     (customStyles = {}) => {
       const inlineStyles = {
         ...parseStyles(styles),
@@ -53,48 +54,71 @@ export const CommandCss = ({
       }
 
       styleElements({ styles: validStyles, elements: paramElements })
-      setStylesApplied(validStyles)
-      setIsLoading(false)
+      setStylesApplied([{ title: 'Styles', styles: validStyles }])
     },
     [styles, manualStyles, setMessageData]
   )
 
+  const handleGetStyles = useCallback(() => {
+    const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
+
+    if (paramElements.length > 1)
+      return setMessageData(cssMessages.parameterOverflow)
+    if (paramElements.length === 0)
+      return setMessageData(cssMessages.noParameters)
+
+    const [firstParamElement] = paramElements
+    const newStylesApplied = getStylesFrom(firstParamElement)
+
+    const directInlineStylesApplied = firstParamElement.getAttribute('style')
+    const directStylesAppllied = parseStyles(directInlineStylesApplied, null)
+    const directStylesWithSchema = directInlineStylesApplied
+      ? [{ title: 'Styles', styles: directStylesAppllied }]
+      : []
+
+    setStylesApplied([...directStylesWithSchema, ...newStylesApplied])
+  }, [])
+
   useEffect(
     function handleActionType() {
       switch (actionType) {
-        case actionTypes.SET_STYLES:
-          applyStyles()
+        case cssActionTypes.SET_STYLES:
+          handleApplyStyles()
           break
 
-        default:
+        case cssActionTypes.GET_STYLES:
+          handleGetStyles()
           break
+
+        case cssActionTypes.NONE:
+          return setMessageData(cssMessages.unexpectedError)
       }
     },
-    [actionType, applyStyles]
+    [actionType, handleApplyStyles, handleGetStyles]
   )
+
+  const hasPages = pages.length > 0
 
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-      <LogWrapper
-        isLoading={isLoading}
-        variant={parameterTypes.STYLES}
-        buttonGroups={buttonGroups}
-      >
-        <Carousel itemInView={pageNumber}>
-          {pages.map((page, currentPageNumber) => {
-            return (
-              <CarouselItem key={currentPageNumber}>
-                <ParameterElements
-                  elements={page}
-                  pinnedElements={[]}
-                  Child={StyleSheet}
-                />
-              </CarouselItem>
-            )
-          })}
-        </Carousel>
+      <LogWrapper variant={parameterTypes.STYLES} buttonGroups={buttonGroups}>
+        {hasPages && (
+          <Carousel itemInView={pageNumber}>
+            {pages.map((page, currentPageNumber) => {
+              return (
+                <CarouselItem key={currentPageNumber}>
+                  <ParameterElements
+                    elements={page}
+                    pinnedElements={[]}
+                    Child={StyleSheet}
+                  />
+                </CarouselItem>
+              )
+            })}
+          </Carousel>
+        )}
       </LogWrapper>
     </>
   )

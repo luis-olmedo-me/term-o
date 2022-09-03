@@ -16,7 +16,6 @@ export const CommandTabs = ({
   terminal: { command, setMessageData }
 }) => {
   const [tabs, setTabs] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
 
   const actionType = getActionType(props)
 
@@ -27,8 +26,6 @@ export const CommandTabs = ({
 
   const handleShowTabList = useCallback((tabsInfo) => {
     setTabs(tabsInfo)
-
-    setIsLoading(false)
   }, [])
 
   useEffect(
@@ -48,28 +45,28 @@ export const CommandTabs = ({
     [actionType, handleShowTabList, setMessageData]
   )
 
+  const hasPages = pages.length > 0
+
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-      <LogWrapper
-        isLoading={isLoading}
-        variant={parameterTypes.TABS}
-        buttonGroups={buttonGroups}
-      >
-        <Carousel itemInView={pageNumber}>
-          {pages.map((page, currentPageNumber) => {
-            return (
-              <CarouselItem key={currentPageNumber}>
-                <ParameterElements
-                  elements={page}
-                  pinnedElements={[]}
-                  Child={Tab}
-                />
-              </CarouselItem>
-            )
-          })}
-        </Carousel>
+      <LogWrapper variant={parameterTypes.TABS} buttonGroups={buttonGroups}>
+        {hasPages && (
+          <Carousel itemInView={pageNumber}>
+            {pages.map((page, currentPageNumber) => {
+              return (
+                <CarouselItem key={currentPageNumber}>
+                  <ParameterElements
+                    elements={page}
+                    pinnedElements={[]}
+                    Child={Tab}
+                  />
+                </CarouselItem>
+              )
+            })}
+          </Carousel>
+        )}
       </LogWrapper>
     </>
   )

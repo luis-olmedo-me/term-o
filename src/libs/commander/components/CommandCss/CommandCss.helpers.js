@@ -32,32 +32,47 @@ export const getActionType = ({ styles, manualStyles, get }) => {
   else return cssActionTypes.NONE
 }
 
+const parseStringStyles = (stringStyles) => {
+  return stringStyles.map((stringStyle) => {
+    const startStylesIndex = stringStyle.indexOf('{')
+
+    return {
+      title: stringStyle.substring(0, startStylesIndex),
+      style: stringStyle.substring(startStylesIndex + 1, stringStyle.length - 1)
+    }
+  })
+}
 const getRules = (sheet) => {
   try {
     return sheet.rules || sheet.cssRules
   } catch {
+    console.log('not found')
     return null
   }
 }
 export const getStylesFrom = (element) => {
-  const sheets = document.styleSheets,
-    ret = []
-  el.matches =
-    el.matches ||
-    el.webkitMatchesSelector ||
-    el.mozMatchesSelector ||
-    el.msMatchesSelector ||
-    el.oMatchesSelector
+  const sheets = document.styleSheets
+  let ret = []
+
+  const matches =
+    element.matches ||
+    element.webkitMatchesSelector ||
+    element.mozMatchesSelector ||
+    element.msMatchesSelector ||
+    element.oMatchesSelector
 
   for (const sheetId in sheets) {
     const rules = getRules(sheets[sheetId])
 
+    if (rules === null) continue
+
     for (const rule in rules) {
-      if (el.matches(rules[rule].selectorText)) {
-        ret.push(rules[rule].cssText)
+      if (matches.apply(element, [rules[rule].selectorText])) {
+        console.log('rules[rule]', rules[rule])
+        ret = [...ret, rules[rule].cssText]
       }
     }
   }
 
-  return ret
+  return parseStringStyles(ret)
 }

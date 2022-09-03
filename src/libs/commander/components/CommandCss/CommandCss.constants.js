@@ -40,7 +40,7 @@ export const cssConfig = {
       key: 'get',
       description: 'Get styles from parameter elements',
       type: optionTypes.BOOLEAN,
-      defaultValue: '',
+      defaultValue: false,
       aliases: ['g']
     }
   },

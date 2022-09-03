@@ -5,6 +5,7 @@ import { getParamsByType } from '../../commander.helpers'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import {
   getActionType,
+  getStylesFrom,
   parseManualStyles,
   parseStyles
 } from './CommandCss.helpers'
@@ -59,7 +60,11 @@ export const CommandCss = ({
   )
 
   const handleGetStyles = useCallback(() => {
-    console.log('hi')
+    console.log('params', params)
+    const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
+    console.log('paramElements', paramElements)
+
+    console.log('hi', paramElements.map(getStylesFrom))
   }, [])
 
   useEffect(

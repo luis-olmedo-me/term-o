@@ -70,7 +70,13 @@ export const CommandCss = ({
     const [firstParamElement] = paramElements
     const newStylesApplied = getStylesFrom(firstParamElement)
 
-    setStylesApplied(newStylesApplied)
+    const directInlineStylesApplied = firstParamElement.getAttribute('style')
+    const directStylesAppllied = parseStyles(directInlineStylesApplied, null)
+    const directStylesWithSchema = directInlineStylesApplied
+      ? [{ title: 'Styles', styles: directStylesAppllied }]
+      : []
+
+    setStylesApplied([...directStylesWithSchema, ...newStylesApplied])
   }, [])
 
   useEffect(

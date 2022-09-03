@@ -23,7 +23,7 @@ export const CommandCss = ({
 }) => {
   const { styles, manualStyles } = props
 
-  const [stylesApplied, setStylesApplied] = useState({})
+  const [stylesApplied, setStylesApplied] = useState([])
 
   const actionType = getActionType(props)
 
@@ -60,11 +60,15 @@ export const CommandCss = ({
   )
 
   const handleGetStyles = useCallback(() => {
-    console.log('params', params)
     const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
-    console.log('paramElements', paramElements)
 
-    console.log('hi', paramElements.map(getStylesFrom))
+    if (paramElements.length > 1) return console.log('have many')
+    if (paramElements.length === 0) return console.log('have nothing')
+
+    const [firstParamElement] = paramElements
+    const newStylesApplied = getStylesFrom(firstParamElement)
+
+    setStylesApplied(newStylesApplied)
   }, [])
 
   useEffect(

@@ -66,11 +66,13 @@ export const useResize = ({ wrapperReference, consolePosition }) => {
   useEffect(() => {
     const resizeCommandHandler = (event) => {
       const side = event.detail.side
+      const emptySpace = bodyData.width - (bodyData.width * 30) / 100
+      const widthTaken = bodyData.width - emptySpace
 
       switch (side) {
         case 'right':
           setResizeData({
-            left: bodyData.width - 460,
+            left: widthTaken < 400 ? 400 : emptySpace,
             top: 10,
             right: 10,
             bottom: 10
@@ -81,7 +83,7 @@ export const useResize = ({ wrapperReference, consolePosition }) => {
           setResizeData({
             left: 10,
             top: 10,
-            right: bodyData.width - 460,
+            right: widthTaken < 400 ? 400 : emptySpace,
             bottom: 10
           })
           break

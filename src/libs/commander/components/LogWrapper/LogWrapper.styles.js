@@ -2,7 +2,7 @@ import styled, { keyframes } from 'styled-components'
 import { Loader } from 'modules/icons/loader.icon'
 
 export const Log = styled.div`
-  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out;
 
   &:first-child {
     border-radius: 3px 3px 0 0;

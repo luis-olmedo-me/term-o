@@ -1,15 +1,16 @@
 import { camelize } from '../../commander.promises'
 import { cssActionTypes } from './CommandCss.constants'
 
-export const parseStyles = (inlineStyles) => {
+export const parseStyles = (inlineStyles, formatter = camelize) => {
   const regex = /([\w-]*)\s*:\s*([^;]*)/g
   var match,
     properties = {}
 
   while ((match = regex.exec(inlineStyles))) {
     const [, key, value] = match
+    const formattedKey = formatter ? formatter(key) : key
 
-    properties[camelize(key)] = value.trim()
+    properties[formattedKey] = value.trim()
   }
 
   return properties
@@ -42,7 +43,7 @@ const parseRules = (rules) => {
 
     return {
       title: selectorText,
-      styles: parseStyles(inlineStyles)
+      styles: parseStyles(inlineStyles, null)
     }
   })
 }

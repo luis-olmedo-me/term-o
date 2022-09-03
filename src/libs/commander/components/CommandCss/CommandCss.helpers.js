@@ -31,3 +31,33 @@ export const getActionType = ({ styles, manualStyles, get }) => {
   else if (get) return cssActionTypes.GET_STYLES
   else return cssActionTypes.NONE
 }
+
+const getRules = (sheet) => {
+  try {
+    return sheet.rules || sheet.cssRules
+  } catch {
+    return null
+  }
+}
+export const getStylesFrom = (element) => {
+  const sheets = document.styleSheets,
+    ret = []
+  el.matches =
+    el.matches ||
+    el.webkitMatchesSelector ||
+    el.mozMatchesSelector ||
+    el.msMatchesSelector ||
+    el.oMatchesSelector
+
+  for (const sheetId in sheets) {
+    const rules = getRules(sheets[sheetId])
+
+    for (const rule in rules) {
+      if (el.matches(rules[rule].selectorText)) {
+        ret.push(rules[rule].cssText)
+      }
+    }
+  }
+
+  return ret
+}

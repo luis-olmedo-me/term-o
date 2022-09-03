@@ -222,9 +222,6 @@ const validatePropValue = (value, type, defaultValue) => {
     case optionTypes.ARRAY:
       return Array.isArray(value) ? value : defaultValue
 
-    case optionTypes.BOOLEAN:
-      return true
-
     default:
       return typeof value === type ? value : defaultValue
   }

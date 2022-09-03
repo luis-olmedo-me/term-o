@@ -18,13 +18,13 @@ const preIconsByVariants = {
   [parameterTypes.SUCCESS]: '✔'
 }
 
-export const LogWrapper = ({ children, variant, buttonGroups, isLoading }) => {
+export const LogWrapper = ({ children, variant, buttonGroups }) => {
   const icon = preIconsByVariants[variant]
   const hasButtonGroups = Boolean(buttonGroups?.length)
 
   return (
     <Log className={variant}>
-      {isLoading && (
+      {!children && (
         <LoaderWrapper>
           <AnimatedLoader />
           <LoaderText>Loading</LoaderText>

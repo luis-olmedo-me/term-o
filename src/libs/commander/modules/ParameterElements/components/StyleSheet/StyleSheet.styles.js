@@ -38,6 +38,9 @@ export const Title = styled.span`
 export const PropertyWrapper = styled.div`
   border-left: 5px solid #00000030;
   padding-left: 2ch;
+  display: flex;
+  flex-flow: column;
+  gap: 5px;
 `
 export const Property = styled.div`
   background-color: #fafafa;
@@ -46,40 +49,27 @@ export const Property = styled.div`
   cursor: pointer;
   color: #111;
   font-weight: bold;
-  margin-bottom: 5px;
   width: fit-content;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
+  display: inline-flex;
+  justify-content: center;
 `
 
 export const PropertyName = styled.span`
   color: #f4256d;
-  vertical-align: middle;
-  line-height: 20px;
 `
 
 export const Equal = styled.span`
   color: #b583e7;
-  vertical-align: middle;
-  line-height: 20px;
 `
 export const PropertyColor = styled.span`
   color: ${(props) => props.fontColor};
   border: 2px solid #00000020;
   padding: 8px;
   background-color: currentColor;
-  font-size: 0;
-  line-height: 20px;
-  vertical-align: middle;
-  margin-right: 5px;
+  margin-left: 5px;
   border-radius: 3px;
 `
 export const PropertyValue = styled.span`
   color: #7828c8;
-  padding: 0 10px;
-  border-radius: 3px;
-  vertical-align: middle;
-  line-height: 20px;
+  margin-left: 5px;
 `

@@ -29,9 +29,9 @@ export const StyleSheet = ({ element = {}, className = '' }) => {
 
                 <Equal>: </Equal>
 
-                <PropertyValue color={isColor ? CSSPropertyValue : ''}>
-                  {isColor && <PropertyColor fontColor={CSSPropertyValue} />}
+                {isColor && <PropertyColor fontColor={CSSPropertyValue} />}
 
+                <PropertyValue color={isColor ? CSSPropertyValue : ''}>
                   {CSSPropertyValue}
                 </PropertyValue>
               </Property>

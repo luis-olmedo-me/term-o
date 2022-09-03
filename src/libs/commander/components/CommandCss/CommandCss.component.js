@@ -9,7 +9,11 @@ import {
   parseStyles
 } from './CommandCss.helpers'
 import { cssMessages } from './CommandCss.messages'
-import { MaterialTree } from '../CommandStorage/CommandStorage.styles'
+import { StyleSheet } from '../../modules/ParameterElements/components/StyleSheet/StyleSheet.component'
+import { ParameterElements } from '../../modules/ParameterElements/ParameterElements.component'
+import { Carousel } from 'modules/components/Carousel/Carousel.component'
+import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
+import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 
 export const CommandCss = ({
   props,
@@ -21,6 +25,11 @@ export const CommandCss = ({
   const [isLoading, setIsLoading] = useState(true)
 
   const actionType = getActionType(props)
+
+  const { buttonGroups, pages, pageNumber } = usePaginationGroups({
+    items: [{ title: 'Styles', styles: stylesApplied }],
+    maxItems: 10
+  })
 
   const applyStyles = useCallback(
     (customStyles = {}) => {
@@ -68,13 +77,24 @@ export const CommandCss = ({
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-      <LogWrapper isLoading={isLoading} variant={parameterTypes.STYLES}>
-        <MaterialTree
-          content={stylesApplied}
-          isKeyEditionEnabled
-          isValueEditionEnabled
-          handleChange={applyStyles}
-        />
+      <LogWrapper
+        isLoading={isLoading}
+        variant={parameterTypes.STYLES}
+        buttonGroups={buttonGroups}
+      >
+        <Carousel itemInView={pageNumber}>
+          {pages.map((page, currentPageNumber) => {
+            return (
+              <CarouselItem key={currentPageNumber}>
+                <ParameterElements
+                  elements={page}
+                  pinnedElements={[]}
+                  Child={StyleSheet}
+                />
+              </CarouselItem>
+            )
+          })}
+        </Carousel>
       </LogWrapper>
     </>
   )

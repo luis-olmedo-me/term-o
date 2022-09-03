@@ -35,7 +35,7 @@ const birth = keyframes`
 `
 export const ChildWrapper = styled.div`
   padding-left: 2ch;
-  border-left: 1px solid #00000020;
+  border-left: 5px solid #00000020;
   animation: ${birth} 0.2s ease-in-out;
   transform-origin: top;
 `

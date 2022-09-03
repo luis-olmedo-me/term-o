@@ -7,8 +7,7 @@ import {
   Log,
   LogContent,
   AnimatedLoader,
-  LoaderText,
-  LoaderWrapper
+  LoaderText
 } from './LogWrapper.styles'
 
 const preIconsByVariants = {
@@ -28,12 +27,12 @@ export const LogWrapper = ({ children, variant, buttonGroups }) => {
     variant === parameterTypes.COMMAND
 
   return (
-    <Log className={variant}>
+    <Log className={hideLoader ? variant : parameterTypes.INFO}>
       {!hideLoader && (
-        <LoaderWrapper>
+        <div>
           <AnimatedLoader />
           <LoaderText>Loading</LoaderText>
-        </LoaderWrapper>
+        </div>
       )}
 
       <LogContent>

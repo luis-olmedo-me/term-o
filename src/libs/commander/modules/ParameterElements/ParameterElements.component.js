@@ -7,7 +7,8 @@ export const ParameterElements = ({
   pinnedElements,
   setPinnedElements,
   shouldAnimate,
-  Child = Element
+  Child = Element,
+  customProps = {}
 }) => {
   return (
     <ElementsWrapper>
@@ -22,6 +23,7 @@ export const ParameterElements = ({
             pinnedElements={pinnedElements}
             variant={isPinned ? 'pinned' : 'default'}
             shouldAnimate={shouldAnimate}
+            {...customProps}
           />
         )
       })}

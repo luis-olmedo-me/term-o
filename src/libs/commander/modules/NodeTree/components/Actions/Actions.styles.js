@@ -10,6 +10,7 @@ export const ActionButtons = styled.div`
   right: 0;
   border-left: 1px solid #00000015;
   background-color: var(--tag-background-color);
+  transition: background-color 0.2s ease-in-out;
 `
 export const ActionButton = styled.button`
   height: -webkit-fill-available;

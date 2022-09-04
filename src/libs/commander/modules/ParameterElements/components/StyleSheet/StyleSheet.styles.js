@@ -44,7 +44,7 @@ export const PropertyWrapper = styled.div`
 `
 export const Property = styled.div`
   background-color: #fafafa;
-  padding: 3px 7px;
+  padding: 0 7px;
   border-radius: 3px;
   cursor: pointer;
   color: #111;

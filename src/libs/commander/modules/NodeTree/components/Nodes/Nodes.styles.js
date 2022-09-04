@@ -5,11 +5,13 @@ export const TagWrapper = styled.span`
     props.isNodeObjetive ? '#ffeecc' : '#fafafa'};
   background: var(--tag-background-color);
   color: #17c964;
-  padding: 3px 0 3px 7px;
+  padding: 0;
   border-radius: 3px;
   cursor: pointer;
   position: relative;
   transition: background-color 0.2s ease-in-out;
+  display: inline-block;
+  height: 1.8rem;
 `
 
 export const GapNodesWrapper = styled.div`

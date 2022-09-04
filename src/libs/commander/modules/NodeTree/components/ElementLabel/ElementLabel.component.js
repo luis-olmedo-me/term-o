@@ -87,7 +87,7 @@ export const ElementLabel = ({
           </ChildWrapper>
 
           <Wrapper {...wrapperProps}>
-            <Tag>{`</`}</Tag>
+            <Tag opening>{`</`}</Tag>
             <TagName isHidden={isHidden}>{tagName}</TagName>
             <Tag>{`>`}</Tag>
           </Wrapper>

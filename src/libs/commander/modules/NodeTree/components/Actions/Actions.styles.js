@@ -4,6 +4,7 @@ export const ActionButtons = styled.div`
   display: inline-block;
   height: -webkit-fill-available;
   position: sticky;
+  border-radius: 0 3px 3px 0;
   top: 0;
   bottom: 0;
   right: 0;

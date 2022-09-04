@@ -8,22 +8,27 @@ export const DefaultWrapper = styled.span`
 export const Tag = styled.span`
   color: #9ba1a6;
   margin: ${(props) => (props.opening ? '0 0 0 7px' : '0 7px 0 0')};
+  line-height: 28px;
 `
 
 export const TagName = styled.span`
   color: ${(props) => (props.isHidden ? '#697177' : '#0070f3')};
+  line-height: 28px;
 `
 
 export const AttributeName = styled.span`
   color: ${(props) => (props.isHidden ? '#9BA1A6' : '#F8C572')};
+  line-height: 28px;
 `
 
 export const Equal = styled.span`
   color: ${(props) => (props.isHidden ? '#787F85' : '#F6AD37')};
+  line-height: 28px;
 `
 
 export const AttributeValue = styled.span`
   color: ${(props) => (props.isHidden ? '#787F85' : '#F5A524')};
+  line-height: 28px;
 `
 
 const birth = keyframes`

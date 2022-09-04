@@ -8,7 +8,6 @@ export const ActionButtons = styled.div`
   bottom: 0;
   right: 0;
   border-left: 1px solid #00000015;
-  margin-left: 10px;
   background-color: var(--tag-background-color);
 `
 export const ActionButton = styled.button`

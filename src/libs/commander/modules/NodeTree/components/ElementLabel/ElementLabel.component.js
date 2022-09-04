@@ -50,7 +50,7 @@ export const ElementLabel = ({
   return (
     <>
       <Wrapper paddingRight={actionsPaddingRight} {...wrapperProps}>
-        <Tag>{'<'}</Tag>
+        <Tag opening>{'<'}</Tag>
 
         <TagName isHidden={isHidden}>{tagName}</TagName>
 

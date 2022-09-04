@@ -3,11 +3,13 @@ import styled from 'styled-components'
 export const ActionButtons = styled.div`
   display: inline-block;
   height: -webkit-fill-available;
-  position: absolute;
+  position: sticky;
   top: 0;
   bottom: 0;
   right: 0;
   border-left: 1px solid #00000015;
+  margin-left: 10px;
+  background-color: var(--tag-background-color);
 `
 export const ActionButton = styled.button`
   height: -webkit-fill-available;

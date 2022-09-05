@@ -79,7 +79,7 @@ const NodesWithoutContext = ({
   const handleNodeClick = () => setObjetives([node])
 
   switch (node.nodeType) {
-    case Node.ELEMENT_NODE:
+    case Node.ELEMENT_NODE: {
       const isHidden = isElementHidden(node)
 
       return (
@@ -116,20 +116,24 @@ const NodesWithoutContext = ({
           </ElementLabel>
         </GapNodesWrapper>
       )
+    }
 
-    case Node.TEXT_NODE:
+    case Node.TEXT_NODE: {
+      const isHidden = isElementHidden(node.parentElement)
+
       return (
         <GapNodesWrapper ref={nodeWrapperRef}>
           <TagWrapper
             onClick={handleNodeClick}
             isNodeObjetive={isNodeObjetive}
             textNode
-            isHidden={isElementHidden(node.parentElement)}
+            isHidden={isHidden}
           >
             "{node.textContent}"
           </TagWrapper>
         </GapNodesWrapper>
       )
+    }
 
     default:
       return null

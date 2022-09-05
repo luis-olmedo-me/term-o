@@ -4,7 +4,7 @@ export const TagWrapper = styled.span`
   --tag-background-color: ${(props) =>
     props.isNodeObjetive ? '#ffeecc' : '#fafafa'};
   background: var(--tag-background-color);
-  color: #17c964;
+  color: ${(props) => (props.isHidden ? '#697177' : '#17c964')};
   border-radius: 3px;
   cursor: pointer;
   position: relative;

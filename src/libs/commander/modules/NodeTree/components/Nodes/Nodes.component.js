@@ -124,6 +124,7 @@ const NodesWithoutContext = ({
             onClick={handleNodeClick}
             isNodeObjetive={isNodeObjetive}
             textNode
+            isHidden={isElementHidden(node.parentElement)}
           >
             "{node.textContent}"
           </TagWrapper>

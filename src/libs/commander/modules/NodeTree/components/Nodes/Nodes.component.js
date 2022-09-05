@@ -120,7 +120,11 @@ const NodesWithoutContext = ({
     case Node.TEXT_NODE:
       return (
         <GapNodesWrapper ref={nodeWrapperRef}>
-          <TagWrapper onClick={handleNodeClick} isNodeObjetive={isNodeObjetive}>
+          <TagWrapper
+            onClick={handleNodeClick}
+            isNodeObjetive={isNodeObjetive}
+            textNode
+          >
             "{node.textContent}"
           </TagWrapper>
         </GapNodesWrapper>

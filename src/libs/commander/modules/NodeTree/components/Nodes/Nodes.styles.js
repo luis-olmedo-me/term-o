@@ -12,10 +12,7 @@ export const TagWrapper = styled.span`
   display: inline-block;
   height: 1.8rem;
   line-height: 1.8rem;
-
-  &:only-child {
-    margin: 0 7px;
-  }
+  padding: ${(props) => (props.textNode ? '0 7px' : '0')};
 `
 
 export const GapNodesWrapper = styled.div`

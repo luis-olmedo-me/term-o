@@ -10,8 +10,8 @@ export const TagWrapper = styled.span`
   position: relative;
   transition: background-color 0.2s ease-in-out;
   display: inline-block;
-  height: 1.8rem;
-  line-height: 1.8rem;
+  height: 2rem;
+  line-height: 2rem;
   padding: ${(props) => (props.textNode ? '0 7px' : '0')};
 `
 

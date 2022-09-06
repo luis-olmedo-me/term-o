@@ -50,10 +50,9 @@ export const ElementLabel = ({
   return (
     <>
       <Wrapper paddingRight={actionsPaddingRight} {...wrapperProps}>
-        <span>
-          <Tag opening>{'<'}</Tag>
-          <TagName isHidden={isHidden}>{tagName}</TagName>
-        </span>
+        <Tag opening>{'<'}</Tag>
+
+        <TagName isHidden={isHidden}>{tagName}</TagName>
 
         {Object.entries(attributes).map(([attributeName, attributeValue]) => {
           const attributeValueShorten =
@@ -63,7 +62,9 @@ export const ElementLabel = ({
 
           return (
             <span key={attributeName}>
-              <AttributeName isHidden={isHidden}>{attributeName}</AttributeName>
+              <AttributeName isHidden={isHidden}>
+                {` ${attributeName}`}
+              </AttributeName>
 
               <Equal isHidden={isHidden}>{`=`}</Equal>
 
@@ -74,7 +75,7 @@ export const ElementLabel = ({
           )
         })}
 
-        {<Tag>{hasChildren ? '>' : '/>'}</Tag>}
+        {<Tag>{hasChildren ? ' >' : ' />'}</Tag>}
 
         {hasActions && <Actions wrapperRef={actionsRef} actions={actions} />}
       </Wrapper>

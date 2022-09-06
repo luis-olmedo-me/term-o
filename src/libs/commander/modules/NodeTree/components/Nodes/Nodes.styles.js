@@ -9,11 +9,10 @@ export const TagWrapper = styled.span`
   cursor: pointer;
   position: relative;
   transition: background-color 0.2s ease-in-out;
+  display: inline-block;
   height: 1.8rem;
+  line-height: 1.8rem;
   padding: ${(props) => (props.textNode ? '0 7px' : '0')};
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
 `
 
 export const GapNodesWrapper = styled.div`

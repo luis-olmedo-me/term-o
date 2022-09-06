@@ -7,6 +7,7 @@ export const DefaultWrapper = styled.span`
 
 export const Tag = styled.span`
   color: #9ba1a6;
+  margin: ${(props) => (props.opening ? '0 0 0 7px' : '0 7px 0 0')};
 `
 
 export const TagName = styled.span`

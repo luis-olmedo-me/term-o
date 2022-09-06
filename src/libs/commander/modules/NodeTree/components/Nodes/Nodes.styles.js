@@ -1,14 +1,18 @@
 import styled from 'styled-components'
 
 export const TagWrapper = styled.span`
-  background: ${(props) => (props.isNodeObjetive ? '#ffeecc' : '#fafafa')};
-  color: #17c964;
-  padding: 3px 7px;
+  --tag-background-color: ${(props) =>
+    props.isNodeObjetive ? '#ffeecc' : '#fafafa'};
+  background: var(--tag-background-color);
+  color: ${(props) => (props.isHidden ? '#697177' : '#17c964')};
   border-radius: 3px;
   cursor: pointer;
   position: relative;
-  padding-right: ${(props) => props.paddingRight || 7}px;
   transition: background-color 0.2s ease-in-out;
+  display: inline-block;
+  height: 2rem;
+  line-height: 2rem;
+  padding: ${(props) => (props.textNode ? '0 7px' : '0')};
 `
 
 export const GapNodesWrapper = styled.div`

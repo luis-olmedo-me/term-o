@@ -146,10 +146,7 @@ export const CommandDom = ({
                     pinnedElements={pinnedElements}
                     setPinnedElements={setPinnedElements}
                     customProps={{
-                      onClick: ({ element }) => {
-                        setEditingElement(element)
-                        console.log('element', element)
-                      }
+                      onClick: ({ element }) => setEditingElement(element)
                     }}
                   />
                 </CarouselItem>
@@ -159,7 +156,10 @@ export const CommandDom = ({
         )}
       </LogWrapper>
 
-      <ConsoleModal isOpen={Boolean(editingElement)}>
+      <ConsoleModal
+        isOpen={Boolean(editingElement)}
+        onClickOutside={() => setEditingElement(null)}
+      >
         <ElementEdition element={editingElement} />
       </ConsoleModal>
     </>

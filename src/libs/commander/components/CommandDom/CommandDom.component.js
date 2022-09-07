@@ -13,6 +13,7 @@ import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginatio
 import { insertParams } from '../../commander.helpers'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
+import { ConsoleModal } from 'src/projects/content/modules/Console/components/ConsoleModal/ConsoleModal.component'
 
 export const CommandDom = ({
   props,
@@ -149,6 +150,8 @@ export const CommandDom = ({
           </Carousel>
         )}
       </LogWrapper>
+
+      <ConsoleModal isOpen={true} />
     </>
   )
 }

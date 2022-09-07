@@ -127,7 +127,7 @@ export const Console = () => {
       onKeyUp={cancelEventPropagation}
       onKeyPress={cancelEventPropagation}
     >
-      <ConsolePortalContext.Provider value={{ root: wrapperReference }}>
+      <ConsolePortalContext.Provider value={{ root: wrapperReference.current }}>
         {!isMoving
           ? singleResizeTypes.map((resizeType) => (
               <Resizer

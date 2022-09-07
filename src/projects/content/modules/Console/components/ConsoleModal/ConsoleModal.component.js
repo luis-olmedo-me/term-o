@@ -4,12 +4,10 @@ import { Modal, ModalWrapper } from './ConsoleModal.styles'
 
 export const ConsoleModal = ({ isOpen, children, onClickOutside }) => {
   const handleWrapperClick = () => {
-    console.log('click in wrapper')
     onClickOutside?.()
   }
 
   const handleModalClick = (event) => {
-    console.log('click in modal')
     event.stopPropagation()
   }
 

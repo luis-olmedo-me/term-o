@@ -41,20 +41,6 @@ const ElementWithoutContext = ({
 
   const isHidden = isElementHidden(element, { height, width })
 
-  const { id, classList } = element
-
-  const idLabel = id && `#${id}`
-  const classNameLabel = !!classList.length && `.${[...classList].join('.')}`
-  const tagNameLabel = element.tagName.toLowerCase()
-
-  const specification = idLabel || classNameLabel || ''
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(`${tagNameLabel}${specification}`)
-
-    closeSelect()
-  }
-
   const handleScrollIntoView = () => {
     element.scrollIntoView({
       behavior: 'smooth'
@@ -107,7 +93,6 @@ const ElementWithoutContext = ({
       onClick: handleScrollIntoView,
       disabled: isHidden
     },
-    { id: 'copy-option', displayText: 'Copy', onClick: handleCopy },
     {
       id: 'copy-xpath-option',
       displayText: 'Copy XPath',

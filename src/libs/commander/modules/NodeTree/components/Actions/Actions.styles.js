@@ -30,7 +30,10 @@ export const ActionButton = styled.button`
     color: #aaa;
   }
   &:hover {
-    background-color: #ffffff15;
+    background-color: #00000005;
+  }
+  &:active {
+    background-color: #00000015;
   }
 `
 

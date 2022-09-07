@@ -3,6 +3,7 @@ import { ElementLabel } from '../ElementLabel/ElementLabel.component'
 import { TagWrapper, ActionButtonText, GapNodesWrapper } from './Nodes.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { isElementHidden } from '../../../../components/CommandDom/CommandDom.helpers'
+import { createXPathFromElement } from '../../../ParameterElements/components/Element/Element.helpers'
 
 const supportedNodeTypes = [Node.ELEMENT_NODE, Node.TEXT_NODE]
 
@@ -54,14 +55,20 @@ const NodesWithoutContext = ({
     handleRootChange(node)
   }
 
+  const handleCopy = () => {
+    const xPath = createXPathFromElement(node)
+
+    navigator.clipboard.writeText(xPath.includes(' ') ? `"${xPath}"` : xPath)
+  }
+
   const actions = [
     {
       id: 'group',
       items: [
         {
           id: 'copy-node',
-          title: 'Copy node xpath',
-          onClick: () => console.log('hi'),
+          title: 'Copy xpath',
+          onClick: handleCopy,
           Component: '❏'
         },
         {

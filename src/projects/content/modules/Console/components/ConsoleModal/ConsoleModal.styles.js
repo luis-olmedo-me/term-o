@@ -7,6 +7,7 @@ export const ModalWrapper = styled.div`
   width: 100%;
   height: 100%;
   background-color: #00000040;
+  z-index: 1;
 `
 
 export const Modal = styled.div`
@@ -15,11 +16,10 @@ export const Modal = styled.div`
   top: 50%;
   left: 50%;
   background: white;
-  z-index: 1;
   width: 50%;
   height: 50%;
-  min-width: 300px;
-  min-height: 330px;
+  min-width: 380px;
+  min-height: 320px;
   transform: translate(-50%, -50%);
   border-radius: 3px;
   padding: 10px;

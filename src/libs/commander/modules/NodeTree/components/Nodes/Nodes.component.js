@@ -59,6 +59,12 @@ const NodesWithoutContext = ({
       id: 'group',
       items: [
         {
+          id: 'copy-node',
+          title: 'Copy node xpath',
+          onClick: () => console.log('hi'),
+          Component: '❏'
+        },
+        {
           id: 'change-root',
           title: 'Change root',
           onClick: handleChangeRoot,

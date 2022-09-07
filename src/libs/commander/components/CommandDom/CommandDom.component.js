@@ -14,6 +14,7 @@ import { insertParams } from '../../commander.helpers'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 import { ConsoleModal } from 'src/projects/content/modules/Console/components/ConsoleModal/ConsoleModal.component'
+import { ElementEdition } from '../../modules/ElementEdition/ElementEdition.component'
 
 export const CommandDom = ({
   props,
@@ -35,6 +36,7 @@ export const CommandDom = ({
 
   const [elements, setElements] = useState([])
   const [pinnedElements, setPinnedElements] = useState([])
+  const [editingElement, setEditingElement] = useState(null)
 
   const actionType = getActionType(props)
 
@@ -143,6 +145,12 @@ export const CommandDom = ({
                     elements={page}
                     pinnedElements={pinnedElements}
                     setPinnedElements={setPinnedElements}
+                    customProps={{
+                      onClick: ({ element }) => {
+                        setEditingElement(element)
+                        console.log('element', element)
+                      }
+                    }}
                   />
                 </CarouselItem>
               )
@@ -151,7 +159,9 @@ export const CommandDom = ({
         )}
       </LogWrapper>
 
-      <ConsoleModal isOpen={true} />
+      <ConsoleModal isOpen={Boolean(editingElement)}>
+        <ElementEdition element={editingElement} />
+      </ConsoleModal>
     </>
   )
 }

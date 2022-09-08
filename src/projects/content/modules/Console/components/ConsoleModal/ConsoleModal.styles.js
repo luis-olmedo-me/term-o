@@ -25,15 +25,18 @@ export const Modal = styled.div`
   box-shadow: 0 0 15px 5px #00000040;
   color: #fafafa;
   background-color: #7928ca;
+  display: flex;
+  flex-direction: column;
+`
+
+export const Content = styled.div`
+  padding: 10px;
+  flex: 1;
   overflow: hidden scroll;
 
   &::-webkit-scrollbar {
     display: none;
   }
-`
-
-export const Content = styled.div`
-  padding: 10px;
 `
 
 export const Title = styled.h3`

@@ -8,4 +8,10 @@ export const Input = styled.input`
   font-family: Coda;
   font-size: 1em;
   background: #00000050;
+
+  &:active,
+  &:focus,
+  &:focus-visible {
+    outline: none;
+  }
 `

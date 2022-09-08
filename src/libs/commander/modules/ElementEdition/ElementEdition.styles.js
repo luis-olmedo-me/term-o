@@ -9,11 +9,3 @@ export const Input = styled.input`
   font-size: 1em;
   background: #00000050;
 `
-
-export const AttributeName = styled.span`
-  font-size: 1em;
-  display: flex;
-  height: 100%;
-  align-items: center;
-  padding-left: 10px;
-`

@@ -1,7 +1,7 @@
 import React from 'react'
 import { getAttributes } from '../../components/CommandDom/CommandDom.helpers'
 import { Table } from 'modules/components/Table/Table.component'
-import { AttributeName, Input } from './ElementEdition.styles'
+import { Input } from './ElementEdition.styles'
 
 export const ElementEdition = ({ element }) => {
   const attributes = getAttributes(element)
@@ -9,7 +9,7 @@ export const ElementEdition = ({ element }) => {
   const attributeRows = Object.entries(attributes).map(
     ([attributeName, attributeValue]) => {
       return [
-        <AttributeName>{attributeName}</AttributeName>,
+        <Input type='text' value={attributeName} />,
         <Input type='text' value={attributeValue} />
       ]
     }

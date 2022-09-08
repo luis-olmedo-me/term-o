@@ -17,6 +17,7 @@ export const TableRow = styled.div`
   margin-bottom: 6px;
   font-size: 1em;
   line-height: 2em;
+  gap: 5px;
 
   &:last-child {
     margin-bottom: 0;

@@ -25,6 +25,11 @@ export const Modal = styled.div`
   box-shadow: 0 0 15px 5px #0000002a;
   color: #fafafa;
   background-color: #7928ca;
+  overflow: hidden scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 export const Content = styled.div`

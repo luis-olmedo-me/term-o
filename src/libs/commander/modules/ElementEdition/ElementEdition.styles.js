@@ -15,4 +15,5 @@ export const AttributeName = styled.span`
   display: flex;
   height: 100%;
   align-items: center;
+  padding-left: 10px;
 `

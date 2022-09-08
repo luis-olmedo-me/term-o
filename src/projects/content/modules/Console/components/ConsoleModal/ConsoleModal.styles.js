@@ -21,9 +21,20 @@ export const Modal = styled.div`
   min-height: 320px;
   transform: translate(-50%, -50%);
   border-radius: 3px;
-  padding: 10px;
   box-sizing: border-box;
   box-shadow: 0 0 15px 5px #0000002a;
   color: #fafafa;
   background-color: #7928ca;
+`
+
+export const Content = styled.div`
+  padding: 10px;
+`
+
+export const Title = styled.h3`
+  margin: 0;
+  padding: 10px 0;
+  background-color: #fafafa;
+  text-align: center;
+  border-radius: 3px 3px 0 0;
 `

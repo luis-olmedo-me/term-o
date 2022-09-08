@@ -17,7 +17,8 @@ export const ElementLabel = ({
   children,
   Wrapper = DefaultWrapper,
   wrapperProps = {},
-  actions
+  actions,
+  hideAttributes
 }) => {
   const actionsRef = useRef(null)
   const [actionsPaddingRight, setActionsPaddingRight] = useState(0)
@@ -42,7 +43,7 @@ export const ElementLabel = ({
 
   const tagName = element.tagName.toLowerCase()
 
-  const attributes = getAttributes(element)
+  const attributes = hideAttributes ? {} : getAttributes(element)
 
   const hasChildren = children?.some(Boolean)
   const hasActions = actions?.length > 0

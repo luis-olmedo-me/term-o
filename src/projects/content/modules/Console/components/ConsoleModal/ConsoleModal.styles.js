@@ -15,7 +15,6 @@ export const Modal = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
-  background: white;
   width: 50%;
   height: 50%;
   min-width: 380px;
@@ -24,4 +23,7 @@ export const Modal = styled.div`
   border-radius: 3px;
   padding: 10px;
   box-sizing: border-box;
+  box-shadow: 0 0 15px 5px #0000002a;
+  color: #fafafa;
+  background-color: #7928ca;
 `

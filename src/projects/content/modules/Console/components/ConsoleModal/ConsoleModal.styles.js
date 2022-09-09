@@ -1,4 +1,13 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
+
+const birth = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`
 
 export const ModalWrapper = styled.div`
   position: absolute;
@@ -8,6 +17,7 @@ export const ModalWrapper = styled.div`
   height: 100%;
   background-color: #00000040;
   z-index: 1;
+  animation: ${birth} 0.2s ease-in-out;
 `
 
 export const Modal = styled.div`

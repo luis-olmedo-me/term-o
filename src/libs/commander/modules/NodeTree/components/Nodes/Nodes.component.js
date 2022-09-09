@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ElementLabel } from '../ElementLabel/ElementLabel.component'
 import { TagWrapper, ActionButtonText, GapNodesWrapper } from './Nodes.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
@@ -20,6 +20,12 @@ const NodesWithoutContext = ({
   setEditingElement
 }) => {
   const nodeWrapperRef = useRef(null)
+  const nodeData = useRef({
+    parent: node?.parentElement,
+    nextSibling: node?.nextElementSibling
+  })
+
+  const [isDead, setIsDead] = useState(false)
 
   const childNodes = [...node.childNodes].filter(
     (node) => !supportedNodeTypes.includes(node)
@@ -58,6 +64,20 @@ const NodesWithoutContext = ({
     navigator.clipboard.writeText(xPath.includes(' ') ? `"${xPath}"` : xPath)
   }
 
+  const handleLifeToggle = () => {
+    if (isDead) {
+      const { parent, nextSibling } = nodeData.current
+
+      setIsDead(false)
+
+      parent.insertBefore(node, nextSibling)
+    } else {
+      setHighlitedElement(null)
+      setIsDead(true)
+      node.remove()
+    }
+  }
+
   const actions = [
     {
       id: 'group',
@@ -80,6 +100,12 @@ const NodesWithoutContext = ({
           title: 'Edit element',
           onClick: () => setEditingElement(node),
           Component: '✎'
+        },
+        {
+          id: 'life-toggle-element',
+          title: isDead ? 'Restore element' : 'Delete element',
+          onClick: handleLifeToggle,
+          Component: isDead ? '✟' : '✖'
         }
       ]
     },

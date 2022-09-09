@@ -78,6 +78,7 @@ const CommandInspectWithoutContext = ({
             setObjetives={setObjetives}
             openNodes={openNodes}
             setOpenNodes={setOpenNodes}
+            setEditingElement={setEditingElement}
             handleRootChange={handleRootChange}
           />
         )}

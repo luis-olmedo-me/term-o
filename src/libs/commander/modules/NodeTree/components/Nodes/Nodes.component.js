@@ -16,7 +16,8 @@ const NodesWithoutContext = ({
   openNodes,
   setOpenNodes,
   handleRootChange,
-  setHighlitedElement
+  setHighlitedElement,
+  setEditingElement
 }) => {
   const nodeWrapperRef = useRef(null)
 
@@ -77,6 +78,12 @@ const NodesWithoutContext = ({
           onClick: handleChangeRoot,
           disabled: !hasNodes,
           Component: isNodeRoot ? '⚑' : '⚐'
+        },
+        {
+          id: 'edit-element',
+          title: 'Edit element',
+          onClick: () => setEditingElement(node),
+          Component: '✎'
         }
       ]
     },
@@ -122,6 +129,7 @@ const NodesWithoutContext = ({
                     handleRootChange={handleRootChange}
                     openNodes={openNodes}
                     setOpenNodes={setOpenNodes}
+                    setEditingElement={setEditingElement}
                   />
                 )
               )

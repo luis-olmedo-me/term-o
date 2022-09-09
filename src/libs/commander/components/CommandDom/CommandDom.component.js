@@ -125,6 +125,11 @@ const CommandDomWithoutContext = ({
   const hasPinnedElements = pinnedElements.length > 0
   const hasPages = pages.length > 0
 
+  const handleModalExit = useCallback(
+    () => setEditingElement(null),
+    [setEditingElement]
+  )
+
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
@@ -166,7 +171,7 @@ const CommandDomWithoutContext = ({
           onMouseEnter: () => setHighlitedElement(editingElement),
           onMouseLeave: () => setHighlitedElement(null)
         }}
-        onClickOutside={() => setEditingElement(null)}
+        onExit={handleModalExit}
       >
         <ElementEdition element={editingElement} />
       </ConsoleModal>

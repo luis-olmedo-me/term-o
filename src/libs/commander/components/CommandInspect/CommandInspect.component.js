@@ -66,6 +66,11 @@ const CommandInspectWithoutContext = ({
     setHTMLRoot(sanitazedNewRoot)
   }
 
+  const handleModalExit = useCallback(
+    () => setEditingElement(null),
+    [setEditingElement]
+  )
+
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
@@ -91,7 +96,7 @@ const CommandInspectWithoutContext = ({
           onMouseEnter: () => setHighlitedElement(editingElement),
           onMouseLeave: () => setHighlitedElement(null)
         }}
-        onClickOutside={() => setEditingElement(null)}
+        onExit={handleModalExit}
       >
         <ElementEdition element={editingElement} />
       </ConsoleModal>

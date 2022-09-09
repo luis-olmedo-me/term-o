@@ -11,7 +11,6 @@ export const ElementEdition = ({ element }) => {
       const [attrName, setAttrName] = useState(attributeName)
       const [attrValue, setAttrValue] = useState(attributeValue)
       const [attrOriginalName, setAttrOriginalName] = useState(attributeName)
-      const [attrOriginalValue, setAttrOriginalValue] = useState(attributeValue)
 
       const handleAttributeNameChange = (event) => {
         setAttrName(event.target.value)
@@ -25,10 +24,6 @@ export const ElementEdition = ({ element }) => {
           element.setAttribute(attrName, attrValue)
 
           setAttrOriginalName(attrName)
-          setAttrOriginalValue(attrName)
-        } else if (event.key === 'Escape') {
-          setAttrName(attrOriginalName)
-          setAttrValue(attrOriginalValue)
         }
       }
       const handleAttrNameKeyUp = (event) => {
@@ -37,10 +32,6 @@ export const ElementEdition = ({ element }) => {
           element.removeAttribute(attrOriginalName)
 
           setAttrOriginalName(attrName)
-          setAttrOriginalValue(attrName)
-        } else if (event.key === 'Escape') {
-          setAttrName(attrOriginalName)
-          setAttrValue(attrOriginalValue)
         }
       }
 

@@ -4,6 +4,9 @@ import { Table } from 'modules/components/Table/Table.component'
 import { Input } from './ElementEdition.styles'
 
 export const ElementEdition = ({ element }) => {
+  const [newAtributeName, setNewAttributeName] = useState('')
+  const [newAtributeValue, setNewAttributeValue] = useState('')
+
   const attributes = getAttributes(element)
 
   const attributeRows = Object.entries(attributes).map(
@@ -39,12 +42,14 @@ export const ElementEdition = ({ element }) => {
         <Input
           type='text'
           value={attrName}
+          placeholder='Attribute name'
           onChange={handleAttributeNameChange}
           onKeyUp={handleAttrNameKeyUp}
         />,
         <Input
           type='text'
           value={attrValue}
+          placeholder='Attribute value'
           onChange={handleAttributeValueChange}
           onKeyUp={handleAttrValueKeyUp}
         />
@@ -52,16 +57,41 @@ export const ElementEdition = ({ element }) => {
     }
   )
 
+  const handleNewAttributeKeyUp = ({ key }) => {
+    if (key === 'Enter') {
+      element.setAttribute(newAtributeName, newAtributeValue)
+
+      setNewAttributeName('')
+      setNewAttributeValue('')
+    }
+  }
+
+  const rows = [
+    ...attributeRows,
+    [
+      <Input
+        type='text'
+        placeholder='New attribute name'
+        value={newAtributeName}
+        onChange={(event) => setNewAttributeName(event.target.value)}
+        onKeyUp={handleNewAttributeKeyUp}
+      />,
+      <Input
+        type='text'
+        placeholder='New attribute value'
+        value={newAtributeValue}
+        onChange={(event) => setNewAttributeValue(event.target.value)}
+        onKeyUp={handleNewAttributeKeyUp}
+      />
+    ]
+  ]
+
   return (
     <div
       onClick={(event) => event.stopPropagation()}
       onMouseDown={(event) => event.stopPropagation()}
     >
-      <Table
-        headers={['Attribute', 'Value']}
-        rows={attributeRows}
-        widths={[50, 50]}
-      />
+      <Table headers={['Attribute', 'Value']} rows={rows} widths={[50, 50]} />
     </div>
   )
 }

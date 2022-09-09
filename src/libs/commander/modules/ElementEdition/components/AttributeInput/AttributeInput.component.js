@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import { Input } from './AttributeInput.styles'
 
 export const AttributeInput = ({ onEnter, defaultValue, placeholder }) => {

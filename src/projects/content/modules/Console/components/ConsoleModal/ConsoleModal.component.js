@@ -2,7 +2,13 @@ import React from 'react'
 import { ConsolePortal } from '../ConsolePortal/ConsolePortal.component'
 import { Modal, ModalWrapper, Content, Title } from './ConsoleModal.styles'
 
-export const ConsoleModal = ({ isOpen, children, onClickOutside, title }) => {
+export const ConsoleModal = ({
+  isOpen,
+  children,
+  onClickOutside,
+  title,
+  titleProps = {}
+}) => {
   const handleWrapperClick = () => {
     onClickOutside?.()
   }
@@ -16,7 +22,7 @@ export const ConsoleModal = ({ isOpen, children, onClickOutside, title }) => {
       {isOpen && (
         <ModalWrapper onClick={handleWrapperClick}>
           <Modal onClick={handleModalClick}>
-            {title && <Title>{title}</Title>}
+            {title && <Title {...titleProps}>{title}</Title>}
 
             <Content>{children}</Content>
           </Modal>

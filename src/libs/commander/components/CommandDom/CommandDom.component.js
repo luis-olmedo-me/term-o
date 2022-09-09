@@ -16,11 +16,13 @@ import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 import { ConsoleModal } from 'src/projects/content/modules/Console/components/ConsoleModal/ConsoleModal.component'
 import { ElementEdition } from '../../modules/ElementEdition/ElementEdition.component'
 import { ElementLabel } from '../../modules/NodeTree/components/ElementLabel/ElementLabel.component'
+import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 
-export const CommandDom = ({
+const CommandDomWithoutContext = ({
   props,
   terminal: { command, setParams, setMessageData, finish },
-  id
+  id,
+  setHighlitedElement
 }) => {
   const {
     get,
@@ -158,8 +160,12 @@ export const CommandDom = ({
       </LogWrapper>
 
       <ConsoleModal
-        title={<ElementLabel element={editingElement} hideAttributes />}
         isOpen={Boolean(editingElement)}
+        title={<ElementLabel element={editingElement} hideAttributes />}
+        titleProps={{
+          onMouseEnter: () => setHighlitedElement(editingElement),
+          onMouseLeave: () => setHighlitedElement(null)
+        }}
         onClickOutside={() => setEditingElement(null)}
       >
         <ElementEdition element={editingElement} />
@@ -167,3 +173,5 @@ export const CommandDom = ({
     </>
   )
 }
+
+export const CommandDom = withOverlayContext(CommandDomWithoutContext)

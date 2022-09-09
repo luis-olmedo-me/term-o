@@ -41,18 +41,14 @@ const NodesWithoutContext = ({
     })
   }, [isNodeObjetive, objetives])
 
-  const handleToggleElement = (event) => {
-    event.stopPropagation()
-
+  const handleToggleElement = () => {
     setOpenNodes((openNodes) =>
       isNodeOpen
         ? openNodes.filter((openNode) => openNode !== node)
         : [...openNodes, node]
     )
   }
-  const handleChangeRoot = (event) => {
-    event.stopPropagation()
-
+  const handleChangeRoot = () => {
     handleRootChange(node)
   }
 

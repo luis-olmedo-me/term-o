@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { cancelPropagation } from './Actions.helpers'
 import { ActionButton, ActionButtons, ItemsWrapper } from './Actions.styles'
 
 export const Actions = ({ actions }) => {
@@ -7,18 +8,12 @@ export const Actions = ({ actions }) => {
       {actions.map((action) => {
         const [isOpen, setIsOpen] = useState(false)
 
-        const handleToggleItems = (event) => {
-          event.stopPropagation()
-
-          setIsOpen(!isOpen)
-        }
-
         const items = action.items
           ? [
               {
                 id: 'toggle-items',
                 title: 'Toggle menu',
-                onClick: handleToggleItems,
+                onClick: () => setIsOpen(!isOpen),
                 Component: isOpen ? '⚙>' : '⚙'
               },
               ...action.items.map((item) => ({ ...item, hidden: !isOpen }))
@@ -32,7 +27,9 @@ export const Actions = ({ actions }) => {
                 !item.hidden && (
                   <ActionButton
                     key={item.id}
-                    onClick={item.disabled ? null : item.onClick}
+                    onClick={
+                      item.disabled ? null : cancelPropagation(item.onClick)
+                    }
                     disabled={item.disabled}
                     title={item.title}
                   >
@@ -45,7 +42,7 @@ export const Actions = ({ actions }) => {
         ) : (
           <ActionButton
             key={action.id}
-            onClick={action.disabled ? null : action.onClick}
+            onClick={action.disabled ? null : cancelPropagation(action.onClick)}
             title={action.title}
             disabled={action.disabled}
           >

@@ -20,27 +20,6 @@ export const ElementLabel = ({
   actions,
   hideAttributes
 }) => {
-  const actionsRef = useRef(null)
-  const [actionsPaddingRight, setActionsPaddingRight] = useState(0)
-
-  useEffect(function checkWrapperPadding() {
-    const currentActionRef = actionsRef.current
-
-    if (!currentActionRef) return
-
-    const updatePadding = () => {
-      const { offsetWidth } = currentActionRef
-      const paddingRight = offsetWidth + 10
-
-      setActionsPaddingRight(paddingRight)
-    }
-
-    const obsever = new ResizeObserver(updatePadding)
-    obsever.observe(currentActionRef)
-
-    return () => obsever.unobserve(currentActionRef)
-  }, [])
-
   const tagName = element.tagName.toLowerCase()
 
   const attributes = hideAttributes ? {} : getAttributes(element)
@@ -50,7 +29,7 @@ export const ElementLabel = ({
 
   return (
     <>
-      <Wrapper paddingRight={actionsPaddingRight} {...wrapperProps}>
+      <Wrapper {...wrapperProps}>
         <Tag opening>{'<'}</Tag>
 
         <TagName isHidden={isHidden}>{tagName}</TagName>
@@ -78,7 +57,7 @@ export const ElementLabel = ({
 
         {<Tag>{hasChildren ? ' >' : ' />'}</Tag>}
 
-        {hasActions && <Actions wrapperRef={actionsRef} actions={actions} />}
+        {hasActions && <Actions actions={actions} />}
       </Wrapper>
 
       {hasChildren && (

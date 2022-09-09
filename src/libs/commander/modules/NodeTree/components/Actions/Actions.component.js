@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { ActionButton, ActionButtons, ItemsWrapper } from './Actions.styles'
 
-export const Actions = ({ wrapperRef, actions }) => {
+export const Actions = ({ actions }) => {
   return (
-    <ActionButtons ref={wrapperRef}>
+    <ActionButtons>
       {actions.map((action) => {
         const [isOpen, setIsOpen] = useState(false)
 

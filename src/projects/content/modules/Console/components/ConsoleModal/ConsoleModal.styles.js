@@ -46,4 +46,5 @@ export const Title = styled.h3`
   text-align: center;
   border-radius: 3px 3px 0 0;
   cursor: pointer;
+  border-bottom: 1px solid #00000030;
 `

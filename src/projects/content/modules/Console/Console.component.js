@@ -122,7 +122,6 @@ export const Console = () => {
       style={{ ...resizeData, ...movingEffect }}
       ondragstart='return false;'
       ondrop='return false;'
-      onMouseDown={() => setTimeout(() => inputReference.current?.focus())}
       onKeyDown={cancelEventPropagation}
       onKeyUp={cancelEventPropagation}
       onKeyPress={cancelEventPropagation}

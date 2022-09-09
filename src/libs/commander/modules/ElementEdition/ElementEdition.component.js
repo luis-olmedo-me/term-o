@@ -1,29 +1,8 @@
 import React, { useState } from 'react'
 import { getAttributes } from '../../components/CommandDom/CommandDom.helpers'
 import { Table } from 'modules/components/Table/Table.component'
-import { Input } from './ElementEdition.styles'
-
-export const AttributeInput = ({ onEnter, defaultValue, placeholder }) => {
-  const [attribute, setAttribute] = useState(defaultValue)
-
-  const handleAttributeKeyUp = (event) => {
-    if (event.key === 'Enter') {
-      onEnter(attribute)
-
-      setAttrOriginalName('')
-    }
-  }
-
-  return (
-    <Input
-      type='text'
-      value={attribute}
-      placeholder={placeholder}
-      onChange={(event) => setAttribute(event.target.value)}
-      onKeyUp={handleAttributeKeyUp}
-    />
-  )
-}
+import { Input } from './components/AttributeInput/AttributeInput.styles'
+import { AttributeInput } from './components/AttributeInput/AttributeInput.component'
 
 export const ElementEdition = ({ element }) => {
   const [newAtributeName, setNewAttributeName] = useState('')

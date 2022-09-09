@@ -3,6 +3,28 @@ import { getAttributes } from '../../components/CommandDom/CommandDom.helpers'
 import { Table } from 'modules/components/Table/Table.component'
 import { Input } from './ElementEdition.styles'
 
+export const AttributeInput = ({ onEnter, defaultValue, placeholder }) => {
+  const [attribute, setAttribute] = useState(defaultValue)
+
+  const handleAttributeKeyUp = (event) => {
+    if (event.key === 'Enter') {
+      onEnter(attribute)
+
+      setAttrOriginalName('')
+    }
+  }
+
+  return (
+    <Input
+      type='text'
+      value={attribute}
+      placeholder={placeholder}
+      onChange={(event) => setAttribute(event.target.value)}
+      onKeyUp={handleAttributeKeyUp}
+    />
+  )
+}
+
 export const ElementEdition = ({ element }) => {
   const [newAtributeName, setNewAttributeName] = useState('')
   const [newAtributeValue, setNewAttributeValue] = useState('')
@@ -11,47 +33,24 @@ export const ElementEdition = ({ element }) => {
 
   const attributeRows = Object.entries(attributes).map(
     ([attributeName, attributeValue]) => {
-      const [attrName, setAttrName] = useState(attributeName)
-      const [attrValue, setAttrValue] = useState(attributeValue)
-      const [attrOriginalName, setAttrOriginalName] = useState(attributeName)
-
-      const handleAttributeNameChange = (event) => {
-        setAttrName(event.target.value)
+      const handleValueEnter = (newValue) => {
+        element.setAttribute(attributeName, newValue)
       }
-      const handleAttributeValueChange = (event) => {
-        setAttrValue(event.target.value)
-      }
-
-      const handleAttrValueKeyUp = (event) => {
-        if (event.key === 'Enter') {
-          element.setAttribute(attrName, attrValue)
-
-          setAttrOriginalName(attrName)
-        }
-      }
-      const handleAttrNameKeyUp = (event) => {
-        if (event.key === 'Enter') {
-          element.setAttribute(attrName, attrValue)
-          element.removeAttribute(attrOriginalName)
-
-          setAttrOriginalName(attrName)
-        }
+      const handleNameEnter = (newName) => {
+        element.setAttribute(newName, attributeValue)
+        element.removeAttribute(attributeName)
       }
 
       return [
-        <Input
-          type='text'
-          value={attrName}
+        <AttributeInput
           placeholder='Attribute name'
-          onChange={handleAttributeNameChange}
-          onKeyUp={handleAttrNameKeyUp}
+          onEnter={handleNameEnter}
+          defaultValue={attributeName}
         />,
-        <Input
-          type='text'
-          value={attrValue}
+        <AttributeInput
           placeholder='Attribute value'
-          onChange={handleAttributeValueChange}
-          onKeyUp={handleAttrValueKeyUp}
+          onEnter={handleValueEnter}
+          defaultValue={attributeValue}
         />
       ]
     }

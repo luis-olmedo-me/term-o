@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ElementLabel } from '../ElementLabel/ElementLabel.component'
 import { TagWrapper, ActionButtonText, GapNodesWrapper } from './Nodes.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
@@ -16,9 +16,16 @@ const NodesWithoutContext = ({
   openNodes,
   setOpenNodes,
   handleRootChange,
-  setHighlitedElement
+  setHighlitedElement,
+  setEditingElement
 }) => {
   const nodeWrapperRef = useRef(null)
+  const nodeData = useRef({
+    parent: node?.parentElement,
+    nextSibling: node?.nextElementSibling
+  })
+
+  const [isDead, setIsDead] = useState(false)
 
   const childNodes = [...node.childNodes].filter(
     (node) => !supportedNodeTypes.includes(node)
@@ -40,18 +47,14 @@ const NodesWithoutContext = ({
     })
   }, [isNodeObjetive, objetives])
 
-  const handleToggleElement = (event) => {
-    event.stopPropagation()
-
+  const handleToggleElement = () => {
     setOpenNodes((openNodes) =>
       isNodeOpen
         ? openNodes.filter((openNode) => openNode !== node)
         : [...openNodes, node]
     )
   }
-  const handleChangeRoot = (event) => {
-    event.stopPropagation()
-
+  const handleChangeRoot = () => {
     handleRootChange(node)
   }
 
@@ -59,6 +62,20 @@ const NodesWithoutContext = ({
     const xPath = createXPathFromElement(node)
 
     navigator.clipboard.writeText(xPath.includes(' ') ? `"${xPath}"` : xPath)
+  }
+
+  const handleLifeToggle = () => {
+    if (isDead) {
+      const { parent, nextSibling } = nodeData.current
+
+      setIsDead(false)
+
+      parent.insertBefore(node, nextSibling)
+    } else {
+      setHighlitedElement(null)
+      setIsDead(true)
+      node.remove()
+    }
   }
 
   const actions = [
@@ -77,6 +94,18 @@ const NodesWithoutContext = ({
           onClick: handleChangeRoot,
           disabled: !hasNodes,
           Component: isNodeRoot ? '⚑' : '⚐'
+        },
+        {
+          id: 'edit-element',
+          title: 'Edit element',
+          onClick: () => setEditingElement(node),
+          Component: '✎'
+        },
+        {
+          id: 'life-toggle-element',
+          title: isDead ? 'Restore element' : 'Delete element',
+          onClick: handleLifeToggle,
+          Component: isDead ? '✟' : '✖'
         }
       ]
     },
@@ -122,6 +151,7 @@ const NodesWithoutContext = ({
                     handleRootChange={handleRootChange}
                     openNodes={openNodes}
                     setOpenNodes={setOpenNodes}
+                    setEditingElement={setEditingElement}
                   />
                 )
               )

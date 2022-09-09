@@ -8,7 +8,8 @@ export const NodeTree = ({
   setObjetives,
   handleRootChange,
   openNodes,
-  setOpenNodes
+  setOpenNodes,
+  setEditingElement
 }) => {
   return (
     <TreeWrapper>
@@ -20,6 +21,7 @@ export const NodeTree = ({
         handleRootChange={handleRootChange}
         openNodes={openNodes}
         setOpenNodes={setOpenNodes}
+        setEditingElement={setEditingElement}
       />
     </TreeWrapper>
   )

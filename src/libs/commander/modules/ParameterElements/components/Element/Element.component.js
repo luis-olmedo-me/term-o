@@ -18,7 +18,8 @@ const ElementWithoutContext = ({
   pinnedElements,
   className = '',
   variant = '',
-  shouldAnimate = false
+  shouldAnimate = false,
+  onClick
 }) => {
   const [isSelectOpen, setIsSelectOpen] = useState(false)
   const [wrapperPaddingRight, setWrapperPaddingRight] = useState(10)
@@ -107,6 +108,7 @@ const ElementWithoutContext = ({
       paddingRight={wrapperPaddingRight}
       className={`${className} ${variant}`}
       shouldAnimate={shouldAnimate}
+      onClick={(event) => onClick?.({ event, element })}
     >
       <ElementLabel element={element} isHidden={isHidden} />
 

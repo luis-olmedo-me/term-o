@@ -1,0 +1,60 @@
+import styled, { keyframes } from 'styled-components'
+
+const birth = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`
+
+export const ModalWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #00000040;
+  z-index: 1;
+  animation: ${birth} 0.2s ease-in-out;
+`
+
+export const Modal = styled.div`
+  color: black;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  height: 50%;
+  min-width: 380px;
+  min-height: 320px;
+  transform: translate(-50%, -50%);
+  border-radius: 3px;
+  box-sizing: border-box;
+  box-shadow: 0 0 15px 5px #00000040;
+  color: #fafafa;
+  background-color: #7928ca;
+  display: flex;
+  flex-direction: column;
+`
+
+export const Content = styled.div`
+  padding: 10px;
+  flex: 1;
+  overflow: hidden scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`
+
+export const Title = styled.h3`
+  margin: 0;
+  padding: 10px 0;
+  background-color: #fafafa;
+  text-align: center;
+  border-radius: 3px 3px 0 0;
+  cursor: pointer;
+  border-bottom: 1px solid #00000030;
+`

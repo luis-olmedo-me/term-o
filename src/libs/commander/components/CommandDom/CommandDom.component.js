@@ -13,11 +13,16 @@ import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginatio
 import { insertParams } from '../../commander.helpers'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
+import { ConsoleModal } from 'src/projects/content/modules/Console/components/ConsoleModal/ConsoleModal.component'
+import { ElementEdition } from '../../modules/ElementEdition/ElementEdition.component'
+import { ElementLabel } from '../../modules/NodeTree/components/ElementLabel/ElementLabel.component'
+import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 
-export const CommandDom = ({
+const CommandDomWithoutContext = ({
   props,
   terminal: { command, setParams, setMessageData, finish },
-  id
+  id,
+  setHighlitedElement
 }) => {
   const {
     get,
@@ -34,6 +39,7 @@ export const CommandDom = ({
 
   const [elements, setElements] = useState([])
   const [pinnedElements, setPinnedElements] = useState([])
+  const [editingElement, setEditingElement] = useState(null)
 
   const actionType = getActionType(props)
 
@@ -119,6 +125,11 @@ export const CommandDom = ({
   const hasPinnedElements = pinnedElements.length > 0
   const hasPages = pages.length > 0
 
+  const handleModalExit = useCallback(
+    () => setEditingElement(null),
+    [setEditingElement]
+  )
+
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
@@ -142,6 +153,9 @@ export const CommandDom = ({
                     elements={page}
                     pinnedElements={pinnedElements}
                     setPinnedElements={setPinnedElements}
+                    customProps={{
+                      onClick: ({ element }) => setEditingElement(element)
+                    }}
                   />
                 </CarouselItem>
               )
@@ -149,6 +163,20 @@ export const CommandDom = ({
           </Carousel>
         )}
       </LogWrapper>
+
+      <ConsoleModal
+        isOpen={Boolean(editingElement)}
+        title={<ElementLabel element={editingElement} hideAttributes />}
+        titleProps={{
+          onMouseEnter: () => setHighlitedElement(editingElement),
+          onMouseLeave: () => setHighlitedElement(null)
+        }}
+        onExit={handleModalExit}
+      >
+        <ElementEdition element={editingElement} />
+      </ConsoleModal>
     </>
   )
 }
+
+export const CommandDom = withOverlayContext(CommandDomWithoutContext)

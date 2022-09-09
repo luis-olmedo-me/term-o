@@ -8,9 +8,16 @@ export const TableWrapper = styled.div`
 export const TableRow = styled.div`
   display: flex;
   vertical-align: baseline;
-  border-bottom: ${(props) => (props.header ? '1px solid #d6d6d6' : 'none')};
+  background-color: ${(props) => (props.header ? '#fafafa' : 'transparent')};
+  color: ${(props) => (props.header ? '#222' : '#fafafa')};
   font-weight: ${(props) => (props.header ? 'bold' : 'normal')};
+  padding: ${(props) => (props.header ? '5px 20px' : '0 20px')};
+  border-radius: ${(props) => (props.header ? '5px' : '0')};
+  text-align: ${(props) => (props.header ? 'center' : 'left')};
   margin-bottom: 6px;
+  font-size: 1em;
+  line-height: 2em;
+  gap: 5px;
 
   &:last-child {
     margin-bottom: 0;

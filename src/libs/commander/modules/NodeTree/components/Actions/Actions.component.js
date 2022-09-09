@@ -1,22 +1,19 @@
 import React, { useState } from 'react'
+import { cancelPropagation } from './Actions.helpers'
 import { ActionButton, ActionButtons, ItemsWrapper } from './Actions.styles'
 
-export const Actions = ({ wrapperRef, actions }) => {
+export const Actions = ({ actions }) => {
   return (
-    <ActionButtons ref={wrapperRef}>
+    <ActionButtons>
       {actions.map((action) => {
         const [isOpen, setIsOpen] = useState(false)
-
-        const handleToggleItems = (event) => {
-          event.stopPropagation()
-        }
 
         const items = action.items
           ? [
               {
                 id: 'toggle-items',
                 title: 'Toggle menu',
-                onClick: handleToggleItems,
+                onClick: () => setIsOpen(!isOpen),
                 Component: isOpen ? '⚙>' : '⚙'
               },
               ...action.items.map((item) => ({ ...item, hidden: !isOpen }))
@@ -24,17 +21,15 @@ export const Actions = ({ wrapperRef, actions }) => {
           : []
 
         return action.items ? (
-          <ItemsWrapper
-            key={action.id}
-            onMouseEnter={() => setIsOpen(true)}
-            onMouseLeave={() => setIsOpen(false)}
-          >
+          <ItemsWrapper key={action.id}>
             {items.map((item) => {
               return (
                 !item.hidden && (
                   <ActionButton
                     key={item.id}
-                    onClick={item.disabled ? null : item.onClick}
+                    onClick={
+                      item.disabled ? null : cancelPropagation(item.onClick)
+                    }
                     disabled={item.disabled}
                     title={item.title}
                   >
@@ -47,7 +42,7 @@ export const Actions = ({ wrapperRef, actions }) => {
         ) : (
           <ActionButton
             key={action.id}
-            onClick={action.disabled ? null : action.onClick}
+            onClick={action.disabled ? null : cancelPropagation(action.onClick)}
             title={action.title}
             disabled={action.disabled}
           >

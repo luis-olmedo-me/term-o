@@ -14,3 +14,25 @@ export const getDefaultHTMlRoot = () => {
 
   return elementsSearch
 }
+
+const removeDuplicatedFromArray = (array) => {
+  return [...new Set(array)]
+}
+const getOpenNodesFromObjetive = (objetive) => {
+  let openNodes = []
+  let currentObjetive = objetive
+
+  while (currentObjetive) {
+    openNodes = [...openNodes, currentObjetive]
+    currentObjetive = currentObjetive.parentElement
+  }
+
+  return openNodes
+}
+export const getOpenNodesFromObjetives = (objetives) => {
+  const openNodes = objetives.reduce((allOpenNodes, objetive) => {
+    return [...allOpenNodes, ...getOpenNodesFromObjetive(objetive)]
+  }, [])
+
+  return removeDuplicatedFromArray(openNodes)
+}

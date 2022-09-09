@@ -1,42 +1,30 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
-import { getActionType, getDefaultHTMlRoot } from './CommandInspect.helpers'
+import {
+  getActionType,
+  getDefaultHTMlRoot,
+  getOpenNodesFromObjetives
+} from './CommandInspect.helpers'
 import { inspectMessages } from './CommandInspect.messages'
 import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { inspectActionTypes } from './CommandInspect.constants'
 import { NodeTree } from '../../modules/NodeTree/NodeTree.component'
 import { getParamsByType } from '../../commander.helpers'
+import { ConsoleModal } from 'src/projects/content/modules/Console/components/ConsoleModal/ConsoleModal.component'
+import { ElementEdition } from '../../modules/ElementEdition/ElementEdition.component'
+import { ElementLabel } from '../../modules/NodeTree/components/ElementLabel/ElementLabel.component'
+import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 
-const removeDuplicatedFromArray = (array) => {
-  return [...new Set(array)]
-}
-const getOpenNodesFromObjetive = (objetive) => {
-  let openNodes = []
-  let currentObjetive = objetive
-
-  while (currentObjetive) {
-    openNodes = [...openNodes, currentObjetive]
-    currentObjetive = currentObjetive.parentElement
-  }
-
-  return openNodes
-}
-const getOpenNodesFromObjetives = (objetives) => {
-  const openNodes = objetives.reduce((allOpenNodes, objetive) => {
-    return [...allOpenNodes, ...getOpenNodesFromObjetive(objetive)]
-  }, [])
-
-  return removeDuplicatedFromArray(openNodes)
-}
-
-export const CommandInspect = ({
+const CommandInspectWithoutContext = ({
   props,
-  terminal: { command, setMessageData, params }
+  terminal: { command, setMessageData, params },
+  setHighlitedElement
 }) => {
   const actionType = getActionType(props)
   const [HTMLRoot, setHTMLRoot] = useState(null)
   const [objetives, setObjetives] = useState([])
   const [openNodes, setOpenNodes] = useState([])
+  const [editingElement, setEditingElement] = useState(null)
 
   const defaultRoot = useRef(null)
 
@@ -78,6 +66,11 @@ export const CommandInspect = ({
     setHTMLRoot(sanitazedNewRoot)
   }
 
+  const handleModalExit = useCallback(
+    () => setEditingElement(null),
+    [setEditingElement]
+  )
+
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
@@ -90,10 +83,25 @@ export const CommandInspect = ({
             setObjetives={setObjetives}
             openNodes={openNodes}
             setOpenNodes={setOpenNodes}
+            setEditingElement={setEditingElement}
             handleRootChange={handleRootChange}
           />
         )}
       </LogWrapper>
+
+      <ConsoleModal
+        isOpen={Boolean(editingElement)}
+        title={<ElementLabel element={editingElement} hideAttributes />}
+        titleProps={{
+          onMouseEnter: () => setHighlitedElement(editingElement),
+          onMouseLeave: () => setHighlitedElement(null)
+        }}
+        onExit={handleModalExit}
+      >
+        <ElementEdition element={editingElement} />
+      </ConsoleModal>
     </>
   )
 }
+
+export const CommandInspect = withOverlayContext(CommandInspectWithoutContext)

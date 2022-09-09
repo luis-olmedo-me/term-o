@@ -16,6 +16,7 @@ import { useResize } from './hooks/useResize/useResize.hook.js'
 import { ConsoleTitle, ConsoleLogs, ConsoleWrapper } from './Console.styles.js'
 import { Notifications } from 'src/modules/components/Notifications/Notifications.component.js'
 import { useNotifications } from 'src/modules/components/Notifications/hooks/useNotifications.hook.js'
+import { ConsolePortalContext } from './components/ConsolePortal/ConsolePortal.contexts.js'
 
 export const Console = () => {
   const wrapperReference = useRef(null)
@@ -121,41 +122,44 @@ export const Console = () => {
       style={{ ...resizeData, ...movingEffect }}
       ondragstart='return false;'
       ondrop='return false;'
-      onMouseDown={() => setTimeout(() => inputReference.current?.focus())}
       onKeyDown={cancelEventPropagation}
       onKeyUp={cancelEventPropagation}
       onKeyPress={cancelEventPropagation}
     >
-      {!isMoving
-        ? singleResizeTypes.map((resizeType) => (
-            <Resizer
-              key={resizeType}
-              resizeType={resizeType}
-              setResizingFrom={setResizingFrom}
-            />
-          ))
-        : null}
+      <ConsolePortalContext.Provider value={{ root: wrapperReference.current }}>
+        {!isMoving
+          ? singleResizeTypes.map((resizeType) => (
+              <Resizer
+                key={resizeType}
+                resizeType={resizeType}
+                setResizingFrom={setResizingFrom}
+              />
+            ))
+          : null}
 
-      <ConsoleTitle
-        ref={titleReference}
-        onMouseDown={(event) => {
-          setResizingFrom(resizeTypes.MOVING)
-          setMovingFrom({ x: event.clientX, y: event.clientY })
-        }}
-      >
-        TERM-O
-      </ConsoleTitle>
+        <ConsoleTitle
+          ref={titleReference}
+          onMouseDown={(event) => {
+            setResizingFrom(resizeTypes.MOVING)
+            setMovingFrom({ x: event.clientX, y: event.clientY })
+          }}
+        >
+          TERM-O
+        </ConsoleTitle>
 
-      <ConsoleLogs ref={historyRef} style={consoleStyles}>
-        {histories.map((history) => history(outsideProps))}
-      </ConsoleLogs>
+        <ConsoleLogs ref={historyRef} style={consoleStyles}>
+          {histories.map((history) => history(outsideProps))}
+        </ConsoleLogs>
 
-      <CommandInput
-        inputReference={inputReference}
-        handleOnEnter={(command) => handleCommandRun(command, histories.length)}
-      />
+        <CommandInput
+          inputReference={inputReference}
+          handleOnEnter={(command) =>
+            handleCommandRun(command, histories.length)
+          }
+        />
 
-      <Notifications messages={notifications} />
+        <Notifications messages={notifications} />
+      </ConsolePortalContext.Provider>
     </ConsoleWrapper>
   )
 }

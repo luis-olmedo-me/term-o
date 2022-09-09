@@ -9,6 +9,8 @@ export const Actions = ({ actions }) => {
 
         const handleToggleItems = (event) => {
           event.stopPropagation()
+
+          setIsOpen(!isOpen)
         }
 
         const items = action.items
@@ -24,11 +26,7 @@ export const Actions = ({ actions }) => {
           : []
 
         return action.items ? (
-          <ItemsWrapper
-            key={action.id}
-            onMouseEnter={() => setIsOpen(true)}
-            onMouseLeave={() => setIsOpen(false)}
-          >
+          <ItemsWrapper key={action.id}>
             {items.map((item) => {
               return (
                 !item.hidden && (

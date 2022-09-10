@@ -29,7 +29,6 @@ export const ConsoleTitle = styled.h1`
   text-align: center;
   font-weight: normal;
   font-size: 25px;
-  border: 1px solid #333;
   box-sizing: border-box;
   background-color: #111;
   color: #d6d6d6;
@@ -57,7 +56,6 @@ export const ConsoleLogs = styled.div`
   color: #d6d6d6;
   display: block;
   overflow-y: scroll;
-  border: solid #333;
   border-width: 0 1px;
   flex: 1;
   border-radius: 5px;

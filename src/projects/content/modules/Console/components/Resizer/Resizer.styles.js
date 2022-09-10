@@ -17,7 +17,6 @@ export const ResizerWrapper = styled.button`
 
     &&:active,
     &&:hover {
-      cursor: col-resize;
       background-color: #333;
       width: 8px;
     }
@@ -30,10 +29,12 @@ export const ResizerWrapper = styled.button`
   &&.left {
     left: 0;
     border-radius: 5px 0 0 5px;
+    cursor: w-resize;
   }
   &&.right {
     right: 0;
     border-radius: 0 5px 5px 0;
+    cursor: e-resize;
   }
 
   &&.top,
@@ -45,7 +46,6 @@ export const ResizerWrapper = styled.button`
 
     &&:active,
     &&:hover {
-      cursor: row-resize;
       background-color: #333;
       height: 12px;
     }
@@ -58,9 +58,11 @@ export const ResizerWrapper = styled.button`
   &&.top {
     top: 0;
     border-radius: 5px 5px 0 0;
+    cursor: n-resize;
   }
   &&.bottom {
     bottom: 0;
     border-radius: 0 0 5px 5px;
+    cursor: s-resize;
   }
 `

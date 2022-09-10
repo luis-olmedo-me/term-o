@@ -7,8 +7,8 @@ export const domConfig = {
     get: {
       key: 'get',
       description: 'Get the value of a DOM element',
-      type: 'array',
-      defaultValue: ['*'],
+      type: optionTypes.ARRAY_OF_STRINGS,
+      defaultValue: [],
       aliases: ['g']
     },
     'has-id': {

@@ -124,7 +124,8 @@ const CommandDomWithoutContext = ({
           handleGetDomElements()
           break
 
-        default:
+        case actionTypes.NONE:
+          setMessageData(domMessages.unexpectedError)
           break
       }
     },

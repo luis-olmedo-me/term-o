@@ -36,8 +36,9 @@ export const getElements = ({
   })
 }
 
-export const getActionType = () => {
-  return actionTypes.GET_DOM_ELEMENTS
+export const getActionType = ({ get }) => {
+  if (get.length) return actionTypes.GET_DOM_ELEMENTS
+  else return actionTypes.NONE
 }
 
 export const isElementHidden = (element, bounds) => {

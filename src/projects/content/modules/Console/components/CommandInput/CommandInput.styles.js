@@ -28,6 +28,7 @@ export const InputWrapper = styled.div`
   border: solid #333;
   border-width: 0 1px 1px;
   background-color: #111;
+  border-radius: 0 0 5px 5px;
 `
 
 export const Hash = styled.span`

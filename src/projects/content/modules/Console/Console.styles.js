@@ -40,6 +40,7 @@ export const ConsoleTitle = styled.h1`
   top: 0;
   z-index: 1;
   transition: background-color 0.2s ease-in-out;
+  border-radius: 5px 5px 0 0;
 
   &&:hover,
   &&:active {
@@ -59,6 +60,7 @@ export const ConsoleLogs = styled.div`
   border: solid #333;
   border-width: 0 1px;
   flex: 1;
+  border-radius: 5px;
 
   &::-webkit-scrollbar {
     display: none;

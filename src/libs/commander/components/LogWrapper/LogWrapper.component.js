@@ -27,7 +27,10 @@ export const LogWrapper = ({ children, variant, buttonGroups }) => {
     variant === parameterTypes.COMMAND
 
   return (
-    <Log className={hideLoader ? variant : parameterTypes.INFO}>
+    <Log
+      className={hideLoader ? variant : parameterTypes.INFO}
+      onMouseDown={(event) => event.stopPropagation()}
+    >
       {!hideLoader && (
         <div>
           <AnimatedLoader />

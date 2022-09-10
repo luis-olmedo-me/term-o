@@ -143,11 +143,10 @@ export const getOptionsFromArgs = (args, propsConfig = {}) => {
 
     const formattedArg = arg.replace(/^--|^-/, '')
 
-    const isArgOptionBoolean = isArgOption && (isNextArgOption || !nextArg)
     const isArgOptionSetBoolean =
       isArgOption && booleanOptions.includes(formattedArg)
 
-    if (isArgOptionBoolean || isArgOptionSetBoolean) {
+    if (isArgOptionSetBoolean) {
       parsedArguments[formattedArg] = true
     } else if (isArgOptionWithRowValue) {
       const [key, value] = getRowDataFromOption(arg)
@@ -217,6 +216,12 @@ const validatePropValue = (value, type, defaultValue) => {
       const lastItem = isArray ? value[value.length - 1] : ''
 
       return lastItem || defaultValue
+    }
+
+    case optionTypes.NUMBER: {
+      const numberValue = Number(value)
+
+      return !Number.isNaN(numberValue) ? numberValue : defaultValue
     }
 
     case optionTypes.ARRAY:

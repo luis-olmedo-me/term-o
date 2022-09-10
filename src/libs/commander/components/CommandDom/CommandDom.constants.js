@@ -74,6 +74,13 @@ export const domConfig = {
       defaultValue: [],
       aliases: ['bx']
     },
+    'by-parent-level': {
+      key: 'byParentLevel',
+      description: 'Search through parents many times from the elements found',
+      type: optionTypes.NUMBER,
+      defaultValue: 0,
+      aliases: ['bpl']
+    },
     'get-parent': {
       key: 'getParent',
       description: 'Get parents of all elements found',

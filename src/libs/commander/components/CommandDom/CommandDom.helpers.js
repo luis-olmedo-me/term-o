@@ -149,10 +149,14 @@ export const getAttributes = (element) => {
   }, {})
 }
 
-export const getParentsOfElements = (elements) => {
+export const getParentsOfElements = (elements, times) => {
   const parents = elements.reduce((parents, element) => {
     return element.parentElement ? [...parents, element.parentElement] : parents
   }, [])
 
-  return removeDuplicatedFromArray(parents)
+  const unrepeatedParents = removeDuplicatedFromArray(parents)
+
+  return times !== 1
+    ? getParentsOfElements(unrepeatedParents, times - 1)
+    : unrepeatedParents
 }

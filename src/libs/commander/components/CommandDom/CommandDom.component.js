@@ -36,6 +36,7 @@ const CommandDomWithoutContext = ({
     byAttribute,
     hidden,
     byXpath,
+    byParentLevel,
     getParent
   } = props
 
@@ -83,9 +84,10 @@ const CommandDomWithoutContext = ({
 
     elementsSearch
       .then(({ elementsFound }) => {
-        const parsedElementsFound = getParent
-          ? getParentsOfElements(elementsFound)
-          : elementsFound
+        const parsedElementsFound =
+          getParent || byParentLevel
+            ? getParentsOfElements(elementsFound, byParentLevel || 1)
+            : elementsFound
 
         if (!parsedElementsFound.length) throw new Error('no elements')
 
@@ -114,7 +116,8 @@ const CommandDomWithoutContext = ({
     setParams,
     finish,
     id,
-    getParent
+    getParent,
+    byParentLevel
   ])
 
   useEffect(

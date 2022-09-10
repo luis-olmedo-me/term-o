@@ -1,4 +1,5 @@
 import { actionTypes } from '../../constants/commands.constants'
+import { removeDuplicatedFromArray } from 'src/helpers/utils.helpers.js'
 
 const getElementsFromDOM = (patterns) => {
   try {
@@ -35,8 +36,9 @@ export const getElements = ({
   })
 }
 
-export const getActionType = () => {
-  return actionTypes.GET_DOM_ELEMENTS
+export const getActionType = ({ get }) => {
+  if (get.length) return actionTypes.GET_DOM_ELEMENTS
+  else return actionTypes.NONE
 }
 
 export const isElementHidden = (element, bounds) => {
@@ -74,15 +76,17 @@ export const generateFilterBySome = ({
     }
     if (byText.length) {
       validations.push((element) =>
-        byText.some((text) => {
+        byText.some((rawText) => {
+          const text = rawText.toLowerCase()
+
           const hasTextMatch = Array.from(element.childNodes).some((child) => {
             const isTextNode = child.nodeType === 3
-            const isTextMatch = !!child?.data?.includes(text)
+            const isTextMatch = !!child?.data?.toLowerCase().includes(text)
 
             return isTextMatch && isTextNode
           })
 
-          const hasValueMatch = element.value?.includes?.(text)
+          const hasValueMatch = element.value?.toLowerCase?.().includes(text)
 
           return hasTextMatch || hasValueMatch
         })
@@ -143,4 +147,16 @@ export const getAttributes = (element) => {
       [attributeName]: element.getAttribute(attributeName)
     }
   }, {})
+}
+
+export const getParentsOfElements = (elements, times) => {
+  const parents = elements.reduce((parents, element) => {
+    return element.parentElement ? [...parents, element.parentElement] : parents
+  }, [])
+
+  const unrepeatedParents = removeDuplicatedFromArray(parents)
+
+  return times !== 1
+    ? getParentsOfElements(unrepeatedParents, times - 1)
+    : unrepeatedParents
 }

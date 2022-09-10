@@ -4,7 +4,8 @@ import {
   generateFilterByEvery,
   generateFilterBySome,
   getActionType,
-  getElements
+  getElements,
+  getParentsOfElements
 } from './CommandDom.helpers'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { ParameterElements } from '../../modules/ParameterElements/ParameterElements.component'
@@ -34,7 +35,8 @@ const CommandDomWithoutContext = ({
     byStyle,
     byAttribute,
     hidden,
-    byXpath
+    byXpath,
+    getParent
   } = props
 
   const [elements, setElements] = useState([])
@@ -81,13 +83,19 @@ const CommandDomWithoutContext = ({
 
     elementsSearch
       .then(({ elementsFound }) => {
+        const parsedElementsFound = getParent
+          ? getParentsOfElements(elementsFound)
+          : elementsFound
+
+        if (!parsedElementsFound.length) throw new Error('no elements')
+
         const elementsAsParam = {
           id,
-          value: elementsFound,
+          value: parsedElementsFound,
           type: parameterTypes.ELEMENTS
         }
 
-        setElements(elementsFound)
+        setElements(parsedElementsFound)
         setParams(insertParams(id, elementsAsParam))
         finish()
       })
@@ -105,7 +113,8 @@ const CommandDomWithoutContext = ({
     setMessageData,
     setParams,
     finish,
-    id
+    id,
+    getParent
   ])
 
   useEffect(

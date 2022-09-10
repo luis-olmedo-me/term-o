@@ -73,6 +73,13 @@ export const domConfig = {
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
       aliases: ['bx']
+    },
+    'get-parent': {
+      key: 'getParent',
+      description: 'Get parents of all elements found',
+      type: optionTypes.BOOLEAN,
+      defaultValue: false,
+      aliases: ['gp']
     }
   },
   output: (props) => <CommandDom key={props.id} {...props} />

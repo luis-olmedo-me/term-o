@@ -1,4 +1,5 @@
 import { actionTypes } from '../../constants/commands.constants'
+import { removeDuplicatedFromArray } from 'src/helpers/utils.helpers.js'
 
 const getElementsFromDOM = (patterns) => {
   try {
@@ -145,4 +146,12 @@ export const getAttributes = (element) => {
       [attributeName]: element.getAttribute(attributeName)
     }
   }, {})
+}
+
+export const getParentsOfElements = (elements) => {
+  const parents = elements.reduce((parents, element) => {
+    return element.parentElement ? [...parents, element.parentElement] : parents
+  }, [])
+
+  return removeDuplicatedFromArray(parents)
 }

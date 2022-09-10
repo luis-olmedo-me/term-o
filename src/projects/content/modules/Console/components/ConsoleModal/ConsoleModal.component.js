@@ -33,7 +33,10 @@ export const ConsoleModal = ({
     <ConsolePortal>
       {isOpen && (
         <ModalWrapper onClick={handleWrapperClick}>
-          <Modal onClick={handleModalClick}>
+          <Modal
+            onClick={handleModalClick}
+            onMouseDown={(event) => event.stopPropagation()}
+          >
             {title && <Title {...titleProps}>{title}</Title>}
 
             <Content>{children}</Content>

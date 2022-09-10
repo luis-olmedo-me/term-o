@@ -7,3 +7,7 @@ export const debounce = (callback, wait) => {
     timerId = setTimeout(() => callback(...args), wait)
   }
 }
+
+export const removeDuplicatedFromArray = (array) => {
+  return [...new Set(array)]
+}

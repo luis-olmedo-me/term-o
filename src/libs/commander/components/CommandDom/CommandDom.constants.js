@@ -7,8 +7,8 @@ export const domConfig = {
     get: {
       key: 'get',
       description: 'Get the value of a DOM element',
-      type: 'array',
-      defaultValue: ['*'],
+      type: optionTypes.ARRAY_OF_STRINGS,
+      defaultValue: [],
       aliases: ['g']
     },
     'has-id': {
@@ -73,6 +73,20 @@ export const domConfig = {
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
       aliases: ['bx']
+    },
+    'by-parent-level': {
+      key: 'byParentLevel',
+      description: 'Search through parents many times from the elements found',
+      type: optionTypes.NUMBER,
+      defaultValue: 0,
+      aliases: ['bpl']
+    },
+    'get-parent': {
+      key: 'getParent',
+      description: 'Get parents of all elements found',
+      type: optionTypes.BOOLEAN,
+      defaultValue: false,
+      aliases: ['gp']
     }
   },
   output: (props) => <CommandDom key={props.id} {...props} />

@@ -74,15 +74,17 @@ export const generateFilterBySome = ({
     }
     if (byText.length) {
       validations.push((element) =>
-        byText.some((text) => {
+        byText.some((rawText) => {
+          const text = rawText.toLowerCase()
+
           const hasTextMatch = Array.from(element.childNodes).some((child) => {
             const isTextNode = child.nodeType === 3
-            const isTextMatch = !!child?.data?.includes(text)
+            const isTextMatch = !!child?.data?.toLowerCase().includes(text)
 
             return isTextMatch && isTextNode
           })
 
-          const hasValueMatch = element.value?.includes?.(text)
+          const hasValueMatch = element.value?.toLowerCase?.().includes(text)
 
           return hasTextMatch || hasValueMatch
         })

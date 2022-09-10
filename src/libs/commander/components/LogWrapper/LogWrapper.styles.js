@@ -3,6 +3,7 @@ import { Loader } from 'modules/icons/loader.icon'
 
 export const Log = styled.div`
   transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out;
+  cursor: auto;
 
   &:first-child {
     border-radius: 3px 3px 0 0;

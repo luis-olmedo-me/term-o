@@ -40,10 +40,15 @@ export const ConsoleTitle = styled.h1`
   z-index: 1;
   transition: background-color 0.2s ease-in-out;
   border-radius: 5px 5px 0 0;
+  cursor: grab;
 
   &&:hover,
   &&:active {
     background-color: #0d0d0d;
+  }
+
+  &&:active {
+    cursor: grabbing;
   }
 `
 
@@ -59,6 +64,7 @@ export const ConsoleLogs = styled.div`
   border-width: 0 1px;
   flex: 1;
   border-radius: 5px;
+  cursor: text;
 
   &::-webkit-scrollbar {
     display: none;

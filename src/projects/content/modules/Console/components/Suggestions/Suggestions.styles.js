@@ -12,7 +12,8 @@ export const SuggestionsWrapper = styled.div`
 export const Suggestion = styled.span`
   padding: 10px 30px;
   display: block;
-  color: ${({ selected }) => (selected ? '#9cf' : '#d6d6d6')};
+  color: ${({ selected }) => (selected ? '#F8C572' : '#d6d6d6')};
+  background-color: ${({ selected }) => (selected ? '#222' : '#111')};
   font-weight: ${({ selected }) => (selected ? 'bold' : 'normal')};
   display: flex;
   justify-content: space-between;

@@ -19,21 +19,21 @@ export const aliasConfig = {
       description: 'List all aliases',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
-      aliases: ['l']
+      aliases: 'l'
     },
     delete: {
       key: 'delete',
       description: 'Delete an alias',
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
-      aliases: ['d']
+      aliases: 'd'
     },
     add: {
       key: 'add',
       description: 'Add an alias',
       type: optionTypes.ARRAY_OF_OBJECTS,
       defaultValue: [],
-      aliases: ['a']
+      aliases: 'a'
     }
   },
   output: (props) => <CommandAlias key={props.id} {...props} />

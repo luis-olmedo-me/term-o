@@ -9,84 +9,84 @@ export const domConfig = {
       description: 'Get the value of a DOM element',
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
-      aliases: ['g']
+      aliases: 'g'
     },
     'has-id': {
       key: 'hasId',
       description: 'Check if a DOM element has an id',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
-      aliases: ['hi']
+      aliases: 'hi'
     },
     'has-class': {
       key: 'hasClass',
       description: 'Check if a DOM element has a class',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
-      aliases: ['hc']
+      aliases: 'hc'
     },
     'by-id': {
       key: 'byId',
       description: 'Get a DOM element by id',
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
-      aliases: ['bi']
+      aliases: 'bi'
     },
     'by-class': {
       key: 'byClass',
       description: 'Get a DOM element by class',
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
-      aliases: ['bc']
+      aliases: 'bc'
     },
     'by-text': {
       key: 'byText',
       description: 'Get a DOM element by text',
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
-      aliases: ['bt']
+      aliases: 'bt'
     },
     'by-style': {
       key: 'byStyle',
       description: 'Get a DOM element by style',
       type: optionTypes.ARRAY_OF_OBJECTS,
       defaultValue: [],
-      aliases: ['bs']
+      aliases: 'bs'
     },
     'by-attribute': {
       key: 'byAttribute',
       description: 'Get a DOM element by attribute',
       type: optionTypes.ARRAY_OF_OBJECTS,
       defaultValue: [],
-      aliases: ['ba']
+      aliases: 'ba'
     },
     hidden: {
       key: 'hidden',
       description: 'Check if a DOM element is hidden for user',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
-      aliases: ['h']
+      aliases: 'h'
     },
     'by-xpath': {
       key: 'byXpath',
       description: 'Get a DOM element by xpath',
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
-      aliases: ['bx']
+      aliases: 'bx'
     },
     'by-parent-level': {
       key: 'byParentLevel',
       description: 'Search through parents many times from the elements found',
       type: optionTypes.NUMBER,
       defaultValue: 0,
-      aliases: ['bpl']
+      aliases: 'bpl'
     },
     'get-parent': {
       key: 'getParent',
       description: 'Get parents of all elements found',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
-      aliases: ['gp']
+      aliases: 'gp'
     }
   },
   output: (props) => <CommandDom key={props.id} {...props} />

@@ -10,21 +10,21 @@ export const storageConfig = {
       description: 'Show the local storage of the current context',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
-      aliases: ['l']
+      aliases: 'l'
     },
     session: {
       key: 'session',
       description: 'Show the session storage of the current context',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
-      aliases: ['s']
+      aliases: 's'
     },
     cookies: {
       key: 'cookies',
       description: 'Show the cookies of the current context',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
-      aliases: ['c']
+      aliases: 'c'
     }
   },
   output: (props) => <CommandStorage key={props.id} {...props} />

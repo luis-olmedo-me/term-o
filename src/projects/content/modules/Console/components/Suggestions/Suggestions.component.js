@@ -25,12 +25,12 @@ export const Suggestions = ({ suggestions, selectedSuggestionId }) => {
     <SuggestionsWrapper ref={selectedSuggestionReference}>
       {suggestions.map((suggestion, index) => {
         const isSelected = selectedSuggestionId === index
-        const aliases = suggestion.aliases || []
+        const aliases = suggestion.aliases || ''
 
         return (
           <Suggestion key={suggestion.value} selected={isSelected}>
             <span>{suggestion.value}</span>
-            <span>{aliases.join(', ')}</span>
+            <span>{aliases}</span>
           </Suggestion>
         )
       })}

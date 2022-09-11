@@ -13,7 +13,7 @@ export const parsePropsIntoSuggestions = (propsConfigs) => {
       : [
           {
             ...propConfig,
-            aliases: propConfig.aliases.map((alias) => `-${alias}`),
+            aliases: `-${propConfig.aliases}`,
             value: `--${key}`
           }
         ]
@@ -126,7 +126,7 @@ export const getOptionsFromArgs = (args, propsConfig = {}) => {
     return propsConfig[propName].type === optionTypes.BOOLEAN
   })
   const booleanOptionAliasesNames = booleanOptionNames.reduce(
-    (aliases, optionName) => [...aliases, ...propsConfig[optionName].aliases],
+    (aliases, optionName) => [...aliases, propsConfig[optionName].aliases],
     []
   )
   const booleanOptions = [...booleanOptionNames, ...booleanOptionAliasesNames]

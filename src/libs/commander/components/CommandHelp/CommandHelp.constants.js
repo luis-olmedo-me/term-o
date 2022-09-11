@@ -9,7 +9,7 @@ export const helpConfig = {
       description: 'Show help for a specific command',
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
-      aliases: ['a']
+      aliases: 'a'
     }
   },
   output: (props) => <CommandHelp key={props.id} {...props} />

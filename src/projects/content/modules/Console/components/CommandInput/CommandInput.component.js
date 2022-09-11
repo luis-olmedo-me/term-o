@@ -50,7 +50,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
       .replace(/'/g, " ' ")
     const lastWord = temporalCommand.split(' ').at(-1)
 
-    const filteredSuggestions = commander
+    const newSuggestions = commander
       .getSuggestions(temporalSpacedCommand)
       .filter(
         (suggestion) =>
@@ -58,12 +58,25 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
           suggestion.aliases?.some((alias) => alias.includes(lastWord))
       )
 
-    const newSuggestions = [defaultSuggestion, ...filteredSuggestions]
+    const { index: indexMatch } = newSuggestions.reduce(
+      (lastMatch, suggestion, index) => {
+        const [matchWord] = suggestion.value.match(lastWord) || []
+        const matches = matchWord?.length
+
+        const isValueMatch = suggestion.value.startsWith(lastWord)
+        const isValidMatch = isValueMatch && lastMatch.matches < matches
+
+        return isValidMatch ? { index, matches } : lastMatch
+      },
+      { index: -1, matches: 0 }
+    )
 
     setSuggestions(
-      temporalCommand && !isLastLetterSpecial ? newSuggestions : []
+      temporalCommand && !isLastLetterSpecial
+        ? [defaultSuggestion, ...newSuggestions]
+        : []
     )
-    setSelectedSuggestionId(0)
+    setSelectedSuggestionId(indexMatch === -1 ? 0 : indexMatch + 1)
   }
 
   const handleKeyPressed = (event) => {

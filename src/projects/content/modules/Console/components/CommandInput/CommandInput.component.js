@@ -60,10 +60,15 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
 
     const { index: indexMatch } = newSuggestions.reduce(
       (lastMatch, suggestion, index) => {
-        const [matchWord] = suggestion.value.match(lastWord) || []
+        const [matchWord] =
+          suggestion.value.match(lastWord) ||
+          suggestion.alias?.match(lastWord) ||
+          []
         const matches = matchWord?.length
 
-        const isValueMatch = suggestion.value.startsWith(lastWord)
+        const isValueMatch =
+          suggestion.value.startsWith(lastWord) ||
+          suggestion.alias?.startsWith(lastWord)
         const isValidMatch = isValueMatch && lastMatch.matches < matches
 
         return isValidMatch ? { index, matches } : lastMatch

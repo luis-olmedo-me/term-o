@@ -54,6 +54,11 @@ class Commander {
     const allArgsReversed = lastCommand.split(' ').reverse()
     const commandName = allArgsReversed.find((arg) => this.isKeyword(arg))
 
+    const shouldUseDefaults =
+      !lastCommand ||
+      lastCommand.match(/'/g)?.length % 2 !== 0 ||
+      lastCommand.match(/"/g)?.length % 2 !== 0
+
     const defaultProps = this.commandNames
       .concat(this.aliasNames)
       .map((name) => ({ value: name }))
@@ -62,7 +67,7 @@ class Commander {
 
     const parsedProps = parsePropsIntoSuggestions(knownCommand?.props)
 
-    return [...parsedProps, ...defaultProps]
+    return shouldUseDefaults ? [...parsedProps, ...defaultProps] : parsedProps
   }
 
   getLogOutput(id, fullLine) {

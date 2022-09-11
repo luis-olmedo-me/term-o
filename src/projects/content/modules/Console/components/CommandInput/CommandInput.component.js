@@ -48,7 +48,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     const temporalSpacedCommand = temporalCommand
       .replace(/"/g, ' " ')
       .replace(/'/g, " ' ")
-    const lastWord = temporalCommand.split(' ').at(-1)
+    const lastWord = temporalSpacedCommand.split(' ').at(-1)
 
     const newSuggestions = commander
       .getSuggestions(temporalSpacedCommand)

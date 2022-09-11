@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { Suggestion, SuggestionsWrapper } from './Suggestions.styles'
 
-export const Suggestions = ({ suggestions, selectedSuggestionId }) => {
+export const Suggestions = ({ suggestions, selectedId, onSuggestionClick }) => {
   const selectedSuggestionReference = useRef(null)
 
   useEffect(
@@ -9,7 +9,7 @@ export const Suggestions = ({ suggestions, selectedSuggestionId }) => {
       if (!suggestions.length) return
 
       const selectedItem =
-        selectedSuggestionReference.current.children[selectedSuggestionId]
+        selectedSuggestionReference.current.children[selectedId]
 
       if (selectedItem) {
         selectedItem.scrollIntoView({
@@ -18,17 +18,21 @@ export const Suggestions = ({ suggestions, selectedSuggestionId }) => {
         })
       }
     },
-    [suggestions, selectedSuggestionId]
+    [suggestions, selectedId]
   )
 
   return (
     <SuggestionsWrapper ref={selectedSuggestionReference}>
       {suggestions.map((suggestion, index) => {
-        const isSelected = selectedSuggestionId === index
+        const isSelected = selectedId === index
         const aliases = suggestion.alias || ''
 
         return (
-          <Suggestion key={suggestion.value} selected={isSelected}>
+          <Suggestion
+            key={suggestion.value}
+            selected={isSelected}
+            onClick={() => onSuggestionClick(index)}
+          >
             <span>{suggestion.value}</span>
             <span>{aliases}</span>
           </Suggestion>

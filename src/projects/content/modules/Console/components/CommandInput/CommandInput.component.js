@@ -15,30 +15,39 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
   const [suggestions, setSuggestions] = useState([])
   const [selectedSuggestionId, setSelectedSuggestionId] = useState(0)
 
+  const handleSelectSuggestion = (selectedId) => {
+    const caretPosition = inputReference.current?.selectionEnd || 0
+
+    const temporalCommand = command.slice(0, caretPosition)
+    const isLastLetterSpecial = [' ', '|'].includes(temporalCommand.at(-1))
+
+    if (selectedId === 0) {
+      handleOnEnter(command)
+      setCommands([
+        ...commands,
+        { command, id: commands.length, selected: false }
+      ])
+      setCommand('')
+      setSuggestions([])
+      setSelectedSuggestionId(0)
+    } else {
+      const { value } = suggestions[selectedId]
+
+      const newCommand = isLastLetterSpecial
+        ? splice(command, caretPosition, value)
+        : spliceArg(command, caretPosition, value)
+
+      setCommand(newCommand)
+      setSelectedSuggestionId(0)
+    }
+  }
+
   const handleKeyUp = ({ target: { selectionEnd }, key }) => {
     const temporalCommand = command.slice(0, selectionEnd)
     const isLastLetterSpecial = [' ', '|'].includes(temporalCommand.at(-1))
 
     if (key === 'Enter') {
-      if (selectedSuggestionId === 0) {
-        handleOnEnter(command)
-        setCommands([
-          ...commands,
-          { command, id: commands.length, selected: false }
-        ])
-        setCommand('')
-        setSuggestions([])
-        setSelectedSuggestionId(0)
-      } else {
-        const { value } = suggestions[selectedSuggestionId]
-
-        const newCommand = isLastLetterSpecial
-          ? splice(command, selectionEnd, value)
-          : spliceArg(command, selectionEnd, value)
-
-        setCommand(newCommand)
-        setSelectedSuggestionId(0)
-      }
+      handleSelectSuggestion(selectedSuggestionId)
 
       return
     } else if (key === 'ArrowUp' || key === 'ArrowDown') {
@@ -176,7 +185,8 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     <InputWrapper>
       <Suggestions
         suggestions={suggestions}
-        selectedSuggestionId={selectedSuggestionId}
+        selectedId={selectedSuggestionId}
+        onSuggestionClick={handleSelectSuggestion}
       />
 
       <div>

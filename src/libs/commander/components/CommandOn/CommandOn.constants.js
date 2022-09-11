@@ -9,21 +9,21 @@ export const onConfig = {
       description: 'URL to listen to',
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: ['.'],
-      aliases: 'u'
+      alias: 'u'
     },
     run: {
       key: 'run',
       description: 'Command to run when the event is defined',
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
-      aliases: 'r'
+      alias: 'r'
     },
     event: {
       key: 'event',
       description: 'Specify an event to run the command',
       type: optionTypes.STRING,
       defaultValue: '',
-      aliases: 'e'
+      alias: 'e'
     }
   },
   output: (props) => <CommandOn key={props.id} {...props} />

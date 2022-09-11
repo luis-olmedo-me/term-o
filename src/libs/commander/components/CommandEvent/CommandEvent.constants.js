@@ -23,21 +23,21 @@ export const eventConfig = {
       description: 'List all events',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
-      aliases: 'l'
+      alias: 'l'
     },
     delete: {
       key: 'delete',
       description: 'Delete an event',
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
-      aliases: 'd'
+      alias: 'd'
     },
     trigger: {
       key: 'trigger',
       description: 'Trigger an event',
       type: optionTypes.STRING,
       defaultValue: '',
-      aliases: 't'
+      alias: 't'
     },
     value: {
       key: 'value',
@@ -45,7 +45,7 @@ export const eventConfig = {
         'Insert this value when "change" event is triggered on inputs elements',
       type: optionTypes.STRING,
       defaultValue: '',
-      aliases: 'v'
+      alias: 'v'
     }
   },
   output: (props) => <CommandEvent key={props.id} {...props} />

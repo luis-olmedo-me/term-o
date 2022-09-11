@@ -55,7 +55,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
       .filter(
         (suggestion) =>
           suggestion.value.includes(lastWord) ||
-          suggestion.aliases?.includes(lastWord)
+          suggestion.alias?.includes(lastWord)
       )
 
     const { index: indexMatch } = newSuggestions.reduce(

@@ -25,7 +25,7 @@ export const Suggestions = ({ suggestions, selectedSuggestionId }) => {
     <SuggestionsWrapper ref={selectedSuggestionReference}>
       {suggestions.map((suggestion, index) => {
         const isSelected = selectedSuggestionId === index
-        const aliases = suggestion.aliases || ''
+        const aliases = suggestion.alias || ''
 
         return (
           <Suggestion key={suggestion.value} selected={isSelected}>

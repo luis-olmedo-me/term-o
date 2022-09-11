@@ -13,7 +13,8 @@ export const Suggestions = ({ suggestions, selectedSuggestionId }) => {
 
       if (selectedItem) {
         selectedItem.scrollIntoView({
-          behavior: 'smooth'
+          behavior: 'smooth',
+          block: 'center'
         })
       }
     },

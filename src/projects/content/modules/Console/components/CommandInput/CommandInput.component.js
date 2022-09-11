@@ -52,7 +52,11 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
 
     const filteredSuggestions = commander
       .getSuggestions(temporalSpacedCommand)
-      .filter((suggestion) => suggestion.value.includes(lastWord))
+      .filter(
+        (suggestion) =>
+          suggestion.value.includes(lastWord) ||
+          suggestion.aliases?.some((alias) => alias.includes(lastWord))
+      )
 
     const newSuggestions = [defaultSuggestion, ...filteredSuggestions]
 

@@ -14,7 +14,6 @@ export const Suggestion = styled.span`
   display: block;
   color: ${({ selected }) => (selected ? '#F8C572' : '#d6d6d6')};
   background-color: ${({ selected }) => (selected ? '#222' : '#111')};
-  font-weight: ${({ selected }) => (selected ? 'bold' : 'normal')};
   display: flex;
   justify-content: space-between;
   height: 40px;

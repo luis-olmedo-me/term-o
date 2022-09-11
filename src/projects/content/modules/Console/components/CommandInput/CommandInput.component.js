@@ -7,7 +7,7 @@ import { Suggestions } from '../Suggestions/Suggestions.component'
 import { Hash, Input, InputWrapper } from './CommandInput.styles'
 import { splice, spliceArg } from './CommandInput.helpers'
 
-const defaultSuggestion = { value: 'Hit enter to execute' }
+const defaultSuggestion = { value: '< Execute >' }
 
 export const CommandInput = ({ inputReference, handleOnEnter }) => {
   const [command, setCommand] = useState('')

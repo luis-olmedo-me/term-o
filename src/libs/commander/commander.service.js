@@ -54,10 +54,15 @@ class Commander {
     const allArgsReversed = lastCommand.split(' ').reverse()
     const commandName = allArgsReversed.find((arg) => this.isKeyword(arg))
 
+    const doubleQuotes = lastCommand.match(/"/g)
+    const singleQuotes = lastCommand.match(/'/g)
+    const doubleQuotesMatches = doubleQuotes ? doubleQuotes.length : 0
+    const singleQuotesMatches = singleQuotes ? singleQuotes.length : 0
+
     const shouldUseDefaults =
-      !lastCommand ||
-      lastCommand.match(/'/g)?.length % 2 !== 0 ||
-      lastCommand.match(/"/g)?.length % 2 !== 0
+      !commandName ||
+      doubleQuotesMatches % 2 !== 0 ||
+      singleQuotesMatches % 2 !== 0
 
     const defaultProps = this.commandNames
       .concat(this.aliasNames)

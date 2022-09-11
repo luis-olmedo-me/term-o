@@ -6,22 +6,16 @@ export const Suggestions = ({ suggestions, selectedSuggestionId }) => {
 
   useEffect(
     function scrollIntoSelectedSuggestion() {
-      const scrollTop = selectedSuggestionReference.current?.scrollTop
-      const hasScrollTop = typeof scrollTop !== 'undefined'
-
       if (!suggestions.length) return
-      if (!hasScrollTop) return
 
-      const newScrollTopValue = selectedSuggestionId * 40
-      const isInRange =
-        newScrollTopValue > scrollTop && newScrollTopValue < scrollTop + 120
+      const selectedItem =
+        selectedSuggestionReference.current.children[selectedSuggestionId]
 
-      if (isInRange) return
-
-      selectedSuggestionReference.current.scrollTop = Math.max(
-        newScrollTopValue - 80,
-        0
-      )
+      if (selectedItem) {
+        selectedItem.scrollIntoView({
+          behavior: 'smooth'
+        })
+      }
     },
     [suggestions, selectedSuggestionId]
   )

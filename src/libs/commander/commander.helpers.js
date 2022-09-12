@@ -108,7 +108,7 @@ const getRowDataFromOption = (option) => {
   return [restoredKey, restoredValue]
 }
 
-const removeQuotesFromValue = (value) => {
+export const removeQuotesFromValue = (value) => {
   return value.replace(/^'|'$/g, '').replace(/^"|"$/g, '')
 }
 

@@ -15,6 +15,10 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
   const [suggestions, setSuggestions] = useState([])
   const [selectedSuggestionId, setSelectedSuggestionId] = useState(0)
 
+  const handleNewCaretPosition = (position) => {
+    setTimeout(() => (inputReference.current.selectionEnd = position))
+  }
+
   const handleSelectSuggestion = (selectedId) => {
     const caretPosition = inputReference.current?.selectionEnd || 0
 
@@ -30,7 +34,12 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     } else {
       const { value } = suggestions[selectedId]
 
-      const newCommand = spliceArg(command, caretPosition, value)
+      const newCommand = spliceArg(
+        command,
+        caretPosition,
+        value,
+        handleNewCaretPosition
+      )
 
       setCommand(newCommand)
       setSelectedSuggestionId(0)

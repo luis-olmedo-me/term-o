@@ -3,7 +3,9 @@ export const spliceArg = (myString, index, value, callback) => {
   let letterCounter = 0
 
   if (myString.length === index) {
-    words[words.length - 1] = value
+    const newWord = words.at(-1).replace(/[^"']+/g, value)
+
+    words[words.length - 1] = newWord
 
     return words.join(' ')
   }
@@ -14,7 +16,7 @@ export const spliceArg = (myString, index, value, callback) => {
     letterCounter += currentWordLength
 
     if (letterCounter >= index) {
-      const newWord = words[wordIndex].replace(/[^"']+/g, value)
+      const newWord = words.at(wordIndex).replace(/[^"']+/g, value)
 
       words[wordIndex] = newWord
 

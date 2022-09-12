@@ -5,7 +5,7 @@ import { commander } from 'libs/commander/commander.service'
 import { Suggestions } from '../Suggestions/Suggestions.component'
 
 import { Hash, Input, InputWrapper } from './CommandInput.styles'
-import { splice, spliceArg } from './CommandInput.helpers'
+import { spliceArg } from './CommandInput.helpers'
 
 const defaultSuggestion = { value: '< Execute >' }
 
@@ -17,9 +17,6 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
 
   const handleSelectSuggestion = (selectedId) => {
     const caretPosition = inputReference.current?.selectionEnd || 0
-
-    const temporalCommand = command.slice(0, caretPosition)
-    const isLastLetterSpecial = [' ', '|'].includes(temporalCommand.at(-1))
 
     if (selectedId === 0) {
       handleOnEnter(command)
@@ -33,9 +30,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     } else {
       const { value } = suggestions[selectedId]
 
-      const newCommand = isLastLetterSpecial
-        ? splice(command, caretPosition, value)
-        : spliceArg(command, caretPosition, value)
+      const newCommand = spliceArg(command, caretPosition, value)
 
       setCommand(newCommand)
       setSelectedSuggestionId(0)

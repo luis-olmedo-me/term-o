@@ -13,7 +13,7 @@ export const parsePropsIntoSuggestions = (propsConfigs) => {
       : [
           {
             ...propConfig,
-            aliases: propConfig.aliases.map((alias) => `-${alias}`),
+            alias: `-${propConfig.alias}`,
             value: `--${key}`
           }
         ]
@@ -108,7 +108,7 @@ const getRowDataFromOption = (option) => {
   return [restoredKey, restoredValue]
 }
 
-const removeQuotesFromValue = (value) => {
+export const removeQuotesFromValue = (value) => {
   return value.replace(/^'|'$/g, '').replace(/^"|"$/g, '')
 }
 
@@ -126,7 +126,7 @@ export const getOptionsFromArgs = (args, propsConfig = {}) => {
     return propsConfig[propName].type === optionTypes.BOOLEAN
   })
   const booleanOptionAliasesNames = booleanOptionNames.reduce(
-    (aliases, optionName) => [...aliases, ...propsConfig[optionName].aliases],
+    (aliases, optionName) => [...aliases, propsConfig[optionName].alias],
     []
   )
   const booleanOptions = [...booleanOptionNames, ...booleanOptionAliasesNames]
@@ -253,12 +253,9 @@ const buildGroupProps = (
 
 export const buildProps = (propValues, propsConfig = {}) => {
   return Object.entries(propsConfig).reduce(
-    (
-      allProps,
-      [propName, { key, type, defaultValue, aliases, groupProps }]
-    ) => {
+    (allProps, [propName, { key, type, defaultValue, alias, groupProps }]) => {
       const aliasName = Object.keys(propValues).find((name) => {
-        return aliases.includes(name)
+        return alias.includes(name)
       })
 
       const groupValue = groupProps

@@ -13,7 +13,7 @@ const cssProps = validStyleKeys.reduce((props, key) => {
       key,
       type: optionTypes.STRING,
       defaultValue: '',
-      aliases: []
+      alias: ''
     }
   }
 }, {})
@@ -27,21 +27,21 @@ export const cssConfig = {
       type: optionTypes.OBJECT,
       groupProps: cssProps,
       defaultValue: {},
-      aliases: []
+      alias: ''
     },
     styles: {
       key: 'styles',
       description: 'Apply inline CSS',
       type: optionTypes.STRING,
       defaultValue: '',
-      aliases: ['s']
+      alias: 's'
     },
     get: {
       key: 'get',
       description: 'Get styles from parameter elements',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
-      aliases: ['g']
+      alias: 'g'
     }
   },
   output: (props) => <CommandCss key={props.id} {...props} />

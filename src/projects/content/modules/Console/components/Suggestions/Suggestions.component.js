@@ -1,41 +1,40 @@
 import React, { useEffect, useRef } from 'react'
 import { Suggestion, SuggestionsWrapper } from './Suggestions.styles'
 
-export const Suggestions = ({ suggestions, selectedSuggestionId }) => {
+export const Suggestions = ({ suggestions, selectedId, onSuggestionClick }) => {
   const selectedSuggestionReference = useRef(null)
 
   useEffect(
     function scrollIntoSelectedSuggestion() {
-      const scrollTop = selectedSuggestionReference.current?.scrollTop
-      const hasScrollTop = typeof scrollTop !== 'undefined'
-
       if (!suggestions.length) return
-      if (!hasScrollTop) return
 
-      const newScrollTopValue = selectedSuggestionId * 40
-      const isInRange =
-        newScrollTopValue > scrollTop && newScrollTopValue < scrollTop + 120
+      const selectedItem =
+        selectedSuggestionReference.current.children[selectedId]
 
-      if (isInRange) return
-
-      selectedSuggestionReference.current.scrollTop = Math.max(
-        newScrollTopValue - 80,
-        0
-      )
+      if (selectedItem) {
+        selectedItem.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        })
+      }
     },
-    [suggestions, selectedSuggestionId]
+    [suggestions, selectedId]
   )
 
   return (
     <SuggestionsWrapper ref={selectedSuggestionReference}>
       {suggestions.map((suggestion, index) => {
-        const isSelected = selectedSuggestionId === index
-        const aliases = suggestion.aliases || []
+        const isSelected = selectedId === index
+        const aliases = suggestion.alias || ''
 
         return (
-          <Suggestion key={suggestion.value} selected={isSelected}>
+          <Suggestion
+            key={suggestion.value}
+            selected={isSelected}
+            onClick={() => onSuggestionClick(index)}
+          >
             <span>{suggestion.value}</span>
-            <span>{aliases.join(', ')}</span>
+            <span>{aliases}</span>
           </Suggestion>
         )
       })}

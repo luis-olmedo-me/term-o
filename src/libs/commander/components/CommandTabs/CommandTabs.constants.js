@@ -10,7 +10,7 @@ export const tabsConfig = {
       description: 'Show all tabs open',
       type: optionTypes.BOOLEAN,
       defaultValue: '',
-      aliases: ['l']
+      alias: 'l'
     }
   },
   output: (props) => <CommandTabs key={props.id} {...props} />

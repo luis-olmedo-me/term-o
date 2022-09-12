@@ -9,6 +9,7 @@ import {
   getOptionsFromArgs,
   parsePropsIntoSuggestions,
   parseValuesIntoParams,
+  removeQuotesFromValue,
   splitArgsTakingInCountSymbols
 } from './commander.helpers'
 import { commanderMessages } from './commander.messages'
@@ -52,7 +53,19 @@ class Commander {
   getSuggestions(command) {
     const [lastCommand] = command.split('|').reverse()
     const allArgsReversed = lastCommand.split(' ').reverse()
-    const commandName = allArgsReversed.find((arg) => this.isKeyword(arg))
+    const commandName = allArgsReversed
+      .map(removeQuotesFromValue)
+      .find((arg) => this.isKeyword(arg))
+
+    const doubleQuotes = lastCommand.match(/"/g)
+    const singleQuotes = lastCommand.match(/'/g)
+    const doubleQuotesMatches = doubleQuotes ? doubleQuotes.length : 0
+    const singleQuotesMatches = singleQuotes ? singleQuotes.length : 0
+
+    const shouldUseDefaults =
+      !commandName ||
+      doubleQuotesMatches % 2 !== 0 ||
+      singleQuotesMatches % 2 !== 0
 
     const defaultProps = this.commandNames
       .concat(this.aliasNames)
@@ -62,7 +75,7 @@ class Commander {
 
     const parsedProps = parsePropsIntoSuggestions(knownCommand?.props)
 
-    return [...parsedProps, ...defaultProps]
+    return shouldUseDefaults ? [...parsedProps, ...defaultProps] : parsedProps
   }
 
   getLogOutput(id, fullLine) {

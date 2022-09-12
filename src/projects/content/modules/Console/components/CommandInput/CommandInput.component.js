@@ -5,9 +5,9 @@ import { commander } from 'libs/commander/commander.service'
 import { Suggestions } from '../Suggestions/Suggestions.component'
 
 import { Hash, Input, InputWrapper } from './CommandInput.styles'
-import { splice, spliceArg } from './CommandInput.helpers'
+import { spliceArg } from './CommandInput.helpers'
 
-const defaultSuggestion = { value: 'Hit enter to execute' }
+const defaultSuggestion = { value: '< Execute >' }
 
 export const CommandInput = ({ inputReference, handleOnEnter }) => {
   const [command, setCommand] = useState('')
@@ -15,30 +15,43 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
   const [suggestions, setSuggestions] = useState([])
   const [selectedSuggestionId, setSelectedSuggestionId] = useState(0)
 
+  const handleNewCaretPosition = (position) => {
+    setTimeout(() => (inputReference.current.selectionEnd = position))
+  }
+
+  const handleSelectSuggestion = (selectedId) => {
+    const caretPosition = inputReference.current?.selectionEnd || 0
+
+    if (selectedId === 0) {
+      handleOnEnter(command)
+      setCommands([
+        ...commands,
+        { command, id: commands.length, selected: false }
+      ])
+      setCommand('')
+      setSuggestions([])
+      setSelectedSuggestionId(0)
+    } else {
+      const { value } = suggestions[selectedId]
+
+      const newCommand = spliceArg(
+        command,
+        caretPosition,
+        value,
+        handleNewCaretPosition
+      )
+
+      setCommand(newCommand)
+      setSelectedSuggestionId(0)
+    }
+  }
+
   const handleKeyUp = ({ target: { selectionEnd }, key }) => {
     const temporalCommand = command.slice(0, selectionEnd)
     const isLastLetterSpecial = [' ', '|'].includes(temporalCommand.at(-1))
 
     if (key === 'Enter') {
-      if (selectedSuggestionId === 0) {
-        handleOnEnter(command)
-        setCommands([
-          ...commands,
-          { command, id: commands.length, selected: false }
-        ])
-        setCommand('')
-        setSuggestions([])
-        setSelectedSuggestionId(0)
-      } else {
-        const { value } = suggestions[selectedSuggestionId]
-
-        const newCommand = isLastLetterSpecial
-          ? splice(command, selectionEnd, value)
-          : spliceArg(command, selectionEnd, value)
-
-        setCommand(newCommand)
-        setSelectedSuggestionId(0)
-      }
+      handleSelectSuggestion(selectedSuggestionId)
 
       return
     } else if (key === 'ArrowUp' || key === 'ArrowDown') {
@@ -48,18 +61,40 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     const temporalSpacedCommand = temporalCommand
       .replace(/"/g, ' " ')
       .replace(/'/g, " ' ")
-    const lastWord = temporalCommand.split(' ').at(-1)
+    const lastWord = temporalSpacedCommand.split(' ').at(-1)
 
-    const filteredSuggestions = commander
+    const newSuggestions = commander
       .getSuggestions(temporalSpacedCommand)
-      .filter((suggestion) => suggestion.value.includes(lastWord))
+      .filter(
+        (suggestion) =>
+          suggestion.value.includes(lastWord) ||
+          suggestion.alias?.includes(lastWord)
+      )
 
-    const newSuggestions = [defaultSuggestion, ...filteredSuggestions]
+    const { index: indexMatch } = newSuggestions.reduce(
+      (lastMatch, suggestion, index) => {
+        const [matchWord] =
+          suggestion.value.match(lastWord) ||
+          suggestion.alias?.match(lastWord) ||
+          []
+        const matches = matchWord?.length
+
+        const isValueMatch =
+          suggestion.value.startsWith(lastWord) ||
+          suggestion.alias?.startsWith(lastWord)
+        const isValidMatch = isValueMatch && lastMatch.matches < matches
+
+        return isValidMatch ? { index, matches } : lastMatch
+      },
+      { index: -1, matches: 0 }
+    )
 
     setSuggestions(
-      temporalCommand && !isLastLetterSpecial ? newSuggestions : []
+      temporalCommand && !isLastLetterSpecial
+        ? [defaultSuggestion, ...newSuggestions]
+        : []
     )
-    setSelectedSuggestionId(0)
+    setSelectedSuggestionId(indexMatch === -1 ? 0 : indexMatch + 1)
   }
 
   const handleKeyPressed = (event) => {
@@ -154,7 +189,8 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     <InputWrapper>
       <Suggestions
         suggestions={suggestions}
-        selectedSuggestionId={selectedSuggestionId}
+        selectedId={selectedSuggestionId}
+        onSuggestionClick={handleSelectSuggestion}
       />
 
       <div>

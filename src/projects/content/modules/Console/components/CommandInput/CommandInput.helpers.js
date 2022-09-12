@@ -1,26 +1,31 @@
-export const splice = (myString, index, value) => {
-  return myString.slice(0, index) + value + myString.slice(index)
-}
-
-export const spliceArg = (myString, index, value) => {
+export const spliceArg = (myString, index, value, callback) => {
   let words = myString.split(' ')
   let letterCounter = 0
 
   if (myString.length === index) {
-    words[words.length - 1] = value
+    const newWord = words.at(-1).replace(/[^"']+/g, value)
+
+    words[words.length - 1] = newWord
 
     return words.join(' ')
   }
 
   for (const wordIndex in words) {
     const word = words[wordIndex]
-    letterCounter += word.length + 1
+    const currentWordLength = word.length + 1
+    letterCounter += currentWordLength
 
     if (letterCounter >= index) {
-      words[wordIndex] = value
+      const newWord = words.at(wordIndex).replace(/[^"']+/g, value)
+
+      words[wordIndex] = newWord
+
+      letterCounter += newWord.length - currentWordLength
       break
     }
   }
+
+  if (callback) callback(letterCounter)
 
   return words.join(' ')
 }

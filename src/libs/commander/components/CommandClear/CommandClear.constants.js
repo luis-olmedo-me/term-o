@@ -10,7 +10,7 @@ export const clearConfig = {
       description: 'Reset any configuration made to TERM-O console',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
-      aliases: ['c']
+      alias: 'c'
     }
   },
   output: (props) => <CommandClear key={props.id} {...props} />

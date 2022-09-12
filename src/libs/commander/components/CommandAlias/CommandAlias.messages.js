@@ -7,7 +7,7 @@ export const aliasMessages = {
     message: 'There are no aliases registered.',
     type: parameterTypes.INFO
   },
-  invalidAliases: {
+  invalidalias: {
     message: 'Invalid alias(es).',
     type: parameterTypes.ERROR
   },

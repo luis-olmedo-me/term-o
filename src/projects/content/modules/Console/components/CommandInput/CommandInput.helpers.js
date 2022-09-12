@@ -17,7 +17,7 @@ export const spliceArg = (myString, index, value) => {
     letterCounter += word.length + 1
 
     if (letterCounter >= index) {
-      words[wordIndex] = value
+      words[wordIndex] = words[wordIndex].replace(/[^"']+/g, value)
       break
     }
   }

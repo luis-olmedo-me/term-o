@@ -34,9 +34,9 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     } else {
       const { value, alias } = suggestions[selectedId]
 
-      const temporalCommand = command.slice(0, caretPosition)
+      const temporalCommand = command.slice(0, caretPosition).trim()
       const lastWord = temporalCommand.split(' ').at(-1)
-      const isExpectingAlias = !lastWord.startsWith('--')
+      const isExpectingAlias = /^-[^-]/.test(lastWord) || lastWord === '-'
 
       const newCommand = spliceArg(
         command,

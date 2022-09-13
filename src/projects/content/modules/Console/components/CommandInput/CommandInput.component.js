@@ -36,12 +36,14 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
 
       const temporalCommand = command.slice(0, caretPosition).trim()
       const lastWord = temporalCommand.split(' ').at(-1)
+
       const isExpectingAlias = /^-[^-]/.test(lastWord) || lastWord === '-'
+      const hasValidAlias = alias !== '-'
 
       const newCommand = spliceArg(
         command,
         caretPosition,
-        isExpectingAlias ? alias : value,
+        isExpectingAlias && hasValidAlias ? alias : value,
         handleNewCaretPosition
       )
 

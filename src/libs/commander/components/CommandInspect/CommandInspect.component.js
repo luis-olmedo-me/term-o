@@ -17,7 +17,7 @@ import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 
 const CommandInspectWithoutContext = ({
   props,
-  terminal: { command, setMessageData, params },
+  terminal: { command, setMessageData, params, finish },
   setHighlitedElement
 }) => {
   const actionType = getActionType(props)
@@ -40,8 +40,10 @@ const CommandInspectWithoutContext = ({
       setOpenNodes(newOpenNodes)
       setHTMLRoot(foundHTMLRoot)
       defaultRoot.current = foundHTMLRoot
+
+      finish()
     },
-    [handleInspect, setMessageData, params]
+    [handleInspect, setMessageData, params, finish]
   )
 
   useEffect(
@@ -53,10 +55,11 @@ const CommandInspectWithoutContext = ({
 
         default:
           setMessageData(inspectMessages.unexpectedError)
+          finish()
           break
       }
     },
-    [actionType, handleInspect, setMessageData]
+    [actionType, handleInspect, setMessageData, finish]
   )
 
   const handleRootChange = (newRoot) => {

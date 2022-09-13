@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const CollapseButton = styled.button`
   margin: 0 0 3px 5px;
-  font-family: Coda;
+  font-family: Share Tech Mono;
   border: none;
   background: #00000020;
   color: ${(props) => (props.disabled ? '#ffffff60' : '#ffffff')};

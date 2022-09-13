@@ -32,12 +32,16 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
       setSuggestions([])
       setSelectedSuggestionId(0)
     } else {
-      const { value } = suggestions[selectedId]
+      const { value, alias } = suggestions[selectedId]
+
+      const temporalCommand = command.slice(0, caretPosition)
+      const lastWord = temporalCommand.split(' ').at(-1)
+      const isExpectingAlias = !lastWord.startsWith('--')
 
       const newCommand = spliceArg(
         command,
         caretPosition,
-        value,
+        isExpectingAlias ? alias : value,
         handleNewCaretPosition
       )
 

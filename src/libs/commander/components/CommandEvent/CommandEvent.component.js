@@ -21,7 +21,7 @@ import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 
 export const CommandEvent = ({
   props,
-  terminal: { command, setMessageData, params }
+  terminal: { command, setMessageData, params, finish }
 }) => {
   const {
     delete: deletedIds,
@@ -68,8 +68,9 @@ export const CommandEvent = ({
       deletePageEvents(idsToDelete)
         .catch(() => setMessageData(eventMessages.unexpectedError))
         .then(() => setMessageData(eventMessages.eventDeleteSuccess))
+        .then(() => finish())
     },
-    [deletedIds, setMessageData]
+    [deletedIds, setMessageData, finish]
   )
 
   const handleTriggerEvent = useCallback(() => {
@@ -112,13 +113,14 @@ export const CommandEvent = ({
 
         case eventActionTypes.TRIGGER:
           handleTriggerEvent()
+          finish()
           break
 
         default:
           break
       }
     },
-    [actionType, handleDeleteEvent, handleShowList, handleTriggerEvent]
+    [actionType, handleDeleteEvent, handleShowList, handleTriggerEvent, finish]
   )
 
   const hasPages = pages.length > 0

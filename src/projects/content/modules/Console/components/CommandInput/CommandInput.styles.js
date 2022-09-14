@@ -8,7 +8,7 @@ export const Input = styled.input`
   border: none;
   vertical-align: middle;
   background-color: transparent;
-  font-family: 'Coda';
+  font-family: 'Share Tech Mono', monospace;
   font-size: 16px;
 
   &:active,

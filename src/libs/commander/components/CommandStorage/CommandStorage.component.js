@@ -16,7 +16,7 @@ import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 
 export const CommandStorage = ({
   props,
-  terminal: { command, setMessageData }
+  terminal: { command, setMessageData, finish }
 }) => {
   const actionType = getActionType(props)
 
@@ -38,8 +38,9 @@ export const CommandStorage = ({
       if (isEmptyStorage) return setMessageData(storageMessages.emptyStorage)
 
       setTableItems(localStorageAsTableItems)
+      finish()
     },
-    [setMessageData]
+    [setMessageData, finish]
   )
 
   useEffect(

@@ -27,7 +27,7 @@ export const SelectDefaultOptionsWrapper = styled.div`
   max-height: 150px;
   border-radius: 3px;
   transform: translate(-50%, -50%);
-  font-family: Coda;
+  font-family: Share Tech Mono;
   box-shadow: 0 0 15px 5px #0000002a;
   padding: 10px 0;
   overflow-y: scroll;

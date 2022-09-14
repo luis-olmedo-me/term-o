@@ -89,7 +89,7 @@ export const GroupButton = styled.button`
   cursor: pointer;
   background-color: transparent;
   transition: background-color 0.2s ease-in-out;
-  font-family: Coda;
+  font-family: Share Tech Mono;
   color: #fff;
   border-width: 0 0 0 1px;
 

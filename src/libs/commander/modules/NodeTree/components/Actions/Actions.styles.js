@@ -18,7 +18,7 @@ export const ActionButton = styled.button`
   border: none;
   color: black;
   font-weight: bold;
-  font-family: Coda;
+  font-family: Share Tech Mono;
   padding: 0 10px;
   cursor: pointer;
   min-width: 2em;

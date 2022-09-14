@@ -4,7 +4,7 @@ export const ConsoleWrapper = styled.div`
   all: initial;
   position: fixed;
   z-index: 1000000;
-  font-family: 'Coda', monospace;
+  font-family: 'Share Tech Mono', monospace;
 
   opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
   transform: scale(${({ isOpen }) => (isOpen ? '1' : '0')});

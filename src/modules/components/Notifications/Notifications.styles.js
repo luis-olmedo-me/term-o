@@ -7,7 +7,7 @@ export const NotificationsWrapper = styled.div`
   left: 10px;
   top: 10px;
   width: 400px;
-  font-family: Coda;
+  font-family: Share Tech Mono;
   font-size: 1em;
 `
 

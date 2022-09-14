@@ -13,7 +13,7 @@ import { commanderMessages } from '../../commander.messages'
 
 export const CommandTabs = ({
   props,
-  terminal: { command, setMessageData }
+  terminal: { command, setMessageData, finish }
 }) => {
   const [tabs, setTabs] = useState([])
 
@@ -24,9 +24,13 @@ export const CommandTabs = ({
     maxItems: 10
   })
 
-  const handleShowTabList = useCallback((tabsInfo) => {
-    setTabs(tabsInfo)
-  }, [])
+  const handleShowTabList = useCallback(
+    (tabsInfo) => {
+      setTabs(tabsInfo)
+      finish()
+    },
+    [finish]
+  )
 
   useEffect(
     function handleActionType() {
@@ -39,10 +43,11 @@ export const CommandTabs = ({
 
         default:
           setMessageData(commanderMessages.unexpectedError)
+          finish()
           break
       }
     },
-    [actionType, handleShowTabList, setMessageData]
+    [actionType, handleShowTabList, setMessageData, finish]
   )
 
   const hasPages = pages.length > 0

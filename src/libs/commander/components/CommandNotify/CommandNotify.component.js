@@ -7,7 +7,7 @@ import { notifyActionTypes } from './CommandNotify.constants'
 
 export const CommandNotify = ({
   props,
-  terminal: { command, addNotification, setMessageData }
+  terminal: { command, addNotification, setMessageData, finish }
 }) => {
   const { message, image } = props
 
@@ -19,7 +19,8 @@ export const CommandNotify = ({
     addNotification(initialId, message, image)
 
     setMessageData(notifyMessages.notificationSuccess)
-  }, [handleNotify, message, image, setMessageData])
+    finish()
+  }, [handleNotify, message, image, setMessageData, finish])
 
   useEffect(
     function handleActionType() {
@@ -30,10 +31,11 @@ export const CommandNotify = ({
 
         default:
           setMessageData(notifyMessages.unexpectedError)
+          finish()
           break
       }
     },
-    [actionType, handleNotify, setMessageData]
+    [actionType, handleNotify, setMessageData, finish]
   )
 
   return <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>

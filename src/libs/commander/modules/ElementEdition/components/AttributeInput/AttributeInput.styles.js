@@ -5,7 +5,7 @@ export const Input = styled.input`
   width: -webkit-fill-available;
   border: none;
   border-radius: 3px;
-  font-family: Coda;
+  font-family: Share Tech Mono;
   font-size: 1em;
   background: #00000050;
   color: #fafafa;

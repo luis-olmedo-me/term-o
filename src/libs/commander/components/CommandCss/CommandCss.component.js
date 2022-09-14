@@ -19,7 +19,7 @@ import { cssActionTypes } from './CommandCss.constants'
 
 export const CommandCss = ({
   props,
-  terminal: { command, params, setMessageData }
+  terminal: { command, params, setMessageData, finish }
 }) => {
   const { styles, manualStyles } = props
 
@@ -77,21 +77,25 @@ export const CommandCss = ({
       : []
 
     setStylesApplied([...directStylesWithSchema, ...newStylesApplied])
-  }, [])
+  }, [setMessageData])
 
   useEffect(
     function handleActionType() {
       switch (actionType) {
         case cssActionTypes.SET_STYLES:
           handleApplyStyles()
+          finish()
           break
 
         case cssActionTypes.GET_STYLES:
           handleGetStyles()
+          finish()
           break
 
         case cssActionTypes.NONE:
-          return setMessageData(cssMessages.unexpectedError)
+          setMessageData(cssMessages.unexpectedError)
+          finish()
+          break
       }
     },
     [actionType, handleApplyStyles, handleGetStyles]

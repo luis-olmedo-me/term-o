@@ -8,7 +8,7 @@ import { getActionType } from './CommandHistory.helpers'
 
 export const CommandHistory = ({
   props,
-  terminal: { command, setMessageData }
+  terminal: { command, setMessageData, finish }
 }) => {
   const { goto, protocol } = props
 
@@ -26,7 +26,8 @@ export const CommandHistory = ({
     setMessageData(historyMessages.redirectionSuccess, {
       urlCount: goto.length
     })
-  }, [goto, setMessageData, protocol])
+    finish()
+  }, [goto, setMessageData, protocol, finish])
 
   useEffect(
     function handleActionType() {

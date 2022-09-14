@@ -16,7 +16,7 @@ import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 
 export const CommandAlias = ({
   props,
-  terminal: { setMessageData, command }
+  terminal: { setMessageData, command, finish }
 }) => {
   const { delete: deletedIds, add: aliasesToAdd } = props
 
@@ -38,6 +38,7 @@ export const CommandAlias = ({
       })
 
       setTableItems(aliasRows)
+      finish()
     },
     [setMessageData]
   )
@@ -53,6 +54,7 @@ export const CommandAlias = ({
     addAliases(validAliases)
       .catch(() => setMessageData(aliasMessages.unexpectedError))
       .then(() => setMessageData(aliasMessages.aliasAdditionSuccess))
+      .then(() => finish())
   }, [aliasesToAdd, setMessageData])
 
   const handleDeleteAliases = useCallback(
@@ -66,6 +68,7 @@ export const CommandAlias = ({
       deleteAliases(validIds)
         .catch(() => setMessageData(aliasMessages.unexpectedError))
         .then(() => setMessageData(aliasMessages.aliasDeletionSuccess))
+        .then(() => finish())
     },
     [deletedIds]
   )

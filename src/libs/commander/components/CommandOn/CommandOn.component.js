@@ -35,7 +35,8 @@ export const CommandOn = ({ props, terminal: { command, setMessageData } }) => {
     addPageEvents(commandsToRun)
       .catch(() => setMessageData(onMessages.unexpectedError))
       .then(() => setMessageData(onMessages.eventSaveSuccess))
-  }, [url, run, setMessageData])
+      .then(() => finish())
+  }, [url, run, setMessageData, finish])
 
   useEffect(
     function handleActionType() {
@@ -46,10 +47,11 @@ export const CommandOn = ({ props, terminal: { command, setMessageData } }) => {
 
         case onActionTypes.NONE:
           setMessageData(onMessages.unexpectedError)
+          finish()
           break
       }
     },
-    [actionType, handleAddEvent, setMessageData]
+    [actionType, handleAddEvent, setMessageData, finish]
   )
 
   return <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>

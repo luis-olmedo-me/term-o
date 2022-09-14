@@ -9,21 +9,33 @@ import { LogWrapper } from '../LogWrapper/LogWrapper.component'
 import { consoleCommands } from '../../commander.constants'
 import { List } from 'modules/components/Table/List/List.component'
 import { Title } from './CommandHelp.styles'
+import { removeDuplicatedFromArray } from 'src/helpers/utils.helpers.js'
 
-export const CommandHelp = ({ props, terminal: { command } }) => {
+export const CommandHelp = ({ props, terminal: { command, finish } }) => {
   const actionType = getActionType(props)
   const { about } = props
   const [localMessages, setLocalMessages] = useState([])
 
-  const handleHelp = useCallback((commands) => {
-    const commandsNoRepeated = Array.from(new Set(commands))
+  const handleHelp = useCallback(
+    (commands) => {
+      const commandsNoRepeated = removeDuplicatedFromArray(commands)
 
-    const messagesForHelp = getMessagesFromCommandsToCheck({
-      commands: commandsNoRepeated
-    })
+      const messagesForHelp = getMessagesFromCommandsToCheck({
+        commands: commandsNoRepeated
+      })
 
-    setLocalMessages(messagesForHelp)
-  }, [])
+      setLocalMessages(messagesForHelp)
+      finish()
+    },
+    [finish]
+  )
+
+  const handleAllHelp = useCallback(() => {
+    const allCommandNames = Object.keys(consoleCommands)
+
+    handleHelp(allCommandNames)
+    finish()
+  }, [handleHelp, finish])
 
   useEffect(
     function handleActionType() {
@@ -33,8 +45,7 @@ export const CommandHelp = ({ props, terminal: { command } }) => {
           break
 
         case helpActionTypes.NONE: {
-          const allCommandNames = Object.keys(consoleCommands)
-          handleHelp(allCommandNames)
+          handleAllHelp()
           break
         }
       }

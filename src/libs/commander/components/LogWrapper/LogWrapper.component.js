@@ -32,19 +32,21 @@ export const LogWrapper = ({ children, variant, buttonGroups }) => {
       onMouseDown={(event) => event.stopPropagation()}
     >
       {!hideLoader && (
-        <div>
+        <LogContent>
           <AnimatedLoader />
           <LoaderText>Loading</LoaderText>
-        </div>
+        </LogContent>
       )}
 
-      <LogContent>
-        {icon && <Hash>{icon}</Hash>}
+      {hideLoader && (
+        <LogContent>
+          {icon && <Hash>{icon}</Hash>}
 
-        {children}
-      </LogContent>
+          {children}
+        </LogContent>
+      )}
 
-      {hasButtonGroups && (
+      {hasButtonGroups && hideLoader && (
         <GroupButtons>
           {buttonGroups.map(({ id, text, onClick, disabled, selected }) => {
             return (

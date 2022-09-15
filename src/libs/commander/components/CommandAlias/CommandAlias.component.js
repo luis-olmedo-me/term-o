@@ -40,7 +40,7 @@ export const CommandAlias = ({
       setTableItems(aliasRows)
       finish()
     },
-    [setMessageData]
+    [setMessageData, finish]
   )
 
   const handleAddAliases = useCallback(() => {
@@ -55,7 +55,7 @@ export const CommandAlias = ({
       .catch(() => setMessageData(aliasMessages.unexpectedError))
       .then(() => setMessageData(aliasMessages.aliasAdditionSuccess))
       .then(() => finish())
-  }, [aliasesToAdd, setMessageData])
+  }, [aliasesToAdd, setMessageData, finish])
 
   const handleDeleteAliases = useCallback(
     ({ aliases = [] }) => {
@@ -70,7 +70,7 @@ export const CommandAlias = ({
         .then(() => setMessageData(aliasMessages.aliasDeletionSuccess))
         .then(() => finish())
     },
-    [deletedIds]
+    [deletedIds, finish]
   )
 
   useEffect(
@@ -88,11 +88,13 @@ export const CommandAlias = ({
           handleAddAliases()
           break
 
-        default:
+        case actionTypes.NONE:
+          setMessageData(aliasMessages.unexpectedError)
+          finish()
           break
       }
     },
-    [actionType, handleAddAliases, handleDeleteAliases, handleShowList]
+    [actionType, handleAddAliases, handleDeleteAliases, handleShowList, finish]
   )
 
   const hasPages = pages.length > 0

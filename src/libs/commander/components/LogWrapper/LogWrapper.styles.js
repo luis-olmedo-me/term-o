@@ -58,12 +58,7 @@ export const Log = styled.div`
   }
 
   &&.help {
-    background: linear-gradient(
-      112deg,
-      #06b7db -63.59%,
-      #ff4ecd -20.3%,
-      #0072f5 70.46%
-    );
+    background-color: #a66908;
     color: #fff;
   }
 `

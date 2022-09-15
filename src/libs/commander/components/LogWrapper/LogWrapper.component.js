@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
 import {
   GroupButtons,
@@ -18,13 +18,23 @@ const preIconsByVariants = {
 }
 
 export const LogWrapper = ({ children, variant, buttonGroups }) => {
-  const icon = preIconsByVariants[variant]
-  const hasButtonGroups = Boolean(buttonGroups?.length)
+  const isCommand = variant === parameterTypes.COMMAND
 
-  const hideLoader =
-    Boolean(children) ||
-    children?.some?.(Boolean) ||
-    variant === parameterTypes.COMMAND
+  const [isFakeLoading, setIsFakeLoading] = useState(!isCommand)
+
+  const icon = preIconsByVariants[variant]
+
+  useEffect(() => {
+    if (isCommand) return
+
+    const timeoutId = setTimeout(() => setIsFakeLoading(false), 500)
+
+    return () => clearTimeout(timeoutId)
+  }, [isCommand])
+
+  const hasContentToShow = Boolean(children) || children?.some?.(Boolean)
+  const hideLoader = !isFakeLoading && hasContentToShow
+  const hasButtonGroups = hideLoader && Boolean(buttonGroups?.length)
 
   return (
     <Log
@@ -46,7 +56,7 @@ export const LogWrapper = ({ children, variant, buttonGroups }) => {
         </LogContent>
       )}
 
-      {hasButtonGroups && hideLoader && (
+      {hasButtonGroups && (
         <GroupButtons>
           {buttonGroups.map(({ id, text, onClick, disabled, selected }) => {
             return (

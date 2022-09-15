@@ -29,7 +29,10 @@ export const LogWrapper = ({ children, variant, buttonGroups }) => {
 
     const timeoutId = setTimeout(() => setIsFakeLoading(false), 500)
 
-    return () => clearTimeout(timeoutId)
+    return () => {
+      setIsFakeLoading(false)
+      clearTimeout(timeoutId)
+    }
   }, [isCommand])
 
   const hasContentToShow = Boolean(children) || children?.some?.(Boolean)

@@ -60,8 +60,8 @@ export const CommandStorage = ({
           finish()
           break
 
-        default:
-          handleShowStorage(window.localStorage)
+        case storageActionTypes.NONE:
+          setMessageData(storageMessages.unexpectedError)
           break
       }
     },
@@ -85,11 +85,6 @@ export const CommandStorage = ({
       case storageActionTypes.SHOW_COOKIES:
         document.cookie = `${key}=${stringifiedNewValue}`
         handleShowStorage(parseCookies(document.cookie))
-        break
-
-      default:
-        window.localStorage.setItem(key, stringifiedNewValue)
-        handleShowStorage(window.localStorage)
         break
     }
   }

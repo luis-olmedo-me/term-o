@@ -38,9 +38,8 @@ export const CommandStorage = ({
       if (isEmptyStorage) return setMessageData(storageMessages.emptyStorage)
 
       setTableItems(localStorageAsTableItems)
-      finish()
     },
-    [setMessageData, finish]
+    [setMessageData]
   )
 
   useEffect(
@@ -48,14 +47,17 @@ export const CommandStorage = ({
       switch (actionType) {
         case storageActionTypes.SHOW_LOCAL_STORAGE:
           handleShowStorage(window.localStorage)
+          finish()
           break
 
         case storageActionTypes.SHOW_SESSION_STORAGE:
           handleShowStorage(window.sessionStorage)
+          finish()
           break
 
         case storageActionTypes.SHOW_COOKIES:
           handleShowStorage(parseCookies(document.cookie))
+          finish()
           break
 
         default:
@@ -63,7 +65,7 @@ export const CommandStorage = ({
           break
       }
     },
-    [actionType, handleShowStorage]
+    [actionType, handleShowStorage, finish]
   )
 
   const handleTreeChange = ({ key, newValue }) => {

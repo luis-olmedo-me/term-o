@@ -125,7 +125,7 @@ const NodesWithoutContext = ({
       const isHidden = isElementHidden(node)
 
       return (
-        <GapNodesWrapper ref={nodeWrapperRef}>
+        <GapNodesWrapper ref={nodeWrapperRef} isRoot={isNodeRoot}>
           <ElementLabel
             element={node}
             Wrapper={TagWrapper}

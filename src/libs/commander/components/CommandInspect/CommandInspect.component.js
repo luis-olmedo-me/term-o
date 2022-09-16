@@ -29,17 +29,17 @@ const CommandInspectWithoutContext = ({
   const defaultRoot = useRef(null)
 
   const handleInspect = useCallback(
-    ({ elementsFound: [foundHTMLRoot] }) => {
+    ({ elementsFound: [defaultHTMLRoot] }) => {
       const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
       const newObjetives = paramElements.length
         ? paramElements
-        : [document.body]
+        : [defaultHTMLRoot]
       const newOpenNodes = getOpenNodesFromObjetives(newObjetives)
 
       setObjetives(newObjetives)
       setOpenNodes(newOpenNodes)
-      setHTMLRoot(foundHTMLRoot)
-      defaultRoot.current = foundHTMLRoot
+      setHTMLRoot(defaultHTMLRoot)
+      defaultRoot.current = defaultHTMLRoot
 
       finish()
     },

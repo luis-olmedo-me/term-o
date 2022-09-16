@@ -43,7 +43,7 @@ const CommandInspectWithoutContext = ({
 
       finish()
     },
-    [handleInspect, setMessageData, params, finish]
+    [handleInspect, setMessageData, finish]
   )
 
   useEffect(

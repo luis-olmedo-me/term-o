@@ -16,6 +16,7 @@ export const Outputs = ({ components, id, outsideProps }) => {
   const [messageData, setMessageData] = useState({ message: '', type: '' })
 
   const fakeDelayTimeoutId = useRef(null)
+  const wrapperRef = useRef(null)
 
   useEffect(() => {
     return () => clearTimeout(fakeDelayTimeoutId.current)
@@ -40,6 +41,11 @@ export const Outputs = ({ components, id, outsideProps }) => {
 
         return oldData
       })
+
+      const children = [...wrapperRef.current.children]
+      const lastChild = children.at(-1)
+
+      lastChild.scrollIntoView()
     }
 
     fakeDelayTimeoutId.current = setTimeout(showNext, 500)
@@ -57,7 +63,7 @@ export const Outputs = ({ components, id, outsideProps }) => {
   }, [])
 
   return (
-    <OutputWrapper>
+    <OutputWrapper ref={wrapperRef}>
       {componentsShown.map(({ Component }, indexId) => {
         const isLastComponent = indexId === componentsShown.length - 1
 

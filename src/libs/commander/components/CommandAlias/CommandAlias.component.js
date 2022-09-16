@@ -31,7 +31,11 @@ export const CommandAlias = ({
 
   const handleShowList = useCallback(
     ({ aliases = [] }) => {
-      if (!aliases.length) return setMessageData(aliasMessages.noAliasesFound)
+      if (!aliases.length) {
+        setMessageData(aliasMessages.noAliasesFound)
+        finish()
+        return
+      }
 
       const aliasRows = aliases.map((alias) => {
         return aliasHeaders.map((aliasHeader) => alias[aliasHeader])
@@ -90,11 +94,10 @@ export const CommandAlias = ({
 
         case actionTypes.NONE:
           setMessageData(aliasMessages.unexpectedError)
-          finish()
           break
       }
     },
-    [actionType, handleAddAliases, handleDeleteAliases, handleShowList, finish]
+    [actionType, handleAddAliases, handleDeleteAliases, handleShowList]
   )
 
   const hasPages = pages.length > 0

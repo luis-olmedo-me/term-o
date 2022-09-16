@@ -43,11 +43,10 @@ export const CommandTabs = ({
 
         default:
           setMessageData(commanderMessages.unexpectedError)
-          finish()
           break
       }
     },
-    [actionType, handleShowTabList, setMessageData, finish]
+    [actionType, handleShowTabList, setMessageData]
   )
 
   const hasPages = pages.length > 0

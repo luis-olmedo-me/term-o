@@ -40,15 +40,20 @@ export const CommandEvent = ({
 
   const handleShowList = useCallback(
     ({ pageEvents = [] }) => {
-      if (!pageEvents.length) return setMessageData(eventMessages.noEventsFound)
+      if (!pageEvents.length) {
+        setMessageData(eventMessages.noEventsFound)
+        finish()
+        return
+      }
 
       const pageEventsRows = pageEvents.map((pageEvent) => {
         return eventRows.map((eventRow) => pageEvent[eventRow])
       })
 
       setTableItems(pageEventsRows)
+      finish()
     },
-    [setMessageData]
+    [setMessageData, finish]
   )
 
   const handleDeleteEvent = useCallback(
@@ -83,9 +88,8 @@ export const CommandEvent = ({
     if (eventToTrigger === supportedEvents.CLICK) {
       paramElements.forEach((element) => element.click())
 
-      return setMessageData(eventMessages.elementsClickedSuccess)
-    }
-    if (eventToTrigger === supportedEvents.CHANGE) {
+      setMessageData(eventMessages.elementsClickedSuccess)
+    } else if (eventToTrigger === supportedEvents.CHANGE) {
       const hasAllInputs = paramElements.every(
         (element) => element.tagName === 'INPUT'
       )
@@ -96,9 +100,11 @@ export const CommandEvent = ({
         element.value = valueToInsert
       })
 
-      return setMessageData(eventMessages.elementsChangedSuccess)
+      setMessageData(eventMessages.elementsChangedSuccess)
     }
-  }, [eventToTrigger, valueToInsert])
+
+    finish()
+  }, [eventToTrigger, valueToInsert, finish])
 
   useEffect(
     function handleActionType() {
@@ -113,14 +119,13 @@ export const CommandEvent = ({
 
         case eventActionTypes.TRIGGER:
           handleTriggerEvent()
-          finish()
           break
 
         default:
           break
       }
     },
-    [actionType, handleDeleteEvent, handleShowList, handleTriggerEvent, finish]
+    [actionType, handleDeleteEvent, handleShowList, handleTriggerEvent]
   )
 
   const hasPages = pages.length > 0

@@ -31,11 +31,10 @@ export const CommandNotify = ({
 
         default:
           setMessageData(notifyMessages.unexpectedError)
-          finish()
           break
       }
     },
-    [actionType, handleNotify, setMessageData, finish]
+    [actionType, handleNotify, setMessageData]
   )
 
   return <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>

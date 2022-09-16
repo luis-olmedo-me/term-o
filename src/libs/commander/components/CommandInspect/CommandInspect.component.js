@@ -55,11 +55,10 @@ const CommandInspectWithoutContext = ({
 
         default:
           setMessageData(inspectMessages.unexpectedError)
-          finish()
           break
       }
     },
-    [actionType, handleInspect, setMessageData, finish]
+    [actionType, handleInspect, setMessageData]
   )
 
   const handleRootChange = (newRoot) => {

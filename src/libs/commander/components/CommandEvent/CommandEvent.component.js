@@ -40,11 +40,7 @@ export const CommandEvent = ({
 
   const handleShowList = useCallback(
     ({ pageEvents = [] }) => {
-      if (!pageEvents.length) {
-        setMessageData(eventMessages.noEventsFound)
-        finish()
-        return
-      }
+      if (!pageEvents.length) return setMessageData(eventMessages.noEventsFound)
 
       const pageEventsRows = pageEvents.map((pageEvent) => {
         return eventRows.map((eventRow) => pageEvent[eventRow])
@@ -53,7 +49,7 @@ export const CommandEvent = ({
       setTableItems(pageEventsRows)
       finish()
     },
-    [setMessageData, finish]
+    [setMessageData]
   )
 
   const handleDeleteEvent = useCallback(

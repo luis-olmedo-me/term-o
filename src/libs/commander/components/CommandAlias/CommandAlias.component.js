@@ -31,11 +31,7 @@ export const CommandAlias = ({
 
   const handleShowList = useCallback(
     ({ aliases = [] }) => {
-      if (!aliases.length) {
-        setMessageData(aliasMessages.noAliasesFound)
-        finish()
-        return
-      }
+      if (!aliases.length) return setMessageData(aliasMessages.noAliasesFound)
 
       const aliasRows = aliases.map((alias) => {
         return aliasHeaders.map((aliasHeader) => alias[aliasHeader])

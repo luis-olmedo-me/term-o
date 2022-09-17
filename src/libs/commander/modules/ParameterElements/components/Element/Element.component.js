@@ -94,6 +94,12 @@ const ElementWithoutContext = ({
       id: 'group',
       items: [
         {
+          id: 'scroll-into-view-option',
+          title: 'Scroll Into View',
+          onClick: handleScrollIntoView,
+          Component: '👁'
+        },
+        {
           id: 'copy-xpath-option',
           title: 'Copy XPath',
           onClick: handleCopyXPath,

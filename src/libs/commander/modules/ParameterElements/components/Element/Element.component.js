@@ -82,16 +82,16 @@ const ElementWithoutContext = ({
           Component: '👁'
         },
         {
-          id: 'copy-xpath-option',
-          title: 'Copy XPath',
-          onClick: handleCopyXPath,
-          Component: '❏'
-        },
-        {
           id: isElementPinned ? 'unpin-element-option' : 'pin-element-option',
           title: isElementPinned ? 'Unpin Element' : 'Pin Element',
           onClick: isElementPinned ? handleUnpinElement : handlePinElement,
           Component: isElementPinned ? '⚑' : '⚐'
+        },
+        {
+          id: 'copy-xpath-option',
+          title: 'Copy XPath',
+          onClick: handleCopyXPath,
+          Component: '❏'
         }
       ]
     }

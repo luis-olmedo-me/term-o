@@ -23,8 +23,10 @@ const ElementWithoutContext = ({
   const [wrapperPaddingRight, setWrapperPaddingRight] = useState(10)
 
   useEffect(function checkWrapperPadding() {
+    const reference = actionsRef.current
+
     const updateData = () => {
-      const { offsetWidth } = actionsRef.current
+      const { offsetWidth } = reference
       const paddingRight = offsetWidth + 10
 
       setWrapperPaddingRight(paddingRight)
@@ -32,9 +34,9 @@ const ElementWithoutContext = ({
 
     const obsever = new ResizeObserver(updateData)
 
-    obsever.observe(actionsRef.current)
+    obsever.observe(reference)
 
-    return () => obsever.unobserve(actionsRef.current)
+    return () => obsever.unobserve(reference)
   }, [])
 
   const isHidden = isElementHidden(element, { height, width })

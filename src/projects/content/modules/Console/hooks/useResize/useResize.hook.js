@@ -69,41 +69,48 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
       const emptySpace = bodyData.width - (bodyData.width * 30) / 100
       const widthTaken = bodyData.width - emptySpace
 
+      let newResizeData = null
+
       switch (side) {
         case 'right':
-          setResizeData({
+          newResizeData = {
             left: widthTaken < 400 ? 400 : emptySpace,
             top: 10,
             right: 10,
             bottom: 10
-          })
+          }
           break
 
         case 'left':
-          setResizeData({
+          newResizeData = {
             left: 10,
             top: 10,
             right: widthTaken < 400 ? 400 : emptySpace,
             bottom: 10
-          })
+          }
           break
 
         case 'full':
-          setResizeData({
+          newResizeData = {
             left: 10,
             top: 10,
             right: 10,
             bottom: 10
-          })
+          }
           break
       }
+
+      if (!newResizeData) return
+
+      setResizeData(newResizeData)
+      updateConfig(newResizeData, onError)
     }
 
     window.addEventListener(eventTypes.TERM_O_RESIZE, resizeCommandHandler)
 
     return () =>
       window.removeEventListener(eventTypes.TERM_O_RESIZE, resizeCommandHandler)
-  }, [bodyData])
+  }, [bodyData, onError])
 
   useEffect(
     function getConfigurationFromBackground() {

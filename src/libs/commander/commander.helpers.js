@@ -255,7 +255,7 @@ export const buildProps = (propValues, propsConfig = {}) => {
   return Object.entries(propsConfig).reduce(
     (allProps, [propName, { key, type, defaultValue, alias, groupProps }]) => {
       const aliasName = Object.keys(propValues).find((name) => {
-        return alias.includes(name)
+        return alias === name
       })
 
       const groupValue = groupProps

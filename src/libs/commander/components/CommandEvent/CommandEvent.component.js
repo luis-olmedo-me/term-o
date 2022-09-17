@@ -47,6 +47,7 @@ export const CommandEvent = ({
       })
 
       setTableItems(pageEventsRows)
+      finish()
     },
     [setMessageData]
   )
@@ -83,9 +84,8 @@ export const CommandEvent = ({
     if (eventToTrigger === supportedEvents.CLICK) {
       paramElements.forEach((element) => element.click())
 
-      return setMessageData(eventMessages.elementsClickedSuccess)
-    }
-    if (eventToTrigger === supportedEvents.CHANGE) {
+      setMessageData(eventMessages.elementsClickedSuccess)
+    } else if (eventToTrigger === supportedEvents.CHANGE) {
       const hasAllInputs = paramElements.every(
         (element) => element.tagName === 'INPUT'
       )
@@ -96,9 +96,11 @@ export const CommandEvent = ({
         element.value = valueToInsert
       })
 
-      return setMessageData(eventMessages.elementsChangedSuccess)
+      setMessageData(eventMessages.elementsChangedSuccess)
     }
-  }, [eventToTrigger, valueToInsert])
+
+    finish()
+  }, [eventToTrigger, valueToInsert, finish])
 
   useEffect(
     function handleActionType() {
@@ -113,38 +115,33 @@ export const CommandEvent = ({
 
         case eventActionTypes.TRIGGER:
           handleTriggerEvent()
-          finish()
           break
 
         default:
           break
       }
     },
-    [actionType, handleDeleteEvent, handleShowList, handleTriggerEvent, finish]
+    [actionType, handleDeleteEvent, handleShowList, handleTriggerEvent]
   )
-
-  const hasPages = pages.length > 0
 
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
       <LogWrapper variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
-        {hasPages && (
-          <Carousel itemInView={pageNumber}>
-            {pages.map((page, currentPageNumber) => {
-              return (
-                <CarouselItem key={currentPageNumber}>
-                  <Table
-                    headers={eventRows}
-                    rows={page}
-                    widths={[20, 15, 15, 50]}
-                  />
-                </CarouselItem>
-              )
-            })}
-          </Carousel>
-        )}
+        <Carousel itemInView={pageNumber}>
+          {pages.map((page, currentPageNumber) => {
+            return (
+              <CarouselItem key={currentPageNumber}>
+                <Table
+                  headers={eventRows}
+                  rows={page}
+                  widths={[20, 15, 15, 50]}
+                />
+              </CarouselItem>
+            )
+          })}
+        </Carousel>
       </LogWrapper>
     </>
   )

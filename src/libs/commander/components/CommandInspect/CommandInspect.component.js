@@ -29,21 +29,21 @@ const CommandInspectWithoutContext = ({
   const defaultRoot = useRef(null)
 
   const handleInspect = useCallback(
-    ({ elementsFound: [foundHTMLRoot] }) => {
+    ({ elementsFound: [defaultHTMLRoot] }) => {
       const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
       const newObjetives = paramElements.length
         ? paramElements
-        : [document.body]
+        : [defaultHTMLRoot]
       const newOpenNodes = getOpenNodesFromObjetives(newObjetives)
 
       setObjetives(newObjetives)
       setOpenNodes(newOpenNodes)
-      setHTMLRoot(foundHTMLRoot)
-      defaultRoot.current = foundHTMLRoot
+      setHTMLRoot(defaultHTMLRoot)
+      defaultRoot.current = defaultHTMLRoot
 
       finish()
     },
-    [handleInspect, setMessageData, params, finish]
+    [handleInspect, setMessageData, finish]
   )
 
   useEffect(
@@ -55,11 +55,10 @@ const CommandInspectWithoutContext = ({
 
         default:
           setMessageData(inspectMessages.unexpectedError)
-          finish()
           break
       }
     },
-    [actionType, handleInspect, setMessageData, finish]
+    [actionType, handleInspect, setMessageData]
   )
 
   const handleRootChange = (newRoot) => {

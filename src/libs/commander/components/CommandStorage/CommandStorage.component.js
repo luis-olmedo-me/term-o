@@ -38,9 +38,8 @@ export const CommandStorage = ({
       if (isEmptyStorage) return setMessageData(storageMessages.emptyStorage)
 
       setTableItems(localStorageAsTableItems)
-      finish()
     },
-    [setMessageData, finish]
+    [setMessageData]
   )
 
   useEffect(
@@ -48,22 +47,25 @@ export const CommandStorage = ({
       switch (actionType) {
         case storageActionTypes.SHOW_LOCAL_STORAGE:
           handleShowStorage(window.localStorage)
+          finish()
           break
 
         case storageActionTypes.SHOW_SESSION_STORAGE:
           handleShowStorage(window.sessionStorage)
+          finish()
           break
 
         case storageActionTypes.SHOW_COOKIES:
           handleShowStorage(parseCookies(document.cookie))
+          finish()
           break
 
-        default:
-          handleShowStorage(window.localStorage)
+        case storageActionTypes.NONE:
+          setMessageData(storageMessages.unexpectedError)
           break
       }
     },
-    [actionType, handleShowStorage]
+    [actionType, handleShowStorage, finish]
   )
 
   const handleTreeChange = ({ key, newValue }) => {
@@ -84,40 +86,31 @@ export const CommandStorage = ({
         document.cookie = `${key}=${stringifiedNewValue}`
         handleShowStorage(parseCookies(document.cookie))
         break
-
-      default:
-        window.localStorage.setItem(key, stringifiedNewValue)
-        handleShowStorage(window.localStorage)
-        break
     }
   }
 
   const parseTableValuesForLocalStoageItems =
     getParseTableValuesForLocalStoageItems(handleTreeChange)
 
-  const hasPages = pages.length > 0
-
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
       <LogWrapper variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
-        {hasPages && (
-          <Carousel itemInView={pageNumber}>
-            {pages.map((page, currentPageNumber) => {
-              return (
-                <CarouselItem key={currentPageNumber}>
-                  <Table
-                    headers={storageHeaders}
-                    rows={page}
-                    parseValue={parseTableValuesForLocalStoageItems}
-                    widths={[20, 80]}
-                  />
-                </CarouselItem>
-              )
-            })}
-          </Carousel>
-        )}
+        <Carousel itemInView={pageNumber}>
+          {pages.map((page, currentPageNumber) => {
+            return (
+              <CarouselItem key={currentPageNumber}>
+                <Table
+                  headers={storageHeaders}
+                  rows={page}
+                  parseValue={parseTableValuesForLocalStoageItems}
+                  widths={[20, 80]}
+                />
+              </CarouselItem>
+            )
+          })}
+        </Carousel>
       </LogWrapper>
     </>
   )

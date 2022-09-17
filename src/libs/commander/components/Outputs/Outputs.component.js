@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useRef, useEffect } from 'react'
 import { OutputWrapper } from './Outputs.styles'
 
 const replaceByParams = (message, params) => {
@@ -15,24 +15,40 @@ export const Outputs = ({ components, id, outsideProps }) => {
   const [params, setParams] = useState([])
   const [messageData, setMessageData] = useState({ message: '', type: '' })
 
+  const fakeDelayTimeoutId = useRef(null)
+  const wrapperRef = useRef(null)
+
+  useEffect(() => {
+    return () => clearTimeout(fakeDelayTimeoutId.current)
+  }, [])
+
   const showNextVisibleComponent = useCallback(() => {
-    setData((oldData) => {
-      const nextInvisibleComponentIndex = oldData.findIndex(
-        (component) => !component.isVisible
-      )
+    const showNext = () => {
+      setData((oldData) => {
+        const nextInvisibleComponentIndex = oldData.findIndex(
+          (component) => !component.isVisible
+        )
 
-      if (nextInvisibleComponentIndex !== -1) {
-        const oldDataCopy = [...oldData]
-        const newData = oldDataCopy.map((data, index) => ({
-          ...data,
-          isVisible: data.isVisible || index === nextInvisibleComponentIndex
-        }))
+        if (nextInvisibleComponentIndex !== -1) {
+          const oldDataCopy = [...oldData]
+          const newData = oldDataCopy.map((data, index) => ({
+            ...data,
+            isVisible: data.isVisible || index === nextInvisibleComponentIndex
+          }))
 
-        return newData
-      }
+          return newData
+        }
 
-      return oldData
-    })
+        return oldData
+      })
+
+      const children = [...wrapperRef.current.children]
+      const lastChild = children.at(-1)
+
+      lastChild.scrollIntoView()
+    }
+
+    fakeDelayTimeoutId.current = setTimeout(showNext, 500)
   }, [])
 
   const componentsShown = data.filter((item) => item.isVisible)
@@ -47,7 +63,7 @@ export const Outputs = ({ components, id, outsideProps }) => {
   }, [])
 
   return (
-    <OutputWrapper>
+    <OutputWrapper ref={wrapperRef}>
       {componentsShown.map(({ Component }, indexId) => {
         const isLastComponent = indexId === componentsShown.length - 1
 

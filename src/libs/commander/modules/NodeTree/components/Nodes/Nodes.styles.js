@@ -16,7 +16,9 @@ export const TagWrapper = styled.span`
 `
 
 export const GapNodesWrapper = styled.div`
-  margin: 10px 0;
+  margin: ${(props) => (props.isRoot ? '0' : '10px 0')};
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 `
 export const ActionButtonText = styled.div`
   transition: transform 0.2s ease-in-out;

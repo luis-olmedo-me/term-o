@@ -21,7 +21,6 @@ import { ConsolePortalContext } from './components/ConsolePortal/ConsolePortal.c
 export const Console = () => {
   const wrapperReference = useRef(null)
   const titleReference = useRef(null)
-  const historyRef = useRef(null)
   const inputReference = useRef(null)
 
   const [histories, setHistories] = useState([])
@@ -41,10 +40,6 @@ export const Console = () => {
     const logOutput = commander.getLogOutput(id, formmatedCommand)
 
     setHistories((histories) => [...histories, logOutput])
-
-    setTimeout(() => {
-      historyRef?.current?.scrollTo(0, historyRef.current.scrollHeight)
-    })
   }, [])
 
   useEffect(
@@ -148,7 +143,7 @@ export const Console = () => {
           TERM-O
         </ConsoleTitle>
 
-        <ConsoleLogs ref={historyRef} style={consoleStyles}>
+        <ConsoleLogs style={consoleStyles}>
           {histories.map((history) => history(outsideProps))}
         </ConsoleLogs>
 

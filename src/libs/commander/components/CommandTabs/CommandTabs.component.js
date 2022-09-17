@@ -43,35 +43,30 @@ export const CommandTabs = ({
 
         default:
           setMessageData(commanderMessages.unexpectedError)
-          finish()
           break
       }
     },
-    [actionType, handleShowTabList, setMessageData, finish]
+    [actionType, handleShowTabList, setMessageData]
   )
-
-  const hasPages = pages.length > 0
 
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
       <LogWrapper variant={parameterTypes.TABS} buttonGroups={buttonGroups}>
-        {hasPages && (
-          <Carousel itemInView={pageNumber}>
-            {pages.map((page, currentPageNumber) => {
-              return (
-                <CarouselItem key={currentPageNumber}>
-                  <ParameterElements
-                    elements={page}
-                    pinnedElements={[]}
-                    Child={Tab}
-                  />
-                </CarouselItem>
-              )
-            })}
-          </Carousel>
-        )}
+        <Carousel itemInView={pageNumber}>
+          {pages.map((page, currentPageNumber) => {
+            return (
+              <CarouselItem key={currentPageNumber}>
+                <ParameterElements
+                  elements={page}
+                  pinnedElements={[]}
+                  Child={Tab}
+                />
+              </CarouselItem>
+            )
+          })}
+        </Carousel>
       </LogWrapper>
     </>
   )

@@ -47,11 +47,10 @@ export const CommandOn = ({ props, terminal: { command, setMessageData } }) => {
 
         case onActionTypes.NONE:
           setMessageData(onMessages.unexpectedError)
-          finish()
           break
       }
     },
-    [actionType, handleAddEvent, setMessageData, finish]
+    [actionType, handleAddEvent, setMessageData]
   )
 
   return <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>

@@ -74,3 +74,10 @@ export const getTabsInfo = () => {
     defaultResponse: []
   })
 }
+
+export const updateConsolePosition = (position) => {
+  createWorkerRequest({
+    type: eventTypes.UPDATE_CONFIG_CONSOLE_POSITION,
+    data: position
+  })
+}

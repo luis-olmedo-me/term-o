@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { commander, customPageEventNames } from 'libs/commander'
 
-import { backgroundRequest } from 'src/helpers/event.helpers.js'
-import { eventTypes } from 'src/constants/events.constants.js'
+import { fetchConfiguration } from 'src/helpers/event.helpers.js'
 import { appRoot } from '../../../content.constants'
 
 const defaultConfiguration = {
@@ -40,15 +39,17 @@ export const useConfig = () => {
   })
 
   useEffect(function getConfiguration() {
-    const receiveConfiguration = ({ response: newConfig }) => {
-      if (!newConfig) return
-
-      const updatedPageEvents = newConfig?.pageEvents?.filter(
+    const receiveConfiguration = ({
+      pageEvents = [],
+      aliases = [],
+      consolePosition = {}
+    }) => {
+      const updatedPageEvents = pageEvents.filter(
         ({ url, event }) =>
           window.location.origin.match(new RegExp(url)) &&
           !customPageEventNames.includes(event)
       )
-      const customEvents = newConfig?.pageEvents?.filter(({ event }) =>
+      const customEvents = pageEvents.filter(({ event }) =>
         customPageEventNames.includes(event)
       )
 
@@ -56,16 +57,13 @@ export const useConfig = () => {
         ...oldConfig,
         appliedPageEvents: updatedPageEvents || [],
         customPageEvents: customEvents || [],
-        consolePosition: newConfig?.consolePosition || {}
+        consolePosition: consolePosition
       }))
 
-      commander.setAliases(newConfig?.aliases)
+      commander.setAliases(aliases)
     }
 
-    backgroundRequest({
-      eventType: eventTypes.GET_CONFIGURATION,
-      callback: receiveConfiguration
-    })
+    fetchConfiguration().then(receiveConfiguration)
   }, [])
 
   return config

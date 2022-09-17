@@ -1,7 +1,6 @@
 import { minimumValueAllowed, resizeTypes } from './useResize.constants'
-import { backgroundRequest } from 'src/helpers/event.helpers.js'
-import { eventTypes } from 'src/constants/events.constants.js'
 import { debounce } from 'src/helpers/utils.helpers.js'
+import { updateConsolePosition } from 'src/helpers/event.helpers'
 
 export const limitLowValue = (value) => (value < 0 ? 0 : value)
 
@@ -84,9 +83,4 @@ export const getNewResizeData = ({
   }
 }
 
-export const updateConfig = debounce((data) => {
-  backgroundRequest({
-    eventType: eventTypes.UPDATE_CONFIG_CONSOLE_POSITION,
-    data
-  })
-}, 800)
+export const updateConfig = debounce(updateConsolePosition, 800)

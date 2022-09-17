@@ -1,12 +1,5 @@
-import React, { useMemo, useState, useCallback, useRef, useEffect } from 'react'
-import {
-  ElementWrapper,
-  SelectTrigger,
-  SelectOption,
-  ThreeDotsOptions,
-  SelectOptionsWrapper,
-  FloatingActions
-} from './Element.styles'
+import React, { useMemo, useState, useRef, useEffect } from 'react'
+import { ElementWrapper, FloatingActions } from './Element.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { isElementHidden } from '../../../../components/CommandDom/CommandDom.helpers'
 import { createXPathFromElement } from './Element.helpers'
@@ -77,25 +70,6 @@ const ElementWithoutContext = ({
   }
 
   const isElementPinned = pinnedElements.includes(element)
-
-  const options = [
-    {
-      id: isElementPinned ? 'unpin-element-option' : 'pin-element-option',
-      displayText: isElementPinned ? 'Unpin Element' : 'Pin Element',
-      onClick: isElementPinned ? handleUnpinElement : handlePinElement
-    },
-    {
-      id: 'scroll-into-view-option',
-      displayText: 'Scroll Into View',
-      onClick: handleScrollIntoView,
-      disabled: isHidden
-    },
-    {
-      id: 'copy-xpath-option',
-      displayText: 'Copy XPath',
-      onClick: handleCopyXPath
-    }
-  ]
 
   const actions = [
     {

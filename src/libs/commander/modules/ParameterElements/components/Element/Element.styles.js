@@ -1,10 +1,4 @@
 import styled, { keyframes } from 'styled-components'
-import {
-  SelectDefaultOption,
-  DefaultTrigger,
-  SelectDefaultOptionsWrapper
-} from 'modules/components/Select/Select.styles'
-import { Select } from 'modules/components/Select/Select.component'
 import { Actions } from '../../../NodeTree/components/Actions/Actions.component'
 
 const Birth = keyframes`
@@ -54,36 +48,4 @@ export const ElementWrapper = styled.span`
 
 export const FloatingActions = styled(Actions)`
   position: absolute;
-`
-
-export const ThreeDotsOptions = styled(Select)`
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: -webkit-fill-available;
-`
-export const SelectOptionsWrapper = styled(SelectDefaultOptionsWrapper)`
-  && {
-    scrollbar-color: #dd44b2 #ffffff;
-  }
-
-  &&::-webkit-scrollbar-thumb {
-    background-color: #dd44b2;
-  }
-`
-export const SelectTrigger = styled(DefaultTrigger)`
-  border-left: 1px solid #eaeaea;
-  border-radius: 0 3px 3px 0;
-  font-weight: bold;
-
-  &:hover {
-    background-color: #ffdbe7;
-    border-color: transparent;
-  }
-`
-export const SelectOption = styled(SelectDefaultOption)`
-  &:hover {
-    background-color: #ff4ecd;
-    color: #fafafa;
-  }
 `

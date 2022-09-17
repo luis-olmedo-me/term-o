@@ -4,7 +4,8 @@ import {
   SelectTrigger,
   SelectOption,
   ThreeDotsOptions,
-  SelectOptionsWrapper
+  SelectOptionsWrapper,
+  FloatingActions
 } from './Element.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { isElementHidden } from '../../../../components/CommandDom/CommandDom.helpers'
@@ -78,6 +79,16 @@ const ElementWithoutContext = ({
     }
   ]
 
+  const actions = [
+    {
+      id: 'test',
+      onClick: () => console.log('click'),
+      disabled: false,
+      title: 'Test',
+      Component: 'T'
+    }
+  ]
+
   return (
     <ElementWrapper
       onMouseEnter={!isHidden ? highlightElement : null}
@@ -87,6 +98,8 @@ const ElementWithoutContext = ({
       onClick={(event) => onClick?.({ event, element })}
     >
       <ElementLabel element={element} isHidden={isHidden} />
+
+      <FloatingActions actions={actions} />
     </ElementWrapper>
   )
 }

@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { cancelPropagation } from './Actions.helpers'
 import { ActionButton, ActionButtons, ItemsWrapper } from './Actions.styles'
 
-export const Actions = ({ actions }) => {
+export const Actions = ({ actions, className }) => {
   return (
-    <ActionButtons>
+    <ActionButtons className={className}>
       {actions.map((action) => {
         const [isOpen, setIsOpen] = useState(false)
 

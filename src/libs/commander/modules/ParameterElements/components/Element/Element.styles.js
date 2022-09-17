@@ -5,6 +5,7 @@ import {
   SelectDefaultOptionsWrapper
 } from 'modules/components/Select/Select.styles'
 import { Select } from 'modules/components/Select/Select.component'
+import { Actions } from '../../../NodeTree/components/Actions/Actions.component'
 
 const Birth = keyframes`
   from {
@@ -48,6 +49,11 @@ export const ElementWrapper = styled.span`
       }
     }
   }
+`
+
+export const FloatingActions = styled(Actions)`
+  position: absolute;
+  background-color: #fafafa;
 `
 
 export const ThreeDotsOptions = styled(Select)`

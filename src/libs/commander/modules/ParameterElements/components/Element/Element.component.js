@@ -91,11 +91,21 @@ const ElementWithoutContext = ({
 
   const actions = [
     {
-      id: 'test',
-      onClick: () => console.log('click'),
-      disabled: false,
-      title: 'Test',
-      Component: 'T'
+      id: 'group',
+      items: [
+        {
+          id: 'copy-xpath-option',
+          title: 'Copy XPath',
+          onClick: handleCopyXPath,
+          Component: '❏'
+        },
+        {
+          id: isElementPinned ? 'unpin-element-option' : 'pin-element-option',
+          title: isElementPinned ? 'Unpin Element' : 'Pin Element',
+          onClick: isElementPinned ? handleUnpinElement : handlePinElement,
+          Component: isElementPinned ? '⚑' : '⚐'
+        }
+      ]
     }
   ]
 

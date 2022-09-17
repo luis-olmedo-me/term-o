@@ -21,21 +21,6 @@ const ElementWithoutContext = ({
   shouldAnimate = false,
   onClick
 }) => {
-  const [isSelectOpen, setIsSelectOpen] = useState(false)
-  const [wrapperPaddingRight, setWrapperPaddingRight] = useState(10)
-  const triggerRef = useRef(null)
-
-  const closeSelect = useCallback(() => {
-    setIsSelectOpen(false)
-  }, [])
-
-  useEffect(function checkWrapperPadding() {
-    const { offsetWidth } = triggerRef.current
-    const paddingRight = offsetWidth + 10
-
-    setWrapperPaddingRight(paddingRight)
-  }, [])
-
   const { height, width } = useMemo(() => {
     return element.getBoundingClientRect() || {}
   }, [element])
@@ -46,30 +31,22 @@ const ElementWithoutContext = ({
     element.scrollIntoView({
       behavior: 'smooth'
     })
-
-    closeSelect()
   }
 
   const handlePinElement = () => {
     setPinnedElements([...pinnedElements, element])
-
-    closeSelect()
   }
 
   const handleUnpinElement = () => {
     setPinnedElements(
       pinnedElements.filter((pinnedElement) => pinnedElement !== element)
     )
-
-    closeSelect()
   }
 
   const handleCopyXPath = () => {
     const xPath = createXPathFromElement(element)
 
     navigator.clipboard.writeText(xPath.includes(' ') ? `"${xPath}"` : xPath)
-
-    closeSelect()
   }
 
   const highlightElement = () => {
@@ -105,24 +82,11 @@ const ElementWithoutContext = ({
     <ElementWrapper
       onMouseEnter={!isHidden ? highlightElement : null}
       onMouseLeave={!isHidden ? unhighlightElement : null}
-      paddingRight={wrapperPaddingRight}
       className={`${className} ${variant}`}
       shouldAnimate={shouldAnimate}
       onClick={(event) => onClick?.({ event, element })}
     >
       <ElementLabel element={element} isHidden={isHidden} />
-
-      <ThreeDotsOptions
-        isOpen={isSelectOpen}
-        handleClickOutside={closeSelect}
-        handleOpenSelect={() => setIsSelectOpen(true)}
-        handleOnMouseEnter={unhighlightElement}
-        ButtonTrigger={SelectTrigger}
-        OptionsWrapper={SelectOptionsWrapper}
-        Option={SelectOption}
-        options={options}
-        triggerRef={triggerRef}
-      />
     </ElementWrapper>
   )
 }

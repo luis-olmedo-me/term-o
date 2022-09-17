@@ -20,14 +20,13 @@ const Birth = keyframes`
 
 export const ElementWrapper = styled.span`
   position: relative;
-  padding: 5px 2em 5px 5px;
+  padding: 5px;
   background-color: #fafafa;
   font-weight: bold;
   border-radius: 3px;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   line-height: 1.75;
-  padding-right: ${(props) => props.paddingRight}px;
   width: 100%;
   text-overflow: ellipsis;
   white-space: nowrap;

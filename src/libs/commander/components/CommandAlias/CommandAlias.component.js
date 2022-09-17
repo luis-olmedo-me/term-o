@@ -77,11 +77,15 @@ export const CommandAlias = ({
     function handleActionType() {
       switch (actionType) {
         case actionTypes.SHOW_LIST:
-          fetchConfiguration().then(handleShowList)
+          fetchConfiguration()
+            .then(handleShowList)
+            .catch(() => setMessageData(aliasMessages.unexpectedError))
           break
 
         case actionTypes.DELETE_ALIAS:
-          fetchConfiguration().then(handleDeleteAliases)
+          fetchConfiguration()
+            .then(handleDeleteAliases)
+            .catch(() => setMessageData(aliasMessages.unexpectedError))
           break
 
         case actionTypes.ADD_ALIAS:

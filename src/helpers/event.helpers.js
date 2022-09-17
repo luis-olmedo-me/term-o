@@ -1,7 +1,16 @@
 import { eventTypes } from 'src/constants/events.constants.js'
 
-export const backgroundRequest = ({ eventType, callback = () => {}, data }) => {
-  chrome?.runtime?.sendMessage?.({ type: eventType, data }, callback)
+export const backgroundRequest = ({
+  eventType,
+  callback = () => {},
+  data,
+  errorCallback
+}) => {
+  try {
+    chrome?.runtime?.sendMessage?.({ type: eventType, data }, callback)
+  } catch (error) {
+    errorCallback?.(error)
+  }
 }
 
 export const fetchConfiguration = () => {
@@ -14,7 +23,10 @@ export const fetchConfiguration = () => {
       }
     }
 
-    backgroundRequest({ eventType: eventTypes.GET_CONFIGURATION, callback })
+    chrome?.runtime?.sendMessage?.(
+      { type: eventTypes.GET_CONFIGURATION },
+      callback
+    )
   })
 }
 
@@ -28,11 +40,10 @@ export const addAliases = (newAliases) => {
       }
     }
 
-    backgroundRequest({
-      eventType: eventTypes.ADD_ALIAS,
-      callback,
-      data: newAliases
-    })
+    chrome?.runtime?.sendMessage?.(
+      { type: eventTypes.ADD_ALIAS, data: newAliases },
+      callback
+    )
   })
 }
 
@@ -46,11 +57,10 @@ export const deleteAliases = (aliasIds) => {
       }
     }
 
-    backgroundRequest({
-      eventType: eventTypes.DELETE_ALIAS,
-      callback,
-      data: { aliasIdsToDelete: aliasIds }
-    })
+    chrome?.runtime?.sendMessage?.(
+      { type: eventTypes.DELETE_ALIAS, data: { aliasIdsToDelete: aliasIds } },
+      callback
+    )
   })
 }
 
@@ -64,11 +74,10 @@ export const deletePageEvents = (ids) => {
       }
     }
 
-    backgroundRequest({
-      eventType: eventTypes.DELETE_PAGES_EVENT,
-      callback,
-      data: { ids }
-    })
+    chrome?.runtime?.sendMessage?.(
+      { type: eventTypes.DELETE_PAGES_EVENT, data: { ids } },
+      callback
+    )
   })
 }
 
@@ -82,11 +91,10 @@ export const addPageEvents = (newPageEvents) => {
       }
     }
 
-    backgroundRequest({
-      eventType: eventTypes.ADD_PAGES_EVENT,
-      callback,
-      data: newPageEvents
-    })
+    chrome?.runtime?.sendMessage?.(
+      { type: eventTypes.ADD_PAGES_EVENT, data: newPageEvents },
+      callback
+    )
   })
 }
 
@@ -100,10 +108,10 @@ export const resetConfiguration = () => {
       }
     }
 
-    backgroundRequest({
-      eventType: eventTypes.RESET_CONFIGURATION,
+    chrome?.runtime?.sendMessage?.(
+      { type: eventTypes.RESET_CONFIGURATION, data: newPageEvents },
       callback
-    })
+    )
   })
 }
 
@@ -117,9 +125,9 @@ export const getTabsInfo = () => {
       }
     }
 
-    backgroundRequest({
-      eventType: eventTypes.GET_TABS_INFO,
+    chrome?.runtime?.sendMessage?.(
+      { type: eventTypes.GET_TABS_INFO, data: newPageEvents },
       callback
-    })
+    )
   })
 }

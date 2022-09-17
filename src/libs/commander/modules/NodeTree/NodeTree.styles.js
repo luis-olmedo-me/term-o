@@ -7,6 +7,7 @@ export const TreeWrapper = styled.div`
   font-weight: bold;
   border-radius: 3px 0 0 3px;
   scroll-snap-type: block;
+  overscroll-behavior: contain;
 
   &::-webkit-scrollbar {
     display: none;

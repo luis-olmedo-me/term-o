@@ -1,11 +1,5 @@
-import React, { useMemo, useState, useCallback, useRef, useEffect } from 'react'
-import {
-  ElementWrapper,
-  SelectTrigger,
-  SelectOption,
-  ThreeDotsOptions,
-  SelectOptionsWrapper
-} from './Element.styles'
+import React, { useMemo, useState, useRef, useEffect } from 'react'
+import { ElementWrapper, FloatingActions } from './Element.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { isElementHidden } from '../../../../components/CommandDom/CommandDom.helpers'
 import { createXPathFromElement } from './Element.helpers'
@@ -21,24 +15,29 @@ const ElementWithoutContext = ({
   shouldAnimate = false,
   onClick
 }) => {
-  const [isSelectOpen, setIsSelectOpen] = useState(false)
-  const [wrapperPaddingRight, setWrapperPaddingRight] = useState(10)
-  const triggerRef = useRef(null)
-
-  const closeSelect = useCallback(() => {
-    setIsSelectOpen(false)
-  }, [])
-
-  useEffect(function checkWrapperPadding() {
-    const { offsetWidth } = triggerRef.current
-    const paddingRight = offsetWidth + 10
-
-    setWrapperPaddingRight(paddingRight)
-  }, [])
-
   const { height, width } = useMemo(() => {
     return element.getBoundingClientRect() || {}
   }, [element])
+
+  const actionsRef = useRef(null)
+  const [wrapperPaddingRight, setWrapperPaddingRight] = useState(10)
+
+  useEffect(function checkWrapperPadding() {
+    const reference = actionsRef.current
+
+    const updateData = () => {
+      const { offsetWidth } = reference
+      const paddingRight = offsetWidth + 10
+
+      setWrapperPaddingRight(paddingRight)
+    }
+
+    const obsever = new ResizeObserver(updateData)
+
+    obsever.observe(reference)
+
+    return () => obsever.unobserve(reference)
+  }, [])
 
   const isHidden = isElementHidden(element, { height, width })
 
@@ -46,30 +45,22 @@ const ElementWithoutContext = ({
     element.scrollIntoView({
       behavior: 'smooth'
     })
-
-    closeSelect()
   }
 
   const handlePinElement = () => {
     setPinnedElements([...pinnedElements, element])
-
-    closeSelect()
   }
 
   const handleUnpinElement = () => {
     setPinnedElements(
       pinnedElements.filter((pinnedElement) => pinnedElement !== element)
     )
-
-    closeSelect()
   }
 
   const handleCopyXPath = () => {
     const xPath = createXPathFromElement(element)
 
     navigator.clipboard.writeText(xPath.includes(' ') ? `"${xPath}"` : xPath)
-
-    closeSelect()
   }
 
   const highlightElement = () => {
@@ -82,22 +73,29 @@ const ElementWithoutContext = ({
 
   const isElementPinned = pinnedElements.includes(element)
 
-  const options = [
+  const actions = [
     {
-      id: isElementPinned ? 'unpin-element-option' : 'pin-element-option',
-      displayText: isElementPinned ? 'Unpin Element' : 'Pin Element',
-      onClick: isElementPinned ? handleUnpinElement : handlePinElement
-    },
-    {
-      id: 'scroll-into-view-option',
-      displayText: 'Scroll Into View',
-      onClick: handleScrollIntoView,
-      disabled: isHidden
-    },
-    {
-      id: 'copy-xpath-option',
-      displayText: 'Copy XPath',
-      onClick: handleCopyXPath
+      id: 'group',
+      items: [
+        {
+          id: 'scroll-into-view-option',
+          title: 'Scroll Into View',
+          onClick: handleScrollIntoView,
+          Component: '👁'
+        },
+        {
+          id: isElementPinned ? 'unpin-element-option' : 'pin-element-option',
+          title: isElementPinned ? 'Unpin Element' : 'Pin Element',
+          onClick: isElementPinned ? handleUnpinElement : handlePinElement,
+          Component: isElementPinned ? '⚑' : '⚐'
+        },
+        {
+          id: 'copy-xpath-option',
+          title: 'Copy XPath',
+          onClick: handleCopyXPath,
+          Component: '❏'
+        }
+      ]
     }
   ]
 
@@ -105,24 +103,14 @@ const ElementWithoutContext = ({
     <ElementWrapper
       onMouseEnter={!isHidden ? highlightElement : null}
       onMouseLeave={!isHidden ? unhighlightElement : null}
-      paddingRight={wrapperPaddingRight}
       className={`${className} ${variant}`}
       shouldAnimate={shouldAnimate}
       onClick={(event) => onClick?.({ event, element })}
+      paddingRight={wrapperPaddingRight}
     >
       <ElementLabel element={element} isHidden={isHidden} />
 
-      <ThreeDotsOptions
-        isOpen={isSelectOpen}
-        handleClickOutside={closeSelect}
-        handleOpenSelect={() => setIsSelectOpen(true)}
-        handleOnMouseEnter={unhighlightElement}
-        ButtonTrigger={SelectTrigger}
-        OptionsWrapper={SelectOptionsWrapper}
-        Option={SelectOption}
-        options={options}
-        triggerRef={triggerRef}
-      />
+      <FloatingActions wrapperRef={actionsRef} actions={actions} />
     </ElementWrapper>
   )
 }

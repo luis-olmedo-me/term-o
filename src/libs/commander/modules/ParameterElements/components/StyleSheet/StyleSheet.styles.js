@@ -52,6 +52,7 @@ export const Property = styled.div`
   width: fit-content;
   display: inline-flex;
   align-items: center;
+  padding: 5px 10px;
 
   opacity: ${(props) => (props.isOverwritten ? '.5' : '1')}; ;
 `

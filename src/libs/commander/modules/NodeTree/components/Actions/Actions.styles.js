@@ -13,7 +13,7 @@ export const ActionButtons = styled.div`
   border-radius: 0 3px 3px 0;
 `
 export const ActionButton = styled.button`
-  height: -webkit-fill-available;
+  height: 100%;
   background-color: transparent;
   border: none;
   color: black;

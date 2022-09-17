@@ -26,6 +26,16 @@ const ElementWithoutContext = ({
     return element.getBoundingClientRect() || {}
   }, [element])
 
+  const actionsRef = useRef(null)
+  const [wrapperPaddingRight, setWrapperPaddingRight] = useState(10)
+
+  useEffect(function checkWrapperPadding() {
+    const { offsetWidth } = actionsRef.current
+    const paddingRight = offsetWidth + 10
+
+    setWrapperPaddingRight(paddingRight)
+  }, [])
+
   const isHidden = isElementHidden(element, { height, width })
 
   const handleScrollIntoView = () => {
@@ -96,10 +106,11 @@ const ElementWithoutContext = ({
       className={`${className} ${variant}`}
       shouldAnimate={shouldAnimate}
       onClick={(event) => onClick?.({ event, element })}
+      paddingRight={wrapperPaddingRight}
     >
       <ElementLabel element={element} isHidden={isHidden} />
 
-      <FloatingActions actions={actions} />
+      <FloatingActions wrapperRef={actionsRef} actions={actions} />
     </ElementWrapper>
   )
 }

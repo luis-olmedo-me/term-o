@@ -52,7 +52,7 @@ chrome.commands.onCommand.addListener(function (command) {
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   switch (request.type) {
     case eventTypes.GET_CONFIGURATION: {
-      sendResponse({ status: 'ok', response: configManager.config })
+      sendResponse({ status: 'ok', data: configManager.config })
       break
     }
 

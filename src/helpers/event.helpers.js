@@ -17,7 +17,7 @@ export const createWorkerRequest = ({ type, data, defaultResponse }) => {
   return new Promise((resolve, reject) => {
     const callback = (response) => {
       if (response?.status === 'ok') {
-        resolve(response?.response || defaultValue)
+        resolve(response?.data || defaultResponse)
       } else {
         reject(response?.error)
       }
@@ -70,6 +70,7 @@ export const resetConfiguration = () => {
 
 export const getTabsInfo = () => {
   return createWorkerRequest({
-    type: eventTypes.GET_TABS_INFO
+    type: eventTypes.GET_TABS_INFO,
+    defaultResponse: []
   })
 }

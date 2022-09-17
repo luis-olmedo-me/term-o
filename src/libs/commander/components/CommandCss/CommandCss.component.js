@@ -100,29 +100,25 @@ export const CommandCss = ({
     [actionType, handleApplyStyles, handleGetStyles]
   )
 
-  const hasPages = pages.length > 0
-
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
       <LogWrapper variant={parameterTypes.STYLES} buttonGroups={buttonGroups}>
-        {hasPages && (
-          <Carousel itemInView={pageNumber}>
-            {pages.map((page, currentPageNumber) => {
-              return (
-                <CarouselItem key={currentPageNumber}>
-                  <ParameterElements
-                    elements={page}
-                    pinnedElements={[]}
-                    Child={StyleSheet}
-                    customProps={{ styleSheets: page }}
-                  />
-                </CarouselItem>
-              )
-            })}
-          </Carousel>
-        )}
+        <Carousel itemInView={pageNumber}>
+          {pages.map((page, currentPageNumber) => {
+            return (
+              <CarouselItem key={currentPageNumber}>
+                <ParameterElements
+                  elements={page}
+                  pinnedElements={[]}
+                  Child={StyleSheet}
+                  customProps={{ styleSheets: page }}
+                />
+              </CarouselItem>
+            )
+          })}
+        </Carousel>
       </LogWrapper>
     </>
   )

@@ -136,7 +136,6 @@ const CommandDomWithoutContext = ({
   )
 
   const hasPinnedElements = pinnedElements.length > 0
-  const hasPages = pages.length > 0
 
   const handleModalExit = useCallback(
     () => setEditingElement(null),
@@ -157,24 +156,22 @@ const CommandDomWithoutContext = ({
           />
         )}
 
-        {hasPages && (
-          <Carousel itemInView={pageNumber}>
-            {pages.map((page, currentPageNumber) => {
-              return (
-                <CarouselItem key={currentPageNumber}>
-                  <ParameterElements
-                    elements={page}
-                    pinnedElements={pinnedElements}
-                    setPinnedElements={setPinnedElements}
-                    customProps={{
-                      onClick: ({ element }) => setEditingElement(element)
-                    }}
-                  />
-                </CarouselItem>
-              )
-            })}
-          </Carousel>
-        )}
+        <Carousel itemInView={pageNumber}>
+          {pages.map((page, currentPageNumber) => {
+            return (
+              <CarouselItem key={currentPageNumber}>
+                <ParameterElements
+                  elements={page}
+                  pinnedElements={pinnedElements}
+                  setPinnedElements={setPinnedElements}
+                  customProps={{
+                    onClick: ({ element }) => setEditingElement(element)
+                  }}
+                />
+              </CarouselItem>
+            )
+          })}
+        </Carousel>
       </LogWrapper>
 
       <ConsoleModal

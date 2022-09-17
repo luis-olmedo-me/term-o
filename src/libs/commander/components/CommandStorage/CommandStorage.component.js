@@ -92,29 +92,25 @@ export const CommandStorage = ({
   const parseTableValuesForLocalStoageItems =
     getParseTableValuesForLocalStoageItems(handleTreeChange)
 
-  const hasPages = pages.length > 0
-
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
       <LogWrapper variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
-        {hasPages && (
-          <Carousel itemInView={pageNumber}>
-            {pages.map((page, currentPageNumber) => {
-              return (
-                <CarouselItem key={currentPageNumber}>
-                  <Table
-                    headers={storageHeaders}
-                    rows={page}
-                    parseValue={parseTableValuesForLocalStoageItems}
-                    widths={[20, 80]}
-                  />
-                </CarouselItem>
-              )
-            })}
-          </Carousel>
-        )}
+        <Carousel itemInView={pageNumber}>
+          {pages.map((page, currentPageNumber) => {
+            return (
+              <CarouselItem key={currentPageNumber}>
+                <Table
+                  headers={storageHeaders}
+                  rows={page}
+                  parseValue={parseTableValuesForLocalStoageItems}
+                  widths={[20, 80]}
+                />
+              </CarouselItem>
+            )
+          })}
+        </Carousel>
       </LogWrapper>
     </>
   )

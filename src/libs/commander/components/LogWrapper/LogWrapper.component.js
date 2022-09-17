@@ -35,23 +35,21 @@ export const LogWrapper = ({ children, variant, buttonGroups }) => {
     }
   }, [isCommand])
 
-  const hasContentToShow = Boolean(children) || children?.some?.(Boolean)
-  const hideLoader = !isFakeLoading && hasContentToShow
-  const hasButtonGroups = hideLoader && Boolean(buttonGroups?.length)
+  const hasButtonGroups = !isFakeLoading && Boolean(buttonGroups?.length)
 
   return (
     <Log
-      className={hideLoader ? variant : parameterTypes.INFO}
+      className={!isFakeLoading ? variant : parameterTypes.INFO}
       onMouseDown={(event) => event.stopPropagation()}
     >
-      {!hideLoader && (
+      {isFakeLoading && (
         <LogContent>
           <AnimatedLoader />
           <LoaderText>Loading</LoaderText>
         </LogContent>
       )}
 
-      {hideLoader && (
+      {!isFakeLoading && (
         <LogContent>
           {icon && <Hash>{icon}</Hash>}
 

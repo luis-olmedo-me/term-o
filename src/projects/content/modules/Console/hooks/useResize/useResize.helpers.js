@@ -83,4 +83,6 @@ export const getNewResizeData = ({
   }
 }
 
-export const updateConfig = debounce(updateConsolePosition, 800)
+export const updateConfig = debounce((data, onError) => {
+  return updateConsolePosition(data).catch(onError)
+}, 800)

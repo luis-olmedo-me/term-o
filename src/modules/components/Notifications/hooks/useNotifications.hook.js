@@ -51,5 +51,18 @@ export const useNotifications = () => {
     []
   )
 
-  return { notifications: firstThreeNotifications, addNotification }
+  const showWorkerRequestError = useCallback(() => {
+    const initialId = Date.now().toString()
+
+    addNotification(
+      initialId,
+      'Worker connection lost, please refresh the window'
+    )
+  }, [addNotification])
+
+  return {
+    notifications: firstThreeNotifications,
+    addNotification,
+    showWorkerRequestError
+  }
 }

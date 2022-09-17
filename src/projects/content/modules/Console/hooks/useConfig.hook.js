@@ -12,7 +12,7 @@ const defaultConfiguration = {
   consolePosition: {}
 }
 
-export const useConfig = () => {
+export const useConfig = ({ onError }) => {
   const [config, setConfig] = useState(defaultConfiguration)
 
   useEffect(function checkConsoleToggle() {
@@ -63,7 +63,7 @@ export const useConfig = () => {
       commander.setAliases(aliases)
     }
 
-    fetchConfiguration().then(receiveConfiguration)
+    fetchConfiguration().then(receiveConfiguration).catch(onError)
   }, [])
 
   return config

@@ -33,12 +33,12 @@ const CommandInspectWithoutContext = ({
       const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
       const newObjetives = paramElements.length
         ? paramElements
-        : [defaultHTMLRoot]
+        : [document.body]
       const newOpenNodes = getOpenNodesFromObjetives(newObjetives)
 
       setObjetives(newObjetives)
       setOpenNodes(newOpenNodes)
-      setHTMLRoot(defaultHTMLRoot)
+      setHTMLRoot(document.body)
       defaultRoot.current = defaultHTMLRoot
 
       finish()

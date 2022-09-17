@@ -8,7 +8,7 @@ export const getActionType = () => {
 
 export const getDefaultHTMlRoot = () => {
   const elementsSearch = getElements({
-    patterns: ['body'],
+    patterns: ['html'],
     filterBySome: null,
     filterByEvery: null
   })

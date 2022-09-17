@@ -1,18 +1,5 @@
 import { eventTypes } from 'src/constants/events.constants.js'
 
-export const backgroundRequest = ({
-  eventType,
-  callback = () => {},
-  data,
-  errorCallback
-}) => {
-  try {
-    chrome?.runtime?.sendMessage?.({ type: eventType, data }, callback)
-  } catch (error) {
-    errorCallback?.(error)
-  }
-}
-
 export const createWorkerRequest = ({ type, data, defaultResponse }) => {
   return new Promise((resolve, reject) => {
     const callback = (response) => {

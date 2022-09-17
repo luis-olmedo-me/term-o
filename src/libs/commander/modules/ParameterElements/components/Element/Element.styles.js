@@ -1,10 +1,5 @@
 import styled, { keyframes } from 'styled-components'
-import {
-  SelectDefaultOption,
-  DefaultTrigger,
-  SelectDefaultOptionsWrapper
-} from 'modules/components/Select/Select.styles'
-import { Select } from 'modules/components/Select/Select.component'
+import { Actions } from '../../../NodeTree/components/Actions/Actions.component'
 
 const Birth = keyframes`
   from {
@@ -20,14 +15,14 @@ const Birth = keyframes`
 
 export const ElementWrapper = styled.span`
   position: relative;
-  padding: 5px 2em 5px 5px;
+  padding: 5px 0 5px 5px;
   background-color: #fafafa;
   font-weight: bold;
   border-radius: 3px;
   cursor: pointer;
+  padding-right: ${(props) => props.paddingRight}px;
   transition: background-color 0.2s ease-in-out;
   line-height: 1.75;
-  padding-right: ${(props) => props.paddingRight}px;
   width: 100%;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -51,34 +46,6 @@ export const ElementWrapper = styled.span`
   }
 `
 
-export const ThreeDotsOptions = styled(Select)`
+export const FloatingActions = styled(Actions)`
   position: absolute;
-  top: 0;
-  right: 0;
-  height: -webkit-fill-available;
-`
-export const SelectOptionsWrapper = styled(SelectDefaultOptionsWrapper)`
-  && {
-    scrollbar-color: #dd44b2 #ffffff;
-  }
-
-  &&::-webkit-scrollbar-thumb {
-    background-color: #dd44b2;
-  }
-`
-export const SelectTrigger = styled(DefaultTrigger)`
-  border-left: 1px solid #eaeaea;
-  border-radius: 0 3px 3px 0;
-  font-weight: bold;
-
-  &:hover {
-    background-color: #ffdbe7;
-    border-color: transparent;
-  }
-`
-export const SelectOption = styled(SelectDefaultOption)`
-  &:hover {
-    background-color: #ff4ecd;
-    color: #fafafa;
-  }
 `

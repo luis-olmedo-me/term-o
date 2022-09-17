@@ -65,6 +65,7 @@ export const ConsoleLogs = styled.div`
   flex: 1;
   border-radius: 5px;
   cursor: text;
+  overscroll-behavior: contain;
 
   &::-webkit-scrollbar {
     display: none;

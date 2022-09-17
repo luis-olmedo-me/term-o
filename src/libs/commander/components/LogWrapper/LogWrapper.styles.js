@@ -58,12 +58,7 @@ export const Log = styled.div`
   }
 
   &&.help {
-    background: linear-gradient(
-      112deg,
-      #06b7db -63.59%,
-      #ff4ecd -20.3%,
-      #0072f5 70.46%
-    );
+    background-color: #a66908;
     color: #fff;
   }
 `
@@ -115,10 +110,10 @@ export const AnimatedLoader = styled(Loader)`
   animation: ${Loading} 1.5s linear infinite;
   animation-timing-function: ease-in-out;
   color: white;
-  padding: 10px;
   width: 16px;
   height: 16px;
   vertical-align: middle;
+  margin-right: 1ch;
 `
 export const LoaderText = styled.span`
   color: white;

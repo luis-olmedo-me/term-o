@@ -125,7 +125,7 @@ const NodesWithoutContext = ({
       const isHidden = isElementHidden(node)
 
       return (
-        <GapNodesWrapper ref={nodeWrapperRef}>
+        <GapNodesWrapper ref={nodeWrapperRef} isRoot={isNodeRoot}>
           <ElementLabel
             element={node}
             Wrapper={TagWrapper}
@@ -165,16 +165,18 @@ const NodesWithoutContext = ({
       const isHidden = isElementHidden(node.parentElement)
 
       return (
-        <GapNodesWrapper ref={nodeWrapperRef}>
-          <TagWrapper
-            onClick={handleNodeClick}
-            isNodeObjetive={isNodeObjetive}
-            textNode
-            isHidden={isHidden}
-          >
-            "{node.textContent}"
-          </TagWrapper>
-        </GapNodesWrapper>
+        node.textContent.trim() && (
+          <GapNodesWrapper ref={nodeWrapperRef}>
+            <TagWrapper
+              onClick={handleNodeClick}
+              isNodeObjetive={isNodeObjetive}
+              textNode
+              isHidden={isHidden}
+            >
+              "{node.textContent}"
+            </TagWrapper>
+          </GapNodesWrapper>
+        )
       )
     }
 

@@ -55,8 +55,9 @@ export const CommandCss = ({
 
       styleElements({ styles: validStyles, elements: paramElements })
       setStylesApplied([{ title: 'Styles', styles: validStyles }])
+      finish()
     },
-    [styles, manualStyles, setMessageData]
+    [styles, manualStyles, setMessageData, finish]
   )
 
   const handleGetStyles = useCallback(() => {
@@ -77,53 +78,47 @@ export const CommandCss = ({
       : []
 
     setStylesApplied([...directStylesWithSchema, ...newStylesApplied])
-  }, [setMessageData])
+    finish()
+  }, [setMessageData, finish])
 
   useEffect(
     function handleActionType() {
       switch (actionType) {
         case cssActionTypes.SET_STYLES:
           handleApplyStyles()
-          finish()
           break
 
         case cssActionTypes.GET_STYLES:
           handleGetStyles()
-          finish()
           break
 
         case cssActionTypes.NONE:
           setMessageData(cssMessages.unexpectedError)
-          finish()
           break
       }
     },
     [actionType, handleApplyStyles, handleGetStyles]
   )
 
-  const hasPages = pages.length > 0
-
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
       <LogWrapper variant={parameterTypes.STYLES} buttonGroups={buttonGroups}>
-        {hasPages && (
-          <Carousel itemInView={pageNumber}>
-            {pages.map((page, currentPageNumber) => {
-              return (
-                <CarouselItem key={currentPageNumber}>
-                  <ParameterElements
-                    elements={page}
-                    pinnedElements={[]}
-                    Child={StyleSheet}
-                    customProps={{ styleSheets: page }}
-                  />
-                </CarouselItem>
-              )
-            })}
-          </Carousel>
-        )}
+        <Carousel itemInView={pageNumber}>
+          {pages.map((page, currentPageNumber) => {
+            return (
+              <CarouselItem key={currentPageNumber}>
+                <ParameterElements
+                  elements={page}
+                  pinnedElements={[]}
+                  Child={StyleSheet}
+                  customProps={{ styleSheets: page }}
+                />
+              </CarouselItem>
+            )
+          })}
+        </Carousel>
       </LogWrapper>
     </>
   )

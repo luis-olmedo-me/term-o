@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
 import {
   GroupButtons,
@@ -18,31 +18,44 @@ const preIconsByVariants = {
 }
 
 export const LogWrapper = ({ children, variant, buttonGroups }) => {
-  const icon = preIconsByVariants[variant]
-  const hasButtonGroups = Boolean(buttonGroups?.length)
+  const isCommand = variant === parameterTypes.COMMAND
 
-  const hideLoader =
-    Boolean(children) ||
-    children?.some?.(Boolean) ||
-    variant === parameterTypes.COMMAND
+  const [isFakeLoading, setIsFakeLoading] = useState(!isCommand)
+
+  const icon = preIconsByVariants[variant]
+
+  useEffect(() => {
+    if (isCommand) return
+
+    const timeoutId = setTimeout(() => setIsFakeLoading(false), 500)
+
+    return () => {
+      setIsFakeLoading(false)
+      clearTimeout(timeoutId)
+    }
+  }, [isCommand])
+
+  const hasButtonGroups = !isFakeLoading && Boolean(buttonGroups?.length)
 
   return (
     <Log
-      className={hideLoader ? variant : parameterTypes.INFO}
+      className={!isFakeLoading ? variant : parameterTypes.INFO}
       onMouseDown={(event) => event.stopPropagation()}
     >
-      {!hideLoader && (
-        <div>
+      {isFakeLoading && (
+        <LogContent>
           <AnimatedLoader />
           <LoaderText>Loading</LoaderText>
-        </div>
+        </LogContent>
       )}
 
-      <LogContent>
-        {icon && <Hash>{icon}</Hash>}
+      {!isFakeLoading && (
+        <LogContent>
+          {icon && <Hash>{icon}</Hash>}
 
-        {children}
-      </LogContent>
+          {children}
+        </LogContent>
+      )}
 
       {hasButtonGroups && (
         <GroupButtons>

@@ -40,7 +40,7 @@ export const CommandAlias = ({
       setTableItems(aliasRows)
       finish()
     },
-    [setMessageData]
+    [setMessageData, finish]
   )
 
   const handleAddAliases = useCallback(() => {
@@ -55,7 +55,7 @@ export const CommandAlias = ({
       .catch(() => setMessageData(aliasMessages.unexpectedError))
       .then(() => setMessageData(aliasMessages.aliasAdditionSuccess))
       .then(() => finish())
-  }, [aliasesToAdd, setMessageData])
+  }, [aliasesToAdd, setMessageData, finish])
 
   const handleDeleteAliases = useCallback(
     ({ aliases = [] }) => {
@@ -70,7 +70,7 @@ export const CommandAlias = ({
         .then(() => setMessageData(aliasMessages.aliasDeletionSuccess))
         .then(() => finish())
     },
-    [deletedIds]
+    [deletedIds, finish]
   )
 
   useEffect(
@@ -88,35 +88,32 @@ export const CommandAlias = ({
           handleAddAliases()
           break
 
-        default:
+        case actionTypes.NONE:
+          setMessageData(aliasMessages.unexpectedError)
           break
       }
     },
     [actionType, handleAddAliases, handleDeleteAliases, handleShowList]
   )
 
-  const hasPages = pages.length > 0
-
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
       <LogWrapper variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
-        {hasPages && (
-          <Carousel itemInView={pageNumber}>
-            {pages.map((page, currentPageNumber) => {
-              return (
-                <CarouselItem key={currentPageNumber}>
-                  <Table
-                    headers={aliasHeaders}
-                    rows={page}
-                    widths={[20, 20, 60]}
-                  />
-                </CarouselItem>
-              )
-            })}
-          </Carousel>
-        )}
+        <Carousel itemInView={pageNumber}>
+          {pages.map((page, currentPageNumber) => {
+            return (
+              <CarouselItem key={currentPageNumber}>
+                <Table
+                  headers={aliasHeaders}
+                  rows={page}
+                  widths={[20, 20, 60]}
+                />
+              </CarouselItem>
+            )
+          })}
+        </Carousel>
       </LogWrapper>
     </>
   )

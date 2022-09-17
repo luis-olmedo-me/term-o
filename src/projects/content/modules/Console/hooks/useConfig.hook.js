@@ -55,8 +55,8 @@ export const useConfig = () => {
 
       setConfig((oldConfig) => ({
         ...oldConfig,
-        appliedPageEvents: updatedPageEvents || [],
-        customPageEvents: customEvents || [],
+        appliedPageEvents: updatedPageEvents,
+        customPageEvents: customEvents,
         consolePosition: consolePosition
       }))
 

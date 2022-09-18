@@ -9,7 +9,10 @@ import { checkIfRegExpIsValid, getActionType } from './CommandOn.helpers'
 import { onMessages } from './CommandOn.messages'
 import { onActionTypes } from './CommandOn.constants'
 
-export const CommandOn = ({ props, terminal: { command, setMessageData } }) => {
+export const CommandOn = ({
+  props,
+  terminal: { command, setMessageData, finish }
+}) => {
   const { url, run, event } = props
 
   const actionType = getActionType(props)

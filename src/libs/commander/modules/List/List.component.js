@@ -1,5 +1,5 @@
 import React from 'react'
-import { ElementsWrapper } from './List.styles'
+import { ListWrapper } from './List.styles'
 import { Element } from './components/Element/Element.component'
 
 export const List = ({
@@ -11,7 +11,7 @@ export const List = ({
   customProps = {}
 }) => {
   return (
-    <ElementsWrapper>
+    <ListWrapper>
       {elements.map((element, indexId) => {
         const isPinned = pinnedElements.includes(element)
 
@@ -27,6 +27,6 @@ export const List = ({
           />
         )
       })}
-    </ElementsWrapper>
+    </ListWrapper>
   )
 }

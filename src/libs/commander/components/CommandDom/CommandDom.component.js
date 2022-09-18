@@ -189,7 +189,7 @@ const CommandDomWithoutContext = ({
             variant={parameterTypes.TABLE}
             buttonGroups={editionPageButtonGroups}
           >
-            {editingElement && <ElementEdition element={editingElement} />}
+            <ElementEdition element={editingElement} />
           </LogWrapper>
         </CarouselItem>
       </Carousel>

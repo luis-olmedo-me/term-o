@@ -10,8 +10,7 @@ import {
   parseStyles
 } from './CommandCss.helpers'
 import { cssMessages } from './CommandCss.messages'
-import { StyleSheet } from '../../modules/List/components/StyleSheet/StyleSheet.component'
-import { List } from '../../modules/List/List.component'
+import { List, StyleSheet } from '../../modules/List'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'

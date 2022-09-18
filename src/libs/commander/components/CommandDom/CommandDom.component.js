@@ -8,14 +8,13 @@ import {
   getParentsOfElements
 } from './CommandDom.helpers'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
-import { List } from '../../modules/List/List.component'
+import { List, Element } from '../../modules/List'
 import { domMessages } from './CommandDom.messages'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 import { insertParams } from '../../commander.helpers'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
-import { Element } from '../../modules/List/components/Element/Element.component'
 
 const CommandDomWithoutContext = ({
   props,

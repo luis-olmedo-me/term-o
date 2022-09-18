@@ -11,9 +11,9 @@ import {
   Title
 } from './StyleSheet.styles'
 
-export const StyleSheet = ({ sheet = {}, className = '', styleSheets }) => {
-  const indexOfCurrentStyleSheet = styleSheets.indexOf(sheet)
-  const styleSheetsAbove = styleSheets.slice(0, indexOfCurrentStyleSheet)
+export const StyleSheet = ({ sheet = {}, className = '', sheets }) => {
+  const indexOfCurrentStyleSheet = sheets.indexOf(sheet)
+  const styleSheetsAbove = sheets.slice(0, indexOfCurrentStyleSheet)
 
   return (
     <>

@@ -26,12 +26,14 @@ export const Console = () => {
   const [histories, setHistories] = useState([])
   const [hasPageEventsBeenRunned, setHasPageEventsBeenRunned] = useState(false)
 
-  const { notifications, addNotification } = useNotifications()
+  const { notifications, addNotification, showWorkerRequestError } =
+    useNotifications()
   const { isOpen, appliedPageEvents, customPageEvents, consolePosition } =
-    useConfig()
+    useConfig({ onError: showWorkerRequestError })
   const { setResizingFrom, resizeData, setMovingFrom, isMoving } = useResize({
     wrapperReference,
-    consolePosition
+    consolePosition,
+    onError: showWorkerRequestError
   })
 
   const handleCommandRun = useCallback((command, id) => {

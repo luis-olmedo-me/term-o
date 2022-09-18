@@ -9,7 +9,7 @@ import { debounce } from 'src/helpers/utils.helpers.js'
 import { defaultBodyData } from './useResize.constants'
 import { eventTypes } from 'src/constants/events.constants.js'
 
-export const useResize = ({ wrapperReference, consolePosition }) => {
+export const useResize = ({ wrapperReference, consolePosition, onError }) => {
   const [resizingFrom, setResizingFrom] = useState('')
   const [movingFrom, setMovingFrom] = useState(null)
   const [resizeData, setResizeData] = useState({
@@ -49,7 +49,7 @@ export const useResize = ({ wrapperReference, consolePosition }) => {
           bottom: isBelowMiniumHeight ? 10 : limitLowValue(newResizeData.bottom)
         }
 
-        updateConfig(formattedData)
+        updateConfig(formattedData, onError)
         setResizeData(formattedData)
         setBodyData(newBodyData)
       }, 500)
@@ -60,7 +60,7 @@ export const useResize = ({ wrapperReference, consolePosition }) => {
 
       return () => obsever.unobserve(document.body)
     },
-    [wrapperReference]
+    [wrapperReference, onError]
   )
 
   useEffect(() => {
@@ -69,41 +69,48 @@ export const useResize = ({ wrapperReference, consolePosition }) => {
       const emptySpace = bodyData.width - (bodyData.width * 30) / 100
       const widthTaken = bodyData.width - emptySpace
 
+      let newResizeData = null
+
       switch (side) {
         case 'right':
-          setResizeData({
+          newResizeData = {
             left: widthTaken < 400 ? 400 : emptySpace,
             top: 10,
             right: 10,
             bottom: 10
-          })
+          }
           break
 
         case 'left':
-          setResizeData({
+          newResizeData = {
             left: 10,
             top: 10,
             right: widthTaken < 400 ? 400 : emptySpace,
             bottom: 10
-          })
+          }
           break
 
         case 'full':
-          setResizeData({
+          newResizeData = {
             left: 10,
             top: 10,
             right: 10,
             bottom: 10
-          })
+          }
           break
       }
+
+      if (!newResizeData) return
+
+      setResizeData(newResizeData)
+      updateConfig(newResizeData, onError)
     }
 
     window.addEventListener(eventTypes.TERM_O_RESIZE, resizeCommandHandler)
 
     return () =>
       window.removeEventListener(eventTypes.TERM_O_RESIZE, resizeCommandHandler)
-  }, [bodyData])
+  }, [bodyData, onError])
 
   useEffect(
     function getConfigurationFromBackground() {
@@ -154,7 +161,7 @@ export const useResize = ({ wrapperReference, consolePosition }) => {
             ...oldResizeData,
             ...newResizeData
           }))
-          updateConfig(newResizeData)
+          updateConfig(newResizeData, onError)
 
           mousePosition = null
         }
@@ -177,7 +184,7 @@ export const useResize = ({ wrapperReference, consolePosition }) => {
 
       return removeResizeListener
     },
-    [resizingFrom, wrapperReference, bodyData]
+    [resizingFrom, wrapperReference, bodyData, onError]
   )
 
   return {

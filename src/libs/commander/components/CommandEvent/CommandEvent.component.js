@@ -106,11 +106,15 @@ export const CommandEvent = ({
     function handleActionType() {
       switch (actionType) {
         case eventActionTypes.SHOW_LIST:
-          fetchConfiguration().then(handleShowList)
+          fetchConfiguration()
+            .then(handleShowList)
+            .catch(() => setMessageData(eventMessages.unexpectedError))
           break
 
         case eventActionTypes.DELETE_EVENT:
-          fetchConfiguration().then(handleDeleteEvent)
+          fetchConfiguration()
+            .then(handleDeleteEvent)
+            .catch(() => setMessageData(eventMessages.unexpectedError))
           break
 
         case eventActionTypes.TRIGGER:

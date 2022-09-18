@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
 import { getActionType } from './CommandNotify.helpers'
 import { notifyMessages } from './CommandNotify.messages'
-import { Log } from '../../modules/Log/Log.component'
+import { Log } from '../../modules/Log'
 import { notifyActionTypes } from './CommandNotify.constants'
 
 export const CommandNotify = ({

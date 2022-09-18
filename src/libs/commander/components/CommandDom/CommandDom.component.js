@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { Log } from '../../modules/Log/Log.component'
+import { Log, AttributeEditionLog } from '../../modules/Log'
 import {
   generateFilterByEvery,
   generateFilterBySome,
@@ -14,7 +14,6 @@ import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginatio
 import { insertParams } from '../../commander.helpers'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
-import { AttributeEditionLog } from '../../modules/AttributeEditionLog/AttributeEditionLog.component'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 
 const CommandDomWithoutContext = ({

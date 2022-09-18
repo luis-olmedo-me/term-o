@@ -6,11 +6,10 @@ import {
   getOpenNodesFromObjetives
 } from './CommandInspect.helpers'
 import { inspectMessages } from './CommandInspect.messages'
-import { Log } from '../../modules/Log/Log.component'
+import { Log, AttributeEditionLog } from '../../modules/Log'
 import { inspectActionTypes } from './CommandInspect.constants'
 import { NodeTree } from '../../modules/NodeTree/NodeTree.component'
 import { getParamsByType } from '../../commander.helpers'
-import { AttributeEditionLog } from '../../modules/AttributeEditionLog/AttributeEditionLog.component'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'

@@ -3,7 +3,7 @@ import {
   customPageEventNames,
   parameterTypes
 } from '../../constants/commands.constants'
-import { Log } from '../../modules/Log/Log.component'
+import { Log } from '../../modules/Log'
 import { addPageEvents } from 'src/helpers/event.helpers.js'
 import { checkIfRegExpIsValid, getActionType } from './CommandOn.helpers'
 import { onMessages } from './CommandOn.messages'

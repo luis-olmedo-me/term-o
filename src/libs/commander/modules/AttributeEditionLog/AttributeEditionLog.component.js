@@ -7,7 +7,7 @@ import { turnAttributesIntoTableItems } from './AttributeEditionLog.helpers'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
-import { Log } from '../Log/Log.component'
+import { Log } from '../Log'
 
 export const AttributeEditionLog = ({ element, onGoBack }) => {
   const [newAtributeName, setNewAttributeName] = useState('')

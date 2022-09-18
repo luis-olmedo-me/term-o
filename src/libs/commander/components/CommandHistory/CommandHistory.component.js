@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from 'react'
 
-import { Log } from '../../modules/Log/Log.component'
+import { Log } from '../../modules/Log'
 
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { historyMessages } from './CommandHistory.messages'

@@ -15,6 +15,7 @@ import { insertParams } from '../../commander.helpers'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
+import { Element } from '../../modules/List/components/Element/Element.component'
 
 const CommandDomWithoutContext = ({
   props,
@@ -149,9 +150,14 @@ const CommandDomWithoutContext = ({
             {hasPinnedElements && (
               <List
                 items={pinnedElements}
-                pinnedElements={pinnedElements}
-                setPinnedElements={setPinnedElements}
-                shouldAnimate
+                Child={({ item }) => (
+                  <Element
+                    element={item}
+                    pinnedElements={pinnedElements}
+                    setPinnedElements={setPinnedElements}
+                    shouldAnimate
+                  />
+                )}
               />
             )}
 
@@ -161,9 +167,17 @@ const CommandDomWithoutContext = ({
                   <CarouselItem key={currentPageNumber}>
                     <List
                       items={page}
-                      pinnedElements={pinnedElements}
-                      setPinnedElements={setPinnedElements}
-                      customProps={{ onClick: handleElementClick }}
+                      Child={({ item }) => (
+                        <Element
+                          element={item}
+                          pinnedElements={pinnedElements}
+                          setPinnedElements={setPinnedElements}
+                          onClick={handleElementClick}
+                          variant={
+                            pinnedElements.includes(item) ? 'pinned' : 'default'
+                          }
+                        />
+                      )}
                     />
                   </CarouselItem>
                 )

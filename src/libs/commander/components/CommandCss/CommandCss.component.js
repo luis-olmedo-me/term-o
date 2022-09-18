@@ -111,9 +111,9 @@ export const CommandCss = ({
               <CarouselItem key={currentPageNumber}>
                 <List
                   items={page}
-                  pinnedElements={[]}
-                  Child={StyleSheet}
-                  customProps={{ styleSheets: page }}
+                  Child={({ item }) => (
+                    <StyleSheet element={item} styleSheets={page} />
+                  )}
                 />
               </CarouselItem>
             )

@@ -2,19 +2,11 @@ import React, { useState } from 'react'
 import { Favicon, FaviconSVG, TabWrapper, Title } from './Tab.styles'
 import { Logo } from 'src/modules/icons/Logo.icon'
 
-export const Tab = ({
-  element = {},
-  className = '',
-  variant = '',
-  shouldAnimate = false
-}) => {
+export const Tab = ({ element = {} }) => {
   const [hasError, setHasError] = useState(false)
 
   return (
-    <TabWrapper
-      className={`${className} ${variant}`}
-      shouldAnimate={shouldAnimate}
-    >
+    <TabWrapper>
       {hasError ? (
         <Logo size={28} Wrapper={FaviconSVG} />
       ) : (

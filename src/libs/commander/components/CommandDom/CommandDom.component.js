@@ -41,6 +41,7 @@ const CommandDomWithoutContext = ({
   const [elements, setElements] = useState([])
   const [pinnedElements, setPinnedElements] = useState([])
   const [editingElement, setEditingElement] = useState(null)
+  const [itemInView, setItemInView] = useState(0)
   const [sheets, setSheets] = useState(null)
 
   const actionType = getActionType(props)
@@ -140,13 +141,37 @@ const CommandDomWithoutContext = ({
     setEditingElement(element)
     setSheets(getStylesFrom(element))
     setHighlitedElement(null)
+    setItemInView(1)
+  }
+
+  const headToElements = {
+    id: 'head-to-elements',
+    text: '<☰',
+    onClick: () => {
+      setItemInView(0)
+      setEditingElement(null)
+    }
+  }
+  const headToStyles = {
+    id: 'head-to-styles',
+    text: '✂>',
+    onClick: () => {
+      setItemInView(2)
+    }
+  }
+  const headToAttributes = {
+    id: 'head-to-attributes',
+    text: '<✎',
+    onClick: () => {
+      setItemInView(1)
+    }
   }
 
   return (
     <>
       <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
-      <Carousel itemInView={editingElement ? 1 : 0}>
+      <Carousel itemInView={itemInView}>
         <CarouselItem>
           <Log variant={parameterTypes.ELEMENT} buttonGroups={buttonGroups}>
             {hasPinnedElements && (
@@ -188,15 +213,19 @@ const CommandDomWithoutContext = ({
           </Log>
         </CarouselItem>
 
-        {/* <CarouselItem>
+        <CarouselItem>
           <AttributeEditionLog
             element={editingElement}
-            onGoBack={() => setEditingElement(null)}
+            leftOptions={[headToElements]}
+            rightOptions={[headToStyles]}
           />
-        </CarouselItem> */}
+        </CarouselItem>
 
         <CarouselItem>
-          <Log variant={parameterTypes.STYLES}>
+          <Log
+            variant={parameterTypes.STYLES}
+            buttonGroups={[headToElements, headToAttributes]}
+          >
             <List
               items={sheets}
               Child={({ item }) => <StyleSheet sheet={item} sheets={sheets} />}

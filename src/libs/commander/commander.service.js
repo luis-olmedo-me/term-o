@@ -1,5 +1,5 @@
 import React from 'react'
-import { MessageCommand } from './components/MessageCommand/MessageCommand.component'
+import { MessageCommand } from './modules/Log'
 
 import { Outputs } from './components/Outputs/Outputs.component'
 import { consoleCommands } from './commander.constants'

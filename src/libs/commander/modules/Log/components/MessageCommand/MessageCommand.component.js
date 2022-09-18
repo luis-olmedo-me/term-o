@@ -1,6 +1,6 @@
 import React from 'react'
-import { Log } from '../../modules/Log'
-import { parameterTypes } from '../../constants/commands.constants'
+import { parameterTypes } from '../../../../constants/commands.constants'
+import { Log } from '../../Log.component'
 
 export const MessageCommand = ({
   terminal: {

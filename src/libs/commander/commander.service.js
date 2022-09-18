@@ -1,5 +1,5 @@
 import React from 'react'
-import { MessageCommand } from './modules/Log'
+import { MessageLog } from './modules/Log'
 
 import { Outputs } from './components/Outputs/Outputs.component'
 import { consoleCommands } from './commander.constants'
@@ -111,11 +111,11 @@ class Commander {
             }
           }
 
-          return <MessageCommand {...errorProps} />
+          return <MessageLog {...errorProps} />
         } else if (!providerProps.messageData.message) {
           return knownCommand?.output(commonProps) || null
         } else {
-          return <MessageCommand {...commonProps} />
+          return <MessageLog {...commonProps} />
         }
       }
     })

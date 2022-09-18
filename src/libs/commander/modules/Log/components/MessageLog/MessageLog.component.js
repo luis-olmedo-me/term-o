@@ -2,7 +2,7 @@ import React from 'react'
 import { parameterTypes } from '../../../../constants/commands.constants'
 import { Log } from '../../Log.component'
 
-export const MessageCommand = ({
+export const MessageLog = ({
   terminal: {
     messageData: { message, type },
     command

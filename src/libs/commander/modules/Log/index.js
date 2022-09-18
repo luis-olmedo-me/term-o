@@ -1,5 +1,5 @@
 import { AttributeEditionLog } from './components/AttributeEditionLog'
-import { MessageCommand } from './components/MessageCommand'
+import { MessageLog } from './components/MessageLog'
 import { Log } from './Log.component'
 
-export { Log, AttributeEditionLog, MessageCommand }
+export { Log, AttributeEditionLog, MessageLog }

@@ -142,6 +142,14 @@ const CommandDomWithoutContext = ({
     setHighlitedElement(null)
   }
 
+  const editionPageButtonGroups = [
+    {
+      id: 'go back',
+      text: '<',
+      onClick: () => setEditingElement(null)
+    }
+  ]
+
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
@@ -179,7 +187,10 @@ const CommandDomWithoutContext = ({
         </CarouselItem>
 
         <CarouselItem>
-          <LogWrapper variant={parameterTypes.TABLE}>
+          <LogWrapper
+            variant={parameterTypes.TABLE}
+            buttonGroups={editionPageButtonGroups}
+          >
             {editingElement && <ElementEdition element={editingElement} />}
           </LogWrapper>
         </CarouselItem>

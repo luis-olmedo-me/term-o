@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { getAttributes } from '../../components/CommandDom/CommandDom.helpers'
 import { Table } from 'modules/components/Table/Table.component'
 import { Input } from './components/AttributeInput/AttributeInput.styles'
-import { AttributeInput } from './components/AttributeInput/AttributeInput.component'
+import { parameterTypes } from '../../constants/commands.constants'
+import { turnAttributesIntoTableItems } from './ElementEdition.helpers'
 
 export const ElementEdition = ({ element }) => {
   const [newAtributeName, setNewAttributeName] = useState('')
@@ -10,30 +11,7 @@ export const ElementEdition = ({ element }) => {
 
   const attributes = getAttributes(element)
 
-  const attributeRows = Object.entries(attributes).map(
-    ([attributeName, attributeValue]) => {
-      const handleValueEnter = (newValue) => {
-        element.setAttribute(attributeName, newValue)
-      }
-      const handleNameEnter = (newName) => {
-        element.setAttribute(newName, attributeValue)
-        element.removeAttribute(attributeName)
-      }
-
-      return [
-        <AttributeInput
-          placeholder='Attribute name'
-          onEnter={handleNameEnter}
-          defaultValue={attributeName}
-        />,
-        <AttributeInput
-          placeholder='Attribute value'
-          onEnter={handleValueEnter}
-          defaultValue={attributeValue}
-        />
-      ]
-    }
-  )
+  const attributeRows = turnAttributesIntoTableItems({ attributes, element })
 
   const handleNewAttributeKeyUp = ({ key }) => {
     if (key === 'Enter') {
@@ -64,7 +42,20 @@ export const ElementEdition = ({ element }) => {
     ]
   ]
 
+  const editionPageButtonGroups = [
+    {
+      id: 'go-back',
+      text: '<',
+      onClick: () => setEditingElement(null)
+    }
+  ]
+
   return (
-    <Table headers={['Attribute', 'Value']} rows={rows} widths={[50, 50]} />
+    <LogWrapper
+      variant={parameterTypes.TABLE}
+      buttonGroups={editionPageButtonGroups}
+    >
+      <Table headers={['Attribute', 'Value']} rows={rows} widths={[50, 50]} />
+    </LogWrapper>
   )
 }

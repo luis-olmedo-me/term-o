@@ -14,9 +14,7 @@ import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginatio
 import { insertParams } from '../../commander.helpers'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
-import { ConsoleModal } from 'src/projects/content/modules/Console/components/ConsoleModal/ConsoleModal.component'
 import { ElementEdition } from '../../modules/ElementEdition/ElementEdition.component'
-import { ElementLabel } from '../../modules/NodeTree/components/ElementLabel/ElementLabel.component'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 
 const CommandDomWithoutContext = ({

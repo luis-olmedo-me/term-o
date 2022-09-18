@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { Log } from '../Log/Log.component'
+import { Log } from '../../modules/Log/Log.component'
 import {
   generateFilterByEvery,
   generateFilterBySome,

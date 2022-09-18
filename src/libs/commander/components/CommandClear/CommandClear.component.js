@@ -4,7 +4,7 @@ import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { getActionType } from './CommandClear.helpers'
 import { clearMessages } from './CommandClear.messages'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
-import { Log } from '../Log/Log.component'
+import { Log } from '../../modules/Log/Log.component'
 
 export const CommandClearWithoutContext = ({
   props,

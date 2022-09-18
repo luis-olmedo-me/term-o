@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
-import { Log } from '../Log/Log.component'
+import { Log } from '../../modules/Log/Log.component'
 import { Table } from 'modules/components/Table/Table.component'
 import { aliasHeaders } from './CommandAlias.constants'
 import {

@@ -5,7 +5,7 @@ import {
   getActionType,
   getMessagesFromCommandsToCheck
 } from './CommandHelp.helpers'
-import { Log } from '../Log/Log.component'
+import { Log } from '../../modules/Log/Log.component'
 import { consoleCommands } from '../../commander.constants'
 import { List } from 'modules/components/Table/List/List.component'
 import { Title } from './CommandHelp.styles'

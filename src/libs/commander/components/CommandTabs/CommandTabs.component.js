@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
 import { getActionType } from './CommandTabs.helpers'
-import { Log } from '../Log/Log.component'
+import { Log } from '../../modules/Log/Log.component'
 import { tabsActionTypes } from './CommandTabs.constants'
 import { getTabsInfo } from 'src/helpers/event.helpers.js'
 import { ParameterElements } from '../../modules/ParameterElements/ParameterElements.component'

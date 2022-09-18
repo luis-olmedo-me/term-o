@@ -1,5 +1,5 @@
 import React from 'react'
-import { Log } from '../Log/Log.component'
+import { Log } from '../../modules/Log/Log.component'
 import { parameterTypes } from '../../constants/commands.constants'
 
 export const MessageCommand = ({

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
 import { styleElements, validateStyles } from '../../commander.promises'
 import { getParamsByType } from '../../commander.helpers'
-import { Log } from '../Log/Log.component'
+import { Log } from '../../modules/Log/Log.component'
 import {
   getActionType,
   getStylesFrom,

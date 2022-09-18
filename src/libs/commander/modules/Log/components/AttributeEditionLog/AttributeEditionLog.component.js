@@ -49,6 +49,10 @@ export const AttributeEditionLog = ({ element, onGoBack }) => {
     />
   ]
 
+  const parsedPages = pages.length
+    ? pages.map((page) => [...page, editableRow])
+    : [[editableRow]]
+
   const editionPageButtonGroups = [
     {
       id: 'go-back',
@@ -61,13 +65,13 @@ export const AttributeEditionLog = ({ element, onGoBack }) => {
   return (
     <Log variant={parameterTypes.TABLE} buttonGroups={editionPageButtonGroups}>
       <Carousel itemInView={pageNumber}>
-        {pages.map((page, currentPageNumber) => {
+        {parsedPages.map((page, currentPageNumber) => {
           return (
             <CarouselItem key={currentPageNumber}>
               <Table
                 key={currentPageNumber}
                 headers={['Attribute', 'Value']}
-                rows={[...page, editableRow]}
+                rows={page}
                 widths={[50, 50]}
               />
             </CarouselItem>

@@ -3,13 +3,13 @@ import { getAttributes } from '../../components/CommandDom/CommandDom.helpers'
 import { Table } from 'modules/components/Table/Table.component'
 import { Input } from './components/AttributeInput/AttributeInput.styles'
 import { parameterTypes } from '../../constants/commands.constants'
-import { turnAttributesIntoTableItems } from './ElementEdition.helpers'
+import { turnAttributesIntoTableItems } from './AttributeEditionLog.helpers'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
-import { Log } from '../../modules/Log/Log.component'
+import { Log } from '../Log/Log.component'
 
-export const ElementEdition = ({ element, onGoBack }) => {
+export const AttributeEditionLog = ({ element, onGoBack }) => {
   const [newAtributeName, setNewAttributeName] = useState('')
   const [newAtributeValue, setNewAttributeValue] = useState('')
 

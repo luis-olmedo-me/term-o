@@ -10,7 +10,7 @@ import { Log } from '../../modules/Log/Log.component'
 import { inspectActionTypes } from './CommandInspect.constants'
 import { NodeTree } from '../../modules/NodeTree/NodeTree.component'
 import { getParamsByType } from '../../commander.helpers'
-import { ElementEdition } from '../../modules/ElementEdition/ElementEdition.component'
+import { AttributeEditionLog } from '../../modules/AttributeEditionLog/AttributeEditionLog.component'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
@@ -93,7 +93,7 @@ const CommandInspectWithoutContext = ({
         </Log>
 
         <CarouselItem>
-          <ElementEdition
+          <AttributeEditionLog
             element={editingElement}
             onGoBack={() => setEditingElement(null)}
           />

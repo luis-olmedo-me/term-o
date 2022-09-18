@@ -18,7 +18,7 @@ export const AttributeEditionLog = ({ element, onGoBack }) => {
   const attributeRows = turnAttributesIntoTableItems({ attributes, element })
   const { buttonGroups, pages, pageNumber } = usePaginationGroups({
     items: attributeRows,
-    maxItems: 2
+    maxItems: 9
   })
 
   const handleNewAttributeKeyUp = ({ key }) => {

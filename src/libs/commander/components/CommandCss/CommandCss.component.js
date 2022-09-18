@@ -111,7 +111,7 @@ export const CommandCss = ({
                 <List
                   items={page}
                   Child={({ item }) => (
-                    <StyleSheet element={item} styleSheets={page} />
+                    <StyleSheet sheet={item} styleSheets={page} />
                   )}
                 />
               </CarouselItem>

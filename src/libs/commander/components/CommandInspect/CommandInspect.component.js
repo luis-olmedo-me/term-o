@@ -70,7 +70,7 @@ const CommandInspectWithoutContext = ({
 
   const editionPageButtonGroups = [
     {
-      id: 'go back',
+      id: 'go-back',
       text: '<',
       onClick: () => setEditingElement(null)
     }

@@ -7,9 +7,9 @@ import {
 } from './CommandHelp.helpers'
 import { Log } from '../../modules/Log'
 import { consoleCommands } from '../../commander.constants'
-import { TableList } from 'modules/components/Table/TableList/TableList.component'
 import { Title } from './CommandHelp.styles'
 import { removeDuplicatedFromArray } from 'src/helpers/utils.helpers.js'
+import { SimpleList } from '../../modules/List'
 
 export const CommandHelp = ({ props, terminal: { command, finish } }) => {
   const actionType = getActionType(props)
@@ -66,7 +66,7 @@ export const CommandHelp = ({ props, terminal: { command, finish } }) => {
             <div key={id}>
               <Title>{title}</Title>
 
-              {showList && <TableList items={items} warning={warning} />}
+              {showList && <SimpleList items={items} warning={warning} />}
             </div>
           )
         })}

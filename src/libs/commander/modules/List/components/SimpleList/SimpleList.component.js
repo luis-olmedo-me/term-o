@@ -1,7 +1,7 @@
 import React from 'react'
-import { ListContainer, Warning } from './TableList.styles'
+import { ListContainer, Warning } from './SimpleList.styles'
 
-export const TableList = ({ items, warning }) => {
+export const SimpleList = ({ items, warning }) => {
   return (
     <ListContainer>
       {warning && <Warning>{warning}</Warning>}

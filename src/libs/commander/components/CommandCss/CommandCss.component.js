@@ -22,12 +22,12 @@ export const CommandCss = ({
 }) => {
   const { styles, manualStyles } = props
 
-  const [stylesApplied, setStylesApplied] = useState([])
+  const [sheets, setSheets] = useState([])
 
   const actionType = getActionType(props)
 
   const { buttonGroups, pages, pageNumber } = usePaginationGroups({
-    items: stylesApplied,
+    items: sheets,
     maxItems: 10
   })
 
@@ -53,7 +53,7 @@ export const CommandCss = ({
       }
 
       styleElements({ styles: validStyles, elements: paramElements })
-      setStylesApplied([{ title: 'Styles', styles: validStyles }])
+      setSheets([{ title: 'Styles', styles: validStyles }])
       finish()
     },
     [styles, manualStyles, setMessageData, finish]
@@ -76,7 +76,7 @@ export const CommandCss = ({
       ? [{ title: 'Styles', styles: directStylesAppllied }]
       : []
 
-    setStylesApplied([...directStylesWithSchema, ...newStylesApplied])
+    setSheets([...directStylesWithSchema, ...newStylesApplied])
     finish()
   }, [setMessageData, finish])
 

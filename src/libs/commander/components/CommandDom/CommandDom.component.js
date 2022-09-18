@@ -137,54 +137,53 @@ const CommandDomWithoutContext = ({
 
   const hasPinnedElements = pinnedElements.length > 0
 
-  const handleModalExit = useCallback(
-    () => setEditingElement(null),
-    [setEditingElement]
-  )
+  const handleElementClick = ({ element }) => {
+    setEditingElement(element)
+    setHighlitedElement(null)
+  }
 
   return (
     <>
       <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
 
-      <LogWrapper variant={parameterTypes.ELEMENT} buttonGroups={buttonGroups}>
-        {hasPinnedElements && (
-          <ParameterElements
-            elements={pinnedElements}
-            pinnedElements={pinnedElements}
-            setPinnedElements={setPinnedElements}
-            shouldAnimate
-          />
-        )}
+      <Carousel itemInView={editingElement ? 1 : 0}>
+        <CarouselItem>
+          <LogWrapper
+            variant={parameterTypes.ELEMENT}
+            buttonGroups={buttonGroups}
+          >
+            {hasPinnedElements && (
+              <ParameterElements
+                elements={pinnedElements}
+                pinnedElements={pinnedElements}
+                setPinnedElements={setPinnedElements}
+                shouldAnimate
+              />
+            )}
 
-        <Carousel itemInView={pageNumber}>
-          {pages.map((page, currentPageNumber) => {
-            return (
-              <CarouselItem key={currentPageNumber}>
-                <ParameterElements
-                  elements={page}
-                  pinnedElements={pinnedElements}
-                  setPinnedElements={setPinnedElements}
-                  customProps={{
-                    onClick: ({ element }) => setEditingElement(element)
-                  }}
-                />
-              </CarouselItem>
-            )
-          })}
-        </Carousel>
-      </LogWrapper>
+            <Carousel itemInView={pageNumber}>
+              {pages.map((page, currentPageNumber) => {
+                return (
+                  <CarouselItem key={currentPageNumber}>
+                    <ParameterElements
+                      elements={page}
+                      pinnedElements={pinnedElements}
+                      setPinnedElements={setPinnedElements}
+                      customProps={{ onClick: handleElementClick }}
+                    />
+                  </CarouselItem>
+                )
+              })}
+            </Carousel>
+          </LogWrapper>
+        </CarouselItem>
 
-      <ConsoleModal
-        isOpen={Boolean(editingElement)}
-        title={<ElementLabel element={editingElement} hideAttributes />}
-        titleProps={{
-          onMouseEnter: () => setHighlitedElement(editingElement),
-          onMouseLeave: () => setHighlitedElement(null)
-        }}
-        onExit={handleModalExit}
-      >
-        <ElementEdition element={editingElement} />
-      </ConsoleModal>
+        <CarouselItem>
+          <LogWrapper variant={parameterTypes.TABLE}>
+            {editingElement && <ElementEdition element={editingElement} />}
+          </LogWrapper>
+        </CarouselItem>
+      </Carousel>
     </>
   )
 }

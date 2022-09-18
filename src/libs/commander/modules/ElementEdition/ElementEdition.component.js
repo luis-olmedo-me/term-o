@@ -65,11 +65,6 @@ export const ElementEdition = ({ element }) => {
   ]
 
   return (
-    <div
-      onClick={(event) => event.stopPropagation()}
-      onMouseDown={(event) => event.stopPropagation()}
-    >
-      <Table headers={['Attribute', 'Value']} rows={rows} widths={[50, 50]} />
-    </div>
+    <Table headers={['Attribute', 'Value']} rows={rows} widths={[50, 50]} />
   )
 }

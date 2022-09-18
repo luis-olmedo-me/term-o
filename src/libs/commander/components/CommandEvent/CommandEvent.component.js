@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
-import { LogWrapper } from '../LogWrapper/LogWrapper.component'
+import { Log } from '../../modules/Log'
 import { Table } from 'modules/components/Table/Table.component'
 import {
   eventActionTypes,
@@ -106,11 +106,15 @@ export const CommandEvent = ({
     function handleActionType() {
       switch (actionType) {
         case eventActionTypes.SHOW_LIST:
-          fetchConfiguration().then(handleShowList)
+          fetchConfiguration()
+            .then(handleShowList)
+            .catch(() => setMessageData(eventMessages.unexpectedError))
           break
 
         case eventActionTypes.DELETE_EVENT:
-          fetchConfiguration().then(handleDeleteEvent)
+          fetchConfiguration()
+            .then(handleDeleteEvent)
+            .catch(() => setMessageData(eventMessages.unexpectedError))
           break
 
         case eventActionTypes.TRIGGER:
@@ -126,9 +130,9 @@ export const CommandEvent = ({
 
   return (
     <>
-      <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
+      <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
-      <LogWrapper variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
+      <Log variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
         <Carousel itemInView={pageNumber}>
           {pages.map((page, currentPageNumber) => {
             return (
@@ -142,7 +146,7 @@ export const CommandEvent = ({
             )
           })}
         </Carousel>
-      </LogWrapper>
+      </Log>
     </>
   )
 }

@@ -1,125 +1,70 @@
 import { eventTypes } from 'src/constants/events.constants.js'
 
-export const backgroundRequest = ({ eventType, callback = () => {}, data }) => {
-  chrome?.runtime?.sendMessage?.({ type: eventType, data }, callback)
-}
-
-export const fetchConfiguration = () => {
+export const createWorkerRequest = ({ type, data, defaultResponse }) => {
   return new Promise((resolve, reject) => {
     const callback = (response) => {
       if (response?.status === 'ok') {
-        resolve(response?.response || {})
+        resolve(response?.data || defaultResponse)
       } else {
         reject(response?.error)
       }
     }
 
-    backgroundRequest({ eventType: eventTypes.GET_CONFIGURATION, callback })
+    chrome?.runtime?.sendMessage?.({ type, data }, callback)
+  })
+}
+
+export const fetchConfiguration = () => {
+  return createWorkerRequest({
+    type: eventTypes.GET_CONFIGURATION,
+    defaultResponse: {}
   })
 }
 
 export const addAliases = (newAliases) => {
-  return new Promise((resolve, reject) => {
-    const callback = (response) => {
-      if (response?.status === 'ok') {
-        resolve()
-      } else {
-        reject(response?.error)
-      }
-    }
-
-    backgroundRequest({
-      eventType: eventTypes.ADD_ALIAS,
-      callback,
-      data: newAliases
-    })
+  return createWorkerRequest({
+    type: eventTypes.ADD_ALIAS,
+    data: newAliases
   })
 }
 
 export const deleteAliases = (aliasIds) => {
-  return new Promise((resolve, reject) => {
-    const callback = (response) => {
-      if (response?.status === 'ok') {
-        resolve()
-      } else {
-        reject(response?.error)
-      }
-    }
-
-    backgroundRequest({
-      eventType: eventTypes.DELETE_ALIAS,
-      callback,
-      data: { aliasIdsToDelete: aliasIds }
-    })
+  return createWorkerRequest({
+    type: eventTypes.DELETE_ALIAS,
+    data: { aliasIdsToDelete: aliasIds }
   })
 }
 
 export const deletePageEvents = (ids) => {
-  return new Promise((resolve, reject) => {
-    const callback = (response) => {
-      if (response?.status === 'ok') {
-        resolve()
-      } else {
-        reject(response?.error)
-      }
-    }
-
-    backgroundRequest({
-      eventType: eventTypes.DELETE_PAGES_EVENT,
-      callback,
-      data: { ids }
-    })
+  return createWorkerRequest({
+    type: eventTypes.DELETE_PAGES_EVENT,
+    data: { ids }
   })
 }
 
 export const addPageEvents = (newPageEvents) => {
-  return new Promise((resolve, reject) => {
-    const callback = (response) => {
-      if (response?.status === 'ok') {
-        resolve()
-      } else {
-        reject(response?.error)
-      }
-    }
-
-    backgroundRequest({
-      eventType: eventTypes.ADD_PAGES_EVENT,
-      callback,
-      data: newPageEvents
-    })
+  return createWorkerRequest({
+    type: eventTypes.ADD_PAGES_EVENT,
+    data: newPageEvents
   })
 }
 
 export const resetConfiguration = () => {
-  return new Promise((resolve, reject) => {
-    const callback = (response) => {
-      if (response?.status === 'ok') {
-        resolve()
-      } else {
-        reject(response?.error)
-      }
-    }
-
-    backgroundRequest({
-      eventType: eventTypes.RESET_CONFIGURATION,
-      callback
-    })
+  return createWorkerRequest({
+    type: eventTypes.RESET_CONFIGURATION
   })
 }
 
 export const getTabsInfo = () => {
-  return new Promise((resolve, reject) => {
-    const callback = (response) => {
-      if (response?.status === 'ok') {
-        resolve(response.data)
-      } else {
-        reject(response?.error)
-      }
-    }
+  return createWorkerRequest({
+    type: eventTypes.GET_TABS_INFO,
+    defaultResponse: []
+  })
+}
 
-    backgroundRequest({
-      eventType: eventTypes.GET_TABS_INFO,
-      callback
-    })
+export const updateConsolePosition = (position) => {
+  return createWorkerRequest({
+    type: eventTypes.UPDATE_CONFIG_CONSOLE_POSITION,
+    data: position
   })
 }

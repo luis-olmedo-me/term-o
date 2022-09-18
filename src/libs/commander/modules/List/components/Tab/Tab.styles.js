@@ -26,23 +26,9 @@ export const TabWrapper = styled.span`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  animation-name: ${(props) => (props.shouldAnimate ? Birth : '')};
+  animation-name: ${Birth};
   animation-duration: 0.5s;
   transform-origin: right;
-
-  &&.pinned {
-    border-left: 10px solid #f8c572;
-    background-color: #ffeecc;
-
-    && button {
-      background-color: transparent;
-      border-left: 1px solid #00000015;
-
-      &:hover {
-        background-color: #ffffff30;
-      }
-    }
-  }
 `
 
 export const Favicon = styled.img`

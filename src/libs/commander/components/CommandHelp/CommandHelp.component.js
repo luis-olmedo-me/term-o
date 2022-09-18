@@ -5,11 +5,11 @@ import {
   getActionType,
   getMessagesFromCommandsToCheck
 } from './CommandHelp.helpers'
-import { LogWrapper } from '../LogWrapper/LogWrapper.component'
+import { Log } from '../../modules/Log'
 import { consoleCommands } from '../../commander.constants'
-import { List } from 'modules/components/Table/List/List.component'
 import { Title } from './CommandHelp.styles'
 import { removeDuplicatedFromArray } from 'src/helpers/utils.helpers.js'
+import { SimpleList } from '../../modules/List'
 
 export const CommandHelp = ({ props, terminal: { command, finish } }) => {
   const actionType = getActionType(props)
@@ -55,9 +55,9 @@ export const CommandHelp = ({ props, terminal: { command, finish } }) => {
 
   return (
     <>
-      <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
+      <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
-      <LogWrapper variant={parameterTypes.HELP}>
+      <Log variant={parameterTypes.HELP}>
         {localMessages.map(({ id, title, items, warning }) => {
           const hasItems = items?.length > 0
           const showList = hasItems || warning
@@ -66,11 +66,11 @@ export const CommandHelp = ({ props, terminal: { command, finish } }) => {
             <div key={id}>
               <Title>{title}</Title>
 
-              {showList && <List items={items} warning={warning} />}
+              {showList && <SimpleList items={items} warning={warning} />}
             </div>
           )
         })}
-      </LogWrapper>
+      </Log>
     </>
   )
 }

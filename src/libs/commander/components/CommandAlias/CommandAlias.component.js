@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
-import { LogWrapper } from '../LogWrapper/LogWrapper.component'
+import { Log } from '../../modules/Log'
 import { Table } from 'modules/components/Table/Table.component'
 import { aliasHeaders } from './CommandAlias.constants'
 import {
@@ -77,11 +77,15 @@ export const CommandAlias = ({
     function handleActionType() {
       switch (actionType) {
         case actionTypes.SHOW_LIST:
-          fetchConfiguration().then(handleShowList)
+          fetchConfiguration()
+            .then(handleShowList)
+            .catch(() => setMessageData(aliasMessages.unexpectedError))
           break
 
         case actionTypes.DELETE_ALIAS:
-          fetchConfiguration().then(handleDeleteAliases)
+          fetchConfiguration()
+            .then(handleDeleteAliases)
+            .catch(() => setMessageData(aliasMessages.unexpectedError))
           break
 
         case actionTypes.ADD_ALIAS:
@@ -98,9 +102,9 @@ export const CommandAlias = ({
 
   return (
     <>
-      <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
+      <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
-      <LogWrapper variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
+      <Log variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
         <Carousel itemInView={pageNumber}>
           {pages.map((page, currentPageNumber) => {
             return (
@@ -114,7 +118,7 @@ export const CommandAlias = ({
             )
           })}
         </Carousel>
-      </LogWrapper>
+      </Log>
     </>
   )
 }

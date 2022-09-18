@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { LogWrapper } from '../LogWrapper/LogWrapper.component'
+import { Log, AttributeEditionLog } from '../../modules/Log'
 import {
   generateFilterByEvery,
   generateFilterBySome,
@@ -8,15 +8,12 @@ import {
   getParentsOfElements
 } from './CommandDom.helpers'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
-import { ParameterElements } from '../../modules/ParameterElements/ParameterElements.component'
+import { List, Element } from '../../modules/List'
 import { domMessages } from './CommandDom.messages'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 import { insertParams } from '../../commander.helpers'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
-import { ConsoleModal } from 'src/projects/content/modules/Console/components/ConsoleModal/ConsoleModal.component'
-import { ElementEdition } from '../../modules/ElementEdition/ElementEdition.component'
-import { ElementLabel } from '../../modules/NodeTree/components/ElementLabel/ElementLabel.component'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 
 const CommandDomWithoutContext = ({
@@ -137,54 +134,64 @@ const CommandDomWithoutContext = ({
 
   const hasPinnedElements = pinnedElements.length > 0
 
-  const handleModalExit = useCallback(
-    () => setEditingElement(null),
-    [setEditingElement]
-  )
+  const handleElementClick = ({ element }) => {
+    setEditingElement(element)
+    setHighlitedElement(null)
+  }
 
   return (
     <>
-      <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
+      <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
-      <LogWrapper variant={parameterTypes.ELEMENT} buttonGroups={buttonGroups}>
-        {hasPinnedElements && (
-          <ParameterElements
-            elements={pinnedElements}
-            pinnedElements={pinnedElements}
-            setPinnedElements={setPinnedElements}
-            shouldAnimate
+      <Carousel itemInView={editingElement ? 1 : 0}>
+        <CarouselItem>
+          <Log variant={parameterTypes.ELEMENT} buttonGroups={buttonGroups}>
+            {hasPinnedElements && (
+              <List
+                items={pinnedElements}
+                Child={({ item }) => (
+                  <Element
+                    element={item}
+                    pinnedElements={pinnedElements}
+                    setPinnedElements={setPinnedElements}
+                    shouldAnimate
+                  />
+                )}
+              />
+            )}
+
+            <Carousel itemInView={pageNumber}>
+              {pages.map((page, currentPageNumber) => {
+                return (
+                  <CarouselItem key={currentPageNumber}>
+                    <List
+                      items={page}
+                      Child={({ item }) => (
+                        <Element
+                          element={item}
+                          pinnedElements={pinnedElements}
+                          setPinnedElements={setPinnedElements}
+                          onClick={handleElementClick}
+                          variant={
+                            pinnedElements.includes(item) ? 'pinned' : 'default'
+                          }
+                        />
+                      )}
+                    />
+                  </CarouselItem>
+                )
+              })}
+            </Carousel>
+          </Log>
+        </CarouselItem>
+
+        <CarouselItem>
+          <AttributeEditionLog
+            element={editingElement}
+            onGoBack={() => setEditingElement(null)}
           />
-        )}
-
-        <Carousel itemInView={pageNumber}>
-          {pages.map((page, currentPageNumber) => {
-            return (
-              <CarouselItem key={currentPageNumber}>
-                <ParameterElements
-                  elements={page}
-                  pinnedElements={pinnedElements}
-                  setPinnedElements={setPinnedElements}
-                  customProps={{
-                    onClick: ({ element }) => setEditingElement(element)
-                  }}
-                />
-              </CarouselItem>
-            )
-          })}
-        </Carousel>
-      </LogWrapper>
-
-      <ConsoleModal
-        isOpen={Boolean(editingElement)}
-        title={<ElementLabel element={editingElement} hideAttributes />}
-        titleProps={{
-          onMouseEnter: () => setHighlitedElement(editingElement),
-          onMouseLeave: () => setHighlitedElement(null)
-        }}
-        onExit={handleModalExit}
-      >
-        <ElementEdition element={editingElement} />
-      </ConsoleModal>
+        </CarouselItem>
+      </Carousel>
     </>
   )
 }

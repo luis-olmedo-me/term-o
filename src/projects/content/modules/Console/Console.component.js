@@ -16,7 +16,6 @@ import { useResize } from './hooks/useResize/useResize.hook.js'
 import { ConsoleTitle, ConsoleLogs, ConsoleWrapper } from './Console.styles.js'
 import { Notifications } from 'src/modules/components/Notifications/Notifications.component.js'
 import { useNotifications } from 'src/modules/components/Notifications/hooks/useNotifications.hook.js'
-import { ConsolePortalContext } from './components/ConsolePortal/ConsolePortal.contexts.js'
 
 export const Console = () => {
   const wrapperReference = useRef(null)
@@ -26,12 +25,14 @@ export const Console = () => {
   const [histories, setHistories] = useState([])
   const [hasPageEventsBeenRunned, setHasPageEventsBeenRunned] = useState(false)
 
-  const { notifications, addNotification } = useNotifications()
+  const { notifications, addNotification, showWorkerRequestError } =
+    useNotifications()
   const { isOpen, appliedPageEvents, customPageEvents, consolePosition } =
-    useConfig()
+    useConfig({ onError: showWorkerRequestError })
   const { setResizingFrom, resizeData, setMovingFrom, isMoving } = useResize({
     wrapperReference,
-    consolePosition
+    consolePosition,
+    onError: showWorkerRequestError
   })
 
   const handleCommandRun = useCallback((command, id) => {
@@ -122,40 +123,36 @@ export const Console = () => {
       onKeyUp={cancelEventPropagation}
       onKeyPress={cancelEventPropagation}
     >
-      <ConsolePortalContext.Provider value={{ root: wrapperReference.current }}>
-        {!isMoving
-          ? singleResizeTypes.map((resizeType) => (
-              <Resizer
-                key={resizeType}
-                resizeType={resizeType}
-                setResizingFrom={setResizingFrom}
-              />
-            ))
-          : null}
+      {!isMoving
+        ? singleResizeTypes.map((resizeType) => (
+            <Resizer
+              key={resizeType}
+              resizeType={resizeType}
+              setResizingFrom={setResizingFrom}
+            />
+          ))
+        : null}
 
-        <ConsoleTitle
-          ref={titleReference}
-          onMouseDown={(event) => {
-            setResizingFrom(resizeTypes.MOVING)
-            setMovingFrom({ x: event.clientX, y: event.clientY })
-          }}
-        >
-          TERM-O
-        </ConsoleTitle>
+      <ConsoleTitle
+        ref={titleReference}
+        onMouseDown={(event) => {
+          setResizingFrom(resizeTypes.MOVING)
+          setMovingFrom({ x: event.clientX, y: event.clientY })
+        }}
+      >
+        TERM-O
+      </ConsoleTitle>
 
-        <ConsoleLogs style={consoleStyles}>
-          {histories.map((history) => history(outsideProps))}
-        </ConsoleLogs>
+      <ConsoleLogs style={consoleStyles}>
+        {histories.map((history) => history(outsideProps))}
+      </ConsoleLogs>
 
-        <CommandInput
-          inputReference={inputReference}
-          handleOnEnter={(command) =>
-            handleCommandRun(command, histories.length)
-          }
-        />
+      <CommandInput
+        inputReference={inputReference}
+        handleOnEnter={(command) => handleCommandRun(command, histories.length)}
+      />
 
-        <Notifications messages={notifications} />
-      </ConsolePortalContext.Provider>
+      <Notifications messages={notifications} />
     </ConsoleWrapper>
   )
 }

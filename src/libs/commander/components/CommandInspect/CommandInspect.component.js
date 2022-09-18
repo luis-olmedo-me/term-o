@@ -6,14 +6,13 @@ import {
   getOpenNodesFromObjetives
 } from './CommandInspect.helpers'
 import { inspectMessages } from './CommandInspect.messages'
-import { LogWrapper } from '../LogWrapper/LogWrapper.component'
+import { Log, AttributeEditionLog } from '../../modules/Log'
 import { inspectActionTypes } from './CommandInspect.constants'
 import { NodeTree } from '../../modules/NodeTree/NodeTree.component'
 import { getParamsByType } from '../../commander.helpers'
-import { ConsoleModal } from 'src/projects/content/modules/Console/components/ConsoleModal/ConsoleModal.component'
-import { ElementEdition } from '../../modules/ElementEdition/ElementEdition.component'
-import { ElementLabel } from '../../modules/NodeTree/components/ElementLabel/ElementLabel.component'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
+import { Carousel } from 'modules/components/Carousel/Carousel.component'
+import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 
 const CommandInspectWithoutContext = ({
   props,
@@ -68,40 +67,37 @@ const CommandInspectWithoutContext = ({
     setHTMLRoot(sanitazedNewRoot)
   }
 
-  const handleModalExit = useCallback(
-    () => setEditingElement(null),
-    [setEditingElement]
-  )
+  const handleElementClick = (element) => {
+    setEditingElement(element)
+    setHighlitedElement(null)
+  }
 
   return (
     <>
-      <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
+      <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
-      <LogWrapper variant={parameterTypes.ELEMENT}>
-        {HTMLRoot && (
-          <NodeTree
-            root={HTMLRoot}
-            objetives={objetives}
-            setObjetives={setObjetives}
-            openNodes={openNodes}
-            setOpenNodes={setOpenNodes}
-            setEditingElement={setEditingElement}
-            handleRootChange={handleRootChange}
+      <Carousel itemInView={editingElement ? 1 : 0}>
+        <Log variant={parameterTypes.ELEMENT}>
+          {HTMLRoot && (
+            <NodeTree
+              root={HTMLRoot}
+              objetives={objetives}
+              setObjetives={setObjetives}
+              openNodes={openNodes}
+              setOpenNodes={setOpenNodes}
+              setEditingElement={handleElementClick}
+              handleRootChange={handleRootChange}
+            />
+          )}
+        </Log>
+
+        <CarouselItem>
+          <AttributeEditionLog
+            element={editingElement}
+            onGoBack={() => setEditingElement(null)}
           />
-        )}
-      </LogWrapper>
-
-      <ConsoleModal
-        isOpen={Boolean(editingElement)}
-        title={<ElementLabel element={editingElement} hideAttributes />}
-        titleProps={{
-          onMouseEnter: () => setHighlitedElement(editingElement),
-          onMouseLeave: () => setHighlitedElement(null)
-        }}
-        onExit={handleModalExit}
-      >
-        <ElementEdition element={editingElement} />
-      </ConsoleModal>
+        </CarouselItem>
+      </Carousel>
     </>
   )
 }

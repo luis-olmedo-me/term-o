@@ -4,7 +4,7 @@ import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { getActionType } from './CommandClear.helpers'
 import { clearMessages } from './CommandClear.messages'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
-import { LogWrapper } from '../LogWrapper/LogWrapper.component'
+import { Log } from '../../modules/Log'
 
 export const CommandClearWithoutContext = ({
   props,
@@ -48,7 +48,7 @@ export const CommandClearWithoutContext = ({
     ]
   )
 
-  return <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
+  return <Log variant={parameterTypes.COMMAND}>{command}</Log>
 }
 
 export const CommandClear = withOverlayContext(CommandClearWithoutContext)

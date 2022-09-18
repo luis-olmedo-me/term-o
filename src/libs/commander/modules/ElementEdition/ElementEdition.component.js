@@ -7,7 +7,7 @@ import { turnAttributesIntoTableItems } from './ElementEdition.helpers'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
-import { LogWrapper } from '../../components/LogWrapper/LogWrapper.component'
+import { Log } from '../../components/Log/Log.component'
 
 export const ElementEdition = ({ element, onGoBack }) => {
   const [newAtributeName, setNewAttributeName] = useState('')
@@ -59,10 +59,7 @@ export const ElementEdition = ({ element, onGoBack }) => {
   ]
 
   return (
-    <LogWrapper
-      variant={parameterTypes.TABLE}
-      buttonGroups={editionPageButtonGroups}
-    >
+    <Log variant={parameterTypes.TABLE} buttonGroups={editionPageButtonGroups}>
       <Carousel itemInView={pageNumber}>
         {pages.map((page, currentPageNumber) => {
           return (
@@ -77,6 +74,6 @@ export const ElementEdition = ({ element, onGoBack }) => {
           )
         })}
       </Carousel>
-    </LogWrapper>
+    </Log>
   )
 }

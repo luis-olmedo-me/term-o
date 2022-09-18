@@ -6,7 +6,7 @@ import {
   getOpenNodesFromObjetives
 } from './CommandInspect.helpers'
 import { inspectMessages } from './CommandInspect.messages'
-import { LogWrapper } from '../LogWrapper/LogWrapper.component'
+import { Log } from '../Log/Log.component'
 import { inspectActionTypes } from './CommandInspect.constants'
 import { NodeTree } from '../../modules/NodeTree/NodeTree.component'
 import { getParamsByType } from '../../commander.helpers'
@@ -75,10 +75,10 @@ const CommandInspectWithoutContext = ({
 
   return (
     <>
-      <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
+      <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
       <Carousel itemInView={editingElement ? 1 : 0}>
-        <LogWrapper variant={parameterTypes.ELEMENT}>
+        <Log variant={parameterTypes.ELEMENT}>
           {HTMLRoot && (
             <NodeTree
               root={HTMLRoot}
@@ -90,7 +90,7 @@ const CommandInspectWithoutContext = ({
               handleRootChange={handleRootChange}
             />
           )}
-        </LogWrapper>
+        </Log>
 
         <CarouselItem>
           <ElementEdition

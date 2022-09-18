@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
 import { styleElements, validateStyles } from '../../commander.promises'
 import { getParamsByType } from '../../commander.helpers'
-import { LogWrapper } from '../LogWrapper/LogWrapper.component'
+import { Log } from '../Log/Log.component'
 import {
   getActionType,
   getStylesFrom,
@@ -102,9 +102,9 @@ export const CommandCss = ({
 
   return (
     <>
-      <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
+      <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
-      <LogWrapper variant={parameterTypes.STYLES} buttonGroups={buttonGroups}>
+      <Log variant={parameterTypes.STYLES} buttonGroups={buttonGroups}>
         <Carousel itemInView={pageNumber}>
           {pages.map((page, currentPageNumber) => {
             return (
@@ -119,7 +119,7 @@ export const CommandCss = ({
             )
           })}
         </Carousel>
-      </LogWrapper>
+      </Log>
     </>
   )
 }

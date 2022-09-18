@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
 import { getActionType } from './CommandTabs.helpers'
-import { LogWrapper } from '../LogWrapper/LogWrapper.component'
+import { Log } from '../Log/Log.component'
 import { tabsActionTypes } from './CommandTabs.constants'
 import { getTabsInfo } from 'src/helpers/event.helpers.js'
 import { ParameterElements } from '../../modules/ParameterElements/ParameterElements.component'
@@ -51,9 +51,9 @@ export const CommandTabs = ({
 
   return (
     <>
-      <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
+      <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
-      <LogWrapper variant={parameterTypes.TABS} buttonGroups={buttonGroups}>
+      <Log variant={parameterTypes.TABS} buttonGroups={buttonGroups}>
         <Carousel itemInView={pageNumber}>
           {pages.map((page, currentPageNumber) => {
             return (
@@ -67,7 +67,7 @@ export const CommandTabs = ({
             )
           })}
         </Carousel>
-      </LogWrapper>
+      </Log>
     </>
   )
 }

@@ -3,7 +3,7 @@ import {
   customPageEventNames,
   parameterTypes
 } from '../../constants/commands.constants'
-import { LogWrapper } from '../LogWrapper/LogWrapper.component'
+import { Log } from '../Log/Log.component'
 import { addPageEvents } from 'src/helpers/event.helpers.js'
 import { checkIfRegExpIsValid, getActionType } from './CommandOn.helpers'
 import { onMessages } from './CommandOn.messages'
@@ -56,5 +56,5 @@ export const CommandOn = ({
     [actionType, handleAddEvent, setMessageData]
   )
 
-  return <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
+  return <Log variant={parameterTypes.COMMAND}>{command}</Log>
 }

@@ -1,7 +1,7 @@
 import styled, { keyframes } from 'styled-components'
 import { Loader } from 'modules/icons/loader.icon'
 
-export const Log = styled.div`
+export const LogWrapper = styled.div`
   transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out;
   cursor: auto;
   width: 100%;

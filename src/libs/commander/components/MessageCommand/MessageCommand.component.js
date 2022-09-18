@@ -1,5 +1,5 @@
 import React from 'react'
-import { LogWrapper } from '../LogWrapper/LogWrapper.component'
+import { Log } from '../Log/Log.component'
 import { parameterTypes } from '../../constants/commands.constants'
 
 export const MessageCommand = ({
@@ -10,9 +10,9 @@ export const MessageCommand = ({
 }) => {
   return (
     <>
-      <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
+      <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
-      <LogWrapper variant={type}>{message}</LogWrapper>
+      <Log variant={type}>{message}</Log>
     </>
   )
 }

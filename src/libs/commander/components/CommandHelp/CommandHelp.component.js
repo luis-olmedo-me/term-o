@@ -5,7 +5,7 @@ import {
   getActionType,
   getMessagesFromCommandsToCheck
 } from './CommandHelp.helpers'
-import { LogWrapper } from '../LogWrapper/LogWrapper.component'
+import { Log } from '../Log/Log.component'
 import { consoleCommands } from '../../commander.constants'
 import { List } from 'modules/components/Table/List/List.component'
 import { Title } from './CommandHelp.styles'
@@ -55,9 +55,9 @@ export const CommandHelp = ({ props, terminal: { command, finish } }) => {
 
   return (
     <>
-      <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
+      <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
-      <LogWrapper variant={parameterTypes.HELP}>
+      <Log variant={parameterTypes.HELP}>
         {localMessages.map(({ id, title, items, warning }) => {
           const hasItems = items?.length > 0
           const showList = hasItems || warning
@@ -70,7 +70,7 @@ export const CommandHelp = ({ props, terminal: { command, finish } }) => {
             </div>
           )
         })}
-      </LogWrapper>
+      </Log>
     </>
   )
 }

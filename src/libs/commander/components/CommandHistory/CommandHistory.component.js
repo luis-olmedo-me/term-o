@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from 'react'
 
-import { LogWrapper } from '../LogWrapper/LogWrapper.component'
+import { Log } from '../Log/Log.component'
 
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { historyMessages } from './CommandHistory.messages'
@@ -43,5 +43,5 @@ export const CommandHistory = ({
     [actionType, handleRedirect]
   )
 
-  return <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
+  return <Log variant={parameterTypes.COMMAND}>{command}</Log>
 }

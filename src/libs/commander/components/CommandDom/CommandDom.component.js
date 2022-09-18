@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { LogWrapper } from '../LogWrapper/LogWrapper.component'
+import { Log } from '../Log/Log.component'
 import {
   generateFilterByEvery,
   generateFilterBySome,
@@ -142,14 +142,11 @@ const CommandDomWithoutContext = ({
 
   return (
     <>
-      <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
+      <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
       <Carousel itemInView={editingElement ? 1 : 0}>
         <CarouselItem>
-          <LogWrapper
-            variant={parameterTypes.ELEMENT}
-            buttonGroups={buttonGroups}
-          >
+          <Log variant={parameterTypes.ELEMENT} buttonGroups={buttonGroups}>
             {hasPinnedElements && (
               <ParameterElements
                 elements={pinnedElements}
@@ -173,7 +170,7 @@ const CommandDomWithoutContext = ({
                 )
               })}
             </Carousel>
-          </LogWrapper>
+          </Log>
         </CarouselItem>
 
         <CarouselItem>

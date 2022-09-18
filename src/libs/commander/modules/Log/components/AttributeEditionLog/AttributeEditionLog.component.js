@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
-import { getAttributes } from '../../components/CommandDom/CommandDom.helpers'
+import { getAttributes } from '../../../../components/CommandDom/CommandDom.helpers'
 import { Table } from 'modules/components/Table/Table.component'
-import { Input } from './components/AttributeInput/AttributeInput.styles'
-import { parameterTypes } from '../../constants/commands.constants'
+import { Input } from '../AttributeInput'
+import { parameterTypes } from '../../../../constants/commands.constants'
 import { turnAttributesIntoTableItems } from './AttributeEditionLog.helpers'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
-import { Log } from '../Log'
+import { Log } from '../../Log.component'
 
 export const AttributeEditionLog = ({ element, onGoBack }) => {
   const [newAtributeName, setNewAttributeName] = useState('')

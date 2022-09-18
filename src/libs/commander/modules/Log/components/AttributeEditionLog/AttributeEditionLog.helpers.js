@@ -1,5 +1,5 @@
 import React from 'react'
-import { AttributeInput } from './components/AttributeInput/AttributeInput.component'
+import { AttributeInput } from '../AttributeInput'
 
 export const turnAttributesIntoTableItems = ({ attributes, element }) => {
   return Object.entries(attributes).map(([attributeName, attributeValue]) => {

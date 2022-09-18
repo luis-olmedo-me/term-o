@@ -1,8 +1,8 @@
 import React from 'react'
-import { ElementsWrapper } from './ParameterElements.styles'
+import { ElementsWrapper } from './List.styles'
 import { Element } from './components/Element/Element.component'
 
-export const ParameterElements = ({
+export const List = ({
   elements,
   pinnedElements,
   setPinnedElements,

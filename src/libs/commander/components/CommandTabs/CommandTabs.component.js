@@ -4,8 +4,8 @@ import { getActionType } from './CommandTabs.helpers'
 import { Log } from '../../modules/Log'
 import { tabsActionTypes } from './CommandTabs.constants'
 import { getTabsInfo } from 'src/helpers/event.helpers.js'
-import { ParameterElements } from '../../modules/ParameterElements/ParameterElements.component'
-import { Tab } from '../../modules/ParameterElements/components/Tab/Tab.component'
+import { List } from '../../modules/List/List.component'
+import { Tab } from '../../modules/List/components/Tab/Tab.component'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
@@ -58,11 +58,7 @@ export const CommandTabs = ({
           {pages.map((page, currentPageNumber) => {
             return (
               <CarouselItem key={currentPageNumber}>
-                <ParameterElements
-                  elements={page}
-                  pinnedElements={[]}
-                  Child={Tab}
-                />
+                <List elements={page} pinnedElements={[]} Child={Tab} />
               </CarouselItem>
             )
           })}

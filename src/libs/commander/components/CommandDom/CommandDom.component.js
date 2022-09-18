@@ -8,7 +8,7 @@ import {
   getParentsOfElements
 } from './CommandDom.helpers'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
-import { ParameterElements } from '../../modules/ParameterElements/ParameterElements.component'
+import { List } from '../../modules/List/List.component'
 import { domMessages } from './CommandDom.messages'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 import { insertParams } from '../../commander.helpers'
@@ -147,7 +147,7 @@ const CommandDomWithoutContext = ({
         <CarouselItem>
           <Log variant={parameterTypes.ELEMENT} buttonGroups={buttonGroups}>
             {hasPinnedElements && (
-              <ParameterElements
+              <List
                 elements={pinnedElements}
                 pinnedElements={pinnedElements}
                 setPinnedElements={setPinnedElements}
@@ -159,7 +159,7 @@ const CommandDomWithoutContext = ({
               {pages.map((page, currentPageNumber) => {
                 return (
                   <CarouselItem key={currentPageNumber}>
-                    <ParameterElements
+                    <List
                       elements={page}
                       pinnedElements={pinnedElements}
                       setPinnedElements={setPinnedElements}

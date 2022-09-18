@@ -3,7 +3,7 @@ import { ElementLabel } from '../ElementLabel/ElementLabel.component'
 import { TagWrapper, ActionButtonText, GapNodesWrapper } from './Nodes.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { isElementHidden } from '../../../../components/CommandDom/CommandDom.helpers'
-import { createXPathFromElement } from '../../../ParameterElements/components/Element/Element.helpers'
+import { createXPathFromElement } from '../../../List/components/Element/Element.helpers'
 
 const supportedNodeTypes = [Node.ELEMENT_NODE, Node.TEXT_NODE]
 

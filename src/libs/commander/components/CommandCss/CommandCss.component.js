@@ -10,8 +10,8 @@ import {
   parseStyles
 } from './CommandCss.helpers'
 import { cssMessages } from './CommandCss.messages'
-import { StyleSheet } from '../../modules/ParameterElements/components/StyleSheet/StyleSheet.component'
-import { ParameterElements } from '../../modules/ParameterElements/ParameterElements.component'
+import { StyleSheet } from '../../modules/List/components/StyleSheet/StyleSheet.component'
+import { List } from '../../modules/List/List.component'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
@@ -109,7 +109,7 @@ export const CommandCss = ({
           {pages.map((page, currentPageNumber) => {
             return (
               <CarouselItem key={currentPageNumber}>
-                <ParameterElements
+                <List
                   elements={page}
                   pinnedElements={[]}
                   Child={StyleSheet}

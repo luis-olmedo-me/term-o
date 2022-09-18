@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
 import { getActionType } from './CommandNotify.helpers'
 import { notifyMessages } from './CommandNotify.messages'
-import { LogWrapper } from '../LogWrapper/LogWrapper.component'
+import { Log } from '../../modules/Log'
 import { notifyActionTypes } from './CommandNotify.constants'
 
 export const CommandNotify = ({
@@ -37,5 +37,5 @@ export const CommandNotify = ({
     [actionType, handleNotify, setMessageData]
   )
 
-  return <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
+  return <Log variant={parameterTypes.COMMAND}>{command}</Log>
 }

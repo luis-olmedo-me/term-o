@@ -3,13 +3,16 @@ import {
   customPageEventNames,
   parameterTypes
 } from '../../constants/commands.constants'
-import { LogWrapper } from '../LogWrapper/LogWrapper.component'
+import { Log } from '../../modules/Log'
 import { addPageEvents } from 'src/helpers/event.helpers.js'
 import { checkIfRegExpIsValid, getActionType } from './CommandOn.helpers'
 import { onMessages } from './CommandOn.messages'
 import { onActionTypes } from './CommandOn.constants'
 
-export const CommandOn = ({ props, terminal: { command, setMessageData } }) => {
+export const CommandOn = ({
+  props,
+  terminal: { command, setMessageData, finish }
+}) => {
   const { url, run, event } = props
 
   const actionType = getActionType(props)
@@ -53,5 +56,5 @@ export const CommandOn = ({ props, terminal: { command, setMessageData } }) => {
     [actionType, handleAddEvent, setMessageData]
   )
 
-  return <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
+  return <Log variant={parameterTypes.COMMAND}>{command}</Log>
 }

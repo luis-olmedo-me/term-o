@@ -4,11 +4,11 @@ import {
   GroupButtons,
   GroupButton,
   Hash,
-  Log,
+  LogWrapper,
   LogContent,
   AnimatedLoader,
   LoaderText
-} from './LogWrapper.styles'
+} from './Log.styles'
 
 const preIconsByVariants = {
   [parameterTypes.COMMAND]: '$',
@@ -17,7 +17,7 @@ const preIconsByVariants = {
   [parameterTypes.SUCCESS]: '✔'
 }
 
-export const LogWrapper = ({ children, variant, buttonGroups }) => {
+export const Log = ({ children, variant, buttonGroups }) => {
   const isCommand = variant === parameterTypes.COMMAND
 
   const [isFakeLoading, setIsFakeLoading] = useState(!isCommand)
@@ -38,7 +38,7 @@ export const LogWrapper = ({ children, variant, buttonGroups }) => {
   const hasButtonGroups = !isFakeLoading && Boolean(buttonGroups?.length)
 
   return (
-    <Log
+    <LogWrapper
       className={!isFakeLoading ? variant : parameterTypes.INFO}
       onMouseDown={(event) => event.stopPropagation()}
     >
@@ -76,6 +76,6 @@ export const LogWrapper = ({ children, variant, buttonGroups }) => {
           })}
         </GroupButtons>
       )}
-    </Log>
+    </LogWrapper>
   )
 }

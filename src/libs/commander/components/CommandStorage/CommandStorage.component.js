@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
-import { LogWrapper } from '../LogWrapper/LogWrapper.component'
+import { Log } from '../../modules/Log'
 import { Table } from 'modules/components/Table/Table.component'
 import {
   getActionType,
@@ -94,9 +94,9 @@ export const CommandStorage = ({
 
   return (
     <>
-      <LogWrapper variant={parameterTypes.COMMAND}>{command}</LogWrapper>
+      <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
-      <LogWrapper variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
+      <Log variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
         <Carousel itemInView={pageNumber}>
           {pages.map((page, currentPageNumber) => {
             return (
@@ -111,7 +111,7 @@ export const CommandStorage = ({
             )
           })}
         </Carousel>
-      </LogWrapper>
+      </Log>
     </>
   )
 }

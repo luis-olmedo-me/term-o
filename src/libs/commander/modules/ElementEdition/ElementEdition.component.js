@@ -5,7 +5,7 @@ import { Input } from './components/AttributeInput/AttributeInput.styles'
 import { parameterTypes } from '../../constants/commands.constants'
 import { turnAttributesIntoTableItems } from './ElementEdition.helpers'
 
-export const ElementEdition = ({ element }) => {
+export const ElementEdition = ({ element, onGoBack }) => {
   const [newAtributeName, setNewAttributeName] = useState('')
   const [newAtributeValue, setNewAttributeValue] = useState('')
 
@@ -46,7 +46,7 @@ export const ElementEdition = ({ element }) => {
     {
       id: 'go-back',
       text: '<',
-      onClick: () => setEditingElement(null)
+      onClick: onGoBack
     }
   ]
 

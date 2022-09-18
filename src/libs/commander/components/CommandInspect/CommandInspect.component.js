@@ -68,14 +68,6 @@ const CommandInspectWithoutContext = ({
     setHTMLRoot(sanitazedNewRoot)
   }
 
-  const editionPageButtonGroups = [
-    {
-      id: 'go-back',
-      text: '<',
-      onClick: () => setEditingElement(null)
-    }
-  ]
-
   const handleElementClick = (element) => {
     setEditingElement(element)
     setHighlitedElement(null)
@@ -101,12 +93,10 @@ const CommandInspectWithoutContext = ({
         </LogWrapper>
 
         <CarouselItem>
-          <LogWrapper
-            variant={parameterTypes.TABLE}
-            buttonGroups={editionPageButtonGroups}
-          >
-            <ElementEdition element={editingElement} />
-          </LogWrapper>
+          <ElementEdition
+            element={editingElement}
+            onGoBack={() => setEditingElement(null)}
+          />
         </CarouselItem>
       </Carousel>
     </>

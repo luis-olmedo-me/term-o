@@ -60,15 +60,9 @@ export const CommandCss = ({
       return setMessageData(cssMessages.noParameters)
 
     const [firstParamElement] = paramElements
-    const newStylesApplied = getStylesFrom(firstParamElement)
+    const newSheets = getStylesFrom(firstParamElement)
 
-    const directInlineStylesApplied = firstParamElement.getAttribute('style')
-    const directStylesAppllied = parseStyles(directInlineStylesApplied, null)
-    const directStylesWithSchema = directInlineStylesApplied
-      ? [{ title: 'Styles', styles: directStylesAppllied }]
-      : []
-
-    setSheets([...directStylesWithSchema, ...newStylesApplied])
+    setSheets(newSheets)
     finish()
   }, [setMessageData, finish])
 

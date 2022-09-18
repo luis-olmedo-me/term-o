@@ -3,7 +3,7 @@ import { ListWrapper } from './List.styles'
 import { Element } from './components/Element/Element.component'
 
 export const List = ({
-  elements,
+  items,
   pinnedElements,
   setPinnedElements,
   shouldAnimate,
@@ -12,7 +12,7 @@ export const List = ({
 }) => {
   return (
     <ListWrapper>
-      {elements.map((element, indexId) => {
+      {items.map((element, indexId) => {
         const isPinned = pinnedElements.includes(element)
 
         return (

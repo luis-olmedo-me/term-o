@@ -58,7 +58,7 @@ export const CommandTabs = ({
           {pages.map((page, currentPageNumber) => {
             return (
               <CarouselItem key={currentPageNumber}>
-                <List elements={page} pinnedElements={[]} Child={Tab} />
+                <List items={page} pinnedElements={[]} Child={Tab} />
               </CarouselItem>
             )
           })}

@@ -148,7 +148,7 @@ const CommandDomWithoutContext = ({
           <Log variant={parameterTypes.ELEMENT} buttonGroups={buttonGroups}>
             {hasPinnedElements && (
               <List
-                elements={pinnedElements}
+                items={pinnedElements}
                 pinnedElements={pinnedElements}
                 setPinnedElements={setPinnedElements}
                 shouldAnimate
@@ -160,7 +160,7 @@ const CommandDomWithoutContext = ({
                 return (
                   <CarouselItem key={currentPageNumber}>
                     <List
-                      elements={page}
+                      items={page}
                       pinnedElements={pinnedElements}
                       setPinnedElements={setPinnedElements}
                       customProps={{ onClick: handleElementClick }}

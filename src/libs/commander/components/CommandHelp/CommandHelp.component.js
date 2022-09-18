@@ -7,7 +7,7 @@ import {
 } from './CommandHelp.helpers'
 import { Log } from '../../modules/Log'
 import { consoleCommands } from '../../commander.constants'
-import { List } from 'modules/components/Table/List/List.component'
+import { TableList } from 'modules/components/Table/TableList/TableList.component'
 import { Title } from './CommandHelp.styles'
 import { removeDuplicatedFromArray } from 'src/helpers/utils.helpers.js'
 
@@ -66,7 +66,7 @@ export const CommandHelp = ({ props, terminal: { command, finish } }) => {
             <div key={id}>
               <Title>{title}</Title>
 
-              {showList && <List items={items} warning={warning} />}
+              {showList && <TableList items={items} warning={warning} />}
             </div>
           )
         })}

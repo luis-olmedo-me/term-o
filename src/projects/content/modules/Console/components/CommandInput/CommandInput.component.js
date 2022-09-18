@@ -56,6 +56,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     const temporalCommand = command.slice(0, selectionEnd)
     const isLastLetterSpecial = [' ', '|'].includes(temporalCommand.at(-1))
 
+    if (!command) return
     if (key === 'Enter') {
       handleSelectSuggestion(selectedSuggestionId)
 

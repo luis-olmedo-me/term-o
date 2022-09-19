@@ -17,6 +17,12 @@ import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { getStylesFrom } from '../CommandCss/CommandCss.helpers'
 
+const domViews = {
+  MAIN: 0,
+  ATTRIBUTES: 1,
+  STYLES: 2
+}
+
 const CommandDomWithoutContext = ({
   props,
   terminal: { command, setParams, setMessageData, finish },
@@ -141,30 +147,42 @@ const CommandDomWithoutContext = ({
     setEditingElement(element)
     setSheets(getStylesFrom(element))
     setHighlitedElement(null)
-    setItemInView(1)
+
+    setItemInView(domViews.ATTRIBUTES)
+  }
+  const handleStylesOptionClick = ({ element }) => {
+    setEditingElement(element)
+    setSheets(getStylesFrom(element))
+    setHighlitedElement(null)
+
+    setItemInView(domViews.STYLES)
+  }
+
+  const handleHeadToElementsView = () => {
+    setItemInView(domViews.MAIN)
+    setEditingElement(null)
+  }
+  const handleHeadToAttributesView = () => {
+    setItemInView(domViews.ATTRIBUTES)
+  }
+  const handleHeadToStylesView = () => {
+    setItemInView(domViews.STYLES)
   }
 
   const headToElements = {
     id: 'head-to-elements',
     text: '<☰',
-    onClick: () => {
-      setItemInView(0)
-      setEditingElement(null)
-    }
+    onClick: handleHeadToElementsView
   }
   const headToStyles = {
     id: 'head-to-styles',
     text: '✂>',
-    onClick: () => {
-      setItemInView(2)
-    }
+    onClick: handleHeadToStylesView
   }
   const headToAttributes = {
     id: 'head-to-attributes',
     text: '<✎',
-    onClick: () => {
-      setItemInView(1)
-    }
+    onClick: handleHeadToAttributesView
   }
 
   return (
@@ -199,7 +217,8 @@ const CommandDomWithoutContext = ({
                           element={item}
                           pinnedElements={pinnedElements}
                           setPinnedElements={setPinnedElements}
-                          onClick={handleElementClick}
+                          onAttributesOptionClick={handleElementClick}
+                          onStylesOptionClick={handleStylesOptionClick}
                           variant={
                             pinnedElements.includes(item) ? 'pinned' : 'default'
                           }

@@ -51,7 +51,6 @@ const getRules = (sheet) => {
   try {
     return sheet.rules || sheet.cssRules
   } catch {
-    console.log('not found')
     return null
   }
 }

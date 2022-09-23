@@ -99,7 +99,7 @@ const NodesWithoutContext = ({
         {
           id: 'edit-element',
           title: 'Edit element',
-          onClick: () => setEditingElement(node),
+          onClick: () => setEditingElement({ element: node }),
           Component: '✎'
         },
         {

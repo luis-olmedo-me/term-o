@@ -17,7 +17,8 @@ const NodesWithoutContext = ({
   setOpenNodes,
   handleRootChange,
   setHighlitedElement,
-  setEditingElement
+  setEditingElement,
+  onStylesOptionClick
 }) => {
   const nodeWrapperRef = useRef(null)
   const nodeData = useRef({
@@ -102,6 +103,12 @@ const NodesWithoutContext = ({
           Component: '✎'
         },
         {
+          id: 'edit-styles',
+          title: 'Edit styles',
+          onClick: (event) => onStylesOptionClick?.({ event, element: node }),
+          Component: '✂'
+        },
+        {
           id: 'life-toggle-element',
           title: isDead ? 'Restore element' : 'Delete element',
           onClick: handleLifeToggle,
@@ -152,6 +159,7 @@ const NodesWithoutContext = ({
                     openNodes={openNodes}
                     setOpenNodes={setOpenNodes}
                     setEditingElement={setEditingElement}
+                    onStylesOptionClick={onStylesOptionClick}
                   />
                 )
               )

@@ -13,6 +13,14 @@ import { getParamsByType } from '../../commander.helpers'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
+import { List, StyleSheet } from '../../modules/List'
+import { getStylesFrom } from '../CommandCss/CommandCss.helpers'
+
+const inspectViews = {
+  MAIN: 0,
+  ATTRIBUTES: 1,
+  STYLES: 2
+}
 
 const CommandInspectWithoutContext = ({
   props,
@@ -20,10 +28,13 @@ const CommandInspectWithoutContext = ({
   setHighlitedElement
 }) => {
   const actionType = getActionType(props)
+
   const [HTMLRoot, setHTMLRoot] = useState(null)
   const [objetives, setObjetives] = useState([])
   const [openNodes, setOpenNodes] = useState([])
   const [editingElement, setEditingElement] = useState(null)
+  const [itemInView, setItemInView] = useState(0)
+  const [sheets, setSheets] = useState(null)
 
   const defaultRoot = useRef(null)
 
@@ -67,16 +78,53 @@ const CommandInspectWithoutContext = ({
     setHTMLRoot(sanitazedNewRoot)
   }
 
-  const handleElementClick = (element) => {
+  const handleElementClick = ({ element }) => {
     setEditingElement(element)
+    setSheets(getStylesFrom(element))
     setHighlitedElement(null)
+
+    setItemInView(inspectViews.ATTRIBUTES)
+  }
+  const handleStylesOptionClick = ({ element }) => {
+    setEditingElement(element)
+    setSheets(getStylesFrom(element))
+    setHighlitedElement(null)
+
+    setItemInView(inspectViews.STYLES)
+  }
+
+  const handleHeadToElementsView = () => {
+    setItemInView(inspectViews.MAIN)
+    setEditingElement(null)
+  }
+  const handleHeadToAttributesView = () => {
+    setItemInView(inspectViews.ATTRIBUTES)
+  }
+  const handleHeadToStylesView = () => {
+    setItemInView(inspectViews.STYLES)
+  }
+
+  const headToElements = {
+    id: 'head-to-elements',
+    text: '<☰',
+    onClick: handleHeadToElementsView
+  }
+  const headToStyles = {
+    id: 'head-to-styles',
+    text: '✂>',
+    onClick: handleHeadToStylesView
+  }
+  const headToAttributes = {
+    id: 'head-to-attributes',
+    text: '<✎',
+    onClick: handleHeadToAttributesView
   }
 
   return (
     <>
       <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
-      <Carousel itemInView={editingElement ? 1 : 0}>
+      <Carousel itemInView={itemInView}>
         <Log variant={parameterTypes.ELEMENT}>
           {HTMLRoot && (
             <NodeTree
@@ -86,6 +134,7 @@ const CommandInspectWithoutContext = ({
               openNodes={openNodes}
               setOpenNodes={setOpenNodes}
               setEditingElement={handleElementClick}
+              onStylesOptionClick={handleStylesOptionClick}
               handleRootChange={handleRootChange}
             />
           )}
@@ -94,8 +143,21 @@ const CommandInspectWithoutContext = ({
         <CarouselItem>
           <AttributeEditionLog
             element={editingElement}
-            onGoBack={() => setEditingElement(null)}
+            leftOptions={[headToElements]}
+            rightOptions={[headToStyles]}
           />
+        </CarouselItem>
+
+        <CarouselItem>
+          <Log
+            variant={parameterTypes.STYLES}
+            buttonGroups={[headToElements, headToAttributes]}
+          >
+            <List
+              items={sheets}
+              Child={({ item }) => <StyleSheet sheet={item} sheets={sheets} />}
+            />
+          </Log>
         </CarouselItem>
       </Carousel>
     </>

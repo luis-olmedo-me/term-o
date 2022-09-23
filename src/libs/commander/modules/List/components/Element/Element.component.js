@@ -13,7 +13,9 @@ const ElementWithoutContext = ({
   className = '',
   variant = '',
   shouldAnimate = false,
-  onClick
+  onClick,
+  onStylesOptionClick,
+  onAttributesOptionClick
 }) => {
   const { height, width } = useMemo(() => {
     return element.getBoundingClientRect() || {}
@@ -74,6 +76,18 @@ const ElementWithoutContext = ({
   const isElementPinned = pinnedElements.includes(element)
 
   const actions = [
+    {
+      id: 'edit-element',
+      title: 'Edit element',
+      onClick: (event) => onAttributesOptionClick?.({ event, element }),
+      Component: '✎'
+    },
+    {
+      id: 'change-styles',
+      title: 'Change styles',
+      onClick: (event) => onStylesOptionClick?.({ event, element }),
+      Component: '✂'
+    },
     {
       id: 'group',
       items: [

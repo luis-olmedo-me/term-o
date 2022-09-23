@@ -11,18 +11,18 @@ import {
   Title
 } from './StyleSheet.styles'
 
-export const StyleSheet = ({ element = {}, className = '', styleSheets }) => {
-  const indexOfCurrentStyleSheet = styleSheets.indexOf(element)
-  const styleSheetsAbove = styleSheets.slice(0, indexOfCurrentStyleSheet)
+export const StyleSheet = ({ sheet = {}, className = '', sheets }) => {
+  const indexOfCurrentStyleSheet = sheets.indexOf(sheet)
+  const styleSheetsAbove = sheets.slice(0, indexOfCurrentStyleSheet)
 
   return (
     <>
       <StyleSheetWrapper className={className}>
-        <Title>{element.title}</Title>
+        <Title>{sheet.title}</Title>
       </StyleSheetWrapper>
 
       <PropertyWrapper>
-        {Object.entries(element.styles).map(
+        {Object.entries(sheet.styles).map(
           ([CSSPropertyName, CSSPropertyValue]) => {
             const isColor = isValidColor(CSSPropertyValue)
             const isOverwritten = styleSheetsAbove.some((styleSheet) => {

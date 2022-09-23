@@ -9,7 +9,11 @@ import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 import { Log } from '../../Log.component'
 
-export const AttributeEditionLog = ({ element, onGoBack }) => {
+export const AttributeEditionLog = ({
+  element,
+  leftOptions = [],
+  rightOptions = []
+}) => {
   const [newAtributeName, setNewAttributeName] = useState('')
   const [newAtributeValue, setNewAttributeValue] = useState('')
 
@@ -54,12 +58,9 @@ export const AttributeEditionLog = ({ element, onGoBack }) => {
     : [[editableRow]]
 
   const editionPageButtonGroups = [
-    {
-      id: 'go-back',
-      text: '<☰',
-      onClick: onGoBack
-    },
-    ...buttonGroups
+    ...leftOptions,
+    ...buttonGroups,
+    ...rightOptions
   ]
 
   return (

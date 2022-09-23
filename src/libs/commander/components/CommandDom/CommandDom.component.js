@@ -8,13 +8,20 @@ import {
   getParentsOfElements
 } from './CommandDom.helpers'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
-import { List, Element } from '../../modules/List'
+import { List, Element, StyleSheet } from '../../modules/List'
 import { domMessages } from './CommandDom.messages'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 import { insertParams } from '../../commander.helpers'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
+import { getStylesFrom } from '../CommandCss/CommandCss.helpers'
+
+const domViews = {
+  MAIN: 0,
+  ATTRIBUTES: 1,
+  STYLES: 2
+}
 
 const CommandDomWithoutContext = ({
   props,
@@ -40,6 +47,8 @@ const CommandDomWithoutContext = ({
   const [elements, setElements] = useState([])
   const [pinnedElements, setPinnedElements] = useState([])
   const [editingElement, setEditingElement] = useState(null)
+  const [itemInView, setItemInView] = useState(0)
+  const [sheets, setSheets] = useState(null)
 
   const actionType = getActionType(props)
 
@@ -136,14 +145,51 @@ const CommandDomWithoutContext = ({
 
   const handleElementClick = ({ element }) => {
     setEditingElement(element)
+    setSheets(getStylesFrom(element))
     setHighlitedElement(null)
+
+    setItemInView(domViews.ATTRIBUTES)
+  }
+  const handleStylesOptionClick = ({ element }) => {
+    setEditingElement(element)
+    setSheets(getStylesFrom(element))
+    setHighlitedElement(null)
+
+    setItemInView(domViews.STYLES)
+  }
+
+  const handleHeadToElementsView = () => {
+    setItemInView(domViews.MAIN)
+    setEditingElement(null)
+  }
+  const handleHeadToAttributesView = () => {
+    setItemInView(domViews.ATTRIBUTES)
+  }
+  const handleHeadToStylesView = () => {
+    setItemInView(domViews.STYLES)
+  }
+
+  const headToElements = {
+    id: 'head-to-elements',
+    text: '<☰',
+    onClick: handleHeadToElementsView
+  }
+  const headToStyles = {
+    id: 'head-to-styles',
+    text: '✂>',
+    onClick: handleHeadToStylesView
+  }
+  const headToAttributes = {
+    id: 'head-to-attributes',
+    text: '<✎',
+    onClick: handleHeadToAttributesView
   }
 
   return (
     <>
       <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
-      <Carousel itemInView={editingElement ? 1 : 0}>
+      <Carousel itemInView={itemInView}>
         <CarouselItem>
           <Log variant={parameterTypes.ELEMENT} buttonGroups={buttonGroups}>
             {hasPinnedElements && (
@@ -171,7 +217,8 @@ const CommandDomWithoutContext = ({
                           element={item}
                           pinnedElements={pinnedElements}
                           setPinnedElements={setPinnedElements}
-                          onClick={handleElementClick}
+                          onAttributesOptionClick={handleElementClick}
+                          onStylesOptionClick={handleStylesOptionClick}
                           variant={
                             pinnedElements.includes(item) ? 'pinned' : 'default'
                           }
@@ -188,8 +235,21 @@ const CommandDomWithoutContext = ({
         <CarouselItem>
           <AttributeEditionLog
             element={editingElement}
-            onGoBack={() => setEditingElement(null)}
+            leftOptions={[headToElements]}
+            rightOptions={[headToStyles]}
           />
+        </CarouselItem>
+
+        <CarouselItem>
+          <Log
+            variant={parameterTypes.STYLES}
+            buttonGroups={[headToElements, headToAttributes]}
+          >
+            <List
+              items={sheets}
+              Child={({ item }) => <StyleSheet sheet={item} sheets={sheets} />}
+            />
+          </Log>
         </CarouselItem>
       </Carousel>
     </>

@@ -11,9 +11,6 @@ import {
 } from './CommandCss.helpers'
 import { cssMessages } from './CommandCss.messages'
 import { List, StyleSheet } from '../../modules/List'
-import { Carousel } from 'modules/components/Carousel/Carousel.component'
-import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
-import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 import { cssActionTypes } from './CommandCss.constants'
 
 export const CommandCss = ({
@@ -22,14 +19,9 @@ export const CommandCss = ({
 }) => {
   const { styles, manualStyles } = props
 
-  const [stylesApplied, setStylesApplied] = useState([])
+  const [sheets, setSheets] = useState([])
 
   const actionType = getActionType(props)
-
-  const { buttonGroups, pages, pageNumber } = usePaginationGroups({
-    items: stylesApplied,
-    maxItems: 10
-  })
 
   const handleApplyStyles = useCallback(
     (customStyles = {}) => {
@@ -53,7 +45,7 @@ export const CommandCss = ({
       }
 
       styleElements({ styles: validStyles, elements: paramElements })
-      setStylesApplied([{ title: 'Styles', styles: validStyles }])
+      setSheets([{ title: 'Styles', styles: validStyles }])
       finish()
     },
     [styles, manualStyles, setMessageData, finish]
@@ -68,15 +60,9 @@ export const CommandCss = ({
       return setMessageData(cssMessages.noParameters)
 
     const [firstParamElement] = paramElements
-    const newStylesApplied = getStylesFrom(firstParamElement)
+    const newSheets = getStylesFrom(firstParamElement)
 
-    const directInlineStylesApplied = firstParamElement.getAttribute('style')
-    const directStylesAppllied = parseStyles(directInlineStylesApplied, null)
-    const directStylesWithSchema = directInlineStylesApplied
-      ? [{ title: 'Styles', styles: directStylesAppllied }]
-      : []
-
-    setStylesApplied([...directStylesWithSchema, ...newStylesApplied])
+    setSheets(newSheets)
     finish()
   }, [setMessageData, finish])
 
@@ -103,21 +89,11 @@ export const CommandCss = ({
     <>
       <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
-      <Log variant={parameterTypes.STYLES} buttonGroups={buttonGroups}>
-        <Carousel itemInView={pageNumber}>
-          {pages.map((page, currentPageNumber) => {
-            return (
-              <CarouselItem key={currentPageNumber}>
-                <List
-                  items={page}
-                  Child={({ item }) => (
-                    <StyleSheet element={item} styleSheets={page} />
-                  )}
-                />
-              </CarouselItem>
-            )
-          })}
-        </Carousel>
+      <Log variant={parameterTypes.STYLES}>
+        <List
+          items={sheets}
+          Child={({ item }) => <StyleSheet sheet={item} sheets={sheets} />}
+        />
       </Log>
     </>
   )

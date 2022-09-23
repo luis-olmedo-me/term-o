@@ -16,7 +16,7 @@ export const ActionButton = styled.button`
   height: 100%;
   background-color: transparent;
   border: none;
-  color: black;
+  color: #333;
   font-weight: bold;
   font-family: Share Tech Mono;
   padding: 0 10px;

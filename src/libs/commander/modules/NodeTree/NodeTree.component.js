@@ -9,7 +9,8 @@ export const NodeTree = ({
   handleRootChange,
   openNodes,
   setOpenNodes,
-  setEditingElement
+  setEditingElement,
+  onStylesOptionClick
 }) => {
   return (
     <TreeWrapper>
@@ -22,6 +23,7 @@ export const NodeTree = ({
         openNodes={openNodes}
         setOpenNodes={setOpenNodes}
         setEditingElement={setEditingElement}
+        onStylesOptionClick={onStylesOptionClick}
       />
     </TreeWrapper>
   )

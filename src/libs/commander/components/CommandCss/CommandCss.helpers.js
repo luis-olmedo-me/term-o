@@ -51,7 +51,6 @@ const getRules = (sheet) => {
   try {
     return sheet.rules || sheet.cssRules
   } catch {
-    console.log('not found')
     return null
   }
 }
@@ -81,5 +80,11 @@ export const getStylesFrom = (element) => {
     }
   }
 
-  return parseRules(ret)
+  const directInlineStylesApplied = element.getAttribute('style')
+  const directStylesAppllied = parseStyles(directInlineStylesApplied, null)
+  const directStylesWithSchema = directInlineStylesApplied
+    ? [{ title: 'Styles', styles: directStylesAppllied }]
+    : []
+
+  return [...directStylesWithSchema, ...parseRules(ret)]
 }

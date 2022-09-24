@@ -40,3 +40,44 @@ export const ChildWrapper = styled.div`
   animation: ${birth} 0.2s ease-in-out;
   transform-origin: top;
 `
+
+export const Prefix = styled.div`
+  width: 10px;
+  height: 100%;
+  position: sticky;
+  left: 0;
+  display: inline-block;
+  vertical-align: top;
+  background-color: #ff4ecd;
+
+  &:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: -0.3px;
+    top: 0;
+    border-radius: 3px 0 0 3px;
+    background-color: var(--tag-background-color);
+  }
+`
+
+export const Postfix = styled.div`
+  width: 10px;
+  height: 100%;
+  display: inline-block;
+  vertical-align: top;
+  background-color: #ff4ecd;
+  position: relative;
+
+  &:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    right: 0;
+    top: 0;
+    height: 100%;
+    border-radius: 0 3px 3px 0;
+    background-color: var(--tag-background-color);
+  }
+`

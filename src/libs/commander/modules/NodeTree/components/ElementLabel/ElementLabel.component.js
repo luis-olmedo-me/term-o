@@ -8,7 +8,9 @@ import {
   Tag,
   TagName,
   DefaultWrapper,
-  ChildWrapper
+  ChildWrapper,
+  Prefix,
+  Postfix
 } from './ElementLabel.styles'
 
 export const ElementLabel = ({
@@ -30,6 +32,8 @@ export const ElementLabel = ({
   return (
     <>
       <Wrapper {...wrapperProps}>
+        <Prefix />
+
         <Tag opening>{'<'}</Tag>
 
         <TagName isHidden={isHidden}>{tagName}</TagName>
@@ -57,7 +61,7 @@ export const ElementLabel = ({
 
         {<Tag>{hasChildren ? ' >' : ' />'}</Tag>}
 
-        {hasActions && <Actions actions={actions} />}
+        {hasActions && <Actions actions={actions} Postfix={Postfix} />}
       </Wrapper>
 
       {hasChildren && (
@@ -67,9 +71,13 @@ export const ElementLabel = ({
           </ChildWrapper>
 
           <Wrapper {...wrapperProps}>
+            <Prefix />
+
             <Tag opening>{`</`}</Tag>
             <TagName isHidden={isHidden}>{tagName}</TagName>
             <Tag>{`>`}</Tag>
+
+            <Postfix />
           </Wrapper>
         </>
       )}

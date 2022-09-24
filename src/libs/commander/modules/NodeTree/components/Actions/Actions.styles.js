@@ -2,15 +2,15 @@ import styled from 'styled-components'
 
 export const ActionButtons = styled.div`
   display: inline-block;
-  height: -webkit-fill-available;
+  height: 100%;
   position: sticky;
-  border-radius: 0 3px 3px 0;
   top: 0;
   bottom: 0;
   right: 0;
   background-color: var(--tag-background-color);
   transition: background-color 0.2s ease-in-out;
-  border-radius: 0 3px 3px 0;
+  border-radius: ${(props) => (props.hasPostfix ? '0' : '0 3px 3px 0')};
+  vertical-align: top;
 `
 export const ActionButton = styled.button`
   height: 100%;
@@ -24,6 +24,7 @@ export const ActionButton = styled.button`
   min-width: 2em;
   text-align: center;
   border-left: 1px solid #00000015;
+  vertical-align: top;
 
   &&:disabled {
     background-color: #00000015;

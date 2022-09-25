@@ -23,8 +23,11 @@ export const ActionButton = styled.button`
   cursor: pointer;
   min-width: 2em;
   text-align: center;
+  box-sizing: border-box;
   border-left: 1px solid #00000015;
   vertical-align: top;
+  border-right: ${(props) =>
+    props.isLastItem ? '1px solid #00000015' : 'unset'};
 
   &&:disabled {
     background-color: #00000015;

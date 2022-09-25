@@ -55,7 +55,7 @@ export const Prefix = styled.div`
     position: absolute;
     width: 100%;
     height: 100%;
-    left: -0.3px;
+    left: 0;
     top: 0;
     border-radius: 3px 0 0 3px;
     background-color: var(--tag-background-color);

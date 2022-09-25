@@ -9,7 +9,7 @@ export const Actions = ({ actions, className, wrapperRef, Postfix }) => {
       className={className}
       hasPostfix={Boolean(Postfix)}
     >
-      {actions.map((action) => {
+      {actions.map((action, index) => {
         const [isOpen, setIsOpen] = useState(false)
 
         const items = action.items
@@ -49,6 +49,7 @@ export const Actions = ({ actions, className, wrapperRef, Postfix }) => {
             onClick={action.disabled ? null : cancelPropagation(action.onClick)}
             title={action.title}
             disabled={action.disabled}
+            isLastItem={index === actions.length - 1}
           >
             {action.Component}
           </ActionButton>

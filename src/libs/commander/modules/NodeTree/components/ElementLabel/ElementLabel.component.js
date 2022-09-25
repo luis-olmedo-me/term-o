@@ -8,9 +8,7 @@ import {
   Tag,
   TagName,
   DefaultWrapper,
-  ChildWrapper,
-  Prefix,
-  Postfix
+  ChildWrapper
 } from './ElementLabel.styles'
 
 export const ElementLabel = ({
@@ -20,7 +18,9 @@ export const ElementLabel = ({
   Wrapper = DefaultWrapper,
   wrapperProps = {},
   actions,
-  hideAttributes
+  hideAttributes,
+  Prefix = null,
+  Postfix = null
 }) => {
   const tagName = element.tagName.toLowerCase()
 
@@ -32,7 +32,7 @@ export const ElementLabel = ({
   return (
     <>
       <Wrapper {...wrapperProps}>
-        <Prefix />
+        {Prefix && <Prefix />}
 
         <Tag>{'<'}</Tag>
 

@@ -1,6 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { ElementLabel } from '../ElementLabel/ElementLabel.component'
-import { TagWrapper, ActionButtonText, GapNodesWrapper } from './Nodes.styles'
+import {
+  TagWrapper,
+  ActionButtonText,
+  GapNodesWrapper,
+  Prefix,
+  Postfix
+} from './Nodes.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { isElementHidden } from '../../../../components/CommandDom/CommandDom.helpers'
 import { createXPathFromElement } from '../../../List/components/Element/Element.helpers'
@@ -144,6 +150,8 @@ const NodesWithoutContext = ({
               onMouseEnter: !isHidden ? () => setHighlitedElement(node) : null,
               onMouseLeave: !isHidden ? () => setHighlitedElement(null) : null
             }}
+            Prefix={Prefix}
+            Postfix={Postfix}
           >
             {childNodes.map((childNode, index) => {
               return (

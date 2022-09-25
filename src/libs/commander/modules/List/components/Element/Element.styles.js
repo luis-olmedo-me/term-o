@@ -15,7 +15,7 @@ const Birth = keyframes`
 
 export const ElementWrapper = styled.span`
   position: relative;
-  padding: 5px 0 5px 5px;
+  padding: 5px 0 5px 7px;
   background-color: #fafafa;
   font-weight: bold;
   border-radius: 3px;

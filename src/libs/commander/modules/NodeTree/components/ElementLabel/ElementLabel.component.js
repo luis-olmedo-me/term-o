@@ -34,7 +34,7 @@ export const ElementLabel = ({
       <Wrapper {...wrapperProps}>
         <Prefix />
 
-        <Tag opening>{'<'}</Tag>
+        <Tag>{'<'}</Tag>
 
         <TagName isHidden={isHidden}>{tagName}</TagName>
 
@@ -59,7 +59,7 @@ export const ElementLabel = ({
           )
         })}
 
-        {<Tag>{hasChildren ? ' >' : ' />'}</Tag>}
+        {<Tag hasPostFix={!!Postfix}>{hasChildren ? ' >' : ' />'}</Tag>}
 
         {hasActions && <Actions actions={actions} Postfix={Postfix} />}
       </Wrapper>
@@ -73,7 +73,7 @@ export const ElementLabel = ({
           <Wrapper {...wrapperProps}>
             <Prefix />
 
-            <Tag opening>{`</`}</Tag>
+            <Tag>{`</`}</Tag>
             <TagName isHidden={isHidden}>{tagName}</TagName>
             <Tag>{`>`}</Tag>
 

@@ -17,7 +17,7 @@ export const ConsoleWrapper = styled.div`
 
   transition: inset 0.05s ease-in-out, opacity 0.2s ease-in-out,
     transform 0.2s ease-in-out;
-  min-height: 400px;
+  min-height: 690px;
   display: flex;
   flex-flow: column;
   font-size: 16px;

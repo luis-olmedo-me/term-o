@@ -18,7 +18,9 @@ export const ElementLabel = ({
   Wrapper = DefaultWrapper,
   wrapperProps = {},
   actions,
-  hideAttributes
+  hideAttributes,
+  Prefix = null,
+  Postfix = null
 }) => {
   const tagName = element.tagName.toLowerCase()
 
@@ -30,7 +32,9 @@ export const ElementLabel = ({
   return (
     <>
       <Wrapper {...wrapperProps}>
-        <Tag opening>{'<'}</Tag>
+        {Prefix && <Prefix />}
+
+        <Tag>{'<'}</Tag>
 
         <TagName isHidden={isHidden}>{tagName}</TagName>
 
@@ -55,9 +59,9 @@ export const ElementLabel = ({
           )
         })}
 
-        {<Tag>{hasChildren ? ' >' : ' />'}</Tag>}
+        {<Tag hasPostFix={!!Postfix}>{hasChildren ? ' >' : ' />'}</Tag>}
 
-        {hasActions && <Actions actions={actions} />}
+        {hasActions && <Actions actions={actions} Postfix={Postfix} />}
       </Wrapper>
 
       {hasChildren && (
@@ -67,9 +71,13 @@ export const ElementLabel = ({
           </ChildWrapper>
 
           <Wrapper {...wrapperProps}>
-            <Tag opening>{`</`}</Tag>
+            <Prefix />
+
+            <Tag>{`</`}</Tag>
             <TagName isHidden={isHidden}>{tagName}</TagName>
             <Tag>{`>`}</Tag>
+
+            <Postfix />
           </Wrapper>
         </>
       )}

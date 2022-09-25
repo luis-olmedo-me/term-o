@@ -2,10 +2,14 @@ import React, { useState } from 'react'
 import { cancelPropagation } from './Actions.helpers'
 import { ActionButton, ActionButtons, ItemsWrapper } from './Actions.styles'
 
-export const Actions = ({ actions, className, wrapperRef }) => {
+export const Actions = ({ actions, className, wrapperRef, Postfix }) => {
   return (
-    <ActionButtons ref={wrapperRef} className={className}>
-      {actions.map((action) => {
+    <ActionButtons
+      ref={wrapperRef}
+      className={className}
+      hasPostfix={Boolean(Postfix)}
+    >
+      {actions.map((action, index) => {
         const [isOpen, setIsOpen] = useState(false)
 
         const items = action.items
@@ -45,11 +49,14 @@ export const Actions = ({ actions, className, wrapperRef }) => {
             onClick={action.disabled ? null : cancelPropagation(action.onClick)}
             title={action.title}
             disabled={action.disabled}
+            isLastItem={index === actions.length - 1}
           >
             {action.Component}
           </ActionButton>
         )
       })}
+
+      {Postfix && <Postfix />}
     </ActionButtons>
   )
 }

@@ -66,7 +66,20 @@ export const CommandHelp = ({ props, terminal: { command, finish } }) => {
             <div key={id}>
               <Title>{title}</Title>
 
-              {showList && <SimpleList items={items} warning={warning} />}
+              <ul>
+                {showList &&
+                  items.map(({ id, title, description }) => {
+                    return (
+                      <li key={id}>
+                        {title}
+
+                        <ul>
+                          <li>{description}</li>
+                        </ul>
+                      </li>
+                    )
+                  })}
+              </ul>
             </div>
           )
         })}

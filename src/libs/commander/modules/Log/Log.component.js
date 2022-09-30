@@ -17,7 +17,7 @@ const preIconsByVariants = {
   [parameterTypes.SUCCESS]: '✔'
 }
 
-export const Log = ({ children, variant, buttonGroups }) => {
+export const Log = ({ children, variant, buttonGroups, hasScroll }) => {
   const isCommand = variant === parameterTypes.COMMAND
 
   const [isFakeLoading, setIsFakeLoading] = useState(!isCommand)
@@ -39,7 +39,10 @@ export const Log = ({ children, variant, buttonGroups }) => {
 
   return (
     <LogWrapper
-      className={!isFakeLoading ? variant : parameterTypes.INFO}
+      className={`
+        ${!isFakeLoading ? variant : parameterTypes.INFO}
+        ${hasScroll ? 'scroll' : ''}
+      `}
       onMouseDown={(event) => event.stopPropagation()}
     >
       {isFakeLoading && (

@@ -62,6 +62,16 @@ export const LogWrapper = styled.div`
     background-color: #a66908;
     color: #fff;
   }
+
+  &&.scroll {
+    max-height: 537px;
+    overflow-y: scroll;
+    overscroll-behavior: contain;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 `
 
 export const Hash = styled.span`

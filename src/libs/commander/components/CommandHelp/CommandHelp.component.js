@@ -7,7 +7,7 @@ import {
 } from './CommandHelp.helpers'
 import { Log } from '../../modules/Log'
 import { consoleCommands } from '../../commander.constants'
-import { HelpWrapper, ListItem, UnsortedList } from './CommandHelp.styles'
+import { ListItem, UnsortedList } from './CommandHelp.styles'
 import { removeDuplicatedFromArray } from 'src/helpers/utils.helpers.js'
 
 export const CommandHelp = ({ props, terminal: { command, finish } }) => {
@@ -56,32 +56,30 @@ export const CommandHelp = ({ props, terminal: { command, finish } }) => {
     <>
       <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
-      <Log variant={parameterTypes.HELP}>
-        <HelpWrapper>
-          {localMessages.map(({ id, title, items }) => {
-            return (
-              <UnsortedList key={id}>
-                <ListItem>
-                  {title}
+      <Log variant={parameterTypes.HELP} hasScroll>
+        {localMessages.map(({ id, title, items }) => {
+          return (
+            <UnsortedList key={id}>
+              <ListItem>
+                {title}
 
-                  <UnsortedList>
-                    {items.map(({ id, title, description }) => {
-                      return (
-                        <ListItem key={id}>
-                          {title}
+                <UnsortedList>
+                  {items.map(({ id, title, description }) => {
+                    return (
+                      <ListItem key={id}>
+                        {title}
 
-                          <UnsortedList>
-                            <ListItem>{description}</ListItem>
-                          </UnsortedList>
-                        </ListItem>
-                      )
-                    })}
-                  </UnsortedList>
-                </ListItem>
-              </UnsortedList>
-            )
-          })}
-        </HelpWrapper>
+                        <UnsortedList>
+                          <ListItem>{description}</ListItem>
+                        </UnsortedList>
+                      </ListItem>
+                    )
+                  })}
+                </UnsortedList>
+              </ListItem>
+            </UnsortedList>
+          )
+        })}
       </Log>
     </>
   )

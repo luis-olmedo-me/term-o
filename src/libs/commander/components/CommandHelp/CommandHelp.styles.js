@@ -15,13 +15,3 @@ export const ListItem = styled.li`
     margin-bottom: 0;
   }
 `
-
-export const HelpWrapper = styled.div`
-  max-height: 537px;
-  overflow-y: scroll;
-  overscroll-behavior: contain;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`

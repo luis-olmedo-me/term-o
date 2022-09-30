@@ -89,7 +89,7 @@ export const CommandCss = ({
     <>
       <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
-      <Log variant={parameterTypes.STYLES}>
+      <Log variant={parameterTypes.STYLES} hasScroll>
         <List
           items={sheets}
           Child={({ item }) => <StyleSheet sheet={item} sheets={sheets} />}

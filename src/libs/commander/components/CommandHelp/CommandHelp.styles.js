@@ -1,5 +1,17 @@
 import styled from 'styled-components'
 
-export const Title = styled.h4`
-  margin: 0;
+export const UnsortedList = styled.ul`
+  margin: 0 0 1em 0;
+  padding-left: 1.5em;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+`
+export const ListItem = styled.li`
+  margin: 0 0 0.5em 0;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 `

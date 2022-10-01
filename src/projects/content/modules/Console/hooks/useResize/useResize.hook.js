@@ -38,9 +38,9 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
         }
 
         const isBelowMiniumWidth =
-          newBodyData.width - (newResizeData.left + newResizeData.right) < 400
+          newBodyData.width - (newResizeData.left + newResizeData.right) < 450
         const isBelowMiniumHeight =
-          newBodyData.height - (newResizeData.top + newResizeData.bottom) < 400
+          newBodyData.height - (newResizeData.top + newResizeData.bottom) < 690
 
         const formattedData = {
           left: isBelowMiniumWidth ? 10 : limitLowValue(newResizeData.left),
@@ -74,7 +74,7 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
       switch (side) {
         case 'right':
           newResizeData = {
-            left: widthTaken < 400 ? 400 : emptySpace,
+            left: widthTaken < 450 ? 450 : emptySpace,
             top: 10,
             right: 10,
             bottom: 10
@@ -85,7 +85,7 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
           newResizeData = {
             left: 10,
             top: 10,
-            right: widthTaken < 400 ? 400 : emptySpace,
+            right: widthTaken < 450 ? 450 : emptySpace,
             bottom: 10
           }
           break

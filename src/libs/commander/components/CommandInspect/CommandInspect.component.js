@@ -125,7 +125,7 @@ const CommandInspectWithoutContext = ({
       <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
       <Carousel itemInView={itemInView}>
-        <Log variant={parameterTypes.ELEMENT}>
+        <Log variant={parameterTypes.ELEMENT} hasScroll>
           {HTMLRoot && (
             <NodeTree
               root={HTMLRoot}
@@ -152,6 +152,7 @@ const CommandInspectWithoutContext = ({
           <Log
             variant={parameterTypes.STYLES}
             buttonGroups={[headToElements, headToAttributes]}
+            hasScroll
           >
             <List
               items={sheets}

@@ -29,7 +29,7 @@ export const getNewResizeData = ({
     case resizeTypes.LEFT: {
       const shouldFixLeft = minimumValueAllowed > mousePositionX
       const isBelowMiniumWidth =
-        bodyWidth - (mousePositionX + resizeData.right) < 400
+        bodyWidth - (mousePositionX + resizeData.right) < 450
 
       return !isBelowMiniumWidth
         ? { left: shouldFixLeft ? 0 : mousePositionX }
@@ -39,7 +39,7 @@ export const getNewResizeData = ({
     case resizeTypes.RIGHT: {
       const right = bodyWidth - mousePositionX - 1
       const shouldFixRight = minimumValueAllowed > right
-      const isBelowMiniumWidth = bodyWidth - (resizeData.left + right) < 400
+      const isBelowMiniumWidth = bodyWidth - (resizeData.left + right) < 450
 
       return !isBelowMiniumWidth ? { right: shouldFixRight ? 0 : right } : {}
     }
@@ -47,7 +47,7 @@ export const getNewResizeData = ({
     case resizeTypes.TOP: {
       const shouldFixTop = minimumValueAllowed > mousePositionY
       const isBelowMiniumHeight =
-        bodyHeight - (mousePositionY + resizeData.bottom) < 400
+        bodyHeight - (mousePositionY + resizeData.bottom) < 690
 
       return !isBelowMiniumHeight
         ? { top: shouldFixTop ? 0 : mousePositionY }
@@ -57,7 +57,7 @@ export const getNewResizeData = ({
     case resizeTypes.BOTTOM: {
       const bottom = bodyHeight - mousePositionY - 1
       const shouldFixBottom = minimumValueAllowed > bottom
-      const isBelowMiniumHeight = bodyHeight - (resizeData.top + bottom) < 400
+      const isBelowMiniumHeight = bodyHeight - (resizeData.top + bottom) < 690
 
       return !isBelowMiniumHeight
         ? { bottom: shouldFixBottom ? 0 : bottom }

@@ -10,7 +10,8 @@ export const getItemsFromProps = ({ props }) => {
   return Object.entries(props).map(([propName, propConfig]) => {
     return {
       id: propConfig.key,
-      text: `--${propName} <${propConfig.type}> - ${propConfig.description}`
+      title: `--${propName} <${propConfig.type}>`,
+      description: propConfig.description
     }
   })
 }

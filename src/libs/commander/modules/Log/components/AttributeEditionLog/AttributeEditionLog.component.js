@@ -64,7 +64,11 @@ export const AttributeEditionLog = ({
   ]
 
   return (
-    <Log variant={parameterTypes.TABLE} buttonGroups={editionPageButtonGroups}>
+    <Log
+      variant={parameterTypes.TABLE}
+      buttonGroups={editionPageButtonGroups}
+      hasScroll
+    >
       <Carousel itemInView={pageNumber}>
         {parsedPages.map((page, currentPageNumber) => {
           return (

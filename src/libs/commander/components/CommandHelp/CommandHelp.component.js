@@ -7,9 +7,8 @@ import {
 } from './CommandHelp.helpers'
 import { Log } from '../../modules/Log'
 import { consoleCommands } from '../../commander.constants'
-import { Title } from './CommandHelp.styles'
+import { ListItem, UnsortedList } from './CommandHelp.styles'
 import { removeDuplicatedFromArray } from 'src/helpers/utils.helpers.js'
-import { SimpleList } from '../../modules/List'
 
 export const CommandHelp = ({ props, terminal: { command, finish } }) => {
   const actionType = getActionType(props)
@@ -57,17 +56,28 @@ export const CommandHelp = ({ props, terminal: { command, finish } }) => {
     <>
       <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
-      <Log variant={parameterTypes.HELP}>
-        {localMessages.map(({ id, title, items, warning }) => {
-          const hasItems = items?.length > 0
-          const showList = hasItems || warning
-
+      <Log variant={parameterTypes.HELP} hasScroll>
+        {localMessages.map(({ id, title, items }) => {
           return (
-            <div key={id}>
-              <Title>{title}</Title>
+            <UnsortedList key={id}>
+              <ListItem>
+                {title}
 
-              {showList && <SimpleList items={items} warning={warning} />}
-            </div>
+                <UnsortedList>
+                  {items.map(({ id, title, description }) => {
+                    return (
+                      <ListItem key={id}>
+                        {title}
+
+                        <UnsortedList>
+                          <ListItem>{description}</ListItem>
+                        </UnsortedList>
+                      </ListItem>
+                    )
+                  })}
+                </UnsortedList>
+              </ListItem>
+            </UnsortedList>
           )
         })}
       </Log>

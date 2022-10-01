@@ -7,7 +7,8 @@ import {
   LogWrapper,
   LogContent,
   AnimatedLoader,
-  LoaderText
+  LoaderText,
+  ScrolledLogContent
 } from './Log.styles'
 
 const preIconsByVariants = {
@@ -17,7 +18,7 @@ const preIconsByVariants = {
   [parameterTypes.SUCCESS]: '✔'
 }
 
-export const Log = ({ children, variant, buttonGroups }) => {
+export const Log = ({ children, variant, buttonGroups, hasScroll }) => {
   const isCommand = variant === parameterTypes.COMMAND
 
   const [isFakeLoading, setIsFakeLoading] = useState(!isCommand)
@@ -37,6 +38,14 @@ export const Log = ({ children, variant, buttonGroups }) => {
 
   const hasButtonGroups = !isFakeLoading && Boolean(buttonGroups?.length)
 
+  const Content = (
+    <>
+      {icon && <Hash>{icon}</Hash>}
+
+      {children}
+    </>
+  )
+
   return (
     <LogWrapper
       className={!isFakeLoading ? variant : parameterTypes.INFO}
@@ -51,9 +60,11 @@ export const Log = ({ children, variant, buttonGroups }) => {
 
       {!isFakeLoading && (
         <LogContent>
-          {icon && <Hash>{icon}</Hash>}
-
-          {children}
+          {hasScroll ? (
+            <ScrolledLogContent>{Content}</ScrolledLogContent>
+          ) : (
+            Content
+          )}
         </LogContent>
       )}
 

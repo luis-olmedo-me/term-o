@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { MessageLog } from './modules/Log'
 
 import { Outputs } from './components/Outputs/Outputs.component'

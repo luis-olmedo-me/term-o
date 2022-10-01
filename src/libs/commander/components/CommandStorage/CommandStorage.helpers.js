@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { storageActionTypes } from './CommandStorage.constants'
 import { MaterialTree } from './CommandStorage.styles'
 

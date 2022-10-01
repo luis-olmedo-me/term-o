@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Nodes } from './components/Nodes/Nodes.component'
 import { TreeWrapper } from './NodeTree.styles'
 

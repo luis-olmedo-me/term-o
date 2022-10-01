@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { optionTypes } from '../../constants/commands.constants'
 
 import { CommandStorage } from './CommandStorage.component'

@@ -1,4 +1,5 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react'
+import * as React from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 import { OutputWrapper } from './Outputs.styles'
 
 const replaceByParams = (message, params) => {

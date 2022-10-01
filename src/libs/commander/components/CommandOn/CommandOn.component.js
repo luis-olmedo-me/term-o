@@ -1,4 +1,5 @@
-import React, { useEffect, useCallback } from 'react'
+import * as React from 'react'
+import { useEffect, useCallback } from 'react'
 import {
   customPageEventNames,
   parameterTypes

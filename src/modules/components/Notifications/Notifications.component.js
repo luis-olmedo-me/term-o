@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Portal } from 'src/modules/components/Portal/Portal.component'
 import { Logo } from 'src/modules/icons/Logo.icon'
 import {

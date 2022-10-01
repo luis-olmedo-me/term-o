@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import * as React from 'react'
+import { useState } from 'react'
 import { cancelPropagation } from './Actions.helpers'
 import { ActionButton, ActionButtons, ItemsWrapper } from './Actions.styles'
 

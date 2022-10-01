@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
+import * as React from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { getAttributes } from '../../../../components/CommandDom/CommandDom.helpers'
 import { Actions } from '../Actions/Actions.component'
 import {

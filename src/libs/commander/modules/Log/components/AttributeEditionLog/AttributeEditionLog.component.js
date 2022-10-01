@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import * as React from 'react'
+import { useState } from 'react'
 import { getAttributes } from '../../../../components/CommandDom/CommandDom.helpers'
 import { Table } from 'modules/components/Table/Table.component'
 import { Input } from '../AttributeInput'

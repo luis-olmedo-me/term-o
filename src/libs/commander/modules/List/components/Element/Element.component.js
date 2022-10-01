@@ -1,4 +1,5 @@
-import React, { useMemo, useState, useRef, useEffect } from 'react'
+import * as React from 'react'
+import { useMemo, useState, useRef, useEffect } from 'react'
 import { ElementWrapper, FloatingActions } from './Element.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { isElementHidden } from '../../../../components/CommandDom/CommandDom.helpers'

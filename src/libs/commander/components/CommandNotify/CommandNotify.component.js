@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect } from 'react'
+import * as React from 'react'
+import { useCallback, useEffect } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
 import { getActionType } from './CommandNotify.helpers'
 import { notifyMessages } from './CommandNotify.messages'

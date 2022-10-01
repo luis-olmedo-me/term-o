@@ -1,5 +1,5 @@
-import React from 'react'
-import { createRoot } from 'react-dom'
+import * as React from 'react'
+import { createRoot } from 'react-dom/client'
 
 import { Console } from './modules/Console/Console.component'
 import { FontFamilies } from './fonts/Fonts.styles'
@@ -9,9 +9,9 @@ import { OverlayProvider } from 'modules/components/Overlay/Overlay.provider'
 
 document.body.prepend(appRoot)
 
-const VDOMroot = createRoot(appRoot)
+const root = createRoot(appRoot)
 
-VDOMroot.render(
+root.render(
   <React.StrictMode>
     <FontFamilies />
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { CommandEvent } from './CommandEvent.component'
 import { optionTypes } from '../../constants/commands.constants'
 

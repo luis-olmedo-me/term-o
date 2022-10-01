@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import * as React from 'react'
+import { useState } from 'react'
 import { Favicon, FaviconSVG, TabWrapper, Title } from './Tab.styles'
 import { Logo } from 'src/modules/icons/Logo.icon'
 

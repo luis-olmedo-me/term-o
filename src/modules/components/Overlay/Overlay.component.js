@@ -1,4 +1,5 @@
-import React, { useMemo } from 'react'
+import * as React from 'react'
+import { useMemo } from 'react'
 import { Portal } from '../Portal/Portal.component'
 import { HighlightedElement, OverlayWrapper } from './Overlay.styles'
 

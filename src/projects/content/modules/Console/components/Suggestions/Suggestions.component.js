@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react'
+import * as React from 'react'
+import { useEffect, useRef } from 'react'
 import { Suggestion, SuggestionsWrapper } from './Suggestions.styles'
 
 export const Suggestions = ({ suggestions, selectedId, onSuggestionClick }) => {

@@ -1,4 +1,5 @@
-import React, { useRef, useEffect, useState } from 'react'
+import * as React from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { PortalContext } from './Portal.contexts'
 
 export const PortalProvider = ({ children }) => {

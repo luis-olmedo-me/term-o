@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import * as React from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
 import { getActionType } from './CommandTabs.helpers'
 import { Log } from '../../modules/Log'

@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import * as React from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { resetConfiguration } from 'src/helpers/event.helpers.js'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { getActionType } from './CommandClear.helpers'

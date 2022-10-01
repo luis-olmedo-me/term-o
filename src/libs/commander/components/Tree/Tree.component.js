@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import styled from 'styled-components'
 import { EditableText } from './components/EditableText/EditableText.component'
 import { objectLabels, arrayLabels } from './Tree.constants'

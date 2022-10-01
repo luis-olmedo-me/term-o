@@ -1,4 +1,5 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import * as React from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import { CarouselWrapper, AnimatedEffect } from './Carousel.styles'
 
 const getAnimationDirection = (isGoingRight, isTheSame) => {

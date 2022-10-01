@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import * as React from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { Log } from '../../modules/Log'
 import { Table } from 'modules/components/Table/Table.component'

@@ -1,5 +1,5 @@
-import React from 'react'
-import { render } from 'react-dom'
+import * as React from 'react'
+import { createRoot } from 'react-dom/client'
 
 import { Console } from './modules/Console/Console.component'
 import { FontFamilies } from './fonts/Fonts.styles'
@@ -9,7 +9,9 @@ import { OverlayProvider } from 'modules/components/Overlay/Overlay.provider'
 
 document.body.prepend(appRoot)
 
-render(
+const root = createRoot(appRoot)
+
+root.render(
   <React.StrictMode>
     <FontFamilies />
 
@@ -20,6 +22,5 @@ render(
         </OverlayProvider>
       </PortalProvider>
     </shadowRoot.div>
-  </React.StrictMode>,
-  appRoot
+  </React.StrictMode>
 )

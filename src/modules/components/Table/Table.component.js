@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { TableWrapper, TableRowValue, TableRow } from './Table.styles'
 
 export const Table = ({ headers, rows, parseValue, widths }) => {

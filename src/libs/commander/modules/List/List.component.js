@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { ListWrapper } from './List.styles'
 import { Element } from './components/Element/Element.component'
 

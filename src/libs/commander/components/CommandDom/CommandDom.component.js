@@ -244,6 +244,7 @@ const CommandDomWithoutContext = ({
           <Log
             variant={parameterTypes.STYLES}
             buttonGroups={[headToElements, headToAttributes]}
+            hasScroll
           >
             <List
               items={sheets}

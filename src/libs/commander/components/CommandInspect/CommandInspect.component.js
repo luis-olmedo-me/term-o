@@ -152,6 +152,7 @@ const CommandInspectWithoutContext = ({
           <Log
             variant={parameterTypes.STYLES}
             buttonGroups={[headToElements, headToAttributes]}
+            hasScroll
           >
             <List
               items={sheets}

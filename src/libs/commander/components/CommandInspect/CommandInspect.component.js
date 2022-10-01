@@ -125,7 +125,7 @@ const CommandInspectWithoutContext = ({
       <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
       <Carousel itemInView={itemInView}>
-        <Log variant={parameterTypes.ELEMENT}>
+        <Log variant={parameterTypes.ELEMENT} hasScroll>
           {HTMLRoot && (
             <NodeTree
               root={HTMLRoot}

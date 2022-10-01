@@ -62,16 +62,6 @@ export const LogWrapper = styled.div`
     background-color: #a66908;
     color: #fff;
   }
-
-  &&.scroll {
-    max-height: 537px;
-    overflow-y: scroll;
-    overscroll-behavior: contain;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
 `
 
 export const Hash = styled.span`
@@ -81,6 +71,15 @@ export const Hash = styled.span`
 export const LogContent = styled.div`
   padding: 10px;
   word-break: break-all;
+`
+export const ScrolledLogContent = styled.div`
+  max-height: 537px;
+  overflow-y: scroll;
+  overscroll-behavior: contain;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 export const GroupButtons = styled.div`

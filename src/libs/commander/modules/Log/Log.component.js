@@ -7,7 +7,8 @@ import {
   LogWrapper,
   LogContent,
   AnimatedLoader,
-  LoaderText
+  LoaderText,
+  ScrolledLogContent
 } from './Log.styles'
 
 const preIconsByVariants = {
@@ -37,12 +38,17 @@ export const Log = ({ children, variant, buttonGroups, hasScroll }) => {
 
   const hasButtonGroups = !isFakeLoading && Boolean(buttonGroups?.length)
 
+  const Content = (
+    <>
+      {icon && <Hash>{icon}</Hash>}
+
+      {children}
+    </>
+  )
+
   return (
     <LogWrapper
-      className={`
-        ${!isFakeLoading ? variant : parameterTypes.INFO}
-        ${hasScroll ? 'scroll' : ''}
-      `}
+      className={!isFakeLoading ? variant : parameterTypes.INFO}
       onMouseDown={(event) => event.stopPropagation()}
     >
       {isFakeLoading && (
@@ -54,9 +60,11 @@ export const Log = ({ children, variant, buttonGroups, hasScroll }) => {
 
       {!isFakeLoading && (
         <LogContent>
-          {icon && <Hash>{icon}</Hash>}
-
-          {children}
+          {hasScroll ? (
+            <ScrolledLogContent>{Content}</ScrolledLogContent>
+          ) : (
+            Content
+          )}
         </LogContent>
       )}
 

@@ -96,10 +96,13 @@ export const Console = () => {
     setHistories([])
   }, [])
 
-  const outsideProps = {
-    clearTerminal,
-    addNotification
-  }
+  const outsideProps = React.useMemo(
+    () => ({
+      clearTerminal,
+      addNotification
+    }),
+    [clearTerminal, addNotification]
+  )
 
   const consoleStyles = {
     paddingTop: parseInt(titleReference.current?.offsetHeight || 0) + 10,

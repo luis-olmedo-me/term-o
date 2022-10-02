@@ -21,8 +21,14 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
 
       const updateData = () => {
         const newBodyData = {
-          width: Math.min(document.body.clientWidth, window.innerWidth - 1),
-          height: Math.min(document.body.clientHeight, window.innerHeight - 1)
+          width:
+            document.body.clientWidth > window.innerWidth
+              ? window.innerWidth
+              : document.body.clientWidth,
+          height:
+            document.body.clientHeight > window.innerHeight
+              ? window.innerHeight
+              : document.body.clientHeight
         }
         const newResizeData = {
           left: parseInt(wrapperReference.current.style.left),

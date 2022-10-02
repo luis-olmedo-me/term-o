@@ -178,7 +178,6 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
         })
 
         mousePosition = null
-        resizeData = newResizeData
         animationId = window.requestAnimationFrame(onAnimationFrame)
       }
 

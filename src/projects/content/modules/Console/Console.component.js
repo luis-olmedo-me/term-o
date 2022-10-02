@@ -119,7 +119,7 @@ export const Console = () => {
     <ConsoleWrapper
       ref={wrapperReference}
       isOpen={isOpen}
-      style={{ ...resizeData, ...movingEffect }}
+      // style={{ ...resizeData, ...movingEffect }}
       ondragstart='return false;'
       ondrop='return false;'
       onMouseDown={() => setTimeout(() => inputReference.current?.focus())}

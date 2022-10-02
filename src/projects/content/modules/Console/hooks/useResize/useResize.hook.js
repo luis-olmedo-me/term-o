@@ -50,8 +50,10 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
         }
 
         updateConfig(formattedData, onError)
-        setResizeData(formattedData)
         setBodyData(newBodyData)
+        Object.entries(newResizeData).forEach(([key, value]) => {
+          wrapperReference.current.style[key] = `${value}px`
+        })
       }, 500)
 
       const obsever = new ResizeObserver(updateData)
@@ -65,6 +67,8 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
 
   useEffect(() => {
     const resizeCommandHandler = (event) => {
+      if (!wrapperReference.current) return
+
       const side = event.detail.side
       const emptySpace = bodyData.width - (bodyData.width * 30) / 100
       const widthTaken = bodyData.width - emptySpace
@@ -102,8 +106,11 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
 
       if (!newResizeData) return
 
-      setResizeData(newResizeData)
       updateConfig(newResizeData, onError)
+      Object.entries(newResizeData).forEach(([key, value]) => {
+        wrapperReference.current.style[key] = `${value}px`
+      }),
+        [wrapperReference]
     }
 
     window.addEventListener(eventTypes.TERM_O_RESIZE, resizeCommandHandler)
@@ -118,11 +125,15 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
 
       if (!hasConsolePosition) return
 
-      setResizeData({
+      const newResizeData = {
         left: isNumber(consolePosition?.left) ? consolePosition.left : 10,
         right: isNumber(consolePosition?.right) ? consolePosition.right : 10,
         top: isNumber(consolePosition?.top) ? consolePosition.top : 10,
         bottom: isNumber(consolePosition?.bottom) ? consolePosition.bottom : 10
+      }
+
+      Object.entries(newResizeData).forEach(([key, value]) => {
+        wrapperReference.current.style[key] = `${value}px`
       })
     },
     [consolePosition]
@@ -157,11 +168,10 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
             bodyData
           })
 
-          setResizeData((oldResizeData) => ({
-            ...oldResizeData,
-            ...newResizeData
-          }))
           updateConfig(newResizeData, onError)
+          Object.entries(newResizeData).forEach(([key, value]) => {
+            wrapperReference.current.style[key] = `${value}px`
+          })
 
           mousePosition = null
         }
@@ -179,7 +189,9 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
       }
 
       animationId = window.requestAnimationFrame(onAnimationFrame)
-      window.addEventListener('mouseup', removeResizeListener)
+      window.addEventListener('mouseup', removeResizeListener, {
+        passive: true
+      })
       window.addEventListener('mousemove', mouseHandler, { passive: true })
 
       return removeResizeListener

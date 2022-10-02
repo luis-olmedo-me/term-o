@@ -5,7 +5,6 @@ import {
   limitLowValue,
   updateConfig
 } from './useResize.helpers'
-import { debounce } from 'src/helpers/utils.helpers.js'
 import { defaultBodyData } from './useResize.constants'
 import { eventTypes } from 'src/constants/events.constants.js'
 

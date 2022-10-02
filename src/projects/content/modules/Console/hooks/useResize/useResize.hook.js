@@ -5,30 +5,32 @@ import {
   limitLowValue,
   updateConfig
 } from './useResize.helpers'
-import { debounce } from 'src/helpers/utils.helpers.js'
 import { defaultBodyData } from './useResize.constants'
 import { eventTypes } from 'src/constants/events.constants.js'
 
 export const useResize = ({ wrapperReference, consolePosition, onError }) => {
   const [resizingFrom, setResizingFrom] = useState('')
   const [movingFrom, setMovingFrom] = useState(null)
-  const [resizeData, setResizeData] = useState({
-    left: 10,
-    right: 10,
-    top: 10,
-    bottom: 10
-  })
 
   const [bodyData, setBodyData] = useState(defaultBodyData)
 
   useEffect(
     function expectForBodyChanges() {
-      if (!wrapperReference?.current) return
+      if (!wrapperReference.current) return
 
-      const updateData = debounce(() => {
+      const updateData = () => {
+        const bodyWidth = document.body.clientWidth
+        const screenWidth = window.innerWidth
+        const bodyHeight = document.body.clientHeight
+        const screenHeight = window.innerHeight
+
         const newBodyData = {
-          width: Math.min(document.body.clientWidth, window.innerWidth - 1),
-          height: Math.min(document.body.clientHeight, window.innerHeight - 1)
+          width:
+            bodyWidth > screenWidth ? screenWidth : bodyWidth || screenWidth,
+          height:
+            bodyHeight > screenHeight
+              ? screenHeight
+              : bodyHeight || screenHeight
         }
         const newResizeData = {
           left: parseInt(wrapperReference.current.style.left),
@@ -50,9 +52,11 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
         }
 
         updateConfig(formattedData, onError)
-        setResizeData(formattedData)
         setBodyData(newBodyData)
-      }, 500)
+        Object.entries(formattedData).forEach(([key, value]) => {
+          wrapperReference.current.style[key] = `${value}px`
+        })
+      }
 
       const obsever = new ResizeObserver(updateData)
 
@@ -65,6 +69,8 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
 
   useEffect(() => {
     const resizeCommandHandler = (event) => {
+      if (!wrapperReference.current) return
+
       const side = event.detail.side
       const emptySpace = bodyData.width - (bodyData.width * 30) / 100
       const widthTaken = bodyData.width - emptySpace
@@ -102,8 +108,11 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
 
       if (!newResizeData) return
 
-      setResizeData(newResizeData)
       updateConfig(newResizeData, onError)
+      Object.entries(newResizeData).forEach(([key, value]) => {
+        wrapperReference.current.style[key] = `${value}px`
+      }),
+        [wrapperReference]
     }
 
     window.addEventListener(eventTypes.TERM_O_RESIZE, resizeCommandHandler)
@@ -118,11 +127,15 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
 
       if (!hasConsolePosition) return
 
-      setResizeData({
+      const newResizeData = {
         left: isNumber(consolePosition?.left) ? consolePosition.left : 10,
         right: isNumber(consolePosition?.right) ? consolePosition.right : 10,
         top: isNumber(consolePosition?.top) ? consolePosition.top : 10,
         bottom: isNumber(consolePosition?.bottom) ? consolePosition.bottom : 10
+      }
+
+      Object.entries(newResizeData).forEach(([key, value]) => {
+        wrapperReference.current.style[key] = `${value}px`
       })
     },
     [consolePosition]
@@ -134,6 +147,12 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
 
       let animationId = null
       let mousePosition = null
+      let resizeData = {
+        left: parseInt(wrapperReference.current.style.left),
+        right: parseInt(wrapperReference.current.style.right),
+        bottom: parseInt(wrapperReference.current.style.bottom),
+        top: parseInt(wrapperReference.current.style.top)
+      }
       const mockDistance = {
         x: bodyData.width - wrapperReference.current.clientWidth,
         y: bodyData.height - wrapperReference.current.clientHeight
@@ -147,25 +166,26 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
       }
 
       const onAnimationFrame = () => {
-        if (mousePosition) {
-          const newResizeData = getNewResizeData({
-            mockDistance,
-            mousePosition: { x: mousePosition.x, y: mousePosition.y },
-            pivotPosition: { x: movingFrom?.x, y: movingFrom?.y },
-            resizeType: resizingFrom,
-            resizeData,
-            bodyData
-          })
-
-          setResizeData((oldResizeData) => ({
-            ...oldResizeData,
-            ...newResizeData
-          }))
-          updateConfig(newResizeData, onError)
-
-          mousePosition = null
+        if (!mousePosition) {
+          animationId = window.requestAnimationFrame(onAnimationFrame)
+          return
         }
 
+        const newResizeData = getNewResizeData({
+          mockDistance,
+          mousePosition: { x: mousePosition.x, y: mousePosition.y },
+          pivotPosition: { x: movingFrom?.x, y: movingFrom?.y },
+          resizeType: resizingFrom,
+          resizeData,
+          bodyData
+        })
+
+        updateConfig(newResizeData, onError)
+        Object.entries(newResizeData).forEach(([key, value]) => {
+          wrapperReference.current.style[key] = `${value}px`
+        })
+
+        mousePosition = null
         animationId = window.requestAnimationFrame(onAnimationFrame)
       }
 
@@ -179,7 +199,9 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
       }
 
       animationId = window.requestAnimationFrame(onAnimationFrame)
-      window.addEventListener('mouseup', removeResizeListener)
+      window.addEventListener('mouseup', removeResizeListener, {
+        passive: true
+      })
       window.addEventListener('mousemove', mouseHandler, { passive: true })
 
       return removeResizeListener
@@ -189,7 +211,6 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
 
   return {
     setResizingFrom,
-    resizeData,
     setMovingFrom,
     isMoving: Boolean(movingFrom)
   }

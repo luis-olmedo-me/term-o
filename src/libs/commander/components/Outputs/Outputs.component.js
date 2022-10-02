@@ -6,7 +6,7 @@ const replaceByParams = (message, params) => {
   return message.replace(/\{([^\}]+)?\}/g, (_, paramKey) => params[paramKey])
 }
 
-export const Outputs = ({ components, id, outsideProps }) => {
+const OutputsNonMemoized = ({ components, id, outsideProps }) => {
   const defaultData = components.map((Component, index) => ({
     Component,
     isVisible: index === 0
@@ -88,3 +88,5 @@ export const Outputs = ({ components, id, outsideProps }) => {
     </OutputWrapper>
   )
 }
+
+export const Outputs = React.memo(OutputsNonMemoized)

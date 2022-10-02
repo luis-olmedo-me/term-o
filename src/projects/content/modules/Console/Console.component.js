@@ -30,7 +30,7 @@ export const Console = () => {
     useNotifications()
   const { isOpen, appliedPageEvents, customPageEvents, consolePosition } =
     useConfig({ onError: showWorkerRequestError })
-  const { setResizingFrom, resizeData, setMovingFrom, isMoving } = useResize({
+  const { setResizingFrom, setMovingFrom, isMoving } = useResize({
     wrapperReference,
     consolePosition,
     onError: showWorkerRequestError
@@ -96,10 +96,13 @@ export const Console = () => {
     setHistories([])
   }, [])
 
-  const outsideProps = {
-    clearTerminal,
-    addNotification
-  }
+  const outsideProps = React.useMemo(
+    () => ({
+      clearTerminal,
+      addNotification
+    }),
+    [clearTerminal, addNotification]
+  )
 
   const consoleStyles = {
     paddingTop: parseInt(titleReference.current?.offsetHeight || 0) + 10,
@@ -116,7 +119,7 @@ export const Console = () => {
     <ConsoleWrapper
       ref={wrapperReference}
       isOpen={isOpen}
-      style={{ ...resizeData, ...movingEffect }}
+      style={movingEffect}
       ondragstart='return false;'
       ondrop='return false;'
       onMouseDown={() => setTimeout(() => inputReference.current?.focus())}

@@ -30,7 +30,7 @@ export const Console = () => {
     useNotifications()
   const { isOpen, appliedPageEvents, customPageEvents, consolePosition } =
     useConfig({ onError: showWorkerRequestError })
-  const { setResizingFrom, resizeData, setMovingFrom, isMoving } = useResize({
+  const { setResizingFrom, setMovingFrom, isMoving } = useResize({
     wrapperReference,
     consolePosition,
     onError: showWorkerRequestError
@@ -119,7 +119,7 @@ export const Console = () => {
     <ConsoleWrapper
       ref={wrapperReference}
       isOpen={isOpen}
-      // style={{ ...resizeData, ...movingEffect }}
+      style={movingEffect}
       ondragstart='return false;'
       ondrop='return false;'
       onMouseDown={() => setTimeout(() => inputReference.current?.focus())}

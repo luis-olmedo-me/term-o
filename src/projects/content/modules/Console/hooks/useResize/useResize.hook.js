@@ -12,12 +12,6 @@ import { eventTypes } from 'src/constants/events.constants.js'
 export const useResize = ({ wrapperReference, consolePosition, onError }) => {
   const [resizingFrom, setResizingFrom] = useState('')
   const [movingFrom, setMovingFrom] = useState(null)
-  const [resizeData, setResizeData] = useState({
-    left: 10,
-    right: 10,
-    top: 10,
-    bottom: 10
-  })
 
   const [bodyData, setBodyData] = useState(defaultBodyData)
 
@@ -145,6 +139,12 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
 
       let animationId = null
       let mousePosition = null
+      let resizeData = {
+        left: parseInt(wrapperReference.current.style.left),
+        right: parseInt(wrapperReference.current.style.right),
+        bottom: parseInt(wrapperReference.current.style.bottom),
+        top: parseInt(wrapperReference.current.style.top)
+      }
       const mockDistance = {
         x: bodyData.width - wrapperReference.current.clientWidth,
         y: bodyData.height - wrapperReference.current.clientHeight
@@ -158,24 +158,27 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
       }
 
       const onAnimationFrame = () => {
-        if (mousePosition) {
-          const newResizeData = getNewResizeData({
-            mockDistance,
-            mousePosition: { x: mousePosition.x, y: mousePosition.y },
-            pivotPosition: { x: movingFrom?.x, y: movingFrom?.y },
-            resizeType: resizingFrom,
-            resizeData,
-            bodyData
-          })
-
-          updateConfig(newResizeData, onError)
-          Object.entries(newResizeData).forEach(([key, value]) => {
-            wrapperReference.current.style[key] = `${value}px`
-          })
-
-          mousePosition = null
+        if (!mousePosition) {
+          animationId = window.requestAnimationFrame(onAnimationFrame)
+          return
         }
 
+        const newResizeData = getNewResizeData({
+          mockDistance,
+          mousePosition: { x: mousePosition.x, y: mousePosition.y },
+          pivotPosition: { x: movingFrom?.x, y: movingFrom?.y },
+          resizeType: resizingFrom,
+          resizeData,
+          bodyData
+        })
+
+        updateConfig(newResizeData, onError)
+        Object.entries(newResizeData).forEach(([key, value]) => {
+          wrapperReference.current.style[key] = `${value}px`
+        })
+
+        mousePosition = null
+        resizeData = newResizeData
         animationId = window.requestAnimationFrame(onAnimationFrame)
       }
 
@@ -201,7 +204,6 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
 
   return {
     setResizingFrom,
-    resizeData,
     setMovingFrom,
     isMoving: Boolean(movingFrom)
   }

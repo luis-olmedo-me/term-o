@@ -17,9 +17,9 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
 
   useEffect(
     function expectForBodyChanges() {
-      if (!wrapperReference?.current) return
+      if (!wrapperReference.current) return
 
-      const updateData = debounce(() => {
+      const updateData = () => {
         const newBodyData = {
           width: Math.min(document.body.clientWidth, window.innerWidth - 1),
           height: Math.min(document.body.clientHeight, window.innerHeight - 1)
@@ -45,10 +45,10 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
 
         updateConfig(formattedData, onError)
         setBodyData(newBodyData)
-        Object.entries(newResizeData).forEach(([key, value]) => {
+        Object.entries(formattedData).forEach(([key, value]) => {
           wrapperReference.current.style[key] = `${value}px`
         })
-      }, 500)
+      }
 
       const obsever = new ResizeObserver(updateData)
 

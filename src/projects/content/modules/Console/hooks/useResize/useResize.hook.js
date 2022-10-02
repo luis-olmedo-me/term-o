@@ -20,15 +20,18 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
       if (!wrapperReference.current) return
 
       const updateData = () => {
+        const bodyWidth = document.body.clientWidth
+        const screenWidth = window.innerWidth
+        const bodyHeight = document.body.clientHeight
+        const screenHeight = window.innerHeight
+
         const newBodyData = {
           width:
-            document.body.clientWidth > window.innerWidth
-              ? window.innerWidth
-              : document.body.clientWidth,
+            bodyWidth > screenWidth ? screenWidth : bodyWidth || screenWidth,
           height:
-            document.body.clientHeight > window.innerHeight
-              ? window.innerHeight
-              : document.body.clientHeight
+            bodyHeight > screenHeight
+              ? screenHeight
+              : bodyHeight || screenHeight
         }
         const newResizeData = {
           left: parseInt(wrapperReference.current.style.left),

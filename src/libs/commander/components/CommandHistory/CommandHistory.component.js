@@ -7,6 +7,7 @@ import { parameterTypes } from '../../constants/commands.constants'
 import { historyMessages } from './CommandHistory.messages'
 import { getActionType } from './CommandHistory.helpers'
 import { historyActionTypes } from './CommandHistory.constants'
+import { fetchHistorial } from '../../../../helpers/event.helpers'
 
 export const CommandHistory = ({
   props,
@@ -31,10 +32,21 @@ export const CommandHistory = ({
     finish()
   }, [goto, setMessageData, protocol, finish])
 
+  const handleShowHistorial = useCallback(
+    (historial) => {
+      console.log('historial', historial)
+      finish()
+    },
+    [setMessageData, finish]
+  )
+
   useEffect(
     function handleActionType() {
       switch (actionType) {
         case historyActionTypes.SHOW_LIST:
+          fetchHistorial()
+            .then(handleShowHistorial)
+            .catch(() => finish())
           break
 
         case historyActionTypes.REDIRECT:
@@ -45,7 +57,7 @@ export const CommandHistory = ({
           break
       }
     },
-    [actionType, handleRedirect]
+    [actionType, handleRedirect, handleShowHistorial]
   )
 
   return <Log variant={parameterTypes.COMMAND}>{command}</Log>

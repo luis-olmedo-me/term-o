@@ -122,5 +122,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       sendResponse({ status: 'ok', data: connectedTabs.list })
       break
     }
+
+    case eventTypes.GET_HISTORIAL: {
+      sendResponse({ status: 'ok' })
+      break
+    }
   }
 })

@@ -3,7 +3,7 @@ import { useEffect, useCallback } from 'react'
 
 import { Log } from '../../modules/Log'
 
-import { actionTypes, parameterTypes } from '../../constants/commands.constants'
+import { parameterTypes } from '../../constants/commands.constants'
 import { historyMessages } from './CommandHistory.messages'
 import { getActionType } from './CommandHistory.helpers'
 import { historyActionTypes } from './CommandHistory.constants'

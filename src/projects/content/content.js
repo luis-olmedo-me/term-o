@@ -12,7 +12,7 @@ document.body.prepend(appRoot)
 const root = createRoot(appRoot)
 
 root.render(
-  <React.StrictMode>
+  <>
     <FontFamilies />
 
     <shadowRoot.div>
@@ -22,5 +22,5 @@ root.render(
         </OverlayProvider>
       </PortalProvider>
     </shadowRoot.div>
-  </React.StrictMode>
+  </>
 )

@@ -6,6 +6,7 @@ import { Log } from '../../modules/Log'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { historyMessages } from './CommandHistory.messages'
 import { getActionType } from './CommandHistory.helpers'
+import { historyActionTypes } from './CommandHistory.constants'
 
 export const CommandHistory = ({
   props,
@@ -33,7 +34,10 @@ export const CommandHistory = ({
   useEffect(
     function handleActionType() {
       switch (actionType) {
-        case actionTypes.REDIRECT:
+        case historyActionTypes.SHOW_LIST:
+          break
+
+        case historyActionTypes.REDIRECT:
           handleRedirect()
           break
 

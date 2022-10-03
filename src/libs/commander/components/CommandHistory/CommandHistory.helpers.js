@@ -1,6 +1,7 @@
-import { actionTypes } from '../../constants/commands.constants'
+import { historyActionTypes } from './CommandHistory.constants'
 
-export const getActionType = ({ goto, protocol }) => {
-  if (goto.length || protocol) return actionTypes.REDIRECT
-  else return actionTypes.NONE
+export const getActionType = ({ goto, protocol, list }) => {
+  if (list) return historyActionTypes.SHOW_LIST
+  else if (goto.length || protocol) return historyActionTypes.REDIRECT
+  else return historyActionTypes.NONE
 }

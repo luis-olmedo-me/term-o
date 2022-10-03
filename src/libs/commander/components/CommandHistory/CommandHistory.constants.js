@@ -19,7 +19,20 @@ export const historyConfig = {
       type: optionTypes.STRING,
       defaultValue: 'https',
       alias: 'p'
+    },
+    list: {
+      key: 'list',
+      description: 'List all history items',
+      type: optionTypes.BOOLEAN,
+      defaultValue: false,
+      alias: 'l'
     }
   },
   output: (props) => <CommandHistory key={props.id} {...props} />
+}
+
+export const historyActionTypes = {
+  SHOW_LIST: 'SHOW_LIST',
+  REDIRECT: 'REDIRECT',
+  NONE: 'NONE'
 }

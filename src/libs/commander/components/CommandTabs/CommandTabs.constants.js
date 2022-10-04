@@ -18,6 +18,20 @@ export const tabsConfig = {
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 'h'
+    },
+    goto: {
+      key: 'goto',
+      description: 'Go to a specific url (URL)',
+      type: optionTypes.ARRAY_OF_STRINGS,
+      defaultValue: [],
+      alias: 'g'
+    },
+    protocol: {
+      key: 'protocol',
+      description: 'Define the protocol to use for the history entry',
+      type: optionTypes.STRING,
+      defaultValue: 'https',
+      alias: 'p'
     }
   },
   output: (props) => <CommandTabs key={props.id} {...props} />
@@ -26,5 +40,6 @@ export const tabsConfig = {
 export const tabsActionTypes = {
   SHOW_CURRENT_TABS: 'SHOW_CURRENT_TABS',
   SHOW_HISTORY: 'SHOW_HISTORY',
+  REDIRECT: 'REDIRECT',
   NONE: 'NONE'
 }

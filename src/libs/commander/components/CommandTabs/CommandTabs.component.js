@@ -11,6 +11,7 @@ import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 import { commanderMessages } from '../../commander.messages'
 import { fetchHistorial } from '../../../../helpers/event.helpers'
+import { tabsMessages } from './CommandTabs.messages'
 
 export const CommandTabs = ({
   props,
@@ -19,6 +20,7 @@ export const CommandTabs = ({
   const [tabs, setTabs] = useState([])
 
   const actionType = getActionType(props)
+  const { goto, protocol } = props
 
   const { buttonGroups, pages, pageNumber } = usePaginationGroups({
     items: tabs,
@@ -32,6 +34,21 @@ export const CommandTabs = ({
     },
     [finish]
   )
+
+  const handleRedirect = useCallback(() => {
+    if (!goto.length) return setMessageData(tabsMessages.missingURL)
+
+    goto.forEach((url) => {
+      const formattedUrl = url.startsWith('www') ? url : `www.${url}`
+
+      window.open(`${protocol}://${formattedUrl}`, '_blank')
+    })
+
+    setMessageData(tabsMessages.redirectionSuccess, {
+      urlCount: goto.length
+    })
+    finish()
+  }, [goto, setMessageData, protocol, finish])
 
   const handleShowHistory = useCallback(
     (historial) => {
@@ -69,12 +86,22 @@ export const CommandTabs = ({
             .catch(() => setMessageData(commanderMessages.unexpectedError))
           break
 
+        case tabsActionTypes.REDIRECT:
+          handleRedirect()
+          break
+
         case tabsActionTypes.NONE:
           setMessageData(commanderMessages.unexpectedError)
           break
       }
     },
-    [actionType, handleShowTabList, setMessageData, handleShowHistory]
+    [
+      actionType,
+      setMessageData,
+      handleShowTabList,
+      handleRedirect,
+      handleShowHistory
+    ]
   )
 
   return (

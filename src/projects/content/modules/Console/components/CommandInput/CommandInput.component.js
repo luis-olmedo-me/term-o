@@ -195,11 +195,13 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
 
   return (
     <InputWrapper>
-      <Suggestions
-        suggestions={suggestions}
-        selectedId={selectedSuggestionId}
-        onSuggestionClick={handleSelectSuggestion}
-      />
+      {command && (
+        <Suggestions
+          suggestions={suggestions}
+          selectedId={selectedSuggestionId}
+          onSuggestionClick={handleSelectSuggestion}
+        />
+      )}
 
       <div>
         <Hash>$</Hash>

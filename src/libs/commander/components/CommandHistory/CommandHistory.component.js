@@ -8,12 +8,22 @@ import { historyMessages } from './CommandHistory.messages'
 import { getActionType } from './CommandHistory.helpers'
 import { historyActionTypes } from './CommandHistory.constants'
 import { fetchHistorial } from '../../../../helpers/event.helpers'
+import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
+import { Carousel } from 'modules/components/Carousel/Carousel.component'
+import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
+import { Table } from 'modules/components/Table/Table.component'
 
 export const CommandHistory = ({
   props,
   terminal: { command, setMessageData, finish }
 }) => {
   const { goto, protocol } = props
+  const [tableItems, setTableItems] = React.useState([])
+
+  const { buttonGroups, pages, pageNumber } = usePaginationGroups({
+    items: tableItems,
+    maxItems: 10
+  })
 
   const actionType = getActionType(props)
 
@@ -34,7 +44,13 @@ export const CommandHistory = ({
 
   const handleShowHistorial = useCallback(
     (historial) => {
-      console.log('historial', historial)
+      const historialAsTableItems = historial.map(
+        ({ lastVisitTime, url, title }) => {
+          return [lastVisitTime, title, new URL(url).hostname]
+        }
+      )
+
+      setTableItems(historialAsTableItems)
       finish()
     },
     [setMessageData, finish]
@@ -60,5 +76,25 @@ export const CommandHistory = ({
     [actionType, handleRedirect, handleShowHistorial]
   )
 
-  return <Log variant={parameterTypes.COMMAND}>{command}</Log>
+  return (
+    <>
+      <Log variant={parameterTypes.COMMAND}>{command}</Log>
+
+      <Log variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
+        <Carousel itemInView={pageNumber}>
+          {pages.map((page, currentPageNumber) => {
+            return (
+              <CarouselItem key={currentPageNumber}>
+                <Table
+                  headers={['Time', 'Title', 'URL']}
+                  widths={[20, 40, 40]}
+                  rows={page}
+                />
+              </CarouselItem>
+            )
+          })}
+        </Carousel>
+      </Log>
+    </>
+  )
 }

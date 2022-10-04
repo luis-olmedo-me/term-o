@@ -80,7 +80,7 @@ export const CommandHistory = ({
     <>
       <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
-      <Log variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
+      <Log variant={parameterTypes.TABS} buttonGroups={buttonGroups}>
         <Carousel itemInView={pageNumber}>
           {pages.map((page, currentPageNumber) => {
             return (

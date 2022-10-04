@@ -59,3 +59,9 @@ export const FaviconSVG = styled.svg`
 export const Title = styled.span`
   vertical-align: middle;
 `
+
+export const HostName = styled.span`
+  vertical-align: middle;
+  margin-left: 10px;
+  color: #00000080;
+`

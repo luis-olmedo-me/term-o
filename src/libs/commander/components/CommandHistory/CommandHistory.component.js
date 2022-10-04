@@ -51,7 +51,8 @@ export const CommandHistory = ({
           return {
             lastVisitTime,
             title,
-            favIconUrl: `https://www.google.com/s2/favicons?domain=${hostName}`
+            favIconUrl: `https://www.google.com/s2/favicons?domain=${hostName}`,
+            hostName
           }
         }
       )

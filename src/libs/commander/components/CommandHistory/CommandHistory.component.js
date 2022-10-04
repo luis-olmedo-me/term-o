@@ -46,7 +46,13 @@ export const CommandHistory = ({
     (historial) => {
       const historialAsTableItems = historial.map(
         ({ lastVisitTime, url, title }) => {
-          return { lastVisitTime, title, favIconUrl: 'invalid-url' }
+          const hostName = new URL(url).hostname
+
+          return {
+            lastVisitTime,
+            title,
+            favIconUrl: `https://www.google.com/s2/favicons?domain=${hostName}`
+          }
         }
       )
 

@@ -10,6 +10,7 @@ import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 import { commanderMessages } from '../../commander.messages'
+import { fetchHistorial } from '../../../../helpers/event.helpers'
 
 export const CommandTabs = ({
   props,
@@ -32,6 +33,27 @@ export const CommandTabs = ({
     [finish]
   )
 
+  const handleShowHistory = useCallback(
+    (historial) => {
+      const historialAsTableItems = historial.map(
+        ({ lastVisitTime, url, title }) => {
+          const hostName = new URL(url).hostname
+
+          return {
+            lastVisitTime,
+            title,
+            favIconUrl: `https://www.google.com/s2/favicons?domain=${hostName}`,
+            hostName
+          }
+        }
+      )
+
+      setTabs(historialAsTableItems)
+      finish()
+    },
+    [setMessageData, finish]
+  )
+
   useEffect(
     function handleActionType() {
       switch (actionType) {
@@ -41,12 +63,18 @@ export const CommandTabs = ({
             .catch(() => setMessageData(commanderMessages.unexpectedError))
           break
 
-        default:
+        case tabsActionTypes.SHOW_HISTORY:
+          fetchHistorial()
+            .then(handleShowHistory)
+            .catch(() => setMessageData(commanderMessages.unexpectedError))
+          break
+
+        case tabsActionTypes.NONE:
           setMessageData(commanderMessages.unexpectedError)
           break
       }
     },
-    [actionType, handleShowTabList, setMessageData]
+    [actionType, handleShowTabList, setMessageData, handleShowHistory]
   )
 
   return (

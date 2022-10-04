@@ -11,6 +11,13 @@ export const tabsConfig = {
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 'c'
+    },
+    history: {
+      key: 'history',
+      description: 'Show past tabs',
+      type: optionTypes.BOOLEAN,
+      defaultValue: false,
+      alias: 'h'
     }
   },
   output: (props) => <CommandTabs key={props.id} {...props} />
@@ -18,5 +25,6 @@ export const tabsConfig = {
 
 export const tabsActionTypes = {
   SHOW_CURRENT_TABS: 'SHOW_CURRENT_TABS',
+  SHOW_HISTORY: 'SHOW_HISTORY',
   NONE: 'NONE'
 }

@@ -2,7 +2,7 @@ import * as React from 'react'
 import { useCallback, useEffect, useState } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
 import { getActionType } from './CommandTabs.helpers'
-import { Log } from '../../modules/Log'
+import { Log, useMessageLog } from '../../modules/Log'
 import { tabsActionTypes } from './CommandTabs.constants'
 import { getTabsInfo } from 'src/helpers/event.helpers.js'
 import { List, Tab } from '../../modules/List'
@@ -13,15 +13,13 @@ import { commanderMessages } from '../../commander.messages'
 import { fetchHistorial } from '../../../../helpers/event.helpers'
 import { tabsMessages } from './CommandTabs.messages'
 
-export const CommandTabs = ({
-  props,
-  terminal: { command, setMessageData, finish }
-}) => {
+export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const [tabs, setTabs] = useState([])
 
   const actionType = getActionType(props)
   const { open, protocol } = props
 
+  const { log: messageLog, setMessage } = useMessageLog()
   const { buttonGroups, pages, pageNumber } = usePaginationGroups({
     items: tabs,
     maxItems: 10
@@ -36,17 +34,17 @@ export const CommandTabs = ({
   )
 
   const handleRedirect = useCallback(() => {
-    if (!open) return setMessageData(tabsMessages.missingURL)
+    if (!open) return setMessage(tabsMessages.missingURL)
 
     const formattedUrl = open.startsWith('www') ? open : `www.${open}`
 
     window.open(`${protocol}://${formattedUrl}`, '_blank')
 
-    setMessageData(tabsMessages.redirectionSuccess, {
+    setMessage(tabsMessages.redirectionSuccess, {
       urlCount: open.length
     })
     finish()
-  }, [open, setMessageData, protocol, finish])
+  }, [open, setMessage, protocol, finish])
 
   const handleShowHistory = useCallback(
     (historial) => {
@@ -66,7 +64,7 @@ export const CommandTabs = ({
       setTabs(historialAsTableItems)
       finish()
     },
-    [setMessageData, finish]
+    [setMessage, finish]
   )
 
   useEffect(
@@ -75,13 +73,13 @@ export const CommandTabs = ({
         case tabsActionTypes.SHOW_CURRENT_TABS:
           getTabsInfo()
             .then(handleShowTabList)
-            .catch(() => setMessageData(commanderMessages.unexpectedError))
+            .catch(() => setMessage(commanderMessages.unexpectedError))
           break
 
         case tabsActionTypes.SHOW_HISTORY:
           fetchHistorial()
             .then(handleShowHistory)
-            .catch(() => setMessageData(commanderMessages.unexpectedError))
+            .catch(() => setMessage(commanderMessages.unexpectedError))
           break
 
         case tabsActionTypes.REDIRECT:
@@ -89,13 +87,13 @@ export const CommandTabs = ({
           break
 
         case tabsActionTypes.NONE:
-          setMessageData(commanderMessages.unexpectedError)
+          setMessage(commanderMessages.unexpectedError)
           break
       }
     },
     [
       actionType,
-      setMessageData,
+      setMessage,
       handleShowTabList,
       handleRedirect,
       handleShowHistory
@@ -106,20 +104,24 @@ export const CommandTabs = ({
     <>
       <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
-      <Log variant={parameterTypes.TABS} buttonGroups={buttonGroups}>
-        <Carousel itemInView={pageNumber}>
-          {pages.map((page, currentPageNumber) => {
-            return (
-              <CarouselItem key={currentPageNumber}>
-                <List
-                  items={page}
-                  Child={({ item }) => <Tab element={item} />}
-                />
-              </CarouselItem>
-            )
-          })}
-        </Carousel>
-      </Log>
+      {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
+
+      {!messageLog && (
+        <Log variant={parameterTypes.TABS} buttonGroups={buttonGroups}>
+          <Carousel itemInView={pageNumber}>
+            {pages.map((page, currentPageNumber) => {
+              return (
+                <CarouselItem key={currentPageNumber}>
+                  <List
+                    items={page}
+                    Child={({ item }) => <Tab element={item} />}
+                  />
+                </CarouselItem>
+              )
+            })}
+          </Carousel>
+        </Log>
+      )}
     </>
   )
 }

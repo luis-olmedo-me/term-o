@@ -195,11 +195,13 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
 
   return (
     <InputWrapper>
-      <Suggestions
-        suggestions={suggestions}
-        selectedId={selectedSuggestionId}
-        onSuggestionClick={handleSelectSuggestion}
-      />
+      {command && (
+        <Suggestions
+          suggestions={suggestions}
+          selectedId={selectedSuggestionId}
+          onSuggestionClick={handleSelectSuggestion}
+        />
+      )}
 
       <div>
         <Hash>$</Hash>
@@ -211,6 +213,10 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
           onKeyUp={handleKeyUp}
           onChange={(event) => setCommand(event.target.value)}
           value={command}
+          onBlur={() => {
+            setSuggestions([])
+            setSelectedSuggestionId(0)
+          }}
           spellcheck='false'
         />
       </div>

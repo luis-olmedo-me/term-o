@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useEffect, useState, useCallback } from 'react'
-import { Log, AttributeEditionLog } from '../../modules/Log'
+import { Log, AttributeEditionLog, useMessageLog } from '../../modules/Log'
 import {
   generateFilterByEvery,
   generateFilterBySome,
@@ -26,7 +26,7 @@ const domViews = {
 
 const CommandDomWithoutContext = ({
   props,
-  terminal: { command, setParams, setMessageData, finish },
+  terminal: { command, setParams, finish },
   id,
   setHighlitedElement
 }) => {
@@ -53,6 +53,7 @@ const CommandDomWithoutContext = ({
 
   const actionType = getActionType(props)
 
+  const { log: messageLog, setMessage } = useMessageLog()
   const { buttonGroups, pages, pageNumber } = usePaginationGroups({
     items: elements,
     maxItems: 10
@@ -108,7 +109,7 @@ const CommandDomWithoutContext = ({
         setParams(insertParams(id, elementsAsParam))
         finish()
       })
-      .catch(() => setMessageData(domMessages.noElementsFound))
+      .catch(() => setMessage(domMessages.noElementsFound))
   }, [
     get,
     hasId,
@@ -119,7 +120,7 @@ const CommandDomWithoutContext = ({
     byAttribute,
     hidden,
     byXpath,
-    setMessageData,
+    setMessage,
     setParams,
     finish,
     id,
@@ -135,7 +136,7 @@ const CommandDomWithoutContext = ({
           break
 
         case actionTypes.NONE:
-          setMessageData(domMessages.unexpectedError)
+          setMessage(domMessages.unexpectedError)
           break
       }
     },
@@ -190,70 +191,78 @@ const CommandDomWithoutContext = ({
     <>
       <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
-      <Carousel itemInView={itemInView}>
-        <CarouselItem>
-          <Log variant={parameterTypes.ELEMENT} buttonGroups={buttonGroups}>
-            {hasPinnedElements && (
+      {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
+
+      {!messageLog && (
+        <Carousel itemInView={itemInView}>
+          <CarouselItem>
+            <Log variant={parameterTypes.ELEMENT} buttonGroups={buttonGroups}>
+              {hasPinnedElements && (
+                <List
+                  items={pinnedElements}
+                  Child={({ item }) => (
+                    <Element
+                      element={item}
+                      pinnedElements={pinnedElements}
+                      setPinnedElements={setPinnedElements}
+                      shouldAnimate
+                    />
+                  )}
+                />
+              )}
+
+              <Carousel itemInView={pageNumber}>
+                {pages.map((page, currentPageNumber) => {
+                  return (
+                    <CarouselItem key={currentPageNumber}>
+                      <List
+                        items={page}
+                        Child={({ item }) => (
+                          <Element
+                            element={item}
+                            pinnedElements={pinnedElements}
+                            setPinnedElements={setPinnedElements}
+                            onAttributesOptionClick={handleElementClick}
+                            onStylesOptionClick={handleStylesOptionClick}
+                            variant={
+                              pinnedElements.includes(item)
+                                ? 'pinned'
+                                : 'default'
+                            }
+                          />
+                        )}
+                      />
+                    </CarouselItem>
+                  )
+                })}
+              </Carousel>
+            </Log>
+          </CarouselItem>
+
+          <CarouselItem>
+            <AttributeEditionLog
+              element={editingElement}
+              leftOptions={[headToElements]}
+              rightOptions={[headToStyles]}
+            />
+          </CarouselItem>
+
+          <CarouselItem>
+            <Log
+              variant={parameterTypes.STYLES}
+              buttonGroups={[headToElements, headToAttributes]}
+              hasScroll
+            >
               <List
-                items={pinnedElements}
+                items={sheets}
                 Child={({ item }) => (
-                  <Element
-                    element={item}
-                    pinnedElements={pinnedElements}
-                    setPinnedElements={setPinnedElements}
-                    shouldAnimate
-                  />
+                  <StyleSheet sheet={item} sheets={sheets} />
                 )}
               />
-            )}
-
-            <Carousel itemInView={pageNumber}>
-              {pages.map((page, currentPageNumber) => {
-                return (
-                  <CarouselItem key={currentPageNumber}>
-                    <List
-                      items={page}
-                      Child={({ item }) => (
-                        <Element
-                          element={item}
-                          pinnedElements={pinnedElements}
-                          setPinnedElements={setPinnedElements}
-                          onAttributesOptionClick={handleElementClick}
-                          onStylesOptionClick={handleStylesOptionClick}
-                          variant={
-                            pinnedElements.includes(item) ? 'pinned' : 'default'
-                          }
-                        />
-                      )}
-                    />
-                  </CarouselItem>
-                )
-              })}
-            </Carousel>
-          </Log>
-        </CarouselItem>
-
-        <CarouselItem>
-          <AttributeEditionLog
-            element={editingElement}
-            leftOptions={[headToElements]}
-            rightOptions={[headToStyles]}
-          />
-        </CarouselItem>
-
-        <CarouselItem>
-          <Log
-            variant={parameterTypes.STYLES}
-            buttonGroups={[headToElements, headToAttributes]}
-            hasScroll
-          >
-            <List
-              items={sheets}
-              Child={({ item }) => <StyleSheet sheet={item} sheets={sheets} />}
-            />
-          </Log>
-        </CarouselItem>
-      </Carousel>
+            </Log>
+          </CarouselItem>
+        </Carousel>
+      )}
     </>
   )
 }

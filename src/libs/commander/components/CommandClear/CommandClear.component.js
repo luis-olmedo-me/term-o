@@ -5,14 +5,16 @@ import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { getActionType } from './CommandClear.helpers'
 import { clearMessages } from './CommandClear.messages'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
-import { Log } from '../../modules/Log'
+import { Log, useMessageLog } from '../../modules/Log'
 
 export const CommandClearWithoutContext = ({
   props,
-  terminal: { clearTerminal, setMessageData, command, finish },
+  terminal: { clearTerminal, command, finish },
   setHighlitedElement
 }) => {
   const actionType = getActionType(props)
+
+  const { log: messageLog, setMessage } = useMessageLog()
 
   const handleClearTerminal = useCallback(() => {
     clearTerminal()
@@ -29,8 +31,8 @@ export const CommandClearWithoutContext = ({
 
         case actionTypes.CLEAR_CONFIG:
           resetConfiguration()
-            .catch(() => setMessageData(clearMessages.unexpectedError))
-            .then(() => setMessageData(clearMessages.configurationResetSuccess))
+            .catch(() => setMessage(clearMessages.unexpectedError))
+            .then(() => setMessage(clearMessages.configurationResetSuccess))
             .then(() => finish())
           break
 
@@ -42,14 +44,20 @@ export const CommandClearWithoutContext = ({
     [
       actionType,
       clearTerminal,
-      setMessageData,
+      setMessage,
       setHighlitedElement,
       handleClearTerminal,
       finish
     ]
   )
 
-  return <Log variant={parameterTypes.COMMAND}>{command}</Log>
+  return (
+    <>
+      <Log variant={parameterTypes.COMMAND}>{command}</Log>
+
+      {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
+    </>
+  )
 }
 
 export const CommandClear = withOverlayContext(CommandClearWithoutContext)

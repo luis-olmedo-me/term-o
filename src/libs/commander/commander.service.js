@@ -95,6 +95,10 @@ class Commander {
       const hasKnownCommand = Boolean(knownCommand)
 
       return ({ providerProps, possibleParams, id }) => {
+        if (!hasKnownCommand) {
+          return <MessageLog {...commanderMessages.unknownCommandError} />
+        }
+
         const params = parseValuesIntoParams(values, possibleParams)
         const commonProps = {
           props,
@@ -102,21 +106,7 @@ class Commander {
           id
         }
 
-        if (!hasKnownCommand) {
-          const errorProps = {
-            ...commonProps,
-            terminal: {
-              ...commonProps.terminal,
-              messageData: commanderMessages.unknownCommandError
-            }
-          }
-
-          return <MessageLog {...errorProps} />
-        } else if (!providerProps.messageData.message) {
-          return knownCommand?.output(commonProps) || null
-        } else {
-          return <MessageLog {...commonProps} />
-        }
+        return knownCommand.output(commonProps)
       }
     })
 

@@ -14,7 +14,6 @@ const OutputsNonMemoized = ({ components, id, outsideProps }) => {
 
   const [data, setData] = useState(defaultData)
   const [params, setParams] = useState([])
-  const [messageData, setMessageData] = useState({ message: '', type: '' })
 
   const fakeDelayTimeoutId = useRef(null)
   const wrapperRef = useRef(null)
@@ -54,28 +53,16 @@ const OutputsNonMemoized = ({ components, id, outsideProps }) => {
 
   const componentsShown = data.filter((item) => item.isVisible)
 
-  const setMessageDataWithParams = useCallback((messageData, params = {}) => {
-    const newMessageData = {
-      ...messageData,
-      message: replaceByParams(messageData.message, params)
-    }
-
-    setMessageData(newMessageData)
-  }, [])
+  const providerProps = {
+    ...outsideProps,
+    setMessageData: setMessageDataWithParams,
+    setParams,
+    finish: showNextVisibleComponent
+  }
 
   return (
     <OutputWrapper ref={wrapperRef}>
       {componentsShown.map(({ Component }, indexId) => {
-        const isLastComponent = indexId === componentsShown.length - 1
-
-        const providerProps = {
-          ...outsideProps,
-          setMessageData: setMessageDataWithParams,
-          messageData: isLastComponent ? messageData : {},
-          setParams,
-          finish: showNextVisibleComponent
-        }
-
         return (
           <Component
             key={`${id}-${indexId}`}

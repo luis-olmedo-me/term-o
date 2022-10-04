@@ -19,12 +19,12 @@ export const tabsConfig = {
       defaultValue: false,
       alias: 'h'
     },
-    goto: {
-      key: 'goto',
+    open: {
+      key: 'open',
       description: 'Go to a specific url (URL)',
-      type: optionTypes.ARRAY_OF_STRINGS,
-      defaultValue: [],
-      alias: 'g'
+      type: optionTypes.STRING,
+      defaultValue: '',
+      alias: 'o'
     },
     protocol: {
       key: 'protocol',

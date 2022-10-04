@@ -20,7 +20,7 @@ export const CommandTabs = ({
   const [tabs, setTabs] = useState([])
 
   const actionType = getActionType(props)
-  const { goto, protocol } = props
+  const { open, protocol } = props
 
   const { buttonGroups, pages, pageNumber } = usePaginationGroups({
     items: tabs,
@@ -36,19 +36,17 @@ export const CommandTabs = ({
   )
 
   const handleRedirect = useCallback(() => {
-    if (!goto.length) return setMessageData(tabsMessages.missingURL)
+    if (!open) return setMessageData(tabsMessages.missingURL)
 
-    goto.forEach((url) => {
-      const formattedUrl = url.startsWith('www') ? url : `www.${url}`
+    const formattedUrl = open.startsWith('www') ? open : `www.${open}`
 
-      window.open(`${protocol}://${formattedUrl}`, '_blank')
-    })
+    window.open(`${protocol}://${formattedUrl}`, '_blank')
 
     setMessageData(tabsMessages.redirectionSuccess, {
-      urlCount: goto.length
+      urlCount: open.length
     })
     finish()
-  }, [goto, setMessageData, protocol, finish])
+  }, [open, setMessageData, protocol, finish])
 
   const handleShowHistory = useCallback(
     (historial) => {

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useEffect, useState, useCallback } from 'react'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
-import { Log } from '../../modules/Log'
+import { Log, useMessageLog } from '../../modules/Log'
 import { Table } from 'modules/components/Table/Table.component'
 import { aliasHeaders } from './CommandAlias.constants'
 import {
@@ -14,24 +14,6 @@ import { aliasMessages } from './CommandAlias.messages'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
-
-const replaceByParams = (message, params) => {
-  return message.replace(/\{([^\}]+)?\}/g, (_, paramKey) => params[paramKey])
-}
-const useMessageLog = () => {
-  const [log, setLog] = useState(null)
-
-  const setMessageDataWithParams = useCallback((messageData, params = {}) => {
-    const newMessageData = {
-      ...messageData,
-      message: replaceByParams(messageData.message, params)
-    }
-
-    setLog(newMessageData)
-  }, [])
-
-  return { log, setMessage: setMessageDataWithParams }
-}
 
 export const CommandAlias = ({ props, terminal: { command, finish } }) => {
   const { delete: deletedIds, add: aliasesToAdd } = props

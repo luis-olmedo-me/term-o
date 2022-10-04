@@ -10,6 +10,8 @@ import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 import { commanderMessages } from '../../commander.messages'
+import { fetchHistorial } from '../../../../helpers/event.helpers'
+import { tabsMessages } from './CommandTabs.messages'
 
 export const CommandTabs = ({
   props,
@@ -18,6 +20,7 @@ export const CommandTabs = ({
   const [tabs, setTabs] = useState([])
 
   const actionType = getActionType(props)
+  const { open, protocol } = props
 
   const { buttonGroups, pages, pageNumber } = usePaginationGroups({
     items: tabs,
@@ -32,21 +35,71 @@ export const CommandTabs = ({
     [finish]
   )
 
+  const handleRedirect = useCallback(() => {
+    if (!open) return setMessageData(tabsMessages.missingURL)
+
+    const formattedUrl = open.startsWith('www') ? open : `www.${open}`
+
+    window.open(`${protocol}://${formattedUrl}`, '_blank')
+
+    setMessageData(tabsMessages.redirectionSuccess, {
+      urlCount: open.length
+    })
+    finish()
+  }, [open, setMessageData, protocol, finish])
+
+  const handleShowHistory = useCallback(
+    (historial) => {
+      const historialAsTableItems = historial.map(
+        ({ lastVisitTime, url, title }) => {
+          const hostName = new URL(url).hostname
+
+          return {
+            lastVisitTime,
+            title,
+            favIconUrl: `https://www.google.com/s2/favicons?domain=${hostName}`,
+            hostName
+          }
+        }
+      )
+
+      setTabs(historialAsTableItems)
+      finish()
+    },
+    [setMessageData, finish]
+  )
+
   useEffect(
     function handleActionType() {
       switch (actionType) {
-        case tabsActionTypes.SHOW_TAB_LIST:
+        case tabsActionTypes.SHOW_CURRENT_TABS:
           getTabsInfo()
             .then(handleShowTabList)
             .catch(() => setMessageData(commanderMessages.unexpectedError))
           break
 
-        default:
+        case tabsActionTypes.SHOW_HISTORY:
+          fetchHistorial()
+            .then(handleShowHistory)
+            .catch(() => setMessageData(commanderMessages.unexpectedError))
+          break
+
+        case tabsActionTypes.REDIRECT:
+          handleRedirect()
+          break
+
+        case tabsActionTypes.NONE:
           setMessageData(commanderMessages.unexpectedError)
           break
       }
     },
-    [actionType, handleShowTabList, setMessageData]
+    [
+      actionType,
+      setMessageData,
+      handleShowTabList,
+      handleRedirect,
+      handleShowHistory
+    ]
   )
 
   return (

@@ -5,18 +5,41 @@ import { CommandTabs } from './CommandTabs.component'
 
 export const tabsConfig = {
   props: {
-    list: {
-      key: 'list',
+    current: {
+      key: 'current',
       description: 'Show all tabs open',
       type: optionTypes.BOOLEAN,
+      defaultValue: false,
+      alias: 'c'
+    },
+    history: {
+      key: 'history',
+      description: 'Show past tabs',
+      type: optionTypes.BOOLEAN,
+      defaultValue: false,
+      alias: 'h'
+    },
+    open: {
+      key: 'open',
+      description: 'Go to a specific url (URL)',
+      type: optionTypes.STRING,
       defaultValue: '',
-      alias: 'l'
+      alias: 'o'
+    },
+    protocol: {
+      key: 'protocol',
+      description: 'Define the protocol to use for the history entry',
+      type: optionTypes.STRING,
+      defaultValue: 'https',
+      alias: 'p'
     }
   },
   output: (props) => <CommandTabs key={props.id} {...props} />
 }
 
 export const tabsActionTypes = {
-  SHOW_TAB_LIST: 'SHOW_TAB_LIST',
+  SHOW_CURRENT_TABS: 'SHOW_CURRENT_TABS',
+  SHOW_HISTORY: 'SHOW_HISTORY',
+  REDIRECT: 'REDIRECT',
   NONE: 'NONE'
 }

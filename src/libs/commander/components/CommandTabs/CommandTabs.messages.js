@@ -1,6 +1,6 @@
 import { parameterTypes } from '../../constants/commands.constants'
 
-export const historyMessages = {
+export const tabsMessages = {
   missingURL: {
     message: 'No url has been provided.',
     type: parameterTypes.ERROR

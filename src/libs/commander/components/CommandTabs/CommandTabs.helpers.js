@@ -1,6 +1,8 @@
 import { tabsActionTypes } from './CommandTabs.constants'
 
-export const getActionType = ({ list }) => {
-  if (list) return tabsActionTypes.SHOW_TAB_LIST
+export const getActionType = ({ current, history, open }) => {
+  if (current) return tabsActionTypes.SHOW_CURRENT_TABS
+  if (history) return tabsActionTypes.SHOW_HISTORY
+  if (open) return tabsActionTypes.REDIRECT
   else return tabsActionTypes.NONE
 }

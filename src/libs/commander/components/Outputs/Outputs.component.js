@@ -2,10 +2,6 @@ import * as React from 'react'
 import { useState, useCallback, useRef, useEffect } from 'react'
 import { OutputWrapper } from './Outputs.styles'
 
-const replaceByParams = (message, params) => {
-  return message.replace(/\{([^\}]+)?\}/g, (_, paramKey) => params[paramKey])
-}
-
 const OutputsNonMemoized = ({ components, id, outsideProps }) => {
   const defaultData = components.map((Component, index) => ({
     Component,

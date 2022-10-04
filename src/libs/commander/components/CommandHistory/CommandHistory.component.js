@@ -11,7 +11,7 @@ import { fetchHistorial } from '../../../../helpers/event.helpers'
 import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
-import { Table } from 'modules/components/Table/Table.component'
+import { List, Tab } from '../../modules/List'
 
 export const CommandHistory = ({
   props,
@@ -46,7 +46,7 @@ export const CommandHistory = ({
     (historial) => {
       const historialAsTableItems = historial.map(
         ({ lastVisitTime, url, title }) => {
-          return [lastVisitTime, title, new URL(url).hostname]
+          return { lastVisitTime, title, favIconUrl: 'invalid-url' }
         }
       )
 
@@ -85,10 +85,9 @@ export const CommandHistory = ({
           {pages.map((page, currentPageNumber) => {
             return (
               <CarouselItem key={currentPageNumber}>
-                <Table
-                  headers={['Time', 'Title', 'URL']}
-                  widths={[20, 40, 40]}
-                  rows={page}
+                <List
+                  items={page}
+                  Child={({ item }) => <Tab element={item} />}
                 />
               </CarouselItem>
             )

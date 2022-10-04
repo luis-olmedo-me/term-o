@@ -51,7 +51,6 @@ const OutputsNonMemoized = ({ components, id, outsideProps }) => {
 
   const providerProps = {
     ...outsideProps,
-    setMessageData: setMessageDataWithParams,
     setParams,
     finish: showNextVisibleComponent
   }

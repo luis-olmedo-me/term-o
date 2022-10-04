@@ -122,5 +122,28 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       sendResponse({ status: 'ok', data: connectedTabs.list })
       break
     }
+
+    case eventTypes.GET_HISTORIAL: {
+      sendResponse({ status: 'ok', data: history.content })
+      break
+    }
   }
 })
+
+class History {
+  constructor() {
+    this.content = []
+
+    chrome.history.search({ text: '' }, (historial) => {
+      this.content = historial.map(({ lastVisitTime, url, title }) => {
+        return { lastVisitTime, url, title }
+      })
+    })
+
+    chrome.history.onVisited.addListener(({ lastVisitTime, url, title }) => {
+      this.content = [{ lastVisitTime, url, title }, ...this.content]
+    })
+  }
+}
+
+const history = new History()

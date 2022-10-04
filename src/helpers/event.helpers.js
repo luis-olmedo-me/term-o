@@ -21,6 +21,13 @@ export const fetchConfiguration = () => {
   })
 }
 
+export const fetchHistorial = () => {
+  return createWorkerRequest({
+    type: eventTypes.GET_HISTORIAL,
+    defaultResponse: {}
+  })
+}
+
 export const addAliases = (newAliases) => {
   return createWorkerRequest({
     type: eventTypes.ADD_ALIAS,

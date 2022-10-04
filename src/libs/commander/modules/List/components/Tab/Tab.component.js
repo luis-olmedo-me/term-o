@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useState } from 'react'
-import { Favicon, FaviconSVG, TabWrapper, Title } from './Tab.styles'
+import { Favicon, FaviconSVG, HostName, TabWrapper, Title } from './Tab.styles'
 import { Logo } from 'src/modules/icons/Logo.icon'
 
 export const Tab = ({ element = {} }) => {
@@ -15,6 +15,8 @@ export const Tab = ({ element = {} }) => {
       )}
 
       <Title>{element.title}</Title>
+
+      {element.hostName ? <HostName>{element.hostName}</HostName> : null}
     </TabWrapper>
   )
 }

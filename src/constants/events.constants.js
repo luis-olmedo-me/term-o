@@ -7,7 +7,8 @@ export const eventTypes = {
   DELETE_ALIAS: 'term-o-delete-alias',
   RESET_CONFIGURATION: 'term-o-reset-configuration',
   GET_TABS_INFO: 'term-o-get-tabs-info',
-  TERM_O_RESIZE: 'term-o-resize'
+  TERM_O_RESIZE: 'term-o-resize',
+  GET_HISTORIAL: 'term-o-get-historial'
 }
 
 export const extensionKeyEvents = {

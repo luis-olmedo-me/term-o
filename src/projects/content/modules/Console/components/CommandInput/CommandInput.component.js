@@ -213,6 +213,10 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
           onKeyUp={handleKeyUp}
           onChange={(event) => setCommand(event.target.value)}
           value={command}
+          onBlur={() => {
+            setSuggestions([])
+            setSelectedSuggestionId(0)
+          }}
           spellcheck='false'
         />
       </div>

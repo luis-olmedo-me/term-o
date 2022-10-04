@@ -50,7 +50,7 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
 
     if (!hasValidAliases) return setMessage(aliasMessages.invalidAliases)
 
-    addAliases([])
+    addAliases(validAliases)
       .catch(() => setMessage(aliasMessages.unexpectedError))
       .then(() => setMessage(aliasMessages.aliasAdditionSuccess))
       .then(() => finish())

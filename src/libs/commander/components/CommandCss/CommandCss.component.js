@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
 import { styleElements, validateStyles } from '../../commander.promises'
 import { getParamsByType } from '../../commander.helpers'
-import { Log } from '../../modules/Log'
+import { Log, useMessageLog } from '../../modules/Log'
 import {
   getActionType,
   getStylesFrom,
@@ -16,13 +16,14 @@ import { cssActionTypes } from './CommandCss.constants'
 
 export const CommandCss = ({
   props,
-  terminal: { command, params, setMessageData, finish }
+  terminal: { command, params, finish }
 }) => {
-  const { styles, manualStyles } = props
-
   const [sheets, setSheets] = useState([])
 
+  const { log: messageLog, setMessage } = useMessageLog()
+
   const actionType = getActionType(props)
+  const { styles, manualStyles } = props
 
   const handleApplyStyles = useCallback(
     (customStyles = {}) => {
@@ -40,7 +41,7 @@ export const CommandCss = ({
       const hasInvalidatedStyles = invalidStylesNames.length > 0
 
       if (hasInvalidatedStyles) {
-        return setMessageData(cssMessages.invalidStyle, {
+        return setMessage(cssMessages.invalidStyle, {
           invalidStyleNames: invalidStylesNames.join(', ')
         })
       }
@@ -49,23 +50,22 @@ export const CommandCss = ({
       setSheets([{ title: 'Styles', styles: validStyles }])
       finish()
     },
-    [styles, manualStyles, setMessageData, finish]
+    [styles, manualStyles, setMessage, finish]
   )
 
   const handleGetStyles = useCallback(() => {
     const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
 
     if (paramElements.length > 1)
-      return setMessageData(cssMessages.parameterOverflow)
-    if (paramElements.length === 0)
-      return setMessageData(cssMessages.noParameters)
+      return setMessage(cssMessages.parameterOverflow)
+    if (paramElements.length === 0) return setMessage(cssMessages.noParameters)
 
     const [firstParamElement] = paramElements
     const newSheets = getStylesFrom(firstParamElement)
 
     setSheets(newSheets)
     finish()
-  }, [setMessageData, finish])
+  }, [setMessage, finish])
 
   useEffect(
     function handleActionType() {
@@ -79,23 +79,27 @@ export const CommandCss = ({
           break
 
         case cssActionTypes.NONE:
-          setMessageData(cssMessages.unexpectedError)
+          setMessage(cssMessages.unexpectedError)
           break
       }
     },
-    [actionType, handleApplyStyles, handleGetStyles]
+    [actionType, handleApplyStyles, handleGetStyles, setMessage]
   )
 
   return (
     <>
       <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
-      <Log variant={parameterTypes.STYLES} hasScroll>
-        <List
-          items={sheets}
-          Child={({ item }) => <StyleSheet sheet={item} sheets={sheets} />}
-        />
-      </Log>
+      {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
+
+      {!messageLog && (
+        <Log variant={parameterTypes.STYLES} hasScroll>
+          <List
+            items={sheets}
+            Child={({ item }) => <StyleSheet sheet={item} sheets={sheets} />}
+          />
+        </Log>
+      )}
     </>
   )
 }

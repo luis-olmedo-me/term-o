@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useEffect, useState, useCallback } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
-import { Log } from '../../modules/Log'
+import { Log, useMessageLog } from '../../modules/Log'
 import { Table } from 'modules/components/Table/Table.component'
 import {
   getActionType,
@@ -15,14 +15,12 @@ import { storageActionTypes, storageHeaders } from './CommandStorage.constants'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 
-export const CommandStorage = ({
-  props,
-  terminal: { command, setMessageData, finish }
-}) => {
+export const CommandStorage = ({ props, terminal: { command, finish } }) => {
   const actionType = getActionType(props)
 
   const [tableItems, setTableItems] = useState([])
 
+  const { log: messageLog, setMessage } = useMessageLog()
   const { buttonGroups, pages, pageNumber } = usePaginationGroups({
     items: tableItems,
     maxItems: 10
@@ -36,11 +34,11 @@ export const CommandStorage = ({
 
       const isEmptyStorage = localStorageAsTableItems.length === 0
 
-      if (isEmptyStorage) return setMessageData(storageMessages.emptyStorage)
+      if (isEmptyStorage) return setMessage(storageMessages.emptyStorage)
 
       setTableItems(localStorageAsTableItems)
     },
-    [setMessageData]
+    [setMessage]
   )
 
   useEffect(
@@ -62,7 +60,7 @@ export const CommandStorage = ({
           break
 
         case storageActionTypes.NONE:
-          setMessageData(storageMessages.unexpectedError)
+          setMessage(storageMessages.unexpectedError)
           break
       }
     },
@@ -97,22 +95,26 @@ export const CommandStorage = ({
     <>
       <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
-      <Log variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
-        <Carousel itemInView={pageNumber}>
-          {pages.map((page, currentPageNumber) => {
-            return (
-              <CarouselItem key={currentPageNumber}>
-                <Table
-                  headers={storageHeaders}
-                  rows={page}
-                  parseValue={parseTableValuesForLocalStoageItems}
-                  widths={[20, 80]}
-                />
-              </CarouselItem>
-            )
-          })}
-        </Carousel>
-      </Log>
+      {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
+
+      {!messageLog && (
+        <Log variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
+          <Carousel itemInView={pageNumber}>
+            {pages.map((page, currentPageNumber) => {
+              return (
+                <CarouselItem key={currentPageNumber}>
+                  <Table
+                    headers={storageHeaders}
+                    rows={page}
+                    parseValue={parseTableValuesForLocalStoageItems}
+                    widths={[20, 80]}
+                  />
+                </CarouselItem>
+              )
+            })}
+          </Carousel>
+        </Log>
+      )}
     </>
   )
 }

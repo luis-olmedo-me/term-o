@@ -7,7 +7,7 @@ import {
   getOpenNodesFromObjetives
 } from './CommandInspect.helpers'
 import { inspectMessages } from './CommandInspect.messages'
-import { Log, AttributeEditionLog } from '../../modules/Log'
+import { Log, AttributeEditionLog, useMessageLog } from '../../modules/Log'
 import { inspectActionTypes } from './CommandInspect.constants'
 import { NodeTree } from '../../modules/NodeTree/NodeTree.component'
 import { getParamsByType } from '../../commander.helpers'
@@ -25,7 +25,7 @@ const inspectViews = {
 
 const CommandInspectWithoutContext = ({
   props,
-  terminal: { command, setMessageData, params, finish },
+  terminal: { command, params, finish },
   setHighlitedElement
 }) => {
   const actionType = getActionType(props)
@@ -38,6 +38,8 @@ const CommandInspectWithoutContext = ({
   const [sheets, setSheets] = useState(null)
 
   const defaultRoot = useRef(null)
+
+  const { log: messageLog, setMessage } = useMessageLog()
 
   const handleInspect = useCallback(
     ({ elementsFound: [defaultHTMLRoot] }) => {
@@ -54,7 +56,7 @@ const CommandInspectWithoutContext = ({
 
       finish()
     },
-    [handleInspect, setMessageData, finish]
+    [handleInspect, setMessage, finish]
   )
 
   useEffect(
@@ -65,11 +67,11 @@ const CommandInspectWithoutContext = ({
           break
 
         default:
-          setMessageData(inspectMessages.unexpectedError)
+          setMessage(inspectMessages.unexpectedError)
           break
       }
     },
-    [actionType, handleInspect, setMessageData]
+    [actionType, handleInspect, setMessage]
   )
 
   const handleRootChange = (newRoot) => {
@@ -125,43 +127,49 @@ const CommandInspectWithoutContext = ({
     <>
       <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
-      <Carousel itemInView={itemInView}>
-        <Log variant={parameterTypes.ELEMENT} hasScroll>
-          {HTMLRoot && (
-            <NodeTree
-              root={HTMLRoot}
-              objetives={objetives}
-              setObjetives={setObjetives}
-              openNodes={openNodes}
-              setOpenNodes={setOpenNodes}
-              setEditingElement={handleElementClick}
-              onStylesOptionClick={handleStylesOptionClick}
-              handleRootChange={handleRootChange}
-            />
-          )}
-        </Log>
+      {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
 
-        <CarouselItem>
-          <AttributeEditionLog
-            element={editingElement}
-            leftOptions={[headToElements]}
-            rightOptions={[headToStyles]}
-          />
-        </CarouselItem>
-
-        <CarouselItem>
-          <Log
-            variant={parameterTypes.STYLES}
-            buttonGroups={[headToElements, headToAttributes]}
-            hasScroll
-          >
-            <List
-              items={sheets}
-              Child={({ item }) => <StyleSheet sheet={item} sheets={sheets} />}
-            />
+      {!messageLog && (
+        <Carousel itemInView={itemInView}>
+          <Log variant={parameterTypes.ELEMENT} hasScroll>
+            {HTMLRoot && (
+              <NodeTree
+                root={HTMLRoot}
+                objetives={objetives}
+                setObjetives={setObjetives}
+                openNodes={openNodes}
+                setOpenNodes={setOpenNodes}
+                setEditingElement={handleElementClick}
+                onStylesOptionClick={handleStylesOptionClick}
+                handleRootChange={handleRootChange}
+              />
+            )}
           </Log>
-        </CarouselItem>
-      </Carousel>
+
+          <CarouselItem>
+            <AttributeEditionLog
+              element={editingElement}
+              leftOptions={[headToElements]}
+              rightOptions={[headToStyles]}
+            />
+          </CarouselItem>
+
+          <CarouselItem>
+            <Log
+              variant={parameterTypes.STYLES}
+              buttonGroups={[headToElements, headToAttributes]}
+              hasScroll
+            >
+              <List
+                items={sheets}
+                Child={({ item }) => (
+                  <StyleSheet sheet={item} sheets={sheets} />
+                )}
+              />
+            </Log>
+          </CarouselItem>
+        </Carousel>
+      )}
     </>
   )
 }

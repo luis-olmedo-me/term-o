@@ -4,31 +4,30 @@ import {
   customPageEventNames,
   parameterTypes
 } from '../../constants/commands.constants'
-import { Log } from '../../modules/Log'
+import { Log, useMessageLog } from '../../modules/Log'
 import { addPageEvents } from 'src/helpers/event.helpers.js'
 import { checkIfRegExpIsValid, getActionType } from './CommandOn.helpers'
 import { onMessages } from './CommandOn.messages'
 import { onActionTypes } from './CommandOn.constants'
 
-export const CommandOn = ({
-  props,
-  terminal: { command, setMessageData, finish }
-}) => {
+export const CommandOn = ({ props, terminal: { command, finish } }) => {
   const { url, run, event } = props
 
   const actionType = getActionType(props)
 
+  const { log: messageLog, setMessage } = useMessageLog()
+
   const handleAddEvent = useCallback(() => {
-    if (!run.length) return setMessageData(onMessages.missingCommand)
+    if (!run.length) return setMessage(onMessages.missingCommand)
 
     const areURLsValid = url.every(checkIfRegExpIsValid)
 
     if (!areURLsValid) {
-      return setMessageData(onMessages.invalidURLRegularExpressions)
+      return setMessage(onMessages.invalidURLRegularExpressions)
     }
 
     if (event && !customPageEventNames.includes(event)) {
-      return setMessageData(onMessages.invalidEventType)
+      return setMessage(onMessages.invalidEventType)
     }
 
     const urlForEvent = url.join('|')
@@ -37,10 +36,10 @@ export const CommandOn = ({
     })
 
     addPageEvents(commandsToRun)
-      .catch(() => setMessageData(onMessages.unexpectedError))
-      .then(() => setMessageData(onMessages.eventSaveSuccess))
+      .catch(() => setMessage(onMessages.unexpectedError))
+      .then(() => setMessage(onMessages.eventSaveSuccess))
       .then(() => finish())
-  }, [url, run, setMessageData, finish])
+  }, [url, run, setMessage, finish])
 
   useEffect(
     function handleActionType() {
@@ -50,12 +49,18 @@ export const CommandOn = ({
           break
 
         case onActionTypes.NONE:
-          setMessageData(onMessages.unexpectedError)
+          setMessage(onMessages.unexpectedError)
           break
       }
     },
-    [actionType, handleAddEvent, setMessageData]
+    [actionType, handleAddEvent, setMessage]
   )
 
-  return <Log variant={parameterTypes.COMMAND}>{command}</Log>
+  return (
+    <>
+      <Log variant={parameterTypes.COMMAND}>{command}</Log>
+
+      {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
+    </>
+  )
 }

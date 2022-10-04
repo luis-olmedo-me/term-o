@@ -5,18 +5,18 @@ import { CommandTabs } from './CommandTabs.component'
 
 export const tabsConfig = {
   props: {
-    list: {
-      key: 'list',
+    current: {
+      key: 'current',
       description: 'Show all tabs open',
       type: optionTypes.BOOLEAN,
-      defaultValue: '',
-      alias: 'l'
+      defaultValue: false,
+      alias: 'c'
     }
   },
   output: (props) => <CommandTabs key={props.id} {...props} />
 }
 
 export const tabsActionTypes = {
-  SHOW_TAB_LIST: 'SHOW_TAB_LIST',
+  SHOW_CURRENT_TABS: 'SHOW_CURRENT_TABS',
   NONE: 'NONE'
 }

@@ -35,7 +35,7 @@ export const CommandTabs = ({
   useEffect(
     function handleActionType() {
       switch (actionType) {
-        case tabsActionTypes.SHOW_TAB_LIST:
+        case tabsActionTypes.SHOW_CURRENT_TABS:
           getTabsInfo()
             .then(handleShowTabList)
             .catch(() => setMessageData(commanderMessages.unexpectedError))

@@ -96,7 +96,12 @@ class Commander {
 
       return ({ providerProps, possibleParams, id }) => {
         if (!hasKnownCommand) {
-          return <MessageLog {...commanderMessages.unknownCommandError} />
+          return (
+            <MessageLog
+              {...commanderMessages.unknownCommandError}
+              command={command}
+            />
+          )
         }
 
         const params = parseValuesIntoParams(values, possibleParams)

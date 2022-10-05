@@ -119,7 +119,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 
     case eventTypes.GET_TABS_INFO: {
-      configManager.setConfig({ consolePosition: request.data })
       sendResponse({ status: 'ok', data: connectedTabs.list })
       break
     }

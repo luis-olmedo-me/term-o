@@ -27,6 +27,8 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
 
   const handleShowTabList = useCallback(
     (tabsInfo) => {
+      if (!tabsInfo.length) return setMessage(tabsMessages.noTabsFound)
+
       setTabs(tabsInfo)
       finish()
     },
@@ -60,6 +62,8 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
           }
         }
       )
+
+      if (!historial.length) return setMessage(tabsMessages.noTabsFound)
 
       setTabs(historialAsTableItems)
       finish()

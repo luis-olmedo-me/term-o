@@ -8,5 +8,9 @@ export const tabsMessages = {
   redirectionSuccess: {
     message: 'Successfully opened {urlCount} url(s).',
     type: parameterTypes.SUCCESS
+  },
+  noTabsFound: {
+    message: 'No tabs where found.',
+    type: parameterTypes.ERROR
   }
 }

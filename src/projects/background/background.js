@@ -118,22 +118,22 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 
     case eventTypes.GET_TABS_INFO: {
-      const id = request.data
+      const { id, data } = request.data
 
       const process = id
         ? processWaitList.getProcessById(id)
-        : processWaitList.add(createTabsOpenProcess)
+        : processWaitList.add((resolve) => createTabsOpenProcess(resolve, data))
 
       sendResponse({ status: 'ok', data: process })
       break
     }
 
     case eventTypes.GET_HISTORIAL: {
-      const id = request.data
+      const { id, data } = request.data
 
       const process = id
         ? processWaitList.getProcessById(id)
-        : processWaitList.add(createHistoryProcess)
+        : processWaitList.add((resolve) => createHistoryProcess(resolve, data))
 
       sendResponse({ status: 'ok', data: process })
       break
@@ -141,7 +141,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
 })
 
-const createHistoryProcess = (resolve) => {
+const createHistoryProcess = (resolve, data) => {
   chrome.history.search({ text: '' }, (historial) => {
     const filteredHistory = historial.map(({ lastVisitTime, url, title }) => {
       return { lastVisitTime, url, title }
@@ -151,7 +151,7 @@ const createHistoryProcess = (resolve) => {
   })
 }
 
-const createTabsOpenProcess = (resolve) => {
+const createTabsOpenProcess = (resolve, data) => {
   chrome.tabs.query({}, function (tabs) {
     const filteredTabs = tabs.map(({ favIconUrl, title, url, id }) => ({
       favIconUrl,

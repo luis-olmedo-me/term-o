@@ -96,7 +96,7 @@ export const resetConfiguration = () => {
 }
 
 export const getTabsInfo = () => {
-  return createWorkerRequest({
+  return createWorkerProcessRequest({
     type: eventTypes.GET_TABS_INFO,
     defaultResponse: []
   })

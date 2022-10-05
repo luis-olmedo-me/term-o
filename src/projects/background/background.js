@@ -119,7 +119,13 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 
     case eventTypes.GET_TABS_INFO: {
-      sendResponse({ status: 'ok', data: connectedTabs.list })
+      const id = request.data
+
+      const process = id
+        ? processWaitList.getProcessById(id)
+        : processWaitList.add(createTabsOpenProcess)
+
+      sendResponse({ status: 'ok', data: process })
       break
     }
 
@@ -138,4 +144,17 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
 const createHistoryProcess = (resolve) => {
   chrome.history.search({ text: '' }, (historial) => resolve(historial))
+}
+
+const createTabsOpenProcess = (resolve) => {
+  chrome.tabs.query({}, function (tabs) {
+    const filteredTabs = tabs.map(({ favIconUrl, title, url, id }) => ({
+      favIconUrl,
+      title,
+      url,
+      id
+    }))
+
+    resolve(filteredTabs)
+  })
 }

@@ -25,15 +25,16 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     maxItems: 10
   })
 
-  const handleShowTabList = useCallback(
-    (tabsInfo) => {
-      if (!tabsInfo.length) return setMessage(tabsMessages.noTabsFound)
+  const handleShowTabList = useCallback(() => {
+    fetchTabsOpen()
+      .then((tabsOpen) => {
+        if (!tabsOpen.length) return setMessage(tabsMessages.noTabsFound)
 
-      setTabs(tabsInfo)
-      finish()
-    },
-    [finish]
-  )
+        setTabs(tabsOpen)
+        finish()
+      })
+      .catch(() => setMessage(commanderMessages.unexpectedError))
+  }, [finish, setMessage])
 
   const handleRedirect = useCallback(() => {
     if (!open) return setMessage(tabsMessages.missingURL)
@@ -48,31 +49,28 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     finish()
   }, [open, setMessage, protocol, finish])
 
-  const handleShowHistory = useCallback(
-    (historial) => {
-      const parsedHistorial = parseHistorial(historial)
+  const handleShowHistory = useCallback(() => {
+    fetchHistorial({ text: byText })
+      .then((historial) => {
+        if (!historial.length) return setMessage(tabsMessages.noTabsFound)
 
-      if (!parsedHistorial.length) return setMessage(tabsMessages.noTabsFound)
+        const parsedHistorial = parseHistorial(historial)
 
-      setTabs(parsedHistorial)
-      finish()
-    },
-    [setMessage, finish]
-  )
+        setTabs(parsedHistorial)
+        finish()
+      })
+      .catch(() => setMessage(commanderMessages.unexpectedError))
+  }, [setMessage, finish, byText])
 
   useEffect(
     function handleActionType() {
       switch (actionType) {
         case tabsActionTypes.SHOW_CURRENT_TABS:
-          fetchTabsOpen()
-            .then(handleShowTabList)
-            .catch(() => setMessage(commanderMessages.unexpectedError))
+          handleShowTabList()
           break
 
         case tabsActionTypes.SHOW_HISTORY:
-          fetchHistorial({ text: byText })
-            .then(handleShowHistory)
-            .catch(() => setMessage(commanderMessages.unexpectedError))
+          handleShowHistory()
           break
 
         case tabsActionTypes.REDIRECT:
@@ -89,8 +87,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       setMessage,
       handleShowTabList,
       handleRedirect,
-      handleShowHistory,
-      byText
+      handleShowHistory
     ]
   )
 

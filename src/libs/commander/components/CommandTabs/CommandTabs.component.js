@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useCallback, useEffect, useState } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
-import { getActionType } from './CommandTabs.helpers'
+import { getActionType, parseHistorial } from './CommandTabs.helpers'
 import { Log, useMessageLog } from '../../modules/Log'
 import { tabsActionTypes } from './CommandTabs.constants'
 import { fetchTabsOpen } from 'src/helpers/event.helpers.js'
@@ -50,22 +50,11 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
 
   const handleShowHistory = useCallback(
     (historial) => {
-      const historialAsTableItems = historial.map(
-        ({ lastVisitTime, url, title }) => {
-          const hostName = new URL(url).hostname
+      const parsedHistorial = parseHistorial(historial)
 
-          return {
-            lastVisitTime,
-            title,
-            favIconUrl: `https://www.google.com/s2/favicons?domain=${hostName}`,
-            hostName
-          }
-        }
-      )
+      if (!parsedHistorial.length) return setMessage(tabsMessages.noTabsFound)
 
-      if (!historial.length) return setMessage(tabsMessages.noTabsFound)
-
-      setTabs(historialAsTableItems)
+      setTabs(parsedHistorial)
       finish()
     },
     [setMessage, finish]

@@ -178,21 +178,3 @@ class WaitList {
 }
 
 const waitList = new WaitList()
-
-class History {
-  constructor() {
-    this.content = []
-
-    chrome.history.search({ text: '' }, (historial) => {
-      this.content = historial.map(({ lastVisitTime, url, title }) => {
-        return { lastVisitTime, url, title }
-      })
-    })
-
-    chrome.history.onVisited.addListener(({ lastVisitTime, url, title }) => {
-      this.content = [{ lastVisitTime, url, title }, ...this.content]
-    })
-  }
-}
-
-const history = new History()

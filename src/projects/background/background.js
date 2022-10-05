@@ -143,7 +143,13 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 })
 
 const createHistoryProcess = (resolve) => {
-  chrome.history.search({ text: '' }, (historial) => resolve(historial))
+  chrome.history.search({ text: '' }, (historial) => {
+    const filteredHistory = historial.map(({ lastVisitTime, url, title }) => {
+      return { lastVisitTime, url, title }
+    })
+
+    resolve(filteredHistory)
+  })
 }
 
 const createTabsOpenProcess = (resolve) => {

@@ -14,6 +14,39 @@ export const createWorkerRequest = ({ type, data, defaultResponse }) => {
   })
 }
 
+export const createWorkerProcessRequest = ({ type, data, defaultResponse }) => {
+  return new Promise((resolve, reject) => {
+    let timeoutId = null
+    const callback = (process) => {
+      console.log('process', process)
+      switch (process.state) {
+        case 'in_progress': {
+          timeoutId = setTimeout(() => createWorker(process.id), 100)
+          break
+        }
+
+        case 'done': {
+          resolve(process.data || defaultResponse)
+          break
+        }
+
+        default: {
+          reject()
+          break
+        }
+      }
+    }
+
+    const createWorker = (id) => {
+      createWorkerRequest({ type, data: id, defaultResponse: {} }).then(
+        callback
+      )
+    }
+
+    createWorker(null)
+  })
+}
+
 export const fetchConfiguration = () => {
   return createWorkerRequest({
     type: eventTypes.GET_CONFIGURATION,
@@ -22,7 +55,7 @@ export const fetchConfiguration = () => {
 }
 
 export const fetchHistorial = () => {
-  return createWorkerRequest({
+  return createWorkerProcessRequest({
     type: eventTypes.GET_HISTORIAL,
     defaultResponse: {}
   })

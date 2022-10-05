@@ -164,9 +164,9 @@ class WaitList {
   add(callback) {
     const newId = Date.now().toString()
     const newProcess = { id: newId, state: 'in_progress', data: null }
-    const resolve = resolver(newId).bind(this)
+    const resolve = this.resolver(newId).bind(this)
 
-    this.list.push(newProcess)
+    this.list = [...this.list, newProcess]
     callback(resolve)
 
     return newProcess

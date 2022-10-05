@@ -6,7 +6,7 @@ export const eventTypes = {
   ADD_ALIAS: 'term-o-add-alias',
   DELETE_ALIAS: 'term-o-delete-alias',
   RESET_CONFIGURATION: 'term-o-reset-configuration',
-  GET_TABS_INFO: 'term-o-get-tabs-info',
+  GET_TABS_OPEN: 'term-o-get-tabs-info',
   TERM_O_RESIZE: 'term-o-resize',
   GET_HISTORIAL: 'term-o-get-historial'
 }

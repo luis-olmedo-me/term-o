@@ -4,7 +4,7 @@ import { parameterTypes } from '../../constants/commands.constants'
 import { getActionType } from './CommandTabs.helpers'
 import { Log, useMessageLog } from '../../modules/Log'
 import { tabsActionTypes } from './CommandTabs.constants'
-import { getTabsInfo } from 'src/helpers/event.helpers.js'
+import { fetchTabsOpen } from 'src/helpers/event.helpers.js'
 import { List, Tab } from '../../modules/List'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
@@ -71,7 +71,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     function handleActionType() {
       switch (actionType) {
         case tabsActionTypes.SHOW_CURRENT_TABS:
-          getTabsInfo()
+          fetchTabsOpen()
             .then(handleShowTabList)
             .catch(() => setMessage(commanderMessages.unexpectedError))
           break

@@ -117,7 +117,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       break
     }
 
-    case eventTypes.GET_TABS_INFO: {
+    case eventTypes.GET_TABS_OPEN: {
       const { id, data } = request.data
 
       const process = id

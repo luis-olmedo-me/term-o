@@ -96,9 +96,9 @@ export const resetConfiguration = () => {
   })
 }
 
-export const getTabsInfo = (data) => {
+export const fetchTabsOpen = (data) => {
   return createWorkerProcessRequest({
-    type: eventTypes.GET_TABS_INFO,
+    type: eventTypes.GET_TABS_OPEN,
     defaultResponse: [],
     data
   })

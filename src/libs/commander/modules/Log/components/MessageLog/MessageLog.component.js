@@ -2,7 +2,7 @@ import * as React from 'react'
 import { parameterTypes } from '../../../../constants/commands.constants'
 import { Log } from '../../Log.component'
 
-export const MessageLog = ({ message, type }) => {
+export const MessageLog = ({ message, type, command }) => {
   return (
     <>
       <Log variant={parameterTypes.COMMAND}>{command}</Log>

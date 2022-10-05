@@ -84,6 +84,7 @@ class Commander {
 
     const setOfOutputs = lines.map((line) => {
       const [command, ...args] = line
+      const commandJoined = line.join(' ')
       const knownCommand = this.commands[command]
 
       const { values, ...propValues } = getOptionsFromArgs(
@@ -96,13 +97,18 @@ class Commander {
 
       return ({ providerProps, possibleParams, id }) => {
         if (!hasKnownCommand) {
-          return <MessageLog {...commanderMessages.unknownCommandError} />
+          return (
+            <MessageLog
+              {...commanderMessages.unknownCommandError}
+              command={commandJoined}
+            />
+          )
         }
 
         const params = parseValuesIntoParams(values, possibleParams)
         const commonProps = {
           props,
-          terminal: { ...providerProps, command: line.join(' '), params },
+          terminal: { ...providerProps, command: commandJoined, params },
           id
         }
 

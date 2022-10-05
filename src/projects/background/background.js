@@ -1,11 +1,11 @@
 import { configManager } from 'libs/config-manager'
+import { processWaitList } from 'libs/process-wait-list/processWaitList.service'
 
 import {
   eventTypes,
   extensionKeyEvents,
   extensionKeyEventNames
 } from 'src/constants/events.constants.js'
-import { connectedTabs } from '../../libs/connected-tabs/connectedTabs.service'
 import {
   resizeFull,
   resizeLeft,
@@ -118,32 +118,48 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 
     case eventTypes.GET_TABS_INFO: {
-      configManager.setConfig({ consolePosition: request.data })
-      sendResponse({ status: 'ok', data: connectedTabs.list })
+      const id = request.data
+
+      const process = id
+        ? processWaitList.getProcessById(id)
+        : processWaitList.add(createTabsOpenProcess)
+
+      sendResponse({ status: 'ok', data: process })
       break
     }
 
     case eventTypes.GET_HISTORIAL: {
-      sendResponse({ status: 'ok', data: history.content })
+      const id = request.data
+
+      const process = id
+        ? processWaitList.getProcessById(id)
+        : processWaitList.add(createHistoryProcess)
+
+      sendResponse({ status: 'ok', data: process })
       break
     }
   }
 })
 
-class History {
-  constructor() {
-    this.content = []
-
-    chrome.history.search({ text: '' }, (historial) => {
-      this.content = historial.map(({ lastVisitTime, url, title }) => {
-        return { lastVisitTime, url, title }
-      })
+const createHistoryProcess = (resolve) => {
+  chrome.history.search({ text: '' }, (historial) => {
+    const filteredHistory = historial.map(({ lastVisitTime, url, title }) => {
+      return { lastVisitTime, url, title }
     })
 
-    chrome.history.onVisited.addListener(({ lastVisitTime, url, title }) => {
-      this.content = [{ lastVisitTime, url, title }, ...this.content]
-    })
-  }
+    resolve(filteredHistory)
+  })
 }
 
-const history = new History()
+const createTabsOpenProcess = (resolve) => {
+  chrome.tabs.query({}, function (tabs) {
+    const filteredTabs = tabs.map(({ favIconUrl, title, url, id }) => ({
+      favIconUrl,
+      title,
+      url,
+      id
+    }))
+
+    resolve(filteredTabs)
+  })
+}

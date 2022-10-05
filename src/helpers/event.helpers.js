@@ -1,4 +1,5 @@
 import { eventTypes } from 'src/constants/events.constants.js'
+import { states } from '../libs/process-wait-list/processWaitList.constants'
 
 export const createWorkerRequest = ({ type, data, defaultResponse }) => {
   return new Promise((resolve, reject) => {
@@ -14,6 +15,38 @@ export const createWorkerRequest = ({ type, data, defaultResponse }) => {
   })
 }
 
+export const createWorkerProcessRequest = ({ type, data, defaultResponse }) => {
+  return new Promise((resolve, reject) => {
+    let timeoutId = null
+    const callback = (process) => {
+      switch (process.state) {
+        case states.IN_PROGRESS: {
+          timeoutId = setTimeout(() => createWorker(process.id), 100)
+          break
+        }
+
+        case states.DONE: {
+          resolve(process.data || defaultResponse)
+          break
+        }
+
+        default: {
+          reject()
+          break
+        }
+      }
+    }
+
+    const createWorker = (id) => {
+      createWorkerRequest({ type, data: id, defaultResponse: {} }).then(
+        callback
+      )
+    }
+
+    createWorker(null)
+  })
+}
+
 export const fetchConfiguration = () => {
   return createWorkerRequest({
     type: eventTypes.GET_CONFIGURATION,
@@ -22,7 +55,7 @@ export const fetchConfiguration = () => {
 }
 
 export const fetchHistorial = () => {
-  return createWorkerRequest({
+  return createWorkerProcessRequest({
     type: eventTypes.GET_HISTORIAL,
     defaultResponse: {}
   })
@@ -63,7 +96,7 @@ export const resetConfiguration = () => {
 }
 
 export const getTabsInfo = () => {
-  return createWorkerRequest({
+  return createWorkerProcessRequest({
     type: eventTypes.GET_TABS_INFO,
     defaultResponse: []
   })

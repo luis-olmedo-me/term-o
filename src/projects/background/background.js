@@ -142,7 +142,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 })
 
 const createHistoryProcess = (resolve, data) => {
-  chrome.history.search({ text: '' }, (historial) => {
+  chrome.history.search(data, (historial) => {
     const filteredHistory = historial.map(({ lastVisitTime, url, title }) => {
       return { lastVisitTime, url, title }
     })

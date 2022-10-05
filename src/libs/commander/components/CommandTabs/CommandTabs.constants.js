@@ -19,6 +19,13 @@ export const tabsConfig = {
       defaultValue: false,
       alias: 'h'
     },
+    'by-text': {
+      key: 'byText',
+      description: 'Get tabs by title or url',
+      type: optionTypes.STRING,
+      defaultValue: '',
+      alias: 'bt'
+    },
     open: {
       key: 'open',
       description: 'Go to a specific url (URL)',

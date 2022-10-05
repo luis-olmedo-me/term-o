@@ -17,7 +17,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const [tabs, setTabs] = useState([])
 
   const actionType = getActionType(props)
-  const { open, protocol } = props
+  const { open, protocol, byText } = props
 
   const { log: messageLog, setMessage } = useMessageLog()
   const { buttonGroups, pages, pageNumber } = usePaginationGroups({
@@ -77,7 +77,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
           break
 
         case tabsActionTypes.SHOW_HISTORY:
-          fetchHistorial()
+          fetchHistorial({ text: byText })
             .then(handleShowHistory)
             .catch(() => setMessage(commanderMessages.unexpectedError))
           break
@@ -96,7 +96,8 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       setMessage,
       handleShowTabList,
       handleRedirect,
-      handleShowHistory
+      handleShowHistory,
+      byText
     ]
   )
 

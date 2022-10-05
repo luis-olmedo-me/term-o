@@ -1,5 +1,4 @@
 import { configManager } from 'libs/config-manager'
-import { connectedTabs } from 'libs/connected-tabs/connectedTabs.service'
 import { processWaitList } from 'libs/process-wait-list/processWaitList.service'
 
 import {

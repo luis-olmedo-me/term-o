@@ -29,8 +29,7 @@
   "commands": {
     "toggle-terminal": {
       "suggested_key": {
-        "default": "Alt+T",
-        "mac": "Alt+T"
+        "default": "Alt+T"
       },
       "description": "Toggle the terminal"
     },

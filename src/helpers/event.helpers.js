@@ -1,4 +1,5 @@
 import { eventTypes } from 'src/constants/events.constants.js'
+import { states } from '../libs/process-wait-list/processWaitList.constants'
 
 export const createWorkerRequest = ({ type, data, defaultResponse }) => {
   return new Promise((resolve, reject) => {
@@ -19,12 +20,12 @@ export const createWorkerProcessRequest = ({ type, data, defaultResponse }) => {
     let timeoutId = null
     const callback = (process) => {
       switch (process.state) {
-        case 'in_progress': {
+        case states.IN_PROGRESS: {
           timeoutId = setTimeout(() => createWorker(process.id), 100)
           break
         }
 
-        case 'done': {
+        case states.DONE: {
           resolve(process.data || defaultResponse)
           break
         }

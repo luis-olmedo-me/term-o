@@ -1,11 +1,12 @@
 import { configManager } from 'libs/config-manager'
+import { connectedTabs } from 'libs/connected-tabs/connectedTabs.service'
+import { processWaitList } from 'libs/process-wait-list/processWaitList.service'
 
 import {
   eventTypes,
   extensionKeyEvents,
   extensionKeyEventNames
 } from 'src/constants/events.constants.js'
-import { connectedTabs } from '../../libs/connected-tabs/connectedTabs.service'
 import {
   resizeFull,
   resizeLeft,
@@ -127,8 +128,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       const id = request.data
 
       const process = id
-        ? waitList.getProcessById(id)
-        : waitList.add(createHistoryProcess)
+        ? processWaitList.getProcessById(id)
+        : processWaitList.add(createHistoryProcess)
 
       sendResponse({ status: 'ok', data: process })
       break
@@ -139,42 +140,3 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 const createHistoryProcess = (resolve) => {
   chrome.history.search({ text: '' }, (historial) => resolve(historial))
 }
-
-class WaitList {
-  constructor() {
-    this.list = []
-  }
-
-  getProcessById(id) {
-    const process = this.list.find((process) => process.id === id)
-
-    if (process?.state === 'done') this.remove(id)
-
-    return process
-  }
-
-  resolver(id) {
-    return (data) => {
-      this.list = this.list.map((process) => {
-        return process.id === id ? { ...process, state: 'done', data } : process
-      })
-    }
-  }
-
-  add(callback) {
-    const newId = Date.now().toString()
-    const newProcess = { id: newId, state: 'in_progress', data: null }
-    const resolve = this.resolver(newId).bind(this)
-
-    this.list = [...this.list, newProcess]
-    callback(resolve)
-
-    return newProcess
-  }
-
-  remove(id) {
-    this.list = this.list.filter((process) => process.id !== id)
-  }
-}
-
-const waitList = new WaitList()

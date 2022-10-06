@@ -54,6 +54,13 @@ export const tabsConfig = {
       defaultValue: 500,
       alias: 'mr'
     },
+    incognito: {
+      key: 'incognito',
+      description: 'Get tabs open in incognito mode',
+      type: optionTypes.BOOLEAN,
+      defaultValue: false,
+      alias: 'i'
+    },
     here: {
       key: 'here',
       description: 'Get open tabs in the current window',

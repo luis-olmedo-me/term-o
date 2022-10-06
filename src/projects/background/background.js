@@ -152,17 +152,18 @@ const createHistoryProcess = (resolve, data) => {
 }
 
 const createTabsOpenProcess = (resolve, data) => {
-  const { text, ...options } = data
+  const { text, incognito: filterIncognitos, ...options } = data
 
   chrome.tabs.query(options, function (tabs) {
     const filteredTabs = tabs.reduce(
-      (finalTabs, { favIconUrl, title, url, id }) => {
+      (finalTabs, { favIconUrl, title, url, id, incognito }) => {
         const titleLower = title.toLowerCase()
         const urlLower = url.toLowerCase()
 
         const matchText = urlLower.includes(text) || titleLower.includes(text)
+        const isFilteredByIncognito = filterIncognitos ? incognito : true
 
-        return matchText || !text
+        return (matchText || !text) && isFilteredByIncognito
           ? finalTabs.concat({
               favIconUrl,
               title,

@@ -63,7 +63,7 @@ export const validateHistoryFilters = ({
   return filters
 }
 
-export const validateTabsFilters = ({ byText, here }) => {
+export const validateTabsFilters = ({ byText, here, incognito }) => {
   let filters = {}
 
   if (byText) {
@@ -71,6 +71,9 @@ export const validateTabsFilters = ({ byText, here }) => {
   }
   if (here) {
     filters = { ...filters, currentWindow: true }
+  }
+  if (incognito) {
+    filters = { ...filters, incognito: true }
   }
 
   return filters

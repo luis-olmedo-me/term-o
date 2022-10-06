@@ -15,4 +15,9 @@ export const Input = styled.input`
   &:focus-visible {
     outline: none;
   }
+
+  &::selection {
+    background-color: #222;
+    color: #f8c572;
+  }
 `

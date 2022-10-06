@@ -19,3 +19,25 @@ export const parseHistorial = (historial) => {
     }
   })
 }
+
+const microsecondsPerDay = 1000 * 60 * 60 * 24
+export const validateHistoryFilters = ({
+  byText,
+  byStartDate,
+  byEndDate,
+  byDate
+}) => {
+  const date = new Date(byDate)
+  const dateOffset = date.getTimezoneOffset()
+  const time = date.getTime()
+  const timeMinusDay = time && time - microsecondsPerDay + dateOffset
+
+  const startDate = timeMinusDay || null
+  const endDate = time || null
+
+  return {
+    text: byText,
+    startTime: startDate,
+    endTime: endDate
+  }
+}

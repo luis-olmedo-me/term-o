@@ -1,7 +1,11 @@
 import * as React from 'react'
 import { useCallback, useEffect, useState } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
-import { getActionType, parseHistorial } from './CommandTabs.helpers'
+import {
+  getActionType,
+  parseHistorial,
+  validateHistoryFilters
+} from './CommandTabs.helpers'
 import { Log, useMessageLog } from '../../modules/Log'
 import { tabsActionTypes } from './CommandTabs.constants'
 import { fetchTabsOpen } from 'src/helpers/event.helpers.js'
@@ -17,7 +21,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const [tabs, setTabs] = useState([])
 
   const actionType = getActionType(props)
-  const { open, protocol, byText } = props
+  const { open, protocol } = props
 
   const { log: messageLog, setMessage } = useMessageLog()
   const { buttonGroups, pages, pageNumber } = usePaginationGroups({
@@ -50,7 +54,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   }, [open, setMessage, protocol, finish])
 
   const handleShowHistory = useCallback(() => {
-    fetchHistorial({ text: byText })
+    fetchHistorial(validateHistoryFilters(props))
       .then((historial) => {
         if (!historial.length) return setMessage(tabsMessages.noTabsFound)
 
@@ -60,7 +64,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
         finish()
       })
       .catch(() => setMessage(commanderMessages.unexpectedError))
-  }, [setMessage, finish, byText])
+  }, [setMessage, finish, props])
 
   useEffect(
     function handleActionType() {

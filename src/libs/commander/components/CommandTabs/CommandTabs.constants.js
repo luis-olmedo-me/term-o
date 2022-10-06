@@ -26,6 +26,27 @@ export const tabsConfig = {
       defaultValue: '',
       alias: 'bt'
     },
+    'by-start-date': {
+      key: 'byStartDate',
+      description: 'Get tabs history from start date',
+      type: optionTypes.STRING,
+      defaultValue: '',
+      alias: 'bsd'
+    },
+    'by-end-date': {
+      key: 'byEndDate',
+      description: 'Get tabs history from end date',
+      type: optionTypes.STRING,
+      defaultValue: '',
+      alias: 'bed'
+    },
+    'by-date': {
+      key: 'byDate',
+      description: 'Get tabs history by date',
+      type: optionTypes.STRING,
+      defaultValue: '',
+      alias: 'bd'
+    },
     open: {
       key: 'open',
       description: 'Go to a specific url (URL)',

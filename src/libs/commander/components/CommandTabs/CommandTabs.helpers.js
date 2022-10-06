@@ -27,17 +27,37 @@ export const validateHistoryFilters = ({
   byEndDate,
   byDate
 }) => {
-  const date = new Date(byDate)
-  const dateOffset = date.getTimezoneOffset()
-  const time = date.getTime()
-  const timeMinusDay = time && time - microsecondsPerDay + dateOffset
+  let filters = { text: byText }
 
-  const startDate = timeMinusDay || null
-  const endDate = time || null
+  if (byDate) {
+    const date = new Date(byDate)
+    const startOffset = date.getTimezoneOffset()
+    const baseTime = date.getTime()
 
-  return {
-    text: byText,
-    startTime: startDate,
-    endTime: endDate
+    const startTime = baseTime && baseTime + startOffset - microsecondsPerDay
+    const endTime = baseTime && baseTime + startOffset
+
+    filters = {
+      ...filters,
+      startTime: startTime || null,
+      endTime: endTime || null
+    }
   }
+  if (byStartDate || byEndDate) {
+    const startDate = new Date(byStartDate)
+    const startOffset = startDate.getTimezoneOffset()
+    const startTime = startDate.getTime() + startOffset
+
+    const endDate = new Date(byEndDate)
+    const endOffset = endDate.getTimezoneOffset()
+    const endTime = endDate.getTime() + endOffset
+
+    filters = {
+      ...filters,
+      startTime: startTime || null,
+      endTime: endTime || null
+    }
+  }
+
+  return filters
 }

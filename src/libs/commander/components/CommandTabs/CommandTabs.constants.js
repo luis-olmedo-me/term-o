@@ -47,6 +47,13 @@ export const tabsConfig = {
       defaultValue: '',
       alias: 'bd'
     },
+    'max-results': {
+      key: 'maxResults',
+      description: 'Limit the amount of tabs shown',
+      type: optionTypes.NUMBER,
+      defaultValue: 500,
+      alias: 'mr'
+    },
     open: {
       key: 'open',
       description: 'Go to a specific url (URL)',

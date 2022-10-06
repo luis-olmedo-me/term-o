@@ -25,9 +25,10 @@ export const validateHistoryFilters = ({
   byText,
   byStartDate,
   byEndDate,
-  byDate
+  byDate,
+  maxResults
 }) => {
-  let filters = { text: byText }
+  let filters = { text: byText, maxResults }
 
   if (byDate) {
     const date = new Date(byDate)

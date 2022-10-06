@@ -12,9 +12,58 @@ export const tabsConfig = {
       defaultValue: false,
       alias: 'c'
     },
-    history: {
-      key: 'history',
+    past: {
+      key: 'past',
       description: 'Show past tabs',
+      type: optionTypes.BOOLEAN,
+      defaultValue: false,
+      alias: 'p'
+    },
+    'by-text': {
+      key: 'byText',
+      description: 'Get tabs by title or url',
+      type: optionTypes.STRING,
+      defaultValue: '',
+      alias: 'bt'
+    },
+    'by-start-date': {
+      key: 'byStartDate',
+      description: 'Get tabs history from start date',
+      type: optionTypes.STRING,
+      defaultValue: '',
+      alias: 'bsd'
+    },
+    'by-end-date': {
+      key: 'byEndDate',
+      description: 'Get tabs history from end date',
+      type: optionTypes.STRING,
+      defaultValue: '',
+      alias: 'bed'
+    },
+    'by-date': {
+      key: 'byDate',
+      description: 'Get tabs history by date',
+      type: optionTypes.STRING,
+      defaultValue: '',
+      alias: 'bd'
+    },
+    'max-results': {
+      key: 'maxResults',
+      description: 'Limit the amount of tabs shown',
+      type: optionTypes.NUMBER,
+      defaultValue: 500,
+      alias: 'mr'
+    },
+    incognito: {
+      key: 'incognito',
+      description: 'Get tabs open in incognito mode',
+      type: optionTypes.BOOLEAN,
+      defaultValue: false,
+      alias: 'i'
+    },
+    here: {
+      key: 'here',
+      description: 'Get open tabs in the current window',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 'h'
@@ -25,13 +74,6 @@ export const tabsConfig = {
       type: optionTypes.STRING,
       defaultValue: '',
       alias: 'o'
-    },
-    protocol: {
-      key: 'protocol',
-      description: 'Define the protocol to use for the history entry',
-      type: optionTypes.STRING,
-      defaultValue: 'https',
-      alias: 'p'
     }
   },
   output: (props) => <CommandTabs key={props.id} {...props} />

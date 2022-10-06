@@ -21,7 +21,7 @@ export const createWorkerProcessRequest = ({ type, data, defaultResponse }) => {
     const callback = (process) => {
       switch (process.state) {
         case states.IN_PROGRESS: {
-          timeoutId = setTimeout(() => createWorker(process.id), 100)
+          timeoutId = setTimeout(() => createWorker({ id: process.id }), 100)
           break
         }
 
@@ -37,13 +37,13 @@ export const createWorkerProcessRequest = ({ type, data, defaultResponse }) => {
       }
     }
 
-    const createWorker = (id) => {
-      createWorkerRequest({ type, data: id, defaultResponse: {} }).then(
-        callback
-      )
+    const createWorker = (data) => {
+      createWorkerRequest({ type, data, defaultResponse: {} })
+        .then(callback)
+        .catch(reject)
     }
 
-    createWorker(null)
+    createWorker({ id: null, data })
   })
 }
 
@@ -54,10 +54,11 @@ export const fetchConfiguration = () => {
   })
 }
 
-export const fetchHistorial = () => {
+export const fetchHistorial = (data) => {
   return createWorkerProcessRequest({
     type: eventTypes.GET_HISTORIAL,
-    defaultResponse: {}
+    defaultResponse: {},
+    data
   })
 }
 
@@ -95,10 +96,11 @@ export const resetConfiguration = () => {
   })
 }
 
-export const getTabsInfo = () => {
+export const fetchTabsOpen = (data) => {
   return createWorkerProcessRequest({
-    type: eventTypes.GET_TABS_INFO,
-    defaultResponse: []
+    type: eventTypes.GET_TABS_OPEN,
+    defaultResponse: [],
+    data
   })
 }
 

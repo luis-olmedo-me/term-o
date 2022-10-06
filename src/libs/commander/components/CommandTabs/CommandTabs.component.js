@@ -1,10 +1,15 @@
 import * as React from 'react'
 import { useCallback, useEffect, useState } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
-import { getActionType } from './CommandTabs.helpers'
+import {
+  getActionType,
+  parseHistorial,
+  validateHistoryFilters,
+  validateTabsFilters
+} from './CommandTabs.helpers'
 import { Log, useMessageLog } from '../../modules/Log'
 import { tabsActionTypes } from './CommandTabs.constants'
-import { getTabsInfo } from 'src/helpers/event.helpers.js'
+import { fetchTabsOpen } from 'src/helpers/event.helpers.js'
 import { List, Tab } from '../../modules/List'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
@@ -17,7 +22,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const [tabs, setTabs] = useState([])
 
   const actionType = getActionType(props)
-  const { open, protocol } = props
+  const { open } = props
 
   const { log: messageLog, setMessage } = useMessageLog()
   const { buttonGroups, pages, pageNumber } = usePaginationGroups({
@@ -25,61 +30,52 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     maxItems: 10
   })
 
-  const handleShowTabList = useCallback(
-    (tabsInfo) => {
-      setTabs(tabsInfo)
-      finish()
-    },
-    [finish]
-  )
+  const handleShowTabList = useCallback(() => {
+    const options = validateTabsFilters(props)
+
+    fetchTabsOpen(options)
+      .then((tabsOpen) => {
+        if (!tabsOpen.length) return setMessage(tabsMessages.noTabsFound)
+
+        setTabs(tabsOpen)
+        finish()
+      })
+      .catch(() => setMessage(commanderMessages.unexpectedError))
+  }, [finish, setMessage, props])
 
   const handleRedirect = useCallback(() => {
     if (!open) return setMessage(tabsMessages.missingURL)
 
-    const formattedUrl = open.startsWith('www') ? open : `www.${open}`
+    window.open(open, '_blank')
 
-    window.open(`${protocol}://${formattedUrl}`, '_blank')
-
-    setMessage(tabsMessages.redirectionSuccess, {
-      urlCount: open.length
-    })
+    setMessage(tabsMessages.redirectionSuccess)
     finish()
-  }, [open, setMessage, protocol, finish])
+  }, [open, setMessage, finish])
 
-  const handleShowHistory = useCallback(
-    (historial) => {
-      const historialAsTableItems = historial.map(
-        ({ lastVisitTime, url, title }) => {
-          const hostName = new URL(url).hostname
+  const handleShowHistory = useCallback(() => {
+    const options = validateHistoryFilters(props)
 
-          return {
-            lastVisitTime,
-            title,
-            favIconUrl: `https://www.google.com/s2/favicons?domain=${hostName}`,
-            hostName
-          }
-        }
-      )
+    fetchHistorial(options)
+      .then((historial) => {
+        if (!historial.length) return setMessage(tabsMessages.noTabsFound)
 
-      setTabs(historialAsTableItems)
-      finish()
-    },
-    [setMessage, finish]
-  )
+        const parsedHistorial = parseHistorial(historial)
+
+        setTabs(parsedHistorial)
+        finish()
+      })
+      .catch(() => setMessage(commanderMessages.unexpectedError))
+  }, [setMessage, finish, props])
 
   useEffect(
     function handleActionType() {
       switch (actionType) {
         case tabsActionTypes.SHOW_CURRENT_TABS:
-          getTabsInfo()
-            .then(handleShowTabList)
-            .catch(() => setMessage(commanderMessages.unexpectedError))
+          handleShowTabList()
           break
 
         case tabsActionTypes.SHOW_HISTORY:
-          fetchHistorial()
-            .then(handleShowHistory)
-            .catch(() => setMessage(commanderMessages.unexpectedError))
+          handleShowHistory()
           break
 
         case tabsActionTypes.REDIRECT:

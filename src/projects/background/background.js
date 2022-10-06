@@ -117,23 +117,23 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       break
     }
 
-    case eventTypes.GET_TABS_INFO: {
-      const id = request.data
+    case eventTypes.GET_TABS_OPEN: {
+      const { id, data } = request.data
 
       const process = id
         ? processWaitList.getProcessById(id)
-        : processWaitList.add(createTabsOpenProcess)
+        : processWaitList.add((resolve) => createTabsOpenProcess(resolve, data))
 
       sendResponse({ status: 'ok', data: process })
       break
     }
 
     case eventTypes.GET_HISTORIAL: {
-      const id = request.data
+      const { id, data } = request.data
 
       const process = id
         ? processWaitList.getProcessById(id)
-        : processWaitList.add(createHistoryProcess)
+        : processWaitList.add((resolve) => createHistoryProcess(resolve, data))
 
       sendResponse({ status: 'ok', data: process })
       break
@@ -141,8 +141,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
 })
 
-const createHistoryProcess = (resolve) => {
-  chrome.history.search({ text: '' }, (historial) => {
+const createHistoryProcess = (resolve, data) => {
+  chrome.history.search(data, (historial) => {
     const filteredHistory = historial.map(({ lastVisitTime, url, title }) => {
       return { lastVisitTime, url, title }
     })
@@ -151,14 +151,29 @@ const createHistoryProcess = (resolve) => {
   })
 }
 
-const createTabsOpenProcess = (resolve) => {
-  chrome.tabs.query({}, function (tabs) {
-    const filteredTabs = tabs.map(({ favIconUrl, title, url, id }) => ({
-      favIconUrl,
-      title,
-      url,
-      id
-    }))
+const createTabsOpenProcess = (resolve, data) => {
+  const { text, incognito: filterIncognitos, ...options } = data
+
+  chrome.tabs.query(options, function (tabs) {
+    const filteredTabs = tabs.reduce(
+      (finalTabs, { favIconUrl, title, url, id, incognito }) => {
+        const titleLower = title.toLowerCase()
+        const urlLower = url.toLowerCase()
+
+        const matchText = urlLower.includes(text) || titleLower.includes(text)
+        const isFilteredByIncognito = filterIncognitos ? incognito : true
+
+        return (matchText || !text) && isFilteredByIncognito
+          ? finalTabs.concat({
+              favIconUrl,
+              title,
+              url,
+              id
+            })
+          : finalTabs
+      },
+      []
+    )
 
     resolve(filteredTabs)
   })

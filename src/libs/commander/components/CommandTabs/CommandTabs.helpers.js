@@ -62,3 +62,13 @@ export const validateHistoryFilters = ({
 
   return filters
 }
+
+export const validateTabsFilters = ({ byText }) => {
+  let filters = {}
+
+  if (byText) {
+    filters = { ...filters, text: byText.toLowerCase() }
+  }
+
+  return filters
+}

@@ -152,13 +152,27 @@ const createHistoryProcess = (resolve, data) => {
 }
 
 const createTabsOpenProcess = (resolve, data) => {
-  chrome.tabs.query({}, function (tabs) {
-    const filteredTabs = tabs.map(({ favIconUrl, title, url, id }) => ({
-      favIconUrl,
-      title,
-      url,
-      id
-    }))
+  const { text, ...options } = data
+
+  chrome.tabs.query(options, function (tabs) {
+    const filteredTabs = tabs.reduce(
+      (finalTabs, { favIconUrl, title, url, id }) => {
+        const titleLower = title.toLowerCase()
+        const urlLower = url.toLowerCase()
+
+        const matchText = urlLower.includes(text) || titleLower.includes(text)
+
+        return matchText
+          ? finalTabs.concat({
+              favIconUrl,
+              title,
+              url,
+              id
+            })
+          : finalTabs
+      },
+      []
+    )
 
     resolve(filteredTabs)
   })

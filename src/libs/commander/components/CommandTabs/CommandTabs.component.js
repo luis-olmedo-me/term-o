@@ -4,7 +4,8 @@ import { parameterTypes } from '../../constants/commands.constants'
 import {
   getActionType,
   parseHistorial,
-  validateHistoryFilters
+  validateHistoryFilters,
+  validateTabsFilters
 } from './CommandTabs.helpers'
 import { Log, useMessageLog } from '../../modules/Log'
 import { tabsActionTypes } from './CommandTabs.constants'
@@ -30,7 +31,9 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   })
 
   const handleShowTabList = useCallback(() => {
-    fetchTabsOpen()
+    const options = validateTabsFilters(props)
+
+    fetchTabsOpen(options)
       .then((tabsOpen) => {
         if (!tabsOpen.length) return setMessage(tabsMessages.noTabsFound)
 
@@ -38,7 +41,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
         finish()
       })
       .catch(() => setMessage(commanderMessages.unexpectedError))
-  }, [finish, setMessage])
+  }, [finish, setMessage, props])
 
   const handleRedirect = useCallback(() => {
     if (!open) return setMessage(tabsMessages.missingURL)
@@ -54,7 +57,9 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   }, [open, setMessage, protocol, finish])
 
   const handleShowHistory = useCallback(() => {
-    fetchHistorial(validateHistoryFilters(props))
+    const options = validateHistoryFilters(props)
+
+    fetchHistorial(options)
       .then((historial) => {
         if (!historial.length) return setMessage(tabsMessages.noTabsFound)
 

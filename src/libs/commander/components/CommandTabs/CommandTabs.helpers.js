@@ -1,8 +1,8 @@
 import { tabsActionTypes } from './CommandTabs.constants'
 
-export const getActionType = ({ current, history, open }) => {
+export const getActionType = ({ current, past, open }) => {
   if (current) return tabsActionTypes.SHOW_CURRENT_TABS
-  if (history) return tabsActionTypes.SHOW_HISTORY
+  if (past) return tabsActionTypes.SHOW_HISTORY
   if (open) return tabsActionTypes.REDIRECT
   else return tabsActionTypes.NONE
 }
@@ -63,11 +63,14 @@ export const validateHistoryFilters = ({
   return filters
 }
 
-export const validateTabsFilters = ({ byText }) => {
+export const validateTabsFilters = ({ byText, here }) => {
   let filters = {}
 
   if (byText) {
     filters = { ...filters, text: byText.toLowerCase() }
+  }
+  if (here) {
+    filters = { ...filters, currentWindow: true }
   }
 
   return filters

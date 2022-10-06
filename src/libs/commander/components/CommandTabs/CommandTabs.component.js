@@ -22,7 +22,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const [tabs, setTabs] = useState([])
 
   const actionType = getActionType(props)
-  const { open, protocol } = props
+  const { open } = props
 
   const { log: messageLog, setMessage } = useMessageLog()
   const { buttonGroups, pages, pageNumber } = usePaginationGroups({
@@ -46,15 +46,11 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const handleRedirect = useCallback(() => {
     if (!open) return setMessage(tabsMessages.missingURL)
 
-    const formattedUrl = open.startsWith('www') ? open : `www.${open}`
+    window.open(open, '_blank')
 
-    window.open(`${protocol}://${formattedUrl}`, '_blank')
-
-    setMessage(tabsMessages.redirectionSuccess, {
-      urlCount: open.length
-    })
+    setMessage(tabsMessages.redirectionSuccess)
     finish()
-  }, [open, setMessage, protocol, finish])
+  }, [open, setMessage, finish])
 
   const handleShowHistory = useCallback(() => {
     const options = validateHistoryFilters(props)

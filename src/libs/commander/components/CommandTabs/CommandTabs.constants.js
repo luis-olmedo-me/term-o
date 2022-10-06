@@ -12,12 +12,12 @@ export const tabsConfig = {
       defaultValue: false,
       alias: 'c'
     },
-    history: {
-      key: 'history',
+    past: {
+      key: 'past',
       description: 'Show past tabs',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
-      alias: 'h'
+      alias: 'p'
     },
     'by-text': {
       key: 'byText',
@@ -54,19 +54,19 @@ export const tabsConfig = {
       defaultValue: 500,
       alias: 'mr'
     },
+    here: {
+      key: 'here',
+      description: 'Get open tabs in the current window',
+      type: optionTypes.BOOLEAN,
+      defaultValue: false,
+      alias: 'h'
+    },
     open: {
       key: 'open',
       description: 'Go to a specific url (URL)',
       type: optionTypes.STRING,
       defaultValue: '',
       alias: 'o'
-    },
-    protocol: {
-      key: 'protocol',
-      description: 'Define the protocol to use for the history entry',
-      type: optionTypes.STRING,
-      defaultValue: 'https',
-      alias: 'p'
     }
   },
   output: (props) => <CommandTabs key={props.id} {...props} />

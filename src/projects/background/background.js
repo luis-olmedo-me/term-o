@@ -162,7 +162,7 @@ const createTabsOpenProcess = (resolve, data) => {
 
         const matchText = urlLower.includes(text) || titleLower.includes(text)
 
-        return matchText
+        return matchText || !text
           ? finalTabs.concat({
               favIconUrl,
               title,

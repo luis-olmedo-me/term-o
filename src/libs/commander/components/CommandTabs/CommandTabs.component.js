@@ -17,32 +17,7 @@ import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginatio
 import { commanderMessages } from '../../commander.messages'
 import { fetchHistorial } from '../../../../helpers/event.helpers'
 import { tabsMessages } from './CommandTabs.messages'
-
-const setDigits = (number, digits) => {
-  const numberAsString = number.toString()
-  const leftZerosNeeded = digits - numberAsString.length
-  const leftZeros = '0'.repeat(leftZerosNeeded)
-
-  return `${leftZeros}${numberAsString}`
-}
-
-export const replace = (message, params) => {
-  return Object.entries(params).reduce((replacedString, [key, value]) => {
-    return replacedString.replace(key, value)
-  }, message)
-}
-
-const formatDate = (date, format) => {
-  const dateObject = new Date(date)
-  const hh = setDigits(dateObject.getHours(), 2)
-  const mm = setDigits(dateObject.getMinutes(), 2)
-  const ss = setDigits(dateObject.getSeconds(), 2)
-  const yyyy = setDigits(dateObject.getFullYear(), 4)
-  const MM = setDigits(dateObject.getMonth(), 2)
-  const dd = setDigits(dateObject.getDate(), 2)
-
-  return replace(format, { hh, ss, yyyy, dd, MM, mm })
-}
+import { formatDate } from 'src/helpers/dates.helpers'
 
 export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const [tabs, setTabs] = useState([])

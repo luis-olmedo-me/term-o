@@ -15,7 +15,7 @@ import {
 } from 'src/helpers/event.helpers.js'
 import { eventMessages } from './CommandEvent.messages'
 import { getActionType } from './CommandEvent.helpers'
-import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
+import { usePaginationActions } from '../../modules/Log/hooks/usePaginationActions'
 import { getParamsByType } from '../../commander.helpers'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
@@ -33,7 +33,7 @@ export const CommandEvent = ({
   const [tableItems, setTableItems] = useState([])
 
   const { log: messageLog, setMessage } = useMessageLog()
-  const { paginationActions, pages, pageNumber } = usePaginationGroups({
+  const { paginationActions, pages, pageNumber } = usePaginationActions({
     items: tableItems,
     maxItems: 10
   })

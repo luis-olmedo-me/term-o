@@ -13,7 +13,7 @@ import { fetchTabsOpen } from 'src/helpers/event.helpers.js'
 import { List, Tab } from '../../modules/List'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
-import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
+import { usePaginationActions } from '../../modules/Log/hooks/usePaginationActions'
 import { commanderMessages } from '../../commander.messages'
 import { fetchHistorial } from '../../../../helpers/event.helpers'
 import { tabsMessages } from './CommandTabs.messages'
@@ -28,7 +28,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const { open } = props
 
   const { log: messageLog, setMessage } = useMessageLog()
-  const { paginationActions, pages, pageNumber } = usePaginationGroups({
+  const { paginationActions, pages, pageNumber } = usePaginationActions({
     items: tabs,
     maxItems: 10
   })

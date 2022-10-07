@@ -11,9 +11,9 @@ import {
 } from 'src/helpers/event.helpers.js'
 import { getActionType, validateAliasesToAdd } from './CommandAlias.helpers'
 import { aliasMessages } from './CommandAlias.messages'
-import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
+import { usePaginationActions } from '../../modules/Log/hooks/usePaginationActions'
 
 export const CommandAlias = ({ props, terminal: { command, finish } }) => {
   const { delete: deletedIds, add: aliasesToAdd } = props
@@ -21,7 +21,7 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
   const [tableItems, setTableItems] = useState([])
 
   const { log: messageLog, setMessage } = useMessageLog()
-  const { paginationActions, pages, pageNumber } = usePaginationGroups({
+  const { paginationActions, pages, pageNumber } = usePaginationActions({
     items: tableItems,
     maxItems: 10
   })

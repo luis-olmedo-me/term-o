@@ -10,7 +10,7 @@ import {
   parseCookies
 } from './CommandStorage.helpers'
 import { storageMessages } from './CommandStorage.messages'
-import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
+import { usePaginationActions } from '../../modules/Log/hooks/usePaginationActions'
 import { storageActionTypes, storageHeaders } from './CommandStorage.constants'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
@@ -21,7 +21,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
   const [tableItems, setTableItems] = useState([])
 
   const { log: messageLog, setMessage } = useMessageLog()
-  const { paginationActions, pages, pageNumber } = usePaginationGroups({
+  const { paginationActions, pages, pageNumber } = usePaginationActions({
     items: tableItems,
     maxItems: 10
   })

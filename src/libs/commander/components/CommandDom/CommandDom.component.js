@@ -11,7 +11,7 @@ import {
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { List, Element, StyleSheet } from '../../modules/List'
 import { domMessages } from './CommandDom.messages'
-import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
+import { usePaginationActions } from '../../modules/Log/hooks/usePaginationActions'
 import { insertParams } from '../../commander.helpers'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
@@ -54,7 +54,7 @@ const CommandDomWithoutContext = ({
   const actionType = getActionType(props)
 
   const { log: messageLog, setMessage } = useMessageLog()
-  const { paginationActions, pages, pageNumber } = usePaginationGroups({
+  const { paginationActions, pages, pageNumber } = usePaginationActions({
     items: elements,
     maxItems: 10
   })

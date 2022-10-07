@@ -2,9 +2,9 @@ import { useState } from 'react'
 import {
   divideItemsIntoPages,
   generateButtonGroupsFromPages
-} from '../Table.helpers'
+} from './usePaginationActions.helpers'
 
-export const usePaginationGroups = ({ items, maxItems }) => {
+export const usePaginationActions = ({ items, maxItems }) => {
   const [pageNumber, setPageNumber] = useState(1)
 
   const itemsDividedIntoPages = divideItemsIntoPages(items, maxItems)

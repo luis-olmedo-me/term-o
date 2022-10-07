@@ -139,7 +139,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
         {
           id: 'date-end-picker',
           label: formatDate(dates.end, 'MM/dd/yyyy hh:mm:ss'),
-          text: formatDate(dates.end, 'yyyy-MM-ddThh:mm'),
+          text: formatDate(dates.end, 'yyyy-MM-ddThh:mm:ss'),
           onChange: ({ target }) =>
             updateFromActions({ endTime: new Date(target.value).getTime() }),
           type: 'datetime'

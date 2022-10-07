@@ -54,7 +54,7 @@ const CommandDomWithoutContext = ({
   const actionType = getActionType(props)
 
   const { log: messageLog, setMessage } = useMessageLog()
-  const { buttonGroups, pages, pageNumber } = usePaginationGroups({
+  const { paginationActions, pages, pageNumber } = usePaginationGroups({
     items: elements,
     maxItems: 10
   })
@@ -196,7 +196,10 @@ const CommandDomWithoutContext = ({
       {!messageLog && (
         <Carousel itemInView={itemInView}>
           <CarouselItem>
-            <Log variant={parameterTypes.ELEMENT} buttonGroups={buttonGroups}>
+            <Log
+              variant={parameterTypes.ELEMENT}
+              actionGroups={paginationActions}
+            >
               {hasPinnedElements && (
                 <List
                   items={pinnedElements}
@@ -250,7 +253,7 @@ const CommandDomWithoutContext = ({
           <CarouselItem>
             <Log
               variant={parameterTypes.STYLES}
-              buttonGroups={[headToElements, headToAttributes]}
+              actionGroups={[headToElements, headToAttributes]}
               hasScroll
             >
               <List

@@ -82,13 +82,13 @@ export const ScrolledLogContent = styled.div`
   }
 `
 
-export const GroupButtons = styled.div`
+export const ActionGroups = styled.div`
   background-color: #00000022;
   display: flex;
   justify-content: center;
 `
 
-export const GroupButton = styled.button`
+export const Action = styled.input`
   border: none;
   padding: 5px 10px;
   cursor: pointer;

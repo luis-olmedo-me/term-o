@@ -21,7 +21,7 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
   const [tableItems, setTableItems] = useState([])
 
   const { log: messageLog, setMessage } = useMessageLog()
-  const { buttonGroups, pages, pageNumber } = usePaginationGroups({
+  const { paginationActions, pages, pageNumber } = usePaginationGroups({
     items: tableItems,
     maxItems: 10
   })
@@ -106,7 +106,7 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
       {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
 
       {!messageLog && (
-        <Log variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
+        <Log variant={parameterTypes.TABLE} actionGroups={paginationActions}>
           <Carousel itemInView={pageNumber}>
             {pages.map((page, currentPageNumber) => {
               return (

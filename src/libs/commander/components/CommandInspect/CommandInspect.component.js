@@ -157,7 +157,7 @@ const CommandInspectWithoutContext = ({
           <CarouselItem>
             <Log
               variant={parameterTypes.STYLES}
-              buttonGroups={[headToElements, headToAttributes]}
+              actionGroups={[headToElements, headToAttributes]}
               hasScroll
             >
               <List

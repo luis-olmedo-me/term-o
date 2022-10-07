@@ -13,9 +13,9 @@ export const usePaginationGroups = ({ items, maxItems }) => {
     pageNumber,
     setPageNumber
   )
-  const shouldDisplayGroups = itemsDividedIntoPages.length > 1
+  const shouldDisplayActions = itemsDividedIntoPages.length > 1
 
-  const buttonGroups = [
+  const paginationActions = [
     {
       id: 'go-to-first-page',
       text: '<<',
@@ -44,7 +44,7 @@ export const usePaginationGroups = ({ items, maxItems }) => {
   ]
 
   return {
-    buttonGroups: shouldDisplayGroups ? buttonGroups : [],
+    paginationActions: shouldDisplayActions ? paginationActions : [],
     pages: itemsDividedIntoPages,
     pageNumber: pageNumber - 1
   }

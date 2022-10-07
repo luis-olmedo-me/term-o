@@ -2,8 +2,8 @@ import * as React from 'react'
 import { useEffect, useState } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
 import {
-  GroupButtons,
-  GroupButton,
+  ActionGroups,
+  Action,
   Hash,
   LogWrapper,
   LogContent,
@@ -19,7 +19,7 @@ const preIconsByVariants = {
   [parameterTypes.SUCCESS]: '✔'
 }
 
-export const Log = ({ children, variant, buttonGroups, hasScroll }) => {
+export const Log = ({ children, variant, actionGroups, hasScroll }) => {
   const isCommand = variant === parameterTypes.COMMAND
 
   const [isFakeLoading, setIsFakeLoading] = useState(!isCommand)
@@ -37,7 +37,7 @@ export const Log = ({ children, variant, buttonGroups, hasScroll }) => {
     }
   }, [isCommand])
 
-  const hasButtonGroups = !isFakeLoading && Boolean(buttonGroups?.length)
+  const hasActionGroups = !isFakeLoading && Boolean(actionGroups?.length)
 
   const Content = (
     <>
@@ -69,24 +69,26 @@ export const Log = ({ children, variant, buttonGroups, hasScroll }) => {
         </LogContent>
       )}
 
-      {hasButtonGroups && (
-        <GroupButtons>
-          {buttonGroups.map(({ id, text, onClick, disabled, selected }) => {
-            return (
-              <GroupButton
-                key={id}
-                onClick={onClick}
-                className={`
-                  ${selected ? 'selected' : ''}
-                  ${disabled ? 'disabled' : ''}
-                `}
-                disabled={disabled}
-              >
-                {text}
-              </GroupButton>
-            )
-          })}
-        </GroupButtons>
+      {hasActionGroups && (
+        <ActionGroups>
+          {actionGroups.map(
+            ({ id, text, onClick, disabled, selected, type }) => {
+              return (
+                <Action
+                  key={id}
+                  onClick={onClick}
+                  className={`
+                    ${selected ? 'selected' : ''}
+                    ${disabled ? 'disabled' : ''}
+                  `}
+                  disabled={disabled}
+                  value={text}
+                  type={type || 'button'}
+                />
+              )
+            }
+          )}
+        </ActionGroups>
       )}
     </LogWrapper>
   )

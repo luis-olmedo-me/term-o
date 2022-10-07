@@ -21,7 +21,7 @@ export const AttributeEditionLog = ({
   const attributes = getAttributes(element)
 
   const attributeRows = turnAttributesIntoTableItems({ attributes, element })
-  const { buttonGroups, pages, pageNumber } = usePaginationGroups({
+  const { paginationActions, pages, pageNumber } = usePaginationGroups({
     items: attributeRows,
     maxItems: 9
   })
@@ -60,14 +60,14 @@ export const AttributeEditionLog = ({
 
   const editionPageButtonGroups = [
     ...leftOptions,
-    ...buttonGroups,
+    ...paginationActions,
     ...rightOptions
   ]
 
   return (
     <Log
       variant={parameterTypes.TABLE}
-      buttonGroups={editionPageButtonGroups}
+      actionGroups={editionPageButtonGroups}
       hasScroll
     >
       <Carousel itemInView={pageNumber}>

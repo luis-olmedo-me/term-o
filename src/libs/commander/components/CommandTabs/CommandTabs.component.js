@@ -25,7 +25,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const { open } = props
 
   const { log: messageLog, setMessage } = useMessageLog()
-  const { buttonGroups, pages, pageNumber } = usePaginationGroups({
+  const { paginationActions, pages, pageNumber } = usePaginationGroups({
     items: tabs,
     maxItems: 10
   })
@@ -103,7 +103,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
 
       {!messageLog && (
-        <Log variant={parameterTypes.TABS} buttonGroups={buttonGroups}>
+        <Log variant={parameterTypes.TABS} actionGroups={paginationActions}>
           <Carousel itemInView={pageNumber}>
             {pages.map((page, currentPageNumber) => {
               return (

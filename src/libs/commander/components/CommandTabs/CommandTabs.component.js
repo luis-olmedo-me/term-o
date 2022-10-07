@@ -22,6 +22,7 @@ import { formatDate } from 'src/helpers/dates.helpers'
 export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const [tabs, setTabs] = useState([])
   const [dates, setDates] = useState({ start: null, end: null })
+  const [areDatesInvalid, setAreDatesInvalid] = useState(false)
 
   const actionType = getActionType(props)
   const { open } = props
@@ -111,12 +112,15 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
 
     fetchHistorial(options)
       .then((historial) => {
+        if (startTime) setDates((dates) => ({ ...dates, start: startTime }))
+        if (endTime) setDates((dates) => ({ ...dates, end: endTime }))
+
+        if (!historial.length) return setAreDatesInvalid(true)
+        setAreDatesInvalid(false)
+
         const parsedHistorial = parseHistorial(historial)
 
         setTabs(parsedHistorial)
-
-        if (startTime) setDates((dates) => ({ ...dates, start: startTime }))
-        if (endTime) setDates((dates) => ({ ...dates, end: endTime }))
       })
       .catch(() => setMessage(commanderMessages.unexpectedError))
   }
@@ -127,6 +131,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
           id: 'date-start-picker',
           label: formatDate(dates.start, 'MM/dd/yyyy hh:mm:ss'),
           text: formatDate(dates.start, 'yyyy-MM-ddThh:mm'),
+          invalid: areDatesInvalid,
           onChange: ({ target }) =>
             updateFromActions({ startTime: new Date(target.value).getTime() }),
           type: 'datetime'
@@ -140,6 +145,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
           id: 'date-end-picker',
           label: formatDate(dates.end, 'MM/dd/yyyy hh:mm:ss'),
           text: formatDate(dates.end, 'yyyy-MM-ddThh:mm:ss'),
+          invalid: areDatesInvalid,
           onChange: ({ target }) =>
             updateFromActions({ endTime: new Date(target.value).getTime() }),
           type: 'datetime'

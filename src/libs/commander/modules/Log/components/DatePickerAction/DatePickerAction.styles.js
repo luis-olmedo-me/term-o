@@ -14,6 +14,11 @@ export const Wrapper = styled.span`
   &&.disabled {
     background-color: #00000033;
   }
+
+  &&.invalid {
+    background-color: #f21361;
+    text-decoration: line-through;
+  }
 `
 
 export const DatePicker = styled.input`

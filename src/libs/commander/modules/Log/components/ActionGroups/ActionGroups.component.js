@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { DatePickerAction } from '../DatePickerAction/DatePickerAction.component'
 import { Action, Groups } from './ActionGroups.styles'
 
 export const ActionGroups = ({ actionGroups }) => {
@@ -13,13 +14,12 @@ export const ActionGroups = ({ actionGroups }) => {
               ${disabled ? 'disabled' : ''}
             `,
             disabled,
-            type,
             value: text
           }
 
           switch (type) {
             case 'date':
-              return <Action {...commonProps} onChange={onChange} />
+              return <DatePickerAction {...commonProps} onChange={onChange} />
 
             default:
               return <Action {...commonProps} onClick={onClick} type='button' />

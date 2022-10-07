@@ -107,7 +107,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
           variant={parameterTypes.TABS}
           actionGroups={[
             {
-              id: 'go-to-last-page',
+              id: 'date-picker',
               text: '10/6/2022',
               onChange: (event) => console.log('hola', event.target.value),
               type: 'date'

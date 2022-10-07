@@ -7,6 +7,7 @@ export const Wrapper = styled.span`
   padding: 5px 10px;
   text-align: center;
 
+  &&:focus-within,
   &&.selected {
     background-color: #ffffff55;
   }

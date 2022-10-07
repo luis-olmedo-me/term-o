@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { DatePicker, Trigger, Wrapper } from './DatePickerAction.styles'
+import { DatePicker, Wrapper } from './DatePickerAction.styles'
 
 export const DatePickerAction = ({
   className,

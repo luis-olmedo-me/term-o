@@ -7,31 +7,56 @@ import {
   validateHistoryFilters,
   validateTabsFilters
 } from './CommandTabs.helpers'
-import { Log, useMessageLog } from '../../modules/Log'
+import {
+  Log,
+  useDateRangeActions,
+  useMessageLog,
+  usePaginationActions
+} from '../../modules/Log'
 import { tabsActionTypes } from './CommandTabs.constants'
 import { fetchTabsOpen } from 'src/helpers/event.helpers.js'
 import { List, Tab } from '../../modules/List'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
-import { usePaginationActions } from '../../modules/Log/hooks/usePaginationActions'
 import { commanderMessages } from '../../commander.messages'
 import { fetchHistorial } from '../../../../helpers/event.helpers'
 import { tabsMessages } from './CommandTabs.messages'
-import { formatDate } from 'src/helpers/dates.helpers'
 
 export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const [tabs, setTabs] = useState([])
-  const [dates, setDates] = useState({ start: null, end: null })
-  const [areDatesInvalid, setAreDatesInvalid] = useState(false)
 
   const actionType = getActionType(props)
   const { open } = props
+
+  const handleDatesUpdate = (overWrittenOptions) => {
+    const options = {
+      ...validateHistoryFilters(props),
+      ...overWrittenOptions
+    }
+    const { startTime, endTime } = options
+
+    fetchHistorial(options)
+      .then((historial) => {
+        if (startTime) setDate({ start: startTime })
+        if (endTime) setDate({ end: endTime })
+
+        if (!historial.length) return setAreDatesInvalid(true)
+        setAreDatesInvalid(false)
+
+        const parsedHistorial = parseHistorial(historial)
+
+        setTabs(parsedHistorial)
+      })
+      .catch(() => setMessage(commanderMessages.unexpectedError))
+  }
 
   const { log: messageLog, setMessage } = useMessageLog()
   const { paginationActions, pages, pageNumber } = usePaginationActions({
     items: tabs,
     maxItems: 10
   })
+  const { startDateAction, endDateAction, setAreDatesInvalid, setDate } =
+    useDateRangeActions({ onDateUpdate: handleDatesUpdate })
 
   const handleShowTabList = useCallback(() => {
     const options = validateTabsFilters(props)
@@ -59,8 +84,8 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     const options = validateHistoryFilters(props)
     const { startTime, endTime } = options
 
-    if (startTime) setDates((dates) => ({ ...dates, start: startTime }))
-    if (endTime) setDates((dates) => ({ ...dates, end: endTime }))
+    if (startTime) setDate({ start: startTime })
+    if (endTime) setDate({ end: endTime })
 
     fetchHistorial(options)
       .then((historial) => {
@@ -102,56 +127,6 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       handleShowHistory
     ]
   )
-
-  const updateFromActions = (overWrittenOptions) => {
-    const options = {
-      ...validateHistoryFilters(props),
-      ...overWrittenOptions
-    }
-    const { startTime, endTime } = options
-
-    fetchHistorial(options)
-      .then((historial) => {
-        if (startTime) setDates((dates) => ({ ...dates, start: startTime }))
-        if (endTime) setDates((dates) => ({ ...dates, end: endTime }))
-
-        if (!historial.length) return setAreDatesInvalid(true)
-        setAreDatesInvalid(false)
-
-        const parsedHistorial = parseHistorial(historial)
-
-        setTabs(parsedHistorial)
-      })
-      .catch(() => setMessage(commanderMessages.unexpectedError))
-  }
-
-  const startDateAction = dates.start
-    ? [
-        {
-          id: 'date-start-picker',
-          label: formatDate(dates.start, 'MM/dd/yyyy hh:mm:ss'),
-          text: formatDate(dates.start, 'yyyy-MM-ddThh:mm'),
-          invalid: areDatesInvalid,
-          onChange: ({ target }) =>
-            updateFromActions({ startTime: new Date(target.value).getTime() }),
-          type: 'datetime'
-        }
-      ]
-    : []
-
-  const endDateAction = dates.end
-    ? [
-        {
-          id: 'date-end-picker',
-          label: formatDate(dates.end, 'MM/dd/yyyy hh:mm:ss'),
-          text: formatDate(dates.end, 'yyyy-MM-ddThh:mm:ss'),
-          invalid: areDatesInvalid,
-          onChange: ({ target }) =>
-            updateFromActions({ endTime: new Date(target.value).getTime() }),
-          type: 'datetime'
-        }
-      ]
-    : []
 
   return (
     <>

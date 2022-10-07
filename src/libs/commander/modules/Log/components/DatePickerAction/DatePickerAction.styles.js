@@ -4,6 +4,15 @@ export const Wrapper = styled.span`
   display: inline-block;
   position: relative;
   overflow: hidden;
+  padding: 5px 10px;
+
+  &&.selected {
+    background-color: #ffffff55;
+  }
+
+  &&.disabled {
+    background-color: #00000033;
+  }
 `
 
 export const Trigger = styled.span`

@@ -16,6 +16,7 @@ export const DatePickerAction = ({
         type='datetime-local'
         disabled={disabled}
         onChange={onChange}
+        value={value}
       />
     </Wrapper>
   )

@@ -101,13 +101,33 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     ]
   )
 
+  const updateFromActions = (overWrittenOptions) => {
+    const options = {
+      ...validateHistoryFilters(props),
+      ...overWrittenOptions
+    }
+    const { startTime, endTime } = options
+
+    fetchHistorial(options)
+      .then((historial) => {
+        const parsedHistorial = parseHistorial(historial)
+
+        setTabs(parsedHistorial)
+
+        if (startTime) setDates((dates) => ({ ...dates, start: startTime }))
+        if (endTime) setDates((dates) => ({ ...dates, end: endTime }))
+      })
+      .catch(() => setMessage(commanderMessages.unexpectedError))
+  }
+
   const startDateAction = dates.start
     ? [
         {
           id: 'date-start-picker',
-          text: new Date(dates.start),
+          text: new Date(dates.start).toISOString(),
           label: new Date(dates.start).toLocaleString(),
-          onChange: (event) => console.log(event.target.value),
+          onChange: ({ target }) =>
+            updateFromActions({ startTime: new Date(target.value).getTime() }),
           type: 'datetime'
         }
       ]
@@ -117,9 +137,10 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     ? [
         {
           id: 'date-end-picker',
-          text: new Date(dates.end),
+          text: new Date(dates.end).toISOString(),
           label: new Date(dates.end).toLocaleString(),
-          onChange: (event) => console.log(event.target.value),
+          onChange: ({ target }) =>
+            updateFromActions({ endTime: new Date(target.value).getTime() }),
           type: 'datetime'
         }
       ]

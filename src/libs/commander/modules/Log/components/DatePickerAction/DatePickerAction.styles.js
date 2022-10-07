@@ -5,6 +5,7 @@ export const Wrapper = styled.span`
   position: relative;
   overflow: hidden;
   padding: 5px 10px;
+  text-align: center;
 
   &&.selected {
     background-color: #ffffff55;
@@ -13,14 +14,6 @@ export const Wrapper = styled.span`
   &&.disabled {
     background-color: #00000033;
   }
-`
-
-export const Trigger = styled.span`
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  padding: 5px 10px;
 `
 
 export const DatePicker = styled.input`

@@ -4,7 +4,7 @@ import { DatePicker, Trigger, Wrapper } from './DatePickerAction.styles'
 export const DatePickerAction = ({ className, value, disabled, onChange }) => {
   return (
     <Wrapper className={className}>
-      <Trigger>📅 {value}</Trigger>
+      <span>{value}</span>
 
       <DatePicker type='date' disabled={disabled} onChange={onChange} />
     </Wrapper>

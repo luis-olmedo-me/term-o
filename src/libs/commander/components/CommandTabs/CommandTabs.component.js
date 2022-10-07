@@ -107,12 +107,22 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
           variant={parameterTypes.TABS}
           actionGroups={[
             {
-              id: 'date-picker',
-              text: '10/6/2022',
-              onChange: (event) => console.log('hola', event.target.value),
-              type: 'date'
+              id: 'date-start-picker',
+              text: new Date(
+                props.byDate || props.byStartDate || null
+              ).toLocaleString(),
+              onChange: (event) => console.log(event.target.value),
+              type: 'datetime'
             },
-            ...paginationActions
+            ...paginationActions,
+            {
+              id: 'date-end-picker',
+              text: new Date(
+                props.byDate || props.byEndDate || null
+              ).toLocaleString(),
+              onChange: (event) => console.log(event.target.value),
+              type: 'datetime'
+            }
           ]}
         >
           <Carousel itemInView={pageNumber}>

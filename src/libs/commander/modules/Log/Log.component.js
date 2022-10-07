@@ -1,9 +1,8 @@
 import * as React from 'react'
 import { useEffect, useState } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
+import { ActionGroups } from './components/ActionGroups/ActionGroups.component'
 import {
-  ActionGroups,
-  Action,
   Hash,
   LogWrapper,
   LogContent,
@@ -69,27 +68,7 @@ export const Log = ({ children, variant, actionGroups, hasScroll }) => {
         </LogContent>
       )}
 
-      {hasActionGroups && (
-        <ActionGroups>
-          {actionGroups.map(
-            ({ id, text, onClick, disabled, selected, type }) => {
-              return (
-                <Action
-                  key={id}
-                  onClick={onClick}
-                  className={`
-                    ${selected ? 'selected' : ''}
-                    ${disabled ? 'disabled' : ''}
-                  `}
-                  disabled={disabled}
-                  value={text}
-                  type={type || 'button'}
-                />
-              )
-            }
-          )}
-        </ActionGroups>
-      )}
+      {hasActionGroups && <ActionGroups actionGroups={actionGroups} />}
     </LogWrapper>
   )
 }

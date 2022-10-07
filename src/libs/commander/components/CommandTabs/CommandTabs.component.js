@@ -18,6 +18,32 @@ import { commanderMessages } from '../../commander.messages'
 import { fetchHistorial } from '../../../../helpers/event.helpers'
 import { tabsMessages } from './CommandTabs.messages'
 
+const setDigits = (number, digits) => {
+  const numberAsString = number.toString()
+  const leftZerosNeeded = digits - numberAsString.length
+  const leftZeros = '0'.repeat(leftZerosNeeded)
+
+  return `${leftZeros}${numberAsString}`
+}
+
+export const replace = (message, params) => {
+  return Object.entries(params).reduce((replacedString, [key, value]) => {
+    return replacedString.replace(key, value)
+  }, message)
+}
+
+const formatDate = (date, format) => {
+  const dateObject = new Date(date)
+  const hh = setDigits(dateObject.getHours(), 2)
+  const mm = setDigits(dateObject.getMinutes(), 2)
+  const ss = setDigits(dateObject.getSeconds(), 2)
+  const yyyy = setDigits(dateObject.getFullYear(), 4)
+  const MM = setDigits(dateObject.getMonth(), 2)
+  const dd = setDigits(dateObject.getDate(), 2)
+
+  return replace(format, { hh, ss, yyyy, dd, MM, mm })
+}
+
 export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const [tabs, setTabs] = useState([])
   const [dates, setDates] = useState({ start: null, end: null })
@@ -124,8 +150,8 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     ? [
         {
           id: 'date-start-picker',
-          text: new Date(dates.start).toISOString(),
-          label: new Date(dates.start).toLocaleString(),
+          label: formatDate(dates.start, 'MM/dd/yyyy hh:mm:ss'),
+          text: formatDate(dates.start, 'yyyy-MM-ddThh:mm'),
           onChange: ({ target }) =>
             updateFromActions({ startTime: new Date(target.value).getTime() }),
           type: 'datetime'
@@ -137,8 +163,8 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     ? [
         {
           id: 'date-end-picker',
-          text: new Date(dates.end).toISOString(),
-          label: new Date(dates.end).toLocaleString(),
+          label: formatDate(dates.end, 'MM/dd/yyyy hh:mm:ss'),
+          text: formatDate(dates.end, 'yyyy-MM-ddThh:mm'),
           onChange: ({ target }) =>
             updateFromActions({ endTime: new Date(target.value).getTime() }),
           type: 'datetime'

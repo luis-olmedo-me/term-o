@@ -108,8 +108,8 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
           actionGroups={[
             {
               id: 'go-to-last-page',
-              text: 'date',
-              onClick: () => console.log('hola'),
+              text: '10/6/2022',
+              onChange: (event) => console.log('hola', event.target.value),
               type: 'date'
             },
             ...paginationActions

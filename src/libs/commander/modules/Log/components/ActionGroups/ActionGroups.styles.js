@@ -23,4 +23,14 @@ export const Action = styled.input`
   &&.disabled {
     background-color: #00000033;
   }
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+
+  &::selection {
+    background-color: #222;
+    color: #f8c572;
+  }
 `

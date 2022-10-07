@@ -103,7 +103,18 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
 
       {!messageLog && (
-        <Log variant={parameterTypes.TABS} actionGroups={paginationActions}>
+        <Log
+          variant={parameterTypes.TABS}
+          actionGroups={[
+            {
+              id: 'go-to-last-page',
+              text: 'date',
+              onClick: () => console.log('hola'),
+              type: 'date'
+            },
+            ...paginationActions
+          ]}
+        >
           <Carousel itemInView={pageNumber}>
             {pages.map((page, currentPageNumber) => {
               return (

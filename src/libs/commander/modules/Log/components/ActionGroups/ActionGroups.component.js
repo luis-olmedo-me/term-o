@@ -6,7 +6,7 @@ export const ActionGroups = ({ actionGroups }) => {
   return (
     <Groups>
       {actionGroups.map(
-        ({ id, text, onClick, onChange, disabled, selected, type }) => {
+        ({ id, text, onClick, onChange, disabled, selected, type, label }) => {
           const commonProps = {
             key: id,
             className: `
@@ -14,11 +14,12 @@ export const ActionGroups = ({ actionGroups }) => {
               ${disabled ? 'disabled' : ''}
             `,
             disabled,
+            label,
             value: text
           }
 
           switch (type) {
-            case 'date':
+            case 'datetime':
               return <DatePickerAction {...commonProps} onChange={onChange} />
 
             default:

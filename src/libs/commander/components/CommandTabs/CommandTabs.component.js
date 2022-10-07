@@ -20,6 +20,7 @@ import { tabsMessages } from './CommandTabs.messages'
 
 export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const [tabs, setTabs] = useState([])
+  const [dates, setDates] = useState({ start: null, end: null })
 
   const actionType = getActionType(props)
   const { open } = props
@@ -54,6 +55,10 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
 
   const handleShowHistory = useCallback(() => {
     const options = validateHistoryFilters(props)
+    const { startTime, endTime } = options
+
+    if (startTime) setDates((dates) => ({ ...dates, start: startTime }))
+    if (endTime) setDates((dates) => ({ ...dates, end: endTime }))
 
     fetchHistorial(options)
       .then((historial) => {
@@ -96,6 +101,30 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     ]
   )
 
+  const startDateAction = dates.start
+    ? [
+        {
+          id: 'date-start-picker',
+          text: new Date(dates.start),
+          label: new Date(dates.start).toLocaleString(),
+          onChange: (event) => console.log(event.target.value),
+          type: 'datetime'
+        }
+      ]
+    : []
+
+  const endDateAction = dates.end
+    ? [
+        {
+          id: 'date-end-picker',
+          text: new Date(dates.end),
+          label: new Date(dates.end).toLocaleString(),
+          onChange: (event) => console.log(event.target.value),
+          type: 'datetime'
+        }
+      ]
+    : []
+
   return (
     <>
       <Log variant={parameterTypes.COMMAND}>{command}</Log>
@@ -106,23 +135,9 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
         <Log
           variant={parameterTypes.TABS}
           actionGroups={[
-            {
-              id: 'date-start-picker',
-              text: new Date(
-                props.byDate || props.byStartDate || null
-              ).toLocaleString(),
-              onChange: (event) => console.log(event.target.value),
-              type: 'datetime'
-            },
+            ...startDateAction,
             ...paginationActions,
-            {
-              id: 'date-end-picker',
-              text: new Date(
-                props.byDate || props.byEndDate || null
-              ).toLocaleString(),
-              onChange: (event) => console.log(event.target.value),
-              type: 'datetime'
-            }
+            ...endDateAction
           ]}
         >
           <Carousel itemInView={pageNumber}>

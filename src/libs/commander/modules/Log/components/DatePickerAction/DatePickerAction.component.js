@@ -1,12 +1,22 @@
 import * as React from 'react'
 import { DatePicker, Trigger, Wrapper } from './DatePickerAction.styles'
 
-export const DatePickerAction = ({ className, value, disabled, onChange }) => {
+export const DatePickerAction = ({
+  className,
+  value,
+  disabled,
+  onChange,
+  label
+}) => {
   return (
     <Wrapper className={className}>
-      <span>{value}</span>
+      <span>{label}</span>
 
-      <DatePicker type='date' disabled={disabled} onChange={onChange} />
+      <DatePicker
+        type='datetime-local'
+        disabled={disabled}
+        onChange={onChange}
+      />
     </Wrapper>
   )
 }

@@ -24,7 +24,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
 
   const [tableItems, setTableItems] = useState([])
   const [itemInView, setItemInView] = useState(storageViews.MAIN)
-  const [editingText, setEditingText] = useState(storageViews.MAIN)
+  const [editingEntity, setEditingEntity] = useState([])
 
   const { log: messageLog, setMessage } = useMessageLog()
   const { paginationActions, pages, pageNumber } = usePaginationActions({
@@ -37,7 +37,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
       const localStorageAsTableItems = Object.entries(storage).map(
         ([key, value]) => {
           const editValue = ({ value }) => {
-            setEditingText(value)
+            setEditingEntity([key, value])
             setItemInView(storageViews.EDITOR)
           }
 
@@ -82,6 +82,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
 
   const handleTreeChange = ({ key, newValue }) => {
     const stringifiedNewValue = JSON.stringify(newValue)
+    setEditingEntity([key, stringifiedNewValue])
 
     switch (actionType) {
       case storageActionTypes.SHOW_LOCAL_STORAGE:
@@ -103,7 +104,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
 
   const handleHeadToTable = () => {
     setItemInView(storageViews.MAIN)
-    setEditingText('')
+    setEditingEntity([])
   }
 
   const headToTable = {
@@ -111,6 +112,8 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
     text: '<☶',
     onClick: handleHeadToTable
   }
+
+  const [editingKey, editingValue] = editingEntity
 
   return (
     <>
@@ -147,12 +150,14 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
               actionGroups={[headToTable]}
               hasScroll
             >
-              {editingText && (
+              {editingEntity.length && (
                 <MaterialTree
-                  content={evaluateStringifiedValue(editingText)}
+                  content={evaluateStringifiedValue(editingValue)}
                   isKeyEditionEnabled
                   isValueEditionEnabled
-                  handleChange={(newValue) => console.log(newValue)}
+                  handleChange={(newValue) =>
+                    handleTreeChange({ key: editingKey, newValue })
+                  }
                 />
               )}
             </Log>

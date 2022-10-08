@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useEffect, useState, useCallback } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
-import { Log, useMessageLog } from '../../modules/Log'
+import { Log, useMessageLog, usePaginationActions } from '../../modules/Log'
 import { Table } from 'modules/components/Table/Table.component'
 import {
   eventActionTypes,
@@ -15,7 +15,6 @@ import {
 } from 'src/helpers/event.helpers.js'
 import { eventMessages } from './CommandEvent.messages'
 import { getActionType } from './CommandEvent.helpers'
-import { usePaginationActions } from '../../modules/Log/hooks/usePaginationActions'
 import { getParamsByType } from '../../commander.helpers'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'

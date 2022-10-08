@@ -1,3 +1,3 @@
-import { usePaginationActions } from './usePaginationActions.hook'
+import { useDateRangeActions } from './useDateRangeActions.hook'
 
-export { usePaginationActions }
+export { useDateRangeActions }

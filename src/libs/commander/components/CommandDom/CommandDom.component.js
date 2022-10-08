@@ -1,6 +1,11 @@
 import * as React from 'react'
 import { useEffect, useState, useCallback } from 'react'
-import { Log, AttributeEditionLog, useMessageLog } from '../../modules/Log'
+import {
+  Log,
+  AttributeEditionLog,
+  useMessageLog,
+  usePaginationActions
+} from '../../modules/Log'
 import {
   generateFilterByEvery,
   generateFilterBySome,
@@ -11,7 +16,6 @@ import {
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { List, Element, StyleSheet } from '../../modules/List'
 import { domMessages } from './CommandDom.messages'
-import { usePaginationActions } from '../../modules/Log/hooks/usePaginationActions'
 import { insertParams } from '../../commander.helpers'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'

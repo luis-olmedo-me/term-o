@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useEffect, useState, useCallback } from 'react'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
-import { Log, useMessageLog } from '../../modules/Log'
+import { Log, useMessageLog, usePaginationActions } from '../../modules/Log'
 import { Table } from 'modules/components/Table/Table.component'
 import { aliasHeaders } from './CommandAlias.constants'
 import {
@@ -13,7 +13,6 @@ import { getActionType, validateAliasesToAdd } from './CommandAlias.helpers'
 import { aliasMessages } from './CommandAlias.messages'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
-import { usePaginationActions } from '../../modules/Log/hooks/usePaginationActions'
 
 export const CommandAlias = ({ props, terminal: { command, finish } }) => {
   const { delete: deletedIds, add: aliasesToAdd } = props

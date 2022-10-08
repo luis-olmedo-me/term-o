@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useEffect, useState, useCallback } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
-import { Log, useMessageLog } from '../../modules/Log'
+import { Log, useMessageLog, usePaginationActions } from '../../modules/Log'
 import { Table } from 'modules/components/Table/Table.component'
 import {
   getActionType,
@@ -10,7 +10,6 @@ import {
   parseCookies
 } from './CommandStorage.helpers'
 import { storageMessages } from './CommandStorage.messages'
-import { usePaginationActions } from '../../modules/Log/hooks/usePaginationActions'
 import { storageActionTypes, storageHeaders } from './CommandStorage.constants'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'

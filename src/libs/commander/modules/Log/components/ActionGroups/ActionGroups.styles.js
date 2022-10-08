@@ -14,7 +14,15 @@ export const Action = styled.input`
   transition: background-color 0.2s ease-in-out;
   font-family: Share Tech Mono;
   color: #fff;
-  border-width: 0 0 0 1px;
+
+  &&:hover {
+    background-color: #ffffff66;
+  }
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
 
   &&.selected {
     background-color: #ffffff55;
@@ -22,11 +30,10 @@ export const Action = styled.input`
 
   &&.disabled {
     background-color: #00000033;
-  }
 
-  &:focus,
-  &:active {
-    outline: none;
+    &&:hover {
+      background-color: #00000033;
+    }
   }
 
   &::selection {

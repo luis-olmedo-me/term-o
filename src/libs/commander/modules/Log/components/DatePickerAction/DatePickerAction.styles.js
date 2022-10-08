@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Action } from '../ActionGroups/ActionGroups.styles'
 
 export const Wrapper = styled.span`
   display: inline-block;
@@ -6,19 +7,38 @@ export const Wrapper = styled.span`
   overflow: hidden;
   padding: 5px 10px;
   text-align: center;
+  transition: background-color 0.2s ease-in-out;
 
-  &&:focus-within,
+  &&:hover {
+    background-color: #ffffff66;
+  }
+
+  &:focus,
+  &:active {
+    outline: none;
+    background-color: #ffffff55;
+  }
+
   &&.selected {
     background-color: #ffffff55;
   }
 
   &&.disabled {
     background-color: #00000033;
+
+    &&:hover {
+      background-color: #00000033;
+    }
   }
 
   &&.invalid {
     background-color: #f21361;
     text-decoration: line-through;
+  }
+
+  &::selection {
+    background-color: #222;
+    color: #f8c572;
   }
 `
 

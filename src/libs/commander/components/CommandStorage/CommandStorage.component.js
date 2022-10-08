@@ -93,9 +93,6 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
     }
   }
 
-  const parseTableValuesForLocalStoageItems =
-    getParseTableValuesForLocalStoageItems(handleTreeChange)
-
   return (
     <>
       <Log variant={parameterTypes.COMMAND}>{command}</Log>
@@ -116,7 +113,6 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
                       <Table
                         headers={storageHeaders}
                         rows={page}
-                        parseValue={parseTableValuesForLocalStoageItems}
                         widths={[20, 80]}
                       />
                     </CarouselItem>

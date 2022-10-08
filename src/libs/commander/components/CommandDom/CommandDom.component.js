@@ -1,6 +1,11 @@
 import * as React from 'react'
 import { useEffect, useState, useCallback } from 'react'
-import { Log, AttributeEditionLog, useMessageLog } from '../../modules/Log'
+import {
+  Log,
+  AttributeEditionLog,
+  useMessageLog,
+  usePaginationActions
+} from '../../modules/Log'
 import {
   generateFilterByEvery,
   generateFilterBySome,
@@ -11,7 +16,6 @@ import {
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { List, Element, StyleSheet } from '../../modules/List'
 import { domMessages } from './CommandDom.messages'
-import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 import { insertParams } from '../../commander.helpers'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
@@ -54,7 +58,7 @@ const CommandDomWithoutContext = ({
   const actionType = getActionType(props)
 
   const { log: messageLog, setMessage } = useMessageLog()
-  const { buttonGroups, pages, pageNumber } = usePaginationGroups({
+  const { paginationActions, pages, pageNumber } = usePaginationActions({
     items: elements,
     maxItems: 10
   })
@@ -196,7 +200,10 @@ const CommandDomWithoutContext = ({
       {!messageLog && (
         <Carousel itemInView={itemInView}>
           <CarouselItem>
-            <Log variant={parameterTypes.ELEMENT} buttonGroups={buttonGroups}>
+            <Log
+              variant={parameterTypes.ELEMENT}
+              actionGroups={paginationActions}
+            >
               {hasPinnedElements && (
                 <List
                   items={pinnedElements}
@@ -250,7 +257,7 @@ const CommandDomWithoutContext = ({
           <CarouselItem>
             <Log
               variant={parameterTypes.STYLES}
-              buttonGroups={[headToElements, headToAttributes]}
+              actionGroups={[headToElements, headToAttributes]}
               hasScroll
             >
               <List

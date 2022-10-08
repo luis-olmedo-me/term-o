@@ -5,10 +5,10 @@ import { Table } from 'modules/components/Table/Table.component'
 import { Input } from '../AttributeInput'
 import { parameterTypes } from '../../../../constants/commands.constants'
 import { turnAttributesIntoTableItems } from './AttributeEditionLog.helpers'
-import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 import { Log } from '../../Log.component'
+import { usePaginationActions } from '../../hooks/usePaginationActions'
 
 export const AttributeEditionLog = ({
   element,
@@ -21,7 +21,7 @@ export const AttributeEditionLog = ({
   const attributes = getAttributes(element)
 
   const attributeRows = turnAttributesIntoTableItems({ attributes, element })
-  const { buttonGroups, pages, pageNumber } = usePaginationGroups({
+  const { paginationActions, pages, pageNumber } = usePaginationActions({
     items: attributeRows,
     maxItems: 9
   })
@@ -60,14 +60,14 @@ export const AttributeEditionLog = ({
 
   const editionPageButtonGroups = [
     ...leftOptions,
-    ...buttonGroups,
+    ...paginationActions,
     ...rightOptions
   ]
 
   return (
     <Log
       variant={parameterTypes.TABLE}
-      buttonGroups={editionPageButtonGroups}
+      actionGroups={editionPageButtonGroups}
       hasScroll
     >
       <Carousel itemInView={pageNumber}>

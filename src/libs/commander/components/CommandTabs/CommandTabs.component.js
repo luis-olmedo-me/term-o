@@ -7,13 +7,17 @@ import {
   validateHistoryFilters,
   validateTabsFilters
 } from './CommandTabs.helpers'
-import { Log, useMessageLog } from '../../modules/Log'
+import {
+  Log,
+  useDateRangeActions,
+  useMessageLog,
+  usePaginationActions
+} from '../../modules/Log'
 import { tabsActionTypes } from './CommandTabs.constants'
 import { fetchTabsOpen } from 'src/helpers/event.helpers.js'
 import { List, Tab } from '../../modules/List'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
-import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 import { commanderMessages } from '../../commander.messages'
 import { fetchHistorial } from '../../../../helpers/event.helpers'
 import { tabsMessages } from './CommandTabs.messages'
@@ -24,11 +28,35 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const actionType = getActionType(props)
   const { open } = props
 
+  const handleDatesUpdate = (overWrittenOptions) => {
+    const options = {
+      ...validateHistoryFilters(props),
+      ...overWrittenOptions
+    }
+    const { startTime, endTime } = options
+
+    fetchHistorial(options)
+      .then((historial) => {
+        if (startTime) setDate({ start: startTime })
+        if (endTime) setDate({ end: endTime })
+
+        if (!historial.length) return setAreDatesInvalid(true)
+        setAreDatesInvalid(false)
+
+        const parsedHistorial = parseHistorial(historial)
+
+        setTabs(parsedHistorial)
+      })
+      .catch(() => setMessage(commanderMessages.unexpectedError))
+  }
+
   const { log: messageLog, setMessage } = useMessageLog()
-  const { buttonGroups, pages, pageNumber } = usePaginationGroups({
+  const { paginationActions, pages, pageNumber } = usePaginationActions({
     items: tabs,
     maxItems: 10
   })
+  const { startDateAction, endDateAction, setAreDatesInvalid, setDate } =
+    useDateRangeActions({ onDateUpdate: handleDatesUpdate })
 
   const handleShowTabList = useCallback(() => {
     const options = validateTabsFilters(props)
@@ -54,6 +82,10 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
 
   const handleShowHistory = useCallback(() => {
     const options = validateHistoryFilters(props)
+    const { startTime, endTime } = options
+
+    if (startTime) setDate({ start: startTime })
+    if (endTime) setDate({ end: endTime })
 
     fetchHistorial(options)
       .then((historial) => {
@@ -103,7 +135,14 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
 
       {!messageLog && (
-        <Log variant={parameterTypes.TABS} buttonGroups={buttonGroups}>
+        <Log
+          variant={parameterTypes.TABS}
+          actionGroups={[
+            ...startDateAction,
+            ...paginationActions,
+            ...endDateAction
+          ]}
+        >
           <Carousel itemInView={pageNumber}>
             {pages.map((page, currentPageNumber) => {
               return (

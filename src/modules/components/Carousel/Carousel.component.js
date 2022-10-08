@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CarouselWrapper, AnimatedEffect } from './Carousel.styles'
 
 const getAnimationDirection = (isGoingRight, isTheSame) => {
@@ -22,20 +22,15 @@ export const Carousel = ({ itemInView, children }) => {
   const isTheSame = oldItemInView === itemInView
 
   const direction = getAnimationDirection(isGoingRight, isTheSame)
+  const selectedItem = children[itemInView]
 
   return (
     <CarouselWrapper ref={wrapperReference}>
-      {children.map((child, index) => {
-        const isSelected = index === itemInView
-
-        return (
-          isSelected && (
-            <AnimatedEffect key={index} direction={direction}>
-              {child}
-            </AnimatedEffect>
-          )
-        )
-      })}
+      {selectedItem && (
+        <AnimatedEffect key={itemInView} direction={direction}>
+          {selectedItem}
+        </AnimatedEffect>
+      )}
     </CarouselWrapper>
   )
 }

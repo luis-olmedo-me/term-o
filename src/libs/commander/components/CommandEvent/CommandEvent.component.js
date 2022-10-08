@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useEffect, useState, useCallback } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
-import { Log, useMessageLog } from '../../modules/Log'
+import { Log, useMessageLog, usePaginationActions } from '../../modules/Log'
 import { Table } from 'modules/components/Table/Table.component'
 import {
   eventActionTypes,
@@ -15,7 +15,6 @@ import {
 } from 'src/helpers/event.helpers.js'
 import { eventMessages } from './CommandEvent.messages'
 import { getActionType } from './CommandEvent.helpers'
-import { usePaginationGroups } from 'modules/components/Table/hooks/usePaginationGroups.hook'
 import { getParamsByType } from '../../commander.helpers'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
@@ -33,7 +32,7 @@ export const CommandEvent = ({
   const [tableItems, setTableItems] = useState([])
 
   const { log: messageLog, setMessage } = useMessageLog()
-  const { buttonGroups, pages, pageNumber } = usePaginationGroups({
+  const { paginationActions, pages, pageNumber } = usePaginationActions({
     items: tableItems,
     maxItems: 10
   })
@@ -137,7 +136,7 @@ export const CommandEvent = ({
       {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
 
       {!messageLog && (
-        <Log variant={parameterTypes.TABLE} buttonGroups={buttonGroups}>
+        <Log variant={parameterTypes.TABLE} actionGroups={paginationActions}>
           <Carousel itemInView={pageNumber}>
             {pages.map((page, currentPageNumber) => {
               return (

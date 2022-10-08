@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { DatePickerAction } from '../DatePickerAction/DatePickerAction.component'
+import { DateTimePickerAction } from '../DateTimePickerAction/DateTimePickerAction.component'
 import { Action, Groups } from './ActionGroups.styles'
 
 export const ActionGroups = ({ actionGroups }) => {
@@ -31,7 +31,7 @@ export const ActionGroups = ({ actionGroups }) => {
           switch (type) {
             case 'datetime':
               return (
-                <DatePickerAction
+                <DateTimePickerAction
                   {...commonProps}
                   onChange={onChange}
                   label={label}

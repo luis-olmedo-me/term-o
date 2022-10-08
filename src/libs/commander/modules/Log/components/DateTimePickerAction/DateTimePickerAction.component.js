@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { DatePicker, Wrapper } from './DatePickerAction.styles'
+import { DatePicker, Wrapper } from './DateTimePickerAction.styles'
 
-export const DatePickerAction = ({
+export const DateTimePickerAction = ({
   className,
   value,
   disabled,

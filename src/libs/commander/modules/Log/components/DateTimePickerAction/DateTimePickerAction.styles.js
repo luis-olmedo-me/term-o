@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { Action } from '../ActionGroups/ActionGroups.styles'
 
 export const Wrapper = styled.span`
   display: inline-block;

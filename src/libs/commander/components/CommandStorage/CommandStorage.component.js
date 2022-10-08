@@ -36,12 +36,25 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
     (storage) => {
       const localStorageAsTableItems = Object.entries(storage).map(
         ([key, value]) => {
-          const editValue = ({ value }) => {
+          const editValue = () => {
             setEditingEntity([key, value])
             setItemInView(storageViews.EDITOR)
           }
 
-          return [{ value: key }, { value, onClick: editValue }]
+          return [
+            { value: key },
+            {
+              value,
+              actions: [
+                {
+                  id: 'edit-element',
+                  title: 'Edit element',
+                  onClick: editValue,
+                  Component: '✎'
+                }
+              ]
+            }
+          ]
         }
       )
 

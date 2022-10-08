@@ -35,16 +35,7 @@ export const Table = ({ headers, rows, widths }) => {
               >
                 {column.value}
 
-                <TableActions
-                  actions={[
-                    {
-                      id: 'edit-element',
-                      title: 'Edit element',
-                      onClick: () => console.log('click'),
-                      Component: '✎'
-                    }
-                  ]}
-                />
+                {column.actions && <TableActions actions={column.actions} />}
               </TableRowValue>
             )
           })}

@@ -3,7 +3,6 @@ import { formatDate } from 'src/helpers/dates.helpers'
 
 export const useDateRangeActions = ({ onDateUpdate }) => {
   const [dates, setDates] = useState({ start: null, end: null })
-  console.log('dates', dates)
   const [areDatesInvalid, setAreDatesInvalid] = useState(false)
 
   const startDateAction = dates.start

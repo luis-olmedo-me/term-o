@@ -42,8 +42,6 @@ export const Tree = ({
         return isSelectedIndex ? newValue : contentValue
       })
 
-      console.log({ formatedContent, content, newValue, index })
-
       handleChange(formatedContent)
     }
 

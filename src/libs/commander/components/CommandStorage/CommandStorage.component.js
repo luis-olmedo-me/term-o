@@ -14,10 +14,16 @@ import { storageActionTypes, storageHeaders } from './CommandStorage.constants'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 
+const storageViews = {
+  MAIN: 0,
+  JSON: 1
+}
+
 export const CommandStorage = ({ props, terminal: { command, finish } }) => {
   const actionType = getActionType(props)
 
   const [tableItems, setTableItems] = useState([])
+  const [itemInView, setItemInView] = useState(storageViews.MAIN)
 
   const { log: messageLog, setMessage } = useMessageLog()
   const { paginationActions, pages, pageNumber } = usePaginationActions({
@@ -97,22 +103,33 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
       {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
 
       {!messageLog && (
-        <Log variant={parameterTypes.TABLE} actionGroups={paginationActions}>
-          <Carousel itemInView={pageNumber}>
-            {pages.map((page, currentPageNumber) => {
-              return (
-                <CarouselItem key={currentPageNumber}>
-                  <Table
-                    headers={storageHeaders}
-                    rows={page}
-                    parseValue={parseTableValuesForLocalStoageItems}
-                    widths={[20, 80]}
-                  />
-                </CarouselItem>
-              )
-            })}
-          </Carousel>
-        </Log>
+        <Carousel itemInView={itemInView}>
+          <CarouselItem>
+            <Log
+              variant={parameterTypes.TABLE}
+              actionGroups={paginationActions}
+            >
+              <Carousel itemInView={pageNumber}>
+                {pages.map((page, currentPageNumber) => {
+                  return (
+                    <CarouselItem key={currentPageNumber}>
+                      <Table
+                        headers={storageHeaders}
+                        rows={page}
+                        parseValue={parseTableValuesForLocalStoageItems}
+                        widths={[20, 80]}
+                      />
+                    </CarouselItem>
+                  )
+                })}
+              </Carousel>
+            </Log>
+          </CarouselItem>
+
+          <CarouselItem>
+            <Log variant={parameterTypes.TABLE}>JSON_VIEW</Log>
+          </CarouselItem>
+        </Carousel>
       )}
     </>
   )

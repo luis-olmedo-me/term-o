@@ -6,7 +6,8 @@ import { Table } from 'modules/components/Table/Table.component'
 import {
   getActionType,
   parseCookies,
-  evaluateStringifiedValue
+  evaluateStringifiedValue,
+  turnStorageToTableItems
 } from './CommandStorage.helpers'
 import { storageMessages } from './CommandStorage.messages'
 import { storageActionTypes, storageHeaders } from './CommandStorage.constants'
@@ -34,29 +35,14 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
 
   const handleShowStorage = useCallback(
     (storage) => {
-      const localStorageAsTableItems = Object.entries(storage).map(
-        ([key, value]) => {
-          const editValue = () => {
-            setEditingEntity([key, value])
-            setItemInView(storageViews.EDITOR)
-          }
-
-          return [
-            { value: key },
-            {
-              value,
-              actions: [
-                {
-                  id: 'edit-element',
-                  title: 'Edit',
-                  onClick: editValue,
-                  Component: '✎'
-                }
-              ]
-            }
-          ]
-        }
-      )
+      const editValue = (entity) => {
+        setEditingEntity(entity)
+        setItemInView(storageViews.EDITOR)
+      }
+      const localStorageAsTableItems = turnStorageToTableItems({
+        storage,
+        editValue
+      })
 
       const isEmptyStorage = localStorageAsTableItems.length === 0
 

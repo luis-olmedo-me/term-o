@@ -19,9 +19,22 @@ export const evaluateStringifiedValue = (value) => {
   }
 }
 
-export const turnStorageToTableItems = ({ storage = {} }) => {
+export const turnStorageToTableItems = ({ storage = {}, editValue }) => {
   return Object.entries(storage).map(([key, value]) => {
-    return [{ value: key }, { value }]
+    return [
+      { value: key },
+      {
+        value,
+        actions: [
+          {
+            id: 'edit-element',
+            title: 'Edit',
+            onClick: () => editValue([key, value]),
+            Component: '✎'
+          }
+        ]
+      }
+    ]
   })
 }
 

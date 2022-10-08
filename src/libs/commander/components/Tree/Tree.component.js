@@ -13,7 +13,7 @@ export const Tree = ({
   isValueEditionEnabled,
   handleChange
 }) => {
-  const [isCollapsed, setIsCollapsed] = React.useState(true)
+  const [isCollapsed, setIsCollapsed] = React.useState(false)
 
   const isContentObject = typeof content === 'object' && content !== null
   const isContentString = typeof content === 'string'

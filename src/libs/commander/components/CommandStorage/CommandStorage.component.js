@@ -106,7 +106,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
     setEditingText('')
   }
 
-  const headToElements = {
+  const headToTable = {
     id: 'head-to-table',
     text: '<☶',
     onClick: handleHeadToTable
@@ -144,7 +144,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
           <CarouselItem>
             <Log
               variant={parameterTypes.TABLE}
-              actionGroups={[headToElements]}
+              actionGroups={[headToTable]}
               hasScroll
             >
               {editingText && (

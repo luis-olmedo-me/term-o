@@ -16,7 +16,7 @@ import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
 
 const storageViews = {
   MAIN: 0,
-  JSON: 1
+  EDITOR: 1
 }
 
 export const CommandStorage = ({ props, terminal: { command, finish } }) => {
@@ -24,6 +24,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
 
   const [tableItems, setTableItems] = useState([])
   const [itemInView, setItemInView] = useState(storageViews.MAIN)
+  const [editingText, setEditingText] = useState(storageViews.MAIN)
 
   const { log: messageLog, setMessage } = useMessageLog()
   const { paginationActions, pages, pageNumber } = usePaginationActions({
@@ -33,7 +34,16 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
 
   const handleShowStorage = useCallback(
     (storage) => {
-      const localStorageAsTableItems = turnStorageToTableItems({ storage })
+      const localStorageAsTableItems = Object.entries(storage).map(
+        ([key, value]) => {
+          const editValue = ({ value }) => {
+            setEditingText(value)
+            setItemInView(storageViews.EDITOR)
+          }
+
+          return [{ value: key }, { value, onClick: editValue }]
+        }
+      )
 
       const isEmptyStorage = localStorageAsTableItems.length === 0
 
@@ -121,7 +131,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
           </CarouselItem>
 
           <CarouselItem>
-            <Log variant={parameterTypes.TABLE}>JSON_VIEW</Log>
+            <Log variant={parameterTypes.TABLE}>{editingText}</Log>
           </CarouselItem>
         </Carousel>
       )}

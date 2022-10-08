@@ -101,6 +101,17 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
     }
   }
 
+  const handleHeadToTable = () => {
+    setItemInView(storageViews.MAIN)
+    setEditingText('')
+  }
+
+  const headToElements = {
+    id: 'head-to-table',
+    text: '<☶',
+    onClick: handleHeadToTable
+  }
+
   return (
     <>
       <Log variant={parameterTypes.COMMAND}>{command}</Log>
@@ -131,7 +142,11 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
           </CarouselItem>
 
           <CarouselItem>
-            <Log variant={parameterTypes.TABLE}>
+            <Log
+              variant={parameterTypes.TABLE}
+              actionGroups={[headToElements]}
+              hasScroll
+            >
               {editingText && (
                 <MaterialTree
                   content={evaluateStringifiedValue(editingText)}

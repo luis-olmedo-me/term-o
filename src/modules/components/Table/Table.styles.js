@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Actions } from 'libs/commander/modules/NodeTree/components/Actions/Actions.component'
+import { Actions } from '../Actions/Actions.component'
 
 export const TableWrapper = styled.div`
   width: 100%;

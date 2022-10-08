@@ -28,6 +28,7 @@ export const ActionButton = styled.button`
   vertical-align: top;
   border-right: ${(props) =>
     props.isLastItem ? '1px solid #00000015' : 'unset'};
+  color: inherit;
 
   &&:disabled {
     background-color: #00000015;

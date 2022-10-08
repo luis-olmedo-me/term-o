@@ -12,7 +12,7 @@ export const TableRow = styled.div`
   background-color: ${(props) => (props.header ? '#fafafa' : 'transparent')};
   color: ${(props) => (props.header ? '#222' : '#fafafa')};
   font-weight: ${(props) => (props.header ? 'bold' : 'normal')};
-  padding: ${(props) => (props.header ? '5px 20px' : '0 20px')};
+  padding: ${(props) => (props.header ? '3px 20px' : '0 20px')};
   border-radius: ${(props) => (props.header ? '5px' : '0')};
   text-align: ${(props) => (props.header ? 'center' : 'left')};
   font-size: 1em;

@@ -146,7 +146,7 @@ export const Tree = ({
 }
 
 const IdentedTree = styled(Tree)`
-  padding-left: 20px;
+  padding: 3px 0 3px 20px;
   border-left: 5px solid #00000020;
 `
 const HighlightedEditableText = styled(EditableText)`

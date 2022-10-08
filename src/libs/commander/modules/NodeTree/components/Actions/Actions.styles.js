@@ -11,12 +11,12 @@ export const ActionButtons = styled.div`
   transition: background-color 0.2s ease-in-out;
   border-radius: ${(props) => (props.hasPostfix ? '0' : '0 3px 3px 0')};
   vertical-align: top;
+  color: #333;
 `
 export const ActionButton = styled.button`
   height: 100%;
   background-color: transparent;
   border: none;
-  color: #333;
   font-weight: bold;
   font-family: Share Tech Mono;
   padding: 0 10px;

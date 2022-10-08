@@ -1,5 +1,10 @@
 import * as React from 'react'
-import { TableWrapper, TableRowValue, TableRow } from './Table.styles'
+import {
+  TableWrapper,
+  TableRowValue,
+  TableRow,
+  TableActions
+} from './Table.styles'
 
 export const Table = ({ headers, rows, widths }) => {
   return (
@@ -29,6 +34,17 @@ export const Table = ({ headers, rows, widths }) => {
                 style={{ flex: width / 100 }}
               >
                 {column.value}
+
+                <TableActions
+                  actions={[
+                    {
+                      id: 'edit-element',
+                      title: 'Edit element',
+                      onClick: () => console.log('click'),
+                      Component: '✎'
+                    }
+                  ]}
+                />
               </TableRowValue>
             )
           })}

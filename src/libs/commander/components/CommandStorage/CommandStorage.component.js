@@ -5,14 +5,14 @@ import { Log, useMessageLog, usePaginationActions } from '../../modules/Log'
 import { Table } from 'modules/components/Table/Table.component'
 import {
   getActionType,
-  getParseTableValuesForLocalStoageItems,
-  turnStorageToTableItems,
-  parseCookies
+  parseCookies,
+  evaluateStringifiedValue
 } from './CommandStorage.helpers'
 import { storageMessages } from './CommandStorage.messages'
 import { storageActionTypes, storageHeaders } from './CommandStorage.constants'
 import { Carousel } from 'modules/components/Carousel/Carousel.component'
 import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
+import { MaterialTree } from './CommandStorage.styles'
 
 const storageViews = {
   MAIN: 0,
@@ -131,7 +131,16 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
           </CarouselItem>
 
           <CarouselItem>
-            <Log variant={parameterTypes.TABLE}>{editingText}</Log>
+            <Log variant={parameterTypes.TABLE}>
+              {editingText && (
+                <MaterialTree
+                  content={evaluateStringifiedValue(editingText)}
+                  isKeyEditionEnabled
+                  isValueEditionEnabled
+                  handleChange={(newValue) => console.log(newValue)}
+                />
+              )}
+            </Log>
           </CarouselItem>
         </Carousel>
       )}

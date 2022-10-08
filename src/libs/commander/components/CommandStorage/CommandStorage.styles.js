@@ -8,4 +8,5 @@ export const MaterialTree = styled(Tree)`
   color: lightcyan;
   width: fit-content;
   min-width: 100%;
+  box-sizing: border-box;
 `

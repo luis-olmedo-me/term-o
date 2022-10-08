@@ -146,7 +146,8 @@ export const Tree = ({
 }
 
 const IdentedTree = styled(Tree)`
-  margin-left: 20px;
+  padding-left: 20px;
+  border-left: 5px solid #00000020;
 `
 const HighlightedEditableText = styled(EditableText)`
   color: turquoise;

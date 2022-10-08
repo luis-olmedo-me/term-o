@@ -38,20 +38,28 @@ export const AttributeEditionLog = ({
   }
 
   const editableRow = [
-    <Input
-      type='text'
-      placeholder='New attribute name'
-      value={newAtributeName}
-      onChange={(event) => setNewAttributeName(event.target.value)}
-      onKeyUp={handleNewAttributeKeyUp}
-    />,
-    <Input
-      type='text'
-      placeholder='New attribute value'
-      value={newAtributeValue}
-      onChange={(event) => setNewAttributeValue(event.target.value)}
-      onKeyUp={handleNewAttributeKeyUp}
-    />
+    {
+      value: (
+        <Input
+          type='text'
+          placeholder='New attribute name'
+          value={newAtributeName}
+          onChange={(event) => setNewAttributeName(event.target.value)}
+          onKeyUp={handleNewAttributeKeyUp}
+        />
+      )
+    },
+    {
+      value: (
+        <Input
+          type='text'
+          placeholder='New attribute value'
+          value={newAtributeValue}
+          onChange={(event) => setNewAttributeValue(event.target.value)}
+          onKeyUp={handleNewAttributeKeyUp}
+        />
+      )
+    }
   ]
 
   const parsedPages = pages.length

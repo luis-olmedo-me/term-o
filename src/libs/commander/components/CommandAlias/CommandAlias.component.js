@@ -32,7 +32,9 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
       if (!aliases.length) return setMessage(aliasMessages.noAliasesFound)
 
       const aliasRows = aliases.map((alias) => {
-        return aliasHeaders.map((aliasHeader) => alias[aliasHeader])
+        return aliasHeaders.map((aliasHeader) => ({
+          value: alias[aliasHeader]
+        }))
       })
 
       setTableItems(aliasRows)

@@ -21,7 +21,7 @@ export const evaluateStringifiedValue = (value) => {
 
 export const turnStorageToTableItems = ({ storage = {} }) => {
   return Object.entries(storage).map(([key, value]) => {
-    return [key, value]
+    return [{ value: key }, { value }]
   })
 }
 

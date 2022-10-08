@@ -33,9 +33,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
 
   const handleShowStorage = useCallback(
     (storage) => {
-      const localStorageAsTableItems = turnStorageToTableItems({
-        storage
-      })
+      const localStorageAsTableItems = turnStorageToTableItems({ storage })
 
       const isEmptyStorage = localStorageAsTableItems.length === 0
 

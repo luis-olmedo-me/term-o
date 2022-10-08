@@ -44,7 +44,9 @@ export const CommandEvent = ({
       if (!pageEvents.length) return setMessage(eventMessages.noEventsFound)
 
       const pageEventsRows = pageEvents.map((pageEvent) => {
-        return eventRows.map((eventRow) => pageEvent[eventRow])
+        return eventRows.map((eventRow) => ({
+          value: pageEvent[eventRow]
+        }))
       })
 
       setTableItems(pageEventsRows)

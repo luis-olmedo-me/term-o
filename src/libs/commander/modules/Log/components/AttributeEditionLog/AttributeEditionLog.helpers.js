@@ -12,16 +12,24 @@ export const turnAttributesIntoTableItems = ({ attributes, element }) => {
     }
 
     return [
-      <AttributeInput
-        placeholder='Attribute name'
-        onEnter={handleNameEnter}
-        defaultValue={attributeName}
-      />,
-      <AttributeInput
-        placeholder='Attribute value'
-        onEnter={handleValueEnter}
-        defaultValue={attributeValue}
-      />
+      {
+        value: (
+          <AttributeInput
+            placeholder='Attribute name'
+            onEnter={handleNameEnter}
+            defaultValue={attributeName}
+          />
+        )
+      },
+      {
+        value: (
+          <AttributeInput
+            placeholder='Attribute value'
+            onEnter={handleValueEnter}
+            defaultValue={attributeValue}
+          />
+        )
+      }
     ]
   })
 }

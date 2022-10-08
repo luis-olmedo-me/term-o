@@ -3,14 +3,15 @@ import { formatDate } from 'src/helpers/dates.helpers'
 
 export const useDateRangeActions = ({ onDateUpdate }) => {
   const [dates, setDates] = useState({ start: null, end: null })
+  console.log('dates', dates)
   const [areDatesInvalid, setAreDatesInvalid] = useState(false)
 
   const startDateAction = dates.start
     ? [
         {
           id: 'date-start-picker',
-          label: formatDate(dates.start, 'MM/dd/yyyy hh:mm:ss'),
-          text: formatDate(dates.start, 'yyyy-MM-ddThh:mm'),
+          label: formatDate(dates.start, 'dd/MM/yyyy hh:mm:ss'),
+          text: formatDate(dates.start, 'yyyy-MM-ddThh:mm:ss'),
           invalid: areDatesInvalid,
           onChange: ({ target }) =>
             onDateUpdate({ startTime: new Date(target.value).getTime() }),
@@ -23,7 +24,7 @@ export const useDateRangeActions = ({ onDateUpdate }) => {
     ? [
         {
           id: 'date-end-picker',
-          label: formatDate(dates.end, 'MM/dd/yyyy hh:mm:ss'),
+          label: formatDate(dates.end, 'dd/MM/yyyy hh:mm:ss'),
           text: formatDate(dates.end, 'yyyy-MM-ddThh:mm:ss'),
           invalid: areDatesInvalid,
           onChange: ({ target }) =>

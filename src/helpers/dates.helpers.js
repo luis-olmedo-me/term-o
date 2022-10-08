@@ -7,7 +7,7 @@ export const formatDate = (date, format) => {
   const mm = setDigits(dateObject.getMinutes(), 2)
   const ss = setDigits(dateObject.getSeconds(), 2)
   const yyyy = setDigits(dateObject.getFullYear(), 4)
-  const MM = setDigits(dateObject.getMonth(), 2)
+  const MM = setDigits(dateObject.getMonth() + 1, 2)
   const dd = setDigits(dateObject.getDate(), 2)
 
   return replace(format, { hh, ss, yyyy, dd, MM, mm })

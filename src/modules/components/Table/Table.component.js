@@ -3,7 +3,8 @@ import {
   TableWrapper,
   TableRowValue,
   TableRow,
-  TableActions
+  TableActions,
+  TableActionsWrapper
 } from './Table.styles'
 
 export const Table = ({ headers, rows, widths }) => {
@@ -35,7 +36,11 @@ export const Table = ({ headers, rows, widths }) => {
               >
                 {column.value}
 
-                {column.actions && <TableActions actions={column.actions} />}
+                {column.actions && (
+                  <TableActionsWrapper className='actions'>
+                    <TableActions actions={column.actions} />
+                  </TableActionsWrapper>
+                )}
               </TableRowValue>
             )
           })}

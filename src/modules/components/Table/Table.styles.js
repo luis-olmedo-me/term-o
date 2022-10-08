@@ -37,10 +37,19 @@ export const TableRowValue = styled.span`
   &&:hover {
     background-color: #f5f5f512;
   }
+
+  &&:hover .actions {
+    opacity: 1;
+  }
+`
+
+export const TableActionsWrapper = styled.div`
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
 `
 
 export const TableActions = styled(Actions)`
   position: absolute;
-  background-color: #7928ca;
+  background-color: #8136cd;
   color: white;
 `

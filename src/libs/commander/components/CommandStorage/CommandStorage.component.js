@@ -48,7 +48,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
               actions: [
                 {
                   id: 'edit-element',
-                  title: 'Edit element',
+                  title: 'Edit',
                   onClick: editValue,
                   Component: '✎'
                 }

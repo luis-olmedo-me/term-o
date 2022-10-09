@@ -9,8 +9,6 @@ import { ElementLabel } from '../../../NodeTree/components/ElementLabel/ElementL
 const ElementWithoutContext = ({
   element = {},
   setHighlitedElement,
-  setPinnedElements,
-  pinnedElements,
   className = '',
   variant = '',
   shouldAnimate = false,
@@ -50,16 +48,6 @@ const ElementWithoutContext = ({
     })
   }
 
-  const handlePinElement = () => {
-    setPinnedElements([...pinnedElements, element])
-  }
-
-  const handleUnpinElement = () => {
-    setPinnedElements(
-      pinnedElements.filter((pinnedElement) => pinnedElement !== element)
-    )
-  }
-
   const handleCopyXPath = () => {
     const xPath = createXPathFromElement(element)
 
@@ -73,8 +61,6 @@ const ElementWithoutContext = ({
   const unhighlightElement = () => {
     setHighlitedElement(null)
   }
-
-  const isElementPinned = pinnedElements.includes(element)
 
   const actions = [
     {
@@ -97,12 +83,6 @@ const ElementWithoutContext = ({
           title: 'Scroll Into View',
           onClick: handleScrollIntoView,
           Component: '👁️'
-        },
-        {
-          id: isElementPinned ? 'unpin-element-option' : 'pin-element-option',
-          title: isElementPinned ? 'Unpin Element' : 'Pin Element',
-          onClick: isElementPinned ? handleUnpinElement : handlePinElement,
-          Component: '🚩'
         },
         {
           id: 'copy-xpath-option',

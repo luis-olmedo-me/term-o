@@ -91,3 +91,15 @@ export const domConfig = {
   },
   output: (props) => <CommandDom key={props.id} {...props} />
 }
+
+export const domViewIds = {
+  MAIN: 0,
+  ATTRIBUTES: 1,
+  STYLES: 2
+}
+
+export const domViews = [
+  { id: domViewIds.MAIN, text: '🏠' },
+  { id: domViewIds.ATTRIBUTES, text: '✏️' },
+  { id: domViewIds.STYLES, text: '✂️' }
+]

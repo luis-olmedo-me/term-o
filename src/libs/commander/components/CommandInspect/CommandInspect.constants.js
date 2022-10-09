@@ -12,3 +12,15 @@ export const inspectActionTypes = {
   INSPECT: 'INSPECT',
   NONE: 'NONE'
 }
+
+export const inspectViewIds = {
+  MAIN: 0,
+  ATTRIBUTES: 1,
+  STYLES: 2
+}
+
+export const inspectViews = [
+  { id: inspectViewIds.MAIN, text: '🏠' },
+  { id: inspectViewIds.ATTRIBUTES, text: '✏️' },
+  { id: inspectViewIds.STYLES, text: '✂️' }
+]

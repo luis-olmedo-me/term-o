@@ -7,20 +7,23 @@ import {
   getOpenNodesFromObjetives
 } from './CommandInspect.helpers'
 import { inspectMessages } from './CommandInspect.messages'
-import { Log, AttributeEditionLog, useMessageLog } from '../../modules/Log'
-import { inspectActionTypes } from './CommandInspect.constants'
+import {
+  Log,
+  AttributeEditionLog,
+  useMessageLog,
+  useViews
+} from '../../modules/Log'
+import {
+  inspectActionTypes,
+  inspectViewIds,
+  inspectViews
+} from './CommandInspect.constants'
 import { NodeTree } from '../../modules/NodeTree/NodeTree.component'
 import { getParamsByType } from '../../commander.helpers'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { List, StyleSheet } from '../../modules/List'
 import { getStylesFrom } from '../CommandCss/CommandCss.helpers'
-
-const inspectViews = {
-  MAIN: 0,
-  ATTRIBUTES: 1,
-  STYLES: 2
-}
 
 const CommandInspectWithoutContext = ({
   props,
@@ -33,12 +36,15 @@ const CommandInspectWithoutContext = ({
   const [objetives, setObjetives] = useState([])
   const [openNodes, setOpenNodes] = useState([])
   const [editingElement, setEditingElement] = useState(null)
-  const [itemInView, setItemInView] = useState(0)
   const [sheets, setSheets] = useState(null)
 
   const defaultRoot = useRef(null)
 
   const { log: messageLog, setMessage } = useMessageLog()
+  const { viewActions, itemInView, changeView } = useViews({
+    views: inspectViews,
+    defaultView: inspectViewIds.MAIN
+  })
 
   const handleInspect = useCallback(
     ({ elementsFound: [defaultHTMLRoot] }) => {
@@ -85,42 +91,17 @@ const CommandInspectWithoutContext = ({
     setSheets(getStylesFrom(element))
     setHighlitedElement(null)
 
-    setItemInView(inspectViews.ATTRIBUTES)
+    changeView(inspectViewIds.ATTRIBUTES)
   }
   const handleStylesOptionClick = ({ element }) => {
     setEditingElement(element)
     setSheets(getStylesFrom(element))
     setHighlitedElement(null)
 
-    setItemInView(inspectViews.STYLES)
+    changeView(inspectViewIds.STYLES)
   }
 
-  const handleHeadToElementsView = () => {
-    setItemInView(inspectViews.MAIN)
-    setEditingElement(null)
-  }
-  const handleHeadToAttributesView = () => {
-    setItemInView(inspectViews.ATTRIBUTES)
-  }
-  const handleHeadToStylesView = () => {
-    setItemInView(inspectViews.STYLES)
-  }
-
-  const headToElements = {
-    id: 'head-to-elements',
-    text: '🏠',
-    onClick: handleHeadToElementsView
-  }
-  const headToStyles = {
-    id: 'head-to-styles',
-    text: '✂️',
-    onClick: handleHeadToStylesView
-  }
-  const headToAttributes = {
-    id: 'head-to-attributes',
-    text: '✏️',
-    onClick: handleHeadToAttributesView
-  }
+  const [headToElements, headToAttributes, headToStyles] = viewActions
 
   return (
     <>

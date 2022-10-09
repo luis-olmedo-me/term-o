@@ -45,7 +45,7 @@ const CommandDomWithoutContext = ({
   } = props
 
   const [elements, setElements] = useState([])
-  const [pinnedElements, setPinnedElements] = useState([])
+  const [selectedElements, setSelectedElements] = useState([])
   const [editingElement, setEditingElement] = useState(null)
   const [sheets, setSheets] = useState(null)
 
@@ -161,16 +161,18 @@ const CommandDomWithoutContext = ({
   }
 
   const handleElementClick = ({ element, event }) => {
-    if (pinnedElements.includes(element)) {
-      const filteredPinnedElements = pinnedElements.filter(
+    if (selectedElements.includes(element)) {
+      const filteredSelectedElements = selectedElements.filter(
         (oldElement) => oldElement !== element
       )
 
-      setPinnedElements(event.ctrlKey ? filteredPinnedElements : [element])
+      setSelectedElements(event.ctrlKey ? filteredSelectedElements : [element])
       return
     }
 
-    setPinnedElements(event.ctrlKey ? [...pinnedElements, element] : [element])
+    setSelectedElements(
+      event.ctrlKey ? [...selectedElements, element] : [element]
+    )
   }
 
   const [headToElements, headToAttributes, headToStyles] = viewActions
@@ -201,7 +203,7 @@ const CommandDomWithoutContext = ({
                             onStylesOptionClick={handleStylesOptionClick}
                             onClick={handleElementClick}
                             variant={
-                              pinnedElements.includes(item)
+                              selectedElements.includes(item)
                                 ? 'pinned'
                                 : 'default'
                             }

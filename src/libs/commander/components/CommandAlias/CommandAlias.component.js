@@ -31,9 +31,21 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
       if (!aliases.length) return setMessage(aliasMessages.noAliasesFound)
 
       const aliasRows = aliases.map((alias) => {
-        return aliasHeaders.map((aliasHeader) => ({
-          value: alias[aliasHeader]
-        }))
+        return aliasHeaders.map((aliasHeader) => {
+          const rowValue = alias[aliasHeader]
+
+          return {
+            value: rowValue,
+            actions: [
+              {
+                id: 'copy-value',
+                title: 'Copy value',
+                onClick: () => navigator.clipboard.writeText(rowValue),
+                Component: '❏'
+              }
+            ]
+          }
+        })
       })
 
       setTableItems(aliasRows)

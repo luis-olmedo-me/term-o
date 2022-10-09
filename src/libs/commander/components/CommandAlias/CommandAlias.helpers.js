@@ -1,5 +1,6 @@
 import { actionTypes } from '../../constants/commands.constants'
 import { commander } from 'libs/commander'
+import { aliasHeaders } from './CommandAlias.constants'
 
 export const getActionType = ({
   list,
@@ -25,4 +26,24 @@ export const validateAliasesToAdd = ({ aliasesToAdd }) => {
     },
     []
   )
+}
+
+export const turnAliasesToTableItems = ({ aliases }) => {
+  return aliases.map((alias) => {
+    return aliasHeaders.map((aliasHeader) => {
+      const rowValue = alias[aliasHeader]
+
+      return {
+        value: rowValue,
+        actions: [
+          {
+            id: 'copy-value',
+            title: 'Copy value',
+            onClick: () => navigator.clipboard.writeText(rowValue),
+            Component: '❏'
+          }
+        ]
+      }
+    })
+  })
 }

@@ -9,7 +9,11 @@ import {
   addAliases,
   deleteAliases
 } from 'src/helpers/event.helpers.js'
-import { getActionType, validateAliasesToAdd } from './CommandAlias.helpers'
+import {
+  getActionType,
+  turnAliasesToTableItems,
+  validateAliasesToAdd
+} from './CommandAlias.helpers'
 import { aliasMessages } from './CommandAlias.messages'
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
 
@@ -30,23 +34,7 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
     ({ aliases = [] }) => {
       if (!aliases.length) return setMessage(aliasMessages.noAliasesFound)
 
-      const aliasRows = aliases.map((alias) => {
-        return aliasHeaders.map((aliasHeader) => {
-          const rowValue = alias[aliasHeader]
-
-          return {
-            value: rowValue,
-            actions: [
-              {
-                id: 'copy-value',
-                title: 'Copy value',
-                onClick: () => navigator.clipboard.writeText(rowValue),
-                Component: '❏'
-              }
-            ]
-          }
-        })
-      })
+      const aliasRows = turnAliasesToTableItems({ aliases })
 
       setTableItems(aliasRows)
       finish()

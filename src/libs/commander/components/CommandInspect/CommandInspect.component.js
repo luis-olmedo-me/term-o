@@ -34,7 +34,6 @@ const CommandInspectWithoutContext = ({
   const actionType = getActionType(props)
 
   const [HTMLRoot, setHTMLRoot] = useState(null)
-  const [objetives, setObjetives] = useState([])
   const [openNodes, setOpenNodes] = useState([])
   const [editingElement, setEditingElement] = useState(null)
   const [sheets, setSheets] = useState(null)
@@ -76,7 +75,6 @@ const CommandInspectWithoutContext = ({
         : [document.body]
       const newOpenNodes = getOpenNodesFromObjetives(newObjetives)
 
-      setObjetives(newObjetives)
       setOpenNodes(newOpenNodes)
       setHTMLRoot(document.body)
       defaultRoot.current = defaultHTMLRoot
@@ -110,6 +108,10 @@ const CommandInspectWithoutContext = ({
 
   const [headToElements, headToAttributes, headToStyles] = viewActions
 
+  const handleElementClick = ({ event, element }) => {
+    selectElement(element, event.ctrlKey)
+  }
+
   return (
     <>
       <Log variant={parameterTypes.COMMAND}>{command}</Log>
@@ -126,8 +128,8 @@ const CommandInspectWithoutContext = ({
             {HTMLRoot && (
               <NodeTree
                 root={HTMLRoot}
-                objetives={objetives}
-                setObjetives={setObjetives}
+                objetives={selectedElements}
+                onElementClick={handleElementClick}
                 openNodes={openNodes}
                 setOpenNodes={setOpenNodes}
                 setEditingElement={handleAttributeEdition}

@@ -5,7 +5,7 @@ import { TreeWrapper } from './NodeTree.styles'
 export const NodeTree = ({
   root,
   objetives,
-  setObjetives,
+  onElementClick,
   handleRootChange,
   openNodes,
   setOpenNodes,
@@ -18,7 +18,7 @@ export const NodeTree = ({
         node={root}
         root={root}
         objetives={objetives}
-        setObjetives={setObjetives}
+        onElementClick={onElementClick}
         handleRootChange={handleRootChange}
         openNodes={openNodes}
         setOpenNodes={setOpenNodes}

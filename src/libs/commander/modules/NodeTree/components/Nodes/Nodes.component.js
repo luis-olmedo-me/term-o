@@ -19,7 +19,7 @@ const NodesWithoutContext = ({
   level = 0,
   root,
   objetives,
-  setObjetives,
+  onElementClick,
   openNodes,
   setOpenNodes,
   handleRootChange,
@@ -122,7 +122,7 @@ const NodesWithoutContext = ({
     }
   ]
 
-  const handleNodeClick = () => setObjetives([node])
+  const handleElementClick = (event) => onElementClick({ element: node, event })
 
   switch (node.nodeType) {
     case Node.ELEMENT_NODE: {
@@ -137,7 +137,7 @@ const NodesWithoutContext = ({
             isHidden={isHidden}
             wrapperProps={{
               isNodeObjetive,
-              onClick: handleNodeClick,
+              onClick: handleElementClick,
               onMouseEnter: !isHidden ? () => setHighlitedElement(node) : null,
               onMouseLeave: !isHidden ? () => setHighlitedElement(null) : null
             }}
@@ -153,7 +153,7 @@ const NodesWithoutContext = ({
                     node={childNode}
                     root={root}
                     objetives={objetives}
-                    setObjetives={setObjetives}
+                    onElementClick={onElementClick}
                     handleRootChange={handleRootChange}
                     openNodes={openNodes}
                     setOpenNodes={setOpenNodes}
@@ -175,7 +175,7 @@ const NodesWithoutContext = ({
         node.textContent.trim() && (
           <GapNodesWrapper ref={nodeWrapperRef}>
             <TagWrapper
-              onClick={handleNodeClick}
+              onClick={handleElementClick}
               isNodeObjetive={isNodeObjetive}
               textNode
               isHidden={isHidden}

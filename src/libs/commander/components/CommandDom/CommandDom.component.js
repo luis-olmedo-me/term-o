@@ -5,7 +5,8 @@ import {
   AttributeEditionLog,
   useMessageLog,
   usePaginationActions,
-  useViews
+  useViews,
+  useElementActions
 } from '../../modules/Log'
 import {
   generateFilterByEvery,
@@ -22,6 +23,7 @@ import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { getStylesFrom } from '../CommandCss/CommandCss.helpers'
 import { domViewIds, domViews } from './CommandDom.constants'
+import { createXPathFromElement } from '../../modules/List/components/Element/Element.helpers'
 
 const CommandDomWithoutContext = ({
   props,
@@ -45,11 +47,25 @@ const CommandDomWithoutContext = ({
   } = props
 
   const [elements, setElements] = useState([])
-  const [selectedElements, setSelectedElements] = useState([])
   const [editingElement, setEditingElement] = useState(null)
   const [sheets, setSheets] = useState(null)
 
   const actionType = getActionType(props)
+
+  const handleAttributeEdition = (element) => {
+    setEditingElement(element)
+    setSheets(getStylesFrom(element))
+    setHighlitedElement(null)
+
+    changeView(domViewIds.ATTRIBUTES)
+  }
+  const handleStyleEdition = (element) => {
+    setEditingElement(element)
+    setSheets(getStylesFrom(element))
+    setHighlitedElement(null)
+
+    changeView(domViewIds.STYLES)
+  }
 
   const { log: messageLog, setMessage } = useMessageLog()
   const { paginationActions, pages, pageNumber } = usePaginationActions({
@@ -60,6 +76,12 @@ const CommandDomWithoutContext = ({
     views: domViews,
     defaultView: domViewIds.MAIN
   })
+  const { elementActions, selectedElements, selectElement } = useElementActions(
+    {
+      onAttributeEdit: handleAttributeEdition,
+      onStyleEdit: handleStyleEdition
+    }
+  )
 
   const handleGetDomElements = useCallback(() => {
     const hasFiltersBySome =
@@ -145,37 +167,18 @@ const CommandDomWithoutContext = ({
     [actionType, handleGetDomElements]
   )
 
-  const handleAttributeEdition = ({ element }) => {
-    setEditingElement(element)
-    setSheets(getStylesFrom(element))
-    setHighlitedElement(null)
-
-    changeView(domViewIds.ATTRIBUTES)
-  }
-  const handleStylesOptionClick = ({ element }) => {
-    setEditingElement(element)
-    setSheets(getStylesFrom(element))
-    setHighlitedElement(null)
-
-    changeView(domViewIds.STYLES)
-  }
-
-  const handleElementClick = ({ element, event }) => {
-    if (selectedElements.includes(element)) {
-      const filteredSelectedElements = selectedElements.filter(
-        (oldElement) => oldElement !== element
-      )
-
-      setSelectedElements(event.ctrlKey ? filteredSelectedElements : [element])
-      return
-    }
-
-    setSelectedElements(
-      event.ctrlKey ? [...selectedElements, element] : [element]
-    )
-  }
-
   const [headToElements, headToAttributes, headToStyles] = viewActions
+  const [
+    attributeEditionAction,
+    styleEditionAction,
+    scrollAction,
+    copyAction,
+    killAction
+  ] = elementActions
+
+  const handleElementClick = ({ event, element }) => {
+    selectElement(element, event.ctrlKey)
+  }
 
   return (
     <>
@@ -188,7 +191,14 @@ const CommandDomWithoutContext = ({
           <CarouselItem>
             <Log
               variant={parameterTypes.ELEMENT}
-              actionGroups={paginationActions}
+              actionGroups={[
+                attributeEditionAction,
+                styleEditionAction,
+                ...paginationActions,
+                scrollAction,
+                copyAction,
+                killAction
+              ]}
             >
               <Carousel itemInView={pageNumber}>
                 {pages.map((page, currentPageNumber) => {
@@ -199,8 +209,6 @@ const CommandDomWithoutContext = ({
                         Child={({ item }) => (
                           <Element
                             element={item}
-                            onAttributesOptionClick={handleAttributeEdition}
-                            onStylesOptionClick={handleStylesOptionClick}
                             onClick={handleElementClick}
                             variant={
                               selectedElements.includes(item)

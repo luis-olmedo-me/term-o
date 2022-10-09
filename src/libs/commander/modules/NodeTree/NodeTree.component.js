@@ -5,12 +5,10 @@ import { TreeWrapper } from './NodeTree.styles'
 export const NodeTree = ({
   root,
   objetives,
-  setObjetives,
-  handleRootChange,
+  onElementClick,
   openNodes,
   setOpenNodes,
-  setEditingElement,
-  onStylesOptionClick
+  setEditingElement
 }) => {
   return (
     <TreeWrapper>
@@ -18,12 +16,10 @@ export const NodeTree = ({
         node={root}
         root={root}
         objetives={objetives}
-        setObjetives={setObjetives}
-        handleRootChange={handleRootChange}
+        onElementClick={onElementClick}
         openNodes={openNodes}
         setOpenNodes={setOpenNodes}
         setEditingElement={setEditingElement}
-        onStylesOptionClick={onStylesOptionClick}
       />
     </TreeWrapper>
   )

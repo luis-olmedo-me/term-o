@@ -11,7 +11,8 @@ import {
   Log,
   AttributeEditionLog,
   useMessageLog,
-  useViews
+  useViews,
+  useElementActions
 } from '../../modules/Log'
 import {
   inspectActionTypes,
@@ -33,18 +34,45 @@ const CommandInspectWithoutContext = ({
   const actionType = getActionType(props)
 
   const [HTMLRoot, setHTMLRoot] = useState(null)
-  const [objetives, setObjetives] = useState([])
   const [openNodes, setOpenNodes] = useState([])
   const [editingElement, setEditingElement] = useState(null)
   const [sheets, setSheets] = useState(null)
 
   const defaultRoot = useRef(null)
 
+  const handleAttributeEdition = (element) => {
+    setEditingElement(element)
+    setSheets(getStylesFrom(element))
+    setHighlitedElement(null)
+
+    changeView(inspectViewIds.ATTRIBUTES)
+  }
+  const handleStyleEdition = (element) => {
+    setEditingElement(element)
+    setSheets(getStylesFrom(element))
+    setHighlitedElement(null)
+
+    changeView(inspectViewIds.STYLES)
+  }
+  const handleRootEdition = (element) => {
+    const sanitazedNewRoot =
+      element === HTMLRoot ? defaultRoot.current : element
+
+    setHTMLRoot(sanitazedNewRoot)
+  }
+
   const { log: messageLog, setMessage } = useMessageLog()
   const { viewActions, itemInView, changeView } = useViews({
     views: inspectViews,
     defaultView: inspectViewIds.MAIN
   })
+  const { elementActions, selectedElements, selectElement } = useElementActions(
+    {
+      onAttributeEdit: handleAttributeEdition,
+      onStyleEdit: handleStyleEdition,
+      onRootEdit: handleRootEdition
+    }
+  )
 
   const handleInspect = useCallback(
     ({ elementsFound: [defaultHTMLRoot] }) => {
@@ -54,7 +82,6 @@ const CommandInspectWithoutContext = ({
         : [document.body]
       const newOpenNodes = getOpenNodesFromObjetives(newObjetives)
 
-      setObjetives(newObjetives)
       setOpenNodes(newOpenNodes)
       setHTMLRoot(document.body)
       defaultRoot.current = defaultHTMLRoot
@@ -79,29 +106,11 @@ const CommandInspectWithoutContext = ({
     [actionType, handleInspect, setMessage]
   )
 
-  const handleRootChange = (newRoot) => {
-    const sanitazedNewRoot =
-      newRoot === HTMLRoot ? defaultRoot.current : newRoot
-
-    setHTMLRoot(sanitazedNewRoot)
-  }
-
-  const handleElementClick = ({ element }) => {
-    setEditingElement(element)
-    setSheets(getStylesFrom(element))
-    setHighlitedElement(null)
-
-    changeView(inspectViewIds.ATTRIBUTES)
-  }
-  const handleStylesOptionClick = ({ element }) => {
-    setEditingElement(element)
-    setSheets(getStylesFrom(element))
-    setHighlitedElement(null)
-
-    changeView(inspectViewIds.STYLES)
-  }
-
   const [headToElements, headToAttributes, headToStyles] = viewActions
+
+  const handleElementClick = ({ event, element }) => {
+    selectElement(element, event.ctrlKey)
+  }
 
   return (
     <>
@@ -111,17 +120,20 @@ const CommandInspectWithoutContext = ({
 
       {!messageLog && (
         <Carousel itemInView={itemInView}>
-          <Log variant={parameterTypes.ELEMENT} hasScroll>
+          <Log
+            variant={parameterTypes.ELEMENT}
+            actionGroups={elementActions}
+            hasScroll
+          >
             {HTMLRoot && (
               <NodeTree
                 root={HTMLRoot}
-                objetives={objetives}
-                setObjetives={setObjetives}
+                objetives={selectedElements}
+                onElementClick={handleElementClick}
                 openNodes={openNodes}
                 setOpenNodes={setOpenNodes}
-                setEditingElement={handleElementClick}
-                onStylesOptionClick={handleStylesOptionClick}
-                handleRootChange={handleRootChange}
+                setEditingElement={handleAttributeEdition}
+                onStylesOptionClick={handleStyleEdition}
               />
             )}
           </Log>

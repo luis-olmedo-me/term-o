@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { useEffect, useRef, useState } from 'react'
 import { ElementLabel } from '../ElementLabel/ElementLabel.component'
 import {
   TagWrapper,
@@ -10,7 +9,6 @@ import {
 } from './Nodes.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { isElementHidden } from '../../../../components/CommandDom/CommandDom.helpers'
-import { createXPathFromElement } from '../../../List/components/Element/Element.helpers'
 
 const supportedNodeTypes = [Node.ELEMENT_NODE, Node.TEXT_NODE]
 
@@ -19,22 +17,12 @@ const NodesWithoutContext = ({
   level = 0,
   root,
   objetives,
-  setObjetives,
+  onElementClick,
   openNodes,
   setOpenNodes,
-  handleRootChange,
   setHighlitedElement,
-  setEditingElement,
-  onStylesOptionClick
+  setEditingElement
 }) => {
-  const nodeWrapperRef = useRef(null)
-  const nodeData = useRef({
-    parent: node?.parentElement,
-    nextSibling: node?.nextElementSibling
-  })
-
-  const [isDead, setIsDead] = useState(false)
-
   const childNodes = [...node.childNodes].filter(
     (node) => !supportedNodeTypes.includes(node)
   )
@@ -45,16 +33,6 @@ const NodesWithoutContext = ({
 
   const hasNodes = childNodes.length > 0
 
-  useEffect(() => {
-    if (!isNodeObjetive || objetives.length > 1) return
-
-    nodeWrapperRef.current?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center',
-      inline: 'center'
-    })
-  }, [isNodeObjetive, objetives])
-
   const handleToggleElement = () => {
     setOpenNodes((openNodes) =>
       isNodeOpen
@@ -62,67 +40,8 @@ const NodesWithoutContext = ({
         : [...openNodes, node]
     )
   }
-  const handleChangeRoot = () => {
-    handleRootChange(node)
-  }
-
-  const handleCopy = () => {
-    const xPath = createXPathFromElement(node)
-
-    navigator.clipboard.writeText(xPath.includes(' ') ? `"${xPath}"` : xPath)
-  }
-
-  const handleLifeToggle = () => {
-    if (isDead) {
-      const { parent, nextSibling } = nodeData.current
-
-      setIsDead(false)
-
-      parent.insertBefore(node, nextSibling)
-    } else {
-      setHighlitedElement(null)
-      setIsDead(true)
-      node.remove()
-    }
-  }
 
   const actions = [
-    {
-      id: 'group',
-      items: [
-        {
-          id: 'copy-node',
-          title: 'Copy xpath',
-          onClick: handleCopy,
-          Component: '📋'
-        },
-        {
-          id: 'change-root',
-          title: 'Change root',
-          onClick: handleChangeRoot,
-          disabled: !hasNodes,
-          Component: '🌱'
-        },
-        {
-          id: 'edit-element',
-          title: 'Edit element',
-          onClick: () => setEditingElement({ element: node }),
-          Component: '✏️'
-        },
-        {
-          id: 'edit-styles',
-          title: 'Edit styles',
-          onClick: (event) => onStylesOptionClick?.({ event, element: node }),
-          Component: '✂️'
-        },
-        {
-          id: 'life-toggle-element',
-          title: isDead ? 'Restore element' : 'Delete element',
-          onClick: handleLifeToggle,
-          Component: isDead ? '↩️' : '💀'
-        }
-      ]
-    },
     {
       id: 'toggle-element',
       onClick: handleToggleElement,
@@ -132,14 +51,14 @@ const NodesWithoutContext = ({
     }
   ]
 
-  const handleNodeClick = () => setObjetives([node])
+  const handleElementClick = (event) => onElementClick({ element: node, event })
 
   switch (node.nodeType) {
     case Node.ELEMENT_NODE: {
       const isHidden = isElementHidden(node)
 
       return (
-        <GapNodesWrapper ref={nodeWrapperRef} isRoot={isNodeRoot}>
+        <GapNodesWrapper isRoot={isNodeRoot}>
           <ElementLabel
             element={node}
             Wrapper={TagWrapper}
@@ -147,7 +66,7 @@ const NodesWithoutContext = ({
             isHidden={isHidden}
             wrapperProps={{
               isNodeObjetive,
-              onClick: handleNodeClick,
+              onClick: handleElementClick,
               onMouseEnter: !isHidden ? () => setHighlitedElement(node) : null,
               onMouseLeave: !isHidden ? () => setHighlitedElement(null) : null
             }}
@@ -163,12 +82,10 @@ const NodesWithoutContext = ({
                     node={childNode}
                     root={root}
                     objetives={objetives}
-                    setObjetives={setObjetives}
-                    handleRootChange={handleRootChange}
+                    onElementClick={onElementClick}
                     openNodes={openNodes}
                     setOpenNodes={setOpenNodes}
                     setEditingElement={setEditingElement}
-                    onStylesOptionClick={onStylesOptionClick}
                   />
                 )
               )
@@ -183,9 +100,9 @@ const NodesWithoutContext = ({
 
       return (
         node.textContent.trim() && (
-          <GapNodesWrapper ref={nodeWrapperRef}>
+          <GapNodesWrapper>
             <TagWrapper
-              onClick={handleNodeClick}
+              onClick={handleElementClick}
               isNodeObjetive={isNodeObjetive}
               textNode
               isHidden={isHidden}

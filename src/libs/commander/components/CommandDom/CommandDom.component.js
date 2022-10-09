@@ -146,8 +146,6 @@ const CommandDomWithoutContext = ({
     [actionType, handleGetDomElements]
   )
 
-  const hasPinnedElements = pinnedElements.length > 0
-
   const handleElementClick = ({ element }) => {
     setEditingElement(element)
     setSheets(getStylesFrom(element))
@@ -203,20 +201,6 @@ const CommandDomWithoutContext = ({
               variant={parameterTypes.ELEMENT}
               actionGroups={paginationActions}
             >
-              {hasPinnedElements && (
-                <List
-                  items={pinnedElements}
-                  Child={({ item }) => (
-                    <Element
-                      element={item}
-                      pinnedElements={pinnedElements}
-                      setPinnedElements={setPinnedElements}
-                      shouldAnimate
-                    />
-                  )}
-                />
-              )}
-
               <Carousel itemInView={pageNumber}>
                 {pages.map((page, currentPageNumber) => {
                   return (

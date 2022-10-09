@@ -162,20 +162,15 @@ const CommandDomWithoutContext = ({
 
   const handleElementClick = ({ element, event }) => {
     if (pinnedElements.includes(element)) {
-      const newPinnedElements = pinnedElements.filter(
+      const filteredPinnedElements = pinnedElements.filter(
         (oldElement) => oldElement !== element
       )
 
-      setPinnedElements(newPinnedElements)
+      setPinnedElements(event.ctrlKey ? filteredPinnedElements : [element])
       return
     }
 
-    if (event.ctrlKey) {
-      setPinnedElements([...pinnedElements, element])
-      return
-    }
-
-    setPinnedElements([element])
+    setPinnedElements(event.ctrlKey ? [...pinnedElements, element] : [element])
   }
 
   const [headToElements, headToAttributes, headToStyles] = viewActions

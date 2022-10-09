@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Tree } from '../Tree/Tree.component'
+import { Tree } from '../../modules/Tree'
 
 export const MaterialTree = styled(Tree)`
   padding: 5px;

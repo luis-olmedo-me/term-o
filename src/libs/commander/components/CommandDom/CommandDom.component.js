@@ -5,7 +5,8 @@ import {
   AttributeEditionLog,
   useMessageLog,
   usePaginationActions,
-  useViews
+  useViews,
+  useElementActions
 } from '../../modules/Log'
 import {
   generateFilterByEvery,
@@ -46,11 +47,25 @@ const CommandDomWithoutContext = ({
   } = props
 
   const [elements, setElements] = useState([])
-  const [selectedElements, setSelectedElements] = useState([])
   const [editingElement, setEditingElement] = useState(null)
   const [sheets, setSheets] = useState(null)
 
   const actionType = getActionType(props)
+
+  const handleAttributeEdition = (element) => {
+    setEditingElement(element)
+    setSheets(getStylesFrom(element))
+    setHighlitedElement(null)
+
+    changeView(domViewIds.ATTRIBUTES)
+  }
+  const handleStyleEdition = (element) => {
+    setEditingElement(element)
+    setSheets(getStylesFrom(element))
+    setHighlitedElement(null)
+
+    changeView(domViewIds.STYLES)
+  }
 
   const { log: messageLog, setMessage } = useMessageLog()
   const { paginationActions, pages, pageNumber } = usePaginationActions({
@@ -61,6 +76,12 @@ const CommandDomWithoutContext = ({
     views: domViews,
     defaultView: domViewIds.MAIN
   })
+  const { elementActions, selectedElements, selectElement } = useElementActions(
+    {
+      onAttributeEdit: handleAttributeEdition,
+      onStyleEdit: handleStyleEdition
+    }
+  )
 
   const handleGetDomElements = useCallback(() => {
     const hasFiltersBySome =
@@ -146,59 +167,18 @@ const CommandDomWithoutContext = ({
     [actionType, handleGetDomElements]
   )
 
-  const handleAttributeEdition = (element) => {
-    setEditingElement(element)
-    setSheets(getStylesFrom(element))
-    setHighlitedElement(null)
-
-    changeView(domViewIds.ATTRIBUTES)
-  }
-  const handleStylesOptionClick = (element) => {
-    setEditingElement(element)
-    setSheets(getStylesFrom(element))
-    setHighlitedElement(null)
-
-    changeView(domViewIds.STYLES)
-  }
-  const handleScrollIntoView = (element) => {
-    element.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center'
-    })
-  }
-  const handleCopyXPath = (element) => {
-    const xPath = createXPathFromElement(element)
-
-    navigator.clipboard.writeText(xPath.includes(' ') ? `"${xPath}"` : xPath)
-  }
-  const handleKill = () => {
-    selectedElements.forEach((element) => element.remove())
-    setSelectedElements([...selectedElements])
-  }
-
-  const handleElementClick = ({ element, event }) => {
-    if (selectedElements.includes(element)) {
-      const filteredSelectedElements = selectedElements.filter(
-        (oldElement) => oldElement !== element
-      )
-
-      setSelectedElements(event.ctrlKey ? filteredSelectedElements : [element])
-      return
-    }
-
-    setSelectedElements(
-      event.ctrlKey ? [...selectedElements, element] : [element]
-    )
-  }
-
-  const hasOneSelectedElement = selectedElements.length === 1
-  const hasSelectedElements = selectedElements.length > 0
-  const hasAllElementsInDom = selectedElements.every((element) =>
-    document.contains(element)
-  )
-
-  const [firstSelectedElement] = selectedElements
   const [headToElements, headToAttributes, headToStyles] = viewActions
+  const [
+    attributeEditionAction,
+    styleEditionAction,
+    scrollAction,
+    copyAction,
+    killAction
+  ] = elementActions
+
+  const handleElementClick = ({ event, element }) => {
+    selectElement(element, event.ctrlKey)
+  }
 
   return (
     <>
@@ -212,37 +192,12 @@ const CommandDomWithoutContext = ({
             <Log
               variant={parameterTypes.ELEMENT}
               actionGroups={[
-                {
-                  id: 'edit-element',
-                  disabled: !hasOneSelectedElement,
-                  onClick: () => handleAttributeEdition(firstSelectedElement),
-                  text: '✏️'
-                },
-                {
-                  id: 'change-styles',
-                  disabled: !hasOneSelectedElement,
-                  onClick: () => handleStylesOptionClick(firstSelectedElement),
-                  text: '✂️'
-                },
+                attributeEditionAction,
+                styleEditionAction,
                 ...paginationActions,
-                {
-                  id: 'scroll-into-view-option',
-                  disabled: !hasOneSelectedElement,
-                  onClick: () => handleScrollIntoView(firstSelectedElement),
-                  text: '👁️'
-                },
-                {
-                  id: 'copy-xpath-option',
-                  disabled: !hasOneSelectedElement,
-                  onClick: () => handleCopyXPath(firstSelectedElement),
-                  text: '📋'
-                },
-                {
-                  id: 'kill-element',
-                  onClick: handleKill,
-                  disabled: !hasAllElementsInDom || !hasSelectedElements,
-                  text: '💀'
-                }
+                scrollAction,
+                copyAction,
+                killAction
               ]}
             >
               <Carousel itemInView={pageNumber}>

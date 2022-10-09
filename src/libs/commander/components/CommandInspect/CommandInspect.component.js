@@ -113,7 +113,7 @@ const CommandInspectWithoutContext = ({
   }
   const headToStyles = {
     id: 'head-to-styles',
-    text: '✂>',
+    text: '✂️>',
     onClick: handleHeadToStylesView
   }
   const headToAttributes = {

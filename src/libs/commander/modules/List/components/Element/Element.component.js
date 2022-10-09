@@ -87,7 +87,7 @@ const ElementWithoutContext = ({
       id: 'change-styles',
       title: 'Change styles',
       onClick: (event) => onStylesOptionClick?.({ event, element }),
-      Component: '✂'
+      Component: '✂️'
     },
     {
       id: 'group',

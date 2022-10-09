@@ -113,7 +113,7 @@ const NodesWithoutContext = ({
           id: 'edit-styles',
           title: 'Edit styles',
           onClick: (event) => onStylesOptionClick?.({ event, element: node }),
-          Component: '✂'
+          Component: '✂️'
         },
         {
           id: 'life-toggle-element',

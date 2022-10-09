@@ -22,6 +22,7 @@ import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { getStylesFrom } from '../CommandCss/CommandCss.helpers'
 import { domViewIds, domViews } from './CommandDom.constants'
+import { createXPathFromElement } from '../../modules/List/components/Element/Element.helpers'
 
 const CommandDomWithoutContext = ({
   props,
@@ -159,6 +160,16 @@ const CommandDomWithoutContext = ({
 
     changeView(domViewIds.STYLES)
   }
+  const handleScrollIntoView = (element) => {
+    element.scrollIntoView({
+      behavior: 'smooth'
+    })
+  }
+  const handleCopyXPath = (element) => {
+    const xPath = createXPathFromElement(element)
+
+    navigator.clipboard.writeText(xPath.includes(' ') ? `"${xPath}"` : xPath)
+  }
 
   const handleElementClick = ({ element, event }) => {
     if (selectedElements.includes(element)) {
@@ -191,7 +202,6 @@ const CommandDomWithoutContext = ({
             <Log
               variant={parameterTypes.ELEMENT}
               actionGroups={[
-                ...paginationActions,
                 {
                   id: 'edit-element',
                   disabled: !hasOneSelectedElement,
@@ -203,6 +213,21 @@ const CommandDomWithoutContext = ({
                   disabled: !hasOneSelectedElement,
                   onClick: () => handleStylesOptionClick(firstSelectedElement),
                   text: '✂️'
+                },
+                ...paginationActions,
+                {
+                  id: 'scroll-into-view-option',
+                  title: 'Scroll Into View',
+                  disabled: !hasOneSelectedElement,
+                  onClick: () => handleScrollIntoView(firstSelectedElement),
+                  text: '👁️'
+                },
+                {
+                  id: 'copy-xpath-option',
+                  title: 'Copy XPath',
+                  disabled: !hasOneSelectedElement,
+                  onClick: () => handleCopyXPath(firstSelectedElement),
+                  text: '📋'
                 }
               ]}
             >

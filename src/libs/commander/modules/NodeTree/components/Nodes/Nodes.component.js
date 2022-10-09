@@ -101,7 +101,7 @@ const NodesWithoutContext = ({
           title: 'Change root',
           onClick: handleChangeRoot,
           disabled: !hasNodes,
-          Component: '🚩'
+          Component: '🌱'
         },
         {
           id: 'edit-element',

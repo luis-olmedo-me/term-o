@@ -10,20 +10,19 @@ import {
   turnStorageToTableItems
 } from './CommandStorage.helpers'
 import { storageMessages } from './CommandStorage.messages'
-import { storageActionTypes, storageHeaders } from './CommandStorage.constants'
+import {
+  storageActionTypes,
+  storageHeaders,
+  storageViewIds,
+  storageViews
+} from './CommandStorage.constants'
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { MaterialTree } from './CommandStorage.styles'
-
-const storageViews = {
-  MAIN: 0,
-  EDITOR: 1
-}
 
 export const CommandStorage = ({ props, terminal: { command, finish } }) => {
   const actionType = getActionType(props)
 
   const [tableItems, setTableItems] = useState([])
-  const [itemInView, setItemInView] = useState(storageViews.MAIN)
   const [editingEntity, setEditingEntity] = useState([])
 
   const { log: messageLog, setMessage } = useMessageLog()
@@ -31,12 +30,16 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
     items: tableItems,
     maxItems: 10
   })
+  const { viewActions, itemInView, changeView } = useViews({
+    views: storageViews,
+    defaultView: storageViewIds.MAIN
+  })
 
   const handleShowStorage = useCallback(
     (storage) => {
       const editValue = (entity) => {
         setEditingEntity(entity)
-        setItemInView(storageViews.EDITOR)
+        changeView(storageViewIds.EDITOR)
       }
       const localStorageAsTableItems = turnStorageToTableItems({
         storage,
@@ -100,18 +103,8 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
     }
   }
 
-  const handleHeadToTable = () => {
-    setItemInView(storageViews.MAIN)
-    setEditingEntity([])
-  }
-
-  const headToTable = {
-    id: 'head-to-table',
-    text: '🏠',
-    onClick: handleHeadToTable
-  }
-
   const [editingKey, editingValue] = editingEntity
+  const [headToTable] = viewActions
 
   return (
     <>

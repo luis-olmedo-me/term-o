@@ -13,25 +13,17 @@ import {
   useMessageLog,
   useViews
 } from '../../modules/Log'
-import { inspectActionTypes } from './CommandInspect.constants'
+import {
+  inspectActionTypes,
+  inspectViewIds,
+  inspectViews
+} from './CommandInspect.constants'
 import { NodeTree } from '../../modules/NodeTree/NodeTree.component'
 import { getParamsByType } from '../../commander.helpers'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { List, StyleSheet } from '../../modules/List'
 import { getStylesFrom } from '../CommandCss/CommandCss.helpers'
-
-export const inspectViewIds = {
-  MAIN: 0,
-  ATTRIBUTES: 1,
-  STYLES: 2
-}
-
-export const inspectViews = [
-  { id: inspectViewIds.MAIN, text: '🏠' },
-  { id: inspectViewIds.ATTRIBUTES, text: '✏️' },
-  { id: inspectViewIds.STYLES, text: '✂️' }
-]
 
 const CommandInspectWithoutContext = ({
   props,

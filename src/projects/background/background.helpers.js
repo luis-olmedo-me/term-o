@@ -4,10 +4,9 @@ export const toggleTerminal = () => {
   if (!root) return
 
   const isInitiated = root.dataset.isInitiated === 'true'
-  const isOpen = root.dataset.isOpen === 'true'
 
   if (isInitiated) {
-    root.dataset.isOpen = !isOpen
+    root.classList.toggle('open')
   }
 }
 

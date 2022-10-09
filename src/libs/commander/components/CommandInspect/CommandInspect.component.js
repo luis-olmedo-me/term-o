@@ -134,7 +134,6 @@ const CommandInspectWithoutContext = ({
                 setOpenNodes={setOpenNodes}
                 setEditingElement={handleAttributeEdition}
                 onStylesOptionClick={handleStyleEdition}
-                handleRootChange={handleRootEdition}
               />
             )}
           </Log>

@@ -20,10 +20,8 @@ const NodesWithoutContext = ({
   onElementClick,
   openNodes,
   setOpenNodes,
-  handleRootChange,
   setHighlitedElement,
-  setEditingElement,
-  onStylesOptionClick
+  setEditingElement
 }) => {
   const childNodes = [...node.childNodes].filter(
     (node) => !supportedNodeTypes.includes(node)
@@ -85,11 +83,9 @@ const NodesWithoutContext = ({
                     root={root}
                     objetives={objetives}
                     onElementClick={onElementClick}
-                    handleRootChange={handleRootChange}
                     openNodes={openNodes}
                     setOpenNodes={setOpenNodes}
                     setEditingElement={setEditingElement}
-                    onStylesOptionClick={onStylesOptionClick}
                   />
                 )
               )

@@ -170,6 +170,10 @@ const CommandDomWithoutContext = ({
 
     navigator.clipboard.writeText(xPath.includes(' ') ? `"${xPath}"` : xPath)
   }
+  const handleKill = () => {
+    selectedElements.forEach((element) => element.remove())
+    setSelectedElements([...selectedElements])
+  }
 
   const handleElementClick = ({ element, event }) => {
     if (selectedElements.includes(element)) {
@@ -187,6 +191,11 @@ const CommandDomWithoutContext = ({
   }
 
   const hasOneSelectedElement = selectedElements.length === 1
+  const hasSelectedElements = selectedElements.length > 0
+  const hasAllElementsInDom = selectedElements.every((element) =>
+    document.contains(element)
+  )
+
   const [firstSelectedElement] = selectedElements
   const [headToElements, headToAttributes, headToStyles] = viewActions
 
@@ -217,17 +226,21 @@ const CommandDomWithoutContext = ({
                 ...paginationActions,
                 {
                   id: 'scroll-into-view-option',
-                  title: 'Scroll Into View',
                   disabled: !hasOneSelectedElement,
                   onClick: () => handleScrollIntoView(firstSelectedElement),
                   text: '👁️'
                 },
                 {
                   id: 'copy-xpath-option',
-                  title: 'Copy XPath',
                   disabled: !hasOneSelectedElement,
                   onClick: () => handleCopyXPath(firstSelectedElement),
                   text: '📋'
+                },
+                {
+                  id: 'kill-element',
+                  onClick: handleKill,
+                  disabled: !hasAllElementsInDom || !hasSelectedElements,
+                  text: '💀'
                 }
               ]}
             >

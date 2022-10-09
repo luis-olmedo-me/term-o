@@ -102,7 +102,7 @@ const ElementWithoutContext = ({
           id: isElementPinned ? 'unpin-element-option' : 'pin-element-option',
           title: isElementPinned ? 'Unpin Element' : 'Pin Element',
           onClick: isElementPinned ? handleUnpinElement : handlePinElement,
-          Component: isElementPinned ? '⚑' : '⚐'
+          Component: '🚩'
         },
         {
           id: 'copy-xpath-option',

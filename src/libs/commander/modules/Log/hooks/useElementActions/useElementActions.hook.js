@@ -1,6 +1,10 @@
 import { useState } from 'react'
 
-export const useElementActions = ({ onAttributeEdit, onStyleEdit }) => {
+export const useElementActions = ({
+  onAttributeEdit,
+  onStyleEdit,
+  onRootEdit
+}) => {
   const [selectedElements, setSelectedElements] = useState([])
 
   const handleScrollIntoView = (element) => {
@@ -39,6 +43,9 @@ export const useElementActions = ({ onAttributeEdit, onStyleEdit }) => {
   )
 
   const [firstSelectedElement] = selectedElements
+  const isRootChangeEnabled = firstSelectedElement
+    ? firstSelectedElement.childElementCount > 0
+    : true
 
   const elementActions = [
     {
@@ -70,6 +77,12 @@ export const useElementActions = ({ onAttributeEdit, onStyleEdit }) => {
       onClick: handleKill,
       disabled: !hasAllElementsInDom || !hasSelectedElements,
       text: '💀'
+    },
+    {
+      id: 'change-root',
+      onClick: () => onRootEdit(firstSelectedElement),
+      disabled: !hasOneSelectedElement || !isRootChangeEnabled,
+      text: '🌱'
     }
   ]
 

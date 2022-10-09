@@ -40,19 +40,25 @@ const CommandInspectWithoutContext = ({
 
   const defaultRoot = useRef(null)
 
-  const handleAttributeEdition = ({ element }) => {
+  const handleAttributeEdition = (element) => {
     setEditingElement(element)
     setSheets(getStylesFrom(element))
     setHighlitedElement(null)
 
     changeView(inspectViewIds.ATTRIBUTES)
   }
-  const handleStyleEdition = ({ element }) => {
+  const handleStyleEdition = (element) => {
     setEditingElement(element)
     setSheets(getStylesFrom(element))
     setHighlitedElement(null)
 
     changeView(inspectViewIds.STYLES)
+  }
+  const handleRootEdition = (element) => {
+    const sanitazedNewRoot =
+      element === HTMLRoot ? defaultRoot.current : element
+
+    setHTMLRoot(sanitazedNewRoot)
   }
 
   const { log: messageLog, setMessage } = useMessageLog()
@@ -63,7 +69,8 @@ const CommandInspectWithoutContext = ({
   const { elementActions, selectedElements, selectElement } = useElementActions(
     {
       onAttributeEdit: handleAttributeEdition,
-      onStyleEdit: handleStyleEdition
+      onStyleEdit: handleStyleEdition,
+      onRootEdit: handleRootEdition
     }
   )
 
@@ -99,13 +106,6 @@ const CommandInspectWithoutContext = ({
     [actionType, handleInspect, setMessage]
   )
 
-  const handleRootChange = (newRoot) => {
-    const sanitazedNewRoot =
-      newRoot === HTMLRoot ? defaultRoot.current : newRoot
-
-    setHTMLRoot(sanitazedNewRoot)
-  }
-
   const [headToElements, headToAttributes, headToStyles] = viewActions
 
   const handleElementClick = ({ event, element }) => {
@@ -134,7 +134,7 @@ const CommandInspectWithoutContext = ({
                 setOpenNodes={setOpenNodes}
                 setEditingElement={handleAttributeEdition}
                 onStylesOptionClick={handleStyleEdition}
-                handleRootChange={handleRootChange}
+                handleRootChange={handleRootEdition}
               />
             )}
           </Log>

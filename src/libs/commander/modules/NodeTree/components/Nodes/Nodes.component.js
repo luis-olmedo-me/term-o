@@ -119,7 +119,7 @@ const NodesWithoutContext = ({
           id: 'life-toggle-element',
           title: isDead ? 'Restore element' : 'Delete element',
           onClick: handleLifeToggle,
-          Component: isDead ? '✟' : '✖'
+          Component: isDead ? '↩️' : '💀'
         }
       ]
     },

@@ -14,10 +14,12 @@ import {
   deletePageEvents
 } from 'src/helpers/event.helpers.js'
 import { eventMessages } from './CommandEvent.messages'
-import { getActionType } from './CommandEvent.helpers'
+import {
+  getActionType,
+  turnPageEventsToTableItems
+} from './CommandEvent.helpers'
 import { getParamsByType } from '../../commander.helpers'
-import { Carousel } from 'modules/components/Carousel/Carousel.component'
-import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
+import { Carousel, CarouselItem } from 'modules/components/Carousel'
 
 export const CommandEvent = ({
   props,
@@ -43,9 +45,7 @@ export const CommandEvent = ({
     ({ pageEvents = [] }) => {
       if (!pageEvents.length) return setMessage(eventMessages.noEventsFound)
 
-      const pageEventsRows = pageEvents.map((pageEvent) => {
-        return eventRows.map((eventRow) => pageEvent[eventRow])
-      })
+      const pageEventsRows = turnPageEventsToTableItems({ pageEvents })
 
       setTableItems(pageEventsRows)
       finish()

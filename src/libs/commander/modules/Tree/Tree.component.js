@@ -13,7 +13,7 @@ export const Tree = ({
   isValueEditionEnabled,
   handleChange
 }) => {
-  const [isCollapsed, setIsCollapsed] = React.useState(true)
+  const [isCollapsed, setIsCollapsed] = React.useState(false)
 
   const isContentObject = typeof content === 'object' && content !== null
   const isContentString = typeof content === 'string'
@@ -146,7 +146,8 @@ export const Tree = ({
 }
 
 const IdentedTree = styled(Tree)`
-  margin-left: 20px;
+  padding: 3px 0 3px 20px;
+  border-left: 5px solid #00000020;
 `
 const HighlightedEditableText = styled(EditableText)`
   color: turquoise;

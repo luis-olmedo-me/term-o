@@ -1,7 +1,13 @@
 import * as React from 'react'
-import { TableWrapper, TableRowValue, TableRow } from './Table.styles'
+import {
+  TableWrapper,
+  TableRowValue,
+  TableRow,
+  TableActions,
+  TableActionsWrapper
+} from './Table.styles'
 
-export const Table = ({ headers, rows, parseValue, widths }) => {
+export const Table = ({ headers, rows, widths }) => {
   return (
     <TableWrapper>
       <TableRow header>
@@ -19,16 +25,22 @@ export const Table = ({ headers, rows, parseValue, widths }) => {
       {rows.map((row, rowIndex) => (
         <TableRow key={`row-${rowIndex}`}>
           {row.map((column, columnIndex) => {
-            const copyColumn = () => navigator.clipboard.writeText(column)
+            const onColumnClick = () => column.onClick?.(column)
             const width = widths[columnIndex]
 
             return (
               <TableRowValue
                 key={`row-column-${columnIndex}`}
-                onClick={copyColumn}
+                onClick={onColumnClick}
                 style={{ flex: width / 100 }}
               >
-                {parseValue ? parseValue(row, columnIndex) : column}
+                {column.value}
+
+                {column.actions && (
+                  <TableActionsWrapper className='actions'>
+                    <TableActions actions={column.actions} />
+                  </TableActionsWrapper>
+                )}
               </TableRowValue>
             )
           })}

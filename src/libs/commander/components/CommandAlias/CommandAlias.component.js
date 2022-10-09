@@ -9,10 +9,13 @@ import {
   addAliases,
   deleteAliases
 } from 'src/helpers/event.helpers.js'
-import { getActionType, validateAliasesToAdd } from './CommandAlias.helpers'
+import {
+  getActionType,
+  turnAliasesToTableItems,
+  validateAliasesToAdd
+} from './CommandAlias.helpers'
 import { aliasMessages } from './CommandAlias.messages'
-import { Carousel } from 'modules/components/Carousel/Carousel.component'
-import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
+import { Carousel, CarouselItem } from 'modules/components/Carousel'
 
 export const CommandAlias = ({ props, terminal: { command, finish } }) => {
   const { delete: deletedIds, add: aliasesToAdd } = props
@@ -31,9 +34,7 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
     ({ aliases = [] }) => {
       if (!aliases.length) return setMessage(aliasMessages.noAliasesFound)
 
-      const aliasRows = aliases.map((alias) => {
-        return aliasHeaders.map((aliasHeader) => alias[aliasHeader])
-      })
+      const aliasRows = turnAliasesToTableItems({ aliases })
 
       setTableItems(aliasRows)
       finish()

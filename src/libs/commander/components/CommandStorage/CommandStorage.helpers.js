@@ -19,9 +19,38 @@ export const evaluateStringifiedValue = (value) => {
   }
 }
 
-export const turnStorageToTableItems = ({ storage = {} }) => {
+export const turnStorageToTableItems = ({ storage = {}, editValue }) => {
   return Object.entries(storage).map(([key, value]) => {
-    return [key, value]
+    return [
+      {
+        value: key,
+        actions: [
+          {
+            id: 'copy-value',
+            title: 'Copy value',
+            onClick: () => navigator.clipboard.writeText(value),
+            Component: '❏'
+          }
+        ]
+      },
+      {
+        value,
+        actions: [
+          {
+            id: 'copy-value',
+            title: 'Copy value',
+            onClick: () => navigator.clipboard.writeText(value),
+            Component: '❏'
+          },
+          {
+            id: 'edit-element',
+            title: 'Edit',
+            onClick: () => editValue([key, value]),
+            Component: '✎'
+          }
+        ]
+      }
+    ]
   })
 }
 

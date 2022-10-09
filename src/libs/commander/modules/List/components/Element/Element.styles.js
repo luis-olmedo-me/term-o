@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components'
-import { Actions } from '../../../NodeTree/components/Actions/Actions.component'
+import { Actions } from 'src/modules/components/Actions'
 
 const Birth = keyframes`
   from {

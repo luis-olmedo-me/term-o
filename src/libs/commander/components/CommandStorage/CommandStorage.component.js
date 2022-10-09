@@ -5,19 +5,26 @@ import { Log, useMessageLog, usePaginationActions } from '../../modules/Log'
 import { Table } from 'modules/components/Table/Table.component'
 import {
   getActionType,
-  getParseTableValuesForLocalStoageItems,
-  turnStorageToTableItems,
-  parseCookies
+  parseCookies,
+  evaluateStringifiedValue,
+  turnStorageToTableItems
 } from './CommandStorage.helpers'
 import { storageMessages } from './CommandStorage.messages'
 import { storageActionTypes, storageHeaders } from './CommandStorage.constants'
-import { Carousel } from 'modules/components/Carousel/Carousel.component'
-import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
+import { Carousel, CarouselItem } from 'modules/components/Carousel'
+import { MaterialTree } from './CommandStorage.styles'
+
+const storageViews = {
+  MAIN: 0,
+  EDITOR: 1
+}
 
 export const CommandStorage = ({ props, terminal: { command, finish } }) => {
   const actionType = getActionType(props)
 
   const [tableItems, setTableItems] = useState([])
+  const [itemInView, setItemInView] = useState(storageViews.MAIN)
+  const [editingEntity, setEditingEntity] = useState([])
 
   const { log: messageLog, setMessage } = useMessageLog()
   const { paginationActions, pages, pageNumber } = usePaginationActions({
@@ -27,8 +34,13 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
 
   const handleShowStorage = useCallback(
     (storage) => {
+      const editValue = (entity) => {
+        setEditingEntity(entity)
+        setItemInView(storageViews.EDITOR)
+      }
       const localStorageAsTableItems = turnStorageToTableItems({
-        storage
+        storage,
+        editValue
       })
 
       const isEmptyStorage = localStorageAsTableItems.length === 0
@@ -68,6 +80,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
 
   const handleTreeChange = ({ key, newValue }) => {
     const stringifiedNewValue = JSON.stringify(newValue)
+    setEditingEntity([key, stringifiedNewValue])
 
     switch (actionType) {
       case storageActionTypes.SHOW_LOCAL_STORAGE:
@@ -87,8 +100,18 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
     }
   }
 
-  const parseTableValuesForLocalStoageItems =
-    getParseTableValuesForLocalStoageItems(handleTreeChange)
+  const handleHeadToTable = () => {
+    setItemInView(storageViews.MAIN)
+    setEditingEntity([])
+  }
+
+  const headToTable = {
+    id: 'head-to-table',
+    text: '<☶',
+    onClick: handleHeadToTable
+  }
+
+  const [editingKey, editingValue] = editingEntity
 
   return (
     <>
@@ -97,22 +120,47 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
       {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
 
       {!messageLog && (
-        <Log variant={parameterTypes.TABLE} actionGroups={paginationActions}>
-          <Carousel itemInView={pageNumber}>
-            {pages.map((page, currentPageNumber) => {
-              return (
-                <CarouselItem key={currentPageNumber}>
-                  <Table
-                    headers={storageHeaders}
-                    rows={page}
-                    parseValue={parseTableValuesForLocalStoageItems}
-                    widths={[20, 80]}
-                  />
-                </CarouselItem>
-              )
-            })}
-          </Carousel>
-        </Log>
+        <Carousel itemInView={itemInView}>
+          <CarouselItem>
+            <Log
+              variant={parameterTypes.TABLE}
+              actionGroups={paginationActions}
+            >
+              <Carousel itemInView={pageNumber}>
+                {pages.map((page, currentPageNumber) => {
+                  return (
+                    <CarouselItem key={currentPageNumber}>
+                      <Table
+                        headers={storageHeaders}
+                        rows={page}
+                        widths={[20, 80]}
+                      />
+                    </CarouselItem>
+                  )
+                })}
+              </Carousel>
+            </Log>
+          </CarouselItem>
+
+          <CarouselItem>
+            <Log
+              variant={parameterTypes.TABLE}
+              actionGroups={[headToTable]}
+              hasScroll
+            >
+              {editingEntity.length && (
+                <MaterialTree
+                  content={evaluateStringifiedValue(editingValue)}
+                  isKeyEditionEnabled
+                  isValueEditionEnabled
+                  handleChange={(newValue) =>
+                    handleTreeChange({ key: editingKey, newValue })
+                  }
+                />
+              )}
+            </Log>
+          </CarouselItem>
+        </Carousel>
       )}
     </>
   )

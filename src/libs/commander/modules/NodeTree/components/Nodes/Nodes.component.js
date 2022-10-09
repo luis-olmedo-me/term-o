@@ -45,16 +45,6 @@ const NodesWithoutContext = ({
 
   const hasNodes = childNodes.length > 0
 
-  useEffect(() => {
-    if (!isNodeObjetive || objetives.length > 1) return
-
-    nodeWrapperRef.current?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center',
-      inline: 'center'
-    })
-  }, [isNodeObjetive, objetives])
-
   const handleToggleElement = () => {
     setOpenNodes((openNodes) =>
       isNodeOpen

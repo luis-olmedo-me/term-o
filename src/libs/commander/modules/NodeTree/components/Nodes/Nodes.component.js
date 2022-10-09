@@ -94,32 +94,32 @@ const NodesWithoutContext = ({
           id: 'copy-node',
           title: 'Copy xpath',
           onClick: handleCopy,
-          Component: '❏'
+          Component: '📋'
         },
         {
           id: 'change-root',
           title: 'Change root',
           onClick: handleChangeRoot,
           disabled: !hasNodes,
-          Component: isNodeRoot ? '⚑' : '⚐'
+          Component: '🌱'
         },
         {
           id: 'edit-element',
           title: 'Edit element',
           onClick: () => setEditingElement({ element: node }),
-          Component: '✎'
+          Component: '✏️'
         },
         {
           id: 'edit-styles',
           title: 'Edit styles',
           onClick: (event) => onStylesOptionClick?.({ event, element: node }),
-          Component: '✂'
+          Component: '✂️'
         },
         {
           id: 'life-toggle-element',
           title: isDead ? 'Restore element' : 'Delete element',
           onClick: handleLifeToggle,
-          Component: isDead ? '✟' : '✖'
+          Component: isDead ? '↩️' : '💀'
         }
       ]
     },

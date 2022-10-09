@@ -19,7 +19,7 @@ export const turnPageEventsToTableItems = ({ pageEvents }) => {
             id: 'copy-value',
             title: 'Copy value',
             onClick: () => navigator.clipboard.writeText(rowValue),
-            Component: '❏'
+            Component: '📋'
           }
         ]
       }

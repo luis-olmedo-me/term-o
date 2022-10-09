@@ -81,13 +81,13 @@ const ElementWithoutContext = ({
       id: 'edit-element',
       title: 'Edit element',
       onClick: (event) => onAttributesOptionClick?.({ event, element }),
-      Component: '✎'
+      Component: '✏️'
     },
     {
       id: 'change-styles',
       title: 'Change styles',
       onClick: (event) => onStylesOptionClick?.({ event, element }),
-      Component: '✂'
+      Component: '✂️'
     },
     {
       id: 'group',
@@ -96,19 +96,19 @@ const ElementWithoutContext = ({
           id: 'scroll-into-view-option',
           title: 'Scroll Into View',
           onClick: handleScrollIntoView,
-          Component: '👁'
+          Component: '👁️'
         },
         {
           id: isElementPinned ? 'unpin-element-option' : 'pin-element-option',
           title: isElementPinned ? 'Unpin Element' : 'Pin Element',
           onClick: isElementPinned ? handleUnpinElement : handlePinElement,
-          Component: isElementPinned ? '⚑' : '⚐'
+          Component: '🚩'
         },
         {
           id: 'copy-xpath-option',
           title: 'Copy XPath',
           onClick: handleCopyXPath,
-          Component: '❏'
+          Component: '📋'
         }
       ]
     }

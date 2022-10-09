@@ -19,7 +19,7 @@ export const Actions = ({ actions, className, wrapperRef, Postfix }) => {
                 id: 'toggle-items',
                 title: 'Toggle menu',
                 onClick: () => setIsOpen(!isOpen),
-                Component: isOpen ? '⚙>' : '⚙'
+                Component: '⚙️'
               },
               ...action.items.map((item) => ({ ...item, hidden: !isOpen }))
             ]

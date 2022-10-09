@@ -176,17 +176,17 @@ const CommandDomWithoutContext = ({
 
   const headToElements = {
     id: 'head-to-elements',
-    text: '<☰',
+    text: '🏠',
     onClick: handleHeadToElementsView
   }
   const headToStyles = {
     id: 'head-to-styles',
-    text: '✂>',
+    text: '✂️',
     onClick: handleHeadToStylesView
   }
   const headToAttributes = {
     id: 'head-to-attributes',
-    text: '<✎',
+    text: '✏️',
     onClick: handleHeadToAttributesView
   }
 

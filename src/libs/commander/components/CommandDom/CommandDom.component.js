@@ -162,7 +162,8 @@ const CommandDomWithoutContext = ({
   }
   const handleScrollIntoView = (element) => {
     element.scrollIntoView({
-      behavior: 'smooth'
+      behavior: 'smooth',
+      block: 'center'
     })
   }
   const handleCopyXPath = (element) => {

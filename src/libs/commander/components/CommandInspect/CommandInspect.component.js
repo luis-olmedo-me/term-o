@@ -118,7 +118,7 @@ const CommandInspectWithoutContext = ({
   }
   const headToAttributes = {
     id: 'head-to-attributes',
-    text: '<✎',
+    text: '<✏️',
     onClick: handleHeadToAttributesView
   }
 

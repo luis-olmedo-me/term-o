@@ -46,7 +46,7 @@ export const turnStorageToTableItems = ({ storage = {}, editValue }) => {
             id: 'edit-element',
             title: 'Edit',
             onClick: () => editValue([key, value]),
-            Component: '✎'
+            Component: '✏️'
           }
         ]
       }

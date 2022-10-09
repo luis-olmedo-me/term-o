@@ -107,7 +107,7 @@ const NodesWithoutContext = ({
           id: 'edit-element',
           title: 'Edit element',
           onClick: () => setEditingElement({ element: node }),
-          Component: '✎'
+          Component: '✏️'
         },
         {
           id: 'edit-styles',

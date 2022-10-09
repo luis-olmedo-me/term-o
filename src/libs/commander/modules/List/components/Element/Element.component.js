@@ -81,7 +81,7 @@ const ElementWithoutContext = ({
       id: 'edit-element',
       title: 'Edit element',
       onClick: (event) => onAttributesOptionClick?.({ event, element }),
-      Component: '✎'
+      Component: '✏️'
     },
     {
       id: 'change-styles',

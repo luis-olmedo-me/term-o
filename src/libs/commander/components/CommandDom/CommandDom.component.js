@@ -4,7 +4,8 @@ import {
   Log,
   AttributeEditionLog,
   useMessageLog,
-  usePaginationActions
+  usePaginationActions,
+  useViews
 } from '../../modules/Log'
 import {
   generateFilterByEvery,
@@ -20,12 +21,7 @@ import { insertParams } from '../../commander.helpers'
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { getStylesFrom } from '../CommandCss/CommandCss.helpers'
-
-const domViews = {
-  MAIN: 0,
-  ATTRIBUTES: 1,
-  STYLES: 2
-}
+import { domViewIds, domViews } from './CommandDom.constants'
 
 const CommandDomWithoutContext = ({
   props,
@@ -49,9 +45,8 @@ const CommandDomWithoutContext = ({
   } = props
 
   const [elements, setElements] = useState([])
-  const [pinnedElements, setPinnedElements] = useState([])
+  const [selectedElements, setSelectedElements] = useState([])
   const [editingElement, setEditingElement] = useState(null)
-  const [itemInView, setItemInView] = useState(0)
   const [sheets, setSheets] = useState(null)
 
   const actionType = getActionType(props)
@@ -60,6 +55,10 @@ const CommandDomWithoutContext = ({
   const { paginationActions, pages, pageNumber } = usePaginationActions({
     items: elements,
     maxItems: 10
+  })
+  const { viewActions, itemInView, changeView } = useViews({
+    views: domViews,
+    defaultView: domViewIds.MAIN
   })
 
   const handleGetDomElements = useCallback(() => {
@@ -146,49 +145,37 @@ const CommandDomWithoutContext = ({
     [actionType, handleGetDomElements]
   )
 
-  const hasPinnedElements = pinnedElements.length > 0
-
-  const handleElementClick = ({ element }) => {
+  const handleAttributeEdition = ({ element }) => {
     setEditingElement(element)
     setSheets(getStylesFrom(element))
     setHighlitedElement(null)
 
-    setItemInView(domViews.ATTRIBUTES)
+    changeView(domViewIds.ATTRIBUTES)
   }
   const handleStylesOptionClick = ({ element }) => {
     setEditingElement(element)
     setSheets(getStylesFrom(element))
     setHighlitedElement(null)
 
-    setItemInView(domViews.STYLES)
+    changeView(domViewIds.STYLES)
   }
 
-  const handleHeadToElementsView = () => {
-    setItemInView(domViews.MAIN)
-    setEditingElement(null)
-  }
-  const handleHeadToAttributesView = () => {
-    setItemInView(domViews.ATTRIBUTES)
-  }
-  const handleHeadToStylesView = () => {
-    setItemInView(domViews.STYLES)
+  const handleElementClick = ({ element, event }) => {
+    if (selectedElements.includes(element)) {
+      const filteredSelectedElements = selectedElements.filter(
+        (oldElement) => oldElement !== element
+      )
+
+      setSelectedElements(event.ctrlKey ? filteredSelectedElements : [element])
+      return
+    }
+
+    setSelectedElements(
+      event.ctrlKey ? [...selectedElements, element] : [element]
+    )
   }
 
-  const headToElements = {
-    id: 'head-to-elements',
-    text: '🏠',
-    onClick: handleHeadToElementsView
-  }
-  const headToStyles = {
-    id: 'head-to-styles',
-    text: '✂️',
-    onClick: handleHeadToStylesView
-  }
-  const headToAttributes = {
-    id: 'head-to-attributes',
-    text: '✏️',
-    onClick: handleHeadToAttributesView
-  }
+  const [headToElements, headToAttributes, headToStyles] = viewActions
 
   return (
     <>
@@ -203,20 +190,6 @@ const CommandDomWithoutContext = ({
               variant={parameterTypes.ELEMENT}
               actionGroups={paginationActions}
             >
-              {hasPinnedElements && (
-                <List
-                  items={pinnedElements}
-                  Child={({ item }) => (
-                    <Element
-                      element={item}
-                      pinnedElements={pinnedElements}
-                      setPinnedElements={setPinnedElements}
-                      shouldAnimate
-                    />
-                  )}
-                />
-              )}
-
               <Carousel itemInView={pageNumber}>
                 {pages.map((page, currentPageNumber) => {
                   return (
@@ -226,12 +199,11 @@ const CommandDomWithoutContext = ({
                         Child={({ item }) => (
                           <Element
                             element={item}
-                            pinnedElements={pinnedElements}
-                            setPinnedElements={setPinnedElements}
-                            onAttributesOptionClick={handleElementClick}
+                            onAttributesOptionClick={handleAttributeEdition}
                             onStylesOptionClick={handleStylesOptionClick}
+                            onClick={handleElementClick}
                             variant={
-                              pinnedElements.includes(item)
+                              selectedElements.includes(item)
                                 ? 'pinned'
                                 : 'default'
                             }

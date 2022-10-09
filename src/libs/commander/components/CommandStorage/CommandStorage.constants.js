@@ -38,3 +38,13 @@ export const storageActionTypes = {
 }
 
 export const storageHeaders = ['key', 'values']
+
+export const storageViewIds = {
+  MAIN: 0,
+  EDITOR: 1
+}
+
+export const storageViews = [
+  { id: storageViewIds.MAIN, text: '🏠' },
+  { id: storageViewIds.EDITOR }
+]

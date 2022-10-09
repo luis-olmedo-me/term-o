@@ -74,7 +74,6 @@ export const Hash = styled.span`
     padding: 0.5em 0.2em 0em 0.3em;
     border-radius: 50%;
     height: 2em;
-    font-size: 1em;
     display: inline-block;
     vertical-align: middle;
     font-size: 0.7em;
@@ -108,11 +107,16 @@ const Loading = keyframes`
 export const AnimatedLoader = styled(Loader)`
   animation: ${Loading} 1.5s linear infinite;
   animation-timing-function: ease-in-out;
-  color: white;
   width: 16px;
   height: 16px;
   vertical-align: middle;
   margin-right: 1ch;
+  background-color: white;
+  padding: 0.3em;
+  border-radius: 50%;
+  vertical-align: middle;
+  font-size: 0.7em;
+  color: #333;
 `
 export const LoaderText = styled.span`
   color: white;

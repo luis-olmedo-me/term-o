@@ -108,7 +108,7 @@ const CommandInspectWithoutContext = ({
 
   const headToElements = {
     id: 'head-to-elements',
-    text: '<☰',
+    text: '🏠',
     onClick: handleHeadToElementsView
   }
   const headToStyles = {

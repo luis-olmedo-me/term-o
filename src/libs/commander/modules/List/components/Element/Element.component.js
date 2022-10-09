@@ -12,9 +12,7 @@ const ElementWithoutContext = ({
   className = '',
   variant = '',
   shouldAnimate = false,
-  onClick,
-  onStylesOptionClick,
-  onAttributesOptionClick
+  onClick
 }) => {
   const { height, width } = useMemo(() => {
     return element.getBoundingClientRect() || {}
@@ -63,18 +61,6 @@ const ElementWithoutContext = ({
   }
 
   const actions = [
-    {
-      id: 'edit-element',
-      title: 'Edit element',
-      onClick: (event) => onAttributesOptionClick?.({ event, element }),
-      Component: '✏️'
-    },
-    {
-      id: 'change-styles',
-      title: 'Change styles',
-      onClick: (event) => onStylesOptionClick?.({ event, element }),
-      Component: '✂️'
-    },
     {
       id: 'group',
       items: [

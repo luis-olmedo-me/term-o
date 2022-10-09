@@ -145,14 +145,14 @@ const CommandDomWithoutContext = ({
     [actionType, handleGetDomElements]
   )
 
-  const handleAttributeEdition = ({ element }) => {
+  const handleAttributeEdition = (element) => {
     setEditingElement(element)
     setSheets(getStylesFrom(element))
     setHighlitedElement(null)
 
     changeView(domViewIds.ATTRIBUTES)
   }
-  const handleStylesOptionClick = ({ element }) => {
+  const handleStylesOptionClick = (element) => {
     setEditingElement(element)
     setSheets(getStylesFrom(element))
     setHighlitedElement(null)
@@ -175,6 +175,8 @@ const CommandDomWithoutContext = ({
     )
   }
 
+  const hasOneSelectedElement = selectedElements.length === 1
+  const [firstSelectedElement] = selectedElements
   const [headToElements, headToAttributes, headToStyles] = viewActions
 
   return (
@@ -188,7 +190,21 @@ const CommandDomWithoutContext = ({
           <CarouselItem>
             <Log
               variant={parameterTypes.ELEMENT}
-              actionGroups={paginationActions}
+              actionGroups={[
+                ...paginationActions,
+                {
+                  id: 'edit-element',
+                  disabled: !hasOneSelectedElement,
+                  onClick: () => handleAttributeEdition(firstSelectedElement),
+                  text: '✏️'
+                },
+                {
+                  id: 'change-styles',
+                  disabled: !hasOneSelectedElement,
+                  onClick: () => handleStylesOptionClick(firstSelectedElement),
+                  text: '✂️'
+                }
+              ]}
             >
               <Carousel itemInView={pageNumber}>
                 {pages.map((page, currentPageNumber) => {
@@ -199,8 +215,6 @@ const CommandDomWithoutContext = ({
                         Child={({ item }) => (
                           <Element
                             element={item}
-                            onAttributesOptionClick={handleAttributeEdition}
-                            onStylesOptionClick={handleStylesOptionClick}
                             onClick={handleElementClick}
                             variant={
                               selectedElements.includes(item)

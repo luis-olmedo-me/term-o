@@ -228,8 +228,6 @@ const CommandDomWithoutContext = ({
                         Child={({ item }) => (
                           <Element
                             element={item}
-                            pinnedElements={pinnedElements}
-                            setPinnedElements={setPinnedElements}
                             onAttributesOptionClick={handleAttributeEdition}
                             onStylesOptionClick={handleStylesOptionClick}
                             onClick={handleElementClick}

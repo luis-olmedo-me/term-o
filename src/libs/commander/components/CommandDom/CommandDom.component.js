@@ -146,7 +146,7 @@ const CommandDomWithoutContext = ({
     [actionType, handleGetDomElements]
   )
 
-  const handleElementClick = ({ element }) => {
+  const handleAttributeEdition = ({ element }) => {
     setEditingElement(element)
     setSheets(getStylesFrom(element))
     setHighlitedElement(null)
@@ -188,6 +188,10 @@ const CommandDomWithoutContext = ({
     onClick: handleHeadToAttributesView
   }
 
+  const handleElementClick = ({ element, event }) => {
+    setPinnedElements(event.ctrlKey ? [...pinnedElements, element] : [element])
+  }
+
   return (
     <>
       <Log variant={parameterTypes.COMMAND}>{command}</Log>
@@ -212,8 +216,9 @@ const CommandDomWithoutContext = ({
                             element={item}
                             pinnedElements={pinnedElements}
                             setPinnedElements={setPinnedElements}
-                            onAttributesOptionClick={handleElementClick}
+                            onAttributesOptionClick={handleAttributeEdition}
                             onStylesOptionClick={handleStylesOptionClick}
+                            onClick={handleElementClick}
                             variant={
                               pinnedElements.includes(item)
                                 ? 'pinned'

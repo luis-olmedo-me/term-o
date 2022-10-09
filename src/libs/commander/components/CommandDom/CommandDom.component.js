@@ -21,17 +21,7 @@ import { insertParams } from '../../commander.helpers'
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { getStylesFrom } from '../CommandCss/CommandCss.helpers'
-
-const domViews = {
-  MAIN: 0,
-  ATTRIBUTES: 1,
-  STYLES: 2
-}
-const views = [
-  { id: domViews.MAIN, text: '🏠' },
-  { id: domViews.ATTRIBUTES, text: '✏️' },
-  { id: domViews.STYLES, text: '✂️' }
-]
+import { domViewIds, domViews } from './CommandDom.constants'
 
 const CommandDomWithoutContext = ({
   props,
@@ -67,8 +57,8 @@ const CommandDomWithoutContext = ({
     maxItems: 10
   })
   const { viewActions, itemInView, changeView } = useViews({
-    views,
-    defaultView: domViews.MAIN
+    views: domViews,
+    defaultView: domViewIds.MAIN
   })
 
   const handleGetDomElements = useCallback(() => {
@@ -160,14 +150,14 @@ const CommandDomWithoutContext = ({
     setSheets(getStylesFrom(element))
     setHighlitedElement(null)
 
-    changeView(domViews.ATTRIBUTES)
+    changeView(domViewIds.ATTRIBUTES)
   }
   const handleStylesOptionClick = ({ element }) => {
     setEditingElement(element)
     setSheets(getStylesFrom(element))
     setHighlitedElement(null)
 
-    changeView(domViews.STYLES)
+    changeView(domViewIds.STYLES)
   }
 
   const handleElementClick = ({ element, event }) => {

@@ -189,7 +189,21 @@ const CommandDomWithoutContext = ({
   }
 
   const handleElementClick = ({ element, event }) => {
-    setPinnedElements(event.ctrlKey ? [...pinnedElements, element] : [element])
+    if (pinnedElements.includes(element)) {
+      const newPinnedElements = pinnedElements.filter(
+        (oldElement) => oldElement !== element
+      )
+
+      setPinnedElements(newPinnedElements)
+      return
+    }
+
+    if (event.ctrlKey) {
+      setPinnedElements([...pinnedElements, element])
+      return
+    }
+
+    setPinnedElements([element])
   }
 
   return (

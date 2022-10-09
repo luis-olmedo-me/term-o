@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Actions } from 'src/modules/components/Actions/Actions.component'
+import { Actions } from 'src/modules/components/Actions'
 import { getAttributes } from '../../../../components/CommandDom/CommandDom.helpers'
 import {
   AttributeName,

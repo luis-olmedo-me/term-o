@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Actions } from '../Actions/Actions.component'
+import { Actions } from '../Actions'
 
 export const TableWrapper = styled.div`
   width: 100%;

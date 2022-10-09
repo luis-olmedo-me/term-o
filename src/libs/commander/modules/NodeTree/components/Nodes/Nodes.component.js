@@ -94,7 +94,7 @@ const NodesWithoutContext = ({
           id: 'copy-node',
           title: 'Copy xpath',
           onClick: handleCopy,
-          Component: '❏'
+          Component: '📋'
         },
         {
           id: 'change-root',

@@ -108,7 +108,7 @@ const ElementWithoutContext = ({
           id: 'copy-xpath-option',
           title: 'Copy XPath',
           onClick: handleCopyXPath,
-          Component: '❏'
+          Component: '📋'
         }
       ]
     }

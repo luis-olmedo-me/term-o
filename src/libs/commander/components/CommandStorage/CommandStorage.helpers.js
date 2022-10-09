@@ -29,7 +29,7 @@ export const turnStorageToTableItems = ({ storage = {}, editValue }) => {
             id: 'copy-value',
             title: 'Copy value',
             onClick: () => navigator.clipboard.writeText(value),
-            Component: '❏'
+            Component: '📋'
           }
         ]
       },
@@ -40,7 +40,7 @@ export const turnStorageToTableItems = ({ storage = {}, editValue }) => {
             id: 'copy-value',
             title: 'Copy value',
             onClick: () => navigator.clipboard.writeText(value),
-            Component: '❏'
+            Component: '📋'
           },
           {
             id: 'edit-element',

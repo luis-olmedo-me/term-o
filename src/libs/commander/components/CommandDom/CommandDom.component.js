@@ -4,7 +4,8 @@ import {
   Log,
   AttributeEditionLog,
   useMessageLog,
-  usePaginationActions
+  usePaginationActions,
+  useViews
 } from '../../modules/Log'
 import {
   generateFilterByEvery,
@@ -26,6 +27,11 @@ const domViews = {
   ATTRIBUTES: 1,
   STYLES: 2
 }
+const views = [
+  { id: domViews.MAIN, text: '🏠' },
+  { id: domViews.ATTRIBUTES, text: '✏️' },
+  { id: domViews.STYLES, text: '✂️' }
+]
 
 const CommandDomWithoutContext = ({
   props,
@@ -51,7 +57,6 @@ const CommandDomWithoutContext = ({
   const [elements, setElements] = useState([])
   const [pinnedElements, setPinnedElements] = useState([])
   const [editingElement, setEditingElement] = useState(null)
-  const [itemInView, setItemInView] = useState(0)
   const [sheets, setSheets] = useState(null)
 
   const actionType = getActionType(props)
@@ -60,6 +65,10 @@ const CommandDomWithoutContext = ({
   const { paginationActions, pages, pageNumber } = usePaginationActions({
     items: elements,
     maxItems: 10
+  })
+  const { viewActions, itemInView, changeView } = useViews({
+    views,
+    defaultView: domViews.MAIN
   })
 
   const handleGetDomElements = useCallback(() => {
@@ -151,41 +160,14 @@ const CommandDomWithoutContext = ({
     setSheets(getStylesFrom(element))
     setHighlitedElement(null)
 
-    setItemInView(domViews.ATTRIBUTES)
+    changeView(domViews.ATTRIBUTES)
   }
   const handleStylesOptionClick = ({ element }) => {
     setEditingElement(element)
     setSheets(getStylesFrom(element))
     setHighlitedElement(null)
 
-    setItemInView(domViews.STYLES)
-  }
-
-  const handleHeadToElementsView = () => {
-    setItemInView(domViews.MAIN)
-    setEditingElement(null)
-  }
-  const handleHeadToAttributesView = () => {
-    setItemInView(domViews.ATTRIBUTES)
-  }
-  const handleHeadToStylesView = () => {
-    setItemInView(domViews.STYLES)
-  }
-
-  const headToElements = {
-    id: 'head-to-elements',
-    text: '🏠',
-    onClick: handleHeadToElementsView
-  }
-  const headToStyles = {
-    id: 'head-to-styles',
-    text: '✂️',
-    onClick: handleHeadToStylesView
-  }
-  const headToAttributes = {
-    id: 'head-to-attributes',
-    text: '✏️',
-    onClick: handleHeadToAttributesView
+    changeView(domViews.STYLES)
   }
 
   const handleElementClick = ({ element, event }) => {
@@ -205,6 +187,8 @@ const CommandDomWithoutContext = ({
 
     setPinnedElements([element])
   }
+
+  const [headToElements, headToAttributes, headToStyles] = viewActions
 
   return (
     <>

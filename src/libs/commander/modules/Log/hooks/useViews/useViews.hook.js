@@ -3,7 +3,7 @@ import { useState } from 'react'
 export const useViews = ({ views, defaultView }) => {
   const [itemInView, setItemInView] = useState(defaultView)
 
-  const actions = views.map((view) => {
+  const viewActions = views.map((view) => {
     return {
       id: `head-to-${view.id}`,
       text: view.text,
@@ -11,5 +11,5 @@ export const useViews = ({ views, defaultView }) => {
     }
   })
 
-  return { itemInView, changeView: setItemInView, actions }
+  return { itemInView, changeView: setItemInView, viewActions }
 }

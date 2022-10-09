@@ -107,7 +107,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
 
   const headToTable = {
     id: 'head-to-table',
-    text: '<☶',
+    text: '🏠',
     onClick: handleHeadToTable
   }
 

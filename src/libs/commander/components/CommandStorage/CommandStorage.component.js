@@ -11,8 +11,7 @@ import {
 } from './CommandStorage.helpers'
 import { storageMessages } from './CommandStorage.messages'
 import { storageActionTypes, storageHeaders } from './CommandStorage.constants'
-import { Carousel } from 'modules/components/Carousel/Carousel.component'
-import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
+import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { MaterialTree } from './CommandStorage.styles'
 
 const storageViews = {

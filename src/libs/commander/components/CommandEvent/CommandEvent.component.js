@@ -16,8 +16,7 @@ import {
 import { eventMessages } from './CommandEvent.messages'
 import { getActionType } from './CommandEvent.helpers'
 import { getParamsByType } from '../../commander.helpers'
-import { Carousel } from 'modules/components/Carousel/Carousel.component'
-import { CarouselItem } from 'modules/components/Carousel/Carousel.styles'
+import { Carousel, CarouselItem } from 'modules/components/Carousel'
 
 export const CommandEvent = ({
   props,

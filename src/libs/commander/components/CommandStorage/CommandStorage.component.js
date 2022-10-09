@@ -1,7 +1,12 @@
 import * as React from 'react'
 import { useEffect, useState, useCallback } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
-import { Log, useMessageLog, usePaginationActions } from '../../modules/Log'
+import {
+  Log,
+  useMessageLog,
+  usePaginationActions,
+  useViews
+} from '../../modules/Log'
 import { Table } from 'modules/components/Table/Table.component'
 import {
   getActionType,

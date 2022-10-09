@@ -66,6 +66,20 @@ export const LogWrapper = styled.div`
 
 export const Hash = styled.span`
   margin-right: 1ch;
+  width: 2em;
+  text-align: center;
+
+  &&.rounded {
+    background-color: white;
+    padding: 0.5em 0.2em 0em 0.3em;
+    border-radius: 50%;
+    height: 2em;
+    font-size: 1em;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 0.7em;
+    color: #333;
+  }
 `
 
 export const LogContent = styled.div`

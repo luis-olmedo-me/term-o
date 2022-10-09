@@ -13,9 +13,9 @@ import {
 
 const preIconsByVariants = {
   [parameterTypes.COMMAND]: '$',
-  [parameterTypes.ERROR]: '✖',
-  [parameterTypes.INFO]: 'ℹ',
-  [parameterTypes.SUCCESS]: '✔'
+  [parameterTypes.ERROR]: '❌',
+  [parameterTypes.INFO]: '📢',
+  [parameterTypes.SUCCESS]: '✔️'
 }
 
 export const Log = ({ children, variant, actionGroups, hasScroll }) => {
@@ -40,7 +40,7 @@ export const Log = ({ children, variant, actionGroups, hasScroll }) => {
 
   const Content = (
     <>
-      {icon && <Hash>{icon}</Hash>}
+      {icon && <Hash className={!isCommand ? 'rounded' : ''}>{icon}</Hash>}
 
       {children}
     </>

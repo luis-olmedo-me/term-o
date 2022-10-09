@@ -14,7 +14,10 @@ import {
   deletePageEvents
 } from 'src/helpers/event.helpers.js'
 import { eventMessages } from './CommandEvent.messages'
-import { getActionType } from './CommandEvent.helpers'
+import {
+  getActionType,
+  turnPageEventsToTableItems
+} from './CommandEvent.helpers'
 import { getParamsByType } from '../../commander.helpers'
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
 
@@ -42,23 +45,7 @@ export const CommandEvent = ({
     ({ pageEvents = [] }) => {
       if (!pageEvents.length) return setMessage(eventMessages.noEventsFound)
 
-      const pageEventsRows = pageEvents.map((pageEvent) => {
-        return eventRows.map((eventRow) => {
-          const rowValue = pageEvent[eventRow]
-
-          return {
-            value: rowValue,
-            actions: [
-              {
-                id: 'copy-value',
-                title: 'Copy value',
-                onClick: () => navigator.clipboard.writeText(rowValue),
-                Component: '❏'
-              }
-            ]
-          }
-        })
-      })
+      const pageEventsRows = turnPageEventsToTableItems({ pageEvents })
 
       setTableItems(pageEventsRows)
       finish()

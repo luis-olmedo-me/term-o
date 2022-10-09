@@ -96,7 +96,7 @@ const ElementWithoutContext = ({
           id: 'scroll-into-view-option',
           title: 'Scroll Into View',
           onClick: handleScrollIntoView,
-          Component: '👁'
+          Component: '👁️'
         },
         {
           id: isElementPinned ? 'unpin-element-option' : 'pin-element-option',

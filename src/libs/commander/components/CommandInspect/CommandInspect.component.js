@@ -11,7 +11,8 @@ import {
   Log,
   AttributeEditionLog,
   useMessageLog,
-  useViews
+  useViews,
+  useElementActions
 } from '../../modules/Log'
 import {
   inspectActionTypes,
@@ -40,11 +41,32 @@ const CommandInspectWithoutContext = ({
 
   const defaultRoot = useRef(null)
 
+  const handleAttributeEdition = ({ element }) => {
+    setEditingElement(element)
+    setSheets(getStylesFrom(element))
+    setHighlitedElement(null)
+
+    changeView(inspectViewIds.ATTRIBUTES)
+  }
+  const handleStyleEdition = ({ element }) => {
+    setEditingElement(element)
+    setSheets(getStylesFrom(element))
+    setHighlitedElement(null)
+
+    changeView(inspectViewIds.STYLES)
+  }
+
   const { log: messageLog, setMessage } = useMessageLog()
   const { viewActions, itemInView, changeView } = useViews({
     views: inspectViews,
     defaultView: inspectViewIds.MAIN
   })
+  const { elementActions, selectedElements, selectElement } = useElementActions(
+    {
+      onAttributeEdit: handleAttributeEdition,
+      onStyleEdit: handleStyleEdition
+    }
+  )
 
   const handleInspect = useCallback(
     ({ elementsFound: [defaultHTMLRoot] }) => {
@@ -86,21 +108,6 @@ const CommandInspectWithoutContext = ({
     setHTMLRoot(sanitazedNewRoot)
   }
 
-  const handleElementClick = ({ element }) => {
-    setEditingElement(element)
-    setSheets(getStylesFrom(element))
-    setHighlitedElement(null)
-
-    changeView(inspectViewIds.ATTRIBUTES)
-  }
-  const handleStylesOptionClick = ({ element }) => {
-    setEditingElement(element)
-    setSheets(getStylesFrom(element))
-    setHighlitedElement(null)
-
-    changeView(inspectViewIds.STYLES)
-  }
-
   const [headToElements, headToAttributes, headToStyles] = viewActions
 
   return (
@@ -111,7 +118,11 @@ const CommandInspectWithoutContext = ({
 
       {!messageLog && (
         <Carousel itemInView={itemInView}>
-          <Log variant={parameterTypes.ELEMENT} hasScroll>
+          <Log
+            variant={parameterTypes.ELEMENT}
+            actionGroups={elementActions}
+            hasScroll
+          >
             {HTMLRoot && (
               <NodeTree
                 root={HTMLRoot}
@@ -119,8 +130,8 @@ const CommandInspectWithoutContext = ({
                 setObjetives={setObjetives}
                 openNodes={openNodes}
                 setOpenNodes={setOpenNodes}
-                setEditingElement={handleElementClick}
-                onStylesOptionClick={handleStylesOptionClick}
+                setEditingElement={handleAttributeEdition}
+                onStylesOptionClick={handleStyleEdition}
                 handleRootChange={handleRootChange}
               />
             )}

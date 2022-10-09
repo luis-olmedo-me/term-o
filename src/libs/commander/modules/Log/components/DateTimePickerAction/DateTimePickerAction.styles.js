@@ -8,18 +8,14 @@ export const Wrapper = styled.span`
   text-align: center;
   transition: background-color 0.2s ease-in-out;
 
-  &&:hover {
-    background-color: #ffffff66;
+  &:hover {
+    background-color: #00000010;
   }
 
   &:focus,
-  &:active {
+  &:active,
+  &.selected {
     outline: none;
-    background-color: #ffffff55;
-  }
-
-  &&.selected {
-    background-color: #ffffff55;
   }
 
   &&.disabled {

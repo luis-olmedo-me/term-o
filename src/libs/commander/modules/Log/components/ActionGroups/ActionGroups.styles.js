@@ -15,8 +15,8 @@ export const Action = styled.input`
   font-family: Share Tech Mono;
   color: #fff;
 
-  &&:hover {
-    background-color: #ffffff66;
+  &:hover {
+    background-color: #00000010;
   }
 
   &:focus,
@@ -25,7 +25,7 @@ export const Action = styled.input`
   }
 
   &&.selected {
-    background-color: #ffffff55;
+    background-color: #ffffff33;
   }
 
   &&.disabled {

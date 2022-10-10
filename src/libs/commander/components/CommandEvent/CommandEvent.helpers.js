@@ -30,10 +30,15 @@ export const turnPageEventsToTableItems = ({ pageEvents }) => {
 export const triggerChangeEvent = ({ element, value }) => {
   const inputType = element.getAttribute('type')
 
-  if (inputType === 'checkbox') {
-    element.checked = value === '' ? !element.checked : value === 'true'
-  } else {
-    element.value = value
+  switch (inputType) {
+    case 'checkbox':
+    case 'radio':
+      element.checked = value === '' ? !element.checked : value === 'true'
+      break
+
+    default:
+      element.value = value
+      break
   }
 
   element.dispatchEvent(new Event('change'))

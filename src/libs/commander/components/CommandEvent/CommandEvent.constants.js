@@ -55,7 +55,8 @@ export const supportedEvents = {
   CLICK: 'click',
   CHANGE: 'change'
 }
-export const supportedEventNames = Object.values(supportedEvents)
+
+export const inputsChangeTrigerables = ['INPUT', 'SELECT']
 
 export const eventActionTypes = {
   SHOW_LIST: 'SHOW_LIST',

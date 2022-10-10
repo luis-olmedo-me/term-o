@@ -6,7 +6,7 @@ import { Table } from 'modules/components/Table/Table.component'
 import {
   eventActionTypes,
   eventRows,
-  supportedEventNames,
+  inputsChangeTrigerables,
   supportedEvents
 } from './CommandEvent.constants'
 import {
@@ -91,8 +91,8 @@ export const CommandEvent = ({
       }
 
       case supportedEvents.CHANGE: {
-        const hasAllInputs = paramElements.every(
-          (element) => element.tagName === 'INPUT'
+        const hasAllInputs = paramElements.every((element) =>
+          inputsChangeTrigerables.includes(element.tagName)
         )
 
         if (!hasAllInputs) return setMessage(eventMessages.invalidElements)

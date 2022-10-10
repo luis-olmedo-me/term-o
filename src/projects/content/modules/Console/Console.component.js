@@ -33,7 +33,8 @@ export const Console = () => {
   const { setResizingFrom, setMovingFrom, isMoving } = useResize({
     wrapperReference,
     consolePosition,
-    onError: showWorkerRequestError
+    onError: showWorkerRequestError,
+    isEnabled: isOpen
   })
 
   const handleCommandRun = useCallback((command, id) => {

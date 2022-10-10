@@ -8,7 +8,12 @@ import {
 import { defaultBodyData } from './useResize.constants'
 import { eventTypes } from 'src/constants/events.constants.js'
 
-export const useResize = ({ wrapperReference, consolePosition, onError }) => {
+export const useResize = ({
+  wrapperReference,
+  consolePosition,
+  onError,
+  isEnabled
+}) => {
   const [resizingFrom, setResizingFrom] = useState('')
   const [movingFrom, setMovingFrom] = useState(null)
 
@@ -68,6 +73,8 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
   )
 
   useEffect(() => {
+    if (!isEnabled) return
+
     const resizeCommandHandler = (event) => {
       if (!wrapperReference.current) return
 
@@ -119,7 +126,7 @@ export const useResize = ({ wrapperReference, consolePosition, onError }) => {
 
     return () =>
       window.removeEventListener(eventTypes.TERM_O_RESIZE, resizeCommandHandler)
-  }, [bodyData, onError])
+  }, [bodyData, onError, isEnabled])
 
   useEffect(
     function getConfigurationFromBackground() {

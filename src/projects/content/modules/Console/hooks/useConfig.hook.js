@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import { commander, customPageEventNames } from 'libs/commander'
 
 import { fetchConfiguration } from 'src/helpers/event.helpers.js'
-import { appRoot } from '../../../content.constants'
 
 const defaultConfiguration = {
   isOpen: false,
@@ -16,25 +15,14 @@ export const useConfig = ({ onError }) => {
   const [config, setConfig] = useState(defaultConfiguration)
 
   useEffect(function checkConsoleToggle() {
-    const observer = new MutationObserver(function (mutations) {
-      mutations.forEach(function (mutation) {
-        if (mutation.type === 'attributes') {
-          setConfig((oldConfig) => ({
-            ...oldConfig,
-            isOpen: appRoot.dataset.isOpen === 'true'
-          }))
-        }
-      })
-    })
+    const toggleConsoleState = () => {
+      setConfig((oldConfig) => ({ ...oldConfig, isOpen: !oldConfig.isOpen }))
+    }
 
-    appRoot.dataset.isInitiated = 'true'
-
-    observer.observe(appRoot, { attributes: true })
+    window.addEventListener('term-o-toggle-console', toggleConsoleState)
 
     return () => {
-      appRoot.dataset.isInitiated = 'false'
-
-      observer.disconnect()
+      window.removeEventListener('term-o-toggle-console', toggleConsoleState)
     }
   })
 

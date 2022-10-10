@@ -8,7 +8,9 @@ import { PortalProvider } from 'modules/components/Portal/Portal.provider'
 import { OverlayProvider } from 'modules/components/Overlay/Overlay.provider'
 import { ToggleControls } from './content.styles'
 
-document.body.prepend(appRoot)
+const termoBody = document.createElement('body')
+document.documentElement.append(termoBody)
+termoBody.append(appRoot)
 
 const root = createRoot(appRoot)
 

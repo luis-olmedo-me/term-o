@@ -6,7 +6,6 @@ import { FontFamilies } from './fonts/Fonts.styles'
 import { appRoot, shadowRoot } from './content.constants'
 import { PortalProvider } from 'modules/components/Portal/Portal.provider'
 import { OverlayProvider } from 'modules/components/Overlay/Overlay.provider'
-import { ToggleControls } from './content.styles'
 
 const termoBody = document.createElement('body')
 document.documentElement.append(termoBody)
@@ -17,7 +16,6 @@ const root = createRoot(appRoot)
 root.render(
   <>
     <FontFamilies />
-    <ToggleControls />
 
     <shadowRoot.div>
       <PortalProvider>

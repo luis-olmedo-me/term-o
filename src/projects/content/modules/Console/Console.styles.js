@@ -6,6 +6,10 @@ export const ConsoleWrapper = styled.div`
   z-index: 1000000;
   font-family: 'Share Tech Mono', monospace;
 
+  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
+  transform: scale(${({ isOpen }) => (isOpen ? '1' : '0')});
+
+  pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
   box-shadow: ${({ isMoving }) =>
     isMoving
       ? '0px 20px 15px -3px rgba(0, 0, 0, 0.5)'
@@ -17,10 +21,6 @@ export const ConsoleWrapper = styled.div`
   display: flex;
   flex-flow: column;
   font-size: 16px;
-
-  opacity: var(--term-o-console-opacity);
-  transform: scale(var(--term-o-console-scale));
-  pointer-events: var(--term-o-console-pointer-events);
 `
 
 export const ConsoleTitle = styled.h1`

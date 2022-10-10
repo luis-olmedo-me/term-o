@@ -23,9 +23,8 @@ const OutputsNonMemoized = ({ components, id, outsideProps }) => {
   }, [])
 
   const showNextVisibleComponent = useCallback((paramFormatter) => {
-    setParams(paramFormatter || defaultFormatter)
-
     const showNext = () => {
+      setParams(paramFormatter || defaultFormatter)
       setData((oldData) => {
         const nextInvisibleComponentIndex = oldData.findIndex(
           (component) => !component.isVisible

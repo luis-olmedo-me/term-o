@@ -76,31 +76,36 @@ export const CommandEvent = ({
   )
 
   const handleTriggerEvent = useCallback(() => {
-    const isEventValid = supportedEventNames.includes(eventToTrigger)
-
-    if (!isEventValid) return setMessage(eventMessages.invalidEventName)
-
     const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
 
-    if (eventToTrigger === supportedEvents.CLICK) {
-      paramElements.forEach((element) => {
-        element.dispatchEvent(new MouseEvent('click'))
-      })
+    switch (eventToTrigger) {
+      case supportedEvents.CLICK: {
+        paramElements.forEach((element) => {
+          element.dispatchEvent(new MouseEvent('click'))
+        })
 
-      setMessage(eventMessages.elementsClickedSuccess)
-    } else if (eventToTrigger === supportedEvents.CHANGE) {
-      const hasAllInputs = paramElements.every(
-        (element) => element.tagName === 'INPUT'
-      )
+        setMessage(eventMessages.elementsClickedSuccess)
+        break
+      }
 
-      if (!hasAllInputs) return setMessage(eventMessages.invalidElements)
+      case supportedEvents.CHANGE: {
+        const hasAllInputs = paramElements.every(
+          (element) => element.tagName === 'INPUT'
+        )
 
-      paramElements.forEach((element) => {
-        element.value = valueToInsert
-        element.dispatchEvent(new Event('change'))
-      })
+        if (!hasAllInputs) return setMessage(eventMessages.invalidElements)
 
-      setMessage(eventMessages.elementsChangedSuccess)
+        paramElements.forEach((element) => {
+          element.value = valueToInsert
+          element.dispatchEvent(new Event('change'))
+        })
+
+        setMessage(eventMessages.elementsChangedSuccess)
+        break
+      }
+
+      default:
+        return setMessage(eventMessages.invalidEventName)
     }
 
     finish()

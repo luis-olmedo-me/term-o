@@ -2,6 +2,10 @@ import * as React from 'react'
 import { useState, useCallback, useRef, useEffect } from 'react'
 import { OutputWrapper } from './Outputs.styles'
 
+const defaultFormatter = (oldParam) => {
+  return [...oldParam, {}]
+}
+
 const OutputsNonMemoized = ({ components, id, outsideProps }) => {
   const defaultData = components.map((Component, index) => ({
     Component,
@@ -18,8 +22,9 @@ const OutputsNonMemoized = ({ components, id, outsideProps }) => {
     return () => clearTimeout(fakeDelayTimeoutId.current)
   }, [])
 
-  const showNextVisibleComponent = useCallback(() => {
+  const showNextVisibleComponent = useCallback((paramFormatter) => {
     const showNext = () => {
+      setParams(paramFormatter || defaultFormatter)
       setData((oldData) => {
         const nextInvisibleComponentIndex = oldData.findIndex(
           (component) => !component.isVisible
@@ -51,7 +56,6 @@ const OutputsNonMemoized = ({ components, id, outsideProps }) => {
 
   const providerProps = {
     ...outsideProps,
-    setParams,
     finish: showNextVisibleComponent
   }
 

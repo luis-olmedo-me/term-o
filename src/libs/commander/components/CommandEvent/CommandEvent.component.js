@@ -6,7 +6,6 @@ import { Table } from 'modules/components/Table/Table.component'
 import {
   eventActionTypes,
   eventRows,
-  supportedEventNames,
   supportedEvents
 } from './CommandEvent.constants'
 import {
@@ -16,7 +15,9 @@ import {
 import { eventMessages } from './CommandEvent.messages'
 import {
   getActionType,
-  turnPageEventsToTableItems
+  triggerChangeEvent,
+  turnPageEventsToTableItems,
+  validateElement
 } from './CommandEvent.helpers'
 import { getParamsByType } from '../../commander.helpers'
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
@@ -76,28 +77,35 @@ export const CommandEvent = ({
   )
 
   const handleTriggerEvent = useCallback(() => {
-    const isEventValid = supportedEventNames.includes(eventToTrigger)
-
-    if (!isEventValid) return setMessage(eventMessages.invalidEventName)
-
     const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
 
-    if (eventToTrigger === supportedEvents.CLICK) {
-      paramElements.forEach((element) => element.click())
+    if (!paramElements.length) return setMessage(eventMessages.missingElements)
 
-      setMessage(eventMessages.elementsClickedSuccess)
-    } else if (eventToTrigger === supportedEvents.CHANGE) {
-      const hasAllInputs = paramElements.every(
-        (element) => element.tagName === 'INPUT'
-      )
+    switch (eventToTrigger) {
+      case supportedEvents.CLICK: {
+        paramElements.forEach((element) => {
+          element.dispatchEvent(new MouseEvent('click'))
+        })
 
-      if (!hasAllInputs) return setMessage(eventMessages.invalidElements)
+        setMessage(eventMessages.elementsClickedSuccess)
+        break
+      }
 
-      paramElements.forEach((element) => {
-        element.value = valueToInsert
-      })
+      case supportedEvents.CHANGE: {
+        const areElementsValid = paramElements.every(validateElement)
 
-      setMessage(eventMessages.elementsChangedSuccess)
+        if (!areElementsValid) return setMessage(eventMessages.invalidElements)
+
+        paramElements.forEach((element) => {
+          triggerChangeEvent({ element, value: valueToInsert })
+        })
+
+        setMessage(eventMessages.elementsChangedSuccess)
+        break
+      }
+
+      default:
+        return setMessage(eventMessages.invalidEventName)
     }
 
     finish()

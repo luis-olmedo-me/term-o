@@ -27,7 +27,7 @@ import { createXPathFromElement } from '../../modules/List/components/Element/El
 
 const CommandDomWithoutContext = ({
   props,
-  terminal: { command, setParams, finish },
+  terminal: { command, finish },
   id,
   setHighlitedElement
 }) => {
@@ -130,8 +130,7 @@ const CommandDomWithoutContext = ({
         }
 
         setElements(parsedElementsFound)
-        setParams(insertParams(id, elementsAsParam))
-        finish()
+        finish(insertParams(id, elementsAsParam))
       })
       .catch(() => setMessage(domMessages.noElementsFound))
   }, [
@@ -145,7 +144,6 @@ const CommandDomWithoutContext = ({
     hidden,
     byXpath,
     setMessage,
-    setParams,
     finish,
     id,
     getParent,

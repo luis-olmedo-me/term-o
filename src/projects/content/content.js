@@ -6,8 +6,11 @@ import { FontFamilies } from './fonts/Fonts.styles'
 import { appRoot, shadowRoot } from './content.constants'
 import { PortalProvider } from 'modules/components/Portal/Portal.provider'
 import { OverlayProvider } from 'modules/components/Overlay/Overlay.provider'
+import { BodyReset } from './content.styles'
 
 const termoBody = document.createElement('body')
+termoBody.setAttribute('id', 'term-o-body')
+
 document.documentElement.append(termoBody)
 termoBody.append(appRoot)
 
@@ -16,6 +19,7 @@ const root = createRoot(appRoot)
 root.render(
   <>
     <FontFamilies />
+    <BodyReset />
 
     <shadowRoot.div>
       <PortalProvider>

@@ -16,6 +16,7 @@ import {
 import { eventMessages } from './CommandEvent.messages'
 import {
   getActionType,
+  triggerChangeEvent,
   turnPageEventsToTableItems
 } from './CommandEvent.helpers'
 import { getParamsByType } from '../../commander.helpers'
@@ -98,8 +99,7 @@ export const CommandEvent = ({
         if (!hasAllInputs) return setMessage(eventMessages.invalidElements)
 
         paramElements.forEach((element) => {
-          element.value = valueToInsert
-          element.dispatchEvent(new Event('change'))
+          triggerChangeEvent({ element, value: valueToInsert })
         })
 
         setMessage(eventMessages.elementsChangedSuccess)

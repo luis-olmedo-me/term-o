@@ -57,6 +57,24 @@ export const supportedEvents = {
 }
 
 export const inputsChangeTrigerables = ['INPUT', 'SELECT']
+export const inputTypeChangeTrigerables = [
+  'checkbox',
+  'color',
+  'date',
+  'datetime-local',
+  'email',
+  'month',
+  'number',
+  'password',
+  'radio',
+  'range',
+  'search',
+  'tel',
+  'text',
+  'time',
+  'url',
+  'week'
+]
 
 export const eventActionTypes = {
   SHOW_LIST: 'SHOW_LIST',

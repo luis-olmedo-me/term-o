@@ -1,4 +1,9 @@
-import { eventActionTypes, eventRows } from './CommandEvent.constants'
+import {
+  eventActionTypes,
+  eventRows,
+  inputsChangeTrigerables,
+  inputTypeChangeTrigerables
+} from './CommandEvent.constants'
 
 export const getActionType = ({ list, delete: deletedIds, trigger }) => {
   if (trigger) return eventActionTypes.TRIGGER
@@ -42,4 +47,14 @@ export const triggerChangeEvent = ({ element, value }) => {
   }
 
   element.dispatchEvent(new Event('change'))
+}
+
+export const validateElement = (element) => {
+  const isValidInput = inputsChangeTrigerables.includes(element.tagName)
+  const isInput = element.tagName === 'INPUT'
+  const type = element.getAttribute('type')
+
+  return (
+    isValidInput && (isInput ? inputTypeChangeTrigerables.includes(type) : true)
+  )
 }

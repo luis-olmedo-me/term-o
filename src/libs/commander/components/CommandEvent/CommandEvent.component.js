@@ -6,7 +6,6 @@ import { Table } from 'modules/components/Table/Table.component'
 import {
   eventActionTypes,
   eventRows,
-  inputsChangeTrigerables,
   supportedEvents
 } from './CommandEvent.constants'
 import {
@@ -17,7 +16,8 @@ import { eventMessages } from './CommandEvent.messages'
 import {
   getActionType,
   triggerChangeEvent,
-  turnPageEventsToTableItems
+  turnPageEventsToTableItems,
+  validateElement
 } from './CommandEvent.helpers'
 import { getParamsByType } from '../../commander.helpers'
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
@@ -92,11 +92,9 @@ export const CommandEvent = ({
       }
 
       case supportedEvents.CHANGE: {
-        const hasAllInputs = paramElements.every((element) =>
-          inputsChangeTrigerables.includes(element.tagName)
-        )
+        const areElementsValid = paramElements.every(validateElement)
 
-        if (!hasAllInputs) return setMessage(eventMessages.invalidElements)
+        if (!areElementsValid) return setMessage(eventMessages.invalidElements)
 
         paramElements.forEach((element) => {
           triggerChangeEvent({ element, value: valueToInsert })

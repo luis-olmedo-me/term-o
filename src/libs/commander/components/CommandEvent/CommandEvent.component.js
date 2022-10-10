@@ -78,6 +78,8 @@ export const CommandEvent = ({
   const handleTriggerEvent = useCallback(() => {
     const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
 
+    if (!paramElements.length) return setMessage(eventMessages.missingElements)
+
     switch (eventToTrigger) {
       case supportedEvents.CLICK: {
         paramElements.forEach((element) => {

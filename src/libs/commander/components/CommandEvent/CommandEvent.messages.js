@@ -30,5 +30,9 @@ export const eventMessages = {
   invalidElements: {
     message: 'The elements provided are not inputs.',
     type: parameterTypes.ERROR
+  },
+  missingElements: {
+    message: 'No DOM elements were provided.',
+    type: parameterTypes.ERROR
   }
 }

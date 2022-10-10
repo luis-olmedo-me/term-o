@@ -83,7 +83,9 @@ export const CommandEvent = ({
     const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
 
     if (eventToTrigger === supportedEvents.CLICK) {
-      paramElements.forEach((element) => element.click())
+      paramElements.forEach((element) => {
+        element.dispatchEvent(new MouseEvent('click'))
+      })
 
       setMessage(eventMessages.elementsClickedSuccess)
     } else if (eventToTrigger === supportedEvents.CHANGE) {
@@ -95,6 +97,7 @@ export const CommandEvent = ({
 
       paramElements.forEach((element) => {
         element.value = valueToInsert
+        element.dispatchEvent(new Event('change'))
       })
 
       setMessage(eventMessages.elementsChangedSuccess)

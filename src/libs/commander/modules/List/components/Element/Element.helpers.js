@@ -25,35 +25,3 @@ const getElementSiblingIndex = (element) => {
 
   return index
 }
-
-export const createXPathFromElement = (element) => {
-  const allNodes = document.getElementsByTagName('*')
-  const paths = []
-
-  for (; element?.nodeType === 1; element = element.parentNode) {
-    const localName = element.localName.toLowerCase()
-
-    if (element.hasAttribute('id')) {
-      const isUniqueId = hasUniqueId(element, allNodes)
-      const id = element.getAttribute('id')
-
-      if (isUniqueId) {
-        paths.unshift(`id('${id}')`)
-
-        return paths.join('/')
-      } else {
-        paths.unshift(`${localName}[@id='${id}']`)
-      }
-    } else if (element.hasAttribute('class')) {
-      const className = element.getAttribute('class')
-
-      paths.unshift(`${localName}[@class='${className}']`)
-    } else {
-      const index = getElementSiblingIndex(element)
-
-      paths.unshift(`${localName}[${index}]`)
-    }
-  }
-
-  return paths.length ? `/${paths.join('/')}` : null
-}

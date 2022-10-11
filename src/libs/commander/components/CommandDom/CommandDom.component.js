@@ -23,7 +23,6 @@ import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { getStylesFrom } from '../CommandCss/CommandCss.helpers'
 import { domViewIds, domViews } from './CommandDom.constants'
-import { createXPathFromElement } from '../../modules/List/components/Element/Element.helpers'
 
 const CommandDomWithoutContext = ({
   props,

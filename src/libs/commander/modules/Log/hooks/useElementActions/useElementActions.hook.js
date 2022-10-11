@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { createXPathFromElement } from './useElementActions.helpers'
 
 export const useElementActions = ({
   onAttributeEdit,

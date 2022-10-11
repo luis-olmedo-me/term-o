@@ -57,11 +57,23 @@ export const FaviconSVG = styled.svg`
 `
 
 export const Title = styled.span`
-  vertical-align: middle;
+  vertical-align: top;
+  line-height: 1.3em;
+  position: relative;
+  color: #333;
+
+  &:before {
+    content: 'Now';
+    position: absolute;
+    bottom: -90%;
+    color: #00000080;
+    font-size: 0.8em;
+  }
 `
 
 export const HostName = styled.span`
-  vertical-align: middle;
+  vertical-align: top;
+  line-height: 1.3em;
   margin-left: 10px;
   color: #00000080;
 `

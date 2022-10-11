@@ -14,7 +14,7 @@ export const Tab = ({ element = {} }) => {
         <Favicon src={element.favIconUrl} onError={() => setHasError(true)} />
       )}
 
-      <Title>{element.title}</Title>
+      <Title secondLine={element.date}>{element.title}</Title>
 
       {element.hostName ? <HostName>{element.hostName}</HostName> : null}
     </TabWrapper>

@@ -51,17 +51,31 @@ export const FaviconSVG = styled.svg`
   height: 28px;
   margin-right: 10px;
   padding: 5px;
-  background-color: #fafafa;
+  background-color: #00000030;
   border-radius: 6px;
   box-sizing: border-box;
 `
 
 export const Title = styled.span`
-  vertical-align: middle;
+  vertical-align: top;
+  line-height: 1.4em;
+  position: relative;
+  color: #333;
+  font-size: 0.9em;
+
+  &:before {
+    content: '${(props) => props.secondLine}';
+    position: absolute;
+    bottom: -105%;
+    color: #00000080;
+    font-size: 0.8em;
+  }
 `
 
 export const HostName = styled.span`
-  vertical-align: middle;
+  vertical-align: top;
+  line-height: 1.4em;
   margin-left: 10px;
   color: #00000080;
+  font-size: 0.9em;
 `

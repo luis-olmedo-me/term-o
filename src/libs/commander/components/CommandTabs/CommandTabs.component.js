@@ -64,7 +64,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       .then((tabsOpen) => {
         if (!tabsOpen.length) return setMessage(tabsMessages.noTabsFound)
 
-        setTabs(tabsOpen)
+        setTabs(tabsOpen.map((tab) => ({ ...tab, date: 'Now' })))
         finish()
       })
       .catch(() => setMessage(commanderMessages.unexpectedError))

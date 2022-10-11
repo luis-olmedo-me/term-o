@@ -1,4 +1,5 @@
 import { tabsActionTypes } from './CommandTabs.constants'
+import { formatDate } from 'src/helpers/dates.helpers'
 
 export const getActionType = ({ current, past, open }) => {
   if (current) return tabsActionTypes.SHOW_CURRENT_TABS
@@ -12,7 +13,7 @@ export const parseHistorial = (historial) => {
     const hostName = new URL(url).hostname
 
     return {
-      lastVisitTime,
+      date: formatDate(lastVisitTime, 'dd/MM/yyyy hh:mm:ss'),
       title,
       favIconUrl: `https://www.google.com/s2/favicons?domain=${hostName}`,
       hostName

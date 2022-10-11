@@ -63,7 +63,7 @@ export const Title = styled.span`
   color: #333;
 
   &:before {
-    content: 'Now';
+    content: '${(props) => props.secondLine}';
     position: absolute;
     bottom: -90%;
     color: #00000080;

@@ -21,6 +21,7 @@ export const ConsoleWrapper = styled.div`
   display: flex;
   flex-flow: column;
   font-size: 16px;
+  inset: 10px;
 `
 
 export const ConsoleTitle = styled.h1`

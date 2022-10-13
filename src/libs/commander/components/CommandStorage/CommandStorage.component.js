@@ -131,7 +131,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
                       <Table
                         headers={storageHeaders}
                         rows={page}
-                        widths={[20, 80]}
+                        widths={[40, 60]}
                       />
                     </CarouselItem>
                   )

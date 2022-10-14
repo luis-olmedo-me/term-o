@@ -17,7 +17,7 @@ export const Table = ({ headers, rows, widths, minTableWidths = [] }) => {
 
     const updateWidth = debounce(
       () => setWrapperWidth(wrapper.clientWidth),
-      500
+      250
     )
 
     const obsever = new ResizeObserver(updateWidth)

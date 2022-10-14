@@ -7,6 +7,7 @@ import {
   TableActionsWrapper
 } from './Table.styles'
 import { debounce } from 'src/helpers/utils.helpers.js'
+import { getWidthOffset } from './Table.helpers'
 
 export const Table = ({ headers, rows, widths, minTableWidths = [] }) => {
   const wrapperRef = React.useRef(null)
@@ -27,14 +28,7 @@ export const Table = ({ headers, rows, widths, minTableWidths = [] }) => {
     return () => obsever.unobserve(wrapper)
   }, [])
 
-  const hidden = minTableWidths.filter((width) => width > wrapperWidth).length
-  const visibles = headers.length - hidden
-  const division = hidden / visibles
-  const widthOffset = widths.reduce((result, width) => {
-    const isHidden = width > wrapperWidth
-
-    return isHidden ? result + width / division : result
-  }, 0)
+  const widthOffset = getWidthOffset({ minTableWidths, wrapperWidth, total })
 
   return (
     <TableWrapper ref={wrapperRef}>

@@ -27,6 +27,15 @@ export const Table = ({ headers, rows, widths, minTableWidths = [] }) => {
     return () => obsever.unobserve(wrapper)
   }, [])
 
+  const hidden = minTableWidths.filter((width) => width > wrapperWidth).length
+  const visibles = headers.length - hidden
+  const division = hidden / visibles
+  const widthOffset = widths.reduce((result, width) => {
+    const isHidden = width > wrapperWidth
+
+    return isHidden ? result + width / division : result
+  }, 0)
+
   return (
     <TableWrapper ref={wrapperRef}>
       <TableRow header>
@@ -39,7 +48,10 @@ export const Table = ({ headers, rows, widths, minTableWidths = [] }) => {
 
           return (
             showColumn && (
-              <span key={`header-${header}`} style={{ flex: width / 100 }}>
+              <span
+                key={`header-${header}`}
+                style={{ flex: width + widthOffset / 100 }}
+              >
                 {header}
               </span>
             )
@@ -62,7 +74,7 @@ export const Table = ({ headers, rows, widths, minTableWidths = [] }) => {
                 <TableRowValue
                   key={`row-column-${columnIndex}`}
                   onClick={onColumnClick}
-                  style={{ flex: width / 100 }}
+                  style={{ flex: width + widthOffset / 100 }}
                 >
                   {column.value}
 

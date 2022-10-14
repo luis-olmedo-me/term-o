@@ -6,18 +6,43 @@ import {
   TableActions,
   TableActionsWrapper
 } from './Table.styles'
+import { debounce } from 'src/helpers/utils.helpers.js'
 
-export const Table = ({ headers, rows, widths }) => {
+export const Table = ({ headers, rows, widths, minTableWidths = [] }) => {
+  const wrapperRef = React.useRef(null)
+  const [wrapperWidth, setWrapperWidth] = React.useState(null)
+
+  React.useEffect(() => {
+    const wrapper = wrapperRef.current
+
+    const updateWidth = debounce(
+      () => setWrapperWidth(wrapper.clientWidth),
+      500
+    )
+
+    const obsever = new ResizeObserver(updateWidth)
+
+    obsever.observe(wrapper)
+
+    return () => obsever.unobserve(wrapper)
+  }, [])
+
   return (
-    <TableWrapper>
+    <TableWrapper ref={wrapperRef}>
       <TableRow header>
         {headers.map((header, index) => {
           const width = widths[index]
+          const showColumn =
+            wrapperWidth !== null && minTableWidths[index]
+              ? wrapperWidth > minTableWidths[index]
+              : true
 
           return (
-            <span key={`header-${header}`} style={{ flex: width / 100 }}>
-              {header}
-            </span>
+            showColumn && (
+              <span key={`header-${header}`} style={{ flex: width / 100 }}>
+                {header}
+              </span>
+            )
           )
         })}
       </TableRow>
@@ -27,21 +52,27 @@ export const Table = ({ headers, rows, widths }) => {
           {row.map((column, columnIndex) => {
             const onColumnClick = () => column.onClick?.(column)
             const width = widths[columnIndex]
+            const showColumn =
+              wrapperWidth !== null && minTableWidths[columnIndex]
+                ? wrapperWidth > minTableWidths[columnIndex]
+                : true
 
             return (
-              <TableRowValue
-                key={`row-column-${columnIndex}`}
-                onClick={onColumnClick}
-                style={{ flex: width / 100 }}
-              >
-                {column.value}
+              showColumn && (
+                <TableRowValue
+                  key={`row-column-${columnIndex}`}
+                  onClick={onColumnClick}
+                  style={{ flex: width / 100 }}
+                >
+                  {column.value}
 
-                {column.actions && (
-                  <TableActionsWrapper className='actions'>
-                    <TableActions actions={column.actions} />
-                  </TableActionsWrapper>
-                )}
-              </TableRowValue>
+                  {column.actions && (
+                    <TableActionsWrapper className='actions'>
+                      <TableActions actions={column.actions} />
+                    </TableActionsWrapper>
+                  )}
+                </TableRowValue>
+              )
             )
           })}
         </TableRow>

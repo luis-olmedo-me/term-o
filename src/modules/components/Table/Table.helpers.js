@@ -1,4 +1,12 @@
-export const getWidthOffset = ({ minTableWidths, wrapperWidth, total }) => {
+export const getWidthOffset = ({
+  minTableWidths,
+  wrapperWidth,
+  widths,
+  total
+}) => {
+  if (wrapperWidth === null) return 0
+  if (minTableWidths.length === 0) return 0
+
   const hidden = minTableWidths.filter((width) => width > wrapperWidth).length
   const visibles = total - hidden
   const division = hidden / visibles

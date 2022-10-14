@@ -28,7 +28,12 @@ export const Table = ({ headers, rows, widths, minTableWidths = [] }) => {
     return () => obsever.unobserve(wrapper)
   }, [])
 
-  const widthOffset = getWidthOffset({ minTableWidths, wrapperWidth, total })
+  const widthOffset = getWidthOffset({
+    minTableWidths,
+    wrapperWidth,
+    widths,
+    total: headers.length
+  })
 
   return (
     <TableWrapper ref={wrapperRef}>

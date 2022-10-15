@@ -96,9 +96,9 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       .then((historial) => {
         if (!historial.length) return setMessage(tabsMessages.noTabsFound)
 
-        const parsedHistorial = parseHistorial(historial)
+        const tabItems = turnOpenTabsToTableItems({ tabsOpen: historial })
 
-        setTabs(parsedHistorial)
+        setTabs(tabItems)
         finish()
       })
       .catch(() => setMessage(commanderMessages.unexpectedError))

@@ -94,6 +94,13 @@ export const turnOpenTabsToTableItems = ({ tabsOpen }) => {
     return tabsTableOptions.columns.map(({ id }) => {
       let rowValue = tab[id]
 
+      if (id === tabsHeaderIds.DATE) {
+        const isRowValueString = typeof rowValue === 'string'
+
+        rowValue = isRowValueString
+          ? rowValue
+          : formatDate(rowValue, 'dd/MM/yyyy hh:mm:ss')
+      }
       if (id === tabsHeaderIds.HOSTNAME) {
         rowValue = new URL(tab.url).hostname
       }

@@ -143,9 +143,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
 const createHistoryProcess = (resolve, data) => {
   chrome.history.search(data, (historial) => {
-    const filteredHistory = historial.map(({ lastVisitTime, url, title }) => {
-      return { lastVisitTime, url, title }
-    })
+    const filteredHistory = historial.map(
+      ({ lastVisitTime, url, title, id }) => {
+        return { date: lastVisitTime, url, title, id }
+      }
+    )
 
     resolve(filteredHistory)
   })
@@ -156,8 +158,7 @@ const createTabsOpenProcess = (resolve, data) => {
 
   chrome.tabs.query(options, function (tabs) {
     const filteredTabs = tabs.reduce(
-      (finalTabs, { favIconUrl, title, url, id, incognito, ...rest }) => {
-        console.log('rest', rest)
+      (finalTabs, { favIconUrl, title, url, id, incognito }) => {
         const titleLower = title.toLowerCase()
         const urlLower = url.toLowerCase()
 

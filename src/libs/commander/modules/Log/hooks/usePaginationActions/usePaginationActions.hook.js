@@ -18,12 +18,14 @@ export const usePaginationActions = ({ items, maxItems }) => {
   const paginationActions = [
     {
       id: 'go-to-first-page',
+      title: 'Go to fist page',
       text: '<<',
       disabled: pageNumber === 1,
       onClick: () => setPageNumber(1)
     },
     {
       id: 'go-to-previous-page',
+      title: 'Go to previous page',
       text: '<',
       onClick: () => setPageNumber(pageNumber - 1),
       disabled: pageNumber === 1
@@ -31,12 +33,14 @@ export const usePaginationActions = ({ items, maxItems }) => {
     ...pagesAsButtonGroups,
     {
       id: 'go-to-next-page',
+      title: 'Go to next page',
       text: '>',
       onClick: () => setPageNumber(pageNumber + 1),
       disabled: pageNumber === itemsDividedIntoPages.length
     },
     {
       id: 'go-to-last-page',
+      title: 'Go to last page',
       text: '>>',
       disabled: pageNumber === itemsDividedIntoPages.length,
       onClick: () => setPageNumber(itemsDividedIntoPages.length)

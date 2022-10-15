@@ -15,7 +15,8 @@ export const ActionGroups = ({ actionGroups }) => {
           selected,
           invalid,
           type,
-          label
+          label,
+          title
         }) => {
           const commonProps = {
             key: id,
@@ -25,7 +26,8 @@ export const ActionGroups = ({ actionGroups }) => {
               ${invalid ? 'invalid' : ''}
             `,
             disabled,
-            value: text
+            value: text,
+            title
           }
 
           switch (type) {

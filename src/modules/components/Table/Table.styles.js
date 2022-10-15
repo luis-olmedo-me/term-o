@@ -12,13 +12,12 @@ export const TableRow = styled.div`
   background-color: ${(props) => (props.header ? '#fafafa' : 'transparent')};
   color: ${(props) => (props.header ? '#222' : '#fafafa')};
   font-weight: ${(props) => (props.header ? 'bold' : 'normal')};
-  padding: ${(props) => (props.header ? '3px 20px' : '0 20px')};
-  border-radius: ${(props) => (props.header ? '5px' : '0')};
+  padding: ${(props) => (props.header ? '1px 0' : '0')};
+  border-radius: ${(props) => (props.header ? '3px' : '0')};
   text-align: ${(props) => (props.header ? 'center' : 'left')};
   font-size: 1em;
   line-height: 2em;
   gap: 5px;
-  width: 95%;
   margin: 0 auto 6px;
 
   &:last-child {
@@ -28,7 +27,7 @@ export const TableRow = styled.div`
 
 export const TableRowValue = styled.span`
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -36,6 +35,7 @@ export const TableRowValue = styled.span`
 
   &&:hover {
     background-color: #f5f5f512;
+    color: #f8c572;
   }
 
   &&:hover .actions {

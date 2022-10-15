@@ -153,6 +153,7 @@ export const CommandEvent = ({
                     headers={eventRows}
                     rows={page}
                     widths={[20, 15, 15, 50]}
+                    minTableWidths={[0, 555, 700, 0]}
                   />
                 </CarouselItem>
               )

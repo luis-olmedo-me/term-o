@@ -9,6 +9,7 @@ export const useDateRangeActions = ({ onDateUpdate }) => {
     ? [
         {
           id: 'date-start-picker',
+          title: 'Start date',
           label: formatDate(dates.start, 'dd/MM/yyyy hh:mm:ss'),
           text: formatDate(dates.start, 'yyyy-MM-ddThh:mm:ss'),
           invalid: areDatesInvalid,
@@ -23,6 +24,7 @@ export const useDateRangeActions = ({ onDateUpdate }) => {
     ? [
         {
           id: 'date-end-picker',
+          title: 'End date',
           label: formatDate(dates.end, 'dd/MM/yyyy hh:mm:ss'),
           text: formatDate(dates.end, 'yyyy-MM-ddThh:mm:ss'),
           invalid: areDatesInvalid,

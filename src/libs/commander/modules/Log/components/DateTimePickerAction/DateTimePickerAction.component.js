@@ -6,10 +6,11 @@ export const DateTimePickerAction = ({
   value,
   disabled,
   onChange,
-  label
+  label,
+  title
 }) => {
   return (
-    <Wrapper className={className}>
+    <Wrapper className={className} title={title}>
       <span>{label}</span>
 
       <DatePicker

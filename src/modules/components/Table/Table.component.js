@@ -41,7 +41,7 @@ export const Table = ({ rows, options }) => {
   return (
     <TableWrapper ref={wrapperRef}>
       <TableRow header>
-        {columns.map(({ id, width, displayName, minTableWidth }) => {
+        {options.columns.map(({ id, width, displayName, minTableWidth }) => {
           const showColumn =
             wrapperWidth !== null && minTableWidth
               ? wrapperWidth > minTableWidth

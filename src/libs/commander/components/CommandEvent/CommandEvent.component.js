@@ -5,7 +5,7 @@ import { Log, useMessageLog, usePaginationActions } from '../../modules/Log'
 import { Table } from 'modules/components/Table/Table.component'
 import {
   eventActionTypes,
-  eventRows,
+  eventTableOptions,
   supportedEvents
 } from './CommandEvent.constants'
 import {
@@ -149,12 +149,7 @@ export const CommandEvent = ({
             {pages.map((page, currentPageNumber) => {
               return (
                 <CarouselItem key={currentPageNumber}>
-                  <Table
-                    headers={eventRows}
-                    rows={page}
-                    widths={[20, 15, 15, 50]}
-                    minTableWidths={[0, 555, 700, 0]}
-                  />
+                  <Table rows={page} options={eventTableOptions} />
                 </CarouselItem>
               )
             })}

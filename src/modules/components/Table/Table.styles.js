@@ -4,6 +4,10 @@ import { Actions } from '../Actions'
 export const TableWrapper = styled.div`
   width: 100%;
   border-collapse: collapse;
+  padding: 7px;
+  background-color: #4b197e;
+  box-sizing: border-box;
+  border-radius: 3px;
 `
 
 export const TableRow = styled.div`
@@ -50,6 +54,6 @@ export const TableActionsWrapper = styled.div`
 
 export const TableActions = styled(Actions)`
   position: absolute;
-  background-color: #8136cd;
+  background-color: #572886;
   color: white;
 `

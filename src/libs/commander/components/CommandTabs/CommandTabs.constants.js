@@ -85,3 +85,38 @@ export const tabsActionTypes = {
   REDIRECT: 'REDIRECT',
   NONE: 'NONE'
 }
+
+export const tabsHeaderIds = {
+  ID: 'id',
+  DATE: 'date',
+  TITLE: 'title',
+  HOSTNAME: 'hostname'
+}
+export const tabsTableOptions = {
+  columns: [
+    {
+      id: tabsHeaderIds.ID,
+      displayName: 'ID',
+      width: 15,
+      minTableWidth: 0
+    },
+    {
+      id: tabsHeaderIds.DATE,
+      displayName: 'Date',
+      width: 15,
+      minTableWidth: 555
+    },
+    {
+      id: tabsHeaderIds.TITLE,
+      displayName: 'Title',
+      width: 40,
+      minTableWidth: 0
+    },
+    {
+      id: tabsHeaderIds.HOSTNAME,
+      displayName: 'Host Name',
+      width: 15,
+      minTableWidth: 0
+    }
+  ]
+}

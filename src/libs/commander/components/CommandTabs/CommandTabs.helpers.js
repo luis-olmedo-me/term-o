@@ -1,4 +1,8 @@
-import { tabsActionTypes } from './CommandTabs.constants'
+import {
+  tabsActionTypes,
+  tabsHeaderIds,
+  tabsTableOptions
+} from './CommandTabs.constants'
 import { formatDate } from 'src/helpers/dates.helpers'
 
 export const getActionType = ({ current, past, open }) => {
@@ -83,4 +87,28 @@ export const validateTabsFilters = ({ byText, here, incognito }) => {
   }
 
   return filters
+}
+
+export const turnOpenTabsToTableItems = ({ tabsOpen }) => {
+  return tabsOpen.map((tab) => {
+    return tabsTableOptions.columns.map(({ id }) => {
+      let rowValue = tab[id]
+
+      if (id === tabsHeaderIds.HOSTNAME) {
+        rowValue = new URL(tab.url).hostname
+      }
+
+      return {
+        value: rowValue,
+        actions: [
+          {
+            id: 'copy-value',
+            title: 'Copy value',
+            onClick: () => navigator.clipboard.writeText(rowValue),
+            Component: '📋'
+          }
+        ]
+      }
+    })
+  })
 }

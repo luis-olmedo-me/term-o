@@ -4,6 +4,7 @@ import { parameterTypes } from '../../constants/commands.constants'
 import {
   getActionType,
   parseHistorial,
+  turnOpenTabsToTableItems,
   validateHistoryFilters,
   validateTabsFilters
 } from './CommandTabs.helpers'
@@ -13,9 +14,9 @@ import {
   useMessageLog,
   usePaginationActions
 } from '../../modules/Log'
-import { tabsActionTypes } from './CommandTabs.constants'
+import { tabsActionTypes, tabsTableOptions } from './CommandTabs.constants'
 import { fetchTabsOpen } from 'src/helpers/event.helpers.js'
-import { List, Tab } from '../../modules/List'
+import { Table } from 'modules/components/Table/Table.component'
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { commanderMessages } from '../../commander.messages'
 import { fetchHistorial } from '../../../../helpers/event.helpers'
@@ -64,10 +65,15 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       .then((tabsOpen) => {
         if (!tabsOpen.length) return setMessage(tabsMessages.noTabsFound)
 
-        setTabs(tabsOpen.map((tab) => ({ ...tab, date: 'Now' })))
+        const tabItems = turnOpenTabsToTableItems({ tabsOpen })
+
+        setTabs(tabItems)
         finish()
       })
-      .catch(() => setMessage(commanderMessages.unexpectedError))
+      .catch(
+        (error) =>
+          console.log(error) || setMessage(commanderMessages.unexpectedError)
+      )
   }, [finish, setMessage, props])
 
   const handleRedirect = useCallback(() => {
@@ -135,7 +141,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
 
       {!messageLog && (
         <Log
-          variant={parameterTypes.TABS}
+          variant={parameterTypes.TABLE}
           actionGroups={[
             ...startDateAction,
             ...paginationActions,
@@ -146,10 +152,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
             {pages.map((page, currentPageNumber) => {
               return (
                 <CarouselItem key={currentPageNumber}>
-                  <List
-                    items={page}
-                    Child={({ item }) => <Tab element={item} />}
-                  />
+                  <Table rows={page} options={tabsTableOptions} />
                 </CarouselItem>
               )
             })}

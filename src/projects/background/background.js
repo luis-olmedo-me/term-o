@@ -156,7 +156,8 @@ const createTabsOpenProcess = (resolve, data) => {
 
   chrome.tabs.query(options, function (tabs) {
     const filteredTabs = tabs.reduce(
-      (finalTabs, { favIconUrl, title, url, id, incognito }) => {
+      (finalTabs, { favIconUrl, title, url, id, incognito, ...rest }) => {
+        console.log('rest', rest)
         const titleLower = title.toLowerCase()
         const urlLower = url.toLowerCase()
 
@@ -168,7 +169,8 @@ const createTabsOpenProcess = (resolve, data) => {
               favIconUrl,
               title,
               url,
-              id
+              id,
+              date: 'Now'
             })
           : finalTabs
       },

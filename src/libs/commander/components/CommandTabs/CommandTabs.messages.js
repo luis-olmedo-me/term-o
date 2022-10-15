@@ -9,6 +9,10 @@ export const tabsMessages = {
     message: 'The url has been successfully open.',
     type: parameterTypes.SUCCESS
   },
+  killSuccess: {
+    message: 'The tab has been successfully killed.',
+    type: parameterTypes.SUCCESS
+  },
   noTabsFound: {
     message: 'No tabs where found.',
     type: parameterTypes.ERROR

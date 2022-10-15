@@ -5,7 +5,8 @@ import {
 } from './CommandTabs.constants'
 import { formatDate } from 'src/helpers/dates.helpers'
 
-export const getActionType = ({ current, past, open }) => {
+export const getActionType = ({ current, past, open, kill }) => {
+  if (kill) return tabsActionTypes.KILL_TAB
   if (current) return tabsActionTypes.SHOW_CURRENT_TABS
   if (past) return tabsActionTypes.SHOW_HISTORY
   if (open) return tabsActionTypes.REDIRECT

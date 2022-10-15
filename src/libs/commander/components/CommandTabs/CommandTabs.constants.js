@@ -74,6 +74,13 @@ export const tabsConfig = {
       type: optionTypes.STRING,
       defaultValue: '',
       alias: 'o'
+    },
+    kill: {
+      key: 'kill',
+      description: 'Kill registered tab',
+      type: optionTypes.STRING,
+      defaultValue: '',
+      alias: 'k'
     }
   },
   output: (props) => <CommandTabs key={props.id} {...props} />
@@ -83,6 +90,7 @@ export const tabsActionTypes = {
   SHOW_CURRENT_TABS: 'SHOW_CURRENT_TABS',
   SHOW_HISTORY: 'SHOW_HISTORY',
   REDIRECT: 'REDIRECT',
+  KILL_TAB: 'KILL_TAB',
   NONE: 'NONE'
 }
 

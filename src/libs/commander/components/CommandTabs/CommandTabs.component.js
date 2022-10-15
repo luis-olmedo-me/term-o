@@ -104,6 +104,11 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       .catch(() => setMessage(commanderMessages.unexpectedError))
   }, [setMessage, finish, props])
 
+  const handleKillTab = useCallback(() => {
+    setMessage(tabsMessages.killSuccess)
+    finish()
+  }, [open, setMessage, finish])
+
   useEffect(
     function handleActionType() {
       switch (actionType) {
@@ -118,6 +123,9 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
         case tabsActionTypes.REDIRECT:
           handleRedirect()
           break
+        case tabsActionTypes.KILL_TAB:
+          handleKillTab()
+          break
 
         case tabsActionTypes.NONE:
           setMessage(commanderMessages.unexpectedError)
@@ -129,7 +137,8 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       setMessage,
       handleShowTabList,
       handleRedirect,
-      handleShowHistory
+      handleShowHistory,
+      handleKillTab
     ]
   )
 

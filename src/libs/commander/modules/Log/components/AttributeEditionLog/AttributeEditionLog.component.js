@@ -8,6 +8,7 @@ import { turnAttributesIntoTableItems } from './AttributeEditionLog.helpers'
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { Log } from '../../Log.component'
 import { usePaginationActions } from '../../hooks/usePaginationActions'
+import { attributeTableOptions } from './AttributeEditionLog.constants'
 
 export const AttributeEditionLog = ({
   element,
@@ -81,12 +82,7 @@ export const AttributeEditionLog = ({
         {parsedPages.map((page, currentPageNumber) => {
           return (
             <CarouselItem key={currentPageNumber}>
-              <Table
-                key={currentPageNumber}
-                headers={['Attribute', 'Value']}
-                rows={page}
-                widths={[50, 50]}
-              />
+              <Table rows={page} options={attributeTableOptions} />
             </CarouselItem>
           )
         })}

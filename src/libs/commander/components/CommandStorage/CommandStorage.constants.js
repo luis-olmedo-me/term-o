@@ -37,8 +37,6 @@ export const storageActionTypes = {
   NONE: 'NONE'
 }
 
-export const storageHeaders = ['key', 'values']
-
 export const storageViewIds = {
   MAIN: 0,
   EDITOR: 1
@@ -48,3 +46,25 @@ export const storageViews = [
   { id: storageViewIds.MAIN, text: '🏠' },
   { id: storageViewIds.EDITOR }
 ]
+
+const storageHeaderIds = {
+  KEY: 'key',
+  VALUE: 'value'
+}
+
+export const storageTableOptions = {
+  columns: [
+    {
+      id: storageHeaderIds.KEY,
+      displayName: 'Key',
+      width: 40,
+      minTableWidth: 0
+    },
+    {
+      id: storageHeaderIds.VALUE,
+      displayName: 'Value',
+      width: 60,
+      minTableWidth: 0
+    }
+  ]
+}

@@ -17,7 +17,7 @@ import {
 import { storageMessages } from './CommandStorage.messages'
 import {
   storageActionTypes,
-  storageHeaders,
+  storageTableOptions,
   storageViewIds,
   storageViews
 } from './CommandStorage.constants'
@@ -128,11 +128,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
                 {pages.map((page, currentPageNumber) => {
                   return (
                     <CarouselItem key={currentPageNumber}>
-                      <Table
-                        headers={storageHeaders}
-                        rows={page}
-                        widths={[40, 60]}
-                      />
+                      <Table rows={page} options={storageTableOptions} />
                     </CarouselItem>
                   )
                 })}

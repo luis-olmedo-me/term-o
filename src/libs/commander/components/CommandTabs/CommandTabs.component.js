@@ -129,6 +129,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
         case tabsActionTypes.REDIRECT:
           handleRedirect()
           break
+
         case tabsActionTypes.KILL_OPEN_TABS:
           handleKillTab()
           break

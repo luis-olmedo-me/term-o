@@ -26,7 +26,6 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const [tabs, setTabs] = useState([])
 
   const actionType = getActionType(props)
-  const { open, kill } = props
 
   const handleDatesUpdate = (overWrittenOptions) => {
     const options = {
@@ -77,13 +76,13 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   }, [finish, setMessage, props])
 
   const handleRedirect = useCallback(() => {
-    if (!open) return setMessage(tabsMessages.missingURL)
+    if (!props.open) return setMessage(tabsMessages.missingURL)
 
-    window.open(open, '_blank')
+    window.open(props.open, '_blank')
 
     setMessage(tabsMessages.redirectionSuccess)
     finish()
-  }, [open, setMessage, finish])
+  }, [props, setMessage, finish])
 
   const handleShowHistory = useCallback(() => {
     const options = validateHistoryFilters(props)
@@ -105,7 +104,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   }, [setMessage, finish, props])
 
   const handleKillTab = useCallback(() => {
-    const numericTabIds = kill.map(Number)
+    const numericTabIds = props.kill.map(Number)
     const hasInvalidTabIds = numericTabIds.some(Number.isNaN)
 
     if (hasInvalidTabIds) return setMessage(tabsMessages.tabIdsInvalid)
@@ -114,7 +113,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
 
     setMessage(tabsMessages.killSuccess)
     finish()
-  }, [kill, setMessage, finish])
+  }, [props, setMessage, finish])
 
   useEffect(
     function handleActionType() {
@@ -130,7 +129,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
         case tabsActionTypes.REDIRECT:
           handleRedirect()
           break
-        case tabsActionTypes.KILL_TAB:
+        case tabsActionTypes.KILL_OPEN_TABS:
           handleKillTab()
           break
 

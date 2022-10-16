@@ -117,6 +117,17 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       break
     }
 
+    case eventTypes.KILL_OPEN_TABS: {
+      const { id, data } = request.data
+
+      const process = id
+        ? processWaitList.getProcessById(id)
+        : processWaitList.add((resolve) => createKillTabsProcess(resolve, data))
+
+      sendResponse({ status: 'ok', data: process })
+      break
+    }
+
     case eventTypes.GET_TABS_OPEN: {
       const { id, data } = request.data
 
@@ -140,6 +151,13 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
   }
 })
+
+const createKillTabsProcess = (resolve, tabIds) => {
+  chrome.tabs.remove(tabIds, (...params) => {
+    console.log('remove', params)
+    resolve()
+  })
+}
 
 const createHistoryProcess = (resolve, data) => {
   chrome.history.search(data, (historial) => {

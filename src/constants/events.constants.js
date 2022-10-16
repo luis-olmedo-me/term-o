@@ -8,7 +8,8 @@ export const eventTypes = {
   RESET_CONFIGURATION: 'term-o-reset-configuration',
   GET_TABS_OPEN: 'term-o-get-tabs-info',
   TERM_O_RESIZE: 'term-o-resize',
-  GET_HISTORIAL: 'term-o-get-historial'
+  GET_HISTORIAL: 'term-o-get-historial',
+  KILL_OPEN_TABS: 'kill_open_tabs'
 }
 
 export const extensionKeyEvents = {

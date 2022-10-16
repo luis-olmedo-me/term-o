@@ -19,14 +19,14 @@ import { fetchTabsOpen } from 'src/helpers/event.helpers.js'
 import { Table } from 'modules/components/Table/Table.component'
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { commanderMessages } from '../../commander.messages'
-import { fetchHistorial } from '../../../../helpers/event.helpers'
+import { deleteTabs, fetchHistorial } from '../../../../helpers/event.helpers'
 import { tabsMessages } from './CommandTabs.messages'
 
 export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const [tabs, setTabs] = useState([])
 
   const actionType = getActionType(props)
-  const { open } = props
+  const { open, kill } = props
 
   const handleDatesUpdate = (overWrittenOptions) => {
     const options = {
@@ -106,8 +106,10 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
 
   const handleKillTab = useCallback(() => {
     setMessage(tabsMessages.killSuccess)
+
+    deleteTabs([Number(kill)])
     finish()
-  }, [open, setMessage, finish])
+  }, [kill, setMessage, finish])
 
   useEffect(
     function handleActionType() {

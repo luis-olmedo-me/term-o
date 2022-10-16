@@ -62,6 +62,13 @@ export const fetchHistorial = (data) => {
   })
 }
 
+export const deleteTabs = (data) => {
+  return createWorkerProcessRequest({
+    type: eventTypes.KILL_OPEN_TABS,
+    data
+  })
+}
+
 export const addAliases = (newAliases) => {
   return createWorkerRequest({
     type: eventTypes.ADD_ALIAS,

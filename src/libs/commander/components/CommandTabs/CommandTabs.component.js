@@ -105,7 +105,12 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   }, [setMessage, finish, props])
 
   const handleKillTab = useCallback(() => {
-    deleteTabs([Number(kill)])
+    const numericTabIds = kill.map(Number)
+    const hasInvalidTabIds = numericTabIds.some(Number.isNaN)
+
+    if (hasInvalidTabIds) return setMessage(tabsMessages.tabIdsInvalid)
+
+    deleteTabs(numericTabIds)
 
     setMessage(tabsMessages.killSuccess)
     finish()

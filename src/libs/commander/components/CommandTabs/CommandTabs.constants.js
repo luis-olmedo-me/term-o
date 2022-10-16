@@ -78,8 +78,8 @@ export const tabsConfig = {
     kill: {
       key: 'kill',
       description: 'Kill registered tab',
-      type: optionTypes.STRING,
-      defaultValue: '',
+      type: optionTypes.ARRAY_OF_STRINGS,
+      defaultValue: [],
       alias: 'k'
     }
   },

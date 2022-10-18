@@ -11,7 +11,7 @@ import { getWidthOffset } from './Table.helpers'
 
 export const Table = ({ rows, options }) => {
   const wrapperRef = React.useRef(null)
-  const [wrapperWidth, setWrapperWidth] = React.useState(null)
+  const [wrapperWidth, setWrapperWidth] = React.useState(0)
 
   React.useEffect(() => {
     const wrapper = wrapperRef.current

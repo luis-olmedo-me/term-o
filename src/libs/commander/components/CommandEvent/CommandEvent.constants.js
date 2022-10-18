@@ -81,13 +81,13 @@ export const eventTableOptions = {
       id: eventHeaderIds.ID,
       displayName: 'ID',
       width: 20,
-      minTableWidth: 0
+      minTableWidth: 555
     },
     {
       id: eventHeaderIds.URL,
       displayName: 'URL',
       width: 15,
-      minTableWidth: 555
+      minTableWidth: 0
     },
     {
       id: eventHeaderIds.EVENT,

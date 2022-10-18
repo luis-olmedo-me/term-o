@@ -42,7 +42,7 @@ export const aliasTableOptions = {
       id: aliasHeaderIds.ID,
       displayName: 'ID',
       width: 20,
-      minTableWidth: 0
+      minTableWidth: 630
     },
     {
       id: aliasHeaderIds.NAME,

@@ -105,14 +105,14 @@ export const tabsTableOptions = {
     {
       id: tabsHeaderIds.ID,
       displayName: 'ID',
-      width: 15,
-      minTableWidth: 0
+      width: 5,
+      minTableWidth: 900
     },
     {
       id: tabsHeaderIds.DATE,
       displayName: 'Date',
-      width: 15,
-      minTableWidth: 555
+      width: 25,
+      minTableWidth: 0
     },
     {
       id: tabsHeaderIds.TITLE,
@@ -124,7 +124,7 @@ export const tabsTableOptions = {
       id: tabsHeaderIds.HOSTNAME,
       displayName: 'Host Name',
       width: 15,
-      minTableWidth: 0
+      minTableWidth: 665
     }
   ]
 }

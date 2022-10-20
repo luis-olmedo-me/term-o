@@ -117,7 +117,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       break
     }
 
-    case eventTypes.KILL_OPEN_TABS: {
+    case eventTypes.DELETE_OPEN_TABS: {
       const { id, data } = request.data
 
       const process = id

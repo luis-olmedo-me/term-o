@@ -1,12 +1,12 @@
+import { formatDate } from 'src/helpers/dates.helpers'
 import {
   tabsActionTypes,
   tabsHeaderIds,
   tabsTableOptions
 } from './CommandTabs.constants'
-import { formatDate } from 'src/helpers/dates.helpers'
 
 export const getActionType = ({ current, past, open, kill }) => {
-  if (kill.length) return tabsActionTypes.KILL_OPEN_TABS
+  if (kill.length) return tabsActionTypes.DELETE_OPEN_TABS
   if (current) return tabsActionTypes.SHOW_CURRENT_TABS
   if (past) return tabsActionTypes.SHOW_HISTORY
   if (open) return tabsActionTypes.REDIRECT

@@ -1,4 +1,6 @@
+import * as React from 'react'
 import { formatDate } from 'src/helpers/dates.helpers'
+import { ImageIcon } from 'src/modules/components/ImageIcon/ImageIcon.component'
 import {
   tabsActionTypes,
   tabsHeaderIds,
@@ -12,19 +14,6 @@ export const getActionType = ({ current, past, open, delete: deleteIds }) => {
   if (past) return tabsActionTypes.SHOW_HISTORY
   if (open) return tabsActionTypes.REDIRECT
   return tabsActionTypes.NONE
-}
-
-export const parseHistorial = (historial) => {
-  return historial.map(({ lastVisitTime, url, title }) => {
-    const hostName = new URL(url).hostname
-
-    return {
-      date: formatDate(lastVisitTime, 'dd/MM/yyyy hh:mm:ss'),
-      title,
-      favIconUrl: `https://www.google.com/s2/favicons?domain=${hostName}`,
-      hostName
-    }
-  })
 }
 
 const microsecondsPerDay = 1000 * 60 * 60 * 24
@@ -95,6 +84,7 @@ export const turnOpenTabsToTableItems = ({ tabsOpen }) => {
   return tabsOpen.map((tab) => {
     return tabsTableOptions.columns.map(({ id }) => {
       let rowValue = tab[id]
+      const valueToCopy = rowValue
 
       if (id === tabsHeaderIds.DATE) {
         const isRowValueString = typeof rowValue === 'string'
@@ -106,6 +96,16 @@ export const turnOpenTabsToTableItems = ({ tabsOpen }) => {
       if (id === tabsHeaderIds.HOSTNAME) {
         rowValue = new URL(tab.url).hostname
       }
+      if (id === tabsHeaderIds.TITLE) {
+        const hostName = new URL(tab.url).hostname
+
+        rowValue = (
+          <ImageIcon
+            url={`https://www.google.com/s2/favicons?domain=${hostName}`}
+            label={tab.title}
+          />
+        )
+      }
 
       return {
         value: rowValue,
@@ -113,7 +113,7 @@ export const turnOpenTabsToTableItems = ({ tabsOpen }) => {
           {
             id: 'copy-value',
             title: 'Copy value',
-            onClick: () => navigator.clipboard.writeText(rowValue),
+            onClick: () => navigator.clipboard.writeText(valueToCopy),
             Component: '📋'
           }
         ]

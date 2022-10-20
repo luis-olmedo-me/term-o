@@ -17,7 +17,6 @@ import {
 import { tabsActionTypes, tabsTableOptions } from './CommandTabs.constants'
 import {
   getActionType,
-  parseHistorial,
   turnOpenTabsToTableItems,
   validateHistoryFilters,
   validateTabsFilters
@@ -44,9 +43,9 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
         if (!historial.length) return setAreDatesInvalid(true)
         setAreDatesInvalid(false)
 
-        const parsedHistorial = parseHistorial(historial)
+        const tabItems = turnOpenTabsToTableItems({ tabsOpen: historial })
 
-        setTabs(parsedHistorial)
+        setTabs(tabItems)
       })
       .catch(() => setMessage(commanderMessages.unexpectedError))
   }

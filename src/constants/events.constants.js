@@ -9,7 +9,7 @@ export const eventTypes = {
   GET_TABS_OPEN: 'term-o-get-tabs-info',
   TERM_O_RESIZE: 'term-o-resize',
   GET_HISTORIAL: 'term-o-get-historial',
-  DELETE_OPEN_TABS: 'DELETE_OPEN_TABS'
+  DELETE_OPEN_TABS: 'term-o-delete-open-tabs'
 }
 
 export const extensionKeyEvents = {

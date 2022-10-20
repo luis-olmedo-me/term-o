@@ -75,9 +75,9 @@ export const tabsConfig = {
       defaultValue: '',
       alias: 'o'
     },
-    kill: {
-      key: 'kill',
-      description: 'Kill registered tab',
+    delete: {
+      key: 'delete',
+      description: 'Delete open tab',
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
       alias: 'k'

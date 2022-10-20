@@ -105,8 +105,8 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       .catch(() => setMessage(commanderMessages.unexpectedError))
   }, [setMessage, finish, props])
 
-  const handleKillTab = React.useCallback(() => {
-    const numericTabIds = props.kill.map(Number)
+  const handleDeleteTabs = React.useCallback(() => {
+    const numericTabIds = props.delete.map(Number)
     const hasInvalidTabIds = numericTabIds.some(Number.isNaN)
 
     if (hasInvalidTabIds) return setMessage(tabsMessages.tabIdsInvalid)
@@ -133,7 +133,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
           break
 
         case tabsActionTypes.DELETE_OPEN_TABS:
-          handleKillTab()
+          handleDeleteTabs()
           break
 
         case tabsActionTypes.NONE:
@@ -147,7 +147,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       handleShowTabList,
       handleRedirect,
       handleShowHistory,
-      handleKillTab
+      handleDeleteTabs
     ]
   )
 

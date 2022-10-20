@@ -1,8 +1,11 @@
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { Table } from 'modules/components/Table/Table.component'
 import * as React from 'react'
-import { fetchTabsOpen } from 'src/helpers/event.helpers.js'
-import { deleteTabs, fetchHistorial } from '../../../../helpers/event.helpers'
+import {
+  deleteTabs,
+  fetchHistorial,
+  fetchTabsOpen
+} from 'src/helpers/event.helpers'
 import { commanderMessages } from '../../commander.messages'
 import { parameterTypes } from '../../constants/commands.constants'
 import {

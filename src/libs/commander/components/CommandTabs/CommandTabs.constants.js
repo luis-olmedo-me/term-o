@@ -80,7 +80,7 @@ export const tabsConfig = {
       description: 'Delete open tab',
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
-      alias: 'k'
+      alias: 'd'
     }
   },
   output: (props) => <CommandTabs key={props.id} {...props} />

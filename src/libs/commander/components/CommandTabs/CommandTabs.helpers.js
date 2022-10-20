@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { formatDate } from 'src/helpers/dates.helpers'
-import { ImageIcon } from 'src/modules/components/ImageIcon/ImageIcon.component'
+import { ImageIcon } from 'src/modules/components/ImageIcon'
 import {
   tabsActionTypes,
   tabsHeaderIds,

@@ -1,6 +1,11 @@
 import * as React from 'react'
 import { Logo } from 'src/modules/icons/Logo.icon'
-import { Favicon, FaviconSVG, IconWrapper } from './ImageIcon.styles'
+import {
+  Favicon,
+  FaviconSVG,
+  IconWrapper,
+  LabelWrapper
+} from './ImageIcon.styles'
 
 export const ImageIcon = ({ url, label }) => {
   const [hasError, setHasError] = React.useState(false)
@@ -13,7 +18,7 @@ export const ImageIcon = ({ url, label }) => {
         <Favicon src={url} onError={() => setHasError(true)} />
       )}
 
-      <span>{label}</span>
+      <LabelWrapper>{label}</LabelWrapper>
     </IconWrapper>
   )
 }

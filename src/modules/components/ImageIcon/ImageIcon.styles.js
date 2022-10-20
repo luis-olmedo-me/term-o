@@ -29,3 +29,12 @@ export const FaviconSVG = styled.svg`
   box-sizing: border-box;
   width: calc(100% - 2em);
 `
+
+export const LabelWrapper = styled.span`
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: calc(100% - 2em);
+  display: inline-block;
+  font-size: 1em;
+`

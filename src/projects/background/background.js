@@ -3,8 +3,8 @@ import { processWaitList } from 'libs/process-wait-list/processWaitList.service'
 
 import {
   eventTypes,
-  extensionKeyEvents,
-  extensionKeyEventNames
+  extensionKeyEventNames,
+  extensionKeyEvents
 } from 'src/constants/events.constants.js'
 import {
   resizeFull,
@@ -117,6 +117,19 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       break
     }
 
+    case eventTypes.DELETE_OPEN_TABS: {
+      const { id, data } = request.data
+
+      const process = id
+        ? processWaitList.getProcessById(id)
+        : processWaitList.add((resolve) =>
+            createDeleteTabsProcess(resolve, data)
+          )
+
+      sendResponse({ status: 'ok', data: process })
+      break
+    }
+
     case eventTypes.GET_TABS_OPEN: {
       const { id, data } = request.data
 
@@ -141,11 +154,20 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
 })
 
+const createDeleteTabsProcess = (resolve, tabIds) => {
+  chrome.tabs.remove(tabIds, (...params) => {
+    console.log('remove', params)
+    resolve()
+  })
+}
+
 const createHistoryProcess = (resolve, data) => {
   chrome.history.search(data, (historial) => {
-    const filteredHistory = historial.map(({ lastVisitTime, url, title }) => {
-      return { lastVisitTime, url, title }
-    })
+    const filteredHistory = historial.map(
+      ({ lastVisitTime, url, title, id }) => {
+        return { date: lastVisitTime, url, title, id }
+      }
+    )
 
     resolve(filteredHistory)
   })
@@ -168,7 +190,8 @@ const createTabsOpenProcess = (resolve, data) => {
               favIconUrl,
               title,
               url,
-              id
+              id,
+              date: 'Now'
             })
           : finalTabs
       },

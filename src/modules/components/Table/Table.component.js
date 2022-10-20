@@ -9,9 +9,9 @@ import {
 import { debounce } from 'src/helpers/utils.helpers.js'
 import { getWidthOffset } from './Table.helpers'
 
-export const Table = ({ headers, rows, widths, minTableWidths = [] }) => {
+export const Table = ({ rows, options }) => {
   const wrapperRef = React.useRef(null)
-  const [wrapperWidth, setWrapperWidth] = React.useState(null)
+  const [wrapperWidth, setWrapperWidth] = React.useState(0)
 
   React.useEffect(() => {
     const wrapper = wrapperRef.current
@@ -28,30 +28,32 @@ export const Table = ({ headers, rows, widths, minTableWidths = [] }) => {
     return () => obsever.unobserve(wrapper)
   }, [])
 
+  const minTableWidths = options.columns.map((column) => column.minTableWidth)
+  const widths = options.columns.map((column) => column.width)
+
   const widthOffset = getWidthOffset({
     minTableWidths,
     wrapperWidth,
     widths,
-    total: headers.length
+    total: options.columns.length
   })
 
   return (
     <TableWrapper ref={wrapperRef}>
       <TableRow header>
-        {headers.map((header, index) => {
-          const width = widths[index]
+        {options.columns.map(({ id, width, displayName, minTableWidth }) => {
           const showColumn =
-            wrapperWidth !== null && minTableWidths[index]
-              ? wrapperWidth > minTableWidths[index]
+            wrapperWidth !== null && minTableWidth
+              ? wrapperWidth > minTableWidth
               : true
 
           return (
             showColumn && (
               <span
-                key={`header-${header}`}
+                key={`header-${id}`}
                 style={{ flex: width + widthOffset / 100 }}
               >
-                {header}
+                {displayName}
               </span>
             )
           )

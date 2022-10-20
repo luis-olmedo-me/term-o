@@ -1,6 +1,6 @@
 import { actionTypes } from '../../constants/commands.constants'
 import { commander } from 'libs/commander'
-import { aliasHeaders } from './CommandAlias.constants'
+import { aliasTableOptions } from './CommandAlias.constants'
 
 export const getActionType = ({
   list,
@@ -30,8 +30,8 @@ export const validateAliasesToAdd = ({ aliasesToAdd }) => {
 
 export const turnAliasesToTableItems = ({ aliases }) => {
   return aliases.map((alias) => {
-    return aliasHeaders.map((aliasHeader) => {
-      const rowValue = alias[aliasHeader]
+    return aliasTableOptions.columns.map(({ id }) => {
+      const rowValue = alias[id]
 
       return {
         value: rowValue,

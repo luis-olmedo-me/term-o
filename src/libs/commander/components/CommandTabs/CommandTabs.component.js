@@ -1,31 +1,32 @@
+import { Carousel, CarouselItem } from 'modules/components/Carousel'
+import { Table } from 'modules/components/Table/Table.component'
 import * as React from 'react'
-import { useCallback, useEffect, useState } from 'react'
-import { parameterTypes } from '../../constants/commands.constants'
 import {
-  getActionType,
-  parseHistorial,
-  validateHistoryFilters,
-  validateTabsFilters
-} from './CommandTabs.helpers'
+  deleteTabs,
+  fetchHistorial,
+  fetchTabsOpen
+} from 'src/helpers/event.helpers'
+import { commanderMessages } from '../../commander.messages'
+import { parameterTypes } from '../../constants/commands.constants'
 import {
   Log,
   useDateRangeActions,
   useMessageLog,
   usePaginationActions
 } from '../../modules/Log'
-import { tabsActionTypes } from './CommandTabs.constants'
-import { fetchTabsOpen } from 'src/helpers/event.helpers.js'
-import { List, Tab } from '../../modules/List'
-import { Carousel, CarouselItem } from 'modules/components/Carousel'
-import { commanderMessages } from '../../commander.messages'
-import { fetchHistorial } from '../../../../helpers/event.helpers'
+import { tabsActionTypes, tabsTableOptions } from './CommandTabs.constants'
+import {
+  getActionType,
+  turnOpenTabsToTableItems,
+  validateHistoryFilters,
+  validateTabsFilters
+} from './CommandTabs.helpers'
 import { tabsMessages } from './CommandTabs.messages'
 
 export const CommandTabs = ({ props, terminal: { command, finish } }) => {
-  const [tabs, setTabs] = useState([])
+  const [tabs, setTabs] = React.useState([])
 
   const actionType = getActionType(props)
-  const { open } = props
 
   const handleDatesUpdate = (overWrittenOptions) => {
     const options = {
@@ -42,9 +43,9 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
         if (!historial.length) return setAreDatesInvalid(true)
         setAreDatesInvalid(false)
 
-        const parsedHistorial = parseHistorial(historial)
+        const tabItems = turnOpenTabsToTableItems({ tabsOpen: historial })
 
-        setTabs(parsedHistorial)
+        setTabs(tabItems)
       })
       .catch(() => setMessage(commanderMessages.unexpectedError))
   }
@@ -57,29 +58,34 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const { startDateAction, endDateAction, setAreDatesInvalid, setDate } =
     useDateRangeActions({ onDateUpdate: handleDatesUpdate })
 
-  const handleShowTabList = useCallback(() => {
+  const handleShowTabList = React.useCallback(() => {
     const options = validateTabsFilters(props)
 
     fetchTabsOpen(options)
       .then((tabsOpen) => {
         if (!tabsOpen.length) return setMessage(tabsMessages.noTabsFound)
 
-        setTabs(tabsOpen.map((tab) => ({ ...tab, date: 'Now' })))
+        const tabItems = turnOpenTabsToTableItems({ tabsOpen })
+
+        setTabs(tabItems)
         finish()
       })
-      .catch(() => setMessage(commanderMessages.unexpectedError))
+      .catch(
+        (error) =>
+          console.log(error) || setMessage(commanderMessages.unexpectedError)
+      )
   }, [finish, setMessage, props])
 
-  const handleRedirect = useCallback(() => {
-    if (!open) return setMessage(tabsMessages.missingURL)
+  const handleRedirect = React.useCallback(() => {
+    if (!props.open) return setMessage(tabsMessages.missingURL)
 
-    window.open(open, '_blank')
+    window.open(props.open, '_blank')
 
     setMessage(tabsMessages.redirectionSuccess)
     finish()
-  }, [open, setMessage, finish])
+  }, [props, setMessage, finish])
 
-  const handleShowHistory = useCallback(() => {
+  const handleShowHistory = React.useCallback(() => {
     const options = validateHistoryFilters(props)
     const { startTime, endTime } = options
 
@@ -90,15 +96,27 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       .then((historial) => {
         if (!historial.length) return setMessage(tabsMessages.noTabsFound)
 
-        const parsedHistorial = parseHistorial(historial)
+        const tabItems = turnOpenTabsToTableItems({ tabsOpen: historial })
 
-        setTabs(parsedHistorial)
+        setTabs(tabItems)
         finish()
       })
       .catch(() => setMessage(commanderMessages.unexpectedError))
   }, [setMessage, finish, props])
 
-  useEffect(
+  const handleDeleteTabs = React.useCallback(() => {
+    const numericTabIds = props.delete.map(Number)
+    const hasInvalidTabIds = numericTabIds.some(Number.isNaN)
+
+    if (hasInvalidTabIds) return setMessage(tabsMessages.tabIdsInvalid)
+
+    deleteTabs(numericTabIds)
+
+    setMessage(tabsMessages.killSuccess)
+    finish()
+  }, [props, setMessage, finish])
+
+  React.useEffect(
     function handleActionType() {
       switch (actionType) {
         case tabsActionTypes.SHOW_CURRENT_TABS:
@@ -113,6 +131,10 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
           handleRedirect()
           break
 
+        case tabsActionTypes.DELETE_OPEN_TABS:
+          handleDeleteTabs()
+          break
+
         case tabsActionTypes.NONE:
           setMessage(commanderMessages.unexpectedError)
           break
@@ -123,7 +145,8 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       setMessage,
       handleShowTabList,
       handleRedirect,
-      handleShowHistory
+      handleShowHistory,
+      handleDeleteTabs
     ]
   )
 
@@ -135,7 +158,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
 
       {!messageLog && (
         <Log
-          variant={parameterTypes.TABS}
+          variant={parameterTypes.TABLE}
           actionGroups={[
             ...startDateAction,
             ...paginationActions,
@@ -146,10 +169,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
             {pages.map((page, currentPageNumber) => {
               return (
                 <CarouselItem key={currentPageNumber}>
-                  <List
-                    items={page}
-                    Child={({ item }) => <Tab element={item} />}
-                  />
+                  <Table rows={page} options={tabsTableOptions} />
                 </CarouselItem>
               )
             })}

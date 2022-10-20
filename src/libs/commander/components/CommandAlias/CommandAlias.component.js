@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { Log, useMessageLog, usePaginationActions } from '../../modules/Log'
 import { Table } from 'modules/components/Table/Table.component'
-import { aliasHeaders } from './CommandAlias.constants'
+import { aliasTableOptions } from './CommandAlias.constants'
 import {
   fetchConfiguration,
   addAliases,
@@ -111,11 +111,7 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
             {pages.map((page, currentPageNumber) => {
               return (
                 <CarouselItem key={currentPageNumber}>
-                  <Table
-                    headers={aliasHeaders}
-                    rows={page}
-                    widths={[20, 20, 60]}
-                  />
+                  <Table rows={page} options={aliasTableOptions} />
                 </CarouselItem>
               )
             })}

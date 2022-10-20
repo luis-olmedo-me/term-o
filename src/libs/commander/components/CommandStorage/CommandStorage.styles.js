@@ -9,4 +9,8 @@ export const MaterialTree = styled(Tree)`
   min-width: 100%;
   box-sizing: border-box;
   line-height: calc(1em + 10px);
+  padding: 7px;
+  background-color: #00000040;
+  box-sizing: border-box;
+  border-radius: 3px;
 `

@@ -1,6 +1,6 @@
 import {
   eventActionTypes,
-  eventRows,
+  eventTableOptions,
   inputsChangeTrigerables,
   inputTypeChangeTrigerables
 } from './CommandEvent.constants'
@@ -14,8 +14,8 @@ export const getActionType = ({ list, delete: deletedIds, trigger }) => {
 
 export const turnPageEventsToTableItems = ({ pageEvents }) => {
   return pageEvents.map((pageEvent) => {
-    return eventRows.map((eventRow) => {
-      const rowValue = pageEvent[eventRow]
+    return eventTableOptions.columns.map(({ id }) => {
+      const rowValue = pageEvent[id]
 
       return {
         value: rowValue,

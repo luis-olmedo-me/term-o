@@ -2,20 +2,6 @@ import * as React from 'react'
 import { CommandEvent } from './CommandEvent.component'
 import { optionTypes } from '../../constants/commands.constants'
 
-const eventKeys = {
-  ID: 'id',
-  URL: 'url',
-  COMMAND: 'command',
-  EVENT: 'event'
-}
-
-export const eventRows = [
-  eventKeys.ID,
-  eventKeys.URL,
-  eventKeys.EVENT,
-  eventKeys.COMMAND
-]
-
 export const eventConfig = {
   props: {
     list: {
@@ -80,4 +66,40 @@ export const eventActionTypes = {
   SHOW_LIST: 'SHOW_LIST',
   DELETE_EVENT: 'DELETE_EVENT',
   TRIGGER: 'TRIGGER'
+}
+
+const eventHeaderIds = {
+  ID: 'id',
+  URL: 'url',
+  EVENT: 'event',
+  COMMAND: 'command'
+}
+
+export const eventTableOptions = {
+  columns: [
+    {
+      id: eventHeaderIds.ID,
+      displayName: 'ID',
+      width: 20,
+      minTableWidth: 555
+    },
+    {
+      id: eventHeaderIds.URL,
+      displayName: 'URL',
+      width: 15,
+      minTableWidth: 0
+    },
+    {
+      id: eventHeaderIds.EVENT,
+      displayName: 'Event',
+      width: 15,
+      minTableWidth: 700
+    },
+    {
+      id: eventHeaderIds.COMMAND,
+      displayName: 'Command',
+      width: 50,
+      minTableWidth: 0
+    }
+  ]
 }

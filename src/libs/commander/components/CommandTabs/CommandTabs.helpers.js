@@ -1,24 +1,19 @@
-import { tabsActionTypes } from './CommandTabs.constants'
+import * as React from 'react'
 import { formatDate } from 'src/helpers/dates.helpers'
+import { ImageIcon } from 'src/modules/components/ImageIcon'
+import {
+  tabsActionTypes,
+  tabsHeaderIds,
+  tabsTableOptions
+} from './CommandTabs.constants'
 
-export const getActionType = ({ current, past, open }) => {
+export const getActionType = ({ current, past, open, delete: deleteIds }) => {
+  if (deleteIds.length)
+    return current ? tabsActionTypes.DELETE_OPEN_TABS : tabsActionTypes.NONE
   if (current) return tabsActionTypes.SHOW_CURRENT_TABS
   if (past) return tabsActionTypes.SHOW_HISTORY
   if (open) return tabsActionTypes.REDIRECT
-  else return tabsActionTypes.NONE
-}
-
-export const parseHistorial = (historial) => {
-  return historial.map(({ lastVisitTime, url, title }) => {
-    const hostName = new URL(url).hostname
-
-    return {
-      date: formatDate(lastVisitTime, 'dd/MM/yyyy hh:mm:ss'),
-      title,
-      favIconUrl: `https://www.google.com/s2/favicons?domain=${hostName}`,
-      hostName
-    }
-  })
+  return tabsActionTypes.NONE
 }
 
 const microsecondsPerDay = 1000 * 60 * 60 * 24
@@ -83,4 +78,46 @@ export const validateTabsFilters = ({ byText, here, incognito }) => {
   }
 
   return filters
+}
+
+export const turnOpenTabsToTableItems = ({ tabsOpen }) => {
+  return tabsOpen.map((tab) => {
+    return tabsTableOptions.columns.map(({ id }) => {
+      let rowValue = tab[id]
+      const valueToCopy = rowValue
+
+      if (id === tabsHeaderIds.DATE) {
+        const isRowValueString = typeof rowValue === 'string'
+
+        rowValue = isRowValueString
+          ? rowValue
+          : formatDate(rowValue, 'dd/MM/yyyy hh:mm:ss')
+      }
+      if (id === tabsHeaderIds.HOSTNAME) {
+        rowValue = new URL(tab.url).hostname
+      }
+      if (id === tabsHeaderIds.TITLE) {
+        const hostName = new URL(tab.url).hostname
+
+        rowValue = (
+          <ImageIcon
+            url={`https://www.google.com/s2/favicons?domain=${hostName}`}
+            label={tab.title}
+          />
+        )
+      }
+
+      return {
+        value: rowValue,
+        actions: [
+          {
+            id: 'copy-value',
+            title: 'Copy value',
+            onClick: () => navigator.clipboard.writeText(valueToCopy),
+            Component: '📋'
+          }
+        ]
+      }
+    })
+  })
 }

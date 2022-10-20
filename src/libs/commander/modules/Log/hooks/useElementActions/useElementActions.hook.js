@@ -74,7 +74,7 @@ export const useElementActions = ({
       text: '📋'
     },
     {
-      id: 'kill-element',
+      id: 'delete-element',
       onClick: handleKill,
       disabled: !hasAllElementsInDom || !hasSelectedElements,
       text: '💀'

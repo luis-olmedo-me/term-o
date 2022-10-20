@@ -3,8 +3,8 @@ import { processWaitList } from 'libs/process-wait-list/processWaitList.service'
 
 import {
   eventTypes,
-  extensionKeyEvents,
-  extensionKeyEventNames
+  extensionKeyEventNames,
+  extensionKeyEvents
 } from 'src/constants/events.constants.js'
 import {
   resizeFull,

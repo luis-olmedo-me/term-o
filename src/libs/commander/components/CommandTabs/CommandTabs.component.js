@@ -1,13 +1,10 @@
+import { Carousel, CarouselItem } from 'modules/components/Carousel'
+import { Table } from 'modules/components/Table/Table.component'
 import * as React from 'react'
-import { useCallback, useEffect, useState } from 'react'
+import { fetchTabsOpen } from 'src/helpers/event.helpers.js'
+import { deleteTabs, fetchHistorial } from '../../../../helpers/event.helpers'
+import { commanderMessages } from '../../commander.messages'
 import { parameterTypes } from '../../constants/commands.constants'
-import {
-  getActionType,
-  parseHistorial,
-  turnOpenTabsToTableItems,
-  validateHistoryFilters,
-  validateTabsFilters
-} from './CommandTabs.helpers'
 import {
   Log,
   useDateRangeActions,
@@ -15,15 +12,17 @@ import {
   usePaginationActions
 } from '../../modules/Log'
 import { tabsActionTypes, tabsTableOptions } from './CommandTabs.constants'
-import { fetchTabsOpen } from 'src/helpers/event.helpers.js'
-import { Table } from 'modules/components/Table/Table.component'
-import { Carousel, CarouselItem } from 'modules/components/Carousel'
-import { commanderMessages } from '../../commander.messages'
-import { deleteTabs, fetchHistorial } from '../../../../helpers/event.helpers'
+import {
+  getActionType,
+  parseHistorial,
+  turnOpenTabsToTableItems,
+  validateHistoryFilters,
+  validateTabsFilters
+} from './CommandTabs.helpers'
 import { tabsMessages } from './CommandTabs.messages'
 
 export const CommandTabs = ({ props, terminal: { command, finish } }) => {
-  const [tabs, setTabs] = useState([])
+  const [tabs, setTabs] = React.useState([])
 
   const actionType = getActionType(props)
 
@@ -57,7 +56,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const { startDateAction, endDateAction, setAreDatesInvalid, setDate } =
     useDateRangeActions({ onDateUpdate: handleDatesUpdate })
 
-  const handleShowTabList = useCallback(() => {
+  const handleShowTabList = React.useCallback(() => {
     const options = validateTabsFilters(props)
 
     fetchTabsOpen(options)
@@ -75,7 +74,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       )
   }, [finish, setMessage, props])
 
-  const handleRedirect = useCallback(() => {
+  const handleRedirect = React.useCallback(() => {
     if (!props.open) return setMessage(tabsMessages.missingURL)
 
     window.open(props.open, '_blank')
@@ -84,7 +83,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     finish()
   }, [props, setMessage, finish])
 
-  const handleShowHistory = useCallback(() => {
+  const handleShowHistory = React.useCallback(() => {
     const options = validateHistoryFilters(props)
     const { startTime, endTime } = options
 
@@ -103,7 +102,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       .catch(() => setMessage(commanderMessages.unexpectedError))
   }, [setMessage, finish, props])
 
-  const handleKillTab = useCallback(() => {
+  const handleKillTab = React.useCallback(() => {
     const numericTabIds = props.kill.map(Number)
     const hasInvalidTabIds = numericTabIds.some(Number.isNaN)
 
@@ -115,7 +114,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     finish()
   }, [props, setMessage, finish])
 
-  useEffect(
+  React.useEffect(
     function handleActionType() {
       switch (actionType) {
         case tabsActionTypes.SHOW_CURRENT_TABS:

@@ -37,4 +37,5 @@ export const LabelWrapper = styled.span`
   width: calc(100% - 2em);
   display: inline-block;
   font-size: 1em;
+  vertical-align: middle;
 `

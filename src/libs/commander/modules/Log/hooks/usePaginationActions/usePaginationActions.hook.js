@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { ChevronRight } from 'src/modules/icons/ChevronRight.icon'
-import { DoubleChevronRight } from 'src/modules/icons/DoubleChevronRight.icon'
+import { Chevron } from 'src/modules/icons/Chevron.icon'
+import { DoubleChevron } from 'src/modules/icons/DoubleChevron.icon'
 import {
   divideItemsIntoPages,
   generateButtonGroupsFromPages
@@ -21,14 +21,14 @@ export const usePaginationActions = ({ items, maxItems }) => {
     {
       id: 'go-to-first-page',
       title: 'Go to fist page',
-      text: <DoubleChevronRight direction='left' />,
+      text: <DoubleChevron direction='left' />,
       disabled: pageNumber === 1,
       onClick: () => setPageNumber(1)
     },
     {
       id: 'go-to-previous-page',
       title: 'Go to previous page',
-      text: <ChevronRight direction='left' />,
+      text: <Chevron direction='left' />,
       onClick: () => setPageNumber(pageNumber - 1),
       disabled: pageNumber === 1
     },
@@ -36,14 +36,14 @@ export const usePaginationActions = ({ items, maxItems }) => {
     {
       id: 'go-to-next-page',
       title: 'Go to next page',
-      text: <ChevronRight />,
+      text: <Chevron />,
       onClick: () => setPageNumber(pageNumber + 1),
       disabled: pageNumber === itemsDividedIntoPages.length
     },
     {
       id: 'go-to-last-page',
       title: 'Go to last page',
-      text: <DoubleChevronRight />,
+      text: <DoubleChevron />,
       disabled: pageNumber === itemsDividedIntoPages.length,
       onClick: () => setPageNumber(itemsDividedIntoPages.length)
     }

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { DirectionableIcon } from './Icon.styles'
 
-export const DoubleChevronRight = ({ direction = 'right' }) => {
+export const DoubleChevron = ({ direction = 'right' }) => {
   return (
     <DirectionableIcon
       className={direction}

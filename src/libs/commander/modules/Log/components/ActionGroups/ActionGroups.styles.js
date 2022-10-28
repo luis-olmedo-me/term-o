@@ -6,7 +6,7 @@ export const Groups = styled.div`
   justify-content: center;
 `
 
-export const Action = styled.input`
+export const Action = styled.button`
   border: none;
   padding: 5px 10px;
   cursor: pointer;

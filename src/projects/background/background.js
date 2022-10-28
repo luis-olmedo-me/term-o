@@ -13,11 +13,18 @@ import {
   toggleTerminal
 } from './background.helpers'
 
+const invalidURLsStarts = ['chrome-extension:', 'chrome:']
+
 chrome.commands.onCommand.addListener(function (command) {
   if (!extensionKeyEventNames.includes(command)) return
 
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    const [{ id }] = tabs
+    const [{ id, url }] = tabs
+    const isInvalidUrl = invalidURLsStarts.some((invalidUrl) =>
+      url.startsWith(invalidUrl)
+    )
+
+    if (isInvalidUrl) return
 
     if (command === extensionKeyEvents.TOGGLE_TERMINAL) {
       chrome.scripting.executeScript({

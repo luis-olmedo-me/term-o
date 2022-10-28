@@ -6,14 +6,13 @@ import {
   extensionKeyEventNames,
   extensionKeyEvents
 } from 'src/constants/events.constants.js'
+import { invalidURLsStarts } from './background.constants'
 import {
   resizeFull,
   resizeLeft,
   resizeRight,
   toggleTerminal
 } from './background.helpers'
-
-const invalidURLsStarts = ['chrome-extension:', 'chrome:']
 
 chrome.commands.onCommand.addListener(function (command) {
   if (!extensionKeyEventNames.includes(command)) return

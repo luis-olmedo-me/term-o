@@ -3,11 +3,10 @@ import styled from 'styled-components'
 export const Icon = styled.svg`
   width: 24px;
   height: 24px;
-
-  ${(props) => props.cssStyles || ''}
+  vertical-align: middle;
 `
 
-export const DirectionableIcon = styled.svg`
+export const DirectionableIcon = styled(Icon)`
   &.right {
     transform: rotate(0);
   }

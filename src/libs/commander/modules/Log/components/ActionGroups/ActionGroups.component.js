@@ -42,7 +42,11 @@ export const ActionGroups = ({ actionGroups }) => {
 
             default:
               return (
-                <Action {...commonProps} onClick={onClick}>
+                <Action
+                  {...commonProps}
+                  onClick={onClick}
+                  hasIcon={typeof text !== 'string'}
+                >
                   {text}
                 </Action>
               )

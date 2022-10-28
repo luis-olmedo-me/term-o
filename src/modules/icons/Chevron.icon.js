@@ -5,8 +5,6 @@ export const Chevron = ({ direction }) => {
   return (
     <DirectionableIcon
       className={direction}
-      height={24}
-      width={24}
       viewBox='0 0 512 512'
       xmlns='http://www.w3.org/2000/svg'
     >

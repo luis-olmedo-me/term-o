@@ -1,3 +1,5 @@
+import * as React from 'react'
+import { Copy } from 'src/modules/icons/Copy.icon'
 import {
   eventActionTypes,
   eventTableOptions,
@@ -24,7 +26,7 @@ export const turnPageEventsToTableItems = ({ pageEvents }) => {
             id: 'copy-value',
             title: 'Copy value',
             onClick: () => navigator.clipboard.writeText(rowValue),
-            Component: '📋'
+            Component: <Copy />
           }
         ]
       }

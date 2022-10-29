@@ -1,4 +1,6 @@
 import * as React from 'react'
+import { Copy } from 'src/modules/icons/Copy.icon'
+import { Tag } from 'src/modules/icons/Tag.icon'
 import { storageActionTypes } from './CommandStorage.constants'
 import { MaterialTree } from './CommandStorage.styles'
 
@@ -29,7 +31,7 @@ export const turnStorageToTableItems = ({ storage = {}, editValue }) => {
             id: 'copy-value',
             title: 'Copy value',
             onClick: () => navigator.clipboard.writeText(value),
-            Component: '📋'
+            Component: <Copy />
           }
         ]
       },
@@ -40,13 +42,13 @@ export const turnStorageToTableItems = ({ storage = {}, editValue }) => {
             id: 'copy-value',
             title: 'Copy value',
             onClick: () => navigator.clipboard.writeText(value),
-            Component: '📋'
+            Component: <Copy />
           },
           {
             id: 'edit-element',
             title: 'Edit',
             onClick: () => editValue([key, value]),
-            Component: '✏️'
+            Component: <Tag />
           }
         ]
       }

@@ -4,7 +4,7 @@ import { Actions } from '../Actions'
 export const TableWrapper = styled.div`
   width: 100%;
   border-collapse: collapse;
-  padding: 7px;
+  padding: 10px;
   background-color: #00000040;
   box-sizing: border-box;
   border-radius: 3px;

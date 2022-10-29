@@ -1,9 +1,11 @@
 import * as React from 'react'
-import { useEffect, useState, useCallback } from 'react'
-import { parameterTypes } from '../../constants/commands.constants'
-import { styleElements, validateStyles } from '../../commander.promises'
+import { useCallback, useEffect, useState } from 'react'
 import { getParamsByType } from '../../commander.helpers'
+import { styleElements, validateStyles } from '../../commander.promises'
+import { parameterTypes } from '../../constants/commands.constants'
+import { List, StyleSheet } from '../../modules/List'
 import { Log, useMessageLog } from '../../modules/Log'
+import { cssActionTypes } from './CommandCss.constants'
 import {
   getActionType,
   getStylesFrom,
@@ -11,8 +13,6 @@ import {
   parseStyles
 } from './CommandCss.helpers'
 import { cssMessages } from './CommandCss.messages'
-import { List, StyleSheet } from '../../modules/List'
-import { cssActionTypes } from './CommandCss.constants'
 
 export const CommandCss = ({
   props,
@@ -93,7 +93,7 @@ export const CommandCss = ({
       {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
 
       {!messageLog && (
-        <Log variant={parameterTypes.STYLES} hasScroll>
+        <Log variant={parameterTypes.STYLES} hasScroll hasShadow>
           <List
             items={sheets}
             Child={({ item }) => <StyleSheet sheet={item} sheets={sheets} />}

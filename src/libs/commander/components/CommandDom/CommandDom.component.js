@@ -1,13 +1,20 @@
+import { Carousel, CarouselItem } from 'modules/components/Carousel'
+import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import * as React from 'react'
-import { useEffect, useState, useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { insertParams } from '../../commander.helpers'
+import { actionTypes, parameterTypes } from '../../constants/commands.constants'
+import { Element, List, StyleSheet } from '../../modules/List'
 import {
-  Log,
   AttributeEditionLog,
+  Log,
+  useElementActions,
   useMessageLog,
   usePaginationActions,
-  useViews,
-  useElementActions
+  useViews
 } from '../../modules/Log'
+import { getStylesFrom } from '../CommandCss/CommandCss.helpers'
+import { domViewIds, domViews } from './CommandDom.constants'
 import {
   generateFilterByEvery,
   generateFilterBySome,
@@ -15,14 +22,7 @@ import {
   getElements,
   getParentsOfElements
 } from './CommandDom.helpers'
-import { actionTypes, parameterTypes } from '../../constants/commands.constants'
-import { List, Element, StyleSheet } from '../../modules/List'
 import { domMessages } from './CommandDom.messages'
-import { insertParams } from '../../commander.helpers'
-import { Carousel, CarouselItem } from 'modules/components/Carousel'
-import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
-import { getStylesFrom } from '../CommandCss/CommandCss.helpers'
-import { domViewIds, domViews } from './CommandDom.constants'
 
 const CommandDomWithoutContext = ({
   props,
@@ -196,6 +196,7 @@ const CommandDomWithoutContext = ({
                 copyAction,
                 killAction
               ]}
+              hasShadow
             >
               <Carousel itemInView={pageNumber}>
                 {pages.map((page, currentPageNumber) => {
@@ -235,6 +236,7 @@ const CommandDomWithoutContext = ({
               variant={parameterTypes.STYLES}
               actionGroups={[headToElements, headToAttributes]}
               hasScroll
+              hasShadow
             >
               <List
                 items={sheets}

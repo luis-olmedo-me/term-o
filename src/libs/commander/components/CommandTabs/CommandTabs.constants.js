@@ -81,6 +81,13 @@ export const tabsConfig = {
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
       alias: 'd'
+    },
+    reload: {
+      key: 'reload',
+      description: 'Reload current tab',
+      type: optionTypes.BOOLEAN,
+      defaultValue: false,
+      alias: 'r'
     }
   },
   output: (props) => <CommandTabs key={props.id} {...props} />
@@ -91,6 +98,7 @@ export const tabsActionTypes = {
   SHOW_HISTORY: 'SHOW_HISTORY',
   REDIRECT: 'REDIRECT',
   KILL_TAB: 'KILL_TAB',
+  RELOAD_TAB: 'RELOAD_TAB',
   NONE: 'NONE'
 }
 

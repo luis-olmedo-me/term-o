@@ -8,7 +8,14 @@ import {
   tabsTableOptions
 } from './CommandTabs.constants'
 
-export const getActionType = ({ current, past, open, delete: deleteIds }) => {
+export const getActionType = ({
+  current,
+  past,
+  open,
+  delete: deleteIds,
+  reload
+}) => {
+  if (reload) return tabsActionTypes.RELOAD_TAB
   if (deleteIds.length)
     return current ? tabsActionTypes.DELETE_OPEN_TABS : tabsActionTypes.NONE
   if (current) return tabsActionTypes.SHOW_CURRENT_TABS

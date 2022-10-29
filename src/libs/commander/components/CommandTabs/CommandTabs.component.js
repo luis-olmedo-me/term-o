@@ -116,6 +116,10 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     finish()
   }, [props, setMessage, finish])
 
+  const handleReloadTab = React.useCallback(() => {
+    window.location.reload()
+  }, [])
+
   React.useEffect(
     function handleActionType() {
       switch (actionType) {
@@ -135,6 +139,10 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
           handleDeleteTabs()
           break
 
+        case tabsActionTypes.RELOAD_TAB:
+          handleReloadTab()
+          break
+
         case tabsActionTypes.NONE:
           setMessage(commanderMessages.unexpectedError)
           break
@@ -146,7 +154,8 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       handleShowTabList,
       handleRedirect,
       handleShowHistory,
-      handleDeleteTabs
+      handleDeleteTabs,
+      handleReloadTab
     ]
   )
 

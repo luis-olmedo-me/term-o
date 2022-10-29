@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { useEffect, useState } from 'react'
-import { Command } from 'src/modules/icons/Command.icon'
 import { Error } from 'src/modules/icons/Error.icon'
 import { Info } from 'src/modules/icons/Info.icon'
 import { Tick } from 'src/modules/icons/Tick.icon'

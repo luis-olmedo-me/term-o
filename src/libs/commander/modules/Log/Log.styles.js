@@ -69,6 +69,10 @@ export const Hash = styled.span`
   min-width: 1em;
   display: inline-block;
   text-align: center;
+
+  & + span {
+    vertical-align: middle;
+  }
 `
 
 export const LogContent = styled.div`

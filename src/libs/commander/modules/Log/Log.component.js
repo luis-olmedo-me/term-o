@@ -46,7 +46,7 @@ export const Log = ({ children, variant, actionGroups, hasScroll }) => {
     <>
       {icon && <Hash>{icon}</Hash>}
 
-      <span style={{ verticalAlign: 'middle' }}>{children}</span>
+      <span>{children}</span>
     </>
   )
 

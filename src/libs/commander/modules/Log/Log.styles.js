@@ -87,7 +87,7 @@ export const Shadow = styled.div`
 `
 
 export const ScrolledLogContent = styled.div`
-  max-height: 537px;
+  max-height: 500px;
   overflow-y: scroll;
   overscroll-behavior: contain;
 

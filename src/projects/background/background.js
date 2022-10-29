@@ -123,13 +123,13 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       break
     }
 
-    case eventTypes.DELETE_OPEN_TABS: {
+    case eventTypes.CLOSE_OPEN_TABS: {
       const { id, data } = request.data
 
       const process = id
         ? processWaitList.getProcessById(id)
         : processWaitList.add((resolve) =>
-            createDeleteTabsProcess(resolve, data)
+            createCloseTabsProcess(resolve, data)
           )
 
       sendResponse({ status: 'ok', data: process })
@@ -160,9 +160,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
 })
 
-const createDeleteTabsProcess = (resolve, tabIds) => {
-  chrome.tabs.remove(tabIds, (...params) => {
-    console.log('remove', params)
+const createCloseTabsProcess = (resolve, tabIds) => {
+  chrome.tabs.remove(tabIds, () => {
     resolve()
   })
 }

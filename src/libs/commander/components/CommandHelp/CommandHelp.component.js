@@ -1,15 +1,15 @@
 import * as React from 'react'
 import { useCallback, useEffect, useState } from 'react'
+import { removeDuplicatedFromArray } from 'src/helpers/utils.helpers.js'
+import { consoleCommands } from '../../commander.constants'
 import { parameterTypes } from '../../constants/commands.constants'
+import { Log } from '../../modules/Log'
 import { helpActionTypes } from './CommandHelp.constants'
 import {
   getActionType,
   getMessagesFromCommandsToCheck
 } from './CommandHelp.helpers'
-import { Log } from '../../modules/Log'
-import { consoleCommands } from '../../commander.constants'
 import { ListItem, UnsortedList } from './CommandHelp.styles'
-import { removeDuplicatedFromArray } from 'src/helpers/utils.helpers.js'
 
 export const CommandHelp = ({ props, terminal: { command, finish } }) => {
   const actionType = getActionType(props)
@@ -57,7 +57,7 @@ export const CommandHelp = ({ props, terminal: { command, finish } }) => {
     <>
       <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
-      <Log variant={parameterTypes.HELP} hasScroll>
+      <Log variant={parameterTypes.HELP} hasScroll hasShadow>
         {localMessages.map(({ id, title, items }) => {
           return (
             <UnsortedList key={id}>

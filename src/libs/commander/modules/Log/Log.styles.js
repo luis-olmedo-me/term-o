@@ -79,8 +79,15 @@ export const LogContent = styled.div`
   padding: 10px;
   word-break: break-all;
 `
+export const Shadow = styled.div`
+  &.shadow {
+    padding: 10px;
+    background-color: #00000015;
+  }
+`
+
 export const ScrolledLogContent = styled.div`
-  max-height: 537px;
+  max-height: 500px;
   overflow-y: scroll;
   overscroll-behavior: contain;
 

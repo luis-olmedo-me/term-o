@@ -1,30 +1,30 @@
+import { Carousel, CarouselItem } from 'modules/components/Carousel'
+import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import * as React from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { getParamsByType } from '../../commander.helpers'
 import { parameterTypes } from '../../constants/commands.constants'
+import { List, StyleSheet } from '../../modules/List'
+import {
+  AttributeEditionLog,
+  Log,
+  useElementActions,
+  useMessageLog,
+  useViews
+} from '../../modules/Log'
+import { NodeTree } from '../../modules/NodeTree/NodeTree.component'
+import { getStylesFrom } from '../CommandCss/CommandCss.helpers'
+import {
+  inspectActionTypes,
+  inspectViewIds,
+  inspectViews
+} from './CommandInspect.constants'
 import {
   getActionType,
   getDefaultHTMlRoot,
   getOpenNodesFromObjetives
 } from './CommandInspect.helpers'
 import { inspectMessages } from './CommandInspect.messages'
-import {
-  Log,
-  AttributeEditionLog,
-  useMessageLog,
-  useViews,
-  useElementActions
-} from '../../modules/Log'
-import {
-  inspectActionTypes,
-  inspectViewIds,
-  inspectViews
-} from './CommandInspect.constants'
-import { NodeTree } from '../../modules/NodeTree/NodeTree.component'
-import { getParamsByType } from '../../commander.helpers'
-import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
-import { Carousel, CarouselItem } from 'modules/components/Carousel'
-import { List, StyleSheet } from '../../modules/List'
-import { getStylesFrom } from '../CommandCss/CommandCss.helpers'
 
 const CommandInspectWithoutContext = ({
   props,
@@ -124,6 +124,7 @@ const CommandInspectWithoutContext = ({
             variant={parameterTypes.ELEMENT}
             actionGroups={elementActions}
             hasScroll
+            hasShadow
           >
             {HTMLRoot && (
               <NodeTree

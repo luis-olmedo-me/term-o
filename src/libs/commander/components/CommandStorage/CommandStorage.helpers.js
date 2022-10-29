@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Copy } from 'src/modules/icons/Copy.icon'
-import { Tag } from 'src/modules/icons/Tag.icon'
+import { Pencil } from 'src/modules/icons/Pencil.icon'
 import { storageActionTypes } from './CommandStorage.constants'
 import { MaterialTree } from './CommandStorage.styles'
 
@@ -48,7 +48,7 @@ export const turnStorageToTableItems = ({ storage = {}, editValue }) => {
             id: 'edit-element',
             title: 'Edit',
             onClick: () => editValue([key, value]),
-            Component: <Tag />
+            Component: <Pencil />
           }
         ]
       }

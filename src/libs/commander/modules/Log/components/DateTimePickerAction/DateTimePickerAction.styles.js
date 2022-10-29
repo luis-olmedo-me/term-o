@@ -58,3 +58,7 @@ export const DatePicker = styled.input`
     cursor: pointer;
   }
 `
+
+export const Label = styled.span`
+  vertical-align: sub;
+`

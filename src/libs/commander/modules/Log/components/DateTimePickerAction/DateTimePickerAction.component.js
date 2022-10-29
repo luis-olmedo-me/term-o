@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { DatePicker, Wrapper } from './DateTimePickerAction.styles'
+import { DatePicker, Label, Wrapper } from './DateTimePickerAction.styles'
 
 export const DateTimePickerAction = ({
   className,
@@ -11,7 +11,7 @@ export const DateTimePickerAction = ({
 }) => {
   return (
     <Wrapper className={className} title={title}>
-      <span>{label}</span>
+      <Label>{label}</Label>
 
       <DatePicker
         type='datetime-local'

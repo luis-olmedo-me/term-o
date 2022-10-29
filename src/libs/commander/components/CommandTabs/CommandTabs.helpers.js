@@ -13,9 +13,11 @@ export const getActionType = ({
   past,
   open,
   delete: deleteIds,
-  reload
+  reload,
+  go
 }) => {
   if (reload) return tabsActionTypes.RELOAD_TAB
+  if (go) return tabsActionTypes.GO
   if (deleteIds.length)
     return current ? tabsActionTypes.DELETE_OPEN_TABS : tabsActionTypes.NONE
   if (current) return tabsActionTypes.SHOW_CURRENT_TABS

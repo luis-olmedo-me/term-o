@@ -95,6 +95,13 @@ export const tabsConfig = {
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 'uc'
+    },
+    go: {
+      key: 'go',
+      description: 'Move between back or forward over the visited pages',
+      type: optionTypes.NUMBER,
+      defaultValue: 0,
+      alias: 'g'
     }
   },
   output: (props) => <CommandTabs key={props.id} {...props} />
@@ -106,6 +113,7 @@ export const tabsActionTypes = {
   REDIRECT: 'REDIRECT',
   KILL_TAB: 'KILL_TAB',
   RELOAD_TAB: 'RELOAD_TAB',
+  GO: 'GO',
   NONE: 'NONE'
 }
 

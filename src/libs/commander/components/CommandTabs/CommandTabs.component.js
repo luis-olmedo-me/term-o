@@ -122,6 +122,10 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     window.location.reload()
   }, [])
 
+  const handleGo = React.useCallback(() => {
+    window.history.go(props.go)
+  }, [props])
+
   React.useEffect(
     function handleActionType() {
       switch (actionType) {
@@ -145,6 +149,10 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
           handleReloadTab()
           break
 
+        case tabsActionTypes.GO:
+          handleGo()
+          break
+
         case tabsActionTypes.NONE:
           setMessage(commanderMessages.unexpectedError)
           break
@@ -157,7 +165,8 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       handleRedirect,
       handleShowHistory,
       handleDeleteTabs,
-      handleReloadTab
+      handleReloadTab,
+      handleGo
     ]
   )
 

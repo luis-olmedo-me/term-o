@@ -1,4 +1,7 @@
 import * as React from 'react'
+import { Home } from 'src/modules/icons/Home.icon'
+import { Palette } from 'src/modules/icons/Palette.icon'
+import { Pencil } from 'src/modules/icons/Pencil.icon'
 import { optionTypes } from '../../constants/commands.constants'
 import { CommandDom } from './CommandDom.component'
 
@@ -99,7 +102,7 @@ export const domViewIds = {
 }
 
 export const domViews = [
-  { id: domViewIds.MAIN, text: '🏠' },
-  { id: domViewIds.ATTRIBUTES, text: '✏️' },
-  { id: domViewIds.STYLES, text: '✂️' }
+  { id: domViewIds.MAIN, text: <Home /> },
+  { id: domViewIds.ATTRIBUTES, text: <Pencil /> },
+  { id: domViewIds.STYLES, text: <Palette /> }
 ]

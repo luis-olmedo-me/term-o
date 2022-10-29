@@ -1,6 +1,6 @@
 import * as React from 'react'
+import { Home } from 'src/modules/icons/Home.icon'
 import { optionTypes } from '../../constants/commands.constants'
-
 import { CommandStorage } from './CommandStorage.component'
 
 export const storageConfig = {
@@ -43,7 +43,7 @@ export const storageViewIds = {
 }
 
 export const storageViews = [
-  { id: storageViewIds.MAIN, text: '🏠' },
+  { id: storageViewIds.MAIN, text: <Home /> },
   { id: storageViewIds.EDITOR }
 ]
 

@@ -19,7 +19,6 @@ export const ActionButton = styled.button`
   border: none;
   font-weight: bold;
   font-family: Share Tech Mono;
-  padding: 0 10px;
   cursor: pointer;
   min-width: 2em;
   text-align: center;
@@ -29,13 +28,19 @@ export const ActionButton = styled.button`
   border-right: ${(props) =>
     props.isLastItem ? '1px solid #00000015' : 'unset'};
   color: inherit;
+  padding: 0;
 
-  &&:disabled {
+  &:disabled {
     background-color: #00000015;
     color: #aaa;
   }
   &:hover {
     background-color: #00000010;
+  }
+
+  &:active,
+  &:focus {
+    outline: none;
   }
 `
 

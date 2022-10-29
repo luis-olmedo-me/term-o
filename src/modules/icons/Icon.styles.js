@@ -7,6 +7,8 @@ export const Icon = styled.svg`
 `
 
 export const DirectionableIcon = styled(Icon)`
+  transition: transform 0.2s ease-in-out;
+
   &.right {
     transform: rotate(0);
   }

@@ -2,7 +2,7 @@ import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { Table } from 'modules/components/Table/Table.component'
 import * as React from 'react'
 import {
-  deleteTabs,
+  closeTabs,
   fetchHistorial,
   fetchTabsOpen
 } from 'src/helpers/event.helpers'
@@ -106,15 +106,15 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       .catch(() => setMessage(commanderMessages.unexpectedError))
   }, [setMessage, finish, props])
 
-  const handleDeleteTabs = React.useCallback(() => {
-    const numericTabIds = props.delete.map(Number)
+  const handleCloseTabs = React.useCallback(() => {
+    const numericTabIds = props.close.map(Number)
     const hasInvalidTabIds = numericTabIds.some(Number.isNaN)
 
     if (hasInvalidTabIds) return setMessage(tabsMessages.tabIdsInvalid)
 
-    deleteTabs(numericTabIds)
+    closeTabs(numericTabIds)
 
-    setMessage(tabsMessages.killSuccess)
+    setMessage(tabsMessages.closeSuccess)
     finish()
   }, [props, setMessage, finish])
 
@@ -143,8 +143,8 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
           handleRedirect()
           break
 
-        case tabsActionTypes.DELETE_OPEN_TABS:
-          handleDeleteTabs()
+        case tabsActionTypes.CLOSE_OPEN_TABS:
+          handleCloseTabs()
           break
 
         case tabsActionTypes.RELOAD_TAB:
@@ -166,7 +166,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       handleShowTabList,
       handleRedirect,
       handleShowHistory,
-      handleDeleteTabs,
+      handleCloseTabs,
       handleReloadTab,
       handleGo
     ]

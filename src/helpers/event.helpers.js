@@ -62,9 +62,9 @@ export const fetchHistorial = (data) => {
   })
 }
 
-export const deleteTabs = (data) => {
+export const closeTabs = (data) => {
   return createWorkerProcessRequest({
-    type: eventTypes.DELETE_OPEN_TABS,
+    type: eventTypes.CLOSE_OPEN_TABS,
     data
   })
 }

@@ -13,8 +13,8 @@ export const tabsMessages = {
     message: 'The provided tab IDs are invalid.',
     type: parameterTypes.ERROR
   },
-  killSuccess: {
-    message: 'The tab has been successfully killed.',
+  closeSuccess: {
+    message: 'The tab has been successfully closed.',
     type: parameterTypes.SUCCESS
   },
   goSuccess: {

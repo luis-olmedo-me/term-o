@@ -5,12 +5,12 @@ import { CommandTabs } from './CommandTabs.component'
 
 export const tabsConfig = {
   props: {
-    current: {
-      key: 'current',
+    now: {
+      key: 'now',
       description: 'Show all tabs open',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
-      alias: 'c'
+      alias: 'n'
     },
     past: {
       key: 'past',
@@ -75,12 +75,12 @@ export const tabsConfig = {
       defaultValue: '',
       alias: 'o'
     },
-    delete: {
-      key: 'delete',
-      description: 'Delete open tab',
+    close: {
+      key: 'close',
+      description: 'Close tabs by their ids',
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
-      alias: 'd'
+      alias: 'c'
     },
     reload: {
       key: 'reload',

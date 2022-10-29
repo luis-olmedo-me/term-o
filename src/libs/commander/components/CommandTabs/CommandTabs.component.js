@@ -120,10 +120,14 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
 
   const handleReloadTab = React.useCallback(() => {
     window.location.reload()
-  }, [])
+
+    setMessage(tabsMessages.reloadSuccess)
+    finish()
+  }, [setMessage, finish])
 
   const handleGo = React.useCallback(() => {
     window.history.go(props.go)
+
     setMessage(tabsMessages.goSuccess)
     finish()
   }, [props, setMessage, finish])

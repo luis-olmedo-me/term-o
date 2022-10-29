@@ -21,6 +21,10 @@ export const tabsMessages = {
     message: 'You got back in the page successfully.',
     type: parameterTypes.SUCCESS
   },
+  reloadSuccess: {
+    message: 'The page is being reloaded.',
+    type: parameterTypes.SUCCESS
+  },
   noTabsFound: {
     message: 'No tabs where found.',
     type: parameterTypes.ERROR

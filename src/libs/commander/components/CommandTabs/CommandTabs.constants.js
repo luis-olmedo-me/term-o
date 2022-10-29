@@ -88,6 +88,13 @@ export const tabsConfig = {
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 'r'
+    },
+    'use-current': {
+      key: 'useCurrent',
+      description: 'Use current tab to open an URL',
+      type: optionTypes.BOOLEAN,
+      defaultValue: false,
+      alias: 'uc'
     }
   },
   output: (props) => <CommandTabs key={props.id} {...props} />

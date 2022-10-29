@@ -79,7 +79,9 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const handleRedirect = React.useCallback(() => {
     if (!props.open) return setMessage(tabsMessages.missingURL)
 
-    window.open(props.open, '_blank')
+    const target = props.useCurrent ? '_self' : '_blank'
+
+    window.open(props.open, target)
 
     setMessage(tabsMessages.redirectionSuccess)
     finish()

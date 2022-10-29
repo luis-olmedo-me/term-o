@@ -3,8 +3,8 @@ import { Copy } from 'src/modules/icons/Copy.icon'
 import { Eye } from 'src/modules/icons/Eye.icon'
 import { Flag } from 'src/modules/icons/Flag.icon'
 import { Palette } from 'src/modules/icons/Palette.icon'
-import { Pencil } from 'src/modules/icons/Pencil.icon'
 import { Skull } from 'src/modules/icons/Skull.icon'
+import { Tag } from 'src/modules/icons/Tag.icon'
 import { createXPathFromElement } from './useElementActions.helpers'
 
 export const useElementActions = ({
@@ -59,7 +59,7 @@ export const useElementActions = ({
       id: 'edit-element',
       disabled: !hasOneSelectedElement,
       onClick: () => onAttributeEdit(firstSelectedElement),
-      text: <Pencil />
+      text: <Tag />
     },
     {
       id: 'change-styles',

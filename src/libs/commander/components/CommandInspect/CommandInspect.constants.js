@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Home } from 'src/modules/icons/Home.icon'
 import { Palette } from 'src/modules/icons/Palette.icon'
-import { Pencil } from 'src/modules/icons/Pencil.icon'
+import { Tag } from 'src/modules/icons/Tag.icon'
 
 import { CommandInspect } from './CommandInspect.component'
 
@@ -22,7 +22,7 @@ export const inspectViewIds = {
 }
 
 export const inspectViews = [
-  { id: domViewIds.MAIN, text: <Home /> },
-  { id: domViewIds.ATTRIBUTES, text: <Pencil /> },
-  { id: domViewIds.STYLES, text: <Palette /> }
+  { id: inspectViewIds.MAIN, text: <Home /> },
+  { id: inspectViewIds.ATTRIBUTES, text: <Tag /> },
+  { id: inspectViewIds.STYLES, text: <Palette /> }
 ]

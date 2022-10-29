@@ -1,21 +1,25 @@
 import * as React from 'react'
 import { useEffect, useState } from 'react'
+import { Command } from 'src/modules/icons/Command.icon'
+import { Error } from 'src/modules/icons/Error.icon'
+import { Info } from 'src/modules/icons/Info.icon'
+import { Tick } from 'src/modules/icons/Tick.icon'
 import { parameterTypes } from '../../constants/commands.constants'
 import { ActionGroups } from './components/ActionGroups/ActionGroups.component'
 import {
-  Hash,
-  LogWrapper,
-  LogContent,
   AnimatedLoader,
+  Hash,
   LoaderText,
+  LogContent,
+  LogWrapper,
   ScrolledLogContent
 } from './Log.styles'
 
 const preIconsByVariants = {
   [parameterTypes.COMMAND]: '$',
-  [parameterTypes.ERROR]: '❌',
-  [parameterTypes.INFO]: '📢',
-  [parameterTypes.SUCCESS]: '✔️'
+  [parameterTypes.ERROR]: <Error />,
+  [parameterTypes.INFO]: <Info />,
+  [parameterTypes.SUCCESS]: <Tick />
 }
 
 export const Log = ({ children, variant, actionGroups, hasScroll }) => {
@@ -40,9 +44,9 @@ export const Log = ({ children, variant, actionGroups, hasScroll }) => {
 
   const Content = (
     <>
-      {icon && <Hash className={!isCommand ? 'rounded' : ''}>{icon}</Hash>}
+      {icon && <Hash>{icon}</Hash>}
 
-      {children}
+      <span style={{ verticalAlign: 'middle' }}>{children}</span>
     </>
   )
 

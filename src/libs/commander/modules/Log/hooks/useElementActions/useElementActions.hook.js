@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { Copy } from 'src/modules/icons/Copy.icon'
 import { Eye } from 'src/modules/icons/Eye.icon'
+import { Flag } from 'src/modules/icons/Flag.icon'
 import { Palette } from 'src/modules/icons/Palette.icon'
 import { Pencil } from 'src/modules/icons/Pencil.icon'
-import { Root } from 'src/modules/icons/Root.icon'
 import { Skull } from 'src/modules/icons/Skull.icon'
 import { createXPathFromElement } from './useElementActions.helpers'
 
@@ -89,7 +89,7 @@ export const useElementActions = ({
       id: 'change-root',
       onClick: () => onRootEdit(firstSelectedElement),
       disabled: !hasOneSelectedElement || !isRootChangeEnabled,
-      text: <Root />
+      text: <Flag />
     }
   ]
 

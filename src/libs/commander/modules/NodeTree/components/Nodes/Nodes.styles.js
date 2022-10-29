@@ -20,11 +20,6 @@ export const GapNodesWrapper = styled.div`
   scroll-snap-align: start;
   scroll-snap-stop: always;
 `
-export const ActionButtonText = styled.div`
-  transition: transform 0.2s ease-in-out;
-  display: inline-block;
-  transform: rotate(${(props) => (props.isOpen ? '-90deg' : '90deg')});
-`
 
 export const Prefix = styled.div`
   width: 10px;

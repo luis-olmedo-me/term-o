@@ -26,7 +26,6 @@ export const ActionGroups = ({ actionGroups }) => {
               ${invalid ? 'invalid' : ''}
             `,
             disabled,
-            value: text,
             title
           }
 
@@ -37,11 +36,20 @@ export const ActionGroups = ({ actionGroups }) => {
                   {...commonProps}
                   onChange={onChange}
                   label={label}
+                  value={text}
                 />
               )
 
             default:
-              return <Action {...commonProps} onClick={onClick} type='button' />
+              return (
+                <Action
+                  {...commonProps}
+                  onClick={onClick}
+                  hasIcon={typeof text !== 'string'}
+                >
+                  {text}
+                </Action>
+              )
           }
         }
       )}

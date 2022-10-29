@@ -1,5 +1,7 @@
 import * as React from 'react'
-import { optionTypes } from '../../constants/commands.constants'
+import { Home } from 'src/modules/icons/Home.icon'
+import { Palette } from 'src/modules/icons/Palette.icon'
+import { Tag } from 'src/modules/icons/Tag.icon'
 
 import { CommandInspect } from './CommandInspect.component'
 
@@ -20,7 +22,7 @@ export const inspectViewIds = {
 }
 
 export const inspectViews = [
-  { id: inspectViewIds.MAIN, text: '🏠' },
-  { id: inspectViewIds.ATTRIBUTES, text: '✏️' },
-  { id: inspectViewIds.STYLES, text: '✂️' }
+  { id: inspectViewIds.MAIN, text: <Home /> },
+  { id: inspectViewIds.ATTRIBUTES, text: <Tag /> },
+  { id: inspectViewIds.STYLES, text: <Palette /> }
 ]

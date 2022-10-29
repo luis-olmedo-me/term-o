@@ -1,4 +1,10 @@
-import { useState } from 'react'
+import * as React from 'react'
+import { Copy } from 'src/modules/icons/Copy.icon'
+import { Eye } from 'src/modules/icons/Eye.icon'
+import { Flag } from 'src/modules/icons/Flag.icon'
+import { Palette } from 'src/modules/icons/Palette.icon'
+import { Skull } from 'src/modules/icons/Skull.icon'
+import { Tag } from 'src/modules/icons/Tag.icon'
 import { createXPathFromElement } from './useElementActions.helpers'
 
 export const useElementActions = ({
@@ -6,7 +12,7 @@ export const useElementActions = ({
   onStyleEdit,
   onRootEdit
 }) => {
-  const [selectedElements, setSelectedElements] = useState([])
+  const [selectedElements, setSelectedElements] = React.useState([])
 
   const handleScrollIntoView = (element) => {
     element.scrollIntoView({
@@ -53,37 +59,37 @@ export const useElementActions = ({
       id: 'edit-element',
       disabled: !hasOneSelectedElement,
       onClick: () => onAttributeEdit(firstSelectedElement),
-      text: '✏️'
+      text: <Tag />
     },
     {
       id: 'change-styles',
       disabled: !hasOneSelectedElement,
       onClick: () => onStyleEdit(firstSelectedElement),
-      text: '✂️'
+      text: <Palette />
     },
     {
       id: 'scroll-into-view-option',
       disabled: !hasOneSelectedElement,
       onClick: () => handleScrollIntoView(firstSelectedElement),
-      text: '👁️'
+      text: <Eye />
     },
     {
       id: 'copy-xpath-option',
       disabled: !hasOneSelectedElement,
       onClick: () => handleCopyXPath(firstSelectedElement),
-      text: '📋'
+      text: <Copy />
     },
     {
       id: 'delete-element',
       onClick: handleKill,
       disabled: !hasAllElementsInDom || !hasSelectedElements,
-      text: '💀'
+      text: <Skull />
     },
     {
       id: 'change-root',
       onClick: () => onRootEdit(firstSelectedElement),
       disabled: !hasOneSelectedElement || !isRootChangeEnabled,
-      text: '🌱'
+      text: <Flag />
     }
   ]
 

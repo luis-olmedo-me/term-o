@@ -1,14 +1,9 @@
-import * as React from 'react'
-import { ElementLabel } from '../ElementLabel/ElementLabel.component'
-import {
-  TagWrapper,
-  ActionButtonText,
-  GapNodesWrapper,
-  Prefix,
-  Postfix
-} from './Nodes.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
+import * as React from 'react'
+import { Chevron } from 'src/modules/icons/Chevron.icon'
 import { isElementHidden } from '../../../../components/CommandDom/CommandDom.helpers'
+import { ElementLabel } from '../ElementLabel/ElementLabel.component'
+import { GapNodesWrapper, Postfix, Prefix, TagWrapper } from './Nodes.styles'
 
 const supportedNodeTypes = [Node.ELEMENT_NODE, Node.TEXT_NODE]
 
@@ -47,7 +42,7 @@ const NodesWithoutContext = ({
       onClick: handleToggleElement,
       disabled: !hasNodes,
       title: 'Toggle children',
-      Component: <ActionButtonText isOpen={isNodeOpen}>{'<'}</ActionButtonText>
+      Component: <Chevron direction={isNodeOpen ? 'top' : 'bottom'} />
     }
   ]
 

@@ -6,14 +6,15 @@ export const Groups = styled.div`
   justify-content: center;
 `
 
-export const Action = styled.input`
+export const Action = styled.button`
   border: none;
-  padding: 5px 10px;
+  padding: ${(props) => (props.hasIcon ? '5px 3px' : '5px 10px')};
   cursor: pointer;
   background-color: transparent;
   transition: background-color 0.2s ease-in-out;
   font-family: Share Tech Mono;
   color: #fff;
+  font-size: 16px;
 
   &:hover {
     background-color: #00000010;

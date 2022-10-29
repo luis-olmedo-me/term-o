@@ -1,5 +1,7 @@
-import { actionTypes } from '../../constants/commands.constants'
 import { commander } from 'libs/commander'
+import * as React from 'react'
+import { Copy } from 'src/modules/icons/Copy.icon'
+import { actionTypes } from '../../constants/commands.constants'
 import { aliasTableOptions } from './CommandAlias.constants'
 
 export const getActionType = ({
@@ -40,7 +42,7 @@ export const turnAliasesToTableItems = ({ aliases }) => {
             id: 'copy-value',
             title: 'Copy value',
             onClick: () => navigator.clipboard.writeText(rowValue),
-            Component: '📋'
+            Component: <Copy />
           }
         ]
       }

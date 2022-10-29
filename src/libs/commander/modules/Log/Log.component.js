@@ -11,7 +11,8 @@ import {
   LoaderText,
   LogContent,
   LogWrapper,
-  ScrolledLogContent
+  ScrolledLogContent,
+  Shadow
 } from './Log.styles'
 
 const preIconsByVariants = {
@@ -21,7 +22,13 @@ const preIconsByVariants = {
   [parameterTypes.SUCCESS]: <Tick />
 }
 
-export const Log = ({ children, variant, actionGroups, hasScroll }) => {
+export const Log = ({
+  children,
+  variant,
+  actionGroups,
+  hasScroll,
+  hasShadow
+}) => {
   const isCommand = variant === parameterTypes.COMMAND
 
   const [isFakeLoading, setIsFakeLoading] = useState(!isCommand)
@@ -63,11 +70,13 @@ export const Log = ({ children, variant, actionGroups, hasScroll }) => {
 
       {!isFakeLoading && (
         <LogContent>
-          {hasScroll ? (
-            <ScrolledLogContent>{Content}</ScrolledLogContent>
-          ) : (
-            Content
-          )}
+          <Shadow className={hasShadow ? 'shadow' : ''}>
+            {hasScroll ? (
+              <ScrolledLogContent>{Content}</ScrolledLogContent>
+            ) : (
+              Content
+            )}
+          </Shadow>
         </LogContent>
       )}
 

@@ -124,6 +124,7 @@ const CommandInspectWithoutContext = ({
             variant={parameterTypes.ELEMENT}
             actionGroups={elementActions}
             hasScroll
+            hasShadow
           >
             {HTMLRoot && (
               <NodeTree

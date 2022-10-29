@@ -124,7 +124,9 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
 
   const handleGo = React.useCallback(() => {
     window.history.go(props.go)
-  }, [props])
+    setMessage(tabsMessages.goSuccess)
+    finish()
+  }, [props, setMessage, finish])
 
   React.useEffect(
     function handleActionType() {

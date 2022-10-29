@@ -17,6 +17,10 @@ export const tabsMessages = {
     message: 'The tab has been successfully killed.',
     type: parameterTypes.SUCCESS
   },
+  goSuccess: {
+    message: 'You got back in the page successfully.',
+    type: parameterTypes.SUCCESS
+  },
   noTabsFound: {
     message: 'No tabs where found.',
     type: parameterTypes.ERROR

@@ -1,13 +1,13 @@
 import * as React from 'react'
-import {
-  TableWrapper,
-  TableRowValue,
-  TableRow,
-  TableActions,
-  TableActionsWrapper
-} from './Table.styles'
 import { debounce } from 'src/helpers/utils.helpers.js'
 import { getWidthOffset } from './Table.helpers'
+import {
+  TableActions,
+  TableActionsWrapper,
+  TableRow,
+  TableRowValue,
+  TableWrapper
+} from './Table.styles'
 
 export const Table = ({ rows, options }) => {
   const wrapperRef = React.useRef(null)
@@ -42,6 +42,8 @@ export const Table = ({ rows, options }) => {
     <TableWrapper ref={wrapperRef}>
       <TableRow header>
         {options.columns.map(({ id, width, displayName, minTableWidth }) => {
+          const adjustedWidth = width + widthOffset / 100
+          const isInvalid = adjustedWidth !== Infinity
           const showColumn =
             wrapperWidth !== null && minTableWidth
               ? wrapperWidth > minTableWidth
@@ -51,7 +53,7 @@ export const Table = ({ rows, options }) => {
             showColumn && (
               <span
                 key={`header-${id}`}
-                style={{ flex: width + widthOffset / 100 }}
+                style={{ flex: isInvalid ? adjustedWidth : width }}
               >
                 {displayName}
               </span>
@@ -64,7 +66,10 @@ export const Table = ({ rows, options }) => {
         <TableRow key={`row-${rowIndex}`}>
           {row.map((column, columnIndex) => {
             const onColumnClick = () => column.onClick?.(column)
+
             const width = widths[columnIndex]
+            const adjustedWidth = width + widthOffset / 100
+            const isInvalid = adjustedWidth !== Infinity
             const showColumn =
               wrapperWidth !== null && minTableWidths[columnIndex]
                 ? wrapperWidth > minTableWidths[columnIndex]
@@ -75,7 +80,7 @@ export const Table = ({ rows, options }) => {
                 <TableRowValue
                   key={`row-column-${columnIndex}`}
                   onClick={onColumnClick}
-                  style={{ flex: width + widthOffset / 100 }}
+                  style={{ flex: isInvalid ? adjustedWidth : width }}
                 >
                   {column.value}
 

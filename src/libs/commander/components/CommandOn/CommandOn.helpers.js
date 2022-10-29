@@ -9,7 +9,7 @@ export const checkIfRegExpIsValid = (regExp) => {
   }
 }
 
-export const getActionType = ({ url, run, event }) => {
-  if (run.length || url.length || event) return onActionTypes.ADD_EVENT
+export const getActionType = ({ run }) => {
+  if (run.length) return onActionTypes.ADD_EVENT
   else return onActionTypes.NONE
 }

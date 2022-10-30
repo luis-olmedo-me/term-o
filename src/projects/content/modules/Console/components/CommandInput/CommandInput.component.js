@@ -5,8 +5,8 @@ import { commander } from 'libs/commander/commander.service'
 
 import { Suggestions } from '../Suggestions/Suggestions.component'
 
-import { Hash, Input, InputWrapper } from './CommandInput.styles'
 import { spliceArg } from './CommandInput.helpers'
+import { Hash, Input, InputWrapper } from './CommandInput.styles'
 
 const defaultSuggestion = { value: '< Execute >' }
 

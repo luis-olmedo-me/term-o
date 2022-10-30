@@ -6,18 +6,17 @@ import { timeActionTypes } from './CommandTime.constants'
 import { getActionType } from './CommandTime.helpers'
 import { timeMessages } from './CommandTime.messages'
 
-export const CommandTime = ({
-  props,
-  terminal: { command, addNotification, finish }
-}) => {
+export const CommandTime = ({ props, terminal: { command, finish } }) => {
   const actionType = getActionType(props)
 
   const { log: messageLog, setMessage } = useMessageLog()
 
-  const handleNotify = useCallback(() => {
-    setMessage(timeMessages.notificationSuccess)
-    finish()
-  }, [setMessage, finish])
+  const handleSetDelay = useCallback(() => {
+    setTimeout(() => {
+      setMessage(timeMessages.notificationSuccess)
+      finish()
+    }, props.delay)
+  }, [props, setMessage, finish])
 
   useEffect(
     function handleActionType() {
@@ -27,7 +26,7 @@ export const CommandTime = ({
           break
       }
     },
-    [actionType, handleNotify, setMessage]
+    [actionType, handleSetDelay, setMessage]
   )
 
   return (

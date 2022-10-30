@@ -24,5 +24,7 @@ export const timeConfig = {
 }
 
 export const timeActionTypes = {
+  SET_DELAY: 'SET_DELAY',
+  SET_INTERVAL: 'SET_INTERVAL',
   NONE: 'NONE'
 }

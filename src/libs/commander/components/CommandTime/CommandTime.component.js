@@ -21,6 +21,10 @@ export const CommandTime = ({ props, terminal: { command, finish } }) => {
   useEffect(
     function handleActionType() {
       switch (actionType) {
+        case timeActionTypes.SET_DELAY:
+          handleSetDelay()
+          break
+        
         default:
           setMessage(timeMessages.unexpectedError)
           break

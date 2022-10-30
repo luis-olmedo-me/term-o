@@ -11,13 +11,6 @@ export const timeConfig = {
       type: optionTypes.NUMBER,
       defaultValue: 0,
       alias: 'd'
-    },
-    interval: {
-      key: 'interval',
-      description: 'Set a interval time before running the next command.',
-      type: optionTypes.NUMBER,
-      defaultValue: 0,
-      alias: 'i'
     }
   },
   output: (props) => <CommandTime key={props.id} {...props} />
@@ -25,6 +18,5 @@ export const timeConfig = {
 
 export const timeActionTypes = {
   SET_DELAY: 'SET_DELAY',
-  SET_INTERVAL: 'SET_INTERVAL',
   NONE: 'NONE'
 }

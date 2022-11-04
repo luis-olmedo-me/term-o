@@ -10,7 +10,7 @@ export const ClockWrapper = styled.div`
   height: 200px;
 `
 
-export const CircleWrapper = styled.div`
+export const CircleWrapper = styled.svg`
   width: 100%;
   height: 100%;
   position: absolute;

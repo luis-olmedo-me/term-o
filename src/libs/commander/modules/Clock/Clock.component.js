@@ -1,23 +1,34 @@
 import * as React from 'react'
 import { CircleWrapper, ClockWrapper, ValueWrapper } from './Clock.styles'
 
-export const Clock = () => {
+export const Clock = ({ time, onFinish }) => {
+  const [currentTime, setCurrentTime] = React.useState(time)
+  console.log('currentTime', currentTime)
+
+  React.useEffect(() => {
+    if (!time) return
+
+    const finish = () => {
+      clearTimeout(timeoutId)
+      clearInterval(decreaseIntervalId)
+
+      setCurrentTime(0)
+      onFinish()
+    }
+
+    const timeoutId = setTimeout(finish, time * 1000)
+    const decreaseIntervalId = setInterval(() => {
+      setCurrentTime((oldTime) => --oldTime)
+    }, 1000)
+
+    return finish
+  }, [time, onFinish])
+
   return (
     <ClockWrapper>
-      <CircleWrapper viewBox='0 0 220 220'>
-        <circle shape-rendering='geometricPrecision' cx='110' cy='110' r='96' />
-        <circle
-          shape-rendering='geometricPrecision'
-          class='indicator'
-          cx='110'
-          cy='110'
-          r='96'
-        />
-      </CircleWrapper>
+      <div></div>
 
-      <ValueWrapper>
-        <span>1</span>:<span>00</span>
-      </ValueWrapper>
+      <ValueWrapper>{currentTime}</ValueWrapper>
     </ClockWrapper>
   )
 }

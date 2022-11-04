@@ -1,14 +1,11 @@
 import * as React from 'react'
-import { useEffect, useState } from 'react'
 import { Error } from 'src/modules/icons/Error.icon'
 import { Info } from 'src/modules/icons/Info.icon'
 import { Tick } from 'src/modules/icons/Tick.icon'
 import { parameterTypes } from '../../constants/commands.constants'
 import { ActionGroups } from './components/ActionGroups/ActionGroups.component'
 import {
-  AnimatedLoader,
   Hash,
-  LoaderText,
   LogContent,
   LogWrapper,
   ScrolledLogContent,
@@ -29,8 +26,6 @@ export const Log = ({
   hasScroll,
   hasShadow
 }) => {
-  const isCommand = variant === parameterTypes.COMMAND
-
   const icon = preIconsByVariants[variant]
 
   const hasActionGroups = Boolean(actionGroups?.length)

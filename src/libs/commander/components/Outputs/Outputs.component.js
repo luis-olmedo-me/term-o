@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useState, useCallback, useRef, useEffect } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { OutputWrapper } from './Outputs.styles'
 
 const defaultFormatter = (oldParam) => {
@@ -15,41 +15,32 @@ const OutputsNonMemoized = ({ components, id, outsideProps }) => {
   const [data, setData] = useState(defaultData)
   const [params, setParams] = useState([])
 
-  const fakeDelayTimeoutId = useRef(null)
   const wrapperRef = useRef(null)
 
-  useEffect(() => {
-    return () => clearTimeout(fakeDelayTimeoutId.current)
-  }, [])
-
   const showNextVisibleComponent = useCallback((paramFormatter) => {
-    const showNext = () => {
-      setParams(paramFormatter || defaultFormatter)
-      setData((oldData) => {
-        const nextInvisibleComponentIndex = oldData.findIndex(
-          (component) => !component.isVisible
-        )
+    setParams(paramFormatter || defaultFormatter)
+    setData((oldData) => {
+      const nextInvisibleComponentIndex = oldData.findIndex(
+        (component) => !component.isVisible
+      )
 
-        if (nextInvisibleComponentIndex !== -1) {
-          const oldDataCopy = [...oldData]
-          const newData = oldDataCopy.map((data, index) => ({
-            ...data,
-            isVisible: data.isVisible || index === nextInvisibleComponentIndex
-          }))
+      if (nextInvisibleComponentIndex !== -1) {
+        const oldDataCopy = [...oldData]
+        const newData = oldDataCopy.map((data, index) => ({
+          ...data,
+          isVisible: data.isVisible || index === nextInvisibleComponentIndex
+        }))
 
-          return newData
-        }
+        return newData
+      }
 
-        return oldData
-      })
+      return oldData
+    })
 
-      const children = [...wrapperRef.current.children]
-      const lastChild = children.at(-1)
+    const children = [...wrapperRef.current.children]
+    const lastChild = children.at(-1)
 
-      lastChild.scrollIntoView()
-    }
-
-    fakeDelayTimeoutId.current = setTimeout(showNext, 500)
+    lastChild.scrollIntoView()
   }, [])
 
   const componentsShown = data.filter((item) => item.isVisible)

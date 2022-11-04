@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { CommandEvent } from './CommandEvent.component'
 import { optionTypes } from '../../constants/commands.constants'
+import { CommandEvent } from './CommandEvent.component'
 
 export const eventConfig = {
   props: {

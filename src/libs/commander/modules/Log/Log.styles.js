@@ -1,5 +1,4 @@
-import { Loader } from 'modules/icons/loader.icon'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 
 export const LogWrapper = styled.div`
   transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out;
@@ -94,32 +93,4 @@ export const ScrolledLogContent = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
-`
-
-const Loading = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-`
-
-export const AnimatedLoader = styled(Loader)`
-  animation: ${Loading} 1.5s linear infinite;
-  animation-timing-function: ease-in-out;
-  width: 16px;
-  height: 16px;
-  vertical-align: middle;
-  margin-right: 1ch;
-  background-color: white;
-  padding: 0.3em;
-  border-radius: 50%;
-  vertical-align: middle;
-  font-size: 0.7em;
-  color: #333;
-`
-export const LoaderText = styled.span`
-  color: white;
-  vertical-align: middle;
 `

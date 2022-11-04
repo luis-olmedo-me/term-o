@@ -70,10 +70,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
         setTabs(tabItems)
         finish()
       })
-      .catch(
-        (error) =>
-          console.log(error) || setMessage(commanderMessages.unexpectedError)
-      )
+      .catch(() => setMessage(commanderMessages.unexpectedError))
   }, [finish, setMessage, props])
 
   const handleRedirect = React.useCallback(() => {

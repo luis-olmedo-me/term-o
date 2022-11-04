@@ -1,14 +1,11 @@
 import * as React from 'react'
-import { useEffect, useState } from 'react'
 import { Error } from 'src/modules/icons/Error.icon'
 import { Info } from 'src/modules/icons/Info.icon'
 import { Tick } from 'src/modules/icons/Tick.icon'
 import { parameterTypes } from '../../constants/commands.constants'
 import { ActionGroups } from './components/ActionGroups/ActionGroups.component'
 import {
-  AnimatedLoader,
   Hash,
-  LoaderText,
   LogContent,
   LogWrapper,
   ScrolledLogContent,
@@ -29,24 +26,9 @@ export const Log = ({
   hasScroll,
   hasShadow
 }) => {
-  const isCommand = variant === parameterTypes.COMMAND
-
-  const [isFakeLoading, setIsFakeLoading] = useState(!isCommand)
-
   const icon = preIconsByVariants[variant]
 
-  useEffect(() => {
-    if (isCommand) return
-
-    const timeoutId = setTimeout(() => setIsFakeLoading(false), 500)
-
-    return () => {
-      setIsFakeLoading(false)
-      clearTimeout(timeoutId)
-    }
-  }, [isCommand])
-
-  const hasActionGroups = !isFakeLoading && Boolean(actionGroups?.length)
+  const hasActionGroups = Boolean(actionGroups?.length)
 
   const Content = (
     <>
@@ -58,27 +40,18 @@ export const Log = ({
 
   return (
     <LogWrapper
-      className={!isFakeLoading ? variant : parameterTypes.INFO}
+      className={variant}
       onMouseDown={(event) => event.stopPropagation()}
     >
-      {isFakeLoading && (
-        <LogContent>
-          <AnimatedLoader />
-          <LoaderText>Loading</LoaderText>
-        </LogContent>
-      )}
-
-      {!isFakeLoading && (
-        <LogContent>
-          <Shadow className={hasShadow ? 'shadow' : ''}>
-            {hasScroll ? (
-              <ScrolledLogContent>{Content}</ScrolledLogContent>
-            ) : (
-              Content
-            )}
-          </Shadow>
-        </LogContent>
-      )}
+      <LogContent>
+        <Shadow className={hasShadow ? 'shadow' : ''}>
+          {hasScroll ? (
+            <ScrolledLogContent>{Content}</ScrolledLogContent>
+          ) : (
+            Content
+          )}
+        </Shadow>
+      </LogContent>
 
       {hasActionGroups && <ActionGroups actionGroups={actionGroups} />}
     </LogWrapper>

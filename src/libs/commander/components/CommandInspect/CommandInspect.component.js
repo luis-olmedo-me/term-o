@@ -152,6 +152,7 @@ const CommandInspectWithoutContext = ({
               variant={parameterTypes.STYLES}
               actionGroups={[headToElements, headToAttributes]}
               hasScroll
+              hasShadow
             >
               <List
                 items={sheets}

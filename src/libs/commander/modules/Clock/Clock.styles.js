@@ -1,27 +1,35 @@
 import styled from 'styled-components'
 
 export const ClockWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: relative;
-  color: #555;
-  width: 200px;
-  height: 200px;
+  width: 50%;
+  margin: auto;
 `
 
-export const CircleWrapper = styled.svg`
-  width: 100%;
-  height: 100%;
+export const ProgressBar = styled.div`
+  height: 40px;
+  border-radius: 3px;
+  background-color: #1f0a33;
+`
+export const Progress = styled.div`
   position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  height: 40px;
+  transition: height 0.2s ease-in-out;
+  border-radius: 3px;
+  background-color: #b583e7;
+  height: ${(props) => props.porcentage}%;
 `
 
 export const ValueWrapper = styled.div`
+  position: absolute;
   width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 3.5em !important;
-  font-weight: 500;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  vertical-align: middle;
+  color: #fafafa;
 `

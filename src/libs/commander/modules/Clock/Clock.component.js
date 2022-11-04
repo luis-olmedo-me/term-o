@@ -1,5 +1,10 @@
 import * as React from 'react'
-import { CircleWrapper, ClockWrapper, ValueWrapper } from './Clock.styles'
+import {
+  ClockWrapper,
+  Progress,
+  ProgressBar,
+  ValueWrapper
+} from './Clock.styles'
 
 export const Clock = ({ time, onFinish }) => {
   const [currentTime, setCurrentTime] = React.useState(time)
@@ -24,9 +29,12 @@ export const Clock = ({ time, onFinish }) => {
     return finish
   }, [time, onFinish])
 
+  const progress = (currentTime * 100) / time
+
   return (
     <ClockWrapper>
-      <div></div>
+      <ProgressBar />
+      <Progress porcentage={progress} />
 
       <ValueWrapper>{currentTime}</ValueWrapper>
     </ClockWrapper>

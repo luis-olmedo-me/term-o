@@ -45,7 +45,7 @@ export const CommandTime = ({ props, terminal: { command, finish } }) => {
       {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
 
       {hasDelay && !messageLog && (
-        <Log variant={parameterTypes.INFO}>
+        <Log variant={parameterTypes.TABLE}>
           <Clock time={delay} onFinish={handleFinishTimer} />
         </Log>
       )}

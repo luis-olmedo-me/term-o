@@ -31,22 +31,9 @@ export const Log = ({
 }) => {
   const isCommand = variant === parameterTypes.COMMAND
 
-  const [isFakeLoading, setIsFakeLoading] = useState(!isCommand)
-
   const icon = preIconsByVariants[variant]
 
-  useEffect(() => {
-    if (isCommand) return
-
-    const timeoutId = setTimeout(() => setIsFakeLoading(false), 500)
-
-    return () => {
-      setIsFakeLoading(false)
-      clearTimeout(timeoutId)
-    }
-  }, [isCommand])
-
-  const hasActionGroups = !isFakeLoading && Boolean(actionGroups?.length)
+  const hasActionGroups = Boolean(actionGroups?.length)
 
   const Content = (
     <>
@@ -58,27 +45,18 @@ export const Log = ({
 
   return (
     <LogWrapper
-      className={!isFakeLoading ? variant : parameterTypes.INFO}
+      className={variant}
       onMouseDown={(event) => event.stopPropagation()}
     >
-      {isFakeLoading && (
-        <LogContent>
-          <AnimatedLoader />
-          <LoaderText>Loading</LoaderText>
-        </LogContent>
-      )}
-
-      {!isFakeLoading && (
-        <LogContent>
-          <Shadow className={hasShadow ? 'shadow' : ''}>
-            {hasScroll ? (
-              <ScrolledLogContent>{Content}</ScrolledLogContent>
-            ) : (
-              Content
-            )}
-          </Shadow>
-        </LogContent>
-      )}
+      <LogContent>
+        <Shadow className={hasShadow ? 'shadow' : ''}>
+          {hasScroll ? (
+            <ScrolledLogContent>{Content}</ScrolledLogContent>
+          ) : (
+            Content
+          )}
+        </Shadow>
+      </LogContent>
 
       {hasActionGroups && <ActionGroups actionGroups={actionGroups} />}
     </LogWrapper>

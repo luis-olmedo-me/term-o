@@ -32,7 +32,7 @@ export const CommandTime = ({ props, terminal: { command, finish } }) => {
   )
 
   const handleFinishTimer = React.useCallback(() => {
-    setMessage(timeMessages.notificationSuccess)
+    setMessage(timeMessages.timeSuccess)
     finish()
   }, [setMessage, finish])
 

@@ -3,8 +3,8 @@ import { parameterTypes } from '../../constants/commands.constants'
 
 export const timeMessages = {
   ...commanderMessages,
-  notificationSuccess: {
-    message: 'The notifications has been created successfully',
+  timeSuccess: {
+    message: 'Time has passed successfully',
     type: parameterTypes.SUCCESS
   }
 }

@@ -8,7 +8,6 @@ import {
 
 export const Clock = ({ time, onFinish }) => {
   const [currentTime, setCurrentTime] = React.useState(time)
-  console.log('currentTime', currentTime)
 
   React.useEffect(() => {
     if (!time) return

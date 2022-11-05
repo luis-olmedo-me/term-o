@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { debounce } from 'src/helpers/utils.helpers.js'
+import { Checkbox } from '../Checkbox/Checkbox.component'
 import {
   TableActions,
   TableActionsWrapper,
@@ -40,8 +41,7 @@ export const Table = ({
         {
           id: 'selection',
           displayName: (
-            <input
-              type='checkbox'
+            <Checkbox
               onChange={onSelectionAll}
               checked={rows.every((row) => selectedRows.includes(row))}
             />
@@ -58,8 +58,7 @@ export const Table = ({
           {
             id: 'selection',
             value: (
-              <input
-                type='checkbox'
+              <Checkbox
                 onChange={() => onSelectionChange({ row })}
                 checked={selectedRows.includes(row)}
               />

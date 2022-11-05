@@ -7,10 +7,9 @@ import {
   deleteAliases,
   fetchConfiguration
 } from 'src/helpers/event.helpers.js'
-import { removeDuplicatedFromArray } from 'src/helpers/utils.helpers.js'
-import { Skull } from 'src/modules/icons/Skull.icon'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { Log, useMessageLog, usePaginationActions } from '../../modules/Log'
+import { useTableSelection } from '../../modules/Log/hooks/useTableSelection'
 import { aliasTableOptions } from './CommandAlias.constants'
 import {
   getActionType,
@@ -23,13 +22,30 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
   const { delete: deletedIds, add: aliasesToAdd } = props
 
   const [tableItems, setTableItems] = useState([])
-  const [selectedRows, setSelectedRows] = useState([])
+
+  const handleDeleteAliasesFromSelection = async () => {
+    const aliasIdsToDelete = selectedRows.map(([idRow]) => idRow.value)
+
+    setSelectedRows([])
+
+    await deleteAliases(aliasIdsToDelete)
+    fetchConfiguration()
+      .then(handleShowList)
+      .catch(() => setMessage(aliasMessages.unexpectedError))
+  }
 
   const { log: messageLog, setMessage } = useMessageLog()
   const { paginationActions, pages, pageNumber } = usePaginationActions({
     items: tableItems,
     maxItems: 10
   })
+  const {
+    selectedRows,
+    setSelectedRows,
+    handleAllSelection,
+    handleSelectionChange,
+    selectionActions
+  } = useTableSelection({ handleDelete: handleDeleteAliasesFromSelection })
 
   const actionType = getActionType(props)
 
@@ -102,40 +118,6 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
     [actionType, handleAddAliases, handleDeleteAliases, handleShowList]
   )
 
-  const handleAllSelection = () => {
-    const currentRows = pages[pageNumber]
-    const areAllRowsIncluded = currentRows.every((allRow) =>
-      selectedRows.includes(allRow)
-    )
-
-    const selections = areAllRowsIncluded
-      ? selectedRows.filter((selectedRow) => !currentRows.includes(selectedRow))
-      : removeDuplicatedFromArray([...selectedRows, ...currentRows])
-
-    setSelectedRows(selections)
-  }
-
-  const handleSelectionChange = ({ row }) => {
-    const isAlreadySelected = selectedRows.includes(row)
-
-    const selection = isAlreadySelected
-      ? selectedRows.filter((selectedRow) => selectedRow !== row)
-      : [...selectedRows, row]
-
-    setSelectedRows(selection)
-  }
-
-  const handleDeleteAliasesFromSelection = async () => {
-    const aliasIdsToDelete = selectedRows.map(([idRow]) => idRow.value)
-
-    setSelectedRows([])
-
-    await deleteAliases(aliasIdsToDelete)
-    fetchConfiguration()
-      .then(handleShowList)
-      .catch(() => setMessage(aliasMessages.unexpectedError))
-  }
-
   return (
     <>
       <Log variant={parameterTypes.COMMAND}>{command}</Log>
@@ -145,15 +127,7 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
       {!messageLog && (
         <Log
           variant={parameterTypes.TABLE}
-          actionGroups={[
-            ...paginationActions,
-            {
-              id: 'delete-aliases',
-              onClick: handleDeleteAliasesFromSelection,
-              disabled: selectedRows.length === 0,
-              text: <Skull />
-            }
-          ]}
+          actionGroups={[...paginationActions, ...selectionActions]}
         >
           <Carousel itemInView={pageNumber}>
             {pages.map((page, currentPageNumber) => {

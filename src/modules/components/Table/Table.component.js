@@ -8,7 +8,7 @@ import {
   TableWrapper
 } from './Table.styles'
 
-export const Table = ({ rows, options }) => {
+export const Table = ({ rows, options, onSelectionChange, onSelectionAll }) => {
   const wrapperRef = React.useRef(null)
   const [wrapperWidth, setWrapperWidth] = React.useState(0)
 
@@ -27,13 +27,40 @@ export const Table = ({ rows, options }) => {
     return () => obsever.unobserve(wrapper)
   }, [])
 
-  const minTableWidths = options.columns.map((column) => column.minTableWidth)
-  const widths = options.columns.map((column) => column.width)
+  const hasSelectionControls = Boolean(onSelectionChange && onSelectionAll)
+
+  const parsedHeaders = hasSelectionControls
+    ? [
+        {
+          id: 'selection',
+          displayName: <input type='checkbox' />,
+          width: '25px',
+          minTableWidth: 0
+        },
+        ...options.columns
+      ]
+    : options.columns
+  const parsedRows = hasSelectionControls
+    ? rows.map((row) => {
+        return [
+          {
+            id: 'selection',
+            value: <input type='checkbox' />,
+            width: '25px',
+            minTableWidth: 0
+          },
+          ...row
+        ]
+      })
+    : rows
+
+  const minTableWidths = parsedHeaders.map((column) => column.minTableWidth)
+  const widths = parsedHeaders.map((column) => column.width)
 
   return (
     <TableWrapper ref={wrapperRef}>
       <TableRow header>
-        {options.columns.map(({ id, width, displayName, minTableWidth }) => {
+        {parsedHeaders.map(({ id, width, displayName, minTableWidth }) => {
           const showColumn =
             wrapperWidth !== null && minTableWidth
               ? wrapperWidth > minTableWidth
@@ -49,7 +76,7 @@ export const Table = ({ rows, options }) => {
         })}
       </TableRow>
 
-      {rows.map((row, rowIndex) => (
+      {parsedRows.map((row, rowIndex) => (
         <TableRow key={`row-${rowIndex}`}>
           {row.map((column, columnIndex) => {
             const onColumnClick = () => column.onClick?.(column)

@@ -12,6 +12,6 @@ export const Box = styled.div`
   cursor: pointer;
 
   &.checked {
-    background-color: #0072f5;
+    background-color: #f8c572;
   }
 `

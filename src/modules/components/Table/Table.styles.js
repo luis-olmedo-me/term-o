@@ -24,6 +24,10 @@ export const TableRow = styled.div`
   gap: 10px;
   margin: 0 auto 6px;
 
+  &.selected {
+    color: #f8c572;
+  }
+
   &:last-child {
     margin-bottom: 0;
   }
@@ -39,12 +43,12 @@ export const TableRowValue = styled.span`
   text-align: ${(props) => (props.center ? 'center' : 'left')};
   flex-grow: 1;
 
-  &&:hover {
+  &:hover {
     background-color: #f5f5f512;
     color: #f8c572;
   }
 
-  &&:hover .actions {
+  &:hover .actions {
     opacity: 1;
   }
 `

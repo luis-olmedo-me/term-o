@@ -45,7 +45,10 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
     handleAllSelection,
     handleSelectionChange,
     selectionActions
-  } = useTableSelection({ handleDelete: handleDeleteAliasesFromSelection })
+  } = useTableSelection({
+    handleDelete: handleDeleteAliasesFromSelection,
+    currrentRows: pages[pageNumber]
+  })
 
   const actionType = getActionType(props)
 

@@ -2,11 +2,10 @@ import * as React from 'react'
 import { removeDuplicatedFromArray } from 'src/helpers/utils.helpers.js'
 import { Skull } from 'src/modules/icons/Skull.icon'
 
-export const useTableSelection = ({ handleDelete }) => {
+export const useTableSelection = ({ handleDelete, currentRows }) => {
   const [selectedRows, setSelectedRows] = React.useState([])
 
   const handleAllSelection = () => {
-    const currentRows = pages[pageNumber]
     const areAllRowsIncluded = currentRows.every((allRow) =>
       selectedRows.includes(allRow)
     )

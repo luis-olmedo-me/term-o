@@ -8,6 +8,7 @@ import {
 } from 'src/constants/events.constants.js'
 import { invalidURLsStarts } from './background.constants'
 import {
+  mergeAliases,
   resizeFull,
   resizeLeft,
   resizeRight,
@@ -73,9 +74,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       break
 
     case eventTypes.ADD_PAGES_EVENT: {
-      const pageEvents = [...configManager.pageEvents, ...request.data]
+      const newData = [configManager.pageEvents, request.data]
 
-      configManager.setConfig({ pageEvents })
+      configManager.setConfig({ pageEvents: newData })
       sendResponse({ status: 'ok' })
       break
     }
@@ -91,7 +92,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 
     case eventTypes.ADD_ALIAS: {
-      const newData = [...configManager.aliases, ...request.data]
+      const newData = mergeAliases(configManager.aliases, request.data)
 
       configManager.setConfig({ aliases: newData })
       sendResponse({ status: 'ok' })

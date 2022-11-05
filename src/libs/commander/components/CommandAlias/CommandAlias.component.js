@@ -1,26 +1,28 @@
+import { Carousel, CarouselItem } from 'modules/components/Carousel'
+import { Table } from 'modules/components/Table/Table.component'
 import * as React from 'react'
-import { useEffect, useState, useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import {
+  addAliases,
+  deleteAliases,
+  fetchConfiguration
+} from 'src/helpers/event.helpers.js'
+import { removeDuplicatedFromArray } from 'src/helpers/utils.helpers.js'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { Log, useMessageLog, usePaginationActions } from '../../modules/Log'
-import { Table } from 'modules/components/Table/Table.component'
 import { aliasTableOptions } from './CommandAlias.constants'
-import {
-  fetchConfiguration,
-  addAliases,
-  deleteAliases
-} from 'src/helpers/event.helpers.js'
 import {
   getActionType,
   turnAliasesToTableItems,
   validateAliasesToAdd
 } from './CommandAlias.helpers'
 import { aliasMessages } from './CommandAlias.messages'
-import { Carousel, CarouselItem } from 'modules/components/Carousel'
 
 export const CommandAlias = ({ props, terminal: { command, finish } }) => {
   const { delete: deletedIds, add: aliasesToAdd } = props
 
   const [tableItems, setTableItems] = useState([])
+  const [selectedRows, setSelectedRows] = useState([])
 
   const { log: messageLog, setMessage } = useMessageLog()
   const { paginationActions, pages, pageNumber } = usePaginationActions({
@@ -99,6 +101,19 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
     [actionType, handleAddAliases, handleDeleteAliases, handleShowList]
   )
 
+  const handleAllSelection = () => {
+    const currentRows = pages[pageNumber]
+    const areAllRowsIncluded = currentRows.every((allRow) =>
+      selectedRows.includes(allRow)
+    )
+
+    const selections = areAllRowsIncluded
+      ? selectedRows.filter((selectedRow) => !currentRows.includes(selectedRow))
+      : removeDuplicatedFromArray([...selectedRows, ...currentRows])
+
+    setSelectedRows(selections)
+  }
+
   return (
     <>
       <Log variant={parameterTypes.COMMAND}>{command}</Log>
@@ -111,7 +126,13 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
             {pages.map((page, currentPageNumber) => {
               return (
                 <CarouselItem key={currentPageNumber}>
-                  <Table rows={page} options={aliasTableOptions} />
+                  <Table
+                    rows={page}
+                    options={aliasTableOptions}
+                    onSelectionAll={handleAllSelection}
+                    onSelectionChange={() => {}}
+                    selectedRows={selectedRows}
+                  />
                 </CarouselItem>
               )
             })}

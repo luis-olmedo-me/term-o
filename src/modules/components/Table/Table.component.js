@@ -8,7 +8,13 @@ import {
   TableWrapper
 } from './Table.styles'
 
-export const Table = ({ rows, options, onSelectionChange, onSelectionAll }) => {
+export const Table = ({
+  rows,
+  options,
+  onSelectionChange,
+  onSelectionAll,
+  selectedRows
+}) => {
   const wrapperRef = React.useRef(null)
   const [wrapperWidth, setWrapperWidth] = React.useState(0)
 
@@ -33,7 +39,13 @@ export const Table = ({ rows, options, onSelectionChange, onSelectionAll }) => {
     ? [
         {
           id: 'selection',
-          displayName: <input type='checkbox' />,
+          displayName: (
+            <input
+              type='checkbox'
+              onChange={onSelectionAll}
+              checked={rows.every((row) => selectedRows.includes(row))}
+            />
+          ),
           width: '25px',
           minTableWidth: 0
         },
@@ -45,7 +57,13 @@ export const Table = ({ rows, options, onSelectionChange, onSelectionAll }) => {
         return [
           {
             id: 'selection',
-            value: <input type='checkbox' />,
+            value: (
+              <input
+                type='checkbox'
+                onChange={() => onSelectionChange({ row })}
+                checked={selectedRows.includes(row)}
+              />
+            ),
             width: '25px',
             minTableWidth: 0
           },

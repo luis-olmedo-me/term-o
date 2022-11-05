@@ -14,6 +14,7 @@ import {
   useMessageLog,
   usePaginationActions
 } from '../../modules/Log'
+import { useTableSelection } from '../../modules/Log/hooks/useTableSelection'
 import { tabsActionTypes, tabsTableOptions } from './CommandTabs.constants'
 import {
   getActionType,
@@ -57,6 +58,17 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   })
   const { startDateAction, endDateAction, setAreDatesInvalid, setDate } =
     useDateRangeActions({ onDateUpdate: handleDatesUpdate })
+  const {
+    selectedRows,
+    setSelectedRows,
+    handleAllSelection,
+    handleSelectionChange,
+    selectionActions
+  } = useTableSelection({
+    // handleDelete: handleDeleteAliasesFromSelection,
+    currentRows: pages[pageNumber],
+    isEnabled: props.now
+  })
 
   const handleShowTabList = React.useCallback(() => {
     const options = validateTabsFilters(props)
@@ -185,14 +197,21 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
           actionGroups={[
             ...startDateAction,
             ...paginationActions,
-            ...endDateAction
+            ...endDateAction,
+            ...selectionActions
           ]}
         >
           <Carousel itemInView={pageNumber}>
             {pages.map((page, currentPageNumber) => {
               return (
                 <CarouselItem key={currentPageNumber}>
-                  <Table rows={page} options={tabsTableOptions} />
+                  <Table
+                    rows={page}
+                    options={tabsTableOptions}
+                    onSelectionAll={handleAllSelection}
+                    onSelectionChange={handleSelectionChange}
+                    selectedRows={selectedRows}
+                  />
                 </CarouselItem>
               )
             })}

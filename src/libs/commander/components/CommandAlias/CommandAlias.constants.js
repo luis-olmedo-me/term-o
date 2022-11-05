@@ -31,7 +31,8 @@ export const aliasConfig = {
   output: (props) => <CommandAlias key={props.id} {...props} />
 }
 
-const aliasHeaderIds = {
+export const aliasHeaderIds = {
+  OPTIONS: 'options',
   ID: 'id',
   NAME: 'name',
   COMMAND: 'command'
@@ -39,21 +40,27 @@ const aliasHeaderIds = {
 export const aliasTableOptions = {
   columns: [
     {
+      id: aliasHeaderIds.OPTIONS,
+      displayName: '',
+      width: '15px',
+      minTableWidth: 0
+    },
+    {
       id: aliasHeaderIds.ID,
       displayName: 'ID',
-      width: 20,
+      width: '15%',
       minTableWidth: 630
     },
     {
       id: aliasHeaderIds.NAME,
       displayName: 'Name',
-      width: 20,
+      width: '20%',
       minTableWidth: 0
     },
     {
       id: aliasHeaderIds.COMMAND,
       displayName: 'Command',
-      width: 60,
+      width: '60%',
       minTableWidth: 0
     }
   ]

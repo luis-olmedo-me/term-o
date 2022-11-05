@@ -3,7 +3,7 @@ import * as React from 'react'
 import { generateUUID } from 'src/helpers/utils.helpers'
 import { Copy } from 'src/modules/icons/Copy.icon'
 import { actionTypes } from '../../constants/commands.constants'
-import { aliasTableOptions } from './CommandAlias.constants'
+import { aliasHeaderIds, aliasTableOptions } from './CommandAlias.constants'
 
 export const getActionType = ({
   list,
@@ -30,6 +30,10 @@ export const turnAliasesToTableItems = ({ aliases }) => {
   return aliases.map((alias) => {
     return aliasTableOptions.columns.map(({ id }) => {
       const rowValue = alias[id]
+
+      if (id === aliasHeaderIds.OPTIONS) {
+        return { value: <input type='checkbox' checked /> }
+      }
 
       return {
         value: rowValue,

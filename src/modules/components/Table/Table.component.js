@@ -42,8 +42,6 @@ export const Table = ({ rows, options }) => {
     <TableWrapper ref={wrapperRef}>
       <TableRow header>
         {options.columns.map(({ id, width, displayName, minTableWidth }) => {
-          const adjustedWidth = width + widthOffset / 100
-          const isInvalid = adjustedWidth !== Infinity
           const showColumn =
             wrapperWidth !== null && minTableWidth
               ? wrapperWidth > minTableWidth
@@ -51,10 +49,7 @@ export const Table = ({ rows, options }) => {
 
           return (
             showColumn && (
-              <span
-                key={`header-${id}`}
-                style={{ flex: isInvalid ? adjustedWidth : width }}
-              >
+              <span key={`header-${id}`} style={{ width }}>
                 {displayName}
               </span>
             )
@@ -68,8 +63,6 @@ export const Table = ({ rows, options }) => {
             const onColumnClick = () => column.onClick?.(column)
 
             const width = widths[columnIndex]
-            const adjustedWidth = width + widthOffset / 100
-            const isInvalid = adjustedWidth !== Infinity
             const showColumn =
               wrapperWidth !== null && minTableWidths[columnIndex]
                 ? wrapperWidth > minTableWidths[columnIndex]
@@ -80,7 +73,7 @@ export const Table = ({ rows, options }) => {
                 <TableRowValue
                   key={`row-column-${columnIndex}`}
                   onClick={onColumnClick}
-                  style={{ flex: isInvalid ? adjustedWidth : width }}
+                  style={{ width }}
                 >
                   {column.value}
 

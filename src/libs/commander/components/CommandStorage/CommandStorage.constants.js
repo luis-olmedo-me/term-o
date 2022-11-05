@@ -57,13 +57,13 @@ export const storageTableOptions = {
     {
       id: storageHeaderIds.KEY,
       displayName: 'Key',
-      width: 40,
+      width: '40%',
       minTableWidth: 0
     },
     {
       id: storageHeaderIds.VALUE,
       displayName: 'Value',
-      width: 60,
+      width: '60%',
       minTableWidth: 0
     }
   ]

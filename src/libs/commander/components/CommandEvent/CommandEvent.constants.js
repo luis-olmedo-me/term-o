@@ -80,25 +80,25 @@ export const eventTableOptions = {
     {
       id: eventHeaderIds.ID,
       displayName: 'ID',
-      width: 20,
+      width: '20%',
       minTableWidth: 555
     },
     {
       id: eventHeaderIds.URL,
       displayName: 'URL',
-      width: 15,
+      width: '15%',
       minTableWidth: 0
     },
     {
       id: eventHeaderIds.EVENT,
       displayName: 'Event',
-      width: 15,
+      width: '15%',
       minTableWidth: 700
     },
     {
       id: eventHeaderIds.COMMAND,
       displayName: 'Command',
-      width: 50,
+      width: '50%',
       minTableWidth: 0
     }
   ]

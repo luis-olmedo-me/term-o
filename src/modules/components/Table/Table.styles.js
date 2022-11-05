@@ -36,6 +36,7 @@ export const TableRowValue = styled.span`
   white-space: nowrap;
   overflow: hidden;
   position: relative;
+  text-align: ${(props) => (props.center ? 'center' : 'left')};
 
   &&:hover {
     background-color: #f5f5f512;

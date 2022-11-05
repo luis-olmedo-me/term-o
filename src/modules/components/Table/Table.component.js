@@ -47,7 +47,8 @@ export const Table = ({
             />
           ),
           width: '25px',
-          minTableWidth: 0
+          minTableWidth: 0,
+          center: true
         },
         ...options.columns
       ]
@@ -64,7 +65,8 @@ export const Table = ({
               />
             ),
             width: '25px',
-            minTableWidth: 0
+            minTableWidth: 0,
+            center: true
           },
           ...row
         ]
@@ -73,6 +75,7 @@ export const Table = ({
 
   const minTableWidths = parsedHeaders.map((column) => column.minTableWidth)
   const widths = parsedHeaders.map((column) => column.width)
+  const centerConditions = parsedHeaders.map((column) => column.center)
 
   return (
     <TableWrapper ref={wrapperRef}>
@@ -99,6 +102,7 @@ export const Table = ({
             const onColumnClick = () => column.onClick?.(column)
 
             const width = widths[columnIndex]
+            const center = centerConditions[columnIndex]
             const showColumn =
               wrapperWidth !== null && minTableWidths[columnIndex]
                 ? wrapperWidth > minTableWidths[columnIndex]
@@ -110,6 +114,7 @@ export const Table = ({
                   key={`row-column-${columnIndex}`}
                   onClick={onColumnClick}
                   style={{ width }}
+                  center={center}
                 >
                   {column.value}
 

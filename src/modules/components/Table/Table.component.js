@@ -4,6 +4,7 @@ import { Checkbox } from '../Checkbox/Checkbox.component'
 import {
   TableActions,
   TableActionsWrapper,
+  TableHeaderRowValue,
   TableRow,
   TableRowValue,
   TableWrapper
@@ -88,9 +89,9 @@ export const Table = ({
 
           return (
             showColumn && (
-              <span key={`header-${id}`} style={{ width }}>
+              <TableHeaderRowValue key={`header-${id}`} width={width}>
                 {displayName}
-              </span>
+              </TableHeaderRowValue>
             )
           )
         })}

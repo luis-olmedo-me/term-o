@@ -8,6 +8,7 @@ import {
   fetchConfiguration
 } from 'src/helpers/event.helpers.js'
 import { removeDuplicatedFromArray } from 'src/helpers/utils.helpers.js'
+import { Skull } from 'src/modules/icons/Skull.icon'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
 import { Log, useMessageLog, usePaginationActions } from '../../modules/Log'
 import { aliasTableOptions } from './CommandAlias.constants'
@@ -59,10 +60,10 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
   }, [aliasesToAdd, setMessage, finish])
 
   const handleDeleteAliases = useCallback(
-    ({ aliases = [] }) => {
+    ({ aliases = [], aliasesIdsToDelete = deletedIds }) => {
       const aliasIds = aliases.map(({ id }) => id)
-      const validIds = deletedIds.filter((id) => aliasIds.includes(id))
-      const hasInvalidIds = deletedIds.length !== validIds.length
+      const validIds = aliasesIdsToDelete.filter((id) => aliasIds.includes(id))
+      const hasInvalidIds = aliasesIdsToDelete.length !== validIds.length
 
       if (hasInvalidIds) return setMessage(aliasMessages.noAliasIdsFound)
 
@@ -124,6 +125,17 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
     setSelectedRows(selection)
   }
 
+  const handleDeleteAliasesFromSelection = async () => {
+    const aliasIdsToDelete = selectedRows.map(([idRow]) => idRow.value)
+
+    setSelectedRows([])
+
+    await deleteAliases(aliasIdsToDelete)
+    fetchConfiguration()
+      .then(handleShowList)
+      .catch(() => setMessage(aliasMessages.unexpectedError))
+  }
+
   return (
     <>
       <Log variant={parameterTypes.COMMAND}>{command}</Log>
@@ -131,7 +143,18 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
       {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
 
       {!messageLog && (
-        <Log variant={parameterTypes.TABLE} actionGroups={paginationActions}>
+        <Log
+          variant={parameterTypes.TABLE}
+          actionGroups={[
+            ...paginationActions,
+            {
+              id: 'delete-aliases',
+              onClick: handleDeleteAliasesFromSelection,
+              disabled: selectedRows.length === 0,
+              text: <Skull />
+            }
+          ]}
+        >
           <Carousel itemInView={pageNumber}>
             {pages.map((page, currentPageNumber) => {
               return (

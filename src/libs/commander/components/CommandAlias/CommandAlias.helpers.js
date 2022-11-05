@@ -31,10 +31,6 @@ export const turnAliasesToTableItems = ({ aliases }) => {
     return aliasTableOptions.columns.map(({ id }) => {
       const rowValue = alias[id]
 
-      if (id === aliasHeaderIds.OPTIONS) {
-        return { value: <input type='checkbox' checked /> }
-      }
-
       return {
         value: rowValue,
         actions: [

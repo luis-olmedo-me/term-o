@@ -32,19 +32,12 @@ export const aliasConfig = {
 }
 
 export const aliasHeaderIds = {
-  OPTIONS: 'options',
   ID: 'id',
   NAME: 'name',
   COMMAND: 'command'
 }
 export const aliasTableOptions = {
   columns: [
-    {
-      id: aliasHeaderIds.OPTIONS,
-      displayName: '',
-      width: '15px',
-      minTableWidth: 0
-    },
     {
       id: aliasHeaderIds.ID,
       displayName: 'ID',

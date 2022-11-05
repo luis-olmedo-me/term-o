@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { debounce } from 'src/helpers/utils.helpers.js'
-import { getWidthOffset } from './Table.helpers'
 import {
   TableActions,
   TableActionsWrapper,
@@ -30,13 +29,6 @@ export const Table = ({ rows, options }) => {
 
   const minTableWidths = options.columns.map((column) => column.minTableWidth)
   const widths = options.columns.map((column) => column.width)
-
-  const widthOffset = getWidthOffset({
-    minTableWidths,
-    wrapperWidth,
-    widths,
-    total: options.columns.length
-  })
 
   return (
     <TableWrapper ref={wrapperRef}>

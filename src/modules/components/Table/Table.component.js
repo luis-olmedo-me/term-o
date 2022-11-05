@@ -89,7 +89,11 @@ export const Table = ({
 
           return (
             showColumn && (
-              <TableHeaderRowValue key={`header-${id}`} width={width}>
+              <TableHeaderRowValue
+                key={`header-${id}`}
+                width={width}
+                hasFixedWidth={!width.endsWith('%')}
+              >
                 {displayName}
               </TableHeaderRowValue>
             )
@@ -116,6 +120,7 @@ export const Table = ({
                   onClick={onColumnClick}
                   style={{ width }}
                   center={center}
+                  hasFixedWidth={!width.endsWith('%')}
                 >
                   {column.value}
 

@@ -6,6 +6,7 @@ import {
   extensionKeyEventNames,
   extensionKeyEvents
 } from 'src/constants/events.constants.js'
+import { generateUUID } from 'src/helpers/utils.helpers'
 import { invalidURLsStarts } from './background.constants'
 import {
   resizeFull,
@@ -73,15 +74,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       break
 
     case eventTypes.ADD_PAGES_EVENT: {
-      const initialId = Date.now().toString()
-      const newPageEvents = request.data.map((newEvent, index) => ({
-        ...newEvent,
-        id: initialId + index
-      }))
+      const pageEvents = [...configManager.pageEvents, ...request.data]
 
-      const newData = [...configManager.pageEvents, ...newPageEvents]
-
-      configManager.setConfig({ pageEvents: newData })
+      configManager.setConfig({ pageEvents })
       sendResponse({ status: 'ok' })
       break
     }
@@ -97,10 +92,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 
     case eventTypes.ADD_ALIAS: {
-      const initialId = Date.now().toString()
       const newAliases = request.data.map((newAlias, index) => ({
         ...newAlias,
-        id: initialId + index
+        id: generateUUID()
       }))
 
       const newData = [...configManager.aliases, ...newAliases]

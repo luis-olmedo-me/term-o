@@ -51,6 +51,16 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       .catch(() => setMessage(commanderMessages.unexpectedError))
   }
 
+  const handleClosingTabsFromSelection = async () => {
+    const tabIdsToClose = selectedRows.map(([idRow]) => idRow.value)
+
+    await closeTabs(tabIdsToClose)
+
+    handleShowTabList()
+
+    setSelectedRows([])
+  }
+
   const { log: messageLog, setMessage } = useMessageLog()
   const { paginationActions, pages, pageNumber } = usePaginationActions({
     items: tabs,
@@ -65,7 +75,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     handleSelectionChange,
     selectionActions
   } = useTableSelection({
-    // handleDelete: handleDeleteAliasesFromSelection,
+    handleDelete: handleClosingTabsFromSelection,
     currentRows: pages[pageNumber],
     isEnabled: props.now
   })
@@ -116,12 +126,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   }, [setMessage, finish, props])
 
   const handleCloseTabs = React.useCallback(() => {
-    const numericTabIds = props.close.map(Number)
-    const hasInvalidTabIds = numericTabIds.some(Number.isNaN)
-
-    if (hasInvalidTabIds) return setMessage(tabsMessages.tabIdsInvalid)
-
-    closeTabs(numericTabIds)
+    closeTabs(props.close)
 
     setMessage(tabsMessages.closeSuccess)
     finish()

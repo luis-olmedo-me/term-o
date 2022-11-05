@@ -5,7 +5,7 @@ export const Box = styled.div`
   height: 0.8em;
   background-color: #ffffff20;
   border: 3px solid #00000045;
-  border-radius: 4px;
+  border-radius: 0.4em;
   display: inline-block;
   vertical-align: text-bottom;
   transition: background-color 0.2s ease-in-out;

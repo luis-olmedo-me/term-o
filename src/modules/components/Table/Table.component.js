@@ -46,7 +46,7 @@ export const Table = ({
               checked={rows.every((row) => selectedRows.includes(row))}
             />
           ),
-          width: '25px',
+          width: '33px',
           minTableWidth: 0,
           center: true
         },
@@ -64,7 +64,7 @@ export const Table = ({
                 checked={selectedRows.includes(row)}
               />
             ),
-            width: '25px',
+            width: '33px',
             minTableWidth: 0,
             center: true
           },

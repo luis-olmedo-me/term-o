@@ -1,14 +1,15 @@
 import * as React from 'react'
-import { useEffect, useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
+import { addPageEvents } from 'src/helpers/event.helpers.js'
+import { generateUUID } from 'src/helpers/utils.helpers'
 import {
   customPageEventNames,
   parameterTypes
 } from '../../constants/commands.constants'
 import { Log, useMessageLog } from '../../modules/Log'
-import { addPageEvents } from 'src/helpers/event.helpers.js'
+import { onActionTypes } from './CommandOn.constants'
 import { checkIfRegExpIsValid, getActionType } from './CommandOn.helpers'
 import { onMessages } from './CommandOn.messages'
-import { onActionTypes } from './CommandOn.constants'
 
 export const CommandOn = ({ props, terminal: { command, finish } }) => {
   const { url, run, event } = props
@@ -32,7 +33,12 @@ export const CommandOn = ({ props, terminal: { command, finish } }) => {
 
     const urlForEvent = url.join('|')
     const commandsToRun = run.map((commandToRun) => {
-      return { command: commandToRun, url: urlForEvent, event }
+      return {
+        id: generateUUID(),
+        command: commandToRun,
+        url: urlForEvent,
+        event
+      }
     })
 
     addPageEvents(commandsToRun)

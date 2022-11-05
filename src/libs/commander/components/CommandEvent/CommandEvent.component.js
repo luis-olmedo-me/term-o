@@ -1,26 +1,26 @@
+import { Carousel, CarouselItem } from 'modules/components/Carousel'
+import { Table } from 'modules/components/Table/Table.component'
 import * as React from 'react'
-import { useEffect, useState, useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import {
+  deletePageEvents,
+  fetchConfiguration
+} from 'src/helpers/event.helpers.js'
+import { getParamsByType } from '../../commander.helpers'
 import { parameterTypes } from '../../constants/commands.constants'
 import { Log, useMessageLog, usePaginationActions } from '../../modules/Log'
-import { Table } from 'modules/components/Table/Table.component'
 import {
   eventActionTypes,
   eventTableOptions,
   supportedEvents
 } from './CommandEvent.constants'
 import {
-  fetchConfiguration,
-  deletePageEvents
-} from 'src/helpers/event.helpers.js'
-import { eventMessages } from './CommandEvent.messages'
-import {
   getActionType,
   triggerChangeEvent,
   turnPageEventsToTableItems,
   validateElement
 } from './CommandEvent.helpers'
-import { getParamsByType } from '../../commander.helpers'
-import { Carousel, CarouselItem } from 'modules/components/Carousel'
+import { eventMessages } from './CommandEvent.messages'
 
 export const CommandEvent = ({
   props,
@@ -83,9 +83,7 @@ export const CommandEvent = ({
 
     switch (eventToTrigger) {
       case supportedEvents.CLICK: {
-        paramElements.forEach((element) => {
-          element.dispatchEvent(new MouseEvent('click'))
-        })
+        paramElements.forEach((element) => element.click())
 
         setMessage(eventMessages.elementsClickedSuccess)
         break

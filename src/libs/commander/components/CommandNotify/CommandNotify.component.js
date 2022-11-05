@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { useCallback, useEffect } from 'react'
 import { parameterTypes } from '../../constants/commands.constants'
-import { getActionType } from './CommandNotify.helpers'
-import { notifyMessages } from './CommandNotify.messages'
 import { Log, useMessageLog } from '../../modules/Log'
 import { notifyActionTypes } from './CommandNotify.constants'
+import { getActionType } from './CommandNotify.helpers'
+import { notifyMessages } from './CommandNotify.messages'
 
 export const CommandNotify = ({
   props,
@@ -17,9 +17,7 @@ export const CommandNotify = ({
   const { log: messageLog, setMessage } = useMessageLog()
 
   const handleNotify = useCallback(() => {
-    const initialId = Date.now().toString()
-
-    addNotification(initialId, message, image)
+    addNotification(message, image)
 
     setMessage(notifyMessages.notificationSuccess)
     finish()

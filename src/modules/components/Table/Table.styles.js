@@ -21,7 +21,7 @@ export const TableRow = styled.div`
   text-align: ${(props) => (props.header ? 'center' : 'left')};
   font-size: 1em;
   line-height: 2em;
-  gap: 5px;
+  gap: 10px;
   margin: 0 auto 6px;
 
   &:last-child {

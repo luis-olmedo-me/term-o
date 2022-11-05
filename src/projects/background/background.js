@@ -6,7 +6,6 @@ import {
   extensionKeyEventNames,
   extensionKeyEvents
 } from 'src/constants/events.constants.js'
-import { generateUUID } from 'src/helpers/utils.helpers'
 import { invalidURLsStarts } from './background.constants'
 import {
   resizeFull,
@@ -92,12 +91,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 
     case eventTypes.ADD_ALIAS: {
-      const newAliases = request.data.map((newAlias, index) => ({
-        ...newAlias,
-        id: generateUUID()
-      }))
-
-      const newData = [...configManager.aliases, ...newAliases]
+      const newData = [...configManager.aliases, ...request.data]
 
       configManager.setConfig({ aliases: newData })
       sendResponse({ status: 'ok' })

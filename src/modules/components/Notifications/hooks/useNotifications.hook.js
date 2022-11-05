@@ -1,9 +1,12 @@
 import { useCallback, useEffect, useState } from 'react'
+import { generateUUID } from 'src/helpers/utils.helpers'
 
 export const useNotifications = () => {
   const [notifications, setNotifications] = useState([])
 
-  const addNotification = useCallback((id, message, image) => {
+  const addNotification = useCallback((message, image) => {
+    const id = generateUUID()
+
     setNotifications((oldNotifications) => {
       return [...oldNotifications, { id, message, image, isDead: false }]
     })
@@ -52,12 +55,7 @@ export const useNotifications = () => {
   )
 
   const showWorkerRequestError = useCallback(() => {
-    const initialId = Date.now().toString()
-
-    addNotification(
-      initialId,
-      'Worker connection lost, please refresh the window'
-    )
+    addNotification('Worker connection lost, please refresh the window')
   }, [addNotification])
 
   return {

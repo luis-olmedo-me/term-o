@@ -1,5 +1,6 @@
 import { commander } from 'libs/commander'
 import * as React from 'react'
+import { generateUUID } from 'src/helpers/utils.helpers'
 import { Copy } from 'src/modules/icons/Copy.icon'
 import { actionTypes } from '../../constants/commands.constants'
 import { aliasTableOptions } from './CommandAlias.constants'
@@ -20,14 +21,9 @@ export const validateAliasesToAdd = ({ aliasesToAdd }) => {
     return { ...totalAliases, ...alias }
   }, {})
 
-  return Object.entries(newAliasesAsObject).reduce(
-    (totalAliases, [name, command]) => {
-      return commander.commandNames.includes(name)
-        ? totalAliases
-        : [...totalAliases, { name, command }]
-    },
-    []
-  )
+  return Object.entries(newAliasesAsObject).map(([name, command]) => {
+    return { id: generateUUID(), name, command }
+  }, [])
 }
 
 export const turnAliasesToTableItems = ({ aliases }) => {

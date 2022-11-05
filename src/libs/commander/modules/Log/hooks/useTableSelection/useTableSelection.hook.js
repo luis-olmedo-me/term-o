@@ -45,8 +45,8 @@ export const useTableSelection = ({
   return {
     selectedRows,
     setSelectedRows,
-    handleAllSelection,
-    handleSelectionChange,
+    handleAllSelection: isEnabled ? handleAllSelection : null,
+    handleSelectionChange: isEnabled ? handleSelectionChange : null,
     selectionActions
   }
 }

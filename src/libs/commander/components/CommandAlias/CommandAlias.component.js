@@ -26,7 +26,7 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
   const handleDeleteAliasesFromSelection = async ({ selectedRows }) => {
     const aliasIdsToDelete = selectedRows.map(([idRow]) => idRow.value)
 
-    setSelectedRows([])
+    clearSelection()
 
     await deleteAliases(aliasIdsToDelete)
     fetchConfiguration()
@@ -39,7 +39,7 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
     items: tableItems,
     maxItems: 10
   })
-  const { setSelectedRows, tableSelectionProps, selectionActions } =
+  const { clearSelection, tableSelectionProps, selectionActions } =
     useTableSelection({
       handleSkullClick: handleDeleteAliasesFromSelection,
       currentRows: pages[pageNumber],

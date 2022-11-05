@@ -58,7 +58,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
 
     handleShowTabList()
 
-    setSelectedRows([])
+    clearSelection()
   }
 
   const { log: messageLog, setMessage } = useMessageLog()
@@ -68,7 +68,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   })
   const { startDateAction, endDateAction, setAreDatesInvalid, setDate } =
     useDateRangeActions({ onDateUpdate: handleDatesUpdate })
-  const { setSelectedRows, tableSelectionProps, selectionActions } =
+  const { clearSelection, tableSelectionProps, selectionActions } =
     useTableSelection({
       handleSkullClick: handleClosingTabsFromSelection,
       currentRows: pages[pageNumber],

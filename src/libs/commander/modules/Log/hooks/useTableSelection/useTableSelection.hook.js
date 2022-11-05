@@ -40,8 +40,10 @@ export const useTableSelection = ({
     }
   ]
 
+  const clearSelection = () => setSelectedRows([])
+
   return {
-    setSelectedRows,
+    clearSelection,
     selectionActions: isEnabled ? selectionActions : [],
     tableSelectionProps: {
       onSelectionAll: isEnabled ? handleAllSelection : null,

@@ -41,7 +41,7 @@ export const TableRowValue = styled.span`
   overflow: hidden;
   position: relative;
   text-align: ${(props) => (props.center ? 'center' : 'left')};
-  flex-grow: ${(props) => (props.hasFixedWidth ? '' : 'grow')};
+  flex-grow: ${(props) => (props.hasFixedWidth ? 'unset' : '1')};
 
   &:hover {
     background-color: #f5f5f512;
@@ -55,7 +55,7 @@ export const TableRowValue = styled.span`
 
 export const TableHeaderRowValue = styled.span`
   width: ${(props) => props.width};
-  flex-grow: ${(props) => (props.hasFixedWidth ? '' : 'grow')};
+  flex-grow: ${(props) => (props.hasFixedWidth ? 'unset' : '1')};
 `
 
 export const TableActionsWrapper = styled.div`

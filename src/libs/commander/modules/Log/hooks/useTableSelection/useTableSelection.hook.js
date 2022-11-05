@@ -31,22 +31,20 @@ export const useTableSelection = ({
     setSelectedRows(selection)
   }
 
-  const selectionActions = isEnabled
-    ? [
-        {
-          id: 'delete-selected',
-          onClick: handleDelete,
-          disabled: selectedRows.length === 0,
-          text: <Skull />
-        }
-      ]
-    : []
+  const selectionActions = [
+    {
+      id: 'delete-selected',
+      onClick: handleDelete,
+      disabled: selectedRows.length === 0,
+      text: <Skull />
+    }
+  ]
 
   return {
     selectedRows,
     setSelectedRows,
     handleAllSelection: isEnabled ? handleAllSelection : null,
     handleSelectionChange: isEnabled ? handleSelectionChange : null,
-    selectionActions
+    selectionActions: isEnabled ? selectionActions : []
   }
 }

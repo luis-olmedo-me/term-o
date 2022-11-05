@@ -8,7 +8,12 @@ import {
 } from 'src/helpers/event.helpers.js'
 import { getParamsByType } from '../../commander.helpers'
 import { parameterTypes } from '../../constants/commands.constants'
-import { Log, useMessageLog, usePaginationActions } from '../../modules/Log'
+import {
+  Log,
+  useMessageLog,
+  usePaginationActions,
+  useTableSelection
+} from '../../modules/Log'
 import {
   eventActionTypes,
   eventTableOptions,
@@ -39,6 +44,12 @@ export const CommandEvent = ({
     items: tableItems,
     maxItems: 10
   })
+  const { clearSelection, tableSelectionProps, selectionActions } =
+    useTableSelection({
+      handleSkullClick: handleDeleteAliasesFromSelection,
+      currentRows: pages[pageNumber],
+      isEnabled: props.now
+    })
 
   const actionType = getActionType(props)
 

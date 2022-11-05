@@ -12,9 +12,9 @@ import {
   Log,
   useDateRangeActions,
   useMessageLog,
-  usePaginationActions
+  usePaginationActions,
+  useTableSelection
 } from '../../modules/Log'
-import { useTableSelection } from '../../modules/Log/hooks/useTableSelection'
 import { tabsActionTypes, tabsTableOptions } from './CommandTabs.constants'
 import {
   getActionType,

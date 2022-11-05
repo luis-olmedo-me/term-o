@@ -8,8 +8,12 @@ import {
   fetchConfiguration
 } from 'src/helpers/event.helpers.js'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
-import { Log, useMessageLog, usePaginationActions } from '../../modules/Log'
-import { useTableSelection } from '../../modules/Log/hooks/useTableSelection'
+import {
+  Log,
+  useMessageLog,
+  usePaginationActions,
+  useTableSelection
+} from '../../modules/Log'
 import { aliasTableOptions } from './CommandAlias.constants'
 import {
   getActionType,

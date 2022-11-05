@@ -51,7 +51,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       .catch(() => setMessage(commanderMessages.unexpectedError))
   }
 
-  const handleClosingTabsFromSelection = async () => {
+  const handleClosingTabsFromSelection = async ({ selectedRows }) => {
     const tabIdsToClose = selectedRows.map(([idRow]) => idRow.value)
 
     await closeTabs(tabIdsToClose)
@@ -68,17 +68,12 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   })
   const { startDateAction, endDateAction, setAreDatesInvalid, setDate } =
     useDateRangeActions({ onDateUpdate: handleDatesUpdate })
-  const {
-    selectedRows,
-    setSelectedRows,
-    handleAllSelection,
-    handleSelectionChange,
-    selectionActions
-  } = useTableSelection({
-    handleDelete: handleClosingTabsFromSelection,
-    currentRows: pages[pageNumber],
-    isEnabled: props.now
-  })
+  const { setSelectedRows, tableSelectionProps, selectionActions } =
+    useTableSelection({
+      handleSkullClick: handleClosingTabsFromSelection,
+      currentRows: pages[pageNumber],
+      isEnabled: props.now
+    })
 
   const handleShowTabList = React.useCallback(() => {
     const options = validateTabsFilters(props)
@@ -211,11 +206,9 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
               return (
                 <CarouselItem key={currentPageNumber}>
                   <Table
+                    {...tableSelectionProps}
                     rows={page}
                     options={tabsTableOptions}
-                    onSelectionAll={handleAllSelection}
-                    onSelectionChange={handleSelectionChange}
-                    selectedRows={selectedRows}
                   />
                 </CarouselItem>
               )

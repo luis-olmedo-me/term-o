@@ -3,7 +3,7 @@ import { removeDuplicatedFromArray } from 'src/helpers/utils.helpers.js'
 import { Skull } from 'src/modules/icons/Skull.icon'
 
 export const useTableSelection = ({
-  handleDelete,
+  handleSkullClick,
   currentRows,
   isEnabled = true
 }) => {
@@ -34,17 +34,19 @@ export const useTableSelection = ({
   const selectionActions = [
     {
       id: 'delete-selected',
-      onClick: handleDelete,
+      onClick: () => handleSkullClick({ selectedRows }),
       disabled: selectedRows.length === 0,
       text: <Skull />
     }
   ]
 
   return {
-    selectedRows,
     setSelectedRows,
-    handleAllSelection: isEnabled ? handleAllSelection : null,
-    handleSelectionChange: isEnabled ? handleSelectionChange : null,
-    selectionActions: isEnabled ? selectionActions : []
+    selectionActions: isEnabled ? selectionActions : [],
+    tableSelectionProps: {
+      onSelectionAll: isEnabled ? handleAllSelection : null,
+      onSelectionChange: isEnabled ? handleSelectionChange : null,
+      selectedRows
+    }
   }
 }

@@ -23,7 +23,7 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
 
   const [tableItems, setTableItems] = useState([])
 
-  const handleDeleteAliasesFromSelection = async () => {
+  const handleDeleteAliasesFromSelection = async ({ selectedRows }) => {
     const aliasIdsToDelete = selectedRows.map(([idRow]) => idRow.value)
 
     setSelectedRows([])
@@ -39,16 +39,12 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
     items: tableItems,
     maxItems: 10
   })
-  const {
-    selectedRows,
-    setSelectedRows,
-    handleAllSelection,
-    handleSelectionChange,
-    selectionActions
-  } = useTableSelection({
-    handleDelete: handleDeleteAliasesFromSelection,
-    currentRows: pages[pageNumber]
-  })
+  const { setSelectedRows, tableSelectionProps, selectionActions } =
+    useTableSelection({
+      handleSkullClick: handleDeleteAliasesFromSelection,
+      currentRows: pages[pageNumber],
+      isEnabled: props.now
+    })
 
   const actionType = getActionType(props)
 
@@ -137,11 +133,9 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
               return (
                 <CarouselItem key={currentPageNumber}>
                   <Table
+                    {...tableSelectionProps}
                     rows={page}
                     options={aliasTableOptions}
-                    onSelectionAll={handleAllSelection}
-                    onSelectionChange={handleSelectionChange}
-                    selectedRows={selectedRows}
                   />
                 </CarouselItem>
               )

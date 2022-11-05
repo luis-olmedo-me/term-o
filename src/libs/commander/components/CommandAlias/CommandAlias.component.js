@@ -114,6 +114,16 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
     setSelectedRows(selections)
   }
 
+  const handleSelectionChange = ({ row }) => {
+    const isAlreadySelected = selectedRows.includes(row)
+
+    const selection = isAlreadySelected
+      ? selectedRows.filter((selectedRow) => selectedRow !== row)
+      : [...selectedRows, row]
+
+    setSelectedRows(selection)
+  }
+
   return (
     <>
       <Log variant={parameterTypes.COMMAND}>{command}</Log>
@@ -130,7 +140,7 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
                     rows={page}
                     options={aliasTableOptions}
                     onSelectionAll={handleAllSelection}
-                    onSelectionChange={() => {}}
+                    onSelectionChange={handleSelectionChange}
                     selectedRows={selectedRows}
                   />
                 </CarouselItem>

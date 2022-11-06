@@ -1,12 +1,12 @@
 import * as React from 'react'
 import { Portal } from 'src/modules/components/Portal/Portal.component'
-import { Logo } from 'src/modules/icons/Logo.icon'
+import { Logo } from 'src/modules/icons'
 import {
   Description,
-  NotificationWrapper,
+  Image,
   LogoWrapper,
   NotificationsWrapper,
-  Image
+  NotificationWrapper
 } from './Notifications.styles'
 
 export const Notifications = ({ messages }) => {

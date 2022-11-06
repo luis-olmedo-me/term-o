@@ -1,7 +1,5 @@
 import * as React from 'react'
-import { Home } from 'src/modules/icons/Home.icon'
-import { Palette } from 'src/modules/icons/Palette.icon'
-import { Tag } from 'src/modules/icons/Tag.icon'
+import { Home, Palette, Tag } from 'src/modules/icons'
 
 import { CommandInspect } from './CommandInspect.component'
 

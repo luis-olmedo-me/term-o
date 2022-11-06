@@ -1,10 +1,5 @@
 import * as React from 'react'
-import { Copy } from 'src/modules/icons/Copy.icon'
-import { Eye } from 'src/modules/icons/Eye.icon'
-import { Flag } from 'src/modules/icons/Flag.icon'
-import { Palette } from 'src/modules/icons/Palette.icon'
-import { Skull } from 'src/modules/icons/Skull.icon'
-import { Tag } from 'src/modules/icons/Tag.icon'
+import { Copy, Eye, Flag, Palette, Skull, Tag } from 'src/modules/icons'
 import { createXPathFromElement } from './useElementActions.helpers'
 
 export const useElementActions = ({

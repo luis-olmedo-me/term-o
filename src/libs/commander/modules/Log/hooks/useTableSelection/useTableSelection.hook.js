@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { removeDuplicatedFromArray } from 'src/helpers/utils.helpers.js'
-import { Skull } from 'src/modules/icons/Skull.icon'
+import { Skull } from 'src/modules/icons'
 
 export const useTableSelection = ({
   handleSkullClick,

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Home } from 'src/modules/icons/Home.icon'
+import { Home } from 'src/modules/icons'
 import { optionTypes } from '../../constants/commands.constants'
 import { CommandStorage } from './CommandStorage.component'
 

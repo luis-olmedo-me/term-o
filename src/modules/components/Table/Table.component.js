@@ -1,15 +1,22 @@
 import * as React from 'react'
 import { debounce } from 'src/helpers/utils.helpers.js'
-import { getWidthOffset } from './Table.helpers'
+import { Checkbox } from '../Checkbox/Checkbox.component'
 import {
   TableActions,
   TableActionsWrapper,
+  TableHeaderRowValue,
   TableRow,
   TableRowValue,
   TableWrapper
 } from './Table.styles'
 
-export const Table = ({ rows, options }) => {
+export const Table = ({
+  rows,
+  options,
+  onSelectionChange,
+  onSelectionAll,
+  selectedRows
+}) => {
   const wrapperRef = React.useRef(null)
   const [wrapperWidth, setWrapperWidth] = React.useState(0)
 
@@ -28,22 +35,53 @@ export const Table = ({ rows, options }) => {
     return () => obsever.unobserve(wrapper)
   }, [])
 
-  const minTableWidths = options.columns.map((column) => column.minTableWidth)
-  const widths = options.columns.map((column) => column.width)
+  const hasSelectionControls = Boolean(onSelectionChange && onSelectionAll)
 
-  const widthOffset = getWidthOffset({
-    minTableWidths,
-    wrapperWidth,
-    widths,
-    total: options.columns.length
-  })
+  const parsedHeaders = hasSelectionControls
+    ? [
+        {
+          id: 'selection',
+          displayName: (
+            <Checkbox
+              onChange={onSelectionAll}
+              checked={rows.every((row) => selectedRows.includes(row))}
+            />
+          ),
+          width: '33px',
+          minTableWidth: 0,
+          center: true
+        },
+        ...options.columns
+      ]
+    : options.columns
+  const parsedRows = hasSelectionControls
+    ? rows.map((row) => {
+        return [
+          {
+            id: 'selection',
+            value: (
+              <Checkbox
+                onChange={() => onSelectionChange({ row })}
+                checked={selectedRows.includes(row)}
+              />
+            ),
+            width: '33px',
+            minTableWidth: 0,
+            center: true
+          },
+          ...row
+        ]
+      })
+    : rows
+
+  const minTableWidths = parsedHeaders.map((column) => column.minTableWidth)
+  const widths = parsedHeaders.map((column) => column.width)
+  const centerConditions = parsedHeaders.map((column) => column.center)
 
   return (
     <TableWrapper ref={wrapperRef}>
       <TableRow header>
-        {options.columns.map(({ id, width, displayName, minTableWidth }) => {
-          const adjustedWidth = width + widthOffset / 100
-          const isInvalid = adjustedWidth !== Infinity
+        {parsedHeaders.map(({ id, width, displayName, minTableWidth }) => {
           const showColumn =
             wrapperWidth !== null && minTableWidth
               ? wrapperWidth > minTableWidth
@@ -51,25 +89,25 @@ export const Table = ({ rows, options }) => {
 
           return (
             showColumn && (
-              <span
+              <TableHeaderRowValue
                 key={`header-${id}`}
-                style={{ flex: isInvalid ? adjustedWidth : width }}
+                width={width}
+                hasFixedWidth={!width.endsWith('%')}
               >
                 {displayName}
-              </span>
+              </TableHeaderRowValue>
             )
           )
         })}
       </TableRow>
 
-      {rows.map((row, rowIndex) => (
+      {parsedRows.map((row, rowIndex) => (
         <TableRow key={`row-${rowIndex}`}>
           {row.map((column, columnIndex) => {
             const onColumnClick = () => column.onClick?.(column)
 
             const width = widths[columnIndex]
-            const adjustedWidth = width + widthOffset / 100
-            const isInvalid = adjustedWidth !== Infinity
+            const center = centerConditions[columnIndex]
             const showColumn =
               wrapperWidth !== null && minTableWidths[columnIndex]
                 ? wrapperWidth > minTableWidths[columnIndex]
@@ -80,7 +118,9 @@ export const Table = ({ rows, options }) => {
                 <TableRowValue
                   key={`row-column-${columnIndex}`}
                   onClick={onColumnClick}
-                  style={{ flex: isInvalid ? adjustedWidth : width }}
+                  style={{ width }}
+                  center={center}
+                  hasFixedWidth={!width.endsWith('%')}
                 >
                   {column.value}
 

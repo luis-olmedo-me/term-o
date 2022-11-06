@@ -128,25 +128,25 @@ export const tabsTableOptions = {
     {
       id: tabsHeaderIds.ID,
       displayName: 'ID',
-      width: 5,
+      width: '5%',
       minTableWidth: 900
     },
     {
       id: tabsHeaderIds.DATE,
       displayName: 'Date',
-      width: 25,
+      width: '25%',
       minTableWidth: 0
     },
     {
       id: tabsHeaderIds.TITLE,
       displayName: 'Title',
-      width: 40,
+      width: '40%',
       minTableWidth: 0
     },
     {
       id: tabsHeaderIds.HOSTNAME,
       displayName: 'Host Name',
-      width: 15,
+      width: '15%',
       minTableWidth: 665
     }
   ]

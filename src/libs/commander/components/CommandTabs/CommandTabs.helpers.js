@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { formatDate } from 'src/helpers/dates.helpers'
 import { ImageIcon } from 'src/modules/components/ImageIcon'
-import { Copy } from 'src/modules/icons/Copy.icon'
+import { Copy } from 'src/modules/icons'
 import {
   tabsActionTypes,
   tabsHeaderIds,

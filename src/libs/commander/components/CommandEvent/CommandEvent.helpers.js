@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Copy } from 'src/modules/icons/Copy.icon'
+import { Copy } from 'src/modules/icons'
 import {
   eventActionTypes,
   eventTableOptions,

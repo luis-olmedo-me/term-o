@@ -74,7 +74,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       break
 
     case eventTypes.ADD_PAGES_EVENT: {
-      const newData = [configManager.pageEvents, request.data]
+      const newData = [...configManager.pageEvents, ...request.data]
 
       configManager.setConfig({ pageEvents: newData })
       sendResponse({ status: 'ok' })

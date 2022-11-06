@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Logo } from 'src/modules/icons/Logo.icon'
+import { Logo } from 'src/modules/icons'
 import {
   Favicon,
   FaviconSVG,

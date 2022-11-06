@@ -9,10 +9,6 @@ export const tabsMessages = {
     message: 'The url has been successfully open.',
     type: parameterTypes.SUCCESS
   },
-  tabIdsInvalid: {
-    message: 'The provided tab IDs are invalid.',
-    type: parameterTypes.ERROR
-  },
   closeSuccess: {
     message: 'The tab has been successfully closed.',
     type: parameterTypes.SUCCESS

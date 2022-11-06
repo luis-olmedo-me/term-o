@@ -8,13 +8,13 @@ export const attributeTableOptions = {
     {
       id: attributeHeaderIds.ATTRIBUTE,
       displayName: 'Attribute',
-      width: 50,
+      width: '50%',
       minTableWidth: 0
     },
     {
       id: attributeHeaderIds.VALUE,
       displayName: 'Value',
-      width: 50,
+      width: '50%',
       minTableWidth: 0
     }
   ]

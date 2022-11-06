@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { Chevron } from 'src/modules/icons/Chevron.icon'
-import { DoubleChevron } from 'src/modules/icons/DoubleChevron.icon'
+import { Chevron, DoubleChevron } from 'src/modules/icons'
 import {
   divideItemsIntoPages,
   generateButtonGroupsFromPages

@@ -1,7 +1,5 @@
 import * as React from 'react'
-import { Error } from 'src/modules/icons/Error.icon'
-import { Info } from 'src/modules/icons/Info.icon'
-import { Tick } from 'src/modules/icons/Tick.icon'
+import { Error, Info, Tick } from 'src/modules/icons'
 import { parameterTypes } from '../../constants/commands.constants'
 import { ActionGroups } from './components/ActionGroups/ActionGroups.component'
 import {

@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { Copy } from 'src/modules/icons/Copy.icon'
-import { Pencil } from 'src/modules/icons/Pencil.icon'
+import { Copy, Pencil } from 'src/modules/icons'
 import { storageActionTypes } from './CommandStorage.constants'
 import { MaterialTree } from './CommandStorage.styles'
 

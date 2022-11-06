@@ -12,7 +12,8 @@ import {
   Log,
   useDateRangeActions,
   useMessageLog,
-  usePaginationActions
+  usePaginationActions,
+  useTableSelection
 } from '../../modules/Log'
 import { tabsActionTypes, tabsTableOptions } from './CommandTabs.constants'
 import {
@@ -50,6 +51,16 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       .catch(() => setMessage(commanderMessages.unexpectedError))
   }
 
+  const handleClosingTabsFromSelection = async ({ selectedRows }) => {
+    const tabIdsToClose = selectedRows.map(([idRow]) => idRow.value)
+
+    await closeTabs(tabIdsToClose)
+
+    handleShowTabList()
+
+    clearSelection()
+  }
+
   const { log: messageLog, setMessage } = useMessageLog()
   const { paginationActions, pages, pageNumber } = usePaginationActions({
     items: tabs,
@@ -57,6 +68,12 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   })
   const { startDateAction, endDateAction, setAreDatesInvalid, setDate } =
     useDateRangeActions({ onDateUpdate: handleDatesUpdate })
+  const { clearSelection, tableSelectionProps, selectionActions } =
+    useTableSelection({
+      handleSkullClick: handleClosingTabsFromSelection,
+      currentRows: pages[pageNumber],
+      isEnabled: props.now
+    })
 
   const handleShowTabList = React.useCallback(() => {
     const options = validateTabsFilters(props)
@@ -104,12 +121,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   }, [setMessage, finish, props])
 
   const handleCloseTabs = React.useCallback(() => {
-    const numericTabIds = props.close.map(Number)
-    const hasInvalidTabIds = numericTabIds.some(Number.isNaN)
-
-    if (hasInvalidTabIds) return setMessage(tabsMessages.tabIdsInvalid)
-
-    closeTabs(numericTabIds)
+    closeTabs(props.close)
 
     setMessage(tabsMessages.closeSuccess)
     finish()
@@ -185,14 +197,19 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
           actionGroups={[
             ...startDateAction,
             ...paginationActions,
-            ...endDateAction
+            ...endDateAction,
+            ...selectionActions
           ]}
         >
           <Carousel itemInView={pageNumber}>
             {pages.map((page, currentPageNumber) => {
               return (
                 <CarouselItem key={currentPageNumber}>
-                  <Table rows={page} options={tabsTableOptions} />
+                  <Table
+                    {...tableSelectionProps}
+                    rows={page}
+                    options={tabsTableOptions}
+                  />
                 </CarouselItem>
               )
             })}

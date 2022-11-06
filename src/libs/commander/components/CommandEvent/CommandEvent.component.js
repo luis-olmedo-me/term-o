@@ -39,6 +39,20 @@ export const CommandEvent = ({
 
   const [tableItems, setTableItems] = useState([])
 
+  const handleDeleteEventsFromTableItems = async ({ selectedRows }) => {
+    const eventIdsToDelete = selectedRows.map(([idRow]) => idRow.value)
+
+    await deletePageEvents(eventIdsToDelete).catch(() =>
+      setMessage(eventMessages.unexpectedError)
+    )
+
+    await fetchConfiguration()
+      .then(handleShowList)
+      .catch(() => setMessage(eventMessages.unexpectedError))
+
+    clearSelection()
+  }
+
   const { log: messageLog, setMessage } = useMessageLog()
   const { paginationActions, pages, pageNumber } = usePaginationActions({
     items: tableItems,
@@ -46,7 +60,7 @@ export const CommandEvent = ({
   })
   const { clearSelection, tableSelectionProps, selectionActions } =
     useTableSelection({
-      handleSkullClick: handleDeleteAliasesFromSelection,
+      handleSkullClick: handleDeleteEventsFromTableItems,
       currentRows: pages[pageNumber],
       isEnabled: props.now
     })
@@ -153,12 +167,19 @@ export const CommandEvent = ({
       {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
 
       {!messageLog && (
-        <Log variant={parameterTypes.TABLE} actionGroups={paginationActions}>
+        <Log
+          variant={parameterTypes.TABLE}
+          actionGroups={[...paginationActions, ...selectionActions]}
+        >
           <Carousel itemInView={pageNumber}>
             {pages.map((page, currentPageNumber) => {
               return (
                 <CarouselItem key={currentPageNumber}>
-                  <Table rows={page} options={eventTableOptions} />
+                  <Table
+                    {...tableSelectionProps}
+                    rows={page}
+                    options={eventTableOptions}
+                  />
                 </CarouselItem>
               )
             })}

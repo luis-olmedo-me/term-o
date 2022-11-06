@@ -1,4 +1,7 @@
+import configuration from 'libs/configuration'
 import styled from 'styled-components'
+
+const radius = configuration.theme.radius
 
 export const Input = styled.input`
   padding: 10px;
@@ -32,7 +35,7 @@ export const InputWrapper = styled.div`
   z-index: 1;
   border-width: 0 1px 1px;
   background-color: #111;
-  border-radius: 0 0 5px 5px;
+  border-radius: 0 0 ${radius} ${radius};
 `
 
 export const Hash = styled.span`

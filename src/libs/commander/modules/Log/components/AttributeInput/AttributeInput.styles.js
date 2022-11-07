@@ -7,7 +7,6 @@ export const Input = styled.input`
   border-radius: 3px;
   font-family: Share Tech Mono;
   font-size: 1em;
-  background: #00000025;
   color: #fafafa;
 
   &:active,

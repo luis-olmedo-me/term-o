@@ -5,11 +5,11 @@ export const defaultTheme = {
 
   title: {
     background: '#000000',
-    color: '#d6d6d6',
+    color: '#fafafa',
 
     hover: {
       background: '#0d0d0d',
-      color: '#d6d6d6'
+      color: '#fafafa'
     }
   },
 
@@ -19,11 +19,11 @@ export const defaultTheme = {
 
   input: {
     background: '#000000',
-    color: '#d6d6d6',
+    color: '#fafafa',
 
     hover: {
       background: '#0d0d0d',
-      color: '#d6d6d6'
+      color: '#fafafa'
     },
 
     selection: {
@@ -34,7 +34,7 @@ export const defaultTheme = {
 
   suggestion: {
     background: '#000000',
-    color: '#d6d6d6',
+    color: '#fafafa',
 
     selected: {
       background: '#222222',
@@ -54,42 +54,42 @@ export const defaultTheme = {
 
     command: {
       background: '#222222',
-      color: '#d6d6d6'
+      color: '#fafafa'
     },
 
     elements: {
       background: '#ff4ecd',
-      color: '#d6d6d6'
+      color: '#fafafa'
     },
 
     stylesheet: {
       background: '#0056d0',
-      color: '#d6d6d6'
+      color: '#fafafa'
     },
 
     error: {
       background: '#f21361',
-      color: '#d6d6d6'
+      color: '#fafafa'
     },
 
     info: {
       background: '#0070f3',
-      color: '#d6d6d6'
+      color: '#fafafa'
     },
 
     table: {
       background: '#7928ca',
-      color: '#d6d6d6'
+      color: '#fafafa'
     },
 
     success: {
       background: '#17c964',
-      color: '#d6d6d6'
+      color: '#fafafa'
     },
 
     help: {
       background: '#a66908',
-      color: '#d6d6d6'
+      color: '#fafafa'
     }
   }
 }

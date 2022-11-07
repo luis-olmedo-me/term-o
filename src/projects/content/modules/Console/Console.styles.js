@@ -2,7 +2,7 @@ import configuration from 'libs/configuration'
 import styled from 'styled-components'
 
 const theme = configuration.theme
-const radius = theme.radius
+const radius = theme.border.radius
 
 export const ConsoleWrapper = styled.div`
   all: initial;
@@ -50,6 +50,7 @@ export const ConsoleTitle = styled.h1`
   &&:hover,
   &&:active {
     background: ${theme.title.hover.background};
+    color: ${theme.title.hover.color};
   }
 
   &&:active {
@@ -62,8 +63,7 @@ export const ConsoleLogs = styled.div`
   width: 100%;
   border: none;
   box-sizing: border-box;
-  background-color: #111;
-  color: #d6d6d6;
+  background-color: ${theme.content.background};
   display: block;
   overflow-y: scroll;
   border-width: 0 1px;

@@ -132,7 +132,12 @@ export const defaultTheme = {
 
     cell: {
       background: 'transparent',
-      color: '#fafafa'
+      color: '#fafafa',
+
+      hover: {
+        background: '#f5f5f512',
+        color: '#f8c572'
+      }
     },
 
     actions: {

@@ -52,8 +52,8 @@ export const TableRowValue = styled.span`
   background: ${theme.table.cell.background};
 
   &:hover {
-    background-color: #f5f5f512;
-    color: #f8c572;
+    background: ${theme.table.cell.hover.background};
+    color: ${theme.table.cell.hover.color};
   }
 
   &:hover .actions {

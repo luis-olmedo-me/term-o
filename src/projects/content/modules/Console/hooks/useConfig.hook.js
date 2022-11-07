@@ -34,7 +34,7 @@ export const useConfig = ({ onError }) => {
     }) => {
       const updatedPageEvents = pageEvents.filter(
         ({ url, event }) =>
-          window.location.href.match(new RegExp(url)) &&
+          new RegExp(url).test(window.location.href) &&
           !customPageEventNames.includes(event)
       )
       const customEvents = pageEvents.filter(({ event }) =>

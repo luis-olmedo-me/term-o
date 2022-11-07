@@ -90,6 +90,35 @@ export const defaultTheme = {
     help: {
       background: '#a66908',
       color: '#fafafa'
+    },
+
+    actions: {
+      background: '#00000022',
+      color: '#fafafa'
+    },
+
+    action: {
+      background: 'transparent',
+
+      hover: {
+        background: '#00000010',
+        color: '#fafafa'
+      },
+
+      selected: {
+        background: '#ffffff33',
+        color: '#fafafa'
+      },
+
+      selection: {
+        background: '#222222',
+        color: '#f8c572'
+      },
+
+      disabled: {
+        background: '#00000033',
+        color: '#fafafa'
+      }
     }
   }
 }

@@ -45,5 +45,56 @@ export const defaultTheme = {
       background: '#222222',
       color: '#f8c572'
     }
+  },
+
+  logs: {
+    border: {
+      radius: '3px'
+    },
+
+    command: {
+      background: '#222222',
+      color: '#d6d6d6'
+    },
+
+    elements: {
+      background: '#ff4ecd',
+      color: '#d6d6d6'
+    },
+
+    stylesheet: {
+      background: '#0056d0',
+      color: '#d6d6d6'
+    },
+
+    error: {
+      background: '#f21361',
+      color: '#d6d6d6'
+    },
+
+    info: {
+      background: '#0070f3',
+      color: '#d6d6d6'
+    },
+
+    table: {
+      background: '#7928ca',
+      color: '#d6d6d6'
+    },
+
+    success: {
+      background: '#17c964',
+      color: '#d6d6d6'
+    },
+
+    tabs: {
+      background: '#06b7db',
+      color: '#d6d6d6'
+    },
+
+    help: {
+      background: '#a66908',
+      color: '#d6d6d6'
+    }
   }
 }

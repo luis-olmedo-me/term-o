@@ -17,14 +17,9 @@ export const LogWrapper = styled.div`
     color: #fff;
   }
 
-  &&.button-group {
-    background-color: #2a2a2a;
-    color: #fff;
-    padding: 0;
-  }
-
   &&.element {
     background-color: #ff4ecd;
+    color: #fff;
   }
 
   &&.styles {

@@ -3,7 +3,6 @@ export const parameterTypes = {
   ELEMENT: 'element',
   STYLES: 'styles',
   COMMAND: 'command',
-  BUTTON_GROUP: 'button-group',
   ERROR: 'error',
   INFO: 'info',
   SUCCESS: 'success',

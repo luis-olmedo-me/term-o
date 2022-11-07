@@ -1,4 +1,8 @@
+import configuration from 'libs/configuration'
 import styled from 'styled-components'
+
+const theme = configuration.theme
+const radius = theme.logs.border.radius
 
 export const LogWrapper = styled.div`
   transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out;
@@ -6,55 +10,50 @@ export const LogWrapper = styled.div`
   width: 100%;
 
   &:first-child {
-    border-radius: 3px 3px 0 0;
+    border-radius: ${radius} ${radius} 0 0;
   }
   &:last-child {
-    border-radius: 0 0 3px 3px;
+    border-radius: 0 0 ${radius} ${radius};
   }
 
   &&.command {
-    background-color: #222;
-    color: #fff;
+    background: ${theme.logs.command.background};
+    color: ${theme.logs.command.color};
   }
 
   &&.element {
-    background-color: #ff4ecd;
-    color: #fff;
+    background: ${theme.logs.elements.background};
+    color: ${theme.logs.elements.color};
   }
 
   &&.styles {
-    background-color: #0056d0;
-    color: #fff;
+    background: ${theme.logs.stylesheet.background};
+    color: ${theme.logs.stylesheet.color};
   }
 
   &&.error {
-    background-color: #f21361;
-    color: #fff;
+    background: ${theme.logs.error.background};
+    color: ${theme.logs.error.color};
   }
 
   &&.info {
-    background-color: #0070f3;
-    color: #fff;
+    background: ${theme.logs.info.background};
+    color: ${theme.logs.info.color};
   }
 
   &&.table {
-    background-color: #7928ca;
-    color: #fff;
+    background: ${theme.logs.table.background};
+    color: ${theme.logs.table.color};
   }
 
   &&.success {
-    background-color: #17c964;
-    color: #fff;
-  }
-
-  &&.tabs {
-    background-color: #06b7db;
-    color: #fff;
+    background: ${theme.logs.success.background};
+    color: ${theme.logs.success.color};
   }
 
   &&.help {
-    background-color: #a66908;
-    color: #fff;
+    background: ${theme.logs.help.background};
+    color: ${theme.logs.help.color};
   }
 `
 

@@ -87,11 +87,6 @@ export const defaultTheme = {
       color: '#d6d6d6'
     },
 
-    tabs: {
-      background: '#06b7db',
-      color: '#d6d6d6'
-    },
-
     help: {
       background: '#a66908',
       color: '#d6d6d6'

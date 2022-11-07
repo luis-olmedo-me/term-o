@@ -7,8 +7,7 @@ export const parameterTypes = {
   INFO: 'info',
   SUCCESS: 'success',
   TABLE: 'table',
-  HELP: 'help',
-  TABS: 'tabs'
+  HELP: 'help'
 }
 
 export const optionTypes = {

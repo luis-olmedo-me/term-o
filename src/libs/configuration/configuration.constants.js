@@ -30,5 +30,20 @@ export const defaultTheme = {
       background: '#222222',
       color: '#f8c572'
     }
+  },
+
+  suggestion: {
+    background: '#000000',
+    color: '#d6d6d6',
+
+    selected: {
+      background: '#222222',
+      color: '#f8c572'
+    },
+
+    hover: {
+      background: '#222222',
+      color: '#f8c572'
+    }
   }
 }

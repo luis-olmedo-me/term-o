@@ -1,4 +1,7 @@
+import configuration from 'libs/configuration'
 import styled from 'styled-components'
+
+const theme = configuration.theme
 
 export const SuggestionsWrapper = styled.div`
   overflow-y: scroll;
@@ -11,9 +14,9 @@ export const SuggestionsWrapper = styled.div`
 
 export const Suggestion = styled.span`
   display: block;
-  color: ${({ selected }) => (selected ? '#F8C572' : '#d6d6d6')};
-  background-color: ${({ selected }) => (selected ? '#222' : '#111')};
-  padding: ${(props) => (props.selected ? '0 40px' : '0 30px')};
+  background: ${theme.suggestion.background};
+  color: ${theme.suggestion.color};
+  padding: 0 30px;
   display: flex;
   justify-content: space-between;
   line-height: 40px;
@@ -22,8 +25,14 @@ export const Suggestion = styled.span`
   cursor: pointer;
   transition: padding 0.2s ease-in-out;
 
+  &.selected {
+    background: ${theme.suggestion.selected.background};
+    color: ${theme.suggestion.selected.color};
+    padding: 0 40px;
+  }
+
   &:hover {
-    background-color: #222;
-    color: #f8c572;
+    background: ${theme.suggestion.hover.background};
+    color: ${theme.suggestion.hover.color};
   }
 `

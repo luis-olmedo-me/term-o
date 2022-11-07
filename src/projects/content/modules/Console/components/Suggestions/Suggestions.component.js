@@ -31,7 +31,7 @@ export const Suggestions = ({ suggestions, selectedId, onSuggestionClick }) => {
         return (
           <Suggestion
             key={suggestion.value}
-            selected={isSelected}
+            className={isSelected ? 'selected' : ''}
             onClick={() => onSuggestionClick(index)}
           >
             <span>{suggestion.value}</span>

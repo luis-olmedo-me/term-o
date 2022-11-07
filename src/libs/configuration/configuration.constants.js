@@ -120,5 +120,24 @@ export const defaultTheme = {
         color: '#fafafa'
       }
     }
+  },
+
+  table: {
+    background: '#00000040',
+
+    header: {
+      background: '#fafafa',
+      color: '#222222'
+    },
+
+    cell: {
+      background: 'transparent',
+      color: '#fafafa'
+    },
+
+    actions: {
+      background: '#662d9d',
+      color: '#fafafa'
+    }
   }
 }

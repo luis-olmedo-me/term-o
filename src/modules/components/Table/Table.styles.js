@@ -1,11 +1,14 @@
+import configuration from 'libs/configuration'
 import styled from 'styled-components'
 import { Actions } from '../Actions'
+
+const theme = configuration.theme
 
 export const TableWrapper = styled.div`
   width: 100%;
   border-collapse: collapse;
   padding: 10px;
-  background-color: #00000040;
+  background: ${theme.table.background};
   box-sizing: border-box;
   border-radius: 3px;
 `
@@ -13,8 +16,7 @@ export const TableWrapper = styled.div`
 export const TableRow = styled.div`
   display: flex;
   vertical-align: baseline;
-  background-color: transparent;
-  color: #fafafa;
+  color: ${theme.table.cell.color};
   font-weight: normal;
   padding: 0;
   border-radius: 0;
@@ -25,16 +27,12 @@ export const TableRow = styled.div`
   margin: 0 auto 6px;
 
   &.header {
-    background-color: #fafafa;
-    color: #222222;
+    background: ${theme.table.header.background};
+    color: ${theme.table.header.color};
     font-weight: bold;
     padding: 1px 0;
-    border-radius: 3px 3px 0 0%;
+    border-radius: 3px 3px 0 0;
     text-align: center;
-  }
-
-  &.selected {
-    color: #f8c572;
   }
 
   &:last-child {
@@ -51,6 +49,7 @@ export const TableRowValue = styled.span`
   position: relative;
   text-align: ${(props) => (props.center ? 'center' : 'left')};
   flex-grow: ${(props) => (props.hasFixedWidth ? 'unset' : '1')};
+  background: ${theme.table.cell.background};
 
   &:hover {
     background-color: #f5f5f512;
@@ -74,6 +73,6 @@ export const TableActionsWrapper = styled.div`
 
 export const TableActions = styled(Actions)`
   position: absolute;
-  background-color: #662d9d;
-  color: white;
+  background: ${theme.table.actions.background};
+  color: ${theme.table.actions.color};
 `

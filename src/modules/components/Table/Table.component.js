@@ -80,7 +80,7 @@ export const Table = ({
 
   return (
     <TableWrapper ref={wrapperRef}>
-      <TableRow header>
+      <TableRow className='header'>
         {parsedHeaders.map(({ id, width, displayName, minTableWidth }) => {
           const showColumn =
             wrapperWidth !== null && minTableWidth

@@ -13,16 +13,25 @@ export const TableWrapper = styled.div`
 export const TableRow = styled.div`
   display: flex;
   vertical-align: baseline;
-  background-color: ${(props) => (props.header ? '#fafafa' : 'transparent')};
-  color: ${(props) => (props.header ? '#222' : '#fafafa')};
-  font-weight: ${(props) => (props.header ? 'bold' : 'normal')};
-  padding: ${(props) => (props.header ? '1px 0' : '0')};
-  border-radius: ${(props) => (props.header ? '3px 3px 0 0' : '0')};
-  text-align: ${(props) => (props.header ? 'center' : 'left')};
+  background-color: transparent;
+  color: #fafafa;
+  font-weight: normal;
+  padding: 0;
+  border-radius: 0;
+  text-align: left;
   font-size: 1em;
   line-height: 2em;
   gap: 10px;
   margin: 0 auto 6px;
+
+  &.header {
+    background-color: #fafafa;
+    color: #222222;
+    font-weight: bold;
+    padding: 1px 0;
+    border-radius: 3px 3px 0 0%;
+    text-align: center;
+  }
 
   &.selected {
     color: #f8c572;

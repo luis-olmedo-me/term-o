@@ -25,7 +25,12 @@ export const Clock = ({ time, onFinish }) => {
       setCurrentTime((oldTime) => --oldTime)
     }, 1000)
 
-    return finish
+    return () => {
+      clearTimeout(timeoutId)
+      clearInterval(decreaseIntervalId)
+
+      setCurrentTime(0)
+    }
   }, [time, onFinish])
 
   const progress = (currentTime * 100) / time

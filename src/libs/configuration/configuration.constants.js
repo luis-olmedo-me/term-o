@@ -47,6 +47,10 @@ export const defaultTheme = {
     }
   },
 
+  resizer: {
+    background: '#333333'
+  },
+
   logs: {
     border: {
       radius: '3px'

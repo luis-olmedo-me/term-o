@@ -1,4 +1,8 @@
+import configuration from 'libs/configuration'
 import styled from 'styled-components'
+
+const theme = configuration.theme
+const radius = theme.border.radius
 
 export const ResizerWrapper = styled.button`
   border: none;
@@ -17,7 +21,7 @@ export const ResizerWrapper = styled.button`
 
     &&:active,
     &&:hover {
-      background-color: #333;
+      background: ${theme.resizer.background};
       width: 8px;
     }
 
@@ -28,12 +32,12 @@ export const ResizerWrapper = styled.button`
   }
   &&.left {
     left: 0;
-    border-radius: 5px 0 0 5px;
+    border-radius: ${radius} 0 0 ${radius};
     cursor: w-resize;
   }
   &&.right {
     right: 0;
-    border-radius: 0 5px 5px 0;
+    border-radius: 0 ${radius} ${radius} 0;
     cursor: e-resize;
   }
 
@@ -46,7 +50,7 @@ export const ResizerWrapper = styled.button`
 
     &&:active,
     &&:hover {
-      background-color: #333;
+      background-color: ${theme.resizer.background};
       height: 12px;
     }
 
@@ -57,12 +61,12 @@ export const ResizerWrapper = styled.button`
   }
   &&.top {
     top: 0;
-    border-radius: 5px 5px 0 0;
+    border-radius: ${radius} ${radius} 0 0;
     cursor: n-resize;
   }
   &&.bottom {
     bottom: 0;
-    border-radius: 0 0 5px 5px;
+    border-radius: 0 0 ${radius} ${radius};
     cursor: s-resize;
   }
 `

@@ -4,7 +4,6 @@ import { Tree } from '../../modules/Tree'
 
 export const MaterialTree = styled(Tree)`
   padding: 5px;
-  border-radius: 4px;
   color: lightcyan;
   width: fit-content;
   min-width: 100%;

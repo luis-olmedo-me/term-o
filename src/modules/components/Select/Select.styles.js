@@ -1,4 +1,7 @@
+import config from 'libs/configuration'
 import styled from 'styled-components'
+
+const radius = config.getTheme('border.200')
 
 export const DefaultTrigger = styled.button`
   height: 100%;
@@ -11,32 +14,34 @@ export const DefaultTrigger = styled.button`
   padding: 0 10px;
   transition: all 0.2s ease-in-out;
   font-size: 1em;
-  color: #444;
-  background-color: #fafafa;
+  background-color: ${config.getTheme('neutral.1200')};
+  color: ${config.getTheme('neutral.400')};
 `
 
 export const SelectDefaultOptionsWrapper = styled.div`
   all: initial;
   position: fixed;
   z-index: 1000003;
-  background-color: #fff;
   inset: 0;
   width: 100%;
   height: fit-content;
   max-width: 220px;
   max-height: 150px;
-  border-radius: 3px;
+  border-radius: ${radius};
   transform: translate(-50%, -50%);
   font-family: Share Tech Mono;
-  box-shadow: 0 0 15px 5px #0000002a;
   padding: 10px 0;
   overflow-y: scroll;
   font-size: 1em;
   opacity: ${(props) => (props.areBoundsCalculated ? 1 : 0)};
+  background-color: ${config.getTheme('neutral.1200')};
+  box-shadow: 0 0 15px 5px ${config.getTheme('transparent.300')};
 
   && {
     scrollbar-width: auto;
-    scrollbar-color: #333 #ffffff;
+    scrollbar-color: ${`${config.getTheme('neutral.400')} ${config.getTheme(
+      'neutral.1200'
+    )}`};
   }
 
   &&::-webkit-scrollbar {
@@ -44,15 +49,15 @@ export const SelectDefaultOptionsWrapper = styled.div`
   }
 
   &&::-webkit-scrollbar-track {
-    background: #ffffff;
-    border-radius: 0 3px 3px 0;
-    border-left: 1px solid #eaeaea;
+    background: ${config.getTheme('neutral.1200')};
+    border-radius: 0 ${radius} ${radius} 0;
+    border-left: 1px solid ${config.getTheme('neutral.1200')};
     padding: 0 3px;
   }
 
   &&::-webkit-scrollbar-thumb {
-    background-color: #333;
-    border-radius: 3px;
+    background-color: ${config.getTheme('neutral.400')};
+    border-radius: ${radius};
   }
 `
 
@@ -60,21 +65,21 @@ export const SelectDefaultOption = styled.div`
   line-height: 2.4em;
   vertical-align: middle;
   text-align: center;
-  border-top: 1px solid #eaeaea;
+  border-top: 1px solid ${config.getTheme('neutral.1200')};
   cursor: pointer;
-  color: #333;
+  color: ${config.getTheme('neutral.400')};
   transition: all 0.2s ease-in-out;
 
   &&.disabled {
-    color: #888;
-    background-color: #eaeaea;
+    color: ${config.getTheme('neutral.1000')};
+    background-color: ${config.getTheme('neutral.1200')};
 
     &:hover {
-      background-color: #eaeaea;
+      background-color: ${config.getTheme('neutral.1200')};
     }
   }
 
   &&:last-child {
-    border-bottom: 1px solid #eaeaea;
+    border-bottom: 1px solid ${config.getTheme('neutral.1200')};
   }
 `

@@ -1,8 +1,11 @@
+import config from 'libs/configuration'
 import styled from 'styled-components'
+
+const radius = config.getTheme('border.200')
 
 export const TreeWrapper = styled.div`
   white-space: nowrap;
   font-weight: bold;
-  border-radius: 3px 0 0 3px;
+  border-radius: ${radius} 0 0 ${radius};
   overscroll-behavior: contain;
 `

@@ -1,3 +1,4 @@
+import config from 'libs/configuration'
 import styled from 'styled-components'
 
 export const ActionButtons = styled.div`
@@ -11,7 +12,7 @@ export const ActionButtons = styled.div`
   transition: background-color 0.2s ease-in-out;
   border-radius: ${(props) => (props.hasPostfix ? '0' : '0 3px 3px 0')};
   vertical-align: top;
-  color: #333;
+  color: ${config.getTheme('neutral.400')};
 `
 export const ActionButton = styled.button`
   height: 100%;
@@ -23,19 +24,20 @@ export const ActionButton = styled.button`
   min-width: 2em;
   text-align: center;
   box-sizing: border-box;
-  border-left: 1px solid #00000015;
   vertical-align: top;
-  border-right: ${(props) =>
-    props.isLastItem ? '1px solid #00000015' : 'unset'};
   color: inherit;
   padding: 0;
 
+  border-left: 1px solid;
+  border-right: ${({ isLastItem }) => (isLastItem ? '1px solid' : 'unset')};
+  border-color: ${config.getTheme('transparent.300')};
+
   &:disabled {
-    background-color: #00000015;
-    color: #aaa;
+    background-color: ${config.getTheme('transparent.200')};
+    color: ${config.getTheme('neutral.1000')};
   }
   &:hover {
-    background-color: #00000010;
+    background-color: ${config.getTheme('transparent.100')};
   }
 
   &:active,

@@ -1,3 +1,4 @@
+import config from 'libs/configuration'
 import styled from 'styled-components'
 
 export const ClockWrapper = styled.div`
@@ -8,8 +9,8 @@ export const ClockWrapper = styled.div`
 
 export const ProgressBar = styled.div`
   height: 40px;
-  border-radius: 3px;
-  background-color: #1f0a33;
+  border-radius: ${config.getTheme('border.200')};
+  background-color: ${config.getTheme('purple.100')};
 `
 export const Progress = styled.div`
   position: absolute;
@@ -18,8 +19,8 @@ export const Progress = styled.div`
   bottom: 0;
   height: 40px;
   transition: height 0.2s ease-in-out;
-  border-radius: 3px;
-  background-color: #b583e7;
+  border-radius: ${config.getTheme('border.200')};
+  background-color: ${config.getTheme('purple.900')};
   height: ${(props) => props.porcentage}%;
 `
 
@@ -31,5 +32,5 @@ export const ValueWrapper = styled.div`
   transform: translateY(-50%);
   text-align: center;
   vertical-align: middle;
-  color: #fafafa;
+  color: ${config.getTheme('neutral.1200')};
 `

@@ -120,7 +120,8 @@ const CommandDomWithoutContext = ({
             ? getParentsOfElements(elementsFound, byParentLevel || 1)
             : elementsFound
 
-        if (!parsedElementsFound.length) throw new Error('no elements')
+        if (!parsedElementsFound.length)
+          return setMessage(domMessages.noElementsFound)
 
         const elementsAsParam = {
           id,

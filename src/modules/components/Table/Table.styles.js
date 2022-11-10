@@ -1,31 +1,38 @@
+import config from 'libs/configuration'
 import styled from 'styled-components'
 import { Actions } from '../Actions'
+
+const radius = config.getTheme('border.200')
 
 export const TableWrapper = styled.div`
   width: 100%;
   border-collapse: collapse;
   padding: 10px;
-  background-color: #00000040;
   box-sizing: border-box;
-  border-radius: 3px;
+  border-radius: ${radius};
+  background-color: ${config.getTheme('transparent.300')};
 `
 
 export const TableRow = styled.div`
   display: flex;
   vertical-align: baseline;
-  background-color: ${(props) => (props.header ? '#fafafa' : 'transparent')};
-  color: ${(props) => (props.header ? '#222' : '#fafafa')};
-  font-weight: ${(props) => (props.header ? 'bold' : 'normal')};
-  padding: ${(props) => (props.header ? '1px 0' : '0')};
-  border-radius: ${(props) => (props.header ? '3px 3px 0 0' : '0')};
-  text-align: ${(props) => (props.header ? 'center' : 'left')};
+  color: ${config.getTheme('neutral.1200')};
+  font-weight: normal;
+  padding: 0;
+  border-radius: 0;
+  text-align: left;
   font-size: 1em;
   line-height: 2em;
   gap: 10px;
   margin: 0 auto 6px;
 
-  &.selected {
-    color: #f8c572;
+  &.header {
+    background-color: ${config.getTheme('neutral.1200')};
+    color: ${config.getTheme('neutral.300')};
+    font-weight: bold;
+    padding: 1px 0;
+    border-radius: ${radius} ${radius} 0 0;
+    text-align: center;
   }
 
   &:last-child {
@@ -42,10 +49,11 @@ export const TableRowValue = styled.span`
   position: relative;
   text-align: ${(props) => (props.center ? 'center' : 'left')};
   flex-grow: ${(props) => (props.hasFixedWidth ? 'unset' : '1')};
+  background-color: ${config.getTheme('transparent.000')};
 
   &:hover {
-    background-color: #f5f5f512;
-    color: #f8c572;
+    background-color: ${config.getTheme('transparent.250')};
+    color: ${config.getTheme('yellow.800')};
   }
 
   &:hover .actions {
@@ -65,6 +73,6 @@ export const TableActionsWrapper = styled.div`
 
 export const TableActions = styled(Actions)`
   position: absolute;
-  background-color: #662d9d;
-  color: white;
+  background-color: ${config.getTheme('purple.700')};
+  color: ${config.getTheme('neutral.1200')};
 `

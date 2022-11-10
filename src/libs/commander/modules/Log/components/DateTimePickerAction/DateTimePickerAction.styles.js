@@ -1,3 +1,4 @@
+import config from 'libs/configuration'
 import styled from 'styled-components'
 
 export const Wrapper = styled.span`
@@ -9,7 +10,7 @@ export const Wrapper = styled.span`
   transition: background-color 0.2s ease-in-out;
 
   &:hover {
-    background-color: #00000010;
+    background-color: ${config.getTheme('transparent.100')};
   }
 
   &:focus,
@@ -18,22 +19,19 @@ export const Wrapper = styled.span`
     outline: none;
   }
 
-  &&.disabled {
-    background-color: #00000033;
-
-    &&:hover {
-      background-color: #00000033;
-    }
+  &&.disabled,
+  &&.disabled:hover {
+    background-color: ${config.getTheme('transparent.400')};
   }
 
   &&.invalid {
-    background-color: #f21361;
+    background-color: ${config.getTheme('red.600')};
     text-decoration: line-through;
   }
 
   &::selection {
-    background-color: #222;
-    color: #f8c572;
+    background-color: ${config.getTheme('neutral.300')};
+    color: ${config.getTheme('yellow.800')};
   }
 `
 

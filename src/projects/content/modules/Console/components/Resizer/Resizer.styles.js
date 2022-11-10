@@ -1,4 +1,7 @@
+import config from 'libs/configuration'
 import styled from 'styled-components'
+
+const radius = config.getTheme('radius.100')
 
 export const ResizerWrapper = styled.button`
   border: none;
@@ -17,7 +20,7 @@ export const ResizerWrapper = styled.button`
 
     &&:active,
     &&:hover {
-      background-color: #333;
+      background-color: ${config.getTheme('neutral.500')};
       width: 8px;
     }
 
@@ -28,12 +31,12 @@ export const ResizerWrapper = styled.button`
   }
   &&.left {
     left: 0;
-    border-radius: 5px 0 0 5px;
+    border-radius: ${radius} 0 0 ${radius};
     cursor: w-resize;
   }
   &&.right {
     right: 0;
-    border-radius: 0 5px 5px 0;
+    border-radius: 0 ${radius} ${radius} 0;
     cursor: e-resize;
   }
 
@@ -46,7 +49,7 @@ export const ResizerWrapper = styled.button`
 
     &&:active,
     &&:hover {
-      background-color: #333;
+      background-color: ${config.getTheme('neutral.500')};
       height: 12px;
     }
 
@@ -57,12 +60,12 @@ export const ResizerWrapper = styled.button`
   }
   &&.top {
     top: 0;
-    border-radius: 5px 5px 0 0;
+    border-radius: ${radius} ${radius} 0 0;
     cursor: n-resize;
   }
   &&.bottom {
     bottom: 0;
-    border-radius: 0 0 5px 5px;
+    border-radius: 0 0 ${radius} ${radius};
     cursor: s-resize;
   }
 `

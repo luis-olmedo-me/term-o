@@ -1,4 +1,7 @@
+import config from 'libs/configuration'
 import styled from 'styled-components'
+
+const radius = config.getTheme('radius.100')
 
 export const ConsoleWrapper = styled.div`
   all: initial;
@@ -31,8 +34,8 @@ export const ConsoleTitle = styled.h1`
   font-weight: normal;
   font-size: 25px;
   box-sizing: border-box;
-  background-color: #111;
-  color: #d6d6d6;
+  background-color: ${config.getTheme('neutral.100')};
+  color: ${config.getTheme('neutral.1200')};
   cursor: pointer;
   user-select: none;
   position: absolute;
@@ -40,12 +43,12 @@ export const ConsoleTitle = styled.h1`
   top: 0;
   z-index: 1;
   transition: background-color 0.2s ease-in-out;
-  border-radius: 5px 5px 0 0;
+  border-radius: ${radius} ${radius} 0 0;
   cursor: grab;
 
   &&:hover,
   &&:active {
-    background-color: #0d0d0d;
+    background-color: ${config.getTheme('neutral.200')};
   }
 
   &&:active {
@@ -58,13 +61,12 @@ export const ConsoleLogs = styled.div`
   width: 100%;
   border: none;
   box-sizing: border-box;
-  background-color: #111;
-  color: #d6d6d6;
+  background-color: ${config.getTheme('neutral.100')};
   display: block;
   overflow-y: scroll;
   border-width: 0 1px;
   flex: 1;
-  border-radius: 5px;
+  border-radius: ${radius};
   cursor: text;
   overscroll-behavior: contain;
 

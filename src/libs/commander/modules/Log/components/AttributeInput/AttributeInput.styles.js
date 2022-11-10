@@ -1,14 +1,15 @@
+import config from 'libs/configuration'
 import styled from 'styled-components'
 
 export const Input = styled.input`
   padding: 6px 10px;
   width: -webkit-fill-available;
   border: none;
-  border-radius: 3px;
   font-family: Share Tech Mono;
   font-size: 1em;
-  background: #00000025;
-  color: #fafafa;
+  border-radius: ${config.getTheme('border.200')};
+  background-color: ${config.getTheme('transparent.300')};
+  color: ${config.getTheme('neutral.1200')};
 
   &:active,
   &:focus,
@@ -17,7 +18,7 @@ export const Input = styled.input`
   }
 
   &::selection {
-    background-color: #222;
-    color: #f8c572;
+    background-color: ${config.getTheme('neutral.300')};
+    color: ${config.getTheme('yellow.800')};
   }
 `

@@ -1,4 +1,7 @@
+import config from 'libs/configuration'
 import styled from 'styled-components'
+
+const radius = config.getTheme('radius.200')
 
 export const LogWrapper = styled.div`
   transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out;
@@ -6,60 +9,50 @@ export const LogWrapper = styled.div`
   width: 100%;
 
   &:first-child {
-    border-radius: 3px 3px 0 0;
+    border-radius: ${radius} ${radius} 0 0;
   }
   &:last-child {
-    border-radius: 0 0 3px 3px;
+    border-radius: 0 0 ${radius} ${radius};
   }
 
   &&.command {
-    background-color: #222;
-    color: #fff;
-  }
-
-  &&.button-group {
-    background-color: #2a2a2a;
-    color: #fff;
-    padding: 0;
+    background-color: ${config.getTheme('neutral.300')};
+    color: ${config.getTheme('neutral.1200')};
   }
 
   &&.element {
-    background-color: #ff4ecd;
+    background-color: ${config.getTheme('pink.700')};
+    color: ${config.getTheme('neutral.1200')};
   }
 
   &&.styles {
-    background-color: #0056d0;
-    color: #fff;
+    background-color: ${config.getTheme('blue.700')};
+    color: ${config.getTheme('neutral.1200')};
   }
 
   &&.error {
-    background-color: #f21361;
-    color: #fff;
+    background-color: ${config.getTheme('red.700')};
+    color: ${config.getTheme('neutral.1200')};
   }
 
   &&.info {
-    background-color: #0070f3;
-    color: #fff;
+    background-color: ${config.getTheme('blue.800')};
+    color: ${config.getTheme('neutral.1200')};
   }
 
   &&.table {
-    background-color: #7928ca;
-    color: #fff;
+    background-color: ${config.getTheme('purple.700')};
+    color: ${config.getTheme('neutral.1200')};
   }
 
   &&.success {
-    background-color: #17c964;
-    color: #fff;
-  }
-
-  &&.tabs {
-    background-color: #06b7db;
-    color: #fff;
+    background-color: ${config.getTheme('green.700')};
+    color: ${config.getTheme('neutral.1200')};
   }
 
   &&.help {
-    background-color: #a66908;
-    color: #fff;
+    background-color: ${config.getTheme('green.700')};
+    color: ${config.getTheme('neutral.1200')};
   }
 `
 
@@ -81,7 +74,7 @@ export const LogContent = styled.div`
 export const Shadow = styled.div`
   &.shadow {
     padding: 10px;
-    background-color: #00000015;
+    background-color: ${config.getTheme('transparent.200')};
   }
 `
 

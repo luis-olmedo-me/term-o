@@ -1,3 +1,4 @@
+import config from 'libs/configuration'
 import styled from 'styled-components'
 
 export const SuggestionsWrapper = styled.div`
@@ -11,9 +12,9 @@ export const SuggestionsWrapper = styled.div`
 
 export const Suggestion = styled.span`
   display: block;
-  color: ${({ selected }) => (selected ? '#F8C572' : '#d6d6d6')};
-  background-color: ${({ selected }) => (selected ? '#222' : '#111')};
-  padding: ${(props) => (props.selected ? '0 40px' : '0 30px')};
+  background-color: ${config.getTheme('neutral.100')};
+  color: ${config.getTheme('neutral.1200')};
+  padding: 0 30px;
   display: flex;
   justify-content: space-between;
   line-height: 40px;
@@ -22,8 +23,14 @@ export const Suggestion = styled.span`
   cursor: pointer;
   transition: padding 0.2s ease-in-out;
 
+  &.selected {
+    background-color: ${config.getTheme('neutral.300')};
+    color: ${config.getTheme('yellow.800')};
+    padding: 0 40px;
+  }
+
   &:hover {
-    background-color: #222;
-    color: #f8c572;
+    background-color: ${config.getTheme('neutral.200')};
+    color: ${config.getTheme('yellow.800')};
   }
 `

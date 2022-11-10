@@ -1,7 +1,9 @@
+import config from 'libs/configuration'
 import styled from 'styled-components'
 
 export const Groups = styled.div`
-  background-color: #00000022;
+  background-color: ${config.getTheme('transparent.100')};
+  color: ${config.getTheme('neutral.1200')};
   display: flex;
   justify-content: center;
 `
@@ -10,14 +12,14 @@ export const Action = styled.button`
   border: none;
   padding: ${(props) => (props.hasIcon ? '5px 3px' : '5px 10px')};
   cursor: pointer;
-  background-color: transparent;
+  background-color: ${config.getTheme('transparent.200')};
   transition: background-color 0.2s ease-in-out;
   font-family: Share Tech Mono;
-  color: #fff;
+  color: inherit;
   font-size: 16px;
 
   &:hover {
-    background-color: #00000010;
+    background-color: ${config.getTheme('transparent.150')};
   }
 
   &:focus,
@@ -26,19 +28,16 @@ export const Action = styled.button`
   }
 
   &&.selected {
-    background-color: #ffffff33;
+    background-color: ${config.getTheme('transparent.450')};
   }
 
-  &&.disabled {
-    background-color: #00000033;
-
-    &&:hover {
-      background-color: #00000033;
-    }
+  &&.disabled,
+  &&.disabled:hover {
+    background-color: ${config.getTheme('transparent.400')};
   }
 
   &::selection {
-    background-color: #222;
-    color: #f8c572;
+    background-color: ${config.getTheme('transparent.300')};
+    color: ${config.getTheme('yellow.800')};
   }
 `

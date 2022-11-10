@@ -14,7 +14,7 @@ export const CommandTime = ({ props, terminal: { command, finish } }) => {
 
   const handleSetDelay = React.useCallback(() => {
     setDelay(props.delay)
-  }, [props, setMessage, finish])
+  }, [props])
 
   React.useEffect(
     function handleActionType() {

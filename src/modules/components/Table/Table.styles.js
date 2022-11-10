@@ -6,7 +6,7 @@ export const TableWrapper = styled.div`
   width: 100%;
   border-collapse: collapse;
   padding: 10px;
-  background-color: ${config.getTheme('transparent.500')};
+  background-color: ${config.getTheme('transparent.300')};
   box-sizing: border-box;
   border-radius: 3px;
 `

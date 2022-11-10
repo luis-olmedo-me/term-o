@@ -74,7 +74,7 @@ export const LogContent = styled.div`
 export const Shadow = styled.div`
   &.shadow {
     padding: 10px;
-    background-color: #00000015;
+    background-color: ${config.getTheme('transparent.200')};
   }
 `
 

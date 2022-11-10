@@ -1,3 +1,4 @@
+import config from 'libs/configuration'
 import styled, { keyframes } from 'styled-components'
 
 const Birth = keyframes`
@@ -15,7 +16,7 @@ const Birth = keyframes`
 export const ElementWrapper = styled.span`
   position: relative;
   padding: 5px 7px;
-  background-color: #fafafa;
+  background-color: ${config.getTheme('neutral.1200')};
   font-weight: bold;
   border-radius: 3px;
   cursor: pointer;
@@ -30,15 +31,15 @@ export const ElementWrapper = styled.span`
   transform-origin: right;
 
   &&.pinned {
-    border-left: 10px solid #f8c572;
-    background-color: #ffeecc;
+    border-left: 10px solid ${config.getTheme('yellow.800')};
+    background-color: ${config.getTheme('yellow.900')};
 
     && button {
       background-color: transparent;
-      border-left: 1px solid #00000015;
+      border-left: 1px solid ${config.getTheme('transparent.200')};
 
       &:hover {
-        background-color: #ffffff15;
+        background-color: ${config.getTheme('transparent.250')};
       }
     }
   }

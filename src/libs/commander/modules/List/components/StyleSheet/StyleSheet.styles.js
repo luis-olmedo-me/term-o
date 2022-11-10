@@ -1,3 +1,4 @@
+import config from 'libs/configuration'
 import styled, { keyframes } from 'styled-components'
 
 const Birth = keyframes`
@@ -15,8 +16,8 @@ const Birth = keyframes`
 export const StyleSheetWrapper = styled.div`
   position: relative;
   padding: 5px 10px;
-  background-color: #fafafa;
-  color: #16181a;
+  background-color: ${config.getTheme('neutral.1200')};
+  color: ${config.getTheme('neutral.200')};
   font-weight: bold;
   border-radius: 3px;
   cursor: pointer;
@@ -36,18 +37,18 @@ export const Title = styled.span`
 `
 
 export const PropertyWrapper = styled.div`
-  border-left: 5px solid #00000030;
+  border-left: 5px solid ${config.getTheme('transparent.400')};
   padding-left: 2ch;
   display: flex;
   flex-flow: column;
   gap: 5px;
 `
 export const Property = styled.div`
-  background-color: #fafafa;
+  background-color: ${config.getTheme('neutral.1200')};
   padding: 0 7px;
   border-radius: 3px;
   cursor: pointer;
-  color: #111;
+  color: ${config.getTheme('neutral.200')};
   font-weight: bold;
   width: fit-content;
   display: inline-flex;
@@ -58,15 +59,15 @@ export const Property = styled.div`
 `
 
 export const PropertyName = styled.span`
-  color: #f4256d;
+  color: ${config.getTheme('red.600')};
 `
 
 export const Equal = styled.span`
-  color: #b583e7;
+  color: ${config.getTheme('purple.900')};
 `
 export const PropertyColor = styled.span`
   color: ${(props) => props.fontColor};
-  border: 2px solid #00000020;
+  border: 2px solid ${config.getTheme('transparent.300')};
   height: 14px;
   width: 14px;
   background-color: currentColor;
@@ -74,6 +75,6 @@ export const PropertyColor = styled.span`
   border-radius: 3px;
 `
 export const PropertyValue = styled.span`
-  color: #7828c8;
+  color: ${config.getTheme('purple.700')};
   margin-left: 5px;
 `

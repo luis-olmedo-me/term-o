@@ -1,3 +1,4 @@
+import config from 'libs/configuration'
 import styled from 'styled-components'
 import { Tree } from '../../modules/Tree'
 
@@ -10,7 +11,7 @@ export const MaterialTree = styled(Tree)`
   box-sizing: border-box;
   line-height: calc(1em + 10px);
   padding: 7px;
-  background-color: #00000040;
+  background-color: ${config.getTheme('transparent.500')};
   box-sizing: border-box;
   border-radius: 3px;
 `

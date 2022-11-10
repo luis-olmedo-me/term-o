@@ -12,14 +12,14 @@ export const Action = styled.button`
   border: none;
   padding: ${(props) => (props.hasIcon ? '5px 3px' : '5px 10px')};
   cursor: pointer;
-  background-color: ${config.getTheme('transparent.300')};
+  background-color: ${config.getTheme('transparent.200')};
   transition: background-color 0.2s ease-in-out;
   font-family: Share Tech Mono;
   color: inherit;
   font-size: 16px;
 
   &:hover {
-    background-color: ${config.getTheme('transparent.200')};
+    background-color: ${config.getTheme('transparent.150')};
   }
 
   &:focus,

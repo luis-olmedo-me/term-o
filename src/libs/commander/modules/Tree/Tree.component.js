@@ -1,7 +1,8 @@
+import config from 'libs/configuration'
 import * as React from 'react'
 import styled from 'styled-components'
 import { EditableText } from './components/EditableText/EditableText.component'
-import { objectLabels, arrayLabels } from './Tree.constants'
+import { arrayLabels, objectLabels } from './Tree.constants'
 import { CollapseButton, TwoDots } from './Tree.styles'
 
 export const Tree = ({
@@ -83,7 +84,11 @@ export const Tree = ({
         )}
         {hasComa && isCollapsed && ','}
 
-        <CollapseButton onClick={handleCollapse} disabled={!hasRichContent}>
+        <CollapseButton
+          className={!hasRichContent ? 'disabled' : ''}
+          disabled={!hasRichContent}
+          onClick={handleCollapse}
+        >
           {isCollapsed ? '+' : '-'}
         </CollapseButton>
 
@@ -147,8 +152,8 @@ export const Tree = ({
 
 const IdentedTree = styled(Tree)`
   padding: 3px 0 3px 20px;
-  border-left: 5px solid #00000020;
+  border-left: 5px solid ${config.getTheme('transparent.300')};
 `
 const HighlightedEditableText = styled(EditableText)`
-  color: turquoise;
+  color: ${config.getTheme('cyan.800')};
 `

@@ -1,8 +1,7 @@
-import configuration from 'libs/configuration'
+import config from 'libs/configuration'
 import styled from 'styled-components'
 
-const theme = configuration.theme
-const radius = theme.logs.border.radius
+const radius = config.getTheme('radius.200')
 
 export const LogWrapper = styled.div`
   transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out;
@@ -17,43 +16,43 @@ export const LogWrapper = styled.div`
   }
 
   &&.command {
-    background: ${theme.logs.command.background};
-    color: ${theme.logs.command.color};
+    background-color: ${config.getTheme('neutral.300')};
+    color: ${config.getTheme('neutral.1200')};
   }
 
   &&.element {
-    background: ${theme.logs.elements.background};
-    color: ${theme.logs.elements.color};
+    background-color: ${config.getTheme('pink.700')};
+    color: ${config.getTheme('neutral.1200')};
   }
 
   &&.styles {
-    background: ${theme.logs.stylesheet.background};
-    color: ${theme.logs.stylesheet.color};
+    background-color: ${config.getTheme('blue.700')};
+    color: ${config.getTheme('neutral.1200')};
   }
 
   &&.error {
-    background: ${theme.logs.error.background};
-    color: ${theme.logs.error.color};
+    background-color: ${config.getTheme('red.700')};
+    color: ${config.getTheme('neutral.1200')};
   }
 
   &&.info {
-    background: ${theme.logs.info.background};
-    color: ${theme.logs.info.color};
+    background-color: ${config.getTheme('blue.800')};
+    color: ${config.getTheme('neutral.1200')};
   }
 
   &&.table {
-    background: ${theme.logs.table.background};
-    color: ${theme.logs.table.color};
+    background-color: ${config.getTheme('purple.700')};
+    color: ${config.getTheme('neutral.1200')};
   }
 
   &&.success {
-    background: ${theme.logs.success.background};
-    color: ${theme.logs.success.color};
+    background-color: ${config.getTheme('green.700')};
+    color: ${config.getTheme('neutral.1200')};
   }
 
   &&.help {
-    background: ${theme.logs.help.background};
-    color: ${theme.logs.help.color};
+    background-color: ${config.getTheme('green.700')};
+    color: ${config.getTheme('neutral.1200')};
   }
 `
 

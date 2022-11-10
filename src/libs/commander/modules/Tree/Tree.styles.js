@@ -5,11 +5,15 @@ export const CollapseButton = styled.button`
   font-family: Share Tech Mono;
   border: none;
   background: #00000020;
-  color: ${(props) => (props.disabled ? '#ffffff60' : '#ffffff')};
+  color: '#ffffff';
   border-radius: 3px;
   vertical-align: middle;
   cursor: pointer;
   line-height: 1.2em;
+
+  &.disabled {
+    color: '#ffffff60';
+  }
 `
 export const TwoDots = styled.span`
   color: orange;

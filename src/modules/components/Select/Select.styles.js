@@ -1,6 +1,8 @@
 import config from 'libs/configuration'
 import styled from 'styled-components'
 
+const radius = config.getTheme('border.200')
+
 export const DefaultTrigger = styled.button`
   height: 100%;
   line-height: 100%;
@@ -25,7 +27,7 @@ export const SelectDefaultOptionsWrapper = styled.div`
   height: fit-content;
   max-width: 220px;
   max-height: 150px;
-  border-radius: 3px;
+  border-radius: ${radius};
   transform: translate(-50%, -50%);
   font-family: Share Tech Mono;
   padding: 10px 0;
@@ -48,14 +50,14 @@ export const SelectDefaultOptionsWrapper = styled.div`
 
   &&::-webkit-scrollbar-track {
     background: ${config.getTheme('neutral.1200')};
-    border-radius: 0 3px 3px 0;
+    border-radius: 0 ${radius} ${radius} 0;
     border-left: 1px solid ${config.getTheme('neutral.1200')};
     padding: 0 3px;
   }
 
   &&::-webkit-scrollbar-thumb {
     background-color: ${config.getTheme('neutral.400')};
-    border-radius: 3px;
+    border-radius: ${radius};
   }
 `
 

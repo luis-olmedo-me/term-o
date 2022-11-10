@@ -17,8 +17,8 @@ export const ElementWrapper = styled.span`
   position: relative;
   padding: 5px 7px;
   background-color: ${config.getTheme('neutral.1200')};
+  border-radius: ${config.getTheme('border.200')};
   font-weight: bold;
-  border-radius: 3px;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   line-height: 1.75;

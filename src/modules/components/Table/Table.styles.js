@@ -2,13 +2,15 @@ import config from 'libs/configuration'
 import styled from 'styled-components'
 import { Actions } from '../Actions'
 
+const radius = config.getTheme('border.200')
+
 export const TableWrapper = styled.div`
   width: 100%;
   border-collapse: collapse;
   padding: 10px;
-  background-color: ${config.getTheme('transparent.300')};
   box-sizing: border-box;
-  border-radius: 3px;
+  border-radius: ${radius};
+  background-color: ${config.getTheme('transparent.300')};
 `
 
 export const TableRow = styled.div`
@@ -29,7 +31,7 @@ export const TableRow = styled.div`
     color: ${config.getTheme('neutral.300')};
     font-weight: bold;
     padding: 1px 0;
-    border-radius: 3px 3px 0 0;
+    border-radius: ${radius} ${radius} 0 0;
     text-align: center;
   }
 

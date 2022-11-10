@@ -1,13 +1,15 @@
 import config from 'libs/configuration'
 import styled from 'styled-components'
 
+const radius = config.getTheme('border.200')
+
 export const TagWrapper = styled.span`
   --tag-background-color: ${({ isNodeObjetive }) =>
     isNodeObjetive
       ? config.getTheme('yellow.900')
       : config.getTheme('neutral.1200')};
 
-  border-radius: 3px;
+  border-radius: ${config.getTheme('border.200')};
   cursor: pointer;
   position: relative;
   transition: background-color 0.2s ease-in-out;
@@ -43,7 +45,7 @@ export const Prefix = styled.div`
     height: 100%;
     left: 0;
     top: 0;
-    border-radius: 3px 0 0 3px;
+    border-radius: ${radius} 0 0 ${radius};
     background-color: var(--tag-background-color);
   }
 `
@@ -63,7 +65,7 @@ export const Postfix = styled.div`
     right: 0;
     top: 0;
     height: 100%;
-    border-radius: 0 3px 3px 0;
+    border-radius: 0 ${radius} ${radius} 0;
     background-color: var(--tag-background-color);
   }
 `

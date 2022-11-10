@@ -9,7 +9,7 @@ export const ClockWrapper = styled.div`
 
 export const ProgressBar = styled.div`
   height: 40px;
-  border-radius: 3px;
+  border-radius: ${config.getTheme('border.200')};
   background-color: ${config.getTheme('purple.100')};
 `
 export const Progress = styled.div`
@@ -19,7 +19,7 @@ export const Progress = styled.div`
   bottom: 0;
   height: 40px;
   transition: height 0.2s ease-in-out;
-  border-radius: 3px;
+  border-radius: ${config.getTheme('border.200')};
   background-color: ${config.getTheme('purple.900')};
   height: ${(props) => props.porcentage}%;
 `

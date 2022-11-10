@@ -19,7 +19,7 @@ export const NotificationWrapper = styled.div`
   padding: 10px;
   display: flex;
   gap: 24px;
-  border-radius: 3px;
+  border-radius: ${config.getTheme('border.200')};
   align-items: center;
   box-sizing: content-box;
   overflow: hidden;

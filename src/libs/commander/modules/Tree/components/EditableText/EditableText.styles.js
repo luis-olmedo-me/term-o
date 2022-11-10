@@ -3,9 +3,9 @@ import styled from 'styled-components'
 
 export const TextInput = styled.input`
   border: none;
-  border-radius: 3px;
   font-family: Share Tech Mono;
   margin: 0;
+  border-radius: ${config.getTheme('border.200')};
   background-color: ${config.getTheme('transparent.400')};
   color: white;
   min-width: 3ch;

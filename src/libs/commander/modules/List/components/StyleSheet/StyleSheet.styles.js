@@ -19,7 +19,7 @@ export const StyleSheetWrapper = styled.div`
   background-color: ${config.getTheme('neutral.1200')};
   color: ${config.getTheme('neutral.200')};
   font-weight: bold;
-  border-radius: 3px;
+  border-radius: ${config.getTheme('border.200')};
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   line-height: 1.75;
@@ -46,7 +46,7 @@ export const PropertyWrapper = styled.div`
 export const Property = styled.div`
   background-color: ${config.getTheme('neutral.1200')};
   padding: 0 7px;
-  border-radius: 3px;
+  border-radius: ${config.getTheme('border.200')};
   cursor: pointer;
   color: ${config.getTheme('neutral.200')};
   font-weight: bold;
@@ -72,7 +72,7 @@ export const PropertyColor = styled.span`
   width: 14px;
   background-color: currentColor;
   margin-left: 5px;
-  border-radius: 3px;
+  border-radius: ${config.getTheme('border.200')};
 `
 export const PropertyValue = styled.span`
   color: ${config.getTheme('purple.700')};

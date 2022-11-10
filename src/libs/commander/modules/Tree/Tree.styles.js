@@ -1,18 +1,19 @@
+import config from 'libs/configuration'
 import styled from 'styled-components'
 
 export const CollapseButton = styled.button`
   margin: 0 0 3px 5px;
   font-family: Share Tech Mono;
   border: none;
-  background: #00000020;
-  color: '#ffffff';
+  background-color: ${config.getTheme('transparent.300')};
+  color: ${config.getTheme('neutral.1200')};
   border-radius: 3px;
   vertical-align: middle;
   cursor: pointer;
   line-height: 1.2em;
 
   &.disabled {
-    color: '#ffffff60';
+    color: ${config.getTheme('transparent.650')};
   }
 `
 export const TwoDots = styled.span`

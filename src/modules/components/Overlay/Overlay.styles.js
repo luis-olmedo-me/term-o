@@ -1,15 +1,19 @@
+import config from 'libs/configuration'
 import styled from 'styled-components'
 
 export const OverlayWrapper = styled.div`
   all: initial;
   position: fixed;
   z-index: 100000;
-  background-color: ${(props) =>
-    props.isHighlighting ? '#00000077' : 'transparent'};
   inset: 0;
   width: 100%;
   pointer-events: none;
   transition: background-color 0.2s ease-in-out;
+
+  background-color: ${({ isHighlighting }) =>
+    isHighlighting
+      ? config.getTheme('transparent.700')
+      : config.getTheme('transparent.000')};
 `
 
 export const HighlightedElement = styled.div`
@@ -23,7 +27,7 @@ export const HighlightedElement = styled.div`
 
   &&.horizontal-limit,
   &&.vertical-limit {
-    border: dashed #9cf;
+    border: dashed ${config.getTheme('blue.800')};
   }
   &&.horizontal-limit {
     border-width: 1px 0;
@@ -33,6 +37,6 @@ export const HighlightedElement = styled.div`
   }
 
   &&.box {
-    background-color: #99ccff33;
+    background-color: ${config.getTheme('transparent.150')};
   }
 `

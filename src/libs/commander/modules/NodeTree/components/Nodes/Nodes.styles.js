@@ -1,10 +1,12 @@
+import config from 'libs/configuration'
 import styled from 'styled-components'
 
 export const TagWrapper = styled.span`
-  --tag-background-color: ${(props) =>
-    props.isNodeObjetive ? '#ffeecc' : '#fafafa'};
-  background: var(--tag-background-color);
-  color: ${(props) => (props.isHidden ? '#697177' : '#17c964')};
+  --tag-background-color: ${({ isNodeObjetive }) =>
+    isNodeObjetive
+      ? config.getTheme('yellow.900')
+      : config.getTheme('neutral.1200')};
+
   border-radius: 3px;
   cursor: pointer;
   position: relative;
@@ -13,6 +15,10 @@ export const TagWrapper = styled.span`
   height: 2em;
   line-height: 2em;
   padding: ${(props) => (props.textNode ? '0 7px' : '0')};
+
+  background-color: var(--tag-background-color);
+  color: ${({ isHidden }) =>
+    isHidden ? config.getTheme('neutral.800') : config.getTheme('green.700')};
 `
 
 export const GapNodesWrapper = styled.div`
@@ -28,7 +34,7 @@ export const Prefix = styled.div`
   left: 0;
   display: inline-block;
   vertical-align: top;
-  background-color: #ff4ecd;
+  background-color: ${config.getTheme('pink.700')};
 
   &:before {
     content: '';
@@ -47,7 +53,7 @@ export const Postfix = styled.div`
   height: 100%;
   display: inline-block;
   vertical-align: top;
-  background-color: #ff4ecd;
+  background-color: ${config.getTheme('pink.700')};
   position: relative;
 
   &:before {

@@ -30,7 +30,7 @@ export const Suggestion = styled.span`
   }
 
   &:hover {
-    background-color: ${config.getTheme('neutral.300')};
+    background-color: ${config.getTheme('neutral.200')};
     color: ${config.getTheme('yellow.800')};
   }
 `

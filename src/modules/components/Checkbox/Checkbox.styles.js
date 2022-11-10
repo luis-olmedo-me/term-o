@@ -1,10 +1,11 @@
+import config from 'libs/configuration'
 import styled from 'styled-components'
 
 export const Box = styled.div`
   width: 0.8em;
   height: 0.8em;
-  background-color: #ffffff20;
-  border: 3px solid #00000045;
+  background-color: ${config.getTheme('transparent.350')};
+  border: 3px solid ${config.getTheme('transparent.400')};
   border-radius: 0.4em;
   display: inline-block;
   vertical-align: text-bottom;
@@ -12,6 +13,6 @@ export const Box = styled.div`
   cursor: pointer;
 
   &.checked {
-    background-color: #9750dd;
+    background-color: ${config.getTheme('purple.800')};
   }
 `

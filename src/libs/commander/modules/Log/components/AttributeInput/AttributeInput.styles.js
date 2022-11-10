@@ -1,3 +1,4 @@
+import config from 'libs/configuration'
 import styled from 'styled-components'
 
 export const Input = styled.input`
@@ -7,7 +8,8 @@ export const Input = styled.input`
   border-radius: 3px;
   font-family: Share Tech Mono;
   font-size: 1em;
-  color: #fafafa;
+  background-color: ${config.getTheme('transparent.300')};
+  color: ${config.getTheme('neutral.1200')};
 
   &:active,
   &:focus,
@@ -16,7 +18,7 @@ export const Input = styled.input`
   }
 
   &::selection {
-    background-color: #222;
-    color: #f8c572;
+    background-color: ${config.getTheme('neutral.300')};
+    color: ${config.getTheme('yellow.800')};
   }
 `

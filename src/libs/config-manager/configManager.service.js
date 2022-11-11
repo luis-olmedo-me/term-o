@@ -39,17 +39,19 @@ class ConfigManager {
   }
 
   getConfigFromLocalStorage() {
-    const receiveConfiguration = ({ configuration = {} }) => {
-      this.config = { ...this.config, ...configuration }
+    const receiveConfiguration = ({ config = {} }) => {
+      this.config = { ...this.config, ...config }
     }
 
-    chrome.storage.sync.get('configuration', receiveConfiguration)
+    chrome.storage.local.get('config', receiveConfiguration)
   }
 
   setConfigInLocalStorage() {
     chrome.storage.sync.set({
       configuration: this.config
     })
+
+    chrome.storage.local.set({ config: this.config })
   }
 
   reset() {

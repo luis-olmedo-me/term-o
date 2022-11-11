@@ -5,7 +5,7 @@ export const TextInput = styled.input`
   border: none;
   font-family: Share Tech Mono;
   margin: 0;
-  border-radius: ${config.getTheme('border.200')};
+  border-radius: ${config.getTheme('radius.200')};
   background-color: ${config.getTheme('transparent.400')};
   color: white;
   min-width: 3ch;

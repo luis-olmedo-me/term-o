@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from 'preact'
 import { createPortal } from 'react-dom'
 import { PortalContext } from './Portal.contexts'
 

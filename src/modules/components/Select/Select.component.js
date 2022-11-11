@@ -1,10 +1,10 @@
-import * as React from 'react'
-import { useState, useEffect, useRef } from 'react'
+import * as React from 'preact'
+import { useEffect, useRef, useState } from 'preact/hooks'
 import { Portal } from '../Portal/Portal.component'
 import {
+  DefaultTrigger,
   SelectDefaultOption,
-  SelectDefaultOptionsWrapper,
-  DefaultTrigger
+  SelectDefaultOptionsWrapper
 } from './Select.styles'
 
 export const Select = ({

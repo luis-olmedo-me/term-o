@@ -1,4 +1,5 @@
-import * as React from 'react'
+import * as React from 'preact'
+import { useEffect, useState } from 'preact/hooks'
 import {
   ClockWrapper,
   Progress,
@@ -7,9 +8,9 @@ import {
 } from './Clock.styles'
 
 export const Clock = ({ time, onFinish }) => {
-  const [currentTime, setCurrentTime] = React.useState(time)
+  const [currentTime, setCurrentTime] = useState(time)
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!time) return
 
     const finish = () => {

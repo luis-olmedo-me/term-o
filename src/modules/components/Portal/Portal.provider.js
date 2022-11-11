@@ -1,5 +1,5 @@
-import * as React from 'react'
-import { useRef, useEffect, useState } from 'react'
+import * as React from 'preact'
+import { useEffect, useRef, useState } from 'preact/hooks'
 import { PortalContext } from './Portal.contexts'
 
 export const PortalProvider = ({ children }) => {

@@ -1,5 +1,5 @@
 import { commander } from 'libs/commander'
-import * as React from 'react'
+import * as React from 'preact'
 import { generateUUID } from 'src/helpers/utils.helpers'
 import { Copy } from 'src/modules/icons'
 import { actionTypes } from '../../constants/commands.constants'

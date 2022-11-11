@@ -1,4 +1,5 @@
-import * as React from 'react'
+import * as React from 'preact'
+import { useState } from 'preact/hooks'
 import { Chevron, DoubleChevron } from 'src/modules/icons'
 import {
   divideItemsIntoPages,
@@ -6,7 +7,7 @@ import {
 } from './usePaginationActions.helpers'
 
 export const usePaginationActions = ({ items, maxItems }) => {
-  const [pageNumber, setPageNumber] = React.useState(1)
+  const [pageNumber, setPageNumber] = useState(1)
 
   const itemsDividedIntoPages = divideItemsIntoPages(items, maxItems)
   const pagesAsButtonGroups = generateButtonGroupsFromPages(

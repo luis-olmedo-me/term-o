@@ -1,5 +1,7 @@
-import * as React from 'react'
-import { useEffect, useState, useCallback } from 'react'
+import { Carousel, CarouselItem } from 'modules/components/Carousel'
+import { Table } from 'modules/components/Table/Table.component'
+import * as React from 'preact'
+import { useCallback, useEffect, useState } from 'preact/hooks'
 import { parameterTypes } from '../../constants/commands.constants'
 import {
   Log,
@@ -7,21 +9,19 @@ import {
   usePaginationActions,
   useViews
 } from '../../modules/Log'
-import { Table } from 'modules/components/Table/Table.component'
-import {
-  getActionType,
-  parseCookies,
-  evaluateStringifiedValue,
-  turnStorageToTableItems
-} from './CommandStorage.helpers'
-import { storageMessages } from './CommandStorage.messages'
 import {
   storageActionTypes,
   storageTableOptions,
   storageViewIds,
   storageViews
 } from './CommandStorage.constants'
-import { Carousel, CarouselItem } from 'modules/components/Carousel'
+import {
+  evaluateStringifiedValue,
+  getActionType,
+  parseCookies,
+  turnStorageToTableItems
+} from './CommandStorage.helpers'
+import { storageMessages } from './CommandStorage.messages'
 import { MaterialTree } from './CommandStorage.styles'
 
 export const CommandStorage = ({ props, terminal: { command, finish } }) => {

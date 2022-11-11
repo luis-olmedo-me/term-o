@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from 'preact'
 import { Icon } from './Icon.styles'
 
 export const Flag = () => {

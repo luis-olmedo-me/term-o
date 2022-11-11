@@ -1,4 +1,5 @@
-import * as React from 'react'
+import * as React from 'preact'
+import { useEffect, useRef, useState } from 'preact/hooks'
 import { debounce } from 'src/helpers/utils.helpers.js'
 import { Checkbox } from '../Checkbox/Checkbox.component'
 import {
@@ -17,10 +18,10 @@ export const Table = ({
   onSelectionAll,
   selectedRows
 }) => {
-  const wrapperRef = React.useRef(null)
-  const [wrapperWidth, setWrapperWidth] = React.useState(0)
+  const wrapperRef = useRef(null)
+  const [wrapperWidth, setWrapperWidth] = useState(0)
 
-  React.useEffect(() => {
+  useEffect(() => {
     const wrapper = wrapperRef.current
 
     const updateWidth = debounce(

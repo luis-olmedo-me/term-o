@@ -1,4 +1,5 @@
-import * as React from 'react'
+import * as React from 'preact'
+import { useCallback, useEffect, useState } from 'preact/hooks'
 import { parameterTypes } from '../../constants/commands.constants'
 import { Clock } from '../../modules/Clock/Clock.component'
 import { Log, useMessageLog } from '../../modules/Log'
@@ -8,15 +9,15 @@ import { timeMessages } from './CommandTime.messages'
 
 export const CommandTime = ({ props, terminal: { command, finish } }) => {
   const actionType = getActionType(props)
-  const [delay, setDelay] = React.useState(0)
+  const [delay, setDelay] = useState(0)
 
   const { log: messageLog, setMessage } = useMessageLog()
 
-  const handleSetDelay = React.useCallback(() => {
+  const handleSetDelay = useCallback(() => {
     setDelay(props.delay)
   }, [props])
 
-  React.useEffect(
+  useEffect(
     function handleActionType() {
       switch (actionType) {
         case timeActionTypes.SET_DELAY:
@@ -31,7 +32,7 @@ export const CommandTime = ({ props, terminal: { command, finish } }) => {
     [actionType, handleSetDelay, setMessage]
   )
 
-  const handleFinishTimer = React.useCallback(() => {
+  const handleFinishTimer = useCallback(() => {
     setMessage(timeMessages.timeSuccess)
     finish()
   }, [setMessage, finish])

@@ -1,6 +1,6 @@
-import * as React from 'react'
-import { ListWrapper } from './List.styles'
+import * as React from 'preact'
 import { Element } from './components/Element/Element.component'
+import { ListWrapper } from './List.styles'
 
 export const List = ({ items, Child = Element }) => {
   return (

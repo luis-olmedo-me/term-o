@@ -1,7 +1,7 @@
 import config from 'libs/configuration'
 import styled from 'styled-components'
 
-const radius = config.getTheme('border.200')
+const radius = config.getTheme('radius.200')
 
 export const TagWrapper = styled.span`
   --tag-background-color: ${({ isNodeObjetive }) =>
@@ -9,7 +9,7 @@ export const TagWrapper = styled.span`
       ? config.getTheme('yellow.900')
       : config.getTheme('neutral.1200')};
 
-  border-radius: ${config.getTheme('border.200')};
+  border-radius: ${config.getTheme('radius.200')};
   cursor: pointer;
   position: relative;
   transition: background-color 0.2s ease-in-out;

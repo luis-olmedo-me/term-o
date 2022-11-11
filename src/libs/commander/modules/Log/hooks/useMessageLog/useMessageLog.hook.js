@@ -1,5 +1,5 @@
+import { useCallback, useState } from 'preact/hooks'
 import { replaceByParams } from './useMessageLog.helpers'
-import { useState, useCallback } from 'react'
 
 export const useMessageLog = () => {
   const [log, setLog] = useState(null)

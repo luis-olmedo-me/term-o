@@ -1,4 +1,5 @@
-import * as React from 'react'
+import * as React from 'preact'
+import { useState } from 'preact/hooks'
 import { removeDuplicatedFromArray } from 'src/helpers/utils.helpers.js'
 import { Skull } from 'src/modules/icons'
 
@@ -7,7 +8,7 @@ export const useTableSelection = ({
   currentRows,
   isEnabled = true
 }) => {
-  const [selectedRows, setSelectedRows] = React.useState([])
+  const [selectedRows, setSelectedRows] = useState([])
 
   const handleAllSelection = () => {
     const areAllRowsIncluded = currentRows.every((allRow) =>

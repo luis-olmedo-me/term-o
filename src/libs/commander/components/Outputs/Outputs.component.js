@@ -1,5 +1,5 @@
-import * as React from 'react'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import * as React from 'preact'
+import { useCallback, useRef, useState } from 'preact/hooks'
 import { OutputWrapper } from './Outputs.styles'
 
 const defaultFormatter = (oldParam) => {
@@ -65,5 +65,5 @@ const OutputsNonMemoized = ({ components, id, outsideProps }) => {
     </OutputWrapper>
   )
 }
-
-export const Outputs = React.memo(OutputsNonMemoized)
+// FIXME: USE MEMO HERE
+export const Outputs = OutputsNonMemoized

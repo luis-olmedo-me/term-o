@@ -1,5 +1,5 @@
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
-import * as React from 'react'
+import * as React from 'preact'
 import { Chevron } from 'src/modules/icons'
 import { isElementHidden } from '../../../../components/CommandDom/CommandDom.helpers'
 import { ElementLabel } from '../ElementLabel/ElementLabel.component'

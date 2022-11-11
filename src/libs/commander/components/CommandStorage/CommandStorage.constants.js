@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from 'preact'
 import { Home } from 'src/modules/icons'
 import { optionTypes } from '../../constants/commands.constants'
 import { CommandStorage } from './CommandStorage.component'

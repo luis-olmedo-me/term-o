@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useCallback, useState } from 'preact/hooks'
 import { formatDate } from 'src/helpers/dates.helpers'
 
 export const useDateRangeActions = ({ onDateUpdate }) => {

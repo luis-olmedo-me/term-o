@@ -1,7 +1,7 @@
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { Table } from 'modules/components/Table/Table.component'
-import * as React from 'react'
-import { useCallback, useEffect, useState } from 'react'
+import * as React from 'preact'
+import { useCallback, useEffect, useState } from 'preact/hooks'
 import {
   deletePageEvents,
   fetchConfiguration

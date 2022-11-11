@@ -7,7 +7,7 @@ export const CollapseButton = styled.button`
   border: none;
   background-color: ${config.getTheme('transparent.300')};
   color: ${config.getTheme('neutral.1200')};
-  border-radius: ${config.getTheme('border.200')};
+  border-radius: ${config.getTheme('radius.200')};
   vertical-align: middle;
   cursor: pointer;
   line-height: 1.2em;

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from 'preact'
 import { Copy, Pencil } from 'src/modules/icons'
 import { storageActionTypes } from './CommandStorage.constants'
 import { MaterialTree } from './CommandStorage.styles'

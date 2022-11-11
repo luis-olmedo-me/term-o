@@ -1,5 +1,5 @@
-import * as React from 'react'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import * as React from 'preact'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks'
 
 import { commander } from 'libs/commander/commander.service'
 
@@ -14,9 +14,9 @@ import {
 import { useConfig } from './hooks/useConfig.hook.js'
 import { useResize } from './hooks/useResize/useResize.hook.js'
 
-import { ConsoleTitle, ConsoleLogs, ConsoleWrapper } from './Console.styles.js'
-import { Notifications } from 'src/modules/components/Notifications/Notifications.component.js'
 import { useNotifications } from 'src/modules/components/Notifications/hooks/useNotifications.hook.js'
+import { Notifications } from 'src/modules/components/Notifications/Notifications.component.js'
+import { ConsoleLogs, ConsoleTitle, ConsoleWrapper } from './Console.styles.js'
 
 export const Console = () => {
   const wrapperReference = useRef(null)
@@ -97,7 +97,7 @@ export const Console = () => {
     setHistories([])
   }, [])
 
-  const outsideProps = React.useMemo(
+  const outsideProps = useMemo(
     () => ({
       clearTerminal,
       addNotification

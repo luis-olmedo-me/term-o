@@ -1,8 +1,6 @@
-import shadowRoot from 'react-shadow/styled-components'
+const appRoot = document.createElement('div');
+appRoot.id = 'term-o-root';
+appRoot.dataset.isOpen = 'false';
+appRoot.dataset.isInitiated = 'false';
 
-const appRoot = document.createElement('div')
-appRoot.id = 'term-o-root'
-appRoot.dataset.isOpen = 'false'
-appRoot.dataset.isInitiated = 'false'
-
-export { appRoot, shadowRoot }
+export { appRoot };

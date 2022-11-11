@@ -1,28 +1,55 @@
+const CopyPlugin = require('copy-webpack-plugin')
 const path = require('path')
+const ExtensionReloader = require('webpack-extension-reloader')
 
 module.exports = {
   entry: {
-    background: './src/projects/background/background.js',
+    popup: './src/projects/popup/popup.js',
     content: './src/projects/content/content.js',
-    popup: './src/projects/popup/popup.js'
+    background: './src/projects/background/background.js'
   },
   output: {
-    path: path.resolve('build/scripts'),
-    filename: '[name].js'
-  },
-  module: {
-    rules: [
-      { test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/ }
-    ]
+    filename: '[name].js',
+    path: path.resolve(__dirname, 'build')
   },
   resolve: {
+    extensions: ['.js', '.jsx', '.css'],
+    modules: [path.resolve(__dirname, 'src'), 'node_modules'],
     alias: {
       libs: path.resolve(__dirname, 'src/libs'),
       modules: path.resolve(__dirname, 'src/modules'),
       projects: path.resolve(__dirname, 'src/projects'),
-      src: path.resolve(__dirname, 'src')
+      src: path.resolve(__dirname, 'src'),
+      react: 'preact/compat'
     }
   },
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader'
+          }
+        ]
+      }
+    ]
+  },
+  plugins: [
+    new CopyPlugin([
+      { from: './src/manifest.json', to: './manifest.json' },
+      { from: './src/images', to: './images' }
+    ]),
+    new ExtensionReloader({
+      manifest: path.resolve(__dirname, './src/manifest.json')
+    })
+  ],
+  optimization: {
+    minimize: true
+  },
+  mode: 'production',
+  stats: 'minimal',
   performance: {
     maxEntrypointSize: 512000,
     maxAssetSize: 512000

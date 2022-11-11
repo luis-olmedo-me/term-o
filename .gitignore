@@ -1,2 +1,7 @@
-**/node_modules
-**/build/scripts
+.DS_Store
+.idea
+node_modules
+build
+build.pem
+ext.nex
+ext.pem

@@ -28,11 +28,7 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader'
-          }
-        ]
+        use: [{ loader: 'babel-loader' }]
       }
     ]
   },
@@ -45,13 +41,8 @@ module.exports = {
       manifest: path.resolve(__dirname, './src/manifest.json')
     })
   ],
-  optimization: {
-    minimize: true
-  },
+  optimization: { minimize: true },
   mode: 'production',
   stats: 'minimal',
-  performance: {
-    maxEntrypointSize: 512000,
-    maxAssetSize: 512000
-  }
+  performance: { maxEntrypointSize: 512000, maxAssetSize: 512000 }
 }

@@ -6,10 +6,7 @@ import { commander } from 'libs/commander/commander.service'
 import { CommandInput } from './components/CommandInput/CommandInput.component.js'
 import { Resizer } from './components/Resizer/Resizer.component.js'
 
-import {
-  resizeTypes,
-  singleResizeTypes
-} from './hooks/useResize/useResize.constants.js'
+import { resizeTypes, singleResizeTypes } from './hooks/useResize/useResize.constants.js'
 
 import { useConfig } from './hooks/useConfig.hook.js'
 import { useResize } from './hooks/useResize/useResize.hook.js'
@@ -26,10 +23,10 @@ export const Console = () => {
   const [histories, setHistories] = useState([])
   const [hasPageEventsBeenRunned, setHasPageEventsBeenRunned] = useState(false)
 
-  const { notifications, addNotification, showWorkerRequestError } =
-    useNotifications()
-  const { isOpen, appliedPageEvents, customPageEvents, consolePosition } =
-    useConfig({ onError: showWorkerRequestError })
+  const { notifications, addNotification, showWorkerRequestError } = useNotifications()
+  const { isOpen, appliedPageEvents, customPageEvents, consolePosition } = useConfig({
+    onError: showWorkerRequestError
+  })
   const { setResizingFrom, setMovingFrom, isMoving } = useResize({
     wrapperReference,
     consolePosition,
@@ -42,7 +39,7 @@ export const Console = () => {
 
     const logOutput = commander.getLogOutput(id, formmatedCommand)
 
-    setHistories((histories) => [...histories, logOutput])
+    setHistories(histories => [...histories, logOutput])
   }, [])
 
   useEffect(
@@ -60,7 +57,7 @@ export const Console = () => {
 
   useEffect(
     function setUpCustomEvents() {
-      const customEventsWithCallbacks = customPageEvents.map((customEvent) => {
+      const customEventsWithCallbacks = customPageEvents.map(customEvent => {
         return {
           ...customEvent,
           callback: () => {
@@ -71,12 +68,12 @@ export const Console = () => {
         }
       })
 
-      customEventsWithCallbacks.forEach((customEvent) => {
+      customEventsWithCallbacks.forEach(customEvent => {
         window.addEventListener(customEvent.event, customEvent.callback)
       })
 
       return () => {
-        customEventsWithCallbacks.forEach((customEvent) => {
+        customEventsWithCallbacks.forEach(customEvent => {
           window.removeEventListener(customEvent.event, customEvent.callback)
         })
       }
@@ -110,7 +107,7 @@ export const Console = () => {
     paddingBottom: parseInt(inputReference.current?.offsetHeight || 0) + 10
   }
 
-  const cancelEventPropagation = (event) => {
+  const cancelEventPropagation = event => {
     event.stopPropagation()
   }
 
@@ -121,26 +118,22 @@ export const Console = () => {
       ref={wrapperReference}
       isOpen={isOpen}
       style={movingEffect}
-      ondragstart='return false;'
-      ondrop='return false;'
+      ondragstart="return false;"
+      ondrop="return false;"
       onMouseDown={() => setTimeout(() => inputReference.current?.focus())}
       onKeyDown={cancelEventPropagation}
       onKeyUp={cancelEventPropagation}
       onKeyPress={cancelEventPropagation}
     >
       {!isMoving
-        ? singleResizeTypes.map((resizeType) => (
-            <Resizer
-              key={resizeType}
-              resizeType={resizeType}
-              setResizingFrom={setResizingFrom}
-            />
+        ? singleResizeTypes.map(resizeType => (
+            <Resizer key={resizeType} resizeType={resizeType} setResizingFrom={setResizingFrom} />
           ))
         : null}
 
       <ConsoleTitle
         ref={titleReference}
-        onMouseDown={(event) => {
+        onMouseDown={event => {
           setResizingFrom(resizeTypes.MOVING)
           setMovingFrom({ x: event.clientX, y: event.clientY })
         }}
@@ -149,12 +142,12 @@ export const Console = () => {
       </ConsoleTitle>
 
       <ConsoleLogs style={consoleStyles}>
-        {histories.map((history) => history(outsideProps))}
+        {histories.map(history => history(outsideProps))}
       </ConsoleLogs>
 
       <CommandInput
         inputReference={inputReference}
-        handleOnEnter={(command) => handleCommandRun(command, histories.length)}
+        handleOnEnter={command => handleCommandRun(command, histories.length)}
       />
 
       <Notifications messages={notifications} />

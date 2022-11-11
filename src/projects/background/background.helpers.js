@@ -28,10 +28,10 @@ export const resizeFull = () => {
 
 export const mergeAliases = (aliasesA, aliasesB) => {
   return aliasesB.reduce((aliases, aliasB) => {
-    const isRepeated = aliases.some((entity) => entity.name === aliasB.name)
+    const isRepeated = aliases.some(entity => entity.name === aliasB.name)
 
     return isRepeated
-      ? aliases.map((entity) => (entity.name === aliasB.name ? aliasB : entity))
+      ? aliases.map(entity => (entity.name === aliasB.name ? aliasB : entity))
       : [...aliases, aliasB]
   }, aliasesA)
 }

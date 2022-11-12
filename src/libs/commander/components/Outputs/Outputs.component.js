@@ -2,7 +2,7 @@ import * as React from 'preact'
 import { useCallback, useRef, useState } from 'preact/hooks'
 import { OutputWrapper } from './Outputs.styles'
 
-const defaultFormatter = (oldParam) => {
+const defaultFormatter = oldParam => {
   return [...oldParam, {}]
 }
 
@@ -17,12 +17,10 @@ const OutputsNonMemoized = ({ components, id, outsideProps }) => {
 
   const wrapperRef = useRef(null)
 
-  const showNextVisibleComponent = useCallback((paramFormatter) => {
+  const showNextVisibleComponent = useCallback(paramFormatter => {
     setParams(paramFormatter || defaultFormatter)
-    setData((oldData) => {
-      const nextInvisibleComponentIndex = oldData.findIndex(
-        (component) => !component.isVisible
-      )
+    setData(oldData => {
+      const nextInvisibleComponentIndex = oldData.findIndex(component => !component.isVisible)
 
       if (nextInvisibleComponentIndex !== -1) {
         const oldDataCopy = [...oldData]
@@ -40,10 +38,10 @@ const OutputsNonMemoized = ({ components, id, outsideProps }) => {
     const children = [...wrapperRef.current.children]
     const lastChild = children.at(-1)
 
-    lastChild.scrollIntoView()
+    setTimeout(() => lastChild.scrollIntoView({ block: 'end' }))
   }, [])
 
-  const componentsShown = data.filter((item) => item.isVisible)
+  const componentsShown = data.filter(item => item.isVisible)
 
   const providerProps = {
     ...outsideProps,

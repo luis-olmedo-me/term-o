@@ -4,12 +4,9 @@
   "description": "Simple terminal for browser",
   "repository": "https://github.com/olmedoluis/term-o",
   "scripts": {
-    "start": "nodemon --exec npm run build-dev",
-    "build-prod": "webpack --mode production",
-    "build-dev": "webpack --mode development --devtool cheap-module-source-map",
-    
-    "build": "cross-env NODE_ENV=production yarn webpack -c webpack.config.js --mode production",
-    "watch": "cross-env NODE_ENV=development yarn webpack -c webpack.config.js --mode development -w"
+    "start": "cross-env NODE_ENV=development yarn webpack -c webpack.config.js --mode development --devtool cheap-module-source-map --watch --progress",
+    "build-dev": "cross-env NODE_ENV=development yarn webpack -c webpack.config.js --mode production",
+    "build-prod": "cross-env NODE_ENV=production yarn webpack -c webpack.config.js --mode production"
   },
   "author": "olmedoluis012@gmail.com",
   "license": "ISC",
@@ -24,20 +21,16 @@
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.0.4",
     "cross-env": "^6.0.3",
-    "html-webpack-plugin": "^4.0.0-beta.8",
     "prettier": "^1.18.2",
     "raw-loader": "^3.1.0",
-    "webpack-cli": "^3.3.9",
-    "webpack-extension-reloader": "^1.1.1",
-    "webpack-manifest-version-sync-plugin": "^0.0.3",
-    "webpack": "^4.41.2"
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9"
   },
   "dependencies": {
     "preact": "^10.0.1",
     "preact-shadow-root": "^1.0.2",
     "react-switch": "^5.0.1",
     "regenerator-runtime": "^0.13.3",
-    "styled-components": "^4.4.1",
-    "styled-system": "^5.1.2"
+    "styled-components": "^4.4.1"
   }
 }

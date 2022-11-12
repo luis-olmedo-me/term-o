@@ -1,6 +1,5 @@
 const CopyPlugin = require('copy-webpack-plugin')
 const path = require('path')
-const ExtensionReloader = require('webpack-extension-reloader')
 
 module.exports = {
   entry: {
@@ -36,13 +35,14 @@ module.exports = {
     new CopyPlugin([
       { from: './src/manifest.json', to: './manifest.json' },
       { from: './src/images', to: './images' }
-    ]),
-    new ExtensionReloader({
-      manifest: path.resolve(__dirname, './src/manifest.json')
-    })
+    ])
   ],
   optimization: { minimize: true },
   mode: 'production',
   stats: 'minimal',
-  performance: { maxEntrypointSize: 512000, maxAssetSize: 512000 }
+  performance: { maxEntrypointSize: 512000, maxAssetSize: 512000 },
+  watchOptions: {
+    aggregateTimeout: 200,
+    ignored: /node_modules/
+  }
 }

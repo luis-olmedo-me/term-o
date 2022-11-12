@@ -39,7 +39,7 @@ module.exports = {
     ]),
     new CleanWebpackPlugin()
   ],
-  // optimization: { minimize: true },
+  optimization: { minimize: true },
   performance: { maxEntrypointSize: 512000, maxAssetSize: 512000 },
   watchOptions: {
     aggregateTimeout: 200,

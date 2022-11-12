@@ -1,7 +1,7 @@
-import config from 'libs/configuration'
+import { theme as t } from 'src/helpers/theme.helpers'
 import styled from 'styled-components'
 
-const radius = config.getTheme('radius.200')
+const radius = t('radius.200')
 
 export const TreeWrapper = styled.div`
   white-space: nowrap;

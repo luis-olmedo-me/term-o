@@ -1,4 +1,4 @@
-import config from 'libs/configuration'
+import { theme as t } from 'src/helpers/theme.helpers'
 import styled, { keyframes } from 'styled-components'
 
 const Birth = keyframes`
@@ -16,10 +16,10 @@ const Birth = keyframes`
 export const StyleSheetWrapper = styled.div`
   position: relative;
   padding: 5px 10px;
-  background-color: ${config.getTheme('neutral.1200')};
-  color: ${config.getTheme('neutral.200')};
+  background-color: ${t('neutral.1200')};
+  color: ${t('neutral.200')};
   font-weight: bold;
-  border-radius: ${config.getTheme('radius.200')};
+  border-radius: ${t('radius.200')};
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   line-height: 1.75;
@@ -27,7 +27,7 @@ export const StyleSheetWrapper = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  animation-name: ${(props) => (props.shouldAnimate ? Birth : '')};
+  animation-name: ${props => (props.shouldAnimate ? Birth : '')};
   animation-duration: 0.5s;
   transform-origin: right;
 `
@@ -37,44 +37,44 @@ export const Title = styled.span`
 `
 
 export const PropertyWrapper = styled.div`
-  border-left: 5px solid ${config.getTheme('transparent.400')};
+  border-left: 5px solid ${t('transparent.400')};
   padding-left: 2ch;
   display: flex;
   flex-flow: column;
   gap: 5px;
 `
 export const Property = styled.div`
-  background-color: ${config.getTheme('neutral.1200')};
+  background-color: ${t('neutral.1200')};
   padding: 0 7px;
-  border-radius: ${config.getTheme('radius.200')};
+  border-radius: ${t('radius.200')};
   cursor: pointer;
-  color: ${config.getTheme('neutral.200')};
+  color: ${t('neutral.200')};
   font-weight: bold;
   width: fit-content;
   display: inline-flex;
   align-items: center;
   padding: 5px 10px;
 
-  opacity: ${(props) => (props.isOverwritten ? '.5' : '1')}; ;
+  opacity: ${props => (props.isOverwritten ? '.5' : '1')};
 `
 
 export const PropertyName = styled.span`
-  color: ${config.getTheme('red.600')};
+  color: ${t('red.600')};
 `
 
 export const Equal = styled.span`
-  color: ${config.getTheme('purple.900')};
+  color: ${t('purple.900')};
 `
 export const PropertyColor = styled.span`
-  color: ${(props) => props.fontColor};
-  border: 2px solid ${config.getTheme('transparent.300')};
+  color: ${props => props.fontColor};
+  border: 2px solid ${t('transparent.300')};
   height: 14px;
   width: 14px;
   background-color: currentColor;
   margin-left: 5px;
-  border-radius: ${config.getTheme('radius.200')};
+  border-radius: ${t('radius.200')};
 `
 export const PropertyValue = styled.span`
-  color: ${config.getTheme('purple.700')};
+  color: ${t('purple.700')};
   margin-left: 5px;
 `

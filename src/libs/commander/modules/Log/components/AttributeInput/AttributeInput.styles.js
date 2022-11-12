@@ -1,4 +1,4 @@
-import config from 'libs/configuration'
+import { theme as t } from 'src/helpers/theme.helpers'
 import styled from 'styled-components'
 
 export const Input = styled.input`
@@ -7,9 +7,9 @@ export const Input = styled.input`
   border: none;
   font-family: Share Tech Mono;
   font-size: 1em;
-  border-radius: ${config.getTheme('radius.200')};
-  background-color: ${config.getTheme('transparent.300')};
-  color: ${config.getTheme('neutral.1200')};
+  border-radius: ${t('radius.200')};
+  background-color: ${t('transparent.300')};
+  color: ${t('neutral.1200')};
 
   &:active,
   &:focus,
@@ -18,7 +18,7 @@ export const Input = styled.input`
   }
 
   &::selection {
-    background-color: ${config.getTheme('neutral.300')};
-    color: ${config.getTheme('yellow.800')};
+    background-color: ${t('neutral.300')};
+    color: ${t('yellow.800')};
   }
 `

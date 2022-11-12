@@ -2,7 +2,7 @@ const CopyPlugin = require('copy-webpack-plugin')
 const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
-module.exports = {
+module.exports = (_env, { watch }) => ({
   entry: {
     popup: './src/projects/popup/popup.js',
     content: './src/projects/content/content.js',
@@ -37,12 +37,12 @@ module.exports = {
       { from: './src/manifest.json', to: './manifest.json' },
       { from: './src/images', to: './images' }
     ]),
-    new CleanWebpackPlugin()
+    ...(watch ? [] : [new CleanWebpackPlugin()])
   ],
-  // optimization: { minimize: true },
+  optimization: { minimize: true },
   performance: { maxEntrypointSize: 512000, maxAssetSize: 512000 },
   watchOptions: {
     aggregateTimeout: 200,
     ignored: /node_modules/
   }
-}
+})

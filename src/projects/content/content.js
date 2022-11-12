@@ -3,7 +3,8 @@ import * as React from 'preact'
 import { OverlayProvider } from 'modules/components/Overlay/Overlay.provider'
 import { PortalProvider } from 'modules/components/Portal/Portal.provider'
 import { StyleSheetManager, ThemeProvider } from 'styled-components'
-import { appContainer, shadow } from './content.constants'
+import { defaultTheme } from '../../constants/theme.constants'
+import { shadow } from './content.constants'
 import { FontFamilies } from './fonts/Fonts.styles'
 import { Console } from './modules/Console/Console.component'
 
@@ -12,7 +13,7 @@ React.render(
     <FontFamilies />
 
     <StyleSheetManager target={shadow}>
-      <ThemeProvider theme={{}}>
+      <ThemeProvider theme={defaultTheme}>
         <PortalProvider>
           <OverlayProvider>
             <Console />

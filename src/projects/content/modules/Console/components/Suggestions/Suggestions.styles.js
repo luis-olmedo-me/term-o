@@ -1,4 +1,4 @@
-import config from 'libs/configuration'
+import { theme as t } from 'src/helpers/theme.helpers'
 import styled from 'styled-components'
 
 export const SuggestionsWrapper = styled.div`
@@ -12,8 +12,8 @@ export const SuggestionsWrapper = styled.div`
 
 export const Suggestion = styled.span`
   display: block;
-  background-color: ${config.getTheme('neutral.100')};
-  color: ${config.getTheme('neutral.1200')};
+  background-color: ${t('neutral.100')};
+  color: ${t('neutral.1200')};
   padding: 0 30px;
   display: flex;
   justify-content: space-between;
@@ -24,13 +24,13 @@ export const Suggestion = styled.span`
   transition: padding 0.2s ease-in-out;
 
   &.selected {
-    background-color: ${config.getTheme('neutral.300')};
-    color: ${config.getTheme('yellow.800')};
+    background-color: ${t('neutral.300')};
+    color: ${t('yellow.800')};
     padding: 0 40px;
   }
 
   &:hover {
-    background-color: ${config.getTheme('neutral.200')};
-    color: ${config.getTheme('yellow.800')};
+    background-color: ${t('neutral.200')};
+    color: ${t('yellow.800')};
   }
 `

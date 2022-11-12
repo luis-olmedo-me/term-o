@@ -1,12 +1,12 @@
-import config from 'libs/configuration'
+import { theme as t } from 'src/helpers/theme.helpers'
 import styled from 'styled-components'
 
 export const TextInput = styled.input`
   border: none;
   font-family: Share Tech Mono;
   margin: 0;
-  border-radius: ${config.getTheme('radius.200')};
-  background-color: ${config.getTheme('transparent.400')};
+  border-radius: ${t('radius.200')};
+  background-color: ${t('transparent.400')};
   color: white;
   min-width: 3ch;
   text-align: center;
@@ -19,7 +19,7 @@ export const TextInput = styled.input`
   }
 
   &::selection {
-    background-color: ${config.getTheme('neutral.300')};
-    color: ${config.getTheme('yellow.800')};
+    background-color: ${t('neutral.300')};
+    color: ${t('yellow.800')};
   }
 `

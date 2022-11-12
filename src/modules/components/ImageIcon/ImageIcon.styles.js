@@ -1,4 +1,4 @@
-import config from 'libs/configuration'
+import { theme as t } from 'src/helpers/theme.helpers'
 import styled from 'styled-components'
 
 export const IconWrapper = styled.span`
@@ -25,7 +25,7 @@ export const FaviconSVG = styled.svg`
   height: 28px;
   margin-right: 10px;
   padding: 5px;
-  background-color: ${config.getTheme('transparent.300')};
+  background-color: ${t('transparent.300')};
   border-radius: 6px;
   box-sizing: border-box;
   width: calc(100% - 2em);

@@ -1,4 +1,4 @@
-import config from 'libs/configuration'
+import { theme as t } from 'src/helpers/theme.helpers'
 import styled from 'styled-components'
 
 export const NotificationsWrapper = styled.div`
@@ -12,13 +12,13 @@ export const NotificationsWrapper = styled.div`
 `
 
 export const NotificationWrapper = styled.div`
-  background-color: ${config.getTheme('neutral.100')};
-  box-shadow: 0 0 15px 5px ${config.getTheme('transparent.300')};
+  background-color: ${t('neutral.100')};
+  box-shadow: 0 0 15px 5px ${t('transparent.300')};
   margin-bottom: 10px;
   padding: 10px;
   display: flex;
   gap: 24px;
-  border-radius: ${config.getTheme('radius.200')};
+  border-radius: ${t('radius.200')};
   align-items: center;
   box-sizing: content-box;
   overflow: hidden;
@@ -48,7 +48,7 @@ export const Image = styled.img`
 `
 
 export const LogoWrapper = styled.svg`
-  background-color: ${config.getTheme('transparent.350')};
+  background-color: ${t('transparent.350')};
   border-radius: 8px;
   padding: 6px;
   max-width: 50px;

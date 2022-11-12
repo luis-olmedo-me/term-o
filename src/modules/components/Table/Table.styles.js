@@ -1,8 +1,8 @@
-import config from 'libs/configuration'
+import { theme as t } from 'src/helpers/theme.helpers'
 import styled from 'styled-components'
 import { Actions } from '../Actions'
 
-const radius = config.getTheme('radius.200')
+const radius = t('radius.200')
 
 export const TableWrapper = styled.div`
   width: 100%;
@@ -10,13 +10,13 @@ export const TableWrapper = styled.div`
   padding: 10px;
   box-sizing: border-box;
   border-radius: ${radius};
-  background-color: ${config.getTheme('transparent.300')};
+  background-color: ${t('transparent.300')};
 `
 
 export const TableRow = styled.div`
   display: flex;
   vertical-align: baseline;
-  color: ${config.getTheme('neutral.1200')};
+  color: ${t('neutral.1200')};
   font-weight: normal;
   padding: 0;
   border-radius: 0;
@@ -27,8 +27,8 @@ export const TableRow = styled.div`
   margin: 0 auto 6px;
 
   &.header {
-    background-color: ${config.getTheme('neutral.1200')};
-    color: ${config.getTheme('neutral.300')};
+    background-color: ${t('neutral.1200')};
+    color: ${t('neutral.300')};
     font-weight: bold;
     padding: 1px 0;
     border-radius: ${radius} ${radius} 0 0;
@@ -47,13 +47,13 @@ export const TableRowValue = styled.span`
   white-space: nowrap;
   overflow: hidden;
   position: relative;
-  text-align: ${(props) => (props.center ? 'center' : 'left')};
-  flex-grow: ${(props) => (props.hasFixedWidth ? 'unset' : '1')};
-  background-color: ${config.getTheme('transparent.000')};
+  text-align: ${props => (props.center ? 'center' : 'left')};
+  flex-grow: ${props => (props.hasFixedWidth ? 'unset' : '1')};
+  background-color: ${t('transparent.000')};
 
   &:hover {
-    background-color: ${config.getTheme('transparent.250')};
-    color: ${config.getTheme('yellow.800')};
+    background-color: ${t('transparent.250')};
+    color: ${t('yellow.800')};
   }
 
   &:hover .actions {
@@ -62,8 +62,8 @@ export const TableRowValue = styled.span`
 `
 
 export const TableHeaderRowValue = styled.span`
-  width: ${(props) => props.width};
-  flex-grow: ${(props) => (props.hasFixedWidth ? 'unset' : '1')};
+  width: ${props => props.width};
+  flex-grow: ${props => (props.hasFixedWidth ? 'unset' : '1')};
 `
 
 export const TableActionsWrapper = styled.div`
@@ -73,6 +73,6 @@ export const TableActionsWrapper = styled.div`
 
 export const TableActions = styled(Actions)`
   position: absolute;
-  background-color: ${config.getTheme('purple.700')};
-  color: ${config.getTheme('neutral.1200')};
+  background-color: ${t('purple.700')};
+  color: ${t('neutral.1200')};
 `

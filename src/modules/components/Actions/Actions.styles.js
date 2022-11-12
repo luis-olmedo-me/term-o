@@ -1,4 +1,4 @@
-import config from 'libs/configuration'
+import { theme as t } from 'src/helpers/theme.helpers'
 import styled from 'styled-components'
 
 export const ActionButtons = styled.div`
@@ -10,9 +10,9 @@ export const ActionButtons = styled.div`
   right: 0;
   background-color: var(--tag-background-color);
   transition: background-color 0.2s ease-in-out;
-  border-radius: ${(props) => (props.hasPostfix ? '0' : '0 3px 3px 0')};
+  border-radius: ${props => (props.hasPostfix ? '0' : '0 3px 3px 0')};
   vertical-align: top;
-  color: ${config.getTheme('neutral.400')};
+  color: ${t('neutral.400')};
 `
 export const ActionButton = styled.button`
   height: 100%;
@@ -30,14 +30,15 @@ export const ActionButton = styled.button`
 
   border-left: 1px solid;
   border-right: ${({ isLastItem }) => (isLastItem ? '1px solid' : 'unset')};
-  border-color: ${config.getTheme('transparent.300')};
+  border-color: ${t('transparent.300')};
 
-  &:disabled {
-    background-color: ${config.getTheme('transparent.200')};
-    color: ${config.getTheme('neutral.1000')};
+  &:disabled,
+  &:disabled:hover {
+    background-color: ${t('transparent.200')};
+    color: ${t('neutral.1000')};
   }
   &:hover {
-    background-color: ${config.getTheme('transparent.100')};
+    background-color: ${t('transparent.100')};
   }
 
   &:active,

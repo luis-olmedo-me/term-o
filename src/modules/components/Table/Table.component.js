@@ -2,22 +2,15 @@ import config from 'libs/configuration'
 import * as React from 'preact'
 import { useEffect, useRef, useState } from 'preact/hooks'
 import { debounce } from 'src/helpers/utils.helpers.js'
-import styled from 'styled-components'
-import { Actions } from '../Actions'
 import { Checkbox } from '../Checkbox/Checkbox.component'
 import {
+  TableActions,
   TableActionsWrapper,
   TableHeaderRowValue,
   TableRow,
   TableRowValue,
   TableWrapper
 } from './Table.styles'
-
-export const TableActions = styled(Actions)`
-  position: absolute;
-  background-color: ${config.getTheme('purple.700')};
-  color: ${config.getTheme('neutral.1200')};
-`
 
 export const Table = ({ rows, options, onSelectionChange, onSelectionAll, selectedRows }) => {
   const wrapperRef = useRef(null)
@@ -124,7 +117,7 @@ export const Table = ({ rows, options, onSelectionChange, onSelectionAll, select
 
                   {column.actions && (
                     <TableActionsWrapper className="actions">
-                      <Actions actions={column.actions} />
+                      <TableActions actions={column.actions} />
                     </TableActionsWrapper>
                   )}
                 </TableRowValue>

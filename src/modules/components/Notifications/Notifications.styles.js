@@ -2,7 +2,6 @@ import config from 'libs/configuration'
 import styled from 'styled-components'
 
 export const NotificationsWrapper = styled.div`
-  all: initial;
   position: fixed;
   z-index: 1000004;
   left: 10px;
@@ -23,13 +22,13 @@ export const NotificationWrapper = styled.div`
   align-items: center;
   box-sizing: content-box;
   overflow: hidden;
-  transition: height 0.4s ease-in-out, opacity 0.3s ease-in-out,
-    padding 0.4s ease-in-out, transform 0.4s ease-in-out;
+  transition: height 0.4s ease-in-out, opacity 0.3s ease-in-out, padding 0.4s ease-in-out,
+    transform 0.4s ease-in-out;
 
-  height: ${(props) => (props.isDead ? '0' : '100%')};
-  opacity: ${(props) => (props.isDead ? '0' : '1')};
-  padding: ${(props) => (props.isDead ? '0' : '10px')};
-  transform: scaleX(${(props) => (props.isDead ? '1.5' : '1')});
+  height: ${props => (props.isDead ? '0' : '100%')};
+  opacity: ${props => (props.isDead ? '0' : '1')};
+  padding: ${props => (props.isDead ? '0' : '10px')};
+  transform: scaleX(${props => (props.isDead ? '1.5' : '1')});
 
   &:last-child {
     margin-bottom: 0;

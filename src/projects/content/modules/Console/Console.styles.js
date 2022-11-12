@@ -4,7 +4,6 @@ import styled from 'styled-components'
 const radius = config.getTheme('radius.100')
 
 export const ConsoleWrapper = styled.div`
-  all: initial;
   position: fixed;
   z-index: 1000000;
   font-family: 'Share Tech Mono', monospace;
@@ -14,12 +13,9 @@ export const ConsoleWrapper = styled.div`
 
   pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
   box-shadow: ${({ isMoving }) =>
-    isMoving
-      ? '0px 20px 15px -3px rgba(0, 0, 0, 0.5)'
-      : '0px 10px 15px -3px rgba(0, 0, 0, 0.15)'};
+    isMoving ? '0px 20px 15px -3px rgba(0, 0, 0, 0.5)' : '0px 10px 15px -3px rgba(0, 0, 0, 0.15)'};
 
-  transition: inset 0.05s ease-in-out, opacity 0.2s ease-in-out,
-    transform 0.2s ease-in-out;
+  transition: inset 0.05s ease-in-out, opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
   min-height: 690px;
   display: flex;
   flex-flow: column;

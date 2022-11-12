@@ -19,7 +19,6 @@ export const DefaultTrigger = styled.button`
 `
 
 export const SelectDefaultOptionsWrapper = styled.div`
-  all: initial;
   position: fixed;
   z-index: 1000003;
   inset: 0;
@@ -33,15 +32,13 @@ export const SelectDefaultOptionsWrapper = styled.div`
   padding: 10px 0;
   overflow-y: scroll;
   font-size: 1em;
-  opacity: ${(props) => (props.areBoundsCalculated ? 1 : 0)};
+  opacity: ${props => (props.areBoundsCalculated ? 1 : 0)};
   background-color: ${config.getTheme('neutral.1200')};
   box-shadow: 0 0 15px 5px ${config.getTheme('transparent.300')};
 
   && {
     scrollbar-width: auto;
-    scrollbar-color: ${`${config.getTheme('neutral.400')} ${config.getTheme(
-      'neutral.1200'
-    )}`};
+    scrollbar-color: ${`${config.getTheme('neutral.400')} ${config.getTheme('neutral.1200')}`};
   }
 
   &&::-webkit-scrollbar {

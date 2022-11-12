@@ -11,7 +11,7 @@ const termoBody = document.createElement('body')
 termoBody.setAttribute('id', 'term-o-body')
 termoBody.append(root)
 
-const shadow = root
+const shadow = root.attachShadow({ mode: 'open' })
 shadow.appendChild(styleContainer)
 
 document.documentElement.append(termoBody)

@@ -1,5 +1,6 @@
-import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import * as React from 'preact'
+
+import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import { useCallback, useEffect, useState } from 'preact/hooks'
 import { resetConfiguration } from 'src/helpers/event.helpers.js'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
@@ -41,22 +42,17 @@ export const CommandClearWithoutContext = ({
           break
       }
     },
-    [
-      actionType,
-      clearTerminal,
-      setMessage,
-      setHighlitedElement,
-      handleClearTerminal,
-      finish
-    ]
+    [actionType, clearTerminal, setMessage, setHighlitedElement, handleClearTerminal, finish]
   )
 
   return (
-    <>
-      <Log variant={parameterTypes.COMMAND}>{command}</Log>
+    messageLog && (
+      <>
+        <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
-      {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
-    </>
+        <Log variant={messageLog.type}>{messageLog.message}</Log>
+      </>
+    )
   )
 }
 

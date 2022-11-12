@@ -1,5 +1,5 @@
 import config from 'libs/configuration'
-import * as React from 'react'
+import * as React from 'preact'
 import { Icon } from './Icon.styles.js'
 
 export const Logo = ({ size, Wrapper = Icon }) => {

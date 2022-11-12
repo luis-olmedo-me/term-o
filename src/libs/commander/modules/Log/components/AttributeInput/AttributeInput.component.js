@@ -1,5 +1,5 @@
-import * as React from 'react'
-import { useState } from 'react'
+import * as React from 'preact'
+import { useState } from 'preact/hooks'
 import { Input } from './AttributeInput.styles'
 
 export const AttributeInput = ({ onEnter, defaultValue, placeholder }) => {

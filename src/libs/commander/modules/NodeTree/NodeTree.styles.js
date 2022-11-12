@@ -1,7 +1,7 @@
 import config from 'libs/configuration'
 import styled from 'styled-components'
 
-const radius = config.getTheme('border.200')
+const radius = config.getTheme('radius.200')
 
 export const TreeWrapper = styled.div`
   white-space: nowrap;

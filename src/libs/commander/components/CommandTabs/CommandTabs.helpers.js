@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from 'preact'
 import { formatDate } from 'src/helpers/dates.helpers'
 import { ImageIcon } from 'src/modules/components/ImageIcon'
 import { Copy } from 'src/modules/icons'

@@ -1,6 +1,6 @@
-import * as React from 'react'
-import { useEffect, useState } from 'react'
-import { CarouselWrapper, AnimatedEffect } from './Carousel.styles'
+import * as React from 'preact'
+import { useEffect, useRef, useState } from 'preact/hooks'
+import { AnimatedEffect, CarouselWrapper } from './Carousel.styles'
 
 const getAnimationDirection = (isGoingRight, isTheSame) => {
   if (isTheSame) return 'center'
@@ -9,7 +9,7 @@ const getAnimationDirection = (isGoingRight, isTheSame) => {
 }
 
 export const Carousel = ({ itemInView, children }) => {
-  const wrapperReference = React.useRef(null)
+  const wrapperReference = useRef(null)
   const [oldItemInView, setOldItemInView] = useState(itemInView)
 
   useEffect(() => {

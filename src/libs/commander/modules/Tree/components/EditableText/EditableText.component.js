@@ -1,4 +1,5 @@
-import * as React from 'react'
+import * as React from 'preact'
+import { useState } from 'preact/hooks'
 import { TextInput } from './EditableText.styles'
 
 export const EditableText = ({
@@ -10,8 +11,8 @@ export const EditableText = ({
 }) => {
   const titleAsString = String(title)
 
-  const [value, setValue] = React.useState(titleAsString)
-  const [isEditing, setIsEditing] = React.useState(false)
+  const [value, setValue] = useState(titleAsString)
+  const [isEditing, setIsEditing] = useState(false)
 
   const handleKeyPress = (event) => {
     event.stopPropagation()

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from 'preact'
 import { optionTypes } from '../../constants/commands.constants'
 import { CommandHelp } from './CommandHelp.component'
 

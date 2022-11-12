@@ -1,11 +1,11 @@
-import * as React from 'react'
-import { useCallback, useEffect, useState } from 'react'
+import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
+import * as React from 'preact'
+import { useCallback, useEffect, useState } from 'preact/hooks'
 import { resetConfiguration } from 'src/helpers/event.helpers.js'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
+import { Log, useMessageLog } from '../../modules/Log'
 import { getActionType } from './CommandClear.helpers'
 import { clearMessages } from './CommandClear.messages'
-import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
-import { Log, useMessageLog } from '../../modules/Log'
 
 export const CommandClearWithoutContext = ({
   props,

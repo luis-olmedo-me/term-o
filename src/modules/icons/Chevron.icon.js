@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from 'preact'
 import { DirectionableIcon } from './Icon.styles'
 
 export const Chevron = ({ direction }) => {

@@ -20,14 +20,12 @@ import {
   createTabsOpenProcess
 } from './background.processes'
 
-chrome.commands.onCommand.addListener(function (command) {
+chrome.commands.onCommand.addListener(function(command) {
   if (!extensionKeyEventNames.includes(command)) return
 
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+  chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     const [{ id, url }] = tabs
-    const isInvalidUrl = invalidURLsStarts.some((invalidUrl) =>
-      url.startsWith(invalidUrl)
-    )
+    const isInvalidUrl = invalidURLsStarts.some(invalidUrl => url.startsWith(invalidUrl))
 
     if (isInvalidUrl) return
 
@@ -61,7 +59,7 @@ chrome.commands.onCommand.addListener(function (command) {
   })
 })
 
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   switch (request.type) {
     case eventTypes.GET_CONFIGURATION: {
       sendResponse({ status: 'ok', data: configManager.config })
@@ -82,9 +80,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 
     case eventTypes.DELETE_PAGES_EVENT: {
-      const newData = configManager.pageEvents.filter(
-        ({ id }) => !request.data.ids.includes(id)
-      )
+      const newData = configManager.pageEvents.filter(({ id }) => !request.data.ids.includes(id))
 
       configManager.setConfig({ pageEvents: newData })
       sendResponse({ status: 'ok' })
@@ -102,9 +98,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     case eventTypes.DELETE_ALIAS: {
       const aliasIdsToDelete = request.data?.aliasIdsToDelete || []
 
-      const newAliases = configManager.aliases.filter(
-        ({ id }) => !aliasIdsToDelete.includes(id)
-      )
+      const newAliases = configManager.aliases.filter(({ id }) => !aliasIdsToDelete.includes(id))
 
       configManager.setConfig({ aliases: newAliases })
       sendResponse({ status: 'ok' })
@@ -122,9 +116,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
       const process = id
         ? processWaitList.getProcessById(id)
-        : processWaitList.add((resolve) =>
-            createCloseTabsProcess(resolve, data)
-          )
+        : processWaitList.add(resolve => createCloseTabsProcess(resolve, data))
 
       sendResponse({ status: 'ok', data: process })
       break
@@ -135,7 +127,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
       const process = id
         ? processWaitList.getProcessById(id)
-        : processWaitList.add((resolve) => createTabsOpenProcess(resolve, data))
+        : processWaitList.add(resolve => createTabsOpenProcess(resolve, data))
 
       sendResponse({ status: 'ok', data: process })
       break
@@ -146,7 +138,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
       const process = id
         ? processWaitList.getProcessById(id)
-        : processWaitList.add((resolve) => createHistoryProcess(resolve, data))
+        : processWaitList.add(resolve => createHistoryProcess(resolve, data))
 
       sendResponse({ status: 'ok', data: process })
       break

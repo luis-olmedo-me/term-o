@@ -2,7 +2,6 @@ import config from 'libs/configuration'
 import styled from 'styled-components'
 
 export const OverlayWrapper = styled.div`
-  all: initial;
   position: fixed;
   z-index: 100000;
   inset: 0;
@@ -11,9 +10,7 @@ export const OverlayWrapper = styled.div`
   transition: background-color 0.2s ease-in-out;
 
   background-color: ${({ isHighlighting }) =>
-    isHighlighting
-      ? config.getTheme('transparent.700')
-      : config.getTheme('transparent.000')};
+    isHighlighting ? config.getTheme('transparent.700') : config.getTheme('transparent.000')};
 `
 
 export const HighlightedElement = styled.div`
@@ -23,7 +20,7 @@ export const HighlightedElement = styled.div`
   inset: 0;
   width: 100%;
   box-sizing: border-box;
-  opacity: ${(props) => (props.isHighlighting ? 1 : 0)};
+  opacity: ${props => (props.isHighlighting ? 1 : 0)};
 
   &&.horizontal-limit,
   &&.vertical-limit {

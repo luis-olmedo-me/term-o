@@ -1,5 +1,5 @@
-import * as React from 'react'
-import { useCallback, useEffect } from 'react'
+import * as React from 'preact'
+import { useCallback, useEffect } from 'preact/hooks'
 import { addPageEvents } from 'src/helpers/event.helpers.js'
 import { generateUUID } from 'src/helpers/utils.helpers'
 import {

@@ -1,8 +1,8 @@
-import * as React from 'react'
+import * as React from 'preact'
 import { MessageLog } from './modules/Log'
 
-import { Outputs } from './components/Outputs/Outputs.component'
 import { consoleCommands } from './commander.constants'
+import { Outputs } from './components/Outputs/Outputs.component'
 
 import {
   buildProps,

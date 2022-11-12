@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'preact/hooks'
 import { generateUUID } from 'src/helpers/utils.helpers'
 
 export const useNotifications = () => {

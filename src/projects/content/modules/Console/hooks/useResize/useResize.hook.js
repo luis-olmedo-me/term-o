@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'preact/hooks'
+import { eventTypes } from 'src/constants/events.constants.js'
+import { defaultBodyData } from './useResize.constants'
 import {
   getNewResizeData,
   isNumber,
   limitLowValue,
   updateConfig
 } from './useResize.helpers'
-import { defaultBodyData } from './useResize.constants'
-import { eventTypes } from 'src/constants/events.constants.js'
 
 export const useResize = ({
   wrapperReference,

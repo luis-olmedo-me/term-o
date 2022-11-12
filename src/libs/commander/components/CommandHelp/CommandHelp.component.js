@@ -1,5 +1,5 @@
-import * as React from 'react'
-import { useCallback, useEffect, useState } from 'react'
+import * as React from 'preact'
+import { useCallback, useEffect, useState } from 'preact/hooks'
 import { removeDuplicatedFromArray } from 'src/helpers/utils.helpers.js'
 import { consoleCommands } from '../../commander.constants'
 import { parameterTypes } from '../../constants/commands.constants'

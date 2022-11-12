@@ -1,3 +1,3 @@
-import { createContext } from 'react'
+import { createContext } from 'preact/compat';
 
-export const PortalContext = createContext(null)
+export const PortalContext = createContext(null);

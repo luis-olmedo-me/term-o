@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from 'preact'
 import { Error, Info, Tick } from 'src/modules/icons'
 import { parameterTypes } from '../../constants/commands.constants'
 import { ActionGroups } from './components/ActionGroups/ActionGroups.component'

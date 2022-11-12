@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from 'preact'
 import { Home, Palette, Tag } from 'src/modules/icons'
 
 import { CommandInspect } from './CommandInspect.component'

@@ -1,5 +1,6 @@
 import config from 'libs/configuration'
-import * as React from 'react'
+import * as React from 'preact'
+import { useState } from 'preact/hooks'
 import styled from 'styled-components'
 import { EditableText } from './components/EditableText/EditableText.component'
 import { arrayLabels, objectLabels } from './Tree.constants'
@@ -14,7 +15,7 @@ export const Tree = ({
   isValueEditionEnabled,
   handleChange
 }) => {
-  const [isCollapsed, setIsCollapsed] = React.useState(false)
+  const [isCollapsed, setIsCollapsed] = useState(false)
 
   const isContentObject = typeof content === 'object' && content !== null
   const isContentString = typeof content === 'string'

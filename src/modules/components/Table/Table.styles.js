@@ -2,7 +2,7 @@ import config from 'libs/configuration'
 import styled from 'styled-components'
 import { Actions } from '../Actions'
 
-const radius = config.getTheme('border.200')
+const radius = config.getTheme('radius.200')
 
 export const TableWrapper = styled.div`
   width: 100%;

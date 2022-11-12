@@ -1,4 +1,4 @@
-import { createRoot } from 'react-dom/client'
+import * as React from 'preact'
 
 console.log('Hello world from popup!')
 
@@ -8,11 +8,4 @@ const ExtensionApp = () => {
   return <p>Hi</p>
 }
 
-const root = createRoot(appRoot)
-
-root.render(
-  <React.StrictMode>
-    <ExtensionApp />
-  </React.StrictMode>,
-  document.getElementById('root')
-)
+React.render(<ExtensionApp />, document.getElementById('root'))

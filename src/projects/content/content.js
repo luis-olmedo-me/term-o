@@ -1,32 +1,25 @@
-import * as React from 'react'
-import { createRoot } from 'react-dom/client'
+import * as React from 'preact'
 
-import { Console } from './modules/Console/Console.component'
-import { FontFamilies } from './fonts/Fonts.styles'
-import { appRoot, shadowRoot } from './content.constants'
-import { PortalProvider } from 'modules/components/Portal/Portal.provider'
 import { OverlayProvider } from 'modules/components/Overlay/Overlay.provider'
-import { BodyReset } from './content.styles'
+import { PortalProvider } from 'modules/components/Portal/Portal.provider'
+import { StyleSheetManager, ThemeProvider } from 'styled-components'
+import { appContainer, shadow } from './content.constants'
+import { FontFamilies } from './fonts/Fonts.styles'
+import { Console } from './modules/Console/Console.component'
 
-const termoBody = document.createElement('body')
-termoBody.setAttribute('id', 'term-o-body')
-
-document.documentElement.append(termoBody)
-termoBody.append(appRoot)
-
-const root = createRoot(appRoot)
-
-root.render(
+React.render(
   <>
     <FontFamilies />
-    <BodyReset />
 
-    <shadowRoot.div>
-      <PortalProvider>
-        <OverlayProvider>
-          <Console />
-        </OverlayProvider>
-      </PortalProvider>
-    </shadowRoot.div>
-  </>
+    <StyleSheetManager target={shadow}>
+      <ThemeProvider theme={{}}>
+        <PortalProvider>
+          <OverlayProvider>
+            <Console />
+          </OverlayProvider>
+        </PortalProvider>
+      </ThemeProvider>
+    </StyleSheetManager>
+  </>,
+  shadow
 )

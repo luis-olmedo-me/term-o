@@ -1,4 +1,5 @@
-import * as React from 'react'
+import * as React from 'preact'
+import { useState } from 'preact/hooks'
 import { Logo } from 'src/modules/icons'
 import {
   Favicon,
@@ -8,7 +9,7 @@ import {
 } from './ImageIcon.styles'
 
 export const ImageIcon = ({ url, label }) => {
-  const [hasError, setHasError] = React.useState(false)
+  const [hasError, setHasError] = useState(false)
 
   return (
     <IconWrapper>

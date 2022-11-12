@@ -1,6 +1,7 @@
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { Table } from 'modules/components/Table/Table.component'
-import * as React from 'react'
+import * as React from 'preact'
+import { useCallback, useEffect, useState } from 'preact/hooks'
 import {
   closeTabs,
   fetchHistorial,
@@ -25,7 +26,7 @@ import {
 import { tabsMessages } from './CommandTabs.messages'
 
 export const CommandTabs = ({ props, terminal: { command, finish } }) => {
-  const [tabs, setTabs] = React.useState([])
+  const [tabs, setTabs] = useState([])
 
   const actionType = getActionType(props)
 
@@ -75,7 +76,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       isEnabled: props.now
     })
 
-  const handleShowTabList = React.useCallback(() => {
+  const handleShowTabList = useCallback(() => {
     const options = validateTabsFilters(props)
 
     fetchTabsOpen(options)
@@ -90,7 +91,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       .catch(() => setMessage(commanderMessages.unexpectedError))
   }, [finish, setMessage, props])
 
-  const handleRedirect = React.useCallback(() => {
+  const handleRedirect = useCallback(() => {
     if (!props.open) return setMessage(tabsMessages.missingURL)
 
     const target = props.useCurrent ? '_self' : '_blank'
@@ -101,7 +102,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     finish()
   }, [props, setMessage, finish])
 
-  const handleShowHistory = React.useCallback(() => {
+  const handleShowHistory = useCallback(() => {
     const options = validateHistoryFilters(props)
     const { startTime, endTime } = options
 
@@ -120,28 +121,28 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       .catch(() => setMessage(commanderMessages.unexpectedError))
   }, [setMessage, finish, props])
 
-  const handleCloseTabs = React.useCallback(() => {
+  const handleCloseTabs = useCallback(() => {
     closeTabs(props.close)
 
     setMessage(tabsMessages.closeSuccess)
     finish()
   }, [props, setMessage, finish])
 
-  const handleReloadTab = React.useCallback(() => {
+  const handleReloadTab = useCallback(() => {
     window.location.reload()
 
     setMessage(tabsMessages.reloadSuccess)
     finish()
   }, [setMessage, finish])
 
-  const handleGo = React.useCallback(() => {
+  const handleGo = useCallback(() => {
     window.history.go(props.go)
 
     setMessage(tabsMessages.goSuccess)
     finish()
   }, [props, setMessage, finish])
 
-  React.useEffect(
+  useEffect(
     function handleActionType() {
       switch (actionType) {
         case tabsActionTypes.SHOW_CURRENT_TABS:

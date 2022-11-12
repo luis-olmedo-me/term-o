@@ -12,5 +12,5 @@ export const MaterialTree = styled(Tree)`
   padding: 7px;
   background-color: ${config.getTheme('transparent.500')};
   box-sizing: border-box;
-  border-radius: ${config.getTheme('border.200')};
+  border-radius: ${config.getTheme('radius.200')};
 `

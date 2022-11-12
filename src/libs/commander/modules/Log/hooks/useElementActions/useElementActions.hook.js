@@ -1,4 +1,5 @@
-import * as React from 'react'
+import * as React from 'preact'
+import { useState } from 'preact/hooks'
 import { Copy, Eye, Flag, Palette, Skull, Tag } from 'src/modules/icons'
 import { createXPathFromElement } from './useElementActions.helpers'
 
@@ -7,7 +8,7 @@ export const useElementActions = ({
   onStyleEdit,
   onRootEdit
 }) => {
-  const [selectedElements, setSelectedElements] = React.useState([])
+  const [selectedElements, setSelectedElements] = useState([])
 
   const handleScrollIntoView = (element) => {
     element.scrollIntoView({

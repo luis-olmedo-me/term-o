@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from 'preact'
 import { DateTimePickerAction } from '../DateTimePickerAction/DateTimePickerAction.component'
 import { Action, Groups } from './ActionGroups.styles'
 

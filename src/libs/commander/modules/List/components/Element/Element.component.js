@@ -1,9 +1,9 @@
-import * as React from 'react'
-import { useMemo } from 'react'
-import { ElementWrapper } from './Element.styles'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
+import * as React from 'preact'
+import { useMemo } from 'preact/hooks'
 import { isElementHidden } from '../../../../components/CommandDom/CommandDom.helpers'
 import { ElementLabel } from '../../../NodeTree/components/ElementLabel/ElementLabel.component'
+import { ElementWrapper } from './Element.styles'
 
 const ElementWithoutContext = ({
   element = {},

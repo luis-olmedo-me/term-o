@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from 'preact'
 import { DatePicker, Label, Wrapper } from './DateTimePickerAction.styles'
 
 export const DateTimePickerAction = ({

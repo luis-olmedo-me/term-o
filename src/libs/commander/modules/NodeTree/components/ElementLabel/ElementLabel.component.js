@@ -1,14 +1,14 @@
-import * as React from 'react'
+import * as React from 'preact'
 import { Actions } from 'src/modules/components/Actions'
 import { getAttributes } from '../../../../components/CommandDom/CommandDom.helpers'
 import {
   AttributeName,
   AttributeValue,
+  ChildWrapper,
+  DefaultWrapper,
   Equal,
   Tag,
-  TagName,
-  DefaultWrapper,
-  ChildWrapper
+  TagName
 } from './ElementLabel.styles'
 
 export const ElementLabel = ({

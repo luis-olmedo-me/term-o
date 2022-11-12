@@ -1,4 +1,6 @@
-import * as React from 'react'
+import config from 'libs/configuration'
+import * as React from 'preact'
+import { useEffect, useRef, useState } from 'preact/hooks'
 import { debounce } from 'src/helpers/utils.helpers.js'
 import { Checkbox } from '../Checkbox/Checkbox.component'
 import {
@@ -10,23 +12,14 @@ import {
   TableWrapper
 } from './Table.styles'
 
-export const Table = ({
-  rows,
-  options,
-  onSelectionChange,
-  onSelectionAll,
-  selectedRows
-}) => {
-  const wrapperRef = React.useRef(null)
-  const [wrapperWidth, setWrapperWidth] = React.useState(0)
+export const Table = ({ rows, options, onSelectionChange, onSelectionAll, selectedRows }) => {
+  const wrapperRef = useRef(null)
+  const [wrapperWidth, setWrapperWidth] = useState(0)
 
-  React.useEffect(() => {
+  useEffect(() => {
     const wrapper = wrapperRef.current
 
-    const updateWidth = debounce(
-      () => setWrapperWidth(wrapper.clientWidth),
-      250
-    )
+    const updateWidth = debounce(() => setWrapperWidth(wrapper.clientWidth), 250)
 
     const obsever = new ResizeObserver(updateWidth)
 
@@ -44,7 +37,7 @@ export const Table = ({
           displayName: (
             <Checkbox
               onChange={onSelectionAll}
-              checked={rows.every((row) => selectedRows.includes(row))}
+              checked={rows.every(row => selectedRows.includes(row))}
             />
           ),
           width: '33px',
@@ -55,7 +48,7 @@ export const Table = ({
       ]
     : options.columns
   const parsedRows = hasSelectionControls
-    ? rows.map((row) => {
+    ? rows.map(row => {
         return [
           {
             id: 'selection',
@@ -74,18 +67,16 @@ export const Table = ({
       })
     : rows
 
-  const minTableWidths = parsedHeaders.map((column) => column.minTableWidth)
-  const widths = parsedHeaders.map((column) => column.width)
-  const centerConditions = parsedHeaders.map((column) => column.center)
+  const minTableWidths = parsedHeaders.map(column => column.minTableWidth)
+  const widths = parsedHeaders.map(column => column.width)
+  const centerConditions = parsedHeaders.map(column => column.center)
 
   return (
     <TableWrapper ref={wrapperRef}>
-      <TableRow className='header'>
+      <TableRow className="header">
         {parsedHeaders.map(({ id, width, displayName, minTableWidth }) => {
           const showColumn =
-            wrapperWidth !== null && minTableWidth
-              ? wrapperWidth > minTableWidth
-              : true
+            wrapperWidth !== null && minTableWidth ? wrapperWidth > minTableWidth : true
 
           return (
             showColumn && (
@@ -125,7 +116,7 @@ export const Table = ({
                   {column.value}
 
                   {column.actions && (
-                    <TableActionsWrapper className='actions'>
+                    <TableActionsWrapper className="actions">
                       <TableActions actions={column.actions} />
                     </TableActionsWrapper>
                   )}

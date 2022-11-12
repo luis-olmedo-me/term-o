@@ -1,14 +1,14 @@
-import * as React from 'react'
-import { useState } from 'react'
-import { getAttributes } from '../../../../components/CommandDom/CommandDom.helpers'
-import { Table } from 'modules/components/Table/Table.component'
-import { Input } from '../AttributeInput'
-import { parameterTypes } from '../../../../constants/commands.constants'
-import { turnAttributesIntoTableItems } from './AttributeEditionLog.helpers'
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
-import { Log } from '../../Log.component'
+import { Table } from 'modules/components/Table/Table.component'
+import * as React from 'preact'
+import { useState } from 'preact/hooks'
+import { getAttributes } from '../../../../components/CommandDom/CommandDom.helpers'
+import { parameterTypes } from '../../../../constants/commands.constants'
 import { usePaginationActions } from '../../hooks/usePaginationActions'
+import { Log } from '../../Log.component'
+import { Input } from '../AttributeInput'
 import { attributeTableOptions } from './AttributeEditionLog.constants'
+import { turnAttributesIntoTableItems } from './AttributeEditionLog.helpers'
 
 export const AttributeEditionLog = ({
   element,

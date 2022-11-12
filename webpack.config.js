@@ -1,5 +1,6 @@
 const CopyPlugin = require('copy-webpack-plugin')
 const path = require('path')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = {
   entry: {
@@ -35,7 +36,8 @@ module.exports = {
     new CopyPlugin([
       { from: './src/manifest.json', to: './manifest.json' },
       { from: './src/images', to: './images' }
-    ])
+    ]),
+    new CleanWebpackPlugin()
   ],
   // optimization: { minimize: true },
   performance: { maxEntrypointSize: 512000, maxAssetSize: 512000 },

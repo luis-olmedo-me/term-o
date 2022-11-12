@@ -1,7 +1,7 @@
-import config from 'libs/configuration'
+import { theme as t } from 'src/helpers/theme.helpers'
 import styled from 'styled-components'
 
-const radius = config.getTheme('radius.100')
+const radius = t('radius.100')
 
 export const ResizerWrapper = styled.button`
   border: none;
@@ -20,7 +20,7 @@ export const ResizerWrapper = styled.button`
 
     &&:active,
     &&:hover {
-      background-color: ${config.getTheme('neutral.500')};
+      background-color: ${t('neutral.500')};
       width: 8px;
     }
 
@@ -49,7 +49,7 @@ export const ResizerWrapper = styled.button`
 
     &&:active,
     &&:hover {
-      background-color: ${config.getTheme('neutral.500')};
+      background-color: ${t('neutral.500')};
       height: 12px;
     }
 

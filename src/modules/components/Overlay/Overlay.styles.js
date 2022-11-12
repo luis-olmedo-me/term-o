@@ -1,4 +1,4 @@
-import config from 'libs/configuration'
+import { theme as t } from 'src/helpers/theme.helpers'
 import styled from 'styled-components'
 
 export const OverlayWrapper = styled.div`
@@ -10,7 +10,7 @@ export const OverlayWrapper = styled.div`
   transition: background-color 0.2s ease-in-out;
 
   background-color: ${({ isHighlighting }) =>
-    isHighlighting ? config.getTheme('transparent.700') : config.getTheme('transparent.000')};
+    isHighlighting ? t('transparent.700') : t('transparent.000')};
 `
 
 export const HighlightedElement = styled.div`
@@ -24,7 +24,7 @@ export const HighlightedElement = styled.div`
 
   &&.horizontal-limit,
   &&.vertical-limit {
-    border: dashed ${config.getTheme('blue.800')};
+    border: dashed ${t('blue.800')};
   }
   &&.horizontal-limit {
     border-width: 1px 0;
@@ -34,6 +34,6 @@ export const HighlightedElement = styled.div`
   }
 
   &&.box {
-    background-color: ${config.getTheme('transparent.150')};
+    background-color: ${t('transparent.150')};
   }
 `

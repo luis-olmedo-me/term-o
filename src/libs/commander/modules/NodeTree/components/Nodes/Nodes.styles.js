@@ -1,30 +1,27 @@
-import config from 'libs/configuration'
+import { theme as t } from 'src/helpers/theme.helpers'
 import styled from 'styled-components'
 
-const radius = config.getTheme('radius.200')
+const radius = t('radius.200')
 
 export const TagWrapper = styled.span`
   --tag-background-color: ${({ isNodeObjetive }) =>
-    isNodeObjetive
-      ? config.getTheme('yellow.900')
-      : config.getTheme('neutral.1200')};
+    isNodeObjetive ? t('yellow.900') : t('neutral.1200')};
 
-  border-radius: ${config.getTheme('radius.200')};
+  border-radius: ${t('radius.200')};
   cursor: pointer;
   position: relative;
   transition: background-color 0.2s ease-in-out;
   display: inline-block;
   height: 2em;
   line-height: 2em;
-  padding: ${(props) => (props.textNode ? '0 7px' : '0')};
+  padding: ${props => (props.textNode ? '0 7px' : '0')};
 
   background-color: var(--tag-background-color);
-  color: ${({ isHidden }) =>
-    isHidden ? config.getTheme('neutral.800') : config.getTheme('green.700')};
+  color: ${({ isHidden }) => (isHidden ? t('neutral.800') : t('green.700'))};
 `
 
 export const GapNodesWrapper = styled.div`
-  margin: ${(props) => (props.isRoot ? '0' : '10px 0')};
+  margin: ${props => (props.isRoot ? '0' : '10px 0')};
   scroll-snap-align: start;
   scroll-snap-stop: always;
 `
@@ -36,7 +33,7 @@ export const Prefix = styled.div`
   left: 0;
   display: inline-block;
   vertical-align: top;
-  background-color: ${config.getTheme('pink.700')};
+  background-color: ${t('pink.700')};
 
   &:before {
     content: '';
@@ -55,7 +52,7 @@ export const Postfix = styled.div`
   height: 100%;
   display: inline-block;
   vertical-align: top;
-  background-color: ${config.getTheme('pink.700')};
+  background-color: ${t('pink.700')};
   position: relative;
 
   &:before {

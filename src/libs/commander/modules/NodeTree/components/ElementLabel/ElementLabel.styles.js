@@ -1,34 +1,30 @@
-import config from 'libs/configuration'
+import { theme as t } from 'src/helpers/theme.helpers'
 import styled, { keyframes } from 'styled-components'
 
 export const DefaultWrapper = styled.span`
   position: relative;
-  padding-right: ${(props) => props.paddingRight || 7}px;
+  padding-right: ${props => props.paddingRight || 7}px;
 `
 
 export const Tag = styled.span`
-  color: ${config.getTheme('neutral.1000')};
-  margin: ${(props) => (props.hasPostFix ? '0 7px 0 0' : '0')};
+  color: ${t('neutral.1000')};
+  margin: ${props => (props.hasPostFix ? '0 7px 0 0' : '0')};
 `
 
 export const TagName = styled.span`
-  color: ${({ isHidden }) =>
-    isHidden ? config.getTheme('neutral.800') : config.getTheme('blue.700')};
+  color: ${({ isHidden }) => (isHidden ? t('neutral.800') : t('blue.700'))};
 `
 
 export const AttributeName = styled.span`
-  color: ${({ isHidden }) =>
-    isHidden ? config.getTheme('neutral.1000') : config.getTheme('yellow.800')};
+  color: ${({ isHidden }) => (isHidden ? t('neutral.1000') : t('yellow.800'))};
 `
 
 export const Equal = styled.span`
-  color: ${({ isHidden }) =>
-    isHidden ? config.getTheme('neutral.900') : config.getTheme('yellow.700')};
+  color: ${({ isHidden }) => (isHidden ? t('neutral.900') : t('yellow.700'))};
 `
 
 export const AttributeValue = styled.span`
-  color: ${({ isHidden }) =>
-    isHidden ? config.getTheme('neutral.900') : config.getTheme('yellow.600')};
+  color: ${({ isHidden }) => (isHidden ? t('neutral.900') : t('yellow.600'))};
 `
 
 const birth = keyframes`
@@ -41,7 +37,7 @@ const birth = keyframes`
 `
 export const ChildWrapper = styled.div`
   padding-left: 2ch;
-  border-left: 5px solid ${config.getTheme('transparent.300')};
+  border-left: 5px solid ${t('transparent.300')};
   animation: ${birth} 0.2s ease-in-out;
   transform-origin: top;
 `

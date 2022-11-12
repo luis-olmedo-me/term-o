@@ -1,13 +1,13 @@
-import config from 'libs/configuration'
+import { theme as t } from 'src/helpers/theme.helpers'
 import styled from 'styled-components'
 
-const radius = config.getTheme('radius.100')
+const radius = t('radius.100')
 
 export const Input = styled.input`
   padding: 10px;
   width: calc(100% - 20px);
   box-sizing: border-box;
-  color: ${config.getTheme('neutral.1200')};
+  color: ${t('neutral.1200')};
   border: none;
   vertical-align: middle;
   background-color: transparent;
@@ -21,8 +21,8 @@ export const Input = styled.input`
   }
 
   &::selection {
-    background-color: ${config.getTheme('neutral.300')};
-    color: ${config.getTheme('yellow.800')};
+    background-color: ${t('neutral.300')};
+    color: ${t('yellow.800')};
   }
 `
 
@@ -34,7 +34,7 @@ export const InputWrapper = styled.div`
   bottom: 0;
   z-index: 1;
   border-width: 0 1px 1px;
-  background-color: ${config.getTheme('neutral.100')};
+  background-color: ${t('neutral.100')};
   border-radius: 0 0 ${radius} ${radius};
 `
 
@@ -43,5 +43,5 @@ export const Hash = styled.span`
   display: inline-block;
   vertical-align: middle;
   text-align: end;
-  color: ${config.getTheme('neutral.1200')};
+  color: ${t('neutral.1200')};
 `

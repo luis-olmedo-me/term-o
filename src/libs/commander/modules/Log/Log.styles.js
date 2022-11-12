@@ -1,7 +1,7 @@
-import config from 'libs/configuration'
+import { theme as t } from 'src/helpers/theme.helpers'
 import styled from 'styled-components'
 
-const radius = config.getTheme('radius.200')
+const radius = t('radius.200')
 
 export const LogWrapper = styled.div`
   transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out;
@@ -16,43 +16,43 @@ export const LogWrapper = styled.div`
   }
 
   &&.command {
-    background-color: ${config.getTheme('neutral.300')};
-    color: ${config.getTheme('neutral.1200')};
+    background-color: ${t('neutral.300')};
+    color: ${t('neutral.1200')};
   }
 
   &&.element {
-    background-color: ${config.getTheme('pink.700')};
-    color: ${config.getTheme('neutral.1200')};
+    background-color: ${t('pink.700')};
+    color: ${t('neutral.1200')};
   }
 
   &&.styles {
-    background-color: ${config.getTheme('blue.700')};
-    color: ${config.getTheme('neutral.1200')};
+    background-color: ${t('blue.700')};
+    color: ${t('neutral.1200')};
   }
 
   &&.error {
-    background-color: ${config.getTheme('red.700')};
-    color: ${config.getTheme('neutral.1200')};
+    background-color: ${t('red.700')};
+    color: ${t('neutral.1200')};
   }
 
   &&.info {
-    background-color: ${config.getTheme('blue.800')};
-    color: ${config.getTheme('neutral.1200')};
+    background-color: ${t('blue.800')};
+    color: ${t('neutral.1200')};
   }
 
   &&.table {
-    background-color: ${config.getTheme('purple.700')};
-    color: ${config.getTheme('neutral.1200')};
+    background-color: ${t('purple.700')};
+    color: ${t('neutral.1200')};
   }
 
   &&.success {
-    background-color: ${config.getTheme('green.700')};
-    color: ${config.getTheme('neutral.1200')};
+    background-color: ${t('green.700')};
+    color: ${t('neutral.1200')};
   }
 
   &&.help {
-    background-color: ${config.getTheme('green.700')};
-    color: ${config.getTheme('neutral.1200')};
+    background-color: ${t('green.700')};
+    color: ${t('neutral.1200')};
   }
 `
 
@@ -74,7 +74,7 @@ export const LogContent = styled.div`
 export const Shadow = styled.div`
   &.shadow {
     padding: 10px;
-    background-color: ${config.getTheme('transparent.200')};
+    background-color: ${t('transparent.200')};
   }
 `
 

@@ -1,4 +1,4 @@
-import config from 'libs/configuration'
+import { theme as t } from 'src/helpers/theme.helpers'
 import styled from 'styled-components'
 
 export const Wrapper = styled.span`
@@ -10,7 +10,7 @@ export const Wrapper = styled.span`
   transition: background-color 0.2s ease-in-out;
 
   &:hover {
-    background-color: ${config.getTheme('transparent.100')};
+    background-color: ${t('transparent.100')};
   }
 
   &:focus,
@@ -21,17 +21,17 @@ export const Wrapper = styled.span`
 
   &&.disabled,
   &&.disabled:hover {
-    background-color: ${config.getTheme('transparent.400')};
+    background-color: ${t('transparent.400')};
   }
 
   &&.invalid {
-    background-color: ${config.getTheme('red.600')};
+    background-color: ${t('red.600')};
     text-decoration: line-through;
   }
 
   &::selection {
-    background-color: ${config.getTheme('neutral.300')};
-    color: ${config.getTheme('yellow.800')};
+    background-color: ${t('neutral.300')};
+    color: ${t('yellow.800')};
   }
 `
 

@@ -5,10 +5,10 @@ class Configuration {
     this.theme = defaultTheme
   }
 
-  setTheme(theme) {
+  sett(theme) {
     this.theme = { ...defaultTheme, ...theme }
   }
-  getTheme(pathsString) {
+  gett(pathsString) {
     const paths = pathsString.split('.')
 
     return paths.reduce((theme, path) => theme[path], this.theme)

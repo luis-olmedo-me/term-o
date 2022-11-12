@@ -1,4 +1,4 @@
-import config from 'libs/configuration'
+import { theme as t } from 'src/helpers/theme.helpers'
 import styled from 'styled-components'
 import { Tree } from '../../modules/Tree'
 
@@ -10,7 +10,7 @@ export const MaterialTree = styled(Tree)`
   box-sizing: border-box;
   line-height: calc(1em + 10px);
   padding: 7px;
-  background-color: ${config.getTheme('transparent.500')};
+  background-color: ${t('transparent.500')};
   box-sizing: border-box;
-  border-radius: ${config.getTheme('radius.200')};
+  border-radius: ${t('radius.200')};
 `

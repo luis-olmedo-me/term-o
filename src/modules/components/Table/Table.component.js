@@ -1,6 +1,6 @@
-import config from 'libs/configuration'
 import * as React from 'preact'
 import { useEffect, useRef, useState } from 'preact/hooks'
+import { theme as t } from 'src/helpers/theme.helpers'
 import { debounce } from 'src/helpers/utils.helpers.js'
 import { Checkbox } from '../Checkbox/Checkbox.component'
 import {

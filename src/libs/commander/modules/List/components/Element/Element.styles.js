@@ -1,4 +1,4 @@
-import config from 'libs/configuration'
+import { theme as t } from 'src/helpers/theme.helpers'
 import styled, { keyframes } from 'styled-components'
 
 const Birth = keyframes`
@@ -16,8 +16,8 @@ const Birth = keyframes`
 export const ElementWrapper = styled.span`
   position: relative;
   padding: 5px 7px;
-  background-color: ${config.getTheme('neutral.1200')};
-  border-radius: ${config.getTheme('radius.200')};
+  background-color: ${t('neutral.1200')};
+  border-radius: ${t('radius.200')};
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
@@ -26,20 +26,20 @@ export const ElementWrapper = styled.span`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  animation-name: ${(props) => (props.shouldAnimate ? Birth : '')};
+  animation-name: ${props => (props.shouldAnimate ? Birth : '')};
   animation-duration: 0.5s;
   transform-origin: right;
 
   &&.pinned {
-    border-left: 10px solid ${config.getTheme('yellow.800')};
-    background-color: ${config.getTheme('yellow.900')};
+    border-left: 10px solid ${t('yellow.800')};
+    background-color: ${t('yellow.900')};
 
     && button {
       background-color: transparent;
-      border-left: 1px solid ${config.getTheme('transparent.200')};
+      border-left: 1px solid ${t('transparent.200')};
 
       &:hover {
-        background-color: ${config.getTheme('transparent.250')};
+        background-color: ${t('transparent.250')};
       }
     }
   }

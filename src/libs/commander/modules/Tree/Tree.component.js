@@ -1,6 +1,6 @@
-import config from 'libs/configuration'
 import * as React from 'preact'
 import { useState } from 'preact/hooks'
+import { theme as t } from 'src/helpers/theme.helpers'
 import styled from 'styled-components'
 import { EditableText } from './components/EditableText/EditableText.component'
 import { arrayLabels, objectLabels } from './Tree.constants'
@@ -31,7 +31,7 @@ export const Tree = ({
 
     const collapsingLabel = isCollapsed ? collapsedLabel : labels.OPEN
 
-    const handleCollapse = (event) => {
+    const handleCollapse = event => {
       event.stopPropagation()
 
       setIsCollapsed(!isCollapsed)
@@ -54,9 +54,7 @@ export const Tree = ({
 
           if (isSelectedIndex) delete finalContent[contentKey]
 
-          return isSelectedIndex
-            ? { ...finalContent, [key]: newValue }
-            : finalContent
+          return isSelectedIndex ? { ...finalContent, [key]: newValue } : finalContent
         },
         { ...content }
       )
@@ -64,9 +62,7 @@ export const Tree = ({
       handleChange(formatedContent)
     }
 
-    const handleChangeByType = isContentOnlyObject
-      ? handleChangeForObjects
-      : handleChangeForArrays
+    const handleChangeByType = isContentOnlyObject ? handleChangeForObjects : handleChangeForArrays
 
     return (
       <div className={className}>
@@ -75,7 +71,7 @@ export const Tree = ({
             <HighlightedEditableText
               title={title}
               isEditionEnabled={isKeyEditionEnabled}
-              onChange={(newTitle) => handleChange(content, newTitle)}
+              onChange={newTitle => handleChange(content, newTitle)}
             />
             <TwoDots>:</TwoDots>
             {` ${collapsingLabel}`}
@@ -127,13 +123,13 @@ export const Tree = ({
             <HighlightedEditableText
               title={title}
               isEditionEnabled={isKeyEditionEnabled}
-              onChange={(newTitle) => handleChange(content, newTitle)}
+              onChange={newTitle => handleChange(content, newTitle)}
             />
             <TwoDots>:</TwoDots>
             <EditableText
               title={content}
               isEditionEnabled={isValueEditionEnabled}
-              onChange={(newContent) => handleChange(newContent, title)}
+              onChange={newContent => handleChange(newContent, title)}
               showTitleWithQuotes={isContentString}
             />
           </>
@@ -153,8 +149,8 @@ export const Tree = ({
 
 const IdentedTree = styled(Tree)`
   padding: 3px 0 3px 20px;
-  border-left: 5px solid ${config.getTheme('transparent.300')};
+  border-left: 5px solid ${t('transparent.300')};
 `
 const HighlightedEditableText = styled(EditableText)`
-  color: ${config.getTheme('cyan.800')};
+  color: ${t('cyan.800')};
 `

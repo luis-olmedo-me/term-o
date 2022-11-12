@@ -1,7 +1,7 @@
-import config from 'libs/configuration'
+import { theme as t } from 'src/helpers/theme.helpers'
 import styled from 'styled-components'
 
-const radius = config.getTheme('radius.100')
+const radius = t('radius.100')
 
 export const ConsoleWrapper = styled.div`
   position: fixed;
@@ -30,8 +30,8 @@ export const ConsoleTitle = styled.h1`
   font-weight: normal;
   font-size: 25px;
   box-sizing: border-box;
-  background-color: ${config.getTheme('neutral.100')};
-  color: ${config.getTheme('neutral.1200')};
+  background-color: ${t('neutral.100')};
+  color: ${t('neutral.1200')};
   cursor: pointer;
   user-select: none;
   position: absolute;
@@ -44,7 +44,7 @@ export const ConsoleTitle = styled.h1`
 
   &&:hover,
   &&:active {
-    background-color: ${config.getTheme('neutral.200')};
+    background-color: ${t('neutral.200')};
   }
 
   &&:active {
@@ -57,7 +57,7 @@ export const ConsoleLogs = styled.div`
   width: 100%;
   border: none;
   box-sizing: border-box;
-  background-color: ${config.getTheme('neutral.100')};
+  background-color: ${t('neutral.100')};
   display: block;
   overflow-y: scroll;
   border-width: 0 1px;

@@ -8,6 +8,7 @@ root.dataset.isOpen = 'false'
 root.dataset.isInitiated = 'false'
 
 const termoBody = document.createElement('body')
+termoBody.setAttribute('style', 'all: unset')
 termoBody.setAttribute('id', 'term-o-body')
 termoBody.append(root)
 

@@ -4,7 +4,10 @@
     [
       "babel-plugin-styled-components",
       {
-        "displayName": false
+        "displayName": true,
+        "minify": true,
+        "transpileTemplateLiterals": true,
+        "pure": true
       }
     ],
     "@babel/plugin-proposal-class-properties"

@@ -1,6 +1,19 @@
-const appRoot = document.createElement('div');
-appRoot.id = 'term-o-root';
-appRoot.dataset.isOpen = 'false';
-appRoot.dataset.isInitiated = 'false';
+const appContainer = document.createElement('div')
+const styleContainer = document.createElement('div')
+styleContainer.appendChild(appContainer)
 
-export { appRoot };
+const root = document.createElement('div')
+root.id = 'term-o-root'
+root.dataset.isOpen = 'false'
+root.dataset.isInitiated = 'false'
+
+const termoBody = document.createElement('body')
+termoBody.setAttribute('id', 'term-o-body')
+termoBody.append(root)
+
+const shadow = root
+shadow.appendChild(styleContainer)
+
+document.documentElement.append(termoBody)
+
+export { appContainer, styleContainer }

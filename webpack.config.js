@@ -37,9 +37,7 @@ module.exports = {
       { from: './src/images', to: './images' }
     ])
   ],
-  optimization: { minimize: true },
-  mode: 'production',
-  stats: 'minimal',
+  // optimization: { minimize: true },
   performance: { maxEntrypointSize: 512000, maxAssetSize: 512000 },
   watchOptions: {
     aggregateTimeout: 200,

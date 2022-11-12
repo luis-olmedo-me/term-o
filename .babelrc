@@ -4,7 +4,7 @@
     [
       "babel-plugin-styled-components",
       {
-        "displayName": true,
+        "displayName": false,
         "minify": true,
         "transpileTemplateLiterals": true,
         "pure": true

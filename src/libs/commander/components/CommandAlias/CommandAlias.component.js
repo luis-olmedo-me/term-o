@@ -3,9 +3,9 @@ import { Table } from 'modules/components/Table/Table.component'
 import * as React from 'preact'
 import { useCallback, useEffect, useState } from 'preact/hooks'
 import { addAliases, deleteAliases, fetchConfiguration } from 'src/helpers/event.helpers.js'
-import { actionTypes, parameterTypes } from '../../constants/commands.constants'
+import { parameterTypes } from '../../constants/commands.constants'
 import { Log, useMessageLog, usePaginationActions, useTableSelection } from '../../modules/Log'
-import { aliasTableOptions } from './CommandAlias.constants'
+import { aliasActionTypes, aliasTableOptions } from './CommandAlias.constants'
 import {
   getActionType,
   turnAliasesToTableItems,
@@ -77,16 +77,16 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
 
   const doAction = useCallback(async () => {
     switch (actionType) {
-      case actionTypes.SHOW_LIST:
+      case aliasActionTypes.SHOW_LIST:
         return await handleShowList()
 
-      case actionTypes.DELETE_ALIAS:
+      case aliasActionTypes.DELETE_ALIAS:
         return await handleDeleteAliases()
 
-      case actionTypes.ADD_ALIAS:
+      case aliasActionTypes.ADD_ALIAS:
         return await handleAddAliases()
 
-      case actionTypes.NONE:
+      case aliasActionTypes.NONE:
         throw new Error('unexpectedError')
     }
   }, [actionType, handleShowList, handleDeleteAliases, handleAddAliases])

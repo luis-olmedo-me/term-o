@@ -1,19 +1,11 @@
-import { configManager } from 'libs/config-manager'
 import { processWaitList } from 'libs/process-wait-list/processWaitList.service'
-
 import {
   eventTypes,
   extensionKeyEventNames,
   extensionKeyEvents
 } from 'src/constants/events.constants.js'
 import { invalidURLsStarts } from './background.constants'
-import {
-  mergeAliases,
-  resizeFull,
-  resizeLeft,
-  resizeRight,
-  toggleTerminal
-} from './background.helpers'
+import { resizeFull, resizeLeft, resizeRight, toggleTerminal } from './background.helpers'
 import {
   createCloseTabsProcess,
   createHistoryProcess,
@@ -61,56 +53,6 @@ chrome.commands.onCommand.addListener(function(command) {
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   switch (request.type) {
-    case eventTypes.GET_CONFIGURATION: {
-      sendResponse({ status: 'ok', data: configManager.config })
-      break
-    }
-
-    case eventTypes.RESET_CONFIGURATION:
-      configManager.reset()
-      sendResponse({ status: 'ok' })
-      break
-
-    case eventTypes.ADD_PAGES_EVENT: {
-      const newData = [...configManager.pageEvents, ...request.data]
-
-      configManager.setConfig({ pageEvents: newData })
-      sendResponse({ status: 'ok' })
-      break
-    }
-
-    case eventTypes.DELETE_PAGES_EVENT: {
-      const newData = configManager.pageEvents.filter(({ id }) => !request.data.ids.includes(id))
-
-      configManager.setConfig({ pageEvents: newData })
-      sendResponse({ status: 'ok' })
-      break
-    }
-
-    case eventTypes.ADD_ALIAS: {
-      const newData = mergeAliases(configManager.aliases, request.data)
-
-      configManager.setConfig({ aliases: newData })
-      sendResponse({ status: 'ok' })
-      break
-    }
-
-    case eventTypes.DELETE_ALIAS: {
-      const aliasIdsToDelete = request.data?.aliasIdsToDelete || []
-
-      const newAliases = configManager.aliases.filter(({ id }) => !aliasIdsToDelete.includes(id))
-
-      configManager.setConfig({ aliases: newAliases })
-      sendResponse({ status: 'ok' })
-      break
-    }
-
-    case eventTypes.UPDATE_CONFIG_CONSOLE_POSITION: {
-      configManager.setConfig({ consolePosition: request.data })
-      sendResponse({ status: 'ok' })
-      break
-    }
-
     case eventTypes.CLOSE_OPEN_TABS: {
       const { id, data } = request.data
 

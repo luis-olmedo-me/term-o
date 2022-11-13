@@ -1,7 +1,7 @@
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import * as React from 'preact'
+import { isElementHidden } from 'src/helpers/dom.helpers'
 import { Chevron } from 'src/modules/icons'
-import { isElementHidden } from '../../../../components/CommandDom/CommandDom.helpers'
 import { ElementLabel } from '../ElementLabel/ElementLabel.component'
 import { GapNodesWrapper, Postfix, Prefix, TagWrapper } from './Nodes.styles'
 
@@ -18,21 +18,17 @@ const NodesWithoutContext = ({
   setHighlitedElement,
   setEditingElement
 }) => {
-  const childNodes = [...node.childNodes].filter(
-    (node) => !supportedNodeTypes.includes(node)
-  )
+  const childNodes = [...node.childNodes].filter(node => !supportedNodeTypes.includes(node))
 
-  const isNodeObjetive = objetives.some((objetive) => node === objetive)
-  const isNodeOpen = openNodes.some((openNode) => node === openNode)
+  const isNodeObjetive = objetives.some(objetive => node === objetive)
+  const isNodeOpen = openNodes.some(openNode => node === openNode)
   const isNodeRoot = root === node
 
   const hasNodes = childNodes.length > 0
 
   const handleToggleElement = () => {
-    setOpenNodes((openNodes) =>
-      isNodeOpen
-        ? openNodes.filter((openNode) => openNode !== node)
-        : [...openNodes, node]
+    setOpenNodes(openNodes =>
+      isNodeOpen ? openNodes.filter(openNode => openNode !== node) : [...openNodes, node]
     )
   }
 
@@ -46,7 +42,7 @@ const NodesWithoutContext = ({
     }
   ]
 
-  const handleElementClick = (event) => onElementClick({ element: node, event })
+  const handleElementClick = event => onElementClick({ element: node, event })
 
   switch (node.nodeType) {
     case Node.ELEMENT_NODE: {

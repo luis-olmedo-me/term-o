@@ -1,10 +1,10 @@
-import { actionTypes } from '../../constants/commands.constants'
+import { isElementHidden } from 'src/helpers/dom.helpers'
 import { removeDuplicatedFromArray } from 'src/helpers/utils.helpers.js'
+import { actionTypes } from '../../constants/commands.constants'
 
-const getElementsFromDOM = (patterns) => {
+const getElementsFromDOM = patterns => {
   try {
-    const elementsFromDOM =
-      (patterns?.length && window.document.querySelectorAll(patterns)) || []
+    const elementsFromDOM = (patterns?.length && window.document.querySelectorAll(patterns)) || []
 
     return [...elementsFromDOM]
   } catch {
@@ -12,20 +12,13 @@ const getElementsFromDOM = (patterns) => {
   }
 }
 
-export const getElements = ({
-  patterns,
-  xpaths,
-  filterBySome,
-  filterByEvery
-}) => {
+export const getElements = ({ patterns, xpaths, filterBySome, filterByEvery }) => {
   return new Promise((resolve, reject) => {
     const elements = xpaths?.length
       ? xpaths.map(lookupElementByXPath)
       : getElementsFromDOM(patterns)
 
-    const elementsFoundByEvery = filterByEvery
-      ? elements.filter(filterByEvery)
-      : elements
+    const elementsFoundByEvery = filterByEvery ? elements.filter(filterByEvery) : elements
 
     const elementsFoundBySome = filterBySome
       ? elementsFoundByEvery.filter(filterBySome)
@@ -41,17 +34,6 @@ export const getActionType = ({ get }) => {
   else return actionTypes.NONE
 }
 
-export const isElementHidden = (element, bounds) => {
-  const { height, width } = bounds || element.getBoundingClientRect()
-
-  return (
-    element.style.visibility === 'hidden' ||
-    element.style.display === 'none' ||
-    height === 0 ||
-    width === 0
-  )
-}
-
 export const generateFilterBySome = ({
   hasId,
   hasClass,
@@ -61,25 +43,25 @@ export const generateFilterBySome = ({
   byStyle,
   byAttribute
 }) => {
-  return (element) => {
+  return element => {
     let validations = []
 
-    if (hasId) validations.push((element) => Boolean(element.id))
-    if (hasClass) validations.push((element) => Boolean(element.className))
+    if (hasId) validations.push(element => Boolean(element.id))
+    if (hasClass) validations.push(element => Boolean(element.className))
     if (byId.length) {
-      validations.push((element) => byId.some((id) => element.id.includes(id)))
+      validations.push(element => byId.some(id => element.id.includes(id)))
     }
     if (byClass.length) {
-      validations.push((element) =>
-        byClass.some((className) => element.className?.includes?.(className))
+      validations.push(element =>
+        byClass.some(className => element.className?.includes?.(className))
       )
     }
     if (byText.length) {
-      validations.push((element) =>
-        byText.some((rawText) => {
+      validations.push(element =>
+        byText.some(rawText => {
           const text = rawText.toLowerCase()
 
-          const hasTextMatch = Array.from(element.childNodes).some((child) => {
+          const hasTextMatch = Array.from(element.childNodes).some(child => {
             const isTextNode = child.nodeType === 3
             const isTextMatch = !!child?.data?.toLowerCase().includes(text)
 
@@ -93,8 +75,8 @@ export const generateFilterBySome = ({
       )
     }
     if (byStyle.length) {
-      validations.push((element) =>
-        byStyle.some((style) => {
+      validations.push(element =>
+        byStyle.some(style => {
           const [[styleName, styleValue]] = Object.entries(style)
 
           return element.style[styleName] === styleValue
@@ -102,8 +84,8 @@ export const generateFilterBySome = ({
       )
     }
     if (byAttribute.length) {
-      validations.push((element) =>
-        byAttribute.some((attribute) => {
+      validations.push(element =>
+        byAttribute.some(attribute => {
           const [[attributeName, attributeValue]] = Object.entries(attribute)
 
           return element.getAttribute(attributeName)?.includes(attributeValue)
@@ -111,21 +93,21 @@ export const generateFilterBySome = ({
       )
     }
 
-    return validations.some((validation) => validation(element))
+    return validations.some(validation => validation(element))
   }
 }
 
 export const generateFilterByEvery = ({ hidden }) => {
-  return (element) => {
+  return element => {
     let validations = []
 
-    if (!hidden) validations.push((element) => !isElementHidden(element))
+    if (!hidden) validations.push(element => !isElementHidden(element))
 
-    return validations.every((validation) => validation(element))
+    return validations.every(validation => validation(element))
   }
 }
 
-export const lookupElementByXPath = (xpath) => {
+export const lookupElementByXPath = xpath => {
   const evaluator = new XPathEvaluator()
   const result = evaluator.evaluate(
     xpath,
@@ -138,7 +120,7 @@ export const lookupElementByXPath = (xpath) => {
   return result.singleNodeValue
 }
 
-export const getAttributes = (element) => {
+export const getAttributes = element => {
   const attributeNames = element.getAttributeNames(element)
 
   return attributeNames.reduce((allAttributes, attributeName) => {
@@ -156,7 +138,5 @@ export const getParentsOfElements = (elements, times) => {
 
   const unrepeatedParents = removeDuplicatedFromArray(parents)
 
-  return times !== 1
-    ? getParentsOfElements(unrepeatedParents, times - 1)
-    : unrepeatedParents
+  return times !== 1 ? getParentsOfElements(unrepeatedParents, times - 1) : unrepeatedParents
 }

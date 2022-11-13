@@ -51,7 +51,7 @@ export const LogWrapper = styled.div`
   }
 
   &&.help {
-    background-color: ${t('green.700')};
+    background-color: ${t('yellow.400')};
     color: ${t('neutral.1200')};
   }
 `

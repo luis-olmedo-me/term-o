@@ -42,6 +42,7 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
 
   const handleShowList = useCallback(async () => {
     const { aliases = [] } = await fetchConfiguration()
+
     const aliasRows = turnAliasesToTableItems({ aliases })
     const hasAliases = aliases.length > 0
 
@@ -62,19 +63,18 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
     setMessage(aliasMessages.aliasAdditionSuccess)
   }, [aliasesToAdd, setMessage])
 
-  const handleDeleteAliases = useCallback(
-    async ({ aliases = [], aliasesIdsToDelete = deletedIds }) => {
-      const aliasIds = aliases.map(({ id }) => id)
-      const validIds = aliasesIdsToDelete.filter(id => aliasIds.includes(id))
-      const hasInvalidIds = aliasesIdsToDelete.length !== validIds.length
+  const handleDeleteAliases = useCallback(async () => {
+    const { aliases = [] } = await fetchConfiguration()
 
-      if (hasInvalidIds) throw new Error('noAliasIdsFound')
+    const aliasIds = aliases.map(({ id }) => id)
+    const validIds = deletedIds.filter(id => aliasIds.includes(id))
+    const hasInvalidIds = deletedIds.length !== validIds.length
 
-      await deleteAliases(validIds)
-      setMessage(aliasMessages.aliasDeletionSuccess)
-    },
-    [deletedIds]
-  )
+    if (hasInvalidIds) throw new Error('noAliasIdsFound')
+
+    await deleteAliases(validIds)
+    setMessage(aliasMessages.aliasDeletionSuccess)
+  }, [deletedIds])
 
   const doAction = useCallback(async () => {
     switch (actionType) {

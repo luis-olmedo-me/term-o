@@ -1,6 +1,30 @@
 import { eventTypes } from 'src/constants/events.constants.js'
 import { states } from '../libs/process-wait-list/processWaitList.constants'
 
+const mergeAliases = (aliasesA, aliasesB) => {
+  return aliasesB.reduce((aliases, aliasB) => {
+    const isRepeated = aliases.some(entity => entity.name === aliasB.name)
+
+    return isRepeated
+      ? aliases.map(entity => (entity.name === aliasB.name ? aliasB : entity))
+      : [...aliases, aliasB]
+  }, aliasesA)
+}
+
+const receiveConfig = ({ aliases, pageEvents, position }) => ({
+  consolePosition: position || {},
+  pageEvents: pageEvents || [],
+  aliases: aliases || []
+})
+
+export const createFrontWorkerRequest = ({ request }) => {
+  return new Promise(async (resolve, reject) => {
+    const response = await request().catch(() => reject({ status: 'error' }))
+
+    resolve(response)
+  })
+}
+
 export const createWorkerRequest = ({ type, data, defaultResponse }) => {
   return new Promise((resolve, reject) => {
     const callback = response => {
@@ -48,7 +72,27 @@ export const createWorkerProcessRequest = ({ type, data, defaultResponse }) => {
 }
 
 export const fetchConfiguration = () => {
-  return chrome.storage.local.get('config').then(({ config }) => config)
+  return chrome.storage.local.get(['aliases', 'pageEvents', 'position']).then(receiveConfig)
+}
+
+export const addAliases = newAliases => {
+  return new Promise(async (resolve, reject) => {
+    const { aliases = [] } = await chrome.storage.local.get('aliases').catch(reject)
+    const mergedAliases = mergeAliases(aliases, newAliases)
+
+    await chrome.storage.local.set({ aliases: mergedAliases }).catch(reject)
+    resolve()
+  })
+}
+
+export const deleteAliases = async aliasIds => {
+  return new Promise(async (resolve, reject) => {
+    const { aliases = [] } = await chrome.storage.local.get('aliases').catch(reject)
+    const filteredAliases = aliases.filter(({ id }) => !aliasIds.includes(id))
+
+    await chrome.storage.local.set({ aliases: filteredAliases }).catch(reject)
+    resolve()
+  })
 }
 
 export const fetchHistorial = data => {
@@ -63,20 +107,6 @@ export const closeTabs = data => {
   return createWorkerProcessRequest({
     type: eventTypes.CLOSE_OPEN_TABS,
     data
-  })
-}
-
-export const addAliases = newAliases => {
-  return createWorkerRequest({
-    type: eventTypes.ADD_ALIAS,
-    data: newAliases
-  })
-}
-
-export const deleteAliases = aliasIds => {
-  return createWorkerRequest({
-    type: eventTypes.DELETE_ALIAS,
-    data: { aliasIdsToDelete: aliasIds }
   })
 }
 

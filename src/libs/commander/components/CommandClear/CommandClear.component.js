@@ -20,25 +20,37 @@ export const CommandClearWithoutContext = ({
   const handleClearTerminal = useCallback(() => {
     clearTerminal()
     setHighlitedElement(null)
-    finish()
-  }, [clearTerminal, setHighlitedElement, finish])
+
+    return { break: true }
+  }, [clearTerminal, setHighlitedElement])
+
+  const handleClearConfig = useCallback(async () => {
+    await resetConfiguration()
+    setMessage(clearMessages.configurationResetSuccess)
+  }, [setMessage])
+
+  const doAction = useCallback(async () => {
+    switch (actionType) {
+      case actionTypes.CLEAR_TERMINAL:
+        return handleClearTerminal()
+
+      case actionTypes.CLEAR_CONFIG:
+        return await handleClearConfig()
+    }
+  }, [actionType, handleClearTerminal, handleClearConfig])
 
   useEffect(
     function handleActionType() {
-      switch (actionType) {
-        case actionTypes.CLEAR_TERMINAL:
-          handleClearTerminal()
-          break
-
-        case actionTypes.CLEAR_CONFIG:
-          resetConfiguration()
-            .catch(() => setMessage(clearMessages.unexpectedError))
-            .then(() => setMessage(clearMessages.configurationResetSuccess))
-            .then(() => finish())
-          break
+      const handleError = error => {
+        setMessage(clearMessages[error.message] || clearMessages.unexpectedError)
+        return { break: true }
       }
+
+      doAction()
+        .catch(handleError)
+        .finally(finish)
     },
-    [actionType, clearTerminal, setMessage, setHighlitedElement, handleClearTerminal, finish]
+    [doAction, setMessage, finish]
   )
 
   return (

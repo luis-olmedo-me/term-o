@@ -68,34 +68,41 @@ const CommandInspectWithoutContext = ({
     onRootEdit: handleRootEdition
   })
 
-  const handleInspect = useCallback(
-    ({ elementsFound: [defaultHTMLRoot] }) => {
-      const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
-      const newObjetives = paramElements.length ? paramElements : [document.body]
-      const newOpenNodes = getOpenNodesFromObjetives(newObjetives)
+  const handleInspect = useCallback(async () => {
+    const { elementsFound } = await getDefaultHTMlRoot()
+    const [defaultHTMLRoot] = elementsFound
 
-      setOpenNodes(newOpenNodes)
-      setHTMLRoot(document.body)
-      defaultRoot.current = defaultHTMLRoot
+    const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
+    const newObjetives = paramElements.length ? paramElements : [document.body]
+    const newOpenNodes = getOpenNodesFromObjetives(newObjetives)
 
-      finish()
-    },
-    [handleInspect, setMessage, finish]
-  )
+    setOpenNodes(newOpenNodes)
+    setHTMLRoot(document.body)
+    defaultRoot.current = defaultHTMLRoot
+  }, [handleInspect])
+
+  const doAction = useCallback(async () => {
+    switch (actionType) {
+      case inspectActionTypes.INSPECT:
+        return await handleInspect()
+
+      case inspectActionTypes.NONE:
+        throw new Error('unexpectedError')
+    }
+  }, [actionType, handleInspect])
 
   useEffect(
     function handleActionType() {
-      switch (actionType) {
-        case inspectActionTypes.INSPECT:
-          getDefaultHTMlRoot().then(handleInspect)
-          break
-
-        default:
-          setMessage(inspectMessages.unexpectedError)
-          break
+      const handleError = error => {
+        setMessage(inspectMessages[error.message] || inspectMessages.unexpectedError)
+        finish({ break: true })
       }
+
+      doAction()
+        .then(finish)
+        .catch(handleError)
     },
-    [actionType, handleInspect, setMessage]
+    [doAction, setMessage, finish]
   )
 
   const [headToElements, headToAttributes, headToStyles] = viewActions

@@ -49,7 +49,7 @@ export const CommandOn = ({ props, terminal: { command, finish } }) => {
   useEffect(
     function handleActionType() {
       const handleError = error => {
-        setMessage(onMessages[error.message] || onMessages.unexpectedError)
+        setMessage(onMessages[error?.message] || onMessages.unexpectedError)
         finish({ break: true })
       }
 

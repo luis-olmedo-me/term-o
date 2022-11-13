@@ -21,7 +21,8 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
 
   const [tableItems, setTableItems] = useState([])
 
-  const onError = error => setMessage(eventMessages[error.message] || eventMessages.unexpectedError)
+  const onError = error =>
+    setMessage(eventMessages[error?.message] || eventMessages.unexpectedError)
   const handleDeleteEventsFromTableItems = async ({ selectedRows }) => {
     const eventIdsToDelete = selectedRows.map(([idRow]) => idRow.value)
 
@@ -113,7 +114,7 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
   useEffect(
     function handleActionType() {
       const handleError = error => {
-        setMessage(eventMessages[error.message] || eventMessages.unexpectedError)
+        setMessage(eventMessages[error?.message] || eventMessages.unexpectedError)
         finish({ break: true })
       }
 

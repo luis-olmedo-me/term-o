@@ -68,7 +68,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
   useEffect(
     function handleActionType() {
       const handleError = error => {
-        setMessage(storageMessages[error.message] || storageMessages.unexpectedError)
+        setMessage(storageMessages[error?.message] || storageMessages.unexpectedError)
         finish({ break: true })
       }
 
@@ -79,7 +79,8 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
     [doAction, setMessage, finish]
   )
 
-  const onError = error => setMessage(eventMessages[error.message] || eventMessages.unexpectedError)
+  const onError = error =>
+    setMessage(eventMessages[error?.message] || eventMessages.unexpectedError)
   const handleTreeChange = ({ key, newValue }) => {
     const stringifiedNewValue = JSON.stringify(newValue)
     setEditingEntity([key, stringifiedNewValue])

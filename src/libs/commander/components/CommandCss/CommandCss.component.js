@@ -68,7 +68,7 @@ export const CommandCss = ({ props, terminal: { command, params, finish } }) => 
   useEffect(
     function handleActionType() {
       const handleError = error => {
-        setMessage(cssMessages[error.message] || cssMessages.unexpectedError)
+        setMessage(cssMessages[error?.message] || cssMessages.unexpectedError)
         finish({ break: true })
       }
 

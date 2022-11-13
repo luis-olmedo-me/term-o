@@ -151,7 +151,7 @@ const CommandDomWithoutContext = ({
   useEffect(
     function handleActionType() {
       const handleError = error => {
-        setMessage(domMessages[error.message] || domMessages.unexpectedError)
+        setMessage(domMessages[error?.message] || domMessages.unexpectedError)
         finish({ break: true })
       }
 

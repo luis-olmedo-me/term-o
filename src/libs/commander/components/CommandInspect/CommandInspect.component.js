@@ -94,7 +94,7 @@ const CommandInspectWithoutContext = ({
   useEffect(
     function handleActionType() {
       const handleError = error => {
-        setMessage(inspectMessages[error.message] || inspectMessages.unexpectedError)
+        setMessage(inspectMessages[error?.message] || inspectMessages.unexpectedError)
         finish({ break: true })
       }
 

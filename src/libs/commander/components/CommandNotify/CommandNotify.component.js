@@ -29,7 +29,7 @@ export const CommandNotify = ({ props, terminal: { command, addNotification, fin
   useEffect(
     function handleActionType() {
       const handleError = error => {
-        setMessage(notifyMessages[error.message] || notifyMessages.unexpectedError)
+        setMessage(notifyMessages[error?.message] || notifyMessages.unexpectedError)
         finish({ break: true })
       }
 

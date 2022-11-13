@@ -45,7 +45,7 @@ export const CommandHelp = ({ props, terminal: { command, finish } }) => {
   useEffect(
     function handleActionType() {
       const handleError = error => {
-        setMessage(commanderMessages[error.message] || commanderMessages.unexpectedError)
+        setMessage(commanderMessages[error?.message] || commanderMessages.unexpectedError)
         finish({ break: true })
       }
 

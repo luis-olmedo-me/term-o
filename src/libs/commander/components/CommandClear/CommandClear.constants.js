@@ -13,5 +13,10 @@ export const clearConfig = {
       alias: 'c'
     }
   },
-  output: (props) => <CommandClear key={props.id} {...props} />
+  output: props => <CommandClear key={props.id} {...props} />
+}
+
+export const clearActionTypes = {
+  CLEAR_TERMINAL: 'CLEAR_TERMINAL',
+  CLEAR_CONFIG: 'CLEAR_CONFIG'
 }

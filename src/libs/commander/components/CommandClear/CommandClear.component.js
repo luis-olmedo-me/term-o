@@ -1,10 +1,11 @@
 import * as React from 'preact'
 
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
-import { useCallback, useEffect, useState } from 'preact/hooks'
+import { useCallback, useEffect } from 'preact/hooks'
 import { resetConfiguration } from 'src/helpers/event.helpers.js'
-import { actionTypes, parameterTypes } from '../../constants/commands.constants'
+import { parameterTypes } from '../../constants/commands.constants'
 import { Log, useMessageLog } from '../../modules/Log'
+import { clearActionTypes } from './CommandClear.constants'
 import { getActionType } from './CommandClear.helpers'
 import { clearMessages } from './CommandClear.messages'
 
@@ -31,10 +32,10 @@ export const CommandClearWithoutContext = ({
 
   const doAction = useCallback(async () => {
     switch (actionType) {
-      case actionTypes.CLEAR_TERMINAL:
+      case clearActionTypes.CLEAR_TERMINAL:
         return handleClearTerminal()
 
-      case actionTypes.CLEAR_CONFIG:
+      case clearActionTypes.CLEAR_CONFIG:
         return await handleClearConfig()
     }
   }, [actionType, handleClearTerminal, handleClearConfig])

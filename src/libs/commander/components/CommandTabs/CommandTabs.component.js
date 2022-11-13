@@ -1,12 +1,9 @@
+import * as React from 'preact'
+
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { Table } from 'modules/components/Table/Table.component'
-import * as React from 'preact'
 import { useCallback, useEffect, useState } from 'preact/hooks'
-import {
-  closeTabs,
-  fetchHistorial,
-  fetchTabsOpen
-} from 'src/helpers/event.helpers'
+import { closeTabs, fetchHistorial, fetchTabsOpen } from 'src/helpers/event.helpers'
 import { commanderMessages } from '../../commander.messages'
 import { parameterTypes } from '../../constants/commands.constants'
 import {
@@ -30,7 +27,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
 
   const actionType = getActionType(props)
 
-  const handleDatesUpdate = (overWrittenOptions) => {
+  const handleDatesUpdate = overWrittenOptions => {
     const options = {
       ...validateHistoryFilters(props),
       ...overWrittenOptions
@@ -38,7 +35,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     const { startTime, endTime } = options
 
     fetchHistorial(options)
-      .then((historial) => {
+      .then(historial => {
         if (startTime) setDate({ start: startTime })
         if (endTime) setDate({ end: endTime })
 
@@ -67,20 +64,20 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     items: tabs,
     maxItems: 10
   })
-  const { startDateAction, endDateAction, setAreDatesInvalid, setDate } =
-    useDateRangeActions({ onDateUpdate: handleDatesUpdate })
-  const { clearSelection, tableSelectionProps, selectionActions } =
-    useTableSelection({
-      handleSkullClick: handleClosingTabsFromSelection,
-      currentRows: pages[pageNumber],
-      isEnabled: props.now
-    })
+  const { startDateAction, endDateAction, setAreDatesInvalid, setDate } = useDateRangeActions({
+    onDateUpdate: handleDatesUpdate
+  })
+  const { clearSelection, tableSelectionProps, selectionActions } = useTableSelection({
+    handleSkullClick: handleClosingTabsFromSelection,
+    currentRows: pages[pageNumber],
+    isEnabled: props.now
+  })
 
   const handleShowTabList = useCallback(() => {
     const options = validateTabsFilters(props)
 
     fetchTabsOpen(options)
-      .then((tabsOpen) => {
+      .then(tabsOpen => {
         if (!tabsOpen.length) return setMessage(tabsMessages.noTabsFound)
 
         const tabItems = turnOpenTabsToTableItems({ tabsOpen })
@@ -110,7 +107,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     if (endTime) setDate({ end: endTime })
 
     fetchHistorial(options)
-      .then((historial) => {
+      .then(historial => {
         if (!historial.length) return setMessage(tabsMessages.noTabsFound)
 
         const tabItems = turnOpenTabsToTableItems({ tabsOpen: historial })
@@ -206,11 +203,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
             {pages.map((page, currentPageNumber) => {
               return (
                 <CarouselItem key={currentPageNumber}>
-                  <Table
-                    {...tableSelectionProps}
-                    rows={page}
-                    options={tabsTableOptions}
-                  />
+                  <Table {...tableSelectionProps} rows={page} options={tabsTableOptions} />
                 </CarouselItem>
               )
             })}

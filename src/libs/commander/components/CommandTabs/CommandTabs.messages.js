@@ -1,6 +1,8 @@
+import { commanderMessages } from '../../commander.messages'
 import { parameterTypes } from '../../constants/commands.constants'
 
 export const tabsMessages = {
+  ...commanderMessages,
   missingURL: {
     message: 'No url has been provided.',
     type: parameterTypes.ERROR

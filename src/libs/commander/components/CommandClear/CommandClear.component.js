@@ -1,9 +1,11 @@
-import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import * as React from 'preact'
-import { useCallback, useEffect, useState } from 'preact/hooks'
+
+import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
+import { useCallback, useEffect } from 'preact/hooks'
 import { resetConfiguration } from 'src/helpers/event.helpers.js'
-import { actionTypes, parameterTypes } from '../../constants/commands.constants'
+import { parameterTypes } from '../../constants/commands.constants'
 import { Log, useMessageLog } from '../../modules/Log'
+import { clearActionTypes } from './CommandClear.constants'
 import { getActionType } from './CommandClear.helpers'
 import { clearMessages } from './CommandClear.messages'
 
@@ -19,44 +21,47 @@ export const CommandClearWithoutContext = ({
   const handleClearTerminal = useCallback(() => {
     clearTerminal()
     setHighlitedElement(null)
-    finish()
-  }, [clearTerminal, setHighlitedElement, finish])
+
+    return { break: true }
+  }, [clearTerminal, setHighlitedElement])
+
+  const handleClearConfig = useCallback(async () => {
+    await resetConfiguration()
+    setMessage(clearMessages.configurationResetSuccess)
+  }, [setMessage])
+
+  const doAction = useCallback(async () => {
+    switch (actionType) {
+      case clearActionTypes.CLEAR_TERMINAL:
+        return handleClearTerminal()
+
+      case clearActionTypes.CLEAR_CONFIG:
+        return await handleClearConfig()
+    }
+  }, [actionType, handleClearTerminal, handleClearConfig])
 
   useEffect(
     function handleActionType() {
-      switch (actionType) {
-        case actionTypes.CLEAR_TERMINAL:
-          handleClearTerminal()
-          break
-
-        case actionTypes.CLEAR_CONFIG:
-          resetConfiguration()
-            .catch(() => setMessage(clearMessages.unexpectedError))
-            .then(() => setMessage(clearMessages.configurationResetSuccess))
-            .then(() => finish())
-          break
-
-        default:
-          finish()
-          break
+      const handleError = error => {
+        setMessage(clearMessages[error?.message] || clearMessages.unexpectedError)
+        finish({ break: true })
       }
+
+      doAction()
+        .then(finish)
+        .catch(handleError)
     },
-    [
-      actionType,
-      clearTerminal,
-      setMessage,
-      setHighlitedElement,
-      handleClearTerminal,
-      finish
-    ]
+    [doAction, setMessage, finish]
   )
 
   return (
-    <>
-      <Log variant={parameterTypes.COMMAND}>{command}</Log>
+    messageLog && (
+      <>
+        <Log variant={parameterTypes.COMMAND}>{command}</Log>
 
-      {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
-    </>
+        <Log variant={messageLog.type}>{messageLog.message}</Log>
+      </>
+    )
   )
 }
 

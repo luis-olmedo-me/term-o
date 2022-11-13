@@ -1,24 +1,13 @@
+import * as React from 'preact'
+
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { Table } from 'modules/components/Table/Table.component'
-import * as React from 'preact'
-import { useCallback, useEffect, useState } from 'preact/hooks'
-import {
-  deletePageEvents,
-  fetchConfiguration
-} from 'src/helpers/event.helpers.js'
+import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
+import { deletePageEvents, fetchConfiguration } from 'src/helpers/event.helpers.js'
 import { getParamsByType } from '../../commander.helpers'
 import { parameterTypes } from '../../constants/commands.constants'
-import {
-  Log,
-  useMessageLog,
-  usePaginationActions,
-  useTableSelection
-} from '../../modules/Log'
-import {
-  eventActionTypes,
-  eventTableOptions,
-  supportedEvents
-} from './CommandEvent.constants'
+import { Log, useMessageLog, usePaginationActions, useTableSelection } from '../../modules/Log'
+import { eventActionTypes, eventTableOptions, supportedEvents } from './CommandEvent.constants'
 import {
   getActionType,
   triggerChangeEvent,
@@ -27,28 +16,19 @@ import {
 } from './CommandEvent.helpers'
 import { eventMessages } from './CommandEvent.messages'
 
-export const CommandEvent = ({
-  props,
-  terminal: { command, params, finish }
-}) => {
-  const {
-    delete: deletedIds,
-    trigger: eventToTrigger,
-    value: valueToInsert
-  } = props
+export const CommandEvent = ({ props, terminal: { command, params, finish } }) => {
+  const { delete: deletedIds, trigger: eventToTrigger, value: valueToInsert } = props
 
   const [tableItems, setTableItems] = useState([])
+  const logRef = useRef(null)
 
+  const onError = error =>
+    setMessage(eventMessages[error?.message] || eventMessages.unexpectedError)
   const handleDeleteEventsFromTableItems = async ({ selectedRows }) => {
     const eventIdsToDelete = selectedRows.map(([idRow]) => idRow.value)
 
-    await deletePageEvents(eventIdsToDelete).catch(() =>
-      setMessage(eventMessages.unexpectedError)
-    )
-
-    await fetchConfiguration()
-      .then(handleShowList)
-      .catch(() => setMessage(eventMessages.unexpectedError))
+    await deletePageEvents(eventIdsToDelete).catch(onError)
+    await handleShowList().catch(onError)
 
     clearSelection()
   }
@@ -58,58 +38,45 @@ export const CommandEvent = ({
     items: tableItems,
     maxItems: 10
   })
-  const { clearSelection, tableSelectionProps, selectionActions } =
-    useTableSelection({
-      handleSkullClick: handleDeleteEventsFromTableItems,
-      currentRows: pages[pageNumber],
-      isEnabled: props.now
-    })
+  const { clearSelection, tableSelectionProps, selectionActions } = useTableSelection({
+    handleSkullClick: handleDeleteEventsFromTableItems,
+    currentRows: pages[pageNumber],
+    isEnabled: props.now
+  })
 
   const actionType = getActionType(props)
 
-  const handleShowList = useCallback(
-    ({ pageEvents = [] }) => {
-      if (!pageEvents.length) return setMessage(eventMessages.noEventsFound)
+  const handleShowList = useCallback(async () => {
+    const { pageEvents = [] } = await fetchConfiguration()
 
-      const pageEventsRows = turnPageEventsToTableItems({ pageEvents })
+    const pageEventsRows = turnPageEventsToTableItems({ pageEvents })
 
-      setTableItems(pageEventsRows)
-      finish()
-    },
-    [setMessage]
-  )
+    if (!pageEvents.length) throw new Error('noEventsFound')
 
-  const handleDeleteEvent = useCallback(
-    ({ pageEvents = [] }) => {
-      if (!pageEvents.length) return setMessage(eventMessages.noEventsFound)
+    setTableItems(pageEventsRows)
+  }, [setMessage])
 
-      const idsToDelete = deletedIds.filter((id) => {
-        return pageEvents.some((pageEvent) => pageEvent.id === id)
-      })
+  const handleDeleteEvent = useCallback(async () => {
+    const { pageEvents = [] } = await fetchConfiguration()
 
-      if (deletedIds.length !== idsToDelete.length) {
-        return setMessage(eventMessages.invalidEventIds, {
-          invalidIds: deletedIds.join(', ')
-        })
-      }
+    const idsToDelete = deletedIds.filter(id => pageEvents.some(pageEvent => pageEvent.id === id))
+    const hasInvalidIds = deletedIds.length !== idsToDelete.length
 
-      deletePageEvents(idsToDelete)
-        .catch(() => setMessage(eventMessages.unexpectedError))
-        .then(() => setMessage(eventMessages.eventDeleteSuccess))
-        .then(() => finish())
-    },
-    [deletedIds, setMessage, finish]
-  )
+    if (!pageEvents.length) throw new Error('noEventsFound')
+    if (hasInvalidIds) throw new Error('invalidEventIds')
+
+    await deletePageEvents(idsToDelete)
+    setMessage(eventMessages.eventDeleteSuccess)
+  }, [deletedIds, setMessage])
 
   const handleTriggerEvent = useCallback(() => {
     const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
 
-    if (!paramElements.length) return setMessage(eventMessages.missingElements)
+    if (!paramElements.length) throw new Error('missingElements')
 
     switch (eventToTrigger) {
       case supportedEvents.CLICK: {
-        paramElements.forEach((element) => element.click())
-
+        paramElements.forEach(element => element.click())
         setMessage(eventMessages.elementsClickedSuccess)
         break
       }
@@ -117,52 +84,53 @@ export const CommandEvent = ({
       case supportedEvents.CHANGE: {
         const areElementsValid = paramElements.every(validateElement)
 
-        if (!areElementsValid) return setMessage(eventMessages.invalidElements)
+        if (!areElementsValid) throw new Error('invalidElements')
 
-        paramElements.forEach((element) => {
-          triggerChangeEvent({ element, value: valueToInsert })
-        })
-
+        paramElements.forEach(element => triggerChangeEvent({ element, value: valueToInsert }))
         setMessage(eventMessages.elementsChangedSuccess)
         break
       }
 
       default:
-        return setMessage(eventMessages.invalidEventName)
+        throw new Error('invalidEventName')
     }
+  }, [eventToTrigger, valueToInsert])
 
-    finish()
-  }, [eventToTrigger, valueToInsert, finish])
+  const doAction = useCallback(async () => {
+    switch (actionType) {
+      case eventActionTypes.SHOW_LIST:
+        return await handleShowList()
+
+      case eventActionTypes.DELETE_EVENT:
+        return await handleDeleteEvent()
+
+      case eventActionTypes.TRIGGER:
+        return handleTriggerEvent()
+
+      case eventActionTypes.NONE:
+        throw new Error('unexpectedError')
+    }
+  }, [actionType, handleShowList, handleDeleteEvent, handleTriggerEvent])
 
   useEffect(
     function handleActionType() {
-      switch (actionType) {
-        case eventActionTypes.SHOW_LIST:
-          fetchConfiguration()
-            .then(handleShowList)
-            .catch(() => setMessage(eventMessages.unexpectedError))
-          break
-
-        case eventActionTypes.DELETE_EVENT:
-          fetchConfiguration()
-            .then(handleDeleteEvent)
-            .catch(() => setMessage(eventMessages.unexpectedError))
-          break
-
-        case eventActionTypes.TRIGGER:
-          handleTriggerEvent()
-          break
-
-        default:
-          break
+      const handleError = error => {
+        setMessage(eventMessages[error?.message] || eventMessages.unexpectedError)
+        finish({ break: true })
       }
+
+      doAction()
+        .then(finish)
+        .catch(handleError)
     },
-    [actionType, handleDeleteEvent, handleShowList, handleTriggerEvent]
+    [doAction, setMessage, finish]
   )
 
   return (
     <>
-      <Log variant={parameterTypes.COMMAND}>{command}</Log>
+      <Log logRef={logRef} variant={parameterTypes.COMMAND}>
+        {command}
+      </Log>
 
       {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
 
@@ -179,6 +147,7 @@ export const CommandEvent = ({
                     {...tableSelectionProps}
                     rows={page}
                     options={eventTableOptions}
+                    widthRef={logRef}
                   />
                 </CarouselItem>
               )

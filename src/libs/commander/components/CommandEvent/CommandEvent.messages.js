@@ -1,10 +1,10 @@
-import { parameterTypes } from '../../constants/commands.constants'
 import { commanderMessages } from '../../commander.messages.js'
+import { parameterTypes } from '../../constants/commands.constants'
 
 export const eventMessages = {
   ...commanderMessages,
   invalidEventIds: {
-    message: 'The following ids were not found: {invalidIds}',
+    message: 'Some of the event ids you provided are invalid.',
     type: parameterTypes.ERROR
   },
   eventDeleteSuccess: {

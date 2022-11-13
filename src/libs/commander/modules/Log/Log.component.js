@@ -2,13 +2,7 @@ import * as React from 'preact'
 import { Error, Info, Tick } from 'src/modules/icons'
 import { parameterTypes } from '../../constants/commands.constants'
 import { ActionGroups } from './components/ActionGroups/ActionGroups.component'
-import {
-  Hash,
-  LogContent,
-  LogWrapper,
-  ScrolledLogContent,
-  Shadow
-} from './Log.styles'
+import { Hash, LogContent, LogWrapper, ScrolledLogContent, Shadow } from './Log.styles'
 
 const preIconsByVariants = {
   [parameterTypes.COMMAND]: '$',
@@ -17,13 +11,7 @@ const preIconsByVariants = {
   [parameterTypes.SUCCESS]: <Tick />
 }
 
-export const Log = ({
-  children,
-  variant,
-  actionGroups,
-  hasScroll,
-  hasShadow
-}) => {
+export const Log = ({ children, variant, actionGroups, hasScroll, hasShadow, ref }) => {
   const icon = preIconsByVariants[variant]
 
   const hasActionGroups = Boolean(actionGroups?.length)
@@ -37,17 +25,10 @@ export const Log = ({
   )
 
   return (
-    <LogWrapper
-      className={variant}
-      onMouseDown={(event) => event.stopPropagation()}
-    >
+    <LogWrapper ref={ref} className={variant} onMouseDown={event => event.stopPropagation()}>
       <LogContent>
         <Shadow className={hasShadow ? 'shadow' : ''}>
-          {hasScroll ? (
-            <ScrolledLogContent>{Content}</ScrolledLogContent>
-          ) : (
-            Content
-          )}
+          {hasScroll ? <ScrolledLogContent>{Content}</ScrolledLogContent> : Content}
         </Shadow>
       </LogContent>
 

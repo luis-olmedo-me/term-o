@@ -1,20 +1,12 @@
+import * as React from 'preact'
+
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { Table } from 'modules/components/Table/Table.component'
-import * as React from 'preact'
-import { useCallback, useEffect, useState } from 'preact/hooks'
-import {
-  addAliases,
-  deleteAliases,
-  fetchConfiguration
-} from 'src/helpers/event.helpers.js'
-import { actionTypes, parameterTypes } from '../../constants/commands.constants'
-import {
-  Log,
-  useMessageLog,
-  usePaginationActions,
-  useTableSelection
-} from '../../modules/Log'
-import { aliasTableOptions } from './CommandAlias.constants'
+import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
+import { addAliases, deleteAliases, fetchConfiguration } from 'src/helpers/event.helpers.js'
+import { parameterTypes } from '../../constants/commands.constants'
+import { Log, useMessageLog, usePaginationActions, useTableSelection } from '../../modules/Log'
+import { aliasActionTypes, aliasTableOptions } from './CommandAlias.constants'
 import {
   getActionType,
   turnAliasesToTableItems,
@@ -23,19 +15,18 @@ import {
 import { aliasMessages } from './CommandAlias.messages'
 
 export const CommandAlias = ({ props, terminal: { command, finish } }) => {
-  const { delete: deletedIds, add: aliasesToAdd } = props
-
   const [tableItems, setTableItems] = useState([])
+  const logRef = useRef(null)
 
+  const onError = error =>
+    setMessage(eventMessages[error?.message] || eventMessages.unexpectedError)
   const handleDeleteAliasesFromSelection = async ({ selectedRows }) => {
     const aliasIdsToDelete = selectedRows.map(([idRow]) => idRow.value)
 
     clearSelection()
 
-    await deleteAliases(aliasIdsToDelete)
-    fetchConfiguration()
-      .then(handleShowList)
-      .catch(() => setMessage(aliasMessages.unexpectedError))
+    await deleteAliases(aliasIdsToDelete).catch(onError)
+    await handleShowList().catch(onError)
   }
 
   const { log: messageLog, setMessage } = useMessageLog()
@@ -43,87 +34,85 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
     items: tableItems,
     maxItems: 10
   })
-  const { clearSelection, tableSelectionProps, selectionActions } =
-    useTableSelection({
-      handleSkullClick: handleDeleteAliasesFromSelection,
-      currentRows: pages[pageNumber],
-      isEnabled: props.now
-    })
+  const { clearSelection, tableSelectionProps, selectionActions } = useTableSelection({
+    handleSkullClick: handleDeleteAliasesFromSelection,
+    currentRows: pages[pageNumber],
+    isEnabled: props.now
+  })
 
   const actionType = getActionType(props)
 
-  const handleShowList = useCallback(
-    ({ aliases = [] }) => {
-      if (!aliases.length) return setMessage(aliasMessages.noAliasesFound)
+  const handleShowList = useCallback(async () => {
+    const { aliases = [] } = await fetchConfiguration()
 
-      const aliasRows = turnAliasesToTableItems({ aliases })
+    const aliasRows = turnAliasesToTableItems({ aliases })
+    const hasAliases = aliases.length > 0
 
-      setTableItems(aliasRows)
-      finish()
-    },
-    [setMessage, finish]
-  )
+    if (!hasAliases) throw new Error('noAliasesFound')
 
-  const handleAddAliases = useCallback(() => {
-    const validAliases = validateAliasesToAdd({ aliasesToAdd })
+    setTableItems(aliasRows)
+  }, [setMessage])
+
+  const handleAddAliases = useCallback(async () => {
+    const validAliases = validateAliasesToAdd({ aliasesToAdd: props.add })
 
     const newAliasesCount = Object.keys(validAliases).length
     const hasValidAliases = newAliasesCount === validAliases.length
 
-    if (!hasValidAliases) return setMessage(aliasMessages.invalidAliases)
+    if (!hasValidAliases) throw new Error('invalidAliases')
 
-    addAliases(validAliases)
-      .catch(() => setMessage(aliasMessages.unexpectedError))
-      .then(() => setMessage(aliasMessages.aliasAdditionSuccess))
-      .then(() => finish())
-  }, [aliasesToAdd, setMessage, finish])
+    await addAliases(validAliases)
+    setMessage(aliasMessages.aliasAdditionSuccess)
+  }, [props, setMessage])
 
-  const handleDeleteAliases = useCallback(
-    ({ aliases = [], aliasesIdsToDelete = deletedIds }) => {
-      const aliasIds = aliases.map(({ id }) => id)
-      const validIds = aliasesIdsToDelete.filter((id) => aliasIds.includes(id))
-      const hasInvalidIds = aliasesIdsToDelete.length !== validIds.length
+  const handleDeleteAliases = useCallback(async () => {
+    const { aliases = [] } = await fetchConfiguration()
 
-      if (hasInvalidIds) return setMessage(aliasMessages.noAliasIdsFound)
+    const aliasIds = aliases.map(({ id }) => id)
+    const validIds = props.delete.filter(id => aliasIds.includes(id))
+    const hasInvalidIds = props.delete.length !== validIds.length
 
-      deleteAliases(validIds)
-        .catch(() => setMessage(aliasMessages.unexpectedError))
-        .then(() => setMessage(aliasMessages.aliasDeletionSuccess))
-        .then(() => finish())
-    },
-    [deletedIds, finish]
-  )
+    if (hasInvalidIds) throw new Error('noAliasIdsFound')
+
+    await deleteAliases(validIds)
+    setMessage(aliasMessages.aliasDeletionSuccess)
+  }, [props])
+
+  const doAction = useCallback(async () => {
+    switch (actionType) {
+      case aliasActionTypes.SHOW_LIST:
+        return await handleShowList()
+
+      case aliasActionTypes.DELETE_ALIAS:
+        return await handleDeleteAliases()
+
+      case aliasActionTypes.ADD_ALIAS:
+        return await handleAddAliases()
+
+      case aliasActionTypes.NONE:
+        throw new Error('unexpectedError')
+    }
+  }, [actionType, handleShowList, handleDeleteAliases, handleAddAliases])
 
   useEffect(
     function handleActionType() {
-      switch (actionType) {
-        case actionTypes.SHOW_LIST:
-          fetchConfiguration()
-            .then(handleShowList)
-            .catch(() => setMessage(aliasMessages.unexpectedError))
-          break
-
-        case actionTypes.DELETE_ALIAS:
-          fetchConfiguration()
-            .then(handleDeleteAliases)
-            .catch(() => setMessage(aliasMessages.unexpectedError))
-          break
-
-        case actionTypes.ADD_ALIAS:
-          handleAddAliases()
-          break
-
-        case actionTypes.NONE:
-          setMessage(aliasMessages.unexpectedError)
-          break
+      const handleError = error => {
+        setMessage(aliasMessages[error?.message] || aliasMessages.unexpectedError)
+        finish({ break: true })
       }
+
+      doAction()
+        .then(finish)
+        .catch(handleError)
     },
-    [actionType, handleAddAliases, handleDeleteAliases, handleShowList]
+    [doAction, setMessage, finish]
   )
 
   return (
     <>
-      <Log variant={parameterTypes.COMMAND}>{command}</Log>
+      <Log ref={logRef} variant={parameterTypes.COMMAND}>
+        {command}
+      </Log>
 
       {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
 
@@ -140,6 +129,7 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
                     {...tableSelectionProps}
                     rows={page}
                     options={aliasTableOptions}
+                    widthRef={logRef}
                   />
                 </CarouselItem>
               )

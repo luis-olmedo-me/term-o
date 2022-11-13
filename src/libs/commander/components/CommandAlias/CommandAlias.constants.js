@@ -28,7 +28,7 @@ export const aliasConfig = {
       alias: 'a'
     }
   },
-  output: (props) => <CommandAlias key={props.id} {...props} />
+  output: props => <CommandAlias key={props.id} {...props} />
 }
 
 export const aliasHeaderIds = {
@@ -57,4 +57,10 @@ export const aliasTableOptions = {
       minTableWidth: 0
     }
   ]
+}
+
+export const aliasActionTypes = {
+  SHOW_LIST: 'SHOW_LIST',
+  DELETE_ALIAS: 'DELETE_ALIAS',
+  ADD_ALIAS: 'ADD_ALIAS'
 }

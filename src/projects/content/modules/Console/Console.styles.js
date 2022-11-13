@@ -65,6 +65,7 @@ export const ConsoleLogs = styled.div`
   border-radius: ${radius};
   cursor: text;
   overscroll-behavior: contain;
+  scroll-behavior: smooth;
 
   &::-webkit-scrollbar {
     display: none;

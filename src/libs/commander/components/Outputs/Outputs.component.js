@@ -1,8 +1,10 @@
 import * as React from 'preact'
-import { useCallback, useRef, useState } from 'preact/hooks'
+
+import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
+import { debounce } from 'src/helpers/utils.helpers.js'
 import { OutputWrapper } from './Outputs.styles'
 
-const defaultFormatter = (oldParam) => {
+const defaultFormatter = oldParam => {
   return [...oldParam, {}]
 }
 
@@ -17,33 +19,47 @@ const OutputsNonMemoized = ({ components, id, outsideProps }) => {
 
   const wrapperRef = useRef(null)
 
-  const showNextVisibleComponent = useCallback((paramFormatter) => {
-    setParams(paramFormatter || defaultFormatter)
-    setData((oldData) => {
-      const nextInvisibleComponentIndex = oldData.findIndex(
-        (component) => !component.isVisible
-      )
+  const showNextVisibleComponent = useCallback(options => {
+    const didBreak = Boolean(options?.break)
+    const didIgnore = Boolean(options?.ignore)
 
-      if (nextInvisibleComponentIndex !== -1) {
-        const oldDataCopy = [...oldData]
-        const newData = oldDataCopy.map((data, index) => ({
+    if (didIgnore) return
+    if (!didBreak) setParams(options?.formatter || defaultFormatter)
+
+    setData(oldData => {
+      const oldDataCopy = [...oldData]
+      const nextInvisibleComponentIndex = oldData.findIndex(component => !component.isVisible)
+
+      const hasNextComponent = nextInvisibleComponentIndex !== -1
+
+      if (hasNextComponent && !didBreak) {
+        return oldDataCopy.map((data, index) => ({
           ...data,
           isVisible: data.isVisible || index === nextInvisibleComponentIndex
         }))
-
-        return newData
       }
 
-      return oldData
+      return didBreak ? [...oldData] : oldData
     })
-
-    const children = [...wrapperRef.current.children]
-    const lastChild = children.at(-1)
-
-    lastChild.scrollIntoView()
   }, [])
 
-  const componentsShown = data.filter((item) => item.isVisible)
+  const scrollIntoLastComponent = useCallback(
+    debounce(() => {
+      const children = wrapperRef.current?.children || []
+      const lastChild = [...children].at(-1)
+
+      if (lastChild) lastChild.scrollIntoView({ behavior: 'smooth' })
+    }, 450),
+    []
+  )
+
+  useEffect(() => {
+    if (!data.length) return
+
+    scrollIntoLastComponent()
+  }, [data, scrollIntoLastComponent])
+
+  const componentsShown = data.filter(item => item.isVisible)
 
   const providerProps = {
     ...outsideProps,

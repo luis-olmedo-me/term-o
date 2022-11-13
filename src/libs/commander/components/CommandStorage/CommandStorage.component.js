@@ -1,7 +1,7 @@
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { Table } from 'modules/components/Table'
 import * as React from 'preact'
-import { useCallback, useEffect, useState } from 'preact/hooks'
+import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 import { parameterTypes } from '../../constants/commands.constants'
 import { Log, useMessageLog, usePaginationActions, useViews } from '../../modules/Log'
 import {
@@ -24,6 +24,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
 
   const [tableItems, setTableItems] = useState([])
   const [editingEntity, setEditingEntity] = useState([])
+  const logRef = useRef(null)
 
   const { log: messageLog, setMessage } = useMessageLog()
   const { paginationActions, pages, pageNumber } = usePaginationActions({
@@ -35,52 +36,52 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
     defaultView: storageViewIds.MAIN
   })
 
-  const handleShowStorage = useCallback(
-    storage => {
-      const editValue = entity => {
-        setEditingEntity(entity)
-        changeView(storageViewIds.EDITOR)
-      }
-      const localStorageAsTableItems = turnStorageToTableItems({
-        storage,
-        editValue
-      })
+  const handleShowStorage = useCallback(storage => {
+    const editValue = entity => {
+      setEditingEntity(entity)
+      changeView(storageViewIds.EDITOR)
+    }
 
-      const isEmptyStorage = localStorageAsTableItems.length === 0
+    const localStorageAsTableItems = turnStorageToTableItems({ storage, editValue })
+    const isEmptyStorage = localStorageAsTableItems.length === 0
 
-      if (isEmptyStorage) return setMessage(storageMessages.emptyStorage)
+    if (isEmptyStorage) throw new Error('emptyStorage')
 
-      setTableItems(localStorageAsTableItems)
-    },
-    [setMessage]
-  )
+    setTableItems(localStorageAsTableItems)
+  }, [])
+
+  const doAction = useCallback(async () => {
+    switch (actionType) {
+      case storageActionTypes.SHOW_LOCAL_STORAGE:
+        return handleShowStorage(window.localStorage)
+
+      case storageActionTypes.SHOW_SESSION_STORAGE:
+        return handleShowStorage(window.sessionStorage)
+
+      case storageActionTypes.SHOW_COOKIES:
+        return handleShowStorage(parseCookies(document.cookie))
+
+      case storageActionTypes.NONE:
+        throw new Error('unexpectedError')
+    }
+  }, [actionType, handleShowStorage])
 
   useEffect(
     function handleActionType() {
-      switch (actionType) {
-        case storageActionTypes.SHOW_LOCAL_STORAGE:
-          handleShowStorage(window.localStorage)
-          finish()
-          break
-
-        case storageActionTypes.SHOW_SESSION_STORAGE:
-          handleShowStorage(window.sessionStorage)
-          finish()
-          break
-
-        case storageActionTypes.SHOW_COOKIES:
-          handleShowStorage(parseCookies(document.cookie))
-          finish()
-          break
-
-        case storageActionTypes.NONE:
-          setMessage(storageMessages.unexpectedError)
-          break
+      const handleError = error => {
+        setMessage(storageMessages[error?.message] || storageMessages.unexpectedError)
+        finish({ break: true })
       }
+
+      doAction()
+        .then(finish)
+        .catch(handleError)
     },
-    [actionType, handleShowStorage, finish]
+    [doAction, setMessage, finish]
   )
 
+  const onError = error =>
+    setMessage(eventMessages[error?.message] || eventMessages.unexpectedError)
   const handleTreeChange = ({ key, newValue }) => {
     const stringifiedNewValue = JSON.stringify(newValue)
     setEditingEntity([key, stringifiedNewValue])
@@ -88,17 +89,17 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
     switch (actionType) {
       case storageActionTypes.SHOW_LOCAL_STORAGE:
         window.localStorage.setItem(key, stringifiedNewValue)
-        handleShowStorage(window.localStorage)
+        handleShowStorage(window.localStorage).catch(onError)
         break
 
       case storageActionTypes.SHOW_SESSION_STORAGE:
         window.sessionStorage.setItem(key, stringifiedNewValue)
-        handleShowStorage(window.sessionStorage)
+        handleShowStorage(window.sessionStorage).catch(onError)
         break
 
       case storageActionTypes.SHOW_COOKIES:
         document.cookie = `${key}=${stringifiedNewValue}`
-        handleShowStorage(parseCookies(document.cookie))
+        handleShowStorage(parseCookies(document.cookie)).catch(onError)
         break
     }
   }
@@ -108,7 +109,9 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
 
   return (
     <>
-      <Log variant={parameterTypes.COMMAND}>{command}</Log>
+      <Log ref={logRef} variant={parameterTypes.COMMAND}>
+        {command}
+      </Log>
 
       {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
 
@@ -120,7 +123,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
                 {pages.map((page, currentPageNumber) => {
                   return (
                     <CarouselItem key={currentPageNumber}>
-                      <Table rows={page} options={storageTableOptions} />
+                      <Table rows={page} options={storageTableOptions} widthRef={logRef} />
                     </CarouselItem>
                   )
                 })}

@@ -1,6 +1,7 @@
+import * as React from 'preact'
+
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
-import * as React from 'preact'
 import { useCallback, useEffect, useState } from 'preact/hooks'
 import { insertParams } from '../../commander.helpers'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
@@ -51,14 +52,14 @@ const CommandDomWithoutContext = ({
 
   const actionType = getActionType(props)
 
-  const handleAttributeEdition = (element) => {
+  const handleAttributeEdition = element => {
     setEditingElement(element)
     setSheets(getStylesFrom(element))
     setHighlitedElement(null)
 
     changeView(domViewIds.ATTRIBUTES)
   }
-  const handleStyleEdition = (element) => {
+  const handleStyleEdition = element => {
     setEditingElement(element)
     setSheets(getStylesFrom(element))
     setHighlitedElement(null)
@@ -75,14 +76,12 @@ const CommandDomWithoutContext = ({
     views: domViews,
     defaultView: domViewIds.MAIN
   })
-  const { elementActions, selectedElements, selectElement } = useElementActions(
-    {
-      onAttributeEdit: handleAttributeEdition,
-      onStyleEdit: handleStyleEdition
-    }
-  )
+  const { elementActions, selectedElements, selectElement } = useElementActions({
+    onAttributeEdit: handleAttributeEdition,
+    onStyleEdit: handleStyleEdition
+  })
 
-  const handleGetDomElements = useCallback(() => {
+  const handleGetDomElements = useCallback(async () => {
     const hasFiltersBySome =
       hasId ||
       hasClass ||
@@ -106,33 +105,24 @@ const CommandDomWithoutContext = ({
 
     const filterElementsByEvery = generateFilterByEvery({ hidden })
 
-    const elementsSearch = getElements({
+    const { elementsFound } = await getElements({
       patterns: get,
       xpaths: byXpath,
       filterBySome: hasFiltersBySome ? filterElementsBySome : null,
       filterByEvery: hasFiltersByAll ? filterElementsByEvery : null
     })
 
-    elementsSearch
-      .then(({ elementsFound }) => {
-        const parsedElementsFound =
-          getParent || byParentLevel
-            ? getParentsOfElements(elementsFound, byParentLevel || 1)
-            : elementsFound
+    const parsedElementsFound =
+      getParent || byParentLevel
+        ? getParentsOfElements(elementsFound, byParentLevel || 1)
+        : elementsFound
 
-        if (!parsedElementsFound.length)
-          return setMessage(domMessages.noElementsFound)
+    if (!parsedElementsFound.length) throw new Error('noElementsFound')
 
-        const elementsAsParam = {
-          id,
-          value: parsedElementsFound,
-          type: parameterTypes.ELEMENTS
-        }
+    const elementsAsParam = { id, value: parsedElementsFound, type: parameterTypes.ELEMENTS }
 
-        setElements(parsedElementsFound)
-        finish(insertParams(id, elementsAsParam))
-      })
-      .catch(() => setMessage(domMessages.noElementsFound))
+    setElements(parsedElementsFound)
+    return insertParams(id, elementsAsParam)
   }, [
     get,
     hasId,
@@ -143,26 +133,33 @@ const CommandDomWithoutContext = ({
     byAttribute,
     hidden,
     byXpath,
-    setMessage,
-    finish,
     id,
     getParent,
     byParentLevel
   ])
 
+  const doAction = useCallback(async () => {
+    switch (actionType) {
+      case actionTypes.GET_DOM_ELEMENTS:
+        return await handleGetDomElements()
+
+      case actionTypes.NONE:
+        throw new Error('unexpectedError')
+    }
+  }, [actionType, handleGetDomElements])
+
   useEffect(
     function handleActionType() {
-      switch (actionType) {
-        case actionTypes.GET_DOM_ELEMENTS:
-          handleGetDomElements()
-          break
-
-        case actionTypes.NONE:
-          setMessage(domMessages.unexpectedError)
-          break
+      const handleError = error => {
+        setMessage(domMessages[error.message] || domMessages.unexpectedError)
+        finish({ break: true })
       }
+
+      doAction()
+        .then(finish)
+        .catch(handleError)
     },
-    [actionType, handleGetDomElements]
+    [doAction, setMessage, finish]
   )
 
   const [headToElements, headToAttributes, headToStyles] = viewActions
@@ -209,11 +206,7 @@ const CommandDomWithoutContext = ({
                           <Element
                             element={item}
                             onClick={handleElementClick}
-                            variant={
-                              selectedElements.includes(item)
-                                ? 'pinned'
-                                : 'default'
-                            }
+                            variant={selectedElements.includes(item) ? 'pinned' : 'default'}
                           />
                         )}
                       />
@@ -241,9 +234,7 @@ const CommandDomWithoutContext = ({
             >
               <List
                 items={sheets}
-                Child={({ item }) => (
-                  <StyleSheet sheet={item} sheets={sheets} />
-                )}
+                Child={({ item }) => <StyleSheet sheet={item} sheets={sheets} />}
               />
             </Log>
           </CarouselItem>

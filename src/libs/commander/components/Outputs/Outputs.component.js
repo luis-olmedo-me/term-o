@@ -21,7 +21,9 @@ const OutputsNonMemoized = ({ components, id, outsideProps }) => {
 
   const showNextVisibleComponent = useCallback(options => {
     const didBreak = Boolean(options?.break)
+    const didIgnore = Boolean(options?.ignore)
 
+    if (didIgnore) return
     if (!didBreak) setParams(options?.formatter || defaultFormatter)
 
     setData(oldData => {

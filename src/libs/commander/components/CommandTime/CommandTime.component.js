@@ -15,21 +15,31 @@ export const CommandTime = ({ props, terminal: { command, finish } }) => {
 
   const handleSetDelay = useCallback(() => {
     setDelay(props.delay)
+    return { ignore: true }
   }, [props])
+
+  const doAction = useCallback(async () => {
+    switch (actionType) {
+      case timeActionTypes.SET_DELAY:
+        return handleSetDelay()
+
+      default:
+        throw new Error('unexpectedError')
+    }
+  }, [actionType, handleSetDelay])
 
   useEffect(
     function handleActionType() {
-      switch (actionType) {
-        case timeActionTypes.SET_DELAY:
-          handleSetDelay()
-          break
-
-        default:
-          setMessage(timeMessages.unexpectedError)
-          break
+      const handleError = error => {
+        setMessage(timeMessages[error?.message] || timeMessages.unexpectedError)
+        finish({ break: true })
       }
+
+      doAction()
+        .then(finish)
+        .catch(handleError)
     },
-    [actionType, handleSetDelay, setMessage]
+    [doAction, setMessage, finish]
   )
 
   const handleFinishTimer = useCallback(() => {

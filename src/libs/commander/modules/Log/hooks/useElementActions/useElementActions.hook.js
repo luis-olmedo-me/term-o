@@ -2,6 +2,7 @@ import * as React from 'preact'
 
 import { useState } from 'preact/hooks'
 import { Copy, Eye, Flag, Palette, Skull, Tag } from 'src/modules/icons'
+import { isElementHidden } from '../../../../components/CommandDom/CommandDom.helpers'
 import { createXPathFromElement } from './useElementActions.helpers'
 
 export const useElementActions = ({ onAttributeEdit, onStyleEdit, onRootEdit }) => {
@@ -39,6 +40,7 @@ export const useElementActions = ({ onAttributeEdit, onStyleEdit, onRootEdit }) 
   const hasAllElementsInDom = selectedElements.every(element => document.contains(element))
 
   const [firstSelectedElement] = selectedElements
+  const isFirstElementHidden = firstSelectedElement ? isElementHidden(firstSelectedElement) : true
   const isRootChangeEnabled = firstSelectedElement
     ? firstSelectedElement.childElementCount > 0
     : true
@@ -58,7 +60,7 @@ export const useElementActions = ({ onAttributeEdit, onStyleEdit, onRootEdit }) 
     },
     {
       id: 'scroll-into-view-option',
-      disabled: !hasOneSelectedElement,
+      disabled: !hasOneSelectedElement || isFirstElementHidden,
       onClick: () => handleScrollIntoView(firstSelectedElement),
       text: <Eye />
     },

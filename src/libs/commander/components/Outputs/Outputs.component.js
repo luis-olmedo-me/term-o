@@ -47,7 +47,7 @@ const OutputsNonMemoized = ({ components, id, outsideProps }) => {
       const lastChild = [...children].at(-1)
 
       if (lastChild) lastChild.scrollIntoView({ behavior: 'smooth' })
-    }, 300),
+    }, 450),
     []
   )
 

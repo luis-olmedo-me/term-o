@@ -1,6 +1,5 @@
 import * as React from 'preact'
 import { useEffect, useRef, useState } from 'preact/hooks'
-import { theme as t } from 'src/helpers/theme.helpers'
 import { debounce } from 'src/helpers/utils.helpers.js'
 import { Checkbox } from '../Checkbox/Checkbox.component'
 import {
@@ -12,15 +11,22 @@ import {
   TableWrapper
 } from './Table.styles'
 
-export const Table = ({ rows, options, onSelectionChange, onSelectionAll, selectedRows }) => {
-  const wrapperRef = useRef(null)
+export const Table = ({
+  rows,
+  options,
+  onSelectionChange,
+  onSelectionAll,
+  selectedRows,
+  widthRef
+}) => {
   const [wrapperWidth, setWrapperWidth] = useState(0)
 
   useEffect(() => {
-    const wrapper = wrapperRef.current
+    const wrapper = widthRef?.current
+
+    if (!wrapper) return
 
     const updateWidth = debounce(() => setWrapperWidth(wrapper.clientWidth), 250)
-
     const obsever = new ResizeObserver(updateWidth)
 
     obsever.observe(wrapper)
@@ -72,7 +78,7 @@ export const Table = ({ rows, options, onSelectionChange, onSelectionAll, select
   const centerConditions = parsedHeaders.map(column => column.center)
 
   return (
-    <TableWrapper ref={wrapperRef}>
+    <TableWrapper ref={widthRef}>
       <TableRow className="header">
         {parsedHeaders.map(({ id, width, displayName, minTableWidth }) => {
           const showColumn =

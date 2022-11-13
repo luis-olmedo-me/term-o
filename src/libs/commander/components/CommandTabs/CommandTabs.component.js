@@ -2,7 +2,7 @@ import * as React from 'preact'
 
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { Table } from 'modules/components/Table/Table.component'
-import { useCallback, useEffect, useState } from 'preact/hooks'
+import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 import { closeTabs, fetchHistorial, fetchTabsOpen } from 'src/helpers/event.helpers'
 import { parameterTypes } from '../../constants/commands.constants'
 import {
@@ -23,6 +23,7 @@ import { tabsMessages } from './CommandTabs.messages'
 
 export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const [tabs, setTabs] = useState([])
+  const logRef = useRef(null)
 
   const actionType = getActionType(props)
 
@@ -168,7 +169,9 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
 
   return (
     <>
-      <Log variant={parameterTypes.COMMAND}>{command}</Log>
+      <Log ref={logRef} variant={parameterTypes.COMMAND}>
+        {command}
+      </Log>
 
       {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
 
@@ -186,7 +189,12 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
             {pages.map((page, currentPageNumber) => {
               return (
                 <CarouselItem key={currentPageNumber}>
-                  <Table {...tableSelectionProps} rows={page} options={tabsTableOptions} />
+                  <Table
+                    {...tableSelectionProps}
+                    rows={page}
+                    options={tabsTableOptions}
+                    widthRef={logRef}
+                  />
                 </CarouselItem>
               )
             })}

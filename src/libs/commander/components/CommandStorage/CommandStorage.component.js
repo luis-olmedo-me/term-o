@@ -1,7 +1,7 @@
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { Table } from 'modules/components/Table'
 import * as React from 'preact'
-import { useCallback, useEffect, useState } from 'preact/hooks'
+import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 import { parameterTypes } from '../../constants/commands.constants'
 import { Log, useMessageLog, usePaginationActions, useViews } from '../../modules/Log'
 import {
@@ -24,6 +24,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
 
   const [tableItems, setTableItems] = useState([])
   const [editingEntity, setEditingEntity] = useState([])
+  const logRef = useRef(null)
 
   const { log: messageLog, setMessage } = useMessageLog()
   const { paginationActions, pages, pageNumber } = usePaginationActions({
@@ -108,7 +109,9 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
 
   return (
     <>
-      <Log variant={parameterTypes.COMMAND}>{command}</Log>
+      <Log ref={logRef} variant={parameterTypes.COMMAND}>
+        {command}
+      </Log>
 
       {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
 
@@ -120,7 +123,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
                 {pages.map((page, currentPageNumber) => {
                   return (
                     <CarouselItem key={currentPageNumber}>
-                      <Table rows={page} options={storageTableOptions} />
+                      <Table rows={page} options={storageTableOptions} widthRef={logRef} />
                     </CarouselItem>
                   )
                 })}

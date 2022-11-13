@@ -2,7 +2,7 @@ import * as React from 'preact'
 
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { Table } from 'modules/components/Table/Table.component'
-import { useCallback, useEffect, useState } from 'preact/hooks'
+import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 import { deletePageEvents, fetchConfiguration } from 'src/helpers/event.helpers.js'
 import { getParamsByType } from '../../commander.helpers'
 import { parameterTypes } from '../../constants/commands.constants'
@@ -20,6 +20,7 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
   const { delete: deletedIds, trigger: eventToTrigger, value: valueToInsert } = props
 
   const [tableItems, setTableItems] = useState([])
+  const logRef = useRef(null)
 
   const onError = error =>
     setMessage(eventMessages[error?.message] || eventMessages.unexpectedError)
@@ -127,7 +128,9 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
 
   return (
     <>
-      <Log variant={parameterTypes.COMMAND}>{command}</Log>
+      <Log logRef={logRef} variant={parameterTypes.COMMAND}>
+        {command}
+      </Log>
 
       {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
 
@@ -140,7 +143,12 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
             {pages.map((page, currentPageNumber) => {
               return (
                 <CarouselItem key={currentPageNumber}>
-                  <Table {...tableSelectionProps} rows={page} options={eventTableOptions} />
+                  <Table
+                    {...tableSelectionProps}
+                    rows={page}
+                    options={eventTableOptions}
+                    widthRef={logRef}
+                  />
                 </CarouselItem>
               )
             })}

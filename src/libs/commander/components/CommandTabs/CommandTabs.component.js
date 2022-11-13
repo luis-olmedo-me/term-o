@@ -4,7 +4,6 @@ import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { Table } from 'modules/components/Table/Table.component'
 import { useCallback, useEffect, useState } from 'preact/hooks'
 import { closeTabs, fetchHistorial, fetchTabsOpen } from 'src/helpers/event.helpers'
-import { commanderMessages } from '../../commander.messages'
 import { parameterTypes } from '../../constants/commands.constants'
 import {
   Log,
@@ -27,34 +26,32 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
 
   const actionType = getActionType(props)
 
-  const handleDatesUpdate = overWrittenOptions => {
+  const onError = error => setMessage(tabsMessages[error?.message] || tabsMessages.unexpectedError)
+  const handleDatesUpdate = async overWrittenOptions => {
     const options = {
       ...validateHistoryFilters(props),
       ...overWrittenOptions
     }
     const { startTime, endTime } = options
 
-    fetchHistorial(options)
-      .then(historial => {
-        if (startTime) setDate({ start: startTime })
-        if (endTime) setDate({ end: endTime })
+    const historial = await fetchHistorial(options).catch(onError)
 
-        if (!historial.length) return setAreDatesInvalid(true)
-        setAreDatesInvalid(false)
+    if (startTime) setDate({ start: startTime })
+    if (endTime) setDate({ end: endTime })
 
-        const tabItems = turnOpenTabsToTableItems({ tabsOpen: historial })
+    if (!historial.length) return setAreDatesInvalid(true)
+    setAreDatesInvalid(false)
 
-        setTabs(tabItems)
-      })
-      .catch(() => setMessage(commanderMessages.unexpectedError))
+    const tabItems = turnOpenTabsToTableItems({ tabsOpen: historial })
+
+    setTabs(tabItems)
   }
 
   const handleClosingTabsFromSelection = async ({ selectedRows }) => {
     const tabIdsToClose = selectedRows.map(([idRow]) => idRow.value)
 
-    await closeTabs(tabIdsToClose)
-
-    handleShowTabList()
+    await closeTabs(tabIdsToClose).catch(onError)
+    await handleShowTabList().catch(onError)
 
     clearSelection()
   }
@@ -73,114 +70,100 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     isEnabled: props.now
   })
 
-  const handleShowTabList = useCallback(() => {
+  const handleShowTabList = useCallback(async () => {
     const options = validateTabsFilters(props)
+    const tabsOpen = await fetchTabsOpen(options)
+    const tabItems = turnOpenTabsToTableItems({ tabsOpen })
 
-    fetchTabsOpen(options)
-      .then(tabsOpen => {
-        if (!tabsOpen.length) return setMessage(tabsMessages.noTabsFound)
+    if (!tabsOpen.length) throw new Error('noTabsFound')
 
-        const tabItems = turnOpenTabsToTableItems({ tabsOpen })
-
-        setTabs(tabItems)
-        finish()
-      })
-      .catch(() => setMessage(commanderMessages.unexpectedError))
-  }, [finish, setMessage, props])
+    setTabs(tabItems)
+  }, [props])
 
   const handleRedirect = useCallback(() => {
-    if (!props.open) return setMessage(tabsMessages.missingURL)
-
     const target = props.useCurrent ? '_self' : '_blank'
 
+    if (!props.open) throw new Error('missingURL')
+
     window.open(props.open, target)
-
     setMessage(tabsMessages.redirectionSuccess)
-    finish()
-  }, [props, setMessage, finish])
+  }, [props])
 
-  const handleShowHistory = useCallback(() => {
+  const handleShowHistory = useCallback(async () => {
     const options = validateHistoryFilters(props)
     const { startTime, endTime } = options
+
+    const historial = await fetchHistorial(options)
+    const tabItems = turnOpenTabsToTableItems({ tabsOpen: historial })
 
     if (startTime) setDate({ start: startTime })
     if (endTime) setDate({ end: endTime })
 
-    fetchHistorial(options)
-      .then(historial => {
-        if (!historial.length) return setMessage(tabsMessages.noTabsFound)
+    if (!historial.length) throw new Error('noTabsFound')
 
-        const tabItems = turnOpenTabsToTableItems({ tabsOpen: historial })
+    setTabs(tabItems)
+  }, [props])
 
-        setTabs(tabItems)
-        finish()
-      })
-      .catch(() => setMessage(commanderMessages.unexpectedError))
-  }, [setMessage, finish, props])
-
-  const handleCloseTabs = useCallback(() => {
-    closeTabs(props.close)
-
+  const handleCloseTabs = useCallback(async () => {
+    await closeTabs(props.close)
     setMessage(tabsMessages.closeSuccess)
-    finish()
-  }, [props, setMessage, finish])
+  }, [props, setMessage])
 
   const handleReloadTab = useCallback(() => {
     window.location.reload()
-
     setMessage(tabsMessages.reloadSuccess)
-    finish()
-  }, [setMessage, finish])
+  }, [setMessage])
 
   const handleGo = useCallback(() => {
     window.history.go(props.go)
-
     setMessage(tabsMessages.goSuccess)
-    finish()
-  }, [props, setMessage, finish])
+  }, [props, setMessage])
+
+  const doAction = useCallback(async () => {
+    switch (actionType) {
+      case tabsActionTypes.SHOW_CURRENT_TABS:
+        return await handleShowTabList()
+
+      case tabsActionTypes.SHOW_HISTORY:
+        return await handleShowHistory()
+
+      case tabsActionTypes.CLOSE_OPEN_TABS:
+        return await handleCloseTabs()
+
+      case tabsActionTypes.REDIRECT:
+        return handleRedirect()
+
+      case tabsActionTypes.RELOAD_TAB:
+        return handleReloadTab()
+
+      case tabsActionTypes.GO:
+        return handleGo()
+
+      case tabsActionTypes.NONE:
+        throw new Error('unexpectedError')
+    }
+  }, [
+    actionType,
+    handleShowTabList,
+    handleRedirect,
+    handleShowHistory,
+    handleCloseTabs,
+    handleReloadTab,
+    handleGo
+  ])
 
   useEffect(
     function handleActionType() {
-      switch (actionType) {
-        case tabsActionTypes.SHOW_CURRENT_TABS:
-          handleShowTabList()
-          break
-
-        case tabsActionTypes.SHOW_HISTORY:
-          handleShowHistory()
-          break
-
-        case tabsActionTypes.REDIRECT:
-          handleRedirect()
-          break
-
-        case tabsActionTypes.CLOSE_OPEN_TABS:
-          handleCloseTabs()
-          break
-
-        case tabsActionTypes.RELOAD_TAB:
-          handleReloadTab()
-          break
-
-        case tabsActionTypes.GO:
-          handleGo()
-          break
-
-        case tabsActionTypes.NONE:
-          setMessage(commanderMessages.unexpectedError)
-          break
+      const handleError = error => {
+        setMessage(tabsMessages[error?.message] || tabsMessages.unexpectedError)
+        finish({ break: true })
       }
+
+      doAction()
+        .then(finish)
+        .catch(handleError)
     },
-    [
-      actionType,
-      setMessage,
-      handleShowTabList,
-      handleRedirect,
-      handleShowHistory,
-      handleCloseTabs,
-      handleReloadTab,
-      handleGo
-    ]
+    [doAction, setMessage, finish]
   )
 
   return (

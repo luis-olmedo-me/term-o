@@ -1,24 +1,13 @@
+import * as React from 'preact'
+
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { Table } from 'modules/components/Table/Table.component'
-import * as React from 'preact'
 import { useCallback, useEffect, useState } from 'preact/hooks'
-import {
-  deletePageEvents,
-  fetchConfiguration
-} from 'src/helpers/event.helpers.js'
+import { deletePageEvents, fetchConfiguration } from 'src/helpers/event.helpers.js'
 import { getParamsByType } from '../../commander.helpers'
 import { parameterTypes } from '../../constants/commands.constants'
-import {
-  Log,
-  useMessageLog,
-  usePaginationActions,
-  useTableSelection
-} from '../../modules/Log'
-import {
-  eventActionTypes,
-  eventTableOptions,
-  supportedEvents
-} from './CommandEvent.constants'
+import { Log, useMessageLog, usePaginationActions, useTableSelection } from '../../modules/Log'
+import { eventActionTypes, eventTableOptions, supportedEvents } from './CommandEvent.constants'
 import {
   getActionType,
   triggerChangeEvent,
@@ -27,24 +16,15 @@ import {
 } from './CommandEvent.helpers'
 import { eventMessages } from './CommandEvent.messages'
 
-export const CommandEvent = ({
-  props,
-  terminal: { command, params, finish }
-}) => {
-  const {
-    delete: deletedIds,
-    trigger: eventToTrigger,
-    value: valueToInsert
-  } = props
+export const CommandEvent = ({ props, terminal: { command, params, finish } }) => {
+  const { delete: deletedIds, trigger: eventToTrigger, value: valueToInsert } = props
 
   const [tableItems, setTableItems] = useState([])
 
   const handleDeleteEventsFromTableItems = async ({ selectedRows }) => {
     const eventIdsToDelete = selectedRows.map(([idRow]) => idRow.value)
 
-    await deletePageEvents(eventIdsToDelete).catch(() =>
-      setMessage(eventMessages.unexpectedError)
-    )
+    await deletePageEvents(eventIdsToDelete).catch(() => setMessage(eventMessages.unexpectedError))
 
     await fetchConfiguration()
       .then(handleShowList)
@@ -58,12 +38,11 @@ export const CommandEvent = ({
     items: tableItems,
     maxItems: 10
   })
-  const { clearSelection, tableSelectionProps, selectionActions } =
-    useTableSelection({
-      handleSkullClick: handleDeleteEventsFromTableItems,
-      currentRows: pages[pageNumber],
-      isEnabled: props.now
-    })
+  const { clearSelection, tableSelectionProps, selectionActions } = useTableSelection({
+    handleSkullClick: handleDeleteEventsFromTableItems,
+    currentRows: pages[pageNumber],
+    isEnabled: props.now
+  })
 
   const actionType = getActionType(props)
 
@@ -83,8 +62,8 @@ export const CommandEvent = ({
     ({ pageEvents = [] }) => {
       if (!pageEvents.length) return setMessage(eventMessages.noEventsFound)
 
-      const idsToDelete = deletedIds.filter((id) => {
-        return pageEvents.some((pageEvent) => pageEvent.id === id)
+      const idsToDelete = deletedIds.filter(id => {
+        return pageEvents.some(pageEvent => pageEvent.id === id)
       })
 
       if (deletedIds.length !== idsToDelete.length) {
@@ -108,7 +87,7 @@ export const CommandEvent = ({
 
     switch (eventToTrigger) {
       case supportedEvents.CLICK: {
-        paramElements.forEach((element) => element.click())
+        paramElements.forEach(element => element.click())
 
         setMessage(eventMessages.elementsClickedSuccess)
         break
@@ -119,7 +98,7 @@ export const CommandEvent = ({
 
         if (!areElementsValid) return setMessage(eventMessages.invalidElements)
 
-        paramElements.forEach((element) => {
+        paramElements.forEach(element => {
           triggerChangeEvent({ element, value: valueToInsert })
         })
 
@@ -175,11 +154,7 @@ export const CommandEvent = ({
             {pages.map((page, currentPageNumber) => {
               return (
                 <CarouselItem key={currentPageNumber}>
-                  <Table
-                    {...tableSelectionProps}
-                    rows={page}
-                    options={eventTableOptions}
-                  />
+                  <Table {...tableSelectionProps} rows={page} options={eventTableOptions} />
                 </CarouselItem>
               )
             })}

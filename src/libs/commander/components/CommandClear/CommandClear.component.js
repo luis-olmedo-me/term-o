@@ -36,10 +36,6 @@ export const CommandClearWithoutContext = ({
             .then(() => setMessage(clearMessages.configurationResetSuccess))
             .then(() => finish())
           break
-
-        default:
-          finish()
-          break
       }
     },
     [actionType, clearTerminal, setMessage, setHighlitedElement, handleClearTerminal, finish]

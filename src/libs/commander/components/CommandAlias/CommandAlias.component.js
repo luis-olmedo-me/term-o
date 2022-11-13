@@ -2,18 +2,9 @@ import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { Table } from 'modules/components/Table/Table.component'
 import * as React from 'preact'
 import { useCallback, useEffect, useState } from 'preact/hooks'
-import {
-  addAliases,
-  deleteAliases,
-  fetchConfiguration
-} from 'src/helpers/event.helpers.js'
+import { addAliases, deleteAliases, fetchConfiguration } from 'src/helpers/event.helpers.js'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
-import {
-  Log,
-  useMessageLog,
-  usePaginationActions,
-  useTableSelection
-} from '../../modules/Log'
+import { Log, useMessageLog, usePaginationActions, useTableSelection } from '../../modules/Log'
 import { aliasTableOptions } from './CommandAlias.constants'
 import {
   getActionType,
@@ -33,9 +24,7 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
     clearSelection()
 
     await deleteAliases(aliasIdsToDelete)
-    fetchConfiguration()
-      .then(handleShowList)
-      .catch(() => setMessage(aliasMessages.unexpectedError))
+    await handleShowList()
   }
 
   const { log: messageLog, setMessage } = useMessageLog()
@@ -43,82 +32,78 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
     items: tableItems,
     maxItems: 10
   })
-  const { clearSelection, tableSelectionProps, selectionActions } =
-    useTableSelection({
-      handleSkullClick: handleDeleteAliasesFromSelection,
-      currentRows: pages[pageNumber],
-      isEnabled: props.now
-    })
+  const { clearSelection, tableSelectionProps, selectionActions } = useTableSelection({
+    handleSkullClick: handleDeleteAliasesFromSelection,
+    currentRows: pages[pageNumber],
+    isEnabled: props.now
+  })
 
   const actionType = getActionType(props)
 
-  const handleShowList = useCallback(
-    ({ aliases = [] }) => {
-      if (!aliases.length) return setMessage(aliasMessages.noAliasesFound)
+  const handleShowList = useCallback(async () => {
+    const { aliases = [] } = await fetchConfiguration()
+    const aliasRows = turnAliasesToTableItems({ aliases })
+    const hasAliases = aliases.length > 0
 
-      const aliasRows = turnAliasesToTableItems({ aliases })
+    if (!hasAliases) throw new Error('noAliasesFound')
 
-      setTableItems(aliasRows)
-      finish()
-    },
-    [setMessage, finish]
-  )
+    setTableItems(aliasRows)
+  }, [setMessage])
 
-  const handleAddAliases = useCallback(() => {
+  const handleAddAliases = useCallback(async () => {
     const validAliases = validateAliasesToAdd({ aliasesToAdd })
 
     const newAliasesCount = Object.keys(validAliases).length
     const hasValidAliases = newAliasesCount === validAliases.length
 
-    if (!hasValidAliases) return setMessage(aliasMessages.invalidAliases)
+    if (!hasValidAliases) throw new Error('invalidAliases')
 
-    addAliases(validAliases)
-      .catch(() => setMessage(aliasMessages.unexpectedError))
-      .then(() => setMessage(aliasMessages.aliasAdditionSuccess))
-      .then(() => finish())
-  }, [aliasesToAdd, setMessage, finish])
+    await addAliases(validAliases)
+    setMessage(aliasMessages.aliasAdditionSuccess)
+  }, [aliasesToAdd, setMessage])
 
   const handleDeleteAliases = useCallback(
-    ({ aliases = [], aliasesIdsToDelete = deletedIds }) => {
+    async ({ aliases = [], aliasesIdsToDelete = deletedIds }) => {
       const aliasIds = aliases.map(({ id }) => id)
-      const validIds = aliasesIdsToDelete.filter((id) => aliasIds.includes(id))
+      const validIds = aliasesIdsToDelete.filter(id => aliasIds.includes(id))
       const hasInvalidIds = aliasesIdsToDelete.length !== validIds.length
 
-      if (hasInvalidIds) return setMessage(aliasMessages.noAliasIdsFound)
+      if (hasInvalidIds) throw new Error('noAliasIdsFound')
 
-      deleteAliases(validIds)
-        .catch(() => setMessage(aliasMessages.unexpectedError))
-        .then(() => setMessage(aliasMessages.aliasDeletionSuccess))
-        .then(() => finish())
+      await deleteAliases(validIds)
+      setMessage(aliasMessages.aliasDeletionSuccess)
     },
-    [deletedIds, finish]
+    [deletedIds]
   )
+
+  const doAction = useCallback(async () => {
+    switch (actionType) {
+      case actionTypes.SHOW_LIST:
+        return await handleShowList()
+
+      case actionTypes.DELETE_ALIAS:
+        return await handleDeleteAliases()
+
+      case actionTypes.ADD_ALIAS:
+        return await handleAddAliases()
+
+      case actionTypes.NONE:
+        throw new Error('unexpectedError')
+    }
+  }, [actionType, handleShowList, handleDeleteAliases, handleAddAliases])
 
   useEffect(
     function handleActionType() {
-      switch (actionType) {
-        case actionTypes.SHOW_LIST:
-          fetchConfiguration()
-            .then(handleShowList)
-            .catch(() => setMessage(aliasMessages.unexpectedError))
-          break
-
-        case actionTypes.DELETE_ALIAS:
-          fetchConfiguration()
-            .then(handleDeleteAliases)
-            .catch(() => setMessage(aliasMessages.unexpectedError))
-          break
-
-        case actionTypes.ADD_ALIAS:
-          handleAddAliases()
-          break
-
-        case actionTypes.NONE:
-          setMessage(aliasMessages.unexpectedError)
-          break
+      const handleError = error => {
+        setMessage(aliasMessages[error.message] || aliasMessages.unexpectedError)
+        return { break: true }
       }
+
+      doAction()
+        .catch(handleError)
+        .finally(finish)
     },
-    [actionType, handleAddAliases, handleDeleteAliases, handleShowList]
+    [doAction, setMessage, finish]
   )
 
   return (
@@ -136,11 +121,7 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
             {pages.map((page, currentPageNumber) => {
               return (
                 <CarouselItem key={currentPageNumber}>
-                  <Table
-                    {...tableSelectionProps}
-                    rows={page}
-                    options={aliasTableOptions}
-                  />
+                  <Table {...tableSelectionProps} rows={page} options={aliasTableOptions} />
                 </CarouselItem>
               )
             })}

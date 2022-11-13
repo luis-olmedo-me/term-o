@@ -1,6 +1,6 @@
 import { optionTypes } from './constants/commands.constants'
 
-export const parsePropsIntoSuggestions = (propsConfigs) => {
+export const parsePropsIntoSuggestions = propsConfigs => {
   if (!propsConfigs) return []
 
   return Object.keys(propsConfigs).reduce((result, key) => {
@@ -40,7 +40,7 @@ const breakArrayInCertainIndexes = (array, indexes) => {
   }, [])
 }
 
-const isOdd = (number) => number % 2 !== 0
+const isOdd = number => number % 2 !== 0
 const hasDoubleQuoteType = (string, quote) => {
   const quoteTypeCount = string.match(new RegExp(quote, 'g'))?.length || -1
 
@@ -55,8 +55,7 @@ export const splitArgsTakingInCountSymbols = (args, _quotes) => {
 
   const argsByQuotes = args.reduce((parsedArguments, argument, index) => {
     const hasQuotes = argument.includes(quotesToUse)
-    const hasAllQuotes =
-      hasDoubleQuoteType(argument, quotesToUse) && !shouldCarryArgs
+    const hasAllQuotes = hasDoubleQuoteType(argument, quotesToUse) && !shouldCarryArgs
     const isVerticalLine = argument === '|'
     const isLastArgument = index === args.length - 1
 
@@ -94,25 +93,34 @@ export const splitArgsTakingInCountSymbols = (args, _quotes) => {
     : splitArgsTakingInCountSymbols(argsByQuotes, "'")
 }
 
-const getRowDataFromOption = (option) => {
+const getRowDataFromOption = option => {
   const rowDataReversedPattern = /(?<value>.+)=(?<key>.+)/g
-  const reversedOption = option.split('').reverse().join('')
+  const reversedOption = option
+    .split('')
+    .reverse()
+    .join('')
 
   const {
     groups: { key = '', value = '' }
   } = rowDataReversedPattern.exec(reversedOption) || { groups: {} }
 
-  const restoredKey = key.split('').reverse().join('')
-  const restoredValue = value.split('').reverse().join('')
+  const restoredKey = key
+    .split('')
+    .reverse()
+    .join('')
+  const restoredValue = value
+    .split('')
+    .reverse()
+    .join('')
 
   return [restoredKey, restoredValue]
 }
 
-export const removeQuotesFromValue = (value) => {
+export const removeQuotesFromValue = value => {
   return value.replace(/^'|'$/g, '').replace(/^"|"$/g, '')
 }
 
-const checkURLValidation = (value) => {
+const checkURLValidation = value => {
   try {
     return !!new URL(value)
   } catch (error) {
@@ -122,7 +130,7 @@ const checkURLValidation = (value) => {
 
 export const getOptionsFromArgs = (args, propsConfig = {}) => {
   const parsedArguments = { values: [] }
-  const booleanOptionNames = Object.keys(propsConfig).filter((propName) => {
+  const booleanOptionNames = Object.keys(propsConfig).filter(propName => {
     return propsConfig[propName].type === optionTypes.BOOLEAN
   })
   const booleanOptionAliasesNames = booleanOptionNames.reduce(
@@ -138,24 +146,19 @@ export const getOptionsFromArgs = (args, propsConfig = {}) => {
     const isArgOption = arg.startsWith('-')
     const isNextArgOption = nextArg.startsWith('-')
 
-    const isArgOptionWithRowValue =
-      isArgOption && arg.includes('=') && /^\w+=.+/.test(arg)
+    const isArgOptionWithRowValue = isArgOption && arg.includes('=') && /^\w+=.+/.test(arg)
 
     const formattedArg = arg.replace(/^--|^-/, '')
 
-    const isArgOptionSetBoolean =
-      isArgOption && booleanOptions.includes(formattedArg)
+    const isArgOptionSetBoolean = isArgOption && booleanOptions.includes(formattedArg)
 
     if (isArgOptionSetBoolean) {
       parsedArguments[formattedArg] = true
     } else if (isArgOptionWithRowValue) {
       const [key, value] = getRowDataFromOption(arg)
 
-      const isValueWithRowValue =
-        value.includes('=') && !checkURLValidation(value)
-      const [nextKey, nextValue] = isValueWithRowValue
-        ? getRowDataFromOption(value)
-        : []
+      const isValueWithRowValue = value.includes('=') && !checkURLValidation(value)
+      const [nextKey, nextValue] = isValueWithRowValue ? getRowDataFromOption(value) : []
 
       const formattedKey = key.replace(/^--|^-/, '')
       const carriedParsedArguments = parsedArguments[formattedKey] || []
@@ -171,9 +174,7 @@ export const getOptionsFromArgs = (args, propsConfig = {}) => {
         nextArg.includes('=') &&
         !checkURLValidation(nextArg) &&
         /^\w+=.+/.test(nextArg)
-      const [nextKey, nextValue] = isNextArgOptionWithRowValue
-        ? getRowDataFromOption(nextArg)
-        : []
+      const [nextKey, nextValue] = isNextArgOptionWithRowValue ? getRowDataFromOption(nextArg) : []
 
       const carriedParsedArguments = parsedArguments[formattedArg] || []
 
@@ -197,16 +198,14 @@ const validatePropValue = (value, type, defaultValue) => {
   switch (type) {
     case optionTypes.ARRAY_OF_OBJECTS: {
       const isArray = Array.isArray(value)
-      const hasAllObjects =
-        isArray && value.every((item) => typeof item === 'object')
+      const hasAllObjects = isArray && value.every(item => typeof item === 'object')
 
       return hasAllObjects ? value : defaultValue
     }
 
     case optionTypes.ARRAY_OF_STRINGS: {
       const isArray = Array.isArray(value)
-      const hasAllStrings =
-        isArray && value.every((item) => typeof item === 'string')
+      const hasAllStrings = isArray && value.every(item => typeof item === 'string')
 
       return hasAllStrings ? value : defaultValue
     }
@@ -232,20 +231,13 @@ const validatePropValue = (value, type, defaultValue) => {
   }
 }
 
-const buildGroupProps = (
-  { values: _values, ...propValues },
-  groupPropConfigs = {}
-) => {
+const buildGroupProps = ({ values: _values, ...propValues }, groupPropConfigs = {}) => {
   return Object.entries(propValues).reduce((allProps, [name, value]) => {
     const groupConfig = groupPropConfigs[name]
 
     if (!groupConfig) return allProps
 
-    const validatedValue = validatePropValue(
-      value,
-      groupConfig.type,
-      groupConfig.defaultValue
-    )
+    const validatedValue = validatePropValue(value, groupConfig.type, groupConfig.defaultValue)
 
     return { ...allProps, [groupConfig.key]: validatedValue }
   }, {})
@@ -254,13 +246,11 @@ const buildGroupProps = (
 export const buildProps = (propValues, propsConfig = {}) => {
   return Object.entries(propsConfig).reduce(
     (allProps, [propName, { key, type, defaultValue, alias, groupProps }]) => {
-      const aliasName = Object.keys(propValues).find((name) => {
+      const aliasName = Object.keys(propValues).find(name => {
         return alias === name
       })
 
-      const groupValue = groupProps
-        ? buildGroupProps(propValues, groupProps)
-        : null
+      const groupValue = groupProps ? buildGroupProps(propValues, groupProps) : null
 
       const value = propValues[propName] || propValues[aliasName] || groupValue
       const validatedValue = validatePropValue(value, type, defaultValue)
@@ -284,9 +274,7 @@ export const parseValuesIntoParams = (values, posibleParams) => {
       const paramIndex = Number(value.replace('$', ''))
       const isParamIndexValid = paramIndex + 1 <= posibleParams.length
 
-      return isParamIndexValid
-        ? params.concat(posibleParams[paramIndex])
-        : params
+      return isParamIndexValid ? params.concat(posibleParams[paramIndex]) : params
     }
 
     return params
@@ -294,13 +282,13 @@ export const parseValuesIntoParams = (values, posibleParams) => {
 }
 
 export const insertParams = (id, newParam) => {
-  return (oldParams) => {
-    const hasOldParam = oldParams.some((param) => param.id === id)
+  const formatter = oldParams => {
+    const hasOldParam = oldParams.some(param => param.id === id)
 
-    const overwrittenParams = oldParams.map((param) =>
-      param.id === id ? newParam : param
-    )
+    const overwrittenParams = oldParams.map(param => (param.id === id ? newParam : param))
 
     return hasOldParam ? overwrittenParams : [...oldParams, newParam]
   }
+
+  return { formatter, break: false }
 }

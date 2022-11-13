@@ -17,14 +17,6 @@ const receiveConfig = ({ aliases, pageEvents, position }) => ({
   aliases: aliases || []
 })
 
-export const createFrontWorkerRequest = ({ request }) => {
-  return new Promise(async (resolve, reject) => {
-    const response = await request().catch(() => reject({ status: 'error' }))
-
-    resolve(response)
-  })
-}
-
 export const createWorkerRequest = ({ type, data, defaultResponse }) => {
   return new Promise((resolve, reject) => {
     const callback = response => {
@@ -95,6 +87,34 @@ export const deleteAliases = async aliasIds => {
   })
 }
 
+export const addPageEvents = newPageEvents => {
+  return new Promise(async (resolve, reject) => {
+    const { pageEvents = [] } = await chrome.storage.local.get('pageEvents').catch(reject)
+    const mergedPageEvents = [...pageEvents, ...newPageEvents]
+
+    await chrome.storage.local.set({ pageEvents: mergedPageEvents }).catch(reject)
+    resolve()
+  })
+}
+
+export const deletePageEvents = pageEventIds => {
+  return new Promise(async (resolve, reject) => {
+    const { pageEvents = [] } = await chrome.storage.local.get('pageEvents').catch(reject)
+    const filteredPageEvents = pageEvents.filter(({ id }) => !pageEventIds.includes(id))
+
+    await chrome.storage.local.set({ pageEvents: filteredPageEvents }).catch(reject)
+    resolve()
+  })
+}
+
+export const resetConfiguration = () => {
+  return chrome.storage.local.set({ aliases: [], pageEvents: [], consolePosition: {} })
+}
+
+export const updateConsolePosition = position => {
+  return chrome.storage.local.set({ position })
+}
+
 export const fetchHistorial = data => {
   return createWorkerProcessRequest({
     type: eventTypes.GET_HISTORIAL,
@@ -110,37 +130,10 @@ export const closeTabs = data => {
   })
 }
 
-export const deletePageEvents = ids => {
-  return createWorkerRequest({
-    type: eventTypes.DELETE_PAGES_EVENT,
-    data: { ids }
-  })
-}
-
-export const addPageEvents = newPageEvents => {
-  return createWorkerRequest({
-    type: eventTypes.ADD_PAGES_EVENT,
-    data: newPageEvents
-  })
-}
-
-export const resetConfiguration = () => {
-  return createWorkerRequest({
-    type: eventTypes.RESET_CONFIGURATION
-  })
-}
-
 export const fetchTabsOpen = data => {
   return createWorkerProcessRequest({
     type: eventTypes.GET_TABS_OPEN,
     defaultResponse: [],
     data
-  })
-}
-
-export const updateConsolePosition = position => {
-  return createWorkerRequest({
-    type: eventTypes.UPDATE_CONFIG_CONSOLE_POSITION,
-    data: position
   })
 }

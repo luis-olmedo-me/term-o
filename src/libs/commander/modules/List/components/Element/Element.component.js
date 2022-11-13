@@ -1,7 +1,7 @@
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
 import * as React from 'preact'
 import { useMemo } from 'preact/hooks'
-import { isElementHidden } from '../../../../components/CommandDom/CommandDom.helpers'
+import { isElementHidden } from 'src/helpers/dom.helpers'
 import { ElementLabel } from '../../../NodeTree/components/ElementLabel/ElementLabel.component'
 import { ElementWrapper } from './Element.styles'
 
@@ -33,7 +33,7 @@ const ElementWithoutContext = ({
       onMouseLeave={!isHidden ? unhighlightElement : null}
       className={`${className} ${variant}`}
       shouldAnimate={shouldAnimate}
-      onClick={(event) => onClick?.({ event, element })}
+      onClick={event => onClick?.({ event, element })}
     >
       <ElementLabel element={element} isHidden={isHidden} />
     </ElementWrapper>

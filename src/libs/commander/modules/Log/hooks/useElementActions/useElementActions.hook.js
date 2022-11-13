@@ -1,8 +1,8 @@
 import * as React from 'preact'
 
 import { useState } from 'preact/hooks'
+import { isElementHidden } from 'src/helpers/dom.helpers'
 import { Copy, Eye, Flag, Palette, Skull, Tag } from 'src/modules/icons'
-import { isElementHidden } from '../../../../components/CommandDom/CommandDom.helpers'
 import { createXPathFromElement } from './useElementActions.helpers'
 
 export const useElementActions = ({ onAttributeEdit, onStyleEdit, onRootEdit }) => {

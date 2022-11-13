@@ -16,9 +16,9 @@ import { aliasMessages } from './CommandAlias.messages'
 export const CommandAlias = ({ props, terminal: { command, finish } }) => {
   const [tableItems, setTableItems] = useState([])
 
+  const onError = error => setMessage(eventMessages[error.message] || eventMessages.unexpectedError)
   const handleDeleteAliasesFromSelection = async ({ selectedRows }) => {
     const aliasIdsToDelete = selectedRows.map(([idRow]) => idRow.value)
-    const onError = () => setMessage(aliasMessages.unexpectedError)
 
     clearSelection()
 

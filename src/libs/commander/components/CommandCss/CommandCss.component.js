@@ -6,18 +6,10 @@ import { parameterTypes } from '../../constants/commands.constants'
 import { List, StyleSheet } from '../../modules/List'
 import { Log, useMessageLog } from '../../modules/Log'
 import { cssActionTypes } from './CommandCss.constants'
-import {
-  getActionType,
-  getStylesFrom,
-  parseManualStyles,
-  parseStyles
-} from './CommandCss.helpers'
+import { getActionType, getStylesFrom, parseManualStyles, parseStyles } from './CommandCss.helpers'
 import { cssMessages } from './CommandCss.messages'
 
-export const CommandCss = ({
-  props,
-  terminal: { command, params, finish }
-}) => {
+export const CommandCss = ({ props, terminal: { command, params, finish } }) => {
   const [sheets, setSheets] = useState([])
 
   const { log: messageLog, setMessage } = useMessageLog()
@@ -56,8 +48,7 @@ export const CommandCss = ({
   const handleGetStyles = useCallback(() => {
     const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
 
-    if (paramElements.length > 1)
-      return setMessage(cssMessages.parameterOverflow)
+    if (paramElements.length > 1) return setMessage(cssMessages.parameterOverflow)
     if (paramElements.length === 0) return setMessage(cssMessages.noParameters)
 
     const [firstParamElement] = paramElements
@@ -94,10 +85,7 @@ export const CommandCss = ({
 
       {!messageLog && (
         <Log variant={parameterTypes.STYLES} hasScroll hasShadow>
-          <List
-            items={sheets}
-            Child={({ item }) => <StyleSheet sheet={item} sheets={sheets} />}
-          />
+          <List items={sheets} Child={({ item }) => <StyleSheet sheet={item} sheets={sheets} />} />
         </Log>
       )}
     </>

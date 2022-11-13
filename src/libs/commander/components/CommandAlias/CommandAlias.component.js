@@ -95,12 +95,12 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
     function handleActionType() {
       const handleError = error => {
         setMessage(aliasMessages[error.message] || aliasMessages.unexpectedError)
-        return { break: true }
+        finish({ break: true })
       }
 
       doAction()
+        .then(finish)
         .catch(handleError)
-        .finally(finish)
     },
     [doAction, setMessage, finish]
   )

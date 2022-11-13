@@ -44,12 +44,12 @@ export const CommandClearWithoutContext = ({
     function handleActionType() {
       const handleError = error => {
         setMessage(clearMessages[error.message] || clearMessages.unexpectedError)
-        return { break: true }
+        finish({ break: true })
       }
 
       doAction()
+        .then(finish)
         .catch(handleError)
-        .finally(finish)
     },
     [doAction, setMessage, finish]
   )

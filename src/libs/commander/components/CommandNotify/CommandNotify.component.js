@@ -6,36 +6,38 @@ import { notifyActionTypes } from './CommandNotify.constants'
 import { getActionType } from './CommandNotify.helpers'
 import { notifyMessages } from './CommandNotify.messages'
 
-export const CommandNotify = ({
-  props,
-  terminal: { command, addNotification, finish }
-}) => {
-  const { message, image } = props
-
+export const CommandNotify = ({ props, terminal: { command, addNotification, finish } }) => {
   const actionType = getActionType(props)
 
   const { log: messageLog, setMessage } = useMessageLog()
 
   const handleNotify = useCallback(() => {
-    addNotification(message, image)
-
+    addNotification(props.message, props.image)
     setMessage(notifyMessages.notificationSuccess)
-    finish()
-  }, [handleNotify, message, image, setMessage, finish])
+  }, [props])
+
+  const doAction = useCallback(async () => {
+    switch (actionType) {
+      case notifyActionTypes.NOTIFY:
+        return handleNotify()
+
+      case notifyActionTypes.NONE:
+        throw new Error('unexpectedError')
+    }
+  }, [actionType, handleNotify])
 
   useEffect(
     function handleActionType() {
-      switch (actionType) {
-        case notifyActionTypes.NOTIFY:
-          handleNotify()
-          break
-
-        default:
-          setMessage(notifyMessages.unexpectedError)
-          break
+      const handleError = error => {
+        setMessage(notifyMessages[error.message] || notifyMessages.unexpectedError)
+        finish({ break: true })
       }
+
+      doAction()
+        .then(finish)
+        .catch(handleError)
     },
-    [actionType, handleNotify, setMessage]
+    [doAction, setMessage, finish]
   )
 
   return (

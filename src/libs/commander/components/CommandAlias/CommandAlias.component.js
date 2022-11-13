@@ -1,6 +1,7 @@
+import * as React from 'preact'
+
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { Table } from 'modules/components/Table/Table.component'
-import * as React from 'preact'
 import { useCallback, useEffect, useState } from 'preact/hooks'
 import { addAliases, deleteAliases, fetchConfiguration } from 'src/helpers/event.helpers.js'
 import { parameterTypes } from '../../constants/commands.constants'

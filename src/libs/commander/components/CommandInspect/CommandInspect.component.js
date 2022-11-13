@@ -1,6 +1,7 @@
+import * as React from 'preact'
+
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
-import * as React from 'preact'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 import { getParamsByType } from '../../commander.helpers'
 import { parameterTypes } from '../../constants/commands.constants'
@@ -14,11 +15,7 @@ import {
 } from '../../modules/Log'
 import { NodeTree } from '../../modules/NodeTree/NodeTree.component'
 import { getStylesFrom } from '../CommandCss/CommandCss.helpers'
-import {
-  inspectActionTypes,
-  inspectViewIds,
-  inspectViews
-} from './CommandInspect.constants'
+import { inspectActionTypes, inspectViewIds, inspectViews } from './CommandInspect.constants'
 import {
   getActionType,
   getDefaultHTMlRoot,
@@ -40,23 +37,22 @@ const CommandInspectWithoutContext = ({
 
   const defaultRoot = useRef(null)
 
-  const handleAttributeEdition = (element) => {
+  const handleAttributeEdition = element => {
     setEditingElement(element)
     setSheets(getStylesFrom(element))
     setHighlitedElement(null)
 
     changeView(inspectViewIds.ATTRIBUTES)
   }
-  const handleStyleEdition = (element) => {
+  const handleStyleEdition = element => {
     setEditingElement(element)
     setSheets(getStylesFrom(element))
     setHighlitedElement(null)
 
     changeView(inspectViewIds.STYLES)
   }
-  const handleRootEdition = (element) => {
-    const sanitazedNewRoot =
-      element === HTMLRoot ? defaultRoot.current : element
+  const handleRootEdition = element => {
+    const sanitazedNewRoot = element === HTMLRoot ? defaultRoot.current : element
 
     setHTMLRoot(sanitazedNewRoot)
   }
@@ -66,20 +62,16 @@ const CommandInspectWithoutContext = ({
     views: inspectViews,
     defaultView: inspectViewIds.MAIN
   })
-  const { elementActions, selectedElements, selectElement } = useElementActions(
-    {
-      onAttributeEdit: handleAttributeEdition,
-      onStyleEdit: handleStyleEdition,
-      onRootEdit: handleRootEdition
-    }
-  )
+  const { elementActions, selectedElements, selectElement } = useElementActions({
+    onAttributeEdit: handleAttributeEdition,
+    onStyleEdit: handleStyleEdition,
+    onRootEdit: handleRootEdition
+  })
 
   const handleInspect = useCallback(
     ({ elementsFound: [defaultHTMLRoot] }) => {
       const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
-      const newObjetives = paramElements.length
-        ? paramElements
-        : [document.body]
+      const newObjetives = paramElements.length ? paramElements : [document.body]
       const newOpenNodes = getOpenNodesFromObjetives(newObjetives)
 
       setOpenNodes(newOpenNodes)
@@ -120,12 +112,7 @@ const CommandInspectWithoutContext = ({
 
       {!messageLog && (
         <Carousel itemInView={itemInView}>
-          <Log
-            variant={parameterTypes.ELEMENT}
-            actionGroups={elementActions}
-            hasScroll
-            hasShadow
-          >
+          <Log variant={parameterTypes.ELEMENT} actionGroups={elementActions} hasScroll hasShadow>
             {HTMLRoot && (
               <NodeTree
                 root={HTMLRoot}
@@ -156,9 +143,7 @@ const CommandInspectWithoutContext = ({
             >
               <List
                 items={sheets}
-                Child={({ item }) => (
-                  <StyleSheet sheet={item} sheets={sheets} />
-                )}
+                Child={({ item }) => <StyleSheet sheet={item} sheets={sheets} />}
               />
             </Log>
           </CarouselItem>

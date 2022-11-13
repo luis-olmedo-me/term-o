@@ -1,4 +1,5 @@
 import * as React from 'preact'
+
 import { useCallback, useEffect, useState } from 'preact/hooks'
 import { getParamsByType } from '../../commander.helpers'
 import { styleElements, validateStyles } from '../../commander.promises'

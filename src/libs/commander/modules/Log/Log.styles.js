@@ -75,6 +75,7 @@ export const Shadow = styled.div`
   &.shadow {
     padding: 10px;
     background-color: ${t('transparent.200')};
+    border-radius: ${t('radius.200')};
   }
 `
 

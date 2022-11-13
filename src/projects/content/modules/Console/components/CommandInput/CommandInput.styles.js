@@ -4,8 +4,8 @@ import styled from 'styled-components'
 const radius = t('radius.100')
 
 export const Input = styled.input`
-  padding: 10px;
-  width: calc(100% - 20px);
+  padding: 15px;
+  width: calc(100% - 25px);
   box-sizing: border-box;
   color: ${t('neutral.1200')};
   border: none;
@@ -39,7 +39,7 @@ export const InputWrapper = styled.div`
 `
 
 export const Hash = styled.span`
-  width: 20px;
+  width: 25px;
   display: inline-block;
   vertical-align: middle;
   text-align: end;

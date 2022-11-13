@@ -17,7 +17,7 @@ const receiveConfig = ({ aliases, pageEvents, position }) => ({
   aliases: aliases || []
 })
 
-export const createWorkerRequest = ({ type, data, defaultResponse }) => {
+const createWorkerRequest = ({ type, data, defaultResponse }) => {
   return new Promise((resolve, reject) => {
     const callback = response => {
       if (response?.status === 'ok') {
@@ -30,7 +30,6 @@ export const createWorkerRequest = ({ type, data, defaultResponse }) => {
     chrome?.runtime?.sendMessage?.({ type, data }, callback)
   })
 }
-
 export const createWorkerProcessRequest = ({ type, data, defaultResponse }) => {
   return new Promise((resolve, reject) => {
     let timeoutId = null

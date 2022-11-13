@@ -14,17 +14,16 @@ import {
 import { aliasMessages } from './CommandAlias.messages'
 
 export const CommandAlias = ({ props, terminal: { command, finish } }) => {
-  const { delete: deletedIds, add: aliasesToAdd } = props
-
   const [tableItems, setTableItems] = useState([])
 
   const handleDeleteAliasesFromSelection = async ({ selectedRows }) => {
     const aliasIdsToDelete = selectedRows.map(([idRow]) => idRow.value)
+    const onError = () => setMessage(aliasMessages.unexpectedError)
 
     clearSelection()
 
-    await deleteAliases(aliasIdsToDelete)
-    await handleShowList()
+    await deleteAliases(aliasIdsToDelete).catch(onError)
+    await handleShowList().catch(onError)
   }
 
   const { log: messageLog, setMessage } = useMessageLog()
@@ -52,7 +51,7 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
   }, [setMessage])
 
   const handleAddAliases = useCallback(async () => {
-    const validAliases = validateAliasesToAdd({ aliasesToAdd })
+    const validAliases = validateAliasesToAdd({ aliasesToAdd: props.add })
 
     const newAliasesCount = Object.keys(validAliases).length
     const hasValidAliases = newAliasesCount === validAliases.length
@@ -61,20 +60,20 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
 
     await addAliases(validAliases)
     setMessage(aliasMessages.aliasAdditionSuccess)
-  }, [aliasesToAdd, setMessage])
+  }, [props, setMessage])
 
   const handleDeleteAliases = useCallback(async () => {
     const { aliases = [] } = await fetchConfiguration()
 
     const aliasIds = aliases.map(({ id }) => id)
-    const validIds = deletedIds.filter(id => aliasIds.includes(id))
-    const hasInvalidIds = deletedIds.length !== validIds.length
+    const validIds = props.delete.filter(id => aliasIds.includes(id))
+    const hasInvalidIds = props.delete.length !== validIds.length
 
     if (hasInvalidIds) throw new Error('noAliasIdsFound')
 
     await deleteAliases(validIds)
     setMessage(aliasMessages.aliasDeletionSuccess)
-  }, [deletedIds])
+  }, [props])
 
   const doAction = useCallback(async () => {
     switch (actionType) {

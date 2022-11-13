@@ -3,7 +3,7 @@ import { states } from '../libs/process-wait-list/processWaitList.constants'
 
 export const createWorkerRequest = ({ type, data, defaultResponse }) => {
   return new Promise((resolve, reject) => {
-    const callback = (response) => {
+    const callback = response => {
       if (response?.status === 'ok') {
         resolve(response?.data || defaultResponse)
       } else {
@@ -18,7 +18,7 @@ export const createWorkerRequest = ({ type, data, defaultResponse }) => {
 export const createWorkerProcessRequest = ({ type, data, defaultResponse }) => {
   return new Promise((resolve, reject) => {
     let timeoutId = null
-    const callback = (process) => {
+    const callback = process => {
       switch (process.state) {
         case states.IN_PROGRESS: {
           timeoutId = setTimeout(() => createWorker({ id: process.id }), 100)
@@ -37,7 +37,7 @@ export const createWorkerProcessRequest = ({ type, data, defaultResponse }) => {
       }
     }
 
-    const createWorker = (data) => {
+    const createWorker = data => {
       createWorkerRequest({ type, data, defaultResponse: {} })
         .then(callback)
         .catch(reject)
@@ -48,13 +48,10 @@ export const createWorkerProcessRequest = ({ type, data, defaultResponse }) => {
 }
 
 export const fetchConfiguration = () => {
-  return createWorkerRequest({
-    type: eventTypes.GET_CONFIGURATION,
-    defaultResponse: {}
-  })
+  return chrome.storage.local.get('config').then(({ config }) => config)
 }
 
-export const fetchHistorial = (data) => {
+export const fetchHistorial = data => {
   return createWorkerProcessRequest({
     type: eventTypes.GET_HISTORIAL,
     defaultResponse: {},
@@ -62,35 +59,35 @@ export const fetchHistorial = (data) => {
   })
 }
 
-export const closeTabs = (data) => {
+export const closeTabs = data => {
   return createWorkerProcessRequest({
     type: eventTypes.CLOSE_OPEN_TABS,
     data
   })
 }
 
-export const addAliases = (newAliases) => {
+export const addAliases = newAliases => {
   return createWorkerRequest({
     type: eventTypes.ADD_ALIAS,
     data: newAliases
   })
 }
 
-export const deleteAliases = (aliasIds) => {
+export const deleteAliases = aliasIds => {
   return createWorkerRequest({
     type: eventTypes.DELETE_ALIAS,
     data: { aliasIdsToDelete: aliasIds }
   })
 }
 
-export const deletePageEvents = (ids) => {
+export const deletePageEvents = ids => {
   return createWorkerRequest({
     type: eventTypes.DELETE_PAGES_EVENT,
     data: { ids }
   })
 }
 
-export const addPageEvents = (newPageEvents) => {
+export const addPageEvents = newPageEvents => {
   return createWorkerRequest({
     type: eventTypes.ADD_PAGES_EVENT,
     data: newPageEvents
@@ -103,7 +100,7 @@ export const resetConfiguration = () => {
   })
 }
 
-export const fetchTabsOpen = (data) => {
+export const fetchTabsOpen = data => {
   return createWorkerProcessRequest({
     type: eventTypes.GET_TABS_OPEN,
     defaultResponse: [],
@@ -111,7 +108,7 @@ export const fetchTabsOpen = (data) => {
   })
 }
 
-export const updateConsolePosition = (position) => {
+export const updateConsolePosition = position => {
   return createWorkerRequest({
     type: eventTypes.UPDATE_CONFIG_CONSOLE_POSITION,
     data: position

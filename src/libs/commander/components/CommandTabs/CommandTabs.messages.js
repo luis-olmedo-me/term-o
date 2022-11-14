@@ -16,7 +16,7 @@ export const tabsMessages = {
     type: parameterTypes.SUCCESS
   },
   goSuccess: {
-    message: 'You got back in the page successfully.',
+    message: 'You have moved successfully.',
     type: parameterTypes.SUCCESS
   },
   reloadSuccess: {

@@ -2,14 +2,12 @@ import { theme as t } from 'src/helpers/theme.helpers'
 import styled from 'styled-components'
 import { Actions } from '../Actions'
 
-const radius = t('radius.200')
-
 export const TableWrapper = styled.div`
   width: 100%;
   border-collapse: collapse;
   padding: 10px;
   box-sizing: border-box;
-  border-radius: ${radius};
+  border-radius: ${t('radius.200')};
   background-color: ${t('transparent.300')};
 `
 
@@ -31,7 +29,7 @@ export const TableRow = styled.div`
     color: ${t('neutral.300')};
     font-weight: bold;
     padding: 1px 0;
-    border-radius: ${radius} ${radius} 0 0;
+    border-radius: ${t('radius.300')};
     text-align: center;
   }
 

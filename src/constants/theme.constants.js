@@ -125,6 +125,7 @@ export const defaultTheme = {
 
   radius: {
     100: '14px',
-    200: '10px'
+    200: '10px',
+    300: '8px'
   }
 }

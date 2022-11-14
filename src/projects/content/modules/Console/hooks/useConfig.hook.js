@@ -16,7 +16,7 @@ export const useConfig = ({ onError }) => {
 
   useEffect(function checkConsoleToggle() {
     const toggleConsoleState = () => {
-      setConfig((oldConfig) => ({ ...oldConfig, isOpen: !oldConfig.isOpen }))
+      setConfig(oldConfig => ({ ...oldConfig, isOpen: !oldConfig.isOpen }))
     }
 
     window.addEventListener('term-o-toggle-console', toggleConsoleState)
@@ -24,24 +24,17 @@ export const useConfig = ({ onError }) => {
     return () => {
       window.removeEventListener('term-o-toggle-console', toggleConsoleState)
     }
-  })
+  }, [])
 
   useEffect(function getConfiguration() {
-    const receiveConfiguration = ({
-      pageEvents = [],
-      aliases = [],
-      consolePosition = {}
-    }) => {
+    const receiveConfiguration = ({ pageEvents, aliases, consolePosition }) => {
       const updatedPageEvents = pageEvents.filter(
         ({ url, event }) =>
-          new RegExp(url).test(window.location.href) &&
-          !customPageEventNames.includes(event)
+          new RegExp(url).test(window.location.href) && !customPageEventNames.includes(event)
       )
-      const customEvents = pageEvents.filter(({ event }) =>
-        customPageEventNames.includes(event)
-      )
+      const customEvents = pageEvents.filter(({ event }) => customPageEventNames.includes(event))
 
-      setConfig((oldConfig) => ({
+      setConfig(oldConfig => ({
         ...oldConfig,
         appliedPageEvents: updatedPageEvents,
         customPageEvents: customEvents,
@@ -51,7 +44,17 @@ export const useConfig = ({ onError }) => {
       commander.setAliases(aliases)
     }
 
-    fetchConfiguration().then(receiveConfiguration).catch(onError)
+    chrome.storage.onChanged.addListener(function(changes, namespace) {
+      const isLocal = namespace === 'local'
+
+      if (isLocal && changes.aliases) {
+        commander.setAliases(changes.aliases.newValue)
+      }
+    })
+
+    fetchConfiguration()
+      .then(receiveConfiguration)
+      .catch(onError)
   }, [])
 
   return config

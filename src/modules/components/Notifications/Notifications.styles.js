@@ -1,14 +1,5 @@
 import { theme as t } from 'src/helpers/theme.helpers'
-import styled, { keyframes } from 'styled-components'
-
-const birth = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`
+import styled from 'styled-components'
 
 export const NotificationsWrapper = styled.div`
   position: fixed;
@@ -33,7 +24,6 @@ export const NotificationWrapper = styled.div`
   align-items: center;
   box-sizing: content-box;
   overflow: hidden;
-  animation: ${birth} 0.2s ease-in-out;
   transition: height 0.4s ease-in-out, opacity 0.3s ease-in-out, padding 0.4s ease-in-out,
     transform 0.4s ease-in-out, top 0.4s ease-in-out;
 

@@ -17,7 +17,7 @@ export const ElementWrapper = styled.span`
   position: relative;
   padding: 5px 7px;
   background-color: ${t('neutral.1200')};
-  border-radius: ${t('radius.200')};
+  border-radius: ${t('radius.300')};
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;

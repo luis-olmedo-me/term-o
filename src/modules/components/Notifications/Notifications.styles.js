@@ -12,23 +12,32 @@ export const NotificationsWrapper = styled.div`
 `
 
 export const NotificationWrapper = styled.div`
+  position: absolute;
+  width: 100%;
   background-color: ${t('neutral.100')};
   box-shadow: 0 0 15px 5px ${t('transparent.300')};
   margin-bottom: 10px;
   padding: 10px;
   display: flex;
   gap: 24px;
-  border-radius: ${t('radius.200')};
+  border-radius: ${t('radius.100')};
   align-items: center;
   box-sizing: content-box;
   overflow: hidden;
   transition: height 0.4s ease-in-out, opacity 0.3s ease-in-out, padding 0.4s ease-in-out,
-    transform 0.4s ease-in-out;
+    transform 0.4s ease-in-out, top 0.4s ease-in-out;
 
-  height: ${props => (props.isDead ? '0' : '100%')};
-  opacity: ${props => (props.isDead ? '0' : '1')};
-  padding: ${props => (props.isDead ? '0' : '10px')};
-  transform: scaleX(${props => (props.isDead ? '1.5' : '1')});
+  height: fit-content;
+  padding: 10px;
+  opacity: ${props => 1 - props.position * 0.3};
+  transform: scaleX(${props => 1 - props.position * 0.2});
+  top: ${props => props.position * 10}px;
+  z-index: ${props => 3 - props.position};
+
+  &.dead {
+    opacity: 0;
+    transform: scaleX(1.5);
+  }
 
   &:last-child {
     margin-bottom: 0;
@@ -41,8 +50,8 @@ export const Description = styled.p`
 `
 
 export const Image = styled.img`
-  width: 50px;
-  height: 50px;
+  width: 35px;
+  height: 35px;
   border-radius: 8px;
   background-size: cover;
 `
@@ -51,6 +60,6 @@ export const LogoWrapper = styled.svg`
   background-color: ${t('transparent.350')};
   border-radius: 8px;
   padding: 6px;
-  max-width: 50px;
-  max-height: 50px;
+  max-width: 35px;
+  max-height: 35px;
 `

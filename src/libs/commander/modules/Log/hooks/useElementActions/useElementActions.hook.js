@@ -9,7 +9,12 @@ export const useElementActions = ({ onAttributeEdit, onStyleEdit, onRootEdit }) 
   const [selectedElements, setSelectedElements] = useState([])
 
   const handleScrollIntoView = element => {
-    element.scrollIntoView({
+    const validatedElement =
+      element?.nodeType === Node.ELEMENT_NODE
+        ? firstSelectedElement
+        : firstSelectedElement.parentElement
+
+    validatedElement.scrollIntoView({
       behavior: 'smooth',
       block: 'center'
     })
@@ -40,7 +45,14 @@ export const useElementActions = ({ onAttributeEdit, onStyleEdit, onRootEdit }) 
   const hasAllElementsInDom = selectedElements.every(element => document.contains(element))
 
   const [firstSelectedElement] = selectedElements
-  const isFirstElementHidden = firstSelectedElement ? isElementHidden(firstSelectedElement) : true
+  const isFirstElementHidden =
+    firstSelectedElement &&
+    isElementHidden(
+      firstSelectedElement?.nodeType === Node.ELEMENT_NODE
+        ? firstSelectedElement
+        : firstSelectedElement.parentElement
+    )
+
   const isRootChangeEnabled = firstSelectedElement
     ? firstSelectedElement.childElementCount > 0
     : true

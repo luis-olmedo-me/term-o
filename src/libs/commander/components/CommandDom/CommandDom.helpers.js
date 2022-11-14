@@ -24,7 +24,7 @@ export const getElements = ({ patterns, xpaths, filterBySome, filterByEvery }) =
       ? elementsFoundByEvery.filter(filterBySome)
       : elementsFoundByEvery
 
-    if (!elementsFoundBySome.length) reject()
+    if (!elementsFoundBySome.length) reject(new Error('noElementsFound'))
     else resolve({ elementsFound: elementsFoundBySome })
   })
 }

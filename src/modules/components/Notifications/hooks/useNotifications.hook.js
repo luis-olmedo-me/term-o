@@ -7,7 +7,7 @@ export const useNotifications = () => {
   const addNotification = useCallback((message, image) => {
     const id = generateUUID()
 
-    setNotifications((oldNotifications) => {
+    setNotifications(oldNotifications => {
       return [...oldNotifications, { id, message, image, isDead: false }]
     })
   }, [])
@@ -16,17 +16,13 @@ export const useNotifications = () => {
     if (!notifications.length) return
 
     const clearLastNotificationTimeoutId = setTimeout(() => {
-      setNotifications((oldNotifications) => {
-        const oldNotificationsAlive = oldNotifications.filter(
-          ({ isDead }) => !isDead
-        )
+      setNotifications(oldNotifications => {
+        const oldNotificationsAlive = oldNotifications.filter(({ isDead }) => !isDead)
 
         return oldNotificationsAlive.map((notification, index) => {
           const isFirstNotification = index === 0
 
-          return isFirstNotification
-            ? { ...notification, isDead: true }
-            : notification
+          return isFirstNotification ? { ...notification, isDead: true } : notification
         })
       })
     }, 3000)
@@ -34,25 +30,19 @@ export const useNotifications = () => {
     return () => clearTimeout(clearLastNotificationTimeoutId)
   }, [notifications])
 
-  const firstThreeNotifications = notifications.reduce(
-    (filteredNotifications, notification) => {
-      const expectedNotifications = filteredNotifications.reduce(
-        (count, filteredNotification) => {
-          const isDead = filteredNotification.isDead
+  const firstThreeNotifications = notifications.reduce((filteredNotifications, notification) => {
+    const expectedNotifications = filteredNotifications.reduce((count, filteredNotification) => {
+      const isDead = filteredNotification.isDead
 
-          return isDead ? count : count + 1
-        },
-        0
-      )
+      return isDead ? count : count + 1
+    }, 0)
 
-      const hasEnoughNotifications = expectedNotifications > 2
+    const hasEnoughNotifications = expectedNotifications > 2
 
-      return !hasEnoughNotifications
-        ? [...filteredNotifications, notification]
-        : filteredNotifications
-    },
-    []
-  )
+    return !hasEnoughNotifications
+      ? [...filteredNotifications, notification]
+      : filteredNotifications
+  }, [])
 
   const showWorkerRequestError = useCallback(() => {
     addNotification('Worker connection lost, please refresh the window')

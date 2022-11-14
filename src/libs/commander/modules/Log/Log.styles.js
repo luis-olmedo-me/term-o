@@ -4,15 +4,19 @@ import styled from 'styled-components'
 const radius = t('radius.200')
 
 export const LogWrapper = styled.div`
-  transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out;
+  transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out,
+    border-radius 0.2s ease-in-out;
   cursor: auto;
   width: 100%;
+  border-radius: 0;
 
-  &:first-child {
-    border-radius: ${radius} ${radius} 0 0;
+  &&.rounded-t {
+    border-top-left-radius: ${radius};
+    border-top-right-radius: ${radius};
   }
-  &:last-child {
-    border-radius: 0 0 ${radius} ${radius};
+  &&.rounded-b {
+    border-bottom-left-radius: ${radius};
+    border-bottom-right-radius: ${radius};
   }
 
   &&.command {
@@ -69,12 +73,12 @@ export const Hash = styled.span`
 
 export const LogContent = styled.div`
   padding: 10px;
-  word-break: break-all;
 `
 export const Shadow = styled.div`
   &.shadow {
     padding: 10px;
     background-color: ${t('transparent.200')};
+    border-radius: ${t('radius.200')};
   }
 `
 

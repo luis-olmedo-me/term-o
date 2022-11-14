@@ -8,11 +8,13 @@ export const LogWrapper = styled.div`
   cursor: auto;
   width: 100%;
 
-  &:first-child {
-    border-radius: ${radius} ${radius} 0 0;
+  &&.rounded-t {
+    border-top-left-radius: ${radius};
+    border-top-right-radius: ${radius};
   }
-  &:last-child {
-    border-radius: 0 0 ${radius} ${radius};
+  &&.rounded-b {
+    border-bottom-left-radius: ${radius};
+    border-bottom-right-radius: ${radius};
   }
 
   &&.command {

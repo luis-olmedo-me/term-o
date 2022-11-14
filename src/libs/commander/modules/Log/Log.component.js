@@ -25,7 +25,11 @@ export const Log = ({ children, variant, actionGroups, hasScroll, hasShadow, ref
   )
 
   return (
-    <LogWrapper ref={ref} className={variant} onMouseDown={event => event.stopPropagation()}>
+    <LogWrapper
+      ref={ref}
+      className={`log ${variant}`}
+      onMouseDown={event => event.stopPropagation()}
+    >
       <LogContent>
         <Shadow className={hasShadow ? 'shadow' : ''}>
           {hasScroll ? <ScrolledLogContent>{Content}</ScrolledLogContent> : Content}

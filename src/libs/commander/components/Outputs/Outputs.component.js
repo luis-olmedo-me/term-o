@@ -39,7 +39,7 @@ const OutputsNonMemoized = ({ components, id, outsideProps }) => {
         }))
       }
 
-      return didBreak ? [...oldData] : oldData
+      return [...oldData]
     })
   }, [])
 

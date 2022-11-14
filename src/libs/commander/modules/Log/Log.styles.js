@@ -4,9 +4,11 @@ import styled from 'styled-components'
 const radius = t('radius.200')
 
 export const LogWrapper = styled.div`
-  transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out;
+  transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out,
+    border-radius 0.2s ease-in-out;
   cursor: auto;
   width: 100%;
+  border-radius: 0;
 
   &&.rounded-t {
     border-top-left-radius: ${radius};

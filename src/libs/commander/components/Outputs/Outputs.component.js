@@ -52,21 +52,24 @@ const OutputsNonMemoized = ({ components, id, outsideProps }) => {
     }, 450),
     []
   )
-  const checkRoundedComponents = useCallback(() => {
-    const logs = wrapperRef.current?.getElementsByClassName('log') || []
+  const checkRoundedComponents = useCallback(
+    debounce(() => {
+      const logs = wrapperRef.current?.getElementsByClassName('log') || []
 
-    const validatedLogs = Array.from(logs)
-    const firstLog = validatedLogs.at(0)
-    const lastLog = validatedLogs.at(-1)
+      const validatedLogs = Array.from(logs)
+      const firstLog = validatedLogs.at(0)
+      const lastLog = validatedLogs.at(-1)
 
-    validatedLogs.forEach(log => {
-      log.classList.remove('rounded-b')
-      log.classList.remove('rounded-t')
-    })
+      validatedLogs.forEach(log => {
+        log.classList.remove('rounded-b')
+        log.classList.remove('rounded-t')
+      })
 
-    if (firstLog) firstLog.classList.add('rounded-t')
-    if (lastLog) lastLog.classList.add('rounded-b')
-  }, [])
+      if (firstLog) firstLog.classList.add('rounded-t')
+      if (lastLog) lastLog.classList.add('rounded-b')
+    }, 100),
+    []
+  )
 
   useEffect(() => {
     if (!data.length) return

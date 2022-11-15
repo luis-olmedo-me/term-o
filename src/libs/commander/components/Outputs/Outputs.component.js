@@ -1,4 +1,5 @@
 import * as React from 'preact'
+import { memo } from 'preact/compat'
 
 import { debounce } from '@src/helpers/utils.helpers.js'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
@@ -100,5 +101,5 @@ const OutputsNonMemoized = ({ components, id, outsideProps }) => {
     </OutputWrapper>
   )
 }
-// FIXME: USE MEMO HERE
-export const Outputs = OutputsNonMemoized
+
+export const Outputs = memo(OutputsNonMemoized)

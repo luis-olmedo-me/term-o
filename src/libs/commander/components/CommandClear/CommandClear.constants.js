@@ -1,4 +1,3 @@
-import * as React from 'preact'
 import { optionTypes } from '../../constants/commands.constants'
 
 import { CommandClear } from './CommandClear.component'
@@ -13,7 +12,7 @@ export const clearConfig = {
       alias: 'c'
     }
   },
-  output: props => <CommandClear key={props.id} {...props} />
+  output: CommandClear
 }
 
 export const clearActionTypes = {

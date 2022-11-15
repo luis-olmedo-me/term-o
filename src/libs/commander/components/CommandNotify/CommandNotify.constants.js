@@ -1,4 +1,3 @@
-import * as React from 'preact'
 import { optionTypes } from '../../constants/commands.constants'
 
 import { CommandNotify } from './CommandNotify.component'
@@ -20,7 +19,7 @@ export const notifyConfig = {
       alias: 'i'
     }
   },
-  output: (props) => <CommandNotify key={props.id} {...props} />
+  output: CommandNotify
 }
 
 export const notifyActionTypes = {

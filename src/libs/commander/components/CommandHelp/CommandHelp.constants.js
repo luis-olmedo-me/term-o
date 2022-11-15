@@ -1,4 +1,3 @@
-import * as React from 'preact'
 import { optionTypes } from '../../constants/commands.constants'
 import { CommandHelp } from './CommandHelp.component'
 
@@ -12,7 +11,7 @@ export const helpConfig = {
       alias: 'a'
     }
   },
-  output: (props) => <CommandHelp key={props.id} {...props} />
+  output: CommandHelp
 }
 
 export const helpActionTypes = {

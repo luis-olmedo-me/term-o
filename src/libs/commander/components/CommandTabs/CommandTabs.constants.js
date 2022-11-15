@@ -1,4 +1,3 @@
-import * as React from 'preact'
 import { optionTypes } from '../../constants/commands.constants'
 
 import { CommandTabs } from './CommandTabs.component'
@@ -104,7 +103,7 @@ export const tabsConfig = {
       alias: 'g'
     }
   },
-  output: (props) => <CommandTabs key={props.id} {...props} />
+  output: CommandTabs
 }
 
 export const tabsActionTypes = {

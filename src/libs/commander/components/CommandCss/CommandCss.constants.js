@@ -1,5 +1,3 @@
-import * as React from 'preact'
-
 import { optionTypes } from '../../constants/commands.constants'
 
 import { CommandCss } from './CommandCss.component'
@@ -44,7 +42,7 @@ export const cssConfig = {
       alias: 'g'
     }
   },
-  output: (props) => <CommandCss key={props.id} {...props} />
+  output: CommandCss
 }
 
 export const cssActionTypes = {

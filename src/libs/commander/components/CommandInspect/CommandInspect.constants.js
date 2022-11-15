@@ -1,11 +1,11 @@
 import * as React from 'preact'
-import { Home, Palette, Tag } from 'src/modules/icons'
 
+import { Home, Palette, Tag } from 'src/modules/icons'
 import { CommandInspect } from './CommandInspect.component'
 
 export const inspectConfig = {
   props: {},
-  output: (props) => <CommandInspect key={props.id} {...props} />
+  output: CommandInspect
 }
 
 export const inspectActionTypes = {

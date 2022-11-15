@@ -1,5 +1,3 @@
-import * as React from 'preact'
-
 import { optionTypes } from '../../constants/commands.constants'
 
 import { CommandAlias } from './CommandAlias.component'
@@ -28,7 +26,7 @@ export const aliasConfig = {
       alias: 'a'
     }
   },
-  output: props => <CommandAlias key={props.id} {...props} />
+  output: CommandAlias
 }
 
 export const aliasHeaderIds = {

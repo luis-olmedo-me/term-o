@@ -1,4 +1,3 @@
-import * as React from 'preact'
 import { optionTypes } from '../../constants/commands.constants'
 import { CommandEvent } from './CommandEvent.component'
 
@@ -27,14 +26,13 @@ export const eventConfig = {
     },
     value: {
       key: 'value',
-      description:
-        'Insert this value when "change" event is triggered on inputs elements',
+      description: 'Insert this value when "change" event is triggered on inputs elements',
       type: optionTypes.STRING,
       defaultValue: '',
       alias: 'v'
     }
   },
-  output: (props) => <CommandEvent key={props.id} {...props} />
+  output: CommandEvent
 }
 
 export const supportedEvents = {

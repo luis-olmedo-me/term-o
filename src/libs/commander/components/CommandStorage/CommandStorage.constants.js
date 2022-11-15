@@ -1,4 +1,5 @@
 import * as React from 'preact'
+
 import { Home } from 'src/modules/icons'
 import { optionTypes } from '../../constants/commands.constants'
 import { CommandStorage } from './CommandStorage.component'
@@ -27,7 +28,7 @@ export const storageConfig = {
       alias: 'c'
     }
   },
-  output: (props) => <CommandStorage key={props.id} {...props} />
+  output: CommandStorage
 }
 
 export const storageActionTypes = {

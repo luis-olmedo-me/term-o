@@ -7,5 +7,5 @@
       "@src": ["src"]
     }
   },
-  "exclude": ["build", "images"]
+  "exclude": ["build", "images", "node_modules"]
 }

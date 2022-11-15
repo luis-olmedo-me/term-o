@@ -9,7 +9,7 @@ const defaultFormatter = oldParam => {
   return [...oldParam, {}]
 }
 
-const OutputsNonMemoized = ({ components, id, outsideProps }) => {
+const OutputsNonMemoized = ({ components, id, outsideProps, onFinishAll }) => {
   const defaultData = components.map((Component, index) => ({
     Component,
     isVisible: index === 0
@@ -20,29 +20,34 @@ const OutputsNonMemoized = ({ components, id, outsideProps }) => {
 
   const wrapperRef = useRef(null)
 
-  const showNextVisibleComponent = useCallback(options => {
-    const didBreak = Boolean(options?.break)
-    const didIgnore = Boolean(options?.ignore)
+  const showNextVisibleComponent = useCallback(
+    options => {
+      const didBreak = Boolean(options?.break)
+      const didIgnore = Boolean(options?.ignore)
 
-    if (didIgnore) return
-    if (!didBreak) setParams(options?.formatter || defaultFormatter)
+      if (didIgnore) return
+      if (!didBreak) setParams(options?.formatter || defaultFormatter)
 
-    setData(oldData => {
-      const oldDataCopy = [...oldData]
-      const nextInvisibleComponentIndex = oldData.findIndex(component => !component.isVisible)
+      setData(oldData => {
+        const oldDataCopy = [...oldData]
+        const nextInvisibleComponentIndex = oldData.findIndex(component => !component.isVisible)
 
-      const hasNextComponent = nextInvisibleComponentIndex !== -1
+        const hasNextComponent = nextInvisibleComponentIndex !== -1
 
-      if (hasNextComponent && !didBreak) {
-        return oldDataCopy.map((data, index) => ({
-          ...data,
-          isVisible: data.isVisible || index === nextInvisibleComponentIndex
-        }))
-      }
+        if (hasNextComponent && !didBreak) {
+          return oldDataCopy.map((data, index) => ({
+            ...data,
+            isVisible: data.isVisible || index === nextInvisibleComponentIndex
+          }))
+        } else if (!hasNextComponent && !didBreak) {
+          onFinishAll?.()
+        }
 
-      return [...oldData]
-    })
-  }, [])
+        return [...oldData]
+      })
+    },
+    [onFinishAll]
+  )
 
   const scrollIntoLastComponent = useCallback(
     debounce(() => {

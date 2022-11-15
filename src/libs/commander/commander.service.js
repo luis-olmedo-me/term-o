@@ -73,7 +73,8 @@ class Commander {
   }
 
   getOutputsSecuence(id, fullLine) {
-    const sequences = fullLine.split('&&').filter(Boolean)
+    const rawLines = fullLine.split(' ').filter(Boolean)
+    const sequences = splitArgsTakingInCountSymbols(rawLines, ['&&'])
 
     return ({ outsideProps }) => {
       return <OutputSecuence id={id} sequences={sequences} outsideProps={outsideProps} />

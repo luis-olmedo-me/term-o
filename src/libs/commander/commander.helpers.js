@@ -47,7 +47,7 @@ const hasDoubleQuoteType = (string, quote) => {
   return !isOdd(quoteTypeCount)
 }
 
-export const splitArgsTakingInCountSymbols = (args, _quotes) => {
+export const splitArgsTakingInCountSymbols = (args, symbols = ['|'], _quotes) => {
   let carriedArgsWithQuotes = []
   let indexesToBreak = []
   let shouldCarryArgs = false
@@ -56,7 +56,7 @@ export const splitArgsTakingInCountSymbols = (args, _quotes) => {
   const argsByQuotes = args.reduce((parsedArguments, argument, index) => {
     const hasQuotes = argument.includes(quotesToUse)
     const hasAllQuotes = hasDoubleQuoteType(argument, quotesToUse) && !shouldCarryArgs
-    const isVerticalLine = argument === '|'
+    const isVerticalLine = symbols.includes(argument)
     const isLastArgument = index === args.length - 1
 
     if (hasAllQuotes) {
@@ -90,7 +90,7 @@ export const splitArgsTakingInCountSymbols = (args, _quotes) => {
 
   return _quotes
     ? breakArrayInCertainIndexes(argsByQuotes, indexesToBreak)
-    : splitArgsTakingInCountSymbols(argsByQuotes, "'")
+    : splitArgsTakingInCountSymbols(argsByQuotes, symbols, "'")
 }
 
 const getRowDataFromOption = option => {

@@ -13,6 +13,7 @@ import { useResize } from './hooks/useResize/useResize.hook.js'
 
 import { useNotifications } from '@modules/components/Notifications/hooks/useNotifications.hook.js'
 import { Notifications } from '@modules/components/Notifications/Notifications.component.js'
+import { generateUUID } from 'helpers/utils.helpers.js'
 import { ConsoleLogs, ConsoleTitle, ConsoleWrapper } from './Console.styles.js'
 
 export const Console = () => {
@@ -34,10 +35,10 @@ export const Console = () => {
     isEnabled: isOpen
   })
 
-  const handleCommandRun = useCallback((command, id) => {
+  const handleCommandRun = useCallback(command => {
     const formmatedCommand = commander.getCommandWithAliases(command)
 
-    const logOutput = commander.getOutputsAsyncSecuence(id, formmatedCommand)
+    const logOutput = commander.getOutputsAsyncSecuence(generateUUID(), formmatedCommand)
 
     setHistories(histories => [...histories, logOutput])
   }, [])
@@ -46,9 +47,8 @@ export const Console = () => {
     function applyPageEvents() {
       if (hasPageEventsBeenRunned) return
 
-      appliedPageEvents.forEach(({ command }, id) => {
-        handleCommandRun(command, id)
-      })
+      const asyncCommand = appliedPageEvents.map(({ command }) => command).join(' &&& ')
+      if (asyncCommand) handleCommandRun(asyncCommand)
 
       if (appliedPageEvents.length) setHasPageEventsBeenRunned(true)
     },
@@ -60,11 +60,7 @@ export const Console = () => {
       const customEventsWithCallbacks = customPageEvents.map(customEvent => {
         return {
           ...customEvent,
-          callback: () => {
-            const id = Date.now().toString()
-
-            handleCommandRun(customEvent.command, id)
-          }
+          callback: () => handleCommandRun(customEvent.command)
         }
       })
 
@@ -149,7 +145,7 @@ export const Console = () => {
 
       <CommandInput
         inputReference={inputReference}
-        handleOnEnter={command => handleCommandRun(command, histories.length)}
+        handleOnEnter={command => handleCommandRun(command)}
       />
 
       <Notifications messages={notifications} />

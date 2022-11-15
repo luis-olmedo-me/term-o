@@ -1,20 +1,16 @@
+import { updateConsolePosition } from '@src/helpers/event.helpers'
+import { debounce } from '@src/helpers/utils.helpers.js'
 import { minimumValueAllowed, resizeTypes } from './useResize.constants'
-import { debounce } from 'src/helpers/utils.helpers.js'
-import { updateConsolePosition } from 'src/helpers/event.helpers'
 
-export const limitLowValue = (value) => (value < 0 ? 0 : value)
+export const limitLowValue = value => (value < 0 ? 0 : value)
 
-export const isNumber = (value) => typeof value === 'number'
+export const isNumber = value => typeof value === 'number'
 
 const validateSide = (side, oppositeSide, mockDistance) => {
   const isSideOutside = side < 0
   const isOppositeSideOutside = oppositeSide < 0
 
-  return isSideOutside
-    ? 0
-    : isOppositeSideOutside
-    ? mockDistance
-    : limitLowValue(side)
+  return isSideOutside ? 0 : isOppositeSideOutside ? mockDistance : limitLowValue(side)
 }
 
 export const getNewResizeData = ({
@@ -28,12 +24,9 @@ export const getNewResizeData = ({
   switch (resizeType) {
     case resizeTypes.LEFT: {
       const shouldFixLeft = minimumValueAllowed > mousePositionX
-      const isBelowMiniumWidth =
-        bodyWidth - (mousePositionX + resizeData.right) < 450
+      const isBelowMiniumWidth = bodyWidth - (mousePositionX + resizeData.right) < 450
 
-      return !isBelowMiniumWidth
-        ? { left: shouldFixLeft ? 0 : mousePositionX }
-        : {}
+      return !isBelowMiniumWidth ? { left: shouldFixLeft ? 0 : mousePositionX } : {}
     }
 
     case resizeTypes.RIGHT: {
@@ -46,12 +39,9 @@ export const getNewResizeData = ({
 
     case resizeTypes.TOP: {
       const shouldFixTop = minimumValueAllowed > mousePositionY
-      const isBelowMiniumHeight =
-        bodyHeight - (mousePositionY + resizeData.bottom) < 690
+      const isBelowMiniumHeight = bodyHeight - (mousePositionY + resizeData.bottom) < 690
 
-      return !isBelowMiniumHeight
-        ? { top: shouldFixTop ? 0 : mousePositionY }
-        : {}
+      return !isBelowMiniumHeight ? { top: shouldFixTop ? 0 : mousePositionY } : {}
     }
 
     case resizeTypes.BOTTOM: {
@@ -59,9 +49,7 @@ export const getNewResizeData = ({
       const shouldFixBottom = minimumValueAllowed > bottom
       const isBelowMiniumHeight = bodyHeight - (resizeData.top + bottom) < 690
 
-      return !isBelowMiniumHeight
-        ? { bottom: shouldFixBottom ? 0 : bottom }
-        : {}
+      return !isBelowMiniumHeight ? { bottom: shouldFixBottom ? 0 : bottom } : {}
     }
 
     case resizeTypes.MOVING: {

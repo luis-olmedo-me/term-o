@@ -1,9 +1,9 @@
-import { processWaitList } from 'libs/process-wait-list/processWaitList.service'
+import { processWaitList } from '@libs/process-wait-list/processWaitList.service'
 import {
   eventTypes,
   extensionKeyEventNames,
   extensionKeyEvents
-} from 'src/constants/events.constants.js'
+} from '@src/constants/events.constants.js'
 import { invalidURLsStarts } from './background.constants'
 import { resizeFull, resizeLeft, resizeRight, toggleTerminal } from './background.helpers'
 import {

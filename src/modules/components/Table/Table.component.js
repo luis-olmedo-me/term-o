@@ -1,6 +1,6 @@
+import { debounce } from '@src/helpers/utils.helpers.js'
 import * as React from 'preact'
 import { useEffect, useRef, useState } from 'preact/hooks'
-import { debounce } from 'src/helpers/utils.helpers.js'
 import { Checkbox } from '../Checkbox/Checkbox.component'
 import {
   TableActions,

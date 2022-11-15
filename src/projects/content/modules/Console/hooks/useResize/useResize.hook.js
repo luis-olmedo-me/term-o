@@ -1,19 +1,9 @@
+import { eventTypes } from '@src/constants/events.constants.js'
 import { useEffect, useState } from 'preact/hooks'
-import { eventTypes } from 'src/constants/events.constants.js'
 import { defaultBodyData } from './useResize.constants'
-import {
-  getNewResizeData,
-  isNumber,
-  limitLowValue,
-  updateConfig
-} from './useResize.helpers'
+import { getNewResizeData, isNumber, limitLowValue, updateConfig } from './useResize.helpers'
 
-export const useResize = ({
-  wrapperReference,
-  consolePosition,
-  onError,
-  isEnabled
-}) => {
+export const useResize = ({ wrapperReference, consolePosition, onError, isEnabled }) => {
   const [resizingFrom, setResizingFrom] = useState('')
   const [movingFrom, setMovingFrom] = useState(null)
 
@@ -30,12 +20,8 @@ export const useResize = ({
         const screenHeight = window.innerHeight
 
         const newBodyData = {
-          width:
-            bodyWidth > screenWidth ? screenWidth : bodyWidth || screenWidth,
-          height:
-            bodyHeight > screenHeight
-              ? screenHeight
-              : bodyHeight || screenHeight
+          width: bodyWidth > screenWidth ? screenWidth : bodyWidth || screenWidth,
+          height: bodyHeight > screenHeight ? screenHeight : bodyHeight || screenHeight
         }
         const newResizeData = {
           left: parseInt(wrapperReference.current.style.left),
@@ -75,7 +61,7 @@ export const useResize = ({
   useEffect(() => {
     if (!isEnabled) return
 
-    const resizeCommandHandler = (event) => {
+    const resizeCommandHandler = event => {
       if (!wrapperReference.current) return
 
       const side = event.detail.side
@@ -124,8 +110,7 @@ export const useResize = ({
 
     window.addEventListener(eventTypes.TERM_O_RESIZE, resizeCommandHandler)
 
-    return () =>
-      window.removeEventListener(eventTypes.TERM_O_RESIZE, resizeCommandHandler)
+    return () => window.removeEventListener(eventTypes.TERM_O_RESIZE, resizeCommandHandler)
   }, [bodyData, onError, isEnabled])
 
   useEffect(
@@ -165,7 +150,7 @@ export const useResize = ({
         y: bodyData.height - wrapperReference.current.clientHeight
       }
 
-      const mouseHandler = (event) => {
+      const mouseHandler = event => {
         mousePosition = {
           x: event.clientX,
           y: event.clientY

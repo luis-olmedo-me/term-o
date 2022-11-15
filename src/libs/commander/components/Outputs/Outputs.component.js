@@ -1,7 +1,7 @@
 import * as React from 'preact'
 
+import { debounce } from '@src/helpers/utils.helpers.js'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
-import { debounce } from 'src/helpers/utils.helpers.js'
 import { OutputWrapper } from './Outputs.styles'
 
 const defaultFormatter = oldParam => {

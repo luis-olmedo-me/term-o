@@ -1,9 +1,9 @@
 import * as React from 'preact'
 
-import { Carousel, CarouselItem } from 'modules/components/Carousel'
-import { Table } from 'modules/components/Table/Table.component'
+import { Carousel, CarouselItem } from '@modules/components/Carousel'
+import { Table } from '@modules/components/Table/Table.component'
+import { deletePageEvents, fetchConfiguration } from '@src/helpers/event.helpers.js'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
-import { deletePageEvents, fetchConfiguration } from 'src/helpers/event.helpers.js'
 import { getParamsByType } from '../../commander.helpers'
 import { parameterTypes } from '../../constants/commands.constants'
 import { Log, useMessageLog, usePaginationActions, useTableSelection } from '../../modules/Log'

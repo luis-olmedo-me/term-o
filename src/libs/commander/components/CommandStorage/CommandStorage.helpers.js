@@ -1,5 +1,5 @@
+import { Copy, Pencil } from '@src/modules/icons'
 import * as React from 'preact'
-import { Copy, Pencil } from 'src/modules/icons'
 import { storageActionTypes } from './CommandStorage.constants'
 import { MaterialTree } from './CommandStorage.styles'
 
@@ -10,7 +10,7 @@ export const getActionType = ({ local, cookies, session }) => {
   return storageActionTypes.NONE
 }
 
-export const evaluateStringifiedValue = (value) => {
+export const evaluateStringifiedValue = value => {
   if (typeof value !== 'string') return value
 
   try {
@@ -55,11 +55,7 @@ export const turnStorageToTableItems = ({ storage = {}, editValue }) => {
   })
 }
 
-export const parseTableValuesForLocalStoageItems = (
-  row,
-  columnIndex,
-  onChange
-) => {
+export const parseTableValuesForLocalStoageItems = (row, columnIndex, onChange) => {
   const isValueRow = columnIndex === 1
   const [key, value] = row
   const currentValue = row[columnIndex]
@@ -69,19 +65,18 @@ export const parseTableValuesForLocalStoageItems = (
       content={evaluateStringifiedValue(value)}
       isKeyEditionEnabled
       isValueEditionEnabled
-      handleChange={(newValue) => onChange({ key, newValue })}
+      handleChange={newValue => onChange({ key, newValue })}
     />
   ) : (
     currentValue
   )
 }
 
-export const getParseTableValuesForLocalStoageItems = (onChange) => {
-  return (row, columnIndex) =>
-    parseTableValuesForLocalStoageItems(row, columnIndex, onChange)
+export const getParseTableValuesForLocalStoageItems = onChange => {
+  return (row, columnIndex) => parseTableValuesForLocalStoageItems(row, columnIndex, onChange)
 }
 
-export const parseCookies = (cookies) => {
+export const parseCookies = cookies => {
   if (!cookies) return {}
 
   return cookies.split('; ').reduce((parsedCookies, cookie) => {

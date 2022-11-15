@@ -1,9 +1,9 @@
 import * as React from 'preact'
 
-import { Carousel, CarouselItem } from 'modules/components/Carousel'
-import { Table } from 'modules/components/Table/Table.component'
+import { Carousel, CarouselItem } from '@modules/components/Carousel'
+import { Table } from '@modules/components/Table/Table.component'
+import { closeTabs, fetchHistorial, fetchTabsOpen } from '@src/helpers/event.helpers'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
-import { closeTabs, fetchHistorial, fetchTabsOpen } from 'src/helpers/event.helpers'
 import { parameterTypes } from '../../constants/commands.constants'
 import {
   Log,

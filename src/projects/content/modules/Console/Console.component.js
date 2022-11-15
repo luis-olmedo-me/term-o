@@ -1,7 +1,7 @@
 import * as React from 'preact'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks'
 
-import { commander } from 'libs/commander/commander.service'
+import { commander } from '@libs/commander'
 
 import { CommandInput } from './components/CommandInput/CommandInput.component.js'
 import { Resizer } from './components/Resizer/Resizer.component.js'
@@ -11,8 +11,8 @@ import { resizeTypes, singleResizeTypes } from './hooks/useResize/useResize.cons
 import { useConfig } from './hooks/useConfig.hook.js'
 import { useResize } from './hooks/useResize/useResize.hook.js'
 
-import { useNotifications } from 'src/modules/components/Notifications/hooks/useNotifications.hook.js'
-import { Notifications } from 'src/modules/components/Notifications/Notifications.component.js'
+import { useNotifications } from '@modules/components/Notifications/hooks/useNotifications.hook.js'
+import { Notifications } from '@modules/components/Notifications/Notifications.component.js'
 import { ConsoleLogs, ConsoleTitle, ConsoleWrapper } from './Console.styles.js'
 
 export const Console = () => {

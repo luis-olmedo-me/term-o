@@ -2,10 +2,9 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
-      "libs": ["src/libs"],
-      "modules": ["src/modules"],
-      "projects": ["src/projects"],
-      "src": ["src"]
+      "@libs": ["src/libs"],
+      "@modules": ["src/modules"],
+      "@src": ["src"]
     }
   },
   "exclude": ["build", "images"]

@@ -1,7 +1,7 @@
 import * as React from 'preact'
 
+import { removeDuplicatedFromArray } from '@src/helpers/utils.helpers.js'
 import { useCallback, useEffect, useState } from 'preact/hooks'
-import { removeDuplicatedFromArray } from 'src/helpers/utils.helpers.js'
 import { consoleCommands } from '../../commander.constants'
 import { commanderMessages } from '../../commander.messages.js'
 import { parameterTypes } from '../../constants/commands.constants'

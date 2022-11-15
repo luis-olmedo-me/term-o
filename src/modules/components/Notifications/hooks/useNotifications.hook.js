@@ -1,5 +1,5 @@
+import { generateUUID } from '@src/helpers/utils.helpers'
 import { useCallback, useEffect, useState } from 'preact/hooks'
-import { generateUUID } from 'src/helpers/utils.helpers'
 
 export const useNotifications = () => {
   const [notifications, setNotifications] = useState([])

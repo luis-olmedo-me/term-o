@@ -1,5 +1,5 @@
+import { Actions } from '@src/modules/components/Actions'
 import * as React from 'preact'
-import { Actions } from 'src/modules/components/Actions'
 import { getAttributes } from '../../../../components/CommandDom/CommandDom.helpers'
 import {
   AttributeName,
@@ -40,15 +40,11 @@ export const ElementLabel = ({
 
         {Object.entries(attributes).map(([attributeName, attributeValue]) => {
           const attributeValueShorten =
-            attributeValue.length > 50
-              ? `${attributeValue.slice(0, 47)}...`
-              : attributeValue
+            attributeValue.length > 50 ? `${attributeValue.slice(0, 47)}...` : attributeValue
 
           return (
             <span key={attributeName}>
-              <AttributeName isHidden={isHidden}>
-                {` ${attributeName}`}
-              </AttributeName>
+              <AttributeName isHidden={isHidden}>{` ${attributeName}`}</AttributeName>
 
               <Equal isHidden={isHidden}>{`=`}</Equal>
 

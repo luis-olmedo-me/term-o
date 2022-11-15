@@ -1,7 +1,7 @@
 import * as React from 'preact'
 
-import { OverlayProvider } from 'modules/components/Overlay/Overlay.provider'
-import { PortalProvider } from 'modules/components/Portal/Portal.provider'
+import { OverlayProvider } from '@modules/components/Overlay/Overlay.provider'
+import { PortalProvider } from '@modules/components/Portal/Portal.provider'
 import { StyleSheetManager, ThemeProvider } from 'styled-components'
 import { defaultTheme } from '../../constants/theme.constants'
 import { shadow } from './content.constants'

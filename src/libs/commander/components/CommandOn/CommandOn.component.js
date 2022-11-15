@@ -1,8 +1,8 @@
 import * as React from 'preact'
 
+import { addPageEvents } from '@src/helpers/event.helpers.js'
+import { generateUUID } from '@src/helpers/utils.helpers'
 import { useCallback, useEffect } from 'preact/hooks'
-import { addPageEvents } from 'src/helpers/event.helpers.js'
-import { generateUUID } from 'src/helpers/utils.helpers'
 import { customPageEventNames, parameterTypes } from '../../constants/commands.constants'
 import { Log, useMessageLog } from '../../modules/Log'
 import { onActionTypes } from './CommandOn.constants'

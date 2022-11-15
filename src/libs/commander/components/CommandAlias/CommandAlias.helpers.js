@@ -1,15 +1,11 @@
-import { commander } from 'libs/commander'
 import * as React from 'preact'
-import { generateUUID } from 'src/helpers/utils.helpers'
-import { Copy } from 'src/modules/icons'
-import { actionTypes } from '../../constants/commands.constants'
-import { aliasHeaderIds, aliasTableOptions } from './CommandAlias.constants'
 
-export const getActionType = ({
-  list,
-  delete: idsToDelete,
-  add: newAliases
-}) => {
+import { generateUUID } from '@src/helpers/utils.helpers'
+import { Copy } from '@src/modules/icons'
+import { actionTypes } from '../../constants/commands.constants'
+import { aliasTableOptions } from './CommandAlias.constants'
+
+export const getActionType = ({ list, delete: idsToDelete, add: newAliases }) => {
   if (list) return actionTypes.SHOW_LIST
   else if (idsToDelete.length) return actionTypes.DELETE_ALIAS
   else if (newAliases.length) return actionTypes.ADD_ALIAS
@@ -27,7 +23,7 @@ export const validateAliasesToAdd = ({ aliasesToAdd }) => {
 }
 
 export const turnAliasesToTableItems = ({ aliases }) => {
-  return aliases.map((alias) => {
+  return aliases.map(alias => {
     return aliasTableOptions.columns.map(({ id }) => {
       const rowValue = alias[id]
 

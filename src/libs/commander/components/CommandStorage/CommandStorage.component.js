@@ -1,5 +1,5 @@
-import { Carousel, CarouselItem } from 'modules/components/Carousel'
-import { Table } from 'modules/components/Table'
+import { Carousel, CarouselItem } from '@modules/components/Carousel'
+import { Table } from '@modules/components/Table'
 import * as React from 'preact'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 import { parameterTypes } from '../../constants/commands.constants'

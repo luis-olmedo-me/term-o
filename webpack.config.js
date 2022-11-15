@@ -16,10 +16,9 @@ module.exports = (_env, { watch, mode }) => ({
     extensions: ['.js', '.jsx', '.css'],
     modules: [path.resolve(__dirname, 'src'), 'node_modules'],
     alias: {
-      libs: path.resolve(__dirname, 'src/libs'),
-      modules: path.resolve(__dirname, 'src/modules'),
-      projects: path.resolve(__dirname, 'src/projects'),
-      src: path.resolve(__dirname, 'src'),
+      '@libs': path.resolve(__dirname, 'src/libs'),
+      '@modules': path.resolve(__dirname, 'src/modules'),
+      '@src': path.resolve(__dirname, 'src'),
       react: 'preact/compat'
     }
   },

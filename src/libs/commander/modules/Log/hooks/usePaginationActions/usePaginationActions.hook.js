@@ -1,10 +1,7 @@
+import { Chevron, DoubleChevron } from '@src/modules/icons'
 import * as React from 'preact'
 import { useState } from 'preact/hooks'
-import { Chevron, DoubleChevron } from 'src/modules/icons'
-import {
-  divideItemsIntoPages,
-  generateButtonGroupsFromPages
-} from './usePaginationActions.helpers'
+import { divideItemsIntoPages, generateButtonGroupsFromPages } from './usePaginationActions.helpers'
 
 export const usePaginationActions = ({ items, maxItems }) => {
   const [pageNumber, setPageNumber] = useState(1)
@@ -21,14 +18,14 @@ export const usePaginationActions = ({ items, maxItems }) => {
     {
       id: 'go-to-first-page',
       title: 'Go to fist page',
-      text: <DoubleChevron direction='left' />,
+      text: <DoubleChevron direction="left" />,
       disabled: pageNumber === 1,
       onClick: () => setPageNumber(1)
     },
     {
       id: 'go-to-previous-page',
       title: 'Go to previous page',
-      text: <Chevron direction='left' />,
+      text: <Chevron direction="left" />,
       onClick: () => setPageNumber(pageNumber - 1),
       disabled: pageNumber === 1
     },

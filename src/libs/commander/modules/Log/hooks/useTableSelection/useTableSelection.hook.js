@@ -1,22 +1,16 @@
+import { removeDuplicatedFromArray } from '@src/helpers/utils.helpers.js'
+import { Skull } from '@src/modules/icons'
 import * as React from 'preact'
 import { useState } from 'preact/hooks'
-import { removeDuplicatedFromArray } from 'src/helpers/utils.helpers.js'
-import { Skull } from 'src/modules/icons'
 
-export const useTableSelection = ({
-  handleSkullClick,
-  currentRows,
-  isEnabled = true
-}) => {
+export const useTableSelection = ({ handleSkullClick, currentRows, isEnabled = true }) => {
   const [selectedRows, setSelectedRows] = useState([])
 
   const handleAllSelection = () => {
-    const areAllRowsIncluded = currentRows.every((allRow) =>
-      selectedRows.includes(allRow)
-    )
+    const areAllRowsIncluded = currentRows.every(allRow => selectedRows.includes(allRow))
 
     const selections = areAllRowsIncluded
-      ? selectedRows.filter((selectedRow) => !currentRows.includes(selectedRow))
+      ? selectedRows.filter(selectedRow => !currentRows.includes(selectedRow))
       : removeDuplicatedFromArray([...selectedRows, ...currentRows])
 
     setSelectedRows(selections)
@@ -26,7 +20,7 @@ export const useTableSelection = ({
     const isAlreadySelected = selectedRows.includes(row)
 
     const selection = isAlreadySelected
-      ? selectedRows.filter((selectedRow) => selectedRow !== row)
+      ? selectedRows.filter(selectedRow => selectedRow !== row)
       : [...selectedRows, row]
 
     setSelectedRows(selection)

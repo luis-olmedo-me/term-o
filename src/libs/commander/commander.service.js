@@ -11,8 +11,11 @@ import {
 } from './commander.helpers'
 import { commanderMessages } from './commander.messages'
 import { Outputs } from './components/Outputs/Outputs.component'
+import { OutputsAsyncSecuence } from './components/OutputsAsyncSecuence/OutputsAsyncSecuence.component'
 import { OutputSecuence } from './components/OutputsSecuence/OutputSecuence.component'
 import { MessageLog } from './modules/Log'
+
+const joinArgs = args => args.join(' ')
 
 class Commander {
   constructor() {
@@ -72,9 +75,20 @@ class Commander {
     return shouldUseDefaults ? [...parsedProps, ...defaultProps] : parsedProps
   }
 
+  getOutputsAsyncSecuence(id, fullLine) {
+    const rawLines = fullLine.split(' ').filter(Boolean)
+    const asyncSequences = splitArgsTakingInCountSymbols(rawLines, ['&&&']).map(joinArgs)
+
+    return ({ outsideProps }) => {
+      return (
+        <OutputsAsyncSecuence id={id} asyncSequences={asyncSequences} outsideProps={outsideProps} />
+      )
+    }
+  }
+
   getOutputsSecuence(id, fullLine) {
     const rawLines = fullLine.split(' ').filter(Boolean)
-    const sequences = splitArgsTakingInCountSymbols(rawLines, ['&&'])
+    const sequences = splitArgsTakingInCountSymbols(rawLines, ['&&']).map(joinArgs)
 
     return ({ outsideProps }) => {
       return <OutputSecuence id={id} sequences={sequences} outsideProps={outsideProps} />

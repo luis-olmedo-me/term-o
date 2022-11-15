@@ -37,7 +37,7 @@ export const Console = () => {
   const handleCommandRun = useCallback((command, id) => {
     const formmatedCommand = commander.getCommandWithAliases(command)
 
-    const logOutput = commander.getOutputsSecuence(id, formmatedCommand)
+    const logOutput = commander.getOutputsAsyncSecuence(id, formmatedCommand)
 
     setHistories(histories => [...histories, logOutput])
   }, [])

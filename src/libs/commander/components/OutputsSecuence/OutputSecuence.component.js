@@ -1,7 +1,7 @@
 import * as React from 'preact'
+import { useCallback, useMemo, useState } from 'preact/hooks'
 
 import { commander } from 'libs/commander/commander.service'
-import { useCallback, useMemo, useState } from 'preact/hooks'
 
 export const OutputSecuence = ({ id, sequences, outsideProps }) => {
   const defaultData = useMemo(

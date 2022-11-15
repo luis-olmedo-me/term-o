@@ -11,6 +11,7 @@ import {
 } from './commander.helpers'
 import { commanderMessages } from './commander.messages'
 import { Outputs } from './components/Outputs/Outputs.component'
+import { OutputSecuence } from './components/OutputsSecuence/OutputSecuence.component'
 import { MessageLog } from './modules/Log'
 
 class Commander {
@@ -71,7 +72,15 @@ class Commander {
     return shouldUseDefaults ? [...parsedProps, ...defaultProps] : parsedProps
   }
 
-  getLogOutput(id, fullLine) {
+  getOutputsSecuence(id, fullLine) {
+    const sequences = fullLine.split('&&').filter(Boolean)
+
+    return ({ outsideProps }) => {
+      return <OutputSecuence id={id} sequences={sequences} outsideProps={outsideProps} />
+    }
+  }
+
+  getOutputs(id, fullLine) {
     const rawLines = fullLine.split(' ').filter(Boolean)
     const lines = splitArgsTakingInCountSymbols(rawLines)
 
@@ -101,8 +110,13 @@ class Commander {
       }
     })
 
-    return outsideProps => (
-      <Outputs key={id} components={setOfOutputs} outsideProps={outsideProps} />
+    return ({ outsideProps, onFinishAll }) => (
+      <Outputs
+        key={id}
+        components={setOfOutputs}
+        outsideProps={outsideProps}
+        onFinishAll={onFinishAll}
+      />
     )
   }
 }

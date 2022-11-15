@@ -37,7 +37,7 @@ export const Console = () => {
   const handleCommandRun = useCallback((command, id) => {
     const formmatedCommand = commander.getCommandWithAliases(command)
 
-    const logOutput = commander.getLogOutput(id, formmatedCommand)
+    const logOutput = commander.getOutputsSecuence(id, formmatedCommand)
 
     setHistories(histories => [...histories, logOutput])
   }, [])
@@ -142,7 +142,9 @@ export const Console = () => {
       </ConsoleTitle>
 
       <ConsoleLogs style={consoleStyles}>
-        {histories.map(history => history(outsideProps))}
+        {histories.map((History, index) => (
+          <History key={index} outsideProps={outsideProps} />
+        ))}
       </ConsoleLogs>
 
       <CommandInput

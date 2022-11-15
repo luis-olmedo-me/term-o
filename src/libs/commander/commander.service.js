@@ -54,7 +54,7 @@ class Commander {
   }
 
   getSuggestions(command) {
-    const [lastCommand] = command.split('|').reverse()
+    const [lastCommand] = command.split(/\||&&|&&&/g).reverse()
     const allArgsReversed = lastCommand.split(' ').reverse()
     const commandName = allArgsReversed.map(removeQuotesFromValue).find(arg => this.isKeyword(arg))
 

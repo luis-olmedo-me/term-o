@@ -52,7 +52,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
 
   const handleKeyUp = ({ target: { selectionEnd }, key }) => {
     const temporalCommand = command.slice(0, selectionEnd)
-    const isLastLetterSpecial = [' ', '|'].includes(temporalCommand.at(-1))
+    const isLastLetterSpecial = [' ', '|', '&&', '&&&'].includes(temporalCommand.at(-1))
 
     if (!command) return
     if (key === 'Enter') {

@@ -1,5 +1,6 @@
 import * as React from 'preact'
-import { Home, Palette, Tag } from 'src/modules/icons'
+
+import { Home, Palette, Tag } from '@src/modules/icons'
 import { optionTypes } from '../../constants/commands.constants'
 import { CommandDom } from './CommandDom.component'
 
@@ -90,7 +91,7 @@ export const domConfig = {
       alias: 'gp'
     }
   },
-  output: (props) => <CommandDom key={props.id} {...props} />
+  output: CommandDom
 }
 
 export const domViewIds = {

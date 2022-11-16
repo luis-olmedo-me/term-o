@@ -1,5 +1,5 @@
-import { isElementHidden } from 'src/helpers/dom.helpers'
-import { removeDuplicatedFromArray } from 'src/helpers/utils.helpers.js'
+import { isElementHidden } from '@src/helpers/dom.helpers'
+import { removeDuplicatedFromArray } from '@src/helpers/utils.helpers.js'
 import { actionTypes } from '../../constants/commands.constants'
 
 const getElementsFromDOM = patterns => {

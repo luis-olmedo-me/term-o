@@ -1,5 +1,5 @@
+import { formatDate } from '@src/helpers/dates.helpers'
 import { useCallback, useState } from 'preact/hooks'
-import { formatDate } from 'src/helpers/dates.helpers'
 
 export const useDateRangeActions = ({ onDateUpdate }) => {
   const [dates, setDates] = useState({ start: null, end: null })
@@ -13,8 +13,7 @@ export const useDateRangeActions = ({ onDateUpdate }) => {
           label: formatDate(dates.start, 'dd/MM/yyyy hh:mm:ss'),
           text: formatDate(dates.start, 'yyyy-MM-ddThh:mm:ss'),
           invalid: areDatesInvalid,
-          onChange: ({ target }) =>
-            onDateUpdate({ startTime: new Date(target.value).getTime() }),
+          onChange: ({ target }) => onDateUpdate({ startTime: new Date(target.value).getTime() }),
           type: 'datetime'
         }
       ]
@@ -28,17 +27,13 @@ export const useDateRangeActions = ({ onDateUpdate }) => {
           label: formatDate(dates.end, 'dd/MM/yyyy hh:mm:ss'),
           text: formatDate(dates.end, 'yyyy-MM-ddThh:mm:ss'),
           invalid: areDatesInvalid,
-          onChange: ({ target }) =>
-            onDateUpdate({ endTime: new Date(target.value).getTime() }),
+          onChange: ({ target }) => onDateUpdate({ endTime: new Date(target.value).getTime() }),
           type: 'datetime'
         }
       ]
     : []
 
-  const setDate = useCallback(
-    (value) => setDates((dates) => ({ ...dates, ...value })),
-    []
-  )
+  const setDate = useCallback(value => setDates(dates => ({ ...dates, ...value })), [])
   return {
     startDateAction,
     endDateAction,

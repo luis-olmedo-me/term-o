@@ -1,5 +1,5 @@
-import { Carousel, CarouselItem } from 'modules/components/Carousel'
-import { Table } from 'modules/components/Table/Table.component'
+import { Carousel, CarouselItem } from '@modules/components/Carousel'
+import { Table } from '@modules/components/Table/Table.component'
 import * as React from 'preact'
 import { useState } from 'preact/hooks'
 import { getAttributes } from '../../../../components/CommandDom/CommandDom.helpers'
@@ -10,11 +10,7 @@ import { Input } from '../AttributeInput'
 import { attributeTableOptions } from './AttributeEditionLog.constants'
 import { turnAttributesIntoTableItems } from './AttributeEditionLog.helpers'
 
-export const AttributeEditionLog = ({
-  element,
-  leftOptions = [],
-  rightOptions = []
-}) => {
+export const AttributeEditionLog = ({ element, leftOptions = [], rightOptions = [] }) => {
   const [newAtributeName, setNewAttributeName] = useState('')
   const [newAtributeValue, setNewAttributeValue] = useState('')
 
@@ -41,10 +37,10 @@ export const AttributeEditionLog = ({
     {
       value: (
         <Input
-          type='text'
-          placeholder='New attribute name'
+          type="text"
+          placeholder="New attribute name"
           value={newAtributeName}
-          onChange={(event) => setNewAttributeName(event.target.value)}
+          onChange={event => setNewAttributeName(event.target.value)}
           onKeyUp={handleNewAttributeKeyUp}
         />
       )
@@ -52,32 +48,22 @@ export const AttributeEditionLog = ({
     {
       value: (
         <Input
-          type='text'
-          placeholder='New attribute value'
+          type="text"
+          placeholder="New attribute value"
           value={newAtributeValue}
-          onChange={(event) => setNewAttributeValue(event.target.value)}
+          onChange={event => setNewAttributeValue(event.target.value)}
           onKeyUp={handleNewAttributeKeyUp}
         />
       )
     }
   ]
 
-  const parsedPages = pages.length
-    ? pages.map((page) => [...page, editableRow])
-    : [[editableRow]]
+  const parsedPages = pages.length ? pages.map(page => [...page, editableRow]) : [[editableRow]]
 
-  const editionPageButtonGroups = [
-    ...leftOptions,
-    ...paginationActions,
-    ...rightOptions
-  ]
+  const editionPageButtonGroups = [...leftOptions, ...paginationActions, ...rightOptions]
 
   return (
-    <Log
-      variant={parameterTypes.TABLE}
-      actionGroups={editionPageButtonGroups}
-      hasScroll
-    >
+    <Log variant={parameterTypes.TABLE} actionGroups={editionPageButtonGroups} hasScroll>
       <Carousel itemInView={pageNumber}>
         {parsedPages.map((page, currentPageNumber) => {
           return (

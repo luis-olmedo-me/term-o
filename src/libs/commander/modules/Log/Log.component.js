@@ -1,5 +1,5 @@
+import { Error, Info, Tick } from '@src/modules/icons'
 import * as React from 'preact'
-import { Error, Info, Tick } from 'src/modules/icons'
 import { parameterTypes } from '../../constants/commands.constants'
 import { ActionGroups } from './components/ActionGroups/ActionGroups.component'
 import { Hash, LogContent, LogWrapper, ScrolledLogContent, Shadow } from './Log.styles'

@@ -2,7 +2,7 @@ const CopyPlugin = require('copy-webpack-plugin')
 const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
-module.exports = (_env, { watch }) => ({
+module.exports = (_env, { watch, mode }) => ({
   entry: {
     popup: './src/projects/popup/popup.js',
     content: './src/projects/content/content.js',
@@ -16,10 +16,9 @@ module.exports = (_env, { watch }) => ({
     extensions: ['.js', '.jsx', '.css'],
     modules: [path.resolve(__dirname, 'src'), 'node_modules'],
     alias: {
-      libs: path.resolve(__dirname, 'src/libs'),
-      modules: path.resolve(__dirname, 'src/modules'),
-      projects: path.resolve(__dirname, 'src/projects'),
-      src: path.resolve(__dirname, 'src'),
+      '@libs': path.resolve(__dirname, 'src/libs'),
+      '@modules': path.resolve(__dirname, 'src/modules'),
+      '@src': path.resolve(__dirname, 'src'),
       react: 'preact/compat'
     }
   },
@@ -39,7 +38,7 @@ module.exports = (_env, { watch }) => ({
     ]),
     ...(watch ? [] : [new CleanWebpackPlugin()])
   ],
-  optimization: { minimize: true },
+  optimization: { minimize: mode === 'production' },
   performance: { maxEntrypointSize: 512000, maxAssetSize: 512000 },
   watchOptions: {
     aggregateTimeout: 200,

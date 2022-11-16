@@ -1,6 +1,6 @@
+import { Portal } from '@src/modules/components/Portal/Portal.component'
+import { Logo } from '@src/modules/icons'
 import * as React from 'preact'
-import { Portal } from 'src/modules/components/Portal/Portal.component'
-import { Logo } from 'src/modules/icons'
 import {
   Description,
   Image,

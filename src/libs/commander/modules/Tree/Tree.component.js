@@ -1,6 +1,6 @@
+import { theme as t } from '@src/helpers/theme.helpers'
 import * as React from 'preact'
 import { useState } from 'preact/hooks'
-import { theme as t } from 'src/helpers/theme.helpers'
 import styled from 'styled-components'
 import { EditableText } from './components/EditableText/EditableText.component'
 import { arrayLabels, objectLabels } from './Tree.constants'

@@ -1,6 +1,6 @@
+import { removeDuplicatedFromArray } from '@src/helpers/utils.helpers.js'
 import { getElements } from '../CommandDom/CommandDom.helpers'
 import { inspectActionTypes } from './CommandInspect.constants'
-import { removeDuplicatedFromArray } from 'src/helpers/utils.helpers.js'
 
 export const getActionType = () => {
   return inspectActionTypes.INSPECT
@@ -16,7 +16,7 @@ export const getDefaultHTMlRoot = () => {
   return elementsSearch
 }
 
-const getOpenNodesFromObjetive = (objetive) => {
+const getOpenNodesFromObjetive = objetive => {
   let openNodes = []
   let currentObjetive = objetive
 
@@ -27,7 +27,7 @@ const getOpenNodesFromObjetive = (objetive) => {
 
   return openNodes
 }
-export const getOpenNodesFromObjetives = (objetives) => {
+export const getOpenNodesFromObjetives = objetives => {
   const openNodes = objetives.reduce((allOpenNodes, objetive) => {
     return [...allOpenNodes, ...getOpenNodesFromObjetive(objetive)]
   }, [])

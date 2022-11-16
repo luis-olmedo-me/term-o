@@ -1,9 +1,6 @@
 import * as React from 'preact'
-import { MessageLog } from './modules/Log'
 
 import { consoleCommands } from './commander.constants'
-import { Outputs } from './components/Outputs/Outputs.component'
-
 import {
   buildProps,
   getOptionsFromArgs,
@@ -13,6 +10,12 @@ import {
   splitArgsTakingInCountSymbols
 } from './commander.helpers'
 import { commanderMessages } from './commander.messages'
+import { Outputs } from './components/Outputs/Outputs.component'
+import { OutputsAsyncSecuence } from './components/OutputsAsyncSecuence/OutputsAsyncSecuence.component'
+import { OutputSecuence } from './components/OutputsSecuence/OutputSecuence.component'
+import { MessageLog } from './modules/Log'
+
+const joinArgs = args => args.join(' ')
 
 class Commander {
   constructor() {
@@ -39,7 +42,7 @@ class Commander {
   getCommandWithAliases(command) {
     return Object.entries(this.aliasesAsObject)
       .reduce((separatedCommandBySpaces, [alias, value]) => {
-        return separatedCommandBySpaces.map((commandWord) =>
+        return separatedCommandBySpaces.map(commandWord =>
           commandWord === alias ? value : commandWord
         )
       }, command.split(' '))
@@ -51,11 +54,9 @@ class Commander {
   }
 
   getSuggestions(command) {
-    const [lastCommand] = command.split('|').reverse()
+    const [lastCommand] = command.split(/\||&&|&&&/g).reverse()
     const allArgsReversed = lastCommand.split(' ').reverse()
-    const commandName = allArgsReversed
-      .map(removeQuotesFromValue)
-      .find((arg) => this.isKeyword(arg))
+    const commandName = allArgsReversed.map(removeQuotesFromValue).find(arg => this.isKeyword(arg))
 
     const doubleQuotes = lastCommand.match(/"/g)
     const singleQuotes = lastCommand.match(/'/g)
@@ -63,13 +64,9 @@ class Commander {
     const singleQuotesMatches = singleQuotes ? singleQuotes.length : 0
 
     const shouldUseDefaults =
-      !commandName ||
-      doubleQuotesMatches % 2 !== 0 ||
-      singleQuotesMatches % 2 !== 0
+      !commandName || doubleQuotesMatches % 2 !== 0 || singleQuotesMatches % 2 !== 0
 
-    const defaultProps = this.commandNames
-      .concat(this.aliasNames)
-      .map((name) => ({ value: name }))
+    const defaultProps = this.commandNames.concat(this.aliasNames).map(name => ({ value: name }))
 
     const knownCommand = this.commands[commandName]
 
@@ -78,31 +75,43 @@ class Commander {
     return shouldUseDefaults ? [...parsedProps, ...defaultProps] : parsedProps
   }
 
-  getLogOutput(id, fullLine) {
+  getOutputsAsyncSecuence(id, fullLine) {
+    const rawLines = fullLine.split(' ').filter(Boolean)
+    const asyncSequences = splitArgsTakingInCountSymbols(rawLines, ['&&&']).map(joinArgs)
+
+    return ({ outsideProps }) => {
+      return (
+        <OutputsAsyncSecuence id={id} asyncSequences={asyncSequences} outsideProps={outsideProps} />
+      )
+    }
+  }
+
+  getOutputsSecuence(id, fullLine) {
+    const rawLines = fullLine.split(' ').filter(Boolean)
+    const sequences = splitArgsTakingInCountSymbols(rawLines, ['&&']).map(joinArgs)
+
+    return ({ outsideProps }) => {
+      return <OutputSecuence id={id} sequences={sequences} outsideProps={outsideProps} />
+    }
+  }
+
+  getOutputs(id, fullLine) {
     const rawLines = fullLine.split(' ').filter(Boolean)
     const lines = splitArgsTakingInCountSymbols(rawLines)
 
-    const setOfOutputs = lines.map((line) => {
+    const setOfOutputs = lines.map(line => {
       const [command, ...args] = line
       const commandJoined = line.join(' ')
       const knownCommand = this.commands[command]
 
-      const { values, ...propValues } = getOptionsFromArgs(
-        args,
-        knownCommand?.props
-      )
+      const { values, ...propValues } = getOptionsFromArgs(args, knownCommand?.props)
       const props = buildProps(propValues, knownCommand?.props)
 
       const hasKnownCommand = Boolean(knownCommand)
 
       return ({ providerProps, possibleParams, id }) => {
         if (!hasKnownCommand) {
-          return (
-            <MessageLog
-              {...commanderMessages.unknownCommandError}
-              command={commandJoined}
-            />
-          )
+          return <MessageLog {...commanderMessages.unknownCommandError} command={commandJoined} />
         }
 
         const params = parseValuesIntoParams(values, possibleParams)
@@ -112,12 +121,17 @@ class Commander {
           id
         }
 
-        return knownCommand.output(commonProps)
+        return <knownCommand.output {...commonProps} />
       }
     })
 
-    return (outsideProps) => (
-      <Outputs key={id} components={setOfOutputs} outsideProps={outsideProps} />
+    return ({ outsideProps, onFinishAll }) => (
+      <Outputs
+        key={id}
+        components={setOfOutputs}
+        outsideProps={outsideProps}
+        onFinishAll={onFinishAll}
+      />
     )
   }
 }

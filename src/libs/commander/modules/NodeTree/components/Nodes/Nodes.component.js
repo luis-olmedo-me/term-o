@@ -1,7 +1,7 @@
-import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
+import { withOverlayContext } from '@modules/components/Overlay/Overlay.hoc'
+import { isElementHidden } from '@src/helpers/dom.helpers'
+import { Chevron } from '@src/modules/icons'
 import * as React from 'preact'
-import { isElementHidden } from 'src/helpers/dom.helpers'
-import { Chevron } from 'src/modules/icons'
 import { ElementLabel } from '../ElementLabel/ElementLabel.component'
 import { GapNodesWrapper, Postfix, Prefix, TagWrapper } from './Nodes.styles'
 

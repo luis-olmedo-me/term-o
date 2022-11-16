@@ -1,7 +1,7 @@
-import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
+import { withOverlayContext } from '@modules/components/Overlay/Overlay.hoc'
+import { isElementHidden } from '@src/helpers/dom.helpers'
 import * as React from 'preact'
 import { useMemo } from 'preact/hooks'
-import { isElementHidden } from 'src/helpers/dom.helpers'
 import { ElementLabel } from '../../../NodeTree/components/ElementLabel/ElementLabel.component'
 import { ElementWrapper } from './Element.styles'
 

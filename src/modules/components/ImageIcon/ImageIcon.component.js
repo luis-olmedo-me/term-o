@@ -1,12 +1,7 @@
+import { Logo } from '@src/modules/icons'
 import * as React from 'preact'
 import { useState } from 'preact/hooks'
-import { Logo } from 'src/modules/icons'
-import {
-  Favicon,
-  FaviconSVG,
-  IconWrapper,
-  LabelWrapper
-} from './ImageIcon.styles'
+import { Favicon, FaviconSVG, IconWrapper, LabelWrapper } from './ImageIcon.styles'
 
 export const ImageIcon = ({ url, label }) => {
   const [hasError, setHasError] = useState(false)

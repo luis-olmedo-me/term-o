@@ -1,7 +1,7 @@
 import * as React from 'preact'
 
-import { Carousel, CarouselItem } from 'modules/components/Carousel'
-import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
+import { Carousel, CarouselItem } from '@modules/components/Carousel'
+import { withOverlayContext } from '@modules/components/Overlay/Overlay.hoc'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 import { getParamsByType } from '../../commander.helpers'
 import { parameterTypes } from '../../constants/commands.constants'

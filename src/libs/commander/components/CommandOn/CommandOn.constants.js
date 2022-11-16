@@ -1,4 +1,3 @@
-import * as React from 'preact'
 import { optionTypes } from '../../constants/commands.constants'
 import { CommandOn } from './CommandOn.component'
 
@@ -26,7 +25,7 @@ export const onConfig = {
       alias: 'e'
     }
   },
-  output: (props) => <CommandOn key={props.id} {...props} />
+  output: CommandOn
 }
 
 export const onActionTypes = {

@@ -1,18 +1,13 @@
+import { formatDate } from '@src/helpers/dates.helpers'
+import { ImageIcon } from '@src/modules/components/ImageIcon'
+import { Copy } from '@src/modules/icons'
 import * as React from 'preact'
-import { formatDate } from 'src/helpers/dates.helpers'
-import { ImageIcon } from 'src/modules/components/ImageIcon'
-import { Copy } from 'src/modules/icons'
-import {
-  tabsActionTypes,
-  tabsHeaderIds,
-  tabsTableOptions
-} from './CommandTabs.constants'
+import { tabsActionTypes, tabsHeaderIds, tabsTableOptions } from './CommandTabs.constants'
 
 export const getActionType = ({ now, past, open, close, reload, go }) => {
   if (reload) return tabsActionTypes.RELOAD_TAB
   if (go) return tabsActionTypes.GO
-  if (close.length)
-    return now ? tabsActionTypes.CLOSE_OPEN_TABS : tabsActionTypes.NONE
+  if (close.length) return now ? tabsActionTypes.CLOSE_OPEN_TABS : tabsActionTypes.NONE
   if (now) return tabsActionTypes.SHOW_CURRENT_TABS
   if (past) return tabsActionTypes.SHOW_HISTORY
   if (open) return tabsActionTypes.REDIRECT
@@ -20,13 +15,7 @@ export const getActionType = ({ now, past, open, close, reload, go }) => {
 }
 
 const microsecondsPerDay = 1000 * 60 * 60 * 24
-export const validateHistoryFilters = ({
-  byText,
-  byStartDate,
-  byEndDate,
-  byDate,
-  maxResults
-}) => {
+export const validateHistoryFilters = ({ byText, byStartDate, byEndDate, byDate, maxResults }) => {
   const now = new Date().getTime()
   const yesterday = now - microsecondsPerDay
 
@@ -84,7 +73,7 @@ export const validateTabsFilters = ({ byText, here, incognito }) => {
 }
 
 export const turnOpenTabsToTableItems = ({ tabsOpen }) => {
-  return tabsOpen.map((tab) => {
+  return tabsOpen.map(tab => {
     return tabsTableOptions.columns.map(({ id }) => {
       let rowValue = tab[id]
       const valueToCopy = rowValue
@@ -92,9 +81,7 @@ export const turnOpenTabsToTableItems = ({ tabsOpen }) => {
       if (id === tabsHeaderIds.DATE) {
         const isRowValueString = typeof rowValue === 'string'
 
-        rowValue = isRowValueString
-          ? rowValue
-          : formatDate(rowValue, 'dd/MM/yyyy hh:mm:ss')
+        rowValue = isRowValueString ? rowValue : formatDate(rowValue, 'dd/MM/yyyy hh:mm:ss')
       }
       if (id === tabsHeaderIds.HOSTNAME) {
         rowValue = new URL(tab.url).hostname

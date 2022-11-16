@@ -1,5 +1,5 @@
 import * as React from 'preact'
-import { useEffect, useState } from 'preact/hooks'
+import { useState } from 'preact/hooks'
 import { Overlay } from './Overlay.component'
 import { OverlayContext } from './Overlay.contexts'
 

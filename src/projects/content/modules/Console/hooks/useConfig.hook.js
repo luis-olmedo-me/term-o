@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'preact/hooks'
 
-import { commander, customPageEventNames } from 'libs/commander'
+import { commander, customPageEventNames } from '@libs/commander'
 
-import { fetchConfiguration } from 'src/helpers/event.helpers.js'
+import { fetchConfiguration } from '@src/helpers/event.helpers.js'
 
 const defaultConfiguration = {
   isOpen: false,

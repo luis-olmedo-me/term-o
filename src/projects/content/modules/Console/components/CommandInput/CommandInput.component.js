@@ -1,7 +1,7 @@
 import * as React from 'preact'
 import { useState } from 'preact/hooks'
 
-import { commander } from 'libs/commander/commander.service'
+import { commander } from '@libs/commander/commander.service'
 
 import { Suggestions } from '../Suggestions/Suggestions.component'
 
@@ -16,19 +16,16 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
   const [suggestions, setSuggestions] = useState([])
   const [selectedSuggestionId, setSelectedSuggestionId] = useState(0)
 
-  const handleNewCaretPosition = (position) => {
+  const handleNewCaretPosition = position => {
     setTimeout(() => (inputReference.current.selectionEnd = position))
   }
 
-  const handleSelectSuggestion = (selectedId) => {
+  const handleSelectSuggestion = selectedId => {
     const caretPosition = inputReference.current?.selectionEnd || 0
 
     if (selectedId === 0) {
       handleOnEnter(command)
-      setCommands([
-        ...commands,
-        { command, id: commands.length, selected: false }
-      ])
+      setCommands([...commands, { command, id: commands.length, selected: false }])
       setCommand('')
       setSuggestions([])
       setSelectedSuggestionId(0)
@@ -55,7 +52,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
 
   const handleKeyUp = ({ target: { selectionEnd }, key }) => {
     const temporalCommand = command.slice(0, selectionEnd)
-    const isLastLetterSpecial = [' ', '|'].includes(temporalCommand.at(-1))
+    const isLastLetterSpecial = [' ', '|', '&&', '&&&'].includes(temporalCommand.at(-1))
 
     if (!command) return
     if (key === 'Enter') {
@@ -66,30 +63,23 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
       return
     }
 
-    const temporalSpacedCommand = temporalCommand
-      .replace(/"/g, ' " ')
-      .replace(/'/g, " ' ")
+    const temporalSpacedCommand = temporalCommand.replace(/"/g, ' " ').replace(/'/g, " ' ")
     const lastWord = temporalSpacedCommand.split(' ').at(-1)
 
     const newSuggestions = commander
       .getSuggestions(temporalSpacedCommand)
       .filter(
-        (suggestion) =>
-          suggestion.value.includes(lastWord) ||
-          suggestion.alias?.includes(lastWord)
+        suggestion => suggestion.value.includes(lastWord) || suggestion.alias?.includes(lastWord)
       )
 
     const { index: indexMatch } = newSuggestions.reduce(
       (lastMatch, suggestion, index) => {
         const [matchWord] =
-          suggestion.value.match(lastWord) ||
-          suggestion.alias?.match(lastWord) ||
-          []
+          suggestion.value.match(lastWord) || suggestion.alias?.match(lastWord) || []
         const matches = matchWord?.length
 
         const isValueMatch =
-          suggestion.value.startsWith(lastWord) ||
-          suggestion.alias?.startsWith(lastWord)
+          suggestion.value.startsWith(lastWord) || suggestion.alias?.startsWith(lastWord)
         const isValidMatch = isValueMatch && lastMatch.matches < matches
 
         return isValidMatch ? { index, matches } : lastMatch
@@ -98,21 +88,19 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
     )
 
     setSuggestions(
-      temporalCommand && !isLastLetterSpecial
-        ? [defaultSuggestion, ...newSuggestions]
-        : []
+      temporalCommand && !isLastLetterSpecial ? [defaultSuggestion, ...newSuggestions] : []
     )
     setSelectedSuggestionId(indexMatch === -1 ? 0 : indexMatch + 1)
   }
 
-  const handleKeyPressed = (event) => {
+  const handleKeyPressed = event => {
     const { key } = event
 
     if (key === 'ArrowUp') {
       event.preventDefault()
 
       if (!suggestions.length && commands.length) {
-        const commandSelected = commands.find((command) => command.selected)
+        const commandSelected = commands.find(command => command.selected)
 
         if (commandSelected) {
           const { id } = commandSelected
@@ -120,7 +108,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
           const isValidId = newId >= 0 && newId < commands.length
 
           if (isValidId) {
-            const newCommands = commands.map((command) => ({
+            const newCommands = commands.map(command => ({
               ...command,
               selected: command.id === newId
             }))
@@ -130,7 +118,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
           }
         } else {
           const defaultCommandSelected = commands.at(-1)
-          const newCommands = commands.map((command) => ({
+          const newCommands = commands.map(command => ({
             ...command,
             selected: command.id === defaultCommandSelected.id
           }))
@@ -142,7 +130,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
         return
       }
 
-      setSelectedSuggestionId((indexId) => {
+      setSelectedSuggestionId(indexId => {
         const nextId = Number(indexId) - 1
         const validatedId = nextId < 0 ? suggestions.length - 1 : nextId
 
@@ -152,7 +140,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
       event.preventDefault()
 
       if (!suggestions.length && commands.length) {
-        const commandSelected = commands.find((command) => command.selected)
+        const commandSelected = commands.find(command => command.selected)
 
         if (commandSelected) {
           const { id } = commandSelected
@@ -160,7 +148,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
           const isValidId = newId >= 0 && newId < commands.length
 
           if (isValidId) {
-            const newCommands = commands.map((command) => ({
+            const newCommands = commands.map(command => ({
               ...command,
               selected: command.id === newId
             }))
@@ -173,17 +161,17 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
         return
       }
 
-      setSelectedSuggestionId((indexId) => {
+      setSelectedSuggestionId(indexId => {
         const nextId = Number(indexId) + 1
         const validatedId = nextId > suggestions.length - 1 ? 0 : nextId
 
         return validatedId
       })
     } else {
-      const hasCommandSelected = commands.find((command) => command.selected)
+      const hasCommandSelected = commands.find(command => command.selected)
 
       if (hasCommandSelected) {
-        const commandWithNoSelected = commands.map((command) => ({
+        const commandWithNoSelected = commands.map(command => ({
           ...command,
           selected: false
         }))
@@ -208,16 +196,16 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
 
         <Input
           ref={inputReference}
-          type='text'
+          type="text"
           onKeyDown={handleKeyPressed}
           onKeyUp={handleKeyUp}
-          onChange={(event) => setCommand(event.target.value)}
+          onChange={event => setCommand(event.target.value)}
           value={command}
           onBlur={() => {
             setSuggestions([])
             setSelectedSuggestionId(0)
           }}
-          spellcheck='false'
+          spellcheck="false"
         />
       </div>
     </InputWrapper>

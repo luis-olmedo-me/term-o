@@ -1,8 +1,8 @@
 import * as React from 'preact'
 
-import { withOverlayContext } from 'modules/components/Overlay/Overlay.hoc'
+import { withOverlayContext } from '@modules/components/Overlay/Overlay.hoc'
+import { resetConfiguration } from '@src/helpers/event.helpers.js'
 import { useCallback, useEffect } from 'preact/hooks'
-import { resetConfiguration } from 'src/helpers/event.helpers.js'
 import { parameterTypes } from '../../constants/commands.constants'
 import { Log, useMessageLog } from '../../modules/Log'
 import { clearActionTypes } from './CommandClear.constants'

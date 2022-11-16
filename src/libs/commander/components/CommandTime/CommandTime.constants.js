@@ -1,4 +1,3 @@
-import * as React from 'preact'
 import { optionTypes } from '../../constants/commands.constants'
 
 import { CommandTime } from './CommandTime.component'
@@ -13,7 +12,7 @@ export const timeConfig = {
       alias: 'd'
     }
   },
-  output: (props) => <CommandTime key={props.id} {...props} />
+  output: CommandTime
 }
 
 export const timeActionTypes = {

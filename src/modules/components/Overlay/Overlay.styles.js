@@ -1,4 +1,4 @@
-import { theme as t } from 'src/helpers/theme.helpers'
+import { theme as t } from '@src/helpers/theme.helpers'
 import styled from 'styled-components'
 
 export const OverlayWrapper = styled.div`

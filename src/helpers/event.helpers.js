@@ -1,4 +1,4 @@
-import { eventTypes } from 'src/constants/events.constants.js'
+import { eventTypes } from '@src/constants/events.constants.js'
 import { states } from '../libs/process-wait-list/processWaitList.constants'
 
 const mergeAliases = (aliasesA, aliasesB) => {

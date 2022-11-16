@@ -1,5 +1,5 @@
+import { Copy } from '@src/modules/icons'
 import * as React from 'preact'
-import { Copy } from 'src/modules/icons'
 import {
   eventActionTypes,
   eventTableOptions,
@@ -15,7 +15,7 @@ export const getActionType = ({ list, delete: deletedIds, trigger }) => {
 }
 
 export const turnPageEventsToTableItems = ({ pageEvents }) => {
-  return pageEvents.map((pageEvent) => {
+  return pageEvents.map(pageEvent => {
     return eventTableOptions.columns.map(({ id }) => {
       const rowValue = pageEvent[id]
 
@@ -51,12 +51,10 @@ export const triggerChangeEvent = ({ element, value }) => {
   element.dispatchEvent(new Event('change'))
 }
 
-export const validateElement = (element) => {
+export const validateElement = element => {
   const isValidInput = inputsChangeTrigerables.includes(element.tagName)
   const isInput = element.tagName === 'INPUT'
   const type = element.getAttribute('type')
 
-  return (
-    isValidInput && (isInput ? inputTypeChangeTrigerables.includes(type) : true)
-  )
+  return isValidInput && (isInput ? inputTypeChangeTrigerables.includes(type) : true)
 }

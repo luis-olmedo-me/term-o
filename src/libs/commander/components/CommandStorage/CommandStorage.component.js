@@ -1,6 +1,8 @@
-import { Carousel, CarouselItem } from '@modules/components/Carousel'
-import { Table } from '@modules/components/Table'
 import * as React from 'preact'
+
+import { Carousel, CarouselItem } from '@modules/components/Carousel'
+import { Editor } from '@modules/components/Editor'
+import { Table } from '@modules/components/Table'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 import { parameterTypes } from '../../constants/commands.constants'
 import { Log, useMessageLog, usePaginationActions, useViews } from '../../modules/Log'
@@ -133,14 +135,15 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
 
           <CarouselItem>
             <Log variant={parameterTypes.TABLE} actionGroups={[headToTable]} hasScroll>
-              {editingEntity.length && (
+              {/* {editingEntity.length && (
                 <MaterialTree
                   content={evaluateStringifiedValue(editingValue)}
                   isKeyEditionEnabled
                   isValueEditionEnabled
                   handleChange={newValue => handleTreeChange({ key: editingKey, newValue })}
                 />
-              )}
+              )} */}
+              <Editor value={evaluateStringifiedValue(editingValue)} />
             </Log>
           </CarouselItem>
         </Carousel>

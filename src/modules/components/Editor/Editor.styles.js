@@ -18,6 +18,7 @@ export const Code = styled.pre`
   margin: 0;
   font-size: 1em;
   overflow: scroll;
+  font-weight: bold;
 
   &::-webkit-scrollbar {
     display: none;

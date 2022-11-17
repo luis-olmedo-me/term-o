@@ -24,6 +24,13 @@ export const Code = styled.pre`
   }
 `
 
+export const Line = styled.pre`
+  margin: 0;
+`
+export const Highlight = styled.pre`
+  margin: 0;
+`
+
 export const CodeInput = styled.textarea`
   padding: 10px;
   width: 100%;

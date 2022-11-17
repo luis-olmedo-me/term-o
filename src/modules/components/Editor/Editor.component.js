@@ -1,7 +1,7 @@
 import * as React from 'preact'
 import { useEffect, useRef, useState } from 'preact/hooks'
 
-import { Code, CodeInput, Wrapper } from './Editor.styles'
+import { Code, CodeInput, Highlight, Line, Wrapper } from './Editor.styles'
 
 export const Editor = ({ value: defaultValue }) => {
   const codeRef = useRef(null)
@@ -18,6 +18,8 @@ export const Editor = ({ value: defaultValue }) => {
     codeInputRef.current.setAttribute('spellcheck', 'false')
   })
 
+  const lines = value.split('\n')
+
   return (
     <Wrapper>
       <CodeInput
@@ -27,7 +29,31 @@ export const Editor = ({ value: defaultValue }) => {
         onScroll={simulateScrollOnCode}
       />
 
-      <Code ref={codeRef}>{value}</Code>
+      <Code ref={codeRef}>
+        {lines.map((line, index) => {
+          const letters = line.split('')
+
+          return (
+            <Line>
+              {letters.map((letter, letterIndex) => {
+                const styles = markup[letter] || {}
+
+                return (
+                  <span key={`${index}-${letterIndex}`} style={styles}>
+                    {letter}
+                  </span>
+                )
+              })}
+            </Line>
+          )
+        })}
+      </Code>
     </Wrapper>
   )
+}
+
+const markup = {
+  '[': {
+    color: 'red'
+  }
 }

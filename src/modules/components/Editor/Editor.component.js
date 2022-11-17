@@ -1,26 +1,31 @@
 import * as React from 'preact'
-import { useEffect, useRef } from 'preact/hooks'
-import { EditableArea } from './Editor.styles'
+import { useEffect, useRef, useState } from 'preact/hooks'
 
-export const Editor = ({ value }) => {
-  const editorRef = useRef(null)
+import { Code, CodeInput, Wrapper } from './Editor.styles'
 
-  useEffect(() => {
-    editorRef.current.setAttribute('contenteditable', 'true')
-    editorRef.current.setAttribute('spellcheck', 'false')
-  }, [])
+export const Editor = ({ value: defaultValue }) => {
+  const codeRef = useRef(null)
 
-  const onChange = event => {
-    console.log('event', event, event.target.innerText)
+  const [value, setValue] = useState(defaultValue)
+
+  const simulateScrollOnCode = event => {
+    codeRef.current.scrollTop = event.target.scrollTop
+    codeRef.current.scrollLeft = event.target.scrollLeft
   }
 
-  const lines = value.split('\n')
+  useEffect(() => {
+    codeRef.current.setAttribute('spellcheck', 'false')
+  })
 
   return (
-    <EditableArea ref={editorRef} onKeyDown={onChange} contenteditable="true">
-      {lines.map(line => (
-        <div>{line}</div>
-      ))}
-    </EditableArea>
+    <Wrapper>
+      <CodeInput
+        value={value}
+        onChange={event => setValue(event.target.value)}
+        onScroll={simulateScrollOnCode}
+      />
+
+      <Code ref={codeRef}>{value}</Code>
+    </Wrapper>
   )
 }

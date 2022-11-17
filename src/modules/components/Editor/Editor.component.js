@@ -5,6 +5,7 @@ import { Code, CodeInput, Wrapper } from './Editor.styles'
 
 export const Editor = ({ value: defaultValue }) => {
   const codeRef = useRef(null)
+  const codeInputRef = useRef(null)
 
   const [value, setValue] = useState(defaultValue)
 
@@ -14,12 +15,13 @@ export const Editor = ({ value: defaultValue }) => {
   }
 
   useEffect(() => {
-    codeRef.current.setAttribute('spellcheck', 'false')
+    codeInputRef.current.setAttribute('spellcheck', 'false')
   })
 
   return (
     <Wrapper>
       <CodeInput
+        ref={codeInputRef}
         value={value}
         onChange={event => setValue(event.target.value)}
         onScroll={simulateScrollOnCode}

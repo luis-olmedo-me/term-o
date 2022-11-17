@@ -31,19 +31,36 @@ export const Editor = ({ value: defaultValue }) => {
 
       <Code ref={codeRef}>
         {lines.map((line, index) => {
-          const letters = line.split('')
+          const lettersV2 = markupV2.reduce(
+            (result, rule) => {
+              return result.reduce((parsedResult, pieceOfResult, resultIndex) => {
+                const isString = typeof pieceOfResult === 'string'
+
+                if (isString) {
+                  const [firstMatch] = pieceOfResult.match(rule.pattern) || []
+
+                  return firstMatch
+                    ? [
+                        ...parsedResult,
+                        ...insertInArray(
+                          pieceOfResult.split(rule.pattern),
+                          <span key={`${index}-${resultIndex}`} style={{ ...rule.style }}>
+                            {firstMatch}
+                          </span>
+                        )
+                      ]
+                    : [...parsedResult, pieceOfResult]
+                }
+
+                return parsedResult
+              }, [])
+            },
+            [line]
+          )
 
           return (
             <Line>
-              {letters.map((letter, letterIndex) => {
-                const styles = markup[letter] || {}
-
-                return (
-                  <span key={`${index}-${letterIndex}`} style={styles}>
-                    {letter}
-                  </span>
-                )
-              })}
+              <span>{lettersV2}</span>
             </Line>
           )
         })}
@@ -52,8 +69,17 @@ export const Editor = ({ value: defaultValue }) => {
   )
 }
 
-const markup = {
-  '[': {
-    color: 'red'
+const markupV2 = [
+  {
+    pattern: /\[/g,
+    style: { color: 'red' }
   }
+]
+
+function insertInArray(array, insertion) {
+  return array.reduce((accumlator, item, index) => {
+    const isLastIndex = index === array.length - 1
+
+    return !isLastIndex ? [...accumlator, item, insertion] : accumlator
+  }, [])
 }

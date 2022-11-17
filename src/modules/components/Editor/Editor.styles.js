@@ -19,6 +19,7 @@ export const Code = styled.pre`
   font-size: 1em;
   overflow: scroll;
   font-weight: bold;
+  display: block;
 
   &::-webkit-scrollbar {
     display: none;
@@ -41,6 +42,7 @@ export const CodeInput = styled.textarea`
   font-size: 1em;
   border: none;
   background-color: transparent;
+  display: block;
 
   &::-webkit-scrollbar {
     display: none;

@@ -2,7 +2,7 @@ import { theme as t } from '@src/helpers/theme.helpers'
 import styled from 'styled-components'
 
 export const Wrapper = styled.div`
-  background-color: ${t('transparent.500')};
+  background-color: ${t('neutral.200')};
   border-radius: ${t('radius.200')};
   position: relative;
 `

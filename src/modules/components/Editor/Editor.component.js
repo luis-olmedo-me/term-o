@@ -52,7 +52,7 @@ export const Editor = ({ value: defaultValue }) => {
                     : [...parsedResult, pieceOfResult]
                 }
 
-                return parsedResult
+                return [...parsedResult, pieceOfResult]
               }, [])
             },
             [line]
@@ -72,7 +72,31 @@ export const Editor = ({ value: defaultValue }) => {
 const markupV2 = [
   {
     pattern: /\[/g,
-    style: { color: 'red' }
+    style: { color: 'red', fontWeight: 'bold' }
+  },
+  {
+    pattern: /\]/g,
+    style: { color: 'red', fontWeight: 'bold' }
+  },
+  {
+    pattern: /\{/g,
+    style: { color: 'red', fontWeight: 'bold' }
+  },
+  {
+    pattern: /\}/g,
+    style: { color: 'red', fontWeight: 'bold' }
+  },
+  {
+    pattern: /".+"/g,
+    style: { color: 'green', fontWeight: 'bold' }
+  },
+  {
+    pattern: /\d+/g,
+    style: { color: 'purple', fontWeight: 'bold' }
+  },
+  {
+    pattern: /:/g,
+    style: { color: 'cyan', fontWeight: 'bold' }
   }
 ]
 
@@ -80,6 +104,6 @@ function insertInArray(array, insertion) {
   return array.reduce((accumlator, item, index) => {
     const isLastIndex = index === array.length - 1
 
-    return !isLastIndex ? [...accumlator, item, insertion] : accumlator
+    return !isLastIndex ? [...accumlator, item, insertion] : [...accumlator, item]
   }, [])
 }

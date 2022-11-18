@@ -3,6 +3,7 @@ import * as React from 'preact'
 import { Carousel, CarouselItem } from '@modules/components/Carousel'
 import { Editor, languages } from '@modules/components/Editor'
 import { Table } from '@modules/components/Table'
+import { EditionLog } from 'libs/commander/modules/Log/components/EditionLog'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 import { parameterTypes } from '../../constants/commands.constants'
 import { Log, useEdition, useMessageLog, usePaginationActions, useViews } from '../../modules/Log'
@@ -33,7 +34,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
     items: tableItems,
     maxItems: 10
   })
-  const { viewActions, itemInView, changeView } = useViews({
+  const { itemInView, changeView } = useViews({
     views: storageViews,
     defaultView: storageViewIds.MAIN
   })
@@ -111,7 +112,6 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
   }
 
   const [editingKey, editingValue] = editingEntity
-  const [headToTable] = viewActions
 
   return (
     <>
@@ -138,21 +138,22 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
           </CarouselItem>
 
           <CarouselItem>
-            <Log
+            {/* <Log
               variant={parameterTypes.TABLE}
               actionGroups={[headToTable, ...editionActions]}
               hasScroll
             >
-              {/* {editingEntity.length && (
+              {editingEntity.length && (
                 <MaterialTree
                   content={evaluateStringifiedValue(editingValue)}
                   isKeyEditionEnabled
                   isValueEditionEnabled
                   handleChange={newValue => handleTreeChange({ key: editingKey, newValue })}
                 />
-              )} */}
+              )}
               <Editor value={evaluateStringifiedValue(editingValue)} language={languages.JSON} />
-            </Log>
+            </Log> */}
+            <EditionLog editingValue={evaluateStringifiedValue(editingValue)} />
           </CarouselItem>
         </Carousel>
       )}

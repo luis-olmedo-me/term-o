@@ -1,9 +1,8 @@
 import * as React from 'preact'
 
 import { Carousel, CarouselItem } from '@modules/components/Carousel'
-import { Editor } from '@modules/components/Editor'
+import { Editor, languages } from '@modules/components/Editor'
 import { Table } from '@modules/components/Table'
-import { languages } from 'modules/components/Editor'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 import { parameterTypes } from '../../constants/commands.constants'
 import { Log, useMessageLog, usePaginationActions, useViews } from '../../modules/Log'

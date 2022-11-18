@@ -1,31 +1,31 @@
 const getJSONTheme = theme => [
   {
+    pattern: /"[^"]+"/g,
+    style: { color: theme.green[700] }
+  },
+  {
     pattern: /\[/g,
-    style: { color: theme.blue[900], fontWeight: 'bold' }
+    style: { color: theme.blue[900] }
   },
   {
     pattern: /\]/g,
-    style: { color: theme.blue[900], fontWeight: 'bold' }
+    style: { color: theme.blue[900] }
   },
   {
     pattern: /\{/g,
-    style: { color: theme.blue[900], fontWeight: 'bold' }
+    style: { color: theme.blue[900] }
   },
   {
     pattern: /\}/g,
-    style: { color: theme.blue[900], fontWeight: 'bold' }
-  },
-  {
-    pattern: /"[^"]+"/g,
-    style: { color: theme.green[700], fontWeight: 'bold' }
+    style: { color: theme.blue[900] }
   },
   {
     pattern: /\d+/g,
-    style: { color: theme.purple[800], fontWeight: 'bold' }
+    style: { color: theme.purple[800] }
   },
   {
     pattern: /:/g,
-    style: { color: theme.cyan[700], fontWeight: 'bold' }
+    style: { color: theme.cyan[700] }
   }
 ]
 

@@ -1,7 +1,7 @@
 import * as React from 'preact'
 import { useEffect, useRef, useState } from 'preact/hooks'
 
-import { Code, CodeInput, Highlight, Line, Wrapper } from './Editor.styles'
+import { Code, CodeInput, Line, Wrapper } from './Editor.styles'
 
 export const Editor = ({ value: defaultValue }) => {
   const codeRef = useRef(null)

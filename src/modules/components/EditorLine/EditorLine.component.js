@@ -1,5 +1,6 @@
 import * as React from 'preact'
 
+import { insertInArray } from './EditorLine.helpers'
 import { Line } from './EditorLine.styles'
 
 export const EditorLine = ({ text, theme }) => {
@@ -37,12 +38,4 @@ export const EditorLine = ({ text, theme }) => {
       <span>{textThemed}</span>
     </Line>
   )
-}
-
-function insertInArray(array, matches) {
-  return array.reduce((accumlator, item, index) => {
-    const match = matches[index]
-
-    return match ? [...accumlator, item, match] : [...accumlator, item]
-  }, [])
 }

@@ -1,7 +1,7 @@
 import * as React from 'preact'
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks'
 import { useTheme } from 'styled-components'
-import { EditorLine } from '../EditorLine/EditorLine.component'
+import { EditorLine } from './component/EditorLine'
 
 import { Code, CodeInput, Wrapper } from './Editor.styles'
 

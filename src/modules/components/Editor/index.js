@@ -1,3 +1,4 @@
-const { Editor } = require('./Editor.component')
+import { Editor } from './Editor.component'
+import { languages } from './Editor.constants'
 
-export { Editor }
+export { Editor, languages }

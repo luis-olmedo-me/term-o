@@ -5,7 +5,7 @@ import { EditorLine } from './component/EditorLine'
 
 import { Code, CodeInput, Wrapper } from './Editor.styles'
 
-export const Editor = ({ value: defaultValue }) => {
+export const Editor = ({ value: defaultValue, language }) => {
   const theme = useTheme()
 
   const codeRef = useRef(null)
@@ -24,7 +24,7 @@ export const Editor = ({ value: defaultValue }) => {
 
   const lines = value.split('\n')
 
-  const themeHighlight = useMemo(() => getHighlightTheme(theme), [theme])
+  const themeHighlight = useMemo(() => language(theme), [theme, language])
 
   return (
     <Wrapper>
@@ -43,34 +43,3 @@ export const Editor = ({ value: defaultValue }) => {
     </Wrapper>
   )
 }
-
-const getHighlightTheme = theme => [
-  {
-    pattern: /\[/g,
-    style: { color: theme.blue[900], fontWeight: 'bold' }
-  },
-  {
-    pattern: /\]/g,
-    style: { color: theme.blue[900], fontWeight: 'bold' }
-  },
-  {
-    pattern: /\{/g,
-    style: { color: theme.blue[900], fontWeight: 'bold' }
-  },
-  {
-    pattern: /\}/g,
-    style: { color: theme.blue[900], fontWeight: 'bold' }
-  },
-  {
-    pattern: /"[^"]+"/g,
-    style: { color: theme.green[700], fontWeight: 'bold' }
-  },
-  {
-    pattern: /\d+/g,
-    style: { color: theme.purple[800], fontWeight: 'bold' }
-  },
-  {
-    pattern: /:/g,
-    style: { color: theme.cyan[700], fontWeight: 'bold' }
-  }
-]

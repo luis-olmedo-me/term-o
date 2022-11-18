@@ -1,9 +1,10 @@
 import * as React from 'preact'
+import { memo } from 'preact/compat'
 
 import { insertInArray } from './EditorLine.helpers'
 import { Line } from './EditorLine.styles'
 
-export const EditorLine = ({ text, theme }) => {
+const EditorLineUnmemoized = ({ text, theme }) => {
   const textThemed = theme.reduce(
     (result, rule) => {
       return result.reduce((parsedResult, pieceOfResult, resultIndex) => {
@@ -39,3 +40,5 @@ export const EditorLine = ({ text, theme }) => {
     </Line>
   )
 }
+
+export const EditorLine = memo(EditorLineUnmemoized)

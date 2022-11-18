@@ -37,7 +37,7 @@ export const Editor = ({ value: defaultValue }) => {
 
       <Code ref={codeRef}>
         {lines.map((line, index) => {
-          return <EditorLine key={index} text={line} theme={themeHighlight} />
+          return <EditorLine key={index} text={line || ' '} theme={themeHighlight} />
         })}
       </Code>
     </Wrapper>

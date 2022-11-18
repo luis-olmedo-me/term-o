@@ -1,9 +1,12 @@
 import * as React from 'preact'
-import { useEffect, useRef, useState } from 'preact/hooks'
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks'
+import { useTheme } from 'styled-components'
 
 import { Code, CodeInput, Line, Wrapper } from './Editor.styles'
 
 export const Editor = ({ value: defaultValue }) => {
+  const theme = useTheme()
+
   const codeRef = useRef(null)
   const codeInputRef = useRef(null)
 
@@ -20,6 +23,8 @@ export const Editor = ({ value: defaultValue }) => {
 
   const lines = value.split('\n')
 
+  const themeHighlight = useMemo(() => getHighlightTheme(theme), [theme])
+
   return (
     <Wrapper>
       <CodeInput
@@ -31,22 +36,27 @@ export const Editor = ({ value: defaultValue }) => {
 
       <Code ref={codeRef}>
         {lines.map((line, index) => {
-          const lettersV2 = markupV2.reduce(
+          const lettersV2 = themeHighlight.reduce(
             (result, rule) => {
               return result.reduce((parsedResult, pieceOfResult, resultIndex) => {
                 const isString = typeof pieceOfResult === 'string'
 
                 if (isString) {
-                  const [firstMatch] = pieceOfResult.match(rule.pattern) || []
+                  const matches = pieceOfResult.match(rule.pattern) || []
 
-                  return firstMatch
+                  return matches.length
                     ? [
                         ...parsedResult,
                         ...insertInArray(
                           pieceOfResult.split(rule.pattern),
-                          <span key={`${index}-${resultIndex}`} style={{ ...rule.style }}>
-                            {firstMatch}
-                          </span>
+                          matches.map((match, matchIndex) => (
+                            <span
+                              key={`${index}-${resultIndex}-${matchIndex}`}
+                              style={{ ...rule.style }}
+                            >
+                              {match}
+                            </span>
+                          ))
                         )
                       ]
                     : [...parsedResult, pieceOfResult]
@@ -59,7 +69,7 @@ export const Editor = ({ value: defaultValue }) => {
           )
 
           return (
-            <Line>
+            <Line key={index}>
               <span>{lettersV2}</span>
             </Line>
           )
@@ -69,41 +79,41 @@ export const Editor = ({ value: defaultValue }) => {
   )
 }
 
-const markupV2 = [
+const getHighlightTheme = theme => [
   {
     pattern: /\[/g,
-    style: { color: 'red', fontWeight: 'bold' }
+    style: { color: theme.blue[900], fontWeight: 'bold' }
   },
   {
     pattern: /\]/g,
-    style: { color: 'red', fontWeight: 'bold' }
+    style: { color: theme.blue[900], fontWeight: 'bold' }
   },
   {
     pattern: /\{/g,
-    style: { color: 'red', fontWeight: 'bold' }
+    style: { color: theme.blue[900], fontWeight: 'bold' }
   },
   {
     pattern: /\}/g,
-    style: { color: 'red', fontWeight: 'bold' }
+    style: { color: theme.blue[900], fontWeight: 'bold' }
   },
   {
-    pattern: /".+"/g,
-    style: { color: 'green', fontWeight: 'bold' }
+    pattern: /"[^"]+"/g,
+    style: { color: theme.green[700], fontWeight: 'bold' }
   },
   {
     pattern: /\d+/g,
-    style: { color: 'purple', fontWeight: 'bold' }
+    style: { color: theme.purple[800], fontWeight: 'bold' }
   },
   {
     pattern: /:/g,
-    style: { color: 'cyan', fontWeight: 'bold' }
+    style: { color: theme.cyan[700], fontWeight: 'bold' }
   }
 ]
 
-function insertInArray(array, insertion) {
+function insertInArray(array, matches) {
   return array.reduce((accumlator, item, index) => {
-    const isLastIndex = index === array.length - 1
+    const match = matches[index]
 
-    return !isLastIndex ? [...accumlator, item, insertion] : [...accumlator, item]
+    return match ? [...accumlator, item, match] : [...accumlator, item]
   }, [])
 }

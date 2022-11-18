@@ -1,8 +1,9 @@
 import * as React from 'preact'
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks'
 import { useTheme } from 'styled-components'
+import { EditorLine } from '../EditorLine/EditorLine.component'
 
-import { Code, CodeInput, Line, Wrapper } from './Editor.styles'
+import { Code, CodeInput, Wrapper } from './Editor.styles'
 
 export const Editor = ({ value: defaultValue }) => {
   const theme = useTheme()
@@ -36,43 +37,7 @@ export const Editor = ({ value: defaultValue }) => {
 
       <Code ref={codeRef}>
         {lines.map((line, index) => {
-          const lettersV2 = themeHighlight.reduce(
-            (result, rule) => {
-              return result.reduce((parsedResult, pieceOfResult, resultIndex) => {
-                const isString = typeof pieceOfResult === 'string'
-
-                if (isString) {
-                  const matches = pieceOfResult.match(rule.pattern) || []
-
-                  return matches.length
-                    ? [
-                        ...parsedResult,
-                        ...insertInArray(
-                          pieceOfResult.split(rule.pattern),
-                          matches.map((match, matchIndex) => (
-                            <span
-                              key={`${index}-${resultIndex}-${matchIndex}`}
-                              style={{ ...rule.style }}
-                            >
-                              {match}
-                            </span>
-                          ))
-                        )
-                      ]
-                    : [...parsedResult, pieceOfResult]
-                }
-
-                return [...parsedResult, pieceOfResult]
-              }, [])
-            },
-            [line]
-          )
-
-          return (
-            <Line key={index}>
-              <span>{lettersV2}</span>
-            </Line>
-          )
+          return <EditorLine key={index} text={line} theme={themeHighlight} />
         })}
       </Code>
     </Wrapper>
@@ -109,11 +74,3 @@ const getHighlightTheme = theme => [
     style: { color: theme.cyan[700], fontWeight: 'bold' }
   }
 ]
-
-function insertInArray(array, matches) {
-  return array.reduce((accumlator, item, index) => {
-    const match = matches[index]
-
-    return match ? [...accumlator, item, match] : [...accumlator, item]
-  }, [])
-}

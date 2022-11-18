@@ -1,6 +1,7 @@
 import { AttributeEditionLog } from './components/AttributeEditionLog'
 import { MessageLog } from './components/MessageLog'
 import { useDateRangeActions } from './hooks/useDateRangeActions'
+import { useEdition } from './hooks/useEdition'
 import { useElementActions } from './hooks/useElementActions'
 import { replaceByParams, useMessageLog } from './hooks/useMessageLog'
 import { usePaginationActions } from './hooks/usePaginationActions'
@@ -18,5 +19,6 @@ export {
   usePaginationActions,
   useElementActions,
   useViews,
+  useEdition,
   useTableSelection
 }

@@ -5,7 +5,7 @@ import { Editor, languages } from '@modules/components/Editor'
 import { Table } from '@modules/components/Table'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 import { parameterTypes } from '../../constants/commands.constants'
-import { Log, useMessageLog, usePaginationActions, useViews } from '../../modules/Log'
+import { Log, useEdition, useMessageLog, usePaginationActions, useViews } from '../../modules/Log'
 import {
   storageActionTypes,
   storageTableOptions,
@@ -36,6 +36,10 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
   const { viewActions, itemInView, changeView } = useViews({
     views: storageViews,
     defaultView: storageViewIds.MAIN
+  })
+  const { editionActions } = useEdition({
+    onReject: () => {},
+    onAccept: () => {}
   })
 
   const handleShowStorage = useCallback(storage => {
@@ -134,7 +138,11 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
           </CarouselItem>
 
           <CarouselItem>
-            <Log variant={parameterTypes.TABLE} actionGroups={[headToTable]} hasScroll>
+            <Log
+              variant={parameterTypes.TABLE}
+              actionGroups={[headToTable, ...editionActions]}
+              hasScroll
+            >
               {/* {editingEntity.length && (
                 <MaterialTree
                   content={evaluateStringifiedValue(editingValue)}

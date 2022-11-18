@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
 `
 
 export const Code = styled.pre`
-  padding: 10px;
+  padding: 10px 15px;
   pointer-events: none;
   position: absolute;
   top: 0;
@@ -26,7 +26,7 @@ export const Code = styled.pre`
 `
 
 export const CodeInput = styled.textarea`
-  padding: 10px;
+  padding: 10px 15px;
   width: 100%;
   min-height: 400px;
   box-sizing: border-box;
@@ -47,5 +47,10 @@ export const CodeInput = styled.textarea`
   &:focus,
   &:focus-visible {
     outline: none;
+  }
+
+  &::selection {
+    color: transparent;
+    background-color: ${t('transparent.450')};
   }
 `

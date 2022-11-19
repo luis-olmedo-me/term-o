@@ -56,7 +56,7 @@ export const Editor = ({
         onKeyUp={onKeyUp}
         onBlur={onBlur}
         onScroll={simulateScrollOnCode}
-        onPaste={inline ? updateScroll : null}
+        // onPaste={inline ? updateScroll : null}
       />
 
       <Code ref={codeRef}>

@@ -1,9 +1,10 @@
-import { Carousel, CarouselItem } from '@modules/components/Carousel'
-import { Table } from '@modules/components/Table'
 import * as React from 'preact'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
+
+import { Carousel, CarouselItem } from '@modules/components/Carousel'
+import { Table } from '@modules/components/Table'
 import { parameterTypes } from '../../constants/commands.constants'
-import { Log, useMessageLog, usePaginationActions, useViews } from '../../modules/Log'
+import { EditionLog, Log, useMessageLog, usePaginationActions, useViews } from '../../modules/Log'
 import {
   storageActionTypes,
   storageTableOptions,
@@ -11,13 +12,12 @@ import {
   storageViews
 } from './CommandStorage.constants'
 import {
-  evaluateStringifiedValue,
   getActionType,
   parseCookies,
+  parseEntity,
   turnStorageToTableItems
 } from './CommandStorage.helpers'
 import { storageMessages } from './CommandStorage.messages'
-import { MaterialTree } from './CommandStorage.styles'
 
 export const CommandStorage = ({ props, terminal: { command, finish } }) => {
   const actionType = getActionType(props)
@@ -31,7 +31,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
     items: tableItems,
     maxItems: 10
   })
-  const { viewActions, itemInView, changeView } = useViews({
+  const { itemInView, changeView } = useViews({
     views: storageViews,
     defaultView: storageViewIds.MAIN
   })
@@ -80,32 +80,30 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
     [doAction, setMessage, finish]
   )
 
-  const onError = error =>
-    setMessage(eventMessages[error?.message] || eventMessages.unexpectedError)
   const handleTreeChange = ({ key, newValue }) => {
-    const stringifiedNewValue = JSON.stringify(newValue)
-    setEditingEntity([key, stringifiedNewValue])
+    setEditingEntity([])
 
     switch (actionType) {
       case storageActionTypes.SHOW_LOCAL_STORAGE:
-        window.localStorage.setItem(key, stringifiedNewValue)
-        handleShowStorage(window.localStorage).catch(onError)
+        window.localStorage.setItem(key, newValue)
+        handleShowStorage(window.localStorage)
         break
 
       case storageActionTypes.SHOW_SESSION_STORAGE:
-        window.sessionStorage.setItem(key, stringifiedNewValue)
-        handleShowStorage(window.sessionStorage).catch(onError)
+        window.sessionStorage.setItem(key, newValue)
+        handleShowStorage(window.sessionStorage)
         break
 
       case storageActionTypes.SHOW_COOKIES:
-        document.cookie = `${key}=${stringifiedNewValue}`
-        handleShowStorage(parseCookies(document.cookie)).catch(onError)
+        document.cookie = `${key}=${newValue}`
+        handleShowStorage(parseCookies(document.cookie))
         break
     }
+
+    changeView(storageViewIds.MAIN)
   }
 
   const [editingKey, editingValue] = editingEntity
-  const [headToTable] = viewActions
 
   return (
     <>
@@ -132,16 +130,11 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
           </CarouselItem>
 
           <CarouselItem>
-            <Log variant={parameterTypes.TABLE} actionGroups={[headToTable]} hasScroll>
-              {editingEntity.length && (
-                <MaterialTree
-                  content={evaluateStringifiedValue(editingValue)}
-                  isKeyEditionEnabled
-                  isValueEditionEnabled
-                  handleChange={newValue => handleTreeChange({ key: editingKey, newValue })}
-                />
-              )}
-            </Log>
+            <EditionLog
+              editingValue={parseEntity(editingValue)}
+              onApprove={newValue => handleTreeChange({ key: editingKey, newValue })}
+              onReject={() => changeView(storageViewIds.MAIN)}
+            />
           </CarouselItem>
         </Carousel>
       )}

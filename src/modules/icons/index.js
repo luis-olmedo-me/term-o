@@ -1,5 +1,6 @@
 import { Chevron } from './Chevron.icon'
 import { Copy } from './Copy.icon'
+import { Diskette } from './Diskette.icon'
 import { DoubleChevron } from './DoubleChevron.icon'
 import { Error } from './Error.icon'
 import { Eye } from './Eye.icon'
@@ -29,5 +30,6 @@ export {
   Pencil,
   Skull,
   Tag,
-  Tick
+  Tick,
+  Diskette
 }

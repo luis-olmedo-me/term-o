@@ -1,4 +1,5 @@
 import { AttributeEditionLog } from './components/AttributeEditionLog'
+import { EditionLog } from './components/EditionLog'
 import { MessageLog } from './components/MessageLog'
 import { useDateRangeActions } from './hooks/useDateRangeActions'
 import { useElementActions } from './hooks/useElementActions'
@@ -18,5 +19,6 @@ export {
   usePaginationActions,
   useElementActions,
   useViews,
-  useTableSelection
+  useTableSelection,
+  EditionLog
 }

@@ -1,23 +1,13 @@
-import { Copy, Pencil } from '@src/modules/icons'
 import * as React from 'preact'
+
+import { Copy, Pencil } from '@src/modules/icons'
 import { storageActionTypes } from './CommandStorage.constants'
-import { MaterialTree } from './CommandStorage.styles'
 
 export const getActionType = ({ local, cookies, session }) => {
   if (local) return storageActionTypes.SHOW_LOCAL_STORAGE
   else if (session) return storageActionTypes.SHOW_SESSION_STORAGE
   else if (cookies) return storageActionTypes.SHOW_COOKIES
   return storageActionTypes.NONE
-}
-
-export const evaluateStringifiedValue = value => {
-  if (typeof value !== 'string') return value
-
-  try {
-    return JSON.parse(value)
-  } catch (error) {
-    return value
-  }
 }
 
 export const turnStorageToTableItems = ({ storage = {}, editValue }) => {
@@ -55,27 +45,6 @@ export const turnStorageToTableItems = ({ storage = {}, editValue }) => {
   })
 }
 
-export const parseTableValuesForLocalStoageItems = (row, columnIndex, onChange) => {
-  const isValueRow = columnIndex === 1
-  const [key, value] = row
-  const currentValue = row[columnIndex]
-
-  return isValueRow ? (
-    <MaterialTree
-      content={evaluateStringifiedValue(value)}
-      isKeyEditionEnabled
-      isValueEditionEnabled
-      handleChange={newValue => onChange({ key, newValue })}
-    />
-  ) : (
-    currentValue
-  )
-}
-
-export const getParseTableValuesForLocalStoageItems = onChange => {
-  return (row, columnIndex) => parseTableValuesForLocalStoageItems(row, columnIndex, onChange)
-}
-
 export const parseCookies = cookies => {
   if (!cookies) return {}
 
@@ -84,4 +53,17 @@ export const parseCookies = cookies => {
 
     return { ...parsedCookies, [key]: value }
   }, {})
+}
+
+export const parseEntity = entity => {
+  try {
+    const object = JSON.parse(entity)
+
+    return object ? JSON.stringify(object, null, 2) : entity
+  } catch {
+    const isNumber = !Number.isNaN(Number(entity))
+    const isBoolean = ['true', 'false'].includes(entity)
+
+    return !isNumber || !isBoolean ? `"${entity}"` : entity
+  }
 }

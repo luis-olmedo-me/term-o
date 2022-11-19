@@ -1,6 +1,7 @@
 import { theme as t } from '@src/helpers/theme.helpers'
 import styled from 'styled-components'
 import { Actions } from '../Actions'
+import { Checkbox } from '../Checkbox/Checkbox.component'
 
 export const TableWrapper = styled.div`
   width: 100%;
@@ -73,4 +74,10 @@ export const TableActions = styled(Actions)`
   position: absolute;
   background-color: ${t('purple.700')};
   color: ${t('neutral.1200')};
+`
+
+export const HeaderCheckbox = styled(Checkbox)`
+  &.checked {
+    background-color: ${t('yellow.800')};
+  }
 `

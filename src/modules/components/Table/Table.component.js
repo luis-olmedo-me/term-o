@@ -1,8 +1,10 @@
-import { debounce } from '@src/helpers/utils.helpers.js'
 import * as React from 'preact'
-import { useEffect, useRef, useState } from 'preact/hooks'
+import { useEffect, useState } from 'preact/hooks'
+
+import { debounce } from '@src/helpers/utils.helpers.js'
 import { Checkbox } from '../Checkbox/Checkbox.component'
 import {
+  HeaderCheckbox,
   TableActions,
   TableActionsWrapper,
   TableHeaderRowValue,
@@ -41,7 +43,7 @@ export const Table = ({
         {
           id: 'selection',
           displayName: (
-            <Checkbox
+            <HeaderCheckbox
               onChange={onSelectionAll}
               checked={rows.every(row => selectedRows.includes(row))}
             />

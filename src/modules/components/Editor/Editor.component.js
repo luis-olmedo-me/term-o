@@ -1,11 +1,23 @@
+import { commander } from 'libs/commander'
 import * as React from 'preact'
-import { useEffect, useMemo, useRef, useState } from 'preact/hooks'
+import { useEffect, useMemo, useRef } from 'preact/hooks'
+
 import { useTheme } from 'styled-components'
 import { EditorLine } from './component/EditorLine'
 
-import { Code, CodeInput, Wrapper } from './Editor.styles'
+import { Code, CodeInput, CodeTextarea, Wrapper } from './Editor.styles'
 
-export const Editor = ({ value, onChange, language }) => {
+export const Editor = ({
+  topLevelReference,
+  value,
+  onChange,
+  onKeyDown,
+  onKeyUp,
+  onBlur,
+  language,
+  inline,
+  inputStyles
+}) => {
   const theme = useTheme()
 
   const codeRef = useRef(null)
@@ -18,18 +30,30 @@ export const Editor = ({ value, onChange, language }) => {
 
   useEffect(() => {
     codeInputRef.current.setAttribute('spellcheck', 'false')
-  })
+  }, [])
 
   const lines = value.split('\n')
 
-  const themeHighlight = useMemo(() => language(theme), [theme, language])
+  const themeHighlight = useMemo(() => language(theme), [
+    theme,
+    language,
+    commander.aliases,
+    commander.commands
+  ])
+  const Input = inline ? CodeInput : CodeTextarea
 
   return (
-    <Wrapper>
-      <CodeInput
-        ref={codeInputRef}
+    <Wrapper inputStyles={inputStyles}>
+      <Input
+        ref={element => {
+          codeInputRef.current = element
+          if (topLevelReference) topLevelReference.current = element
+        }}
         value={value}
-        onChange={event => onChange(event.target.value)}
+        onChange={onChange}
+        onKeyDown={onKeyDown}
+        onKeyUp={onKeyUp}
+        onBlur={onBlur}
         onScroll={simulateScrollOnCode}
       />
 

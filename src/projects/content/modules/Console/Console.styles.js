@@ -41,6 +41,8 @@ export const ConsoleTitle = styled.h1`
   transition: background-color 0.2s ease-in-out;
   border-radius: ${radius} ${radius} 0 0;
   cursor: grab;
+  font-size: 1.5em;
+  line-height: 1.2em;
 
   &&:hover,
   &&:active {

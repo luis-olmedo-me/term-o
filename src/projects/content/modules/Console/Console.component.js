@@ -100,7 +100,7 @@ export const Console = () => {
 
   const consoleStyles = {
     paddingTop: parseInt(titleReference.current?.offsetHeight || 0) + 10,
-    paddingBottom: parseInt(inputReference.current?.offsetHeight || 0) + 10
+    paddingBottom: parseInt(inputReference.current?.offsetHeight || 0) + 40
   }
 
   const cancelEventPropagation = event => {

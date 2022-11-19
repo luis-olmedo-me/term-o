@@ -40,7 +40,11 @@ export const EditionLog = ({ editingValue, onReject, onApprove }) => {
 
   return (
     <Log variant={parameterTypes.TABLE} actionGroups={editionActions} hasScroll hasShadow>
-      <Editor value={value} language={languages.JSON} onChange={setValue} />
+      <Editor
+        value={value}
+        language={languages.JSON}
+        onChange={event => setValue(event.target.value)}
+      />
     </Log>
   )
 }

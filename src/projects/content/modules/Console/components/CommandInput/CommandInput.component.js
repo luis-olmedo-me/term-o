@@ -5,8 +5,9 @@ import { commander } from '@libs/commander/commander.service'
 
 import { Suggestions } from '../Suggestions/Suggestions.component'
 
+import { Editor, languages } from 'modules/components/Editor'
 import { spliceArg } from './CommandInput.helpers'
-import { Hash, Input, InputWrapper } from './CommandInput.styles'
+import { EditorWrapper, Hash, inputStyles, InputWrapper } from './CommandInput.styles'
 
 const defaultSuggestion = { value: '< Execute >' }
 
@@ -194,19 +195,22 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
       <div>
         <Hash>$</Hash>
 
-        <Input
-          ref={inputReference}
-          type="text"
-          onKeyDown={handleKeyPressed}
-          onKeyUp={handleKeyUp}
-          onChange={event => setCommand(event.target.value)}
-          value={command}
-          onBlur={() => {
-            setSuggestions([])
-            setSelectedSuggestionId(0)
-          }}
-          spellcheck="false"
-        />
+        <EditorWrapper>
+          <Editor
+            topLevelReference={inputReference}
+            onKeyDown={handleKeyPressed}
+            onKeyUp={handleKeyUp}
+            onChange={event => setCommand(event.target.value)}
+            value={command}
+            onBlur={() => {
+              setSuggestions([])
+              setSelectedSuggestionId(0)
+            }}
+            language={languages.BASH}
+            inputStyles={inputStyles}
+            inline
+          />
+        </EditorWrapper>
       </div>
     </InputWrapper>
   )

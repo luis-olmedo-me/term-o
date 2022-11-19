@@ -1,5 +1,5 @@
 import { theme as t } from '@src/helpers/theme.helpers'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const Wrapper = styled.div`
   background-color: ${t('neutral.200')};
@@ -19,17 +19,16 @@ export const Code = styled.pre`
   font-size: 1em;
   overflow: scroll;
   display: block;
-  line-height: 1em;
+  line-height: 1.2em;
 
   &::-webkit-scrollbar {
     display: none;
   }
 `
 
-export const CodeInput = styled.textarea`
+const inputStyles = css`
   padding: 15px;
   width: 100%;
-  min-height: 400px;
   box-sizing: border-box;
   white-space: nowrap;
   font-size: 1em;
@@ -39,7 +38,7 @@ export const CodeInput = styled.textarea`
   caret-color: white;
   color: transparent;
   resize: none;
-  line-height: 1em;
+  line-height: 1.2em;
 
   &::-webkit-scrollbar {
     display: none;
@@ -55,4 +54,12 @@ export const CodeInput = styled.textarea`
     color: transparent;
     background-color: ${t('transparent.450')};
   }
+`
+
+export const CodeTextarea = styled.textarea`
+  ${inputStyles}
+  min-height: 400px;
+`
+export const CodeInput = styled.textarea`
+  ${inputStyles}
 `

@@ -1,11 +1,12 @@
 import * as React from 'preact'
-import { useEffect, useMemo, useRef, useState } from 'preact/hooks'
+import { useEffect, useMemo, useRef } from 'preact/hooks'
+
 import { useTheme } from 'styled-components'
 import { EditorLine } from './component/EditorLine'
 
-import { Code, CodeInput, Wrapper } from './Editor.styles'
+import { Code, CodeInput, CodeTextarea, Wrapper } from './Editor.styles'
 
-export const Editor = ({ value, onChange, language }) => {
+export const Editor = ({ value, onChange, language, inline }) => {
   const theme = useTheme()
 
   const codeRef = useRef(null)
@@ -23,10 +24,11 @@ export const Editor = ({ value, onChange, language }) => {
   const lines = value.split('\n')
 
   const themeHighlight = useMemo(() => language(theme), [theme, language])
+  const Input = inline ? CodeInput : CodeTextarea
 
   return (
     <Wrapper>
-      <CodeInput
+      <Input
         ref={codeInputRef}
         value={value}
         onChange={event => onChange(event.target.value)}

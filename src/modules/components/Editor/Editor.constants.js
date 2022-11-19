@@ -1,3 +1,5 @@
+import { commander } from 'libs/commander'
+
 const getJSONTheme = theme => [
   {
     pattern: /"[^"]+"/g,
@@ -33,6 +35,22 @@ const getJSONTheme = theme => [
   }
 ]
 
+const getTERMOTheme = theme => [
+  {
+    pattern: /"[^"]+"/g,
+    style: { color: theme.green[700] }
+  },
+  {
+    pattern: /--[^\s]|-[^\s]/g,
+    style: { color: theme.yellow[800] }
+  },
+  {
+    pattern: new RegExp(`${commander.commandNames.join('|')}|&{2,3}|\|`),
+    style: { color: theme.purple[800] }
+  }
+]
+
 export const languages = {
-  JSON: getJSONTheme
+  JSON: getJSONTheme,
+  TERMO: getTERMOTheme
 }

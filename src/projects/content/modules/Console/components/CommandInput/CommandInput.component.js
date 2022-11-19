@@ -205,7 +205,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
             setSuggestions([])
             setSelectedSuggestionId(0)
           }}
-          language={languages.JSON}
+          language={languages.TERMO}
           inputStyles={inputStyles}
           inline
         />

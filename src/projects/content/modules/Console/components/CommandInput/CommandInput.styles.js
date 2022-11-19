@@ -3,12 +3,23 @@ import styled, { css } from 'styled-components'
 
 const radius = t('radius.100')
 
+export const EditorWrapper = styled.div`
+  display: inline-block;
+  width: calc(100% - 25px);
+  padding: 15px;
+`
+
 export const inputStyles = css`
   background-color: ${t('neutral.100')};
   width: calc(100% - 25px);
   border-radius: 0 0 ${radius} 0;
   box-sizing: content-box;
   display: inline-block;
+
+  & > pre,
+  & > input {
+    padding: 0;
+  }
 `
 
 export const Input = styled.input`

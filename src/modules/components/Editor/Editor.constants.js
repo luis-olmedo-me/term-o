@@ -57,6 +57,10 @@ const getTERMOTheme = theme => [
     style: { color: theme.purple[900] }
   },
   {
+    pattern: /[$]\d+/g,
+    style: { color: theme.blue[700] }
+  },
+  {
     pattern: /\d+/g,
     style: { color: theme.cyan[800] }
   }

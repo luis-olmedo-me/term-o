@@ -45,7 +45,7 @@ const getTERMOTheme = theme => [
     style: { color: theme.yellow[800] }
   },
   {
-    pattern: new RegExp(`${commander.commandNames.join('|')}|&{2,3}|\|`),
+    pattern: new RegExp(`${commander.commandNames.join('|')}|&{2,3}|[|]`, 'g'),
     style: { color: theme.purple[800] }
   }
 ]

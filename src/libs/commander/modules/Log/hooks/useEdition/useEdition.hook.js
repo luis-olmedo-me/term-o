@@ -1,11 +1,11 @@
-import { CloseBorder, TickBorder } from 'modules/icons'
+import { CloseBorder, Diskette } from 'modules/icons'
 import * as React from 'preact'
 
 export const useEdition = ({ onAccept, onReject }) => {
   const editionActions = [
     {
       id: `accept`,
-      text: <TickBorder />,
+      text: <Diskette />,
       onClick: onAccept
     },
     {

@@ -1,6 +1,7 @@
 import { Chevron } from './Chevron.icon'
 import { CloseBorder } from './CloseBorder.icon'
 import { Copy } from './Copy.icon'
+import { Diskette } from './Diskette.icon'
 import { DoubleChevron } from './DoubleChevron.icon'
 import { Error } from './Error.icon'
 import { Eye } from './Eye.icon'
@@ -14,7 +15,6 @@ import { Pencil } from './Pencil.icon'
 import { Skull } from './Skull.icon'
 import { Tag } from './Tag.icon'
 import { Tick } from './Tick.icon'
-import { TickBorder } from './TickBorder.icon'
 
 export {
   Chevron,
@@ -32,6 +32,6 @@ export {
   Skull,
   Tag,
   Tick,
-  TickBorder,
+  Diskette,
   CloseBorder
 }

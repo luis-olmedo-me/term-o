@@ -8,12 +8,28 @@ import { Log } from '../../Log.component'
 
 export const EditionLog = ({ editingValue, onReject, onApprove }) => {
   const [value, setValue] = useState(editingValue)
+  const [isInvalid, setIsInvalid] = useState(false)
+
+  const handleApproval = () => {
+    let result
+
+    try {
+      result = JSON.stringify(JSON.parse(value))
+      setIsInvalid(false)
+    } catch {
+      setIsInvalid(true)
+      return
+    }
+
+    onApprove(result.trim())
+  }
 
   const editionActions = [
     {
       id: `approve`,
       text: <TickBorder />,
-      onClick: () => onApprove(value)
+      onClick: handleApproval,
+      invalid: isInvalid
     },
     {
       id: `reject`,

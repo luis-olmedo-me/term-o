@@ -14,7 +14,6 @@ import {
   storageViews
 } from './CommandStorage.constants'
 import {
-  evaluateValue,
   getActionType,
   parseCookies,
   parseEntity,
@@ -84,22 +83,21 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
   )
 
   const handleTreeChange = ({ key, newValue }) => {
-    const stringifiedNewValue = evaluateValue(newValue)
     setEditingEntity([])
 
     switch (actionType) {
       case storageActionTypes.SHOW_LOCAL_STORAGE:
-        window.localStorage.setItem(key, stringifiedNewValue)
+        window.localStorage.setItem(key, newValue)
         handleShowStorage(window.localStorage)
         break
 
       case storageActionTypes.SHOW_SESSION_STORAGE:
-        window.sessionStorage.setItem(key, stringifiedNewValue)
+        window.sessionStorage.setItem(key, newValue)
         handleShowStorage(window.sessionStorage)
         break
 
       case storageActionTypes.SHOW_COOKIES:
-        document.cookie = `${key}=${stringifiedNewValue}`
+        document.cookie = `${key}=${newValue}`
         handleShowStorage(parseCookies(document.cookie))
         break
     }

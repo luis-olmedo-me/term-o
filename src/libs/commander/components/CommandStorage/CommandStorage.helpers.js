@@ -57,25 +57,13 @@ export const parseCookies = cookies => {
 
 export const parseEntity = entity => {
   try {
-    const isObject = JSON.parse(entity)
+    const object = JSON.parse(entity)
 
-    return isObject ? JSON.stringify(entity, null, 2) : entity
+    return object ? JSON.stringify(object, null, 2) : entity
   } catch {
     const isNumber = !Number.isNaN(Number(entity))
     const isBoolean = ['true', 'false'].includes(entity)
 
     return !isNumber || !isBoolean ? `"${entity}"` : entity
-  }
-}
-
-export const evaluateValue = value => {
-  try {
-    return JSON.parse(value)
-  } catch {
-    const isNumber = !Number.isNaN(Number(entity))
-    const isBoolean = ['true', 'false'].includes(entity)
-    const parsedValue = isNumber || isBoolean ? entity : `"${entity}"`
-
-    return JSON.parse(`{value:${parsedValue}}`).value
   }
 }

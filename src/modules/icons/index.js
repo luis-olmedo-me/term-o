@@ -1,5 +1,4 @@
 import { Chevron } from './Chevron.icon'
-import { CloseBorder } from './CloseBorder.icon'
 import { Copy } from './Copy.icon'
 import { Diskette } from './Diskette.icon'
 import { DoubleChevron } from './DoubleChevron.icon'
@@ -32,6 +31,5 @@ export {
   Skull,
   Tag,
   Tick,
-  Diskette,
-  CloseBorder
+  Diskette
 }

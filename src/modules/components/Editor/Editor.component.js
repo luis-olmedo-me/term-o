@@ -1,3 +1,4 @@
+import { commander } from 'libs/commander'
 import * as React from 'preact'
 import { useEffect, useMemo, useRef } from 'preact/hooks'
 
@@ -33,7 +34,12 @@ export const Editor = ({
 
   const lines = value.split('\n')
 
-  const themeHighlight = useMemo(() => language(theme), [theme, language])
+  const themeHighlight = useMemo(() => language(theme), [
+    theme,
+    language,
+    commander.aliases,
+    commander.commands
+  ])
   const Input = inline ? CodeInput : CodeTextarea
 
   return (

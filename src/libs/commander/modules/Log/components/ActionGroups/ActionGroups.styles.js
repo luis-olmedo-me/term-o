@@ -40,4 +40,13 @@ export const Action = styled.button`
     background-color: ${t('transparent.300')};
     color: ${t('yellow.800')};
   }
+
+  &.invalid {
+    background-color: ${t('red.600')};
+    text-decoration: line-through;
+
+    &:hover {
+      background-color: ${t('red.500')};
+    }
+  }
 `

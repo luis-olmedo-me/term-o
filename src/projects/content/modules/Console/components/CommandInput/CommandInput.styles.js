@@ -1,11 +1,18 @@
 import { theme as t } from '@src/helpers/theme.helpers'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 const radius = t('radius.100')
 
+export const inputStyles = css`
+  background-color: ${t('neutral.100')};
+  width: calc(100% - 25px);
+  border-radius: 0;
+  box-sizing: content-box;
+  display: inline-block;
+`
+
 export const Input = styled.input`
   padding: 15px;
-  width: calc(100% - 25px);
   box-sizing: border-box;
   color: ${t('neutral.1200')};
   border: none;

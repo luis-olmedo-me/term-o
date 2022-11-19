@@ -14,7 +14,8 @@ export const Editor = ({
   onKeyUp,
   onBlur,
   language,
-  inline
+  inline,
+  inputStyles
 }) => {
   const theme = useTheme()
 
@@ -40,7 +41,7 @@ export const Editor = ({
   const Input = inline ? CodeInput : CodeTextarea
 
   return (
-    <Wrapper>
+    <Wrapper inputStyles={inputStyles}>
       <Input
         ref={codeInputRef}
         value={value}

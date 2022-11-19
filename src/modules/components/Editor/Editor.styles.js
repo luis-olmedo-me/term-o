@@ -3,6 +3,10 @@ import styled, { css } from 'styled-components'
 
 export const Wrapper = styled.div`
   position: relative;
+  background-color: ${t('neutral.200')};
+  border-radius: ${t('radius.200')};
+
+  ${props => props.inputStyles}
 `
 
 export const Code = styled.pre`
@@ -25,8 +29,6 @@ export const Code = styled.pre`
 `
 
 const inputStyles = css`
-  background-color: ${t('neutral.200')};
-  border-radius: ${t('radius.200')};
   font-family: 'Share Tech Mono', monospace;
   padding: 15px;
   width: 100%;
@@ -36,6 +38,7 @@ const inputStyles = css`
   border: none;
   display: block;
   caret-color: white;
+  background-color: transparent;
   color: transparent;
   line-height: 1.2em;
 

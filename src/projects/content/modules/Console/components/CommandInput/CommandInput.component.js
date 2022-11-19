@@ -7,7 +7,7 @@ import { Suggestions } from '../Suggestions/Suggestions.component'
 
 import { Editor, languages } from 'modules/components/Editor'
 import { spliceArg } from './CommandInput.helpers'
-import { Hash, Input, InputWrapper } from './CommandInput.styles'
+import { Hash, inputStyles, InputWrapper } from './CommandInput.styles'
 
 const defaultSuggestion = { value: '< Execute >' }
 
@@ -206,6 +206,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
             setSelectedSuggestionId(0)
           }}
           language={languages.JSON}
+          inputStyles={inputStyles}
           inline
         />
       </div>

@@ -6,7 +6,8 @@ const radius = t('radius.100')
 export const EditorWrapper = styled.div`
   display: inline-block;
   width: calc(100% - 25px);
-  padding: 15px;
+  padding: 15px 0 15px 15px;
+  box-sizing: border-box;
 `
 
 export const inputStyles = css`

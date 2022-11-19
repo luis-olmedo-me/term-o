@@ -2,8 +2,6 @@ import { theme as t } from '@src/helpers/theme.helpers'
 import styled, { css } from 'styled-components'
 
 export const Wrapper = styled.div`
-  background-color: ${t('neutral.200')};
-  border-radius: ${t('radius.200')};
   position: relative;
 `
 
@@ -27,6 +25,8 @@ export const Code = styled.pre`
 `
 
 const inputStyles = css`
+  background-color: ${t('neutral.200')};
+  border-radius: ${t('radius.200')};
   font-family: 'Share Tech Mono', monospace;
   padding: 15px;
   width: 100%;
@@ -34,7 +34,6 @@ const inputStyles = css`
   white-space: nowrap;
   font-size: 1em;
   border: none;
-  background-color: transparent;
   display: block;
   caret-color: white;
   color: transparent;

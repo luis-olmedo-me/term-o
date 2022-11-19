@@ -28,12 +28,7 @@ export const Editor = ({ value, onChange, language, inline }) => {
 
   return (
     <Wrapper>
-      <Input
-        ref={codeInputRef}
-        value={value}
-        onChange={event => onChange(event.target.value)}
-        onScroll={simulateScrollOnCode}
-      />
+      <Input ref={codeInputRef} value={value} onChange={onChange} onScroll={simulateScrollOnCode} />
 
       <Code ref={codeRef}>
         {lines.map((line, index) => {

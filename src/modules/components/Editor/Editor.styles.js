@@ -10,6 +10,7 @@ export const Wrapper = styled.div`
 `
 
 export const Code = styled.pre`
+  font-family: 'Share Tech Mono', monospace;
   padding: 15px;
   pointer-events: none;
   position: absolute;
@@ -22,6 +23,10 @@ export const Code = styled.pre`
   overflow: scroll;
   display: block;
   line-height: 1.2em;
+
+  & * {
+    font-family: 'Share Tech Mono', monospace;
+  }
 
   &::-webkit-scrollbar {
     display: none;

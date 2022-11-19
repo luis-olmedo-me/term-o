@@ -64,3 +64,28 @@ export const parseCookies = cookies => {
     return { ...parsedCookies, [key]: value }
   }, {})
 }
+
+export const parseEntity = entity => {
+  try {
+    const isObject = JSON.parse(entity)
+
+    return isObject ? JSON.stringify(entity, null, 2) : entity
+  } catch {
+    const isNumber = !Number.isNaN(Number(entity))
+    const isBoolean = ['true', 'false'].includes(entity)
+
+    return !isNumber || !isBoolean ? `"${entity}"` : entity
+  }
+}
+
+export const evaluateValue = value => {
+  try {
+    return JSON.parse(value)
+  } catch {
+    const isNumber = !Number.isNaN(Number(entity))
+    const isBoolean = ['true', 'false'].includes(entity)
+    const parsedValue = isNumber || isBoolean ? entity : `"${entity}"`
+
+    return JSON.parse(`{value:${parsedValue}}`).value
+  }
+}

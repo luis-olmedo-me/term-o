@@ -15,8 +15,10 @@ import {
 } from './CommandStorage.constants'
 import {
   evaluateStringifiedValue,
+  evaluateValue,
   getActionType,
   parseCookies,
+  parseEntity,
   turnStorageToTableItems
 } from './CommandStorage.helpers'
 import { storageMessages } from './CommandStorage.messages'
@@ -84,8 +86,8 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
   )
 
   const handleTreeChange = ({ key, newValue }) => {
-    const stringifiedNewValue = JSON.stringify(JSON.parse(newValue))
-    setEditingEntity([key, stringifiedNewValue])
+    const stringifiedNewValue = evaluateValue(newValue)
+    setEditingEntity([])
 
     switch (actionType) {
       case storageActionTypes.SHOW_LOCAL_STORAGE:
@@ -135,7 +137,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
 
           <CarouselItem>
             <EditionLog
-              editingValue={evaluateStringifiedValue(editingValue)}
+              editingValue={parseEntity(editingValue)}
               onApprove={newValue => handleTreeChange({ key: editingKey, newValue })}
               onReject={() => changeView(storageViewIds.MAIN)}
             />

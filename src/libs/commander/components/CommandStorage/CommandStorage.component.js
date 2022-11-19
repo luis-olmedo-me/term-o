@@ -38,10 +38,6 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
     views: storageViews,
     defaultView: storageViewIds.MAIN
   })
-  const { editionActions } = useEdition({
-    onReject: () => {},
-    onAccept: () => {}
-  })
 
   const handleShowStorage = useCallback(storage => {
     const editValue = entity => {
@@ -87,28 +83,28 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
     [doAction, setMessage, finish]
   )
 
-  const onError = error =>
-    setMessage(eventMessages[error?.message] || eventMessages.unexpectedError)
   const handleTreeChange = ({ key, newValue }) => {
-    const stringifiedNewValue = JSON.stringify(newValue)
+    const stringifiedNewValue = JSON.stringify(JSON.parse(newValue))
     setEditingEntity([key, stringifiedNewValue])
 
     switch (actionType) {
       case storageActionTypes.SHOW_LOCAL_STORAGE:
         window.localStorage.setItem(key, stringifiedNewValue)
-        handleShowStorage(window.localStorage).catch(onError)
+        handleShowStorage(window.localStorage)
         break
 
       case storageActionTypes.SHOW_SESSION_STORAGE:
         window.sessionStorage.setItem(key, stringifiedNewValue)
-        handleShowStorage(window.sessionStorage).catch(onError)
+        handleShowStorage(window.sessionStorage)
         break
 
       case storageActionTypes.SHOW_COOKIES:
         document.cookie = `${key}=${stringifiedNewValue}`
-        handleShowStorage(parseCookies(document.cookie)).catch(onError)
+        handleShowStorage(parseCookies(document.cookie))
         break
     }
+
+    changeView(storageViewIds.MAIN)
   }
 
   const [editingKey, editingValue] = editingEntity
@@ -138,22 +134,11 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
           </CarouselItem>
 
           <CarouselItem>
-            {/* <Log
-              variant={parameterTypes.TABLE}
-              actionGroups={[headToTable, ...editionActions]}
-              hasScroll
-            >
-              {editingEntity.length && (
-                <MaterialTree
-                  content={evaluateStringifiedValue(editingValue)}
-                  isKeyEditionEnabled
-                  isValueEditionEnabled
-                  handleChange={newValue => handleTreeChange({ key: editingKey, newValue })}
-                />
-              )}
-              <Editor value={evaluateStringifiedValue(editingValue)} language={languages.JSON} />
-            </Log> */}
-            <EditionLog editingValue={evaluateStringifiedValue(editingValue)} />
+            <EditionLog
+              editingValue={evaluateStringifiedValue(editingValue)}
+              onApprove={newValue => handleTreeChange({ key: editingKey, newValue })}
+              onReject={() => changeView(storageViewIds.MAIN)}
+            />
           </CarouselItem>
         </Carousel>
       )}

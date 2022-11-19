@@ -5,13 +5,11 @@ import { EditorLine } from './component/EditorLine'
 
 import { Code, CodeInput, Wrapper } from './Editor.styles'
 
-export const Editor = ({ value: defaultValue, language }) => {
+export const Editor = ({ value, onChange, language }) => {
   const theme = useTheme()
 
   const codeRef = useRef(null)
   const codeInputRef = useRef(null)
-
-  const [value, setValue] = useState(defaultValue)
 
   const simulateScrollOnCode = event => {
     codeRef.current.scrollTop = event.target.scrollTop
@@ -31,7 +29,7 @@ export const Editor = ({ value: defaultValue, language }) => {
       <CodeInput
         ref={codeInputRef}
         value={value}
-        onChange={event => setValue(event.target.value)}
+        onChange={event => onChange(event.target.value)}
         onScroll={simulateScrollOnCode}
       />
 

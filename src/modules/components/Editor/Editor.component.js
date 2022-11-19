@@ -22,10 +22,6 @@ export const Editor = ({
   const codeRef = useRef(null)
   const codeInputRef = useRef(null)
 
-  useEffect(() => {
-    topLevelReference.current = codeRef.current
-  }, [])
-
   const simulateScrollOnCode = event => {
     codeRef.current.scrollTop = event.target.scrollTop
     codeRef.current.scrollLeft = event.target.scrollLeft
@@ -43,7 +39,10 @@ export const Editor = ({
   return (
     <Wrapper inputStyles={inputStyles}>
       <Input
-        ref={codeInputRef}
+        ref={element => {
+          codeInputRef.current = element
+          if (topLevelReference) topLevelReference.current = element
+        }}
         value={value}
         onChange={onChange}
         onKeyDown={onKeyDown}

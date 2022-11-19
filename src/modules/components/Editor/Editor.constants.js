@@ -35,7 +35,7 @@ const getJSONTheme = theme => [
   }
 ]
 
-const getTERMOTheme = theme => [
+const getBashTheme = theme => [
   {
     pattern: /"[^"]+"/g,
     style: { color: theme.green[700] }
@@ -68,5 +68,5 @@ const getTERMOTheme = theme => [
 
 export const languages = {
   JSON: getJSONTheme,
-  TERMO: getTERMOTheme
+  BASH: getBashTheme
 }

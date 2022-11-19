@@ -206,7 +206,7 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
               setSuggestions([])
               setSelectedSuggestionId(0)
             }}
-            language={languages.TERMO}
+            language={languages.BASH}
             inputStyles={inputStyles}
             inline
           />

@@ -6,11 +6,24 @@ import { EditorLine } from './component/EditorLine'
 
 import { Code, CodeInput, CodeTextarea, Wrapper } from './Editor.styles'
 
-export const Editor = ({ value, onChange, language, inline }) => {
+export const Editor = ({
+  topLevelReference,
+  value,
+  onChange,
+  onKeyDown,
+  onKeyUp,
+  onBlur,
+  language,
+  inline
+}) => {
   const theme = useTheme()
 
   const codeRef = useRef(null)
   const codeInputRef = useRef(null)
+
+  useEffect(() => {
+    topLevelReference.current = codeRef.current
+  }, [])
 
   const simulateScrollOnCode = event => {
     codeRef.current.scrollTop = event.target.scrollTop
@@ -19,7 +32,7 @@ export const Editor = ({ value, onChange, language, inline }) => {
 
   useEffect(() => {
     codeInputRef.current.setAttribute('spellcheck', 'false')
-  })
+  }, [])
 
   const lines = value.split('\n')
 
@@ -28,7 +41,15 @@ export const Editor = ({ value, onChange, language, inline }) => {
 
   return (
     <Wrapper>
-      <Input ref={codeInputRef} value={value} onChange={onChange} onScroll={simulateScrollOnCode} />
+      <Input
+        ref={codeInputRef}
+        value={value}
+        onChange={onChange}
+        onKeyDown={onKeyDown}
+        onKeyUp={onKeyUp}
+        onBlur={onBlur}
+        onScroll={simulateScrollOnCode}
+      />
 
       <Code ref={codeRef}>
         {lines.map((line, index) => {

@@ -27,6 +27,7 @@ export const Code = styled.pre`
 `
 
 const inputStyles = css`
+  font-family: 'Share Tech Mono', monospace;
   padding: 15px;
   width: 100%;
   box-sizing: border-box;
@@ -37,7 +38,6 @@ const inputStyles = css`
   display: block;
   caret-color: white;
   color: transparent;
-  resize: none;
   line-height: 1.2em;
 
   &::-webkit-scrollbar {
@@ -58,8 +58,9 @@ const inputStyles = css`
 
 export const CodeTextarea = styled.textarea`
   ${inputStyles}
+  resize: none;
   min-height: 400px;
 `
-export const CodeInput = styled.textarea`
+export const CodeInput = styled.input`
   ${inputStyles}
 `

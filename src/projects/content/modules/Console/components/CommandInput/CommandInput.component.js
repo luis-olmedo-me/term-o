@@ -5,6 +5,7 @@ import { commander } from '@libs/commander/commander.service'
 
 import { Suggestions } from '../Suggestions/Suggestions.component'
 
+import { Editor, languages } from 'modules/components/Editor'
 import { spliceArg } from './CommandInput.helpers'
 import { Hash, Input, InputWrapper } from './CommandInput.styles'
 
@@ -194,9 +195,8 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
       <div>
         <Hash>$</Hash>
 
-        <Input
-          ref={inputReference}
-          type="text"
+        <Editor
+          topLevelReference={inputReference}
           onKeyDown={handleKeyPressed}
           onKeyUp={handleKeyUp}
           onChange={event => setCommand(event.target.value)}
@@ -205,7 +205,8 @@ export const CommandInput = ({ inputReference, handleOnEnter }) => {
             setSuggestions([])
             setSelectedSuggestionId(0)
           }}
-          spellcheck="false"
+          language={languages.JSON}
+          inline
         />
       </div>
     </InputWrapper>

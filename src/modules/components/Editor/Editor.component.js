@@ -23,9 +23,9 @@ export const Editor = ({
   const codeRef = useRef(null)
   const codeInputRef = useRef(null)
 
-  const simulateScrollOnCode = event => {
-    codeRef.current.scrollTop = event.target.scrollTop
-    codeRef.current.scrollLeft = event.target.scrollLeft
+  const simulateScrollOnCode = () => {
+    codeRef.current.scrollTop = codeInputRef.current.scrollTop
+    codeRef.current.scrollLeft = codeInputRef.current.scrollLeft
   }
 
   useEffect(() => {
@@ -55,6 +55,7 @@ export const Editor = ({
         onKeyUp={onKeyUp}
         onBlur={onBlur}
         onScroll={simulateScrollOnCode}
+        onPaste={() => setTimeout(simulateScrollOnCode, 100)}
       />
 
       <Code ref={codeRef}>

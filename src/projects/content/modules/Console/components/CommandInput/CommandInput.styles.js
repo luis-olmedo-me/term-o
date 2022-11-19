@@ -6,7 +6,7 @@ const radius = t('radius.100')
 export const inputStyles = css`
   background-color: ${t('neutral.100')};
   width: calc(100% - 25px);
-  border-radius: 0;
+  border-radius: 0 0 ${radius} 0;
   box-sizing: content-box;
   display: inline-block;
 `

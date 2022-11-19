@@ -14,7 +14,6 @@ import {
   storageViews
 } from './CommandStorage.constants'
 import {
-  evaluateStringifiedValue,
   evaluateValue,
   getActionType,
   parseCookies,
@@ -22,7 +21,6 @@ import {
   turnStorageToTableItems
 } from './CommandStorage.helpers'
 import { storageMessages } from './CommandStorage.messages'
-import { MaterialTree } from './CommandStorage.styles'
 
 export const CommandStorage = ({ props, terminal: { command, finish } }) => {
   const actionType = getActionType(props)

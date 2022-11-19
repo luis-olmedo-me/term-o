@@ -10,16 +10,6 @@ export const getActionType = ({ local, cookies, session }) => {
   return storageActionTypes.NONE
 }
 
-export const evaluateStringifiedValue = value => {
-  if (typeof value !== 'string') return value
-
-  try {
-    return JSON.stringify(JSON.parse(value), null, 2)
-  } catch (error) {
-    return value
-  }
-}
-
 export const turnStorageToTableItems = ({ storage = {}, editValue }) => {
   return Object.entries(storage).map(([key, value]) => {
     return [

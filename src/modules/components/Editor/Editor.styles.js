@@ -42,7 +42,7 @@ const inputStyles = css`
   font-size: 1em;
   border: none;
   display: block;
-  caret-color: white;
+  caret-color: ${t('neutral.1200')};
   background-color: transparent;
   color: transparent;
   line-height: 1.2em;

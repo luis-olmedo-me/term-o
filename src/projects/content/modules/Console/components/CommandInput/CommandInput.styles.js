@@ -8,6 +8,7 @@ export const EditorWrapper = styled.div`
   width: calc(100% - 25px);
   padding: 15px 0 15px 15px;
   box-sizing: border-box;
+  color: ${t('neutral.1200')};
 `
 
 export const inputStyles = css`

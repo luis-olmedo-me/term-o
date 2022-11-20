@@ -51,6 +51,7 @@ export const splitArgsTakingInCountSymbols = (args, symbols = ['|'], _quotes) =>
   let carriedArgsWithQuotes = []
   let indexesToBreak = []
   let shouldCarryArgs = false
+  let breakIndexOffset = 0
   const quotesToUse = _quotes || '"'
 
   const argsByQuotes = args.reduce((parsedArguments, argument, index) => {
@@ -72,6 +73,8 @@ export const splitArgsTakingInCountSymbols = (args, symbols = ['|'], _quotes) =>
 
       if (!shouldCarryArgs) {
         carriedArgsWithQuotes = []
+      } else {
+        breakIndexOffset++
       }
 
       return newParsedArguments
@@ -82,7 +85,7 @@ export const splitArgsTakingInCountSymbols = (args, symbols = ['|'], _quotes) =>
         ? [...parsedArguments, carriedArgsWithQuotes.join(' ')]
         : parsedArguments
     } else if (isVerticalLine) {
-      indexesToBreak = [...indexesToBreak, index]
+      indexesToBreak = [...indexesToBreak, index - breakIndexOffset]
     }
 
     return [...parsedArguments, argument]

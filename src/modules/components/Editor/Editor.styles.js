@@ -5,19 +5,18 @@ export const Wrapper = styled.div`
   position: relative;
   background-color: ${t('neutral.200')};
   border-radius: ${t('radius.200')};
+  padding: 15px;
+  box-sizing: border-box;
 
   ${props => props.inputStyles}
 `
 
 export const Code = styled.pre`
   font-family: 'Share Tech Mono', monospace;
-  padding: 15px;
   pointer-events: none;
   position: absolute;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  box-sizing: border-box;
+  padding: 0;
+  inset: 15px;
   margin: 0;
   font-size: 1em;
   overflow: scroll;
@@ -35,7 +34,6 @@ export const Code = styled.pre`
 
 const inputStyles = css`
   font-family: 'Share Tech Mono', monospace;
-  padding: 15px;
   width: 100%;
   box-sizing: border-box;
   white-space: nowrap;
@@ -46,6 +44,7 @@ const inputStyles = css`
   background-color: transparent;
   color: transparent;
   line-height: 1.2em;
+  padding: 0;
 
   &::-webkit-scrollbar {
     display: none;

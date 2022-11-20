@@ -39,7 +39,7 @@ const CommandDomWithoutContext = ({
     byClass,
     byText,
     byStyle,
-    byAttribute,
+    byAttr,
     hidden,
     byXpath,
     byParentLevel,
@@ -89,7 +89,7 @@ const CommandDomWithoutContext = ({
       byClass.length ||
       byText.length ||
       byStyle.length ||
-      byAttribute.length
+      byAttr.length
 
     const hasFiltersByAll = !hidden
 
@@ -100,7 +100,7 @@ const CommandDomWithoutContext = ({
       byClass,
       byText,
       byStyle,
-      byAttribute
+      byAttr
     })
 
     const filterElementsByEvery = generateFilterByEvery({ hidden })
@@ -130,7 +130,7 @@ const CommandDomWithoutContext = ({
     byId,
     byClass,
     byStyle,
-    byAttribute,
+    byAttr,
     hidden,
     byXpath,
     id,

@@ -55,8 +55,8 @@ export const domConfig = {
       defaultValue: [],
       alias: 'bs'
     },
-    'by-attribute': {
-      key: 'byAttribute',
+    'by-attr': {
+      key: 'byAttr',
       description: 'Get a DOM element by attribute',
       type: optionTypes.ARRAY_OF_OBJECTS,
       defaultValue: [],

@@ -41,7 +41,7 @@ export const generateFilterBySome = ({
   byClass,
   byText,
   byStyle,
-  byAttribute
+  byAttr
 }) => {
   return element => {
     let validations = []
@@ -83,9 +83,9 @@ export const generateFilterBySome = ({
         })
       )
     }
-    if (byAttribute.length) {
+    if (byAttr.length) {
       validations.push(element =>
-        byAttribute.some(attribute => {
+        byAttr.some(attribute => {
           const [[attributeName, attributeValue]] = Object.entries(attribute)
 
           return element.getAttribute(attributeName)?.includes(attributeValue)

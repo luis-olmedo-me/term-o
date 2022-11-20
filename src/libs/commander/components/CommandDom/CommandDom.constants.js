@@ -89,6 +89,13 @@ export const domConfig = {
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 'gp'
+    },
+    attr: {
+      key: 'attr',
+      description: 'Set attributes of elements from parameters',
+      type: optionTypes.ARRAY_OF_OBJECTS,
+      defaultValue: [],
+      alias: 'a'
     }
   },
   output: CommandDom

@@ -1,5 +1,5 @@
 import * as React from 'preact'
-import { useEffect, useMemo, useRef } from 'preact/hooks'
+import { useCallback, useEffect, useMemo, useRef } from 'preact/hooks'
 
 import { commander } from '@libs/commander'
 import { useTheme } from 'styled-components'
@@ -22,13 +22,12 @@ export const Editor = ({
   const codeRef = useRef(null)
   const codeInputRef = useRef(null)
 
-  useEffect(
-    function syncScrollPosition() {
-      codeRef.current.scrollTop = codeInputRef.current.scrollTop
-      codeRef.current.scrollLeft = codeInputRef.current.scrollLeft
-    },
-    [value]
-  )
+  const syncScrollPosition = useCallback(() => {
+    codeRef.current.scrollTop = codeInputRef.current.scrollTop
+    codeRef.current.scrollLeft = codeInputRef.current.scrollLeft
+  }, [])
+
+  useEffect(syncScrollPosition, [value])
   useEffect(function setDefaultAttributes() {
     codeInputRef.current.setAttribute('spellcheck', 'false')
   }, [])
@@ -55,6 +54,7 @@ export const Editor = ({
         onKeyDown={onKeyDown}
         onKeyUp={onKeyUp}
         onBlur={onBlur}
+        onScroll={syncScrollPosition}
       />
 
       <Code ref={codeRef}>

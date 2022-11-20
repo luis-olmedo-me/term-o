@@ -120,6 +120,7 @@ export const lookupElementByXPath = xpath => {
   return result.singleNodeValue
 }
 
+// FIXME: Move this into a more global helpers file.
 export const getAttributes = element => {
   const attributeNames = element.getAttributeNames(element)
 

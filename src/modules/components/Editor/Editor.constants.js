@@ -2,6 +2,10 @@ import { commander } from 'libs/commander'
 
 const getJSONTheme = theme => [
   {
+    pattern: /""/g,
+    style: { color: theme.green[700] }
+  },
+  {
     pattern: /"[^"]+"/g,
     style: { color: theme.green[700] }
   },
@@ -36,6 +40,10 @@ const getJSONTheme = theme => [
 ]
 
 const getBashTheme = theme => [
+  {
+    pattern: /""/g,
+    style: { color: theme.green[700] }
+  },
   {
     pattern: /"[^"]+"/g,
     style: { color: theme.green[700] }

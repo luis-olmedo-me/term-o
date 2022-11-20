@@ -1,10 +1,9 @@
-import { commander } from 'libs/commander'
 import * as React from 'preact'
 import { useEffect, useMemo, useRef } from 'preact/hooks'
 
+import { commander } from '@libs/commander'
 import { useTheme } from 'styled-components'
 import { EditorLine } from './component/EditorLine'
-
 import { Code, CodeInput, CodeTextarea, Wrapper } from './Editor.styles'
 
 export const Editor = ({
@@ -23,16 +22,14 @@ export const Editor = ({
   const codeRef = useRef(null)
   const codeInputRef = useRef(null)
 
-  const simulateScrollOnCode = () => {
-    codeRef.current.scrollTop = codeInputRef.current.scrollTop
-    codeRef.current.scrollLeft = codeInputRef.current.scrollLeft
-  }
-  const updateScroll = () =>
-    setTimeout(() => {
+  useEffect(
+    function syncScrollPosition() {
+      codeRef.current.scrollTop = codeInputRef.current.scrollTop
       codeRef.current.scrollLeft = codeInputRef.current.scrollLeft
-    }, 100)
-
-  useEffect(() => {
+    },
+    [value]
+  )
+  useEffect(function setDefaultAttributes() {
     codeInputRef.current.setAttribute('spellcheck', 'false')
   }, [])
 
@@ -58,8 +55,6 @@ export const Editor = ({
         onKeyDown={onKeyDown}
         onKeyUp={onKeyUp}
         onBlur={onBlur}
-        onScroll={simulateScrollOnCode}
-        onPaste={inline ? updateScroll : null}
       />
 
       <Code ref={codeRef}>

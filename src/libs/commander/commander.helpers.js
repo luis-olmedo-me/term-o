@@ -176,7 +176,7 @@ export const getOptionsFromArgs = (args, propsConfig = {}) => {
         !isNextArgOption &&
         nextArg.includes('=') &&
         !checkURLValidation(nextArg) &&
-        /^\w+=.+/.test(nextArg)
+        /^[^\s]+=.+/.test(nextArg)
       const [nextKey, nextValue] = isNextArgOptionWithRowValue ? getRowDataFromOption(nextArg) : []
 
       const carriedParsedArguments = parsedArguments[formattedArg] || []

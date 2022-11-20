@@ -85,10 +85,20 @@ export const generateFilterBySome = ({
     }
     if (byAttr.length) {
       validations.push(element =>
-        byAttr.some(attribute => {
-          const [[attributeName, attributeValue]] = Object.entries(attribute)
+        byAttr.some(attrConfig => {
+          const [[attrNamePattern, attrValuePattern]] = Object.entries(attrConfig)
+          const attrNameRegex = new RegExp(attrNamePattern)
+          const attrValueRegex = new RegExp(attrValuePattern)
 
-          return element.getAttribute(attributeName)?.includes(attributeValue)
+          const elementAttrs = getAttributes(element)
+          const matchesAttrName = Object.keys(elementAttrs).some(attrName =>
+            attrNameRegex.test(attrName)
+          )
+          const matchesAttrValue = Object.values(elementAttrs).some(attrValue =>
+            attrValueRegex.test(attrValue)
+          )
+
+          return matchesAttrName && matchesAttrValue
         })
       )
     }

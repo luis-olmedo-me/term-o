@@ -27,7 +27,10 @@ export const Editor = ({
     codeRef.current.scrollTop = codeInputRef.current.scrollTop
     codeRef.current.scrollLeft = codeInputRef.current.scrollLeft
   }
-  const updateScroll = () => setTimeout(simulateScrollOnCode, 100)
+  const updateScroll = () =>
+    setTimeout(() => {
+      codeRef.current.scrollLeft = codeInputRef.current.scrollLeft
+    }, 100)
 
   useEffect(() => {
     codeInputRef.current.setAttribute('spellcheck', 'false')
@@ -56,7 +59,7 @@ export const Editor = ({
         onKeyUp={onKeyUp}
         onBlur={onBlur}
         onScroll={simulateScrollOnCode}
-        // onPaste={inline ? updateScroll : null}
+        onPaste={inline ? updateScroll : null}
       />
 
       <Code ref={codeRef}>

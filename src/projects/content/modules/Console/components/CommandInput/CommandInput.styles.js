@@ -7,10 +7,8 @@ export const inputStyles = css`
   background-color: ${t('neutral.100')};
   width: calc(100% - 25px);
   border-radius: 0 0 ${radius} 0;
-  box-sizing: border-box;
   display: inline-block;
   color: ${t('neutral.1200')};
-  box-sizing: content-box;
   vertical-align: middle;
 `
 
@@ -51,7 +49,7 @@ export const InputWrapper = styled.div`
 export const Hash = styled.span`
   width: 25px;
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: baseline;
   text-align: end;
   color: ${t('neutral.1200')};
 `

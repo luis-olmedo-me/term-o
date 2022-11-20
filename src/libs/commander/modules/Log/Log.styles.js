@@ -58,6 +58,11 @@ export const LogWrapper = styled.div`
     background-color: ${t('yellow.400')};
     color: ${t('neutral.1200')};
   }
+
+  &&.code {
+    background-color: ${t('cyan.700')};
+    color: ${t('neutral.1200')};
+  }
 `
 
 export const Hash = styled.span`

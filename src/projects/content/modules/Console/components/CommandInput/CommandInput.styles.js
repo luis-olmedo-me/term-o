@@ -12,28 +12,6 @@ export const inputStyles = css`
   vertical-align: middle;
 `
 
-export const Input = styled.input`
-  padding: 15px;
-  box-sizing: border-box;
-  color: ${t('neutral.1200')};
-  border: none;
-  vertical-align: middle;
-  background-color: transparent;
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 16px;
-
-  &:active,
-  &:focus,
-  &:focus-visible {
-    outline: none;
-  }
-
-  &::selection {
-    background-color: ${t('neutral.300')};
-    color: ${t('yellow.800')};
-  }
-`
-
 export const InputWrapper = styled.div`
   background-color: transparent;
   box-sizing: border-box;

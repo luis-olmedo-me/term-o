@@ -284,7 +284,7 @@ export const buildProps = (propValues, propsConfig = {}) => {
 
       const groupValue = groupProps ? buildGroupProps(propValues, groupProps) : null
 
-      const value = propValues[propName] || propValues[aliasName] || groupValue
+      const value = groupValue || propValues[propName] || propValues[aliasName]
       const validatedValue = validatePropValue(value, type, defaultValue, objectTypes)
 
       return { ...allProps, [key]: validatedValue }

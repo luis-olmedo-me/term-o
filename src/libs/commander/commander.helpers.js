@@ -206,7 +206,7 @@ const evaluateStringifiedPrimitiveValue = value => {
   else return removeQuotesFromValue(value)
 }
 
-const validatePropValue = (value, type, defaultValue) => {
+const validatePropValue = (value, type, defaultValue, objectTypes) => {
   switch (type) {
     case optionTypes.OBJECT_TEST: {
       const isArray = Array.isArray(value)
@@ -216,7 +216,9 @@ const validatePropValue = (value, type, defaultValue) => {
         ? value.reduce((accumulator, item) => {
             const [[key, value]] = Object.entries(item)
 
-            return { ...accumulator, [key]: value }
+            return objectTypes?.length
+              ? { ...accumulator, [key]: objectTypes.includes(typeof value) ? value : defaultValue }
+              : { ...accumulator, [key]: value }
           }, {})
         : defaultValue
     }
@@ -262,7 +264,12 @@ const buildGroupProps = ({ values: _values, ...propValues }, groupPropConfigs = 
 
     if (!groupConfig) return allProps
 
-    const validatedValue = validatePropValue(value, groupConfig.type, groupConfig.defaultValue)
+    const validatedValue = validatePropValue(
+      value,
+      groupConfig.type,
+      groupConfig.defaultValue,
+      groupConfig.objectTypes
+    )
 
     return { ...allProps, [groupConfig.key]: validatedValue }
   }, {})
@@ -270,7 +277,7 @@ const buildGroupProps = ({ values: _values, ...propValues }, groupPropConfigs = 
 
 export const buildProps = (propValues, propsConfig = {}) => {
   return Object.entries(propsConfig).reduce(
-    (allProps, [propName, { key, type, defaultValue, alias, groupProps }]) => {
+    (allProps, [propName, { key, type, defaultValue, alias, groupProps, objectTypes }]) => {
       const aliasName = Object.keys(propValues).find(name => {
         return alias === name
       })
@@ -278,7 +285,7 @@ export const buildProps = (propValues, propsConfig = {}) => {
       const groupValue = groupProps ? buildGroupProps(propValues, groupProps) : null
 
       const value = propValues[propName] || propValues[aliasName] || groupValue
-      const validatedValue = validatePropValue(value, type, defaultValue)
+      const validatedValue = validatePropValue(value, type, defaultValue, objectTypes)
 
       return { ...allProps, [key]: validatedValue }
     },

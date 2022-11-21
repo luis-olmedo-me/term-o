@@ -2,14 +2,13 @@ import * as React from 'preact'
 
 import { generateUUID } from '@src/helpers/utils.helpers'
 import { Copy } from '@src/modules/icons'
-import { actionTypes } from '../../constants/commands.constants'
-import { aliasTableOptions } from './CommandAlias.constants'
+import { aliasActionTypes, aliasTableOptions } from './CommandAlias.constants'
 
 export const getActionType = ({ list, delete: idsToDelete, add: newAliases }) => {
-  if (list) return actionTypes.SHOW_LIST
-  else if (idsToDelete.length) return actionTypes.DELETE_ALIAS
-  else if (Object.keys(newAliases).length) return actionTypes.ADD_ALIAS
-  else return actionTypes.NONE
+  if (list) return aliasActionTypes.SHOW_LIST
+  else if (idsToDelete.length) return aliasActionTypes.DELETE_ALIAS
+  else if (Object.keys(newAliases).length) return aliasActionTypes.ADD_ALIAS
+  else return aliasActionTypes.NONE
 }
 
 export const validateAliasesToAdd = ({ aliasesToAdd }) => {

@@ -61,5 +61,6 @@ export const aliasTableOptions = {
 export const aliasActionTypes = {
   SHOW_LIST: 'SHOW_LIST',
   DELETE_ALIAS: 'DELETE_ALIAS',
-  ADD_ALIAS: 'ADD_ALIAS'
+  ADD_ALIAS: 'ADD_ALIAS',
+  NONE: 'NONE'
 }

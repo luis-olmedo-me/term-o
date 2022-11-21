@@ -18,7 +18,8 @@ export const optionTypes = {
   ARRAY_OF_OBJECTS: 'array-of-objects',
   ARRAY_OF_STRINGS: 'array-of-strings',
   OBJECT: 'object',
-  STRING: 'string'
+  STRING: 'string',
+  OBJECT_TEST: 'object-test'
 }
 
 export const actionTypes = {

@@ -197,8 +197,32 @@ export const getOptionsFromArgs = (args, propsConfig = {}) => {
   return parsedArguments
 }
 
+const evaluateStringifiedPrimitiveValue = value => {
+  const isNumber = !Number.isNaN(Number(value))
+  const isBoolean = ['true', 'false'].includes(value)
+
+  if (isNumber) return Number(value)
+  else if (isBoolean) return value === 'true'
+  else return removeQuotesFromValue(value)
+}
+
 const validatePropValue = (value, type, defaultValue) => {
   switch (type) {
+    case optionTypes.OBJECT_TEST: {
+      const isArray = Array.isArray(value)
+      const hasAllObjects = isArray && value.every(item => typeof item === 'object')
+
+      console.log('value', value)
+
+      return hasAllObjects
+        ? value.reduce((accumulator, item) => {
+            const [[key, value]] = Object.entries(item)
+
+            return { ...accumulator, [key]: evaluateStringifiedPrimitiveValue(value) }
+          }, {})
+        : defaultValue
+    }
+
     case optionTypes.ARRAY_OF_OBJECTS: {
       const isArray = Array.isArray(value)
       const hasAllObjects = isArray && value.every(item => typeof item === 'object')

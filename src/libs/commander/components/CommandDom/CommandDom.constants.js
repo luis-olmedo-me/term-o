@@ -62,6 +62,13 @@ export const domConfig = {
       defaultValue: [],
       alias: 'ba'
     },
+    'by-attr-test': {
+      key: 'byAttrTest',
+      description: 'Set attributes of elements from parameters',
+      type: optionTypes.OBJECT_TEST,
+      defaultValue: {},
+      alias: 'bat'
+    },
     hidden: {
       key: 'hidden',
       description: 'Check if a DOM element is hidden for user',

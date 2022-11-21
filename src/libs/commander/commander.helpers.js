@@ -182,7 +182,7 @@ export const getOptionsFromArgs = (args, propsConfig = {}) => {
       const carriedParsedArguments = parsedArguments[formattedArg] || []
 
       const newValue = isNextArgOptionWithRowValue
-        ? { [nextKey]: removeQuotesFromValue(nextValue) }
+        ? { [nextKey]: evaluateStringifiedPrimitiveValue(nextValue) }
         : removeQuotesFromValue(nextArg)
 
       argIndex++
@@ -212,13 +212,11 @@ const validatePropValue = (value, type, defaultValue) => {
       const isArray = Array.isArray(value)
       const hasAllObjects = isArray && value.every(item => typeof item === 'object')
 
-      console.log('value', value)
-
       return hasAllObjects
         ? value.reduce((accumulator, item) => {
             const [[key, value]] = Object.entries(item)
 
-            return { ...accumulator, [key]: evaluateStringifiedPrimitiveValue(value) }
+            return { ...accumulator, [key]: value }
           }, {})
         : defaultValue
     }

@@ -229,15 +229,6 @@ const validatePropValue = (value, type, defaultValue, objectTypes) => {
         : defaultValue
     }
 
-    // FIXME: We should use OBJECT.
-    case optionTypes.ARRAY_OF_OBJECTS: {
-      const isArray = Array.isArray(value)
-      const hasAllObjects = isArray && value.every(item => typeof item === 'object')
-
-      return hasAllObjects ? value : defaultValue
-    }
-
-    // FIXME: We should use OBJECT.
     case optionTypes.ARRAY_OF_STRINGS: {
       const isArray = Array.isArray(value)
       const hasAllStrings = isArray && value.every(item => typeof item === 'string')

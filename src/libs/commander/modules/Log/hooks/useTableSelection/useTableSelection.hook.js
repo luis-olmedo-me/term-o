@@ -10,7 +10,8 @@ export const useTableSelection = ({
   isEnabled = true,
   tableItems,
   pages,
-  changePage
+  changePage,
+  maxItems
 }) => {
   const [selectedRows, setSelectedRows] = useState([])
 
@@ -36,7 +37,7 @@ export const useTableSelection = ({
 
   const handleDelete = () => {
     const newItemsCount = tableItems.length - selectedRows.length
-    const pagesDeletedCount = pages.length - newItemsCount / 10
+    const pagesDeletedCount = pages.length - newItemsCount / maxItems
 
     changePage(pageNumber => {
       const newPageNumber = pageNumber - pagesDeletedCount

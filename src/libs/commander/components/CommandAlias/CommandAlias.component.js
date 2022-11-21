@@ -6,7 +6,7 @@ import { addAliases, deleteAliases, fetchConfiguration } from '@src/helpers/even
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 import { parameterTypes } from '../../constants/commands.constants'
 import { Log, useMessageLog, usePaginationActions, useTableSelection } from '../../modules/Log'
-import { aliasActionTypes, aliasTableOptions } from './CommandAlias.constants'
+import { aliasActionTypes, aliasTableOptions, MAX_ITEMS } from './CommandAlias.constants'
 import {
   getActionType,
   turnAliasesToTableItems,
@@ -32,14 +32,15 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
   const { log: messageLog, setMessage } = useMessageLog()
   const { paginationActions, pages, pageNumber, changePage } = usePaginationActions({
     items: tableItems,
-    maxItems: 10
+    maxItems: MAX_ITEMS
   })
   const { clearSelection, tableSelectionProps, selectionActions } = useTableSelection({
     changePage,
     onDelete: handleDeleteAliasesFromSelection,
     currentRows: pages[pageNumber],
     tableItems,
-    pages
+    pages,
+    maxItems: MAX_ITEMS
   })
 
   const actionType = getActionType(props)

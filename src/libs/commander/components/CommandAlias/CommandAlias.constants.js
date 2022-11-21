@@ -64,3 +64,5 @@ export const aliasActionTypes = {
   ADD_ALIAS: 'ADD_ALIAS',
   NONE: 'NONE'
 }
+
+export const MAX_ITEMS = 10

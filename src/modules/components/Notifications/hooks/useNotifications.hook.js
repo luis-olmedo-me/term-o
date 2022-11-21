@@ -45,7 +45,7 @@ export const useNotifications = () => {
   }, [])
 
   const showWorkerRequestError = useCallback(() => {
-    addNotification('Worker connection lost, please refresh the window')
+    addNotification('Worker connection lost, please refresh the window.')
   }, [addNotification])
 
   return {

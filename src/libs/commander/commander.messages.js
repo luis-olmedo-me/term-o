@@ -16,5 +16,9 @@ export const commanderMessages = {
   noParameters: {
     message: `Elements in parameters are required.`,
     type: parameterTypes.ERROR
+  },
+  contextError: {
+    message: `'Worker connection lost, please refresh the window.`,
+    type: parameterTypes.ERROR
   }
 }

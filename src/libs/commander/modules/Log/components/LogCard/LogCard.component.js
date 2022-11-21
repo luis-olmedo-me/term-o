@@ -1,0 +1,34 @@
+import * as React from 'preact'
+
+import { Error, Info, Tick } from '@src/modules/icons'
+import { parameterTypes } from '../../../../constants/commands.constants'
+import { CardContainer, CardContent, CardScroll, CardShadow, Hash } from './LogCard.styles'
+
+const preIconsByVariants = {
+  [parameterTypes.COMMAND]: '$',
+  [parameterTypes.ERROR]: <Error />,
+  [parameterTypes.INFO]: <Info />,
+  [parameterTypes.SUCCESS]: <Tick />
+}
+
+export const LogCard = ({ children, variant, hasScroll, hasShadow, ref }) => {
+  const icon = preIconsByVariants[variant]
+
+  const Content = (
+    <>
+      {icon && <Hash>{icon}</Hash>}
+
+      <span>{children}</span>
+    </>
+  )
+
+  return (
+    <CardContainer ref={ref} className={variant} onMouseDown={event => event.stopPropagation()}>
+      <CardContent>
+        <CardShadow className={hasShadow ? 'shadow' : ''}>
+          {hasScroll ? <CardScroll>{Content}</CardScroll> : Content}
+        </CardShadow>
+      </CardContent>
+    </CardContainer>
+  )
+}

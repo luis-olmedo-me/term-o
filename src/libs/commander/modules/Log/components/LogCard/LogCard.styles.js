@@ -1,23 +1,12 @@
 import { theme as t } from '@src/helpers/theme.helpers'
 import styled from 'styled-components'
 
-const radius = t('radius.200')
-
-export const LogWrapper = styled.div`
+export const CardContainer = styled.div`
   transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out,
     border-radius 0.2s ease-in-out;
   cursor: auto;
   width: 100%;
   border-radius: 0;
-
-  &&.rounded-t {
-    border-top-left-radius: ${radius};
-    border-top-right-radius: ${radius};
-  }
-  &&.rounded-b {
-    border-bottom-left-radius: ${radius};
-    border-bottom-right-radius: ${radius};
-  }
 
   &&.command {
     background-color: ${t('neutral.300')};
@@ -76,10 +65,10 @@ export const Hash = styled.span`
   }
 `
 
-export const LogContent = styled.div`
+export const CardContent = styled.div`
   padding: 10px;
 `
-export const Shadow = styled.div`
+export const CardShadow = styled.div`
   &.shadow {
     padding: 10px;
     background-color: ${t('transparent.200')};
@@ -87,7 +76,7 @@ export const Shadow = styled.div`
   }
 `
 
-export const ScrolledLogContent = styled.div`
+export const CardScroll = styled.div`
   max-height: 500px;
   overflow-y: scroll;
   overscroll-behavior: contain;
@@ -96,5 +85,3 @@ export const ScrolledLogContent = styled.div`
     display: none;
   }
 `
-
-export const LogContainer = styled.div``

@@ -13,6 +13,6 @@ export const Box = styled.div`
   cursor: pointer;
 
   &.checked {
-    background-color: ${t('purple.800')};
+    background-color: ${t('purple.900')};
   }
 `

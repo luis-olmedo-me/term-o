@@ -52,6 +52,7 @@ export const domConfig = {
       key: 'byStyle',
       description: 'Get a DOM element by style',
       type: optionTypes.OBJECT,
+      objectTypes: ['string'],
       defaultValue: {},
       alias: 'bs'
     },
@@ -59,6 +60,7 @@ export const domConfig = {
       key: 'byAttr',
       description: 'Get a DOM element by attribute',
       type: optionTypes.OBJECT,
+      objectTypes: ['string', 'boolean'],
       defaultValue: {},
       alias: 'ba'
     },

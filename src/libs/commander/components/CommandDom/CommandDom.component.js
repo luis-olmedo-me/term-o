@@ -84,7 +84,10 @@ const CommandDomWithoutContext = ({
 
   const handleGetDomElements = useCallback(async () => {
     const hasByAttrFilter = Object.keys(byAttr).length
+    const hasByStyleFilter = Object.keys(byStyle).length
+
     const hasValidAttrFilter = hasByAttrFilter ? isObjectFilterValidRegex(byAttr) : true
+    const hasValidStyleFilter = hasByStyleFilter ? isObjectFilterValidRegex(byStyle) : true
 
     const hasFiltersBySome =
       hasId ||
@@ -92,10 +95,10 @@ const CommandDomWithoutContext = ({
       byId.length ||
       byClass.length ||
       byText.length ||
-      Object.keys(byStyle).length ||
+      hasByStyleFilter ||
       hasByAttrFilter
 
-    if (!hasValidAttrFilter) throw new Error('invalidRegex')
+    if (!hasValidAttrFilter || !hasValidStyleFilter) throw new Error('invalidRegex')
 
     const hasFiltersByAll = !hidden
 

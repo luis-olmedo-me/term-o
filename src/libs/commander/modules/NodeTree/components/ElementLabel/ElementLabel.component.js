@@ -47,11 +47,15 @@ export const ElementLabel = ({
             <span key={attributeName}>
               <AttributeName isHidden={isHidden}>{` ${attributeName}`}</AttributeName>
 
-              <Equal isHidden={isHidden}>{`=`}</Equal>
+              {attributeValue && (
+                <>
+                  <Equal isHidden={isHidden}>{`=`}</Equal>
 
-              <AttributeValue isHidden={isHidden} title={attributeValue}>
-                {`"${attributeValueShorten}"`}
-              </AttributeValue>
+                  <AttributeValue isHidden={isHidden} title={attributeValue}>
+                    {`"${attributeValueShorten}"`}
+                  </AttributeValue>
+                </>
+              )}
             </span>
           )
         })}

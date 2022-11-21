@@ -36,7 +36,7 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
   })
   const { clearSelection, tableSelectionProps, selectionActions } = useTableSelection({
     changePage,
-    handleSkullClick: handleDeleteAliasesFromSelection,
+    onDelete: handleDeleteAliasesFromSelection,
     currentRows: pages[pageNumber],
     tableItems,
     pages

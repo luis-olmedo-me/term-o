@@ -5,7 +5,7 @@ import { removeDuplicatedFromArray } from '@src/helpers/utils.helpers.js'
 import { Skull } from '@src/modules/icons'
 
 export const useTableSelection = ({
-  handleSkullClick,
+  onDelete,
   currentRows,
   isEnabled = true,
   tableItems,
@@ -44,7 +44,7 @@ export const useTableSelection = ({
       return newPageNumber < 1 ? 1 : newPageNumber
     })
 
-    handleSkullClick({ selectedRows })
+    onDelete({ selectedRows })
   }
 
   const selectionActions = [

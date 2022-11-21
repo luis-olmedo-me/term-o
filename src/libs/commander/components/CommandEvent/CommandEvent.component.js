@@ -40,7 +40,7 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
   })
   const { clearSelection, tableSelectionProps, selectionActions } = useTableSelection({
     changePage,
-    handleSkullClick: handleDeleteEventsFromTableItems,
+    onDelete: handleDeleteEventsFromTableItems,
     currentRows: pages[pageNumber],
     tableItems,
     pages

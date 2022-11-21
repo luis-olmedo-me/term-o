@@ -67,7 +67,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   })
   const { clearSelection, tableSelectionProps, selectionActions } = useTableSelection({
     changePage,
-    handleSkullClick: handleClosingTabsFromSelection,
+    onDelete: handleClosingTabsFromSelection,
     currentRows: pages[pageNumber],
     isEnabled: props.now,
     tableItems,

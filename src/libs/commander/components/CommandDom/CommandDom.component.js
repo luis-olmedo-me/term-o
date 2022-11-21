@@ -32,20 +32,7 @@ const CommandDomWithoutContext = ({
   id,
   setHighlitedElement
 }) => {
-  const {
-    get,
-    hasId,
-    hasClass,
-    byId,
-    byClass,
-    byText,
-    byStyle,
-    byAttr,
-    hidden,
-    byXpath,
-    byParentLevel,
-    getParent
-  } = props
+  const { get, byText, byStyle, byAttr, hidden, byXpath, byParentLevel, getParent } = props
 
   const [elements, setElements] = useState([])
   const [editingElement, setEditingElement] = useState(null)
@@ -89,29 +76,13 @@ const CommandDomWithoutContext = ({
     const hasValidAttrFilter = hasByAttrFilter ? isObjectFilterValidRegex(byAttr) : true
     const hasValidStyleFilter = hasByStyleFilter ? isObjectFilterValidRegex(byStyle) : true
 
-    const hasFiltersBySome =
-      hasId ||
-      hasClass ||
-      byId.length ||
-      byClass.length ||
-      byText.length ||
-      hasByStyleFilter ||
-      hasByAttrFilter
+    const hasFiltersBySome = byText.length || hasByStyleFilter || hasByAttrFilter
 
     if (!hasValidAttrFilter || !hasValidStyleFilter) throw new Error('invalidRegex')
 
     const hasFiltersByAll = !hidden
 
-    const filterElementsBySome = generateFilterBySome({
-      hasId,
-      hasClass,
-      byId,
-      byClass,
-      byText,
-      byStyle,
-      byAttr
-    })
-
+    const filterElementsBySome = generateFilterBySome({ byText, byStyle, byAttr })
     const filterElementsByEvery = generateFilterByEvery({ hidden })
 
     const { elementsFound } = await getElements({
@@ -132,20 +103,7 @@ const CommandDomWithoutContext = ({
 
     setElements(parsedElementsFound)
     return insertParams(id, elementsAsParam)
-  }, [
-    get,
-    hasId,
-    hasClass,
-    byId,
-    byClass,
-    byStyle,
-    byAttr,
-    hidden,
-    byXpath,
-    id,
-    getParent,
-    byParentLevel
-  ])
+  }, [get, byStyle, byAttr, hidden, byXpath, id, getParent, byParentLevel])
 
   const handleSetAttribute = useCallback(() => {
     const attributes = Object.entries(props.attr)

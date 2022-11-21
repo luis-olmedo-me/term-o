@@ -35,28 +35,10 @@ export const getActionType = ({ get, attr }) => {
   else return domActionTypes.NONE
 }
 
-export const generateFilterBySome = ({
-  hasId,
-  hasClass,
-  byId,
-  byClass,
-  byText,
-  byStyle,
-  byAttr
-}) => {
+export const generateFilterBySome = ({ byText, byStyle, byAttr }) => {
   return element => {
     let validations = []
 
-    if (hasId) validations.push(element => Boolean(element.id))
-    if (hasClass) validations.push(element => Boolean(element.className))
-    if (byId.length) {
-      validations.push(element => byId.some(id => element.id.includes(id)))
-    }
-    if (byClass.length) {
-      validations.push(element =>
-        byClass.some(className => element.className?.includes?.(className))
-      )
-    }
     if (byText.length) {
       validations.push(element =>
         byText.some(rawText => {

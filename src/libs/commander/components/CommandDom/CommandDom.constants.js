@@ -13,34 +13,6 @@ export const domConfig = {
       defaultValue: [],
       alias: 'g'
     },
-    'has-id': {
-      key: 'hasId',
-      description: 'Check if a DOM element has an id',
-      type: optionTypes.BOOLEAN,
-      defaultValue: false,
-      alias: 'hi'
-    },
-    'has-class': {
-      key: 'hasClass',
-      description: 'Check if a DOM element has a class',
-      type: optionTypes.BOOLEAN,
-      defaultValue: false,
-      alias: 'hc'
-    },
-    'by-id': {
-      key: 'byId',
-      description: 'Get a DOM element by id',
-      type: optionTypes.ARRAY_OF_STRINGS,
-      defaultValue: [],
-      alias: 'bi'
-    },
-    'by-class': {
-      key: 'byClass',
-      description: 'Get a DOM element by class',
-      type: optionTypes.ARRAY_OF_STRINGS,
-      defaultValue: [],
-      alias: 'bc'
-    },
     'by-text': {
       key: 'byText',
       description: 'Get a DOM element by text',

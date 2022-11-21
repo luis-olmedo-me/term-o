@@ -34,14 +34,16 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
   }
 
   const { log: messageLog, setMessage } = useMessageLog()
-  const { paginationActions, pages, pageNumber } = usePaginationActions({
+  const { paginationActions, pages, pageNumber, changePage } = usePaginationActions({
     items: tableItems,
     maxItems: 10
   })
   const { clearSelection, tableSelectionProps, selectionActions } = useTableSelection({
+    changePage,
     handleSkullClick: handleDeleteEventsFromTableItems,
     currentRows: pages[pageNumber],
-    isEnabled: props.now
+    tableItems,
+    pages
   })
 
   const actionType = getActionType(props)

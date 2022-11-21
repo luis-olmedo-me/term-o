@@ -1,9 +1,17 @@
+import * as React from 'preact'
+import { useEffect, useState } from 'preact/hooks'
+
 import { removeDuplicatedFromArray } from '@src/helpers/utils.helpers.js'
 import { Skull } from '@src/modules/icons'
-import * as React from 'preact'
-import { useState } from 'preact/hooks'
 
-export const useTableSelection = ({ handleSkullClick, currentRows, isEnabled = true }) => {
+export const useTableSelection = ({
+  handleSkullClick,
+  currentRows,
+  isEnabled = true,
+  tableItems,
+  pages,
+  changePage
+}) => {
   const [selectedRows, setSelectedRows] = useState([])
 
   const handleAllSelection = () => {
@@ -26,10 +34,23 @@ export const useTableSelection = ({ handleSkullClick, currentRows, isEnabled = t
     setSelectedRows(selection)
   }
 
+  const handleDelete = () => {
+    const newItemsCount = tableItems.length - selectedRows.length
+    const pagesDeletedCount = pages.length - newItemsCount / 10
+
+    changePage(pageNumber => {
+      const newPageNumber = pageNumber - pagesDeletedCount
+
+      return newPageNumber < 1 ? 1 : newPageNumber
+    })
+
+    handleSkullClick({ selectedRows })
+  }
+
   const selectionActions = [
     {
       id: 'delete-selected',
-      onClick: () => handleSkullClick({ selectedRows }),
+      onClick: handleDelete,
       disabled: selectedRows.length === 0,
       text: <Skull />
     }

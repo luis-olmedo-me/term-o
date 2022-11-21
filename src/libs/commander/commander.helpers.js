@@ -166,6 +166,7 @@ export const getOptionsFromArgs = (args, propsConfig = {}) => {
       const formattedKey = key.replace(/^--|^-/, '')
       const carriedParsedArguments = parsedArguments[formattedKey] || []
 
+      // FIXME: We should use evaluateStringifiedPrimitiveValue.
       const newValue = isValueWithRowValue
         ? { [nextKey]: removeQuotesFromValue(nextValue) }
         : removeQuotesFromValue(value)
@@ -181,6 +182,7 @@ export const getOptionsFromArgs = (args, propsConfig = {}) => {
 
       const carriedParsedArguments = parsedArguments[formattedArg] || []
 
+      // FIXME: We should use evaluateStringifiedPrimitiveValue.
       const newValue = isNextArgOptionWithRowValue
         ? { [nextKey]: evaluateStringifiedPrimitiveValue(nextValue) }
         : removeQuotesFromValue(nextArg)
@@ -223,6 +225,7 @@ const validatePropValue = (value, type, defaultValue, objectTypes) => {
         : defaultValue
     }
 
+    // FIXME: We should use OBJECT.
     case optionTypes.ARRAY_OF_OBJECTS: {
       const isArray = Array.isArray(value)
       const hasAllObjects = isArray && value.every(item => typeof item === 'object')
@@ -230,6 +233,7 @@ const validatePropValue = (value, type, defaultValue, objectTypes) => {
       return hasAllObjects ? value : defaultValue
     }
 
+    // FIXME: We should use OBJECT.
     case optionTypes.ARRAY_OF_STRINGS: {
       const isArray = Array.isArray(value)
       const hasAllStrings = isArray && value.every(item => typeof item === 'string')

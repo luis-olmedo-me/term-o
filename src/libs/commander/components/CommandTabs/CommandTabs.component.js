@@ -12,7 +12,7 @@ import {
   usePaginationActions,
   useTableSelection
 } from '../../modules/Log'
-import { tabsActionTypes, tabsTableOptions } from './CommandTabs.constants'
+import { MAX_ITEMS, tabsActionTypes, tabsTableOptions } from './CommandTabs.constants'
 import {
   getActionType,
   turnOpenTabsToTableItems,
@@ -58,17 +58,21 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   }
 
   const { log: messageLog, setMessage } = useMessageLog()
-  const { paginationActions, pages, pageNumber } = usePaginationActions({
+  const { paginationActions, pages, pageNumber, changePage } = usePaginationActions({
     items: tabs,
-    maxItems: 10
+    maxItems: MAX_ITEMS
   })
   const { startDateAction, endDateAction, setAreDatesInvalid, setDate } = useDateRangeActions({
     onDateUpdate: handleDatesUpdate
   })
   const { clearSelection, tableSelectionProps, selectionActions } = useTableSelection({
-    handleSkullClick: handleClosingTabsFromSelection,
+    changePage,
+    onDelete: handleClosingTabsFromSelection,
     currentRows: pages[pageNumber],
-    isEnabled: props.now
+    isEnabled: props.now,
+    tableItems: tabs,
+    pages,
+    maxItems: MAX_ITEMS
   })
 
   const handleShowTabList = useCallback(async () => {

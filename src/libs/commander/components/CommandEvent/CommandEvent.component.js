@@ -7,7 +7,12 @@ import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 import { getParamsByType } from '../../commander.helpers'
 import { parameterTypes } from '../../constants/commands.constants'
 import { Log, useMessageLog, usePaginationActions, useTableSelection } from '../../modules/Log'
-import { eventActionTypes, eventTableOptions, supportedEvents } from './CommandEvent.constants'
+import {
+  eventActionTypes,
+  eventTableOptions,
+  MAX_ITEMS,
+  supportedEvents
+} from './CommandEvent.constants'
 import {
   getActionType,
   triggerChangeEvent,
@@ -34,14 +39,17 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
   }
 
   const { log: messageLog, setMessage } = useMessageLog()
-  const { paginationActions, pages, pageNumber } = usePaginationActions({
+  const { paginationActions, pages, pageNumber, changePage } = usePaginationActions({
     items: tableItems,
-    maxItems: 10
+    maxItems: MAX_ITEMS
   })
   const { clearSelection, tableSelectionProps, selectionActions } = useTableSelection({
-    handleSkullClick: handleDeleteEventsFromTableItems,
+    changePage,
+    onDelete: handleDeleteEventsFromTableItems,
     currentRows: pages[pageNumber],
-    isEnabled: props.now
+    tableItems,
+    pages,
+    maxItems: MAX_ITEMS
   })
 
   const actionType = getActionType(props)

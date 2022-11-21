@@ -101,3 +101,5 @@ export const eventTableOptions = {
     }
   ]
 }
+
+export const MAX_ITEMS = 10

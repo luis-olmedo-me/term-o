@@ -150,3 +150,5 @@ export const tabsTableOptions = {
     }
   ]
 }
+
+export const MAX_ITEMS = 10

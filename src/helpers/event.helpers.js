@@ -12,7 +12,7 @@ const mergeAliases = (aliasesA, aliasesB) => {
 }
 
 const receiveConfig = ({ aliases, pageEvents, position }) => ({
-  consolePosition: position || {},
+  position: position || {},
   pageEvents: pageEvents || [],
   aliases: aliases || []
 })
@@ -61,57 +61,86 @@ export const createWorkerProcessRequest = ({ type, data, defaultResponse }) => {
     createWorker({ id: null, data })
   })
 }
+const createFrontRequest = ({ request }) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await request().catch(reject)
+
+      resolve(response)
+    } catch {
+      reject(new Error('contextError'))
+    }
+  })
+}
 
 export const fetchConfiguration = () => {
-  return chrome.storage.local.get(['aliases', 'pageEvents', 'position']).then(receiveConfig)
+  return createFrontRequest({
+    request: async function() {
+      return await chrome.storage.local
+        .get(['aliases', 'pageEvents', 'position'])
+        .then(receiveConfig)
+    }
+  })
 }
 
 export const addAliases = newAliases => {
-  return new Promise(async (resolve, reject) => {
-    const { aliases = [] } = await chrome.storage.local.get('aliases').catch(reject)
-    const mergedAliases = mergeAliases(aliases, newAliases)
+  return createFrontRequest({
+    request: async function() {
+      const { aliases = [] } = await chrome.storage.local.get('aliases')
+      const mergedAliases = mergeAliases(aliases, newAliases)
 
-    await chrome.storage.local.set({ aliases: mergedAliases }).catch(reject)
-    resolve()
+      await chrome.storage.local.set({ aliases: mergedAliases })
+    }
   })
 }
 
 export const deleteAliases = async aliasIds => {
-  return new Promise(async (resolve, reject) => {
-    const { aliases = [] } = await chrome.storage.local.get('aliases').catch(reject)
-    const filteredAliases = aliases.filter(({ id }) => !aliasIds.includes(id))
+  return createFrontRequest({
+    request: async function() {
+      const { aliases = [] } = await chrome.storage.local.get('aliases')
+      const filteredAliases = aliases.filter(({ id }) => !aliasIds.includes(id))
 
-    await chrome.storage.local.set({ aliases: filteredAliases }).catch(reject)
-    resolve()
+      await chrome.storage.local.set({ aliases: filteredAliases })
+    }
   })
 }
 
 export const addPageEvents = newPageEvents => {
-  return new Promise(async (resolve, reject) => {
-    const { pageEvents = [] } = await chrome.storage.local.get('pageEvents').catch(reject)
-    const mergedPageEvents = [...pageEvents, ...newPageEvents]
+  return createFrontRequest({
+    request: async function() {
+      const { pageEvents = [] } = await chrome.storage.local.get('pageEvents')
+      const mergedPageEvents = [...pageEvents, ...newPageEvents]
 
-    await chrome.storage.local.set({ pageEvents: mergedPageEvents }).catch(reject)
-    resolve()
+      await chrome.storage.local.set({ pageEvents: mergedPageEvents })
+    }
   })
 }
 
 export const deletePageEvents = pageEventIds => {
-  return new Promise(async (resolve, reject) => {
-    const { pageEvents = [] } = await chrome.storage.local.get('pageEvents').catch(reject)
-    const filteredPageEvents = pageEvents.filter(({ id }) => !pageEventIds.includes(id))
+  return createFrontRequest({
+    request: async function() {
+      const { pageEvents = [] } = await chrome.storage.local.get('pageEvents')
+      const filteredPageEvents = pageEvents.filter(({ id }) => !pageEventIds.includes(id))
 
-    await chrome.storage.local.set({ pageEvents: filteredPageEvents }).catch(reject)
-    resolve()
+      await chrome.storage.local.set({ pageEvents: filteredPageEvents })
+    }
   })
 }
 
 export const resetConfiguration = () => {
-  return chrome.storage.local.set({ aliases: [], pageEvents: [], consolePosition: {} })
+  return createFrontRequest({
+    request: async function() {
+      await chrome.storage.local.set({ aliases: [], pageEvents: [], position: {} })
+    }
+  })
 }
 
 export const updateConsolePosition = position => {
-  return chrome.storage.local.set({ position })
+  return createFrontRequest({
+    request: async function() {
+      await chrome.storage.local.set({ position })
+    }
+  })
 }
 
 export const fetchHistorial = data => {

@@ -27,7 +27,7 @@ export const useConfig = ({ onError }) => {
   }, [])
 
   useEffect(function getConfiguration() {
-    const receiveConfiguration = ({ pageEvents, aliases, consolePosition }) => {
+    const receiveConfiguration = ({ pageEvents, aliases, position }) => {
       const updatedPageEvents = pageEvents.filter(
         ({ url, event }) =>
           new RegExp(url).test(window.location.href) && !customPageEventNames.includes(event)
@@ -38,7 +38,7 @@ export const useConfig = ({ onError }) => {
         ...oldConfig,
         appliedPageEvents: updatedPageEvents,
         customPageEvents: customEvents,
-        consolePosition: consolePosition
+        consolePosition: position
       }))
 
       commander.setAliases(aliases)

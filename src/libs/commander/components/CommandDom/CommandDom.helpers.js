@@ -1,4 +1,4 @@
-import { getAttributes, isElementHidden } from '@src/helpers/dom.helpers'
+import { getAttributes, getStyles, isElementHidden } from '@src/helpers/dom.helpers'
 import { removeDuplicatedFromArray } from '@src/helpers/utils.helpers.js'
 import { actionTypes } from '../../constants/commands.constants'
 
@@ -74,12 +74,21 @@ export const generateFilterBySome = ({
         })
       )
     }
-    if (byStyle.length) {
+    if (Object.keys(byStyle).length) {
       validations.push(element =>
-        byStyle.some(style => {
-          const [[styleName, styleValue]] = Object.entries(style)
+        Object.entries(byStyle).some(([styleNamePattern, styleValuePattern]) => {
+          const styleNameRegex = new RegExp(styleNamePattern)
+          const styleValueRegex = new RegExp(styleValuePattern)
+          const elementStyles = getStyles(element)
 
-          return element.style[styleName] === styleValue
+          const matchesStyleName = Object.keys(elementStyles).some(styleName =>
+            styleNameRegex.test(styleName)
+          )
+          const matchesStyleValue = Object.values(elementStyles).some(styleValue =>
+            styleValueRegex.test(styleValue)
+          )
+
+          return matchesStyleName && matchesStyleValue
         })
       )
     }

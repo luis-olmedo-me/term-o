@@ -51,8 +51,8 @@ export const domConfig = {
     'by-style': {
       key: 'byStyle',
       description: 'Get a DOM element by style',
-      type: optionTypes.ARRAY_OF_OBJECTS,
-      defaultValue: [],
+      type: optionTypes.OBJECT,
+      defaultValue: {},
       alias: 'bs'
     },
     'by-attr': {

@@ -27,3 +27,19 @@ export const getAttributes = element => {
     }
   }, {})
 }
+
+export const getStyles = element => {
+  const styleNames = Object.keys(element.style)
+  const computedStyles = getComputedStyle(element)
+
+  return styleNames.reduce((allStyles, styleName) => {
+    const styleValue = computedStyles.getPropertyValue(styleName)
+
+    return styleValue
+      ? {
+          ...allStyles,
+          [styleName]: styleValue
+        }
+      : allStyles
+  }, {})
+}

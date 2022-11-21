@@ -92,7 +92,7 @@ const CommandDomWithoutContext = ({
       byId.length ||
       byClass.length ||
       byText.length ||
-      byStyle.length ||
+      Object.keys(byStyle).length ||
       hasByAttrFilter
 
     if (!hasValidAttrFilter) throw new Error('invalidRegex')

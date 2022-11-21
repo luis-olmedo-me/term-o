@@ -61,18 +61,24 @@ export const createWorkerProcessRequest = ({ type, data, defaultResponse }) => {
     createWorker({ id: null, data })
   })
 }
-
-export const fetchConfiguration = () => {
+const createFrontRequest = ({ request }) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const response = await chrome.storage.local
-        .get(['aliases', 'pageEvents', 'position'])
-        .then(receiveConfig)
-        .catch(reject)
+      const response = await request().catch(reject)
 
       resolve(response)
     } catch {
       reject(new Error('contextError'))
+    }
+  })
+}
+
+export const fetchConfiguration = () => {
+  return createFrontRequest({
+    request: async function() {
+      return await chrome.storage.local
+        .get(['aliases', 'pageEvents', 'position'])
+        .then(receiveConfig)
     }
   })
 }

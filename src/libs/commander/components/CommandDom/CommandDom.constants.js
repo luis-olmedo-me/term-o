@@ -115,3 +115,8 @@ export const domViews = [
   { id: domViewIds.ATTRIBUTES, text: <Tag /> },
   { id: domViewIds.STYLES, text: <Palette /> }
 ]
+
+export const domActionTypes = {
+  GET_DOM_ELEMENTS: 'GET_DOM_ELEMENTS',
+  NONE: 'NONE'
+}

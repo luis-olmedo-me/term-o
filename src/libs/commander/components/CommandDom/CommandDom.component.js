@@ -5,7 +5,7 @@ import { withOverlayContext } from '@modules/components/Overlay/Overlay.hoc'
 import { isObjectFilterValidRegex } from 'helpers/dom.helpers'
 import { useCallback, useEffect, useState } from 'preact/hooks'
 import { insertParams } from '../../commander.helpers'
-import { actionTypes, parameterTypes } from '../../constants/commands.constants'
+import { parameterTypes } from '../../constants/commands.constants'
 import { Element, List, StyleSheet } from '../../modules/List'
 import {
   AttributeEditionLog,
@@ -16,7 +16,7 @@ import {
   useViews
 } from '../../modules/Log'
 import { getStylesFrom } from '../CommandCss/CommandCss.helpers'
-import { domViewIds, domViews } from './CommandDom.constants'
+import { domActionTypes, domViewIds, domViews } from './CommandDom.constants'
 import {
   generateFilterByEvery,
   generateFilterBySome,
@@ -149,10 +149,10 @@ const CommandDomWithoutContext = ({
 
   const doAction = useCallback(async () => {
     switch (actionType) {
-      case actionTypes.GET_DOM_ELEMENTS:
+      case domActionTypes.GET_DOM_ELEMENTS:
         return await handleGetDomElements()
 
-      case actionTypes.NONE:
+      case domActionTypes.NONE:
         throw new Error('unexpectedError')
     }
   }, [actionType, handleGetDomElements])

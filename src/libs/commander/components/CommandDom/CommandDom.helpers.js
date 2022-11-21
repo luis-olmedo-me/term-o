@@ -1,6 +1,6 @@
 import { getAttributes, getStyles, isElementHidden } from '@src/helpers/dom.helpers'
 import { removeDuplicatedFromArray } from '@src/helpers/utils.helpers.js'
-import { actionTypes } from '../../constants/commands.constants'
+import { domActionTypes } from './CommandDom.constants'
 
 const getElementsFromDOM = patterns => {
   try {
@@ -30,8 +30,8 @@ export const getElements = ({ patterns, xpaths, filterBySome, filterByEvery }) =
 }
 
 export const getActionType = ({ get }) => {
-  if (get.length) return actionTypes.GET_DOM_ELEMENTS
-  else return actionTypes.NONE
+  if (get.length) return domActionTypes.GET_DOM_ELEMENTS
+  else return domActionTypes.NONE
 }
 
 export const generateFilterBySome = ({

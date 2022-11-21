@@ -49,6 +49,10 @@ const getBashTheme = theme => [
     style: { color: theme.green[700] }
   },
   {
+    pattern: /http:\S+|https:\S+/g,
+    style: { color: theme.blue[800] }
+  },
+  {
     pattern: /--[^\s]+|-[^\s]+/g,
     style: { color: theme.yellow[800] }
   },

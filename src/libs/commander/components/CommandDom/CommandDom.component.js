@@ -2,6 +2,7 @@ import * as React from 'preact'
 
 import { Carousel, CarouselItem } from '@modules/components/Carousel'
 import { withOverlayContext } from '@modules/components/Overlay/Overlay.hoc'
+import { isObjectFilterValidRegex } from 'helpers/dom.helpers'
 import { useCallback, useEffect, useState } from 'preact/hooks'
 import { insertParams } from '../../commander.helpers'
 import { actionTypes, parameterTypes } from '../../constants/commands.constants'
@@ -82,6 +83,9 @@ const CommandDomWithoutContext = ({
   })
 
   const handleGetDomElements = useCallback(async () => {
+    const hasByAttrFilter = Object.keys(byAttr).length
+    const hasValidAttrFilter = hasByAttrFilter ? isObjectFilterValidRegex(byAttr) : true
+
     const hasFiltersBySome =
       hasId ||
       hasClass ||
@@ -89,7 +93,9 @@ const CommandDomWithoutContext = ({
       byClass.length ||
       byText.length ||
       byStyle.length ||
-      Object.keys(byAttr).length
+      hasByAttrFilter
+
+    if (!hasValidAttrFilter) throw new Error('invalidRegex')
 
     const hasFiltersByAll = !hidden
 

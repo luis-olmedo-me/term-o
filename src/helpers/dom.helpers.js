@@ -1,3 +1,5 @@
+import { checkIfRegExpIsValid } from 'libs/commander/components/CommandOn/CommandOn.helpers'
+
 export const isElementHidden = (element, bounds) => {
   const { height, width } = bounds || element.getBoundingClientRect()
 
@@ -7,4 +9,10 @@ export const isElementHidden = (element, bounds) => {
     height === 0 ||
     width === 0
   )
+}
+
+export const isObjectFilterValidRegex = filter => {
+  return Object.entries(filter).every(([key, value]) => {
+    return checkIfRegExpIsValid(key) && checkIfRegExpIsValid(value)
+  })
 }

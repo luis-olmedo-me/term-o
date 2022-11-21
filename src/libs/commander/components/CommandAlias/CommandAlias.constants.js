@@ -21,8 +21,9 @@ export const aliasConfig = {
     add: {
       key: 'add',
       description: 'Add an alias',
-      type: optionTypes.ARRAY_OF_OBJECTS,
-      defaultValue: [],
+      type: optionTypes.OBJECT,
+      objectTypes: ['string'],
+      defaultValue: {},
       alias: 'a'
     }
   },

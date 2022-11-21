@@ -218,9 +218,13 @@ const validatePropValue = (value, type, defaultValue, objectTypes) => {
         ? value.reduce((accumulator, item) => {
             const [[key, value]] = Object.entries(item)
 
-            return objectTypes?.length
-              ? { ...accumulator, [key]: objectTypes.includes(typeof value) ? value : defaultValue }
-              : { ...accumulator, [key]: value }
+            if (objectTypes?.length) {
+              return objectTypes.includes(typeof value)
+                ? { ...accumulator, [key]: value }
+                : accumulator
+            }
+
+            return { ...accumulator, [key]: value }
           }, {})
         : defaultValue
     }

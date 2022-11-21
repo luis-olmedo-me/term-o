@@ -58,16 +58,9 @@ export const domConfig = {
     'by-attr': {
       key: 'byAttr',
       description: 'Get a DOM element by attribute',
-      type: optionTypes.ARRAY_OF_OBJECTS,
-      defaultValue: [],
-      alias: 'ba'
-    },
-    'by-attr-test': {
-      key: 'byAttrTest',
-      description: 'Set attributes of elements from parameters',
       type: optionTypes.OBJECT,
       defaultValue: {},
-      alias: 'bat'
+      alias: 'ba'
     },
     hidden: {
       key: 'hidden',

@@ -208,7 +208,7 @@ const evaluateStringifiedPrimitiveValue = value => {
 
 const validatePropValue = (value, type, defaultValue, objectTypes) => {
   switch (type) {
-    case optionTypes.OBJECT_TEST: {
+    case optionTypes.OBJECT: {
       const isArray = Array.isArray(value)
       const hasAllObjects = isArray && value.every(item => typeof item === 'object')
 
@@ -252,6 +252,9 @@ const validatePropValue = (value, type, defaultValue, objectTypes) => {
 
     case optionTypes.ARRAY:
       return Array.isArray(value) ? value : defaultValue
+
+    case optionTypes.GROUP:
+      return typeof value === 'object' ? value : defaultValue
 
     default:
       return typeof value === type ? value : defaultValue

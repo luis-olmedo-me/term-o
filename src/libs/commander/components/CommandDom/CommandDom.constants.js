@@ -65,7 +65,7 @@ export const domConfig = {
     'by-attr-test': {
       key: 'byAttrTest',
       description: 'Set attributes of elements from parameters',
-      type: optionTypes.OBJECT_TEST,
+      type: optionTypes.OBJECT,
       defaultValue: {},
       alias: 'bat'
     },

@@ -70,7 +70,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     onDelete: handleClosingTabsFromSelection,
     currentRows: pages[pageNumber],
     isEnabled: props.now,
-    tableItems,
+    tableItems: tabs,
     pages,
     maxItems: MAX_ITEMS
   })

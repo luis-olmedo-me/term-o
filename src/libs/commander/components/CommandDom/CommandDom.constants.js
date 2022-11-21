@@ -97,7 +97,7 @@ export const domConfig = {
       description: 'Set attributes of elements from parameters',
       type: optionTypes.OBJECT,
       defaultValue: {},
-      objectTypes: ['string'],
+      objectTypes: ['string', 'boolean'],
       alias: 'a'
     }
   },
@@ -118,5 +118,6 @@ export const domViews = [
 
 export const domActionTypes = {
   GET_DOM_ELEMENTS: 'GET_DOM_ELEMENTS',
+  SET_ATTRIBUTES: 'SET_ATTRIBUTES',
   NONE: 'NONE'
 }

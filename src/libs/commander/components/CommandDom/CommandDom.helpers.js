@@ -29,8 +29,9 @@ export const getElements = ({ patterns, xpaths, filterBySome, filterByEvery }) =
   })
 }
 
-export const getActionType = ({ get }) => {
-  if (get.length) return domActionTypes.GET_DOM_ELEMENTS
+export const getActionType = ({ get, attr }) => {
+  if (Object.keys(attr).length) return domActionTypes.SET_ATTRIBUTES
+  else if (get.length) return domActionTypes.GET_DOM_ELEMENTS
   else return domActionTypes.NONE
 }
 

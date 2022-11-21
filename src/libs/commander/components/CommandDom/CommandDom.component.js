@@ -4,7 +4,7 @@ import { Carousel, CarouselItem } from '@modules/components/Carousel'
 import { withOverlayContext } from '@modules/components/Overlay/Overlay.hoc'
 import { isObjectFilterValidRegex } from 'helpers/dom.helpers'
 import { useCallback, useEffect, useState } from 'preact/hooks'
-import { insertParams } from '../../commander.helpers'
+import { getParamsByType, insertParams } from '../../commander.helpers'
 import { parameterTypes } from '../../constants/commands.constants'
 import { Element, List, StyleSheet } from '../../modules/List'
 import {
@@ -28,7 +28,7 @@ import { domMessages } from './CommandDom.messages'
 
 const CommandDomWithoutContext = ({
   props,
-  terminal: { command, finish },
+  terminal: { command, finish, params },
   id,
   setHighlitedElement
 }) => {
@@ -147,10 +147,32 @@ const CommandDomWithoutContext = ({
     byParentLevel
   ])
 
+  const handleSetAttribute = useCallback(() => {
+    const attributes = Object.entries(props.attr)
+    const paramElements = getParamsByType(parameterTypes.ELEMENTS, params)
+
+    if (paramElements.length === 0) throw new Error('noParameters')
+
+    paramElements.forEach(element => {
+      attributes.forEach(([key, value]) => {
+        const isBoolean = typeof value === 'boolean'
+
+        if (isBoolean && value) element.setAttribute(key, '')
+        else if (isBoolean) element.removeAttribute(key)
+        else element.setAttribute(key, value)
+      })
+    })
+
+    setMessage(domMessages.attributeSetSuccess)
+  }, [params, props])
+
   const doAction = useCallback(async () => {
     switch (actionType) {
       case domActionTypes.GET_DOM_ELEMENTS:
         return await handleGetDomElements()
+
+      case domActionTypes.SET_ATTRIBUTES:
+        return handleSetAttribute()
 
       case domActionTypes.NONE:
         throw new Error('unexpectedError')

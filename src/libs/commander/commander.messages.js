@@ -12,5 +12,9 @@ export const commanderMessages = {
   invalidRegex: {
     message: 'The regular expression you provided is not valid. Please try again.',
     type: parameterTypes.ERROR
+  },
+  noParameters: {
+    message: `Elements in parameters are required.`,
+    type: parameterTypes.ERROR
   }
 }

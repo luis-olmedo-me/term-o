@@ -84,79 +84,61 @@ export const fetchConfiguration = () => {
 }
 
 export const addAliases = newAliases => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const { aliases = [] } = await chrome.storage.local.get('aliases').catch(reject)
+  return createFrontRequest({
+    request: async function() {
+      const { aliases = [] } = await chrome.storage.local.get('aliases')
       const mergedAliases = mergeAliases(aliases, newAliases)
 
-      await chrome.storage.local.set({ aliases: mergedAliases }).catch(reject)
-      resolve()
-    } catch {
-      reject(new Error('contextError'))
+      await chrome.storage.local.set({ aliases: mergedAliases })
     }
   })
 }
 
 export const deleteAliases = async aliasIds => {
-  return new Promise(async (resolve, reject) => {
-    try {
+  return createFrontRequest({
+    request: async function() {
       const { aliases = [] } = await chrome.storage.local.get('aliases')
       const filteredAliases = aliases.filter(({ id }) => !aliasIds.includes(id))
 
       await chrome.storage.local.set({ aliases: filteredAliases })
-      resolve()
-    } catch {
-      reject(new Error('contextError'))
     }
   })
 }
 
 export const addPageEvents = newPageEvents => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const { pageEvents = [] } = await chrome.storage.local.get('pageEvents').catch(reject)
+  return createFrontRequest({
+    request: async function() {
+      const { pageEvents = [] } = await chrome.storage.local.get('pageEvents')
       const mergedPageEvents = [...pageEvents, ...newPageEvents]
 
-      await chrome.storage.local.set({ pageEvents: mergedPageEvents }).catch(reject)
-      resolve()
-    } catch {
-      reject(new Error('contextError'))
+      await chrome.storage.local.set({ pageEvents: mergedPageEvents })
     }
   })
 }
 
 export const deletePageEvents = pageEventIds => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const { pageEvents = [] } = await chrome.storage.local.get('pageEvents').catch(reject)
+  return createFrontRequest({
+    request: async function() {
+      const { pageEvents = [] } = await chrome.storage.local.get('pageEvents')
       const filteredPageEvents = pageEvents.filter(({ id }) => !pageEventIds.includes(id))
 
-      await chrome.storage.local.set({ pageEvents: filteredPageEvents }).catch(reject)
-      resolve()
-    } catch {
-      reject(new Error('contextError'))
+      await chrome.storage.local.set({ pageEvents: filteredPageEvents })
     }
   })
 }
 
 export const resetConfiguration = () => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      await chrome.storage.local.set({ aliases: [], pageEvents: [], position: {} }).catch(reject)
-      resolve()
-    } catch {
-      reject(new Error('contextError'))
+  return createFrontRequest({
+    request: async function() {
+      await chrome.storage.local.set({ aliases: [], pageEvents: [], position: {} })
     }
   })
 }
 
 export const updateConsolePosition = position => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      await chrome.storage.local.set({ position }).catch(reject)
-      resolve()
-    } catch {
-      reject(new Error('contextError'))
+  return createFrontRequest({
+    request: async function() {
+      await chrome.storage.local.set({ position })
     }
   })
 }

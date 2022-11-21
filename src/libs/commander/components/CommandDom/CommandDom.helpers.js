@@ -91,12 +91,13 @@ export const generateFilterBySome = ({
           const elementAttrs = getAttributes(element)
 
           if (typeof attrValuePattern === 'boolean') {
-            const matchAttrName = Object.keys(elementAttrs).find(attrName =>
+            const matchAttrNames = Object.keys(elementAttrs).filter(attrName =>
               attrNameRegex.test(attrName)
             )
-            const matchesAttrValue = matchAttrName && elementAttrs[matchAttrName]
 
-            return attrValuePattern ? matchesAttrValue === '' : matchesAttrValue !== ''
+            return attrValuePattern
+              ? matchAttrNames.some(name => elementAttrs[name] === '')
+              : matchAttrNames.some(name => elementAttrs[name] !== '')
           }
 
           const matchesAttrName = Object.keys(elementAttrs).some(attrName =>

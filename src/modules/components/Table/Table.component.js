@@ -120,6 +120,7 @@ export const Table = ({
                   style={{ width }}
                   center={center}
                   hasFixedWidth={!width.endsWith('%')}
+                  className={typeof column.value === 'string' ? 'internal' : null}
                 >
                   {column.value}
 

@@ -12,6 +12,10 @@ export const Box = styled.div`
   transition: background-color 0.2s ease-in-out;
   cursor: pointer;
 
+  &:hover {
+    background-color: ${t('transparent.250')};
+  }
+
   &.checked {
     background-color: ${t('purple.900')};
   }

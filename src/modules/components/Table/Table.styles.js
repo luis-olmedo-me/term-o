@@ -50,9 +50,11 @@ export const TableRowValue = styled.span`
   flex-grow: ${props => (props.hasFixedWidth ? 'unset' : '1')};
   background-color: ${t('transparent.000')};
 
-  &:hover {
-    background-color: ${t('transparent.250')};
-    color: ${t('yellow.800')};
+  &.internal {
+    &:hover {
+      background-color: ${t('transparent.250')};
+      color: ${t('yellow.800')};
+    }
   }
 
   &:hover .actions {

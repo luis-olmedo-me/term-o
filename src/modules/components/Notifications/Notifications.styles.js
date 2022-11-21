@@ -14,7 +14,7 @@ export const NotificationsWrapper = styled.div`
 export const NotificationWrapper = styled.div`
   position: absolute;
   width: 100%;
-  background-color: ${t('neutral.100')};
+  background-color: ${t('neutral.200')};
   box-shadow: 0 0 15px 5px ${t('transparent.300')};
   margin-bottom: 10px;
   padding: 10px;

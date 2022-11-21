@@ -7,17 +7,18 @@ export const parameterTypes = {
   INFO: 'info',
   SUCCESS: 'success',
   TABLE: 'table',
-  HELP: 'help'
+  HELP: 'help',
+  CODE: 'code'
 }
 
 export const optionTypes = {
   BOOLEAN: 'boolean',
   NUMBER: 'number',
   ARRAY: 'array',
-  ARRAY_OF_OBJECTS: 'array-of-objects',
   ARRAY_OF_STRINGS: 'array-of-strings',
-  OBJECT: 'object',
-  STRING: 'string'
+  GROUP: 'group',
+  STRING: 'string',
+  OBJECT: 'object'
 }
 
 export const actionTypes = {

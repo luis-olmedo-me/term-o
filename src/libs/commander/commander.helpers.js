@@ -167,8 +167,8 @@ export const getOptionsFromArgs = (args, propsConfig = {}) => {
       const carriedParsedArguments = parsedArguments[formattedKey] || []
 
       const newValue = isValueWithRowValue
-        ? { [nextKey]: removeQuotesFromValue(nextValue) }
-        : removeQuotesFromValue(value)
+        ? { [nextKey]: evaluateStringifiedPrimitiveValue(nextValue) }
+        : evaluateStringifiedPrimitiveValue(value)
 
       parsedArguments[formattedKey] = [...carriedParsedArguments, newValue]
     } else if (isArgOption) {
@@ -176,14 +176,14 @@ export const getOptionsFromArgs = (args, propsConfig = {}) => {
         !isNextArgOption &&
         nextArg.includes('=') &&
         !checkURLValidation(nextArg) &&
-        /^\w+=.+/.test(nextArg)
+        /^[^\s]+=.+/.test(nextArg)
       const [nextKey, nextValue] = isNextArgOptionWithRowValue ? getRowDataFromOption(nextArg) : []
 
       const carriedParsedArguments = parsedArguments[formattedArg] || []
 
       const newValue = isNextArgOptionWithRowValue
-        ? { [nextKey]: removeQuotesFromValue(nextValue) }
-        : removeQuotesFromValue(nextArg)
+        ? { [nextKey]: evaluateStringifiedPrimitiveValue(nextValue) }
+        : evaluateStringifiedPrimitiveValue(nextArg)
 
       argIndex++
       parsedArguments[formattedArg] = [...carriedParsedArguments, newValue]
@@ -197,13 +197,34 @@ export const getOptionsFromArgs = (args, propsConfig = {}) => {
   return parsedArguments
 }
 
-const validatePropValue = (value, type, defaultValue) => {
+const evaluateStringifiedPrimitiveValue = value => {
+  const isNumber = !Number.isNaN(Number(value))
+  const isBoolean = ['true', 'false'].includes(value)
+
+  if (isNumber) return Number(value)
+  else if (isBoolean) return value === 'true'
+  else return removeQuotesFromValue(value)
+}
+
+const validatePropValue = (value, type, defaultValue, objectTypes) => {
   switch (type) {
-    case optionTypes.ARRAY_OF_OBJECTS: {
+    case optionTypes.OBJECT: {
       const isArray = Array.isArray(value)
       const hasAllObjects = isArray && value.every(item => typeof item === 'object')
 
-      return hasAllObjects ? value : defaultValue
+      return hasAllObjects
+        ? value.reduce((accumulator, item) => {
+            const [[key, value]] = Object.entries(item)
+
+            if (objectTypes?.length) {
+              return objectTypes.includes(typeof value)
+                ? { ...accumulator, [key]: value }
+                : accumulator
+            }
+
+            return { ...accumulator, [key]: value }
+          }, {})
+        : defaultValue
     }
 
     case optionTypes.ARRAY_OF_STRINGS: {
@@ -213,21 +234,19 @@ const validatePropValue = (value, type, defaultValue) => {
       return hasAllStrings ? value : defaultValue
     }
 
+    case optionTypes.NUMBER:
     case optionTypes.STRING: {
       const isArray = Array.isArray(value)
-      const lastItem = isArray ? value[value.length - 1] : ''
+      const lastItem = isArray ? value.at(-1) : null
 
-      return lastItem || defaultValue
-    }
-
-    case optionTypes.NUMBER: {
-      const numberValue = Number(value)
-
-      return !Number.isNaN(numberValue) ? numberValue : defaultValue
+      return typeof lastItem === type ? lastItem : defaultValue
     }
 
     case optionTypes.ARRAY:
       return Array.isArray(value) ? value : defaultValue
+
+    case optionTypes.GROUP:
+      return typeof value === 'object' ? value : defaultValue
 
     default:
       return typeof value === type ? value : defaultValue
@@ -240,7 +259,12 @@ const buildGroupProps = ({ values: _values, ...propValues }, groupPropConfigs = 
 
     if (!groupConfig) return allProps
 
-    const validatedValue = validatePropValue(value, groupConfig.type, groupConfig.defaultValue)
+    const validatedValue = validatePropValue(
+      value,
+      groupConfig.type,
+      groupConfig.defaultValue,
+      groupConfig.objectTypes
+    )
 
     return { ...allProps, [groupConfig.key]: validatedValue }
   }, {})
@@ -248,15 +272,15 @@ const buildGroupProps = ({ values: _values, ...propValues }, groupPropConfigs = 
 
 export const buildProps = (propValues, propsConfig = {}) => {
   return Object.entries(propsConfig).reduce(
-    (allProps, [propName, { key, type, defaultValue, alias, groupProps }]) => {
+    (allProps, [propName, { key, type, defaultValue, alias, groupProps, objectTypes }]) => {
       const aliasName = Object.keys(propValues).find(name => {
         return alias === name
       })
 
       const groupValue = groupProps ? buildGroupProps(propValues, groupProps) : null
 
-      const value = propValues[propName] || propValues[aliasName] || groupValue
-      const validatedValue = validatePropValue(value, type, defaultValue)
+      const value = groupValue || propValues[propName] || propValues[aliasName]
+      const validatedValue = validatePropValue(value, type, defaultValue, objectTypes)
 
       return { ...allProps, [key]: validatedValue }
     },

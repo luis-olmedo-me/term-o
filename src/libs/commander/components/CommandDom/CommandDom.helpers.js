@@ -1,6 +1,6 @@
-import { isElementHidden } from '@src/helpers/dom.helpers'
+import { getAttributes, getStyles, isElementHidden } from '@src/helpers/dom.helpers'
 import { removeDuplicatedFromArray } from '@src/helpers/utils.helpers.js'
-import { actionTypes } from '../../constants/commands.constants'
+import { domActionTypes } from './CommandDom.constants'
 
 const getElementsFromDOM = patterns => {
   try {
@@ -29,33 +29,16 @@ export const getElements = ({ patterns, xpaths, filterBySome, filterByEvery }) =
   })
 }
 
-export const getActionType = ({ get }) => {
-  if (get.length) return actionTypes.GET_DOM_ELEMENTS
-  else return actionTypes.NONE
+export const getActionType = ({ get, attr }) => {
+  if (Object.keys(attr).length) return domActionTypes.SET_ATTRIBUTES
+  else if (get.length) return domActionTypes.GET_DOM_ELEMENTS
+  else return domActionTypes.NONE
 }
 
-export const generateFilterBySome = ({
-  hasId,
-  hasClass,
-  byId,
-  byClass,
-  byText,
-  byStyle,
-  byAttribute
-}) => {
+export const generateFilterBySome = ({ byText, byStyle, byAttr }) => {
   return element => {
     let validations = []
 
-    if (hasId) validations.push(element => Boolean(element.id))
-    if (hasClass) validations.push(element => Boolean(element.className))
-    if (byId.length) {
-      validations.push(element => byId.some(id => element.id.includes(id)))
-    }
-    if (byClass.length) {
-      validations.push(element =>
-        byClass.some(className => element.className?.includes?.(className))
-      )
-    }
     if (byText.length) {
       validations.push(element =>
         byText.some(rawText => {
@@ -74,21 +57,49 @@ export const generateFilterBySome = ({
         })
       )
     }
-    if (byStyle.length) {
+    if (Object.keys(byStyle).length) {
       validations.push(element =>
-        byStyle.some(style => {
-          const [[styleName, styleValue]] = Object.entries(style)
+        Object.entries(byStyle).some(([styleNamePattern, styleValuePattern]) => {
+          const styleNameRegex = new RegExp(styleNamePattern)
+          const styleValueRegex = new RegExp(styleValuePattern)
+          const elementStyles = getStyles(element)
 
-          return element.style[styleName] === styleValue
+          const matchesStyleName = Object.keys(elementStyles).some(styleName =>
+            styleNameRegex.test(styleName)
+          )
+          const matchesStyleValue = Object.values(elementStyles).some(styleValue =>
+            styleValueRegex.test(styleValue)
+          )
+
+          return matchesStyleName && matchesStyleValue
         })
       )
     }
-    if (byAttribute.length) {
+    if (Object.keys(byAttr).length) {
       validations.push(element =>
-        byAttribute.some(attribute => {
-          const [[attributeName, attributeValue]] = Object.entries(attribute)
+        Object.entries(byAttr).some(([attrNamePattern, attrValuePattern]) => {
+          const attrNameRegex = new RegExp(attrNamePattern)
+          const attrValueRegex = new RegExp(attrValuePattern)
+          const elementAttrs = getAttributes(element)
 
-          return element.getAttribute(attributeName)?.includes(attributeValue)
+          if (typeof attrValuePattern === 'boolean') {
+            const matchAttrNames = Object.keys(elementAttrs).filter(attrName =>
+              attrNameRegex.test(attrName)
+            )
+
+            return attrValuePattern
+              ? matchAttrNames.some(name => elementAttrs[name] === '')
+              : matchAttrNames.some(name => elementAttrs[name] !== '')
+          }
+
+          const matchesAttrName = Object.keys(elementAttrs).some(attrName =>
+            attrNameRegex.test(attrName)
+          )
+          const matchesAttrValue = Object.values(elementAttrs).some(attrValue =>
+            attrValueRegex.test(attrValue)
+          )
+
+          return matchesAttrName && matchesAttrValue
         })
       )
     }
@@ -118,17 +129,6 @@ export const lookupElementByXPath = xpath => {
   )
 
   return result.singleNodeValue
-}
-
-export const getAttributes = element => {
-  const attributeNames = element.getAttributeNames(element)
-
-  return attributeNames.reduce((allAttributes, attributeName) => {
-    return {
-      ...allAttributes,
-      [attributeName]: element.getAttribute(attributeName)
-    }
-  }, {})
 }
 
 export const getParentsOfElements = (elements, times) => {

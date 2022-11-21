@@ -21,8 +21,9 @@ export const aliasConfig = {
     add: {
       key: 'add',
       description: 'Add an alias',
-      type: optionTypes.ARRAY_OF_OBJECTS,
-      defaultValue: [],
+      type: optionTypes.OBJECT,
+      objectTypes: ['string'],
+      defaultValue: {},
       alias: 'a'
     }
   },
@@ -60,5 +61,6 @@ export const aliasTableOptions = {
 export const aliasActionTypes = {
   SHOW_LIST: 'SHOW_LIST',
   DELETE_ALIAS: 'DELETE_ALIAS',
-  ADD_ALIAS: 'ADD_ALIAS'
+  ADD_ALIAS: 'ADD_ALIAS',
+  NONE: 'NONE'
 }

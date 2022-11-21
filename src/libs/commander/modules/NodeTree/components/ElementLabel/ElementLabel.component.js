@@ -1,6 +1,7 @@
-import { Actions } from '@src/modules/components/Actions'
 import * as React from 'preact'
-import { getAttributes } from '../../../../components/CommandDom/CommandDom.helpers'
+
+import { getAttributes } from '@src/helpers/dom.helpers'
+import { Actions } from '@src/modules/components/Actions'
 import {
   AttributeName,
   AttributeValue,
@@ -46,11 +47,15 @@ export const ElementLabel = ({
             <span key={attributeName}>
               <AttributeName isHidden={isHidden}>{` ${attributeName}`}</AttributeName>
 
-              <Equal isHidden={isHidden}>{`=`}</Equal>
+              {attributeValue && (
+                <>
+                  <Equal isHidden={isHidden}>{`=`}</Equal>
 
-              <AttributeValue isHidden={isHidden} title={attributeValue}>
-                {`"${attributeValueShorten}"`}
-              </AttributeValue>
+                  <AttributeValue isHidden={isHidden} title={attributeValue}>
+                    {`"${attributeValueShorten}"`}
+                  </AttributeValue>
+                </>
+              )}
             </span>
           )
         })}

@@ -13,34 +13,6 @@ export const domConfig = {
       defaultValue: [],
       alias: 'g'
     },
-    'has-id': {
-      key: 'hasId',
-      description: 'Check if a DOM element has an id',
-      type: optionTypes.BOOLEAN,
-      defaultValue: false,
-      alias: 'hi'
-    },
-    'has-class': {
-      key: 'hasClass',
-      description: 'Check if a DOM element has a class',
-      type: optionTypes.BOOLEAN,
-      defaultValue: false,
-      alias: 'hc'
-    },
-    'by-id': {
-      key: 'byId',
-      description: 'Get a DOM element by id',
-      type: optionTypes.ARRAY_OF_STRINGS,
-      defaultValue: [],
-      alias: 'bi'
-    },
-    'by-class': {
-      key: 'byClass',
-      description: 'Get a DOM element by class',
-      type: optionTypes.ARRAY_OF_STRINGS,
-      defaultValue: [],
-      alias: 'bc'
-    },
     'by-text': {
       key: 'byText',
       description: 'Get a DOM element by text',
@@ -51,15 +23,17 @@ export const domConfig = {
     'by-style': {
       key: 'byStyle',
       description: 'Get a DOM element by style',
-      type: optionTypes.ARRAY_OF_OBJECTS,
-      defaultValue: [],
+      type: optionTypes.OBJECT,
+      objectTypes: ['string'],
+      defaultValue: {},
       alias: 'bs'
     },
-    'by-attribute': {
-      key: 'byAttribute',
+    'by-attr': {
+      key: 'byAttr',
       description: 'Get a DOM element by attribute',
-      type: optionTypes.ARRAY_OF_OBJECTS,
-      defaultValue: [],
+      type: optionTypes.OBJECT,
+      objectTypes: ['string', 'boolean'],
+      defaultValue: {},
       alias: 'ba'
     },
     hidden: {
@@ -89,6 +63,14 @@ export const domConfig = {
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 'gp'
+    },
+    attr: {
+      key: 'attr',
+      description: 'Set attributes of elements from parameters',
+      type: optionTypes.OBJECT,
+      defaultValue: {},
+      objectTypes: ['string', 'boolean'],
+      alias: 'a'
     }
   },
   output: CommandDom
@@ -105,3 +87,9 @@ export const domViews = [
   { id: domViewIds.ATTRIBUTES, text: <Tag /> },
   { id: domViewIds.STYLES, text: <Palette /> }
 ]
+
+export const domActionTypes = {
+  GET_DOM_ELEMENTS: 'GET_DOM_ELEMENTS',
+  SET_ATTRIBUTES: 'SET_ATTRIBUTES',
+  NONE: 'NONE'
+}

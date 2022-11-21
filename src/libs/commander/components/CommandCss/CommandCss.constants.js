@@ -22,7 +22,7 @@ export const cssConfig = {
       key: 'manualStyles',
       description: 'Apply any CSS property you want to set',
       internal: true,
-      type: optionTypes.OBJECT,
+      type: optionTypes.GROUP,
       groupProps: cssProps,
       defaultValue: {},
       alias: ''

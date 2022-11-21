@@ -6,5 +6,9 @@ export const domMessages = {
   noElementsFound: {
     message: 'No elements where found in DOM.',
     type: parameterTypes.ERROR
+  },
+  attributeSetSuccess: {
+    message: 'Attributes set successfully',
+    type: parameterTypes.SUCCESS
   }
 }

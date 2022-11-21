@@ -1,8 +1,9 @@
-import { Carousel, CarouselItem } from '@modules/components/Carousel'
-import { Table } from '@modules/components/Table/Table.component'
 import * as React from 'preact'
 import { useState } from 'preact/hooks'
-import { getAttributes } from '../../../../components/CommandDom/CommandDom.helpers'
+
+import { Carousel, CarouselItem } from '@modules/components/Carousel'
+import { Table } from '@modules/components/Table/Table.component'
+import { getAttributes } from '@src/helpers/dom.helpers'
 import { parameterTypes } from '../../../../constants/commands.constants'
 import { usePaginationActions } from '../../hooks/usePaginationActions'
 import { Log } from '../../Log.component'

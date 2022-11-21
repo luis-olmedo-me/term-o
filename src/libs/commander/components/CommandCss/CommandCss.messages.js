@@ -10,9 +10,5 @@ export const cssMessages = {
   parameterOverflow: {
     message: `There are many elements in parameters. Only one is allowed.`,
     type: parameterTypes.ERROR
-  },
-  noParameters: {
-    message: `Elements in parameters are required.`,
-    type: parameterTypes.ERROR
   }
 }

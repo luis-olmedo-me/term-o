@@ -72,48 +72,64 @@ export const fetchConfiguration = () => {
 
       resolve(response)
     } catch {
-      reject('contextError')
+      reject(new Error('contextError'))
     }
   })
 }
 
 export const addAliases = newAliases => {
   return new Promise(async (resolve, reject) => {
-    const { aliases = [] } = await chrome.storage.local.get('aliases').catch(reject)
-    const mergedAliases = mergeAliases(aliases, newAliases)
+    try {
+      const { aliases = [] } = await chrome.storage.local.get('aliases').catch(reject)
+      const mergedAliases = mergeAliases(aliases, newAliases)
 
-    await chrome.storage.local.set({ aliases: mergedAliases }).catch(reject)
-    resolve()
+      await chrome.storage.local.set({ aliases: mergedAliases }).catch(reject)
+      resolve()
+    } catch {
+      reject(new Error('contextError'))
+    }
   })
 }
 
 export const deleteAliases = async aliasIds => {
   return new Promise(async (resolve, reject) => {
-    const { aliases = [] } = await chrome.storage.local.get('aliases').catch(reject)
-    const filteredAliases = aliases.filter(({ id }) => !aliasIds.includes(id))
+    try {
+      const { aliases = [] } = await chrome.storage.local.get('aliases')
+      const filteredAliases = aliases.filter(({ id }) => !aliasIds.includes(id))
 
-    await chrome.storage.local.set({ aliases: filteredAliases }).catch(reject)
-    resolve()
+      await chrome.storage.local.set({ aliases: filteredAliases })
+      resolve()
+    } catch {
+      reject(new Error('contextError'))
+    }
   })
 }
 
 export const addPageEvents = newPageEvents => {
   return new Promise(async (resolve, reject) => {
-    const { pageEvents = [] } = await chrome.storage.local.get('pageEvents').catch(reject)
-    const mergedPageEvents = [...pageEvents, ...newPageEvents]
+    try {
+      const { pageEvents = [] } = await chrome.storage.local.get('pageEvents').catch(reject)
+      const mergedPageEvents = [...pageEvents, ...newPageEvents]
 
-    await chrome.storage.local.set({ pageEvents: mergedPageEvents }).catch(reject)
-    resolve()
+      await chrome.storage.local.set({ pageEvents: mergedPageEvents }).catch(reject)
+      resolve()
+    } catch {
+      reject(new Error('contextError'))
+    }
   })
 }
 
 export const deletePageEvents = pageEventIds => {
   return new Promise(async (resolve, reject) => {
-    const { pageEvents = [] } = await chrome.storage.local.get('pageEvents').catch(reject)
-    const filteredPageEvents = pageEvents.filter(({ id }) => !pageEventIds.includes(id))
+    try {
+      const { pageEvents = [] } = await chrome.storage.local.get('pageEvents').catch(reject)
+      const filteredPageEvents = pageEvents.filter(({ id }) => !pageEventIds.includes(id))
 
-    await chrome.storage.local.set({ pageEvents: filteredPageEvents }).catch(reject)
-    resolve()
+      await chrome.storage.local.set({ pageEvents: filteredPageEvents }).catch(reject)
+      resolve()
+    } catch {
+      reject(new Error('contextError'))
+    }
   })
 }
 
@@ -123,7 +139,7 @@ export const resetConfiguration = () => {
       await chrome.storage.local.set({ aliases: [], pageEvents: [], position: {} }).catch(reject)
       resolve()
     } catch {
-      reject('contextError')
+      reject(new Error('contextError'))
     }
   })
 }
@@ -134,7 +150,7 @@ export const updateConsolePosition = position => {
       await chrome.storage.local.set({ position }).catch(reject)
       resolve()
     } catch {
-      reject('contextError')
+      reject(new Error('contextError'))
     }
   })
 }

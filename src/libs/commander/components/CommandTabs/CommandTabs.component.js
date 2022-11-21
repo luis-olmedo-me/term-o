@@ -58,7 +58,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   }
 
   const { log: messageLog, setMessage } = useMessageLog()
-  const { paginationActions, pages, pageNumber } = usePaginationActions({
+  const { paginationActions, pages, pageNumber, changePage } = usePaginationActions({
     items: tabs,
     maxItems: 10
   })
@@ -66,9 +66,12 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     onDateUpdate: handleDatesUpdate
   })
   const { clearSelection, tableSelectionProps, selectionActions } = useTableSelection({
+    changePage,
     handleSkullClick: handleClosingTabsFromSelection,
     currentRows: pages[pageNumber],
-    isEnabled: props.now
+    isEnabled: props.now,
+    tableItems,
+    pages
   })
 
   const handleShowTabList = useCallback(async () => {

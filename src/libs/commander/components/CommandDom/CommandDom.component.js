@@ -89,7 +89,7 @@ const CommandDomWithoutContext = ({
       byClass.length ||
       byText.length ||
       byStyle.length ||
-      byAttr.length
+      Object.keys(byAttr).length
 
     const hasFiltersByAll = !hidden
 

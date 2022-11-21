@@ -83,7 +83,7 @@ export const generateFilterBySome = ({
         })
       )
     }
-    if (byAttr.length) {
+    if (Object.keys(byAttr).length) {
       validations.push(element =>
         Object.entries(byAttr).some(([attrNamePattern, attrValuePattern]) => {
           const attrNameRegex = new RegExp(attrNamePattern)

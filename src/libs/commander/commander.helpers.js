@@ -166,10 +166,9 @@ export const getOptionsFromArgs = (args, propsConfig = {}) => {
       const formattedKey = key.replace(/^--|^-/, '')
       const carriedParsedArguments = parsedArguments[formattedKey] || []
 
-      // FIXME: We should use evaluateStringifiedPrimitiveValue.
       const newValue = isValueWithRowValue
-        ? { [nextKey]: removeQuotesFromValue(nextValue) }
-        : removeQuotesFromValue(value)
+        ? { [nextKey]: evaluateStringifiedPrimitiveValue(nextValue) }
+        : evaluateStringifiedPrimitiveValue(value)
 
       parsedArguments[formattedKey] = [...carriedParsedArguments, newValue]
     } else if (isArgOption) {
@@ -182,10 +181,9 @@ export const getOptionsFromArgs = (args, propsConfig = {}) => {
 
       const carriedParsedArguments = parsedArguments[formattedArg] || []
 
-      // FIXME: We should use evaluateStringifiedPrimitiveValue.
       const newValue = isNextArgOptionWithRowValue
         ? { [nextKey]: evaluateStringifiedPrimitiveValue(nextValue) }
-        : removeQuotesFromValue(nextArg)
+        : evaluateStringifiedPrimitiveValue(nextArg)
 
       argIndex++
       parsedArguments[formattedArg] = [...carriedParsedArguments, newValue]
@@ -236,17 +234,12 @@ const validatePropValue = (value, type, defaultValue, objectTypes) => {
       return hasAllStrings ? value : defaultValue
     }
 
+    case optionTypes.NUMBER:
     case optionTypes.STRING: {
       const isArray = Array.isArray(value)
-      const lastItem = isArray ? value[value.length - 1] : ''
+      const lastItem = isArray ? value.at(-1) : null
 
-      return lastItem || defaultValue
-    }
-
-    case optionTypes.NUMBER: {
-      const numberValue = Number(value)
-
-      return !Number.isNaN(numberValue) ? numberValue : defaultValue
+      return typeof lastItem === type ? lastItem : defaultValue
     }
 
     case optionTypes.ARRAY:

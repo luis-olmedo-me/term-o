@@ -12,7 +12,7 @@ const mergeAliases = (aliasesA, aliasesB) => {
 }
 
 const receiveConfig = ({ aliases, pageEvents, position }) => ({
-  consolePosition: position || {},
+  position: position || {},
   pageEvents: pageEvents || [],
   aliases: aliases || []
 })
@@ -63,7 +63,18 @@ export const createWorkerProcessRequest = ({ type, data, defaultResponse }) => {
 }
 
 export const fetchConfiguration = () => {
-  return chrome.storage.local.get(['aliases', 'pageEvents', 'position']).then(receiveConfig)
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await chrome.storage.local
+        .get(['aliases', 'pageEvents', 'position'])
+        .then(receiveConfig)
+        .catch(reject)
+
+      resolve(response)
+    } catch {
+      reject('contextError')
+    }
+  })
 }
 
 export const addAliases = newAliases => {
@@ -107,11 +118,25 @@ export const deletePageEvents = pageEventIds => {
 }
 
 export const resetConfiguration = () => {
-  return chrome.storage.local.set({ aliases: [], pageEvents: [], consolePosition: {} })
+  return new Promise(async (resolve, reject) => {
+    try {
+      await chrome.storage.local.set({ aliases: [], pageEvents: [], position: {} }).catch(reject)
+      resolve()
+    } catch {
+      reject('contextError')
+    }
+  })
 }
 
 export const updateConsolePosition = position => {
-  return chrome.storage.local.set({ position })
+  return new Promise(async (resolve, reject) => {
+    try {
+      await chrome.storage.local.set({ position }).catch(reject)
+      resolve()
+    } catch {
+      reject('contextError')
+    }
+  })
 }
 
 export const fetchHistorial = data => {

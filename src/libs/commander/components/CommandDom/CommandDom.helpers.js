@@ -88,8 +88,17 @@ export const generateFilterBySome = ({
         Object.entries(byAttr).some(([attrNamePattern, attrValuePattern]) => {
           const attrNameRegex = new RegExp(attrNamePattern)
           const attrValueRegex = new RegExp(attrValuePattern)
-
           const elementAttrs = getAttributes(element)
+
+          if (typeof attrValuePattern === 'boolean') {
+            const matchAttrName = Object.keys(elementAttrs).find(attrName =>
+              attrNameRegex.test(attrName)
+            )
+            const matchesAttrValue = matchAttrName && elementAttrs[matchAttrName]
+
+            return attrValuePattern ? matchesAttrValue === '' : matchesAttrValue !== ''
+          }
+
           const matchesAttrName = Object.keys(elementAttrs).some(attrName =>
             attrNameRegex.test(attrName)
           )

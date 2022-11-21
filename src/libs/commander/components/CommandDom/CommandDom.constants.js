@@ -95,8 +95,9 @@ export const domConfig = {
     attr: {
       key: 'attr',
       description: 'Set attributes of elements from parameters',
-      type: optionTypes.ARRAY_OF_OBJECTS,
-      defaultValue: [],
+      type: optionTypes.OBJECT,
+      defaultValue: {},
+      objectTypes: ['string'],
       alias: 'a'
     }
   },

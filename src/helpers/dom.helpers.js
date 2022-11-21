@@ -16,3 +16,14 @@ export const isObjectFilterValidRegex = filter => {
     return checkIfRegExpIsValid(key) && checkIfRegExpIsValid(value)
   })
 }
+
+export const getAttributes = element => {
+  const attributeNames = element.getAttributeNames(element)
+
+  return attributeNames.reduce((allAttributes, attributeName) => {
+    return {
+      ...allAttributes,
+      [attributeName]: element.getAttribute(attributeName)
+    }
+  }, {})
+}

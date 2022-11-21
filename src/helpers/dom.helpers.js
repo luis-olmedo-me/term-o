@@ -1,4 +1,4 @@
-import { checkIfRegExpIsValid } from 'libs/commander/components/CommandOn/CommandOn.helpers'
+import { checkIfRegExpIsValid } from './utils.helpers'
 
 export const isElementHidden = (element, bounds) => {
   const { height, width } = bounds || element.getBoundingClientRect()

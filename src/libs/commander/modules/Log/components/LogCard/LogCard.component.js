@@ -2,6 +2,7 @@ import * as React from 'preact'
 
 import { Error, Info, Tick } from '@src/modules/icons'
 import { parameterTypes } from '../../../../constants/commands.constants'
+import { CardActions } from '../CardActions/CardActions.component'
 import { CardContainer, CardContent, CardScroll, CardShadow, Hash } from './LogCard.styles'
 
 const preIconsByVariants = {
@@ -11,7 +12,7 @@ const preIconsByVariants = {
   [parameterTypes.SUCCESS]: <Tick />
 }
 
-export const LogCard = ({ children, variant, hasScroll, hasShadow, ref, command }) => {
+export const LogCard = ({ children, variant, hasScroll, hasShadow, ref, command, actions }) => {
   const icon = preIconsByVariants[variant]
 
   const Content = (
@@ -21,6 +22,8 @@ export const LogCard = ({ children, variant, hasScroll, hasShadow, ref, command 
       <span>{children}</span>
     </>
   )
+
+  const hasActions = Boolean(actions?.length)
 
   return (
     <>
@@ -32,6 +35,8 @@ export const LogCard = ({ children, variant, hasScroll, hasShadow, ref, command 
             {hasScroll ? <CardScroll>{Content}</CardScroll> : Content}
           </CardShadow>
         </CardContent>
+
+        {hasActions && <CardActions actions={actions} />}
       </CardContainer>
     </>
   )

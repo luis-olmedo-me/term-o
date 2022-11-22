@@ -1,13 +1,14 @@
 import * as React from 'preact'
 import { parameterTypes } from '../../../../constants/commands.constants'
-import { Log } from '../../Log.component'
+import { LogContainer } from '../../Log.styles'
+import LogCard from '../LogCard'
 
 export const MessageLog = ({ message, type, command }) => {
   return (
-    <>
-      <Log variant={parameterTypes.COMMAND}>{command}</Log>
-
-      <Log variant={type}>{message}</Log>
-    </>
+    <LogContainer>
+      <LogCard variant={type} command={command}>
+        {message}
+      </LogCard>
+    </LogContainer>
   )
 }

@@ -58,31 +58,12 @@ const OutputsNonMemoized = ({ components, id, outsideProps, onFinishAll }) => {
     }, 450),
     []
   )
-  const checkRoundedComponents = useCallback(
-    debounce(() => {
-      const logs = wrapperRef.current?.getElementsByClassName('log') || []
-
-      const validatedLogs = Array.from(logs)
-      const firstLog = validatedLogs.at(0)
-      const lastLog = validatedLogs.at(-1)
-
-      validatedLogs.forEach(log => {
-        log.classList.remove('rounded-b')
-        log.classList.remove('rounded-t')
-      })
-
-      if (firstLog) firstLog.classList.add('rounded-t')
-      if (lastLog) lastLog.classList.add('rounded-b')
-    }, 100),
-    []
-  )
 
   useEffect(() => {
     if (!data.length) return
 
     scrollIntoLastComponent()
-    checkRoundedComponents()
-  }, [data, scrollIntoLastComponent, checkRoundedComponents])
+  }, [data, scrollIntoLastComponent])
 
   const componentsShown = data.filter(item => item.isVisible)
 

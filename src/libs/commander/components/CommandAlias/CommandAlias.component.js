@@ -1,11 +1,17 @@
 import * as React from 'preact'
+import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 
 import { Carousel, CarouselItem } from '@modules/components/Carousel'
 import { Table } from '@modules/components/Table/Table.component'
 import { addAliases, deleteAliases, fetchConfiguration } from '@src/helpers/event.helpers.js'
-import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 import { parameterTypes } from '../../constants/commands.constants'
-import { Log, useMessageLog, usePaginationActions, useTableSelection } from '../../modules/Log'
+import {
+  LogCard,
+  LogContainer,
+  useMessageLog,
+  usePaginationActions,
+  useTableSelection
+} from '../../modules/Log'
 import { aliasActionTypes, aliasTableOptions, MAX_ITEMS } from './CommandAlias.constants'
 import {
   getActionType,
@@ -112,17 +118,18 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
   )
 
   return (
-    <>
-      <Log ref={logRef} variant={parameterTypes.COMMAND}>
-        {command}
-      </Log>
-
-      {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
+    <LogContainer>
+      {messageLog && (
+        <LogCard variant={messageLog.type} command={command}>
+          {messageLog.message}
+        </LogCard>
+      )}
 
       {!messageLog && (
-        <Log
+        <LogCard
           variant={parameterTypes.TABLE}
-          actionGroups={[...paginationActions, ...selectionActions]}
+          actions={[...paginationActions, ...selectionActions]}
+          command={command}
         >
           <Carousel itemInView={pageNumber}>
             {pages.map((page, currentPageNumber) => {
@@ -138,8 +145,8 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
               )
             })}
           </Carousel>
-        </Log>
+        </LogCard>
       )}
-    </>
+    </LogContainer>
   )
 }

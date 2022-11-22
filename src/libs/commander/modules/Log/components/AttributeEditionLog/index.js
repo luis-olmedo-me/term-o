@@ -1,3 +1,3 @@
 import { AttributeEditionLog } from './AttributeEditionLog.component'
 
-export { AttributeEditionLog }
+export default AttributeEditionLog

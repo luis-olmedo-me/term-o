@@ -1,3 +1,3 @@
 import { usePaginationActions } from './usePaginationActions.hook'
 
-export { usePaginationActions }
+export default usePaginationActions

@@ -1,15 +1,16 @@
 import * as React from 'preact'
+import { useCallback, useEffect, useState } from 'preact/hooks'
 
 import { Carousel, CarouselItem } from '@modules/components/Carousel'
 import { withOverlayContext } from '@modules/components/Overlay/Overlay.hoc'
-import { isObjectFilterValidRegex } from 'helpers/dom.helpers'
-import { useCallback, useEffect, useState } from 'preact/hooks'
+import { isObjectFilterValidRegex } from '@src/helpers/dom.helpers'
 import { getParamsByType, insertParams } from '../../commander.helpers'
 import { parameterTypes } from '../../constants/commands.constants'
 import { Element, List, StyleSheet } from '../../modules/List'
 import {
   AttributeEditionLog,
-  Log,
+  LogCard,
+  LogContainer,
   useElementActions,
   useMessageLog,
   usePaginationActions,
@@ -165,15 +166,17 @@ const CommandDomWithoutContext = ({
   }
 
   return (
-    <>
-      <Log variant={parameterTypes.COMMAND}>{command}</Log>
-
-      {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
+    <LogContainer>
+      {messageLog && (
+        <LogCard variant={messageLog.type} command={command}>
+          {messageLog.message}
+        </LogCard>
+      )}
 
       {!messageLog && (
         <Carousel itemInView={itemInView}>
           <CarouselItem>
-            <Log
+            <LogCard
               variant={parameterTypes.ELEMENT}
               actionGroups={[
                 attributeEditionAction,
@@ -183,6 +186,7 @@ const CommandDomWithoutContext = ({
                 copyAction,
                 killAction
               ]}
+              command={command}
               hasShadow
             >
               <Carousel itemInView={pageNumber}>
@@ -203,7 +207,7 @@ const CommandDomWithoutContext = ({
                   )
                 })}
               </Carousel>
-            </Log>
+            </LogCard>
           </CarouselItem>
 
           <CarouselItem>
@@ -215,9 +219,10 @@ const CommandDomWithoutContext = ({
           </CarouselItem>
 
           <CarouselItem>
-            <Log
+            <LogCard
               variant={parameterTypes.STYLES}
               actionGroups={[headToElements, headToAttributes]}
+              command={command}
               hasScroll
               hasShadow
             >
@@ -225,11 +230,11 @@ const CommandDomWithoutContext = ({
                 items={sheets}
                 Child={({ item }) => <StyleSheet sheet={item} sheets={sheets} />}
               />
-            </Log>
+            </LogCard>
           </CarouselItem>
         </Carousel>
       )}
-    </>
+    </LogContainer>
   )
 }
 

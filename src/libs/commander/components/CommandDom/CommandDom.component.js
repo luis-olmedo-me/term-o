@@ -178,7 +178,7 @@ const CommandDomWithoutContext = ({
           <CarouselItem>
             <LogCard
               variant={parameterTypes.ELEMENT}
-              actionGroups={[
+              actions={[
                 attributeEditionAction,
                 styleEditionAction,
                 ...paginationActions,
@@ -215,13 +215,14 @@ const CommandDomWithoutContext = ({
               element={editingElement}
               leftOptions={[headToElements]}
               rightOptions={[headToStyles]}
+              command={command}
             />
           </CarouselItem>
 
           <CarouselItem>
             <LogCard
               variant={parameterTypes.STYLES}
-              actionGroups={[headToElements, headToAttributes]}
+              actions={[headToElements, headToAttributes]}
               command={command}
               hasScroll
               hasShadow

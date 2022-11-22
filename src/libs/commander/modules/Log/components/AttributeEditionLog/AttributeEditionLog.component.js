@@ -11,7 +11,7 @@ import LogCard from '../LogCard'
 import { attributeTableOptions } from './AttributeEditionLog.constants'
 import { turnAttributesIntoTableItems } from './AttributeEditionLog.helpers'
 
-export const AttributeEditionLog = ({ element, leftOptions = [], rightOptions = [] }) => {
+export const AttributeEditionLog = ({ element, leftOptions = [], rightOptions = [], command }) => {
   const [newAtributeName, setNewAttributeName] = useState('')
   const [newAtributeValue, setNewAttributeValue] = useState('')
 

@@ -11,7 +11,7 @@ const preIconsByVariants = {
   [parameterTypes.SUCCESS]: <Tick />
 }
 
-export const LogCard = ({ children, variant, hasScroll, hasShadow, ref }) => {
+export const LogCard = ({ children, variant, hasScroll, hasShadow, ref, command }) => {
   const icon = preIconsByVariants[variant]
 
   const Content = (
@@ -23,12 +23,16 @@ export const LogCard = ({ children, variant, hasScroll, hasShadow, ref }) => {
   )
 
   return (
-    <CardContainer ref={ref} className={variant} onMouseDown={event => event.stopPropagation()}>
-      <CardContent>
-        <CardShadow className={hasShadow ? 'shadow' : ''}>
-          {hasScroll ? <CardScroll>{Content}</CardScroll> : Content}
-        </CardShadow>
-      </CardContent>
-    </CardContainer>
+    <>
+      {command && <LogCard variant={parameterTypes.COMMAND}>{command}</LogCard>}
+
+      <CardContainer ref={ref} className={variant} onMouseDown={event => event.stopPropagation()}>
+        <CardContent>
+          <CardShadow className={hasShadow ? 'shadow' : ''}>
+            {hasScroll ? <CardScroll>{Content}</CardScroll> : Content}
+          </CardShadow>
+        </CardContent>
+      </CardContainer>
+    </>
   )
 }

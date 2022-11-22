@@ -1,6 +1,6 @@
 import * as React from 'preact'
 import { useCallback, useEffect } from 'preact/hooks'
-import { parameterTypes } from '../../constants/commands.constants'
+
 import { LogCard, LogContainer, useMessageLog } from '../../modules/Log'
 import { notifyActionTypes } from './CommandNotify.constants'
 import { getActionType } from './CommandNotify.helpers'

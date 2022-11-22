@@ -66,7 +66,7 @@ export const AttributeEditionLog = ({ element, leftOptions = [], rightOptions = 
   return (
     <LogCard
       variant={parameterTypes.TABLE}
-      actionGroups={editionPageButtonGroups}
+      actions={editionPageButtonGroups}
       command={command}
       hasScroll
     >

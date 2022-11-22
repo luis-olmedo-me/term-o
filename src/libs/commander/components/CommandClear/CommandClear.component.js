@@ -1,10 +1,9 @@
 import * as React from 'preact'
+import { useCallback, useEffect } from 'preact/hooks'
 
 import { withOverlayContext } from '@modules/components/Overlay/Overlay.hoc'
 import { resetConfiguration } from '@src/helpers/event.helpers.js'
-import { useCallback, useEffect } from 'preact/hooks'
-import { parameterTypes } from '../../constants/commands.constants'
-import { Log, useMessageLog } from '../../modules/Log'
+import { LogCard, LogContainer, useMessageLog } from '../../modules/Log'
 import { clearActionTypes } from './CommandClear.constants'
 import { getActionType } from './CommandClear.helpers'
 import { clearMessages } from './CommandClear.messages'
@@ -56,11 +55,11 @@ export const CommandClearWithoutContext = ({
 
   return (
     messageLog && (
-      <>
-        <Log variant={parameterTypes.COMMAND}>{command}</Log>
-
-        <Log variant={messageLog.type}>{messageLog.message}</Log>
-      </>
+      <LogContainer>
+        <LogCard variant={messageLog.type} command={command}>
+          {messageLog.message}
+        </LogCard>
+      </LogContainer>
     )
   )
 }

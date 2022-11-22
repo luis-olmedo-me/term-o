@@ -1,9 +1,9 @@
 import * as React from 'preact'
+import { useCallback, useEffect, useState } from 'preact/hooks'
 
 import { LogContainer } from '@libs/commander/modules/Log/Log.styles'
 import { removeDuplicatedFromArray } from '@src/helpers/utils.helpers.js'
 import { LogCard } from 'libs/commander/modules/Log/components/LogCard/LogCard.component'
-import { useCallback, useEffect, useState } from 'preact/hooks'
 import { consoleCommands } from '../../commander.constants'
 import { commanderMessages } from '../../commander.messages.js'
 import { parameterTypes } from '../../constants/commands.constants'

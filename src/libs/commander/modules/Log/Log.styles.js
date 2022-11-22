@@ -1,5 +1,8 @@
+import { theme as t } from '@src/helpers/theme.helpers'
 import styled from 'styled-components'
 import { CardContainer } from './components/LogCard/LogCard.styles'
+
+const radius = t('radius.200')
 
 export const LogContainer = styled.div`
   &:first-child ${CardContainer}:first-child {

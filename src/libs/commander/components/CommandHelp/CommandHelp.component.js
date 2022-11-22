@@ -1,6 +1,8 @@
 import * as React from 'preact'
 
+import { LogContainer } from '@libs/commander/modules/Log/Log.styles'
 import { removeDuplicatedFromArray } from '@src/helpers/utils.helpers.js'
+import { LogCard } from 'libs/commander/modules/Log/components/LogCard/LogCard.component'
 import { useCallback, useEffect, useState } from 'preact/hooks'
 import { consoleCommands } from '../../commander.constants'
 import { commanderMessages } from '../../commander.messages.js'
@@ -57,13 +59,15 @@ export const CommandHelp = ({ props, terminal: { command, finish } }) => {
   )
 
   return (
-    <>
-      <Log variant={parameterTypes.COMMAND}>{command}</Log>
-
-      {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
+    <LogContainer>
+      {messageLog && (
+        <LogCard variant={messageLog.type} command={command}>
+          {messageLog.message}
+        </LogCard>
+      )}
 
       {!messageLog && (
-        <Log variant={parameterTypes.HELP} hasScroll hasShadow>
+        <LogCard variant={parameterTypes.HELP} command={command} hasScroll hasShadow>
           {localMessages.map(({ id, title, items }) => {
             return (
               <UnsortedList key={id}>
@@ -87,8 +91,8 @@ export const CommandHelp = ({ props, terminal: { command, finish } }) => {
               </UnsortedList>
             )
           })}
-        </Log>
+        </LogCard>
       )}
-    </>
+    </LogContainer>
   )
 }

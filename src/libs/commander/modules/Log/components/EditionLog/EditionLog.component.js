@@ -4,9 +4,9 @@ import { useState } from 'preact/hooks'
 import { Editor, languages } from 'modules/components/Editor'
 import { Diskette, Home } from 'modules/icons'
 import { parameterTypes } from '../../../../constants/commands.constants'
-import { Log } from '../../Log.component'
+import LogCard from '../LogCard'
 
-export const EditionLog = ({ editingValue, onReject, onApprove }) => {
+export const EditionLog = ({ editingValue, onReject, onApprove, command }) => {
   const [value, setValue] = useState(editingValue)
   const [isInvalid, setIsInvalid] = useState(false)
 
@@ -39,12 +39,18 @@ export const EditionLog = ({ editingValue, onReject, onApprove }) => {
   ]
 
   return (
-    <Log variant={parameterTypes.CODE} actionGroups={editionActions} hasScroll hasShadow>
+    <LogCard
+      variant={parameterTypes.CODE}
+      actions={editionActions}
+      command={command}
+      hasScroll
+      hasShadow
+    >
       <Editor
         value={value}
         language={languages.JSON}
         onChange={event => setValue(event.target.value)}
       />
-    </Log>
+    </LogCard>
   )
 }

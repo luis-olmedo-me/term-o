@@ -4,7 +4,15 @@ import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 import { Carousel, CarouselItem } from '@modules/components/Carousel'
 import { Table } from '@modules/components/Table'
 import { parameterTypes } from '../../constants/commands.constants'
-import { EditionLog, Log, useMessageLog, usePaginationActions, useViews } from '../../modules/Log'
+import {
+  EditionLog,
+  Log,
+  LogCard,
+  LogContainer,
+  useMessageLog,
+  usePaginationActions,
+  useViews
+} from '../../modules/Log'
 import {
   storageActionTypes,
   storageTableOptions,
@@ -106,17 +114,17 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
   const [editingKey, editingValue] = editingEntity
 
   return (
-    <>
-      <Log ref={logRef} variant={parameterTypes.COMMAND}>
-        {command}
-      </Log>
-
-      {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
+    <LogContainer>
+      {messageLog && (
+        <LogCard variant={messageLog.type} command={command}>
+          {messageLog.message}
+        </LogCard>
+      )}
 
       {!messageLog && (
         <Carousel itemInView={itemInView}>
           <CarouselItem>
-            <Log variant={parameterTypes.TABLE} actionGroups={paginationActions}>
+            <LogCard variant={parameterTypes.TABLE} actions={paginationActions} command={command}>
               <Carousel itemInView={pageNumber}>
                 {pages.map((page, currentPageNumber) => {
                   return (
@@ -126,7 +134,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
                   )
                 })}
               </Carousel>
-            </Log>
+            </LogCard>
           </CarouselItem>
 
           <CarouselItem>
@@ -134,10 +142,11 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
               editingValue={parseEntity(editingValue)}
               onApprove={newValue => handleTreeChange({ key: editingKey, newValue })}
               onReject={() => changeView(storageViewIds.MAIN)}
+              command={command}
             />
           </CarouselItem>
         </Carousel>
       )}
-    </>
+    </LogContainer>
   )
 }

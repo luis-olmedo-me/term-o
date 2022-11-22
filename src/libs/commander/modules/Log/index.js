@@ -8,11 +8,9 @@ import { replaceByParams, useMessageLog } from './hooks/useMessageLog'
 import { usePaginationActions } from './hooks/usePaginationActions'
 import { useTableSelection } from './hooks/useTableSelection'
 import { useViews } from './hooks/useViews'
-import { Log } from './Log.component'
 import { LogContainer } from './Log.styles'
 
 export {
-  Log,
   AttributeEditionLog,
   MessageLog,
   useMessageLog,

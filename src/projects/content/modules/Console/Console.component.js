@@ -112,7 +112,12 @@ export const Console = () => {
   return (
     <ConsoleWrapper
       ref={wrapperReference}
+      className={`
+        ${isOpen ? 'open' : ''}
+        ${isMoving ? 'moving' : ''}
+      `}
       isOpen={isOpen}
+      isMoving={isMoving}
       style={movingEffect}
       ondragstart="return false;"
       ondrop="return false;"

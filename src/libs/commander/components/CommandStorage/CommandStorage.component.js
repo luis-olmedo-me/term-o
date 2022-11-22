@@ -6,7 +6,6 @@ import { Table } from '@modules/components/Table'
 import { parameterTypes } from '../../constants/commands.constants'
 import {
   EditionLog,
-  Log,
   LogCard,
   LogContainer,
   useMessageLog,

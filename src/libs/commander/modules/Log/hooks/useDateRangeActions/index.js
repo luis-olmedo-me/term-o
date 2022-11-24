@@ -1,3 +1,3 @@
 import { useDateRangeActions } from './useDateRangeActions.hook'
 
-export { useDateRangeActions }
+export default useDateRangeActions

@@ -1,11 +1,11 @@
 import * as React from 'preact'
-
 import { useCallback, useEffect, useState } from 'preact/hooks'
+
 import { getParamsByType } from '../../commander.helpers'
 import { styleElements, validateStyles } from '../../commander.promises'
 import { parameterTypes } from '../../constants/commands.constants'
 import { List, StyleSheet } from '../../modules/List'
-import { Log, useMessageLog } from '../../modules/Log'
+import { LogCard, LogContainer, useMessageLog } from '../../modules/Log'
 import { cssActionTypes } from './CommandCss.constants'
 import { getActionType, getStylesFrom, parseManualStyles, parseStyles } from './CommandCss.helpers'
 import { cssMessages } from './CommandCss.messages'
@@ -80,16 +80,18 @@ export const CommandCss = ({ props, terminal: { command, params, finish } }) => 
   )
 
   return (
-    <>
-      <Log variant={parameterTypes.COMMAND}>{command}</Log>
-
-      {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
+    <LogContainer>
+      {messageLog && (
+        <LogCard variant={messageLog.type} command={command}>
+          {messageLog.message}
+        </LogCard>
+      )}
 
       {!messageLog && (
-        <Log variant={parameterTypes.STYLES} hasScroll hasShadow>
+        <LogCard variant={parameterTypes.STYLES} command={command} hasScroll hasShadow>
           <List items={sheets} Child={({ item }) => <StyleSheet sheet={item} sheets={sheets} />} />
-        </Log>
+        </LogCard>
       )}
-    </>
+    </LogContainer>
   )
 }

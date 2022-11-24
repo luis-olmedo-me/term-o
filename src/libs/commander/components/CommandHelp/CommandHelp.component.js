@@ -1,11 +1,11 @@
 import * as React from 'preact'
+import { useCallback, useEffect, useState } from 'preact/hooks'
 
 import { removeDuplicatedFromArray } from '@src/helpers/utils.helpers.js'
-import { useCallback, useEffect, useState } from 'preact/hooks'
 import { consoleCommands } from '../../commander.constants'
 import { commanderMessages } from '../../commander.messages.js'
 import { parameterTypes } from '../../constants/commands.constants'
-import { Log, useMessageLog } from '../../modules/Log'
+import { LogCard, LogContainer, useMessageLog } from '../../modules/Log'
 import { helpActionTypes } from './CommandHelp.constants'
 import { getActionType, getMessagesFromCommandsToCheck } from './CommandHelp.helpers'
 import { ListItem, UnsortedList } from './CommandHelp.styles'
@@ -57,13 +57,15 @@ export const CommandHelp = ({ props, terminal: { command, finish } }) => {
   )
 
   return (
-    <>
-      <Log variant={parameterTypes.COMMAND}>{command}</Log>
-
-      {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
+    <LogContainer>
+      {messageLog && (
+        <LogCard variant={messageLog.type} command={command}>
+          {messageLog.message}
+        </LogCard>
+      )}
 
       {!messageLog && (
-        <Log variant={parameterTypes.HELP} hasScroll hasShadow>
+        <LogCard variant={parameterTypes.HELP} command={command} hasScroll hasShadow>
           {localMessages.map(({ id, title, items }) => {
             return (
               <UnsortedList key={id}>
@@ -87,8 +89,8 @@ export const CommandHelp = ({ props, terminal: { command, finish } }) => {
               </UnsortedList>
             )
           })}
-        </Log>
+        </LogCard>
       )}
-    </>
+    </LogContainer>
   )
 }

@@ -1,3 +1,3 @@
 import { MessageLog } from './MessageLog.component'
 
-export { MessageLog }
+export default MessageLog

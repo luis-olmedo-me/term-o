@@ -1,3 +1,3 @@
 import { useViews } from './useViews.hook'
 
-export { useViews }
+export default useViews

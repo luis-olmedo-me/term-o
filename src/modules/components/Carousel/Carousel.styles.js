@@ -13,6 +13,7 @@ export const CarouselItem = styled.div`
   width: 100%;
   justify-content: center;
   scroll-snap-align: center;
+  flex-direction: column;
 `
 
 const birth = keyframes`
@@ -24,6 +25,6 @@ const birth = keyframes`
   }
 `
 export const AnimatedEffect = styled.div`
-  transform-origin: ${(props) => props.direction};
+  transform-origin: ${props => props.direction};
   animation: ${birth} 0.2s ease-in-out;
 `

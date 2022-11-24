@@ -1,8 +1,6 @@
 import { theme as t } from '@src/helpers/theme.helpers'
 import styled from 'styled-components'
 
-const radius = t('radius.200')
-
 export const TagWrapper = styled.span`
   --tag-background-color: ${({ isNodeObjetive }) =>
     isNodeObjetive ? t('yellow.900') : t('neutral.1200')};
@@ -33,7 +31,7 @@ export const Prefix = styled.div`
   left: 0;
   display: inline-block;
   vertical-align: top;
-  background-color: ${t('pink.700')};
+  background-color: ${t('pink.600')};
 
   &:before {
     content: '';
@@ -42,7 +40,7 @@ export const Prefix = styled.div`
     height: 100%;
     left: 0;
     top: 0;
-    border-radius: ${radius} 0 0 ${radius};
+    border-radius: ${t('radius.300')} 0 0 ${t('radius.300')};
     background-color: var(--tag-background-color);
   }
 `
@@ -52,7 +50,7 @@ export const Postfix = styled.div`
   height: 100%;
   display: inline-block;
   vertical-align: top;
-  background-color: ${t('pink.700')};
+  background-color: ${t('pink.600')};
   position: relative;
 
   &:before {
@@ -62,7 +60,7 @@ export const Postfix = styled.div`
     right: 0;
     top: 0;
     height: 100%;
-    border-radius: 0 ${radius} ${radius} 0;
+    border-radius: 0 ${t('radius.300')} ${t('radius.300')} 0;
     background-color: var(--tag-background-color);
   }
 `

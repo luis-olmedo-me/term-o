@@ -1,4 +1,5 @@
 import { theme as t } from '@src/helpers/theme.helpers'
+import { LogContainer } from 'libs/commander/modules/Log'
 import styled from 'styled-components'
 
 const radius = t('radius.100')
@@ -7,20 +8,30 @@ export const ConsoleWrapper = styled.div`
   position: fixed;
   z-index: 1000000;
   font-family: 'Share Tech Mono', monospace;
-
-  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
-  transform: scale(${({ isOpen }) => (isOpen ? '1' : '0')});
-
-  pointer-events: ${({ isOpen }) => (isOpen ? 'all' : 'none')};
-  box-shadow: ${({ isMoving }) =>
-    isMoving ? '0px 20px 15px -3px rgba(0, 0, 0, 0.5)' : '0px 10px 15px -3px rgba(0, 0, 0, 0.15)'};
-
+  opacity: (0);
+  transform: scale(0);
+  pointer-events: none;
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.15);
   transition: inset 0.05s ease-in-out, opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
   min-height: 690px;
   display: flex;
   flex-flow: column;
   font-size: 16px;
   inset: 10px;
+
+  &.open {
+    pointer-events: all;
+    transform: scale(1);
+    opacity: (1);
+  }
+
+  &.moving {
+    opacity: 0;
+
+    ${LogContainer} {
+      opacity: 0;
+    }
+  }
 `
 
 export const ConsoleTitle = styled.h1`

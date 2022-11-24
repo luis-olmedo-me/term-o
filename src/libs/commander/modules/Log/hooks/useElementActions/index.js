@@ -1,3 +1,3 @@
 import { useElementActions } from './useElementActions.hook'
 
-export { useElementActions }
+export default useElementActions

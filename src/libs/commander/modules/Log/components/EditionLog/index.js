@@ -1,3 +1,3 @@
 import { EditionLog } from './EditionLog.component'
 
-export { EditionLog }
+export default EditionLog

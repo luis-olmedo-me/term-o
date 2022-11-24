@@ -1,7 +1,7 @@
 import * as React from 'preact'
 import { useCallback, useEffect } from 'preact/hooks'
-import { parameterTypes } from '../../constants/commands.constants'
-import { Log, useMessageLog } from '../../modules/Log'
+
+import { LogCard, LogContainer, useMessageLog } from '../../modules/Log'
 import { notifyActionTypes } from './CommandNotify.constants'
 import { getActionType } from './CommandNotify.helpers'
 import { notifyMessages } from './CommandNotify.messages'
@@ -41,10 +41,12 @@ export const CommandNotify = ({ props, terminal: { command, addNotification, fin
   )
 
   return (
-    <>
-      <Log variant={parameterTypes.COMMAND}>{command}</Log>
-
-      {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
-    </>
+    messageLog && (
+      <LogContainer>
+        <LogCard variant={messageLog.type} command={command}>
+          {messageLog.message}
+        </LogCard>
+      </LogContainer>
+    )
   )
 }

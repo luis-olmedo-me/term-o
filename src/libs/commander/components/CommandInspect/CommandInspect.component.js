@@ -1,14 +1,15 @@
 import * as React from 'preact'
+import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 
 import { Carousel, CarouselItem } from '@modules/components/Carousel'
 import { withOverlayContext } from '@modules/components/Overlay/Overlay.hoc'
-import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 import { getParamsByType } from '../../commander.helpers'
 import { parameterTypes } from '../../constants/commands.constants'
 import { List, StyleSheet } from '../../modules/List'
 import {
   AttributeEditionLog,
-  Log,
+  LogCard,
+  LogContainer,
   useElementActions,
   useMessageLog,
   useViews
@@ -112,14 +113,22 @@ const CommandInspectWithoutContext = ({
   }
 
   return (
-    <>
-      <Log variant={parameterTypes.COMMAND}>{command}</Log>
-
-      {messageLog && <Log variant={messageLog.type}>{messageLog.message}</Log>}
+    <LogContainer>
+      {messageLog && (
+        <LogCard variant={messageLog.type} command={command}>
+          {messageLog.message}
+        </LogCard>
+      )}
 
       {!messageLog && (
         <Carousel itemInView={itemInView}>
-          <Log variant={parameterTypes.ELEMENT} actionGroups={elementActions} hasScroll hasShadow>
+          <LogCard
+            variant={parameterTypes.ELEMENT}
+            actions={elementActions}
+            command={command}
+            hasScroll
+            hasShadow
+          >
             {HTMLRoot && (
               <NodeTree
                 root={HTMLRoot}
@@ -131,20 +140,22 @@ const CommandInspectWithoutContext = ({
                 onStylesOptionClick={handleStyleEdition}
               />
             )}
-          </Log>
+          </LogCard>
 
           <CarouselItem>
             <AttributeEditionLog
               element={editingElement}
               leftOptions={[headToElements]}
               rightOptions={[headToStyles]}
+              command={command}
             />
           </CarouselItem>
 
           <CarouselItem>
-            <Log
+            <LogCard
               variant={parameterTypes.STYLES}
-              actionGroups={[headToElements, headToAttributes]}
+              actions={[headToElements, headToAttributes]}
+              command={command}
               hasScroll
               hasShadow
             >
@@ -152,11 +163,11 @@ const CommandInspectWithoutContext = ({
                 items={sheets}
                 Child={({ item }) => <StyleSheet sheet={item} sheets={sheets} />}
               />
-            </Log>
+            </LogCard>
           </CarouselItem>
         </Carousel>
       )}
-    </>
+    </LogContainer>
   )
 }
 

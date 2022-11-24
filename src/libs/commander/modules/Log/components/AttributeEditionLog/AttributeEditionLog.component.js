@@ -5,13 +5,13 @@ import { Carousel, CarouselItem } from '@modules/components/Carousel'
 import { Table } from '@modules/components/Table/Table.component'
 import { getAttributes } from '@src/helpers/dom.helpers'
 import { parameterTypes } from '../../../../constants/commands.constants'
-import { usePaginationActions } from '../../hooks/usePaginationActions'
-import { Log } from '../../Log.component'
+import usePaginationActions from '../../hooks/usePaginationActions'
 import { Input } from '../AttributeInput'
+import LogCard from '../LogCard'
 import { attributeTableOptions } from './AttributeEditionLog.constants'
 import { turnAttributesIntoTableItems } from './AttributeEditionLog.helpers'
 
-export const AttributeEditionLog = ({ element, leftOptions = [], rightOptions = [] }) => {
+export const AttributeEditionLog = ({ element, leftOptions = [], rightOptions = [], command }) => {
   const [newAtributeName, setNewAttributeName] = useState('')
   const [newAtributeValue, setNewAttributeValue] = useState('')
 
@@ -64,7 +64,12 @@ export const AttributeEditionLog = ({ element, leftOptions = [], rightOptions = 
   const editionPageButtonGroups = [...leftOptions, ...paginationActions, ...rightOptions]
 
   return (
-    <Log variant={parameterTypes.TABLE} actionGroups={editionPageButtonGroups} hasScroll>
+    <LogCard
+      variant={parameterTypes.TABLE}
+      actions={editionPageButtonGroups}
+      command={command}
+      hasScroll
+    >
       <Carousel itemInView={pageNumber}>
         {parsedPages.map((page, currentPageNumber) => {
           return (
@@ -74,6 +79,6 @@ export const AttributeEditionLog = ({ element, leftOptions = [], rightOptions = 
           )
         })}
       </Carousel>
-    </Log>
+    </LogCard>
   )
 }

@@ -28,10 +28,6 @@ export const ActionButton = styled.button`
   color: inherit;
   padding: 0;
 
-  border-left: 1px solid;
-  border-right: ${({ isLastItem }) => (isLastItem ? '1px solid' : 'unset')};
-  border-color: ${t('transparent.300')};
-
   &:disabled,
   &:disabled:hover {
     background-color: ${t('transparent.200')};

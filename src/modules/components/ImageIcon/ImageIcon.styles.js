@@ -21,14 +21,13 @@ export const FaviconSVG = styled.svg`
   display: inline-block;
   vertical-align: middle;
   background-size: cover;
-  width: 28px;
-  height: 28px;
-  margin-right: 10px;
+  width: 1.5em;
+  height: 1.5em;
+  margin: 0 4px;
   padding: 5px;
   background-color: ${t('transparent.300')};
   border-radius: 6px;
   box-sizing: border-box;
-  width: calc(100% - 2em);
 `
 
 export const LabelWrapper = styled.span`

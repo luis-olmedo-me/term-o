@@ -44,7 +44,8 @@ export const AttributeEditionLog = ({ element, leftOptions = [], rightOptions = 
           onChange={event => setNewAttributeName(event.target.value)}
           onKeyUp={handleNewAttributeKeyUp}
         />
-      )
+      ),
+      internal: false
     },
     {
       value: (
@@ -55,7 +56,8 @@ export const AttributeEditionLog = ({ element, leftOptions = [], rightOptions = 
           onChange={event => setNewAttributeValue(event.target.value)}
           onKeyUp={handleNewAttributeKeyUp}
         />
-      )
+      ),
+      internal: false
     }
   ]
 

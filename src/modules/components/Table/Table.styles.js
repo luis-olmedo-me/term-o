@@ -51,6 +51,9 @@ export const TableRowValue = styled.span`
   background-color: ${t('transparent.000')};
 
   &.internal {
+    border-radius: ${t('radius.300')};
+    padding: 0 5px;
+
     &:hover {
       background-color: ${t('transparent.250')};
       color: ${t('yellow.800')};

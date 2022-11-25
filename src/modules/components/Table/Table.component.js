@@ -63,7 +63,7 @@ export const Table = ({
             id: 'selection',
             value: (
               <Checkbox
-                onChange={() => onSelectionChange({ row })}
+                onChange={event => onSelectionChange({ row, event })}
                 checked={selectedRows.includes(row)}
               />
             ),

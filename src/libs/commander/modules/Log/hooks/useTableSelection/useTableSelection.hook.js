@@ -14,6 +14,7 @@ export const useTableSelection = ({
   maxItems
 }) => {
   const [selectedRows, setSelectedRows] = useState([])
+  const [lastRowSelected, setLastRowSelected] = useState(null)
 
   const handleAllSelection = () => {
     const areAllRowsIncluded = currentRows.every(allRow => selectedRows.includes(allRow))
@@ -25,7 +26,24 @@ export const useTableSelection = ({
     setSelectedRows(selections)
   }
 
-  const handleSelectionChange = ({ row }) => {
+  const handleSelectionChange = ({ row, event }) => {
+    if (!event.ctrlKey && lastRowSelected) setLastRowSelected(null)
+    else if (event.ctrlKey && !lastRowSelected) setLastRowSelected(row)
+    else if (event.ctrlKey && lastRowSelected) {
+      const startIndex = tableItems.findIndex(item => item === row)
+      const endIndex = tableItems.findIndex(item => item === lastRowSelected)
+
+      const groupSelected =
+        startIndex > endIndex
+          ? tableItems.slice(endIndex, startIndex + 1)
+          : tableItems.slice(startIndex, endIndex + 1)
+      const selection = removeDuplicatedFromArray([...selectedRows, ...groupSelected])
+
+      setSelectedRows(selection)
+      setLastRowSelected(null)
+      return
+    }
+
     const isAlreadySelected = selectedRows.includes(row)
 
     const selection = isAlreadySelected

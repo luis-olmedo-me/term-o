@@ -3,10 +3,10 @@ import { AttributeInput } from '../AttributeInput'
 
 export const turnAttributesIntoTableItems = ({ attributes, element }) => {
   return Object.entries(attributes).map(([attributeName, attributeValue]) => {
-    const handleValueEnter = (newValue) => {
+    const handleValueEnter = newValue => {
       element.setAttribute(attributeName, newValue)
     }
-    const handleNameEnter = (newName) => {
+    const handleNameEnter = newName => {
       element.setAttribute(newName, attributeValue)
       element.removeAttribute(attributeName)
     }
@@ -15,20 +15,22 @@ export const turnAttributesIntoTableItems = ({ attributes, element }) => {
       {
         value: (
           <AttributeInput
-            placeholder='Attribute name'
+            placeholder="Attribute name"
             onEnter={handleNameEnter}
             defaultValue={attributeName}
           />
-        )
+        ),
+        internal: false
       },
       {
         value: (
           <AttributeInput
-            placeholder='Attribute value'
+            placeholder="Attribute value"
             onEnter={handleValueEnter}
             defaultValue={attributeValue}
           />
-        )
+        ),
+        internal: false
       }
     ]
   })

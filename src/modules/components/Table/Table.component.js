@@ -50,7 +50,8 @@ export const Table = ({
           ),
           width: '33px',
           minTableWidth: 0,
-          center: true
+          center: true,
+          internal: false
         },
         ...options.columns
       ]
@@ -68,7 +69,8 @@ export const Table = ({
             ),
             width: '33px',
             minTableWidth: 0,
-            center: true
+            center: true,
+            internal: false
           },
           ...row
         ]
@@ -120,7 +122,7 @@ export const Table = ({
                   style={{ width }}
                   center={center}
                   hasFixedWidth={!width.endsWith('%')}
-                  className={typeof column.value === 'string' ? 'internal' : null}
+                  className={column.internal === false ? '' : 'internal'}
                 >
                   {column.value}
 

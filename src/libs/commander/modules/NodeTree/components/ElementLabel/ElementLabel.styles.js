@@ -8,7 +8,6 @@ export const DefaultWrapper = styled.span`
 
 export const Tag = styled.span`
   color: ${t('neutral.1000')};
-  margin: ${props => (props.hasPostFix ? '0 7px 0 0' : '0')};
 `
 
 export const TagName = styled.span`

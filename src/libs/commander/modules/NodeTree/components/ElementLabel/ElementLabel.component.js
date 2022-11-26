@@ -60,7 +60,7 @@ export const ElementLabel = ({
           )
         })}
 
-        {<Tag hasPostFix={!!Postfix}>{hasChildren ? ' >' : ' />'}</Tag>}
+        {<Tag>{hasChildren ? ' > ' : ' /> '}</Tag>}
 
         {hasActions && <Actions actions={actions} Postfix={Postfix} />}
       </Wrapper>

@@ -40,3 +40,10 @@ export const customPageEvents = {
   CLICK: 'click'
 }
 export const customPageEventNames = Object.values(customPageEvents)
+
+export const internalEventProperties = {
+  ID: 'id',
+  URL: 'url',
+  EVENT: 'event',
+  COMMAND: 'command'
+}

@@ -1,24 +1,11 @@
 import * as React from 'preact'
-import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
+import { useCallback, useEffect, useState } from 'preact/hooks'
 
-import { Carousel, CarouselItem } from '@modules/components/Carousel'
-import { Table } from '@modules/components/Table/Table.component'
 import { deletePageEvents, fetchConfiguration } from '@src/helpers/event.helpers.js'
 import { getParamsByType } from '../../commander.helpers'
 import { parameterTypes } from '../../constants/commands.constants'
-import {
-  LogCard,
-  LogContainer,
-  useMessageLog,
-  usePaginationActions,
-  useTableSelection
-} from '../../modules/Log'
-import {
-  eventActionTypes,
-  eventTableOptions,
-  MAX_ITEMS,
-  supportedEvents
-} from './CommandEvent.constants'
+import { InternalEventListLog, LogCard, LogContainer, useMessageLog } from '../../modules/Log'
+import { eventActionTypes, MAX_ITEMS, supportedEvents } from './CommandEvent.constants'
 import {
   getActionType,
   triggerChangeEvent,
@@ -31,32 +18,8 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
   const { delete: deletedIds, trigger: eventToTrigger, value: valueToInsert } = props
 
   const [tableItems, setTableItems] = useState([])
-  const logRef = useRef(null)
-
-  const onError = error =>
-    setMessage(eventMessages[error?.message] || eventMessages.unexpectedError)
-  const handleDeleteEventsFromTableItems = async ({ selectedRows }) => {
-    const eventIdsToDelete = selectedRows.map(([idRow]) => idRow.value)
-
-    await deletePageEvents(eventIdsToDelete).catch(onError)
-    await handleShowList().catch(onError)
-
-    clearSelection()
-  }
 
   const { log: messageLog, setMessage } = useMessageLog()
-  const { paginationActions, pages, pageNumber, changePage } = usePaginationActions({
-    items: tableItems,
-    maxItems: MAX_ITEMS
-  })
-  const { clearSelection, tableSelectionProps, selectionActions } = useTableSelection({
-    changePage,
-    onDelete: handleDeleteEventsFromTableItems,
-    currentRows: pages[pageNumber],
-    tableItems,
-    pages,
-    maxItems: MAX_ITEMS
-  })
 
   const actionType = getActionType(props)
 
@@ -147,6 +110,15 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
     [doAction, setMessage, finish]
   )
 
+  const onError = error =>
+    setMessage(eventMessages[error?.message] || eventMessages.unexpectedError)
+  const handleDeleteEventsFromTableItems = async ({ selectedRows }) => {
+    const eventIdsToDelete = selectedRows.map(([idRow]) => idRow.value)
+
+    await deletePageEvents(eventIdsToDelete).catch(onError)
+    await handleShowList().catch(onError)
+  }
+
   return (
     <LogContainer>
       {messageLog && (
@@ -156,26 +128,12 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
       )}
 
       {!messageLog && (
-        <LogCard
-          variant={parameterTypes.TABLE}
-          actions={[...paginationActions, ...selectionActions]}
+        <InternalEventListLog
+          tableItems={tableItems}
+          maxItems={MAX_ITEMS}
+          onDelete={handleDeleteEventsFromTableItems}
           command={command}
-        >
-          <Carousel itemInView={pageNumber}>
-            {pages.map((page, currentPageNumber) => {
-              return (
-                <CarouselItem key={currentPageNumber}>
-                  <Table
-                    {...tableSelectionProps}
-                    rows={page}
-                    options={eventTableOptions}
-                    widthRef={logRef}
-                  />
-                </CarouselItem>
-              )
-            })}
-          </Carousel>
-        </LogCard>
+        />
       )}
     </LogContainer>
   )

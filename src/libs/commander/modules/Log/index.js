@@ -1,5 +1,6 @@
 import AttributeEditionLog from './components/AttributeEditionLog'
 import EditionLog from './components/EditionLog'
+import InternalEventListLog from './components/InternalEventListLog'
 import LogCard from './components/LogCard'
 import MessageLog from './components/MessageLog'
 import useDateRangeActions from './hooks/useDateRangeActions'
@@ -22,6 +23,7 @@ export {
   useViews,
   useTableSelection,
   EditionLog,
+  InternalEventListLog,
   LogCard,
   LogContainer
 }

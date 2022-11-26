@@ -7,9 +7,10 @@ import {
   inputTypeChangeTrigerables
 } from './CommandEvent.constants'
 
-export const getActionType = ({ list, delete: deletedIds, trigger }) => {
+export const getActionType = ({ list, delete: deletedIds, trigger, listeners }) => {
   if (trigger) return eventActionTypes.TRIGGER
   else if (deletedIds.length) return eventActionTypes.DELETE_EVENT
+  else if (listeners) return eventActionTypes.SHOW_LISTENERS_LIST
   else if (list) return eventActionTypes.SHOW_LIST
   else return eventActionTypes.NONE
 }

@@ -110,10 +110,17 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
     }
   }, [eventToTrigger, valueToInsert])
 
+  const handleShowListeners = useCallback(() => {
+    setMessage(eventMessages.elementsChangedSuccess)
+  }, [setMessage])
+
   const doAction = useCallback(async () => {
     switch (actionType) {
       case eventActionTypes.SHOW_LIST:
         return await handleShowList()
+
+      case eventActionTypes.SHOW_LISTENERS_LIST:
+        return handleShowListeners()
 
       case eventActionTypes.DELETE_EVENT:
         return await handleDeleteEvent()
@@ -124,7 +131,7 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
       case eventActionTypes.NONE:
         throw new Error('unexpectedError')
     }
-  }, [actionType, handleShowList, handleDeleteEvent, handleTriggerEvent])
+  }, [actionType, handleShowList, handleDeleteEvent, handleTriggerEvent, handleShowListeners])
 
   useEffect(
     function handleActionType() {

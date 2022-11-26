@@ -30,6 +30,13 @@ export const eventConfig = {
       type: optionTypes.STRING,
       defaultValue: '',
       alias: 'v'
+    },
+    {
+      key: 'listeners',
+      description: 'List all event listeners',
+      type: optionTypes.BOOLEAN,
+      defaultValue: false,
+      alias: 'L'
     }
   ],
   output: CommandEvent
@@ -61,6 +68,7 @@ export const inputTypeChangeTrigerables = [
 ]
 
 export const eventActionTypes = {
+  SHOW_LISTENERS_LIST: 'SHOW_LISTENERS_LIST',
   SHOW_LIST: 'SHOW_LIST',
   DELETE_EVENT: 'DELETE_EVENT',
   TRIGGER: 'TRIGGER'

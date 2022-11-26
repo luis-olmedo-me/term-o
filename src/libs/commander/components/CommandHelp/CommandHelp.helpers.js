@@ -7,7 +7,7 @@ export const getActionType = ({ about }) => {
 }
 
 export const getItemsFromProps = ({ props }) => {
-  return Object.entries(props).map(([propName, propConfig]) => {
+  return props.map(propConfig => {
     return {
       id: propConfig.key,
       title: `--${propName} <${propConfig.type}>`,

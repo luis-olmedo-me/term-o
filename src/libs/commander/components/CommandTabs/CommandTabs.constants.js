@@ -3,106 +3,106 @@ import { optionTypes } from '../../constants/commands.constants'
 import { CommandTabs } from './CommandTabs.component'
 
 export const tabsConfig = {
-  props: {
-    now: {
+  props: [
+    {
       key: 'now',
       description: 'Show all tabs open',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 'n'
     },
-    past: {
+    {
       key: 'past',
       description: 'Show past tabs',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 'p'
     },
-    'by-text': {
+    {
       key: 'byText',
       description: 'Get tabs by title or url',
       type: optionTypes.STRING,
       defaultValue: '',
       alias: 'bt'
     },
-    'by-start-date': {
+    {
       key: 'byStartDate',
       description: 'Get tabs history from start date',
       type: optionTypes.STRING,
       defaultValue: '',
       alias: 'bsd'
     },
-    'by-end-date': {
+    {
       key: 'byEndDate',
       description: 'Get tabs history from end date',
       type: optionTypes.STRING,
       defaultValue: '',
       alias: 'bed'
     },
-    'by-date': {
+    {
       key: 'byDate',
       description: 'Get tabs history by date',
       type: optionTypes.STRING,
       defaultValue: '',
       alias: 'bd'
     },
-    'max-results': {
+    {
       key: 'maxResults',
       description: 'Limit the amount of tabs shown',
       type: optionTypes.NUMBER,
       defaultValue: 500,
       alias: 'mr'
     },
-    incognito: {
+    {
       key: 'incognito',
       description: 'Get tabs open in incognito mode',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 'i'
     },
-    here: {
+    {
       key: 'here',
       description: 'Get open tabs in the current window',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 'h'
     },
-    open: {
+    {
       key: 'open',
       description: 'Go to a specific url (URL)',
       type: optionTypes.STRING,
       defaultValue: '',
       alias: 'o'
     },
-    close: {
+    {
       key: 'close',
       description: 'Close tabs by their ids',
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
       alias: 'c'
     },
-    reload: {
+    {
       key: 'reload',
       description: 'Reload current tab',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 'r'
     },
-    'use-current': {
+    {
       key: 'useCurrent',
       description: 'Use current tab to open an URL',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 'uc'
     },
-    go: {
+    {
       key: 'go',
       description: 'Move between back or forward over the visited pages',
       type: optionTypes.NUMBER,
       defaultValue: 0,
       alias: 'g'
     }
-  },
+  ],
   output: CommandTabs
 }
 

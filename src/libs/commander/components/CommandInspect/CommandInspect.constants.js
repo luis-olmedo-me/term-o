@@ -4,7 +4,7 @@ import { Home, Palette, Tag } from '@src/modules/icons'
 import { CommandInspect } from './CommandInspect.component'
 
 export const inspectConfig = {
-  props: {},
+  props: [],
   output: CommandInspect
 }
 

@@ -2,36 +2,36 @@ import { optionTypes } from '../../constants/commands.constants'
 import { CommandEvent } from './CommandEvent.component'
 
 export const eventConfig = {
-  props: {
-    list: {
+  props: [
+    {
       key: 'list',
       description: 'List all events',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 'l'
     },
-    delete: {
+    {
       key: 'delete',
       description: 'Delete an event',
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
       alias: 'd'
     },
-    trigger: {
+    {
       key: 'trigger',
       description: 'Trigger an event',
       type: optionTypes.STRING,
       defaultValue: '',
       alias: 't'
     },
-    value: {
+    {
       key: 'value',
       description: 'Insert this value when "change" event is triggered on inputs elements',
       type: optionTypes.STRING,
       defaultValue: '',
       alias: 'v'
     }
-  },
+  ],
   output: CommandEvent
 }
 

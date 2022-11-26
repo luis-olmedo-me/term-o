@@ -3,22 +3,22 @@ import { optionTypes } from '../../constants/commands.constants'
 import { CommandAlias } from './CommandAlias.component'
 
 export const aliasConfig = {
-  props: {
-    list: {
+  props: [
+    {
       key: 'list',
       description: 'List all aliases',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 'l'
     },
-    delete: {
+    {
       key: 'delete',
       description: 'Delete an alias',
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
       alias: 'd'
     },
-    add: {
+    {
       key: 'add',
       description: 'Add an alias',
       type: optionTypes.OBJECT,
@@ -26,7 +26,7 @@ export const aliasConfig = {
       defaultValue: {},
       alias: 'a'
     }
-  },
+  ],
   output: CommandAlias
 }
 

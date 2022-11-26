@@ -4,9 +4,7 @@ import { optionTypes } from './constants/commands.constants'
 export const parsePropsIntoSuggestions = propsConfigs => {
   if (!propsConfigs) return []
 
-  return Object.keys(propsConfigs).reduce((result, key) => {
-    const propConfig = propsConfigs.find(prop => prop.key === key)
-
+  return Object.keys(propsConfigs).reduce((result, propConfig) => {
     const groupProps = parsePropsIntoSuggestions(propConfig.groupProps)
 
     const newValue = groupProps.length
@@ -15,7 +13,7 @@ export const parsePropsIntoSuggestions = propsConfigs => {
           {
             ...propConfig,
             alias: `-${propConfig.alias}`,
-            value: `--${key}`
+            value: `--${propConfig.key}`
           }
         ]
 

@@ -1,10 +1,11 @@
-import { Copy } from '@src/modules/icons'
-import { internalEventProperties } from 'libs/commander/constants/commands.constants'
 import * as React from 'preact'
+
+import { Copy } from '@src/modules/icons'
 import {
   eventActionTypes,
   inputsChangeTrigerables,
-  inputTypeChangeTrigerables
+  inputTypeChangeTrigerables,
+  internalEventTableOptions
 } from './CommandEvent.constants'
 
 export const getActionType = ({ list, delete: deletedIds, trigger, listeners }) => {
@@ -17,7 +18,7 @@ export const getActionType = ({ list, delete: deletedIds, trigger, listeners }) 
 
 export const turnPageEventsToTableItems = ({ pageEvents }) => {
   return pageEvents.map(pageEvent => {
-    return internalEventProperties.columns.map(({ id }) => {
+    return internalEventTableOptions.columns.map(({ id }) => {
       const rowValue = pageEvent[id]
 
       return {

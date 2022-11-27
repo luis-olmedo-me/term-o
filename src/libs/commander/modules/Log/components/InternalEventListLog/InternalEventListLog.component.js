@@ -6,9 +6,8 @@ import { Table } from 'modules/components/Table'
 import usePaginationActions from '../../hooks/usePaginationActions'
 import useTableSelection from '../../hooks/useTableSelection'
 import LogCard from '../LogCard'
-import { internalEventTableOptions } from './InternalEventListLog.constants'
 
-export const InternalEventListLog = ({ tableItems, command, maxItems, onDelete }) => {
+export const InternalEventListLog = ({ tableItems, command, maxItems, onDelete, options }) => {
   const { paginationActions, pages, pageNumber, changePage } = usePaginationActions({
     items: tableItems,
     maxItems
@@ -32,12 +31,7 @@ export const InternalEventListLog = ({ tableItems, command, maxItems, onDelete }
         {pages.map((page, currentPageNumber) => {
           return (
             <CarouselItem key={currentPageNumber}>
-              <Table
-                {...tableSelectionProps}
-                rows={page}
-                options={internalEventTableOptions}
-                widthRef={logRef}
-              />
+              <Table {...tableSelectionProps} rows={page} options={options} />
             </CarouselItem>
           )
         })}

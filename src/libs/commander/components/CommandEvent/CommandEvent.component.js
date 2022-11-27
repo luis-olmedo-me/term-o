@@ -5,7 +5,12 @@ import { deletePageEvents, fetchConfiguration } from '@src/helpers/event.helpers
 import { getParamsByType } from '../../commander.helpers'
 import { parameterTypes } from '../../constants/commands.constants'
 import { InternalEventListLog, LogCard, LogContainer, useMessageLog } from '../../modules/Log'
-import { eventActionTypes, MAX_ITEMS, supportedEvents } from './CommandEvent.constants'
+import {
+  eventActionTypes,
+  internalEventTableOptions,
+  MAX_ITEMS,
+  supportedEvents
+} from './CommandEvent.constants'
 import {
   getActionType,
   triggerChangeEvent,
@@ -133,6 +138,7 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
           maxItems={MAX_ITEMS}
           onDelete={handleDeleteEventsFromTableItems}
           command={command}
+          options={internalEventTableOptions}
         />
       )}
     </LogContainer>

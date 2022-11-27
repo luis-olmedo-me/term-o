@@ -139,6 +139,7 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
           onSelectionDelete={handleEventsDelete}
           command={command}
           options={internalEventTableOptions}
+          hasSelection
         />
       )}
     </LogContainer>

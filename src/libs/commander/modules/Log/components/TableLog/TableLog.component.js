@@ -8,7 +8,14 @@ import usePaginationActions from '../../hooks/usePaginationActions'
 import useTableSelection from '../../hooks/useTableSelection'
 import LogCard from '../LogCard'
 
-export const TableLog = ({ tableItems, command, maxItems, onSelectionDelete, options }) => {
+export const TableLog = ({
+  tableItems,
+  command,
+  maxItems,
+  onSelectionDelete,
+  options,
+  hasSelection
+}) => {
   const logRef = useRef(null)
 
   const { paginationActions, pages, pageNumber, changePage } = usePaginationActions({
@@ -21,7 +28,8 @@ export const TableLog = ({ tableItems, command, maxItems, onSelectionDelete, opt
     currentRows: pages[pageNumber],
     tableItems,
     pages,
-    maxItems
+    maxItems,
+    isEnabled: hasSelection
   })
 
   return (

@@ -42,7 +42,7 @@ export const eventConfig = {
   output: CommandEvent
 }
 
-export const supportedEvents = {
+export const triggerableEvents = {
   CLICK: 'click',
   CHANGE: 'change'
 }

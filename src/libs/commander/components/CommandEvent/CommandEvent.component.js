@@ -9,7 +9,7 @@ import {
   eventActionTypes,
   internalEventTableOptions,
   MAX_ITEMS,
-  supportedEvents
+  triggerableEvents
 } from './CommandEvent.constants'
 import {
   getActionType,
@@ -22,29 +22,31 @@ import { eventMessages } from './CommandEvent.messages'
 export const CommandEvent = ({ props, terminal: { command, params, finish } }) => {
   const { delete: deletedIds, trigger: eventToTrigger, value: valueToInsert } = props
 
-  const [tableItems, setTableItems] = useState([])
+  const [tableItems, setPageEvents] = useState([])
 
   const { log: messageLog, setMessage } = useMessageLog()
 
   const actionType = getActionType(props)
 
   const handleShowList = useCallback(async () => {
-    const { pageEvents = [] } = await fetchConfiguration()
+    const config = await fetchConfiguration()
 
-    const pageEventsRows = turnPageEventsToTableItems({ pageEvents })
+    const pageEventsRows = turnPageEventsToTableItems({ pageEvents: config.pageEvents })
 
-    if (!pageEvents.length) throw new Error('noEventsFound')
+    if (!config.pageEvents.length) throw new Error('noEventsFound')
 
-    setTableItems(pageEventsRows)
+    setPageEvents(pageEventsRows)
   }, [setMessage])
 
   const handleDeleteEvent = useCallback(async () => {
-    const { pageEvents = [] } = await fetchConfiguration()
+    const config = await fetchConfiguration()
 
-    const idsToDelete = deletedIds.filter(id => pageEvents.some(pageEvent => pageEvent.id === id))
+    const idsToDelete = deletedIds.filter(deletedId =>
+      config.pageEvents.some(({ id }) => id === deletedId)
+    )
     const hasInvalidIds = deletedIds.length !== idsToDelete.length
 
-    if (!pageEvents.length) throw new Error('noEventsFound')
+    if (!config.pageEvents.length) throw new Error('noEventsFound')
     if (hasInvalidIds) throw new Error('invalidEventIds')
 
     await deletePageEvents(idsToDelete)
@@ -57,13 +59,13 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
     if (!paramElements.length) throw new Error('missingElements')
 
     switch (eventToTrigger) {
-      case supportedEvents.CLICK: {
+      case triggerableEvents.CLICK: {
         paramElements.forEach(element => element.click())
         setMessage(eventMessages.elementsClickedSuccess)
         break
       }
 
-      case supportedEvents.CHANGE: {
+      case triggerableEvents.CHANGE: {
         const areElementsValid = paramElements.every(validateElement)
 
         if (!areElementsValid) throw new Error('invalidElements')

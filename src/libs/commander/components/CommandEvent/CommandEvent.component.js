@@ -117,7 +117,7 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
 
   const onError = error =>
     setMessage(eventMessages[error?.message] || eventMessages.unexpectedError)
-  const handleDeleteEventsFromTableItems = async ({ selectedRows }) => {
+  const handleEventsDelete = async ({ selectedRows }) => {
     const eventIdsToDelete = selectedRows.map(([idRow]) => idRow.value)
 
     await deletePageEvents(eventIdsToDelete).catch(onError)
@@ -136,7 +136,7 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
         <TableLog
           tableItems={tableItems}
           maxItems={MAX_ITEMS}
-          onDelete={handleDeleteEventsFromTableItems}
+          onSelectionDelete={handleEventsDelete}
           command={command}
           options={internalEventTableOptions}
         />

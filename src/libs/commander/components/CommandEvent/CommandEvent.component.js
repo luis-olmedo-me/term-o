@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'preact/hooks'
 import { deletePageEvents, fetchConfiguration } from '@src/helpers/event.helpers.js'
 import { getParamsByType } from '../../commander.helpers'
 import { parameterTypes } from '../../constants/commands.constants'
-import { InternalEventListLog, LogCard, LogContainer, useMessageLog } from '../../modules/Log'
+import { LogCard, LogContainer, TableLog, useMessageLog } from '../../modules/Log'
 import {
   eventActionTypes,
   internalEventTableOptions,
@@ -133,7 +133,7 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
       )}
 
       {!messageLog && (
-        <InternalEventListLog
+        <TableLog
           tableItems={tableItems}
           maxItems={MAX_ITEMS}
           onDelete={handleDeleteEventsFromTableItems}

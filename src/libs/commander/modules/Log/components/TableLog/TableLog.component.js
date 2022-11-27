@@ -8,7 +8,7 @@ import usePaginationActions from '../../hooks/usePaginationActions'
 import useTableSelection from '../../hooks/useTableSelection'
 import LogCard from '../LogCard'
 
-export const InternalEventListLog = ({ tableItems, command, maxItems, onDelete, options }) => {
+export const TableLog = ({ tableItems, command, maxItems, onDelete, options }) => {
   const logRef = useRef(null)
 
   const { paginationActions, pages, pageNumber, changePage } = usePaginationActions({

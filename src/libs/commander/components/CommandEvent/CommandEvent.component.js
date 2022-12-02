@@ -8,6 +8,7 @@ import { LogCard, LogContainer, TableLog, useMessageLog } from '../../modules/Lo
 import {
   eventActionTypes,
   internalEventTableOptions,
+  listenersTableOptions,
   MAX_ITEMS,
   triggerableEvents
 } from './CommandEvent.constants'
@@ -22,7 +23,8 @@ import { eventMessages } from './CommandEvent.messages'
 export const CommandEvent = ({ props, terminal: { command, params, finish } }) => {
   const { delete: deletedIds, trigger: eventToTrigger, value: valueToInsert } = props
 
-  const [tableItems, setPageEvents] = useState([])
+  const [internPageEvents, setInternPageEvents] = useState([])
+  const [listeners, setListeners] = useState([])
 
   const { log: messageLog, setMessage } = useMessageLog()
 
@@ -35,7 +37,7 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
 
     if (!config.pageEvents.length) throw new Error('noEventsFound')
 
-    setPageEvents(pageEventsRows)
+    setInternPageEvents(pageEventsRows)
   }, [setMessage])
 
   const handleDeleteEvent = useCallback(async () => {
@@ -81,7 +83,15 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
   }, [eventToTrigger, valueToInsert])
 
   const handleShowListeners = useCallback(() => {
-    setMessage(eventMessages.elementsChangedSuccess)
+    const eventListeners = window.getEventListeners(window)
+    const eventListenerItems = Object.values(eventListeners).reduce((acc, listeners) => {
+      const parsedListeners = listeners.map(({ listener, type }) => {
+        return [{ value: type }, { value: listener.name }]
+      })
+      return [...acc, ...parsedListeners]
+    }, [])
+
+    setListeners(eventListenerItems)
   }, [setMessage])
 
   const doAction = useCallback(async () => {
@@ -126,6 +136,9 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
     await handleShowList().catch(onError)
   }
 
+  const hasInternPageEvents = Boolean(internPageEvents.length)
+  const hasListeners = Boolean(listeners.length)
+
   return (
     <LogContainer>
       {messageLog && (
@@ -134,14 +147,24 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
         </LogCard>
       )}
 
-      {!messageLog && (
+      {!messageLog && hasInternPageEvents && (
         <TableLog
-          tableItems={tableItems}
+          tableItems={internPageEvents}
           maxItems={MAX_ITEMS}
           onSelectionDelete={handleEventsDelete}
           command={command}
           options={internalEventTableOptions}
           hasSelection
+        />
+      )}
+
+      {!messageLog && hasListeners && (
+        <TableLog
+          tableItems={listeners}
+          maxItems={MAX_ITEMS}
+          command={command}
+          options={listenersTableOptions}
+          hasSelection={false}
         />
       )}
     </LogContainer>

@@ -104,3 +104,20 @@ export const internalEventTableOptions = {
     }
   ]
 }
+
+export const listenersTableOptions = {
+  columns: [
+    {
+      id: 'type',
+      displayName: 'ID',
+      width: '50%',
+      minTableWidth: 0
+    },
+    {
+      id: 'function_name',
+      displayName: 'Function Name',
+      width: '50%',
+      minTableWidth: 0
+    }
+  ]
+}

@@ -51,6 +51,6 @@ export const runWebsource = fileName => {
     this.remove()
   }
 
-  if (document.head) document.head.appendChild(scriptElement)
-  else document.documentElement.appendChild(scriptElement)
+  if (document.head) document.head.prepend(scriptElement)
+  else document.documentElement.prepend(scriptElement)
 }

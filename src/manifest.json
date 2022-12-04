@@ -52,5 +52,11 @@
       },
       "description": "Resize terminal to its full size"
     }
-  }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["eventListenersSetUp.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }

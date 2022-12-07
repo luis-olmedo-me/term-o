@@ -1,6 +1,7 @@
 import * as React from 'preact'
 import { useCallback, useEffect, useState } from 'preact/hooks'
 
+import listeners from '@libs/listeners'
 import { deletePageEvents, fetchConfiguration } from '@src/helpers/event.helpers.js'
 import { getParamsByType } from '../../commander.helpers'
 import { parameterTypes } from '../../constants/commands.constants'
@@ -24,7 +25,7 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
   const { delete: deletedIds, trigger: eventToTrigger, value: valueToInsert } = props
 
   const [internPageEvents, setInternPageEvents] = useState([])
-  const [listeners, setListeners] = useState([])
+  const [eventListeners, setEventListeners] = useState([])
 
   const { log: messageLog, setMessage } = useMessageLog()
 
@@ -83,15 +84,11 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
   }, [eventToTrigger, valueToInsert])
 
   const handleShowListeners = useCallback(() => {
-    const eventListeners = window.getEventListeners(window)
-    const eventListenerItems = Object.values(eventListeners).reduce((acc, listeners) => {
-      const parsedListeners = listeners.map(({ listener, type }) => {
-        return [{ value: type }, { value: listener.name }]
-      })
-      return [...acc, ...parsedListeners]
+    const eventListenerItems = listeners.getListeners().reduce((acc, { callback, type }) => {
+      return [...acc, [{ value: type }, { value: callback.name }]]
     }, [])
 
-    setListeners(eventListenerItems)
+    setEventListeners(eventListenerItems)
   }, [setMessage])
 
   const doAction = useCallback(async () => {
@@ -137,7 +134,7 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
   }
 
   const hasInternPageEvents = Boolean(internPageEvents.length)
-  const hasListeners = Boolean(listeners.length)
+  const hasListeners = Boolean(eventListeners.length)
 
   return (
     <LogContainer>
@@ -160,7 +157,7 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
 
       {!messageLog && hasListeners && (
         <TableLog
-          tableItems={listeners}
+          tableItems={eventListeners}
           maxItems={MAX_ITEMS}
           command={command}
           options={listenersTableOptions}

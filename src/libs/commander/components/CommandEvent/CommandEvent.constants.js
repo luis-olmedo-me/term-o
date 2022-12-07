@@ -108,8 +108,8 @@ export const internalEventTableOptions = {
 export const listenersTableOptions = {
   columns: [
     {
-      id: 'type',
-      displayName: 'ID',
+      id: 'event_name',
+      displayName: 'Event',
       width: '50%',
       minTableWidth: 0
     },

@@ -24,7 +24,9 @@ export const Table = ({
   const [wrapperWidth, setWrapperWidth] = useState(0)
 
   useEffect(() => {
-    const wrapper = widthRef?.current
+    const wrapper =
+      widthRef?.current &&
+      (widthRef?.current.isReactComponent ? widthRef?.current.base : widthRef?.current)
 
     if (!wrapper) return
 

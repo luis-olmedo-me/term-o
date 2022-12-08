@@ -34,12 +34,10 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
   const handleShowList = useCallback(async () => {
     const config = await fetchConfiguration()
 
-    const pageEventsRows = turnPageEventsToTableItems({ pageEvents: config.pageEvents })
-
     if (!config.pageEvents.length) throw new Error('noEventsFound')
 
-    setInternPageEvents(pageEventsRows)
-  }, [setMessage])
+    setInternPageEvents(config.pageEvents)
+  }, [])
 
   const handleDeleteEvent = useCallback(async () => {
     const config = await fetchConfiguration()

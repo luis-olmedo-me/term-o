@@ -82,25 +82,29 @@ export const internalEventTableOptions = {
       id: internalEventProperties.ID,
       displayName: 'ID',
       width: '20%',
-      minTableWidth: 555
+      minTableWidth: 555,
+      field: 'id'
     },
     {
       id: internalEventProperties.URL,
       displayName: 'URL',
       width: '15%',
-      minTableWidth: 0
+      minTableWidth: 0,
+      field: 'url'
     },
     {
       id: internalEventProperties.EVENT,
       displayName: 'Event',
       width: '15%',
-      minTableWidth: 700
+      minTableWidth: 700,
+      field: 'event'
     },
     {
       id: internalEventProperties.COMMAND,
       displayName: 'Command',
       width: '50%',
-      minTableWidth: 0
+      minTableWidth: 0,
+      field: 'command'
     }
   ]
 }

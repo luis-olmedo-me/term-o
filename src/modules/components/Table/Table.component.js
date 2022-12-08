@@ -128,7 +128,7 @@ export const Table = ({
               actions,
               cellRenderer
             }) => {
-              const value = searchIn(row, field)
+              const value = field ? searchIn(row, field) : ''
               const onColumnClick = onClick ? () => onClick(column) : null
               const showColumn =
                 wrapperWidth !== null && minTableWidth ? wrapperWidth > minTableWidth : true

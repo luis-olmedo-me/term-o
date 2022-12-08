@@ -142,20 +142,20 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
 
       {!messageLog && hasInternPageEvents && (
         <TableLog
-          tableItems={internPageEvents}
-          maxItems={MAX_ITEMS}
-          onSelectionDelete={handleEventsDelete}
           command={command}
+          maxItems={MAX_ITEMS}
+          tableItems={internPageEvents}
           options={internalEventTableOptions}
+          onSelectionDelete={handleEventsDelete}
           hasSelection
         />
       )}
 
       {!messageLog && hasListeners && (
         <TableLog
-          tableItems={eventListeners}
-          maxItems={MAX_ITEMS}
           command={command}
+          maxItems={MAX_ITEMS}
+          tableItems={eventListeners}
           options={listenersTableOptions}
           hasSelection={false}
         />

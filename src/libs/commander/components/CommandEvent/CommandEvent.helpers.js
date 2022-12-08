@@ -16,26 +16,6 @@ export const getActionType = ({ list, delete: deletedIds, trigger, listeners }) 
   else return eventActionTypes.NONE
 }
 
-export const turnPageEventsToTableItems = ({ pageEvents }) => {
-  return pageEvents.map(pageEvent => {
-    return internalEventTableOptions.columns.map(({ id }) => {
-      const rowValue = pageEvent[id]
-
-      return {
-        value: rowValue,
-        actions: [
-          {
-            id: 'copy-value',
-            title: 'Copy value',
-            onClick: () => navigator.clipboard.writeText(rowValue),
-            Component: <Copy />
-          }
-        ]
-      }
-    })
-  })
-}
-
 export const triggerChangeEvent = ({ element, value }) => {
   const inputType = element.getAttribute('type')
 

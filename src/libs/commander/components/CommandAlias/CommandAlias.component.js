@@ -21,12 +21,11 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
   const handleShowList = useCallback(async () => {
     const { aliases = [] } = await fetchConfiguration()
 
-    const aliasRows = turnAliasesToTableItems({ aliases })
     const hasAliases = aliases.length > 0
 
     if (!hasAliases) throw new Error('noAliasesFound')
 
-    setTableItems(aliasRows)
+    setTableItems(aliases)
   }, [setMessage])
 
   const handleAddAliases = useCallback(async () => {

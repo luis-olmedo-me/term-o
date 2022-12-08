@@ -19,7 +19,8 @@ export const Table = ({
   onSelectionChange,
   onSelectionAll,
   selectedRows,
-  widthRef
+  widthRef,
+  components = {}
 }) => {
   const [wrapperWidth, setWrapperWidth] = useState(0)
 
@@ -40,16 +41,12 @@ export const Table = ({
 
   const hasSelectionControls = Boolean(onSelectionChange && onSelectionAll)
 
-  const parsedHeaders = hasSelectionControls
+  const parsedColumns = hasSelectionControls
     ? [
         {
           id: 'selection',
-          displayName: (
-            <HeaderCheckbox
-              onChange={onSelectionAll}
-              checked={rows.every(row => selectedRows.includes(row))}
-            />
-          ),
+          headerCellRenderer: 'headerCheckbox',
+          cellRenderer: 'cellCheckbox',
           width: '33px',
           minTableWidth: 0,
           center: true,
@@ -58,35 +55,48 @@ export const Table = ({
         ...options.columns
       ]
     : options.columns
-  const parsedRows = hasSelectionControls
-    ? rows.map(row => {
-        return [
-          {
-            id: 'selection',
-            value: (
-              <Checkbox
-                onChange={event => onSelectionChange({ row, event })}
-                checked={selectedRows.includes(row)}
-              />
-            ),
-            width: '33px',
-            minTableWidth: 0,
-            center: true,
-            internal: false
-          },
-          ...row
-        ]
-      })
-    : rows
+  // const rows = hasSelectionControls
+  //   ? rows.map(row => {
+  //       return [
+  //         {
+  //           id: 'selection',
+  //           CellRenderer: ({ value }) => (
+  //             <Checkbox
+  //               onChange={event => onSelectionChange({ row, event })}
+  //               checked={selectedRows.includes(row)}
+  //             />
+  //           )
+  //         },
+  //         ...row
+  //       ]
+  //     })
+  //   : rows
 
-  const minTableWidths = parsedHeaders.map(column => column.minTableWidth)
-  const widths = parsedHeaders.map(column => column.width)
-  const centerConditions = parsedHeaders.map(column => column.center)
+  const parsedComponents = {
+    ...components,
+    headerCheckbox: () => (
+      <HeaderCheckbox
+        onChange={onSelectionAll}
+        checked={rows.every(row => selectedRows.includes(row))}
+      />
+    ),
+    cellCheckbox: ({ row }) => (
+      <Checkbox
+        onChange={event => onSelectionChange({ row, event })}
+        checked={selectedRows.includes(row)}
+      />
+    )
+  }
+
+  const minTableWidths = parsedColumns.map(column => column.minTableWidth)
+  const widths = parsedColumns.map(column => column.width)
+  const centerConditions = parsedColumns.map(column => column.center)
 
   return (
     <TableWrapper ref={widthRef}>
       <TableRow className="header">
-        {parsedHeaders.map(({ id, width, displayName, minTableWidth }) => {
+        {parsedColumns.map(({ id, width, displayName, minTableWidth, headerCellRenderer }) => {
+          const HeaderCellRenderer = parsedComponents[headerCellRenderer]
           const showColumn =
             wrapperWidth !== null && minTableWidth ? wrapperWidth > minTableWidth : true
 
@@ -97,16 +107,57 @@ export const Table = ({
                 width={width}
                 hasFixedWidth={!width.endsWith('%')}
               >
-                {displayName}
+                {HeaderCellRenderer ? <HeaderCellRenderer /> : displayName}
               </TableHeaderRowValue>
             )
           )
         })}
       </TableRow>
 
-      {parsedRows.map((row, rowIndex) => (
+      {rows.map((row, rowIndex) => (
         <TableRow key={`row-${rowIndex}`}>
-          {row.map((column, columnIndex) => {
+          {parsedColumns.map(
+            ({
+              id,
+              width,
+              minTableWidth,
+              field,
+              onClick,
+              center,
+              internal,
+              actions,
+              cellRenderer
+            }) => {
+              const value = searchIn(row, field)
+              const onColumnClick = onClick ? () => onClick(column) : null
+              const showColumn =
+                wrapperWidth !== null && minTableWidth ? wrapperWidth > minTableWidth : true
+              const CellRenderer = parsedComponents[cellRenderer]
+
+              return (
+                showColumn && (
+                  <TableRowValue
+                    key={`${id}-${rowIndex}`}
+                    onClick={onColumnClick}
+                    style={{ width }}
+                    center={center}
+                    hasFixedWidth={!width.endsWith('%')}
+                    className={internal === false ? '' : 'internal'}
+                  >
+                    {CellRenderer ? <CellRenderer value={value} row={row} /> : value}
+
+                    {actions && (
+                      <TableActionsWrapper className="actions">
+                        <TableActions actions={actions} />
+                      </TableActionsWrapper>
+                    )}
+                  </TableRowValue>
+                )
+              )
+            }
+          )}
+
+          {/* {row.map((column, columnIndex) => {
             const onColumnClick = () => column.onClick?.(column)
 
             const width = widths[columnIndex]
@@ -136,9 +187,15 @@ export const Table = ({
                 </TableRowValue>
               )
             )
-          })}
+          })} */}
         </TableRow>
       ))}
     </TableWrapper>
   )
+}
+
+export const searchIn = (reference, pathsString) => {
+  const paths = pathsString.split('.')
+
+  return paths.reduce((result, path) => result[path], reference)
 }

@@ -84,9 +84,7 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
   }, [eventToTrigger, valueToInsert])
 
   const handleShowListeners = useCallback(() => {
-    const eventListenerItems = listeners.getListeners().reduce((acc, { callback, type }) => {
-      return [...acc, [{ value: type }, { value: callback.name }]]
-    }, [])
+    const eventListenerItems = listeners.getListeners()
 
     setEventListeners(eventListenerItems)
   }, [setMessage])

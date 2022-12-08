@@ -111,13 +111,15 @@ export const listenersTableOptions = {
       id: 'event_name',
       displayName: 'Event',
       width: '50%',
-      minTableWidth: 0
+      minTableWidth: 0,
+      field: 'type'
     },
     {
       id: 'function_name',
       displayName: 'Function Name',
       width: '50%',
-      minTableWidth: 0
+      minTableWidth: 0,
+      field: 'callback.name'
     }
   ]
 }

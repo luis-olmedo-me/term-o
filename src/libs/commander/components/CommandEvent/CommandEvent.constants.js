@@ -1,3 +1,4 @@
+import { defaultCellActionIds } from 'modules/components/Table'
 import { internalEventProperties, optionTypes } from '../../constants/commands.constants'
 import { CommandEvent } from './CommandEvent.component'
 
@@ -83,28 +84,32 @@ export const internalEventTableOptions = {
       displayName: 'ID',
       width: '20%',
       minTableWidth: 555,
-      field: 'id'
+      field: 'id',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
       id: internalEventProperties.URL,
       displayName: 'URL',
       width: '15%',
       minTableWidth: 0,
-      field: 'url'
+      field: 'url',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
       id: internalEventProperties.EVENT,
       displayName: 'Event',
       width: '15%',
       minTableWidth: 700,
-      field: 'event'
+      field: 'event',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
       id: internalEventProperties.COMMAND,
       displayName: 'Command',
       width: '50%',
       minTableWidth: 0,
-      field: 'command'
+      field: 'command',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
     }
   ]
 }

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'preact/hooks'
 
 import { debounce } from '@src/helpers/utils.helpers.js'
 import { Checkbox } from '../Checkbox/Checkbox.component'
+import { defaultCellActions } from './Table.constants'
 import {
   HeaderCheckbox,
   TableActions,
@@ -20,7 +21,8 @@ export const Table = ({
   onSelectionAll,
   selectedRows,
   widthRef,
-  components = {}
+  components = {},
+  actions = []
 }) => {
   const [wrapperWidth, setWrapperWidth] = useState(0)
 
@@ -87,6 +89,7 @@ export const Table = ({
       />
     )
   }
+  const parsedActions = [...defaultCellActions, ...actions]
 
   const minTableWidths = parsedColumns.map(column => column.minTableWidth)
   const widths = parsedColumns.map(column => column.width)
@@ -125,7 +128,7 @@ export const Table = ({
               onClick,
               center,
               internal,
-              actions,
+              actionIds,
               cellRenderer
             }) => {
               const value = field ? searchIn(row, field) : ''
@@ -133,6 +136,9 @@ export const Table = ({
               const showColumn =
                 wrapperWidth !== null && minTableWidth ? wrapperWidth > minTableWidth : true
               const CellRenderer = parsedComponents[cellRenderer]
+              const cellActions = actionIds
+                ? parsedActions.filter(({ id }) => actionIds.includes(id))
+                : []
 
               return (
                 showColumn && (
@@ -146,9 +152,9 @@ export const Table = ({
                   >
                     {CellRenderer ? <CellRenderer value={value} row={row} /> : value}
 
-                    {actions && (
+                    {cellActions && (
                       <TableActionsWrapper className="actions">
-                        <TableActions actions={actions} />
+                        <TableActions actions={cellActions} eventProps={{ value }} />
                       </TableActionsWrapper>
                     )}
                   </TableRowValue>

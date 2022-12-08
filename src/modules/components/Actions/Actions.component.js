@@ -8,7 +8,7 @@ export const Actions = ({ actions, className, wrapperRef, Postfix, eventProps })
     <ActionButtons ref={wrapperRef} className={className} hasPostfix={Boolean(Postfix)}>
       {actions.map((action, index) => {
         const [isOpen, setIsOpen] = useState(false)
-        const onClick = () => action.onCLick?.({ ...eventProps })
+        const onClick = () => action.onClick?.({ ...eventProps })
 
         const items = action.items
           ? [
@@ -25,7 +25,7 @@ export const Actions = ({ actions, className, wrapperRef, Postfix, eventProps })
         return action.items ? (
           <ItemsWrapper key={action.id}>
             {items.map(item => {
-              const onItemClick = () => item.onCLick?.({ ...eventProps })
+              const onItemClick = () => item.onClick?.({ ...eventProps })
 
               return (
                 !item.hidden && (

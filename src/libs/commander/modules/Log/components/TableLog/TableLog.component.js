@@ -14,7 +14,10 @@ export const TableLog = ({
   maxItems,
   onSelectionDelete,
   options,
-  hasSelection
+  hasSelection,
+  leftActions = [],
+  rightActions = [],
+  components
 }) => {
   const logRef = useRef(null)
 
@@ -35,7 +38,7 @@ export const TableLog = ({
   return (
     <LogCard
       variant={parameterTypes.TABLE}
-      actions={[...paginationActions, ...selectionActions]}
+      actions={[...leftActions, ...paginationActions, ...selectionActions, ...rightActions]}
       command={command}
       ref={logRef}
     >
@@ -43,7 +46,13 @@ export const TableLog = ({
         {pages.map((page, currentPageNumber) => {
           return (
             <CarouselItem key={currentPageNumber}>
-              <Table {...tableSelectionProps} rows={page} options={options} widthRef={logRef} />
+              <Table
+                {...tableSelectionProps}
+                rows={page}
+                options={options}
+                widthRef={logRef}
+                components={components}
+              />
             </CarouselItem>
           )
         })}

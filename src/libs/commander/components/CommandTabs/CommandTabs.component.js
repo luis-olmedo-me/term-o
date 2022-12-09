@@ -2,12 +2,14 @@ import * as React from 'preact'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 
 import { Carousel, CarouselItem } from '@modules/components/Carousel'
+import { ImageIcon } from '@modules/components/ImageIcon'
 import { Table } from '@modules/components/Table/Table.component'
 import { closeTabs, fetchHistorial, fetchTabsOpen } from '@src/helpers/event.helpers'
 import { parameterTypes } from '../../constants/commands.constants'
 import {
   LogCard,
   LogContainer,
+  TableLog,
   useDateRangeActions,
   useMessageLog,
   usePaginationActions,
@@ -54,8 +56,6 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
 
     await closeTabs(tabIdsToClose).catch(onError)
     await handleShowTabList().catch(onError)
-
-    clearSelection()
   }
 
   const { log: messageLog, setMessage } = useMessageLog()
@@ -181,31 +181,24 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       )}
 
       {!messageLog && (
-        <LogCard
-          variant={parameterTypes.TABLE}
-          actions={[
-            ...startDateAction,
-            ...paginationActions,
-            ...endDateAction,
-            ...selectionActions
-          ]}
+        <TableLog
           command={command}
-        >
-          <Carousel itemInView={pageNumber}>
-            {pages.map((page, currentPageNumber) => {
-              return (
-                <CarouselItem key={currentPageNumber}>
-                  <Table
-                    {...tableSelectionProps}
-                    rows={page}
-                    options={tabsTableOptions}
-                    widthRef={logRef}
-                  />
-                </CarouselItem>
-              )
-            })}
-          </Carousel>
-        </LogCard>
+          maxItems={MAX_ITEMS}
+          tableItems={tabs}
+          options={tabsTableOptions}
+          onSelectionDelete={handleClosingTabsFromSelection}
+          hasSelection={props.now}
+          leftActions={[...startDateAction]}
+          rightActions={[...endDateAction, ...endDateAction]}
+          components={{
+            imageIcon: ({ value, row }) => (
+              <ImageIcon
+                url={`https://www.google.com/s2/favicons?domain=${row.hostname}`}
+                label={row.title}
+              />
+            )
+          }}
+        />
       )}
     </LogContainer>
   )

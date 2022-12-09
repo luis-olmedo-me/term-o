@@ -1,3 +1,4 @@
+import { defaultCellActionIds } from 'modules/components/Table'
 import { optionTypes } from '../../constants/commands.constants'
 
 import { CommandTabs } from './CommandTabs.component'
@@ -128,25 +129,34 @@ export const tabsTableOptions = {
       id: tabsHeaderIds.ID,
       displayName: 'ID',
       width: '5%',
-      minTableWidth: 900
+      minTableWidth: 900,
+      field: 'id',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
       id: tabsHeaderIds.DATE,
       displayName: 'Date',
       width: '25%',
-      minTableWidth: 0
+      minTableWidth: 0,
+      field: 'date',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
       id: tabsHeaderIds.TITLE,
       displayName: 'Title',
       width: '40%',
-      minTableWidth: 0
+      minTableWidth: 0,
+      field: 'url',
+      cellRenderer: 'imageIcon',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
       id: tabsHeaderIds.HOSTNAME,
       displayName: 'Host Name',
       width: '15%',
-      minTableWidth: 665
+      minTableWidth: 665,
+      field: 'hostname',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
     }
   ]
 }

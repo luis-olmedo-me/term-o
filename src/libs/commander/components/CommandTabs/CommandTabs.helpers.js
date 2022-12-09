@@ -74,40 +74,12 @@ export const validateTabsFilters = ({ byText, here, incognito }) => {
 
 export const turnOpenTabsToTableItems = ({ tabsOpen }) => {
   return tabsOpen.map(tab => {
-    return tabsTableOptions.columns.map(({ id }) => {
-      let rowValue = tab[id]
-      const valueToCopy = rowValue
+    const isDateValueString = typeof tab.date === 'string'
 
-      if (id === tabsHeaderIds.DATE) {
-        const isRowValueString = typeof rowValue === 'string'
-
-        rowValue = isRowValueString ? rowValue : formatDate(rowValue, 'dd/MM/yyyy hh:mm:ss')
-      }
-      if (id === tabsHeaderIds.HOSTNAME) {
-        rowValue = new URL(tab.url).hostname
-      }
-      if (id === tabsHeaderIds.TITLE) {
-        const hostName = new URL(tab.url).hostname
-
-        rowValue = (
-          <ImageIcon
-            url={`https://www.google.com/s2/favicons?domain=${hostName}`}
-            label={tab.title}
-          />
-        )
-      }
-
-      return {
-        value: rowValue,
-        actions: [
-          {
-            id: 'copy-value',
-            title: 'Copy value',
-            onClick: () => navigator.clipboard.writeText(valueToCopy),
-            Component: <Copy />
-          }
-        ]
-      }
-    })
+    return {
+      ...tab,
+      date: isDateValueString ? tab.date : formatDate(tab.date, 'dd/MM/yyyy hh:mm:ss'),
+      hostname: new URL(tab.url).hostname
+    }
   })
 }

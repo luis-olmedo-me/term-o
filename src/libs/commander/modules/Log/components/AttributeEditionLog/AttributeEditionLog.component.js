@@ -25,7 +25,7 @@ const components = {
   },
   attrValueEditor: ({ value, row }) => {
     const handleValueEnter = newValue => {
-      element.setAttribute(row.attributeName, newValue)
+      row.element.setAttribute(row.attributeName, newValue)
     }
 
     return (

@@ -6,8 +6,7 @@ module.exports = (_env, { watch, mode }) => ({
   entry: {
     popup: './src/projects/popup/popup.js',
     content: './src/projects/content/content.js',
-    background: './src/projects/background/background.js',
-    eventListenersSetUp: './src/projects/event-listeners-set-up/event-listeners-set-up.js'
+    background: './src/projects/background/background.js'
   },
   output: {
     filename: '[name].js',

@@ -20,10 +20,6 @@
   "background": {
     "service_worker": "./background.js"
   },
-  "action": {
-    "default_popup": "./popup.html",
-    "default_title": "easy-console"
-  },
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
   },
@@ -52,11 +48,5 @@
       },
       "description": "Resize terminal to its full size"
     }
-  },
-  "web_accessible_resources": [
-    {
-      "resources": ["eventListenersSetUp.js"],
-      "matches": ["<all_urls>"]
-    }
-  ]
+  }
 }

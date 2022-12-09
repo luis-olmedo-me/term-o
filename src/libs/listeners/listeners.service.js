@@ -1,3 +1,5 @@
+import { ignoredEventTypes } from './listeners.constants'
+
 class Listeners {
   constructor() {
     this.data = []
@@ -14,6 +16,8 @@ class Listeners {
 
     EventTarget.prototype.addEventListener = function(type, callback, options) {
       oldAddEventListeners.call(this, ...arguments)
+
+      if (ignoredEventTypes.includes(type)) return
 
       self.data.push({ type, callback, options, context: this })
     }

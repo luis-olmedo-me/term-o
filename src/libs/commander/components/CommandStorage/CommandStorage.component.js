@@ -2,16 +2,12 @@ import * as React from 'preact'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 
 import { Carousel, CarouselItem } from '@modules/components/Carousel'
-import { Table } from '@modules/components/Table'
-import { Pencil } from 'modules/icons'
-import { parameterTypes } from '../../constants/commands.constants'
 import {
   EditionLog,
   LogCard,
   LogContainer,
   TableLog,
   useMessageLog,
-  usePaginationActions,
   useViews
 } from '../../modules/Log'
 import {
@@ -32,15 +28,10 @@ import { storageMessages } from './CommandStorage.messages'
 export const CommandStorage = ({ props, terminal: { command, finish } }) => {
   const actionType = getActionType(props)
 
-  const [tableItems, setTableItems] = useState([])
+  const [storageItems, setStorageItems] = useState([])
   const [editingEntity, setEditingEntity] = useState([])
-  const logRef = useRef(null)
 
   const { log: messageLog, setMessage } = useMessageLog()
-  const { paginationActions, pages, pageNumber } = usePaginationActions({
-    items: tableItems,
-    maxItems: 10
-  })
   const { itemInView, changeView } = useViews({
     views: storageViews,
     defaultView: storageViewIds.MAIN
@@ -57,7 +48,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
 
     if (isEmptyStorage) throw new Error('emptyStorage')
 
-    setTableItems(localStorageAsTableItems)
+    setStorageItems(localStorageAsTableItems)
   }, [])
 
   const doAction = useCallback(async () => {
@@ -130,7 +121,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
             <TableLog
               command={command}
               maxItems={10}
-              tableItems={tableItems}
+              tableItems={storageItems}
               options={storageTableOptions}
               hasSelection={false}
               actions={cellActions}

@@ -2,8 +2,9 @@ import * as React from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
 import { debounce } from '@src/helpers/utils.helpers.js'
-import { Checkbox } from '../Checkbox/Checkbox.component'
+import Checkbox from '../Checkbox'
 import { defaultCellActions } from './Table.constants'
+import { searchIn } from './Table.helpers'
 import {
   HeaderCheckbox,
   TableActions,
@@ -57,22 +58,6 @@ export const Table = ({
         ...options.columns
       ]
     : options.columns
-  // const rows = hasSelectionControls
-  //   ? rows.map(row => {
-  //       return [
-  //         {
-  //           id: 'selection',
-  //           CellRenderer: ({ value }) => (
-  //             <Checkbox
-  //               onChange={event => onSelectionChange({ row, event })}
-  //               checked={selectedRows.includes(row)}
-  //             />
-  //           )
-  //         },
-  //         ...row
-  //       ]
-  //     })
-  //   : rows
 
   const parsedComponents = {
     ...components,
@@ -90,10 +75,6 @@ export const Table = ({
     )
   }
   const parsedActions = [...defaultCellActions, ...actions]
-
-  const minTableWidths = parsedColumns.map(column => column.minTableWidth)
-  const widths = parsedColumns.map(column => column.width)
-  const centerConditions = parsedColumns.map(column => column.center)
 
   return (
     <TableWrapper ref={widthRef}>
@@ -162,46 +143,8 @@ export const Table = ({
               )
             }
           )}
-
-          {/* {row.map((column, columnIndex) => {
-            const onColumnClick = () => column.onClick?.(column)
-
-            const width = widths[columnIndex]
-            const center = centerConditions[columnIndex]
-            const showColumn =
-              wrapperWidth !== null && minTableWidths[columnIndex]
-                ? wrapperWidth > minTableWidths[columnIndex]
-                : true
-
-            return (
-              showColumn && (
-                <TableRowValue
-                  key={`row-column-${columnIndex}`}
-                  onClick={onColumnClick}
-                  style={{ width }}
-                  center={center}
-                  hasFixedWidth={!width.endsWith('%')}
-                  className={column.internal === false ? '' : 'internal'}
-                >
-                  {column.value}
-
-                  {column.actions && (
-                    <TableActionsWrapper className="actions">
-                      <TableActions actions={column.actions} />
-                    </TableActionsWrapper>
-                  )}
-                </TableRowValue>
-              )
-            )
-          })} */}
         </TableRow>
       ))}
     </TableWrapper>
   )
-}
-
-export const searchIn = (reference, pathsString) => {
-  const paths = pathsString.split('.')
-
-  return paths.reduce((result, path) => result[path], reference)
 }

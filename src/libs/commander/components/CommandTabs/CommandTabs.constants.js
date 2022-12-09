@@ -1,6 +1,8 @@
+import * as React from 'preact'
+
+import { ImageIcon } from 'modules/components/ImageIcon'
 import { defaultCellActionIds } from 'modules/components/Table'
 import { optionTypes } from '../../constants/commands.constants'
-
 import { CommandTabs } from './CommandTabs.component'
 
 export const tabsConfig = {
@@ -117,7 +119,16 @@ export const tabsActionTypes = {
   NONE: 'NONE'
 }
 
-export const tabsHeaderIds = {
+export const tableComponents = {
+  imageIcon: ({ row }) => (
+    <ImageIcon
+      url={`https://www.google.com/s2/favicons?domain=${row.hostname}`}
+      label={row.title}
+    />
+  )
+}
+
+export const tabColumnIds = {
   ID: 'id',
   DATE: 'date',
   TITLE: 'title',
@@ -126,7 +137,7 @@ export const tabsHeaderIds = {
 export const tabsTableOptions = {
   columns: [
     {
-      id: tabsHeaderIds.ID,
+      id: tabColumnIds.ID,
       displayName: 'ID',
       width: '5%',
       minTableWidth: 900,
@@ -134,7 +145,7 @@ export const tabsTableOptions = {
       actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
-      id: tabsHeaderIds.DATE,
+      id: tabColumnIds.DATE,
       displayName: 'Date',
       width: '25%',
       minTableWidth: 0,
@@ -142,7 +153,7 @@ export const tabsTableOptions = {
       actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
-      id: tabsHeaderIds.TITLE,
+      id: tabColumnIds.TITLE,
       displayName: 'Title',
       width: '40%',
       minTableWidth: 0,
@@ -151,7 +162,7 @@ export const tabsTableOptions = {
       actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
-      id: tabsHeaderIds.HOSTNAME,
+      id: tabColumnIds.HOSTNAME,
       displayName: 'Host Name',
       width: '15%',
       minTableWidth: 665,

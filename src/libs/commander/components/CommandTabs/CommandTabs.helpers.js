@@ -1,8 +1,5 @@
 import { formatDate } from '@src/helpers/dates.helpers'
-import { ImageIcon } from '@src/modules/components/ImageIcon'
-import { Copy } from '@src/modules/icons'
-import * as React from 'preact'
-import { tabsActionTypes, tabsHeaderIds, tabsTableOptions } from './CommandTabs.constants'
+import { tabsActionTypes } from './CommandTabs.constants'
 
 export const getActionType = ({ now, past, open, close, reload, go }) => {
   if (reload) return tabsActionTypes.RELOAD_TAB

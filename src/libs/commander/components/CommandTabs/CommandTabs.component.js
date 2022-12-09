@@ -1,21 +1,20 @@
 import * as React from 'preact'
-import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
+import { useCallback, useEffect, useState } from 'preact/hooks'
 
-import { Carousel, CarouselItem } from '@modules/components/Carousel'
-import { ImageIcon } from '@modules/components/ImageIcon'
-import { Table } from '@modules/components/Table/Table.component'
 import { closeTabs, fetchHistorial, fetchTabsOpen } from '@src/helpers/event.helpers'
-import { parameterTypes } from '../../constants/commands.constants'
 import {
   LogCard,
   LogContainer,
   TableLog,
   useDateRangeActions,
-  useMessageLog,
-  usePaginationActions,
-  useTableSelection
+  useMessageLog
 } from '../../modules/Log'
-import { MAX_ITEMS, tabsActionTypes, tabsTableOptions } from './CommandTabs.constants'
+import {
+  MAX_ITEMS,
+  tableComponents,
+  tabsActionTypes,
+  tabsTableOptions
+} from './CommandTabs.constants'
 import {
   getActionType,
   turnOpenTabsToTableItems,
@@ -26,7 +25,6 @@ import { tabsMessages } from './CommandTabs.messages'
 
 export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const [tabs, setTabs] = useState([])
-  const logRef = useRef(null)
 
   const actionType = getActionType(props)
 
@@ -59,21 +57,8 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   }
 
   const { log: messageLog, setMessage } = useMessageLog()
-  const { paginationActions, pages, pageNumber, changePage } = usePaginationActions({
-    items: tabs,
-    maxItems: MAX_ITEMS
-  })
   const { startDateAction, endDateAction, setAreDatesInvalid, setDate } = useDateRangeActions({
     onDateUpdate: handleDatesUpdate
-  })
-  const { clearSelection, tableSelectionProps, selectionActions } = useTableSelection({
-    changePage,
-    onDelete: handleClosingTabsFromSelection,
-    currentRows: pages[pageNumber],
-    isEnabled: props.now,
-    tableItems: tabs,
-    pages,
-    maxItems: MAX_ITEMS
   })
 
   const handleShowTabList = useCallback(async () => {
@@ -188,16 +173,9 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
           options={tabsTableOptions}
           onSelectionDelete={handleClosingTabsFromSelection}
           hasSelection={props.now}
-          leftActions={[...startDateAction]}
-          rightActions={[...endDateAction, ...endDateAction]}
-          components={{
-            imageIcon: ({ value, row }) => (
-              <ImageIcon
-                url={`https://www.google.com/s2/favicons?domain=${row.hostname}`}
-                label={row.title}
-              />
-            )
-          }}
+          leftActions={startDateAction}
+          rightActions={endDateAction}
+          components={tableComponents}
         />
       )}
     </LogContainer>

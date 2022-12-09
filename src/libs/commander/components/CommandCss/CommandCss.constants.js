@@ -2,23 +2,23 @@ import { optionTypes } from '../../constants/commands.constants'
 
 import { CommandCss } from './CommandCss.component'
 
-import { kebabize, validStyleKeys } from '../../commander.promises'
+import { validStyleKeys } from '../../commander.promises'
 
 const cssProps = validStyleKeys.reduce((props, key) => {
-  return {
+  return [
     ...props,
-    [kebabize(key)]: {
+    {
       key,
       type: optionTypes.STRING,
       defaultValue: '',
       alias: ''
     }
-  }
-}, {})
+  ]
+}, [])
 
 export const cssConfig = {
-  props: {
-    'manual-styles': {
+  props: [
+    {
       key: 'manualStyles',
       description: 'Apply any CSS property you want to set',
       internal: true,
@@ -27,21 +27,21 @@ export const cssConfig = {
       defaultValue: {},
       alias: ''
     },
-    styles: {
+    {
       key: 'styles',
       description: 'Apply inline CSS',
       type: optionTypes.STRING,
       defaultValue: '',
       alias: 's'
     },
-    get: {
+    {
       key: 'get',
       description: 'Get styles from parameter elements',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 'g'
     }
-  },
+  ],
   output: CommandCss
 }
 

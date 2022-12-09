@@ -2,6 +2,7 @@ import AttributeEditionLog from './components/AttributeEditionLog'
 import EditionLog from './components/EditionLog'
 import LogCard from './components/LogCard'
 import MessageLog from './components/MessageLog'
+import TableLog from './components/TableLog'
 import useDateRangeActions from './hooks/useDateRangeActions'
 import useElementActions from './hooks/useElementActions'
 import useMessageLog, { replaceByParams } from './hooks/useMessageLog'
@@ -22,6 +23,7 @@ export {
   useViews,
   useTableSelection,
   EditionLog,
+  TableLog,
   LogCard,
   LogContainer
 }

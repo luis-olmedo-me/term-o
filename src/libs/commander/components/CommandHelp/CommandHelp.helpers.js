@@ -1,3 +1,4 @@
+import { kebabize } from 'libs/commander/commander.promises'
 import { consoleCommands } from '../../commander.constants'
 import { helpActionTypes } from './CommandHelp.constants'
 
@@ -7,7 +8,9 @@ export const getActionType = ({ about }) => {
 }
 
 export const getItemsFromProps = ({ props }) => {
-  return Object.entries(props).map(([propName, propConfig]) => {
+  return props.map(propConfig => {
+    const propName = kebabize(propConfig.key)
+
     return {
       id: propConfig.key,
       title: `--${propName} <${propConfig.type}>`,

@@ -2,14 +2,12 @@ import * as React from 'preact'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 
 import { Carousel, CarouselItem } from '@modules/components/Carousel'
-import { Table } from '@modules/components/Table'
-import { parameterTypes } from '../../constants/commands.constants'
 import {
   EditionLog,
   LogCard,
   LogContainer,
+  TableLog,
   useMessageLog,
-  usePaginationActions,
   useViews
 } from '../../modules/Log'
 import {
@@ -19,6 +17,7 @@ import {
   storageViews
 } from './CommandStorage.constants'
 import {
+  createCellActions,
   getActionType,
   parseCookies,
   parseEntity,
@@ -29,32 +28,27 @@ import { storageMessages } from './CommandStorage.messages'
 export const CommandStorage = ({ props, terminal: { command, finish } }) => {
   const actionType = getActionType(props)
 
-  const [tableItems, setTableItems] = useState([])
+  const [storageItems, setStorageItems] = useState([])
   const [editingEntity, setEditingEntity] = useState([])
-  const logRef = useRef(null)
 
   const { log: messageLog, setMessage } = useMessageLog()
-  const { paginationActions, pages, pageNumber } = usePaginationActions({
-    items: tableItems,
-    maxItems: 10
-  })
   const { itemInView, changeView } = useViews({
     views: storageViews,
     defaultView: storageViewIds.MAIN
   })
 
-  const handleShowStorage = useCallback(storage => {
-    const editValue = entity => {
-      setEditingEntity(entity)
-      changeView(storageViewIds.EDITOR)
-    }
+  const editValue = entity => {
+    setEditingEntity(entity)
+    changeView(storageViewIds.EDITOR)
+  }
 
-    const localStorageAsTableItems = turnStorageToTableItems({ storage, editValue })
+  const handleShowStorage = useCallback(storage => {
+    const localStorageAsTableItems = turnStorageToTableItems({ storage })
     const isEmptyStorage = localStorageAsTableItems.length === 0
 
     if (isEmptyStorage) throw new Error('emptyStorage')
 
-    setTableItems(localStorageAsTableItems)
+    setStorageItems(localStorageAsTableItems)
   }, [])
 
   const doAction = useCallback(async () => {
@@ -111,6 +105,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
   }
 
   const [editingKey, editingValue] = editingEntity
+  const cellActions = createCellActions({ editValue })
 
   return (
     <LogContainer>
@@ -123,17 +118,14 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
       {!messageLog && (
         <Carousel itemInView={itemInView}>
           <CarouselItem>
-            <LogCard variant={parameterTypes.TABLE} actions={paginationActions} command={command}>
-              <Carousel itemInView={pageNumber}>
-                {pages.map((page, currentPageNumber) => {
-                  return (
-                    <CarouselItem key={currentPageNumber}>
-                      <Table rows={page} options={storageTableOptions} widthRef={logRef} />
-                    </CarouselItem>
-                  )
-                })}
-              </Carousel>
-            </LogCard>
+            <TableLog
+              command={command}
+              maxItems={10}
+              tableItems={storageItems}
+              options={storageTableOptions}
+              hasSelection={false}
+              actions={cellActions}
+            />
           </CarouselItem>
 
           <CarouselItem>

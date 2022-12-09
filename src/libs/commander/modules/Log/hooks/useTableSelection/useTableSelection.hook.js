@@ -64,6 +64,7 @@ export const useTableSelection = ({
     })
 
     onDelete({ selectedRows })
+    clearSelection()
   }
 
   const selectionActions = [

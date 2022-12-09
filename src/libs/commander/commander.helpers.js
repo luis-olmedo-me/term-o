@@ -1,11 +1,10 @@
+import { kebabize } from './commander.promises'
 import { optionTypes } from './constants/commands.constants'
 
 export const parsePropsIntoSuggestions = propsConfigs => {
   if (!propsConfigs) return []
 
-  return Object.keys(propsConfigs).reduce((result, key) => {
-    const propConfig = propsConfigs[key]
-
+  return propsConfigs.reduce((result, propConfig) => {
     const groupProps = parsePropsIntoSuggestions(propConfig.groupProps)
 
     const newValue = groupProps.length
@@ -14,7 +13,7 @@ export const parsePropsIntoSuggestions = propsConfigs => {
           {
             ...propConfig,
             alias: `-${propConfig.alias}`,
-            value: `--${key}`
+            value: `--${propConfig.key}`
           }
         ]
 
@@ -255,7 +254,7 @@ const validatePropValue = (value, type, defaultValue, objectTypes) => {
 
 const buildGroupProps = ({ values: _values, ...propValues }, groupPropConfigs = {}) => {
   return Object.entries(propValues).reduce((allProps, [name, value]) => {
-    const groupConfig = groupPropConfigs[name]
+    const groupConfig = groupPropConfigs.find(groupPropConfig => groupPropConfig.key === name)
 
     if (!groupConfig) return allProps
 
@@ -270,9 +269,10 @@ const buildGroupProps = ({ values: _values, ...propValues }, groupPropConfigs = 
   }, {})
 }
 
-export const buildProps = (propValues, propsConfig = {}) => {
-  return Object.entries(propsConfig).reduce(
-    (allProps, [propName, { key, type, defaultValue, alias, groupProps, objectTypes }]) => {
+export const buildProps = (propValues, propsConfig = []) => {
+  return propsConfig.reduce(
+    (allProps, { key, type, defaultValue, alias, groupProps, objectTypes }) => {
+      const propName = kebabize(key)
       const aliasName = Object.keys(propValues).find(name => {
         return alias === name
       })

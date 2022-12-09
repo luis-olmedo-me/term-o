@@ -1,41 +1,49 @@
-import { optionTypes } from '../../constants/commands.constants'
+import { defaultCellActionIds } from 'modules/components/Table'
+import { internalEventProperties, optionTypes } from '../../constants/commands.constants'
 import { CommandEvent } from './CommandEvent.component'
 
 export const eventConfig = {
-  props: {
-    list: {
+  props: [
+    {
       key: 'list',
       description: 'List all events',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 'l'
     },
-    delete: {
+    {
       key: 'delete',
       description: 'Delete an event',
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
       alias: 'd'
     },
-    trigger: {
+    {
       key: 'trigger',
       description: 'Trigger an event',
       type: optionTypes.STRING,
       defaultValue: '',
       alias: 't'
     },
-    value: {
+    {
       key: 'value',
       description: 'Insert this value when "change" event is triggered on inputs elements',
       type: optionTypes.STRING,
       defaultValue: '',
       alias: 'v'
+    },
+    {
+      key: 'listeners',
+      description: 'List all event listeners',
+      type: optionTypes.BOOLEAN,
+      defaultValue: false,
+      alias: 'L'
     }
-  },
+  ],
   output: CommandEvent
 }
 
-export const supportedEvents = {
+export const triggerableEvents = {
   CLICK: 'click',
   CHANGE: 'change'
 }
@@ -61,45 +69,66 @@ export const inputTypeChangeTrigerables = [
 ]
 
 export const eventActionTypes = {
+  SHOW_LISTENERS_LIST: 'SHOW_LISTENERS_LIST',
   SHOW_LIST: 'SHOW_LIST',
   DELETE_EVENT: 'DELETE_EVENT',
   TRIGGER: 'TRIGGER'
 }
 
-const eventHeaderIds = {
-  ID: 'id',
-  URL: 'url',
-  EVENT: 'event',
-  COMMAND: 'command'
-}
+export const MAX_ITEMS = 10
 
-export const eventTableOptions = {
+export const internalEventTableOptions = {
   columns: [
     {
-      id: eventHeaderIds.ID,
+      id: internalEventProperties.ID,
       displayName: 'ID',
       width: '20%',
-      minTableWidth: 555
+      minTableWidth: 555,
+      field: 'id',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
-      id: eventHeaderIds.URL,
+      id: internalEventProperties.URL,
       displayName: 'URL',
       width: '15%',
-      minTableWidth: 0
+      minTableWidth: 0,
+      field: 'url',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
-      id: eventHeaderIds.EVENT,
+      id: internalEventProperties.EVENT,
       displayName: 'Event',
       width: '15%',
-      minTableWidth: 700
+      minTableWidth: 700,
+      field: 'event',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
-      id: eventHeaderIds.COMMAND,
+      id: internalEventProperties.COMMAND,
       displayName: 'Command',
       width: '50%',
-      minTableWidth: 0
+      minTableWidth: 0,
+      field: 'command',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
     }
   ]
 }
 
-export const MAX_ITEMS = 10
+export const listenersTableOptions = {
+  columns: [
+    {
+      id: 'event_name',
+      displayName: 'Event',
+      width: '50%',
+      minTableWidth: 0,
+      field: 'type'
+    },
+    {
+      id: 'function_name',
+      displayName: 'Function Name',
+      width: '50%',
+      minTableWidth: 0,
+      field: 'callback.name'
+    }
+  ]
+}

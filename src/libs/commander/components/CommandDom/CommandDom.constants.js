@@ -5,22 +5,22 @@ import { optionTypes } from '../../constants/commands.constants'
 import { CommandDom } from './CommandDom.component'
 
 export const domConfig = {
-  props: {
-    get: {
+  props: [
+    {
       key: 'get',
       description: 'Get the value of a DOM element',
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
       alias: 'g'
     },
-    'by-text': {
+    {
       key: 'byText',
       description: 'Get a DOM element by text',
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
       alias: 'bt'
     },
-    'by-style': {
+    {
       key: 'byStyle',
       description: 'Get a DOM element by style',
       type: optionTypes.OBJECT,
@@ -28,7 +28,7 @@ export const domConfig = {
       defaultValue: {},
       alias: 'bs'
     },
-    'by-attr': {
+    {
       key: 'byAttr',
       description: 'Get a DOM element by attribute',
       type: optionTypes.OBJECT,
@@ -36,35 +36,35 @@ export const domConfig = {
       defaultValue: {},
       alias: 'ba'
     },
-    hidden: {
+    {
       key: 'hidden',
       description: 'Check if a DOM element is hidden for user',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 'h'
     },
-    'by-xpath': {
+    {
       key: 'byXpath',
       description: 'Get a DOM element by xpath',
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
       alias: 'bx'
     },
-    'by-parent-level': {
+    {
       key: 'byParentLevel',
       description: 'Search through parents many times from the elements found',
       type: optionTypes.NUMBER,
       defaultValue: 0,
       alias: 'bpl'
     },
-    'get-parent': {
+    {
       key: 'getParent',
       description: 'Get parents of all elements found',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 'gp'
     },
-    attr: {
+    {
       key: 'attr',
       description: 'Set attributes of elements from parameters',
       type: optionTypes.OBJECT,
@@ -72,7 +72,7 @@ export const domConfig = {
       objectTypes: ['string', 'boolean'],
       alias: 'a'
     }
-  },
+  ],
   output: CommandDom
 }
 

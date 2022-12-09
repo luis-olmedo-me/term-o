@@ -1,65 +1,27 @@
 import * as React from 'preact'
-import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
+import { useCallback, useEffect, useState } from 'preact/hooks'
 
-import { Carousel, CarouselItem } from '@modules/components/Carousel'
-import { Table } from '@modules/components/Table/Table.component'
 import { addAliases, deleteAliases, fetchConfiguration } from '@src/helpers/event.helpers.js'
-import { parameterTypes } from '../../constants/commands.constants'
-import {
-  LogCard,
-  LogContainer,
-  useMessageLog,
-  usePaginationActions,
-  useTableSelection
-} from '../../modules/Log'
+import { LogCard, LogContainer, TableLog, useMessageLog } from '../../modules/Log'
 import { aliasActionTypes, aliasTableOptions, MAX_ITEMS } from './CommandAlias.constants'
-import {
-  getActionType,
-  turnAliasesToTableItems,
-  validateAliasesToAdd
-} from './CommandAlias.helpers'
+import { getActionType, validateAliasesToAdd } from './CommandAlias.helpers'
 import { aliasMessages } from './CommandAlias.messages'
 
 export const CommandAlias = ({ props, terminal: { command, finish } }) => {
   const [tableItems, setTableItems] = useState([])
-  const logRef = useRef(null)
-
-  const onError = error =>
-    setMessage(eventMessages[error?.message] || eventMessages.unexpectedError)
-  const handleDeleteAliasesFromSelection = async ({ selectedRows }) => {
-    const aliasIdsToDelete = selectedRows.map(([idRow]) => idRow.value)
-
-    clearSelection()
-
-    await deleteAliases(aliasIdsToDelete).catch(onError)
-    await handleShowList().catch(onError)
-  }
 
   const { log: messageLog, setMessage } = useMessageLog()
-  const { paginationActions, pages, pageNumber, changePage } = usePaginationActions({
-    items: tableItems,
-    maxItems: MAX_ITEMS
-  })
-  const { clearSelection, tableSelectionProps, selectionActions } = useTableSelection({
-    changePage,
-    onDelete: handleDeleteAliasesFromSelection,
-    currentRows: pages[pageNumber],
-    tableItems,
-    pages,
-    maxItems: MAX_ITEMS
-  })
 
   const actionType = getActionType(props)
 
   const handleShowList = useCallback(async () => {
     const { aliases = [] } = await fetchConfiguration()
 
-    const aliasRows = turnAliasesToTableItems({ aliases })
     const hasAliases = aliases.length > 0
 
     if (!hasAliases) throw new Error('noAliasesFound')
 
-    setTableItems(aliasRows)
+    setTableItems(aliases)
   }, [setMessage])
 
   const handleAddAliases = useCallback(async () => {
@@ -117,6 +79,15 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
     [doAction, setMessage, finish]
   )
 
+  const onError = error =>
+    setMessage(eventMessages[error?.message] || eventMessages.unexpectedError)
+  const handleDeleteAliasesFromSelection = async ({ selectedRows }) => {
+    const aliasIdsToDelete = selectedRows.map(({ id }) => id)
+
+    await deleteAliases(aliasIdsToDelete).catch(onError)
+    await handleShowList().catch(onError)
+  }
+
   return (
     <LogContainer>
       {messageLog && (
@@ -126,26 +97,14 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
       )}
 
       {!messageLog && (
-        <LogCard
-          variant={parameterTypes.TABLE}
-          actions={[...paginationActions, ...selectionActions]}
+        <TableLog
           command={command}
-        >
-          <Carousel itemInView={pageNumber}>
-            {pages.map((page, currentPageNumber) => {
-              return (
-                <CarouselItem key={currentPageNumber}>
-                  <Table
-                    {...tableSelectionProps}
-                    rows={page}
-                    options={aliasTableOptions}
-                    widthRef={logRef}
-                  />
-                </CarouselItem>
-              )
-            })}
-          </Carousel>
-        </LogCard>
+          maxItems={MAX_ITEMS}
+          tableItems={tableItems}
+          options={aliasTableOptions}
+          onSelectionDelete={handleDeleteAliasesFromSelection}
+          hasSelection
+        />
       )}
     </LogContainer>
   )

@@ -1,108 +1,111 @@
-import { optionTypes } from '../../constants/commands.constants'
+import * as React from 'preact'
 
+import { ImageIcon } from 'modules/components/ImageIcon'
+import { defaultCellActionIds } from 'modules/components/Table'
+import { optionTypes } from '../../constants/commands.constants'
 import { CommandTabs } from './CommandTabs.component'
 
 export const tabsConfig = {
-  props: {
-    now: {
+  props: [
+    {
       key: 'now',
       description: 'Show all tabs open',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 'n'
     },
-    past: {
+    {
       key: 'past',
       description: 'Show past tabs',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 'p'
     },
-    'by-text': {
+    {
       key: 'byText',
       description: 'Get tabs by title or url',
       type: optionTypes.STRING,
       defaultValue: '',
       alias: 'bt'
     },
-    'by-start-date': {
+    {
       key: 'byStartDate',
       description: 'Get tabs history from start date',
       type: optionTypes.STRING,
       defaultValue: '',
       alias: 'bsd'
     },
-    'by-end-date': {
+    {
       key: 'byEndDate',
       description: 'Get tabs history from end date',
       type: optionTypes.STRING,
       defaultValue: '',
       alias: 'bed'
     },
-    'by-date': {
+    {
       key: 'byDate',
       description: 'Get tabs history by date',
       type: optionTypes.STRING,
       defaultValue: '',
       alias: 'bd'
     },
-    'max-results': {
+    {
       key: 'maxResults',
       description: 'Limit the amount of tabs shown',
       type: optionTypes.NUMBER,
       defaultValue: 500,
       alias: 'mr'
     },
-    incognito: {
+    {
       key: 'incognito',
       description: 'Get tabs open in incognito mode',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 'i'
     },
-    here: {
+    {
       key: 'here',
       description: 'Get open tabs in the current window',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 'h'
     },
-    open: {
+    {
       key: 'open',
       description: 'Go to a specific url (URL)',
       type: optionTypes.STRING,
       defaultValue: '',
       alias: 'o'
     },
-    close: {
+    {
       key: 'close',
       description: 'Close tabs by their ids',
       type: optionTypes.ARRAY_OF_STRINGS,
       defaultValue: [],
       alias: 'c'
     },
-    reload: {
+    {
       key: 'reload',
       description: 'Reload current tab',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 'r'
     },
-    'use-current': {
+    {
       key: 'useCurrent',
       description: 'Use current tab to open an URL',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 'uc'
     },
-    go: {
+    {
       key: 'go',
       description: 'Move between back or forward over the visited pages',
       type: optionTypes.NUMBER,
       defaultValue: 0,
       alias: 'g'
     }
-  },
+  ],
   output: CommandTabs
 }
 
@@ -116,7 +119,16 @@ export const tabsActionTypes = {
   NONE: 'NONE'
 }
 
-export const tabsHeaderIds = {
+export const tableComponents = {
+  imageIcon: ({ row }) => (
+    <ImageIcon
+      url={`https://www.google.com/s2/favicons?domain=${row.hostname}`}
+      label={row.title}
+    />
+  )
+}
+
+export const tabsColumnIds = {
   ID: 'id',
   DATE: 'date',
   TITLE: 'title',
@@ -125,28 +137,37 @@ export const tabsHeaderIds = {
 export const tabsTableOptions = {
   columns: [
     {
-      id: tabsHeaderIds.ID,
+      id: tabsColumnIds.ID,
       displayName: 'ID',
       width: '5%',
-      minTableWidth: 900
+      minTableWidth: 900,
+      field: 'id',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
-      id: tabsHeaderIds.DATE,
+      id: tabsColumnIds.DATE,
       displayName: 'Date',
       width: '25%',
-      minTableWidth: 0
+      minTableWidth: 0,
+      field: 'date',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
-      id: tabsHeaderIds.TITLE,
+      id: tabsColumnIds.TITLE,
       displayName: 'Title',
       width: '40%',
-      minTableWidth: 0
+      minTableWidth: 0,
+      field: 'url',
+      cellRenderer: 'imageIcon',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
-      id: tabsHeaderIds.HOSTNAME,
+      id: tabsColumnIds.HOSTNAME,
       displayName: 'Host Name',
       width: '15%',
-      minTableWidth: 665
+      minTableWidth: 665,
+      field: 'hostname',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
     }
   ]
 }

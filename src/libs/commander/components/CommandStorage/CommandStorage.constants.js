@@ -1,33 +1,34 @@
 import * as React from 'preact'
 
 import { Home } from '@src/modules/icons'
+import { defaultCellActionIds } from 'modules/components/Table'
 import { optionTypes } from '../../constants/commands.constants'
 import { CommandStorage } from './CommandStorage.component'
 
 export const storageConfig = {
-  props: {
-    local: {
+  props: [
+    {
       key: 'local',
       description: 'Show the local storage of the current context',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 'l'
     },
-    session: {
+    {
       key: 'session',
       description: 'Show the session storage of the current context',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 's'
     },
-    cookies: {
+    {
       key: 'cookies',
       description: 'Show the cookies of the current context',
       type: optionTypes.BOOLEAN,
       defaultValue: false,
       alias: 'c'
     }
-  },
+  ],
   output: CommandStorage
 }
 
@@ -53,19 +54,27 @@ const storageHeaderIds = {
   VALUE: 'value'
 }
 
+export const storageCellActionIds = {
+  EDIT_VALUE: 'edit-value'
+}
+
 export const storageTableOptions = {
   columns: [
     {
       id: storageHeaderIds.KEY,
       displayName: 'Key',
       width: '40%',
-      minTableWidth: 0
+      minTableWidth: 0,
+      field: 'storageKey',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
       id: storageHeaderIds.VALUE,
       displayName: 'Value',
       width: '60%',
-      minTableWidth: 0
+      minTableWidth: 0,
+      field: 'storageValue',
+      actionIds: [defaultCellActionIds.COPY_VALUE, storageCellActionIds.EDIT_VALUE]
     }
   ]
 }

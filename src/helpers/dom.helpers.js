@@ -43,14 +43,3 @@ export const getStyles = element => {
       : allStyles
   }, {})
 }
-
-export const runWebsource = fileName => {
-  const scriptElement = document.createElement('script')
-  scriptElement.src = chrome.runtime.getURL(fileName)
-  scriptElement.onload = function() {
-    this.remove()
-  }
-
-  if (document.head) document.head.prepend(scriptElement)
-  else document.documentElement.prepend(scriptElement)
-}

@@ -2,7 +2,6 @@ import * as React from 'preact'
 
 import { OverlayProvider } from '@modules/components/Overlay/Overlay.provider'
 import { PortalProvider } from '@modules/components/Portal/Portal.provider'
-import { runWebsource } from '@src/helpers/dom.helpers'
 import listeners from 'libs/listeners'
 import { StyleSheetManager, ThemeProvider } from 'styled-components'
 import { defaultTheme } from '../../constants/theme.constants'

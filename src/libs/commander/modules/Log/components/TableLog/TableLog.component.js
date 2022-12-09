@@ -17,7 +17,8 @@ export const TableLog = ({
   hasSelection,
   leftActions = [],
   rightActions = [],
-  components
+  components,
+  actions
 }) => {
   const logRef = useRef(null)
 
@@ -52,6 +53,7 @@ export const TableLog = ({
                 options={options}
                 widthRef={logRef}
                 components={components}
+                actions={actions}
               />
             </CarouselItem>
           )

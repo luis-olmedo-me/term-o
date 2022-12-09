@@ -1,7 +1,7 @@
 import * as React from 'preact'
 
-import { Copy, Pencil } from '@src/modules/icons'
-import { storageActionTypes } from './CommandStorage.constants'
+import { Pencil } from '@src/modules/icons'
+import { storageActionTypes, storageCellActionIds } from './CommandStorage.constants'
 
 export const getActionType = ({ local, cookies, session }) => {
   if (local) return storageActionTypes.SHOW_LOCAL_STORAGE
@@ -11,38 +11,20 @@ export const getActionType = ({ local, cookies, session }) => {
 }
 
 export const turnStorageToTableItems = ({ storage = {}, editValue }) => {
-  return Object.entries(storage).map(([key, value]) => {
-    return [
-      {
-        value: key,
-        actions: [
-          {
-            id: 'copy-value',
-            title: 'Copy value',
-            onClick: () => navigator.clipboard.writeText(value),
-            Component: <Copy />
-          }
-        ]
-      },
-      {
-        value,
-        actions: [
-          {
-            id: 'copy-value',
-            title: 'Copy value',
-            onClick: () => navigator.clipboard.writeText(value),
-            Component: <Copy />
-          },
-          {
-            id: 'edit-element',
-            title: 'Edit',
-            onClick: () => editValue([key, value]),
-            Component: <Pencil />
-          }
-        ]
-      }
-    ]
+  return Object.entries(storage).map(([storageKey, storageValue]) => {
+    return { storageKey, storageValue }
   })
+}
+
+export const createCellActions = ({ editValue }) => {
+  return [
+    {
+      id: storageCellActionIds.EDIT_VALUE,
+      title: 'Edit',
+      onClick: ({ row }) => editValue([row.storageKey, row.storageValue]),
+      Component: <Pencil />
+    }
+  ]
 }
 
 export const parseCookies = cookies => {

@@ -154,7 +154,7 @@ export const Table = ({
 
                     {cellActions && (
                       <TableActionsWrapper className="actions">
-                        <TableActions actions={cellActions} eventProps={{ value }} />
+                        <TableActions actions={cellActions} eventProps={{ value, row }} />
                       </TableActionsWrapper>
                     )}
                   </TableRowValue>

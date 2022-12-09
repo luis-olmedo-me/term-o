@@ -3,11 +3,13 @@ import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 
 import { Carousel, CarouselItem } from '@modules/components/Carousel'
 import { Table } from '@modules/components/Table'
+import { Pencil } from 'modules/icons'
 import { parameterTypes } from '../../constants/commands.constants'
 import {
   EditionLog,
   LogCard,
   LogContainer,
+  TableLog,
   useMessageLog,
   usePaginationActions,
   useViews
@@ -19,6 +21,7 @@ import {
   storageViews
 } from './CommandStorage.constants'
 import {
+  createCellActions,
   getActionType,
   parseCookies,
   parseEntity,
@@ -43,13 +46,13 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
     defaultView: storageViewIds.MAIN
   })
 
-  const handleShowStorage = useCallback(storage => {
-    const editValue = entity => {
-      setEditingEntity(entity)
-      changeView(storageViewIds.EDITOR)
-    }
+  const editValue = entity => {
+    setEditingEntity(entity)
+    changeView(storageViewIds.EDITOR)
+  }
 
-    const localStorageAsTableItems = turnStorageToTableItems({ storage, editValue })
+  const handleShowStorage = useCallback(storage => {
+    const localStorageAsTableItems = turnStorageToTableItems({ storage })
     const isEmptyStorage = localStorageAsTableItems.length === 0
 
     if (isEmptyStorage) throw new Error('emptyStorage')
@@ -111,6 +114,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
   }
 
   const [editingKey, editingValue] = editingEntity
+  const cellActions = createCellActions({ editValue })
 
   return (
     <LogContainer>
@@ -123,17 +127,14 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
       {!messageLog && (
         <Carousel itemInView={itemInView}>
           <CarouselItem>
-            <LogCard variant={parameterTypes.TABLE} actions={paginationActions} command={command}>
-              <Carousel itemInView={pageNumber}>
-                {pages.map((page, currentPageNumber) => {
-                  return (
-                    <CarouselItem key={currentPageNumber}>
-                      <Table rows={page} options={storageTableOptions} widthRef={logRef} />
-                    </CarouselItem>
-                  )
-                })}
-              </Carousel>
-            </LogCard>
+            <TableLog
+              command={command}
+              maxItems={10}
+              tableItems={tableItems}
+              options={storageTableOptions}
+              hasSelection={false}
+              actions={cellActions}
+            />
           </CarouselItem>
 
           <CarouselItem>

@@ -128,7 +128,7 @@ export const tableComponents = {
   )
 }
 
-export const tabColumnIds = {
+export const tabsColumnIds = {
   ID: 'id',
   DATE: 'date',
   TITLE: 'title',
@@ -137,7 +137,7 @@ export const tabColumnIds = {
 export const tabsTableOptions = {
   columns: [
     {
-      id: tabColumnIds.ID,
+      id: tabsColumnIds.ID,
       displayName: 'ID',
       width: '5%',
       minTableWidth: 900,
@@ -145,7 +145,7 @@ export const tabsTableOptions = {
       actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
-      id: tabColumnIds.DATE,
+      id: tabsColumnIds.DATE,
       displayName: 'Date',
       width: '25%',
       minTableWidth: 0,
@@ -153,7 +153,7 @@ export const tabsTableOptions = {
       actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
-      id: tabColumnIds.TITLE,
+      id: tabsColumnIds.TITLE,
       displayName: 'Title',
       width: '40%',
       minTableWidth: 0,
@@ -162,7 +162,7 @@ export const tabsTableOptions = {
       actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
-      id: tabColumnIds.HOSTNAME,
+      id: tabsColumnIds.HOSTNAME,
       displayName: 'Host Name',
       width: '15%',
       minTableWidth: 665,

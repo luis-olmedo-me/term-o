@@ -82,7 +82,7 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
   const onError = error =>
     setMessage(eventMessages[error?.message] || eventMessages.unexpectedError)
   const handleDeleteAliasesFromSelection = async ({ selectedRows }) => {
-    const aliasIdsToDelete = selectedRows.map(([idRow]) => idRow.value)
+    const aliasIdsToDelete = selectedRows.map(({ id }) => id)
 
     await deleteAliases(aliasIdsToDelete).catch(onError)
     await handleShowList().catch(onError)

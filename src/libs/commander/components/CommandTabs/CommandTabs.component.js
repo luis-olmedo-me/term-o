@@ -50,7 +50,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   }
 
   const handleClosingTabsFromSelection = async ({ selectedRows }) => {
-    const tabIdsToClose = selectedRows.map(([idRow]) => idRow.value)
+    const tabIdsToClose = selectedRows.map(({ id }) => id)
 
     await closeTabs(tabIdsToClose).catch(onError)
     await handleShowTabList().catch(onError)

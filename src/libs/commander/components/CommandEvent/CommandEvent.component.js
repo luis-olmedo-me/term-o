@@ -123,7 +123,7 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
   const onError = error =>
     setMessage(eventMessages[error?.message] || eventMessages.unexpectedError)
   const handleEventsDelete = async ({ selectedRows }) => {
-    const eventIdsToDelete = selectedRows.map(([idRow]) => idRow.value)
+    const eventIdsToDelete = selectedRows.map(({ id }) => id)
 
     await deletePageEvents(eventIdsToDelete).catch(onError)
     await handleShowList().catch(onError)

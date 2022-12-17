@@ -104,7 +104,12 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   }, [props, setMessage])
 
   const handleSwitch = useCallback(async () => {
-    updateTab({ tabId: props.switch, props: { active: true } })
+    const tabs = await fetchTabsOpen({})
+    const tabIds = tabs.map(tab => tab.id)
+
+    if (!tabIds.includes(props.switch)) throw new Error('noTabsFound')
+
+    await updateTab({ tabId: props.switch, props: { active: true } })
   }, [props, setMessage])
 
   const handleReloadTab = useCallback(() => {
@@ -128,6 +133,9 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       case tabsActionTypes.CLOSE_OPEN_TABS:
         return await handleCloseTabs()
 
+      case tabsActionTypes.SWITCH:
+        return await handleSwitch()
+
       case tabsActionTypes.REDIRECT:
         return handleRedirect()
 
@@ -136,9 +144,6 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
 
       case tabsActionTypes.GO:
         return handleGo()
-
-      case tabsActionTypes.SWITCH:
-        return handleSwitch()
 
       case tabsActionTypes.NONE:
         throw new Error('unexpectedError')

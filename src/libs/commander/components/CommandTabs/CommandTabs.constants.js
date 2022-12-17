@@ -1,7 +1,9 @@
 import * as React from 'preact'
 
+import { updateTab } from 'helpers/event.helpers'
 import { ImageIcon } from 'modules/components/ImageIcon'
 import { defaultCellActionIds } from 'modules/components/Table'
+import { Open } from 'modules/icons'
 import { optionTypes } from '../../constants/commands.constants'
 import { CommandTabs } from './CommandTabs.component'
 
@@ -104,6 +106,13 @@ export const tabsConfig = {
       type: optionTypes.NUMBER,
       defaultValue: 0,
       alias: 'g'
+    },
+    {
+      key: 'switch',
+      description: 'Switch tab in view',
+      type: optionTypes.NUMBER,
+      defaultValue: NaN,
+      alias: 's'
     }
   ],
   output: CommandTabs
@@ -116,8 +125,21 @@ export const tabsActionTypes = {
   KILL_TAB: 'KILL_TAB',
   RELOAD_TAB: 'RELOAD_TAB',
   GO: 'GO',
+  SWITCH: 'SWITCH',
   NONE: 'NONE'
 }
+
+export const tabsCellActionIds = {
+  SWITCH: 'switch'
+}
+export const tableCellActions = [
+  {
+    id: tabsCellActionIds.SWITCH,
+    title: 'Switch',
+    onClick: ({ row }) => updateTab({ tabId: row.id, props: { active: true } }),
+    Component: <Open />
+  }
+]
 
 export const tableComponents = {
   imageIcon: ({ row }) => (
@@ -134,7 +156,44 @@ export const tabsColumnIds = {
   TITLE: 'title',
   HOSTNAME: 'hostname'
 }
-export const tabsTableOptions = {
+export const currentTabsTableOptions = {
+  columns: [
+    {
+      id: tabsColumnIds.ID,
+      displayName: 'ID',
+      width: '5%',
+      minTableWidth: 900,
+      field: 'id',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
+    },
+    {
+      id: tabsColumnIds.DATE,
+      displayName: 'Date',
+      width: '25%',
+      minTableWidth: 0,
+      field: 'date',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
+    },
+    {
+      id: tabsColumnIds.TITLE,
+      displayName: 'Title',
+      width: '40%',
+      minTableWidth: 0,
+      field: 'url',
+      cellRenderer: 'imageIcon',
+      actionIds: [defaultCellActionIds.COPY_VALUE, tabsCellActionIds.SWITCH]
+    },
+    {
+      id: tabsColumnIds.HOSTNAME,
+      displayName: 'Host Name',
+      width: '15%',
+      minTableWidth: 665,
+      field: 'hostname',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
+    }
+  ]
+}
+export const pastTabsTableOptions = {
   columns: [
     {
       id: tabsColumnIds.ID,

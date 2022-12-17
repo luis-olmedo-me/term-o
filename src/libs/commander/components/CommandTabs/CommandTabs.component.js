@@ -2,6 +2,7 @@ import * as React from 'preact'
 import { useCallback, useEffect, useState } from 'preact/hooks'
 
 import { closeTabs, fetchHistorial, fetchTabsOpen } from '@src/helpers/event.helpers'
+import { updateTab } from 'helpers/event.helpers'
 import {
   LogCard,
   LogContainer,
@@ -10,10 +11,12 @@ import {
   useMessageLog
 } from '../../modules/Log'
 import {
+  currentTabsTableOptions,
   MAX_ITEMS,
+  pastTabsTableOptions,
+  tableCellActions,
   tableComponents,
-  tabsActionTypes,
-  tabsTableOptions
+  tabsActionTypes
 } from './CommandTabs.constants'
 import {
   getActionType,
@@ -100,6 +103,15 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     setMessage(tabsMessages.closeSuccess)
   }, [props, setMessage])
 
+  const handleSwitch = useCallback(async () => {
+    const tabs = await fetchTabsOpen({})
+    const tabIds = tabs.map(tab => tab.id)
+
+    if (!tabIds.includes(props.switch)) throw new Error('noTabsFound')
+
+    await updateTab({ tabId: props.switch, props: { active: true } })
+  }, [props, setMessage])
+
   const handleReloadTab = useCallback(() => {
     window.location.reload()
     setMessage(tabsMessages.reloadSuccess)
@@ -121,6 +133,9 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       case tabsActionTypes.CLOSE_OPEN_TABS:
         return await handleCloseTabs()
 
+      case tabsActionTypes.SWITCH:
+        return await handleSwitch()
+
       case tabsActionTypes.REDIRECT:
         return handleRedirect()
 
@@ -140,7 +155,8 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     handleShowHistory,
     handleCloseTabs,
     handleReloadTab,
-    handleGo
+    handleGo,
+    handleSwitch
   ])
 
   useEffect(
@@ -170,12 +186,13 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
           command={command}
           maxItems={MAX_ITEMS}
           tableItems={tabs}
-          options={tabsTableOptions}
+          options={props.now ? currentTabsTableOptions : pastTabsTableOptions}
           onSelectionDelete={handleClosingTabsFromSelection}
           hasSelection={props.now}
           leftActions={startDateAction}
           rightActions={endDateAction}
           components={tableComponents}
+          actions={tableCellActions}
         />
       )}
     </LogContainer>

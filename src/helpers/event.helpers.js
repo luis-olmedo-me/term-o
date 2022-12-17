@@ -165,3 +165,19 @@ export const fetchTabsOpen = data => {
     data
   })
 }
+
+export const getTabsInfo = data => {
+  return createWorkerProcessRequest({
+    type: eventTypes.GET_TABS_INFO,
+    defaultResponse: [],
+    data
+  })
+}
+
+export const updateTab = data => {
+  return createWorkerProcessRequest({
+    type: eventTypes.UPDATE_TAB,
+    defaultResponse: [],
+    data
+  })
+}

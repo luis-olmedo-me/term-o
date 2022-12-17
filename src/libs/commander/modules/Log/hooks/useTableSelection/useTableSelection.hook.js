@@ -55,7 +55,7 @@ export const useTableSelection = ({
 
   const handleDelete = () => {
     const newItemsCount = tableItems.length - selectedRows.length
-    const pagesDeletedCount = pages.length - newItemsCount / maxItems
+    const pagesDeletedCount = Math.floor(pages.length - newItemsCount / maxItems)
 
     changePage(pageNumber => {
       const newPageNumber = pageNumber - pagesDeletedCount

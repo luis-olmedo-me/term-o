@@ -181,7 +181,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
           command={command}
           maxItems={MAX_ITEMS}
           tableItems={tabs}
-          options={props.current ? currentTabsTableOptions : pastTabsTableOptions}
+          options={props.now ? currentTabsTableOptions : pastTabsTableOptions}
           onSelectionDelete={handleClosingTabsFromSelection}
           hasSelection={props.now}
           leftActions={startDateAction}

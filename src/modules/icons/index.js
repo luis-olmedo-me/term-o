@@ -9,6 +9,7 @@ import { Home } from './Home.icon'
 import { Info } from './Info.icon'
 import { Loader } from './Loader.icon'
 import { Logo } from './Logo.icon'
+import { Open } from './Open'
 import { Palette } from './Palette.icon'
 import { Pencil } from './Pencil.icon'
 import { Skull } from './Skull.icon'
@@ -31,5 +32,6 @@ export {
   Skull,
   Tag,
   Tick,
-  Diskette
+  Diskette,
+  Open
 }

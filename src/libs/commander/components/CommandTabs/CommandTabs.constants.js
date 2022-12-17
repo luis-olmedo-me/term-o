@@ -3,7 +3,7 @@ import * as React from 'preact'
 import { updateTab } from 'helpers/event.helpers'
 import { ImageIcon } from 'modules/components/ImageIcon'
 import { defaultCellActionIds } from 'modules/components/Table'
-import { Pencil } from 'modules/icons'
+import { Eye, Open } from 'modules/icons'
 import { optionTypes } from '../../constants/commands.constants'
 import { CommandTabs } from './CommandTabs.component'
 
@@ -137,7 +137,7 @@ export const tableCellActions = [
     id: tabsCellActionIds.SWITCH,
     title: 'Switch',
     onClick: ({ row }) => updateTab({ tabId: row.id, props: { active: true } }),
-    Component: <Pencil />
+    Component: <Open />
   }
 ]
 

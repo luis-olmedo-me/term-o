@@ -47,5 +47,3 @@ export const createGetTabsInfoProccess = (resolve, options) => {
     resolve(filteredTabs)
   })
 }
-
-createGetTabsInfoProccess(() => {}, {})

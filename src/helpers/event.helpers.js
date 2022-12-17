@@ -127,6 +127,8 @@ export const deletePageEvents = pageEventIds => {
   })
 }
 
+
+
 export const resetConfiguration = () => {
   return createFrontRequest({
     request: async function() {
@@ -161,6 +163,14 @@ export const closeTabs = data => {
 export const fetchTabsOpen = data => {
   return createWorkerProcessRequest({
     type: eventTypes.GET_TABS_OPEN,
+    defaultResponse: [],
+    data
+  })
+}
+
+export const getTabsInfo = data => {
+  return createWorkerProcessRequest({
+    type: eventTypes.GET_TABS_INFO,
     defaultResponse: [],
     data
   })

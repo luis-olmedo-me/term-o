@@ -89,7 +89,7 @@ export const Console = () => {
   )
 
   useEffect(function requestCurrentTabInfo() {
-    getTabsInfo({ active: true }).then(tabs => console.log('tabs', tabs))
+    getTabsInfo({ active: true, currentWindow: true }).then(([tabInfo]) => setTabInfo(tabInfo))
   }, [])
 
   const clearTerminal = useCallback(() => {
@@ -99,7 +99,8 @@ export const Console = () => {
   const outsideProps = useMemo(
     () => ({
       clearTerminal,
-      addNotification
+      addNotification,
+      tabInfo
     }),
     [clearTerminal, addNotification]
   )

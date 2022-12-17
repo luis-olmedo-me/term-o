@@ -10,7 +10,8 @@ import {
   createCloseTabsProcess,
   createGetTabsInfoProccess,
   createHistoryProcess,
-  createTabsOpenProcess
+  createTabsOpenProcess,
+  createUpdateTabProccess
 } from './background.processes'
 
 chrome.commands.onCommand.addListener(function(command) {
@@ -93,6 +94,17 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       const process = id
         ? processWaitList.getProcessById(id)
         : processWaitList.add(resolve => createHistoryProcess(resolve, data))
+
+      sendResponse({ status: 'ok', data: process })
+      break
+    }
+
+    case eventTypes.UPDATE_TAB: {
+      const { id, data } = request.data
+
+      const process = id
+        ? processWaitList.getProcessById(id)
+        : processWaitList.add(resolve => createUpdateTabProccess(resolve, data))
 
       sendResponse({ status: 'ok', data: process })
       break

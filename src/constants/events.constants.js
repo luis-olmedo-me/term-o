@@ -5,7 +5,8 @@ export const eventTypes = {
   CLOSE_OPEN_TABS: 'term-o-close-open-tabs',
   TOGGLE_CONSOLE: 'term-o-toggle-console',
   RESIZE: 'term-o-resize',
-  GET_TABS_INFO: 'term-o-get-tabs-info'
+  GET_TABS_INFO: 'term-o-get-tabs-info',
+  UPDATE_TAB: 'term-o-update-tab'
 }
 
 export const extensionKeyEvents = {

@@ -52,3 +52,11 @@ export const createGetTabsInfoProccess = (resolve, options) => {
     resolve(filteredTabs)
   })
 }
+
+export const createUpdateTabProccess = (resolve, data) => {
+  const { tabId, props } = data
+
+  chrome.tabs.update(tabId, props, () => {
+    resolve()
+  })
+}

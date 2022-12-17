@@ -104,6 +104,13 @@ export const tabsConfig = {
       type: optionTypes.NUMBER,
       defaultValue: 0,
       alias: 'g'
+    },
+    {
+      key: 'switch',
+      description: 'Switch tab in view',
+      type: optionTypes.STRING,
+      defaultValue: '',
+      alias: 's'
     }
   ],
   output: CommandTabs
@@ -116,6 +123,7 @@ export const tabsActionTypes = {
   KILL_TAB: 'KILL_TAB',
   RELOAD_TAB: 'RELOAD_TAB',
   GO: 'GO',
+  SWITCH: 'SWITCH',
   NONE: 'NONE'
 }
 

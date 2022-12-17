@@ -2,6 +2,7 @@ import * as React from 'preact'
 import { useCallback, useEffect, useState } from 'preact/hooks'
 
 import { closeTabs, fetchHistorial, fetchTabsOpen } from '@src/helpers/event.helpers'
+import { updateTab } from 'helpers/event.helpers'
 import {
   LogCard,
   LogContainer,
@@ -100,6 +101,10 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     setMessage(tabsMessages.closeSuccess)
   }, [props, setMessage])
 
+  const handleSwitch = useCallback(async () => {
+    updateTab({ tabId: props.switch, props: { active: true } })
+  }, [props, setMessage])
+
   const handleReloadTab = useCallback(() => {
     window.location.reload()
     setMessage(tabsMessages.reloadSuccess)
@@ -130,6 +135,9 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       case tabsActionTypes.GO:
         return handleGo()
 
+      case tabsActionTypes.SWITCH:
+        return handleSwitch()
+
       case tabsActionTypes.NONE:
         throw new Error('unexpectedError')
     }
@@ -140,7 +148,8 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     handleShowHistory,
     handleCloseTabs,
     handleReloadTab,
-    handleGo
+    handleGo,
+    handleSwitch
   ])
 
   useEffect(

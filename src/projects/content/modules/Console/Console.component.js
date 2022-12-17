@@ -13,6 +13,7 @@ import { useResize } from './hooks/useResize/useResize.hook.js'
 
 import { useNotifications } from '@modules/components/Notifications/hooks/useNotifications.hook.js'
 import { Notifications } from '@modules/components/Notifications/Notifications.component.js'
+import { getTabsInfo } from 'helpers/event.helpers.js'
 import { generateUUID } from 'helpers/utils.helpers.js'
 import { ConsoleLogs, ConsoleTitle, ConsoleWrapper } from './Console.styles.js'
 
@@ -22,6 +23,7 @@ export const Console = () => {
   const inputReference = useRef(null)
 
   const [histories, setHistories] = useState([])
+  const [tabInfo, setTabInfo] = useState({})
   const [hasPageEventsBeenRunned, setHasPageEventsBeenRunned] = useState(false)
 
   const { notifications, addNotification, showWorkerRequestError } = useNotifications()
@@ -85,6 +87,10 @@ export const Console = () => {
     },
     [isOpen]
   )
+
+  useEffect(function requestCurrentTabInfo() {
+    getTabsInfo({ active: true }).then(tabs => console.log('tabs', tabs))
+  }, [])
 
   const clearTerminal = useCallback(() => {
     setHistories([])

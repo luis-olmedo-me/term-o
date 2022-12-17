@@ -42,7 +42,12 @@ export const createTabsOpenProcess = (resolve, data) => {
 
 export const createGetTabsInfoProccess = (resolve, options) => {
   chrome.tabs.query(options, tabs => {
-    const filteredTabs = tabs.map(({ id, url }) => ({ id, url }))
+    const filteredTabs = tabs.map(({ favIconUrl, title, url, id }) => ({
+      favIconUrl,
+      title,
+      url,
+      id
+    }))
 
     resolve(filteredTabs)
   })

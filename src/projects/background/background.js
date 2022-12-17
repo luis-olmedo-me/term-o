@@ -65,6 +65,17 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       break
     }
 
+    case eventTypes.GET_TABS_INFO: {
+      const { id, data } = request.data
+
+      const process = id
+        ? processWaitList.getProcessById(id)
+        : processWaitList.add(resolve => createGetTabsInfoProccess(resolve, data))
+
+      sendResponse({ status: 'ok', data: process })
+      break
+    }
+
     case eventTypes.GET_TABS_OPEN: {
       const { id, data } = request.data
 
@@ -82,17 +93,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       const process = id
         ? processWaitList.getProcessById(id)
         : processWaitList.add(resolve => createHistoryProcess(resolve, data))
-
-      sendResponse({ status: 'ok', data: process })
-      break
-    }
-
-    case eventTypes.GET_TABS_INFO: {
-      const { id, data } = request.data
-
-      const process = id
-        ? processWaitList.getProcessById(id)
-        : processWaitList.add(resolve => createGetTabsInfoProccess(resolve, data))
 
       sendResponse({ status: 'ok', data: process })
       break

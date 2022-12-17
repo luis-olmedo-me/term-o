@@ -12,6 +12,7 @@ import {
 } from '../../modules/Log'
 import {
   MAX_ITEMS,
+  tableCellActions,
   tableComponents,
   tabsActionTypes,
   tabsTableOptions
@@ -185,6 +186,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
           leftActions={startDateAction}
           rightActions={endDateAction}
           components={tableComponents}
+          actions={tableCellActions}
         />
       )}
     </LogContainer>

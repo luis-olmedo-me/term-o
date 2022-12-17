@@ -1,7 +1,9 @@
 import * as React from 'preact'
 
+import { updateTab } from 'helpers/event.helpers'
 import { ImageIcon } from 'modules/components/ImageIcon'
 import { defaultCellActionIds } from 'modules/components/Table'
+import { Pencil } from 'modules/icons'
 import { optionTypes } from '../../constants/commands.constants'
 import { CommandTabs } from './CommandTabs.component'
 
@@ -127,6 +129,18 @@ export const tabsActionTypes = {
   NONE: 'NONE'
 }
 
+export const tabsCellActionIds = {
+  SWITCH: 'switch'
+}
+export const tableCellActions = [
+  {
+    id: tabsCellActionIds.SWITCH,
+    title: 'Switch',
+    onClick: ({ row }) => updateTab({ tabId: row.id, props: { active: true } }),
+    Component: <Pencil />
+  }
+]
+
 export const tableComponents = {
   imageIcon: ({ row }) => (
     <ImageIcon
@@ -167,7 +181,7 @@ export const tabsTableOptions = {
       minTableWidth: 0,
       field: 'url',
       cellRenderer: 'imageIcon',
-      actionIds: [defaultCellActionIds.COPY_VALUE]
+      actionIds: [defaultCellActionIds.COPY_VALUE, tabsCellActionIds.SWITCH]
     },
     {
       id: tabsColumnIds.HOSTNAME,

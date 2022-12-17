@@ -108,8 +108,8 @@ export const tabsConfig = {
     {
       key: 'switch',
       description: 'Switch tab in view',
-      type: optionTypes.STRING,
-      defaultValue: '',
+      type: optionTypes.NUMBER,
+      defaultValue: NaN,
       alias: 's'
     }
   ],

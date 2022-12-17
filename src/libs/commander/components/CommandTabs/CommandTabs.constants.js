@@ -156,7 +156,7 @@ export const tabsColumnIds = {
   TITLE: 'title',
   HOSTNAME: 'hostname'
 }
-export const tabsTableOptions = {
+export const currentTabsTableOptions = {
   columns: [
     {
       id: tabsColumnIds.ID,
@@ -182,6 +182,43 @@ export const tabsTableOptions = {
       field: 'url',
       cellRenderer: 'imageIcon',
       actionIds: [defaultCellActionIds.COPY_VALUE, tabsCellActionIds.SWITCH]
+    },
+    {
+      id: tabsColumnIds.HOSTNAME,
+      displayName: 'Host Name',
+      width: '15%',
+      minTableWidth: 665,
+      field: 'hostname',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
+    }
+  ]
+}
+export const pastTabsTableOptions = {
+  columns: [
+    {
+      id: tabsColumnIds.ID,
+      displayName: 'ID',
+      width: '5%',
+      minTableWidth: 900,
+      field: 'id',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
+    },
+    {
+      id: tabsColumnIds.DATE,
+      displayName: 'Date',
+      width: '25%',
+      minTableWidth: 0,
+      field: 'date',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
+    },
+    {
+      id: tabsColumnIds.TITLE,
+      displayName: 'Title',
+      width: '40%',
+      minTableWidth: 0,
+      field: 'url',
+      cellRenderer: 'imageIcon',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
       id: tabsColumnIds.HOSTNAME,

@@ -11,11 +11,12 @@ import {
   useMessageLog
 } from '../../modules/Log'
 import {
+  currentTabsTableOptions,
   MAX_ITEMS,
+  pastTabsTableOptions,
   tableCellActions,
   tableComponents,
-  tabsActionTypes,
-  tabsTableOptions
+  tabsActionTypes
 } from './CommandTabs.constants'
 import {
   getActionType,
@@ -180,7 +181,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
           command={command}
           maxItems={MAX_ITEMS}
           tableItems={tabs}
-          options={tabsTableOptions}
+          options={props.current ? currentTabsTableOptions : pastTabsTableOptions}
           onSelectionDelete={handleClosingTabsFromSelection}
           hasSelection={props.now}
           leftActions={startDateAction}

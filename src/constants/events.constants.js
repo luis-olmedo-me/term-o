@@ -4,7 +4,10 @@ export const eventTypes = {
   GET_HISTORIAL: 'term-o-get-historial',
   CLOSE_OPEN_TABS: 'term-o-close-open-tabs',
   TOGGLE_CONSOLE: 'term-o-toggle-console',
-  RESIZE: 'term-o-resize'
+  RESIZE: 'term-o-resize',
+  GET_TABS_INFO: 'term-o-get-tabs-info',
+  UPDATE_TAB: 'term-o-update-tab',
+  UPDATE_WINDOW: 'term-o-update-window'
 }
 
 export const extensionKeyEvents = {

@@ -101,6 +101,13 @@ export const tabsConfig = {
       alias: 'uc'
     },
     {
+      key: 'permissions',
+      description: 'Show tab permissions',
+      type: optionTypes.BOOLEAN,
+      defaultValue: false,
+      alias: 'P'
+    },
+    {
       key: 'go',
       description: 'Move between back or forward over the visited pages',
       type: optionTypes.NUMBER,
@@ -114,6 +121,7 @@ export const tabsConfig = {
 export const tabsActionTypes = {
   SHOW_CURRENT_TABS: 'SHOW_CURRENT_TABS',
   SHOW_HISTORY: 'SHOW_HISTORY',
+  SHOW_PERMISSIONS: 'SHOW_PERMISSIONS',
   REDIRECT: 'REDIRECT',
   KILL_TAB: 'KILL_TAB',
   RELOAD_TAB: 'RELOAD_TAB',

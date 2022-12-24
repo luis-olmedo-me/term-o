@@ -1,7 +1,8 @@
 import { formatDate } from '@src/helpers/dates.helpers'
 import { tabsActionTypes } from './CommandTabs.constants'
 
-export const getActionType = ({ now, past, open, close, reload, go }) => {
+export const getActionType = ({ now, past, open, close, reload, go, permissions }) => {
+  if (permissions) return tabsActionTypes.SHOW_PERMISSIONS
   if (reload) return tabsActionTypes.RELOAD_TAB
   if (go) return tabsActionTypes.GO
   if (close.length) return now ? tabsActionTypes.CLOSE_OPEN_TABS : tabsActionTypes.NONE

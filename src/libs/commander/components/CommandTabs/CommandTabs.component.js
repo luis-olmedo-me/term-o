@@ -71,6 +71,16 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     setTabs(tabItems)
   }, [props])
 
+  const handleShowPermissions = useCallback(async () => {
+    const options = validateTabsFilters(props)
+    const tabsOpen = await fetchTabsOpen(options)
+    const tabItems = turnOpenTabsToTableItems({ tabsOpen })
+
+    if (!tabsOpen.length) throw new Error('noTabsFound')
+
+    setTabs(tabItems)
+  }, [props])
+
   const handleRedirect = useCallback(() => {
     const target = props.useCurrent ? '_self' : '_blank'
 
@@ -118,6 +128,9 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       case tabsActionTypes.SHOW_HISTORY:
         return await handleShowHistory()
 
+      case tabsActionTypes.SHOW_PERMISSIONS:
+        return await handleShowPermissions()
+
       case tabsActionTypes.CLOSE_OPEN_TABS:
         return await handleCloseTabs()
 
@@ -140,7 +153,8 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     handleShowHistory,
     handleCloseTabs,
     handleReloadTab,
-    handleGo
+    handleGo,
+    handleShowPermissions
   ])
 
   useEffect(

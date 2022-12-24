@@ -1,5 +1,6 @@
 import * as React from 'preact'
 
+import { updateTab, updateWindow } from 'helpers/event.helpers'
 import { ImageIcon } from 'modules/components/ImageIcon'
 import { defaultCellActionIds } from 'modules/components/Table'
 import { optionTypes } from '../../constants/commands.constants'
@@ -118,6 +119,21 @@ export const tabsActionTypes = {
   GO: 'GO',
   NONE: 'NONE'
 }
+
+export const tabsCellActionIds = {
+  SWITCH: 'switch'
+}
+export const tableCellActions = [
+  {
+    id: tabsCellActionIds.SWITCH,
+    title: 'Switch',
+    onClick: ({ row }) => {
+      updateTab({ tabId: row.id, props: { active: true } })
+      if (!row.currentWindow) updateWindow({ windowId: row.windowId, props: { focused: true } })
+    },
+    Component: <Open />
+  }
+]
 
 export const tableComponents = {
   imageIcon: ({ row }) => (

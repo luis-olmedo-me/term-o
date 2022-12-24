@@ -109,5 +109,16 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       sendResponse({ status: 'ok', data: process })
       break
     }
+
+    case eventTypes.UPDATE_TAB: {
+      const { id, data } = request.data
+
+      const process = id
+        ? processWaitList.getProcessById(id)
+        : processWaitList.add(resolve => createUpdateTabProccess(resolve, data))
+
+      sendResponse({ status: 'ok', data: process })
+      break
+    }
   }
 })

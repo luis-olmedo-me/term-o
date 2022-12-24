@@ -3,6 +3,7 @@ import * as React from 'preact'
 import { updateTab, updateWindow } from 'helpers/event.helpers'
 import { ImageIcon } from 'modules/components/ImageIcon'
 import { defaultCellActionIds } from 'modules/components/Table'
+import { Open } from 'modules/icons'
 import { optionTypes } from '../../constants/commands.constants'
 import { CommandTabs } from './CommandTabs.component'
 

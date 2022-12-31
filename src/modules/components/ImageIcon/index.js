@@ -1,3 +1,3 @@
 import { ImageIcon } from './ImageIcon.component'
 
-export { ImageIcon }
+export default ImageIcon

@@ -190,6 +190,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
           maxItems={MAX_ITEMS}
           tableItems={tabPermissions}
           options={permissionTableOptions}
+          components={tableComponents}
           hasSelection={false}
         />
       )}

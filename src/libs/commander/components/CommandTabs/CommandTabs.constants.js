@@ -1,7 +1,8 @@
 import * as React from 'preact'
 
+import ImageIcon from '@modules/components/ImageIcon'
+import Switch from '@modules/components/Switch'
 import { updateTab, updateWindow } from 'helpers/event.helpers'
-import { ImageIcon } from 'modules/components/ImageIcon'
 import { defaultCellActionIds } from 'modules/components/Table'
 import { Open } from 'modules/icons'
 import { optionTypes } from '../../constants/commands.constants'
@@ -150,7 +151,8 @@ export const tableComponents = {
       url={`https://www.google.com/s2/favicons?domain=${row.hostname}`}
       label={row.title}
     />
-  )
+  ),
+  switch: ({ row }) => <Switch checked={row.enable} />
 }
 
 export const MAX_ITEMS = 10
@@ -227,8 +229,10 @@ export const permissionTableOptions = {
       displayName: 'State',
       width: '33%',
       minTableWidth: 0,
-      field: 'state',
-      actionIds: []
+      field: 'enable',
+      cellRenderer: 'switch',
+      actionIds: [],
+      internal: false
     }
   ]
 }
@@ -240,6 +244,6 @@ export const tabPermissions = [
   {
     id: tabPermissionIds.OPEN_TABS,
     name: 'Tabs creation',
-    enable: 'true'
+    enable: true
   }
 ]

@@ -153,6 +153,8 @@ export const tableComponents = {
   )
 }
 
+export const MAX_ITEMS = 10
+
 export const tabsColumnIds = {
   ID: 'id',
   DATE: 'date',
@@ -197,4 +199,47 @@ export const tabsTableOptions = {
   ]
 }
 
-export const MAX_ITEMS = 10
+export const permissionColumnIds = {
+  ID: 'id',
+  NAME: 'name',
+  STATE: 'state'
+}
+export const permissionTableOptions = {
+  columns: [
+    {
+      id: permissionColumnIds.ID,
+      displayName: 'ID',
+      width: '33%',
+      minTableWidth: 0,
+      field: 'id',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
+    },
+    {
+      id: permissionColumnIds.NAME,
+      displayName: 'Name',
+      width: '33%',
+      minTableWidth: 0,
+      field: 'name',
+      actionIds: []
+    },
+    {
+      id: permissionColumnIds.STATE,
+      displayName: 'State',
+      width: '33%',
+      minTableWidth: 0,
+      field: 'state',
+      actionIds: []
+    }
+  ]
+}
+
+export const tabPermissionIds = {
+  OPEN_TABS: 'open_tabs'
+}
+export const tabPermissions = [
+  {
+    id: tabPermissionIds.OPEN_TABS,
+    name: 'Tabs creation',
+    enable: 'true'
+  }
+]

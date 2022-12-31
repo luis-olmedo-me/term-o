@@ -11,7 +11,9 @@ import {
 } from '../../modules/Log'
 import {
   MAX_ITEMS,
+  permissionTableOptions,
   tableComponents,
+  tabPermissions,
   tabsActionTypes,
   tabsTableOptions
 } from './CommandTabs.constants'
@@ -71,16 +73,6 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     setTabs(tabItems)
   }, [props])
 
-  const handleShowPermissions = useCallback(async () => {
-    const options = validateTabsFilters(props)
-    const tabsOpen = await fetchTabsOpen(options)
-    const tabItems = turnOpenTabsToTableItems({ tabsOpen })
-
-    if (!tabsOpen.length) throw new Error('noTabsFound')
-
-    setTabs(tabItems)
-  }, [props])
-
   const handleRedirect = useCallback(() => {
     const target = props.useCurrent ? '_self' : '_blank'
 
@@ -128,9 +120,6 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
       case tabsActionTypes.SHOW_HISTORY:
         return await handleShowHistory()
 
-      case tabsActionTypes.SHOW_PERMISSIONS:
-        return await handleShowPermissions()
-
       case tabsActionTypes.CLOSE_OPEN_TABS:
         return await handleCloseTabs()
 
@@ -153,8 +142,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     handleShowHistory,
     handleCloseTabs,
     handleReloadTab,
-    handleGo,
-    handleShowPermissions
+    handleGo
   ])
 
   useEffect(
@@ -171,6 +159,9 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     [doAction, setMessage, finish]
   )
 
+  const hasTabs = Boolean(tabs.length)
+  const showPermissions = props.permissions
+
   return (
     <LogContainer>
       {messageLog && (
@@ -179,7 +170,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
         </LogCard>
       )}
 
-      {!messageLog && (
+      {!messageLog && hasTabs && (
         <TableLog
           command={command}
           maxItems={MAX_ITEMS}
@@ -190,6 +181,16 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
           leftActions={startDateAction}
           rightActions={endDateAction}
           components={tableComponents}
+        />
+      )}
+
+      {!messageLog && showPermissions && (
+        <TableLog
+          command={command}
+          maxItems={MAX_ITEMS}
+          tableItems={tabPermissions}
+          options={permissionTableOptions}
+          hasSelection={false}
         />
       )}
     </LogContainer>

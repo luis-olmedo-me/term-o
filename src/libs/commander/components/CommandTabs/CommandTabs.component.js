@@ -1,6 +1,7 @@
 import * as React from 'preact'
 import { useCallback, useEffect, useState } from 'preact/hooks'
 
+import Switch from '@modules/components/Switch'
 import { closeTabs, fetchHistorial, fetchTabsOpen } from '@src/helpers/event.helpers'
 import {
   LogCard,
@@ -162,6 +163,10 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const hasTabs = Boolean(tabs.length)
   const showPermissions = props.permissions
 
+  const permissionTableComponents = {
+    switch: ({ row }) => <Switch checked={row.enable} />
+  }
+
   return (
     <LogContainer>
       {messageLog && (
@@ -190,7 +195,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
           maxItems={MAX_ITEMS}
           tableItems={tabPermissions}
           options={permissionTableOptions}
-          components={tableComponents}
+          components={permissionTableComponents}
           hasSelection={false}
         />
       )}

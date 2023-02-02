@@ -1,7 +1,6 @@
 import * as React from 'preact'
 
 import ImageIcon from '@modules/components/ImageIcon'
-import Switch from '@modules/components/Switch'
 import { updateTab, updateWindow } from 'helpers/event.helpers'
 import { defaultCellActionIds } from 'modules/components/Table'
 import { Open } from 'modules/icons'
@@ -151,8 +150,7 @@ export const tableComponents = {
       url={`https://www.google.com/s2/favicons?domain=${row.hostname}`}
       label={row.title}
     />
-  ),
-  switch: ({ row }) => <Switch checked={row.enable} />
+  )
 }
 
 export const MAX_ITEMS = 10

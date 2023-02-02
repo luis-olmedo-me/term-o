@@ -26,6 +26,7 @@ import {
   validateTabsFilters
 } from './CommandTabs.helpers'
 import { tabsMessages } from './CommandTabs.messages'
+import { SwitchWrapper } from './CommandTabs.styles'
 
 export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const [tabs, setTabs] = useState([])
@@ -180,10 +181,12 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
 
   const permissionTableComponents = {
     switch: ({ row }) => (
-      <Switch
-        checked={row.enable}
-        onChange={event => handleSwitchTabsCreationPermission(event, row)}
-      />
+      <SwitchWrapper>
+        <Switch
+          checked={row.enable}
+          onChange={event => handleSwitchTabsCreationPermission(event, row)}
+        />
+      </SwitchWrapper>
     )
   }
 

@@ -7,7 +7,9 @@ export const eventTypes = {
   RESIZE: 'term-o-resize',
   GET_TABS_INFO: 'term-o-get-tabs-info',
   UPDATE_TAB: 'term-o-update-tab',
-  UPDATE_WINDOW: 'term-o-update-window'
+  UPDATE_WINDOW: 'term-o-update-window',
+  AUTOMATIC_CLOSE_TABS: 'term-o-automatic-close-tabs',
+  CANCEL_AUTOMATIC_CLOSE_TABS: 'term-o-cancel-automatic-close-tabs'
 }
 
 export const extensionKeyEvents = {

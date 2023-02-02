@@ -1,6 +1,7 @@
 import * as React from 'preact'
 import { useCallback, useEffect, useState } from 'preact/hooks'
 
+import { automaticallyCloseTabs, cancelAutomaticallyCloseTabs } from '@helpers/event.helpers'
 import Switch from '@modules/components/Switch'
 import { closeTabs, fetchHistorial, fetchTabsOpen } from '@src/helpers/event.helpers'
 import {
@@ -11,10 +12,10 @@ import {
   useMessageLog
 } from '../../modules/Log'
 import {
+  defaultTabPermissions,
   MAX_ITEMS,
   permissionTableOptions,
   tableComponents,
-  tabPermissions,
   tabsActionTypes,
   tabsTableOptions
 } from './CommandTabs.constants'
@@ -28,6 +29,7 @@ import { tabsMessages } from './CommandTabs.messages'
 
 export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const [tabs, setTabs] = useState([])
+  const [tablePermissions, setTabPermissions] = useState(defaultTabPermissions)
 
   const actionType = getActionType(props)
 
@@ -163,8 +165,26 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const hasTabs = Boolean(tabs.length)
   const showPermissions = props.permissions
 
+  const handleSwitchTabsCreationPermission = async (event, row) => {
+    const shouldEnable = event.checked
+
+    if (shouldEnable) await automaticallyCloseTabs([row.id])
+    else await cancelAutomaticallyCloseTabs([row.id])
+
+    setTabPermissions(oldTabPermissions => {
+      return oldTabPermissions.map(permission =>
+        permission.id === row.id ? { ...permission, enable: shouldEnable } : permission
+      )
+    })
+  }
+
   const permissionTableComponents = {
-    switch: ({ row }) => <Switch checked={row.enable} />
+    switch: ({ row }) => (
+      <Switch
+        checked={row.enable}
+        onChange={event => handleSwitchTabsCreationPermission(event, row)}
+      />
+    )
   }
 
   return (
@@ -193,7 +213,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
         <TableLog
           command={command}
           maxItems={MAX_ITEMS}
-          tableItems={tabPermissions}
+          tableItems={tablePermissions}
           options={permissionTableOptions}
           components={permissionTableComponents}
           hasSelection={false}

@@ -20,6 +20,7 @@ export const FakeInput = styled.div`
   height: 30px;
   border-radius: 20px;
   background-color: ${t('blue.700')};
+  pointer-events: none;
 
   &:before {
     content: '';
@@ -30,6 +31,7 @@ export const FakeInput = styled.div`
     height: 25px;
     border-radius: 100%;
     background-color: ${t('neutral.200')};
+    transition: left 0.3s ease-in-out;
   }
 
   &.checked:before {

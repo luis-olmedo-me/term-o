@@ -189,3 +189,19 @@ export const updateWindow = data => {
     data
   })
 }
+
+export const automaticallyCloseTabs = data => {
+  return createWorkerRequest({
+    type: eventTypes.AUTOMATIC_CLOSE_TABS,
+    defaultResponse: null,
+    data
+  })
+}
+
+export const cancelAutomaticallyCloseTabs = data => {
+  return createWorkerRequest({
+    type: eventTypes.CANCEL_AUTOMATIC_CLOSE_TABS,
+    defaultResponse: null,
+    data
+  })
+}

@@ -238,10 +238,10 @@ export const permissionTableOptions = {
 export const tabPermissionIds = {
   OPEN_TABS: 'open_tabs'
 }
-export const tabPermissions = [
+export const defaultTabPermissions = [
   {
     id: tabPermissionIds.OPEN_TABS,
     name: 'Tabs creation',
-    enable: true
+    enable: false
   }
 ]

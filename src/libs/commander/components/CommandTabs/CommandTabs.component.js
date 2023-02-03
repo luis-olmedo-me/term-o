@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'preact/hooks'
 import { automaticallyCloseTabs, cancelAutomaticallyCloseTabs } from '@helpers/event.helpers'
 import Switch from '@modules/components/Switch'
 import { closeTabs, fetchHistorial, fetchTabsOpen } from '@src/helpers/event.helpers'
+import { getTabsInfo } from 'helpers/event.helpers'
 import {
   LogCard,
   LogContainer,
@@ -167,14 +168,16 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const showPermissions = props.permissions
 
   const handleSwitchTabsCreationPermission = async (event, row) => {
-    const shouldEnable = event.checked
+    const enable = event.checked
 
-    if (shouldEnable) await automaticallyCloseTabs([row.id])
-    else await cancelAutomaticallyCloseTabs([row.id])
+    const [currentTab] = await getTabsInfo({ active: true, currentWindow: true })
+
+    if (enable) await cancelAutomaticallyCloseTabs([currentTab.id])
+    else await automaticallyCloseTabs([currentTab.id])
 
     setTabPermissions(oldTabPermissions => {
       return oldTabPermissions.map(permission =>
-        permission.id === row.id ? { ...permission, enable: shouldEnable } : permission
+        permission.id === row.id ? { ...permission, enable } : permission
       )
     })
   }

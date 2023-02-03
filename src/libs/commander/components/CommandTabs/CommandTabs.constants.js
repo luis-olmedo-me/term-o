@@ -229,8 +229,7 @@ export const permissionTableOptions = {
       minTableWidth: 0,
       field: 'enable',
       cellRenderer: 'switch',
-      actionIds: [],
-      internal: false
+      actionIds: []
     }
   ]
 }
@@ -242,6 +241,6 @@ export const defaultTabPermissions = [
   {
     id: tabPermissionIds.OPEN_TABS,
     name: 'Tabs creation',
-    enable: false
+    enable: true
   }
 ]

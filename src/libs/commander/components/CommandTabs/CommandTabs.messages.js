@@ -29,7 +29,7 @@ export const tabsMessages = {
   },
   invalidPermissions: {
     message: 'Invalid permissions IDs.',
-    type: parameterTypes.SUCCESS
+    type: parameterTypes.ERROR
   },
   noTabsFound: {
     message: 'No tabs where found.',

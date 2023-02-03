@@ -65,6 +65,10 @@ const getBashTheme = theme => [
     style: { color: theme.pink[800] }
   },
   {
+    pattern: /false|true/g,
+    style: { color: theme.cyan[800] }
+  },
+  {
     pattern: /\b(&{2,3}|[|])\b/g,
     style: { color: theme.purple[900] }
   },

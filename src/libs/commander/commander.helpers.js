@@ -13,7 +13,7 @@ export const parsePropsIntoSuggestions = propsConfigs => {
           {
             ...propConfig,
             alias: `-${propConfig.alias}`,
-            value: `--${propConfig.key}`
+            value: `--${kebabize(propConfig.key)}`
           }
         ]
 

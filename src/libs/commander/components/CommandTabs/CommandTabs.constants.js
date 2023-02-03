@@ -113,6 +113,14 @@ export const tabsConfig = {
       type: optionTypes.NUMBER,
       defaultValue: 0,
       alias: 'g'
+    },
+    {
+      key: 'togglePermission',
+      description: 'Toggle permission for current tab',
+      type: optionTypes.OBJECT,
+      objectTypes: ['boolean'],
+      defaultValue: {},
+      alias: 'tp'
     }
   ],
   output: CommandTabs
@@ -122,6 +130,7 @@ export const tabsActionTypes = {
   SHOW_CURRENT_TABS: 'SHOW_CURRENT_TABS',
   SHOW_HISTORY: 'SHOW_HISTORY',
   SHOW_PERMISSIONS: 'SHOW_PERMISSIONS',
+  TOGGLE_PERMISSIONS: 'TOGGLE_PERMISSIONS',
   REDIRECT: 'REDIRECT',
   KILL_TAB: 'KILL_TAB',
   RELOAD_TAB: 'RELOAD_TAB',
@@ -237,6 +246,9 @@ export const permissionTableOptions = {
 export const tabPermissionIds = {
   OPEN_TABS: 'open_tabs'
 }
+
+export const possibleTabPermissionIds = Object.values(tabPermissionIds)
+
 export const defaultTabPermissions = [
   {
     id: tabPermissionIds.OPEN_TABS,

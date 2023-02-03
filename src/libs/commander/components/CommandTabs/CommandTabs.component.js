@@ -16,7 +16,9 @@ import {
   defaultTabPermissions,
   MAX_ITEMS,
   permissionTableOptions,
+  possibleTabPermissionIds,
   tableComponents,
+  tabPermissionIds,
   tabsActionTypes,
   tabsTableOptions
 } from './CommandTabs.constants'
@@ -117,8 +119,35 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     setMessage(tabsMessages.goSuccess)
   }, [props, setMessage])
 
+  const handleTogglePermission = useCallback(async () => {
+    const hasValidKeys = Object.keys(props.togglePermission).every(key =>
+      possibleTabPermissionIds.includes(key)
+    )
+
+    if (!hasValidKeys) throw new Error('invalidPermissions')
+
+    const [currentTab] = await getTabsInfo({ active: true, currentWindow: true })
+
+    const requests = Object.entries(props.togglePermission).map(([id, value]) => {
+      if (id === tabPermissionIds.OPEN_TABS) {
+        return value
+          ? cancelAutomaticallyCloseTabs([currentTab.id])
+          : automaticallyCloseTabs([currentTab.id])
+      }
+
+      return null
+    })
+
+    await Promise.all(requests)
+
+    setMessage(tabsMessages.permissionsChangeSuccess)
+  }, [props, setMessage])
+
   const doAction = useCallback(async () => {
     switch (actionType) {
+      case tabsActionTypes.TOGGLE_PERMISSIONS:
+        return await handleTogglePermission()
+
       case tabsActionTypes.SHOW_CURRENT_TABS:
         return await handleShowTabList()
 
@@ -147,7 +176,8 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     handleShowHistory,
     handleCloseTabs,
     handleReloadTab,
-    handleGo
+    handleGo,
+    handleTogglePermission
   ])
 
   useEffect(

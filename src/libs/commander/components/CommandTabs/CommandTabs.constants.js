@@ -293,11 +293,3 @@ export const tabPermissionIds = {
 }
 
 export const possibleTabPermissionIds = Object.values(tabPermissionIds)
-
-export const defaultTabPermissions = [
-  {
-    id: tabPermissionIds.OPEN_TABS,
-    name: 'Tabs creation',
-    enable: true
-  }
-]

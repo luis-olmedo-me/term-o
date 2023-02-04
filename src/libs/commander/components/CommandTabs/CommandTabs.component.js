@@ -18,8 +18,9 @@ import {
   useMessageLog
 } from '../../modules/Log'
 import {
-  defaultTabPermissions,
+  currentTabsTableOptions,
   MAX_ITEMS,
+  pastTabsTableOptions,
   permissionTableOptions,
   possibleTabPermissionIds,
   tableComponents,

@@ -1,5 +1,5 @@
-import { removeDuplicatedFromArray } from '@helpers/utils.helpers'
-import { processWaitList } from '@libs/process-wait-list/processWaitList.service'
+import processWaitList from '@libs/process-wait-list'
+import tabAutomaticCloser from '@libs/tabs-automatic-closer'
 import {
   eventTypes,
   extensionKeyEventNames,
@@ -146,31 +146,3 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }
   }
 })
-
-class TabAutomaticCloser {
-  constructor() {
-    this.bannedTabIds = []
-
-    chrome.tabs.onCreated.addListener(this.onTabCreation.bind(this))
-  }
-
-  getBannedTabs() {
-    return this.bannedTabIds
-  }
-
-  onTabCreation(tab) {
-    if (this.bannedTabIds.includes(tab.openerTabId)) chrome.tabs.remove(tab.id)
-  }
-
-  addTabs(tabIds) {
-    const newBannedTabIds = [...this.bannedTabIds, ...tabIds]
-
-    this.bannedTabIds = removeDuplicatedFromArray(newBannedTabIds)
-  }
-
-  removeTabs(tabIds) {
-    this.bannedTabIds = this.bannedTabIds.filter(id => tabIds.includes(id))
-  }
-}
-
-const tabAutomaticCloser = new TabAutomaticCloser()

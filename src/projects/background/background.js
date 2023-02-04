@@ -9,6 +9,7 @@ import { invalidURLsStarts } from './background.constants'
 import { resizeFull, resizeLeft, resizeRight, toggleTerminal } from './background.helpers'
 import {
   createCloseTabsProcess,
+  createGetTabsInfoProccess,
   createHistoryProcess,
   createTabsOpenProcess,
   createUpdateTabProccess,
@@ -62,6 +63,17 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       const process = id
         ? processWaitList.getProcessById(id)
         : processWaitList.add(resolve => createCloseTabsProcess(resolve, data))
+
+      sendResponse({ status: 'ok', data: process })
+      break
+    }
+
+    case eventTypes.GET_TABS_INFO: {
+      const { id, data } = request.data
+
+      const process = id
+        ? processWaitList.getProcessById(id)
+        : processWaitList.add(resolve => createGetTabsInfoProccess(resolve, data))
 
       sendResponse({ status: 'ok', data: process })
       break

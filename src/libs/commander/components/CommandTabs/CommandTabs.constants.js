@@ -1,9 +1,9 @@
 import * as React from 'preact'
 
+import { updateTab, updateWindow } from '@helpers/event.helpers'
 import ImageIcon from '@modules/components/ImageIcon'
-import { updateTab, updateWindow } from 'helpers/event.helpers'
-import { defaultCellActionIds } from 'modules/components/Table'
-import { Open } from 'modules/icons'
+import { defaultCellActionIds } from '@modules/components/Table'
+import { Open } from '@modules/icons'
 import { optionTypes } from '../../constants/commands.constants'
 import { CommandTabs } from './CommandTabs.component'
 
@@ -121,6 +121,13 @@ export const tabsConfig = {
       objectTypes: ['boolean'],
       defaultValue: {},
       alias: 'tp'
+    },
+    {
+      key: 'switch',
+      description: 'Switch tab in view',
+      type: optionTypes.NUMBER,
+      defaultValue: NaN,
+      alias: 's'
     }
   ],
   output: CommandTabs
@@ -135,6 +142,7 @@ export const tabsActionTypes = {
   KILL_TAB: 'KILL_TAB',
   RELOAD_TAB: 'RELOAD_TAB',
   GO: 'GO',
+  SWITCH: 'SWITCH',
   NONE: 'NONE'
 }
 
@@ -170,7 +178,44 @@ export const tabsColumnIds = {
   TITLE: 'title',
   HOSTNAME: 'hostname'
 }
-export const tabsTableOptions = {
+export const currentTabsTableOptions = {
+  columns: [
+    {
+      id: tabsColumnIds.ID,
+      displayName: 'ID',
+      width: '5%',
+      minTableWidth: 900,
+      field: 'id',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
+    },
+    {
+      id: tabsColumnIds.DATE,
+      displayName: 'Date',
+      width: '25%',
+      minTableWidth: 0,
+      field: 'date',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
+    },
+    {
+      id: tabsColumnIds.TITLE,
+      displayName: 'Title',
+      width: '40%',
+      minTableWidth: 0,
+      field: 'url',
+      cellRenderer: 'imageIcon',
+      actionIds: [defaultCellActionIds.COPY_VALUE, tabsCellActionIds.SWITCH]
+    },
+    {
+      id: tabsColumnIds.HOSTNAME,
+      displayName: 'Host Name',
+      width: '15%',
+      minTableWidth: 665,
+      field: 'hostname',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
+    }
+  ]
+}
+export const pastTabsTableOptions = {
   columns: [
     {
       id: tabsColumnIds.ID,

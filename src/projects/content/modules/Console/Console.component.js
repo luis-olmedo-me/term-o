@@ -11,9 +11,10 @@ import { resizeTypes, singleResizeTypes } from './hooks/useResize/useResize.cons
 import { useConfig } from './hooks/useConfig.hook.js'
 import { useResize } from './hooks/useResize/useResize.hook.js'
 
+import { getTabsInfo } from '@helpers/event.helpers.js'
+import { generateUUID } from '@helpers/utils.helpers.js'
 import { useNotifications } from '@modules/components/Notifications/hooks/useNotifications.hook.js'
 import { Notifications } from '@modules/components/Notifications/Notifications.component.js'
-import { generateUUID } from 'helpers/utils.helpers.js'
 import { ConsoleLogs, ConsoleTitle, ConsoleWrapper } from './Console.styles.js'
 
 export const Console = () => {
@@ -22,6 +23,7 @@ export const Console = () => {
   const inputReference = useRef(null)
 
   const [histories, setHistories] = useState([])
+  const [tabInfo, setTabInfo] = useState({})
   const [hasPageEventsBeenRunned, setHasPageEventsBeenRunned] = useState(false)
 
   const { notifications, addNotification, showWorkerRequestError } = useNotifications()
@@ -86,6 +88,10 @@ export const Console = () => {
     [isOpen]
   )
 
+  useEffect(function requestCurrentTabInfo() {
+    getTabsInfo({ active: true, currentWindow: true }).then(([tabInfo]) => setTabInfo(tabInfo))
+  }, [])
+
   const clearTerminal = useCallback(() => {
     setHistories([])
   }, [])
@@ -93,7 +99,8 @@ export const Console = () => {
   const outsideProps = useMemo(
     () => ({
       clearTerminal,
-      addNotification
+      addNotification,
+      tabInfo
     }),
     [clearTerminal, addNotification]
   )

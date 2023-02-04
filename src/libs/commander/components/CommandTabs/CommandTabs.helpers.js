@@ -9,8 +9,10 @@ export const getActionType = ({
   reload,
   go,
   permissions,
-  togglePermission
+  togglePermission,
+  switch: switchTab
 }) => {
+  if (!Number.isNaN(switchTab)) return tabsActionTypes.SWITCH
   if (Object.keys(togglePermission).length) return tabsActionTypes.TOGGLE_PERMISSIONS
   if (permissions) return tabsActionTypes.SHOW_PERMISSIONS
   if (reload) return tabsActionTypes.RELOAD_TAB

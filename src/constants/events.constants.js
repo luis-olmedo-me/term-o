@@ -9,7 +9,8 @@ export const eventTypes = {
   UPDATE_TAB: 'term-o-update-tab',
   UPDATE_WINDOW: 'term-o-update-window',
   AUTOMATIC_CLOSE_TABS: 'term-o-automatic-close-tabs',
-  CANCEL_AUTOMATIC_CLOSE_TABS: 'term-o-cancel-automatic-close-tabs'
+  CANCEL_AUTOMATIC_CLOSE_TABS: 'term-o-cancel-automatic-close-tabs',
+  GET_AUTOMATIC_CLOSE_TABS: 'term-o-get-automatic-close-tabs'
 }
 
 export const extensionKeyEvents = {

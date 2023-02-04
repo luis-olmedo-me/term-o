@@ -1,5 +1,5 @@
 import { formatDate } from '@src/helpers/dates.helpers'
-import { tabsActionTypes } from './CommandTabs.constants'
+import { tabPermissionIds, tabsActionTypes } from './CommandTabs.constants'
 
 export const getActionType = ({
   now,
@@ -90,4 +90,14 @@ export const turnOpenTabsToTableItems = ({ tabsOpen }) => {
       hostname: new URL(tab.url).hostname
     }
   })
+}
+
+export const generatePermissionsAsTable = ({ canOpenTabs }) => {
+  return [
+    {
+      id: tabPermissionIds.OPEN_TABS,
+      name: 'Tabs creation',
+      enable: !canOpenTabs
+    }
+  ]
 }

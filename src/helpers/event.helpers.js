@@ -205,3 +205,10 @@ export const cancelAutomaticallyCloseTabs = data => {
     data
   })
 }
+
+export const getAutomaticallyCloseTabs = () => {
+  return createWorkerRequest({
+    type: eventTypes.GET_AUTOMATIC_CLOSE_TABS,
+    defaultResponse: []
+  })
+}

@@ -137,6 +137,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       sendResponse({ status: 'ok', data: null })
       break
     }
+
+    case eventTypes.GET_AUTOMATIC_CLOSE_TABS: {
+      const bannedTabs = tabAutomaticCloser.getBannedTabs()
+
+      sendResponse({ status: 'ok', data: bannedTabs })
+      break
+    }
   }
 })
 
@@ -145,6 +152,10 @@ class TabAutomaticCloser {
     this.bannedTabIds = []
 
     chrome.tabs.onCreated.addListener(this.onTabCreation.bind(this))
+  }
+
+  getBannedTabs() {
+    return this.bannedTabIds
   }
 
   onTabCreation(tab) {

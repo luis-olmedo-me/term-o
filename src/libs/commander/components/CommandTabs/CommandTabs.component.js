@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'preact/hooks'
 import { automaticallyCloseTabs, cancelAutomaticallyCloseTabs } from '@helpers/event.helpers'
 import Switch from '@modules/components/Switch'
 import { closeTabs, fetchHistorial, fetchTabsOpen } from '@src/helpers/event.helpers'
-import { getTabsInfo } from 'helpers/event.helpers'
+import { getAutomaticallyCloseTabs, getTabsInfo } from 'helpers/event.helpers'
 import {
   LogCard,
   LogContainer,
@@ -23,6 +23,7 @@ import {
   tabsTableOptions
 } from './CommandTabs.constants'
 import {
+  generatePermissionsAsTable,
   getActionType,
   turnOpenTabsToTableItems,
   validateHistoryFilters,
@@ -33,7 +34,7 @@ import { SwitchWrapper } from './CommandTabs.styles'
 
 export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const [tabs, setTabs] = useState([])
-  const [tablePermissions, setTabPermissions] = useState(defaultTabPermissions)
+  const [tablePermissions, setTabPermissions] = useState([])
 
   const actionType = getActionType(props)
 
@@ -119,6 +120,16 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     setMessage(tabsMessages.goSuccess)
   }, [props, setMessage])
 
+  const handleShowPermissions = useCallback(async () => {
+    const automaticallyClosedTabs = await getAutomaticallyCloseTabs()
+    const [currentTab] = await getTabsInfo({ active: true, currentWindow: true })
+
+    const canOpenTabs = automaticallyClosedTabs.includes(currentTab.id)
+    const permissionAsTableItems = generatePermissionsAsTable({ canOpenTabs })
+
+    setTabPermissions(permissionAsTableItems)
+  }, [props, setMessage])
+
   const handleTogglePermission = useCallback(async () => {
     const hasValidKeys = Object.keys(props.togglePermission).every(key =>
       possibleTabPermissionIds.includes(key)
@@ -147,6 +158,9 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     switch (actionType) {
       case tabsActionTypes.TOGGLE_PERMISSIONS:
         return await handleTogglePermission()
+
+      case tabsActionTypes.SHOW_PERMISSIONS:
+        return await handleShowPermissions()
 
       case tabsActionTypes.SHOW_CURRENT_TABS:
         return await handleShowTabList()
@@ -177,7 +191,8 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     handleCloseTabs,
     handleReloadTab,
     handleGo,
-    handleTogglePermission
+    handleTogglePermission,
+    handleShowPermissions
   ])
 
   useEffect(
@@ -195,7 +210,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   )
 
   const hasTabs = Boolean(tabs.length)
-  const showPermissions = props.permissions
+  const showPermissions = Boolean(tablePermissions.length)
 
   const handleSwitchTabsCreationPermission = async (event, row) => {
     const enable = event.checked

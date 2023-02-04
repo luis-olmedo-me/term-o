@@ -23,6 +23,7 @@ import {
   pastTabsTableOptions,
   permissionTableOptions,
   possibleTabPermissionIds,
+  tableCellActions,
   tableComponents,
   tabPermissionIds,
   tabsActionTypes,

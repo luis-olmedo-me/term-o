@@ -1,9 +1,9 @@
 import * as React from 'preact'
 
-import { updateTab } from 'helpers/event.helpers'
-import { ImageIcon } from 'modules/components/ImageIcon'
-import { defaultCellActionIds } from 'modules/components/Table'
-import { Open } from 'modules/icons'
+import { updateTab, updateWindow } from '@helpers/event.helpers'
+import ImageIcon from '@modules/components/ImageIcon'
+import { defaultCellActionIds } from '@modules/components/Table'
+import { Open } from '@modules/icons'
 import { optionTypes } from '../../constants/commands.constants'
 import { CommandTabs } from './CommandTabs.component'
 
@@ -101,11 +101,26 @@ export const tabsConfig = {
       alias: 'uc'
     },
     {
+      key: 'permissions',
+      description: 'Show tab permissions',
+      type: optionTypes.BOOLEAN,
+      defaultValue: false,
+      alias: 'P'
+    },
+    {
       key: 'go',
       description: 'Move between back or forward over the visited pages',
       type: optionTypes.NUMBER,
       defaultValue: 0,
       alias: 'g'
+    },
+    {
+      key: 'togglePermission',
+      description: 'Toggle permission for current tab',
+      type: optionTypes.OBJECT,
+      objectTypes: ['boolean'],
+      defaultValue: {},
+      alias: 'tp'
     },
     {
       key: 'switch',
@@ -121,6 +136,8 @@ export const tabsConfig = {
 export const tabsActionTypes = {
   SHOW_CURRENT_TABS: 'SHOW_CURRENT_TABS',
   SHOW_HISTORY: 'SHOW_HISTORY',
+  SHOW_PERMISSIONS: 'SHOW_PERMISSIONS',
+  TOGGLE_PERMISSIONS: 'TOGGLE_PERMISSIONS',
   REDIRECT: 'REDIRECT',
   KILL_TAB: 'KILL_TAB',
   RELOAD_TAB: 'RELOAD_TAB',
@@ -136,7 +153,10 @@ export const tableCellActions = [
   {
     id: tabsCellActionIds.SWITCH,
     title: 'Switch',
-    onClick: ({ row }) => updateTab({ tabId: row.id, props: { active: true } }),
+    onClick: ({ row }) => {
+      updateTab({ tabId: row.id, props: { active: true } })
+      if (!row.currentWindow) updateWindow({ windowId: row.windowId, props: { focused: true } })
+    },
     Component: <Open />
   }
 ]
@@ -149,6 +169,8 @@ export const tableComponents = {
     />
   )
 }
+
+export const MAX_ITEMS = 10
 
 export const tabsColumnIds = {
   ID: 'id',
@@ -231,4 +253,43 @@ export const pastTabsTableOptions = {
   ]
 }
 
-export const MAX_ITEMS = 10
+export const permissionColumnIds = {
+  ID: 'id',
+  NAME: 'name',
+  STATE: 'state'
+}
+export const permissionTableOptions = {
+  columns: [
+    {
+      id: permissionColumnIds.ID,
+      displayName: 'ID',
+      width: '33%',
+      minTableWidth: 0,
+      field: 'id',
+      actionIds: [defaultCellActionIds.COPY_VALUE]
+    },
+    {
+      id: permissionColumnIds.NAME,
+      displayName: 'Name',
+      width: '33%',
+      minTableWidth: 0,
+      field: 'name',
+      actionIds: []
+    },
+    {
+      id: permissionColumnIds.STATE,
+      displayName: 'State',
+      width: '33%',
+      minTableWidth: 0,
+      field: 'enable',
+      cellRenderer: 'switch',
+      actionIds: []
+    }
+  ]
+}
+
+export const tabPermissionIds = {
+  OPEN_TABS: 'open_tabs'
+}
+
+export const possibleTabPermissionIds = Object.values(tabPermissionIds)

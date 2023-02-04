@@ -19,9 +19,17 @@ export const tabsMessages = {
     message: 'You have moved successfully.',
     type: parameterTypes.SUCCESS
   },
+  permissionsChangeSuccess: {
+    message: 'Permissions have been changed.',
+    type: parameterTypes.SUCCESS
+  },
   reloadSuccess: {
     message: 'The page is being reloaded.',
     type: parameterTypes.SUCCESS
+  },
+  invalidPermissions: {
+    message: 'Invalid permissions IDs.',
+    type: parameterTypes.ERROR
   },
   noTabsFound: {
     message: 'No tabs where found.',

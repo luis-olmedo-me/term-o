@@ -1,8 +1,15 @@
 import * as React from 'preact'
 import { useCallback, useEffect, useState } from 'preact/hooks'
 
+import {
+  automaticallyCloseTabs,
+  cancelAutomaticallyCloseTabs,
+  getAutomaticallyCloseTabs,
+  getTabsInfo,
+  updateTab
+} from '@helpers/event.helpers'
+import Switch from '@modules/components/Switch'
 import { closeTabs, fetchHistorial, fetchTabsOpen } from '@src/helpers/event.helpers'
-import { updateTab } from 'helpers/event.helpers'
 import {
   LogCard,
   LogContainer,
@@ -14,20 +21,27 @@ import {
   currentTabsTableOptions,
   MAX_ITEMS,
   pastTabsTableOptions,
+  permissionTableOptions,
+  possibleTabPermissionIds,
   tableCellActions,
   tableComponents,
-  tabsActionTypes
+  tabPermissionIds,
+  tabsActionTypes,
+  tabsTableOptions
 } from './CommandTabs.constants'
 import {
+  generatePermissionsAsTable,
   getActionType,
   turnOpenTabsToTableItems,
   validateHistoryFilters,
   validateTabsFilters
 } from './CommandTabs.helpers'
 import { tabsMessages } from './CommandTabs.messages'
+import { SwitchWrapper } from './CommandTabs.styles'
 
 export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   const [tabs, setTabs] = useState([])
+  const [tablePermissions, setTabPermissions] = useState([])
 
   const actionType = getActionType(props)
 
@@ -122,8 +136,48 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     setMessage(tabsMessages.goSuccess)
   }, [props, setMessage])
 
+  const handleShowPermissions = useCallback(async () => {
+    const automaticallyClosedTabs = await getAutomaticallyCloseTabs()
+    const [currentTab] = await getTabsInfo({ active: true, currentWindow: true })
+
+    const canOpenTabs = automaticallyClosedTabs.includes(currentTab.id)
+    const permissionAsTableItems = generatePermissionsAsTable({ canOpenTabs })
+
+    setTabPermissions(permissionAsTableItems)
+  }, [props, setMessage])
+
+  const handleTogglePermission = useCallback(async () => {
+    const hasValidKeys = Object.keys(props.togglePermission).every(key =>
+      possibleTabPermissionIds.includes(key)
+    )
+
+    if (!hasValidKeys) throw new Error('invalidPermissions')
+
+    const [currentTab] = await getTabsInfo({ active: true, currentWindow: true })
+
+    const requests = Object.entries(props.togglePermission).map(([id, value]) => {
+      if (id === tabPermissionIds.OPEN_TABS) {
+        return value
+          ? cancelAutomaticallyCloseTabs([currentTab.id])
+          : automaticallyCloseTabs([currentTab.id])
+      }
+
+      return null
+    })
+
+    await Promise.all(requests)
+
+    setMessage(tabsMessages.permissionsChangeSuccess)
+  }, [props, setMessage])
+
   const doAction = useCallback(async () => {
     switch (actionType) {
+      case tabsActionTypes.TOGGLE_PERMISSIONS:
+        return await handleTogglePermission()
+
+      case tabsActionTypes.SHOW_PERMISSIONS:
+        return await handleShowPermissions()
+
       case tabsActionTypes.SHOW_CURRENT_TABS:
         return await handleShowTabList()
 
@@ -156,6 +210,8 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     handleCloseTabs,
     handleReloadTab,
     handleGo,
+    handleTogglePermission,
+    handleShowPermissions,
     handleSwitch
   ])
 
@@ -173,6 +229,35 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
     [doAction, setMessage, finish]
   )
 
+  const hasTabs = Boolean(tabs.length)
+  const showPermissions = Boolean(tablePermissions.length)
+
+  const handleSwitchTabsCreationPermission = async (event, row) => {
+    const enable = event.checked
+
+    const [currentTab] = await getTabsInfo({ active: true, currentWindow: true })
+
+    if (enable) await cancelAutomaticallyCloseTabs([currentTab.id])
+    else await automaticallyCloseTabs([currentTab.id])
+
+    setTabPermissions(oldTabPermissions => {
+      return oldTabPermissions.map(permission =>
+        permission.id === row.id ? { ...permission, enable } : permission
+      )
+    })
+  }
+
+  const permissionTableComponents = {
+    switch: ({ row }) => (
+      <SwitchWrapper>
+        <Switch
+          checked={row.enable}
+          onChange={event => handleSwitchTabsCreationPermission(event, row)}
+        />
+      </SwitchWrapper>
+    )
+  }
+
   return (
     <LogContainer>
       {messageLog && (
@@ -181,7 +266,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
         </LogCard>
       )}
 
-      {!messageLog && (
+      {!messageLog && hasTabs && (
         <TableLog
           command={command}
           maxItems={MAX_ITEMS}
@@ -193,6 +278,17 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
           rightActions={endDateAction}
           components={tableComponents}
           actions={tableCellActions}
+        />
+      )}
+
+      {!messageLog && showPermissions && (
+        <TableLog
+          command={command}
+          maxItems={MAX_ITEMS}
+          tableItems={tablePermissions}
+          options={permissionTableOptions}
+          components={permissionTableComponents}
+          hasSelection={false}
         />
       )}
     </LogContainer>

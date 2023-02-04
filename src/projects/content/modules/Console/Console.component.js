@@ -11,10 +11,10 @@ import { resizeTypes, singleResizeTypes } from './hooks/useResize/useResize.cons
 import { useConfig } from './hooks/useConfig.hook.js'
 import { useResize } from './hooks/useResize/useResize.hook.js'
 
+import { getTabsInfo } from '@helpers/event.helpers.js'
+import { generateUUID } from '@helpers/utils.helpers.js'
 import { useNotifications } from '@modules/components/Notifications/hooks/useNotifications.hook.js'
 import { Notifications } from '@modules/components/Notifications/Notifications.component.js'
-import { getTabsInfo } from 'helpers/event.helpers.js'
-import { generateUUID } from 'helpers/utils.helpers.js'
 import { ConsoleLogs, ConsoleTitle, ConsoleWrapper } from './Console.styles.js'
 
 export const Console = () => {

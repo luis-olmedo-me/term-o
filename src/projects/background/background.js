@@ -1,4 +1,5 @@
-import { processWaitList } from '@libs/process-wait-list/processWaitList.service'
+import processWaitList from '@libs/process-wait-list'
+import tabAutomaticCloser from '@libs/tabs-automatic-closer'
 import {
   eventTypes,
   extensionKeyEventNames,
@@ -11,7 +12,8 @@ import {
   createGetTabsInfoProccess,
   createHistoryProcess,
   createTabsOpenProcess,
-  createUpdateTabProccess
+  createUpdateTabProccess,
+  createUpdateWindowProccess
 } from './background.processes'
 
 chrome.commands.onCommand.addListener(function(command) {
@@ -88,12 +90,34 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       break
     }
 
+    case eventTypes.GET_TABS_INFO: {
+      const { id, data } = request.data
+
+      const process = id
+        ? processWaitList.getProcessById(id)
+        : processWaitList.add(resolve => createGetTabsInfoProccess(resolve, data))
+
+      sendResponse({ status: 'ok', data: process })
+      break
+    }
+
     case eventTypes.GET_HISTORIAL: {
       const { id, data } = request.data
 
       const process = id
         ? processWaitList.getProcessById(id)
         : processWaitList.add(resolve => createHistoryProcess(resolve, data))
+
+      sendResponse({ status: 'ok', data: process })
+      break
+    }
+
+    case eventTypes.UPDATE_WINDOW: {
+      const { id, data } = request.data
+
+      const process = id
+        ? processWaitList.getProcessById(id)
+        : processWaitList.add(resolve => createUpdateWindowProccess(resolve, data))
 
       sendResponse({ status: 'ok', data: process })
       break
@@ -107,6 +131,29 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         : processWaitList.add(resolve => createUpdateTabProccess(resolve, data))
 
       sendResponse({ status: 'ok', data: process })
+      break
+    }
+
+    case eventTypes.AUTOMATIC_CLOSE_TABS: {
+      const tabIds = request.data
+      tabAutomaticCloser.addTabs(tabIds)
+
+      sendResponse({ status: 'ok', data: null })
+      break
+    }
+
+    case eventTypes.CANCEL_AUTOMATIC_CLOSE_TABS: {
+      const tabIds = request.data
+      tabAutomaticCloser.removeTabs(tabIds)
+
+      sendResponse({ status: 'ok', data: null })
+      break
+    }
+
+    case eventTypes.GET_AUTOMATIC_CLOSE_TABS: {
+      const bannedTabs = tabAutomaticCloser.getBannedTabs()
+
+      sendResponse({ status: 'ok', data: bannedTabs })
       break
     }
   }

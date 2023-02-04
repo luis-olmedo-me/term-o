@@ -6,7 +6,11 @@ export const eventTypes = {
   TOGGLE_CONSOLE: 'term-o-toggle-console',
   RESIZE: 'term-o-resize',
   GET_TABS_INFO: 'term-o-get-tabs-info',
-  UPDATE_TAB: 'term-o-update-tab'
+  UPDATE_TAB: 'term-o-update-tab',
+  UPDATE_WINDOW: 'term-o-update-window',
+  AUTOMATIC_CLOSE_TABS: 'term-o-automatic-close-tabs',
+  CANCEL_AUTOMATIC_CLOSE_TABS: 'term-o-cancel-automatic-close-tabs',
+  GET_AUTOMATIC_CLOSE_TABS: 'term-o-get-automatic-close-tabs'
 }
 
 export const extensionKeyEvents = {

@@ -1,4 +1,5 @@
-import { processWaitList } from './processWaitList.service'
 import { states } from './processWaitList.constants'
+import { processWaitList } from './processWaitList.service'
 
-export { processWaitList, states }
+export default processWaitList
+export { states }

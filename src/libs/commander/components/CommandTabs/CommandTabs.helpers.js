@@ -1,8 +1,20 @@
 import { formatDate } from '@src/helpers/dates.helpers'
-import { tabsActionTypes } from './CommandTabs.constants'
+import { tabPermissionIds, tabsActionTypes } from './CommandTabs.constants'
 
-export const getActionType = ({ now, past, open, close, reload, go, switch: switchTab }) => {
+export const getActionType = ({
+  now,
+  past,
+  open,
+  close,
+  reload,
+  go,
+  permissions,
+  togglePermission,
+  switch: switchTab
+}) => {
   if (!Number.isNaN(switchTab)) return tabsActionTypes.SWITCH
+  if (Object.keys(togglePermission).length) return tabsActionTypes.TOGGLE_PERMISSIONS
+  if (permissions) return tabsActionTypes.SHOW_PERMISSIONS
   if (reload) return tabsActionTypes.RELOAD_TAB
   if (go) return tabsActionTypes.GO
   if (close.length) return now ? tabsActionTypes.CLOSE_OPEN_TABS : tabsActionTypes.NONE
@@ -80,4 +92,14 @@ export const turnOpenTabsToTableItems = ({ tabsOpen }) => {
       hostname: new URL(tab.url).hostname
     }
   })
+}
+
+export const generatePermissionsAsTable = ({ canOpenTabs }) => {
+  return [
+    {
+      id: tabPermissionIds.OPEN_TABS,
+      name: 'Tabs creation',
+      enable: !canOpenTabs
+    }
+  ]
 }

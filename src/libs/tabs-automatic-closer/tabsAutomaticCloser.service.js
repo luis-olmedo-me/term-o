@@ -5,6 +5,7 @@ class TabAutomaticCloser {
     this.bannedTabIds = []
 
     chrome.tabs.onCreated.addListener(this.onTabCreation.bind(this))
+    chrome.tabs.onRemoved.addListener(this.onTabRemoval.bind(this))
   }
 
   getBannedTabs() {
@@ -13,6 +14,11 @@ class TabAutomaticCloser {
 
   onTabCreation(tab) {
     if (this.bannedTabIds.includes(tab.openerTabId)) chrome.tabs.remove(tab.id)
+  }
+  onTabRemoval(tabId) {
+    if (!this.bannedTabIds.includes(tabId)) return
+
+    this.bannedTabIds = this.bannedTabIds.filter(id => id !== tabId)
   }
 
   addTabs(tabIds) {

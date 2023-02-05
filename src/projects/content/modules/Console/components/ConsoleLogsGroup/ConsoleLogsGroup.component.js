@@ -1,20 +1,31 @@
 import * as React from 'preact'
+import { useState } from 'preact/hooks'
 
 import { Chevron } from '@modules/icons'
-import { GroupContainer, GroupContent, GroupHeader, SideLine } from './ConsoleLogsGroup.styles'
+import {
+  GroupContainer,
+  GroupContent,
+  GroupContentWrapper,
+  GroupHeader,
+  SideLine
+} from './ConsoleLogsGroup.styles'
 
 export const ConsoleLogsGroup = ({ children }) => {
+  const [isOpen, setIsOpen] = useState(false)
+
   return (
     <GroupContainer>
-      <GroupHeader>
-        <span>Pinned logs</span>
+      <GroupHeader onClick={() => setIsOpen(!isOpen)}>
+        <span>Page events</span>
 
-        <Chevron direction="top" />
+        <Chevron direction={isOpen ? 'bottom' : 'top'} />
       </GroupHeader>
 
-      <SideLine />
+      <GroupContentWrapper className={isOpen ? '' : 'hidden'}>
+        <SideLine />
 
-      <GroupContent>{children}</GroupContent>
+        <GroupContent>{children}</GroupContent>
+      </GroupContentWrapper>
     </GroupContainer>
   )
 }

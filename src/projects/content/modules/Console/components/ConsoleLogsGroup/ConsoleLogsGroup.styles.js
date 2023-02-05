@@ -19,6 +19,18 @@ export const GroupContainer = styled.div`
   position: relative;
 `
 
+export const GroupCounter = styled.span`
+  padding: 0.1rem 0.3rem;
+  background-color: ${t('neutral.1200')};
+  color: ${t('neutral.200')};
+  border-radius: 1rem;
+  font-weight: bold;
+
+  &[data-disabled] {
+    background-color: ${t('transparent.750')};
+  }
+`
+
 export const GroupHeader = styled.button`
   display: flex;
   justify-content: space-between;

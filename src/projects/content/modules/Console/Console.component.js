@@ -52,8 +52,7 @@ export const Console = () => {
     function applyPageEvents() {
       if (hasPageEventsBeenRunned) return
 
-      const asyncCommand = appliedPageEvents.map(({ command }) => command).join(' &&& ')
-      if (asyncCommand) handleCommandRun(asyncCommand, true)
+      appliedPageEvents.forEach(({ command }) => handleCommandRun(command, true))
 
       if (appliedPageEvents.length) setHasPageEventsBeenRunned(true)
     },
@@ -155,7 +154,7 @@ export const Console = () => {
       <ConsoleLogs style={consoleStyles}>
         <ConsoleLogsGroup logsCount={staticHistories.length}>
           {staticHistories.map((History, index) => (
-            <History key={index} outsideProps={outsideProps} />
+            <History key={`static-${index}`} outsideProps={outsideProps} />
           ))}
         </ConsoleLogsGroup>
 

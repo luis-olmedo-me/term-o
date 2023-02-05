@@ -24,6 +24,7 @@ export const Console = () => {
   const inputReference = useRef(null)
 
   const [histories, setHistories] = useState([])
+  const [staticHistories, setStaticHistories] = useState([])
   const [tabInfo, setTabInfo] = useState({})
   const [hasPageEventsBeenRunned, setHasPageEventsBeenRunned] = useState(false)
 
@@ -38,12 +39,13 @@ export const Console = () => {
     isEnabled: isOpen
   })
 
-  const handleCommandRun = useCallback(command => {
+  const handleCommandRun = useCallback((command, isStatic) => {
     const formmatedCommand = commander.getCommandWithAliases(command)
 
     const logOutput = commander.getOutputsAsyncSecuence(generateUUID(), formmatedCommand)
 
-    setHistories(histories => [...histories, logOutput])
+    if (isStatic) setStaticHistories(histories => [...histories, logOutput])
+    else setHistories(histories => [...histories, logOutput])
   }, [])
 
   useEffect(
@@ -51,7 +53,7 @@ export const Console = () => {
       if (hasPageEventsBeenRunned) return
 
       const asyncCommand = appliedPageEvents.map(({ command }) => command).join(' &&& ')
-      if (asyncCommand) handleCommandRun(asyncCommand)
+      if (asyncCommand) handleCommandRun(asyncCommand, true)
 
       if (appliedPageEvents.length) setHasPageEventsBeenRunned(true)
     },
@@ -63,7 +65,7 @@ export const Console = () => {
       const customEventsWithCallbacks = customPageEvents.map(customEvent => {
         return {
           ...customEvent,
-          callback: () => handleCommandRun(customEvent.command)
+          callback: () => handleCommandRun(customEvent.command, true)
         }
       })
 
@@ -152,10 +154,14 @@ export const Console = () => {
 
       <ConsoleLogs style={consoleStyles}>
         <ConsoleLogsGroup>
-          {histories.map((History, index) => (
+          {staticHistories.map((History, index) => (
             <History key={index} outsideProps={outsideProps} />
           ))}
         </ConsoleLogsGroup>
+
+        {histories.map((History, index) => (
+          <History key={index} outsideProps={outsideProps} />
+        ))}
       </ConsoleLogs>
 
       <CommandInput

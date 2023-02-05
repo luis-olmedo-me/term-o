@@ -26,8 +26,8 @@ export const GroupHeader = styled.div`
   background-color: ${t('neutral.200')};
   color: ${t('neutral.1200')};
   padding: 5px 10px;
+  margin-bottom: 10px;
   border-radius: ${t('radius.300')};
-  margin: 0 10px 10px 10px;
   cursor: pointer;
 
   &:hover {
@@ -39,11 +39,10 @@ export const SideLine = styled.div`
   width: 10px;
   border-radius: 5px;
   background-color: ${t('neutral.200')};
-  margin-left: 10px;
+  margin-right: 10px;
 `
 
 export const GroupContent = styled.div`
-  margin: 0 10px;
   width: 10px;
   border-radius: 5px;
   flex: 1;

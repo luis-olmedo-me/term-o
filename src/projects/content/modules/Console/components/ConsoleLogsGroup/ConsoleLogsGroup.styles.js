@@ -26,7 +26,7 @@ export const GroupCounter = styled.span`
   border-radius: 1rem;
   font-weight: bold;
 
-  &[data-disabled] {
+  &[data-disabled='true'] {
     background-color: ${t('transparent.750')};
   }
 `

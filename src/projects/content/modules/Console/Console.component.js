@@ -153,7 +153,7 @@ export const Console = () => {
       </ConsoleTitle>
 
       <ConsoleLogs style={consoleStyles}>
-        <ConsoleLogsGroup>
+        <ConsoleLogsGroup logsCount={staticHistories.length}>
           {staticHistories.map((History, index) => (
             <History key={index} outsideProps={outsideProps} />
           ))}

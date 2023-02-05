@@ -19,19 +19,34 @@ export const GroupContainer = styled.div`
   position: relative;
 `
 
-export const GroupHeader = styled.div`
+export const GroupHeader = styled.button`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: ${t('neutral.200')};
+  background-color: ${t('transparent.350')};
   color: ${t('neutral.1200')};
   padding: 5px 10px;
   margin-bottom: 10px;
   border-radius: ${t('radius.300')};
   cursor: pointer;
+  border: none;
+  width: 100%;
+  font-family: Share Tech Mono;
+  font-size: 1rem;
+  transition: background-color 0.2s ease-in-out;
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
 
   &:hover {
-    background-color: ${t('neutral.300')};
+    background-color: ${t('transparent.450')};
+  }
+
+  &:disabled {
+    background-color: ${t('transparent.250')};
+    color: ${t('neutral.1000')};
   }
 `
 

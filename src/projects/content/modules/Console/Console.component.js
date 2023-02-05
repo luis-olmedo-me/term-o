@@ -15,6 +15,7 @@ import { getTabsInfo } from '@helpers/event.helpers.js'
 import { generateUUID } from '@helpers/utils.helpers.js'
 import { useNotifications } from '@modules/components/Notifications/hooks/useNotifications.hook.js'
 import { Notifications } from '@modules/components/Notifications/Notifications.component.js'
+import { ConsoleLogsGroup } from './components/ConsoleLogsGroup/ConsoleLogsGroup.component.js'
 import { ConsoleLogs, ConsoleTitle, ConsoleWrapper } from './Console.styles.js'
 
 export const Console = () => {
@@ -150,9 +151,11 @@ export const Console = () => {
       </ConsoleTitle>
 
       <ConsoleLogs style={consoleStyles}>
-        {histories.map((History, index) => (
-          <History key={index} outsideProps={outsideProps} />
-        ))}
+        <ConsoleLogsGroup>
+          {histories.map((History, index) => (
+            <History key={index} outsideProps={outsideProps} />
+          ))}
+        </ConsoleLogsGroup>
       </ConsoleLogs>
 
       <CommandInput

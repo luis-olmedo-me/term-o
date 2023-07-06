@@ -1,4 +1,4 @@
-import { kebabize } from './commander.promises'
+import { camelize, kebabize } from './commander.promises'
 import { optionTypes } from './constants/commands.constants'
 
 export const parsePropsIntoSuggestions = propsConfigs => {
@@ -254,7 +254,9 @@ const validatePropValue = (value, type, defaultValue, objectTypes) => {
 
 const buildGroupProps = ({ values: _values, ...propValues }, groupPropConfigs = {}) => {
   return Object.entries(propValues).reduce((allProps, [name, value]) => {
-    const groupConfig = groupPropConfigs.find(groupPropConfig => groupPropConfig.key === name)
+    const groupConfig = groupPropConfigs.find(
+      groupPropConfig => groupPropConfig.key === camelize(name)
+    )
 
     if (!groupConfig) return allProps
 

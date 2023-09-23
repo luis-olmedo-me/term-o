@@ -18,14 +18,14 @@ import {
   useMessageLog
 } from '../../modules/Log'
 import {
-  currentTabsTableOptions,
   MAX_ITEMS,
+  currentTabsTableOptions,
   pastTabsTableOptions,
   permissionTableOptions,
   possibleTabPermissionIds,
+  tabPermissionIds,
   tableCellActions,
   tableComponents,
-  tabPermissionIds,
   tabsActionTypes,
   tabsTableOptions
 } from './CommandTabs.constants'
@@ -74,7 +74,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
   }
 
   const { log: messageLog, setMessage } = useMessageLog()
-  const { startDateAction, endDateAction, setAreDatesInvalid, setDate } = useDateRangeActions({
+  const { dateActions, setAreDatesInvalid, setDate } = useDateRangeActions({
     onDateUpdate: handleDatesUpdate
   })
 
@@ -274,8 +274,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
           options={props.now ? currentTabsTableOptions : pastTabsTableOptions}
           onSelectionDelete={handleClosingTabsFromSelection}
           hasSelection={props.now}
-          leftActions={startDateAction}
-          rightActions={endDateAction}
+          leftActions={dateActions}
           components={tableComponents}
           actions={tableCellActions}
         />

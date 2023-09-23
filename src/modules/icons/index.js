@@ -6,6 +6,7 @@ import { DoubleChevron } from './DoubleChevron.icon'
 import { Error } from './Error.icon'
 import { Eye } from './Eye.icon'
 import { Flag } from './Flag.icon'
+import { Gear } from './Gear.icon'
 import { Home } from './Home.icon'
 import { Info } from './Info.icon'
 import { Loader } from './Loader.icon'
@@ -26,6 +27,7 @@ export {
   Error,
   Eye,
   Flag,
+  Gear,
   Home,
   Info,
   Loader,

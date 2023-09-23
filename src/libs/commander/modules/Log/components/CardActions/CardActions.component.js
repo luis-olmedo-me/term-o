@@ -1,6 +1,7 @@
 import * as React from 'preact'
 import { DateTimePickerAction } from '../DateTimePickerAction/DateTimePickerAction.component'
-import { Action, Groups } from './CardActions.styles'
+import { cardActionTypes } from './CardActions.constants'
+import { Action, Groups, SymbolWrapper } from './CardActions.styles'
 
 export const CardActions = ({ actions }) => {
   return (
@@ -19,7 +20,7 @@ export const CardActions = ({ actions }) => {
           }
 
           switch (type) {
-            case 'datetime':
+            case cardActionTypes.DATE_TIME:
               return (
                 <DateTimePickerAction
                   {...commonProps}
@@ -27,6 +28,13 @@ export const CardActions = ({ actions }) => {
                   label={label}
                   value={text}
                 />
+              )
+
+            case cardActionTypes.SYMBOL:
+              return (
+                <SymbolWrapper>
+                  <span>{text}</span>
+                </SymbolWrapper>
               )
 
             default:

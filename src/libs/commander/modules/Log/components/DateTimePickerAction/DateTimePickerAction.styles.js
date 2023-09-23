@@ -2,15 +2,19 @@ import { theme as t } from '@src/helpers/theme.helpers'
 import styled from 'styled-components'
 
 export const Wrapper = styled.span`
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
   overflow: hidden;
-  padding: 5px 10px;
+  padding: 0 5px;
   text-align: center;
   transition: background-color 0.2s ease-in-out;
+  background-color: ${t('transparent.200')};
+  border-radius: 10px;
 
   &:hover {
-    background-color: ${t('transparent.100')};
+    background-color: ${t('transparent.150')};
   }
 
   &:focus,
@@ -58,5 +62,11 @@ export const DatePicker = styled.input`
 `
 
 export const Label = styled.span`
-  vertical-align: sub;
+  position: absolute;
+  left: 50%;
+  top: 57%;
+  transform: translate(-50%, -50%);
+  font-size: 0.5em;
+  font-weight: bold;
+  color: ${t('neutral.800')};
 `

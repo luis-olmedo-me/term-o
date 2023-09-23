@@ -1,3 +1,4 @@
+import { Calendar } from './Calendar.icon'
 import { Chevron } from './Chevron.icon'
 import { Copy } from './Copy.icon'
 import { Diskette } from './Diskette.icon'
@@ -17,8 +18,10 @@ import { Tag } from './Tag.icon'
 import { Tick } from './Tick.icon'
 
 export {
+  Calendar,
   Chevron,
   Copy,
+  Diskette,
   DoubleChevron,
   Error,
   Eye,
@@ -27,11 +30,10 @@ export {
   Info,
   Loader,
   Logo,
+  Open,
   Palette,
   Pencil,
   Skull,
   Tag,
-  Tick,
-  Diskette,
-  Open
+  Tick
 }

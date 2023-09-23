@@ -57,3 +57,9 @@ export const Action = styled.button`
     }
   }
 `
+
+export const SymbolWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`

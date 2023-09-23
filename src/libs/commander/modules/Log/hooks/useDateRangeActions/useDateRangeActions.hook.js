@@ -15,12 +15,12 @@ export const useDateRangeActions = ({ onDateUpdate }) => {
           invalid: areDatesInvalid,
           onChange: ({ target }) => onDateUpdate({ startTime: new Date(target.value).getTime() }),
           type: 'datetime'
-        }
-      ]
-    : []
-
-  const endDateAction = dates.end
-    ? [
+        },
+        {
+          id: 'range-symbol',
+          text: '➜',
+          type: 'symbol'
+        },
         {
           id: 'date-end-picker',
           title: 'End date',
@@ -32,6 +32,8 @@ export const useDateRangeActions = ({ onDateUpdate }) => {
         }
       ]
     : []
+
+  const endDateAction = dates.end ? [] : []
 
   const setDate = useCallback(value => setDates(dates => ({ ...dates, ...value })), [])
   return {

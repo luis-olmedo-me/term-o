@@ -6,6 +6,8 @@ export const Groups = styled.div`
   color: ${t('neutral.1200')};
   display: flex;
   justify-content: center;
+  padding: 7px;
+  gap: 7px;
 `
 
 export const Action = styled.button`
@@ -17,6 +19,7 @@ export const Action = styled.button`
   font-family: Share Tech Mono;
   color: inherit;
   font-size: 16px;
+  border-radius: 10px;
 
   &:hover {
     background-color: ${t('transparent.150')};
@@ -31,6 +34,10 @@ export const Action = styled.button`
     background-color: ${t('transparent.450')};
   }
 
+  &&.disabled {
+    color: ${t('transparent.550')};
+    cursor: not-allowed;
+  }
   &&.disabled,
   &&.disabled:hover {
     background-color: ${t('transparent.400')};

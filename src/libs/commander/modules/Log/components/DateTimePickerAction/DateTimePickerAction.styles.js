@@ -8,6 +8,8 @@ export const Wrapper = styled.span`
   padding: 5px 10px;
   text-align: center;
   transition: background-color 0.2s ease-in-out;
+  background-color: ${t('transparent.200')};
+  border-radius: 10px;
 
   &:hover {
     background-color: ${t('transparent.100')};

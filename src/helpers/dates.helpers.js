@@ -1,20 +1,6 @@
+import { monthNames } from 'constants/Dates.constants'
 import { setDigits } from './maths.helpers'
 import { replace } from './utils.helpers'
-
-const monthNames = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-]
 
 export const formatDate = (date, format) => {
   const dateObject = date ? new Date(date) : new Date()

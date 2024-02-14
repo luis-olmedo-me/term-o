@@ -49,6 +49,7 @@ export const usePaginationActions = ({ items, maxItems }) => {
   return {
     paginationActions: shouldDisplayActions ? paginationActions : [],
     pages: itemsDividedIntoPages,
+    pagesCount: itemsDividedIntoPages.length,
     pageNumber: pageNumber - 1,
     changePage: setPageNumber
   }

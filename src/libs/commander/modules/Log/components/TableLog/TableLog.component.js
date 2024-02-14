@@ -6,7 +6,9 @@ import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { Table } from 'modules/components/Table'
 import usePaginationActions from '../../hooks/usePaginationActions'
 import useTableSelection from '../../hooks/useTableSelection'
+import useViews from '../../hooks/useViews'
 import LogCard from '../LogCard'
+import { tableLogViewIds, tableLogViews } from './TableLog.constants'
 
 export const TableLog = ({
   tableItems,
@@ -22,7 +24,7 @@ export const TableLog = ({
 }) => {
   const logRef = useRef(null)
 
-  const { paginationActions, pages, pageNumber, changePage } = usePaginationActions({
+  const { paginationActions, pages, pagesCount, pageNumber, changePage } = usePaginationActions({
     items: tableItems,
     maxItems
   })
@@ -36,14 +38,25 @@ export const TableLog = ({
     isEnabled: hasSelection
   })
 
+  const {
+    viewActions: [headToMain, headToConfig],
+    itemInView,
+    changeView
+  } = useViews({
+    views: tableLogViews,
+    defaultView: tableLogViewIds.TABLE
+  })
+
+  const isTableView = itemInView === tableLogViewIds.TABLE
+
+  const dynamicItemInView = isTableView ? pageNumber : itemInView + pagesCount - 1
+  const logCardActions = isTableView
+    ? [...leftActions, ...paginationActions, ...selectionActions, ...rightActions, headToConfig]
+    : [headToMain]
+
   return (
-    <LogCard
-      variant={parameterTypes.TABLE}
-      actions={[...leftActions, ...paginationActions, ...selectionActions, ...rightActions]}
-      command={command}
-      ref={logRef}
-    >
-      <Carousel itemInView={pageNumber}>
+    <LogCard variant={parameterTypes.TABLE} actions={logCardActions} command={command} ref={logRef}>
+      <Carousel itemInView={dynamicItemInView}>
         {pages.map((page, currentPageNumber) => {
           return (
             <CarouselItem key={currentPageNumber}>
@@ -58,6 +71,10 @@ export const TableLog = ({
             </CarouselItem>
           )
         })}
+
+        <CarouselItem>
+          <button onClick={() => changeView(tableLogViewIds.TABLE)}>back</button>
+        </CarouselItem>
       </Carousel>
     </LogCard>
   )

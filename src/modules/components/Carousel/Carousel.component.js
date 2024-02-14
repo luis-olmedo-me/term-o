@@ -18,11 +18,13 @@ export const Carousel = ({ itemInView, children }) => {
     }
   }, [itemInView])
 
+  const flattedChildren = children.flat()
+
   const isGoingRight = oldItemInView < itemInView
   const isTheSame = oldItemInView === itemInView
 
   const direction = getAnimationDirection(isGoingRight, isTheSame)
-  const selectedItem = children[itemInView]
+  const selectedItem = flattedChildren[itemInView]
 
   return (
     <CarouselWrapper ref={wrapperReference}>

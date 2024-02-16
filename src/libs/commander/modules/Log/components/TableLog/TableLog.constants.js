@@ -11,3 +11,19 @@ export const tableLogViews = [
   { id: tableLogViewIds.TABLE, text: <Home /> },
   { id: tableLogViewIds.CONFIG, text: <Gear /> }
 ]
+
+const tableLogHeaderIds = {
+  KEY: 'key'
+}
+
+export const tableLogTableOptions = {
+  columns: [
+    {
+      id: tableLogHeaderIds.KEY,
+      displayName: 'Key',
+      width: '40%',
+      minTableWidth: 0,
+      field: 'displayName'
+    }
+  ]
+}

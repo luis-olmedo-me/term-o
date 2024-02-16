@@ -8,7 +8,7 @@ import usePaginationActions from '../../hooks/usePaginationActions'
 import useTableSelection from '../../hooks/useTableSelection'
 import useViews from '../../hooks/useViews'
 import LogCard from '../LogCard'
-import { tableLogViewIds, tableLogViews } from './TableLog.constants'
+import { tableLogTableOptions, tableLogViewIds, tableLogViews } from './TableLog.constants'
 
 export const TableLog = ({
   tableItems,
@@ -40,8 +40,7 @@ export const TableLog = ({
 
   const {
     viewActions: [headToMain, headToConfig],
-    itemInView,
-    changeView
+    itemInView
   } = useViews({
     views: tableLogViews,
     defaultView: tableLogViewIds.TABLE
@@ -73,7 +72,7 @@ export const TableLog = ({
         })}
 
         <CarouselItem>
-          <button onClick={() => changeView(tableLogViewIds.TABLE)}>back</button>
+          <Table rows={options.columns} options={tableLogTableOptions} widthRef={logRef} />
         </CarouselItem>
       </Carousel>
     </LogCard>

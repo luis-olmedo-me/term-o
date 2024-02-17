@@ -1,5 +1,4 @@
 import * as React from 'preact'
-import { useRef } from 'preact/hooks'
 
 import { parameterTypes } from 'libs/commander/constants/commands.constants'
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
@@ -22,8 +21,6 @@ export const TableLog = ({
   components,
   actions
 }) => {
-  const logRef = useRef(null)
-
   const { paginationActions, pages, pagesCount, pageNumber, changePage } = usePaginationActions({
     items: tableItems,
     maxItems
@@ -63,7 +60,6 @@ export const TableLog = ({
                 {...tableSelectionProps}
                 rows={page}
                 options={options}
-                widthRef={logRef}
                 components={components}
                 actions={actions}
               />
@@ -72,7 +68,7 @@ export const TableLog = ({
         })}
 
         <CarouselItem>
-          <Table rows={options.columns} options={tableLogTableOptions} widthRef={logRef} />
+          <Table rows={options.columns} options={tableLogTableOptions} />
         </CarouselItem>
       </Carousel>
     </LogCard>

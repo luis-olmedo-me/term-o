@@ -1,7 +1,5 @@
 import * as React from 'preact'
-import { useEffect, useState } from 'preact/hooks'
 
-import { debounce } from '@src/helpers/utils.helpers.js'
 import Checkbox from '../Checkbox'
 import { defaultCellActions } from './Table.constants'
 import { searchIn } from './Table.helpers'
@@ -21,7 +19,6 @@ export const Table = ({
   onSelectionChange,
   onSelectionAll,
   selectedRows,
-  widthRef,
   components = {},
   actions = []
 }) => {
@@ -61,7 +58,7 @@ export const Table = ({
   const defaultWidth = 100 / parsedColumns.length
 
   return (
-    <TableWrapper ref={widthRef}>
+    <TableWrapper>
       <TableRow className="header">
         {parsedColumns.map(({ id, width, displayName, minTableWidth, headerCellRenderer }) => {
           const HeaderCellRenderer = parsedComponents[headerCellRenderer]

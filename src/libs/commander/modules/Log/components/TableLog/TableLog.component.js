@@ -3,11 +3,17 @@ import * as React from 'preact'
 import { parameterTypes } from 'libs/commander/constants/commands.constants'
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { Table } from 'modules/components/Table'
+import { useState } from 'preact/hooks'
 import usePaginationActions from '../../hooks/usePaginationActions'
 import useTableSelection from '../../hooks/useTableSelection'
 import useViews from '../../hooks/useViews'
 import LogCard from '../LogCard'
-import { tableLogTableOptions, tableLogViewIds, tableLogViews } from './TableLog.constants'
+import {
+  tableLogActions,
+  tableLogTableOptions,
+  tableLogViewIds,
+  tableLogViews
+} from './TableLog.constants'
 
 export const TableLog = ({
   tableItems,
@@ -19,8 +25,10 @@ export const TableLog = ({
   leftActions = [],
   rightActions = [],
   components,
-  actions
+  actions = []
 }) => {
+  const [columns, setColumns] = useState(options.columns)
+
   const { paginationActions, pages, pagesCount, pageNumber, changePage } = usePaginationActions({
     items: tableItems,
     maxItems
@@ -68,7 +76,7 @@ export const TableLog = ({
         })}
 
         <CarouselItem>
-          <Table rows={options.columns} options={tableLogTableOptions} />
+          <Table rows={columns} options={tableLogTableOptions} actions={tableLogActions} />
         </CarouselItem>
       </Carousel>
     </LogCard>

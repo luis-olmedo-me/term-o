@@ -46,9 +46,10 @@ export const TableRowValue = styled.span`
   white-space: nowrap;
   overflow: hidden;
   position: relative;
+  width: ${props => props.width};
   text-align: ${props => (props.center ? 'center' : 'left')};
-  flex-grow: ${props => (props.hasFixedWidth ? 'unset' : '1')};
   background-color: ${t('transparent.000')};
+  flex-grow: ${props => (props.hasFixedWidth ? 'unset' : '1')};
 
   &.internal {
     border-radius: ${t('radius.300')};

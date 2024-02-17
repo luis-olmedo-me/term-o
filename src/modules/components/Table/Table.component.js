@@ -25,23 +25,6 @@ export const Table = ({
   components = {},
   actions = []
 }) => {
-  const [wrapperWidth, setWrapperWidth] = useState(0)
-
-  useEffect(() => {
-    const wrapper =
-      widthRef?.current &&
-      (widthRef?.current.isReactComponent ? widthRef?.current.base : widthRef?.current)
-
-    if (!wrapper) return
-
-    const updateWidth = debounce(() => setWrapperWidth(wrapper.clientWidth), 250)
-    const obsever = new ResizeObserver(updateWidth)
-
-    obsever.observe(wrapper)
-
-    return () => obsever.unobserve(wrapper)
-  }, [])
-
   const hasSelectionControls = Boolean(onSelectionChange && onSelectionAll)
 
   const parsedColumns = hasSelectionControls
@@ -75,25 +58,23 @@ export const Table = ({
     )
   }
   const parsedActions = [...defaultCellActions, ...actions]
+  const defaultWidth = 100 / parsedColumns.length
 
   return (
     <TableWrapper ref={widthRef}>
       <TableRow className="header">
         {parsedColumns.map(({ id, width, displayName, minTableWidth, headerCellRenderer }) => {
           const HeaderCellRenderer = parsedComponents[headerCellRenderer]
-          const showColumn =
-            wrapperWidth !== null && minTableWidth ? wrapperWidth > minTableWidth : true
+          const hasFixedWidth = Boolean(width)
 
           return (
-            showColumn && (
-              <TableHeaderRowValue
-                key={`header-${id}`}
-                width={width}
-                hasFixedWidth={!width.endsWith('%')}
-              >
-                {HeaderCellRenderer ? <HeaderCellRenderer /> : displayName}
-              </TableHeaderRowValue>
-            )
+            <TableHeaderRowValue
+              key={`header-${id}`}
+              width={width || `${defaultWidth}%`}
+              hasFixedWidth={hasFixedWidth}
+            >
+              {HeaderCellRenderer ? <HeaderCellRenderer /> : displayName}
+            </TableHeaderRowValue>
           )
         })}
       </TableRow>
@@ -101,45 +82,32 @@ export const Table = ({
       {rows.map((row, rowIndex) => (
         <TableRow key={`row-${rowIndex}`}>
           {parsedColumns.map(
-            ({
-              id,
-              width,
-              minTableWidth,
-              field,
-              onClick,
-              center,
-              internal,
-              actionIds,
-              cellRenderer
-            }) => {
+            ({ id, width, field, onClick, center, internal, actionIds, cellRenderer }) => {
               const value = field ? searchIn(row, field) : ''
               const onColumnClick = onClick ? () => onClick(column) : null
-              const showColumn =
-                wrapperWidth !== null && minTableWidth ? wrapperWidth > minTableWidth : true
               const CellRenderer = parsedComponents[cellRenderer]
               const cellActions = actionIds
                 ? parsedActions.filter(({ id }) => actionIds.includes(id))
                 : []
+              const hasFixedWidth = Boolean(width)
 
               return (
-                showColumn && (
-                  <TableRowValue
-                    key={`${id}-${rowIndex}`}
-                    onClick={onColumnClick}
-                    style={{ width }}
-                    center={center}
-                    hasFixedWidth={!width.endsWith('%')}
-                    className={internal === false ? '' : 'internal'}
-                  >
-                    {CellRenderer ? <CellRenderer value={value} row={row} /> : value}
+                <TableRowValue
+                  key={`${id}-${rowIndex}`}
+                  onClick={onColumnClick}
+                  center={center}
+                  className={internal === false ? '' : 'internal'}
+                  width={width || `${defaultWidth}%`}
+                  hasFixedWidth={hasFixedWidth}
+                >
+                  {CellRenderer ? <CellRenderer value={value} row={row} /> : value}
 
-                    {cellActions && (
-                      <TableActionsWrapper className="actions">
-                        <TableActions actions={cellActions} eventProps={{ value, row }} />
-                      </TableActionsWrapper>
-                    )}
-                  </TableRowValue>
-                )
+                  {cellActions && (
+                    <TableActionsWrapper className="actions">
+                      <TableActions actions={cellActions} eventProps={{ value, row }} />
+                    </TableActionsWrapper>
+                  )}
+                </TableRowValue>
               )
             }
           )}

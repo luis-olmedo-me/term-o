@@ -54,9 +54,37 @@ export const TableLog = ({
     ? [...leftActions, ...paginationActions, ...selectionActions, ...rightActions, headToConfig]
     : [headToMain]
 
+  const handleMoveColumnDown = ({ row: column }) => {
+    const columnsCopy = [...columns]
+
+    const columnIndex = columnsCopy.findIndex(columnCopy => columnCopy.id === column.id)
+    const nextColumnIndex = columnIndex - 1
+
+    const nextColumn = columnsCopy[nextColumnIndex]
+
+    columnsCopy[columnIndex] = nextColumn
+    columnsCopy[nextColumnIndex] = column
+
+    setColumns(columnsCopy)
+  }
+
+  const handleMoveColumnUp = ({ row: column }) => {
+    const columnsCopy = [...columns]
+
+    const columnIndex = columnsCopy.findIndex(columnCopy => columnCopy.id === column.id)
+    const previousColumnIndex = columnIndex + 1
+
+    const previousColumn = columnsCopy[previousColumnIndex]
+
+    columnsCopy[columnIndex] = previousColumn
+    columnsCopy[previousColumnIndex] = column
+
+    setColumns(columnsCopy)
+  }
+
   const tableLogActions = createTableLogActions({
-    onMoveUpClick: ({ value }) => console.log(value),
-    onMoveDownClick: ({ value }) => console.log(value)
+    onMoveUpClick: handleMoveColumnUp,
+    onMoveDownClick: handleMoveColumnDown
   })
 
   return (
@@ -68,7 +96,7 @@ export const TableLog = ({
               <Table
                 {...tableSelectionProps}
                 rows={page}
-                options={options}
+                options={{ ...options, columns }}
                 components={components}
                 actions={actions}
               />

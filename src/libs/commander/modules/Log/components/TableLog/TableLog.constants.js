@@ -1,7 +1,6 @@
 import * as React from 'preact'
 
 import { Gear, Home } from '@src/modules/icons'
-import { Chevron } from 'modules/icons'
 
 export const tableLogActionIds = {
   MOVE_UP: 'move-up',

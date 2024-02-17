@@ -1,3 +1,8 @@
+import * as React from 'preact'
+
+import { Chevron } from '@src/modules/icons'
+import { tableLogActionIds } from './TableLog.constants'
+
 export const createTableLogActions = ({ onMoveUpClick, onMoveDownClick }) => {
   return [
     {

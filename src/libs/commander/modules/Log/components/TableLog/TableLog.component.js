@@ -51,7 +51,7 @@ export const TableLog = ({
     : [headToMain]
 
   return (
-    <LogCard variant={parameterTypes.TABLE} actions={logCardActions} command={command} ref={logRef}>
+    <LogCard variant={parameterTypes.TABLE} actions={logCardActions} command={command}>
       <Carousel itemInView={dynamicItemInView}>
         {pages.map((page, currentPageNumber) => {
           return (

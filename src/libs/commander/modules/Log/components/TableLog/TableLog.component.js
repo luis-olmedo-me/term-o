@@ -54,7 +54,10 @@ export const TableLog = ({
     ? [...leftActions, ...paginationActions, ...selectionActions, ...rightActions, headToConfig]
     : [headToMain]
 
-  const tableLogTableActions = createTableLogActions()
+  const tableLogActions = createTableLogActions({
+    onMoveUpClick: ({ value }) => console.log(value),
+    onMoveDownClick: ({ value }) => console.log(value)
+  })
 
   return (
     <LogCard variant={parameterTypes.TABLE} actions={logCardActions} command={command}>

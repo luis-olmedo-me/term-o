@@ -1,15 +1,15 @@
-export const createTableLogActions = () => {
+export const createTableLogActions = ({ onMoveUpClick, onMoveDownClick }) => {
   return [
     {
       id: tableLogActionIds.MOVE_UP,
       title: 'Move up',
-      onClick: ({ value }) => console.log(value),
+      onClick: onMoveUpClick,
       Component: <Chevron direction="top" />
     },
     {
       id: tableLogActionIds.MOVE_DOWN,
       title: 'Move down',
-      onClick: ({ value }) => console.log(value),
+      onClick: onMoveDownClick,
       Component: <Chevron direction="bottom" />
     }
   ]

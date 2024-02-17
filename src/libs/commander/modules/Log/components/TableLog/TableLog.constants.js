@@ -21,8 +21,6 @@ export const tableLogTableOptions = {
     {
       id: tableLogHeaderIds.KEY,
       displayName: 'Key',
-      width: '40%',
-      minTableWidth: 0,
       field: 'displayName'
     }
   ]

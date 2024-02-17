@@ -8,12 +8,8 @@ import usePaginationActions from '../../hooks/usePaginationActions'
 import useTableSelection from '../../hooks/useTableSelection'
 import useViews from '../../hooks/useViews'
 import LogCard from '../LogCard'
-import {
-  tableLogActions,
-  tableLogTableOptions,
-  tableLogViewIds,
-  tableLogViews
-} from './TableLog.constants'
+import { tableLogTableOptions, tableLogViewIds, tableLogViews } from './TableLog.constants'
+import { createTableLogActions } from './TableLog.helpers'
 
 export const TableLog = ({
   tableItems,
@@ -57,6 +53,8 @@ export const TableLog = ({
   const logCardActions = isTableView
     ? [...leftActions, ...paginationActions, ...selectionActions, ...rightActions, headToConfig]
     : [headToMain]
+
+  const tableLogTableActions = createTableLogActions()
 
   return (
     <LogCard variant={parameterTypes.TABLE} actions={logCardActions} command={command}>

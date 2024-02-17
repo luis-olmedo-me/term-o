@@ -9,6 +9,7 @@ export const Actions = ({ actions, className, wrapperRef, Postfix, eventProps })
       {actions.map((action, index) => {
         const [isOpen, setIsOpen] = useState(false)
         const onClick = () => action.onClick?.({ ...eventProps })
+        const isDisabled = action.disabled || action.checkIsDisable?.({ ...eventProps })
 
         const items = action.items
           ? [
@@ -26,13 +27,14 @@ export const Actions = ({ actions, className, wrapperRef, Postfix, eventProps })
           <ItemsWrapper key={action.id}>
             {items.map(item => {
               const onItemClick = () => item.onClick?.({ ...eventProps })
+              const isItemDisabled = item.disabled || item.checkIsDisable?.({ ...eventProps })
 
               return (
                 !item.hidden && (
                   <ActionButton
                     key={item.id}
-                    onClick={item.disabled ? null : cancelPropagation(onItemClick)}
-                    disabled={item.disabled}
+                    onClick={isItemDisabled ? null : cancelPropagation(onItemClick)}
+                    disabled={isItemDisabled}
                     title={item.title}
                   >
                     {item.Component}
@@ -44,9 +46,9 @@ export const Actions = ({ actions, className, wrapperRef, Postfix, eventProps })
         ) : (
           <ActionButton
             key={action.id}
-            onClick={action.disabled ? null : cancelPropagation(onClick)}
+            onClick={isDisabled ? null : cancelPropagation(onClick)}
             title={action.title}
-            disabled={action.disabled}
+            disabled={isDisabled}
             isLastItem={index === actions.length - 1}
           >
             {action.Component}

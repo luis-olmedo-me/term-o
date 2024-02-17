@@ -60,7 +60,7 @@ export const Table = ({
   return (
     <TableWrapper>
       <TableRow className="header">
-        {parsedColumns.map(({ id, width, displayName, minTableWidth, headerCellRenderer }) => {
+        {parsedColumns.map(({ id, width, displayName, headerCellRenderer }) => {
           const HeaderCellRenderer = parsedComponents[headerCellRenderer]
           const hasFixedWidth = Boolean(width)
 

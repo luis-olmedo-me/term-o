@@ -84,7 +84,8 @@ export const TableLog = ({
 
   const tableLogActions = createTableLogActions({
     onMoveUpClick: handleMoveColumnUp,
-    onMoveDownClick: handleMoveColumnDown
+    onMoveDownClick: handleMoveColumnDown,
+    columns
   })
 
   return (

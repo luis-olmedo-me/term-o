@@ -72,7 +72,7 @@ export const TableHeaderRowValue = styled.span`
 `
 
 export const TableActionsWrapper = styled.div`
-  opacity: 0;
+  opacity: ${props => (props.actionsAlwaysVisible ? '1' : '0')};
   transition: opacity 0.2s ease-in-out;
 `
 

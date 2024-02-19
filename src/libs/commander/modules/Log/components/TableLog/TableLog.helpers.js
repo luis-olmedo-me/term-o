@@ -13,14 +13,14 @@ export const createTableLogActions = ({ onMoveUpClick, onMoveDownClick, columns 
       title: 'Move up',
       onClick: onMoveUpClick,
       Component: <Chevron direction="top" />,
-      checkIsDisable: ({ row }) => row.id === firstColumn.id
+      checkIsDisable: ({ row }) => row.id === lastColumn.id
     },
     {
       id: tableLogActionIds.MOVE_DOWN,
       title: 'Move down',
       onClick: onMoveDownClick,
       Component: <Chevron direction="bottom" />,
-      checkIsDisable: ({ row }) => row.id === lastColumn.id
+      checkIsDisable: ({ row }) => row.id === firstColumn.id
     }
   ]
 }

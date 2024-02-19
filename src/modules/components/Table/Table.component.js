@@ -20,7 +20,8 @@ export const Table = ({
   onSelectionAll,
   selectedRows,
   components = {},
-  actions = []
+  actions = [],
+  actionsAlwaysVisible = false
 }) => {
   const hasSelectionControls = Boolean(onSelectionChange && onSelectionAll)
 
@@ -100,7 +101,10 @@ export const Table = ({
                   {CellRenderer ? <CellRenderer value={value} row={row} /> : value}
 
                   {cellActions && (
-                    <TableActionsWrapper className="actions">
+                    <TableActionsWrapper
+                      className="actions"
+                      actionsAlwaysVisible={actionsAlwaysVisible}
+                    >
                       <TableActions actions={cellActions} eventProps={{ value, row }} />
                     </TableActionsWrapper>
                   )}

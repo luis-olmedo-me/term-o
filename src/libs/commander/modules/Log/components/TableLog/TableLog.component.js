@@ -106,7 +106,12 @@ export const TableLog = ({
         })}
 
         <CarouselItem>
-          <Table rows={columns} options={tableLogTableOptions} actions={tableLogActions} />
+          <Table
+            rows={columns}
+            options={tableLogTableOptions}
+            actions={tableLogActions}
+            actionsAlwaysVisible
+          />
         </CarouselItem>
       </Carousel>
     </LogCard>

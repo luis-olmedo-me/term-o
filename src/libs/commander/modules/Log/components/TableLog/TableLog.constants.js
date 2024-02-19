@@ -4,7 +4,8 @@ import { Gear, Home } from '@src/modules/icons'
 
 export const tableLogActionIds = {
   MOVE_UP: 'move-up',
-  MOVE_DOWN: 'move-down'
+  MOVE_DOWN: 'move-down',
+  STATE: 'STATE'
 }
 
 export const tableLogViewIds = {
@@ -27,7 +28,7 @@ export const tableLogTableOptions = {
       id: tableLogHeaderIds.KEY,
       displayName: 'Column Name',
       field: 'displayName',
-      actionIds: [tableLogActionIds.MOVE_UP, tableLogActionIds.MOVE_DOWN]
+      actionIds: [tableLogActionIds.MOVE_UP, tableLogActionIds.MOVE_DOWN, tableLogActionIds.STATE]
     }
   ]
 }

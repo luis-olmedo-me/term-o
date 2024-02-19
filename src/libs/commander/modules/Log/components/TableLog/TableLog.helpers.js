@@ -1,6 +1,6 @@
 import * as React from 'preact'
 
-import { Chevron } from '@src/modules/icons'
+import { Chevron, Live } from '@src/modules/icons'
 import { tableLogActionIds } from './TableLog.constants'
 
 export const createTableLogActions = ({ onMoveUpClick, onMoveDownClick, columns }) => {
@@ -21,6 +21,12 @@ export const createTableLogActions = ({ onMoveUpClick, onMoveDownClick, columns 
       onClick: onMoveDownClick,
       Component: <Chevron direction="bottom" />,
       checkIsDisable: ({ row }) => row.id === firstColumn.id
+    },
+    {
+      id: tableLogActionIds.STATE,
+      title: 'State',
+      onClick: () => {},
+      Component: <Live />
     }
   ]
 }

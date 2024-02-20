@@ -21,7 +21,8 @@ export const Table = ({
   selectedRows,
   components = {},
   actions = [],
-  actionsAlwaysVisible = false
+  actionsAlwaysVisible = false,
+  createActionsPerRow
 }) => {
   const hasSelectionControls = Boolean(onSelectionChange && onSelectionAll)
 
@@ -55,7 +56,7 @@ export const Table = ({
       />
     )
   }
-  const parsedActions = [...defaultCellActions, ...actions]
+
   const defaultWidth = 100 / parsedColumns.length
 
   return (
@@ -77,43 +78,48 @@ export const Table = ({
         })}
       </TableRow>
 
-      {rows.map((row, rowIndex) => (
-        <TableRow key={`row-${rowIndex}`}>
-          {parsedColumns.map(
-            ({ id, width, field, onClick, center, internal, actionIds, cellRenderer }) => {
-              const value = field ? searchIn(row, field) : ''
-              const onColumnClick = onClick ? () => onClick(column) : null
-              const CellRenderer = parsedComponents[cellRenderer]
-              const cellActions = actionIds
-                ? parsedActions.filter(({ id }) => actionIds.includes(id))
-                : []
-              const hasFixedWidth = Boolean(width)
+      {rows.map((row, rowIndex) => {
+        const actionsPerRow = createActionsPerRow?.(row) || []
+        const parsedActions = [...defaultCellActions, ...actions, ...actionsPerRow]
 
-              return (
-                <TableRowValue
-                  key={`${id}-${rowIndex}`}
-                  onClick={onColumnClick}
-                  center={center}
-                  className={internal === false ? '' : 'internal'}
-                  width={width || `${defaultWidth}%`}
-                  hasFixedWidth={hasFixedWidth}
-                >
-                  {CellRenderer ? <CellRenderer value={value} row={row} /> : value}
+        return (
+          <TableRow key={`row-${rowIndex}`}>
+            {parsedColumns.map(
+              ({ id, width, field, onClick, center, internal, actionIds, cellRenderer }) => {
+                const value = field ? searchIn(row, field) : ''
+                const onColumnClick = onClick ? () => onClick(column) : null
+                const CellRenderer = parsedComponents[cellRenderer]
+                const hasFixedWidth = Boolean(width)
+                const cellActions = actionIds
+                  ? parsedActions.filter(({ id }) => actionIds.includes(id))
+                  : []
 
-                  {cellActions && (
-                    <TableActionsWrapper
-                      className="actions"
-                      actionsAlwaysVisible={actionsAlwaysVisible}
-                    >
-                      <TableActions actions={cellActions} eventProps={{ value, row }} />
-                    </TableActionsWrapper>
-                  )}
-                </TableRowValue>
-              )
-            }
-          )}
-        </TableRow>
-      ))}
+                return (
+                  <TableRowValue
+                    key={`${id}-${rowIndex}`}
+                    onClick={onColumnClick}
+                    center={center}
+                    className={internal === false ? '' : 'internal'}
+                    width={width || `${defaultWidth}%`}
+                    hasFixedWidth={hasFixedWidth}
+                  >
+                    {CellRenderer ? <CellRenderer value={value} row={row} /> : value}
+
+                    {cellActions && (
+                      <TableActionsWrapper
+                        className="actions"
+                        actionsAlwaysVisible={actionsAlwaysVisible}
+                      >
+                        <TableActions actions={cellActions} eventProps={{ value, row }} />
+                      </TableActionsWrapper>
+                    )}
+                  </TableRowValue>
+                )
+              }
+            )}
+          </TableRow>
+        )
+      })}
     </TableWrapper>
   )
 }

@@ -9,7 +9,7 @@ import useTableSelection from '../../hooks/useTableSelection'
 import useViews from '../../hooks/useViews'
 import LogCard from '../LogCard'
 import { tableLogTableOptions, tableLogViewIds, tableLogViews } from './TableLog.constants'
-import { createTableLogActions } from './TableLog.helpers'
+import { createTableLogActionsCreatorPerRow } from './TableLog.helpers'
 
 export const TableLog = ({
   tableItems,
@@ -82,7 +82,7 @@ export const TableLog = ({
     setColumns(columnsCopy)
   }
 
-  const tableLogActions = createTableLogActions({
+  const createActionsPerRow = createTableLogActionsCreatorPerRow({
     onMoveUpClick: handleMoveColumnUp,
     onMoveDownClick: handleMoveColumnDown,
     columns
@@ -109,7 +109,7 @@ export const TableLog = ({
           <Table
             rows={columns}
             options={tableLogTableOptions}
-            actions={tableLogActions}
+            createActionsPerRow={createActionsPerRow}
             actionsAlwaysVisible
           />
         </CarouselItem>

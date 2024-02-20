@@ -25,6 +25,9 @@ export const TableLog = ({
 }) => {
   const [columns, setColumns] = useState(options.columns)
 
+  const defaultColumnIds = options.columns.map(column => column.id)
+  const [activeColumnIds, setActiveColumnIds] = useState(defaultColumnIds)
+
   const { paginationActions, pages, pagesCount, pageNumber, changePage } = usePaginationActions({
     items: tableItems,
     maxItems
@@ -82,10 +85,22 @@ export const TableLog = ({
     setColumns(columnsCopy)
   }
 
+  const handleToggleColumn = ({ row: column }) => {
+    const isActive = activeColumnIds.includes(activeColumnId)
+
+    setActiveColumnIds(oldActiveColumnsIds => {
+      return isActive
+        ? oldActiveColumnsIds.filter(activeColumnId => activeColumnId !== column.id)
+        : oldActiveColumnsIds.concat(column.id)
+    })
+  }
+
   const createActionsPerRow = createTableLogActionsCreatorPerRow({
     onMoveUpClick: handleMoveColumnUp,
     onMoveDownClick: handleMoveColumnDown,
-    columns
+    onToggleColumn: handleToggleColumn,
+    columns,
+    activeColumnIds
   })
 
   return (

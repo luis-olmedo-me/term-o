@@ -3,7 +3,13 @@ import * as React from 'preact'
 import { Chevron, Live } from '@src/modules/icons'
 import { tableLogActionIds } from './TableLog.constants'
 
-export const createTableLogActionsCreatorPerRow = ({ onMoveUpClick, onMoveDownClick, columns }) => {
+export const createTableLogActionsCreatorPerRow = ({
+  onMoveUpClick,
+  onMoveDownClick,
+  onToggleColumn,
+  activeColumnIds,
+  columns
+}) => {
   const firstColumn = columns.at(0)
   const lastColumn = columns.at(-1)
 
@@ -25,8 +31,8 @@ export const createTableLogActionsCreatorPerRow = ({ onMoveUpClick, onMoveDownCl
     {
       id: tableLogActionIds.STATE,
       title: 'State',
-      onClick: () => {},
-      Component: <Live active />
+      onClick: onToggleColumn,
+      Component: <Live active={activeColumnIds.includes(row.id)} />
     }
   ]
 }

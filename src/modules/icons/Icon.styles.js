@@ -22,3 +22,8 @@ export const DirectionableIcon = styled(Icon)`
     transform: rotate(-90deg);
   }
 `
+
+export const PopupPath = styled.path`
+  transition: opacity 0.2s ease-in-out;
+  opacity: ${props => (props.active ? 1 : 0)};
+`

@@ -3,13 +3,12 @@ import * as React from 'preact'
 import { parameterTypes } from 'libs/commander/constants/commands.constants'
 import { Carousel, CarouselItem } from 'modules/components/Carousel'
 import { Table } from 'modules/components/Table'
-import { useState } from 'preact/hooks'
 import usePaginationActions from '../../hooks/usePaginationActions'
+import useTableConfig from '../../hooks/useTableConfig'
 import useTableSelection from '../../hooks/useTableSelection'
 import useViews from '../../hooks/useViews'
 import LogCard from '../LogCard'
 import { tableLogTableOptions, tableLogViewIds, tableLogViews } from './TableLog.constants'
-import { createTableLogActionsCreatorPerRow } from './TableLog.helpers'
 
 export const TableLog = ({
   tableItems,
@@ -23,11 +22,6 @@ export const TableLog = ({
   components,
   actions = []
 }) => {
-  const [columns, setColumns] = useState(options.columns)
-
-  const defaultColumnIds = options.columns.map(column => column.id)
-  const [activeColumnIds, setActiveColumnIds] = useState(defaultColumnIds)
-
   const { paginationActions, pages, pagesCount, pageNumber, changePage } = usePaginationActions({
     items: tableItems,
     maxItems
@@ -41,6 +35,7 @@ export const TableLog = ({
     maxItems,
     isEnabled: hasSelection
   })
+  const { columns, createActionsPerRow } = useTableConfig({ options })
 
   const {
     viewActions: [headToMain, headToConfig],
@@ -56,52 +51,6 @@ export const TableLog = ({
   const logCardActions = isTableView
     ? [...leftActions, ...paginationActions, ...selectionActions, ...rightActions, headToConfig]
     : [headToMain]
-
-  const handleMoveColumnDown = ({ row: column }) => {
-    const columnsCopy = [...columns]
-
-    const columnIndex = columnsCopy.findIndex(columnCopy => columnCopy.id === column.id)
-    const nextColumnIndex = columnIndex - 1
-
-    const nextColumn = columnsCopy[nextColumnIndex]
-
-    columnsCopy[columnIndex] = nextColumn
-    columnsCopy[nextColumnIndex] = column
-
-    setColumns(columnsCopy)
-  }
-
-  const handleMoveColumnUp = ({ row: column }) => {
-    const columnsCopy = [...columns]
-
-    const columnIndex = columnsCopy.findIndex(columnCopy => columnCopy.id === column.id)
-    const previousColumnIndex = columnIndex + 1
-
-    const previousColumn = columnsCopy[previousColumnIndex]
-
-    columnsCopy[columnIndex] = previousColumn
-    columnsCopy[previousColumnIndex] = column
-
-    setColumns(columnsCopy)
-  }
-
-  const handleToggleColumn = ({ row: column }) => {
-    const isActive = activeColumnIds.includes(activeColumnId)
-
-    setActiveColumnIds(oldActiveColumnsIds => {
-      return isActive
-        ? oldActiveColumnsIds.filter(activeColumnId => activeColumnId !== column.id)
-        : oldActiveColumnsIds.concat(column.id)
-    })
-  }
-
-  const createActionsPerRow = createTableLogActionsCreatorPerRow({
-    onMoveUpClick: handleMoveColumnUp,
-    onMoveDownClick: handleMoveColumnDown,
-    onToggleColumn: handleToggleColumn,
-    columns,
-    activeColumnIds
-  })
 
   return (
     <LogCard variant={parameterTypes.TABLE} actions={logCardActions} command={command}>

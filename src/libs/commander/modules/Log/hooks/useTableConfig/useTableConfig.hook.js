@@ -53,5 +53,7 @@ export const useTableConfig = ({ options }) => {
     activeColumnIds
   })
 
-  return { columns, createActionsPerRow }
+  const filteredColumns = columns.filter(column => activeColumnIds.includes(column.id))
+
+  return { columns, filteredColumns, createActionsPerRow }
 }

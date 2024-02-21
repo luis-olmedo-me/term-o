@@ -35,7 +35,7 @@ export const TableLog = ({
     maxItems,
     isEnabled: hasSelection
   })
-  const { columns, createActionsPerRow } = useTableConfig({ options })
+  const { columns, filteredColumns, createActionsPerRow } = useTableConfig({ options })
 
   const {
     viewActions: [headToMain, headToConfig],
@@ -61,7 +61,7 @@ export const TableLog = ({
               <Table
                 {...tableSelectionProps}
                 rows={page}
-                options={{ ...options, columns }}
+                options={{ ...options, columns: filteredColumns }}
                 components={components}
                 actions={actions}
               />

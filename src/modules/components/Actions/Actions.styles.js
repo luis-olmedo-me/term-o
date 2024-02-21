@@ -27,6 +27,7 @@ export const ActionButton = styled.button`
   vertical-align: top;
   color: inherit;
   padding: 0;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 
   &:disabled,
   &:disabled:hover {

@@ -1,6 +1,7 @@
 import { theme as t } from '@src/helpers/theme.helpers'
 import styled from 'styled-components'
 import { Actions } from '../Actions'
+import { ActionButton } from '../Actions/Actions.styles'
 import { Checkbox } from '../Checkbox/Checkbox.component'
 
 export const TableWrapper = styled.div`
@@ -81,7 +82,7 @@ export const TableActions = styled(Actions)`
   background-color: ${t('purple.700')};
   color: ${t('neutral.1200')};
 
-  button:hover {
+  ${ActionButton}:hover {
     color: ${t('yellow.800')};
   }
 `

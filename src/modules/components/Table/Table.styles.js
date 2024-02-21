@@ -80,6 +80,10 @@ export const TableActions = styled(Actions)`
   position: absolute;
   background-color: ${t('purple.700')};
   color: ${t('neutral.1200')};
+
+  button:hover {
+    color: ${t('yellow.800')};
+  }
 `
 
 export const HeaderCheckbox = styled(Checkbox)`

@@ -20,3 +20,7 @@ export const extensionKeyEvents = {
   RESIZE_FULL: 'resize-full'
 }
 export const extensionKeyEventNames = Object.values(extensionKeyEvents)
+
+export const defaultTableConfig = {
+  activeColumnIds: []
+}

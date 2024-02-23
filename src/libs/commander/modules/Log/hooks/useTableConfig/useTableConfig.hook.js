@@ -1,11 +1,30 @@
-import { useState } from 'preact/hooks'
+import { useEffect, useState } from 'preact/hooks'
+
+import { fetchTableConfig, setTableConfig } from '@src/helpers/event.helpers'
 import { createTableLogActionsCreatorPerRow } from './useTableConfig.helpers'
 
-export const useTableConfig = ({ options }) => {
-  const [columns, setColumns] = useState(options.columns)
-
+export const useTableConfig = ({ options, id }) => {
   const defaultColumnIds = options.columns.map(column => column.id)
+
+  const [columns, setColumns] = useState(options.columns)
   const [activeColumnIds, setActiveColumnIds] = useState(defaultColumnIds)
+
+  useEffect(
+    function receiveTableConfig() {
+      if (!id) return
+
+      const receiveConfiguration = data => {
+        console.log('data', data)
+        const newActiveColumnIds = data.activeColumnIds
+        const hasNewActiveColumnIds = newActiveColumnIds.length > 0
+
+        if (hasNewActiveColumnIds) setActiveColumnIds(newActiveColumnIds)
+      }
+
+      fetchTableConfig(id).then(receiveConfiguration)
+    },
+    [id]
+  )
 
   const handleMoveColumnDown = ({ row: column }) => {
     const columnsCopy = [...columns]
@@ -19,6 +38,7 @@ export const useTableConfig = ({ options }) => {
     columnsCopy[nextColumnIndex] = column
 
     setColumns(columnsCopy)
+    if (id) setTableConfig(id, { activeColumnIds: columnsCopy })
   }
 
   const handleMoveColumnUp = ({ row: column }) => {
@@ -33,16 +53,17 @@ export const useTableConfig = ({ options }) => {
     columnsCopy[previousColumnIndex] = column
 
     setColumns(columnsCopy)
+    if (id) setTableConfig(id, { activeColumnIds: columnsCopy })
   }
 
   const handleToggleColumn = ({ row: column }) => {
     const isActive = activeColumnIds.includes(column.id)
+    const newActiveColumnIds = isActive
+      ? activeColumnIds.filter(activeColumnId => activeColumnId !== column.id)
+      : activeColumnIds.concat(column.id)
 
-    setActiveColumnIds(oldActiveColumnsIds => {
-      return isActive
-        ? oldActiveColumnsIds.filter(activeColumnId => activeColumnId !== column.id)
-        : oldActiveColumnsIds.concat(column.id)
-    })
+    setActiveColumnIds(newActiveColumnIds)
+    if (id) setTableConfig(id, { activeColumnIds: newActiveColumnIds })
   }
 
   const createActionsPerRow = createTableLogActionsCreatorPerRow({

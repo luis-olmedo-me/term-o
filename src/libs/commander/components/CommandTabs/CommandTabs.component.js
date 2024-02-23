@@ -268,6 +268,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
 
       {!messageLog && hasTabs && (
         <TableLog
+          id="tabs"
           command={command}
           maxItems={MAX_ITEMS}
           tableItems={tabs}
@@ -282,6 +283,7 @@ export const CommandTabs = ({ props, terminal: { command, finish } }) => {
 
       {!messageLog && showPermissions && (
         <TableLog
+          id="permissions"
           command={command}
           maxItems={MAX_ITEMS}
           tableItems={tablePermissions}

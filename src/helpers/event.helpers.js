@@ -87,7 +87,7 @@ export const fetchConfiguration = () => {
 }
 
 export const fetchTableConfig = id => {
-  const receiveTableConfig = receiveTableConfigFor(id)
+  const receiveTableConfig = receiveTableConfigFor(`${id}TableConfig`)
 
   return createFrontRequest({
     request: async function() {

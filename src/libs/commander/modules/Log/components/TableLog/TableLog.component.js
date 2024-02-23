@@ -11,6 +11,7 @@ import LogCard from '../LogCard'
 import { tableLogTableOptions, tableLogViewIds, tableLogViews } from './TableLog.constants'
 
 export const TableLog = ({
+  id,
   tableItems,
   command,
   maxItems,
@@ -35,7 +36,7 @@ export const TableLog = ({
     maxItems,
     isEnabled: hasSelection
   })
-  const { columns, filteredColumns, createActionsPerRow } = useTableConfig({ options })
+  const { columns, filteredColumns, createActionsPerRow } = useTableConfig({ options, id })
 
   const {
     viewActions: [headToMain, headToConfig],

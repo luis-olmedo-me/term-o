@@ -19,9 +19,11 @@ export const CarouselItem = styled.div`
 const birth = keyframes`
   from {
     transform: scaleX(0);
+    opacity: 0.5;
   }
   to {
     transform: scaleX(1);
+    opacity: 1;
   }
 `
 export const AnimatedEffect = styled.div`

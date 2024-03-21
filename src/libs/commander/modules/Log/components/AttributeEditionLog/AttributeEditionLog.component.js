@@ -5,12 +5,19 @@ import TableLog from '../TableLog'
 import { attributeTableOptions, tableComponents } from './AttributeEditionLog.constants'
 import { turnAttributesIntoTableItems } from './AttributeEditionLog.helpers'
 
-export const AttributeEditionLog = ({ element, leftOptions = [], rightOptions = [], command }) => {
+export const AttributeEditionLog = ({
+  id,
+  element,
+  leftOptions = [],
+  rightOptions = [],
+  command
+}) => {
   const attributes = getAttributes(element)
   const attributeRows = turnAttributesIntoTableItems({ attributes, element })
 
   return (
     <TableLog
+      id={id}
       command={command}
       maxItems={10}
       tableItems={attributeRows}

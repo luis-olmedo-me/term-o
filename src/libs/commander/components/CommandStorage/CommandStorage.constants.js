@@ -63,16 +63,12 @@ export const storageTableOptions = {
     {
       id: storageHeaderIds.KEY,
       displayName: 'Key',
-      width: '40%',
-      minTableWidth: 0,
       field: 'storageKey',
       actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
       id: storageHeaderIds.VALUE,
       displayName: 'Value',
-      width: '60%',
-      minTableWidth: 0,
       field: 'storageValue',
       actionIds: [defaultCellActionIds.COPY_VALUE, storageCellActionIds.EDIT_VALUE]
     }

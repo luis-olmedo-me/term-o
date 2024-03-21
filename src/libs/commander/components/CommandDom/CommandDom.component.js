@@ -152,7 +152,7 @@ const CommandDomWithoutContext = ({
     [doAction, setMessage, finish]
   )
 
-  const [headToElements, headToAttributes, headToStyles] = viewActions
+  const [headToMain, headToAttributes, headToStyles] = viewActions
   const [
     attributeEditionAction,
     styleEditionAction,
@@ -212,8 +212,9 @@ const CommandDomWithoutContext = ({
 
           <CarouselItem>
             <AttributeEditionLog
+              id="elementAttribute"
               element={editingElement}
-              leftOptions={[headToElements]}
+              leftOptions={[headToMain]}
               rightOptions={[headToStyles]}
               command={command}
             />
@@ -222,7 +223,7 @@ const CommandDomWithoutContext = ({
           <CarouselItem>
             <LogCard
               variant={parameterTypes.STYLES}
-              actions={[headToElements, headToAttributes]}
+              actions={[headToMain, headToAttributes]}
               command={command}
               hasScroll
               hasShadow

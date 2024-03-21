@@ -1,6 +1,7 @@
 import { theme as t } from '@src/helpers/theme.helpers'
 import styled from 'styled-components'
 import { Actions } from '../Actions'
+import { ActionButton } from '../Actions/Actions.styles'
 import { Checkbox } from '../Checkbox/Checkbox.component'
 
 export const TableWrapper = styled.div`
@@ -46,9 +47,10 @@ export const TableRowValue = styled.span`
   white-space: nowrap;
   overflow: hidden;
   position: relative;
+  width: ${props => props.width};
   text-align: ${props => (props.center ? 'center' : 'left')};
-  flex-grow: ${props => (props.hasFixedWidth ? 'unset' : '1')};
   background-color: ${t('transparent.000')};
+  flex-grow: ${props => (props.hasFixedWidth ? 'unset' : '1')};
 
   &.internal {
     border-radius: ${t('radius.300')};
@@ -71,7 +73,7 @@ export const TableHeaderRowValue = styled.span`
 `
 
 export const TableActionsWrapper = styled.div`
-  opacity: 0;
+  opacity: ${props => (props.actionsAlwaysVisible ? '1' : '0')};
   transition: opacity 0.2s ease-in-out;
 `
 
@@ -79,6 +81,10 @@ export const TableActions = styled(Actions)`
   position: absolute;
   background-color: ${t('purple.700')};
   color: ${t('neutral.1200')};
+
+  ${ActionButton}:hover {
+    color: ${t('yellow.800')};
+  }
 `
 
 export const HeaderCheckbox = styled(Checkbox)`

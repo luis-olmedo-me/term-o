@@ -82,32 +82,24 @@ export const internalEventTableOptions = {
     {
       id: internalEventProperties.ID,
       displayName: 'ID',
-      width: '20%',
-      minTableWidth: 555,
       field: 'id',
       actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
       id: internalEventProperties.URL,
       displayName: 'URL',
-      width: '15%',
-      minTableWidth: 0,
       field: 'url',
       actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
       id: internalEventProperties.EVENT,
       displayName: 'Event',
-      width: '15%',
-      minTableWidth: 700,
       field: 'event',
       actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
       id: internalEventProperties.COMMAND,
       displayName: 'Command',
-      width: '50%',
-      minTableWidth: 0,
       field: 'command',
       actionIds: [defaultCellActionIds.COPY_VALUE]
     }
@@ -119,15 +111,11 @@ export const listenersTableOptions = {
     {
       id: 'event_name',
       displayName: 'Event',
-      width: '50%',
-      minTableWidth: 0,
       field: 'type'
     },
     {
       id: 'function_name',
       displayName: 'Function Name',
-      width: '50%',
-      minTableWidth: 0,
       field: 'callback.name'
     }
   ]

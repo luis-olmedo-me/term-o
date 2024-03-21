@@ -1,4 +1,4 @@
-import { eventTypes } from '@src/constants/events.constants.js'
+import { defaultTableConfig, eventTypes } from '@src/constants/events.constants'
 import { states } from '../libs/process-wait-list/processWaitList.constants'
 
 const mergeAliases = (aliasesA, aliasesB) => {
@@ -16,6 +16,9 @@ const receiveConfig = ({ aliases, pageEvents, position }) => ({
   pageEvents: pageEvents || [],
   aliases: aliases || []
 })
+const receiveTableConfigFor = id => {
+  return data => ({ ...defaultTableConfig, ...data[id] })
+}
 
 const createWorkerRequest = ({ type, data, defaultResponse }) => {
   return new Promise((resolve, reject) => {
@@ -79,6 +82,24 @@ export const fetchConfiguration = () => {
       return await chrome.storage.local
         .get(['aliases', 'pageEvents', 'position'])
         .then(receiveConfig)
+    }
+  })
+}
+
+export const fetchTableConfig = id => {
+  const receiveTableConfig = receiveTableConfigFor(`${id}TableConfig`)
+
+  return createFrontRequest({
+    request: async function() {
+      return await chrome.storage.local.get([`${id}TableConfig`]).then(receiveTableConfig)
+    }
+  })
+}
+
+export const setTableConfig = (id, config) => {
+  return createFrontRequest({
+    request: async function() {
+      await chrome.storage.local.set({ [`${id}TableConfig`]: config })
     }
   })
 }

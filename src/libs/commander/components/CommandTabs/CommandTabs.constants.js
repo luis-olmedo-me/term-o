@@ -183,24 +183,18 @@ export const currentTabsTableOptions = {
     {
       id: tabsColumnIds.ID,
       displayName: 'ID',
-      width: '5%',
-      minTableWidth: 900,
       field: 'id',
       actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
       id: tabsColumnIds.DATE,
       displayName: 'Date',
-      width: '25%',
-      minTableWidth: 0,
       field: 'date',
       actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
       id: tabsColumnIds.TITLE,
       displayName: 'Title',
-      width: '40%',
-      minTableWidth: 0,
       field: 'url',
       cellRenderer: 'imageIcon',
       actionIds: [defaultCellActionIds.COPY_VALUE, tabsCellActionIds.SWITCH]
@@ -208,8 +202,6 @@ export const currentTabsTableOptions = {
     {
       id: tabsColumnIds.HOSTNAME,
       displayName: 'Host Name',
-      width: '15%',
-      minTableWidth: 665,
       field: 'hostname',
       actionIds: [defaultCellActionIds.COPY_VALUE]
     }
@@ -220,24 +212,18 @@ export const pastTabsTableOptions = {
     {
       id: tabsColumnIds.ID,
       displayName: 'ID',
-      width: '5%',
-      minTableWidth: 900,
       field: 'id',
       actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
       id: tabsColumnIds.DATE,
       displayName: 'Date',
-      width: '25%',
-      minTableWidth: 0,
       field: 'date',
       actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
       id: tabsColumnIds.TITLE,
       displayName: 'Title',
-      width: '40%',
-      minTableWidth: 0,
       field: 'url',
       cellRenderer: 'imageIcon',
       actionIds: [defaultCellActionIds.COPY_VALUE]
@@ -245,8 +231,6 @@ export const pastTabsTableOptions = {
     {
       id: tabsColumnIds.HOSTNAME,
       displayName: 'Host Name',
-      width: '15%',
-      minTableWidth: 665,
       field: 'hostname',
       actionIds: [defaultCellActionIds.COPY_VALUE]
     }
@@ -263,24 +247,18 @@ export const permissionTableOptions = {
     {
       id: permissionColumnIds.ID,
       displayName: 'ID',
-      width: '33%',
-      minTableWidth: 0,
       field: 'id',
       actionIds: [defaultCellActionIds.COPY_VALUE]
     },
     {
       id: permissionColumnIds.NAME,
       displayName: 'Name',
-      width: '33%',
-      minTableWidth: 0,
       field: 'name',
       actionIds: []
     },
     {
       id: permissionColumnIds.STATE,
       displayName: 'State',
-      width: '33%',
-      minTableWidth: 0,
       field: 'enable',
       cellRenderer: 'switch',
       actionIds: []

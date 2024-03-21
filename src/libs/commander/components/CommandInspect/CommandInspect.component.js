@@ -144,6 +144,7 @@ const CommandInspectWithoutContext = ({
 
           <CarouselItem>
             <AttributeEditionLog
+              id="elemenAttributetInspected"
               element={editingElement}
               leftOptions={[headToElements]}
               rightOptions={[headToStyles]}

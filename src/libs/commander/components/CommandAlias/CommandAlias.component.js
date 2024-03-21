@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'preact/hooks'
 
 import { addAliases, deleteAliases, fetchConfiguration } from '@src/helpers/event.helpers.js'
 import { LogCard, LogContainer, TableLog, useMessageLog } from '../../modules/Log'
-import { aliasActionTypes, aliasTableOptions, MAX_ITEMS } from './CommandAlias.constants'
+import { MAX_ITEMS, aliasActionTypes, aliasTableOptions } from './CommandAlias.constants'
 import { getActionType, validateAliasesToAdd } from './CommandAlias.helpers'
 import { aliasMessages } from './CommandAlias.messages'
 
@@ -98,6 +98,7 @@ export const CommandAlias = ({ props, terminal: { command, finish } }) => {
 
       {!messageLog && (
         <TableLog
+          id="aliases"
           command={command}
           maxItems={MAX_ITEMS}
           tableItems={tableItems}

@@ -7,10 +7,10 @@ import { getParamsByType } from '../../commander.helpers'
 import { parameterTypes } from '../../constants/commands.constants'
 import { LogCard, LogContainer, TableLog, useMessageLog } from '../../modules/Log'
 import {
+  MAX_ITEMS,
   eventActionTypes,
   internalEventTableOptions,
   listenersTableOptions,
-  MAX_ITEMS,
   triggerableEvents
 } from './CommandEvent.constants'
 import {
@@ -142,6 +142,7 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
 
       {!messageLog && hasInternPageEvents && (
         <TableLog
+          id="pageEvents"
           command={command}
           maxItems={MAX_ITEMS}
           tableItems={internPageEvents}
@@ -153,6 +154,7 @@ export const CommandEvent = ({ props, terminal: { command, params, finish } }) =
 
       {!messageLog && hasListeners && (
         <TableLog
+          id="listeners"
           command={command}
           maxItems={MAX_ITEMS}
           tableItems={eventListeners}

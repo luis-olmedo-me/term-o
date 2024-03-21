@@ -212,6 +212,7 @@ const CommandDomWithoutContext = ({
 
           <CarouselItem>
             <AttributeEditionLog
+              id="elementAttribute"
               element={editingElement}
               leftOptions={[headToMain]}
               rightOptions={[headToStyles]}

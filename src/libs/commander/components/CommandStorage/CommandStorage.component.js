@@ -119,6 +119,7 @@ export const CommandStorage = ({ props, terminal: { command, finish } }) => {
         <Carousel itemInView={itemInView}>
           <CarouselItem>
             <TableLog
+              id="storage"
               command={command}
               maxItems={10}
               tableItems={storageItems}

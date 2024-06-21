@@ -15,7 +15,7 @@ module.exports = (_env, { watch, mode }) => ({
   },
   resolve: {
     extensions: ['.js', '.jsx', '.css'],
-    modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+    modules: [path.resolve(__dirname, 'src-new'), 'node_modules'],
     alias: {
       '@src': path.resolve(__dirname, 'src-new'),
       react: 'preact/compat'
@@ -33,7 +33,8 @@ module.exports = (_env, { watch, mode }) => ({
   plugins: [
     new CopyPlugin([
       { from: './src-new/manifest.json', to: './manifest.json' },
-      { from: './src-new/images', to: './images' }
+      { from: './src-new/images', to: './images' },
+      { from: './src-new/sidepanel.html', to: './sidepanel.html' }
     ]),
     ...(watch ? [] : [new CleanWebpackPlugin()])
   ],

@@ -1,4 +1,4 @@
-import { eventTypes } from 'src/constants/events.constants.js'
+import { eventTypes } from '@src/constants/events.constants.js'
 
 export const backgroundRequest = ({ eventType, callback = () => {}, data }) => {
   chrome?.runtime?.sendMessage?.({ type: eventType, data }, callback)
@@ -6,7 +6,7 @@ export const backgroundRequest = ({ eventType, callback = () => {}, data }) => {
 
 export const fetchConfiguration = () => {
   return new Promise((resolve, reject) => {
-    const callback = (response) => {
+    const callback = response => {
       if (response?.status === 'ok') {
         resolve(response?.response || {})
       } else {
@@ -18,9 +18,9 @@ export const fetchConfiguration = () => {
   })
 }
 
-export const addAliases = (newAliases) => {
+export const addAliases = newAliases => {
   return new Promise((resolve, reject) => {
-    const callback = (response) => {
+    const callback = response => {
       if (response?.status === 'ok') {
         resolve()
       } else {
@@ -36,9 +36,9 @@ export const addAliases = (newAliases) => {
   })
 }
 
-export const deleteAliases = (aliasIds) => {
+export const deleteAliases = aliasIds => {
   return new Promise((resolve, reject) => {
-    const callback = (response) => {
+    const callback = response => {
       if (response?.status === 'ok') {
         resolve()
       } else {
@@ -54,9 +54,9 @@ export const deleteAliases = (aliasIds) => {
   })
 }
 
-export const deletePageEvents = (ids) => {
+export const deletePageEvents = ids => {
   return new Promise((resolve, reject) => {
-    const callback = (response) => {
+    const callback = response => {
       if (response?.status === 'ok') {
         resolve()
       } else {
@@ -72,9 +72,9 @@ export const deletePageEvents = (ids) => {
   })
 }
 
-export const addPageEvents = (newPageEvents) => {
+export const addPageEvents = newPageEvents => {
   return new Promise((resolve, reject) => {
-    const callback = (response) => {
+    const callback = response => {
       if (response?.status === 'ok') {
         resolve()
       } else {
@@ -92,7 +92,7 @@ export const addPageEvents = (newPageEvents) => {
 
 export const resetConfiguration = () => {
   return new Promise((resolve, reject) => {
-    const callback = (response) => {
+    const callback = response => {
       if (response?.status === 'ok') {
         resolve()
       } else {
@@ -107,17 +107,17 @@ export const resetConfiguration = () => {
   })
 }
 
-export const onLocationChange = (callback) => {
+export const onLocationChange = callback => {
   let oldHref = document.location.href,
     bodyDOM = document.body
 
-  const observer = new MutationObserver(function (_mutations) {
+  const observer = new MutationObserver(function(_mutations) {
     if (oldHref != document.location.href) {
       oldHref = document.location.href
 
       callback()
 
-      window.requestAnimationFrame(function () {
+      window.requestAnimationFrame(function() {
         let temporalBodyDOM = document.body
 
         if (temporalBodyDOM !== bodyDOM) {

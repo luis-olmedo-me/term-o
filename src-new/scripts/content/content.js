@@ -2,11 +2,13 @@ import * as React from 'preact'
 
 import { FontFamilies } from './fonts/Fonts.styles'
 
+console.log('Hello world from content!')
+
 const appRoot = document.createElement('div')
 document.body.prepend(appRoot)
 
 const ExtensionApp = () => {
-  console.log('Hello World from popup.js inside the ExtensionApp!')
+  console.log('Hello World from content.js inside the ExtensionApp!')
 
   return <p>Hi</p>
 }

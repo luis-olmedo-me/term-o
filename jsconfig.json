@@ -1,10 +1,8 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": "./src-new",
     "paths": {
-      "@libs": ["src/libs"],
-      "@modules": ["src/modules"],
-      "@src": ["src"]
+      "@src": ["src-new"]
     }
   },
   "exclude": ["build", "images", "node_modules"]

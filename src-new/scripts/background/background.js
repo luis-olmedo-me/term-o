@@ -3,6 +3,7 @@ import { extensionKeyEventNames, extensionKeyEvents, invalidPreURLs } from './ba
 console.log('Hello world from background!')
 
 chrome.commands.onCommand.addListener(function(command) {
+  console.log('💬  command:', command)
   if (!extensionKeyEventNames.includes(command)) return
 
   chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {

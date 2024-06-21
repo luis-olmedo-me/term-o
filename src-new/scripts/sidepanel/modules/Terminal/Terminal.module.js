@@ -1,8 +1,8 @@
 import * as React from 'preact'
 import { useEffect, useRef, useState } from 'preact/hooks'
 
-import Input from '../../components/Input'
-import Logger from '../../components/Logger'
+import Input from '@sidepanel/components/Input'
+import Logger from '@sidepanel/modules/Logger'
 import * as S from './Terminal.styles'
 
 const mockedLogs = [

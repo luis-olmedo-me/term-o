@@ -1,6 +1,6 @@
 import { theme as t } from '@src/theme/theme.helpers'
 import styled from 'styled-components'
-import { LoggerWrapper } from '../../components/Logger/Logger.styles'
+import { LoggerWrapper } from '../Logger/Logger.styles'
 
 export const TerminalWrapper = styled.div`
   display: flex;

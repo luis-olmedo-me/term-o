@@ -17,6 +17,7 @@ module.exports = (_env, { watch, mode }) => ({
     extensions: ['.js', '.jsx', '.css'],
     modules: [path.resolve(__dirname, 'src-new'), 'node_modules'],
     alias: {
+      '@sidepanel': path.resolve(__dirname, 'src-new/scripts/sidepanel'),
       '@src': path.resolve(__dirname, 'src-new'),
       react: 'preact/compat'
     }

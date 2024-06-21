@@ -33,6 +33,6 @@ export const InputWrapper = styled.div`
   gap: ${t('space.400')};
   background-color: ${t('grey.900')};
   color: ${t('grey.50')};
-  padding: ${t('space.200')} ${t('space.400')};
-  cursor: input;
+  padding: ${t('space.300')} ${t('space.500')};
+  cursor: text;
 `

@@ -32,8 +32,8 @@ module.exports = (_env, { watch, mode }) => ({
   },
   plugins: [
     new CopyPlugin([
-      { from: './src/manifest.json', to: './manifest.json' },
-      { from: './src/images', to: './images' }
+      { from: './src-new/manifest.json', to: './manifest.json' },
+      { from: './src-new/images', to: './images' }
     ]),
     ...(watch ? [] : [new CleanWebpackPlugin()])
   ],

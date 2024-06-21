@@ -3,7 +3,7 @@
   "version": "0.5.0",
   "description": "Simple terminal for browser",
   "manifest_version": 3,
-  "permissions": ["tabs", "activeTab", "storage", "scripting", "history"],
+  "permissions": ["tabs", "activeTab", "storage", "scripting", "history", "sidePanel"],
   "host_permissions": ["http://*/", "https://*/"],
   "icons": {
     "16": "images/logo-16_x_16.png",
@@ -20,33 +20,16 @@
   "background": {
     "service_worker": "./background.js"
   },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
   },
   "commands": {
     "toggle-terminal": {
-      "suggested_key": {
-        "default": "Alt+T"
-      },
+      "suggested_key": { "default": "Alt+T" },
       "description": "Toggle the terminal"
-    },
-    "resize-right": {
-      "suggested_key": {
-        "default": "Alt+Right"
-      },
-      "description": "Resize terminal to the right"
-    },
-    "resize-left": {
-      "suggested_key": {
-        "default": "Alt+Left"
-      },
-      "description": "Resize terminal to the left"
-    },
-    "resize-full": {
-      "suggested_key": {
-        "default": "Alt+Up"
-      },
-      "description": "Resize terminal to its full size"
     }
   }
 }

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 export const LoggerWrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   gap: ${t('space.400')};
   background-color: ${t('grey.900')};
   color: ${t('grey.50')};

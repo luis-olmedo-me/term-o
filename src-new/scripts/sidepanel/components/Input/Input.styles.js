@@ -1,27 +1,33 @@
-import { theme as t } from '@src/helpers/theme.helpers'
-import styled, { css } from 'styled-components'
+import { theme as t } from '@src/theme/theme.helpers'
+import styled from 'styled-components'
 
-const radius = t('radius.100')
-
-export const inputStyles = css`
-  background-color: ${t('neutral.100')};
-  width: calc(100% - 25px);
-  border-radius: 0 0 ${radius} 0;
-  display: inline-block;
-  color: ${t('neutral.1200')};
-  vertical-align: middle;
-`
-
-export const InputWrapper = styled.div`
-  background-color: transparent;
-  box-sizing: border-box;
-  position: absolute;
+export const StyledInput = styled.input`
+  font-family: ${t('font.primary')};
   width: 100%;
-  bottom: 0;
-  z-index: 1;
-  border-width: 0 1px 1px;
-  background-color: ${t('neutral.100')};
-  border-radius: 0 0 ${radius} ${radius};
+  box-sizing: border-box;
+  white-space: nowrap;
+  font-size: ${t('font-size.100')};
+  border: none;
+  display: block;
+  caret-color: ${t('green.50')};
+  background-color: transparent;
+  color: transparent;
+  line-height: ${t('line-height.300')};
+  padding: ${t('space.500')} ${t('space.400')};
+  background-color: ${t('grey.900')};
+  color: ${t('grey.50')};
+  letter-spacing: ${t('space.50')};
+
+  &:active,
+  &:focus,
+  &:focus-visible {
+    outline: none;
+  }
+
+  &::selection {
+    color: ${t('green.A200')};
+    background-color: ${t('grey.800')};
+  }
 `
 
 export const Hash = styled.span`

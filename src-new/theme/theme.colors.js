@@ -54,7 +54,7 @@ export const defaultTheme = {
     A700: '#aa00ff'
   },
 
-  deepPurple: {
+  'deep-purple': {
     '50': '#ede7f6',
     '100': '#d1c4e9',
     '200': '#b39ddb',
@@ -105,7 +105,7 @@ export const defaultTheme = {
     A700: '#2962ff'
   },
 
-  lightBlue: {
+  'light-blue': {
     '50': '#e1f5fe',
     '100': '#b3e5fc',
     '200': '#81d4fa',
@@ -173,7 +173,7 @@ export const defaultTheme = {
     A700: '#00c853'
   },
 
-  lightGreen: {
+  'light-green': {
     '50': '#f1f8e9',
     '100': '#dcedc8',
     '200': '#c5e1a5',
@@ -258,7 +258,7 @@ export const defaultTheme = {
     A700: '#ff6d00'
   },
 
-  deepOrange: {
+  'deep-orange': {
     '50': '#fbe9e7',
     '100': '#ffccbc',
     '200': '#ffab91',
@@ -309,7 +309,7 @@ export const defaultTheme = {
     A700: '#616161'
   },
 
-  blueGrey: {
+  'blue-grey': {
     '50': '#eceff1',
     '100': '#cfd8dc',
     '200': '#b0bec5',
@@ -327,8 +327,39 @@ export const defaultTheme = {
   },
 
   radius: {
-    100: '14px',
-    200: '10px',
-    300: '8px'
+    50: '1px',
+    100: '2px',
+    200: '4px',
+    300: '8px',
+    400: '10px',
+    500: '14px',
+    500: '16px'
+  },
+
+  space: {
+    50: '1px',
+    100: '2px',
+    200: '4px',
+    300: '8px',
+    400: '10px',
+    500: '14px',
+    500: '16px'
+  },
+
+  'font-size': {
+    50: '.8rem',
+    100: '1rem',
+    200: '1.25rem'
+  },
+
+  'line-height': {
+    50: '.8rem',
+    100: '1rem',
+    200: '1.25rem',
+    300: '1.5rem'
+  },
+
+  font: {
+    primary: 'Coda'
   }
 }

@@ -11,7 +11,7 @@ export const Terminal = () => {
     <div>
       <Logger logs={[]} />
 
-      <Input type="text" onChange={handleChange} placeholder="..." />
+      <Input type="text" onChange={handleChange} />
     </div>
   )
 }

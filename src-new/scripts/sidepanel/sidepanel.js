@@ -1,11 +1,5 @@
 import * as React from 'preact'
+import Terminal from './modules/Terminal'
 
-console.log('Hello world from sidepanel!')
-
-const ExtensionApp = () => {
-  console.log('Hello World from sidepanel.js inside the ExtensionApp!')
-
-  return <p>Hi</p>
-}
-
-React.render(<ExtensionApp />, document.getElementById('root'))
+console.log('testing..')
+React.render(<Terminal />, document.getElementById('root'))

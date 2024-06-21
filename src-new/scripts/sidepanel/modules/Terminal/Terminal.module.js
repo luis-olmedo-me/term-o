@@ -5,8 +5,16 @@ import Input from '../../components/Input'
 import Logger from '../../components/Logger'
 import * as S from './Terminal.styles'
 
+const mockedLogs = [
+  {
+    id: '123',
+    command: 'dom -g *'
+  }
+]
+
 export const Terminal = () => {
   const [value, setValue] = useState('')
+  const [logs, setLogs] = useState(mockedLogs)
   const inputRef = useRef(null)
 
   const handleChange = event => {
@@ -25,7 +33,7 @@ export const Terminal = () => {
 
   return (
     <S.TerminalWrapper onClick={focusOnInput}>
-      <Logger logs={['test', 'test1']} />
+      <Logger logs={logs} />
 
       <Input type="text" onChange={handleChange} value={value} prefix="$" inputRef={inputRef} />
     </S.TerminalWrapper>

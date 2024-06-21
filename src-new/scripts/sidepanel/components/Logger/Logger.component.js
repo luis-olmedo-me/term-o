@@ -6,7 +6,7 @@ export const Logger = ({ logs }) => {
   return (
     <S.LoggerWrapper>
       {logs.reverse().map(log => (
-        <p>{log}</p>
+        <p key={log.id}>$ {log.command}</p>
       ))}
     </S.LoggerWrapper>
   )

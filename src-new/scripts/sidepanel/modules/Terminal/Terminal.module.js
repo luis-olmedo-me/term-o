@@ -1,4 +1,6 @@
 import * as React from 'preact'
+import { useState } from 'preact/hooks'
+
 import { Input } from '../../components/Input/Input.component'
 import Logger from '../../components/Logger'
 
@@ -15,7 +17,7 @@ export const Terminal = () => {
     <div>
       <Logger logs={[]} />
 
-      <Input type="text" onChange={handleChange} value={value} />
+      <Input type="text" onChange={handleChange} value={value} prefix="$" />
     </div>
   )
 }

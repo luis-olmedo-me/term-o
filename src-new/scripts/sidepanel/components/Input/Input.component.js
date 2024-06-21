@@ -1,16 +1,20 @@
 import * as React from 'preact'
 
-import { StyledInput } from './Input.styles'
+import * as S from './Input.styles'
 
-export const Input = ({ onChange, onKeyDown, placeholder, value }) => {
+export const Input = ({ onChange, onKeyDown, placeholder, value, prefix }) => {
   return (
-    <StyledInput
-      spellCheck="false"
-      type="text"
-      value={value}
-      onChange={onChange}
-      onKeyDown={onKeyDown}
-      placeholder={placeholder}
-    />
+    <S.InputWrapper>
+      <span>{prefix}</span>
+
+      <S.Input
+        spellCheck="false"
+        type="text"
+        value={value}
+        onChange={onChange}
+        onKeyDown={onKeyDown}
+        placeholder={placeholder}
+      />
+    </S.InputWrapper>
   )
 }

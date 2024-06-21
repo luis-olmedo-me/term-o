@@ -4,20 +4,20 @@ import { FontFamilies } from './fonts/Fonts.styles'
 
 console.log('Hello world from content!')
 
-const appRoot = document.createElement('div')
-document.body.prepend(appRoot)
+// const appRoot = document.createElement('div')
+// document.body.prepend(appRoot)
 
-const ExtensionApp = () => {
-  console.log('Hello World from content.js inside the ExtensionApp!')
+// const ExtensionApp = () => {
+//   console.log('Hello World from content.js inside the ExtensionApp!')
 
-  return <p>Hi</p>
-}
+//   return <p>Hi</p>
+// }
 
-React.render(
-  <>
-    <FontFamilies />
+// React.render(
+//   <>
+//     <FontFamilies />
 
-    <ExtensionApp />
-  </>,
-  appRoot
-)
+//     <ExtensionApp />
+//   </>,
+//   appRoot
+// )

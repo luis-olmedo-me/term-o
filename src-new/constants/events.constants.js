@@ -9,7 +9,3 @@ export const eventTypes = {
   CONFIG_UPDATE: 'term-o-config-update',
   RESET_CONFIGURATION: 'term-o-update-configuration'
 }
-
-export const extensionKeyEvents = {
-  TOGGLE_TERMINAL: 'toggle-terminal'
-}

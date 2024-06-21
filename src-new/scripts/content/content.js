@@ -1,9 +1,8 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import * as React from 'preact'
 
-import { appRoot, shadowRoot } from './content.constants'
 import { FontFamilies } from './fonts/Fonts.styles'
 
+const appRoot = document.createElement('div')
 document.body.prepend(appRoot)
 
 const ExtensionApp = () => {
@@ -12,13 +11,11 @@ const ExtensionApp = () => {
   return <p>Hi</p>
 }
 
-ReactDOM.render(
-  <React.StrictMode>
+React.render(
+  <>
     <FontFamilies />
 
-    <shadowRoot.div>
-      <ExtensionApp />
-    </shadowRoot.div>
-  </React.StrictMode>,
+    <ExtensionApp />
+  </>,
   appRoot
 )

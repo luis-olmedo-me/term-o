@@ -1,9 +1,10 @@
 {
   "name": "Term-O",
-  "version": "0.1.0",
+  "version": "0.5.0",
   "description": "Simple terminal for browser",
   "manifest_version": 3,
-  "permissions": ["tabs", "activeTab", "storage", "sidePanel"],
+  "permissions": ["tabs", "activeTab", "storage", "scripting", "history"],
+  "host_permissions": ["http://*/", "https://*/"],
   "icons": {
     "16": "images/logo-16_x_16.png",
     "48": "images/logo-48_x_48.png",
@@ -13,18 +14,11 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["./scripts/content.js"]
+      "js": ["./content.js"]
     }
   ],
   "background": {
-    "service_worker": "./scripts/background.js"
-  },
-  "side_panel": {
-    "default_path": "sidepanel.html"
-  },
-  "action": {
-    "default_popup": "./popup.html",
-    "default_title": "easy-console"
+    "service_worker": "./background.js"
   },
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
@@ -32,10 +26,27 @@
   "commands": {
     "toggle-terminal": {
       "suggested_key": {
-        "default": "Alt+T",
-        "mac": "Alt+T"
+        "default": "Alt+T"
       },
       "description": "Toggle the terminal"
+    },
+    "resize-right": {
+      "suggested_key": {
+        "default": "Alt+Right"
+      },
+      "description": "Resize terminal to the right"
+    },
+    "resize-left": {
+      "suggested_key": {
+        "default": "Alt+Left"
+      },
+      "description": "Resize terminal to the left"
+    },
+    "resize-full": {
+      "suggested_key": {
+        "default": "Alt+Up"
+      },
+      "description": "Resize terminal to its full size"
     }
   }
 }

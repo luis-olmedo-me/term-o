@@ -1,5 +1,4 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import * as React from 'preact'
 
 console.log('Hello world from sidepanel!')
 
@@ -9,9 +8,4 @@ const ExtensionApp = () => {
   return <p>Hi</p>
 }
 
-ReactDOM.render(
-  <React.StrictMode>
-    <ExtensionApp />
-  </React.StrictMode>,
-  document.getElementById('root')
-)
+React.render(<ExtensionApp />, document.getElementById('root'))

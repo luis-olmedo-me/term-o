@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import { appRoot, shadowRoot } from '$/content.constants'
-import { FontFamilies } from '$/fonts/Fonts.styles'
+import { appRoot, shadowRoot } from './content.constants'
+import { FontFamilies } from './fonts/Fonts.styles'
 
 document.body.prepend(appRoot)
 

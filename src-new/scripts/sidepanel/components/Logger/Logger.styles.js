@@ -1,0 +1,12 @@
+import { theme as t } from '@src/theme/theme.helpers'
+import styled from 'styled-components'
+
+export const LoggerWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${t('space.400')};
+  background-color: ${t('grey.900')};
+  color: ${t('grey.50')};
+  padding: ${t('space.500')};
+  cursor: input;
+`

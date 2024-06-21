@@ -1,8 +1,9 @@
 import * as React from 'preact'
 import { useState } from 'preact/hooks'
 
-import { Input } from '../../components/Input/Input.component'
+import Input from '../../components/Input'
 import Logger from '../../components/Logger'
+import * as S from './Terminal.styles'
 
 export const Terminal = () => {
   const [value, setValue] = useState('')
@@ -14,10 +15,10 @@ export const Terminal = () => {
   }
 
   return (
-    <div>
-      <Logger logs={[]} />
+    <S.TerminalWrapper>
+      <Logger logs={['test', 'test1']} />
 
       <Input type="text" onChange={handleChange} value={value} prefix="$" />
-    </div>
+    </S.TerminalWrapper>
   )
 }

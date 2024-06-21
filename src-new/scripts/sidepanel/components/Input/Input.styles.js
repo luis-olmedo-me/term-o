@@ -6,7 +6,7 @@ export const Input = styled.input`
   width: 100%;
   box-sizing: border-box;
   white-space: nowrap;
-  font-size: ${t('font-size.100')};
+  font-size: ${t('font-size.50')};
   border: none;
   display: block;
   caret-color: ${t('green.50')};
@@ -27,11 +27,12 @@ export const Input = styled.input`
   }
 `
 
-export const InputWrapper = styled.span`
+export const InputWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: ${t('space.400')};
   background-color: ${t('grey.900')};
   color: ${t('grey.50')};
-  padding: ${t('space.500')} ${t('space.400')};
+  padding: ${t('space.200')} ${t('space.400')};
+  cursor: input;
 `

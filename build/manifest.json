@@ -17,6 +17,9 @@
       "js": ["./content.js"]
     }
   ],
+  "action": {
+    "default_title": "Click to open panel"
+  },
   "background": {
     "service_worker": "./background.js"
   },
@@ -27,9 +30,9 @@
     "extension_pages": "script-src 'self'; object-src 'self'"
   },
   "commands": {
-    "toggle-terminal": {
+    "open-terminal": {
       "suggested_key": { "default": "Alt+T" },
-      "description": "Toggle the terminal"
+      "description": "Open the terminal"
     }
   }
 }

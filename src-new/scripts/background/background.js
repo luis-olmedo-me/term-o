@@ -3,19 +3,16 @@ import { extensionKeyEventNames, extensionKeyEvents, invalidPreURLs } from './ba
 console.log('Hello world from background!')
 
 chrome.commands.onCommand.addListener(function(command) {
-  console.log('💬  command:', command)
   if (!extensionKeyEventNames.includes(command)) return
 
-  chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+  chrome.tabs.query({ active: true, currentWindow: true }, async function(tabs) {
     const [{ id, url }] = tabs
     const isInvalidUrl = invalidPreURLs.some(invalidUrl => url.startsWith(invalidUrl))
 
     if (isInvalidUrl) return
 
-    if (command === extensionKeyEvents.TOGGLE_TERMINAL) {
-      chrome.sidePanel
-        .setPanelBehavior({ openPanelOnActionClick: true })
-        .catch(error => console.error(error))
+    if (command === extensionKeyEvents.OPEN_TERMINAL) {
+      chrome.sidePanel.open({ tabId: id })
     }
   })
 })

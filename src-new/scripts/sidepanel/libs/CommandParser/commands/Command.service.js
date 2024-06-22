@@ -26,7 +26,7 @@ export class Command {
   }
 
   expect({ name, type, defaultValue }) {
-    const value = defaultValue || defaultValues[type] || defaultValues.none
+    const value = (defaultValue || defaultValues[type]) ?? defaultValues.none
 
     this.propTypes = { ...this.propTypes, [name]: type }
     this.defaults = { ...this.defaults, [name]: value }

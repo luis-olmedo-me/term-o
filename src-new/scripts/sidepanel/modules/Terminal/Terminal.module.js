@@ -32,11 +32,11 @@ export const Terminal = () => {
 
     if (key === 'Enter') {
       setLogs([
-        ...logs,
         {
           id: ++id,
           command: value
-        }
+        },
+        ...logs
       ])
       setValue('')
       focusOnInput()

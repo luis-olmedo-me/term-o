@@ -2,7 +2,8 @@
   "compilerOptions": {
     "baseUrl": "./src-new",
     "paths": {
-      "@src": ["src-new"]
+      "@src": ["src-new"],
+      "@sidepanel": ["src-new/scripts/sidepanel"]
     }
   },
   "exclude": ["build", "images", "node_modules"]

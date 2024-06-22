@@ -10,7 +10,7 @@ class CommandParser {
     const [name, ...scriptArgs] = scriptRaw.trim().split(' ')
     const createCommand = this.commands[name] || createUknown
 
-    return createCommand(scriptRaw)
+    return createCommand(scriptRaw).execute()
   }
 }
 

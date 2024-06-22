@@ -38,5 +38,7 @@ export class Command {
     if (!this.handler) throw new Error('Missing handler!')
 
     this.handler({ ...this.defaults })
+
+    return this
   }
 }

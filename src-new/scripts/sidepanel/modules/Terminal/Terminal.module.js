@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from 'preact/hooks'
 import Input from '@sidepanel/components/Input'
 import Logger from '@sidepanel/modules/Logger'
 import commandParser from 'scripts/sidepanel/libs/CommandParser'
-import Log from 'scripts/sidepanel/libs/Log'
 import * as S from './Terminal.styles'
 
 export const Terminal = () => {

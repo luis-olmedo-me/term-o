@@ -37,9 +37,13 @@ export const Terminal = () => {
   }, [])
 
   useEffect(function addEventsOnCommandParser() {
-    commandParser.addEventListener('clear', () => {
-      setLogs([])
-    })
+    const clearLogs = () => setLogs([])
+
+    commandParser.addEventListener('clear', clearLogs)
+
+    return () => {
+      commandParser.removeEventListener('clear', clearLogs)
+    }
   }, [])
 
   return (

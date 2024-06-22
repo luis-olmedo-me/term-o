@@ -1,5 +1,5 @@
-import { clear } from './commands/clear/clear.command'
-import { unknown } from './commands/unknown/unknown.command'
+import { createClear } from './commands/clear/clear.command'
+import { createUknown } from './commands/unknown/unknown.command'
 
 class CommandParser {
   constructor(commands) {
@@ -7,13 +7,13 @@ class CommandParser {
   }
 
   read(scriptRaw) {
-    const [scriptName, ...scriptArgs] = scriptRaw.trim().split(' ')
-    const script = this.commands[scriptName] || unknown
+    const [name, ...scriptArgs] = scriptRaw.trim().split(' ')
+    const createCommand = this.commands[name] || createUknown
 
-    return script
+    return createCommand(scriptRaw)
   }
 }
 
 export const commandParser = new CommandParser({
-  clear
+  clear: createClear
 })

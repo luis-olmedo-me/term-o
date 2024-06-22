@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'preact/hooks'
 
 import Input from '@sidepanel/components/Input'
 import Logger from '@sidepanel/modules/Logger'
+import commandParser from 'scripts/sidepanel/libs/CommandParser'
 import Log from 'scripts/sidepanel/libs/Log'
 import * as S from './Terminal.styles'
 
@@ -31,7 +32,8 @@ export const Terminal = () => {
     const key = event.key
 
     if (key === 'Enter') {
-      const newLog = new Log(value)
+      const newLog = commandParser.read(value)
+      console.log('💬  newLog:', newLog)
 
       setLogs([newLog, ...logs])
       setValue('')

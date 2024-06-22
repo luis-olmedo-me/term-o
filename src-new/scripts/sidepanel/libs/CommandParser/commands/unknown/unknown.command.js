@@ -1,3 +1,9 @@
 import { Command } from '../Command.service'
 
-export const unknown = new Command()
+const handleUnknown = props => {
+  console.log('Unknown', props)
+}
+
+export const createUknown = command => {
+  return new Command(command).setHandler(handleUnknown)
+}

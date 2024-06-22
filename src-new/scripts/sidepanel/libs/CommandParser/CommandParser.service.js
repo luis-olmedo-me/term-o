@@ -10,6 +10,12 @@ class CommandParser {
   read(scriptRaw) {
     const [name, ...scriptArgs] = scriptRaw.trim().split(' ')
     const createCommand = this.commands[name] || createUknown
+    const commandListeners = this.listeners[name] || []
+    console.log('💬  commandListeners:', commandListeners)
+    console.log('💬  this.listeners:', this.listeners)
+    console.log('💬  this.listeners[name]:', this.listeners[name])
+
+    commandListeners.forEach(listener => listener())
 
     return createCommand(scriptRaw).execute()
   }

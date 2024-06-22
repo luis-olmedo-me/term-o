@@ -7,16 +7,9 @@ import commandParser from 'scripts/sidepanel/libs/CommandParser'
 import Log from 'scripts/sidepanel/libs/Log'
 import * as S from './Terminal.styles'
 
-const mockedLogs = [
-  {
-    id: 0,
-    command: 'dom -g *'
-  }
-]
-
 export const Terminal = () => {
   const [value, setValue] = useState('')
-  const [logs, setLogs] = useState(mockedLogs)
+  const [logs, setLogs] = useState([])
   const inputRef = useRef(null)
 
   const focusOnInput = () => {
@@ -34,7 +27,7 @@ export const Terminal = () => {
     if (key === 'Enter') {
       const newLog = commandParser.read(value)
 
-      setLogs([newLog, ...logs])
+      setLogs(oldLogs => [newLog, ...oldLogs])
       setValue('')
       focusOnInput()
     }

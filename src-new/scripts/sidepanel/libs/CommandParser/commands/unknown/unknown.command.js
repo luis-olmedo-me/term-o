@@ -5,5 +5,5 @@ const handleUnknown = props => {
 }
 
 export const createUknown = command => {
-  return new Command(command).setHandler(handleUnknown)
+  return new Command('uknown', command).setHandler(handleUnknown)
 }

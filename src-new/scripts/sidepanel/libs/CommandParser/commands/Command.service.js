@@ -10,8 +10,9 @@ const defaultValues = {
 }
 
 export class Command {
-  constructor(command) {
+  constructor(name, command) {
     this.id = createUUIDv4()
+    this.name = name
     this.command = command
     this.propTypes = {}
     this.defaults = {}

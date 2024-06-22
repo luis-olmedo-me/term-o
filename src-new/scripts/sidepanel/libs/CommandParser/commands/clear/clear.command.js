@@ -5,7 +5,7 @@ const handleClear = props => {
 }
 
 export const createClear = command => {
-  return new Command(command)
+  return new Command('clear', command)
     .expect({ name: 'test', type: 'string' })
     .expect({ name: 'test-1', type: 'boolean' })
     .expect({ name: 'test-2', type: 'number' })

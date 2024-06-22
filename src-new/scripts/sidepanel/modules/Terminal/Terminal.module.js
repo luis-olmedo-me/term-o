@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'preact/hooks'
 
 import Input from '@sidepanel/components/Input'
 import Logger from '@sidepanel/modules/Logger'
+import Log from 'scripts/sidepanel/libs/Log'
 import * as S from './Terminal.styles'
 
 const mockedLogs = [
@@ -31,13 +32,8 @@ export const Terminal = () => {
     const key = event.key
 
     if (key === 'Enter') {
-      setLogs([
-        {
-          id: ++id,
-          command: value
-        },
-        ...logs
-      ])
+      setLogs([new Log(value), ...logs])
+
       setValue('')
       focusOnInput()
     }
@@ -52,7 +48,6 @@ export const Terminal = () => {
       <Logger logs={logs} />
 
       <Input
-        type="text"
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         value={value}

@@ -44,6 +44,12 @@ export const Terminal = () => {
     focusOnInput()
   }, [])
 
+  useEffect(function addEventsOnCommandParser() {
+    commandParser.addEventListener('clear', () => {
+      setLogs([])
+    })
+  }, [])
+
   return (
     <S.TerminalWrapper onClick={focusOnInput}>
       <Logger logs={logs} />

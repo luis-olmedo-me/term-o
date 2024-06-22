@@ -12,9 +12,11 @@ class CommandParser {
     const createCommand = this.commands[name] || createUknown
     const commandListeners = this.listeners[name] || []
 
-    commandListeners.forEach(listener => listener())
+    const command = createCommand(scriptRaw).prepare(scriptArgs)
 
-    return createCommand(scriptRaw).execute()
+    commandListeners.forEach(listener => listener(command))
+
+    return command.execute()
   }
 
   addEventListener(eventName, listener) {

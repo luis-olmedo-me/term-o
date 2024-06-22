@@ -12,7 +12,6 @@ const mockedLogs = [
     command: 'dom -g *'
   }
 ]
-let id = 1
 
 export const Terminal = () => {
   const [value, setValue] = useState('')
@@ -32,8 +31,9 @@ export const Terminal = () => {
     const key = event.key
 
     if (key === 'Enter') {
-      setLogs([new Log(value), ...logs])
+      const newLog = new Log(value)
 
+      setLogs([newLog, ...logs])
       setValue('')
       focusOnInput()
     }

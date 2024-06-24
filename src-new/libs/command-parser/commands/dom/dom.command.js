@@ -1,10 +1,9 @@
 import { commandNames } from '../command.constants'
 import { Command } from '../command.service'
 
-export const createCLEAR = (script, handler) => {
+export const createDOM = (script, handler) => {
   return new Command({
-    name: commandNames.CLEAR,
-    command: script,
-    hidden: true
+    name: commandNames.DOM,
+    command: script
   }).setHandler(handler)
 }

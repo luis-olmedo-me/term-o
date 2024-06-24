@@ -8,5 +8,6 @@ export const defaultValues = {
 
 export const commandNames = {
   CLEAR: 'clear',
-  UKNOWN: 'uknown'
+  UKNOWN: 'uknown',
+  DOM: 'dom'
 }

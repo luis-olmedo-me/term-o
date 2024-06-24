@@ -1,4 +1,5 @@
-import { createClear } from './commands/clear/clear.command'
+import { createCLEAR } from './commands/clear/clear.command'
+import { createDOM } from './commands/dom/dom.command'
 import { createUknown } from './commands/unknown/unknown.command'
 
 class CommandParser {
@@ -47,5 +48,6 @@ class CommandParser {
 }
 
 export const commandParser = new CommandParser({
-  clear: createClear
+  clear: createCLEAR,
+  dom: createDOM
 })

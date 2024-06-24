@@ -1,9 +1,13 @@
+import EventListener from '../event-listener'
+
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 import { defaultValues } from './command.constants'
 import { parseOptions } from './command.helpers'
 
-export class Command {
+export class Command extends EventListener {
   constructor({ name, command, hidden = false }) {
+    super()
+
     this.id = createUUIDv4()
     this.name = name
     this.command = command
@@ -24,6 +28,8 @@ export class Command {
 
   update(...updates) {
     this.updates = [...this.updates, ...updates]
+
+    this.dispatchEvent('update', this.updates)
   }
 
   expect({ name, type, defaultValue }) {

@@ -1,5 +1,5 @@
-import { commandNames } from '../../sub-services/command/command.constants'
-import { Command } from '../../sub-services/command/command.service'
+import { commandNames } from '../../command-parser.constants'
+import Command from '../../sub-services/command'
 
 export const createCLEAR = (script, handler) => {
   return new Command({

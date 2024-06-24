@@ -5,9 +5,3 @@ export const defaultValues = {
   array: [],
   none: null
 }
-
-export const commandNames = {
-  CLEAR: 'clear',
-  UKNOWN: 'uknown',
-  DOM: 'dom'
-}

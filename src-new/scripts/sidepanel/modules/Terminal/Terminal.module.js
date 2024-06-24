@@ -28,7 +28,6 @@ export const Terminal = () => {
 
     if (key === 'Enter') {
       const newLog = commandParser.read(value)
-      console.log('💬  newLog:', newLog)
 
       setLogs(oldLogs => [newLog, ...oldLogs])
       setValue('')
@@ -45,9 +44,7 @@ export const Terminal = () => {
 
     commandParser.addEventListener('clear', clearLogs)
 
-    return () => {
-      commandParser.removeEventListener('clear', clearLogs)
-    }
+    return () => commandParser.removeEventListener('clear', clearLogs)
   }, [])
 
   return (

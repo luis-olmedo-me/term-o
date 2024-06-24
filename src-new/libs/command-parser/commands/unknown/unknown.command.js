@@ -1,5 +1,5 @@
-import { commandNames } from '../command.constants'
-import { Command } from '../command.service'
+import { commandNames } from '../../sub-services/command/command.constants'
+import { Command } from '../../sub-services/command/command.service'
 
 const handleUnknown = command => {
   console.log('Unknown', command)

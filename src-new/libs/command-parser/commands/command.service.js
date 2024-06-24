@@ -13,12 +13,17 @@ export class Command {
     this.outputs = []
     this.handler = null
     this.hidden = hidden
+    this.updates = []
   }
 
   setHandler(handler) {
     this.handler = handler
 
     return this
+  }
+
+  update(...updates) {
+    this.updates = [...this.updates, ...updates]
   }
 
   expect({ name, type, defaultValue }) {

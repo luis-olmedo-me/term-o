@@ -1,4 +1,4 @@
-import { extensionKeyEventNames, extensionKeyEvents, invalidPreURLs } from './background.constants'
+import { extensionKeyEventNames, extensionKeyEvents } from './background.constants'
 
 console.log('Hello world from background!')
 

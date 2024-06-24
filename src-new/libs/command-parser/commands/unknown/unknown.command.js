@@ -2,7 +2,7 @@ import { commandNames } from '../../command-parser.constants'
 import Command from '../../sub-services/command'
 
 const handleUnknown = command => {
-  console.log('Unknown', command)
+  command.update(['‼ Uknown command!'])
 }
 
 export const createUknown = script => {

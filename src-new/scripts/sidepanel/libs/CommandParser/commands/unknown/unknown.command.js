@@ -5,5 +5,5 @@ const handleUnknown = command => {
 }
 
 export const createUknown = script => {
-  return new Command('uknown', script).setHandler(handleUnknown)
+  return new Command({ name: 'uknown', command: script }).setHandler(handleUnknown)
 }

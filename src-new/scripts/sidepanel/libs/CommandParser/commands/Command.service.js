@@ -3,7 +3,7 @@ import { defaultValues } from './Command.constants'
 import { parseOptions } from './Command.helpers'
 
 export class Command {
-  constructor({ name, command, hidden }) {
+  constructor({ name, command, hidden = false }) {
     this.id = createUUIDv4()
     this.name = name
     this.command = command

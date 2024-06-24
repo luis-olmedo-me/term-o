@@ -56,9 +56,7 @@ export class Command {
   }
 
   execute() {
-    if (!this.handler) throw new Error('Missing handler!')
-
-    this.handler(this)
+    if (this.handler) this.handler(this)
 
     return this
   }

@@ -1,10 +1,13 @@
 import * as React from 'preact'
 import { useEffect, useRef, useState } from 'preact/hooks'
 
+import commandHandlers from '@sidepanel/command-handlers'
 import Input from '@sidepanel/components/Input'
 import Logger from '@sidepanel/modules/Logger'
-import commandParser from 'scripts/sidepanel/libs/CommandParser'
+import commandParser from '@src/libs/command-parser'
 import * as S from './Terminal.styles'
+
+commandParser.setHandlers(commandHandlers)
 
 export const Terminal = () => {
   const [value, setValue] = useState('')

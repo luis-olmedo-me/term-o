@@ -4,19 +4,26 @@ import { createUknown } from './commands/unknown/unknown.command'
 class CommandParser {
   constructor(commands) {
     this.commands = commands
+    this.handlers = {}
     this.listeners = {}
   }
 
   read(scriptRaw) {
     const [name, ...scriptArgs] = scriptRaw.trim().split(' ')
-    const createCommand = this.commands[name] || createUknown
     const commandListeners = this.listeners[name] || []
+    const createCommand = this.commands[name] || createUknown
+    const handler = this.handlers[name]
 
     const command = createCommand(scriptRaw).prepare(scriptArgs)
 
+    if (handler) command.setHandler(handler)
     commandListeners.forEach(listener => listener(command))
 
-    return command.execute()
+    return command
+  }
+
+  setHandlers(commandHandlers) {
+    this.handlers = commandHandlers
   }
 
   addEventListener(eventName, listener) {

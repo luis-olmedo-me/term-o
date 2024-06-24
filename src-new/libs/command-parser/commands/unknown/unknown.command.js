@@ -1,3 +1,4 @@
+import { commandNames } from '../command.constants'
 import { Command } from '../command.service'
 
 const handleUnknown = command => {
@@ -5,5 +6,8 @@ const handleUnknown = command => {
 }
 
 export const createUknown = script => {
-  return new Command({ name: 'uknown', command: script }).setHandler(handleUnknown)
+  return new Command({
+    name: commandNames.UKNOWN,
+    command: script
+  }).setHandler(handleUnknown)
 }

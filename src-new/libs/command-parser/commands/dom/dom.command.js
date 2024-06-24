@@ -5,5 +5,7 @@ export const createDOM = (script, handler) => {
   return new Command({
     name: commandNames.DOM,
     command: script
-  }).setHandler(handler)
+  })
+    .expect({ name: 'get', type: 'string' })
+    .setHandler(handler)
 }

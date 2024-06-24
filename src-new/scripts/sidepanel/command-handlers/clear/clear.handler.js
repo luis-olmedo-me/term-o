@@ -1,3 +1,3 @@
-export const handleClear = command => {
+export const handleCLEAR = command => {
   console.log('New-Clear', command)
 }

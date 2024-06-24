@@ -28,6 +28,7 @@ export const Terminal = () => {
 
     if (key === 'Enter') {
       const newLog = commandParser.read(value)
+      console.log('💬  newLog:', newLog)
 
       setLogs(oldLogs => [newLog, ...oldLogs])
       setValue('')

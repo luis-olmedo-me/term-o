@@ -4,7 +4,7 @@ import * as S from './Input.styles'
 
 export const Input = ({ onChange, onKeyDown, placeholder, value, prefix, inputRef, disabled }) => {
   return (
-    <S.InputWrapper>
+    <S.InputWrapper aria-disabled={disabled}>
       <span>{prefix}</span>
 
       <S.Input

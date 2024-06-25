@@ -33,7 +33,7 @@ export const Prompt = ({ onEnter, inputRef, tab, pso }) => {
   })
 
   return (
-    <S.PromptWrapper>
+    <S.PromptWrapper aria-disabled={disabled}>
       <S.Decoration>{createPSO(pso, tab)}</S.Decoration>
 
       <Input

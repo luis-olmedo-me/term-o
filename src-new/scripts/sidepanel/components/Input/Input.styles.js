@@ -25,9 +25,6 @@ export const Input = styled.input`
     color: ${t('green.A200')};
     background-color: ${t('grey.800')};
   }
-
-  &:disabled {
-  }
 `
 
 export const InputWrapper = styled.div`
@@ -38,4 +35,9 @@ export const InputWrapper = styled.div`
   color: ${t('grey.50')};
   padding: ${t('space.300')} ${t('space.500')};
   cursor: text;
+
+  &[aria-disabled='true'],
+  &[aria-disabled='true'] ${Input}:disabled {
+    cursor: not-allowed;
+  }
 `

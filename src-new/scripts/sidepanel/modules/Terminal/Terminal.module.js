@@ -30,11 +30,10 @@ export const Terminal = () => {
     inputRef.current.focus()
   }
 
-  const handleEnter = event => {
+  const handleEnter = () => {
     const newLog = commandParser.read(value)
 
     setLogs(oldLogs => [newLog, ...oldLogs])
-    setValue('')
     focusOnInput()
   }
 

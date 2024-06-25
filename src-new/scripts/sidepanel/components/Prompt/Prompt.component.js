@@ -16,6 +16,7 @@ export const Prompt = ({ onEnter, inputRef }) => {
 
     if (key === 'Enter') {
       onEnter(value)
+      setValue('')
     }
   }
 

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'preact/hooks'
 import commandHandlers from '@sidepanel/command-handlers'
 import Prompt from '@sidepanel/components/Prompt'
 import Logger from '@sidepanel/modules/Logger'
+import { invalidURLsStarts } from '@src/constants/events.constants'
 import commandParser from '@src/libs/command-parser'
 import { getCurrentTab } from 'scripts/sidepanel/helpers/event.helpers'
 import * as S from './Terminal.styles'
@@ -47,10 +48,10 @@ export const Terminal = () => {
     focusOnInput()
   }
 
-  const hasTab = Boolean(tab)
+  const isInvalidUrl = !tab || invalidURLsStarts.some(invalidUrl => tab.url.startsWith(invalidUrl))
 
   return (
-    <S.TerminalWrapper onClick={focusOnInput}>
+    <S.TerminalWrapper onClick={focusOnInput} aria-disabled={isInvalidUrl}>
       <Logger logs={logs} />
 
       <Prompt onEnter={handleEnter} inputRef={inputRef} tab={tab} pso="On {origin}" />

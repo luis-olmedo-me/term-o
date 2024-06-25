@@ -5,35 +5,14 @@ import commandHandlers from '@sidepanel/command-handlers'
 import Input from '@sidepanel/components/Input'
 import Logger from '@sidepanel/modules/Logger'
 import commandParser from '@src/libs/command-parser'
+import Prompt from 'scripts/sidepanel/components/Prompt'
 import * as S from './Terminal.styles'
 
 commandParser.setHandlers(commandHandlers)
 
 export const Terminal = () => {
-  const [value, setValue] = useState('')
   const [logs, setLogs] = useState([])
   const inputRef = useRef(null)
-
-  const focusOnInput = () => {
-    inputRef.current.focus()
-  }
-
-  const handleChange = event => {
-    const value = event.target.value
-
-    setValue(value)
-  }
-  const handleKeyDown = event => {
-    const key = event.key
-
-    if (key === 'Enter') {
-      const newLog = commandParser.read(value)
-
-      setLogs(oldLogs => [newLog, ...oldLogs])
-      setValue('')
-      focusOnInput()
-    }
-  }
 
   useEffect(function focusOnInputAtFirstTime() {
     focusOnInput()
@@ -47,17 +26,23 @@ export const Terminal = () => {
     return () => commandParser.removeEventListener('clear', clearLogs)
   }, [])
 
+  const focusOnInput = () => {
+    inputRef.current.focus()
+  }
+
+  const handleEnter = event => {
+    const newLog = commandParser.read(value)
+
+    setLogs(oldLogs => [newLog, ...oldLogs])
+    setValue('')
+    focusOnInput()
+  }
+
   return (
     <S.TerminalWrapper onClick={focusOnInput}>
       <Logger logs={logs} />
 
-      <Input
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-        value={value}
-        prefix="$"
-        inputRef={inputRef}
-      />
+      <Prompt onEnter={handleEnter} inputRef={inputRef} />
     </S.TerminalWrapper>
   )
 }

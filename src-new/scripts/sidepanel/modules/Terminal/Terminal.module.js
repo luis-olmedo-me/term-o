@@ -21,16 +21,25 @@ export const Terminal = () => {
   }, [])
 
   useEffect(function addEventsForTabs() {
-    const handleUpdated = (tabId, changeInfo, tab) => {
-      const isInvalidUrl = invalidURLsStarts.some(invalidUrl => tab.url.startsWith(invalidUrl))
+    const handleUpdated = (_tabId, _changeInfo, updatedTab) => {
+      const isInvalidUrl = invalidURLsStarts.some(invalidUrl =>
+        updatedTab.url.startsWith(invalidUrl)
+      )
 
-      setTab(!isInvalidUrl && tab.url ? tab : null)
+      setTab(!isInvalidUrl && updatedTab.url ? updatedTab : null)
+    }
+    const handleRemoved = (_tabId, _changeInfo, _removedTab) => {
+      getCurrentTab().then(setTab)
     }
 
     getCurrentTab().then(setTab)
     chrome.tabs.onUpdated.addListener(handleUpdated)
+    chrome.tabs.onRemoved.addListener(handleRemoved)
 
-    return () => chrome.tabs.onCreated.removeListener(handleNewTab)
+    return () => {
+      chrome.tabs.onCreated.removeListener(handleNewTab)
+      chrome.tabs.onRemoved.removeListener(handleRemoved)
+    }
   }, [])
 
   useEffect(function addEventsOnCommandParser() {

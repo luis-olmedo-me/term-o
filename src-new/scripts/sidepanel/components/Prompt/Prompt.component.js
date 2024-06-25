@@ -1,8 +1,9 @@
 import * as React from 'preact'
 import { useState } from 'preact/hooks'
 import Input from '../Input'
+import * as S from './Prompt.styles'
 
-export const Prompt = ({ onEnter, inputRef }) => {
+export const Prompt = ({ onEnter, inputRef, pso }) => {
   const [value, setValue] = useState('')
 
   const handleChange = event => {
@@ -21,12 +22,16 @@ export const Prompt = ({ onEnter, inputRef }) => {
   }
 
   return (
-    <Input
-      inputRef={inputRef}
-      value={value}
-      onChange={handleChange}
-      onKeyDown={handleKeyDown}
-      prefix="$"
-    />
+    <S.PromptWrapper>
+      <S.Decoration>{pso}</S.Decoration>
+
+      <Input
+        inputRef={inputRef}
+        value={value}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        prefix="$"
+      />
+    </S.PromptWrapper>
   )
 }

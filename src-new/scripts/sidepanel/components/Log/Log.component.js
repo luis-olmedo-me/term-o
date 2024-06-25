@@ -4,7 +4,7 @@ import { useEffect, useState } from 'preact/hooks'
 import * as S from './Log.styles'
 
 export const Log = ({ command, prefix }) => {
-  const [updates, setUpdates] = useState([])
+  const [updates, setUpdates] = useState(command.updates)
 
   useEffect(
     function listenUpdates() {
@@ -17,7 +17,7 @@ export const Log = ({ command, prefix }) => {
 
   return (
     !command.hidden && (
-      <>
+      <div>
         <p>
           {prefix} {command.command}
         </p>
@@ -25,7 +25,7 @@ export const Log = ({ command, prefix }) => {
         {updates.map(update => {
           return <p>{update}</p>
         })}
-      </>
+      </div>
     )
   )
 }

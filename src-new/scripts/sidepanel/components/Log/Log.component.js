@@ -5,12 +5,21 @@ import * as S from './Log.styles'
 
 export const Log = ({ command, prefix }) => {
   const [updates, setUpdates] = useState(command.updates)
+  console.log('💬  Log.updates:', updates)
 
   useEffect(
     function listenUpdates() {
-      command.addEventListener('update', setUpdates)
+      const handleUpdate = updates => {
+        console.log('💬  handleUpdate.updates:', updates)
+        setUpdates(updates)
+      }
 
-      return () => command.removeEventListener('update', setUpdates)
+      command.addEventListener('update', handleUpdate)
+
+      return () => {
+        console.log('unmount')
+        command.removeEventListener('update', handleUpdate)
+      }
     },
     [command]
   )

@@ -1,7 +1,12 @@
-export const handleDOM = command => {
-  command.update('Searching for DOM elements.')
+export const handleDOM = async command => {
+  const tab = command.data.tab
 
-  setTimeout(() => {
-    command.update('Searching for DOM elements twice.')
-  }, 1000)
+  command.update('Getting elements.')
+  const elements = await chrome.tabs.sendMessage(tab.id, 'get-dom-elements')
+
+  for (const element of elements) {
+    command.update(element)
+  }
+
+  command.update(`Found ${elements.length} elements.`)
 }

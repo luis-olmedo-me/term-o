@@ -10,6 +10,6 @@ export const createUKNOWN = script => {
     name: commandNames.UKNOWN,
     command: script
   })
-    .expect({ name: 'title', type: 'string' })
+    .expect({ name: 'title', type: 'string', defaultValue: 'Uknown command!' })
     .addEventListener('execute', handleUKNOWN)
 }

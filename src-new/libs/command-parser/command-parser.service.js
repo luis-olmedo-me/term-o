@@ -1,6 +1,6 @@
 import { createCLEAR } from './commands/clear/clear.command'
 import { createDOM } from './commands/dom/dom.command'
-import { createUknown } from './commands/unknown/unknown.command'
+import { createUKNOWN } from './commands/unknown/unknown.command'
 import EventListener from './sub-services/event-listener'
 
 class CommandParser extends EventListener {
@@ -13,7 +13,7 @@ class CommandParser extends EventListener {
 
   read(scriptRaw) {
     const [name, ...scriptArgs] = scriptRaw.trim().split(' ')
-    const createCommand = this.commands[name] || createUknown
+    const createCommand = this.commands[name] || createUKNOWN
     const handler = this.handlers[name]
 
     const command = createCommand(scriptRaw).prepare(scriptArgs)

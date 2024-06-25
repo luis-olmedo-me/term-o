@@ -1,13 +1,15 @@
 import { commandNames } from '../../command-parser.constants'
 import Command from '../../sub-services/command'
 
-const handleUnknown = command => {
-  command.update('‼ Uknown command!')
+const handleUKNOWN = command => {
+  command.update(`‼ ${command.props.title}`)
 }
 
-export const createUknown = script => {
+export const createUKNOWN = script => {
   return new Command({
     name: commandNames.UKNOWN,
     command: script
-  }).setHandler(handleUnknown)
+  })
+    .expect({ name: 'title', type: 'string' })
+    .setHandler(handleUKNOWN)
 }

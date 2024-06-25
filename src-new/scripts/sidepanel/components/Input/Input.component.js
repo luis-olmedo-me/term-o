@@ -2,7 +2,7 @@ import * as React from 'preact'
 
 import * as S from './Input.styles'
 
-export const Input = ({ onChange, onKeyDown, placeholder, value, prefix, inputRef }) => {
+export const Input = ({ onChange, onKeyDown, placeholder, value, prefix, inputRef, disabled }) => {
   return (
     <S.InputWrapper>
       <span>{prefix}</span>
@@ -15,6 +15,7 @@ export const Input = ({ onChange, onKeyDown, placeholder, value, prefix, inputRe
         onChange={onChange}
         onKeyDown={onKeyDown}
         placeholder={placeholder}
+        disabled={disabled}
       />
     </S.InputWrapper>
   )

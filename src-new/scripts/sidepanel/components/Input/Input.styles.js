@@ -25,6 +25,9 @@ export const Input = styled.input`
     color: ${t('green.A200')};
     background-color: ${t('grey.800')};
   }
+
+  &:disabled {
+  }
 `
 
 export const InputWrapper = styled.div`

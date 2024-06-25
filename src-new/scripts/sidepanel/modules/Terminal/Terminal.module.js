@@ -17,8 +17,15 @@ export const Terminal = () => {
 
   useEffect(function focusOnInputAtFirstTime() {
     focusOnInput()
+  }, [])
 
-    window.addEventListener('focus', () => getCurrentTab().then(setTab))
+  useEffect(function handlePanelFocus() {
+    const updateTab = () => getCurrentTab().then(setTab)
+
+    updateTab()
+    window.addEventListener('focus', updateTab)
+
+    return () => window.removeEventListener('focus', updateTab)
   }, [])
 
   useEffect(function addEventsOnCommandParser() {
@@ -46,9 +53,7 @@ export const Terminal = () => {
     <S.TerminalWrapper onClick={focusOnInput}>
       <Logger logs={logs} />
 
-      {hasTab && (
-        <Prompt onEnter={handleEnter} inputRef={inputRef} pso={`On ${new URL(tab.url).origin}`} />
-      )}
+      <Prompt onEnter={handleEnter} inputRef={inputRef} tab={tab} pso="On {origin}" />
     </S.TerminalWrapper>
   )
 }

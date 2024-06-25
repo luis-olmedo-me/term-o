@@ -1,11 +1,14 @@
 import * as React from 'preact'
 
+import Log from '@sidepanel/components/Log'
 import * as S from './Logger.styles'
 
 export const Logger = ({ logs }) => {
   return (
     <S.LoggerWrapper>
-      {logs.map(log => !log.hidden && <p key={log.id}>$ {log.command}</p>)}
+      {logs.map(command => (
+        <Log key={log.id} command={command} />
+      ))}
     </S.LoggerWrapper>
   )
 }

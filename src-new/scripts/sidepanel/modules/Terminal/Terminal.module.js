@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from 'preact/hooks'
 import commandHandlers from '@sidepanel/command-handlers'
 import Prompt from '@sidepanel/components/Prompt'
 import Logger from '@sidepanel/modules/Logger'
-import { invalidURLsStarts } from '@src/constants/events.constants'
 import commandParser from '@src/libs/command-parser'
 import { getCurrentTab } from 'scripts/sidepanel/helpers/event.helpers'
 import * as S from './Terminal.styles'
@@ -18,28 +17,8 @@ export const Terminal = () => {
 
   useEffect(function focusOnInputAtFirstTime() {
     focusOnInput()
-  }, [])
 
-  useEffect(function addEventsForTabs() {
-    const handleUpdated = (_tabId, _changeInfo, updatedTab) => {
-      const isInvalidUrl = invalidURLsStarts.some(invalidUrl =>
-        updatedTab.url.startsWith(invalidUrl)
-      )
-
-      setTab(!isInvalidUrl && updatedTab.url ? updatedTab : null)
-    }
-    const handleRemoved = (_tabId, _changeInfo, _removedTab) => {
-      getCurrentTab().then(setTab)
-    }
-
-    getCurrentTab().then(setTab)
-    chrome.tabs.onUpdated.addListener(handleUpdated)
-    chrome.tabs.onRemoved.addListener(handleRemoved)
-
-    return () => {
-      chrome.tabs.onCreated.removeListener(handleNewTab)
-      chrome.tabs.onRemoved.removeListener(handleRemoved)
-    }
+    window.addEventListener('focus', () => getCurrentTab().then(setTab))
   }, [])
 
   useEffect(function addEventsOnCommandParser() {

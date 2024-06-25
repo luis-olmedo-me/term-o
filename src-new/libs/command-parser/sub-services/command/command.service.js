@@ -12,6 +12,7 @@ export class Command extends EventListener {
     this.name = name
     this.command = command
     this.propTypes = {}
+    this.data = {}
     this.props = {}
     this.defaults = { carry: [] }
     this.outputs = []
@@ -71,5 +72,9 @@ export class Command extends EventListener {
     if (this.handler) this.handler(this)
 
     return this
+  }
+
+  appendsData(data) {
+    this.data = { ...this.data, ...data }
   }
 }

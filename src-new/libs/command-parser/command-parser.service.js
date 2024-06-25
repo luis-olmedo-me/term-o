@@ -19,7 +19,7 @@ class CommandParser extends EventListener {
     const command = createCommand(scriptRaw).prepare(scriptArgs)
 
     if (handler) command.setHandler(handler)
-    this.dispatchEvent(name)
+    this.dispatchEvent(name, command)
 
     return command
   }

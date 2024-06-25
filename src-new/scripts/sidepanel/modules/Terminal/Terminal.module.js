@@ -5,7 +5,7 @@ import commandHandlers from '@sidepanel/command-handlers'
 import Prompt from '@sidepanel/components/Prompt'
 import Logger from '@sidepanel/modules/Logger'
 import { invalidURLsStarts } from '@src/constants/events.constants'
-import commandParser from '@src/libs/command-parser'
+import commandParser, { commandNames } from '@src/libs/command-parser'
 import { getCurrentTab } from 'scripts/sidepanel/helpers/event.helpers'
 import * as S from './Terminal.styles'
 
@@ -29,13 +29,24 @@ export const Terminal = () => {
     return () => window.removeEventListener('focus', updateTab)
   }, [])
 
-  useEffect(function addEventsOnCommandParser() {
+  useEffect(function clearLogsOnClearCommand() {
     const clearLogs = () => setLogs([])
 
-    commandParser.addEventListener('clear', clearLogs)
+    commandParser.addEventListener(commandNames.CLEAR, clearLogs)
 
-    return () => commandParser.removeEventListener('clear', clearLogs)
+    return () => commandParser.removeEventListener(commandNames.CLEAR, clearLogs)
   }, [])
+
+  useEffect(
+    function addExternalDataOnNewCommands() {
+      const appendTab = command => command.appendsData({ tab })
+
+      commandParser.addEventListener(commandNames.DOM, appendTab)
+
+      return () => commandParser.removeEventListener(commandNames.DOM, appendTab)
+    },
+    [tab]
+  )
 
   const focusOnInput = () => {
     inputRef.current?.focus()

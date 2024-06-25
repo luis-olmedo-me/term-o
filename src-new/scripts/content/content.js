@@ -2,11 +2,25 @@
 
 // import { FontFamilies } from './fonts/Fonts.styles'
 
-console.log('Hello world from content!')
+// console.log('Hello world from content!')
+const getElementsFromDOM = patterns => {
+  try {
+    const elementsFromDOM = (patterns?.length && window.document.querySelectorAll(patterns)) || []
+
+    return [...elementsFromDOM]
+  } catch {
+    return []
+  }
+}
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message === 'get-dom-elements') {
-    sendResponse(['div'])
+  const { data, type } = message
+
+  if (type === 'get-dom-elements') {
+    const elementsFromDOM = getElementsFromDOM(data.get)
+    const stringifiedElements = elementsFromDOM.map(element => element.tagName.toLowerCase())
+
+    sendResponse(stringifiedElements)
   }
 })
 

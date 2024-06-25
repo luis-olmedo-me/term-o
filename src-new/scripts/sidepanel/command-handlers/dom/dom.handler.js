@@ -11,10 +11,14 @@ const request = (tabId, key) => {
 }
 
 export const handleDOM = async command => {
-  const tab = command.data.tab
+  const { tab } = command.data
+  const { get } = command.props
 
   command.update('Getting elements.')
-  const elements = await request(tab.id, 'get-dom-elements')
+  const elements = await request(tab.id, {
+    type: 'get-dom-elements',
+    data: { get }
+  })
 
   command.reset()
   command.update(elements)

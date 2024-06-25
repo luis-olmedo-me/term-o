@@ -7,12 +7,16 @@ export class EventListener {
     const listeners = this.listeners[eventName] || []
 
     listeners.forEach(listener => listener(data))
+
+    return this
   }
 
   addEventListener(eventName, listener) {
     const oldListeners = this.listeners[eventName] || []
 
     this.listeners = { ...this.listeners, [eventName]: [...oldListeners, listener] }
+
+    return this
   }
 
   removeEventListener(eventName, listener) {
@@ -26,5 +30,7 @@ export class EventListener {
     }
 
     this.listeners = { ...this.listeners, [eventName]: filteredEvents }
+
+    return this
   }
 }

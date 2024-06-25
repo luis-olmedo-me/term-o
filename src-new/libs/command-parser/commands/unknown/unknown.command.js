@@ -11,5 +11,5 @@ export const createUKNOWN = script => {
     command: script
   })
     .expect({ name: 'title', type: 'string' })
-    .setHandler(handleUKNOWN)
+    .addEventListener('execute', handleUKNOWN)
 }

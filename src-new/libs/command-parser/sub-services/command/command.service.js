@@ -16,21 +16,14 @@ export class Command extends EventListener {
     this.props = {}
     this.defaults = { carry: [] }
     this.outputs = []
-    this.handler = null
     this.hidden = hidden
     this.updates = []
-  }
-
-  setHandler(handler) {
-    this.handler = handler
-
-    return this
   }
 
   update(...updates) {
     this.updates = [...this.updates, ...updates]
 
-    this.dispatchEvent('update', this.updates)
+    this.dispatchEvent('update', this)
   }
 
   expect({ name, type, defaultValue }) {
@@ -69,7 +62,7 @@ export class Command extends EventListener {
   }
 
   execute() {
-    if (this.handler) this.handler(this)
+    this.dispatchEvent('execute', this)
 
     return this
   }

@@ -7,5 +7,5 @@ export const createDOM = (script, handler) => {
     command: script
   })
     .expect({ name: 'get', type: 'string' })
-    .setHandler(handler)
+    .addEventListener('execute', handler)
 }

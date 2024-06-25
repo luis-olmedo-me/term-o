@@ -5,7 +5,7 @@ import commandHandlers from '@sidepanel/command-handlers'
 import Prompt from '@sidepanel/components/Prompt'
 import Logger from '@sidepanel/modules/Logger'
 import { invalidURLsStarts } from '@src/constants/events.constants'
-import commandParser, { commandNames } from '@src/libs/command-parser'
+import commandParser from '@src/libs/command-parser'
 import { getCurrentTab } from 'scripts/sidepanel/helpers/event.helpers'
 import * as S from './Terminal.styles'
 
@@ -32,18 +32,18 @@ export const Terminal = () => {
   useEffect(function clearLogsOnClearCommand() {
     const clearLogs = () => setLogs([])
 
-    commandParser.addEventListener(commandNames.CLEAR, clearLogs)
+    commandParser.addEventListener('before-clear', clearLogs)
 
-    return () => commandParser.removeEventListener(commandNames.CLEAR, clearLogs)
+    return () => commandParser.removeEventListener('before-clear', clearLogs)
   }, [])
 
   useEffect(
     function addExternalDataOnNewCommands() {
       const appendTab = command => command.appendsData({ tab })
 
-      commandParser.addEventListener(commandNames.DOM, appendTab)
+      commandParser.addEventListener('before-dom', appendTab)
 
-      return () => commandParser.removeEventListener(commandNames.DOM, appendTab)
+      return () => commandParser.removeEventListener('before-dom', appendTab)
     },
     [tab]
   )

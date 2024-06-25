@@ -6,5 +6,5 @@ export const createCLEAR = (script, handler) => {
     name: commandNames.CLEAR,
     command: script,
     hidden: true
-  }).setHandler(handler)
+  }).addEventListener('execute', handler)
 }

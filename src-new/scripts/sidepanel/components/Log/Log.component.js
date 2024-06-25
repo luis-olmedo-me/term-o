@@ -9,7 +9,7 @@ export const Log = ({ command, prefix }) => {
 
   useEffect(
     function listenUpdates() {
-      const handleUpdate = updates => {
+      const handleUpdate = ({ updates }) => {
         console.log('💬  handleUpdate.updates:', updates)
         setUpdates(updates)
       }

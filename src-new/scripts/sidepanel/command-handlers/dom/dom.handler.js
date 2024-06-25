@@ -16,9 +16,7 @@ export const handleDOM = async command => {
   command.update('Getting elements.')
   const elements = await request(tab.id, 'get-dom-elements')
 
-  for (const element of elements) {
-    command.update(element)
-  }
-
+  command.reset()
+  command.update(elements)
   command.update(`Found ${elements.length} elements.`)
 }

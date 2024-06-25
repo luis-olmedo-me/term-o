@@ -20,6 +20,12 @@ export class Command extends EventListener {
     this.updates = []
   }
 
+  reset() {
+    this.updates = []
+
+    this.dispatchEvent('update', this)
+  }
+
   update(...updates) {
     this.updates = [...this.updates, ...updates]
 

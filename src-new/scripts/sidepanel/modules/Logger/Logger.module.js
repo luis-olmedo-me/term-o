@@ -7,7 +7,7 @@ export const Logger = ({ logs }) => {
   return (
     <S.LoggerWrapper>
       {logs.map(command => (
-        <Log key={command.id} command={command} />
+        <Log key={command.id} command={command} prefix="$" />
       ))}
     </S.LoggerWrapper>
   )

@@ -2,10 +2,9 @@ import * as React from 'preact'
 import { useEffect, useRef, useState } from 'preact/hooks'
 
 import commandHandlers from '@sidepanel/command-handlers'
-import Input from '@sidepanel/components/Input'
+import Prompt from '@sidepanel/components/Prompt'
 import Logger from '@sidepanel/modules/Logger'
 import commandParser from '@src/libs/command-parser'
-import Prompt from 'scripts/sidepanel/components/Prompt'
 import * as S from './Terminal.styles'
 
 commandParser.setHandlers(commandHandlers)

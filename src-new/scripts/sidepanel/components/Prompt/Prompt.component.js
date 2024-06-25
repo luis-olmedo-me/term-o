@@ -20,5 +20,13 @@ export const Prompt = ({ onEnter, inputRef }) => {
     }
   }
 
-  return <Input ref={inputRef} value={value} onChange={handleChange} onKeyDown={handleKeyDown} />
+  return (
+    <Input
+      inputRef={inputRef}
+      value={value}
+      onChange={handleChange}
+      onKeyDown={handleKeyDown}
+      prefix="$"
+    />
+  )
 }

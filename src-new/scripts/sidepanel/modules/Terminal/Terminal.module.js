@@ -29,7 +29,7 @@ export const Terminal = () => {
     inputRef.current.focus()
   }
 
-  const handleEnter = () => {
+  const handleEnter = value => {
     const newLog = commandParser.read(value)
 
     setLogs(oldLogs => [newLog, ...oldLogs])

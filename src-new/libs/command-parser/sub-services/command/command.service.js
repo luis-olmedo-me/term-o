@@ -12,6 +12,7 @@ export class Command extends EventListener {
     this.name = name
     this.command = command
     this.propTypes = {}
+    this.abbreviations = {}
     this.data = {}
     this.props = {}
     this.defaults = { carry: [] }
@@ -33,11 +34,12 @@ export class Command extends EventListener {
     this.dispatchEvent('update', this)
   }
 
-  expect({ name, type, defaultValue }) {
+  expect({ name, type, defaultValue, abbreviation }) {
     const value = (defaultValue || defaultValues[type]) ?? defaultValues.none
 
-    this.propTypes = { ...this.propTypes, [name]: type }
     this.defaults = { ...this.defaults, [name]: value }
+    this.propTypes = { ...this.propTypes, [name]: type }
+    if (abbreviation) this.abbreviations = { ...this.abbreviations, [name]: abbreviation }
 
     return this
   }

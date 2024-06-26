@@ -7,7 +7,8 @@ export const LoggerWrapper = styled.div`
   gap: ${t('space.400')};
   background-color: ${t('grey.900')};
   color: ${t('grey.50')};
-  padding: ${t('space.400')} ${t('space.500')} 0;
+  padding: 0 ${t('space.500')};
+  margin-top: ${t('line-height.300')};
   cursor: text;
 
   &::-webkit-scrollbar {

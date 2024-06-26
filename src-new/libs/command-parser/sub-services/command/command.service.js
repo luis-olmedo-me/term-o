@@ -39,7 +39,7 @@ export class Command extends EventListener {
 
     this.defaults = { ...this.defaults, [name]: value }
     this.propTypes = { ...this.propTypes, [name]: type }
-    if (abbreviation) this.abbreviations = { ...this.abbreviations, [name]: abbreviation }
+    if (abbreviation) this.abbreviations = { ...this.abbreviations, [abbreviation]: name }
 
     return this
   }

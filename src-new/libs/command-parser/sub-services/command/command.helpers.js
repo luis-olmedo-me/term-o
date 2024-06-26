@@ -37,8 +37,11 @@ const parseOptions = (index, arg, argsBySpace, propType) => {
     case 'number': {
       const nextArg = argsBySpace.at(++index)
       const value = Number(nextArg)
+      const isValidNumber = !Number.isNaN(value)
 
-      return { value: Number.isNaN(value) ? null : value, newIndex: index }
+      if (!isValidNumber) throw `"${arg} ${nextArg}" is not a valid number.`
+
+      return { value, newIndex: index }
     }
 
     case 'array': {
@@ -56,7 +59,7 @@ const parseOptions = (index, arg, argsBySpace, propType) => {
     }
 
     default:
-      return { value: null, newIndex: index }
+      throw 'Something went wrong.'
   }
 }
 
@@ -70,12 +73,32 @@ export const getPropsFromString = (command, args) => {
       const prop = arg.slice(2)
       const propType = command.propTypes[prop]
 
+      if (!propType) throw `${arg} is not a valid command prop.`
+
       const { value, newIndex } = parseOptions(index, arg, args, propType)
 
       index = newIndex
 
       if (value !== null) {
         props = { ...props, [prop]: value }
+      }
+
+      continue
+    }
+    if (arg.startsWith('-')) {
+      const prop = arg.slice(1)
+      const propName = command.abbreviations[prop]
+
+      if (!propName) throw `${arg} is not a valid command prop.`
+
+      const propType = command.propTypes[propName]
+
+      const { value, newIndex } = parseOptions(index, `--${propName}`, args, propType)
+
+      index = newIndex
+
+      if (value !== null) {
+        props = { ...props, [propName]: value }
       }
 
       continue

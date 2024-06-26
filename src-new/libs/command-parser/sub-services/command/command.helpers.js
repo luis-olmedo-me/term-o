@@ -77,12 +77,10 @@ export const getPropsFromString = (command, args) => {
 
       const { value, newIndex } = parseOptions(index, arg, args, propType)
 
+      if (value === null) throw `${arg} prop has an unexpected value.`
+
       index = newIndex
-
-      if (value !== null) {
-        props = { ...props, [prop]: value }
-      }
-
+      props = { ...props, [prop]: value }
       continue
     }
     if (arg.startsWith('-')) {
@@ -92,15 +90,12 @@ export const getPropsFromString = (command, args) => {
       if (!propName) throw `${arg} is not a valid command prop.`
 
       const propType = command.propTypes[propName]
-
       const { value, newIndex } = parseOptions(index, `--${propName}`, args, propType)
 
+      if (value === null) throw `${arg} prop has an unexpected value.`
+
       index = newIndex
-
-      if (value !== null) {
-        props = { ...props, [propName]: value }
-      }
-
+      props = { ...props, [propName]: value }
       continue
     }
 

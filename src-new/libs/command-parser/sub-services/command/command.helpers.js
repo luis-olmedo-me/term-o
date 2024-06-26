@@ -12,7 +12,7 @@ const parseOptions = (index, arg, argsBySpace, propType) => {
 
       index++
       let value = argStart
-      const nextArgs = argsBySpace.slice(index)
+      const nextArgs = argStart.endsWith(quote) ? [] : argsBySpace.slice(index)
 
       for (const nextArg of nextArgs) {
         if (nextArg.endsWith(quote)) {
@@ -90,7 +90,7 @@ export const getPropsFromString = (command, args) => {
       if (!propName) throw `${arg} is not a valid command prop.`
 
       const propType = command.propTypes[propName]
-      const { value, newIndex } = parseOptions(index, `--${propName}`, args, propType)
+      const { value, newIndex } = parseOptions(index, arg, args, propType)
 
       if (value === null) throw `${arg} prop has an unexpected value.`
 

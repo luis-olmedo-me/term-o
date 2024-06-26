@@ -10,7 +10,8 @@ export const TerminalWrapper = styled.div`
   height: 100vh;
 
   & ${LoggerWrapper} {
-    flex: 1;
+    flex-grow: 1;
+    overflow: scroll;
   }
 
   &[aria-disabled='true']::after {

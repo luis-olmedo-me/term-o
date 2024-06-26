@@ -9,4 +9,8 @@ export const LoggerWrapper = styled.div`
   color: ${t('grey.50')};
   padding: ${t('space.400')} ${t('space.500')} 0;
   cursor: text;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `

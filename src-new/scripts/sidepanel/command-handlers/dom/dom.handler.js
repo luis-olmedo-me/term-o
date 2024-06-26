@@ -59,14 +59,10 @@ export const handleDOM = async command => {
   const { get } = command.props
 
   command.update('Getting elements.')
-
   const elements = await getDOMElements(tab.id, { patterns: [get] })
-
-  elements.forEach(element => command.update(element))
-
   command.update('Finished.')
 
-  // command.reset()
-  // command.update(elements)
-  // command.update(`Found ${elements.length} elements.`)
+  command.reset()
+  elements.forEach(element => command.update(element))
+  command.update(`Found ${elements.length} elements.`)
 }

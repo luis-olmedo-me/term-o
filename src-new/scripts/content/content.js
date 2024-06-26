@@ -1,43 +1,25 @@
-// import * as React from 'preact'
+import processWaitList from '@src/libs/process-wait-list'
 
-// import { FontFamilies } from './fonts/Fonts.styles'
-
-// console.log('Hello world from content!')
-const getElementsFromDOM = patterns => {
+export const getElementsFromDOM = (resolve, data) => {
   try {
-    const elementsFromDOM = (patterns?.length && window.document.querySelectorAll(patterns)) || []
+    const elementsFromDOM = window.document.querySelectorAll(data.patterns) || []
+    const elements = Array.from(elementsFromDOM)
 
-    return [...elementsFromDOM]
-  } catch {
-    return []
+    resolve(elements)
+  } catch (error) {
+    console.log('💬  error:', error)
+    throw 'Something went wrong!'
   }
 }
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  const { data, type } = message
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  const { id, data } = request.data
 
-  if (type === 'get-dom-elements') {
-    const elementsFromDOM = getElementsFromDOM(data.get)
-    const stringifiedElements = elementsFromDOM.map(element => element.tagName.toLowerCase())
+  if (request.type === 'get-dom-elements') {
+    const process = id
+      ? processWaitList.getProcessById(id)
+      : processWaitList.add(resolve => getElementsFromDOM(resolve, data))
 
-    sendResponse(stringifiedElements)
+    return sendResponse({ status: 'ok', data: process })
   }
 })
-
-// const appRoot = document.createElement('div')
-// document.body.prepend(appRoot)
-
-// const ExtensionApp = () => {
-//   console.log('Hello World from content.js inside the ExtensionApp!')
-
-//   return <p>Hi</p>
-// }
-
-// React.render(
-//   <>
-//     <FontFamilies />
-
-//     <ExtensionApp />
-//   </>,
-//   appRoot
-// )

@@ -101,4 +101,6 @@ export const getPropsFromString = (command, args) => {
 
     throw `${arg} is an unexpected argument.`
   }
+
+  return props
 }

@@ -15,7 +15,7 @@ export class Command extends EventListener {
     this.abbreviations = {}
     this.data = {}
     this.props = {}
-    this.defaults = { carry: [] }
+    this.defaults = {}
     this.outputs = []
     this.updates = []
     this.hidden = hidden

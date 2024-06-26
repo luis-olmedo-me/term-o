@@ -20,12 +20,12 @@ export const Log = ({ command, prefix }) => {
   return (
     !command.hidden && (
       <div>
-        <p>
+        <S.LogItem>
           {prefix} {command.command}
-        </p>
+        </S.LogItem>
 
         {updates.map(update => {
-          return <p>{update}</p>
+          return <S.LogItem>{update}</S.LogItem>
         })}
       </div>
     )

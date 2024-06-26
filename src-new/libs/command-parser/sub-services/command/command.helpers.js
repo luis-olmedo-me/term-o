@@ -1,13 +1,14 @@
-export const parseOptions = (index, arg, argsBySpace, propType) => {
+const parseOptions = (index, arg, argsBySpace, propType) => {
   switch (propType) {
     case 'string': {
       index++
       const argStart = argsBySpace.at(index) || ''
       const quote = argStart.charAt(0)
-      const quotesPattern = new RegExp(`${quote}|${quote}^$`, 'g')
-
       const isQuote = /"|'/g.test(quote)
-      if (!isQuote) return { value: null, newIndex: index }
+
+      if (!isQuote) throw `${arg} expects for quoted [string] value.`
+
+      const quotesPattern = new RegExp(`${quote}|${quote}^$`, 'g')
 
       index++
       let value = argStart
@@ -57,4 +58,31 @@ export const parseOptions = (index, arg, argsBySpace, propType) => {
     default:
       return { value: null, newIndex: index }
   }
+}
+
+export const getPropsFromString = (command, args) => {
+  let props = {}
+
+  for (let index = 0; index < args.length; index++) {
+    const arg = args[index]
+
+    if (arg.startsWith('--')) {
+      const prop = arg.slice(2)
+      const propType = command.propTypes[prop]
+
+      const { value, newIndex } = parseOptions(index, arg, args, propType)
+
+      index = newIndex
+
+      if (value !== null) {
+        props = { ...props, [prop]: value }
+      }
+
+      continue
+    }
+
+    props = { ...props, carry: [...props.carry, arg] }
+  }
+
+  return props
 }

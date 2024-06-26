@@ -2,7 +2,7 @@ import EventListener from '../event-listener'
 
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 import { defaultValues } from './command.constants'
-import { parseOptions } from './command.helpers'
+import { getPropsFromString } from './command.helpers'
 
 export class Command extends EventListener {
   constructor({ name, command, hidden = false }) {
@@ -16,8 +16,9 @@ export class Command extends EventListener {
     this.props = {}
     this.defaults = { carry: [] }
     this.outputs = []
-    this.hidden = hidden
     this.updates = []
+    this.hidden = hidden
+    this.finished = false
   }
 
   reset() {
@@ -44,36 +45,41 @@ export class Command extends EventListener {
   prepare(args) {
     this.props = this.defaults
 
-    for (let index = 0; index < args.length; index++) {
-      const arg = args[index]
+    try {
+      const newProps = getPropsFromString(this, args)
 
-      if (arg.startsWith('--')) {
-        const prop = arg.slice(2)
-        const propType = this.propTypes[prop]
-        const { value, newIndex } = parseOptions(index, arg, args, propType)
-
-        index = newIndex
-
-        if (value !== null) {
-          this.props = { ...this.props, [prop]: value }
-        }
-
-        continue
-      }
-
-      this.props = { ...this.props, carry: [...this.props.carry, arg] }
+      this.props = { ...this.props, ...newProps }
+    } catch (error) {
+      this.throw(error)
     }
 
     return this
   }
 
   execute() {
-    this.dispatchEvent('execute', this)
+    if (this.finished) return
+
+    try {
+      this.dispatchEvent('execute', this)
+    } catch (error) {
+      this.throw(error)
+    }
 
     return this
   }
 
   appendsData(data) {
     this.data = { ...this.data, ...data }
+  }
+
+  throw(message) {
+    this.reset()
+    this.update(`‼ ${message}`)
+
+    this.finish()
+  }
+
+  finish() {
+    this.finished = true
   }
 }

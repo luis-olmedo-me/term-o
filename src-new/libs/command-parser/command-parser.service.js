@@ -17,9 +17,9 @@ class CommandParser extends EventListener {
     const handler = this.handlers[name]
 
     const command = createCommand(scriptRaw).prepare(scriptArgs)
+    this.dispatchEvent(`on-create-${name}`, command)
 
     if (handler) command.addEventListener('execute', handler)
-    this.dispatchEvent(`before-${name}`, command)
 
     return command
   }

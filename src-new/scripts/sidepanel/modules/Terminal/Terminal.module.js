@@ -32,18 +32,18 @@ export const Terminal = () => {
   useEffect(function clearLogsOnClearCommand() {
     const clearLogs = () => setLogs([])
 
-    commandParser.addEventListener('before-clear', clearLogs)
+    commandParser.addEventListener('on-create-clear', clearLogs)
 
-    return () => commandParser.removeEventListener('before-clear', clearLogs)
+    return () => commandParser.removeEventListener('on-create-clear', clearLogs)
   }, [])
 
   useEffect(
     function addExternalDataOnNewCommands() {
       const appendTab = command => command.appendsData({ tab })
 
-      commandParser.addEventListener('before-dom', appendTab)
+      commandParser.addEventListener('on-create-dom', appendTab)
 
-      return () => commandParser.removeEventListener('before-dom', appendTab)
+      return () => commandParser.removeEventListener('on-create-dom', appendTab)
     },
     [tab]
   )

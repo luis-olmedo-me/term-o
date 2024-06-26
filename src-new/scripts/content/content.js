@@ -3,13 +3,11 @@ import processes from './processes'
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   const { id, data } = request.data
-  const proccess = processes[request.type]
+  const handler = processes[request.type]
 
-  if (proccess) {
-    const process = id
-      ? processWaitList.getProcessById(id)
-      : processWaitList.add(resolve => proccess(resolve, data))
+  const process = id
+    ? processWaitList.getProcessById(id)
+    : processWaitList.add(resolve => handler(resolve, data))
 
-    return sendResponse({ status: 'ok', data: process })
-  }
+  return sendResponse({ status: 'ok', data: process })
 })

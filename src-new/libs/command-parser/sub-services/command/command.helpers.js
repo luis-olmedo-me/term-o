@@ -4,17 +4,18 @@ export const parseOptions = (index, arg, argsBySpace, propType) => {
       index++
       const argStart = argsBySpace.at(index) || ''
       const quote = argStart.charAt(0)
+      const quotesPattern = new RegExp(`${quote}|${quote}^$`, 'g')
 
       const isQuote = /"|'/g.test(quote)
       if (!isQuote) return { value: null, newIndex: index }
 
       index++
-      let value = argStart.replace(new RegExp(`^${quote}`), '')
+      let value = argStart
       const nextArgs = argsBySpace.slice(index)
 
       for (const nextArg of nextArgs) {
         if (nextArg.endsWith(quote)) {
-          value += ` ${nextArg.replace(new RegExp(`${quote}$`), '')}`
+          value += ` ${nextArg}`
           index++
           break
         }
@@ -22,6 +23,8 @@ export const parseOptions = (index, arg, argsBySpace, propType) => {
         value += ` ${nextArg}`
         index++
       }
+
+      value = value.replace(quotesPattern, '')
 
       return { value: value || null, newIndex: index }
     }

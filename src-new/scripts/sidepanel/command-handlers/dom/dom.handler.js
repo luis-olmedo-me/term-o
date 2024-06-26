@@ -1,17 +1,4 @@
-// const request = (tabId, key) => {
-//   return new Promise((resolve, reject) => {
-//     chrome.tabs.sendMessage(tabId, key, response => {
-//       if (chrome.runtime.lastError) {
-//         const error = new Error(chrome.runtime.lastError.message)
-
-//         reject(error)
-//         return
-//       }
-
-//       resolve(response)
-//     })
-//   })
-// }
+import { states } from '@src/libs/process-wait-list'
 
 const createWorkerRequest = ({ tabId, type, data, defaultResponse }) => {
   return new Promise((resolve, reject) => {
@@ -73,19 +60,11 @@ export const handleDOM = async command => {
 
   command.update('Getting elements.')
 
-  try {
-    const elements = await getDOMElements(tab.id, { patterns: [get] })
-    console.log('💬  elements:', elements)
-  } catch (error) {
-    console.error(error)
-  }
+  const elements = await getDOMElements(tab.id, { patterns: [get] })
+
+  elements.forEach(element => command.update(element))
 
   command.update('Finished.')
-
-  // request(tab.id, {
-  //   type: 'get-dom-elements',
-  //   data: { get }
-  // })
 
   // command.reset()
   // command.update(elements)

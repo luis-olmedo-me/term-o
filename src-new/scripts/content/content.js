@@ -3,11 +3,20 @@ import processWaitList from '@src/libs/process-wait-list'
 export const getElementsFromDOM = (resolve, data) => {
   try {
     const elementsFromDOM = window.document.querySelectorAll(data.patterns) || []
-    const elements = Array.from(elementsFromDOM)
+    const elements = Array.from(elementsFromDOM).map(element => {
+      const tagName = element.tagName.toLowerCase()
+      const id = element.getAttribute('id')
+      const classes = element.getAttribute('class')?.replaceAll(' ', '.')
+
+      let label = tagName
+      if (id) label = `${label}#${id}`
+      if (classes && !id) label = `${label}.${classes}`
+
+      return label
+    })
 
     resolve(elements)
   } catch (error) {
-    console.log('💬  error:', error)
     throw 'Something went wrong!'
   }
 }

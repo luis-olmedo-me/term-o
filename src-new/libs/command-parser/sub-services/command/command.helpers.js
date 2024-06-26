@@ -5,14 +5,15 @@ const parseOptions = (index, arg, argsBySpace, propType) => {
       const argStart = argsBySpace.at(index) || ''
       const quote = argStart.charAt(0)
       const isQuote = /"|'/g.test(quote)
+      const argStartIsLastQuoted = argStart.endsWith(quote)
 
       if (!isQuote) throw `${arg} expects for quoted [string] value.`
 
       const quotesPattern = new RegExp(`${quote}|${quote}^$`, 'g')
 
-      index++
+      if (!argStartIsLastQuoted) index++
       let value = argStart
-      const nextArgs = argStart.endsWith(quote) ? [] : argsBySpace.slice(index)
+      const nextArgs = argStartIsLastQuoted ? [] : argsBySpace.slice(index)
 
       for (const nextArg of nextArgs) {
         if (nextArg.endsWith(quote)) {

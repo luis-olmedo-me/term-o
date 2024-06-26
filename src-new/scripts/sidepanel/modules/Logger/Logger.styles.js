@@ -18,6 +18,7 @@ export const LoggerWrapper = styled.div`
 
   &::-webkit-scrollbar-track {
     background-color: ${t('grey.800')};
+    border-radius: 3px;
 
     &:active,
     &:hover {
@@ -26,8 +27,8 @@ export const LoggerWrapper = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    border-radius: 2px;
-    background-color: ${t('green.A400')};
+    border-radius: 3px;
+    background-color: ${t('grey.600')};
 
     &:active,
     &:hover {

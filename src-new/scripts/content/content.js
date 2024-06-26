@@ -1,24 +1,54 @@
 import processWaitList from '@src/libs/process-wait-list'
 
 export const getElementsFromDOM = (resolve, data) => {
-  try {
-    const elementsFromDOM = window.document.querySelectorAll(data.patterns) || []
-    const elements = Array.from(elementsFromDOM).map(element => {
-      const tagName = element.tagName.toLowerCase()
-      const id = element.getAttribute('id')
-      const classes = element.getAttribute('class')?.replaceAll(' ', '.')
+  const { searchByTag, searchByAttributeName, searchByAttributeValue } = data
 
-      let label = tagName
-      if (id) label = `${label}#${id}`
-      if (classes && !id) label = `${label}.${classes}`
+  const tagPattern = searchByTag && new RegExp(searchByTag)
+  const attrPattern = searchByAttributeName && new RegExp(searchByAttributeName)
+  const attrValPattern = searchByAttributeValue && new RegExp(searchByAttributeValue)
 
-      return label
-    })
+  const elementsFromDOM = window.document.querySelectorAll('*') || []
+  const elements = Array.from(elementsFromDOM).filter(element => {
+    const tagName = element.tagName.toLowerCase()
+    const attrNames = element.getAttributeNames()
+    const attrValues = attrNames.map(attributeName => element.getAttribute(attributeName))
 
-    resolve(elements)
-  } catch (error) {
-    throw 'Something went wrong!'
-  }
+    const conditions = []
+
+    if (tagPattern) {
+      conditions.push(() => {
+        return tagPattern.test(tagName)
+      })
+    }
+
+    if (attrPattern) {
+      conditions.push(() => {
+        return attrNames.some(attrName => attrPattern.test(attrName))
+      })
+    }
+
+    if (attrValPattern) {
+      conditions.push(() => {
+        return attrValues.some(attrValue => attrValPattern.test(attrValue))
+      })
+    }
+
+    return conditions.every(condition => condition())
+  })
+
+  const formattedElements = elements.map(element => {
+    const tagName = element.tagName.toLowerCase()
+    const id = element.getAttribute('id')
+    const classes = element.getAttribute('class')?.replaceAll(' ', '.')
+
+    let label = tagName
+    if (id) label = `${label}#${id}`
+    if (classes && !id) label = `${label}.${classes}`
+
+    return label
+  })
+
+  resolve(formattedElements)
 }
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {

@@ -56,11 +56,14 @@ export const getDOMElements = (tabId, data) => {
 
 export const handleDOM = async command => {
   const { tab } = command.data
-  const { get } = command.props
+  const P = name => command.props[name]
 
   command.update('Getting elements.')
-  const elements = await getDOMElements(tab.id, { patterns: [get] })
-  command.update('Finished.')
+  const elements = await getDOMElements(tab.id, {
+    searchByTag: P`tag`,
+    searchByAttributeName: P`attr`,
+    searchByAttributeValue: P`attr-val`
+  })
 
   command.reset()
   elements.forEach(element => command.update(element))

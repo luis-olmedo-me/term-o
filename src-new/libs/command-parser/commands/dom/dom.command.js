@@ -5,5 +5,9 @@ export const createDOM = script => {
   return new Command({
     name: commandNames.DOM,
     command: script
-  }).expect({ name: 'get', type: 'string' })
+  })
+    .expect({ name: 'get', type: 'boolean' })
+    .expect({ name: 'tag', type: 'string' })
+    .expect({ name: 'attr', type: 'string' })
+    .expect({ name: 'attr-val', type: 'string' })
 }

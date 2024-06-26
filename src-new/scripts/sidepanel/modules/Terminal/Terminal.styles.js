@@ -11,7 +11,8 @@ export const TerminalWrapper = styled.div`
 
   & ${LoggerWrapper} {
     flex-grow: 1;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
 
   &[aria-disabled='true']::after {

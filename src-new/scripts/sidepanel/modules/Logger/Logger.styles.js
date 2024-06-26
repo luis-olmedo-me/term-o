@@ -11,6 +11,26 @@ export const LoggerWrapper = styled.div`
   cursor: text;
 
   &::-webkit-scrollbar {
-    display: none;
+    height: 10px;
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: ${t('grey.800')};
+
+    &:active,
+    &:hover {
+      background-color: ${t('grey.800')};
+    }
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background-color: ${t('green.A400')};
+
+    &:active,
+    &:hover {
+      background-color: ${t('green.A200')};
+    }
   }
 `

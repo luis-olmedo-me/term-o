@@ -25,11 +25,11 @@ export const handleDOM = async command => {
     const attrs = Object.entries(attributes)
       .map(
         ([name, value]) =>
-          `${C`#78909c`}[${C`#8c9eff`}${name}${C`#607d8b`}=${C`#ff8f00`}"${value}"${C`#78909c`}]`
+          `${C`#a0a5ae`}[${C`#26c6da`}${name}${C`#eeeeee`}=${C`#ffd76d`}"${value}"${C`#a0a5ae`}]`
       )
       .join(' ')
 
-    return attrs ? `${C`#2979ff`}${tagName} ${attrs}` : `${C`#2979ff`}${tagName}`
+    return attrs ? `${C`#ef5350`}${tagName} ${attrs}` : `${C`#ef5350`}${tagName}`
   })
 
   if (P`group`) textElements = prependCounters(textElements)

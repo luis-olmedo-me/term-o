@@ -52,6 +52,9 @@ export class Command extends EventListener {
 
     try {
       const newProps = getPropsFromString(this, args)
+      const hasNewProps = Object.values(newProps).length > 0
+
+      if (!hasNewProps) throw 'No props were provided.'
 
       this.props = { ...this.props, ...newProps }
     } catch (error) {

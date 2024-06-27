@@ -36,12 +36,13 @@ export const getDOMElements = (resolve, data) => {
 
   const formattedElements = elements.map(element => {
     const tagName = element.tagName.toLowerCase()
-    const id = element.getAttribute('id')
-    const classes = element.getAttribute('class')?.replaceAll(' ', '.')
+    const attrs = element
+      .getAttributeNames()
+      ?.map(attrName => `["${attrName}"="${element.getAttribute(attrName)}"]`)
+      .join(' ')
 
     let label = tagName
-    if (id) label = `${label}#${id}`
-    if (classes && !id) label = `${label}.${classes}`
+    if (attrs) label = `${label} ${attrs}`
 
     return label
   })

@@ -4,9 +4,10 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = (_env, { watch, mode }) => ({
   entry: {
-    popup: './src/projects/popup/popup.js',
-    content: './src/projects/content/content.js',
-    background: './src/projects/background/background.js'
+    background: './src-new/scripts/background/background.js',
+    content: './src-new/scripts/content/content.js',
+    popup: './src-new/scripts/popup/popup.js',
+    sidepanel: './src-new/scripts/sidepanel/sidepanel.js'
   },
   output: {
     filename: '[name].js',
@@ -14,12 +15,10 @@ module.exports = (_env, { watch, mode }) => ({
   },
   resolve: {
     extensions: ['.js', '.jsx', '.css'],
-    modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+    modules: [path.resolve(__dirname, 'src-new'), 'node_modules'],
     alias: {
-      '@libs': path.resolve(__dirname, 'src/libs'),
-      '@modules': path.resolve(__dirname, 'src/modules'),
-      '@helpers': path.resolve(__dirname, 'src/helpers'),
-      '@src': path.resolve(__dirname, 'src'),
+      '@sidepanel': path.resolve(__dirname, 'src-new/scripts/sidepanel'),
+      '@src': path.resolve(__dirname, 'src-new'),
       react: 'preact/compat'
     }
   },
@@ -34,8 +33,9 @@ module.exports = (_env, { watch, mode }) => ({
   },
   plugins: [
     new CopyPlugin([
-      { from: './src/manifest.json', to: './manifest.json' },
-      { from: './src/images', to: './images' }
+      { from: './src-new/manifest.json', to: './manifest.json' },
+      { from: './src-new/images', to: './images' },
+      { from: './src-new/sidepanel.html', to: './sidepanel.html' }
     ]),
     ...(watch ? [] : [new CleanWebpackPlugin()])
   ],

@@ -2,7 +2,7 @@
   "name": "term-o",
   "version": "0.5.0",
   "description": "Simple and lightweight terminal for browser",
-  "repository": "https://github.com/olmedoluis/term-o",
+  "repository": "https://github.com/luis-olmedo-me/term-o",
   "scripts": {
     "start": "yarn webpack -c webpack.config.js --mode development --devtool cheap-module-source-map --watch --progress",
     "build-dev": "yarn webpack -c webpack.config.js --mode development",

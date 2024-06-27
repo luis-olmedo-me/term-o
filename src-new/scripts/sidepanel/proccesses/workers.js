@@ -1,0 +1,10 @@
+import { createWorkerProcessRequest } from './worker-creator'
+
+export const getDOMElements = (tabId, data) => {
+  return createWorkerProcessRequest({
+    type: 'get-dom-elements',
+    defaultResponse: {},
+    tabId,
+    data
+  })
+}

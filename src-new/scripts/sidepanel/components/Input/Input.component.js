@@ -1,0 +1,22 @@
+import * as React from 'preact'
+
+import * as S from './Input.styles'
+
+export const Input = ({ onChange, onKeyDown, placeholder, value, prefix, inputRef, disabled }) => {
+  return (
+    <S.InputWrapper aria-disabled={disabled}>
+      <span>{prefix}</span>
+
+      <S.Input
+        ref={inputRef}
+        spellCheck="false"
+        type="text"
+        value={value}
+        onChange={onChange}
+        onKeyDown={onKeyDown}
+        placeholder={placeholder}
+        disabled={disabled}
+      />
+    </S.InputWrapper>
+  )
+}

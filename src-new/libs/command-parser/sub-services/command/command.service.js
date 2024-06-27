@@ -61,6 +61,14 @@ export class Command extends EventListener {
     return this
   }
 
+  mock(mockedProps) {
+    const scriptArgs = Object.entries(mockedProps).reduce((args, [name, value]) => {
+      return [...args, `--${name}`, value]
+    }, [])
+
+    return this.prepare(scriptArgs)
+  }
+
   execute() {
     if (this.finished) return
 

@@ -13,8 +13,10 @@ class CommandParser extends EventListener {
 
   read(scriptRaw) {
     const [name, ...scriptArgs] = scriptRaw.trim().split(' ')
-    const createCommand = this.commands[name] || createUKNOWN
+    const createCommand = this.commands[name]
     const handler = this.handlers[name]
+
+    if (!createCommand) return createUKNOWN(scriptRaw).mock({ title: '"Unkown command."' })
 
     const command = createCommand(scriptRaw).prepare(scriptArgs)
     this.dispatchEvent(`on-create-${name}`, command)
@@ -31,5 +33,6 @@ class CommandParser extends EventListener {
 
 export const commandParser = new CommandParser({
   clear: createCLEAR,
-  dom: createDOM
+  dom: createDOM,
+  error: createUKNOWN
 })

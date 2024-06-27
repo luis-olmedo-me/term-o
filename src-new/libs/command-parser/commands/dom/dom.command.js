@@ -9,6 +9,5 @@ export const createDOM = script => {
     .expect({ name: 'attr', type: 'string', abbreviation: 'a' })
     .expect({ name: 'get', type: 'boolean', abbreviation: 'g' })
     .expect({ name: 'tag', type: 'string', abbreviation: 't' })
-    .expect({ name: 'attr-val', type: 'string', abbreviation: 'A' })
     .expect({ name: 'group', type: 'boolean', abbreviation: 'G' })
 }

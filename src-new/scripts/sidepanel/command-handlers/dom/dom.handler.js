@@ -13,6 +13,7 @@ function prependCounters(array) {
 export const handleDOM = async command => {
   const { tab } = command.data
   const P = name => command.props[name]
+  const C = color => `[termo.${color}]`
 
   command.update('Getting elements.')
   const elements = await getDOMElements(tab.id, {
@@ -25,7 +26,7 @@ export const handleDOM = async command => {
       .map(([name, value]) => `["${name}"="${value}"]`)
       .join(' ')
 
-    return attrs ? `${tagName} ${attrs}` : tagName
+    return attrs ? `${C`#ffab40`}${tagName} ${C`#78909c`}${attrs}` : `${C`#ffab40`}${tagName}`
   })
 
   if (P`group`) textElements = prependCounters(textElements)

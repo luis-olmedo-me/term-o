@@ -11,9 +11,9 @@ export const getCookies = () => {
 export const getStorage = (resolve, data) => {
   let storages = {}
 
-  if (data.inludeLocal) storages = { ...storages, ...window.localStorage }
-  if (data.includeSession) storages = { ...storages, ...window.sessionStorage }
-  if (data.includeCookies) storages = { ...storages, ...getCookies() }
+  if (data.includeLocal) storages = { ...storages, local: { ...window.localStorage } }
+  if (data.includeSession) storages = { ...storages, session: { ...window.localStorage } }
+  if (data.includeCookies) storages = { ...storages, cookies: getCookies() }
 
-  resolve(formattedElements)
+  resolve(storages)
 }

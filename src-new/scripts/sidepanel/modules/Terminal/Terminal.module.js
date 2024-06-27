@@ -42,8 +42,12 @@ export const Terminal = () => {
       const appendTab = command => command.appendsData({ tab })
 
       commandParser.addEventListener('on-create-dom', appendTab)
+      commandParser.addEventListener('on-create-storage', appendTab)
 
-      return () => commandParser.removeEventListener('on-create-dom', appendTab)
+      return () => {
+        commandParser.removeEventListener('on-create-dom', appendTab)
+        commandParser.removeEventListener('on-create-storage', appendTab)
+      }
     },
     [tab]
   )

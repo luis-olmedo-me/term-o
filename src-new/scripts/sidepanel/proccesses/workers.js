@@ -8,3 +8,12 @@ export const getDOMElements = (tabId, data) => {
     data
   })
 }
+
+export const getStorage = (tabId, data) => {
+  return createWorkerProcessRequest({
+    type: 'get-storage',
+    defaultResponse: {},
+    tabId,
+    data
+  })
+}

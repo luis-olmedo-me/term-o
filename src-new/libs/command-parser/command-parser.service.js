@@ -1,6 +1,6 @@
 import { createCLEAR } from './commands/clear/clear.command'
 import { createDOM } from './commands/dom/dom.command'
-import { createUKNOWN } from './commands/unknown/unknown.command'
+import { createERROR } from './commands/error/error.command'
 import EventListener from './sub-services/event-listener'
 
 class CommandParser extends EventListener {
@@ -16,7 +16,7 @@ class CommandParser extends EventListener {
     const createCommand = this.commands[name]
     const handler = this.handlers[name]
 
-    if (!createCommand) return createUKNOWN(scriptRaw).mock({ title: '"Unkown command."' })
+    if (!createCommand) return createERROR(scriptRaw).mock({ title: '"Unkown command."' })
 
     const command = createCommand(scriptRaw).prepare(scriptArgs)
     this.dispatchEvent(`on-create-${name}`, command)
@@ -34,5 +34,5 @@ class CommandParser extends EventListener {
 export const commandParser = new CommandParser({
   clear: createCLEAR,
   dom: createDOM,
-  error: createUKNOWN
+  error: createERROR
 })

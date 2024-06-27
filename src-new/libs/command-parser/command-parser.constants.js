@@ -1,5 +1,5 @@
 export const commandNames = {
   CLEAR: 'clear',
-  UKNOWN: 'uknown',
+  ERROR: 'error',
   DOM: 'dom'
 }

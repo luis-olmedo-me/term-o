@@ -3,3 +3,5 @@ export const theme = pathsString => props => {
 
   return paths.reduce((theme, path) => theme[path], props.theme)
 }
+
+export const getColor = color => `[termo.${color}]`

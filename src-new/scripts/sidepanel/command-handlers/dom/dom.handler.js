@@ -1,4 +1,5 @@
 import { getDOMElements } from '@sidepanel/proccesses/workers'
+import { getColor as C } from '@src/theme/theme.helpers'
 
 function prependCounters(array) {
   const counters = array.reduce((acc, value) => {
@@ -13,7 +14,6 @@ function prependCounters(array) {
 export const handleDOM = async command => {
   const { tab } = command.data
   const P = name => command.props[name]
-  const C = color => `[termo.${color}]`
 
   command.update('Getting elements.')
   const elements = await getDOMElements(tab.id, {

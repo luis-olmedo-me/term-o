@@ -2,7 +2,7 @@ import { commandNames } from '../../command-parser.constants'
 import Command from '../../sub-services/command'
 
 const handleUKNOWN = command => {
-  command.update(`‼ ${command.props.title}`)
+  throw `${command.props.title}`
 }
 
 export const createUKNOWN = script => {
@@ -10,6 +10,6 @@ export const createUKNOWN = script => {
     name: commandNames.UKNOWN,
     command: script
   })
-    .expect({ name: 'title', type: 'string', defaultValue: 'Uknown command!' })
+    .expect({ name: 'title', type: 'string', defaultValue: 'Uknown command.' })
     .addEventListener('execute', handleUKNOWN)
 }

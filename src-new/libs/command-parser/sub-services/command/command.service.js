@@ -1,6 +1,7 @@
 import EventListener from '../event-listener'
 
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
+import { getColor as C } from '@src/theme/theme.helpers'
 import { defaultValues } from './command.constants'
 import { getPropsFromString } from './command.helpers'
 
@@ -78,7 +79,7 @@ export class Command extends EventListener {
 
   throw(message) {
     this.reset()
-    this.update(`‼ ${message}`)
+    this.update(`${C`#d50000`}✕ ${message}`)
 
     this.finish()
   }

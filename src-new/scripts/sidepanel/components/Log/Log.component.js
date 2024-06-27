@@ -1,11 +1,12 @@
 import * as React from 'preact'
-import { useEffect, useState } from 'preact/hooks'
+import { useEffect, useRef, useState } from 'preact/hooks'
 
 import { convertStringToObjects } from './Log.helpers'
 import * as S from './Log.styles'
 
 export const Log = ({ command, prefix }) => {
   const [updates, setUpdates] = useState([])
+  const wrapper = useRef(null)
 
   useEffect(
     function listenUpdates() {
@@ -24,22 +25,20 @@ export const Log = ({ command, prefix }) => {
   )
 
   return (
-    !command.hidden && (
-      <div>
-        <S.LogItem>
-          {prefix} {command.command}
-        </S.LogItem>
+    <S.LogWrapper ref={wrapper} hidden={command.hidden}>
+      <S.LogItem>
+        {prefix} {command.command}
+      </S.LogItem>
 
-        {updates.map(update => {
-          return (
-            <S.LogItem>
-              {update.map(({ color, content }) => (
-                <span style={{ color }}>{content}</span>
-              ))}
-            </S.LogItem>
-          )
-        })}
-      </div>
-    )
+      {updates.map(update => {
+        return (
+          <S.LogItem>
+            {update.map(({ color, content }) => (
+              <span style={{ color }}>{content}</span>
+            ))}
+          </S.LogItem>
+        )
+      })}
+    </S.LogWrapper>
   )
 }

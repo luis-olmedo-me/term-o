@@ -16,6 +16,7 @@ export class Command extends EventListener {
     this.data = {}
     this.props = {}
     this.defaults = {}
+    this.validations = {}
     this.outputs = []
     this.updates = []
     this.hidden = hidden
@@ -34,12 +35,13 @@ export class Command extends EventListener {
     this.dispatchEvent('update', this)
   }
 
-  expect({ name, type, defaultValue, abbreviation }) {
+  expect({ name, type, defaultValue, abbreviation, validate }) {
     const value = (defaultValue || defaultValues[type]) ?? defaultValues.none
 
     this.defaults = { ...this.defaults, [name]: value }
     this.propTypes = { ...this.propTypes, [name]: type }
     if (abbreviation) this.abbreviations = { ...this.abbreviations, [abbreviation]: name }
+    if (validate) this.validations = { ...this.validations, [name]: validate }
 
     return this
   }

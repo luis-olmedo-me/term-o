@@ -90,10 +90,12 @@ export const getPropsFromString = (command, args) => {
 
       if (!propName) throw `${arg} is not a valid command prop.`
 
+      const validate = command.validations[propName]
       const propType = command.propTypes[propName]
       const { value, newIndex } = parseOptions(index, arg, args, propType)
 
       if (value === null) throw `${arg} prop has an unexpected value.`
+      if (validate) validate(value)
 
       index = newIndex
       props = { ...props, [propName]: value }

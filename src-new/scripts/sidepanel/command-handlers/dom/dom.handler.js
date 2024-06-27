@@ -15,14 +15,22 @@ export const handleDOM = async command => {
   const P = name => command.props[name]
 
   command.update('Getting elements.')
-  let elements = await getDOMElements(tab.id, {
+  const elements = await getDOMElements(tab.id, {
     searchByTag: P`tag`,
     searchByAttributeName: P`attr`,
     searchByAttributeValue: P`attr-val`
   })
 
-  if (P`group`) elements = prependCounters(elements)
+  let textElements = elements.map(({ tagName, attributes }) => {
+    const attrs = Object.entries(attributes)
+      .map(([name, value]) => `["${name}"="${value}"]`)
+      .join(' ')
+
+    return attrs ? `${tagName} ${attrs}` : tagName
+  })
+
+  if (P`group`) textElements = prependCounters(textElements)
 
   command.reset()
-  elements.forEach(element => command.update(element))
+  textElements.forEach(element => command.update(element))
 }

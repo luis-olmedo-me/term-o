@@ -54,7 +54,10 @@ export const Terminal = () => {
   )
 
   const focusOnInput = () => {
-    inputRef.current?.focus()
+    const selection = window.getSelection()
+    const selectedText = selection.toString()
+
+    if (!selectedText) inputRef.current?.focus()
   }
 
   const handleEnter = value => {
@@ -68,7 +71,7 @@ export const Terminal = () => {
   }
 
   return (
-    <S.TerminalWrapper onClick={focusOnInput}>
+    <S.TerminalWrapper onMouseUp={focusOnInput}>
       <Logger logs={logs} loggerRef={loggerRef} />
 
       <Prompt onEnter={handleEnter} inputRef={inputRef} tab={tab} pso="On {origin}" />

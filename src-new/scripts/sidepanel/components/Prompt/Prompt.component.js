@@ -48,7 +48,7 @@ export const Prompt = ({ onEnter, inputRef, tab, pso }) => {
         value={historialIndex ? historial.at(historialIndex) : value}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
-        prefix="$"
+        prefix={historialIndex || '$'}
       />
     </S.PromptWrapper>
   )

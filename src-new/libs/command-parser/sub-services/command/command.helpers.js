@@ -107,3 +107,12 @@ export const getPropsFromString = (command, args) => {
 
   return props
 }
+
+export const validateRequirements = (requirements, newProps) => {
+  for (const [propRequester, propsNeeded] of Object.entries(requirements)) {
+    const hasNeeded = propsNeeded.some(name => typeof newProps[name] !== 'undefined')
+    const needed = propsNeeded.map(name => `--${name}`).join(' | ')
+
+    if (!hasNeeded) throw `--${propRequester} requires at least one of ${needed}.`
+  }
+}

@@ -3,7 +3,7 @@ import EventListener from '../event-listener'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 import { getColor as C } from '@src/theme/theme.helpers'
 import { defaultValues } from './command.constants'
-import { getPropsFromString } from './command.helpers'
+import { getPropsFromString, validateRequirements } from './command.helpers'
 
 export class Command extends EventListener {
   constructor({ name, command, hidden = false }) {
@@ -62,6 +62,7 @@ export class Command extends EventListener {
       const hasNewProps = Object.values(newProps).length > 0
 
       if (!hasNewProps) throw 'No props were provided.'
+      validateRequirements(this.requirements, newProps)
 
       this.props = { ...this.props, ...newProps }
     } catch (error) {

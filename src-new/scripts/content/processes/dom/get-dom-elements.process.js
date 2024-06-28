@@ -8,7 +8,6 @@ export const getDOMElements = (resolve, data) => {
   const elements = Array.from(elementsFromDOM).filter(element => {
     const tagName = element.tagName.toLowerCase()
     const attrNames = element.getAttributeNames()
-    const attrValues = attrNames.map(attributeName => element.getAttribute(attributeName))
 
     const conditions = []
 

@@ -1,11 +1,30 @@
 import { states } from '@src/libs/process-wait-list'
 
+const errorMessagesOverwritten = [
+  {
+    original: 'Could not establish connection. Receiving end does not exist.',
+    new:
+      'Unable to establish a connection to the tab. Please refresh the page or ensure that it is open.'
+  }
+]
+
+const getErrorMessage = error => {
+  const replacement = errorMessagesOverwritten.find(message => message.original === error)
+
+  return replacement ? replacement.new : error
+}
+
 const createWorkerRequest = ({ tabId, type, data, defaultResponse }) => {
   return new Promise((resolve, reject) => {
     const callback = response => {
       const lastError = chrome.runtime.lastError
 
-      if (lastError) return reject(lastError.message)
+      if (lastError) {
+        const error = getErrorMessage(lastError.message)
+
+        return reject(error)
+      }
+
       if (response.status !== 'ok') return reject(response.error)
 
       resolve(response.data || defaultResponse)
@@ -32,7 +51,7 @@ export const createWorkerProcessRequest = ({ tabId, type, data, defaultResponse 
         }
 
         default: {
-          reject()
+          reject('Unexpected status when waiting for process.')
           break
         }
       }

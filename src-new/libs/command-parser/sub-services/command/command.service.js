@@ -22,6 +22,11 @@ export class Command extends EventListener {
     this.updates = []
     this.hidden = hidden
     this.finished = false
+    this.executing = false
+  }
+
+  get working() {
+    return this.executing || this.finished
   }
 
   reset() {
@@ -73,10 +78,11 @@ export class Command extends EventListener {
   }
 
   async execute() {
-    if (this.finished) return
+    if (this.working) throw 'Command can be executed once.'
 
     try {
       await this.dispatchEvent('execute', this)
+      this.executing = true
     } catch (error) {
       this.throw(error)
     }
@@ -97,5 +103,6 @@ export class Command extends EventListener {
 
   finish() {
     this.finished = true
+    this.executing = false
   }
 }

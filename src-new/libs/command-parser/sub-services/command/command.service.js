@@ -90,7 +90,7 @@ export class Command extends EventListener {
 
   throw(message) {
     this.reset()
-    this.update(`${C`#d50000`}✕ ${message}`)
+    this.update(`${C`#ef5350`}✕ ${message}`)
 
     this.finish()
   }

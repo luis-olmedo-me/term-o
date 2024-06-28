@@ -23,7 +23,7 @@ export const Prompt = ({ onEnter, inputRef, tab, pso }) => {
     const key = event.key
 
     if (key === 'Enter') {
-      onEnter(value)
+      onEnter(historialIndex ? historial.at(historialIndex) : value)
       setHistorial(history => [...history, value].slice(0, HISTORIAL_SIZE))
       setValue('')
     }

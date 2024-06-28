@@ -22,7 +22,7 @@ export const getDOMElements = (resolve, data) => {
       conditions.push(() => {
         return attrNames.some(name => {
           const value = element.getAttribute(name)
-          const attr = value ? `${name}=${value}` : name
+          const attr = value ? `${name}="${value}"` : name
 
           return attrPattern.test(attr)
         })

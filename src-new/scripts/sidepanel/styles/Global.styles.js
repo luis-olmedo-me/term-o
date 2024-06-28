@@ -1,3 +1,4 @@
+import { theme as t } from '@src/theme/theme.helpers'
 import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
@@ -28,7 +29,8 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     font-family: 'Coda', Courier, monospace;
-  }
+    background-color: ${t('grey.900')};
+}
 `
 
 export default GlobalStyle

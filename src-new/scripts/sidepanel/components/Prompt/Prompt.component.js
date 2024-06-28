@@ -1,6 +1,5 @@
-import { invalidURLsStarts } from '@src/constants/events.constants'
 import * as React from 'preact'
-import { useEffect, useState } from 'preact/hooks'
+import { useState } from 'preact/hooks'
 import Input from '../Input'
 import { createPSO } from './Prompt.helpers'
 import * as S from './Prompt.styles'

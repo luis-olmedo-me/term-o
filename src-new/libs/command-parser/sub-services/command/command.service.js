@@ -72,11 +72,11 @@ export class Command extends EventListener {
     return this.prepare(scriptArgs)
   }
 
-  execute() {
+  async execute() {
     if (this.finished) return
 
     try {
-      this.dispatchEvent('execute', this)
+      await this.dispatchEvent('execute', this)
     } catch (error) {
       this.throw(error)
     }

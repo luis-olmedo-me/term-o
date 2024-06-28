@@ -41,3 +41,7 @@ export const InputWrapper = styled.div`
     cursor: not-allowed;
   }
 `
+
+export const Prefix = styled.span`
+  width: 3ch;
+`

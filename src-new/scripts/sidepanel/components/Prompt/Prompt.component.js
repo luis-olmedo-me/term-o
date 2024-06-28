@@ -5,6 +5,8 @@ import Input from '../Input'
 import { createPSO } from './Prompt.helpers'
 import * as S from './Prompt.styles'
 
+const HISTORIAL_SIZE = 40
+
 export const Prompt = ({ onEnter, inputRef, tab, pso }) => {
   const [value, setValue] = useState('')
   const [historialIndex, setHistorialIndex] = useState(0)
@@ -22,20 +24,30 @@ export const Prompt = ({ onEnter, inputRef, tab, pso }) => {
 
     if (key === 'Enter') {
       onEnter(value)
-      setHistorial(history => [...history, value])
+      setHistorial(history => [...history, value].slice(0, HISTORIAL_SIZE))
       setValue('')
     }
 
     if (key === 'ArrowUp') {
       event.preventDefault()
 
-      setHistorialIndex(index => index - 1)
+      setHistorialIndex(index => {
+        const newIndex = index - 1
+        const canBeStored = newIndex * -1 <= historial.length
+
+        return canBeStored ? newIndex : index
+      })
     }
 
     if (key === 'ArrowDown') {
       event.preventDefault()
 
-      setHistorialIndex(index => index + 1)
+      setHistorialIndex(index => {
+        const newIndex = index + 1
+        const canBeStored = newIndex <= 0
+
+        return canBeStored ? newIndex : index
+      })
     }
   }
 

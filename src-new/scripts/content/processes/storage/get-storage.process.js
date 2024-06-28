@@ -1,20 +1,5 @@
-export const getCookies = () => {
-  if (!document.cookie) return {}
-
-  return document.cookie.split('; ').reduce((parsedCookies, cookie) => {
-    const [key, value] = cookie.split('=')
-
-    return { ...parsedCookies, [key]: value }
-  }, {})
-}
-
-function silentQuotes(storageObject) {
-  return Object.keys(storageObject).reduce((newStorageObject, key) => {
-    newStorageObject[key] = storageObject[key].replace(/"/g, '\\"')
-
-    return newStorageObject
-  }, {})
-}
+import { silentQuotes } from '../processes.helpers'
+import { getCookies } from './get-storage.helpers'
 
 export const getStorage = (resolve, data) => {
   let storages = {}

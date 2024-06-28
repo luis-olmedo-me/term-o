@@ -5,7 +5,8 @@ export const getDOMElements = (resolve, data) => {
   const attrPattern = searchByAttributeName && new RegExp(searchByAttributeName)
 
   const allElements = window.document.querySelectorAll('*') || []
-  const elements = Array.from(allElements).filter(element => {
+
+  const elements = Array.from(allElements).reduce((formattedElements, element) => {
     const tagName = element.tagName.toLowerCase()
     const attrNames = element.getAttributeNames()
 
@@ -21,26 +22,21 @@ export const getDOMElements = (resolve, data) => {
       conditions.push(() => {
         return attrNames.some(name => {
           const value = element.getAttribute(name)
-          const attr = value ? `${name}=${value}` : name
+          const attr = value ? `${name}="${value}"` : name
 
           return attrPattern.test(attr)
         })
       })
     }
 
-    return conditions.every(condition => condition())
-  })
+    if (!conditions.every(condition => condition())) return formattedElements
 
-  const formattedElements = elements.map(element => {
-    const tagName = element.tagName.toLowerCase()
-    const attrNames = element.getAttributeNames() || []
     const attrs = attrNames.reduce(
       (allAttrs, attrName) => ({ ...allAttrs, [attrName]: element.getAttribute(attrName) }),
       {}
     )
+    return [...formattedElements, { tagName, attributes: attrs }]
+  }, [])
 
-    return { tagName, attributes: attrs }
-  })
-
-  resolve(formattedElements)
+  resolve(elements)
 }

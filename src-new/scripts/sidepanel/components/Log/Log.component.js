@@ -36,7 +36,7 @@ export const Log = ({ command, prefix, onUpdate }) => {
         return (
           <S.LogItem>
             {update.map(({ color, content }) => (
-              <span style={{ color }}>{content}</span>
+              <S.ColoredText color={color}>{content}</S.ColoredText>
             ))}
           </S.LogItem>
         )

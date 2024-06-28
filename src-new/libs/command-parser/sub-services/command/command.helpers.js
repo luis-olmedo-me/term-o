@@ -1,3 +1,5 @@
+import { getColor as C } from '@src/theme/theme.helpers'
+
 const parseOptions = (index, arg, argsBySpace, propType) => {
   switch (propType) {
     case 'string': {
@@ -74,11 +76,11 @@ export const getPropsFromString = (command, args) => {
       const prop = arg.slice(2)
       const propType = command.propTypes[prop]
 
-      if (!propType) throw `${arg} is not a valid command prop.`
+      if (!propType) throw `${C`#ff6c70`}${arg}${C`#ef5350`} is not a valid command prop.`
 
       const { value, newIndex } = parseOptions(index, arg, args, propType)
 
-      if (value === null) throw `${arg} prop has an unexpected value.`
+      if (value === null) throw `${C`#ff6c70`}${arg}${C`#ef5350`} prop has an unexpected value.`
 
       index = newIndex
       props = { ...props, [prop]: value }
@@ -88,13 +90,13 @@ export const getPropsFromString = (command, args) => {
       const prop = arg.slice(1)
       const propName = command.abbreviations[prop]
 
-      if (!propName) throw `${arg} is not a valid command prop.`
+      if (!propName) throw `${C`#ff6c70`}${arg}${C`#ef5350`} is not a valid command prop.`
 
       const validate = command.validations[propName]
       const propType = command.propTypes[propName]
       const { value, newIndex } = parseOptions(index, arg, args, propType)
 
-      if (value === null) throw `${arg} prop has an unexpected value.`
+      if (value === null) throw `${C`#ff6c70`}${arg}${C`#ef5350`} prop has an unexpected value.`
       if (validate) validate(value)
 
       index = newIndex
@@ -111,8 +113,10 @@ export const getPropsFromString = (command, args) => {
 export const validateRequirements = (requirements, newProps) => {
   for (const [propRequester, propsNeeded] of Object.entries(requirements)) {
     const hasNeeded = propsNeeded.some(name => typeof newProps[name] !== 'undefined')
-    const needed = propsNeeded.map(name => `--${name}`).join(' | ')
+    const needed = propsNeeded.map(name => `${C`#ff6c70`}--${name}${C`#ef5350`}`).join(' or ')
 
-    if (!hasNeeded) throw `--${propRequester} requires at least one of ${needed}.`
+    if (!hasNeeded) {
+      throw `${C`#ff6c70`}--${propRequester}${C`#ef5350`} requires: ${needed}`
+    }
   }
 }

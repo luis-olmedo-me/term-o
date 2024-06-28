@@ -1,12 +1,10 @@
 import * as React from 'preact'
 
 import Log from '@sidepanel/components/Log'
-import { useCallback, useRef } from 'preact/hooks'
+import { useCallback } from 'preact/hooks'
 import * as S from './Logger.styles'
 
-export const Logger = ({ logs }) => {
-  const loggerRef = useRef(null)
-
+export const Logger = ({ logs, loggerRef }) => {
   const scrollLogsToBottom = useCallback(() => {
     loggerRef.current.scrollTo({ top: loggerRef.current.scrollHeight })
   }, [])

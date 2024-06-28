@@ -15,6 +15,7 @@ export const Terminal = () => {
   const [logs, setLogs] = useState([])
   const [tab, setTab] = useState(null)
   const inputRef = useRef(null)
+  const loggerRef = useRef(null)
 
   useEffect(function focusOnInputAtFirstTime() {
     focusOnInput()
@@ -68,7 +69,7 @@ export const Terminal = () => {
 
   return (
     <S.TerminalWrapper onClick={focusOnInput}>
-      <Logger logs={logs} />
+      <Logger logs={logs} loggerRef={loggerRef} />
 
       <Prompt onEnter={handleEnter} inputRef={inputRef} tab={tab} pso="On {origin}" />
     </S.TerminalWrapper>

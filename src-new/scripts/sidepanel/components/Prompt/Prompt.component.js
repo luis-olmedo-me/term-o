@@ -7,6 +7,8 @@ import * as S from './Prompt.styles'
 
 export const Prompt = ({ onEnter, inputRef, tab, pso }) => {
   const [value, setValue] = useState('')
+  const [historialIndex, setHistorialIndex] = useState(0)
+  const [historial, setHistorial] = useState([])
 
   const handleChange = event => {
     const value = event.target.value
@@ -19,7 +21,20 @@ export const Prompt = ({ onEnter, inputRef, tab, pso }) => {
 
     if (key === 'Enter') {
       onEnter(value)
+      setHistorial(history => [...history, value])
       setValue('')
+    }
+
+    if (key === 'ArrowUp') {
+      event.preventDefault()
+
+      setHistorialIndex(index => index - 1)
+    }
+
+    if (key === 'ArrowDown') {
+      event.preventDefault()
+
+      setHistorialIndex(index => index + 1)
     }
   }
 
@@ -29,7 +44,7 @@ export const Prompt = ({ onEnter, inputRef, tab, pso }) => {
 
       <Input
         inputRef={inputRef}
-        value={value}
+        value={historialIndex ? historial.at(historialIndex) : value}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         prefix="$"

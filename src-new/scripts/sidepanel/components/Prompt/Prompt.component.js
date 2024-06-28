@@ -7,7 +7,6 @@ import * as S from './Prompt.styles'
 
 export const Prompt = ({ onEnter, inputRef, tab, pso }) => {
   const [value, setValue] = useState('')
-  const [disabled, setDisabled] = useState(false)
 
   const handleChange = event => {
     const value = event.target.value
@@ -24,16 +23,8 @@ export const Prompt = ({ onEnter, inputRef, tab, pso }) => {
     }
   }
 
-  useEffect(function URLValidation() {
-    if (!tab) return
-
-    const isInvalidUrl = invalidURLsStarts.some(invalidUrl => tab.url.startsWith(invalidUrl))
-
-    setDisabled(isInvalidUrl)
-  })
-
   return (
-    <S.PromptWrapper aria-disabled={disabled}>
+    <S.PromptWrapper>
       <S.Decoration>{createPSO(pso, tab)}</S.Decoration>
 
       <Input
@@ -41,7 +32,6 @@ export const Prompt = ({ onEnter, inputRef, tab, pso }) => {
         value={value}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
-        disabled={disabled}
         prefix="$"
       />
     </S.PromptWrapper>

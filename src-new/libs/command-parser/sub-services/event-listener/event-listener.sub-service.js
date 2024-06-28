@@ -3,10 +3,12 @@ export class EventListener {
     this.listeners = {}
   }
 
-  dispatchEvent(eventName, data = null) {
+  async dispatchEvent(eventName, data = null) {
     const listeners = this.listeners[eventName] || []
 
-    listeners.forEach(listener => listener(data))
+    for (const listener of listeners) {
+      await listener(data)
+    }
 
     return this
   }

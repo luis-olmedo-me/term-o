@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'preact/hooks'
 import { convertStringToObjects } from './Log.helpers'
 import * as S from './Log.styles'
 
-export const Log = ({ command, prefix }) => {
+export const Log = ({ command, prefix, onUpdate }) => {
   const [updates, setUpdates] = useState([])
   const wrapper = useRef(null)
 
@@ -12,16 +12,18 @@ export const Log = ({ command, prefix }) => {
     function listenUpdates() {
       const handleUpdate = ({ updates }) => {
         const updateBlocks = updates.map(convertStringToObjects)
+        if (onUpdate) onUpdate()
 
         setUpdates(updateBlocks)
       }
 
       handleUpdate(command)
-      command.addEventListener('update', handleUpdate).execute()
+      command.addEventListener('update', handleUpdate)
+      if (!command.working) command.execute()
 
       return () => command.removeEventListener('update', handleUpdate)
     },
-    [command]
+    [command, onUpdate]
   )
 
   return (

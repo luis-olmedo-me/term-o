@@ -15,6 +15,7 @@ export const Terminal = () => {
   const [logs, setLogs] = useState([])
   const [tab, setTab] = useState(null)
   const inputRef = useRef(null)
+  const loggerRef = useRef(null)
 
   useEffect(function focusOnInputAtFirstTime() {
     focusOnInput()
@@ -42,8 +43,12 @@ export const Terminal = () => {
       const appendTab = command => command.appendsData({ tab })
 
       commandParser.addEventListener('on-create-dom', appendTab)
+      commandParser.addEventListener('on-create-storage', appendTab)
 
-      return () => commandParser.removeEventListener('on-create-dom', appendTab)
+      return () => {
+        commandParser.removeEventListener('on-create-dom', appendTab)
+        commandParser.removeEventListener('on-create-storage', appendTab)
+      }
     },
     [tab]
   )
@@ -54,16 +59,17 @@ export const Terminal = () => {
 
   const handleEnter = value => {
     const newLog = commandParser.read(value)
+    const isInvalidUrl = invalidURLsStarts.some(invalidUrl => tab.url.startsWith(invalidUrl))
+
+    if (isInvalidUrl) newLog.throw('Term-o is unable to execute commands on this page.')
 
     setLogs(oldLogs => [newLog, ...oldLogs])
     focusOnInput()
   }
 
-  const isInvalidUrl = !tab || invalidURLsStarts.some(invalidUrl => tab.url.startsWith(invalidUrl))
-
   return (
-    <S.TerminalWrapper onClick={focusOnInput} aria-disabled={isInvalidUrl}>
-      <Logger logs={logs} />
+    <S.TerminalWrapper onClick={focusOnInput}>
+      <Logger logs={logs} loggerRef={loggerRef} />
 
       <Prompt onEnter={handleEnter} inputRef={inputRef} tab={tab} pso="On {origin}" />
     </S.TerminalWrapper>

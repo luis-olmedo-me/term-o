@@ -4,11 +4,10 @@ export const getDOMElements = (resolve, data) => {
   const tagPattern = searchByTag && new RegExp(searchByTag)
   const attrPattern = searchByAttributeName && new RegExp(searchByAttributeName)
 
-  const elementsFromDOM = window.document.querySelectorAll('*') || []
-  const elements = Array.from(elementsFromDOM).filter(element => {
+  const allElements = window.document.querySelectorAll('*') || []
+  const elements = Array.from(allElements).filter(element => {
     const tagName = element.tagName.toLowerCase()
     const attrNames = element.getAttributeNames()
-    const attrValues = attrNames.map(attributeName => element.getAttribute(attributeName))
 
     const conditions = []
 

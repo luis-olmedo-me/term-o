@@ -13,17 +13,18 @@ export const Prompt = ({ onEnter, inputRef, tab, pso }) => {
   const [historial, setHistorial] = useState([])
 
   const handleChange = event => {
-    const value = event.target.value
+    const targetValue = event.target.value
 
-    setValue(value)
+    setValue(targetValue)
     if (historialIndex) setHistorialIndex(0)
   }
 
   const handleKeyDown = event => {
     const key = event.key
+    const targetValue = event.target.value
 
     if (key === 'Enter') {
-      onEnter(historialIndex ? historial.at(historialIndex) : value)
+      onEnter(targetValue)
       setHistorial(history => [...history, value].slice(0, HISTORIAL_SIZE))
       setValue('')
     }

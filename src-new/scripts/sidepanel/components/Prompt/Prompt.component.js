@@ -14,6 +14,7 @@ export const Prompt = ({ onEnter, inputRef, tab, pso }) => {
     const value = event.target.value
 
     setValue(value)
+    if (historialIndex) setHistorialIndex(0)
   }
 
   const handleKeyDown = event => {

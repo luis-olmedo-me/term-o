@@ -16,9 +16,4 @@ export const PromptWrapper = styled.div`
   cursor: text;
   background-color: ${t('grey.900')};
   color: ${t('grey.50')};
-
-  &[aria-disabled='true'],
-  &[aria-disabled='true'] ${Decoration} {
-    cursor: not-allowed;
-  }
 `

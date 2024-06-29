@@ -14,6 +14,6 @@ export const Decoration = styled.p`
 
 export const PromptWrapper = styled.div`
   cursor: text;
-  background-color: ${t('grey.900')};
+  background-color: ${t('colors.background')};
   color: ${t('grey.50')};
 `

@@ -14,7 +14,7 @@ export const handleSTORAGE = async command => {
   command.reset()
   Object.values(storages).forEach(values => {
     Object.entries(values).forEach(([key, value]) => {
-      command.update(`${C`#a0a5ae`}${key}${C`#eeeeee`}=${C`#ffd76d`}"${value}"`)
+      command.update(`${C`bright-black`}${key}${C`white`}=${C`yellow`}"${value}"`)
     })
   })
 }

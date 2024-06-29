@@ -5,7 +5,7 @@ export const LoggerWrapper = styled.div`
   display: flex;
   flex-direction: column-reverse;
   gap: ${t('space.400')};
-  background-color: ${t('grey.900')};
+  background-color: ${t('colors.background')};
   color: ${t('grey.50')};
   padding: 0 ${t('space.500')};
   margin-top: ${t('space.500')};

@@ -42,7 +42,7 @@ const parseOptions = (index, arg, argsBySpace, propType) => {
       const value = Number(nextArg)
       const isValidNumber = !Number.isNaN(value)
 
-      if (!isValidNumber) throw `"${C`#ff6c70`}${nextArg}${C`#ef5350`}" is not a valid number.`
+      if (!isValidNumber) throw `"${C`bright-red`}${nextArg}${C`red`}" is not a valid number.`
 
       return { value, newIndex: index }
     }
@@ -76,11 +76,11 @@ export const getPropsFromString = (command, args) => {
       const prop = arg.slice(2)
       const propType = command.propTypes[prop]
 
-      if (!propType) throw `${C`#ff6c70`}${arg}${C`#ef5350`} is not a valid command prop.`
+      if (!propType) throw `${C`bright-red`}${arg}${C`red`} is not a valid command prop.`
 
       const { value, newIndex } = parseOptions(index, arg, args, propType)
 
-      if (value === null) throw `${C`#ff6c70`}${arg}${C`#ef5350`} prop has an unexpected value.`
+      if (value === null) throw `${C`bright-red`}${arg}${C`red`} prop has an unexpected value.`
 
       index = newIndex
       props = { ...props, [prop]: value }
@@ -90,13 +90,13 @@ export const getPropsFromString = (command, args) => {
       const prop = arg.slice(1)
       const propName = command.abbreviations[prop]
 
-      if (!propName) throw `${C`#ff6c70`}${arg}${C`#ef5350`} is not a valid command prop.`
+      if (!propName) throw `${C`bright-red`}${arg}${C`red`} is not a valid command prop.`
 
       const validate = command.validations[propName]
       const propType = command.propTypes[propName]
       const { value, newIndex } = parseOptions(index, arg, args, propType)
 
-      if (value === null) throw `${C`#ff6c70`}${arg}${C`#ef5350`} prop has an unexpected value.`
+      if (value === null) throw `${C`bright-red`}${arg}${C`red`} prop has an unexpected value.`
       if (validate) validate(value)
 
       index = newIndex
@@ -104,7 +104,7 @@ export const getPropsFromString = (command, args) => {
       continue
     }
 
-    throw `${C`#ff6c70`}${arg}${C`#ef5350`} is an unexpected argument.`
+    throw `${C`bright-red`}${arg}${C`red`} is an unexpected argument.`
   }
 
   return props
@@ -113,10 +113,10 @@ export const getPropsFromString = (command, args) => {
 export const validateRequirements = (requirements, newProps) => {
   for (const [propRequester, propsNeeded] of Object.entries(requirements)) {
     const hasNeeded = propsNeeded.some(name => typeof newProps[name] !== 'undefined')
-    const needed = propsNeeded.map(name => `${C`#ff6c70`}--${name}${C`#ef5350`}`).join(' or ')
+    const needed = propsNeeded.map(name => `${C`bright-red`}--${name}${C`red`}`).join(' or ')
 
     if (!hasNeeded) {
-      throw `${C`#ff6c70`}--${propRequester}${C`#ef5350`} requires: ${needed}`
+      throw `${C`bright-red`}--${propRequester}${C`red`} requires: ${needed}`
     }
   }
 }

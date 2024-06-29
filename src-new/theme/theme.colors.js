@@ -366,7 +366,6 @@ export const defaultTheme = {
   colors: {
     name: 'Material Black',
     background: '#151515',
-    black: '#252525',
     foreground: '#A1B0B8',
     'background-selection': '#9cb0b9',
     'bright-black': '#A1B0B8',
@@ -378,6 +377,7 @@ export const defaultTheme = {
     'bright-white': '#D8DEE9',
     'bright-yellow': '#FAC863',
     'cursor-color': '#FFFFFF',
+    black: '#252525',
     blue: '#42A5F5',
     cyan: '#00ACC1',
     green: '#C3D82C',

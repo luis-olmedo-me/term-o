@@ -9,7 +9,7 @@ export const Input = styled.input`
   font-size: ${t('font-size.50')};
   border: none;
   display: block;
-  caret-color: ${t('green.50')};
+  caret-color: ${t('colors.cursor-color')};
   line-height: ${t('line-height.300')};
   background-color: ${t('colors.background')};
   color: ${t('colors.foreground')};

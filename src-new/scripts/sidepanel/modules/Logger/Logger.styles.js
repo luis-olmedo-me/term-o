@@ -20,20 +20,22 @@ export const LoggerWrapper = styled.div`
   &::-webkit-scrollbar-track {
     background-color: ${t('colors.black')};
     border-radius: 3px;
+    cursor: pointer;
 
     &:active,
     &:hover {
-      background-color: ${t('grey.800')};
+      background-color: ${t('colors.black')};
     }
   }
 
   &::-webkit-scrollbar-thumb {
     border-radius: 3px;
     background-color: ${t('colors.bright-black')};
+    cursor: pointer;
 
     &:active,
     &:hover {
-      background-color: ${t('green.A200')};
+      background-color: ${t('colors.color-selection')};
     }
   }
 `

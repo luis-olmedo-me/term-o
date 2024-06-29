@@ -2,5 +2,6 @@ export const commandNames = {
   CLEAR: 'clear',
   ERROR: 'error',
   DOM: 'dom',
-  STORAGE: 'storage'
+  STORAGE: 'storage',
+  TABS: 'tabs'
 }

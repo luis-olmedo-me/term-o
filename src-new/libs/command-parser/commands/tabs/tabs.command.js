@@ -5,5 +5,7 @@ export const createTABS = script => {
   return new Command({
     name: commandNames.TABS,
     command: script
-  }).expect({ name: 'list', type: 'boolean', abbreviation: 'l' })
+  })
+    .expect({ name: 'list', type: 'boolean', abbreviation: 'l' })
+    .expect({ name: 'switch', type: 'string', abbreviation: 's' })
 }

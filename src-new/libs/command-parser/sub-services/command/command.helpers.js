@@ -42,7 +42,7 @@ const parseOptions = (index, arg, argsBySpace, propType) => {
       const value = Number(nextArg)
       const isValidNumber = !Number.isNaN(value)
 
-      if (!isValidNumber) throw `"${arg} ${nextArg}" is not a valid number.`
+      if (!isValidNumber) throw `"${C`#ff6c70`}${nextArg}${C`#ef5350`}" is not a valid number.`
 
       return { value, newIndex: index }
     }
@@ -104,7 +104,7 @@ export const getPropsFromString = (command, args) => {
       continue
     }
 
-    throw `${arg} is an unexpected argument.`
+    throw `${C`#ff6c70`}${arg}${C`#ef5350`} is an unexpected argument.`
   }
 
   return props

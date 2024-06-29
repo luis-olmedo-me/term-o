@@ -13,7 +13,7 @@ export const ColoredText = styled.span`
   color: ${({ color }) => color};
 
   &::selection {
-    color: ${t('green.A200')};
-    background-color: ${t('grey.800')};
+    color: ${t('colors.color-selection')};
+    background-color: ${t('colors.background-selection')};
   }
 `

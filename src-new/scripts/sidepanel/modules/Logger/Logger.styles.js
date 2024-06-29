@@ -6,7 +6,7 @@ export const LoggerWrapper = styled.div`
   flex-direction: column-reverse;
   gap: ${t('space.400')};
   background-color: ${t('colors.background')};
-  color: ${t('grey.50')};
+  color: ${t('colors.foreground')};
   padding: 0 ${t('space.500')};
   margin-top: ${t('space.500')};
   margin-right: ${t('space.500')};
@@ -18,7 +18,7 @@ export const LoggerWrapper = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    background-color: ${t('grey.800')};
+    background-color: ${t('colors.black')};
     border-radius: 3px;
 
     &:active,
@@ -29,7 +29,7 @@ export const LoggerWrapper = styled.div`
 
   &::-webkit-scrollbar-thumb {
     border-radius: 3px;
-    background-color: ${t('grey.600')};
+    background-color: ${t('colors.bright-black')};
 
     &:active,
     &:hover {

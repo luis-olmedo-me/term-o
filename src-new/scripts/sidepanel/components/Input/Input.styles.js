@@ -12,7 +12,7 @@ export const Input = styled.input`
   caret-color: ${t('green.50')};
   line-height: ${t('line-height.300')};
   background-color: ${t('colors.background')};
-  color: ${t('grey.50')};
+  color: ${t('colors.foreground')};
   letter-spacing: ${t('space.50')};
 
   &:active,
@@ -22,8 +22,8 @@ export const Input = styled.input`
   }
 
   &::selection {
-    color: ${t('green.A200')};
-    background-color: ${t('grey.800')};
+    color: ${t('colors.color-selection')};
+    background-color: ${t('colors.background-selection')};
   }
 `
 
@@ -32,7 +32,7 @@ export const InputWrapper = styled.div`
   align-items: center;
   gap: ${t('space.400')};
   background-color: ${t('colors.background')};
-  color: ${t('grey.50')};
+  color: ${t('colors.foreground')};
   padding: ${t('space.300')} ${t('space.500')};
   cursor: text;
 

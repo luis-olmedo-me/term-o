@@ -9,7 +9,9 @@ export const handleTABS = async command => {
     const tabs = await chrome.tabs.query({})
 
     tabs.forEach(tab => {
-      command.update(`W${tab.windowId} T${tab.id} "${tab.title}" "${tab.url}"`)
+      command.update(
+        `${C`blue`}W${tab.windowId} T${tab.id} ${C`yellow`}"${tab.title}" "${tab.url}"`
+      )
     })
   }
 }

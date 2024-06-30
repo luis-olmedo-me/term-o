@@ -6,9 +6,13 @@ export const handleTABS = async command => {
   if (P`switch`) {
     const tabIdString = P`switch`.replace(/^T/, '')
     const tabId = Number(tabIdString)
-    const { windowId, id, title, url } = await chrome.tabs.get(tabId)
+    const isValidId = Number.isNaN(tabId) && tabIdString.startsWith('T')
 
+    if (!isValidId) throw 'The tab id provided is not valid.'
+
+    const { windowId, id, title, url } = await chrome.tabs.get(tabId)
     await chrome.tabs.update(tabId, { selected: true })
+
     command.update(`You are on ${C`blue`}T${id}${C`foreground`} now.`)
     command.update(`${C`blue`}W${windowId} ${C`bright-blue`}T${id} ${C`yellow`}"${title}" "${url}"`)
   }

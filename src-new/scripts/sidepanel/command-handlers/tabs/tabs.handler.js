@@ -6,19 +6,19 @@ export const handleTABS = async command => {
   if (P`switch`) {
     const tabIdString = P`switch`.replace(/^T/, '')
     const tabId = Number(tabIdString)
-    const tab = await chrome.tabs.get(tabId)
+    const { windowId, id, title, url } = await chrome.tabs.get(tabId)
 
     await chrome.tabs.update(tabId, { selected: true })
-    command.update(`You are on ${C`blue`}T${tab.id}${C`foreground`} now.`)
-    command.update(`${C`blue`}W${tab.windowId} T${tab.id} ${C`yellow`}"${tab.title}" "${tab.url}"`)
+    command.update(`You are on ${C`blue`}T${id}${C`foreground`} now.`)
+    command.update(`${C`blue`}W${windowId} ${C`bright-blue`}T${id} ${C`yellow`}"${title}" "${url}"`)
   }
 
   if (P`list`) {
     const tabs = await chrome.tabs.query({})
 
-    tabs.forEach(tab => {
+    tabs.forEach(({ windowId, id, title, url }) => {
       command.update(
-        `${C`blue`}W${tab.windowId} T${tab.id} ${C`yellow`}"${tab.title}" "${tab.url}"`
+        `${C`blue`}W${windowId} ${C`bright-blue`}T${id} ${C`yellow`}"${title}" "${url}"`
       )
     })
   }

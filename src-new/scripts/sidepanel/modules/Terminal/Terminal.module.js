@@ -11,6 +11,8 @@ import * as S from './Terminal.styles'
 
 commandParser.setHandlers(commandHandlers)
 
+const CAN_COPY_ON_SELECTION = true
+
 export const Terminal = () => {
   const [logs, setLogs] = useState([])
   const [tab, setTab] = useState(null)
@@ -58,6 +60,7 @@ export const Terminal = () => {
     const selectedText = selection.toString()
 
     if (!selectedText) inputRef.current?.focus()
+    else if (CAN_COPY_ON_SELECTION) navigator.clipboard.writeText(selectedText)
   }
 
   const handleEnter = value => {

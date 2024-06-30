@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'preact/hooks'
 
 import commandHandlers from '@sidepanel/command-handlers'
 import Prompt from '@sidepanel/components/Prompt'
+import { CAN_COPY_ON_SELECTION } from '@sidepanel/config'
 import Logger from '@sidepanel/modules/Logger'
 import { invalidURLsStarts } from '@src/constants/events.constants'
 import commandParser from '@src/libs/command-parser'
@@ -10,8 +11,6 @@ import { getCurrentTab } from 'scripts/sidepanel/helpers/event.helpers'
 import * as S from './Terminal.styles'
 
 commandParser.setHandlers(commandHandlers)
-
-const CAN_COPY_ON_SELECTION = true
 
 export const Terminal = () => {
   const [logs, setLogs] = useState([])

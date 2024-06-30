@@ -1,10 +1,9 @@
+import { HISTORIAL_SIZE } from '@sidepanel/config'
 import * as React from 'preact'
 import { useState } from 'preact/hooks'
 import Input from '../Input'
 import { createPSO } from './Prompt.helpers'
 import * as S from './Prompt.styles'
-
-const HISTORIAL_SIZE = 40
 
 export const Prompt = ({ onEnter, inputRef, tab, pso }) => {
   const [value, setValue] = useState('')

@@ -60,8 +60,9 @@ export class Command extends EventListener {
     try {
       const newProps = getPropsFromString(this, args)
       const hasNewProps = Object.values(newProps).length > 0
+      const itExpectProps = Object.keys(this.propTypes).length > 0
 
-      if (!hasNewProps) throw 'No props were provided.'
+      if (!hasNewProps && itExpectProps) throw 'No props were provided.'
       validateRequirements(this.dependencies, newProps)
 
       this.props = { ...this.props, ...newProps }

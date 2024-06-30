@@ -6,6 +6,16 @@ export const createTABS = script => {
     name: commandNames.TABS,
     command: script
   })
-    .expect({ name: 'list', type: 'boolean', abbreviation: 'l' })
-    .expect({ name: 'switch', type: 'string', abbreviation: 's' })
+    .expect({
+      name: 'list',
+      type: 'boolean',
+      abbreviation: 'l',
+      worksWith: []
+    })
+    .expect({
+      name: 'switch',
+      type: 'string',
+      abbreviation: 's',
+      worksWith: []
+    })
 }

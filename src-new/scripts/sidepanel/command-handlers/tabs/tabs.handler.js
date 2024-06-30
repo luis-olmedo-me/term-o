@@ -1,4 +1,5 @@
 import { getColor as C } from '@src/theme/theme.helpers'
+import { renameError } from '../command-handlers.helpers'
 
 export const handleTABS = async command => {
   const P = name => command.props[name]
@@ -11,7 +12,7 @@ export const handleTABS = async command => {
 
     if (!isValidId) throw 'The tab id provided is not valid.'
 
-    const { windowId, id, title, url } = await chrome.tabs.get(tabId)
+    const { windowId, id, title, url } = await chrome.tabs.get(tabId).catch(renameError)
     await chrome.tabs.update(tabId, { selected: true })
 
     command.update(`You are on ${C`blue`}T${id}${C`foreground`} now.`)

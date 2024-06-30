@@ -110,13 +110,22 @@ export const getPropsFromString = (command, args) => {
   return props
 }
 
-export const validateRequirements = (requirements, newProps) => {
-  for (const [propRequester, propsNeeded] of Object.entries(requirements)) {
-    const hasNeeded = propsNeeded.some(name => typeof newProps[name] !== 'undefined')
-    const needed = propsNeeded.map(name => `${C`bright-red`}--${name}${C`red`}`).join(' or ')
+export const validateRequirements = (dependencies, newProps) => {
+  const propNames = Object.keys(newProps)
 
-    if (!hasNeeded) {
-      throw `${C`bright-red`}--${propRequester}${C`red`} requires: ${needed}`
+  for (const propName of propNames) {
+    const propDependencies = dependencies[propName]
+
+    if (!propDependencies) continue
+
+    const propsCollapsing = propNames.filter(
+      name => !propDependencies.includes(name) && propName !== name
+    )
+
+    if (propsCollapsing.length) {
+      const useless = propsCollapsing.map(name => `${C`bright-red`}--${name}${C`red`}`).join(' or ')
+
+      throw `${C`bright-red`}--${propName}${C`red`} can not work with ${useless}`
     }
   }
 }

@@ -20,7 +20,7 @@ export class Command extends EventListener {
     this.validations = {}
     this.outputs = []
     this.updates = []
-    this.requirements = []
+    this.dependencies = []
     this.hidden = hidden
     this.finished = false
     this.executing = false
@@ -42,14 +42,14 @@ export class Command extends EventListener {
     this.dispatchEvent('update', this)
   }
 
-  expect({ name, type, defaultValue, abbreviation, validate, requires }) {
+  expect({ name, type, defaultValue, abbreviation, validate, worksWith }) {
     const value = (defaultValue || defaultValues[type]) ?? defaultValues.none
 
     this.defaults = { ...this.defaults, [name]: value }
     this.propTypes = { ...this.propTypes, [name]: type }
     if (abbreviation) this.abbreviations = { ...this.abbreviations, [abbreviation]: name }
     if (validate) this.validations = { ...this.validations, [name]: validate }
-    if (requires) this.requirements = { ...this.requirements, [name]: requires }
+    if (worksWith) this.dependencies = { ...this.dependencies, [name]: worksWith }
 
     return this
   }
@@ -62,7 +62,7 @@ export class Command extends EventListener {
       const hasNewProps = Object.values(newProps).length > 0
 
       if (!hasNewProps) throw 'No props were provided.'
-      validateRequirements(this.requirements, newProps)
+      validateRequirements(this.dependencies, newProps)
 
       this.props = { ...this.props, ...newProps }
     } catch (error) {

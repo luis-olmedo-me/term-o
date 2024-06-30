@@ -4,9 +4,10 @@ export const handleTABS = async command => {
   const P = name => command.props[name]
 
   if (P`switch`) {
-    const tabIdString = P`switch`.replace(/^T/, '')
+    const tabIdRaw = P`switch`
+    const tabIdString = tabIdRaw.replace(/^T/, '')
     const tabId = Number(tabIdString)
-    const isValidId = Number.isNaN(tabId) && tabIdString.startsWith('T')
+    const isValidId = !Number.isNaN(tabId) && tabIdRaw.startsWith('T')
 
     if (!isValidId) throw 'The tab id provided is not valid.'
 
@@ -14,16 +15,14 @@ export const handleTABS = async command => {
     await chrome.tabs.update(tabId, { selected: true })
 
     command.update(`You are on ${C`blue`}T${id}${C`foreground`} now.`)
-    command.update(`${C`blue`}W${windowId} ${C`bright-blue`}T${id} ${C`yellow`}"${title}" "${url}"`)
+    command.update(`${C`purple`}W${windowId} ${C`blue`}T${id} ${C`yellow`}"${title}" "${url}"`)
   }
 
   if (P`list`) {
     const tabs = await chrome.tabs.query({})
 
     tabs.forEach(({ windowId, id, title, url }) => {
-      command.update(
-        `${C`blue`}W${windowId} ${C`bright-blue`}T${id} ${C`yellow`}"${title}" "${url}"`
-      )
+      command.update(`${C`purple`}W${windowId} ${C`blue`}T${id} ${C`yellow`}"${title}" "${url}"`)
     })
   }
 }

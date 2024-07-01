@@ -17,32 +17,32 @@ class CommandParser extends EventListener {
 
   read(rawScript) {
     let [firstFragment, ...nextFragments] = splitBy(rawScript, '&&')
-    const command = this.readFragment(firstFragment)
+    const command = this.readFragment(rawScript, firstFragment)
     let carriedCommand = command
 
     nextFragments.forEach(fragment => {
-      const nextCommand = this.readFragment(fragment)
+      const nextCommand = this.readFragment(rawScript, fragment)
       carriedCommand.queuedCommand = nextCommand
       carriedCommand = nextCommand
 
-      return this.readFragment(fragment)
+      return this.readFragment(rawScript, fragment)
     })
 
     return command
   }
 
-  readFragment(scriptRaw) {
+  readFragment(fullScriptRaw, scriptRaw) {
     const [name, ...scriptArgs] = scriptRaw.trim().split(' ')
     const createCommand = this.commands[name]
     const handler = this.handlers[name]
     const cleanedName = name.replace('"', '\\"')
 
     if (!createCommand)
-      return createERROR(scriptRaw).mock({
+      return createERROR(fullScriptRaw).mock({
         title: `'The command "${C`bright-red`}${cleanedName}${C`red`}" is unrecognized.'`
       })
 
-    const command = createCommand(scriptRaw).prepare(scriptArgs)
+    const command = createCommand(fullScriptRaw).prepare(scriptArgs)
     this.dispatchEvent(`on-create-${name}`, command)
 
     if (handler) command.addEventListener('execute', handler)

@@ -1,3 +1,3 @@
-import { Command } from './command.service'
+import { Command } from './command.sub-service'
 
 export default Command

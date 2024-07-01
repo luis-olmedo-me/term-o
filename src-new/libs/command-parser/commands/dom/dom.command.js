@@ -8,15 +8,15 @@ export const createDOM = script => {
     command: script
   })
     .expect({
-      name: 'get',
+      name: 'search',
       type: 'boolean',
-      abbreviation: 'g',
+      abbreviation: 's',
       worksWith: ['attr', 'tag', 'group']
     })
     .expect({
       name: 'group',
       type: 'boolean',
-      abbreviation: 'G'
+      abbreviation: 'g'
     })
     .expect({
       name: 'attr',

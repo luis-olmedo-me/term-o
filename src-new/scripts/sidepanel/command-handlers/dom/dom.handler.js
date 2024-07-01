@@ -6,7 +6,7 @@ export const handleDOM = async command => {
   const { tab } = command.data
   const P = name => command.props[name]
 
-  if (P`get`) {
+  if (P`search`) {
     command.update('Getting elements.')
     const elements = await getDOMElements(tab.id, {
       searchByTag: P`tag`,

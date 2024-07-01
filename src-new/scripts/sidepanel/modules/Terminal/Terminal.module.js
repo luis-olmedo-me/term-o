@@ -40,17 +40,16 @@ export const Terminal = () => {
 
   useEffect(
     function addExternalDataOnNewCommands() {
-      const appendTab = command => command.appendsData({ tab })
-      const appendSetTab = command => command.appendsData({ setTab })
+      const appendData = command => command.appendsData({ tab, setTab })
 
-      commandParser.addEventListener('on-create-dom', appendTab)
-      commandParser.addEventListener('on-create-storage', appendTab)
-      commandParser.addEventListener('on-create-tabs', appendSetTab)
+      commandParser.addEventListener('on-create-dom', appendData)
+      commandParser.addEventListener('on-create-storage', appendData)
+      commandParser.addEventListener('on-create-tabs', appendData)
 
       return () => {
-        commandParser.removeEventListener('on-create-dom', appendTab)
-        commandParser.removeEventListener('on-create-storage', appendTab)
-        commandParser.removeEventListener('on-create-tabs', appendSetTab)
+        commandParser.removeEventListener('on-create-dom', appendData)
+        commandParser.removeEventListener('on-create-storage', appendData)
+        commandParser.removeEventListener('on-create-tabs', appendData)
       }
     },
     [tab]

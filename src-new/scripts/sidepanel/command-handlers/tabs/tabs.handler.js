@@ -3,7 +3,7 @@ import { getColor as C } from '@src/theme/theme.helpers'
 import { renameError } from '../command-handlers.helpers'
 
 export const handleTABS = async command => {
-  const { setTab } = command.data
+  const { tab, setTab } = command.data
   const P = name => command.props[name]
 
   if (P`reload`) {
@@ -50,6 +50,12 @@ export const handleTABS = async command => {
 
     command.reset()
     command.update(`New tab ${C`blue`}T${id}${C`foreground`} is created.`)
+    command.update(`${C`purple`}W${windowId} ${C`blue`}T${id} ${C`yellow`}"${title}" "${url}"`)
+  }
+
+  if (P`current`) {
+    const { windowId, id, title, url } = tab
+
     command.update(`${C`purple`}W${windowId} ${C`blue`}T${id} ${C`yellow`}"${title}" "${url}"`)
   }
 

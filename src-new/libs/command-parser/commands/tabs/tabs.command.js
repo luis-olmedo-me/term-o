@@ -49,4 +49,10 @@ export const createTABS = script => {
       validate: [isURL],
       worksWith: []
     })
+    .expect({
+      name: 'current',
+      type: 'boolean',
+      abbreviation: 'C',
+      worksWith: []
+    })
 }

@@ -15,13 +15,15 @@ export const handleDOM = async command => {
 
     let textElements = elements.map(({ tagName, attributes }) => {
       const attrs = Object.entries(attributes)
-        .map(
-          ([name, value]) =>
-            `${C`bright-black`}[${C`cyan`}${name}${C`white`}=${C`yellow`}"${value}"${C`bright-black`}]`
-        )
+        .map(([name, value]) => {
+          const attrName = `${C`cyan`}"${name}"`
+          const attrValue = value ? ` ${C`yellow`}"${value}"` : ''
+
+          return `${C`bright-black`}[${attrName} ${attrValue}${C`bright-black`}]`
+        })
         .join(' ')
 
-      return attrs ? `${C`red`}${tagName} ${attrs}` : `${C`red`}${tagName}`
+      return attrs ? `${C`red`}"${tagName}" ${attrs}` : `${C`red`}"${tagName}"`
     })
 
     if (P`group`) textElements = prependCounters(textElements)

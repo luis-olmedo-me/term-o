@@ -15,12 +15,20 @@ class CommandParser extends EventListener {
     this.handlers = {}
   }
 
-  read(scriptRaw) {
-    return splitBy(scriptRaw, '&&').reduce((command, fragment) => {
-      // if (fragment)
-      //   else
+  read(rawScript) {
+    let [firstFragment, ...nextFragments] = splitBy(rawScript, '&&')
+    const command = this.readFragment(firstFragment)
+    let carriedCommand = command
+
+    nextFragments.forEach(fragment => {
+      const nextCommand = this.readFragment(fragment)
+      carriedCommand.queuedCommand = nextCommand
+      carriedCommand = nextCommand
+
       return this.readFragment(fragment)
-    }, null)
+    })
+
+    return command
   }
 
   readFragment(scriptRaw) {

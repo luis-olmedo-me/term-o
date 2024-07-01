@@ -24,6 +24,7 @@ export class Command extends EventListener {
     this.hidden = hidden
     this.finished = false
     this.executing = false
+    this.queuedCommand = null
   }
 
   get working() {
@@ -85,8 +86,10 @@ export class Command extends EventListener {
     if (this.working) throw 'Command can be executed once.'
 
     try {
-      await this.dispatchEvent('execute', this)
       this.executing = true
+      await this.dispatchEvent('execute', this)
+      await this.executeNext()
+      this.finish()
     } catch (error) {
       this.throw(error)
     }
@@ -103,6 +106,10 @@ export class Command extends EventListener {
     this.update(`${C`red`}✕ ${message}`)
 
     this.finish()
+  }
+
+  async executeNext() {
+    if (this.queuedCommand) await this.queuedCommand.execute()
   }
 
   finish() {

@@ -18,13 +18,3 @@ export const createUUIDv4 = () => {
     return newValue.toString(16)
   })
 }
-
-export const isRegExp = regExp => {
-  try {
-    new RegExp(regExp)
-
-    return true
-  } catch (error) {
-    return false
-  }
-}

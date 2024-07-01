@@ -8,7 +8,7 @@ export const handleTABS = async command => {
 
   if (P`reload`) {
     const { windowId, id, title, url } = await getTab(P`reload`).catch(renameError)
-    await chrome.tabs.reload(tabId).catch(renameError)
+    await chrome.tabs.reload(id).catch(renameError)
 
     command.update(`The tab ${C`blue`}T${id}${C`foreground`} has been refreshed now.`)
     command.update(`${C`purple`}W${windowId} ${C`blue`}T${id} ${C`yellow`}"${title}" "${url}"`)

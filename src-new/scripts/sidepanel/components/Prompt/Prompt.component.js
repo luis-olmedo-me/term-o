@@ -1,6 +1,8 @@
-import { HISTORIAL_SIZE } from '@sidepanel/config'
 import * as React from 'preact'
 import { useState } from 'preact/hooks'
+
+import { HISTORIAL_SIZE } from '@sidepanel/config'
+import ColoredText from '../ColoredText'
 import Input from '../Input'
 import { createPSO } from './Prompt.helpers'
 import * as S from './Prompt.styles'
@@ -53,7 +55,9 @@ export const Prompt = ({ onEnter, inputRef, tab, pso }) => {
 
   return (
     <S.PromptWrapper>
-      <S.Decoration>{createPSO(pso, tab)}</S.Decoration>
+      <S.Decoration>
+        <ColoredText value={createPSO(pso, tab)} />
+      </S.Decoration>
 
       <Input
         inputRef={inputRef}

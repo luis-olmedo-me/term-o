@@ -7,13 +7,13 @@ export const Decoration = styled.p`
   cursor: text;
 
   &::selection {
-    color: ${t('green.A200')};
-    background-color: ${t('grey.800')};
+    color: ${t('colors.color-selection')};
+    background-color: ${t('colors.background-selection')};
   }
 `
 
 export const PromptWrapper = styled.div`
   cursor: text;
-  background-color: ${t('grey.900')};
-  color: ${t('grey.50')};
+  background-color: ${t('colors.background')};
+  color: ${t('colors.foreground')};
 `

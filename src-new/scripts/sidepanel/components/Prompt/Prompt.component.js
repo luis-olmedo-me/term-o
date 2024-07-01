@@ -1,11 +1,11 @@
-import { invalidURLsStarts } from '@src/constants/events.constants'
 import * as React from 'preact'
-import { useEffect, useState } from 'preact/hooks'
+import { useState } from 'preact/hooks'
+
+import { HISTORIAL_SIZE } from '@sidepanel/config'
+import ColoredText from '../ColoredText'
 import Input from '../Input'
 import { createPSO } from './Prompt.helpers'
 import * as S from './Prompt.styles'
-
-const HISTORIAL_SIZE = 40
 
 export const Prompt = ({ onEnter, inputRef, tab, pso }) => {
   const [value, setValue] = useState('')
@@ -23,9 +23,10 @@ export const Prompt = ({ onEnter, inputRef, tab, pso }) => {
     const key = event.key
     const targetValue = event.target.value
 
-    if (key === 'Enter') {
+    if (key === 'Enter' && targetValue) {
       onEnter(targetValue)
-      setHistorial(history => [...history, value].slice(0, HISTORIAL_SIZE))
+      setHistorial(history => [...history, targetValue].slice(0, HISTORIAL_SIZE))
+      setHistorialIndex(0)
       setValue('')
     }
 
@@ -54,7 +55,9 @@ export const Prompt = ({ onEnter, inputRef, tab, pso }) => {
 
   return (
     <S.PromptWrapper>
-      <S.Decoration>{createPSO(pso, tab)}</S.Decoration>
+      <S.Decoration>
+        <ColoredText value={createPSO(pso, tab)} />
+      </S.Decoration>
 
       <Input
         inputRef={inputRef}

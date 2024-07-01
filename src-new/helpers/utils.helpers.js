@@ -19,12 +19,6 @@ export const createUUIDv4 = () => {
   })
 }
 
-export const isRegExp = regExp => {
-  try {
-    new RegExp(regExp)
-
-    return true
-  } catch (error) {
-    return false
-  }
+export const delay = time => {
+  return new Promise(resolve => setTimeout(resolve, time))
 }

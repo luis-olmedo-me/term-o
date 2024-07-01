@@ -3,7 +3,7 @@ import EventListener from '../event-listener'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 import { getColor as C } from '@src/theme/theme.helpers'
 import { defaultValues } from './command.constants'
-import { getPropsFromString } from './command.helpers'
+import { getPropsFromString, validateRequirements } from './command.helpers'
 
 export class Command extends EventListener {
   constructor({ name, command, hidden = false }) {
@@ -20,6 +20,7 @@ export class Command extends EventListener {
     this.validations = {}
     this.outputs = []
     this.updates = []
+    this.dependencies = []
     this.hidden = hidden
     this.finished = false
     this.executing = false
@@ -41,13 +42,14 @@ export class Command extends EventListener {
     this.dispatchEvent('update', this)
   }
 
-  expect({ name, type, defaultValue, abbreviation, validate }) {
+  expect({ name, type, defaultValue, abbreviation, validate, worksWith }) {
     const value = (defaultValue || defaultValues[type]) ?? defaultValues.none
 
     this.defaults = { ...this.defaults, [name]: value }
     this.propTypes = { ...this.propTypes, [name]: type }
     if (abbreviation) this.abbreviations = { ...this.abbreviations, [abbreviation]: name }
     if (validate) this.validations = { ...this.validations, [name]: validate }
+    if (worksWith) this.dependencies = { ...this.dependencies, [name]: worksWith }
 
     return this
   }
@@ -58,8 +60,10 @@ export class Command extends EventListener {
     try {
       const newProps = getPropsFromString(this, args)
       const hasNewProps = Object.values(newProps).length > 0
+      const itExpectProps = Object.keys(this.propTypes).length > 0
 
-      if (!hasNewProps) throw 'No props were provided.'
+      if (!hasNewProps && itExpectProps) throw 'No props were provided.'
+      validateRequirements(this.dependencies, newProps)
 
       this.props = { ...this.props, ...newProps }
     } catch (error) {
@@ -96,7 +100,7 @@ export class Command extends EventListener {
 
   throw(message) {
     this.reset()
-    this.update(`${C`#ef5350`}✕ ${message}`)
+    this.update(`${C`red`}✕ ${message}`)
 
     this.finish()
   }

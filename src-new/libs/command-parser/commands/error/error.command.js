@@ -10,6 +10,11 @@ export const createERROR = script => {
     name: commandNames.ERROR,
     command: script
   })
-    .expect({ name: 'title', type: 'string' })
+    .expect({
+      name: 'title',
+      type: 'string',
+      abbreviation: 't',
+      worksWith: []
+    })
     .addEventListener('execute', handleERROR)
 }

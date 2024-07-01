@@ -6,7 +6,19 @@ export const createSTORAGE = script => {
     name: commandNames.STORAGE,
     command: script
   })
-    .expect({ name: 'local', type: 'boolean', abbreviation: 'l' })
-    .expect({ name: 'session', type: 'boolean', abbreviation: 's' })
-    .expect({ name: 'cookie', type: 'boolean', abbreviation: 'c' })
+    .expect({
+      name: 'local',
+      type: 'boolean',
+      abbreviation: 'l'
+    })
+    .expect({
+      name: 'session',
+      type: 'boolean',
+      abbreviation: 's'
+    })
+    .expect({
+      name: 'cookie',
+      type: 'boolean',
+      abbreviation: 'c'
+    })
 }

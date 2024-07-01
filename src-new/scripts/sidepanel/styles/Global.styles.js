@@ -29,7 +29,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     font-family: 'Coda', Courier, monospace;
-    background-color: ${t('grey.900')};
+    background-color: ${t('colors.background')};
 }
 `
 

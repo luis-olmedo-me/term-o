@@ -1,3 +1,5 @@
+import { getColor as C } from '@src/theme/theme.helpers'
+
 const parseOptions = (index, arg, argsBySpace, propType) => {
   switch (propType) {
     case 'string': {
@@ -40,7 +42,7 @@ const parseOptions = (index, arg, argsBySpace, propType) => {
       const value = Number(nextArg)
       const isValidNumber = !Number.isNaN(value)
 
-      if (!isValidNumber) throw `"${arg} ${nextArg}" is not a valid number.`
+      if (!isValidNumber) throw `"${C`bright-red`}${nextArg}${C`red`}" is not a valid number.`
 
       return { value, newIndex: index }
     }
@@ -74,11 +76,11 @@ export const getPropsFromString = (command, args) => {
       const prop = arg.slice(2)
       const propType = command.propTypes[prop]
 
-      if (!propType) throw `${arg} is not a valid command prop.`
+      if (!propType) throw `${C`bright-red`}${arg}${C`red`} is not a valid command prop.`
 
       const { value, newIndex } = parseOptions(index, arg, args, propType)
 
-      if (value === null) throw `${arg} prop has an unexpected value.`
+      if (value === null) throw `${C`bright-red`}${arg}${C`red`} prop has an unexpected value.`
 
       index = newIndex
       props = { ...props, [prop]: value }
@@ -88,22 +90,42 @@ export const getPropsFromString = (command, args) => {
       const prop = arg.slice(1)
       const propName = command.abbreviations[prop]
 
-      if (!propName) throw `${arg} is not a valid command prop.`
+      if (!propName) throw `${C`bright-red`}${arg}${C`red`} is not a valid command prop.`
 
-      const validate = command.validations[propName]
+      const validations = command.validations[propName]
       const propType = command.propTypes[propName]
       const { value, newIndex } = parseOptions(index, arg, args, propType)
 
-      if (value === null) throw `${arg} prop has an unexpected value.`
-      if (validate) validate(value)
+      if (value === null) throw `${C`bright-red`}${arg}${C`red`} prop has an unexpected value.`
+      if (validations) validations.forEach(validation => validation(value))
 
       index = newIndex
       props = { ...props, [propName]: value }
       continue
     }
 
-    throw `${arg} is an unexpected argument.`
+    throw `${C`bright-red`}${arg}${C`red`} is an unexpected argument.`
   }
 
   return props
+}
+
+export const validateRequirements = (dependencies, newProps) => {
+  const propNames = Object.keys(newProps)
+
+  for (const propName of propNames) {
+    const propDependencies = dependencies[propName]
+
+    if (!propDependencies) continue
+
+    const propsCollapsing = propNames.filter(
+      name => !propDependencies.includes(name) && propName !== name
+    )
+
+    if (propsCollapsing.length) {
+      const useless = propsCollapsing.map(name => `${C`bright-red`}--${name}${C`red`}`).join(' or ')
+
+      throw `${C`bright-red`}--${propName}${C`red`} can not work with ${useless}`
+    }
+  }
 }

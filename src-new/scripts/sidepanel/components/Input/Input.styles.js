@@ -9,10 +9,10 @@ export const Input = styled.input`
   font-size: ${t('font-size.50')};
   border: none;
   display: block;
-  caret-color: ${t('green.50')};
+  caret-color: ${t('colors.cursor-color')};
   line-height: ${t('line-height.300')};
-  background-color: ${t('grey.900')};
-  color: ${t('grey.50')};
+  background-color: ${t('colors.background')};
+  color: ${t('colors.foreground')};
   letter-spacing: ${t('space.50')};
 
   &:active,
@@ -22,8 +22,8 @@ export const Input = styled.input`
   }
 
   &::selection {
-    color: ${t('green.A200')};
-    background-color: ${t('grey.800')};
+    color: ${t('colors.color-selection')};
+    background-color: ${t('colors.background-selection')};
   }
 `
 
@@ -31,8 +31,8 @@ export const InputWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: ${t('space.400')};
-  background-color: ${t('grey.900')};
-  color: ${t('grey.50')};
+  background-color: ${t('colors.background')};
+  color: ${t('colors.foreground')};
   padding: ${t('space.300')} ${t('space.500')};
   cursor: text;
 

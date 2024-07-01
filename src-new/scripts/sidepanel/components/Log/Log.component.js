@@ -1,20 +1,19 @@
 import * as React from 'preact'
 import { useEffect, useRef, useState } from 'preact/hooks'
 
-import { convertStringToObjects } from './Log.helpers'
+import ColoredText from '../ColoredText'
 import * as S from './Log.styles'
 
 export const Log = ({ command, prefix, onUpdate }) => {
-  const [updates, setUpdates] = useState([])
+  const [updates, setUpdates] = useState(command.updates)
   const wrapper = useRef(null)
 
   useEffect(
     function listenUpdates() {
-      const handleUpdate = ({ updates }) => {
-        const updateBlocks = updates.map(convertStringToObjects)
+      const handleUpdate = ({ updates: newUpdates }) => {
         if (onUpdate) onUpdate()
 
-        setUpdates(updateBlocks)
+        setUpdates(newUpdates)
       }
 
       handleUpdate(command)
@@ -35,9 +34,7 @@ export const Log = ({ command, prefix, onUpdate }) => {
       {updates.map(update => {
         return (
           <S.LogItem>
-            {update.map(({ color, content }) => (
-              <span style={{ color }}>{content}</span>
-            ))}
+            <ColoredText value={update} />
           </S.LogItem>
         )
       })}

@@ -2,6 +2,7 @@ import { createCLEAR } from './commands/clear/clear.command'
 import { createDOM } from './commands/dom/dom.command'
 import { createERROR } from './commands/error/error.command'
 import { createSTORAGE } from './commands/storage/storage.command'
+import { createTABS } from './commands/tabs/tabs.command'
 import EventListener from './sub-services/event-listener'
 
 class CommandParser extends EventListener {
@@ -36,5 +37,6 @@ export const commandParser = new CommandParser({
   clear: createCLEAR,
   dom: createDOM,
   storage: createSTORAGE,
+  tabs: createTABS,
   error: createERROR
 })

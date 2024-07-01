@@ -6,7 +6,7 @@ export const TerminalWrapper = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  background-color: ${t('grey.900')};
+  background-color: ${t('colors.background')};
   height: 100vh;
 
   & ${LoggerWrapper} {

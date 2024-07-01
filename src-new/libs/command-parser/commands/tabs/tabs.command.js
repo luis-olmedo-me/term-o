@@ -10,7 +10,12 @@ export const createTABS = script => {
       name: 'list',
       type: 'boolean',
       abbreviation: 'l',
-      worksWith: []
+      worksWith: ['incognito']
+    })
+    .expect({
+      name: 'incognito',
+      type: 'boolean',
+      abbreviation: 'i'
     })
     .expect({
       name: 'switch',

@@ -35,6 +35,15 @@ export const handleTABS = async command => {
     command.update(`${C`purple`}W${windowId} ${C`blue`}T${id} ${C`yellow`}"${title}" "${url}"`)
   }
 
+  if (P`close`) {
+    const { windowId, id, title, url } = await getTab(P`close`).catch(renameError)
+
+    await chrome.tabs.remove(id)
+
+    command.update(`The tab ${C`blue`}T${id}${C`foreground`} is closed now.`)
+    command.update(`${C`purple`}W${windowId} ${C`blue`}T${id} ${C`yellow`}"${title}" "${url}"`)
+  }
+
   if (P`list`) {
     const onlyIncognito = P`incognito`
     const tabs = await chrome.tabs.query({})

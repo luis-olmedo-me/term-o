@@ -24,4 +24,10 @@ export const createTABS = script => {
       abbreviation: 'p',
       worksWith: []
     })
+    .expect({
+      name: 'reload',
+      type: 'string',
+      abbreviation: 'r',
+      worksWith: []
+    })
 }

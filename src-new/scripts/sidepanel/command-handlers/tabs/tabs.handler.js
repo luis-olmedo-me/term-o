@@ -10,8 +10,8 @@ export const handleTABS = async command => {
     const { windowId, id, title, url } = await getTab(P`reload`).catch(renameError)
     await chrome.tabs.reload(id).catch(renameError)
 
-    command.update(`The tab ${C`blue`}T${id}${C`foreground`} has been refreshed now.`)
-    command.update(`${C`purple`}W${windowId} ${C`blue`}T${id} ${C`yellow`}"${title}" "${url}"`)
+    command.update(`The tab ${C`blue`}"T${id}" ${C`foreground`}has been refreshed now.`)
+    command.update(`${C`purple`}"W${windowId}" ${C`blue`}"T${id}" ${C`yellow`}"${title}" "${url}"`)
   }
 
   if (P`points`) {
@@ -20,8 +20,8 @@ export const handleTABS = async command => {
 
     setTab(tab)
 
-    command.update(`You are focused terminal on ${C`blue`}T${id}${C`foreground`} now.`)
-    command.update(`${C`purple`}W${windowId} ${C`blue`}T${id} ${C`yellow`}"${title}" "${url}"`)
+    command.update(`You are focused terminal on ${C`blue`}"T${id}" ${C`foreground`}now.`)
+    command.update(`${C`purple`}"W${windowId}" ${C`blue`}"T${id}" ${C`yellow`}"${title}" "${url}"`)
   }
 
   if (P`switch`) {
@@ -31,8 +31,8 @@ export const handleTABS = async command => {
     if (!focused) await chrome.windows.update(windowId, { focused: true })
     await chrome.tabs.update(id, { selected: true })
 
-    command.update(`You are on ${C`blue`}T${id}${C`foreground`} now.`)
-    command.update(`${C`purple`}W${windowId} ${C`blue`}T${id} ${C`yellow`}"${title}" "${url}"`)
+    command.update(`You are on ${C`blue`}"T${id}" ${C`foreground`}now.`)
+    command.update(`${C`purple`}"W${windowId}" ${C`blue`}"T${id}" ${C`yellow`}"${title}" "${url}"`)
   }
 
   if (P`close`) {
@@ -40,8 +40,8 @@ export const handleTABS = async command => {
 
     await chrome.tabs.remove(id)
 
-    command.update(`The tab ${C`blue`}T${id}${C`foreground`} is closed now.`)
-    command.update(`${C`purple`}W${windowId} ${C`blue`}T${id} ${C`yellow`}"${title}" "${url}"`)
+    command.update(`The tab ${C`blue`}"T${id}" ${C`foreground`}is closed now.`)
+    command.update(`${C`purple`}"W${windowId}" ${C`blue`}"T${id}" ${C`yellow`}"${title}" "${url}"`)
   }
 
   if (P`open`) {
@@ -49,14 +49,14 @@ export const handleTABS = async command => {
     const { windowId, id, title, url } = await createTab({ url: P`open` }).catch(renameError)
 
     command.reset()
-    command.update(`New tab ${C`blue`}T${id}${C`foreground`} is created.`)
-    command.update(`${C`purple`}W${windowId} ${C`blue`}T${id} ${C`yellow`}"${title}" "${url}"`)
+    command.update(`New tab ${C`blue`}"T${id}" ${C`foreground`}is created.`)
+    command.update(`${C`purple`}"W${windowId}" ${C`blue`}"T${id}" ${C`yellow`}"${title}" "${url}"`)
   }
 
   if (P`current`) {
     const { windowId, id, title, url } = tab
 
-    command.update(`${C`purple`}W${windowId} ${C`blue`}T${id} ${C`yellow`}"${title}" "${url}"`)
+    command.update(`${C`purple`}"W${windowId}" ${C`blue`}"T${id}" ${C`yellow`}"${title}" "${url}"`)
   }
 
   if (P`list`) {
@@ -68,7 +68,9 @@ export const handleTABS = async command => {
 
       if (onlyIncognito && !incognito) continue
 
-      command.update(`${C`purple`}W${windowId} ${C`blue`}T${id} ${C`yellow`}"${title}" "${url}"`)
+      command.update(
+        `${C`purple`}"W${windowId}" ${C`blue`}"T${id}" ${C`yellow`}"${title}" "${url}"`
+      )
     }
   }
 }

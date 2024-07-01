@@ -43,6 +43,12 @@ export class Command extends EventListener {
     this.dispatchEvent('update', this)
   }
 
+  setUpdate(...updates) {
+    this.updates = updates
+
+    this.dispatchEvent('update', this)
+  }
+
   expect({ name, type, defaultValue, abbreviation, validate, worksWith }) {
     const value = (defaultValue || defaultValues[type]) ?? defaultValues.none
 
@@ -109,7 +115,14 @@ export class Command extends EventListener {
   }
 
   async executeNext() {
-    if (this.queuedCommand) await this.queuedCommand.execute()
+    if (!this.queuedCommand) return
+    const currentUpdates = this.updates
+
+    this.queuedCommand.addEventListener('update', ({ updates }) => {
+      this.setUpdate(...currentUpdates, ...updates)
+    })
+
+    await this.queuedCommand.execute()
   }
 
   finish() {

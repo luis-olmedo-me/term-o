@@ -1,4 +1,5 @@
 import { getColor as C } from '@src/theme/theme.helpers'
+import { splitBy } from './command-parser.helpers'
 import { createCLEAR } from './commands/clear/clear.command'
 import { createDOM } from './commands/dom/dom.command'
 import { createERROR } from './commands/error/error.command'
@@ -15,6 +16,14 @@ class CommandParser extends EventListener {
   }
 
   read(scriptRaw) {
+    return splitBy(scriptRaw, '&&').reduce((command, fragment) => {
+      // if (fragment)
+      //   else
+      return this.readFragment(fragment)
+    }, null)
+  }
+
+  readFragment(scriptRaw) {
     const [name, ...scriptArgs] = scriptRaw.trim().split(' ')
     const createCommand = this.commands[name]
     const handler = this.handlers[name]

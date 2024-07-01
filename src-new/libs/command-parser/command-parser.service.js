@@ -1,3 +1,4 @@
+import { getColor as C } from '@src/theme/theme.helpers'
 import { createCLEAR } from './commands/clear/clear.command'
 import { createDOM } from './commands/dom/dom.command'
 import { createERROR } from './commands/error/error.command'
@@ -17,8 +18,12 @@ class CommandParser extends EventListener {
     const [name, ...scriptArgs] = scriptRaw.trim().split(' ')
     const createCommand = this.commands[name]
     const handler = this.handlers[name]
+    const cleanedName = name.replace('"', '\\"')
 
-    if (!createCommand) return createERROR(scriptRaw).mock({ title: '"Unkown command."' })
+    if (!createCommand)
+      return createERROR(scriptRaw).mock({
+        title: `"The command "${C`bright-red`}${cleanedName}${C`red`}" is unrecognized."`
+      })
 
     const command = createCommand(scriptRaw).prepare(scriptArgs)
     this.dispatchEvent(`on-create-${name}`, command)

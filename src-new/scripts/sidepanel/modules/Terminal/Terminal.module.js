@@ -6,6 +6,7 @@ import Prompt from '@sidepanel/components/Prompt'
 import { CAN_COPY_ON_SELECTION } from '@sidepanel/config'
 import Logger from '@sidepanel/modules/Logger'
 import commandParser from '@src/libs/command-parser'
+import { getColor as C } from '@src/theme/theme.helpers'
 import { getCurrentTab } from 'scripts/sidepanel/helpers/event.helpers'
 import * as S from './Terminal.styles'
 
@@ -75,7 +76,12 @@ export const Terminal = () => {
     <S.TerminalWrapper onMouseUp={focusOnInput}>
       <Logger logs={logs} loggerRef={loggerRef} />
 
-      <Prompt onEnter={handleEnter} inputRef={inputRef} tab={tab} pso="On {origin}" />
+      <Prompt
+        onEnter={handleEnter}
+        inputRef={inputRef}
+        tab={tab}
+        pso={`On ${C`bright-blue`}{origin}`}
+      />
     </S.TerminalWrapper>
   )
 }

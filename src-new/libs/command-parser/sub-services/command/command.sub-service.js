@@ -2,6 +2,7 @@ import EventListener from '../event-listener'
 
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 import { getColor as C } from '@src/theme/theme.helpers'
+import { Option } from '../Option/Option.sub-service'
 import { defaultValues } from './command.constants'
 import { getPropsFromString, validateRequirements } from './command.helpers'
 
@@ -16,6 +17,7 @@ export class Command extends EventListener {
     this.abbreviations = {}
     this.data = {}
     this.props = {}
+    this.options = []
     this.defaults = {}
     this.validations = {}
     this.outputs = []
@@ -57,6 +59,16 @@ export class Command extends EventListener {
     if (abbreviation) this.abbreviations = { ...this.abbreviations, [abbreviation]: name }
     if (validate) this.validations = { ...this.validations, [name]: validate }
     if (worksWith) this.dependencies = { ...this.dependencies, [name]: worksWith }
+
+    this.options = this.options.concat(
+      new Option({
+        value,
+        type,
+        abbreviation,
+        validations: validate,
+        dependencies: worksWith
+      })
+    )
 
     return this
   }

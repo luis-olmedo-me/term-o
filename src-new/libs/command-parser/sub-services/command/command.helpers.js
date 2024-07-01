@@ -116,8 +116,25 @@ export const validateRequirements = (dependencies, newProps) => {
   for (const propName of propNames) {
     const propDependencies = dependencies[propName]
 
-    if (!propDependencies) continue
+    const missedDependencyFrom = Object.entries(dependencies).reduce(
+      (deps, [dependencyName, dependencyValues]) => {
+        return dependencyValues.includes(propName) ? [...deps, dependencyName] : deps
+      },
+      []
+    )
+    const missingDependencies = missedDependencyFrom.filter(
+      dependency => typeof newProps[dependency] === 'undefined'
+    )
 
+    if (missingDependencies.length) {
+      const matches = missingDependencies
+        .map(name => `${C`bright-red`}--${name}${C`red`}`)
+        .join(' or ')
+
+      throw `${C`bright-red`}--${propName}${C`red`} works with ${matches}`
+    }
+
+    if (!propDependencies) continue
     const propsCollapsing = propNames.filter(
       name => !propDependencies.includes(name) && propName !== name
     )

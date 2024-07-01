@@ -1,10 +1,6 @@
-import { isRegExp } from '@src/helpers/utils.helpers'
 import { commandNames } from '../../command-parser.constants'
 import Command from '../../sub-services/command'
-
-const validateRegExp = value => {
-  if (!isRegExp(value)) throw `${value} is not a valid regular expression.`
-}
+import { isRegExp } from '../helpers'
 
 export const createDOM = script => {
   return new Command({
@@ -26,12 +22,12 @@ export const createDOM = script => {
       name: 'attr',
       type: 'string',
       abbreviation: 'a',
-      validate: validateRegExp
+      validate: [isRegExp]
     })
     .expect({
       name: 'tag',
       type: 'string',
       abbreviation: 't',
-      validate: validateRegExp
+      validate: [isRegExp]
     })
 }

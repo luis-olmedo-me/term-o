@@ -41,4 +41,10 @@ export const createTABS = script => {
       abbreviation: 'c',
       worksWith: []
     })
+    .expect({
+      name: 'open',
+      type: 'string',
+      abbreviation: 'o',
+      worksWith: []
+    })
 }

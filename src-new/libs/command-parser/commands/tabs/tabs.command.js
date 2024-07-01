@@ -1,5 +1,6 @@
 import { commandNames } from '../../command-parser.constants'
 import Command from '../../sub-services/command'
+import { isURL } from '../helpers'
 
 export const createTABS = script => {
   return new Command({
@@ -45,6 +46,7 @@ export const createTABS = script => {
       name: 'open',
       type: 'string',
       abbreviation: 'o',
+      validate: [isURL],
       worksWith: []
     })
 }

@@ -18,3 +18,7 @@ export const createUUIDv4 = () => {
     return newValue.toString(16)
   })
 }
+
+export const delay = time => {
+  return new Promise(resolve => setTimeout(resolve, time))
+}

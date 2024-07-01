@@ -22,7 +22,7 @@ class CommandParser extends EventListener {
 
     if (!createCommand)
       return createERROR(scriptRaw).mock({
-        title: `"The command "${C`bright-red`}${cleanedName}${C`red`}" is unrecognized."`
+        title: `'The command "${C`bright-red`}${cleanedName}${C`red`}" is unrecognized.'`
       })
 
     const command = createCommand(scriptRaw).prepare(scriptArgs)

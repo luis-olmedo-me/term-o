@@ -1,3 +1,4 @@
+import { getTab } from '@sidepanel/proccesses/workers'
 import { getColor as C } from '@src/theme/theme.helpers'
 import { renameError } from '../command-handlers.helpers'
 
@@ -6,14 +7,7 @@ export const handleTABS = async command => {
   const P = name => command.props[name]
 
   if (P`reload`) {
-    const tabIdRaw = P`reload`
-    const tabIdString = tabIdRaw.replace(/^T/, '')
-    const tabId = Number(tabIdString)
-    const isValidId = !Number.isNaN(tabId) && tabIdRaw.startsWith('T')
-
-    if (!isValidId) throw 'The tab id provided is not valid.'
-
-    const { windowId, id, title, url } = await chrome.tabs.get(tabId).catch(renameError)
+    const { windowId, id, title, url } = await getTab(P`reload`).catch(renameError)
     await chrome.tabs.reload(tabId).catch(renameError)
 
     command.update(`The tab ${C`blue`}T${id}${C`foreground`} has been refreshed now.`)
@@ -21,14 +15,7 @@ export const handleTABS = async command => {
   }
 
   if (P`points`) {
-    const tabIdRaw = P`points`
-    const tabIdString = tabIdRaw.replace(/^T/, '')
-    const tabId = Number(tabIdString)
-    const isValidId = !Number.isNaN(tabId) && tabIdRaw.startsWith('T')
-
-    if (!isValidId) throw 'The tab id provided is not valid.'
-
-    const tab = await chrome.tabs.get(tabId).catch(renameError)
+    const tab = await getTab(P`points`).catch(renameError)
     const { windowId, id, title, url } = tab
 
     setTab(tab)
@@ -38,18 +25,10 @@ export const handleTABS = async command => {
   }
 
   if (P`switch`) {
-    const tabIdRaw = P`switch`
-    const tabIdString = tabIdRaw.replace(/^T/, '')
-    const tabId = Number(tabIdString)
-    const isValidId = !Number.isNaN(tabId) && tabIdRaw.startsWith('T')
-
-    if (!isValidId) throw 'The tab id provided is not valid.'
-
-    const { windowId, id, title, url } = await chrome.tabs.get(tabId).catch(renameError)
+    const { windowId, id, title, url } = await getTab(P`switch`).catch(renameError)
     const { focused } = await chrome.windows.get(windowId).catch(renameError)
 
     if (!focused) await chrome.windows.update(windowId, { focused: true })
-
     await chrome.tabs.update(tabId, { selected: true })
 
     command.update(`You are on ${C`blue`}T${id}${C`foreground`} now.`)

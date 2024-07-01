@@ -17,3 +17,13 @@ export const getStorage = (tabId, data) => {
     data
   })
 }
+
+export const getTab = async tabIdRaw => {
+  const tabIdString = tabIdRaw.replace(/^T/, '')
+  const tabId = Number(tabIdString)
+  const isValidId = !Number.isNaN(tabId) && tabIdRaw.startsWith('T')
+
+  if (!isValidId) throw 'The tab id provided is not valid.'
+
+  return await chrome.tabs.get(tabId)
+}

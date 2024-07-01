@@ -1,7 +1,7 @@
 import { getColor as C } from '@src/theme/theme.helpers'
 
-const parseOptions = (index, arg, argsBySpace, propType) => {
-  switch (propType) {
+const parseOptions = (index, arg, argsBySpace, type) => {
+  switch (type) {
     case 'string': {
       index++
       const argStart = argsBySpace.at(index) || ''
@@ -73,34 +73,26 @@ export const getPropsFromString = (command, args) => {
     const arg = args[index]
 
     if (arg.startsWith('--')) {
-      const prop = arg.slice(2)
-      const propType = command.propTypes[prop]
-
-      if (!propType) throw `${C`bright-red`}${arg}${C`red`} is not a valid command prop.`
-
-      const { value, newIndex } = parseOptions(index, arg, args, propType)
+      const propName = arg.slice(2)
+      const option = command.options.getByName(propName)
+      const { value, newIndex } = parseOptions(index, arg, args, option.type)
 
       if (value === null) throw `${C`bright-red`}${arg}${C`red`} prop has an unexpected value.`
 
       index = newIndex
-      props = { ...props, [prop]: value }
+      props = { ...props, [option.name]: value }
       continue
     }
     if (arg.startsWith('-')) {
-      const prop = arg.slice(1)
-      const propName = command.abbreviations[prop]
+      const propAbbreviation = arg.slice(1)
+      const option = command.options.getByAbbreviation(propAbbreviation)
+      const { value, newIndex } = parseOptions(index, arg, args, option.type)
 
-      if (!propName) throw `${C`bright-red`}${arg}${C`red`} is not a valid command prop.`
-
-      const validations = command.validations[propName]
-      const propType = command.propTypes[propName]
-      const { value, newIndex } = parseOptions(index, arg, args, propType)
-
-      if (value === null) throw `${C`bright-red`}${arg}${C`red`} prop has an unexpected value.`
-      if (validations) validations.forEach(validation => validation(value))
+      if (value === null) throw `${C`bright-red`}${arg}${C`red`} option has an unexpected value.`
+      option.validate()
 
       index = newIndex
-      props = { ...props, [propName]: value }
+      props = { ...props, [option.name]: value }
       continue
     }
 
@@ -108,41 +100,4 @@ export const getPropsFromString = (command, args) => {
   }
 
   return props
-}
-
-export const validateRequirements = (dependencies, newProps) => {
-  const propNames = Object.keys(newProps)
-
-  for (const propName of propNames) {
-    const propDependencies = dependencies[propName]
-
-    const missedDependencyFrom = Object.entries(dependencies).reduce(
-      (deps, [dependencyName, dependencyValues]) => {
-        return dependencyValues.includes(propName) ? [...deps, dependencyName] : deps
-      },
-      []
-    )
-    const missingDependencies = missedDependencyFrom.filter(
-      dependency => typeof newProps[dependency] === 'undefined'
-    )
-
-    if (missingDependencies.length) {
-      const matches = missingDependencies
-        .map(name => `${C`bright-red`}--${name}${C`red`}`)
-        .join(' or ')
-
-      throw `${C`bright-red`}--${propName}${C`red`} works with ${matches}`
-    }
-
-    if (!propDependencies) continue
-    const propsCollapsing = propNames.filter(
-      name => !propDependencies.includes(name) && propName !== name
-    )
-
-    if (propsCollapsing.length) {
-      const useless = propsCollapsing.map(name => `${C`bright-red`}--${name}${C`red`}`).join(' or ')
-
-      throw `${C`bright-red`}--${propName}${C`red`} can not work with ${useless}`
-    }
-  }
 }

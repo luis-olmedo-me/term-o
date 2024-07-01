@@ -2,7 +2,25 @@ import { getColor as C } from '@src/theme/theme.helpers'
 import { renameError } from '../command-handlers.helpers'
 
 export const handleTABS = async command => {
+  const { setTab } = command.data
   const P = name => command.props[name]
+
+  if (P`points`) {
+    const tabIdRaw = P`points`
+    const tabIdString = tabIdRaw.replace(/^T/, '')
+    const tabId = Number(tabIdString)
+    const isValidId = !Number.isNaN(tabId) && tabIdRaw.startsWith('T')
+
+    if (!isValidId) throw 'The tab id provided is not valid.'
+
+    const tab = await chrome.tabs.get(tabId).catch(renameError)
+    const { windowId, id, title, url } = tab
+
+    setTab(tab)
+
+    command.update(`You are focused terminal on ${C`blue`}T${id}${C`foreground`} now.`)
+    command.update(`${C`purple`}W${windowId} ${C`blue`}T${id} ${C`yellow`}"${title}" "${url}"`)
+  }
 
   if (P`switch`) {
     const tabIdRaw = P`switch`

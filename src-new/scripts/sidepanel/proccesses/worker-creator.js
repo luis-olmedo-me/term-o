@@ -4,7 +4,7 @@ const errorMessagesOverwritten = [
   {
     original: 'Could not establish connection. Receiving end does not exist.',
     new:
-      'Unable to establish a connection to the tab. Please refresh the page or ensure that it is open.'
+      'Term-o cannot establish a connection to the tab. Please refresh the page or ensure it is open. Note that Term-o cannot execute commands on extension or browser built-in pages.'
   }
 ]
 

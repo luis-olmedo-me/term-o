@@ -5,7 +5,6 @@ import commandHandlers from '@sidepanel/command-handlers'
 import Prompt from '@sidepanel/components/Prompt'
 import { CAN_COPY_ON_SELECTION } from '@sidepanel/config'
 import Logger from '@sidepanel/modules/Logger'
-import { invalidURLsStarts } from '@src/constants/events.constants'
 import commandParser from '@src/libs/command-parser'
 import { getCurrentTab } from 'scripts/sidepanel/helpers/event.helpers'
 import * as S from './Terminal.styles'
@@ -67,9 +66,6 @@ export const Terminal = () => {
 
   const handleEnter = value => {
     const newLog = commandParser.read(value)
-    const isInvalidUrl = invalidURLsStarts.some(invalidUrl => tab.url.startsWith(invalidUrl))
-
-    if (isInvalidUrl) newLog.throw('Term-o is unable to execute commands on this page.')
 
     setLogs(oldLogs => [newLog, ...oldLogs])
     focusOnInput()

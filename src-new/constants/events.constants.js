@@ -9,5 +9,3 @@ export const eventTypes = {
   CONFIG_UPDATE: 'term-o-config-update',
   RESET_CONFIGURATION: 'term-o-update-configuration'
 }
-
-export const invalidURLsStarts = ['chrome-extension:', 'chrome:']

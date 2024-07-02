@@ -78,6 +78,7 @@ export const getPropsFromString = (command, args) => {
       const { value, newIndex } = parseOptions(index, arg, args, option.type)
 
       if (value === null) throw `${C`bright-red`}${arg}${C`red`} prop has an unexpected value.`
+      option.validate(value)
 
       index = newIndex
       props = { ...props, [option.name]: value }
@@ -89,7 +90,7 @@ export const getPropsFromString = (command, args) => {
       const { value, newIndex } = parseOptions(index, arg, args, option.type)
 
       if (value === null) throw `${C`bright-red`}${arg}${C`red`} option has an unexpected value.`
-      option.validate()
+      option.validate(value)
 
       index = newIndex
       props = { ...props, [option.name]: value }

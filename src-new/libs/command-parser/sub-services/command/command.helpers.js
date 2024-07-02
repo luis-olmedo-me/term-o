@@ -71,6 +71,7 @@ export const getPropsFromString = (command, args) => {
 
   for (let index = 0; index < args.length; index++) {
     const arg = args[index]
+    const nextArg = args[index + 1]
 
     if (arg.startsWith('--')) {
       const propName = arg.slice(2)
@@ -96,6 +97,7 @@ export const getPropsFromString = (command, args) => {
       props = { ...props, [option.name]: value }
       continue
     }
+    if (nextArg === '$') continue
 
     throw `${C`bright-red`}${arg}${C`red`} is an unexpected argument.`
   }

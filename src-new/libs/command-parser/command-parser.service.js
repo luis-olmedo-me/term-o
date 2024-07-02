@@ -34,11 +34,14 @@ class CommandParser extends EventListener {
     const command = this.get(firstFragment)
     let carriedCommand = command
 
-    nextFragments.forEach(fragment => {
+    for (let fragment of nextFragments) {
       const nextCommand = this.get(fragment)
       carriedCommand.nextCommand = nextCommand
+
+      if (nextCommand.finished) break
+
       carriedCommand = nextCommand
-    })
+    }
 
     return command
   }

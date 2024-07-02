@@ -10,6 +10,7 @@ export const Log = ({ command, prefix, onUpdate }) => {
 
   useEffect(
     function listenUpdates() {
+      const shouldExecute = command.timesExecuted === 0 && !command.finished
       const handleUpdate = ({ updates: newUpdates }) => {
         if (onUpdate) onUpdate()
 
@@ -18,7 +19,7 @@ export const Log = ({ command, prefix, onUpdate }) => {
 
       handleUpdate(command)
       command.addEventListener('update', handleUpdate)
-      if (command.canBeExecuted) command.execute()
+      if (shouldExecute) command.execute()
 
       return () => command.removeEventListener('update', handleUpdate)
     },

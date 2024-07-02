@@ -22,10 +22,8 @@ export class Command extends EventListener {
     this.executing = false
     this.nextCommand = null
     this.options = new Options()
-  }
-
-  get canBeExecuted() {
-    return !this.executing && !this.finished
+    this.timesExecuted = 0
+    this.args = []
   }
 
   reset() {
@@ -62,6 +60,8 @@ export class Command extends EventListener {
   }
 
   prepare(args) {
+    this.args = args
+
     try {
       const newProps = getPropsFromString(this, args)
       const hasNewProps = Object.values(newProps).length > 0
@@ -86,16 +86,16 @@ export class Command extends EventListener {
   }
 
   async execute() {
-    if (!this.canBeExecuted) throw 'Command can be executed once.'
-
     try {
       this.props = this.options.getValues()
       this.executing = true
+      this.timesExecuted++
+
+      if (this.args.includes('$')) throw 'Command expects for value command before.'
 
       await this.dispatchEvent('execute', this)
-      await this.executeNext()
-
       this.finish()
+      await this.executeNext()
     } catch (error) {
       this.throw(error)
     }
@@ -117,16 +117,23 @@ export class Command extends EventListener {
   async executeNext() {
     if (!this.nextCommand) return
     const currentUpdates = this.updates
+    const nextCommand = this.nextCommand
+    const initialUpdates = [...currentUpdates, ...nextCommand.updates]
+    const shouldExecute = nextCommand.timesExecuted === 0 && !nextCommand.finished
 
-    this.nextCommand.addEventListener('update', ({ updates }) => {
+    if (!shouldExecute) return this.setUpdates(...initialUpdates)
+
+    nextCommand.addEventListener('update', ({ updates }) => {
       this.setUpdates(...currentUpdates, ...updates)
     })
 
-    if (this.nextCommand.updates.length) {
-      this.setUpdates(...currentUpdates, ...this.nextCommand.updates)
-    }
+    for (let nextCommandUpdate of nextCommand.updates) {
+      const updatedArgs = nextCommand.args.map(arg => (arg === '$' ? '"img"' : arg))
 
-    if (this.nextCommand.canBeExecuted) await this.nextCommand.execute()
+      nextCommand.prepare(updatedArgs)
+
+      await nextCommand.execute()
+    }
   }
 
   setTitle(newTitle) {

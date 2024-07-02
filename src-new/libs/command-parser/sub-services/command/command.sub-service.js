@@ -88,8 +88,7 @@ export class Command extends EventListener {
   async execute() {
     try {
       this.props = this.options.getValues()
-      this.executing = true
-      this.timesExecuted++
+      this.startExecuting()
 
       if (this.args.includes('$')) throw 'Command expects for value command before.'
 
@@ -140,6 +139,12 @@ export class Command extends EventListener {
     this.title = newTitle
 
     return this
+  }
+
+  startExecuting() {
+    this.finished = false
+    this.executing = true
+    this.timesExecuted++
   }
 
   finish() {

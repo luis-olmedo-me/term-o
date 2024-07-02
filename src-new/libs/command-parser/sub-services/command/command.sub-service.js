@@ -20,12 +20,12 @@ export class Command extends EventListener {
     this.hidden = hidden
     this.finished = false
     this.executing = false
-    this.queuedCommand = null
+    this.nextCommand = null
     this.options = new Options()
   }
 
-  get working() {
-    return this.executing || this.finished
+  get canBeExecuted() {
+    return !this.executing && !this.finished
   }
 
   reset() {
@@ -40,7 +40,7 @@ export class Command extends EventListener {
     this.dispatchEvent('update', this)
   }
 
-  setUpdate(...updates) {
+  setUpdates(...updates) {
     this.updates = updates
 
     this.dispatchEvent('update', this)
@@ -86,7 +86,7 @@ export class Command extends EventListener {
   }
 
   async execute() {
-    if (this.working) throw 'Command can be executed once.'
+    if (!this.canBeExecuted) throw 'Command can be executed once.'
 
     try {
       this.props = this.options.getValues()
@@ -115,14 +115,18 @@ export class Command extends EventListener {
   }
 
   async executeNext() {
-    if (!this.queuedCommand) return
+    if (!this.nextCommand) return
     const currentUpdates = this.updates
 
-    this.queuedCommand.addEventListener('update', ({ updates }) => {
-      this.setUpdate(...currentUpdates, ...updates)
+    this.nextCommand.addEventListener('update', ({ updates }) => {
+      this.setUpdates(...currentUpdates, ...updates)
     })
 
-    await this.queuedCommand.execute()
+    if (this.nextCommand.updates.length) {
+      this.setUpdates(...currentUpdates, ...this.nextCommand.updates)
+    }
+
+    if (this.nextCommand.canBeExecuted) await this.nextCommand.execute()
   }
 
   setTitle(newTitle) {

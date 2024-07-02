@@ -18,7 +18,7 @@ export const Log = ({ command, prefix, onUpdate }) => {
 
       handleUpdate(command)
       command.addEventListener('update', handleUpdate)
-      if (!command.working) command.execute()
+      if (command.canBeExecuted) command.execute()
 
       return () => command.removeEventListener('update', handleUpdate)
     },

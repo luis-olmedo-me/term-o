@@ -17,18 +17,30 @@ class CommandParser extends EventListener {
 
   read(rawScript) {
     let [firstFragment, ...nextFragments] = splitBy(rawScript, '&&')
-    const command = this.get(rawScript, firstFragment)
+    const command = this.readCommunicated(firstFragment)
     let carriedCommand = command
 
     nextFragments.forEach(fragment => {
-      const nextCommand = this.get(rawScript, fragment)
-      carriedCommand.queuedCommand = nextCommand
+      const nextCommand = this.readCommunicated(fragment)
+      carriedCommand.nextCommand = nextCommand
       carriedCommand = nextCommand
-
-      return this.get(rawScript, fragment)
     })
 
     return command.setTitle(rawScript)
+  }
+
+  readCommunicated(rawScript) {
+    let [firstFragment, ...nextFragments] = splitBy(rawScript, '|')
+    const command = this.get(firstFragment)
+    let carriedCommand = command
+
+    nextFragments.forEach(fragment => {
+      const nextCommand = this.get(fragment)
+      carriedCommand.nextCommand = nextCommand
+      carriedCommand = nextCommand
+    })
+
+    return command
   }
 
   get(scriptRaw) {
@@ -37,10 +49,11 @@ class CommandParser extends EventListener {
     const handler = this.handlers[name]
     const cleanedName = name.replace('"', '\\"')
 
-    if (!createCommand)
+    if (!createCommand) {
       return createERROR().mock({
         title: `'The command "${C`bright-red`}${cleanedName}${C`red`}" is unrecognized.'`
       })
+    }
 
     const command = createCommand().prepare(scriptArgs)
     this.dispatchEvent(`on-create-${name}`, command)

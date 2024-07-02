@@ -17,21 +17,21 @@ class CommandParser extends EventListener {
 
   read(rawScript) {
     let [firstFragment, ...nextFragments] = splitBy(rawScript, '&&')
-    const command = this.readFragment(rawScript, firstFragment)
+    const command = this.get(rawScript, firstFragment)
     let carriedCommand = command
 
     nextFragments.forEach(fragment => {
-      const nextCommand = this.readFragment(rawScript, fragment)
+      const nextCommand = this.get(rawScript, fragment)
       carriedCommand.queuedCommand = nextCommand
       carriedCommand = nextCommand
 
-      return this.readFragment(rawScript, fragment)
+      return this.get(rawScript, fragment)
     })
 
     return command
   }
 
-  readFragment(fullScriptRaw, scriptRaw) {
+  get(fullScriptRaw, scriptRaw) {
     const [name, ...scriptArgs] = scriptRaw.trim().split(' ')
     const createCommand = this.commands[name]
     const handler = this.handlers[name]

@@ -13,6 +13,6 @@ export class Option {
   }
 
   validate() {
-    if (this.validations) this.validations.forEach(validation => validation(value))
+    if (this.validations) this.validations.forEach(validation => validation(this.value))
   }
 }

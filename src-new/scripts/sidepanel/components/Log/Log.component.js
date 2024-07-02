@@ -28,7 +28,7 @@ export const Log = ({ command, prefix, onUpdate }) => {
   return (
     <S.LogWrapper ref={wrapper} hidden={command.hidden}>
       <S.LogItem>
-        {prefix} {command.command}
+        {prefix} {command.title}
       </S.LogItem>
 
       {updates.map(update => {

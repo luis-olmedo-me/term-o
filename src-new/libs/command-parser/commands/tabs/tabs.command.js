@@ -2,11 +2,8 @@ import { commandNames } from '../../command-parser.constants'
 import Command from '../../sub-services/command'
 import { isURL } from '../helpers'
 
-export const createTABS = script => {
-  return new Command({
-    name: commandNames.TABS,
-    command: script
-  })
+export const createTABS = () => {
+  return new Command({ name: commandNames.TABS })
     .expect({
       name: 'list',
       type: 'boolean',

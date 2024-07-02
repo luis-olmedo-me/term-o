@@ -7,12 +7,12 @@ import { defaultValues } from './command.constants'
 import { getPropsFromString } from './command.helpers'
 
 export class Command extends EventListener {
-  constructor({ name, command, hidden = false }) {
+  constructor({ name, hidden = false }) {
     super()
 
     this.id = createUUIDv4()
     this.name = name
-    this.command = command
+    this.title = ''
     this.data = {}
     this.props = {}
     this.outputs = []
@@ -123,6 +123,12 @@ export class Command extends EventListener {
     })
 
     await this.queuedCommand.execute()
+  }
+
+  setTitle(newTitle) {
+    this.title = newTitle
+
+    return this
   }
 
   finish() {

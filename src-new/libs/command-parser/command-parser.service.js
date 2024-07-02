@@ -28,21 +28,21 @@ class CommandParser extends EventListener {
       return this.get(rawScript, fragment)
     })
 
-    return command
+    return command.setTitle(rawScript)
   }
 
-  get(fullScriptRaw, scriptRaw) {
+  get(scriptRaw) {
     const [name, ...scriptArgs] = scriptRaw.trim().split(' ')
     const createCommand = this.commands[name]
     const handler = this.handlers[name]
     const cleanedName = name.replace('"', '\\"')
 
     if (!createCommand)
-      return createERROR(fullScriptRaw).mock({
+      return createERROR().mock({
         title: `'The command "${C`bright-red`}${cleanedName}${C`red`}" is unrecognized.'`
       })
 
-    const command = createCommand(fullScriptRaw).prepare(scriptArgs)
+    const command = createCommand().prepare(scriptArgs)
     this.dispatchEvent(`on-create-${name}`, command)
 
     if (handler) command.addEventListener('execute', handler)

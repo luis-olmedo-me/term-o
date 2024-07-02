@@ -1,11 +1,8 @@
 import { commandNames } from '../../command-parser.constants'
 import Command from '../../sub-services/command'
 
-export const createSTORAGE = script => {
-  return new Command({
-    name: commandNames.STORAGE,
-    command: script
-  })
+export const createSTORAGE = () => {
+  return new Command({ name: commandNames.STORAGE })
     .expect({
       name: 'local',
       type: 'boolean',

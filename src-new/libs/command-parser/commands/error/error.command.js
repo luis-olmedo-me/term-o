@@ -5,11 +5,8 @@ const handleERROR = command => {
   throw `${command.props.title}`
 }
 
-export const createERROR = script => {
-  return new Command({
-    name: commandNames.ERROR,
-    command: script
-  })
+export const createERROR = () => {
+  return new Command({ name: commandNames.ERROR })
     .expect({
       name: 'title',
       type: 'string',

@@ -42,15 +42,19 @@ const parseOptions = (index, arg, argsBySpace, type) => {
     }
 
     case 'array': {
-      const nextArgs = argsBySpace.slice(index)
-      let value = []
+      const nextArg = argsBySpace.slice(index)
 
-      for (const nextArg of nextArgs) {
-        if (nextArg.startsWith('--')) break
+      const startsWithBracket = argValue.startsWith('[')
+      const endsWithBracket = argValue.endsWith(']')
 
-        value = [...value, nextArg]
-        index++
-      }
+      if ((!startsWithBracket || !endsWithBracket) && !argValue)
+        throw `${C`bright-red`}${arg} ${C`red`}expects for brackets with ${C`bright-red`}[string]${C`red`} value(s). Instead, it received nothing.`
+
+      const value = JSON.parse(nextArg)
+      const isValidJsonValue = Object.values(value).every(value => typeof value === 'string')
+
+      if (!isValidJsonValue)
+        throw `${C`bright-red`}${arg} ${C`red`}expects for brackets with ${C`bright-red`}[string]${C`red`} value(s). Instead, it received ${C`bright-red`}${argValue}${C`red`}.`
 
       return { value, newIndex: index }
     }

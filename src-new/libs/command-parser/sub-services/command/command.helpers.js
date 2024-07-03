@@ -66,6 +66,15 @@ const parseOptions = (index, arg, argsBySpace, type) => {
   }
 }
 
+const isParam = (option, arg) => {
+  const isBoolean = option.type === 'boolean'
+
+  const paramPattern = /^\$\d+$/g
+  const argValue = arg?.value
+
+  return !isBoolean && Boolean(argValue) && paramPattern.test(argValue)
+}
+
 export const getPropsFromString = command => {
   const args = command.args
   const argValues = args.map(arg => arg.value)
@@ -78,11 +87,9 @@ export const getPropsFromString = command => {
     if (argValue.startsWith('--')) {
       const propName = argValue.slice(2)
       const option = command.options.getByName(propName)
-
-      const isBoolean = option.type === 'boolean'
       const nextArg = args[index + 1]
 
-      if (nextArg?.value === '$' && !isBoolean) {
+      if (isParam(option, nextArg)) {
         index += 2
         nextArg.holdUp()
 
@@ -101,11 +108,9 @@ export const getPropsFromString = command => {
     if (argValue.startsWith('-')) {
       const propAbbreviation = argValue.slice(1)
       const option = command.options.getByAbbreviation(propAbbreviation)
-
-      const isBoolean = option.type === 'boolean'
       const nextArg = args[index + 1]
 
-      if (nextArg?.value === '$' && !isBoolean) {
+      if (isParam(option, nextArg)) {
         index += 2
         nextArg.holdUp()
 

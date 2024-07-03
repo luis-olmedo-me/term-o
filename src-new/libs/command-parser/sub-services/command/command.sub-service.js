@@ -1,39 +1,11 @@
-import EventListener from '../event-listener'
-
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 import { getColor as C } from '@src/theme/theme.helpers'
+
 import { Options } from '../Options/Options.sub-service'
+import Argument from '../argument'
+import EventListener from '../event-listener'
 import { defaultValues } from './command.constants'
 import { executePerUpdates, getPropsFromString } from './command.helpers'
-
-class Argument {
-  constructor(value) {
-    this.value = value
-    this.isHoldingUp = false
-  }
-
-  setValue(newValue) {
-    this.isHoldingUp = false
-    this.value = newValue
-  }
-
-  holdUp() {
-    this.isHoldingUp = true
-  }
-
-  getIndex() {
-    const value = this.value
-    const paramPattern = /^\$\d+$/g
-
-    if (paramPattern.test(value)) {
-      const indexAsString = value.replace('$', '')
-
-      return Number(indexAsString)
-    }
-
-    return -1
-  }
-}
 
 export class Command extends EventListener {
   constructor({ name, hidden = false }) {

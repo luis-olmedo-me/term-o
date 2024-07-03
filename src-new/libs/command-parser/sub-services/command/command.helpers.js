@@ -40,7 +40,7 @@ const parseOptions = (index, arg, argsBySpace, type) => {
       return { value, newIndex: index }
     }
 
-    case 'array': {
+    case 'string[]': {
       const nextArg = argsBySpace.slice(index)
 
       const startsWithBracket = argValue.startsWith('[')

@@ -6,6 +6,22 @@ import { Options } from '../Options/Options.sub-service'
 import { defaultValues } from './command.constants'
 import { executePerUpdates, getPropsFromString } from './command.helpers'
 
+class Argument {
+  constructor(value) {
+    this.value = value
+    this.isHoldingUp = false
+  }
+
+  setValue(newValue) {
+    this.isHoldingUp = false
+    this.value = newValue
+  }
+
+  holdUp() {
+    this.isHoldingUp = true
+  }
+}
+
 export class Command extends EventListener {
   constructor({ name, hidden = false }) {
     super()
@@ -60,11 +76,11 @@ export class Command extends EventListener {
     return this
   }
 
-  prepare(args = this.args, replacements) {
-    this.args = args
+  prepare(args) {
+    this.args = args ? args.map(arg => new Argument(arg)) : this.args
 
     try {
-      const newProps = getPropsFromString(this, args, replacements)
+      const newProps = getPropsFromString(this)
       const hasNewProps = Object.values(newProps).length > 0
       const itExpectProps = this.options.length > 0
 
@@ -117,10 +133,10 @@ export class Command extends EventListener {
 
     const currentUpdates = this.updates
     const nextCommand = this.nextCommand
-    const optionsUpdatables = nextCommand.options.updatables
+    const hasArgsHoldingUp = nextCommand.args.some(arg => arg.isHoldingUp)
 
     if (nextCommand.finished) {
-      this.setUpdates(...currentUpdates, ...nextCommand.staticUpdates, ...nextCommand.updates)
+      this.setUpdates(...currentUpdates, ...nextCommand.staticUpdates)
 
       return
     }
@@ -129,7 +145,7 @@ export class Command extends EventListener {
       this.setUpdates(...currentUpdates, ...staticUpdates, ...updates)
     })
 
-    if (!optionsUpdatables.length) await nextCommand.execute()
+    if (!hasArgsHoldingUp) await nextCommand.execute()
     else await executePerUpdates(nextCommand, currentUpdates)
   }
 

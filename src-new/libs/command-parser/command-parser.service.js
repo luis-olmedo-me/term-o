@@ -5,6 +5,7 @@ import { createDOM } from './commands/dom/dom.command'
 import { createERROR } from './commands/error/error.command'
 import { createSTORAGE } from './commands/storage/storage.command'
 import { createTABS } from './commands/tabs/tabs.command'
+import { getArgs } from './sub-services/command/command.helpers'
 import EventListener from './sub-services/event-listener'
 
 class CommandParser extends EventListener {
@@ -33,7 +34,7 @@ class CommandParser extends EventListener {
   }
 
   get(scriptRaw) {
-    const [name, ...scriptArgs] = scriptRaw.trim().split(' ')
+    const [name, ...scriptArgs] = getArgs(scriptRaw)
     const createCommand = this.commands[name]
     const handler = this.handlers[name]
     const cleanedName = name.replace('"', '\\"')

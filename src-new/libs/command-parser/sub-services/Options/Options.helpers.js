@@ -21,7 +21,7 @@ export const validate = (dependencies, newProps) => {
         .map(name => `${C`bright-red`}--${name}${C`red`}`)
         .join(' or ')
 
-      throw `${C`bright-red`}--${propName}${C`red`} works with ${matches}`
+      throw `${C`bright-red`}--${propName}${C`red`} requires to be executed with ${matches}.`
     }
 
     if (!propDependencies) continue

@@ -4,33 +4,26 @@ const parseOptions = (index, arg, argsBySpace, type) => {
   switch (type) {
     case 'string': {
       index++
-      const argStart = argsBySpace.at(index) || ''
-      const quote = argStart.charAt(0)
-      const isQuote = /"|'/g.test(quote)
-      const argStartIsLastQuoted = argStart.endsWith(quote)
+      const argValue = argsBySpace.at(index) || ''
+      const quote = argValue.charAt(0)
 
-      if (!isQuote) throw `${arg} expects for quoted [string] value.`
+      const startsWithQuote = /"|'/g.test(quote)
+      const endsWithQUote = argValue.endsWith(quote)
 
+      if ((!startsWithQuote || !endsWithQUote) && !argValue)
+        throw `${C`bright-red`}${arg} ${C`red`}expects for quoted ${C`bright-red`}[string]${C`red`} value. Instead, it received nothing.`
+
+      if (!startsWithQuote || !endsWithQUote)
+        throw `${C`bright-red`}${arg} ${C`red`}expects for quoted ${C`bright-red`}[string]${C`red`} value. Instead, it received ${C`bright-red`}${argValue}${C`red`}.`
+
+      index++
       const quotesPattern = new RegExp(`${quote}|${quote}^$`, 'g')
+      const value = argValue.replace(quotesPattern, '')
 
-      if (!argStartIsLastQuoted) index++
-      let value = argStart
-      const nextArgs = argStartIsLastQuoted ? [] : argsBySpace.slice(index)
+      if (!value)
+        throw `${C`bright-red`}${arg} ${C`red`}expects for content inside of quoted ${C`bright-red`}[string]${C`red`} value. Instead, it received ${C`bright-red`}${argValue}${C`red`}.`
 
-      for (const nextArg of nextArgs) {
-        if (nextArg.endsWith(quote)) {
-          value += ` ${nextArg}`
-          index++
-          break
-        }
-
-        value += ` ${nextArg}`
-        index++
-      }
-
-      value = value.replace(quotesPattern, '')
-
-      return { value: value || null, newIndex: index }
+      return { value, newIndex: index }
     }
 
     case 'boolean': {
@@ -42,7 +35,8 @@ const parseOptions = (index, arg, argsBySpace, type) => {
       const value = Number(nextArg)
       const isValidNumber = !Number.isNaN(value)
 
-      if (!isValidNumber) throw `"${C`bright-red`}${nextArg}${C`red`}" is not a valid number.`
+      if (!isValidNumber)
+        throw `"${C`bright-red`}${arg}${C`red`}"expects ${C`bright-red`}[number]${C`red`} value. Instead, it received ${C`bright-red`}${nextArg}${C`red`}.`
 
       return { value, newIndex: index }
     }
@@ -96,12 +90,11 @@ export const getPropsFromString = command => {
         continue
       }
 
-      const { value, newIndex } = parseOptions(index, argValue, argValues, option.type)
-
-      if (value === null) throw `${C`bright-red`}${argValue}${C`red`} prop has an unexpected value.`
+      const argName = `--${option.name} ( -${option.abbreviation} )`
+      const { value, newIndex } = parseOptions(index, argName, argValues, option.type)
       option.validate(value)
-
       index = newIndex
+
       props = { ...props, [option.name]: value }
       continue
     }
@@ -117,13 +110,11 @@ export const getPropsFromString = command => {
         continue
       }
 
-      const { value, newIndex } = parseOptions(index, argValue, argValues, option.type)
-
-      if (value === null)
-        throw `${C`bright-red`}${argValue}${C`red`} option has an unexpected value.`
+      const argName = `--${option.name} ( -${option.abbreviation} )`
+      const { value, newIndex } = parseOptions(index, argName, argValues, option.type)
       option.validate(value)
-
       index = newIndex
+
       props = { ...props, [option.name]: value }
       continue
     }
@@ -134,7 +125,7 @@ export const getPropsFromString = command => {
   return props
 }
 
-const getArgs = value => {
+export const getArgs = value => {
   const fragments = value.trim().split(' ')
 
   let output = []

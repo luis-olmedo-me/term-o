@@ -181,9 +181,10 @@ export const getArgs = value => {
 
       for (const nextFragment of nextFragments) {
         fragmentValue += ` ${nextFragment}`
-        index++
 
         if (nextFragment.endsWith(quote)) break
+
+        index++
       }
 
       addFragment(fragmentValue)
@@ -197,13 +198,12 @@ export const getArgs = value => {
 }
 
 export const executePerUpdates = async (command, updates) => {
+  const argsHoldingUp = command.args.filter(arg => arg.isHoldingUp)
   const colorPattern = /\[termo\.#(?:[0-9a-fA-F]{3}){1,2}\]/g
 
   for (let update of updates) {
     let cleanedUpdate = update.replace(colorPattern, '')
-
     const availableArgs = getArgs(cleanedUpdate)
-    const argsHoldingUp = command.args.filter(arg => arg.isHoldingUp)
 
     argsHoldingUp.forEach(arg => {
       const index = arg.getIndex()

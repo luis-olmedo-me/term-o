@@ -1,5 +1,6 @@
 export class Argument {
   constructor(value) {
+    this.backup = value
     this.value = value
     this.isHoldingUp = false
   }
@@ -14,7 +15,7 @@ export class Argument {
   }
 
   getIndex() {
-    const value = this.value
+    const value = this.backup
     const paramPattern = /^\$\d+$/g
 
     if (paramPattern.test(value)) {

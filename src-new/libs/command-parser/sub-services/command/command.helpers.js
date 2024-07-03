@@ -146,6 +146,31 @@ const getArgs = value => {
     const fragment = fragments[index]
 
     const startsWithQuote = /^"|^'/g.test(fragment)
+    const startsWithBracket = /^\[/g.test(fragment)
+
+    if (startsWithBracket) {
+      const endBrancket = ']'
+      const endsWithQuote = fragment.endsWith(endBrancket)
+
+      if (endsWithQuote && fragment.length > 1) {
+        addFragment(fragment)
+        continue
+      }
+
+      const nextFragments = fragments.slice(++index)
+      let fragmentValue = fragment
+
+      for (const nextFragment of nextFragments) {
+        fragmentValue += ` ${nextFragment}`
+
+        if (nextFragment.endsWith(endBrancket)) break
+
+        index++
+      }
+
+      addFragment(fragmentValue)
+      continue
+    }
 
     if (startsWithQuote) {
       const quote = fragment.charAt(0)
@@ -162,6 +187,7 @@ const getArgs = value => {
       for (const nextFragment of nextFragments) {
         fragmentValue += ` ${nextFragment}`
         index++
+
         if (nextFragment.endsWith(quote)) break
       }
 

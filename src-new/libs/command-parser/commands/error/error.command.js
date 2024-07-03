@@ -2,14 +2,15 @@ import { commandNames } from '../../command-parser.constants'
 import Command from '../../sub-services/command'
 
 const handleERROR = command => {
-  throw `${command.props.title}`
+  const P = name => command.props[name]
+
+  if (P`title`) {
+    command.throw(P`title`)
+  }
 }
 
-export const createERROR = script => {
-  return new Command({
-    name: commandNames.ERROR,
-    command: script
-  })
+export const createERROR = () => {
+  return new Command({ name: commandNames.ERROR })
     .expect({
       name: 'title',
       type: 'string',

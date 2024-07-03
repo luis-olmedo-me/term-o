@@ -2,21 +2,18 @@ import { commandNames } from '../../command-parser.constants'
 import Command from '../../sub-services/command'
 import { isRegExp } from '../helpers'
 
-export const createDOM = script => {
-  return new Command({
-    name: commandNames.DOM,
-    command: script
-  })
+export const createDOM = () => {
+  return new Command({ name: commandNames.DOM })
     .expect({
-      name: 'get',
+      name: 'search',
       type: 'boolean',
-      abbreviation: 'g',
+      abbreviation: 's',
       worksWith: ['attr', 'tag', 'group']
     })
     .expect({
       name: 'group',
       type: 'boolean',
-      abbreviation: 'G'
+      abbreviation: 'g'
     })
     .expect({
       name: 'attr',

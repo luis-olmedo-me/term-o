@@ -6,25 +6,29 @@ export const handleDOM = async command => {
   const { tab } = command.data
   const P = name => command.props[name]
 
-  command.update('Getting elements.')
-  const elements = await getDOMElements(tab.id, {
-    searchByTag: P`tag`,
-    searchByAttributeName: P`attr`
-  })
+  if (P`search`) {
+    command.update('Getting elements.')
+    const elements = await getDOMElements(tab.id, {
+      searchByTag: P`tag`,
+      searchByAttributeName: P`attr`
+    })
 
-  let textElements = elements.map(({ tagName, attributes }) => {
-    const attrs = Object.entries(attributes)
-      .map(
-        ([name, value]) =>
-          `${C`bright-black`}[${C`cyan`}${name}${C`white`}=${C`yellow`}"${value}"${C`bright-black`}]`
-      )
-      .join(' ')
+    let textElements = elements.map(({ tagName, attributes }) => {
+      const attrs = Object.entries(attributes)
+        .map(([name, value]) => {
+          const attrName = `${C`cyan`}"${name}"`
+          const attrValue = value ? ` ${C`yellow`}"${value}"` : ''
 
-    return attrs ? `${C`red`}${tagName} ${attrs}` : `${C`red`}${tagName}`
-  })
+          return `${C`bright-black`}[${attrName} ${attrValue}${C`bright-black`}]`
+        })
+        .join(' ')
 
-  if (P`group`) textElements = prependCounters(textElements)
+      return attrs ? `${C`red`}"${tagName}" ${attrs}` : `${C`red`}"${tagName}"`
+    })
 
-  command.reset()
-  textElements.forEach(element => command.update(element))
+    if (P`group`) textElements = prependCounters(textElements)
+
+    command.reset()
+    textElements.forEach(element => command.update(element))
+  }
 }

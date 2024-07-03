@@ -39,7 +39,6 @@ export class Command extends EventListener {
     this.executing = false
     this.nextCommand = null
     this.options = new Options()
-    this.timesExecuted = 0
     this.args = []
   }
 
@@ -158,7 +157,6 @@ export class Command extends EventListener {
   startExecuting() {
     this.finished = false
     this.executing = true
-    this.timesExecuted++
   }
 
   finish() {

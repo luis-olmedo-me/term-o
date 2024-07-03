@@ -7,10 +7,6 @@ export class Options {
     this.values = []
   }
 
-  get updatables() {
-    return this.values.filter(option => option.expectsReplacement)
-  }
-
   add({ name, value, type, abbreviation, validations, dependencies }) {
     this.values = this.values.concat(
       new Option({

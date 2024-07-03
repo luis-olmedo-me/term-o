@@ -131,11 +131,6 @@ export const getPropsFromString = command => {
 
 export const executePerUpdates = async (command, updates) => {
   for (let update of updates) {
-    // command.options.updatables.forEach(option => {
-    //   // option.setValue('"textarea"')
-    //   command.mock({ [option.name]: '"textarea"' })
-    // })
-
     const argsHoldingUp = command.args.filter(arg => arg.isHoldingUp)
 
     argsHoldingUp.forEach(arg => arg.setValue('"textarea"'))

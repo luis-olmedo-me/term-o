@@ -134,11 +134,62 @@ export const getPropsFromString = command => {
   return props
 }
 
+const getArgs = value => {
+  const fragments = value.trim().split(' ')
+
+  let output = []
+  const addFragment = fragment => {
+    output = output.concat(fragment)
+  }
+
+  for (let index = 0; index < fragments.length; index++) {
+    const fragment = fragments[index]
+
+    const startsWithQuote = /^"|^'/g.test(fragment)
+
+    if (startsWithQuote) {
+      const quote = fragment.charAt(0)
+      const endsWithQuote = fragment.endsWith(quote)
+
+      if (endsWithQuote && fragment.length > 1) {
+        addFragment(fragment)
+        continue
+      }
+
+      const nextFragments = fragments.slice(++index)
+      let fragmentValue = fragment
+
+      for (const nextFragment of nextFragments) {
+        fragmentValue += ` ${nextFragment}`
+        index++
+        if (nextFragment.endsWith(quote)) break
+      }
+
+      addFragment(fragmentValue)
+      continue
+    }
+
+    addFragment(fragment)
+  }
+
+  return output
+}
+
 export const executePerUpdates = async (command, updates) => {
+  const colorPattern = /\[termo\.#(?:[0-9a-fA-F]{3}){1,2}\]/g
+
   for (let update of updates) {
+    let cleanedUpdate = update.replace(colorPattern, '')
+
+    const availableArgs = getArgs(cleanedUpdate)
     const argsHoldingUp = command.args.filter(arg => arg.isHoldingUp)
 
-    argsHoldingUp.forEach(arg => arg.setValue('"textarea"'))
+    argsHoldingUp.forEach(arg => {
+      const index = arg.getIndex()
+      const newValue = availableArgs[index] || ''
+
+      arg.setValue(newValue)
+    })
     command.prepare()
 
     await command.execute()

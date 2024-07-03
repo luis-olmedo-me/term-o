@@ -20,6 +20,19 @@ class Argument {
   holdUp() {
     this.isHoldingUp = true
   }
+
+  getIndex() {
+    const value = this.value
+    const paramPattern = /^\$\d+$/g
+
+    if (paramPattern.test(value)) {
+      const indexAsString = value.replace('$', '')
+
+      return Number(indexAsString)
+    }
+
+    return -1
+  }
 }
 
 export class Command extends EventListener {

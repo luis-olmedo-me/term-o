@@ -19,7 +19,7 @@ export const handleDOM = async command => {
           const attrName = `${C`cyan`}"${name}"`
           const attrValue = value ? ` ${C`yellow`}"${value}"` : ''
 
-          return `${C`bright-black`}[${attrName} ${attrValue}${C`bright-black`}]`
+          return `${C`purple`}[ ${attrName} ${attrValue} ${C`purple`}]`
         })
         .join(' ')
 

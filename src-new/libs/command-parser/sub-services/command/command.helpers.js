@@ -135,9 +135,7 @@ export const getPropsFromString = (command, args, replaceables) => {
 
 export const executePerUpdates = async (command, updates) => {
   for (let update of updates) {
-    const updatedArgs = command.args.map(arg => (arg === '$' ? '"img"' : arg))
-
-    command.prepare(updatedArgs, '"img"')
+    command.prepare(command.args, '"img"')
 
     command.options.updatables.forEach(option => {
       option.setValue({ ...command.props, [option.name]: '"img"' })

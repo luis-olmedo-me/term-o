@@ -17,6 +17,7 @@ export class Command extends EventListener {
     this.props = {}
     this.outputs = []
     this.updates = []
+    this.staticUpdates = []
     this.hidden = hidden
     this.finished = false
     this.executing = false
@@ -118,10 +119,14 @@ export class Command extends EventListener {
     const nextCommand = this.nextCommand
     const optionsUpdatables = nextCommand.options.updatables
 
-    if (nextCommand.finished) return this.setUpdates(...currentUpdates, ...nextCommand.updates)
+    if (nextCommand.finished) {
+      this.setUpdates(...currentUpdates, ...nextCommand.staticUpdates, ...nextCommand.updates)
 
-    nextCommand.addEventListener('update', ({ updates }) => {
-      this.setUpdates(...currentUpdates, ...updates)
+      return
+    }
+
+    nextCommand.addEventListener('update', ({ staticUpdates, updates }) => {
+      this.setUpdates(...currentUpdates, ...staticUpdates, ...updates)
     })
 
     if (!optionsUpdatables.length) await nextCommand.execute()
@@ -143,5 +148,6 @@ export class Command extends EventListener {
   finish() {
     this.finished = true
     this.executing = false
+    this.staticUpdates = [...this.staticUpdates, ...this.updates]
   }
 }

@@ -20,6 +20,7 @@ export class Command extends EventListener {
     this.updates = []
     this.staticUpdates = []
     this.hidden = hidden
+    this.error = false
     this.finished = false
     this.executing = false
     this.nextCommand = null
@@ -110,6 +111,7 @@ export class Command extends EventListener {
     this.update(`${C`red`}✕ ${message}`)
 
     this.finish()
+    this.error = true
   }
 
   async executeNext() {

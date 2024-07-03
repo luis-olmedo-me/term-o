@@ -218,6 +218,8 @@ export const executePerUpdates = async (command, updates) => {
     })
     command.prepare()
 
+    if (command.error) break
+
     await command.execute()
   }
 }

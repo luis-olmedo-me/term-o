@@ -62,20 +62,39 @@ const parseOptions = (index, arg, argsBySpace, type) => {
     }
 
     default:
-      throw 'Something went wrong.'
+      throw `Option type ${C`bright-red`}${type}${C`red`} is not recognized.`
   }
 }
 
-export const getPropsFromString = (command, args) => {
+const getNextArg = (args, index, replaceables, isBoolean) => {
+  const nextArg = args[index + 1]
+
+  if (nextArg === '$' && !isBoolean && replaceables) {
+    return replaceables
+  }
+
+  return nextArg
+}
+
+export const getPropsFromString = (command, args, replaceables) => {
   let props = {}
 
   for (let index = 0; index < args.length; index++) {
     const arg = args[index]
-    const nextArg = args[index + 1]
 
     if (arg.startsWith('--')) {
       const propName = arg.slice(2)
       const option = command.options.getByName(propName)
+
+      const isBoolean = option.type === 'boolean'
+      const nextArg = getNextArg(args, index, replaceables, isBoolean)
+
+      if (nextArg === '$' && !isBoolean) {
+        index += 2
+        option.holdUp()
+        continue
+      }
+
       const { value, newIndex } = parseOptions(index, arg, args, option.type)
 
       if (value === null) throw `${C`bright-red`}${arg}${C`red`} prop has an unexpected value.`
@@ -88,6 +107,16 @@ export const getPropsFromString = (command, args) => {
     if (arg.startsWith('-')) {
       const propAbbreviation = arg.slice(1)
       const option = command.options.getByAbbreviation(propAbbreviation)
+
+      const isBoolean = option.type === 'boolean'
+      const nextArg = getNextArg(args, index, replaceables, isBoolean)
+
+      if (nextArg === '$' && !isBoolean) {
+        index += 2
+        option.holdUp()
+        continue
+      }
+
       const { value, newIndex } = parseOptions(index, arg, args, option.type)
 
       if (value === null) throw `${C`bright-red`}${arg}${C`red`} option has an unexpected value.`
@@ -97,10 +126,23 @@ export const getPropsFromString = (command, args) => {
       props = { ...props, [option.name]: value }
       continue
     }
-    if (nextArg === '$') continue
 
     throw `${C`bright-red`}${arg}${C`red`} is an unexpected argument.`
   }
 
   return props
+}
+
+export const executePerUpdates = async (command, updates) => {
+  for (let update of updates) {
+    const updatedArgs = command.args.map(arg => (arg === '$' ? '"img"' : arg))
+
+    command.prepare(updatedArgs, '"img"')
+
+    command.options.updatables.forEach(option => {
+      option.setValue({ ...command.props, [option.name]: '"img"' })
+    })
+
+    await command.execute()
+  }
 }

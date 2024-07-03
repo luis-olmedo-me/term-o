@@ -17,20 +17,6 @@ class CommandParser extends EventListener {
 
   read(rawScript) {
     let [firstFragment, ...nextFragments] = splitBy(rawScript, '&&')
-    const command = this.readCommunicated(firstFragment)
-    let carriedCommand = command
-
-    nextFragments.forEach(fragment => {
-      const nextCommand = this.readCommunicated(fragment)
-      carriedCommand.nextCommand = nextCommand
-      carriedCommand = nextCommand
-    })
-
-    return command.setTitle(rawScript)
-  }
-
-  readCommunicated(rawScript) {
-    let [firstFragment, ...nextFragments] = splitBy(rawScript, '|')
     const command = this.get(firstFragment)
     let carriedCommand = command
 
@@ -43,7 +29,7 @@ class CommandParser extends EventListener {
       carriedCommand = nextCommand
     }
 
-    return command
+    return command.setTitle(rawScript)
   }
 
   get(scriptRaw) {

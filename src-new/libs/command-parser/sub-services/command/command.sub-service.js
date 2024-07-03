@@ -4,7 +4,7 @@ import { createUUIDv4 } from '@src/helpers/utils.helpers'
 import { getColor as C } from '@src/theme/theme.helpers'
 import { Options } from '../Options/Options.sub-service'
 import { defaultValues } from './command.constants'
-import { getPropsFromString } from './command.helpers'
+import { executePerUpdates, getPropsFromString } from './command.helpers'
 
 export class Command extends EventListener {
   constructor({ name, hidden = false }) {
@@ -59,11 +59,11 @@ export class Command extends EventListener {
     return this
   }
 
-  prepare(args) {
+  prepare(args = this.args, replacements) {
     this.args = args
 
     try {
-      const newProps = getPropsFromString(this, args)
+      const newProps = getPropsFromString(this, args, replacements)
       const hasNewProps = Object.values(newProps).length > 0
       const itExpectProps = this.options.length > 0
 
@@ -90,10 +90,8 @@ export class Command extends EventListener {
       this.props = this.options.getValues()
       this.startExecuting()
 
-      if (this.args.includes('$')) throw 'Command expects for value command before.'
-
       await this.dispatchEvent('execute', this)
-      this.finish()
+
       await this.executeNext()
     } catch (error) {
       this.throw(error)
@@ -115,24 +113,19 @@ export class Command extends EventListener {
 
   async executeNext() {
     if (!this.nextCommand) return
+
     const currentUpdates = this.updates
     const nextCommand = this.nextCommand
-    const initialUpdates = [...currentUpdates, ...nextCommand.updates]
-    const shouldExecute = nextCommand.timesExecuted === 0 && !nextCommand.finished
+    const optionsUpdatables = nextCommand.options.updatables
 
-    if (!shouldExecute) return this.setUpdates(...initialUpdates)
+    if (nextCommand.finished) return this.setUpdates(...currentUpdates, ...nextCommand.updates)
 
     nextCommand.addEventListener('update', ({ updates }) => {
       this.setUpdates(...currentUpdates, ...updates)
     })
 
-    for (let nextCommandUpdate of nextCommand.updates) {
-      const updatedArgs = nextCommand.args.map(arg => (arg === '$' ? '"img"' : arg))
-
-      nextCommand.prepare(updatedArgs)
-
-      await nextCommand.execute()
-    }
+    if (!optionsUpdatables.length) await nextCommand.execute()
+    else await executePerUpdates(nextCommand, currentUpdates)
   }
 
   setTitle(newTitle) {

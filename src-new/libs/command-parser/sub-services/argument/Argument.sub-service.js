@@ -1,4 +1,4 @@
-class Argument {
+export class Argument {
   constructor(value) {
     this.value = value
     this.isHoldingUp = false

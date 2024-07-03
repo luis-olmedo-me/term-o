@@ -16,7 +16,6 @@ const parseOptions = (index, arg, argsBySpace, type) => {
       if (!startsWithQuote || !endsWithQUote)
         throw `${C`bright-red`}${arg} ${C`red`}expects for quoted ${C`bright-red`}[string]${C`red`} value. Instead, it received ${C`bright-red`}${argValue}${C`red`}.`
 
-      index++
       const quotesPattern = new RegExp(`${quote}|${quote}^$`, 'g')
       const value = argValue.replace(quotesPattern, '')
 

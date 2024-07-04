@@ -7,6 +7,10 @@ export class Options {
     this.values = []
   }
 
+  get length() {
+    return this.values.length
+  }
+
   add({ name, value, type, abbreviation, validations, dependencies }) {
     this.values = this.values.concat(
       new Option({

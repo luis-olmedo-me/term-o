@@ -8,11 +8,15 @@ export class Option {
     this.dependencies = dependencies
   }
 
+  get displayName() {
+    return `--${this.name} ( -${this.abbreviation} )`
+  }
+
   setValue(value) {
     this.value = value
   }
 
   validate(value) {
-    if (this.validations) this.validations.forEach(validation => validation(value))
+    if (this.validations) this.validations.forEach(validation => validation(this, value))
   }
 }

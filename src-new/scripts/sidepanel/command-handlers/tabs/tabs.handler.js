@@ -61,7 +61,14 @@ export const handleTABS = async command => {
 
   if (P`list`) {
     const onlyIncognito = P`incognito`
-    const tabs = await chrome.tabs.query({})
+
+    const onlyMuted = P`muted` ? { muted: true } : null
+    const onlyUnmuted = P`unmuted` ? { muted: false } : null
+
+    const tabs = await chrome.tabs.query({
+      ...onlyMuted,
+      ...onlyUnmuted
+    })
 
     for (const tab of tabs) {
       const { windowId, id, title, url, incognito } = tab

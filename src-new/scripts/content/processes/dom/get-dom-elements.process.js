@@ -1,8 +1,13 @@
+import { getElementXPath } from './dom.helpers'
+
 export const getDOMElements = (resolve, data) => {
-  const { searchByTag, searchByAttributeName } = data
+  const { searchByTag, searchByAttribute, searchByText, appendXpath } = data
+  const [searchByAttributeName, searchByAttributeValue] = searchByAttribute
 
   const tagPattern = searchByTag && new RegExp(searchByTag)
-  const attrPattern = searchByAttributeName && new RegExp(searchByAttributeName)
+  const textPattern = searchByText && new RegExp(searchByText)
+  const attrNamePattern = searchByAttributeName && new RegExp(searchByAttributeName)
+  const attrValuePattern = searchByAttributeValue && new RegExp(searchByAttributeValue)
 
   const allElements = window.document.querySelectorAll('*') || []
 
@@ -18,13 +23,20 @@ export const getDOMElements = (resolve, data) => {
       })
     }
 
-    if (attrPattern) {
+    if (textPattern) {
+      conditions.push(() => {
+        return textPattern.test(element.textContent)
+      })
+    }
+
+    if (attrNamePattern || attrValuePattern) {
       conditions.push(() => {
         return attrNames.some(name => {
           const value = element.getAttribute(name)
-          const attr = value ? `["${name}" "${value}"]` : `["${name}"]`
+          const isNameMatch = !attrNamePattern || attrNamePattern.test(name)
+          const isValueMatch = !attrValuePattern || attrValuePattern.test(value)
 
-          return attrPattern.test(attr)
+          return isNameMatch && isValueMatch
         })
       })
     }
@@ -35,7 +47,9 @@ export const getDOMElements = (resolve, data) => {
       (allAttrs, attrName) => ({ ...allAttrs, [attrName]: element.getAttribute(attrName) }),
       {}
     )
-    return [...formattedElements, { tagName, attributes: attrs }]
+    const xpath = appendXpath ? getElementXPath(element) : null
+
+    return [...formattedElements, { tagName, attributes: attrs, xpath }]
   }, [])
 
   resolve(elements)

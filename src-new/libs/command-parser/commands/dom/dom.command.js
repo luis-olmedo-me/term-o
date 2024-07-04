@@ -1,14 +1,26 @@
 import { commandNames } from '../../command-parser.constants'
 import Command from '../../sub-services/command'
-import { isRegExp } from '../helpers'
+import { isInRange, isRegExp, isXpath } from '../helpers'
 
 export const createDOM = () => {
   return new Command({ name: commandNames.DOM })
     .expect({
+      name: 'search-xpath',
+      type: 'string',
+      abbreviation: 'X',
+      worksWith: [],
+      validate: [isXpath]
+    })
+    .expect({
       name: 'search',
       type: 'boolean',
       abbreviation: 's',
-      worksWith: ['attr', 'tag', 'group']
+      worksWith: ['attr', 'tag', 'group', 'text', 'xpath']
+    })
+    .expect({
+      name: 'xpath',
+      type: 'boolean',
+      abbreviation: 'x'
     })
     .expect({
       name: 'group',
@@ -17,14 +29,20 @@ export const createDOM = () => {
     })
     .expect({
       name: 'attr',
-      type: 'string',
+      type: 'string-array',
       abbreviation: 'a',
-      validate: [isRegExp]
+      validate: [isRegExp, isInRange(0, 2)]
     })
     .expect({
       name: 'tag',
       type: 'string',
       abbreviation: 't',
+      validate: [isRegExp]
+    })
+    .expect({
+      name: 'text',
+      type: 'string',
+      abbreviation: 'T',
       validate: [isRegExp]
     })
 }

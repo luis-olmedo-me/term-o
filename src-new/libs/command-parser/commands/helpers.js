@@ -8,7 +8,7 @@ export const isRegExp = (option, value) => {
   } catch (error) {
     const name = option.displayName
 
-    throw `${C`bright-red`}${name}${C`red`} expects a valid regular expression. Instead, it received ${C`bright-red`}${value}${C`red`}.`
+    throw `${C`bright-red`}${name}${C`red`} expects a valid regular expression. Instead, it received ${C`bright-red`}"${value}"${C`red`}.`
   }
 }
 
@@ -21,7 +21,7 @@ export const isXpath = (option, value) => {
   } catch (error) {
     const name = option.displayName
 
-    throw `${C`bright-red`}${name}${C`red`} expects a valid XPath. Instead, it received ${C`bright-red`}${value}${C`red`}.`
+    throw `${C`bright-red`}${name}${C`red`} expects a valid XPath. Instead, it received ${C`bright-red`}"${value}"${C`red`}.`
   }
 }
 
@@ -33,7 +33,7 @@ export const isURL = (option, value) => {
   } catch (error) {
     const name = option.displayName
 
-    throw `${C`bright-red`}${name}${C`red`} expects a valid URL. Instead, it received ${C`bright-red`}${value}${C`red`}.`
+    throw `${C`bright-red`}${name}${C`red`} expects a valid URL. Instead, it received ${C`bright-red`}"${value}"${C`red`}.`
   }
 }
 

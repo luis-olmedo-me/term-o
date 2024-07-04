@@ -29,8 +29,8 @@ export const splitBy = (value, key) => {
 
       for (const nextFragment of nextFragments) {
         fragmentValue += ` ${nextFragment}`
-        index++
         if (nextFragment.endsWith(quote)) break
+        index++
       }
 
       addFragment(fragmentValue)

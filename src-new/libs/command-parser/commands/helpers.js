@@ -37,6 +37,16 @@ export const isURL = (option, value) => {
   }
 }
 
+export const hasNoSpaces = (option, value) => {
+  if (Array.isArray(value)) return value.forEach(hasNoSpaces)
+
+  if (value.includes(' ')) {
+    const name = option.displayName
+
+    throw `${C`bright-red`}${name}${C`red`} expects a valid URL. Instead, it received ${C`bright-red`}"${value}"${C`red`}.`
+  }
+}
+
 export const isInRange = (min, max) => {
   return (option, value) => {
     const isValid = value.length >= min && value.length <= max
@@ -47,5 +57,13 @@ export const isInRange = (min, max) => {
 
       throw `${C`bright-red`}${name}${C`red`}expects between ${min} and ${max} value(s). Instead, it received ${C`bright-red`}${count}${C`red`}.`
     }
+  }
+}
+
+export const onItem = (index, validation) => {
+  return (option, value) => {
+    value.forEach((item, itemIndex) => {
+      if (itemIndex === index) validation(option, item)
+    })
   }
 }

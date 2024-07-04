@@ -1,5 +1,6 @@
 import { getColor as C } from '@src/theme/theme.helpers'
 import { splitBy } from './command-parser.helpers'
+import { createALIAS } from './commands/alias/alias.command'
 import { createCLEAR } from './commands/clear/clear.command'
 import { createDOM } from './commands/dom/dom.command'
 import { createERROR } from './commands/error/error.command'
@@ -63,5 +64,6 @@ export const commandParser = new CommandParser({
   dom: createDOM,
   storage: createSTORAGE,
   tabs: createTABS,
+  alias: createALIAS,
   error: createERROR
 })

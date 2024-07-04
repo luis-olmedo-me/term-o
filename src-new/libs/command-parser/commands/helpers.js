@@ -19,3 +19,12 @@ export const isURL = value => {
     throw `"${C`bright-red`}${value}${C`red`}" is not a valid URL.`
   }
 }
+
+export const isInRange = (min, max) => {
+  return value => {
+    const isValid = value.length >= min && value.length <= max
+
+    if (!isValid)
+      throw `Expected between ${min} and ${max} value(s). Instead, it received ${value.length}.`
+  }
+}

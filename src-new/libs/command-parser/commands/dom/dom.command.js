@@ -1,15 +1,6 @@
 import { commandNames } from '../../command-parser.constants'
 import Command from '../../sub-services/command'
-import { isRegExp } from '../helpers'
-
-const isInRange = (min, max) => {
-  return value => {
-    const isValid = value.length >= min && value.length <= max
-
-    if (!isValid)
-      throw `Expected between ${min} and ${max} value(s). Instead, it received ${value.length}.`
-  }
-}
+import { isInRange, isRegExp } from '../helpers'
 
 export const createDOM = () => {
   return new Command({ name: commandNames.DOM })

@@ -1,32 +1,29 @@
 export const getElementXPath = element => {
-  if (!element || !element.tagName) return ''
+  if (element.id !== '') return 'id("' + element.id + '")'
+  if (element === document.body) return element.tagName.toLowerCase()
 
-  let xpath = ''
-  let parentElement = element
+  let childCount = 0
+  let siblings = element.parentNode.childNodes
 
-  while (parentElement.tagName !== 'HTML') {
-    const tagName = parentElement.tagName.toLowerCase()
+  for (let i = 0; i < siblings.length; i++) {
+    let sibling = siblings[i]
 
-    let siblingIndex = 1
-    let sibling = parentElement.previousElementSibling
+    if (sibling === element)
+      return (
+        getElementXPath(element.parentNode) +
+        '/' +
+        element.tagName.toLowerCase() +
+        '[' +
+        (childCount + 1) +
+        ']'
+      )
 
-    while (sibling) {
-      if (sibling.tagName === tagName) {
-        siblingIndex++
-      }
-
-      sibling = sibling.previousElementSibling
+    if (sibling.nodeType === Node.ELEMENT_NODE && sibling.tagName === element.tagName) {
+      childCount++
     }
-
-    const tagSelector = `${tagName}[${siblingIndex}]`
-
-    xpath = '/' + tagSelector + xpath
-    parentElement = parentElement.parentElement
   }
 
-  xpath = '/html' + xpath
-
-  return xpath.toLowerCase()
+  return ''
 }
 
 export const getElementByXPath = xpath => {

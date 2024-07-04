@@ -16,7 +16,7 @@ const parseOptions = (index, arg, argsBySpace, type) => {
       if (!startsWithQuote || !endsWithQUote)
         throw `${C`bright-red`}${arg} ${C`red`}expects for quoted ${C`bright-red`}[string]${C`red`} value. Instead, it received ${C`bright-red`}${argValue}${C`red`}.`
 
-      const quotesPattern = new RegExp(`${quote}|${quote}^$`, 'g')
+      const quotesPattern = new RegExp(`^${quote}|${quote}$`, 'g')
       const value = argValue.replace(quotesPattern, '')
 
       if (!value)
@@ -211,10 +211,9 @@ const getParamValue = (indexes, values) => {
   }
 
   const parsedValues = indexes.map(index => values[index]).filter(Boolean)
+  const valuesInLine = parsedValues.join(' ')
 
   if (!parsedValues.length) return ''
-
-  const valuesInLine = parsedValues.join(' ')
 
   return `[ ${valuesInLine} ]`
 }

@@ -5,6 +5,12 @@ import { isInRange, isRegExp } from '../helpers'
 export const createDOM = () => {
   return new Command({ name: commandNames.DOM })
     .expect({
+      name: 'search-xpath',
+      type: 'string',
+      abbreviation: 'X',
+      worksWith: []
+    })
+    .expect({
       name: 'search',
       type: 'boolean',
       abbreviation: 's',

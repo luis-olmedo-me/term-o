@@ -1,10 +1,35 @@
-import { getDOMElements } from '@sidepanel/proccesses/workers'
+import { findDOMElement, getDOMElements } from '@sidepanel/proccesses/workers'
 import { getColor as C } from '@src/theme/theme.helpers'
 import { prependCounters } from '../command-handlers.helpers'
 
 export const handleDOM = async command => {
   const { tab } = command.data
   const P = name => command.props[name]
+
+  if (P`search-xpath`) {
+    command.update('Searching element.')
+    const element = await findDOMElement(tab.id, {
+      searchByXpath: P`search-xpath`
+    })
+
+    command.reset()
+    if (!element) return
+
+    const { tagName, attributes } = element
+
+    const attrs = Object.entries(attributes)
+      .map(([name, value]) => {
+        const attrName = `${C`cyan`}"${name}"`
+        const attrValue = value ? ` ${C`yellow`}"${value}"` : ''
+
+        return `${C`purple`}[ ${attrName} ${attrValue} ${C`purple`}]`
+      })
+      .join(' ')
+
+    const textElement = attrs ? `${C`red`}"${tagName}" ${attrs}` : `${C`red`}"${tagName}"`
+
+    command.update(textElement)
+  }
 
   if (P`search`) {
     command.update('Getting elements.')

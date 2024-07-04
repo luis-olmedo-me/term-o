@@ -10,7 +10,7 @@ export const handleDOM = async command => {
     command.update('Getting elements.')
     const elements = await getDOMElements(tab.id, {
       searchByTag: P`tag`,
-      searchByAttributeName: P`attr`
+      searchByAttribute: P`attr`
     })
 
     let textElements = elements.map(({ tagName, attributes }) => {

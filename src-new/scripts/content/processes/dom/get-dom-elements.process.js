@@ -1,8 +1,10 @@
 export const getDOMElements = (resolve, data) => {
-  const { searchByTag, searchByAttributeName } = data
+  const { searchByTag, searchByAttribute } = data
+  const [searchByAttributeName, searchByAttributeValue] = searchByAttribute
 
   const tagPattern = searchByTag && new RegExp(searchByTag)
-  const attrPattern = searchByAttributeName && new RegExp(searchByAttributeName)
+  const attrNamePattern = searchByAttributeName && new RegExp(searchByAttributeName)
+  const attrValuePattern = searchByAttributeValue && new RegExp(searchByAttributeValue)
 
   const allElements = window.document.querySelectorAll('*') || []
 
@@ -18,13 +20,18 @@ export const getDOMElements = (resolve, data) => {
       })
     }
 
-    if (attrPattern) {
+    if (attrNamePattern) {
+      conditions.push(() => {
+        return attrNames.some(name => attrNamePattern.test(name))
+      })
+    }
+
+    if (attrValuePattern) {
       conditions.push(() => {
         return attrNames.some(name => {
           const value = element.getAttribute(name)
-          const attr = value ? `["${name}" "${value}"]` : `["${name}"]`
 
-          return attrPattern.test(attr)
+          return attrValuePattern.test(value)
         })
       })
     }

@@ -40,20 +40,25 @@ const parseOptions = (index, arg, argsBySpace, type) => {
       return { value, newIndex: index }
     }
 
-    case 'string[]': {
-      const nextArg = argsBySpace.slice(index)
+    case 'string-array': {
+      index++
+      const argValue = argsBySpace.at(index) || ''
 
       const startsWithBracket = argValue.startsWith('[')
       const endsWithBracket = argValue.endsWith(']')
 
       if ((!startsWithBracket || !endsWithBracket) && !argValue)
-        throw `${C`bright-red`}${arg} ${C`red`}expects for brackets with ${C`bright-red`}[string]${C`red`} value(s). Instead, it received nothing.`
+        throw `${C`bright-red`}${arg} ${C`red`}expects for ${C`bright-red`}[string-array]${C`red`} value. Instead, it received nothing.`
 
-      const value = JSON.parse(nextArg)
-      const isValidJsonValue = Object.values(value).every(value => typeof value === 'string')
+      if (!startsWithBracket || !endsWithBracket)
+        throw `${C`bright-red`}${arg} ${C`red`}expects for ${C`bright-red`}[string-array]${C`red`} value. Instead, it received ${C`bright-red`}${argValue}${C`red`}.`
 
-      if (!isValidJsonValue)
-        throw `${C`bright-red`}${arg} ${C`red`}expects for brackets with ${C`bright-red`}[string]${C`red`} value(s). Instead, it received ${C`bright-red`}${argValue}${C`red`}.`
+      const argValueWithComas = argValue.replace('" "', '","')
+      const value = JSON.parse(argValueWithComas)
+      const isValidValue = Object.values(value).every(value => typeof value === 'string' && value)
+
+      if (!isValidValue)
+        throw `${C`bright-red`}${arg} ${C`red`}expects for content in ${C`bright-red`}[string-array]${C`red`} value(s). Instead, it received ${C`bright-red`}${argValue}${C`red`}.`
 
       return { value, newIndex: index }
     }

@@ -17,7 +17,7 @@ export const createDOM = () => {
     })
     .expect({
       name: 'attr',
-      type: 'string[]',
+      type: 'string-array',
       abbreviation: 'a',
       validate: [isRegExp]
     })

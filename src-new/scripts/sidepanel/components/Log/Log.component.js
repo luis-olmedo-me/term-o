@@ -1,21 +1,19 @@
 import * as React from 'preact'
 import { useEffect, useRef, useState } from 'preact/hooks'
 
+import { MAX_LINES_PER_COMMAND } from '@sidepanel/config'
 import ColoredText from '../ColoredText'
 import * as S from './Log.styles'
 
-const MAX_LINES_PER_COMMAND = 50
-
 export const Log = ({ command, prefix, onUpdate }) => {
   const [updates, setUpdates] = useState(command.updates)
-  const [visiblesCount, setVisiblesCount] = useState(MAX_LINES_PER_COMMAND)
   const wrapper = useRef(null)
 
   useEffect(
     function listenUpdates() {
       const handleUpdate = ({ updates: newUpdates }) => {
         if (onUpdate) onUpdate()
-        const limitedUpdates = newUpdates.slice(visiblesCount * -1)
+        const limitedUpdates = newUpdates.slice(MAX_LINES_PER_COMMAND * -1)
 
         setUpdates(limitedUpdates)
       }

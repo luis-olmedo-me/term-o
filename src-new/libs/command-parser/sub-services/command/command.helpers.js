@@ -98,7 +98,7 @@ export const getPropsFromString = command => {
         continue
       }
 
-      const argName = `--${option.name} ( -${option.abbreviation} )`
+      const argName = option.displayName
       const { value, newIndex } = parseOptions(index, argName, argValues, option.type)
       option.validate(value)
       index = newIndex
@@ -118,7 +118,7 @@ export const getPropsFromString = command => {
         continue
       }
 
-      const argName = `--${option.name} ( -${option.abbreviation} )`
+      const argName = option.displayName
       const { value, newIndex } = parseOptions(index, argName, argValues, option.type)
       option.validate(value)
       index = newIndex

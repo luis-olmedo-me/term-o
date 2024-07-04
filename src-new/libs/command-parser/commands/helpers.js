@@ -6,7 +6,7 @@ export const isRegExp = (option, value) => {
   try {
     new RegExp(value)
   } catch (error) {
-    const name = `--${option.name} ( -${option.abbreviation} )`
+    const name = option.displayName
 
     throw `${C`bright-red`}${name}${C`red`} expects a valid regular expression. Instead, it received ${C`bright-red`}${value}${C`red`}.`
   }
@@ -18,7 +18,7 @@ export const isURL = (option, value) => {
   try {
     new URL(value)
   } catch (error) {
-    const name = `--${option.name} ( -${option.abbreviation} )`
+    const name = option.displayName
 
     throw `${C`bright-red`}${name}${C`red`} expects a valid URL. Instead, it received ${C`bright-red`}${value}${C`red`}.`
   }
@@ -29,7 +29,7 @@ export const isInRange = (min, max) => {
     const isValid = value.length >= min && value.length <= max
 
     if (!isValid) {
-      const name = `--${option.name} ( -${option.abbreviation} )`
+      const name = option.displayName
       const count = value.length
 
       throw `${C`bright-red`}${name}${C`red`}expects between ${min} and ${max} value(s). Instead, it received ${C`bright-red`}${count}${C`red`}.`

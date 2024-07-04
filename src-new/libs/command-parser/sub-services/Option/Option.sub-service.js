@@ -8,6 +8,10 @@ export class Option {
     this.dependencies = dependencies
   }
 
+  get displayName() {
+    return `--${this.name} ( -${this.abbreviation} )`
+  }
+
   setValue(value) {
     this.value = value
   }

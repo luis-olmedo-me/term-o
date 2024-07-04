@@ -71,7 +71,7 @@ const parseOptions = (index, arg, argsBySpace, type) => {
 const isParam = (option, arg) => {
   const isBoolean = option.type === 'boolean'
 
-  const paramPattern = /^\$\d+$/g
+  const paramPattern = /^\$\d+(,\d+)?(-\d+)?$/
   const argValue = arg?.value
 
   return !isBoolean && Boolean(argValue) && paramPattern.test(argValue)
@@ -203,6 +203,22 @@ export const getArgs = value => {
   return output
 }
 
+const getParamValue = (indexes, values) => {
+  if (indexes.length === 1) {
+    const [index] = indexes
+
+    return values[index] || ''
+  }
+
+  const parsedValues = indexes.map(index => values[index]).filter(Boolean)
+
+  if (!parsedValues.length) return ''
+
+  const valuesInLine = parsedValues.join(' ')
+
+  return `[ ${valuesInLine} ]`
+}
+
 export const executePerUpdates = async (command, updates) => {
   const argsHoldingUp = command.args.filter(arg => arg.isHoldingUp)
   const colorPattern = /\[termo\.#(?:[0-9a-fA-F]{3}){1,2}\]/g
@@ -212,8 +228,8 @@ export const executePerUpdates = async (command, updates) => {
     const availableArgs = getArgs(cleanedUpdate)
 
     argsHoldingUp.forEach(arg => {
-      const index = arg.getIndex()
-      const newValue = availableArgs[index] || ''
+      const indexes = arg.getIndexes()
+      const newValue = getParamValue(indexes, availableArgs)
 
       arg.setValue(newValue)
     })

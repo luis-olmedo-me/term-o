@@ -8,12 +8,22 @@ export const createTABS = () => {
       name: 'list',
       type: 'boolean',
       abbreviation: 'l',
-      worksWith: ['incognito']
+      worksWith: ['incognito', 'muted', 'unmuted']
     })
     .expect({
       name: 'incognito',
       type: 'boolean',
       abbreviation: 'i'
+    })
+    .expect({
+      name: 'muted',
+      type: 'boolean',
+      abbreviation: 'm'
+    })
+    .expect({
+      name: 'unmuted',
+      type: 'boolean',
+      abbreviation: 'M'
     })
     .expect({
       name: 'switch',

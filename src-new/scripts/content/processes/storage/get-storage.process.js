@@ -1,4 +1,4 @@
-import { getCookies, getLocal, getSession } from './get-storage.helpers'
+import { getCookies, getLocal, getSession } from './storage.helpers'
 
 export const getStorage = (resolve, data) => {
   let storages = {}

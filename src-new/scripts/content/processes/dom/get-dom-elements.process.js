@@ -1,4 +1,4 @@
-import { getElementXPath } from './get-dom-elements.helpers'
+import { getElementXPath } from './dom.helpers'
 
 export const getDOMElements = (resolve, data) => {
   const { searchByTag, searchByAttribute, searchByText, appendXpath } = data

@@ -93,8 +93,9 @@ export class Command extends EventListener {
       this.startExecuting()
 
       await this.dispatchEvent('execute', this)
-
       await this.executeNext()
+
+      this.finish()
     } catch (error) {
       this.throw(error)
     }

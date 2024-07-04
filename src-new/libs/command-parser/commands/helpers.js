@@ -1,6 +1,8 @@
 import { getColor as C } from '@src/theme/theme.helpers'
 
 export const isRegExp = value => {
+  if (Array.isArray(value)) return value.forEach(isRegExp)
+
   try {
     new RegExp(value)
   } catch (error) {
@@ -9,6 +11,8 @@ export const isRegExp = value => {
 }
 
 export const isURL = value => {
+  if (Array.isArray(value)) return value.forEach(isURL)
+
   try {
     new URL(value)
   } catch (error) {

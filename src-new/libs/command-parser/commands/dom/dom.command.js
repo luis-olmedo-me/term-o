@@ -8,7 +8,12 @@ export const createDOM = () => {
       name: 'search',
       type: 'boolean',
       abbreviation: 's',
-      worksWith: ['attr', 'tag', 'group', 'text']
+      worksWith: ['attr', 'tag', 'group', 'text', 'xpath']
+    })
+    .expect({
+      name: 'xpath',
+      type: 'boolean',
+      abbreviation: 'x'
     })
     .expect({
       name: 'group',

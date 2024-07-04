@@ -1,5 +1,7 @@
+import { getElementXPath } from './get-dom-elements.helpers'
+
 export const getDOMElements = (resolve, data) => {
-  const { searchByTag, searchByAttribute, searchByText } = data
+  const { searchByTag, searchByAttribute, searchByText, appendXpath } = data
   const [searchByAttributeName, searchByAttributeValue] = searchByAttribute
 
   const tagPattern = searchByTag && new RegExp(searchByTag)
@@ -45,7 +47,9 @@ export const getDOMElements = (resolve, data) => {
       (allAttrs, attrName) => ({ ...allAttrs, [attrName]: element.getAttribute(attrName) }),
       {}
     )
-    return [...formattedElements, { tagName, attributes: attrs }]
+    const xpath = appendXpath ? getElementXPath(element) : null
+
+    return [...formattedElements, { tagName, attributes: attrs, xpath }]
   }, [])
 
   resolve(elements)

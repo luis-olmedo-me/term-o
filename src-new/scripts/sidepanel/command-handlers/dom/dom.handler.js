@@ -11,10 +11,13 @@ export const handleDOM = async command => {
     const elements = await getDOMElements(tab.id, {
       searchByTag: P`tag`,
       searchByAttribute: P`attr`,
-      searchByText: P`text`
+      searchByText: P`text`,
+      appendXpath: P`xpath`
     })
 
-    let textElements = elements.map(({ tagName, attributes }) => {
+    let textElements = elements.map(({ tagName, attributes, xpath }) => {
+      if (xpath !== null) return `${C`yellow`}"${xpath}"`
+
       const attrs = Object.entries(attributes)
         .map(([name, value]) => {
           const attrName = `${C`cyan`}"${name}"`

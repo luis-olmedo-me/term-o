@@ -1,5 +1,7 @@
+import { getArgs } from './sub-services/command/command.helpers'
+
 export const splitBy = (value, key) => {
-  const fragments = value.trim().split(' ')
+  const fragments = getArgs(value)
 
   let output = []
   let outputIndex = 0
@@ -11,31 +13,7 @@ export const splitBy = (value, key) => {
 
   for (let index = 0; index < fragments.length; index++) {
     const fragment = fragments[index]
-
-    const startsWithQuote = /^"|^'/g.test(fragment)
     const isKey = fragment === key
-
-    if (startsWithQuote) {
-      const quote = fragment.charAt(0)
-      const endsWithQuote = fragment.endsWith(quote)
-
-      if (endsWithQuote && fragment.length > 1) {
-        addFragment(fragment)
-        continue
-      }
-
-      const nextFragments = fragments.slice(++index)
-      let fragmentValue = fragment
-
-      for (const nextFragment of nextFragments) {
-        fragmentValue += ` ${nextFragment}`
-        if (nextFragment.endsWith(quote)) break
-        index++
-      }
-
-      addFragment(fragmentValue)
-      continue
-    }
 
     if (isKey) {
       outputIndex++

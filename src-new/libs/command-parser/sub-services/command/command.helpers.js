@@ -134,7 +134,7 @@ export const getPropsFromString = command => {
 }
 
 export const getArgs = value => {
-  const fragments = value.trim().split(' ')
+  const fragments = value.split(' ')
 
   let output = []
   const addFragment = fragment => {
@@ -143,6 +143,8 @@ export const getArgs = value => {
 
   for (let index = 0; index < fragments.length; index++) {
     const fragment = fragments[index]
+
+    if (!fragment) continue
 
     const startsWithQuote = /^"|^'/g.test(fragment)
     const startsWithBracket = /^\[/g.test(fragment)

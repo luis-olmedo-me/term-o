@@ -12,6 +12,19 @@ export const isRegExp = (option, value) => {
   }
 }
 
+export const isXpath = (option, value) => {
+  if (Array.isArray(value)) return value.forEach(isXpath)
+
+  try {
+    window.document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
+      .singleNodeValue
+  } catch (error) {
+    const name = option.displayName
+
+    throw `${C`bright-red`}${name}${C`red`} expects a valid XPath. Instead, it received ${C`bright-red`}${value}${C`red`}.`
+  }
+}
+
 export const isURL = (option, value) => {
   if (Array.isArray(value)) return value.forEach(isURL)
 

@@ -1,6 +1,6 @@
 import { commandNames } from '../../command-parser.constants'
 import Command from '../../sub-services/command'
-import { isInRange, isRegExp } from '../helpers'
+import { isInRange, isRegExp, isXpath } from '../helpers'
 
 export const createDOM = () => {
   return new Command({ name: commandNames.DOM })
@@ -8,7 +8,8 @@ export const createDOM = () => {
       name: 'search-xpath',
       type: 'string',
       abbreviation: 'X',
-      worksWith: []
+      worksWith: [],
+      validate: [isXpath]
     })
     .expect({
       name: 'search',

@@ -69,7 +69,11 @@ export class Command extends EventListener {
       const hasNewProps = Object.values(newProps).length > 0
       const itExpectProps = this.options.length > 0
 
-      if (!hasNewProps && itExpectProps) throw 'No props were provided.'
+      if (!hasNewProps && itExpectProps) {
+        const name = this.name
+
+        throw `${C`bright-red`}"${name}" ${C`red`}command expects for props. Instead, it received nothing.`
+      }
 
       this.options.setValues(newProps)
     } catch (error) {

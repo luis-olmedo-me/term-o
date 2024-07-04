@@ -1,8 +1,9 @@
 export const getDOMElements = (resolve, data) => {
-  const { searchByTag, searchByAttribute } = data
+  const { searchByTag, searchByAttribute, searchByText } = data
   const [searchByAttributeName, searchByAttributeValue] = searchByAttribute
 
   const tagPattern = searchByTag && new RegExp(searchByTag)
+  const textPattern = searchByText && new RegExp(searchByText)
   const attrNamePattern = searchByAttributeName && new RegExp(searchByAttributeName)
   const attrValuePattern = searchByAttributeValue && new RegExp(searchByAttributeValue)
 
@@ -17,6 +18,12 @@ export const getDOMElements = (resolve, data) => {
     if (tagPattern) {
       conditions.push(() => {
         return tagPattern.test(tagName)
+      })
+    }
+
+    if (textPattern) {
+      conditions.push(() => {
+        return textPattern.test(element.textContent)
       })
     }
 

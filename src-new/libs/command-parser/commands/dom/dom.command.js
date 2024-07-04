@@ -8,7 +8,7 @@ export const createDOM = () => {
       name: 'search',
       type: 'boolean',
       abbreviation: 's',
-      worksWith: ['attr', 'tag', 'group']
+      worksWith: ['attr', 'tag', 'group', 'text']
     })
     .expect({
       name: 'group',
@@ -25,6 +25,12 @@ export const createDOM = () => {
       name: 'tag',
       type: 'string',
       abbreviation: 't',
+      validate: [isRegExp]
+    })
+    .expect({
+      name: 'text',
+      type: 'string',
+      abbreviation: 'T',
       validate: [isRegExp]
     })
 }

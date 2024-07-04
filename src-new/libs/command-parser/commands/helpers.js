@@ -16,7 +16,7 @@ export const isXpath = (option, value) => {
   if (Array.isArray(value)) return value.forEach(isXpath)
 
   try {
-    window.document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
+    window.document.evaluate(value, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
       .singleNodeValue
   } catch (error) {
     const name = option.displayName

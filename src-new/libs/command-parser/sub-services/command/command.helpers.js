@@ -16,7 +16,7 @@ const parseOptions = (index, arg, argsBySpace, type) => {
       if (!startsWithQuote || !endsWithQUote)
         throw `${C`bright-red`}${arg} ${C`red`}expects for quoted ${C`bright-red`}[string]${C`red`} value. Instead, it received ${C`bright-red`}${argValue}${C`red`}.`
 
-      const quotesPattern = new RegExp(`${quote}|${quote}^$`, 'g')
+      const quotesPattern = new RegExp(`^${quote}|${quote}$`, 'g')
       const value = argValue.replace(quotesPattern, '')
 
       if (!value)
@@ -71,7 +71,7 @@ const parseOptions = (index, arg, argsBySpace, type) => {
 const isParam = (option, arg) => {
   const isBoolean = option.type === 'boolean'
 
-  const paramPattern = /^\$\d+$/g
+  const paramPattern = /^\$\d+(,\d+)?(-\d+)?$/
   const argValue = arg?.value
 
   return !isBoolean && Boolean(argValue) && paramPattern.test(argValue)
@@ -134,7 +134,7 @@ export const getPropsFromString = command => {
 }
 
 export const getArgs = value => {
-  const fragments = value.trim().split(' ')
+  const fragments = value.split(' ')
 
   let output = []
   const addFragment = fragment => {
@@ -143,6 +143,8 @@ export const getArgs = value => {
 
   for (let index = 0; index < fragments.length; index++) {
     const fragment = fragments[index]
+
+    if (!fragment) continue
 
     const startsWithQuote = /^"|^'/g.test(fragment)
     const startsWithBracket = /^\[/g.test(fragment)
@@ -201,6 +203,21 @@ export const getArgs = value => {
   return output
 }
 
+const getParamValue = (indexes, values) => {
+  if (indexes.length === 1) {
+    const [index] = indexes
+
+    return values[index] || ''
+  }
+
+  const parsedValues = indexes.map(index => values[index]).filter(Boolean)
+  const valuesInLine = parsedValues.join(' ')
+
+  if (!parsedValues.length) return ''
+
+  return `[ ${valuesInLine} ]`
+}
+
 export const executePerUpdates = async (command, updates) => {
   const argsHoldingUp = command.args.filter(arg => arg.isHoldingUp)
   const colorPattern = /\[termo\.#(?:[0-9a-fA-F]{3}){1,2}\]/g
@@ -210,8 +227,8 @@ export const executePerUpdates = async (command, updates) => {
     const availableArgs = getArgs(cleanedUpdate)
 
     argsHoldingUp.forEach(arg => {
-      const index = arg.getIndex()
-      const newValue = availableArgs[index] || ''
+      const indexes = arg.getIndexes()
+      const newValue = getParamValue(indexes, availableArgs)
 
       arg.setValue(newValue)
     })

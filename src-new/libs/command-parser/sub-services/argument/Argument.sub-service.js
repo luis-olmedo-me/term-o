@@ -14,14 +14,14 @@ export class Argument {
     this.isHoldingUp = true
   }
 
-  getIndex() {
+  getIndexes() {
     const value = this.backup
-    const paramPattern = /^\$\d+$/g
+    const paramPattern = /^\$\d+(,\d+)?(-\d+)?$/
 
     if (paramPattern.test(value)) {
-      const indexAsString = value.replace('$', '')
+      const indexesAsString = value.replace('$', '')
 
-      return Number(indexAsString)
+      return JSON.parse(`[${indexesAsString}]`)
     }
 
     return -1

@@ -1,6 +1,7 @@
 import * as React from 'preact'
 import { useEffect, useRef, useState } from 'preact/hooks'
 
+import { MAX_LINES_PER_COMMAND } from '@sidepanel/config'
 import ColoredText from '../ColoredText'
 import * as S from './Log.styles'
 
@@ -12,8 +13,9 @@ export const Log = ({ command, prefix, onUpdate }) => {
     function listenUpdates() {
       const handleUpdate = ({ updates: newUpdates }) => {
         if (onUpdate) onUpdate()
+        const limitedUpdates = newUpdates.slice(MAX_LINES_PER_COMMAND * -1)
 
-        setUpdates(newUpdates)
+        setUpdates(limitedUpdates)
       }
 
       handleUpdate(command)

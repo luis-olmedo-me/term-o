@@ -1,6 +1,6 @@
 import { commandNames } from '../../command-parser.constants'
 import Command from '../../sub-services/command'
-import { isURL } from '../helpers'
+import { isRegExp, isURL } from '../helpers'
 
 export const createTABS = () => {
   return new Command({ name: commandNames.TABS })
@@ -8,12 +8,24 @@ export const createTABS = () => {
       name: 'list',
       type: 'boolean',
       abbreviation: 'l',
-      worksWith: ['incognito', 'muted', 'unmuted']
+      worksWith: ['incognito', 'muted', 'unmuted', 'title', 'url']
     })
     .expect({
       name: 'incognito',
       type: 'boolean',
       abbreviation: 'i'
+    })
+    .expect({
+      name: 'title',
+      type: 'string',
+      abbreviation: 't',
+      validate: [isRegExp]
+    })
+    .expect({
+      name: 'url',
+      type: 'string',
+      abbreviation: 'u',
+      validate: [isRegExp]
     })
     .expect({
       name: 'muted',

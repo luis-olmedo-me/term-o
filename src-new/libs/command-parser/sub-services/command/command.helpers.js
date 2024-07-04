@@ -53,7 +53,7 @@ const parseOptions = (index, arg, argsBySpace, type) => {
       if (!startsWithBracket || !endsWithBracket)
         throw `${C`bright-red`}${arg} ${C`red`}expects for ${C`bright-red`}[string-array]${C`red`} value. Instead, it received ${C`bright-red`}${argValue}${C`red`}.`
 
-      const argValueWithComas = argValue.replace('" "', '","')
+      const argValueWithComas = argValue.replaceAll('" "', '","')
       const value = JSON.parse(argValueWithComas)
       const isValidValue = Object.values(value).every(value => typeof value === 'string' && value)
 

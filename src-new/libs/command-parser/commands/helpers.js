@@ -47,6 +47,19 @@ export const hasNoSpaces = (option, value) => {
   }
 }
 
+export const hasItems = staticLength => {
+  return (option, value) => {
+    const isValid = value.length === staticLength
+
+    if (!isValid) {
+      const name = option.displayName
+      const count = value.length
+
+      throw `${C`bright-red`}${name}${C`red`}expects ${staticLength} value(s). Instead, it received ${C`bright-red`}${count}${C`red`}.`
+    }
+  }
+}
+
 export const isInRange = (min, max) => {
   return (option, value) => {
     const isValid = value.length >= min && value.length <= max

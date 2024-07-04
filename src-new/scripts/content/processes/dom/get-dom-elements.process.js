@@ -20,18 +20,14 @@ export const getDOMElements = (resolve, data) => {
       })
     }
 
-    if (attrNamePattern) {
-      conditions.push(() => {
-        return attrNames.some(name => attrNamePattern.test(name))
-      })
-    }
-
-    if (attrValuePattern) {
+    if (attrNamePattern || attrValuePattern) {
       conditions.push(() => {
         return attrNames.some(name => {
           const value = element.getAttribute(name)
+          const isNameMatch = !attrNamePattern || attrNamePattern.test(name)
+          const isValueMatch = !attrValuePattern || attrValuePattern.test(value)
 
-          return attrValuePattern.test(value)
+          return isNameMatch && isValueMatch
         })
       })
     }

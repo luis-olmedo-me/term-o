@@ -3,5 +3,6 @@ export const commandNames = {
   ERROR: 'error',
   DOM: 'dom',
   STORAGE: 'storage',
-  TABS: 'tabs'
+  TABS: 'tabs',
+  ALIAS: 'alias'
 }

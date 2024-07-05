@@ -1,5 +1,6 @@
 import { getColor as C } from '@src/theme/theme.helpers'
 import { splitBy } from './command-parser.helpers'
+import { createALIAS } from './commands/alias/alias.command'
 import { createCLEAR } from './commands/clear/clear.command'
 import { createDOM } from './commands/dom/dom.command'
 import { createERROR } from './commands/error/error.command'
@@ -14,10 +15,17 @@ class CommandParser extends EventListener {
 
     this.commands = commands
     this.handlers = {}
+    this.aliases = []
+  }
+
+  setAliases(aliases) {
+    this.aliases = aliases
   }
 
   read(rawScript) {
-    let [firstFragment, ...nextFragments] = splitBy(rawScript, '&&')
+    const scriptFormatted = this.getWithAliasesResolved(rawScript)
+    let [firstFragment, ...nextFragments] = splitBy(scriptFormatted, '&&')
+
     const command = this.get(firstFragment)
     let carriedCommand = command
 
@@ -35,6 +43,7 @@ class CommandParser extends EventListener {
 
   get(scriptRaw) {
     const [name, ...scriptArgs] = getArgs(scriptRaw)
+
     const createCommand = this.commands[name]
     const handler = this.handlers[name]
     const cleanedName = name.replace('"', '\\"')
@@ -56,6 +65,13 @@ class CommandParser extends EventListener {
   setHandlers(commandHandlers) {
     this.handlers = commandHandlers
   }
+
+  getWithAliasesResolved(script) {
+    const [name, ...scriptArgs] = getArgs(script)
+    const aliasFound = this.aliases.find(alias => alias.key === name)?.value || null
+
+    return aliasFound ? [aliasFound, ...scriptArgs].join(' ') : script
+  }
 }
 
 export const commandParser = new CommandParser({
@@ -63,5 +79,6 @@ export const commandParser = new CommandParser({
   dom: createDOM,
   storage: createSTORAGE,
   tabs: createTABS,
+  alias: createALIAS,
   error: createERROR
 })

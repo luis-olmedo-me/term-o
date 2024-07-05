@@ -38,6 +38,26 @@ export const Terminal = () => {
     return () => commandParser.removeEventListener('on-create-clear', clearLogs)
   }, [])
 
+  useEffect(function expectForAliasChanges() {
+    const handleStorageChanges = (changes, namespace) => {
+      if (namespace !== 'local') return
+
+      for (let [key, { newValue }] of Object.entries(changes)) {
+        if (key === 'aliases') commandParser.setAliases(newValue)
+      }
+    }
+
+    const updateCurrentAliases = async () => {
+      const { aliases = [] } = await chrome.storage.local.get('aliases')
+      commandParser.setAliases(aliases)
+    }
+
+    updateCurrentAliases()
+    chrome.storage.onChanged.addListener(handleStorageChanges)
+
+    return () => chrome.storage.onChanged.removeListener(handleStorageChanges)
+  }, [])
+
   useEffect(
     function addExternalDataOnNewCommands() {
       const appendData = command => command.appendsData({ tab, setTab })

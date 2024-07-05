@@ -68,8 +68,13 @@ export class Command extends EventListener {
       const newProps = getPropsFromString(this)
       const hasNewProps = Object.values(newProps).length > 0
       const itExpectProps = this.options.length > 0
+      const hasArgsHoldingUp = this.args.some(arg => arg.isHoldingUp)
 
-      if (!hasNewProps && itExpectProps) throw 'No props were provided.'
+      if (!hasNewProps && itExpectProps && !hasArgsHoldingUp) {
+        const name = this.name
+
+        throw `${C`bright-red`}"${name}" ${C`red`}command expects for props. Instead, it received nothing.`
+      }
 
       this.options.setValues(newProps)
     } catch (error) {
@@ -132,8 +137,8 @@ export class Command extends EventListener {
       this.setUpdates(...currentUpdates, ...staticUpdates, ...updates)
     })
 
-    if (!hasArgsHoldingUp) await nextCommand.execute()
-    else await executePerUpdates(nextCommand, currentUpdates)
+    if (hasArgsHoldingUp) await executePerUpdates(nextCommand, currentUpdates)
+    else await nextCommand.execute()
   }
 
   setTitle(newTitle) {

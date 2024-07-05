@@ -1,3 +1,4 @@
+import { validateSchema } from '@src/helpers/utils.helpers'
 import { getColor as C } from '@src/theme/theme.helpers'
 
 export const isRegExp = (option, value) => {
@@ -21,6 +22,19 @@ export const isJSON = (option, value) => {
     const name = option.displayName
 
     throw `${C`brightRed`}${name}${C`red`} expects a valid JSON. Instead, it received ${C`brightRed`}"${value}"${C`red`}.`
+  }
+}
+
+export const isJSONScheme = scheme => {
+  return (option, value) => {
+    isJSON(option, value)
+    const { isValid, error } = validateSchema(scheme, value)
+
+    if (!isValid) {
+      const name = option.displayName
+
+      throw `${C`brightRed`}${name}${C`red`}expects a valid JSON value. Instead, ${error}.`
+    }
   }
 }
 

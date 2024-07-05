@@ -23,7 +23,9 @@ class CommandParser extends EventListener {
   }
 
   read(rawScript) {
-    let [firstFragment, ...nextFragments] = splitBy(rawScript, '&&')
+    const scriptFormatted = this.getWithAliasesResolved(rawScript)
+    let [firstFragment, ...nextFragments] = splitBy(scriptFormatted, '&&')
+
     const command = this.get(firstFragment)
     let carriedCommand = command
 
@@ -40,7 +42,7 @@ class CommandParser extends EventListener {
   }
 
   get(scriptRaw) {
-    const [name, ...scriptArgs] = this.getWithAliasesResolved(scriptRaw)
+    const [name, ...scriptArgs] = getArgs(scriptRaw)
 
     const createCommand = this.commands[name]
     const handler = this.handlers[name]
@@ -68,11 +70,7 @@ class CommandParser extends EventListener {
     const [name, ...scriptArgs] = getArgs(script)
     const aliasFound = this.aliases.find(alias => alias.key === name)?.value || null
 
-    if (!aliasFound) return [name, ...scriptArgs]
-
-    const newScript = [aliasFound, ...scriptArgs].join(' ')
-
-    return getArgs(newScript)
+    return aliasFound ? [aliasFound, ...scriptArgs].join(' ') : script
   }
 }
 

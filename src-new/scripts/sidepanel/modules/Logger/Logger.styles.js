@@ -30,12 +30,12 @@ export const LoggerWrapper = styled.div`
 
   &::-webkit-scrollbar-thumb {
     border-radius: 3px;
-    background-color: ${t('colors.bright-black')};
+    background-color: ${t('colors.brightBlack')};
     cursor: pointer;
 
     &:active,
     &:hover {
-      background-color: ${t('colors.bright-green')};
+      background-color: ${t('colors.brightGreen')};
     }
   }
 `

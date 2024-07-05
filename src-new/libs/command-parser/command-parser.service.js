@@ -50,7 +50,7 @@ class CommandParser extends EventListener {
 
     if (!createCommand) {
       return createERROR().mock({
-        title: `'The command "${C`bright-red`}${cleanedName}${C`red`}" is unrecognized.'`
+        title: `'The command "${C`brightRed`}${cleanedName}${C`red`}" is unrecognized.'`
       })
     }
 

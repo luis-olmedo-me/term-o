@@ -9,7 +9,7 @@ export const Input = styled.input`
   font-size: ${t('font-size.50')};
   border: none;
   display: block;
-  caret-color: ${t('colors.cursor-color')};
+  caret-color: ${t('colors.cursorColor')};
   line-height: ${t('line-height.300')};
   background-color: ${t('colors.background')};
   color: ${t('colors.foreground')};
@@ -22,8 +22,8 @@ export const Input = styled.input`
   }
 
   &::selection {
-    color: ${t('colors.bright-green')};
-    background-color: ${t('colors..selection-background')};
+    color: ${t('colors.brightGreen')};
+    background-color: ${t('colors.selectionBackground')};
   }
 `
 

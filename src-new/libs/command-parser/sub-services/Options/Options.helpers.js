@@ -18,10 +18,10 @@ export const validate = (dependencies, newProps) => {
 
     if (missingDependencies.length) {
       const matches = missingDependencies
-        .map(name => `${C`bright-red`}--${name}${C`red`}`)
+        .map(name => `${C`brightRed`}--${name}${C`red`}`)
         .join(' or ')
 
-      throw `${C`bright-red`}--${propName}${C`red`} requires to be executed with ${matches}.`
+      throw `${C`brightRed`}--${propName}${C`red`} requires to be executed with ${matches}.`
     }
 
     if (!propDependencies) continue
@@ -30,9 +30,9 @@ export const validate = (dependencies, newProps) => {
     )
 
     if (propsCollapsing.length) {
-      const useless = propsCollapsing.map(name => `${C`bright-red`}--${name}${C`red`}`).join(' or ')
+      const useless = propsCollapsing.map(name => `${C`brightRed`}--${name}${C`red`}`).join(' or ')
 
-      throw `${C`bright-red`}--${propName}${C`red`} can not work with ${useless}`
+      throw `${C`brightRed`}--${propName}${C`red`} can not work with ${useless}`
     }
   }
 }

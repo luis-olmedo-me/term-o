@@ -73,7 +73,7 @@ export class Command extends EventListener {
       if (!hasNewProps && itExpectProps && !hasArgsHoldingUp) {
         const name = this.name
 
-        throw `${C`bright-red`}"${name}" ${C`red`}command expects for props. Instead, it received nothing.`
+        throw `${C`brightRed`}"${name}" ${C`red`}command expects for props. Instead, it received nothing.`
       }
 
       this.options.setValues(newProps)

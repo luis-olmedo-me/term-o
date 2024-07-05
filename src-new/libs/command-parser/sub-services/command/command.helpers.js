@@ -11,16 +11,16 @@ const parseOptions = (index, arg, argsBySpace, type) => {
       const endsWithQUote = argValue.endsWith(quote)
 
       if ((!startsWithQuote || !endsWithQUote) && !argValue)
-        throw `${C`bright-red`}${arg} ${C`red`}expects for quoted ${C`bright-red`}[string]${C`red`} value. Instead, it received nothing.`
+        throw `${C`brightRed`}${arg} ${C`red`}expects for quoted ${C`brightRed`}[string]${C`red`} value. Instead, it received nothing.`
 
       if (!startsWithQuote || !endsWithQUote)
-        throw `${C`bright-red`}${arg} ${C`red`}expects for quoted ${C`bright-red`}[string]${C`red`} value. Instead, it received ${C`bright-red`}${argValue}${C`red`}.`
+        throw `${C`brightRed`}${arg} ${C`red`}expects for quoted ${C`brightRed`}[string]${C`red`} value. Instead, it received ${C`brightRed`}${argValue}${C`red`}.`
 
       const quotesPattern = new RegExp(`^${quote}|${quote}$`, 'g')
       const value = argValue.replace(quotesPattern, '')
 
       if (!value)
-        throw `${C`bright-red`}${arg} ${C`red`}expects for content inside of quoted ${C`bright-red`}[string]${C`red`} value. Instead, it received ${C`bright-red`}${argValue}${C`red`}.`
+        throw `${C`brightRed`}${arg} ${C`red`}expects for content inside of quoted ${C`brightRed`}[string]${C`red`} value. Instead, it received ${C`brightRed`}${argValue}${C`red`}.`
 
       return { value, newIndex: index }
     }
@@ -35,7 +35,7 @@ const parseOptions = (index, arg, argsBySpace, type) => {
       const isValidNumber = !Number.isNaN(value)
 
       if (!isValidNumber)
-        throw `"${C`bright-red`}${arg}${C`red`}"expects ${C`bright-red`}[number]${C`red`} value. Instead, it received ${C`bright-red`}${nextArg}${C`red`}.`
+        throw `"${C`brightRed`}${arg}${C`red`}"expects ${C`brightRed`}[number]${C`red`} value. Instead, it received ${C`brightRed`}${nextArg}${C`red`}.`
 
       return { value, newIndex: index }
     }
@@ -48,23 +48,23 @@ const parseOptions = (index, arg, argsBySpace, type) => {
       const endsWithBracket = argValue.endsWith(']')
 
       if ((!startsWithBracket || !endsWithBracket) && !argValue)
-        throw `${C`bright-red`}${arg} ${C`red`}expects for ${C`bright-red`}[string-array]${C`red`} value. Instead, it received nothing.`
+        throw `${C`brightRed`}${arg} ${C`red`}expects for ${C`brightRed`}[string-array]${C`red`} value. Instead, it received nothing.`
 
       if (!startsWithBracket || !endsWithBracket)
-        throw `${C`bright-red`}${arg} ${C`red`}expects for ${C`bright-red`}[string-array]${C`red`} value. Instead, it received ${C`bright-red`}${argValue}${C`red`}.`
+        throw `${C`brightRed`}${arg} ${C`red`}expects for ${C`brightRed`}[string-array]${C`red`} value. Instead, it received ${C`brightRed`}${argValue}${C`red`}.`
 
       const argValueWithComas = argValue.replaceAll('" "', '","')
       const value = JSON.parse(argValueWithComas)
       const isValidValue = Object.values(value).every(value => typeof value === 'string' && value)
 
       if (!isValidValue)
-        throw `${C`bright-red`}${arg} ${C`red`}expects for content in ${C`bright-red`}[string-array]${C`red`} value(s). Instead, it received ${C`bright-red`}${argValue}${C`red`}.`
+        throw `${C`brightRed`}${arg} ${C`red`}expects for content in ${C`brightRed`}[string-array]${C`red`} value(s). Instead, it received ${C`brightRed`}${argValue}${C`red`}.`
 
       return { value, newIndex: index }
     }
 
     default:
-      throw `Option type ${C`bright-red`}${type}${C`red`} is not recognized.`
+      throw `Option type ${C`brightRed`}${type}${C`red`} is not recognized.`
   }
 }
 
@@ -127,7 +127,7 @@ export const getPropsFromString = command => {
       continue
     }
 
-    throw `${C`bright-red`}${argValue}${C`red`} is an unexpected argument.`
+    throw `${C`brightRed`}${argValue}${C`red`} is an unexpected argument.`
   }
 
   return props

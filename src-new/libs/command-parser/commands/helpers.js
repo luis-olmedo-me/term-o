@@ -8,7 +8,7 @@ export const isRegExp = (option, value) => {
   } catch (error) {
     const name = option.displayName
 
-    throw `${C`bright-red`}${name}${C`red`} expects a valid regular expression. Instead, it received ${C`bright-red`}"${value}"${C`red`}.`
+    throw `${C`brightRed`}${name}${C`red`} expects a valid regular expression. Instead, it received ${C`brightRed`}"${value}"${C`red`}.`
   }
 }
 
@@ -21,7 +21,7 @@ export const isXpath = (option, value) => {
   } catch (error) {
     const name = option.displayName
 
-    throw `${C`bright-red`}${name}${C`red`} expects a valid XPath. Instead, it received ${C`bright-red`}"${value}"${C`red`}.`
+    throw `${C`brightRed`}${name}${C`red`} expects a valid XPath. Instead, it received ${C`brightRed`}"${value}"${C`red`}.`
   }
 }
 
@@ -33,7 +33,7 @@ export const isURL = (option, value) => {
   } catch (error) {
     const name = option.displayName
 
-    throw `${C`bright-red`}${name}${C`red`} expects a valid URL. Instead, it received ${C`bright-red`}"${value}"${C`red`}.`
+    throw `${C`brightRed`}${name}${C`red`} expects a valid URL. Instead, it received ${C`brightRed`}"${value}"${C`red`}.`
   }
 }
 
@@ -43,7 +43,7 @@ export const hasNoSpaces = (option, value) => {
   if (value.includes(' ')) {
     const name = option.displayName
 
-    throw `${C`bright-red`}${name}${C`red`} expects a value without space characters. Instead, it received ${C`bright-red`}"${value}"${C`red`}.`
+    throw `${C`brightRed`}${name}${C`red`} expects a value without space characters. Instead, it received ${C`brightRed`}"${value}"${C`red`}.`
   }
 }
 
@@ -55,7 +55,7 @@ export const hasItems = staticLength => {
       const name = option.displayName
       const count = value.length
 
-      throw `${C`bright-red`}${name}${C`red`}expects ${staticLength} value(s). Instead, it received ${C`bright-red`}${count}${C`red`}.`
+      throw `${C`brightRed`}${name}${C`red`}expects ${staticLength} value(s). Instead, it received ${C`brightRed`}${count}${C`red`}.`
     }
   }
 }
@@ -68,7 +68,7 @@ export const isInRange = (min, max) => {
       const name = option.displayName
       const count = value.length
 
-      throw `${C`bright-red`}${name}${C`red`}expects between ${min} and ${max} value(s). Instead, it received ${C`bright-red`}${count}${C`red`}.`
+      throw `${C`brightRed`}${name}${C`red`}expects between ${min} and ${max} value(s). Instead, it received ${C`brightRed`}${count}${C`red`}.`
     }
   }
 }

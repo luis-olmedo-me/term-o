@@ -15,6 +15,11 @@ class CommandParser extends EventListener {
 
     this.commands = commands
     this.handlers = {}
+    this.aliases = []
+  }
+
+  setAliases(aliases) {
+    this.aliases = aliases
   }
 
   read(rawScript) {
@@ -35,7 +40,8 @@ class CommandParser extends EventListener {
   }
 
   get(scriptRaw) {
-    const [name, ...scriptArgs] = getArgs(scriptRaw)
+    const [name, ...scriptArgs] = this.getWithAliasesResolved(scriptRaw)
+
     const createCommand = this.commands[name]
     const handler = this.handlers[name]
     const cleanedName = name.replace('"', '\\"')
@@ -56,6 +62,17 @@ class CommandParser extends EventListener {
 
   setHandlers(commandHandlers) {
     this.handlers = commandHandlers
+  }
+
+  getWithAliasesResolved(script) {
+    const [name, ...scriptArgs] = getArgs(script)
+    const aliasFound = this.aliases.find(alias => alias.key === name)?.value || null
+
+    if (!aliasFound) return [name, ...scriptArgs]
+
+    const newScript = [aliasFound, ...scriptArgs].join(' ')
+
+    return getArgs(newScript)
   }
 }
 

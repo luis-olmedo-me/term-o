@@ -1,4 +1,4 @@
-import { defaultTheme } from './theme.colors'
+import { defaultTheme, themeColorSetNameRef } from './theme.colors'
 
 export const theme = pathsString => props => {
   const paths = pathsString.split('.')
@@ -7,11 +7,8 @@ export const theme = pathsString => props => {
 }
 
 export const getColor = color => {
-  const colorLabel = defaultTheme.colors[color]
+  const colorSetName = themeColorSetNameRef.current
+  const colorSet = defaultTheme.colorsets.find(set => set.name === colorSetName) || {}
 
-  return `[termo.${colorLabel || color}]`
-}
-
-export const isDarkModePrefered = () => {
-  return Boolean(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+  return `[termo.${colorSet[color] || color}]`
 }

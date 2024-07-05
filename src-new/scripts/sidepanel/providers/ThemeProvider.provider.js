@@ -1,15 +1,13 @@
+import * as React from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
 import { defaultColorSetNames, defaultTheme } from '@src/theme/theme.colors'
-import { isDarkModePrefered } from '@src/theme/theme.helpers'
 import { ThemeProvider as StyleProvider } from 'styled-components'
-
-const isDarkModeDefault = isDarkModePrefered()
-const defaultColorsetName = isDarkModeDefault ? 'Material Dark' : 'Iceberg Light'
+import { themeColorSetNameRef } from 'theme/theme.colors'
 
 export const ThemeProvider = ({ children }) => {
   const [colorSets, setColorSets] = useState(defaultTheme.colorsets)
-  const [colorSetName, setColorSetName] = useState(defaultColorsetName)
+  const [colorSetName, setColorSetName] = useState(themeColorSetNameRef.current)
 
   const isDefaultColorset = defaultColorSetNames.includes(colorSetName)
 

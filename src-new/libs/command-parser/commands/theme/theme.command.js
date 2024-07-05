@@ -1,7 +1,7 @@
 import { colorScheme } from '@src/theme/theme.helpers'
 import { commandNames } from '../../command-parser.constants'
 import Command from '../../sub-services/command'
-import { isJSONScheme } from '../helpers'
+import { isJSONScheme } from '../validators'
 
 export const createALIAS = () => {
   return new Command({ name: commandNames.ALIAS })

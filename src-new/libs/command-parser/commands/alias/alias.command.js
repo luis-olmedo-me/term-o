@@ -1,6 +1,6 @@
 import { commandNames } from '../../command-parser.constants'
 import Command from '../../sub-services/command'
-import { hasItems, hasNoSpaces, onItem } from '../helpers'
+import { hasItems, hasNoSpaces, onItem } from '../validators'
 
 export const createALIAS = () => {
   return new Command({ name: commandNames.ALIAS })

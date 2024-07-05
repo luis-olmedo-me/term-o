@@ -1,6 +1,6 @@
 import { commandNames } from '../../command-parser.constants'
 import Command from '../../sub-services/command'
-import { isRegExp, isURL } from '../helpers'
+import { isRegExp, isURL } from '../validators'
 
 export const createTABS = () => {
   return new Command({ name: commandNames.TABS })

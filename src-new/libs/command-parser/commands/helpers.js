@@ -55,6 +55,11 @@ export const validateSchema = (option, schema, value) => {
       continue
     }
 
-    throw `${C`brightRed`}${name}${C`red`} expects a valid JSON. Instead, the type for "${key}" is unrecognized.`
+    throw `${C`brightRed`}${name}${C`red`} expects a valid JSON. Instead, the type for ${C`brightRed`}"${key}"${C`red`} is unrecognized.`
   }
+
+  const invalidKey = Object.keys(value).find(key => typeof schema[key] === 'undefined')
+
+  if (invalidKey)
+    throw `${C`brightRed`}${name}${C`red`} expects a valid JSON. Instead, it received an value with unexpected key ${C`brightRed`}"${invalidKey}"${C`red`}.`
 }

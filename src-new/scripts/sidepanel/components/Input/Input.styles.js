@@ -22,7 +22,7 @@ export const Input = styled.input`
   }
 
   &::selection {
-    color: ${t('colors.color-selection')};
+    color: ${t('colors.bright-green')};
     background-color: ${t('colors..selection-background')};
   }
 `

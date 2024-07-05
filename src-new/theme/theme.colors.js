@@ -41,7 +41,6 @@ export const defaultTheme = {
     background: '#151515',
     foreground: '#CCCCCC',
     'selection-background': '#252525',
-    'color-selection': '#99C794',
     'bright-black': '#A1B0B8',
     'bright-blue': '#6699CC',
     'bright-cyan': '#5FB3B3',

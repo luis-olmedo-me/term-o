@@ -35,7 +35,7 @@ export const LoggerWrapper = styled.div`
 
     &:active,
     &:hover {
-      background-color: ${t('colors.color-selection')};
+      background-color: ${t('colors.bright-green')};
     }
   }
 `

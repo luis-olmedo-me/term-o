@@ -37,7 +37,7 @@ export const handleTHEME = async command => {
     const response = await chrome.storage.local.get('color-sets')
     const colorSets = response['color-sets'] || []
 
-    const existingSet = colorSets.find(set => set.name.includes(newColorSet.name))
+    const existingSet = colorSets.find(set => set.name === newColorSet.name)
 
     if (!existingSet) return
     const newColorSets = colorSets.filter(set => set.name !== name)
@@ -45,5 +45,20 @@ export const handleTHEME = async command => {
     await chrome.storage.local.set({ ['color-sets']: newColorSets })
 
     command.update(`${C`purple`}"${name}"`)
+  }
+
+  if (P`apply`) {
+    const newColorSetName = JSON.parse(P`apply`)
+
+    const response = await chrome.storage.local.get('color-sets')
+    const colorSets = response['color-sets'] || []
+
+    const alreadyExists = colorSets.some(set => set.name === newColorSetName)
+
+    if (!alreadyExists) return
+
+    await chrome.storage.local.set({ ['color-set-name']: newColorSetName })
+
+    command.update(`${C`purple`}"${newColorSetName}"`)
   }
 }

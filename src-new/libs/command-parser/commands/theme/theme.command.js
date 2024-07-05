@@ -6,9 +6,9 @@ import { colorScheme } from './theme.constants'
 export const createTHEME = () => {
   return new Command({ name: commandNames.THEME })
     .expect({
-      name: 'add',
+      name: 'import',
       type: 'string',
-      abbreviation: 'a',
+      abbreviation: 'i',
       validate: [isJSONScheme(colorScheme)],
       worksWith: []
     })
@@ -22,6 +22,12 @@ export const createTHEME = () => {
       name: 'delete',
       type: 'string',
       abbreviation: 'd',
+      worksWith: []
+    })
+    .expect({
+      name: 'apply',
+      type: 'string',
+      abbreviation: 'a',
       worksWith: []
     })
 }

@@ -40,7 +40,7 @@ export const defaultTheme = {
     name: 'Material Black',
     background: '#151515',
     foreground: '#CCCCCC',
-    'background-selection': '#252525',
+    'selection-background': '#252525',
     'color-selection': '#99C794',
     'bright-black': '#A1B0B8',
     'bright-blue': '#6699CC',

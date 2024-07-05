@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'preact/hooks'
 
-import { defaultTheme } from '@src/theme/theme.colors'
+import { defaultColorSetNames, defaultTheme } from '@src/theme/theme.colors'
 import { isDarkModePrefered } from '@src/theme/theme.helpers'
 import { ThemeProvider as StyleProvider } from 'styled-components'
 
@@ -10,6 +10,8 @@ const defaultColorsetName = isDarkModeDefault ? 'Material Dark' : 'Iceberg Light
 export const ThemeProvider = ({ children }) => {
   const [colorSets, setColorSets] = useState(defaultTheme.colorsets)
   const [colorSetName, setColorSetName] = useState(defaultColorsetName)
+
+  const isDefaultColorset = defaultColorSetNames.includes(colorSetName)
 
   useEffect(function expectForColorSetsChanges() {
     const handleStorageChanges = (changes, namespace) => {
@@ -42,9 +44,9 @@ export const ThemeProvider = ({ children }) => {
     }
 
     const updateCurrentColorSets = async () => {
-      const { colorsetname = [] } = await chrome.storage.local.get('colorsetname')
+      const { colorsetname } = await chrome.storage.local.get('colorsetname')
 
-      setColorSetName(colorsetname)
+      if (colorsetname) setColorSetName(colorsetname)
     }
 
     updateCurrentColorSets()
@@ -52,6 +54,24 @@ export const ThemeProvider = ({ children }) => {
 
     return () => chrome.storage.onChanged.removeListener(handleStorageChanges)
   }, [])
+
+  useEffect(
+    function expectForDefaultColorSetNameChanges() {
+      if (!isDefaultColorset) return
+
+      const mediaTheme = window.matchMedia('(prefers-color-scheme: dark)')
+      const handleMediaThemeChange = event => {
+        const newColorSetName = event.matches ? 'Material Dark' : 'Iceberg Light'
+
+        setColorSetName(newColorSetName)
+      }
+
+      mediaTheme.addEventListener('change', handleMediaThemeChange)
+
+      return () => mediaTheme.removeEventListener('change', handleMediaThemeChange)
+    },
+    [isDefaultColorset]
+  )
 
   const colorSet = colorSets.find(set => set.name === colorSetName)
 

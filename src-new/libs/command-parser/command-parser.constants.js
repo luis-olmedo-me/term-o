@@ -4,5 +4,6 @@ export const commandNames = {
   DOM: 'dom',
   STORAGE: 'storage',
   TABS: 'tabs',
-  ALIAS: 'alias'
+  ALIAS: 'alias',
+  THEME: 'theme'
 }

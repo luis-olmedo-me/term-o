@@ -13,7 +13,7 @@ const isValidType = (value, type) => {
   }
 }
 
-export const validateSchema = (option, value, schema) => {
+export const validateSchema = (option, schema, value) => {
   const name = option.displayName
 
   for (let key in schema) {

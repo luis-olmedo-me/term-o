@@ -3,8 +3,8 @@ import Command from '../../sub-services/command'
 import { isJSONScheme } from '../validators'
 import { colorScheme } from './theme.constants'
 
-export const createALIAS = () => {
-  return new Command({ name: commandNames.ALIAS })
+export const createTHEME = () => {
+  return new Command({ name: commandNames.THEME })
     .expect({
       name: 'add',
       type: 'string',

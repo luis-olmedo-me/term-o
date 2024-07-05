@@ -6,6 +6,7 @@ import { createDOM } from './commands/dom/dom.command'
 import { createERROR } from './commands/error/error.command'
 import { createSTORAGE } from './commands/storage/storage.command'
 import { createTABS } from './commands/tabs/tabs.command'
+import { createTHEME } from './commands/theme/theme.command'
 import { getArgs } from './sub-services/command/command.helpers'
 import EventListener from './sub-services/event-listener'
 
@@ -80,5 +81,6 @@ export const commandParser = new CommandParser({
   storage: createSTORAGE,
   tabs: createTABS,
   alias: createALIAS,
+  theme: createTHEME,
   error: createERROR
 })

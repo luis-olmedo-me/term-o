@@ -28,7 +28,10 @@ export const isJSON = (option, value) => {
 export const isJSONScheme = scheme => {
   return (option, value) => {
     isJSON(option, value)
-    validateSchema(option, scheme, value)
+
+    const parsedValue = JSON.parse(value)
+
+    validateSchema(option, scheme, parsedValue)
   }
 }
 

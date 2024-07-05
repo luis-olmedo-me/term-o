@@ -12,6 +12,18 @@ export const isRegExp = (option, value) => {
   }
 }
 
+export const isJSON = (option, value) => {
+  if (Array.isArray(value)) return value.forEach(isJSON)
+
+  try {
+    JSON.parse(value)
+  } catch (error) {
+    const name = option.displayName
+
+    throw `${C`brightRed`}${name}${C`red`} expects a valid JSON. Instead, it received ${C`brightRed`}"${value}"${C`red`}.`
+  }
+}
+
 export const isXpath = (option, value) => {
   if (Array.isArray(value)) return value.forEach(isXpath)
 

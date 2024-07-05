@@ -1,6 +1,7 @@
 import * as React from 'preact'
 import { useEffect, useRef, useState } from 'preact/hooks'
 
+import useStorage from '@background/hooks/useStorage'
 import commandHandlers from '@sidepanel/command-handlers'
 import Prompt from '@sidepanel/components/Prompt'
 import { CAN_COPY_ON_SELECTION, PSO } from '@sidepanel/config'
@@ -16,6 +17,13 @@ export const Terminal = () => {
   const [tab, setTab] = useState(null)
   const inputRef = useRef(null)
   const loggerRef = useRef(null)
+
+  useStorage({
+    namespace: 'local',
+    key: 'aliases',
+    onInit: ({ value }) => commandParser.setAliases(value),
+    onUpdate: ({ newValue }) => commandParser.setAliases(newValue)
+  })
 
   useEffect(function focusOnInputAtFirstTime() {
     focusOnInput()
@@ -36,26 +44,6 @@ export const Terminal = () => {
     commandParser.addEventListener('on-create-clear', clearLogs)
 
     return () => commandParser.removeEventListener('on-create-clear', clearLogs)
-  }, [])
-
-  useEffect(function expectForAliasChanges() {
-    const handleStorageChanges = (changes, namespace) => {
-      if (namespace !== 'local') return
-
-      for (let [key, { newValue }] of Object.entries(changes)) {
-        if (key === 'aliases') commandParser.setAliases(newValue)
-      }
-    }
-
-    const updateCurrentAliases = async () => {
-      const { aliases = [] } = await chrome.storage.local.get('aliases')
-      commandParser.setAliases(aliases)
-    }
-
-    updateCurrentAliases()
-    chrome.storage.onChanged.addListener(handleStorageChanges)
-
-    return () => chrome.storage.onChanged.removeListener(handleStorageChanges)
   }, [])
 
   useEffect(

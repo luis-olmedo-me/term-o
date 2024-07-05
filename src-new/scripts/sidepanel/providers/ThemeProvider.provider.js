@@ -1,6 +1,7 @@
 import * as React from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
+import useStorage from '@background/hooks/useStorage'
 import { defaultColorSetNames, defaultTheme } from '@src/theme/theme.colors'
 import { ThemeProvider as StyleProvider } from 'styled-components'
 import { themeColorSetNameRef } from 'theme/theme.colors'
@@ -11,47 +12,19 @@ export const ThemeProvider = ({ children }) => {
 
   const isDefaultColorset = defaultColorSetNames.includes(colorSetName)
 
-  useEffect(function expectForColorSetsChanges() {
-    const handleStorageChanges = (changes, namespace) => {
-      if (namespace !== 'local') return
+  useStorage({
+    namespace: 'local',
+    key: 'color-sets',
+    onInit: ({ value }) => setColorSets([...defaultTheme.colorsets, ...value]),
+    onUpdate: ({ newValue }) => setColorSets(oldColorSets => [...oldColorSets, newValue])
+  })
 
-      for (let [key, { newValue }] of Object.entries(changes)) {
-        if (key === 'colorsets') setColorSets([...defaultTheme.colorsets, ...newValue])
-      }
-    }
-
-    const updateCurrentColorSets = async () => {
-      const { colorsets = [] } = await chrome.storage.local.get('colorsets')
-
-      setColorSets([...defaultTheme.colorsets, ...colorsets])
-    }
-
-    updateCurrentColorSets()
-    chrome.storage.onChanged.addListener(handleStorageChanges)
-
-    return () => chrome.storage.onChanged.removeListener(handleStorageChanges)
-  }, [])
-
-  useEffect(function expectForColorSetNameChanges() {
-    const handleStorageChanges = (changes, namespace) => {
-      if (namespace !== 'local') return
-
-      for (let [key, { newValue }] of Object.entries(changes)) {
-        if (key === 'colorsetname') setColorSetName(newValue)
-      }
-    }
-
-    const updateCurrentColorSets = async () => {
-      const { colorsetname } = await chrome.storage.local.get('colorsetname')
-
-      if (colorsetname) setColorSetName(colorsetname)
-    }
-
-    updateCurrentColorSets()
-    chrome.storage.onChanged.addListener(handleStorageChanges)
-
-    return () => chrome.storage.onChanged.removeListener(handleStorageChanges)
-  }, [])
+  useStorage({
+    namespace: 'local',
+    key: 'color-set-name',
+    onInit: ({ value }) => setColorSetName(value),
+    onUpdate: ({ newValue }) => setColorSetName(newValue)
+  })
 
   useEffect(
     function expectForDefaultColorSetNameChanges() {

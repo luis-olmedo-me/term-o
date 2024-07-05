@@ -3,7 +3,8 @@
     "baseUrl": "./src-new",
     "paths": {
       "@src": ["src-new"],
-      "@sidepanel": ["src-new/scripts/sidepanel"]
+      "@sidepanel": ["src-new/scripts/sidepanel"],
+      "@background": ["src-new/scripts/background"]
     }
   },
   "exclude": ["build", "images", "node_modules"]

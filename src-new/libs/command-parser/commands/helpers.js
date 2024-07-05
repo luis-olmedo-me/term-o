@@ -43,7 +43,7 @@ export const hasNoSpaces = (option, value) => {
   if (value.includes(' ')) {
     const name = option.displayName
 
-    throw `${C`bright-red`}${name}${C`red`} expects a valid URL. Instead, it received ${C`bright-red`}"${value}"${C`red`}.`
+    throw `${C`bright-red`}${name}${C`red`} expects a value without space characters. Instead, it received ${C`bright-red`}"${value}"${C`red`}.`
   }
 }
 

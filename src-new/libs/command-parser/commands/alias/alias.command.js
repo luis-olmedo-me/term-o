@@ -8,7 +8,7 @@ export const createALIAS = () => {
       name: 'add',
       type: 'string-array',
       abbreviation: 'a',
-      validate: [hasItems(2), onItem(1, hasNoSpaces)],
+      validate: [hasItems(2), onItem(0, hasNoSpaces)],
       worksWith: []
     })
     .expect({

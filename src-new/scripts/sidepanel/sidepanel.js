@@ -1,12 +1,13 @@
 import * as React from 'preact'
 
 import { defaultTheme } from '@src/theme/theme.colors'
-import { ThemeProvider } from 'styled-components'
+
 import Terminal from './modules/Terminal'
+import { ThemeProvider } from './providers/ThemeProvider.provider'
 import GlobalStyle from './styles/Global.styles'
 
 React.render(
-  <ThemeProvider theme={defaultTheme}>
+  <ThemeProvider>
     <GlobalStyle />
 
     <Terminal />

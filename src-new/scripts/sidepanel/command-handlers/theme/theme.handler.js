@@ -1,3 +1,4 @@
+import { defaultTheme } from '@src/theme/theme.colors'
 import { getColor as C } from '@src/theme/theme.helpers'
 
 export const handleTHEME = async command => {
@@ -6,8 +7,9 @@ export const handleTHEME = async command => {
   if (P`list`) {
     const response = await chrome.storage.local.get('color-sets')
     const colorSets = response['color-sets'] || []
+    const allColorSets = [...defaultTheme.colorsets, ...colorSets]
 
-    colorSets.forEach(({ name }) => {
+    allColorSets.forEach(({ name }) => {
       command.update(`${C`purple`}"${name}"`)
     })
   }

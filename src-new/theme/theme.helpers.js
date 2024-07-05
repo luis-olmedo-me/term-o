@@ -11,3 +11,7 @@ export const getColor = color => {
 
   return `[termo.${colorLabel || color}]`
 }
+
+export const isDarkModePrefered = () => {
+  return Boolean(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+}

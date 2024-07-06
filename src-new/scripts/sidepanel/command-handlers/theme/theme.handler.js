@@ -1,5 +1,5 @@
 import { getStorageValue, setStorageValue } from '@sidepanel/proccesses/workers'
-import { defaultModes } from '@src/libs/color-set'
+import { defaultSets } from '@src/libs/color-set'
 import { getColor as C } from '@src/theme/theme.helpers'
 
 export const handleTHEME = async command => {
@@ -8,7 +8,7 @@ export const handleTHEME = async command => {
 
   if (P`list`) {
     const colorSetsFromLS = await getStorageValue('local', 'color-sets')
-    const colorSets = colorSetsFromLS || defaultModes
+    const colorSets = colorSetsFromLS || defaultSets
 
     colorSets.forEach(({ name }) => {
       command.update(`${C`purple`}"${name}"`)
@@ -25,7 +25,7 @@ export const handleTHEME = async command => {
     const newSet = JSON.parse(P`import`)
 
     const colorSetsFromLS = await getStorageValue('local', 'color-sets')
-    const colorSets = colorSetsFromLS || defaultModes
+    const colorSets = colorSetsFromLS || defaultSets
     const alreadyExists = colorSets.some(set => set.name.includes(newSet.name))
 
     if (alreadyExists) {
@@ -44,9 +44,9 @@ export const handleTHEME = async command => {
     const name = P`delete`
 
     const colorSetsFromLS = await getStorageValue('local', 'color-sets')
-    const colorSets = colorSetsFromLS || defaultModes
+    const colorSets = colorSetsFromLS || defaultSets
     const alreadyExists = colorSets.some(set => set.name === name)
-    const isDefault = defaultModes.some(set => set.name === name)
+    const isDefault = defaultSets.some(set => set.name === name)
 
     if (isDefault) {
       return command.throw(
@@ -69,7 +69,7 @@ export const handleTHEME = async command => {
     const name = P`apply`
 
     const colorSetsFromLS = await getStorageValue('local', 'color-sets')
-    const colorSets = colorSetsFromLS || defaultModes
+    const colorSets = colorSetsFromLS || defaultSets
     const alreadyExists = colorSets.some(set => set.name === name)
 
     if (!alreadyExists) {

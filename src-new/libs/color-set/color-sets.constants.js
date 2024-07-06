@@ -46,4 +46,4 @@ export const defaultlLightMode = {
   cursorColor: '#33374c'
 }
 
-export const defaultModes = [defaultlDarkMode, defaultlLightMode]
+export const defaultSets = [defaultlDarkMode, defaultlLightMode]

@@ -1,4 +1,4 @@
-import { defaultModes } from './color-sets.constants'
+import { defaultSets } from './color-sets.constants'
 import { getDefaultMode } from './color-sets.helpers'
 
 class ColorSets {
@@ -33,4 +33,4 @@ class ColorSets {
   }
 }
 
-export const colorSets = new ColorSets(defaultModes, getDefaultMode().name)
+export const colorSets = new ColorSets(defaultSets, getDefaultMode().name)

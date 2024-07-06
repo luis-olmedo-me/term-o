@@ -50,7 +50,7 @@ export const Terminal = () => {
   useEffect(
     function addExternalDataOnNewCommands() {
       const clearLogs = () => setLogs([])
-      const appendData = command => command.appendsData({ tab, setTab, theme, clearLogs })
+      const appendData = command => command.appendsData({ tab, setTab, theme })
 
       commandParser.addEventListener('on-create-dom', appendData)
       commandParser.addEventListener('on-create-storage', appendData)

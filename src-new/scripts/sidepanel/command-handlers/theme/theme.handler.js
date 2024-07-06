@@ -35,6 +35,7 @@ export const handleTHEME = async command => {
     const newColorSets = colorSets.concat(newSet)
 
     await setStorageValue('local', 'color-sets', newColorSets)
+    await setStorageValue('local', 'color-set-name', newSet.name)
 
     command.update(`${C`purple`}"${newSet.name}"`)
   }

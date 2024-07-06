@@ -91,3 +91,6 @@ export const themeColorSetNameRef = {
     ? defaultlDarkMode.name
     : defaultlLightMode.name
 }
+export const themeColorSetsRef = {
+  current: defaultTheme.colorsets
+}

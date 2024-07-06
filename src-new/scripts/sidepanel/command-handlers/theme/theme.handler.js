@@ -1,22 +1,21 @@
-import { defaultTheme } from '@src/theme/theme.colors'
+import { getStorageValue, setStorageValue } from '@sidepanel/proccesses/workers'
+import { defaultTheme, themeColorSetNameRef } from '@src/theme/theme.colors'
 import { getColor as C } from '@src/theme/theme.helpers'
 
 export const handleTHEME = async command => {
   const P = name => command.props[name]
 
   if (P`list`) {
-    const response = await chrome.storage.local.get('color-sets')
-    const colorSets = response['color-sets'] || []
-    const allColorSets = [...defaultTheme.colorsets, ...colorSets]
+    const colorSetsFromLS = await getStorageValue('local', 'color-sets')
+    const colorSets = colorSetsFromLS || defaultTheme.colorsets
 
-    allColorSets.forEach(({ name }) => {
+    colorSets.forEach(({ name }) => {
       command.update(`${C`purple`}"${name}"`)
     })
   }
 
   if (P`current`) {
-    const response = await chrome.storage.local.get('color-set-name')
-    const name = response['color-set-name'] || ''
+    const name = themeColorSetNameRef.current
 
     command.update(`${C`purple`}"${name}"`)
   }
@@ -24,18 +23,17 @@ export const handleTHEME = async command => {
   if (P`import`) {
     const newSet = JSON.parse(P`import`)
 
-    const response = await chrome.storage.local.get('color-sets')
-    const colorSets = response['color-sets'] || []
-
+    const colorSetsFromLS = await getStorageValue('local', 'color-sets')
+    const colorSets = colorSetsFromLS || defaultTheme.colorsets
     const alreadyExists = colorSets.some(set => set.name.includes(newSet.name))
 
     if (alreadyExists) {
-      return command.throw(`'The theme "${C`brightRed`}${newSet.name}${C`red`}" already exists.'`)
+      return command.throw(`The theme "${C`brightRed`}${newSet.name}${C`red`}" already exists.`)
     }
 
     const newColorSets = colorSets.concat(newSet)
 
-    await chrome.storage.local.set({ ['color-sets']: newColorSets })
+    await setStorageValue('local', 'color-sets', newColorSets)
 
     command.update(`${C`purple`}"${newSet.name}"`)
   }
@@ -43,18 +41,24 @@ export const handleTHEME = async command => {
   if (P`delete`) {
     const name = P`delete`
 
-    const response = await chrome.storage.local.get('color-sets')
-    const colorSets = response['color-sets'] || []
+    const colorSetsFromLS = await getStorageValue('local', 'color-sets')
+    const colorSets = colorSetsFromLS || defaultTheme.colorsets
+    const alreadyExists = colorSets.some(set => set.name === name)
+    const isDefault = defaultTheme.colorsets.some(set => set.name === name)
 
-    const existingSet = colorSets.some(set => set.name === name)
+    if (isDefault) {
+      return command.throw(
+        `The theme "${C`brightRed`}${name}${C`red`}" is a default theme that can not be deleted.`
+      )
+    }
 
-    if (!existingSet) {
-      return command.throw(`'The theme "${C`brightRed`}${name}${C`red`}" does not exist.'`)
+    if (!alreadyExists) {
+      return command.throw(`The theme "${C`brightRed`}${name}${C`red`}" does not exist.`)
     }
 
     const newColorSets = colorSets.filter(set => set.name !== name)
 
-    await chrome.storage.local.set({ ['color-sets']: newColorSets })
+    await setStorageValue('local', 'color-sets', newColorSets)
 
     command.update(`${C`purple`}"${name}"`)
   }
@@ -62,17 +66,15 @@ export const handleTHEME = async command => {
   if (P`apply`) {
     const name = P`apply`
 
-    const response = await chrome.storage.local.get('color-sets')
-    const colorSets = response['color-sets'] || []
-    const allColorSets = [...defaultTheme.colorsets, ...colorSets]
-
-    const alreadyExists = allColorSets.some(set => set.name === name)
+    const colorSetsFromLS = await getStorageValue('local', 'color-sets')
+    const colorSets = colorSetsFromLS || defaultTheme.colorsets
+    const alreadyExists = colorSets.some(set => set.name === name)
 
     if (!alreadyExists) {
-      return command.throw(`'The theme "${C`brightRed`}${name}${C`red`}" is unrecognized.'`)
+      return command.throw(`The theme "${C`brightRed`}${name}${C`red`}" is unrecognized.`)
     }
 
-    await chrome.storage.local.set({ ['color-set-name']: name })
+    await setStorageValue('local', 'color-set-name', name)
 
     command.update(`${C`purple`}"${name}"`)
   }

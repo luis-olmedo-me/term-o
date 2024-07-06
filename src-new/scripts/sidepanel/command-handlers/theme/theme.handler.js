@@ -1,6 +1,6 @@
-import { getStorageValue, setStorageValue } from '@sidepanel/proccesses/workers'
 import { defaultSets } from '@src/libs/color-set'
 import { getColor as C } from '@src/theme/theme.helpers'
+import { getStorageValue, setStorageValue } from '../storage/storage.helpers'
 
 export const handleTHEME = async command => {
   const { theme } = command.data

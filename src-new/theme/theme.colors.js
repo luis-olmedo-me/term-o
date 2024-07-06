@@ -86,8 +86,6 @@ export const defaultTheme = {
   colorsets: [defaultlDarkMode, defaultlLightMode]
 }
 
-export const defaultColorSetNames = defaultTheme.colorsets.map(set => set.name)
-
 export const themeColorSetNameRef = {
   current: window.matchMedia?.('(prefers-color-scheme: dark)').matches
     ? defaultlDarkMode.name

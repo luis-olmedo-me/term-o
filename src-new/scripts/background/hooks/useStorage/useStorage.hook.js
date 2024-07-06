@@ -1,29 +1,24 @@
-import { useEffect } from 'preact/hooks'
+import { useCallback, useEffect, useState } from 'preact/hooks'
 
-export const useStorage = ({ namespace, key, onUpdate, onInit, defaultValue }) => {
+export const useStorage = ({ namespace, key, defaultValue }) => {
+  const [state, setState] = useState(defaultValue)
+
   useEffect(
     function expectStorageChanges() {
       const handleStorageChanges = (changes, currentChanges) => {
         if (currentChanges !== namespace) return
 
-        for (let [storageKey, change] of Object.entries(changes)) {
-          if (storageKey === key) onUpdate(change)
+        for (let [storageKey, { newValue }] of Object.entries(changes)) {
+          if (storageKey === key) setState(newValue)
         }
       }
 
       const updateState = async () => {
         const data = await chrome.storage.local.get(key)
-        let value = data[key]
+        const newValue = data[key]
+        const hasValue = typeof newValue !== 'undefined'
 
-        const hasValue = typeof value !== 'undefined'
-        const hasDefaultValue = typeof defaultValue !== 'undefined'
-
-        if (!hasValue && hasDefaultValue) {
-          await chrome.storage[namespace].set({ [key]: defaultValue })
-          value = defaultValue
-        }
-
-        onInit({ value })
+        setState(hasValue ? newValue : defaultValue)
       }
 
       updateState()
@@ -33,4 +28,13 @@ export const useStorage = ({ namespace, key, onUpdate, onInit, defaultValue }) =
     },
     [namespace, key]
   )
+
+  const setStateInStorage = useCallback(
+    async value => {
+      await chrome.storage[namespace].set({ [key]: value })
+    },
+    [namespace, key]
+  )
+
+  return [state, setStateInStorage]
 }

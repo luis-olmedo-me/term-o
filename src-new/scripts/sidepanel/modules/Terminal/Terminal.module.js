@@ -18,11 +18,9 @@ export const Terminal = () => {
   const inputRef = useRef(null)
   const loggerRef = useRef(null)
 
-  useStorage({
+  const [aliases] = useStorage({
     namespace: 'local',
     key: 'aliases',
-    onInit: ({ value }) => commandParser.setAliases(value),
-    onUpdate: ({ newValue }) => commandParser.setAliases(newValue),
     defaultValue: []
   })
 
@@ -38,6 +36,13 @@ export const Terminal = () => {
 
     return () => window.removeEventListener('focus', updateTab)
   }, [])
+
+  useEffect(
+    function expectAliasChanges() {
+      commandParser.setAliases(aliases)
+    },
+    [aliases]
+  )
 
   useEffect(function clearLogsOnClearCommand() {
     const clearLogs = () => setLogs([])

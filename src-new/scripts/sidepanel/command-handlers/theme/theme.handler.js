@@ -1,5 +1,5 @@
 import { getStorageValue, setStorageValue } from '@sidepanel/proccesses/workers'
-import { defaultModes } from '@src/libs/color-sets'
+import { defaultModes } from '@src/libs/color-set'
 import { getColor as C } from '@src/theme/theme.helpers'
 
 export const handleTHEME = async command => {

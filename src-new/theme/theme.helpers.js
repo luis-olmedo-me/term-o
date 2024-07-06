@@ -1,4 +1,4 @@
-import colorSets from '@src/libs/color-sets'
+import colorSet from '@src/libs/color-set'
 
 export const theme = pathsString => props => {
   const paths = pathsString.split('.')
@@ -7,7 +7,7 @@ export const theme = pathsString => props => {
 }
 
 export const getColor = color => {
-  const colorFound = colorSets.getColor(color)
+  const colorFound = colorSet.getColor(color)
 
   return `[termo.${colorFound || color}]`
 }

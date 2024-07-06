@@ -6,7 +6,7 @@ export const Input = styled.input`
   width: 100%;
   box-sizing: border-box;
   white-space: nowrap;
-  font-size: ${t('font-size.50')};
+  font-size: ${t('fontSize.50')};
   border: none;
   display: block;
   caret-color: ${t('colors.cursorColor')};

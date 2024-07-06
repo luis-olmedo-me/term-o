@@ -17,9 +17,11 @@ export const handleALIAS = async command => {
     const { aliases = [] } = await chrome.storage.local.get('aliases')
     const alreadyExists = aliases.some(alias => alias.key.includes(key))
 
-    const newAliases = alreadyExists
-      ? aliases.map(alias => (alias.key === key ? newAlias : alias))
-      : aliases.concat(newAlias)
+    if (alreadyExists) {
+      return command.throw(`The alias "${C`brightRed`}${key}${C`red`}" already exists.`)
+    }
+
+    const newAliases = aliases.concat(newAlias)
 
     await chrome.storage.local.set({ aliases: newAliases })
 
@@ -32,7 +34,10 @@ export const handleALIAS = async command => {
     const { aliases = [] } = await chrome.storage.local.get('aliases')
     const existingAlias = aliases.find(alias => alias.key.includes(key))
 
-    if (!existingAlias) return
+    if (!existingAlias) {
+      return command.throw(`The alias "${C`brightRed`}${key}${C`red`}" does not exist.`)
+    }
+
     const newAliases = aliases.filter(alias => alias.key !== key)
 
     await chrome.storage.local.set({ aliases: newAliases })

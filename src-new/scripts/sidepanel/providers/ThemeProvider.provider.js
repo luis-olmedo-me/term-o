@@ -25,7 +25,7 @@ export const ThemeProvider = ({ children }) => {
     key: 'color-set-name',
     onInit: ({ value }) => setColorSetName(value),
     onUpdate: ({ newValue }) => setColorSetName(newValue),
-    defaultValue: ''
+    defaultValue: themeColorSetNameRef.current
   })
 
   useEffect(

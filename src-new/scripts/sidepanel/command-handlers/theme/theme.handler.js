@@ -1,4 +1,4 @@
-import { defaultSets } from '@src/libs/color-set'
+import { defaultSets, getDefaultMode } from '@src/libs/color-set'
 import { getColor as C } from '@src/theme/theme.helpers'
 import { getStorageValue, setStorageValue } from '../storage/storage.helpers'
 
@@ -16,9 +16,9 @@ export const handleTHEME = async command => {
   }
 
   if (P`current`) {
-    const name = theme.colors.name
+    const currentName = theme.colors.name
 
-    command.update(`${C`purple`}"${name}"`)
+    command.update(`${C`purple`}"${currentName}"`)
   }
 
   if (P`import`) {
@@ -42,6 +42,8 @@ export const handleTHEME = async command => {
 
   if (P`delete`) {
     const name = P`delete`
+    const currentName = theme.colors.name
+    const defaultName = getDefaultMode().name
 
     const colorSetsFromLS = await getStorageValue('local', 'color-sets')
     const colorSets = colorSetsFromLS || defaultSets
@@ -60,6 +62,7 @@ export const handleTHEME = async command => {
 
     const newColorSets = colorSets.filter(set => set.name !== name)
 
+    if (name === currentName) await setStorageValue('local', 'color-set-name', defaultName)
     await setStorageValue('local', 'color-sets', newColorSets)
 
     command.update(`${C`purple`}"${name}"`)

@@ -22,7 +22,8 @@ export const Terminal = () => {
     namespace: 'local',
     key: 'aliases',
     onInit: ({ value }) => commandParser.setAliases(value),
-    onUpdate: ({ newValue }) => commandParser.setAliases(newValue)
+    onUpdate: ({ newValue }) => commandParser.setAliases(newValue),
+    defaultValue: []
   })
 
   useEffect(function focusOnInputAtFirstTime() {

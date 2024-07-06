@@ -1,6 +1,6 @@
 import { useEffect } from 'preact/hooks'
 
-export const useStorage = ({ namespace, key, onUpdate, onInit }) => {
+export const useStorage = ({ namespace, key, onUpdate, onInit, defaultValue }) => {
   useEffect(
     function expectStorageChanges() {
       const handleStorageChanges = (changes, currentChanges) => {
@@ -13,9 +13,15 @@ export const useStorage = ({ namespace, key, onUpdate, onInit }) => {
 
       const updateState = async () => {
         const data = await chrome.storage.local.get(key)
-        const value = data[key]
+        let value = data[key]
 
-        if (typeof value === 'undefined') return
+        const hasValue = typeof value !== 'undefined'
+        const hasDefaultValue = typeof defaultValue !== 'undefined'
+
+        if (!hasValue && hasDefaultValue) {
+          await chrome.storage[namespace].set({ [key]: defaultValue })
+          value = defaultValue
+        }
 
         onInit({ value })
       }

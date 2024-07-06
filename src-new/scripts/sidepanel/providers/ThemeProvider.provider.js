@@ -16,14 +16,16 @@ export const ThemeProvider = ({ children }) => {
     namespace: 'local',
     key: 'color-sets',
     onInit: ({ value }) => setColorSets([...defaultTheme.colorsets, ...value]),
-    onUpdate: ({ newValue }) => setColorSets(oldColorSets => [...oldColorSets, newValue])
+    onUpdate: ({ newValue }) => setColorSets(oldColorSets => [...oldColorSets, newValue]),
+    defaultValue: defaultTheme.colorsets
   })
 
   useStorage({
     namespace: 'local',
     key: 'color-set-name',
     onInit: ({ value }) => setColorSetName(value),
-    onUpdate: ({ newValue }) => setColorSetName(newValue)
+    onUpdate: ({ newValue }) => setColorSetName(newValue),
+    defaultValue: ''
   })
 
   useEffect(

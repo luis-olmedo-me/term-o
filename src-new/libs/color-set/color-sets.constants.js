@@ -23,7 +23,7 @@ export const defaultlDarkMode = {
 }
 
 export const defaultlLightMode = {
-  name: 'Default light Mode',
+  name: 'Default Light Mode',
   black: '#dcdfe7',
   red: '#cc517a',
   green: '#668e3d',

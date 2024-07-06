@@ -1,32 +1,32 @@
 import * as React from 'preact'
 
 import useStorage from '@background/hooks/useStorage'
-import colorSet from '@src/libs/color-set'
+import colorSet, { defaultSets } from '@src/libs/color-set'
 import { defaultTheme } from '@src/theme/theme.colors'
 import { useEffect, useState } from 'preact/hooks'
 import { ThemeProvider as StyleProvider } from 'styled-components'
 
 export const ThemeProvider = ({ children }) => {
-  const [colors, setColors] = useState(colorSet.currentColorSet)
+  const [colors, setColors] = useState(colorSet.colors)
 
   const [updatedColorSets] = useStorage({
     namespace: 'local',
     key: 'color-sets',
-    defaultValue: colorSet.colors
+    defaultValue: defaultSets
   })
 
   const [updatedColorSetName] = useStorage({
     namespace: 'local',
     key: 'color-set-name',
-    defaultValue: colorSet.current
+    defaultValue: colorSet.name
   })
 
   useEffect(
-    function updateRef() {
-      colorSet.setColors(updatedColorSets)
-      colorSet.setCurrent(updatedColorSetName)
+    function updateColorsReference() {
+      const newColorSetSelected = updatedColorSets.find(set => set.name === updatedColorSetName)
 
-      setColors(colorSet.currentColorSet)
+      colorSet.setColors(newColorSetSelected)
+      setColors(colorSet.colors)
     },
     [updatedColorSetName, updatedColorSets]
   )

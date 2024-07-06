@@ -1,5 +1,5 @@
-import { defaultlDarkMode, defaultlLightMode, defaultSets } from './color-sets.constants'
-import { colorSets } from './color-sets.service'
+import { defaultlDarkMode, defaultlLightMode, defaultSets } from './color-set.constants'
+import { colorSet } from './color-set.service'
 
-export default colorSets
+export default colorSet
 export { defaultlDarkMode, defaultlLightMode, defaultSets }

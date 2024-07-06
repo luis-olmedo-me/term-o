@@ -3,10 +3,12 @@ import * as React from 'preact'
 import useStorage from '@background/hooks/useStorage'
 import colorSets from '@src/libs/color-sets'
 import { defaultTheme } from '@src/theme/theme.colors'
-import { useEffect } from 'preact/hooks'
+import { useEffect, useState } from 'preact/hooks'
 import { ThemeProvider as StyleProvider } from 'styled-components'
 
 export const ThemeProvider = ({ children }) => {
+  const [colors, setColors] = useState(colorSets.currentColorSet)
+
   const [updatedColorSets] = useStorage({
     namespace: 'local',
     key: 'color-sets',
@@ -21,16 +23,13 @@ export const ThemeProvider = ({ children }) => {
 
   useEffect(
     function updateRef() {
-      return () => {
-        colorSets.setColors(updatedColorSets)
-        colorSets.setCurrent(updatedColorSetName)
-      }
+      colorSets.setColors(updatedColorSets)
+      colorSets.setCurrent(updatedColorSetName)
+
+      setColors(colorSets.currentColorSet)
     },
     [updatedColorSetName, updatedColorSets]
   )
 
-  const colorSet = updatedColorSets.find(set => set.name === updatedColorSetName)
-  console.log('💬  colorSet:', colorSet)
-
-  return <StyleProvider theme={{ ...defaultTheme, colors: colorSet }}>{children}</StyleProvider>
+  return <StyleProvider theme={{ ...defaultTheme, colors }}>{children}</StyleProvider>
 }

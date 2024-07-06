@@ -1,5 +1,6 @@
 import * as React from 'preact'
 import { useEffect, useRef, useState } from 'preact/hooks'
+import { useTheme } from 'styled-components'
 
 import useStorage from '@background/hooks/useStorage'
 import commandHandlers from '@sidepanel/command-handlers'
@@ -17,6 +18,8 @@ export const Terminal = () => {
   const [tab, setTab] = useState(null)
   const inputRef = useRef(null)
   const loggerRef = useRef(null)
+
+  const theme = useTheme()
 
   const [aliases] = useStorage({
     namespace: 'local',
@@ -54,19 +57,21 @@ export const Terminal = () => {
 
   useEffect(
     function addExternalDataOnNewCommands() {
-      const appendData = command => command.appendsData({ tab, setTab })
+      const appendData = command => command.appendsData({ tab, setTab, theme })
 
       commandParser.addEventListener('on-create-dom', appendData)
       commandParser.addEventListener('on-create-storage', appendData)
       commandParser.addEventListener('on-create-tabs', appendData)
+      commandParser.addEventListener('on-create-theme', appendData)
 
       return () => {
         commandParser.removeEventListener('on-create-dom', appendData)
         commandParser.removeEventListener('on-create-storage', appendData)
         commandParser.removeEventListener('on-create-tabs', appendData)
+        commandParser.removeEventListener('on-create-theme', appendData)
       }
     },
-    [tab]
+    [tab, theme]
   )
 
   const focusOnInput = () => {

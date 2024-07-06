@@ -88,8 +88,9 @@ export const defaultTheme = {
 
 export const defaultColorSetNames = defaultTheme.colorsets.map(set => set.name)
 
+const [darkColorSetName, lightColorSetName] = defaultColorSetNames
 export const themeColorSetNameRef = {
   current: window.matchMedia?.('(prefers-color-scheme: dark)').matches
-    ? 'Material Black'
-    : 'Iceberg Light'
+    ? darkColorSetName
+    : lightColorSetName
 }

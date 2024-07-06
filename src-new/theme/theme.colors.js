@@ -1,5 +1,3 @@
-import colorSets from '@src/libs/color-sets'
-
 export const defaultTheme = {
   radius: {
     50: '1px',
@@ -37,13 +35,4 @@ export const defaultTheme = {
   font: {
     primary: 'Coda'
   }
-}
-
-export const themeColorSetNameRef = {
-  current: window.matchMedia?.('(prefers-color-scheme: dark)').matches
-    ? defaultlDarkMode.name
-    : defaultlLightMode.name
-}
-export const themeColorSetsRef = {
-  current: defaultTheme.colorsets
 }

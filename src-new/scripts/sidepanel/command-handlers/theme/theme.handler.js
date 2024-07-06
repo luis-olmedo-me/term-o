@@ -1,5 +1,5 @@
 import { getStorageValue, setStorageValue } from '@sidepanel/proccesses/workers'
-import { defaultTheme, themeColorSetNameRef } from '@src/theme/theme.colors'
+import colorSets from '@src/libs/color-sets'
 import { getColor as C } from '@src/theme/theme.helpers'
 
 export const handleTHEME = async command => {
@@ -7,7 +7,7 @@ export const handleTHEME = async command => {
 
   if (P`list`) {
     const colorSetsFromLS = await getStorageValue('local', 'color-sets')
-    const colorSets = colorSetsFromLS || defaultTheme.colorsets
+    const colorSets = colorSetsFromLS || colorSets.values
 
     colorSets.forEach(({ name }) => {
       command.update(`${C`purple`}"${name}"`)
@@ -15,7 +15,7 @@ export const handleTHEME = async command => {
   }
 
   if (P`current`) {
-    const name = themeColorSetNameRef.current
+    const name = colorSets.current
 
     command.update(`${C`purple`}"${name}"`)
   }
@@ -24,7 +24,7 @@ export const handleTHEME = async command => {
     const newSet = JSON.parse(P`import`)
 
     const colorSetsFromLS = await getStorageValue('local', 'color-sets')
-    const colorSets = colorSetsFromLS || defaultTheme.colorsets
+    const colorSets = colorSetsFromLS || colorSets.values
     const alreadyExists = colorSets.some(set => set.name.includes(newSet.name))
 
     if (alreadyExists) {
@@ -42,9 +42,9 @@ export const handleTHEME = async command => {
     const name = P`delete`
 
     const colorSetsFromLS = await getStorageValue('local', 'color-sets')
-    const colorSets = colorSetsFromLS || defaultTheme.colorsets
+    const colorSets = colorSetsFromLS || colorSets.values
     const alreadyExists = colorSets.some(set => set.name === name)
-    const isDefault = defaultTheme.colorsets.some(set => set.name === name)
+    const isDefault = colorSets.values.some(set => set.name === name)
 
     if (isDefault) {
       return command.throw(
@@ -67,7 +67,7 @@ export const handleTHEME = async command => {
     const name = P`apply`
 
     const colorSetsFromLS = await getStorageValue('local', 'color-sets')
-    const colorSets = colorSetsFromLS || defaultTheme.colorsets
+    const colorSets = colorSetsFromLS || colorSets.values
     const alreadyExists = colorSets.some(set => set.name === name)
 
     if (!alreadyExists) {

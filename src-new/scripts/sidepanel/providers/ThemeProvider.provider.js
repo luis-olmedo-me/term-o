@@ -1,35 +1,36 @@
 import * as React from 'preact'
 
 import useStorage from '@background/hooks/useStorage'
+import colorSets from '@src/libs/color-sets'
 import { defaultTheme } from '@src/theme/theme.colors'
 import { useEffect } from 'preact/hooks'
 import { ThemeProvider as StyleProvider } from 'styled-components'
-import { themeColorSetNameRef, themeColorSetsRef } from 'theme/theme.colors'
 
 export const ThemeProvider = ({ children }) => {
-  const [colorSets] = useStorage({
+  const [updatedColorSets] = useStorage({
     namespace: 'local',
     key: 'color-sets',
-    defaultValue: defaultTheme.colorsets
+    defaultValue: colorSets.colors
   })
 
-  const [colorSetName] = useStorage({
+  const [updatedColorSetName] = useStorage({
     namespace: 'local',
     key: 'color-set-name',
-    defaultValue: themeColorSetNameRef.current
+    defaultValue: colorSets.current
   })
 
   useEffect(
     function updateRef() {
       return () => {
-        themeColorSetNameRef.current = colorSetName
-        themeColorSetsRef.current = colorSets
+        colorSets.setColors(updatedColorSets)
+        colorSets.setCurrent(updatedColorSetName)
       }
     },
-    [colorSetName, colorSets]
+    [updatedColorSetName, updatedColorSets]
   )
 
-  const colorSet = colorSets.find(set => set.name === colorSetName)
+  const colorSet = updatedColorSets.find(set => set.name === updatedColorSetName)
+  console.log('💬  colorSet:', colorSet)
 
   return <StyleProvider theme={{ ...defaultTheme, colors: colorSet }}>{children}</StyleProvider>
 }

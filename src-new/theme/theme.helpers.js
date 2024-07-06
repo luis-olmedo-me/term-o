@@ -1,4 +1,4 @@
-import { themeColorSetNameRef, themeColorSetsRef } from './theme.colors'
+import colorSets from '@src/libs/color-sets'
 
 export const theme = pathsString => props => {
   const paths = pathsString.split('.')
@@ -7,8 +7,7 @@ export const theme = pathsString => props => {
 }
 
 export const getColor = color => {
-  const colorSetName = themeColorSetNameRef.current
-  const colorSet = themeColorSetsRef.current.find(set => set.name === colorSetName) || {}
+  const colorFound = colorSets.getColor(color)
 
-  return `[termo.${colorSet[color] || color}]`
+  return `[termo.${colorFound || color}]`
 }

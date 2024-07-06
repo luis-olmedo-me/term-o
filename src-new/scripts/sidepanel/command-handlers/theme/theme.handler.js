@@ -14,6 +14,13 @@ export const handleTHEME = async command => {
     })
   }
 
+  if (P`current`) {
+    const response = await chrome.storage.local.get('color-set-name')
+    const name = response['color-set-name'] || ''
+
+    command.update(`${C`purple`}"${name}"`)
+  }
+
   if (P`import`) {
     const newSet = JSON.parse(P`import`)
 

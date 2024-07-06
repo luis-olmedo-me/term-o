@@ -30,4 +30,10 @@ export const createTHEME = () => {
       abbreviation: 'a',
       worksWith: []
     })
+    .expect({
+      name: 'current',
+      type: 'boolean',
+      abbreviation: 'C',
+      worksWith: []
+    })
 }

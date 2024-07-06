@@ -46,7 +46,7 @@ export const handleTHEME = async command => {
     const response = await chrome.storage.local.get('color-sets')
     const colorSets = response['color-sets'] || []
 
-    const existingSet = colorSets.find(set => set.name === newColorSet.name)
+    const existingSet = colorSets.some(set => set.name === name)
 
     if (!existingSet) {
       return command.throw(`'The theme "${C`brightRed`}${name}${C`red`}" does not exist.'`)

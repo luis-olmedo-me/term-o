@@ -52,12 +52,12 @@ export const handleTHEME = async command => {
 
     if (isDefault) {
       return command.throw(
-        `The theme "${C`brightRed`}${name}${C`red`}" is a default theme that can not be deleted.`
+        `The theme ${C`brightRed`}"${name}"${C`red`} is a default theme that can not be deleted.`
       )
     }
 
     if (!alreadyExists) {
-      return command.throw(`The theme "${C`brightRed`}${name}${C`red`}" does not exist.`)
+      return command.throw(`The theme ${C`brightRed`}"${name}"${C`red`} does not exist.`)
     }
 
     const newColorSets = colorSets.filter(set => set.name !== name)
@@ -76,7 +76,7 @@ export const handleTHEME = async command => {
     const alreadyExists = colorSets.some(set => set.name === name)
 
     if (!alreadyExists) {
-      return command.throw(`The theme "${C`brightRed`}${name}${C`red`}" is unrecognized.`)
+      return command.throw(`The theme ${C`brightRed`}"${name}"${C`red`} is unrecognized.`)
     }
 
     await setStorageValue('local', 'color-set-name', name)

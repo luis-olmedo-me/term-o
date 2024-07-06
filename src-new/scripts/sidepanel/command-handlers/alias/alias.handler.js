@@ -18,7 +18,7 @@ export const handleALIAS = async command => {
     const alreadyExists = aliases.some(alias => alias.key.includes(key))
 
     if (alreadyExists) {
-      return command.throw(`The alias "${C`brightRed`}${key}${C`red`}" already exists.`)
+      return command.throw(`The alias ${C`brightRed`}"${key}"${C`red`} already exists.`)
     }
 
     const newAliases = aliases.concat(newAlias)
@@ -35,7 +35,7 @@ export const handleALIAS = async command => {
     const existingAlias = aliases.find(alias => alias.key.includes(key))
 
     if (!existingAlias) {
-      return command.throw(`The alias "${C`brightRed`}${key}${C`red`}" does not exist.`)
+      return command.throw(`The alias ${C`brightRed`}"${key}"${C`red`} does not exist.`)
     }
 
     const newAliases = aliases.filter(alias => alias.key !== key)

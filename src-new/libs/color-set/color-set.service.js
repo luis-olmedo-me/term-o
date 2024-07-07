@@ -15,12 +15,8 @@ class ColorSet {
   getColor(colorName) {
     return this.values[colorName]
   }
-
   setColors(newColors) {
     this.values = newColors
-  }
-  setCurrent(newThemeName) {
-    this.themeName = newThemeName
   }
 }
 

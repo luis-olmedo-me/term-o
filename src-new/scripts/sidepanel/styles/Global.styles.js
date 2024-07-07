@@ -13,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
-    font-family: "${defaultTheme.font.primary}", Courier, monospace;
+    font-family: "${t('font.primary')}", Courier, monospace;
     background-color: ${t('colors.background')};
   }
 `

@@ -33,6 +33,6 @@ export const defaultTheme = {
   },
 
   font: {
-    primary: 'Victor Mono'
+    primary: 'Cascadia Code'
   }
 }

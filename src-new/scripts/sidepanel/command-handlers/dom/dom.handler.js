@@ -19,7 +19,7 @@ export const handleDOM = async command => {
 
     const attrs = Object.entries(attributes)
       .map(([name, value]) => {
-        const attrName = `${C`cyan`}"${name}"`
+        const attrName = `${C`green`}"${name}"`
         const attrValue = value ? ` ${C`yellow`}"${value}"` : ''
 
         return `${C`purple`}[ ${attrName} ${attrValue} ${C`purple`}]`
@@ -45,7 +45,7 @@ export const handleDOM = async command => {
 
       const attrs = Object.entries(attributes)
         .map(([name, value]) => {
-          const attrName = `${C`cyan`}"${name}"`
+          const attrName = `${C`green`}"${name}"`
           const attrValue = value ? `${C`yellow`}"${value}"` : ''
 
           return `${C`purple`}[ ${attrName} ${attrValue} ${C`purple`}]`

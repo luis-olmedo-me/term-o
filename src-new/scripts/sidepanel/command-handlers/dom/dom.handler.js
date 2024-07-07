@@ -22,7 +22,7 @@ export const handleDOM = async command => {
         const attrName = `${C`green`}"${name}"`
         const attrValue = value ? ` ${C`yellow`}"${value}"` : ''
 
-        return `${C`purple`}[ ${attrName} ${attrValue} ${C`purple`}]`
+        return `${C`purple`}[${attrName}${attrValue}${C`purple`}]`
       })
       .join(' ')
 
@@ -48,7 +48,7 @@ export const handleDOM = async command => {
           const attrName = `${C`green`}"${name}"`
           const attrValue = value ? `${C`yellow`}"${value}"` : ''
 
-          return `${C`purple`}[ ${attrName} ${attrValue} ${C`purple`}]`
+          return `${C`purple`}[${attrName}${attrValue}${C`purple`}]`
         })
         .join(' ')
 

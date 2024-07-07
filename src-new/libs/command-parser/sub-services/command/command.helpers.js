@@ -137,8 +137,8 @@ export const getArgs = value => {
   const fragments = value.split(' ')
 
   let output = []
-  const addFragment = fragment => {
-    output = output.concat(fragment)
+  const addFragment = (...fragment) => {
+    output = output.concat(...fragment)
   }
 
   for (let index = 0; index < fragments.length; index++) {
@@ -148,6 +148,7 @@ export const getArgs = value => {
 
     const startsWithQuote = /^"|^'/g.test(fragment)
     const startsWithBracket = /^\[/g.test(fragment)
+    const isFlag = /^\-([a-zA-Z]+)/g.test(fragment)
 
     if (startsWithBracket) {
       const endBrancket = ']'
@@ -194,6 +195,15 @@ export const getArgs = value => {
       }
 
       addFragment(fragmentValue)
+      continue
+    }
+    if (isFlag) {
+      const flags = fragment
+        .replace('-', '')
+        .split('')
+        .map(flag => `-${flag}`)
+
+      addFragment(...flags)
       continue
     }
 

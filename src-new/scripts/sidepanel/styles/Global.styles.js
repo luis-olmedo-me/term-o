@@ -1,4 +1,3 @@
-import { defaultTheme } from '@src/theme/theme.colors'
 import { theme as t } from '@src/theme/theme.helpers'
 import { createGlobalStyle } from 'styled-components'
 

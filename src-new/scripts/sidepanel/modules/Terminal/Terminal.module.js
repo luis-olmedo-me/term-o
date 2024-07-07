@@ -73,8 +73,8 @@ export const Terminal = () => {
     const selection = window.getSelection()
     const selectedText = selection.toString()
 
-    if (!selectedText) inputRef.current?.focus()
-    else if (CAN_COPY_ON_SELECTION) navigator.clipboard.writeText(selectedText)
+    if (CAN_COPY_ON_SELECTION && selectedText) navigator.clipboard.writeText(selectedText)
+    inputRef.current?.focus()
   }
 
   const handleEnter = value => {

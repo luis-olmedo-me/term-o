@@ -7,8 +7,8 @@ export const Decoration = styled.p`
   cursor: text;
 
   &::selection {
-    color: ${t('colors.color-selection')};
-    background-color: ${t('colors.background-selection')};
+    color: ${t('colors.brightGreen')};
+    background-color: ${t('colors.selectionBackground')};
   }
 `
 

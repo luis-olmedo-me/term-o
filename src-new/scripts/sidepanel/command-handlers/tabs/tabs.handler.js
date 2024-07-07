@@ -1,6 +1,6 @@
-import { createTab, getTab } from '@sidepanel/proccesses/workers'
 import { getColor as C } from '@src/theme/theme.helpers'
 import { renameError } from '../command-handlers.helpers'
+import { createTab, getTab } from './tabs.helpers'
 
 export const handleTABS = async command => {
   const { tab, setTab } = command.data

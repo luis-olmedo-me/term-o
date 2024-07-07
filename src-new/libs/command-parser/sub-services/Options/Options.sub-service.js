@@ -49,7 +49,7 @@ export class Options {
   getByName(name) {
     const foundValue = this.values.find(value => value.name === name)
 
-    if (!foundValue) throw `${C`bright-red`}--${name}${C`red`} is not a valid command option.`
+    if (!foundValue) throw `${C`brightRed`}--${name}${C`red`} is not a valid command option.`
 
     return foundValue
   }
@@ -57,8 +57,7 @@ export class Options {
   getByAbbreviation(abbreviation) {
     const foundValue = this.values.find(value => value.abbreviation === abbreviation)
 
-    if (!foundValue)
-      throw `${C`bright-red`}-${abbreviation}${C`red`} is not a valid command option.`
+    if (!foundValue) throw `${C`brightRed`}-${abbreviation}${C`red`} is not a valid command option.`
 
     return foundValue
   }

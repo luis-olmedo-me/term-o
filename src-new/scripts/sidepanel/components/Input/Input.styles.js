@@ -6,10 +6,10 @@ export const Input = styled.input`
   width: 100%;
   box-sizing: border-box;
   white-space: nowrap;
-  font-size: ${t('font-size.50')};
+  font-size: ${t('fontSize.50')};
   border: none;
   display: block;
-  caret-color: ${t('colors.cursor-color')};
+  caret-color: ${t('colors.cursorColor')};
   line-height: ${t('line-height.300')};
   background-color: ${t('colors.background')};
   color: ${t('colors.foreground')};
@@ -22,8 +22,8 @@ export const Input = styled.input`
   }
 
   &::selection {
-    color: ${t('colors.color-selection')};
-    background-color: ${t('colors.background-selection')};
+    color: ${t('colors.brightGreen')};
+    background-color: ${t('colors.selectionBackground')};
   }
 `
 

@@ -1,6 +1,8 @@
 import * as React from 'preact'
 import { useEffect, useRef, useState } from 'preact/hooks'
+import { useTheme } from 'styled-components'
 
+import useStorage from '@background/hooks/useStorage'
 import commandHandlers from '@sidepanel/command-handlers'
 import Prompt from '@sidepanel/components/Prompt'
 import { CAN_COPY_ON_SELECTION, PSO } from '@sidepanel/config'
@@ -17,6 +19,14 @@ export const Terminal = () => {
   const inputRef = useRef(null)
   const loggerRef = useRef(null)
 
+  const theme = useTheme()
+
+  const [aliases] = useStorage({
+    namespace: 'local',
+    key: 'aliases',
+    defaultValue: []
+  })
+
   useEffect(function focusOnInputAtFirstTime() {
     focusOnInput()
   }, [])
@@ -30,57 +40,41 @@ export const Terminal = () => {
     return () => window.removeEventListener('focus', updateTab)
   }, [])
 
-  useEffect(function clearLogsOnClearCommand() {
-    const clearLogs = () => setLogs([])
-
-    commandParser.addEventListener('on-create-clear', clearLogs)
-
-    return () => commandParser.removeEventListener('on-create-clear', clearLogs)
-  }, [])
-
-  useEffect(function expectForAliasChanges() {
-    const handleStorageChanges = (changes, namespace) => {
-      if (namespace !== 'local') return
-
-      for (let [key, { newValue }] of Object.entries(changes)) {
-        if (key === 'aliases') commandParser.setAliases(newValue)
-      }
-    }
-
-    const updateCurrentAliases = async () => {
-      const { aliases = [] } = await chrome.storage.local.get('aliases')
+  useEffect(
+    function expectAliasChanges() {
       commandParser.setAliases(aliases)
-    }
-
-    updateCurrentAliases()
-    chrome.storage.onChanged.addListener(handleStorageChanges)
-
-    return () => chrome.storage.onChanged.removeListener(handleStorageChanges)
-  }, [])
+    },
+    [aliases]
+  )
 
   useEffect(
     function addExternalDataOnNewCommands() {
-      const appendData = command => command.appendsData({ tab, setTab })
+      const clearLogs = () => setLogs([])
+      const appendData = command => command.appendsData({ tab, setTab, theme })
 
       commandParser.addEventListener('on-create-dom', appendData)
       commandParser.addEventListener('on-create-storage', appendData)
       commandParser.addEventListener('on-create-tabs', appendData)
+      commandParser.addEventListener('on-create-theme', appendData)
+      commandParser.addEventListener('on-create-clear', clearLogs)
 
       return () => {
         commandParser.removeEventListener('on-create-dom', appendData)
         commandParser.removeEventListener('on-create-storage', appendData)
         commandParser.removeEventListener('on-create-tabs', appendData)
+        commandParser.removeEventListener('on-create-theme', appendData)
+        commandParser.removeEventListener('on-create-clear', clearLogs)
       }
     },
-    [tab]
+    [tab, theme]
   )
 
   const focusOnInput = () => {
     const selection = window.getSelection()
     const selectedText = selection.toString()
 
-    if (!selectedText) inputRef.current?.focus()
-    else if (CAN_COPY_ON_SELECTION) navigator.clipboard.writeText(selectedText)
+    if (CAN_COPY_ON_SELECTION && selectedText) navigator.clipboard.writeText(selectedText)
+    inputRef.current?.focus()
   }
 
   const handleEnter = value => {

@@ -58,6 +58,6 @@ export const handleDOM = async command => {
     if (P`group`) textElements = prependCounters(textElements)
 
     command.reset()
-    textElements.forEach(element => command.update(element))
+    command.update(...textElements)
   }
 }

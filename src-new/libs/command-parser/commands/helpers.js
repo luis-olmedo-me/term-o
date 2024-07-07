@@ -1,82 +1,65 @@
 import { getColor as C } from '@src/theme/theme.helpers'
 
-export const isRegExp = (option, value) => {
-  if (Array.isArray(value)) return value.forEach(isRegExp)
-
-  try {
-    new RegExp(value)
-  } catch (error) {
-    const name = option.displayName
-
-    throw `${C`bright-red`}${name}${C`red`} expects a valid regular expression. Instead, it received ${C`bright-red`}"${value}"${C`red`}.`
+const isValidType = (value, type) => {
+  switch (type) {
+    case 'string':
+      return typeof value === 'string'
+    case 'number':
+      return typeof value === 'number' && isFinite(value)
+    case 'array':
+      return Array.isArray(value)
+    default:
+      return false
   }
 }
 
-export const isXpath = (option, value) => {
-  if (Array.isArray(value)) return value.forEach(isXpath)
+export const validateSchema = (option, schema, value) => {
+  const name = option.displayName
 
-  try {
-    window.document.evaluate(value, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
-      .singleNodeValue
-  } catch (error) {
-    const name = option.displayName
+  for (let key in schema) {
+    if (!schema.hasOwnProperty(key)) continue
 
-    throw `${C`bright-red`}${name}${C`red`} expects a valid XPath. Instead, it received ${C`bright-red`}"${value}"${C`red`}.`
-  }
-}
+    if (!value.hasOwnProperty(key))
+      throw `${C`brightRed`}${name}${C`red`} expects a valid JSON. Instead, it is missing property ${C`brightRed`}"${key}"${C`red`} in object.`
 
-export const isURL = (option, value) => {
-  if (Array.isArray(value)) return value.forEach(isURL)
+    const expectedType = schema[key]
+    const supposedValue = value[key]
 
-  try {
-    new URL(value)
-  } catch (error) {
-    const name = option.displayName
+    const shouldBeString = typeof expectedType === 'string'
+    const shouldBeArray = Array.isArray(expectedType)
 
-    throw `${C`bright-red`}${name}${C`red`} expects a valid URL. Instead, it received ${C`bright-red`}"${value}"${C`red`}.`
-  }
-}
+    if (shouldBeString) {
+      if (!isValidType(supposedValue, expectedType))
+        throw `${C`brightRed`}${name}${C`red`} expects a valid JSON. Instead, the value of ${C`brightRed`}"${key}"${C`red`} does not match type ${C`brightRed`}"${expectedType}"${C`red`}.`
 
-export const hasNoSpaces = (option, value) => {
-  if (Array.isArray(value)) return value.forEach(hasNoSpaces)
-
-  if (value.includes(' ')) {
-    const name = option.displayName
-
-    throw `${C`bright-red`}${name}${C`red`} expects a value without space characters. Instead, it received ${C`bright-red`}"${value}"${C`red`}.`
-  }
-}
-
-export const hasItems = staticLength => {
-  return (option, value) => {
-    const isValid = value.length === staticLength
-
-    if (!isValid) {
-      const name = option.displayName
-      const count = value.length
-
-      throw `${C`bright-red`}${name}${C`red`}expects ${staticLength} value(s). Instead, it received ${C`bright-red`}${count}${C`red`}.`
+      continue
     }
-  }
-}
 
-export const isInRange = (min, max) => {
-  return (option, value) => {
-    const isValid = value.length >= min && value.length <= max
+    if (shouldBeArray) {
+      const isArray = Array.isArray(supposedValue)
 
-    if (!isValid) {
-      const name = option.displayName
-      const count = value.length
+      if (!isArray)
+        throw `${C`brightRed`}${name}${C`red`} expects a valid JSON. Instead, the property ${C`brightRed`}"${key}"${C`red`} should be an array according to the schema.`
 
-      throw `${C`bright-red`}${name}${C`red`}expects between ${min} and ${max} value(s). Instead, it received ${C`bright-red`}${count}${C`red`}.`
+      const firstExpectedType = expectedType[0]
+      const isValid = supposedValue.every(item => isValidType(item, firstExpectedType))
+
+      if (!isValid)
+        throw `${C`brightRed`}${name}${C`red`} expects a valid JSON. Instead, the element ${C`brightRed`}"${supposedValue}"${C`red`} does not match type ${C`brightRed`}"${firstExpectedType}"${C`red`}.`
+
+      continue
     }
-  }
-}
 
-export const onItem = (index, validation) => {
-  return (option, value) => {
-    value.forEach((item, itemIndex) => {
-      if (itemIndex === index) validation(option, item)
-    })
+    if (typeof expectedType === 'object') {
+      validateSchema(option, supposedValue, expectedType)
+      continue
+    }
+
+    throw `${C`brightRed`}${name}${C`red`} expects a valid JSON. Instead, the type for ${C`brightRed`}"${key}"${C`red`} is unrecognized.`
   }
+
+  const invalidKey = Object.keys(value).find(key => typeof schema[key] === 'undefined')
+
+  if (invalidKey)
+    throw `${C`brightRed`}${name}${C`red`} expects a valid JSON. Instead, it received an value with unexpected key ${C`brightRed`}"${invalidKey}"${C`red`}.`
 }

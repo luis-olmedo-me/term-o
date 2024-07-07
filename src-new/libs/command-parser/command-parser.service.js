@@ -6,6 +6,7 @@ import { createDOM } from './commands/dom/dom.command'
 import { createERROR } from './commands/error/error.command'
 import { createSTORAGE } from './commands/storage/storage.command'
 import { createTABS } from './commands/tabs/tabs.command'
+import { createTHEME } from './commands/theme/theme.command'
 import { getArgs } from './sub-services/command/command.helpers'
 import EventListener from './sub-services/event-listener'
 
@@ -50,7 +51,7 @@ class CommandParser extends EventListener {
 
     if (!createCommand) {
       return createERROR().mock({
-        title: `'The command "${C`bright-red`}${cleanedName}${C`red`}" is unrecognized.'`
+        title: `'The command "${C`brightRed`}${cleanedName}${C`red`}" is unrecognized.'`
       })
     }
 
@@ -80,5 +81,6 @@ export const commandParser = new CommandParser({
   storage: createSTORAGE,
   tabs: createTABS,
   alias: createALIAS,
+  theme: createTHEME,
   error: createERROR
 })

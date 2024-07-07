@@ -1,6 +1,6 @@
 import { commandNames } from '../../command-parser.constants'
 import Command from '../../sub-services/command'
-import { isInRange, isRegExp, isXpath } from '../helpers'
+import { isInRange, isRegExp, isXpath } from '../validators'
 
 export const createDOM = () => {
   return new Command({ name: commandNames.DOM })

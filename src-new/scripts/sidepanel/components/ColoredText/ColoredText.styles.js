@@ -5,7 +5,7 @@ export const Text = styled.span`
   color: ${({ color }) => color};
 
   &::selection {
-    color: ${t('colors.color-selection')};
-    background-color: ${t('colors.background-selection')};
+    color: ${t('colors.brightGreen')};
+    background-color: ${t('colors.selectionBackground')};
   }
 `

@@ -1,4 +1,4 @@
-import { defaultTheme } from './theme.colors'
+import colorSet from '@src/libs/color-set'
 
 export const theme = pathsString => props => {
   const paths = pathsString.split('.')
@@ -7,7 +7,7 @@ export const theme = pathsString => props => {
 }
 
 export const getColor = color => {
-  const colorLabel = defaultTheme.colors[color]
+  const colorFound = colorSet.getColor(color)
 
-  return `[termo.${colorLabel || color}]`
+  return `[termo.${colorFound || color}]`
 }

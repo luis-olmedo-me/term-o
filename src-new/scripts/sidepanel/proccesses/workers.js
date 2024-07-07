@@ -1,4 +1,3 @@
-import { delay } from '@src/helpers/utils.helpers'
 import { createWorkerProcessRequest } from './worker-creator'
 
 export const findDOMElement = (tabId, data) => {

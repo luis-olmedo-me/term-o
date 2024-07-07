@@ -1,3 +1,5 @@
+import { delay } from '@src/helpers/utils.helpers'
+
 export const getTab = async tabIdRaw => {
   const tabIdString = tabIdRaw.replace(/^T/, '')
   const tabId = Number(tabIdString)

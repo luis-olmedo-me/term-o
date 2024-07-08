@@ -42,8 +42,9 @@ export const handleDOM = async command => {
     })
 
     let textElements = elements.map(({ tagName, attributes, xpath }) => {
-      if (xpath !== null) return `${C`yellow`}"${getQuotedString(xpath)}"`
+      if (xpath !== null) return `${C`yellow`}${getQuotedString(xpath)}`
 
+      const quotedTagName = getQuotedString(tagName)
       const attrs = Object.entries(attributes)
         .map(([name, value]) => {
           const attrName = `${C`green`}${getQuotedString(name)}`
@@ -53,7 +54,7 @@ export const handleDOM = async command => {
         })
         .join(' ')
 
-      return attrs ? `${C`red`}"${tagName}" ${attrs}` : `${C`red`}"${tagName}"`
+      return attrs ? `${C`red`}${quotedTagName} ${attrs}` : `${C`red`}${quotedTagName}`
     })
 
     if (P`group`) textElements = prependCounters(textElements)

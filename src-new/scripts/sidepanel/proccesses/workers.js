@@ -26,3 +26,12 @@ export const getStorage = (tabId, data) => {
     data
   })
 }
+
+export const getElementStyles = (tabId, data) => {
+  return createWorkerProcessRequest({
+    type: 'get-element-styles',
+    defaultResponse: [],
+    tabId,
+    data
+  })
+}

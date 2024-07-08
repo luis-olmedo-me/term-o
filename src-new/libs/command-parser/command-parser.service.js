@@ -5,6 +5,7 @@ import { createCLEAR } from './commands/clear/clear.command'
 import { createDOM } from './commands/dom/dom.command'
 import { createERROR } from './commands/error/error.command'
 import { createSTORAGE } from './commands/storage/storage.command'
+import { createSTYLE } from './commands/style/style.command'
 import { createTABS } from './commands/tabs/tabs.command'
 import { createTHEME } from './commands/theme/theme.command'
 import { getArgs } from './sub-services/command/command.helpers'
@@ -82,5 +83,6 @@ export const commandParser = new CommandParser({
   tabs: createTABS,
   alias: createALIAS,
   theme: createTHEME,
+  style: createSTYLE,
   error: createERROR
 })

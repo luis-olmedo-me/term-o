@@ -5,28 +5,25 @@ const getCrossOrginStyleSheet = async styleSheet => {
   const originalStyleElement = styleSheet.owner
 
   if (cachedURLs[url]) return cachedURLs[url]
+  const response = await fetch(url)
+  const cssText = response.text()
 
-  return await fetch(url)
-    .then(response => response.text())
-    .then(cssText => {
-      const styleElement = document.createElement('style')
+  const styleElement = document.createElement('style')
+  styleElement.textContent = cssText
 
-      styleElement.textContent = cssText
+  if (originalStyleElement?.parentNode) {
+    const parentNode = originalStyleElement.parentNode
 
-      if (originalStyleElement?.parentNode) {
-        const parentNode = originalStyleElement.parentNode
+    parentNode.insertBefore(styleElement, originalStyleElement)
+  } else {
+    document.head.appendChild(styleElement)
+  }
 
-        parentNode.insertBefore(styleElement, originalStyleElement)
-      } else {
-        document.head.appendChild(styleElement)
-      }
+  const myStyleSheet = document.styleSheets[document.styleSheets.length - 1]
+  cachedURLs[url] = myStyleSheet
+  cachedStyles.push(styleElement)
 
-      const myStyleSheet = document.styleSheets[document.styleSheets.length - 1]
-      cachedURLs[url] = myStyleSheet
-      cachedStyles.push(styleElement)
-
-      return myStyleSheet
-    })
+  return myStyleSheet
 }
 
 export const mockCrossOriginStyleSheets = async () => {

@@ -9,7 +9,8 @@ export const handleSTYLES = async command => {
   if (P`on`) {
     command.update('Searching element styles.')
     const rules = await getElementStyles(tab.id, {
-      searchByXpath: P`on`
+      searchByXpath: P`on`,
+      searchByProperty: P`property`
     })
 
     const formattedStyles = rules.map(({ styles, selector }) => {

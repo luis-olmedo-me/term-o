@@ -46,7 +46,6 @@ export const createWorkerProcessRequest = ({ tabId, type, data, defaultResponse 
         }
 
         case states.ERROR: {
-          console.log('💬  ERROR: process.data:', process.data)
           reject(process.data || defaultResponse)
           break
         }

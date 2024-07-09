@@ -1,6 +1,9 @@
 let cachedURLs = {}
 let cachedStyles = []
-const getCrossOrginStyleSheet = async url => {
+const getCrossOrginStyleSheet = async styleSheet => {
+  const url = styleSheet.href
+  const originalStyleElement = styleSheet.owner
+
   if (cachedURLs[url]) return cachedURLs[url]
 
   return await fetch(url)
@@ -10,7 +13,13 @@ const getCrossOrginStyleSheet = async url => {
 
       styleElement.textContent = cssText
 
-      document.head.appendChild(styleElement)
+      if (originalStyleElement?.parentNode) {
+        const parentNode = originalStyleElement.parentNode
+
+        parentNode.insertBefore(styleElement, originalStyleElement)
+      } else {
+        document.head.appendChild(styleElement)
+      }
 
       const myStyleSheet = document.styleSheets[document.styleSheets.length - 1]
       cachedURLs[url] = myStyleSheet
@@ -27,7 +36,7 @@ export const mockCrossOriginStyleSheets = async () => {
         ? new URL(styleSheet.href).orgin !== window.location.origin
         : false
 
-      if (isCrossOrigin) await getCrossOrginStyleSheet(styleSheet.href)
+      if (isCrossOrigin) await getCrossOrginStyleSheet(styleSheet)
     } catch {
       throw new Error('Unexpected error when trying to mock Cross Origin Stylesheet.')
     }

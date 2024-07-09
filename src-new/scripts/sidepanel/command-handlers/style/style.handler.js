@@ -12,7 +12,7 @@ export const handleSTYLES = async command => {
     })
 
     command.reset()
-    const formattedStyles = Object.entries(styles)
+    const formattedStyles = styles
       .map(([name, value]) => {
         return `${C`purple`}[${C`green`}"${name}" ${C`yellow`}"${value}"${C`purple`}]`
       })

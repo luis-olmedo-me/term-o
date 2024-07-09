@@ -5,25 +5,28 @@ const getCrossOrginStyleSheet = async styleSheet => {
   const originalStyleElement = styleSheet.owner
 
   if (cachedURLs[url]) return cachedURLs[url]
-  const response = await fetch(url)
-  const cssText = response.text()
 
-  const styleElement = document.createElement('style')
-  styleElement.textContent = cssText
+  return await fetch(url)
+    .then(response => response.text())
+    .then(cssText => {
+      const styleElement = document.createElement('style')
 
-  if (originalStyleElement?.parentNode) {
-    const parentNode = originalStyleElement.parentNode
+      styleElement.textContent = cssText
 
-    parentNode.insertBefore(styleElement, originalStyleElement)
-  } else {
-    document.head.appendChild(styleElement)
-  }
+      if (originalStyleElement?.parentNode) {
+        const parentNode = originalStyleElement.parentNode
 
-  const myStyleSheet = document.styleSheets[document.styleSheets.length - 1]
-  cachedURLs[url] = myStyleSheet
-  cachedStyles.push(styleElement)
+        parentNode.insertBefore(styleElement, originalStyleElement)
+      } else {
+        document.head.appendChild(styleElement)
+      }
 
-  return myStyleSheet
+      const myStyleSheet = document.styleSheets[document.styleSheets.length - 1]
+      cachedURLs[url] = myStyleSheet
+      cachedStyles.push(styleElement)
+
+      return myStyleSheet
+    })
 }
 
 export const mockCrossOriginStyleSheets = async () => {
@@ -35,7 +38,7 @@ export const mockCrossOriginStyleSheets = async () => {
 
       if (isCrossOrigin) await getCrossOrginStyleSheet(styleSheet)
     } catch {
-      throw new Error('Unexpected error when trying to mock Cross Origin Stylesheet.')
+      throw 'Unexpected error when trying to mock Cross Origin Stylesheet.'
     }
   }
 }

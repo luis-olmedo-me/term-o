@@ -1,5 +1,13 @@
 import { getColor as C } from '@src/theme/theme.helpers'
 
+const getJSONValue = stringValue => {
+  try {
+    return JSON.parse(stringValue)
+  } catch {
+    return null
+  }
+}
+
 const parseOptions = (index, arg, argsBySpace, type) => {
   switch (type) {
     case 'string': {
@@ -54,8 +62,9 @@ const parseOptions = (index, arg, argsBySpace, type) => {
         throw `${C`brightRed`}${arg} ${C`red`}expects for ${C`brightRed`}[string-array]${C`red`} value. Instead, it received ${C`brightRed`}${argValue}${C`red`}.`
 
       const argValueWithComas = argValue.replaceAll('" "', '","')
-      const value = JSON.parse(argValueWithComas)
-      const isValidValue = Object.values(value).every(value => typeof value === 'string' && value)
+      const value = getJSONValue(argValueWithComas)
+      const isValidValue =
+        value && Object.values(value).every(value => typeof value === 'string' && value)
 
       if (!isValidValue)
         throw `${C`brightRed`}${arg} ${C`red`}expects for content in ${C`brightRed`}[string-array]${C`red`} value(s). Instead, it received ${C`brightRed`}${argValue}${C`red`}.`

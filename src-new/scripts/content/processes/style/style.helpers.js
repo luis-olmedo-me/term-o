@@ -29,6 +29,14 @@ const getCrossOrginStyleSheet = async styleSheet => {
     })
 }
 
+export const clearMockedCrossOriginStyleSheets = () => {
+  for (const cachedStyle of cachedStyles) {
+    cachedStyle.remove()
+  }
+
+  cachedURLs = {}
+}
+
 export const mockCrossOriginStyleSheets = async () => {
   for (const styleSheet of document.styleSheets) {
     try {
@@ -38,17 +46,10 @@ export const mockCrossOriginStyleSheets = async () => {
 
       if (isCrossOrigin) await getCrossOrginStyleSheet(styleSheet)
     } catch {
+      clearMockedCrossOriginStyleSheets()
       throw 'Unexpected error when trying to mock Cross Origin Stylesheet.'
     }
   }
-}
-
-export const clearMockedCrossOriginStyleSheets = () => {
-  for (const cachedStyle of cachedStyles) {
-    cachedStyle.remove()
-  }
-
-  cachedURLs = {}
 }
 
 const getStylesFromStyleAttribute = element => {

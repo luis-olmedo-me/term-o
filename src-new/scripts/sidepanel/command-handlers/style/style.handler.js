@@ -11,13 +11,11 @@ export const handleSTYLES = async command => {
       searchByXpath: P`on`
     })
 
-    command.reset()
-    const formattedStyles = styles
-      .map(([name, value]) => {
-        return `${C`purple`}[${C`green`}"${name}" ${C`yellow`}"${value}"${C`purple`}]`
-      })
-      .join(' ')
+    const formattedStyles = styles.map(([name, value, namespace]) => {
+      return `${C`purple`}"${name}" ${C`yellow`}"${value}" ${C`yellow`}"${namespace}"`
+    })
 
-    command.update(formattedStyles)
+    command.reset()
+    command.update(...formattedStyles)
   }
 }

@@ -18,7 +18,6 @@ export const getElementStyles = async (resolve, data) => {
   if (!element) return resolve(null)
 
   const computedStyles = getComputedStyle(element)
-  const computedStyleNames = Object.keys(computedStyles)
   let rules = []
 
   await mockCrossOriginStyleSheets()
@@ -43,6 +42,10 @@ export const getElementStyles = async (resolve, data) => {
       : rules.concat({ selector, styles: [style] })
   }
 
+  const inlineRule = rules.find(rule => rule.selector === 'element.styles')
+  const restRules = rules.filter(rule => rule.selector !== 'element.styles')
+  const sortedRules = inlineRule ? [inlineRule, ...restRules] : restRules
+
   clearMockedCrossOriginStyleSheets()
-  resolve(rules)
+  resolve(sortedRules)
 }

@@ -18,12 +18,12 @@ export const getElementStyles = async (resolve, data) => {
   if (!element) return resolve(null)
 
   const computedStyles = getComputedStyle(element)
+  const computedStyleNames = Object.keys(computedStyles)
   let rules = []
 
   await mockCrossOriginStyleSheets()
 
-  for (let i = 0; i < computedStyles.length; i++) {
-    const propName = computedStyles[i]
+  for (const propName of computedStyleNames) {
     const propValue = computedStyles.getPropertyValue(propName)
     const selector = findCSSRuleForElement(element, propName)
 

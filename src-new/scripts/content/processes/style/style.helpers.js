@@ -1,4 +1,5 @@
 let cachedURLs = {}
+let cachedStyles = []
 const getCrossOrginStyleSheet = async url => {
   if (cachedURLs[url]) return cachedURLs[url]
 
@@ -13,12 +14,13 @@ const getCrossOrginStyleSheet = async url => {
 
       const myStyleSheet = document.styleSheets[document.styleSheets.length - 1]
       cachedURLs[url] = myStyleSheet
+      cachedStyles.push(styleElement)
 
       return myStyleSheet
     })
 }
 
-export async function findCSSRuleForElement(element, propertyName) {
+export function findCSSRuleForElement(element, propertyName) {
   const styleSheets = document.styleSheets
   const computedStyles = window.getComputedStyle(element)
 
@@ -57,4 +59,12 @@ export const mockCrossOriginStyleSheets = async () => {
       throw new Error('Unexpected error when trying to mock Cross Origin Stylesheet.')
     }
   }
+}
+
+export const clearMockedCrossOriginStyleSheets = () => {
+  for (const cachedStyle of cachedStyles) {
+    cachedStyle.remove()
+  }
+
+  cachedURLs = {}
 }

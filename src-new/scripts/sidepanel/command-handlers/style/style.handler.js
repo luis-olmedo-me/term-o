@@ -13,6 +13,7 @@ export const handleSTYLES = async command => {
     })
 
     const formattedStyles = rules.map(({ styles, selector }) => {
+      const quotedSelector = getQuotedString(selector)
       const css = styles
         .map(([name, value]) => {
           const coloredName = `${C`green`}${getQuotedString(name)}`
@@ -22,7 +23,7 @@ export const handleSTYLES = async command => {
         })
         .join(' ')
 
-      return css ? `${C`purple`}${selector} ${css}` : `${C`purple`}${selector}`
+      return css ? `${C`cyan`}${quotedSelector} ${css}` : `${C`cyan`}${quotedSelector}`
     })
 
     command.reset()

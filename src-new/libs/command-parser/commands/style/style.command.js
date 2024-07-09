@@ -8,7 +8,7 @@ export const createSTYLE = () => {
       name: 'on',
       type: 'string',
       abbreviation: 'o',
-      worksWith: ['property'],
+      worksWith: ['property', 'selector'],
       validate: [isXpath]
     })
     .expect({
@@ -16,6 +16,12 @@ export const createSTYLE = () => {
       type: 'string-array',
       abbreviation: 'p',
       validate: [isRegExp, isInRange(0, 2)]
+    })
+    .expect({
+      name: 'selector',
+      type: 'string',
+      abbreviation: 's',
+      validate: [isRegExp]
     })
     .expect({
       name: 'apply',

@@ -20,9 +20,51 @@ const getCrossOrginStyleSheet = async url => {
     })
 }
 
-export function findCSSRuleForElement(element, propertyName) {
+export const mockCrossOriginStyleSheets = async () => {
+  for (const styleSheet of document.styleSheets) {
+    try {
+      const isCrossOrigin = styleSheet.href
+        ? new URL(styleSheet.href).orgin !== window.location.origin
+        : false
+
+      if (isCrossOrigin) await getCrossOrginStyleSheet(styleSheet.href)
+    } catch {
+      throw new Error('Unexpected error when trying to mock Cross Origin Stylesheet.')
+    }
+  }
+}
+
+export const clearMockedCrossOriginStyleSheets = () => {
+  for (const cachedStyle of cachedStyles) {
+    cachedStyle.remove()
+  }
+
+  cachedURLs = {}
+}
+
+const getStylesFromStyleAttribute = element => {
+  const styleAttribute = element.getAttribute('style')
+
+  if (!styleAttribute) return {}
+
+  const declarations = styleAttribute.split(';')
+
+  return declarations.reduce((styles, declaration) => {
+    if (declaration.trim() === '') return styles
+
+    const [property, value] = declaration.split(':').map(part => part.trim())
+    styles[property] = value
+
+    return { ...styles, [property]: value }
+  }, {})
+}
+
+export const findCSSRuleForElement = (element, propertyName) => {
   const styleSheets = document.styleSheets
   const computedStyles = window.getComputedStyle(element)
+
+  const inlineStyles = getStylesFromStyleAttribute(element)
+  const isInlineStyle = inlineStyles.hasOwnProperty(propertyName)
 
   for (const styleSheet of styleSheets) {
     const isCrossOrigin = styleSheet.href
@@ -44,27 +86,5 @@ export function findCSSRuleForElement(element, propertyName) {
     }
   }
 
-  return null
-}
-
-export const mockCrossOriginStyleSheets = async () => {
-  for (const styleSheet of document.styleSheets) {
-    try {
-      const isCrossOrigin = styleSheet.href
-        ? new URL(styleSheet.href).orgin !== window.location.origin
-        : false
-
-      if (isCrossOrigin) await getCrossOrginStyleSheet(styleSheet.href)
-    } catch {
-      throw new Error('Unexpected error when trying to mock Cross Origin Stylesheet.')
-    }
-  }
-}
-
-export const clearMockedCrossOriginStyleSheets = () => {
-  for (const cachedStyle of cachedStyles) {
-    cachedStyle.remove()
-  }
-
-  cachedURLs = {}
+  return isInlineStyle ? 'element.styles' : null
 }

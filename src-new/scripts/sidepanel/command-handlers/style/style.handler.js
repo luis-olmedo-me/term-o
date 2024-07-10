@@ -6,7 +6,7 @@ export const handleSTYLES = async command => {
   const { tab } = command.data
   const P = name => command.props[name]
 
-  if (P`on`) {
+  if (P`list`) {
     command.update('Searching element styles.')
     const rules = await getElementStyles(tab.id, {
       searchByXpath: P`on`,

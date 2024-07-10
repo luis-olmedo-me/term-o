@@ -18,8 +18,15 @@ export const renameError = error => {
   throw replacement ? replacement.new : error
 }
 
-export const formatElement = ({ tagName, attributes, xpath }) => {
-  if (xpath !== null) return `${C`yellow`}${getQuotedString(xpath)}`
+export const getNumberTabId = tabIdRaw => {
+  const tabIdString = tabIdRaw.replace(/^T/, '')
+
+  return Number(tabIdString)
+}
+
+export const formatElement = ({ tagName, attributes, xpath, tabId }) => {
+  const quotedTabId = tabId ? `${C`blue`}${getQuotedString(tabId)} ` : ''
+  if (xpath !== null) return `${quotedTabId}${C`yellow`}${getQuotedString(xpath)}`
 
   const attrs = Object.entries(attributes)
     .map(([name, value]) => {
@@ -32,12 +39,15 @@ export const formatElement = ({ tagName, attributes, xpath }) => {
 
   const quotedTagName = getQuotedString(tagName)
 
-  return attrs ? `${C`red`}${quotedTagName} ${attrs}` : `${C`red`}${quotedTagName}`
+  return attrs
+    ? `${quotedTabId}${C`red`}${quotedTagName} ${attrs}`
+    : `${quotedTabId}${C`red`}${quotedTagName}`
 }
 
-export const formatEvent = ({ name, target }) => {
+export const formatEvent = ({ name, target, tabId }) => {
+  const quotedTabId = tabId ? `${C`blue`}${getQuotedString(tabId)} ` : ''
   const quotedName = getQuotedString(name)
   const quotedTarget = getQuotedString(target)
 
-  return `${C`purple`}${quotedName} ${C`yellow`}${quotedTarget}`
+  return `${quotedTabId}${C`purple`}${quotedName} ${C`yellow`}${quotedTarget}`
 }

@@ -53,6 +53,7 @@ export const Terminal = () => {
       const appendData = command => command.appendsData({ tab, setTab, theme })
 
       commandParser.addEventListener('on-create-dom', appendData)
+      commandParser.addEventListener('on-create-style', appendData)
       commandParser.addEventListener('on-create-storage', appendData)
       commandParser.addEventListener('on-create-tabs', appendData)
       commandParser.addEventListener('on-create-theme', appendData)
@@ -60,6 +61,7 @@ export const Terminal = () => {
 
       return () => {
         commandParser.removeEventListener('on-create-dom', appendData)
+        commandParser.removeEventListener('on-create-style', appendData)
         commandParser.removeEventListener('on-create-storage', appendData)
         commandParser.removeEventListener('on-create-tabs', appendData)
         commandParser.removeEventListener('on-create-theme', appendData)

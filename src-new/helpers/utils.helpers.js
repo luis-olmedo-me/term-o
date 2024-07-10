@@ -22,3 +22,12 @@ export const createUUIDv4 = () => {
 export const delay = time => {
   return new Promise(resolve => setTimeout(resolve, time))
 }
+
+export const getQuotedString = value => {
+  const hasDoubleQuote = value.includes('"')
+  const hasSingleQuote = value.includes("'")
+
+  if (hasDoubleQuote && !hasSingleQuote) return `'${value}'`
+  else if (!hasDoubleQuote && hasSingleQuote) return `"${value}"`
+  else return `"${value.replace('"', '\\"')}"`
+}

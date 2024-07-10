@@ -1,6 +1,6 @@
 import { getCookies, getLocal, getSession } from './storage.helpers'
 
-export const getStorage = (resolve, data) => {
+export const getStorage = async (resolve, data) => {
   let storages = {}
 
   if (data.includeLocal) storages = { ...storages, local: getLocal() }

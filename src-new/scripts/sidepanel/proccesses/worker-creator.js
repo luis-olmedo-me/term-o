@@ -45,6 +45,11 @@ export const createWorkerProcessRequest = ({ tabId, type, data, defaultResponse 
           break
         }
 
+        case states.ERROR: {
+          reject(process.data || defaultResponse)
+          break
+        }
+
         case states.DONE: {
           resolve(process.data || defaultResponse)
           break

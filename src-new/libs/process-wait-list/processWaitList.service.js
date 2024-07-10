@@ -6,7 +6,7 @@ class ProcessWaitList {
   }
 
   getProcessById(id) {
-    const process = this.list.find((process) => process.id === id)
+    const process = this.list.find(process => process.id === id)
 
     if (process?.state === 'done') this.remove(id)
 
@@ -14,11 +14,17 @@ class ProcessWaitList {
   }
 
   resolver(id) {
-    return (data) => {
-      this.list = this.list.map((process) => {
-        return process.id === id
-          ? { ...process, state: states.DONE, data }
-          : process
+    return data => {
+      this.list = this.list.map(process => {
+        return process.id === id ? { ...process, state: states.DONE, data } : process
+      })
+    }
+  }
+
+  rejecter(id) {
+    return data => {
+      this.list = this.list.map(process => {
+        return process.id === id ? { ...process, state: states.ERROR, data } : process
       })
     }
   }
@@ -27,15 +33,16 @@ class ProcessWaitList {
     const newId = Date.now().toString()
     const newProcess = { id: newId, state: states.IN_PROGRESS, data: null }
     const resolve = this.resolver(newId).bind(this)
+    const reject = this.rejecter(newId).bind(this)
 
     this.list = [...this.list, newProcess]
-    callback(resolve)
+    callback(resolve).catch(reject)
 
     return newProcess
   }
 
   remove(id) {
-    this.list = this.list.filter((process) => process.id !== id)
+    this.list = this.list.filter(process => process.id !== id)
   }
 }
 

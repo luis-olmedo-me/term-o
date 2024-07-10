@@ -1,6 +1,6 @@
 import { getElementByXPath } from './dom.helpers'
 
-export const findDOMElement = (resolve, data) => {
+export const findDOMElement = async (resolve, data) => {
   const { searchByXpath } = data
 
   const element = getElementByXPath(searchByXpath)

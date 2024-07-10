@@ -70,6 +70,32 @@ export const hasNoSpaces = (option, value) => {
   }
 }
 
+export const isInlineStyles = (option, value) => {
+  if (Array.isArray(value)) return value.forEach(isInlineStyles)
+
+  const validPropertyName = /^-?\w+$/
+  const validPropertyValue = /^[\w\s.%#()-]+$/
+
+  const stylesArray = value.split(';')
+
+  for (const style of stylesArray) {
+    const trimmedStyle = style.trim()
+
+    if (trimmedStyle === '') continue
+
+    const [propName, propValue] = trimmedStyle.split(':').map(part => part?.trim())
+    const isMissingContent = propName === '' || propValue === ''
+    const isInvalidPropName = !validPropertyName.test(propName)
+    const isInvalidPropValue = !validPropertyValue.test(propValue)
+
+    if (isMissingContent || isInvalidPropName || isInvalidPropValue) {
+      const name = option.displayName
+
+      throw `${C`brightRed`}${name}${C`red`} expects valid inline styles. Instead, it received ${C`brightRed`}"${value}"${C`red`}.`
+    }
+  }
+}
+
 export const hasItems = staticLength => {
   return (option, value) => {
     const isValid = value.length === staticLength

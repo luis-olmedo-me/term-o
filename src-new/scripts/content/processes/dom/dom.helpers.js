@@ -1,6 +1,6 @@
 export const getElementXPath = element => {
   if (element.id !== '') return 'id("' + element.id + '")'
-  if (element === document.body) return element.tagName.toLowerCase()
+  if (element.parentElement === null) return element.tagName.toLowerCase()
 
   let childCount = 0
   let siblings = element.parentNode.childNodes

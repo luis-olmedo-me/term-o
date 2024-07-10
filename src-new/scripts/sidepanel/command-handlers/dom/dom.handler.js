@@ -5,8 +5,10 @@ export const handleDOM = async command => {
   const { tab } = command.data
   const P = name => command.props[name]
 
+  const tabId = P`tab-id` || tab.id
+
   if (P`search-xpath`) {
-    const element = await findDOMElement(tab.id, {
+    const element = await findDOMElement(tabId, {
       searchByXpath: P`search-xpath`
     })
 
@@ -20,7 +22,7 @@ export const handleDOM = async command => {
       return
     }
 
-    const event = await clickElement(tab.id, {
+    const event = await clickElement(tabId, {
       searchByXpath: P`search-xpath`
     })
 
@@ -30,7 +32,7 @@ export const handleDOM = async command => {
 
   if (P`search`) {
     command.update('Getting elements.')
-    const elements = await getDOMElements(tab.id, {
+    const elements = await getDOMElements(tabId, {
       searchByTag: P`tag`,
       searchByAttribute: P`attr`,
       searchByText: P`text`,

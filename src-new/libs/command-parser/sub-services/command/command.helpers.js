@@ -101,7 +101,7 @@ export const getPropsFromString = command => {
       const nextArg = args[index + 1]
 
       if (isParam(option, nextArg)) {
-        index += 2
+        index++
         nextArg.holdUp()
 
         continue
@@ -121,7 +121,7 @@ export const getPropsFromString = command => {
       const nextArg = args[index + 1]
 
       if (isParam(option, nextArg)) {
-        index += 2
+        index++
         nextArg.holdUp()
 
         continue

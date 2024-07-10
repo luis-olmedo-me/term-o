@@ -1,4 +1,4 @@
-import { findDOMElement, getDOMElements } from '@sidepanel/proccesses/workers'
+import { clickElement, findDOMElement, getDOMElements } from '@sidepanel/proccesses/workers'
 import { getQuotedString } from '@src/helpers/utils.helpers'
 import { getColor as C } from '@src/theme/theme.helpers'
 import { prependCounters } from '../command-handlers.helpers'
@@ -30,6 +30,10 @@ export const handleDOM = async command => {
     const textElement = attrs ? `${C`red`}"${tagName}" ${attrs}` : `${C`red`}"${tagName}"`
 
     command.update(textElement)
+
+    const event = await clickElement({
+      searchByXpath: P`search-xpath`
+    })
   }
 
   if (P`search`) {

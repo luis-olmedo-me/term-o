@@ -60,7 +60,7 @@ export const validate = (dependencies, strictDependencies, newProps) => {
     const propStricDependencies = strictDependencies[propName]
 
     validateAsDependency(dependencies, newProps, propName)
-    validatePropStrictDependencies(propStricDependencies, propNames, propName)
+    validatePropStrictDependencies(propStricDependencies, newProps, propName)
     validatePropDependencies(propDependencies, propNames, propName)
   }
 }

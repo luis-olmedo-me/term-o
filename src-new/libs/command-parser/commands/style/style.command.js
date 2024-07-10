@@ -8,13 +8,15 @@ export const createSTYLE = () => {
       name: 'list',
       type: 'boolean',
       abbreviation: 'l',
-      worksWith: ['on', 'property', 'selector']
+      worksWith: ['on', 'property', 'selector'],
+      mustHave: ['on']
     })
     .expect({
       name: 'apply',
       type: 'string',
       abbreviation: 'a',
-      worksWith: ['on']
+      worksWith: ['on'],
+      mustHave: ['on']
     })
     .expect({
       name: 'on',

@@ -34,3 +34,10 @@ export const formatElement = ({ tagName, attributes, xpath }) => {
 
   return attrs ? `${C`red`}${quotedTagName} ${attrs}` : `${C`red`}${quotedTagName}`
 }
+
+export const formatEvent = ({ name, target }) => {
+  const quotedName = getQuotedString(name)
+  const quotedTarget = getQuotedString(target)
+
+  return `${C`purple`}${quotedName} ${C`yellow`}${quotedTarget}`
+}

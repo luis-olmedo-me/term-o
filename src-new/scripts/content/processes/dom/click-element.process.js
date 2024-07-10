@@ -9,5 +9,5 @@ export const clickElement = async (resolve, data) => {
 
   element.click()
 
-  resolve({ eventName: 'click', target: searchByXpath })
+  resolve({ name: 'click', target: searchByXpath })
 }

@@ -1,12 +1,11 @@
 import { clickElement, findDOMElement, getDOMElements } from '@sidepanel/proccesses/workers'
-import { formatElement, prependCounters } from '../command-handlers.helpers'
+import { formatElement, formatEvent, prependCounters } from '../command-handlers.helpers'
 
 export const handleDOM = async command => {
   const { tab } = command.data
   const P = name => command.props[name]
 
   if (P`search-xpath`) {
-    command.update('Searching element.')
     const element = await findDOMElement(tab.id, {
       searchByXpath: P`search-xpath`
     })
@@ -14,12 +13,19 @@ export const handleDOM = async command => {
     command.reset()
     if (!element) return
 
-    const textElement = formatElement(element)
-    command.update(textElement)
+    if (!P`click`) {
+      const textElement = formatElement(element)
+      command.update(textElement)
+
+      return
+    }
 
     const event = await clickElement(tab.id, {
       searchByXpath: P`search-xpath`
     })
+
+    const textEvent = formatEvent(event)
+    command.update(textEvent)
   }
 
   if (P`search`) {

@@ -1,7 +1,5 @@
 import { clickElement, findDOMElement, getDOMElements } from '@sidepanel/proccesses/workers'
-import { getQuotedString } from '@src/helpers/utils.helpers'
-import { getColor as C } from '@src/theme/theme.helpers'
-import { prependCounters } from '../command-handlers.helpers'
+import { formatElement, prependCounters } from '../command-handlers.helpers'
 
 export const handleDOM = async command => {
   const { tab } = command.data
@@ -16,19 +14,7 @@ export const handleDOM = async command => {
     command.reset()
     if (!element) return
 
-    const { tagName, attributes } = element
-
-    const attrs = Object.entries(attributes)
-      .map(([name, value]) => {
-        const attrName = `${C`green`}"${name}"`
-        const attrValue = value ? ` ${C`yellow`}"${value}"` : ''
-
-        return `${C`purple`}[${attrName}${attrValue}${C`purple`}]`
-      })
-      .join(' ')
-
-    const textElement = attrs ? `${C`red`}"${tagName}" ${attrs}` : `${C`red`}"${tagName}"`
-
+    const textElement = formatElement(element)
     command.update(textElement)
 
     const event = await clickElement(tab.id, {
@@ -45,22 +31,7 @@ export const handleDOM = async command => {
       appendXpath: P`xpath`
     })
 
-    let textElements = elements.map(({ tagName, attributes, xpath }) => {
-      if (xpath !== null) return `${C`yellow`}${getQuotedString(xpath)}`
-
-      const quotedTagName = getQuotedString(tagName)
-      const attrs = Object.entries(attributes)
-        .map(([name, value]) => {
-          const attrName = `${C`green`}${getQuotedString(name)}`
-          const attrValue = value ? ` ${C`yellow`}${getQuotedString(value)}` : ''
-
-          return `${C`purple`}[${attrName}${attrValue}${C`purple`}]`
-        })
-        .join(' ')
-
-      return attrs ? `${C`red`}${quotedTagName} ${attrs}` : `${C`red`}${quotedTagName}`
-    })
-
+    let textElements = elements.map(formatElement)
     if (P`group`) textElements = prependCounters(textElements)
 
     command.reset()

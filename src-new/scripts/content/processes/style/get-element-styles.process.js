@@ -15,7 +15,7 @@ export const getElementStyles = async (resolve, data) => {
 
   const element = getElementByXPath(searchByXpath)
 
-  if (!element) return resolve(null)
+  if (!element) return resolve([])
 
   const computedStyles = getComputedStyle(element)
   let rules = []

@@ -98,3 +98,16 @@ export const findCSSRuleForElement = (element, propertyName) => {
 
   return isInlineStyle ? 'element.styles' : null
 }
+
+export const styleStringToArray = styleString => {
+  return styleString.split(';').reduce(function(styleArray, style) {
+    const parts = style.split(':')
+
+    if (parts.length !== 2) return styleArray
+
+    const key = parts[0]?.trim()
+    const value = parts[1]?.trim()
+
+    return key && value ? [...styleArray, [key, value]] : styleArray
+  }, [])
+}

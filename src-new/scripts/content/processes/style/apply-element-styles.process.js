@@ -1,13 +1,20 @@
 import { getElementByXPath } from '../dom/dom.helpers'
+import { styleStringToArray } from './style.helpers'
 
 export const applyElementStyles = async (resolve, data) => {
   const { searchByXpath, newInlineStyles } = data
 
   const element = getElementByXPath(searchByXpath)
 
-  if (!element) return resolve(null)
+  if (!element) return resolve([])
 
-  element.setAttribute('style', newInlineStyles)
+  const styles = styleStringToArray(newInlineStyles)
+  if (styles.length) element.setAttribute('style', newInlineStyles)
 
-  resolve()
+  resolve([
+    {
+      selector: 'element.styles',
+      styles: styles
+    }
+  ])
 }

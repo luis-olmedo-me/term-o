@@ -29,25 +29,16 @@ export const handleSTYLES = async command => {
     })
 
     command.reset()
-    command.update(...formattedStyles)
+    if (rules.length) command.update(...formattedStyles)
   }
 
   if (P`apply`) {
-    await applyElementStyles(tab.id, {
+    const rules = await applyElementStyles(tab.id, {
       searchByXpath: P`on`,
       newInlineStyles: P`apply`
     })
 
-    command.update('Searching element styles.')
-    const rules = await getElementStyles(tab.id, {
-      searchByXpath: P`on`,
-      searchByProperty: P`property`,
-      searchBySelector: P`selector`
-    })
-
-    const filteredRules = rules.filter(rule => rule.selector === 'element.styles')
-
-    const formattedStyles = filteredRules.map(({ styles, selector }) => {
+    const formattedStyles = rules.map(({ styles, selector }) => {
       const quotedSelector = getQuotedString(selector)
       const css = styles
         .map(([name, value]) => {
@@ -61,7 +52,6 @@ export const handleSTYLES = async command => {
       return css ? `${C`cyan`}${quotedSelector} ${css}` : `${C`cyan`}${quotedSelector}`
     })
 
-    command.reset()
-    command.update(...formattedStyles)
+    if (rules.length) command.update(...formattedStyles)
   }
 }

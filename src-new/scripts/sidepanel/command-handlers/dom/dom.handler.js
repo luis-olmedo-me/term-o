@@ -31,7 +31,7 @@ export const handleDOM = async command => {
 
     command.update(textElement)
 
-    const event = await clickElement({
+    const event = await clickElement(tab.id, {
       searchByXpath: P`search-xpath`
     })
   }

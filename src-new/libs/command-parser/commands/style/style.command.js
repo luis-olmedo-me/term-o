@@ -1,6 +1,6 @@
 import { commandNames } from '../../command-parser.constants'
 import Command from '../../sub-services/command'
-import { isInRange, isRegExp, isXpath } from '../validators'
+import { isInlineStyles, isInRange, isRegExp, isXpath } from '../validators'
 
 export const createSTYLE = () => {
   return new Command({ name: commandNames.STYLE })
@@ -15,6 +15,7 @@ export const createSTYLE = () => {
       name: 'apply',
       type: 'string',
       abbreviation: 'a',
+      validate: [isInlineStyles],
       worksWith: ['on'],
       mustHave: ['on']
     })

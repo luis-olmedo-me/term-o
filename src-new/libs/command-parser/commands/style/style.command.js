@@ -5,10 +5,21 @@ import { isInRange, isRegExp, isXpath } from '../validators'
 export const createSTYLE = () => {
   return new Command({ name: commandNames.STYLE })
     .expect({
+      name: 'list',
+      type: 'boolean',
+      abbreviation: 'l',
+      worksWith: ['on', 'property', 'selector']
+    })
+    .expect({
+      name: 'apply',
+      type: 'string',
+      abbreviation: 'a',
+      worksWith: ['on']
+    })
+    .expect({
       name: 'on',
       type: 'string',
       abbreviation: 'o',
-      worksWith: ['property', 'selector'],
       validate: [isXpath]
     })
     .expect({
@@ -22,11 +33,5 @@ export const createSTYLE = () => {
       type: 'string',
       abbreviation: 's',
       validate: [isRegExp]
-    })
-    .expect({
-      name: 'apply',
-      type: 'string',
-      abbreviation: 'a',
-      worksWith: []
     })
 }

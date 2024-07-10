@@ -16,7 +16,9 @@ export const validate = (dependencies, newProps) => {
       dependency => typeof newProps[dependency] === 'undefined'
     )
 
-    if (missingDependencies.length) {
+    const isValidSkiping = missedDependencyFrom.length - 1 === missingDependencies.length
+
+    if (missingDependencies.length && !isValidSkiping) {
       const matches = missingDependencies
         .map(name => `${C`brightRed`}--${name}${C`red`}`)
         .join(' or ')

@@ -8,8 +8,13 @@ export const createDOM = () => {
       name: 'search-xpath',
       type: 'string',
       abbreviation: 'X',
-      worksWith: [],
+      worksWith: ['click'],
       validate: [isXpath]
+    })
+    .expect({
+      name: 'click',
+      type: 'boolean',
+      abbreviation: 'c'
     })
     .expect({
       name: 'search',

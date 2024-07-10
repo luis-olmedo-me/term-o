@@ -11,7 +11,7 @@ export class Options {
     return this.values.length
   }
 
-  add({ name, value, type, abbreviation, validations, dependencies }) {
+  add({ name, value, type, abbreviation, validations, dependencies, strictDependencies }) {
     this.values = this.values.concat(
       new Option({
         name,
@@ -19,7 +19,8 @@ export class Options {
         type,
         abbreviation,
         validations,
-        dependencies
+        dependencies,
+        strictDependencies
       })
     )
   }
@@ -27,6 +28,12 @@ export class Options {
   getDependencies() {
     return this.values.reduce((deps, { name, dependencies }) => {
       return dependencies ? { ...deps, [name]: dependencies } : deps
+    }, {})
+  }
+
+  getStrictDependencies() {
+    return this.values.reduce((deps, { name, strictDependencies }) => {
+      return strictDependencies ? { ...deps, [name]: strictDependencies } : deps
     }, {})
   }
 
@@ -38,8 +45,9 @@ export class Options {
 
   setValues(values) {
     const dependencies = this.getDependencies()
+    const strictDependencies = this.getStrictDependencies()
 
-    validate(dependencies, values)
+    validate(dependencies, strictDependencies, values)
 
     Object.entries(values).forEach(([name, value]) => {
       this.getByName(name).setValue(value)

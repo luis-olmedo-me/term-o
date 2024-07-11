@@ -26,4 +26,11 @@ export const createALIAS = () => {
       worksWith: [],
       description: 'Delete an alias by its name.'
     })
+    .expect({
+      name: 'help',
+      type: 'boolean',
+      abbreviation: 'h',
+      description: 'Display help about the options available for this command.',
+      worksWith: []
+    })
 }

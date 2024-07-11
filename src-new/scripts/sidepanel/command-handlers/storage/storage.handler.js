@@ -1,5 +1,6 @@
 import { getStorage } from '@sidepanel/proccesses/workers'
 import { getColor as C } from '@src/theme/theme.helpers'
+import { displayHelp } from '../command-handlers.helpers'
 
 export const handleSTORAGE = async command => {
   const { tab } = command.data
@@ -17,4 +18,6 @@ export const handleSTORAGE = async command => {
       command.update(`${C`purple`}"${key}" ${C`yellow`}"${value}"`)
     })
   })
+
+  if (P`help`) displayHelp(command)
 }

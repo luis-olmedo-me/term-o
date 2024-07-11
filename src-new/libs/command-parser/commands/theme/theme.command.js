@@ -41,4 +41,11 @@ export const createTHEME = () => {
       worksWith: [],
       description: 'Show the currently applied theme.'
     })
+    .expect({
+      name: 'help',
+      type: 'boolean',
+      abbreviation: 'h',
+      description: 'Display help about the options available for this command.',
+      worksWith: []
+    })
 }

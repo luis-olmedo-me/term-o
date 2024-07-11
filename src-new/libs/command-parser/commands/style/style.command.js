@@ -42,4 +42,11 @@ export const createSTYLE = () => {
       validate: [isRegExp],
       description: 'Filter elements by CSS selector matching a regular expression.'
     })
+    .expect({
+      name: 'help',
+      type: 'boolean',
+      abbreviation: 'h',
+      description: 'Display help about the options available for this command.',
+      worksWith: []
+    })
 }

@@ -77,4 +77,11 @@ export const createDOM = () => {
       abbreviation: 'i',
       description: 'Get elements on a specific tab ID (T[number]).'
     })
+    .expect({
+      name: 'help',
+      type: 'boolean',
+      abbreviation: 'h',
+      description: 'Display help about the options available for this command.',
+      worksWith: []
+    })
 }

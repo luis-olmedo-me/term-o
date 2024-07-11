@@ -1,5 +1,6 @@
 import { defaultSets, getDefaultMode } from '@src/libs/color-set'
 import { getColor as C } from '@src/theme/theme.helpers'
+import { displayHelp } from '../command-handlers.helpers'
 import { getStorageValue, setStorageValue } from '../storage/storage.helpers'
 
 export const handleTHEME = async command => {
@@ -83,4 +84,6 @@ export const handleTHEME = async command => {
 
     command.update(`${C`purple`}"${name}"`)
   }
+
+  if (P`help`) displayHelp(command)
 }

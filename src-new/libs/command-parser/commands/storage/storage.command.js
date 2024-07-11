@@ -21,4 +21,11 @@ export const createSTORAGE = () => {
       abbreviation: 'c',
       description: 'Get cookies from the pointed tab in the terminal.'
     })
+    .expect({
+      name: 'help',
+      type: 'boolean',
+      abbreviation: 'h',
+      description: 'Display help about the options available for this command.',
+      worksWith: []
+    })
 }

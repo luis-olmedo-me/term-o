@@ -26,7 +26,6 @@ export const getNumberTabId = tabIdRaw => {
 
 export const displayHelp = command => {
   const options = command.options
-  console.log('💬  options:', options)
   const optionsWithDependencies = options.getDependencies()
 
   const dependencies = Object.values(optionsWithDependencies).flat()
@@ -40,13 +39,15 @@ export const displayHelp = command => {
     const option = options.getByName(name)
     const displayName = option.displayName
 
-    outputs.push(`${displayName}: ${option.description}`)
+    outputs.push(`• ${C`purple`}${displayName}${C`foreground`}: ${option.description}`)
 
     dependencies.forEach(dependencyName => {
       const dependencyOption = options.getByName(dependencyName)
       const displayName = dependencyOption.displayName
 
-      outputs.push(`· ${displayName}: ${dependencyOption.description}`)
+      outputs.push(
+        `| • ${C`brightPurple`}${displayName}${C`foreground`}: ${dependencyOption.description}`
+      )
     })
   })
 

@@ -33,11 +33,13 @@ module.exports = (_env, { watch, mode }) => ({
     ]
   },
   plugins: [
-    new CopyPlugin([
-      { from: './src-new/manifest.json', to: './manifest.json' },
-      { from: './src-new/images', to: './images' },
-      { from: './src-new/sidepanel.html', to: './sidepanel.html' }
-    ]),
+    new CopyPlugin({
+      patterns: [
+        { from: './src-new/manifest.json', to: './manifest.json' },
+        { from: './src-new/images', to: './images' },
+        { from: './src-new/sidepanel.html', to: './sidepanel.html' }
+      ]
+    }),
     ...(watch ? [] : [new CleanWebpackPlugin()])
   ],
   optimization: { minimize: mode === 'production' },

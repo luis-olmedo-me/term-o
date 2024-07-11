@@ -1,5 +1,5 @@
 import { getColor as C } from '@src/theme/theme.helpers'
-import { renameError } from '../command-handlers.helpers'
+import { displayHelp, renameError } from '../command-handlers.helpers'
 import { createTab, getTab } from './tabs.helpers'
 
 export const handleTABS = async command => {
@@ -90,4 +90,6 @@ export const handleTABS = async command => {
       )
     }
   }
+
+  if (P`help`) displayHelp(command)
 }

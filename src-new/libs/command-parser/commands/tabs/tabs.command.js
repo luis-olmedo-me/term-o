@@ -99,4 +99,11 @@ export const createTABS = () => {
       description: 'Show the tab currently pointed to by the terminal.',
       worksWith: []
     })
+    .expect({
+      name: 'help',
+      type: 'boolean',
+      abbreviation: 'h',
+      description: 'Display help about the options available for this command.',
+      worksWith: []
+    })
 }

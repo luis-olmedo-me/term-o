@@ -24,6 +24,41 @@ export const getNumberTabId = tabIdRaw => {
   return Number(tabIdString)
 }
 
+export const displayHelp = command => {
+  const options = command.options
+  console.log('💬  options:', options)
+  const optionsWithDependencies = options.getDependencies()
+
+  const dependencies = Object.values(optionsWithDependencies).flat()
+  const optionsIndependents = options.values.filter(
+    option => !option.dependencies && !dependencies.includes(option.name)
+  )
+
+  let outputs = []
+
+  Object.entries(optionsWithDependencies).forEach(([name, dependencies]) => {
+    const option = options.getByName(name)
+    const displayName = option.displayName
+
+    outputs.push(`${displayName}: ${option.description}`)
+
+    dependencies.forEach(dependencyName => {
+      const dependencyOption = options.getByName(dependencyName)
+      const displayName = dependencyOption.displayName
+
+      outputs.push(`· ${displayName}: ${dependencyOption.description}`)
+    })
+  })
+
+  optionsIndependents.forEach(option => {
+    const displayName = option.displayName
+
+    outputs.push(`${displayName}: ${option.description}`)
+  })
+
+  command.update(...outputs)
+}
+
 export const formatElement = ({ tagName, attributes, xpath, textContent, tabId }) => {
   const quotedTabId = tabId ? `${C`blue`}${getQuotedString(tabId)} ` : ''
   if (xpath !== null) return `${quotedTabId}${C`yellow`}${getQuotedString(xpath)}`

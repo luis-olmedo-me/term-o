@@ -4,6 +4,13 @@ import Command from '../../sub-services/command'
 export const createSTORAGE = () => {
   return new Command({ name: commandNames.STORAGE })
     .expect({
+      name: 'list',
+      type: 'boolean',
+      abbreviation: 'l',
+      worksWith: ['local', 'session', 'cookie'],
+      description: 'Show a storages of the tab currently open.'
+    })
+    .expect({
       name: 'local',
       type: 'boolean',
       abbreviation: 'l',

@@ -1,7 +1,7 @@
 import { getElementXPath } from './dom.helpers'
 
 export const getDOMElements = async (resolve, data) => {
-  const { searchByTag, searchByAttribute, searchByText, appendXpath } = data
+  const { searchByTag, searchByAttribute, searchByText, appendXpath, appendTextContent } = data
   const [searchByAttributeName, searchByAttributeValue] = searchByAttribute
 
   const tagPattern = searchByTag && new RegExp(searchByTag)
@@ -49,7 +49,9 @@ export const getDOMElements = async (resolve, data) => {
     )
     const xpath = appendXpath ? getElementXPath(element) : null
 
-    return [...formattedElements, { tagName, attributes: attrs, xpath }]
+    const textContent = appendTextContent ? element.textContent : null
+
+    return [...formattedElements, { tagName, attributes: attrs, xpath, textContent }]
   }, [])
 
   resolve(elements)

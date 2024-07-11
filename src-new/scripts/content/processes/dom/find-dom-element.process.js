@@ -15,5 +15,5 @@ export const findDOMElement = async (resolve, data) => {
     {}
   )
 
-  resolve({ tagName, attributes: attrs, xpath: null })
+  resolve({ tagName, attributes: attrs, xpath: null, textContent: null })
 }

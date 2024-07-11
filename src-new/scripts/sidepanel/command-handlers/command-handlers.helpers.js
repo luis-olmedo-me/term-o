@@ -24,9 +24,10 @@ export const getNumberTabId = tabIdRaw => {
   return Number(tabIdString)
 }
 
-export const formatElement = ({ tagName, attributes, xpath, tabId }) => {
+export const formatElement = ({ tagName, attributes, xpath, textContent, tabId }) => {
   const quotedTabId = tabId ? `${C`blue`}${getQuotedString(tabId)} ` : ''
   if (xpath !== null) return `${quotedTabId}${C`yellow`}${getQuotedString(xpath)}`
+  if (textContent !== null) return `${quotedTabId}${C`yellow`}${getQuotedString(textContent)}`
 
   const attrs = Object.entries(attributes)
     .map(([name, value]) => {

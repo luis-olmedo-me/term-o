@@ -41,6 +41,7 @@ export const handleDOM = async command => {
       searchByTag: P`tag`,
       searchByAttribute: P`attr`,
       searchByText: P`text`,
+      appendTextContent: P`content`,
       appendXpath: P`xpath`
     })
 

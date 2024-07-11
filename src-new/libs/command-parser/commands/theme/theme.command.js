@@ -10,30 +10,35 @@ export const createTHEME = () => {
       type: 'string',
       abbreviation: 'i',
       validate: [isJSONScheme(colorScheme)],
-      worksWith: []
+      worksWith: [],
+      description: 'Import a color scheme in JSON format.'
     })
     .expect({
       name: 'list',
       type: 'boolean',
       abbreviation: 'l',
-      worksWith: []
+      worksWith: [],
+      description: 'List available themes.'
     })
     .expect({
       name: 'delete',
       type: 'string',
       abbreviation: 'd',
-      worksWith: []
+      worksWith: [],
+      description: 'Delete a theme by its name.'
     })
     .expect({
       name: 'apply',
       type: 'string',
       abbreviation: 'a',
-      worksWith: []
+      worksWith: [],
+      description: 'Apply a theme by its name.'
     })
     .expect({
       name: 'current',
       type: 'boolean',
       abbreviation: 'C',
-      worksWith: []
+      worksWith: [],
+      description: 'Show the currently applied theme.'
     })
 }

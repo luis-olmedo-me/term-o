@@ -20,7 +20,7 @@ export const createDOM = () => {
       name: 'search',
       type: 'boolean',
       abbreviation: 's',
-      worksWith: ['attr', 'tag', 'group', 'text', 'content', 'xpath', 'tab-id']
+      worksWith: ['attr', 'style', 'tag', 'group', 'text', 'content', 'xpath', 'tab-id']
     })
     .expect({
       name: 'xpath',
@@ -36,6 +36,12 @@ export const createDOM = () => {
       name: 'attr',
       type: 'string-array',
       abbreviation: 'a',
+      validate: [isRegExp, isInRange(0, 2)]
+    })
+    .expect({
+      name: 'style',
+      type: 'string-array',
+      abbreviation: 'S',
       validate: [isRegExp, isInRange(0, 2)]
     })
     .expect({

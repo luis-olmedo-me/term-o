@@ -40,6 +40,7 @@ export const handleDOM = async command => {
     const elements = await getDOMElements(tabId, {
       searchByTag: P`tag`,
       searchByAttribute: P`attr`,
+      searchByStyle: P`style`,
       searchByText: P`text`,
       appendTextContent: P`content`,
       appendXpath: P`xpath`

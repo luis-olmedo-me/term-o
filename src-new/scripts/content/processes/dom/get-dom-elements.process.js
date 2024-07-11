@@ -1,13 +1,23 @@
 import { getElementXPath } from './dom.helpers'
 
 export const getDOMElements = async (resolve, data) => {
-  const { searchByTag, searchByAttribute, searchByText, appendXpath, appendTextContent } = data
+  const {
+    searchByTag,
+    searchByAttribute,
+    searchByStyle,
+    searchByText,
+    appendXpath,
+    appendTextContent
+  } = data
   const [searchByAttributeName, searchByAttributeValue] = searchByAttribute
+  const [searchByStyleName, searchByStyleValue] = searchByStyle
 
   const tagPattern = searchByTag && new RegExp(searchByTag)
   const textPattern = searchByText && new RegExp(searchByText)
   const attrNamePattern = searchByAttributeName && new RegExp(searchByAttributeName)
   const attrValuePattern = searchByAttributeValue && new RegExp(searchByAttributeValue)
+  const styleNamePattern = searchByStyleName && new RegExp(searchByStyleName)
+  const styleValuePattern = searchByStyleValue && new RegExp(searchByStyleValue)
 
   const allElements = window.document.querySelectorAll('*') || []
 
@@ -38,6 +48,24 @@ export const getDOMElements = async (resolve, data) => {
 
           return isNameMatch && isValueMatch
         })
+      })
+    }
+
+    if (styleNamePattern || styleValuePattern) {
+      conditions.push(() => {
+        const computedStyles = getComputedStyle(element)
+
+        for (let i = 0; i < computedStyles.length; i++) {
+          const propName = computedStyles[i]
+          const propValue = computedStyles.getPropertyValue(propName)
+
+          const isNameMatch = !styleNamePattern || styleNamePattern.test(propName)
+          const isValueMatch = !styleValuePattern || styleValuePattern.test(propValue)
+
+          if (isNameMatch && isValueMatch) return true
+        }
+
+        return false
       })
     }
 

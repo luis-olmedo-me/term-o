@@ -8,14 +8,19 @@ export const createDOM = () => {
       name: 'search-xpath',
       type: 'string',
       abbreviation: 'X',
-      worksWith: [],
+      worksWith: ['click', 'tab-id'],
       validate: [isXpath]
+    })
+    .expect({
+      name: 'click',
+      type: 'boolean',
+      abbreviation: 'c'
     })
     .expect({
       name: 'search',
       type: 'boolean',
       abbreviation: 's',
-      worksWith: ['attr', 'tag', 'group', 'text', 'xpath']
+      worksWith: ['attr', 'style', 'tag', 'group', 'text', 'content', 'xpath', 'tab-id']
     })
     .expect({
       name: 'xpath',
@@ -34,6 +39,12 @@ export const createDOM = () => {
       validate: [isRegExp, isInRange(0, 2)]
     })
     .expect({
+      name: 'style',
+      type: 'string-array',
+      abbreviation: 'S',
+      validate: [isRegExp, isInRange(0, 2)]
+    })
+    .expect({
       name: 'tag',
       type: 'string',
       abbreviation: 't',
@@ -44,5 +55,16 @@ export const createDOM = () => {
       type: 'string',
       abbreviation: 'T',
       validate: [isRegExp]
+    })
+    .expect({
+      name: 'content',
+      type: 'boolean',
+      abbreviation: 'C',
+      validate: [isRegExp]
+    })
+    .expect({
+      name: 'tab-id',
+      type: 'string',
+      abbreviation: 'i'
     })
 }

@@ -39,6 +39,15 @@ export const getElementStyles = (tabId, data) => {
 export const applyElementStyles = (tabId, data) => {
   return createWorkerProcessRequest({
     type: 'apply-element-styles',
+    defaultResponse: [],
+    tabId,
+    data
+  })
+}
+
+export const clickElement = (tabId, data) => {
+  return createWorkerProcessRequest({
+    type: 'click-element',
     defaultResponse: null,
     tabId,
     data

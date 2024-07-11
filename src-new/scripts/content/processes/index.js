@@ -1,3 +1,4 @@
+import { clickElement } from './dom/click-element.process'
 import { findDOMElement } from './dom/find-dom-element.process'
 import { getDOMElements } from './dom/get-dom-elements.process'
 import { getStorage } from './storage/get-storage.process'
@@ -9,5 +10,6 @@ export default {
   'find-dom-element': findDOMElement,
   'get-storage': getStorage,
   'get-element-styles': getElementStyles,
-  'apply-element-styles': applyElementStyles
+  'apply-element-styles': applyElementStyles,
+  'click-element': clickElement
 }

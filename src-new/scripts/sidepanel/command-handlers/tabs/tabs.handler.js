@@ -49,6 +49,15 @@ export const handleTABS = async command => {
   }
 
   if (P`current`) {
+    const [{ windowId, id, title, url }] = await chrome.tabs.query({
+      active: true,
+      lastFocusedWindow: true
+    })
+
+    command.update(`${C`purple`}"W${windowId}" ${C`blue`}"T${id}" ${C`yellow`}"${title}" "${url}"`)
+  }
+
+  if (P`pointing`) {
     const { windowId, id, title, url } = tab
 
     command.update(`${C`purple`}"W${windowId}" ${C`blue`}"T${id}" ${C`yellow`}"${title}" "${url}"`)
@@ -58,6 +67,7 @@ export const handleTABS = async command => {
     const onlyIncognito = P`incognito`
     const onlyTitle = P`title` && new RegExp(P`title`)
     const onlyURL = P`url` && new RegExp(P`url`)
+    const onlyWindowId = P`window-id` && new RegExp(P`window-id`)
 
     const onlyMuted = P`muted` ? { muted: true } : null
     const onlyUnmuted = P`unmuted` ? { muted: false } : null
@@ -73,6 +83,7 @@ export const handleTABS = async command => {
       if (onlyIncognito && !incognito) continue
       if (onlyTitle && !onlyTitle.test(title)) continue
       if (onlyURL && !onlyURL.test(url)) continue
+      if (onlyWindowId && !onlyWindowId.test(`W${windowId}`)) continue
 
       command.update(
         `${C`purple`}"W${windowId}" ${C`blue`}"T${id}" ${C`yellow`}"${title}" "${url}"`

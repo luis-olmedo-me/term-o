@@ -8,7 +8,7 @@ export const createTABS = () => {
       name: 'list',
       type: 'boolean',
       abbreviation: 'l',
-      worksWith: ['incognito', 'muted', 'unmuted', 'title', 'url']
+      worksWith: ['incognito', 'muted', 'unmuted', 'title', 'url', 'window-id']
     })
     .expect({
       name: 'incognito',
@@ -36,6 +36,11 @@ export const createTABS = () => {
       name: 'unmuted',
       type: 'boolean',
       abbreviation: 'M'
+    })
+    .expect({
+      name: 'window-id',
+      type: 'string',
+      abbreviation: 'w'
     })
     .expect({
       name: 'switch',
@@ -72,6 +77,12 @@ export const createTABS = () => {
       name: 'current',
       type: 'boolean',
       abbreviation: 'C',
+      worksWith: []
+    })
+    .expect({
+      name: 'pointing',
+      type: 'boolean',
+      abbreviation: 'P',
       worksWith: []
     })
 }

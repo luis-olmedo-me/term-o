@@ -74,4 +74,10 @@ export const createTABS = () => {
       abbreviation: 'C',
       worksWith: []
     })
+    .expect({
+      name: 'pointing',
+      type: 'boolean',
+      abbreviation: 'P',
+      worksWith: []
+    })
 }

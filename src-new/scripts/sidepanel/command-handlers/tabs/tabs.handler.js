@@ -49,6 +49,15 @@ export const handleTABS = async command => {
   }
 
   if (P`current`) {
+    const [{ windowId, id, title, url }] = await chrome.tabs.query({
+      active: true,
+      lastFocusedWindow: true
+    })
+
+    command.update(`${C`purple`}"W${windowId}" ${C`blue`}"T${id}" ${C`yellow`}"${title}" "${url}"`)
+  }
+
+  if (P`pointing`) {
     const { windowId, id, title, url } = tab
 
     command.update(`${C`purple`}"W${windowId}" ${C`blue`}"T${id}" ${C`yellow`}"${title}" "${url}"`)

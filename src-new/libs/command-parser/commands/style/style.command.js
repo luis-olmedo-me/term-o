@@ -9,7 +9,8 @@ export const createSTYLE = () => {
       type: 'boolean',
       abbreviation: 'l',
       worksWith: ['on', 'property', 'selector'],
-      mustHave: ['on']
+      mustHave: ['on'],
+      description: 'List CSS styles applied to elements and their selectors matching the criteria.'
     })
     .expect({
       name: 'apply',
@@ -17,24 +18,28 @@ export const createSTYLE = () => {
       abbreviation: 'a',
       validate: [isInlineStyles],
       worksWith: ['on'],
-      mustHave: ['on']
+      mustHave: ['on'],
+      description: 'Apply inline styles to elements matching the criteria.'
     })
     .expect({
       name: 'on',
       type: 'string',
       abbreviation: 'o',
-      validate: [isXpath]
+      validate: [isXpath],
+      description: 'XPath expression to select elements.'
     })
     .expect({
       name: 'property',
       type: 'string-array',
       abbreviation: 'p',
-      validate: [isRegExp, isInRange(0, 2)]
+      validate: [isRegExp, isInRange(0, 2)],
+      description: 'Filter styles by property names matching specified patterns.'
     })
     .expect({
       name: 'selector',
       type: 'string',
       abbreviation: 's',
-      validate: [isRegExp]
+      validate: [isRegExp],
+      description: 'Filter elements by CSS selector matching a regular expression.'
     })
 }

@@ -46,7 +46,7 @@ export class Command extends EventListener {
     this.dispatchEvent('update', this)
   }
 
-  expect({ name, type, defaultValue, abbreviation, validate, worksWith, mustHave }) {
+  expect({ name, type, defaultValue, abbreviation, validate, worksWith, mustHave, description }) {
     const value = (defaultValue || defaultValues[type]) ?? defaultValues.none
 
     this.options.add({
@@ -54,6 +54,7 @@ export class Command extends EventListener {
       value,
       type,
       abbreviation,
+      description,
       validations: validate,
       dependencies: worksWith,
       strictDependencies: mustHave

@@ -4,18 +4,35 @@ import Command from '../../sub-services/command'
 export const createSTORAGE = () => {
   return new Command({ name: commandNames.STORAGE })
     .expect({
+      name: 'list',
+      type: 'boolean',
+      abbreviation: 'l',
+      worksWith: ['local', 'session', 'cookie'],
+      description: 'Show a storages of the tab currently open.'
+    })
+    .expect({
       name: 'local',
       type: 'boolean',
-      abbreviation: 'l'
+      abbreviation: 'l',
+      description: 'Get local storage from the pointed tab in the terminal.'
     })
     .expect({
       name: 'session',
       type: 'boolean',
-      abbreviation: 's'
+      abbreviation: 's',
+      description: 'Get local session from the pointed tab in the terminal.'
     })
     .expect({
       name: 'cookie',
       type: 'boolean',
-      abbreviation: 'c'
+      abbreviation: 'c',
+      description: 'Get cookies from the pointed tab in the terminal.'
+    })
+    .expect({
+      name: 'help',
+      type: 'boolean',
+      abbreviation: 'h',
+      description: 'Display help about the options available for this command.',
+      worksWith: []
     })
 }

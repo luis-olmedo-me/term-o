@@ -15,6 +15,7 @@ export const createERROR = () => {
       name: 'title',
       type: 'string',
       abbreviation: 't',
+      description: 'Throw and error.',
       worksWith: []
     })
     .addEventListener('execute', handleERROR)

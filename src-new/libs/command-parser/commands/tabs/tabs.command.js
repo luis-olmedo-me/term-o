@@ -8,68 +8,80 @@ export const createTABS = () => {
       name: 'list',
       type: 'boolean',
       abbreviation: 'l',
-      worksWith: ['incognito', 'muted', 'unmuted', 'title', 'url', 'window-id']
+      worksWith: ['incognito', 'muted', 'unmuted', 'title', 'url', 'window-id'],
+      description: 'Show a list of tabs currently open.'
     })
     .expect({
       name: 'incognito',
       type: 'boolean',
-      abbreviation: 'i'
+      abbreviation: 'i',
+      description: 'Filter tabs in incognito mode.'
     })
     .expect({
       name: 'title',
       type: 'string',
       abbreviation: 't',
+      description: 'Filter tabs by title using a regular expression.',
       validate: [isRegExp]
     })
     .expect({
       name: 'url',
       type: 'string',
       abbreviation: 'u',
+      description: 'Filter tabs by URL using a regular expression.',
       validate: [isRegExp]
     })
     .expect({
       name: 'muted',
       type: 'boolean',
-      abbreviation: 'm'
+      abbreviation: 'm',
+      description: 'Filter muted tabs.'
     })
     .expect({
       name: 'unmuted',
       type: 'boolean',
-      abbreviation: 'M'
+      abbreviation: 'M',
+      description: 'Filter unmuted tabs.'
     })
     .expect({
       name: 'window-id',
       type: 'string',
-      abbreviation: 'w'
+      abbreviation: 'w',
+      description: 'Filter tabs by window ID.'
     })
     .expect({
       name: 'switch',
       type: 'string',
       abbreviation: 's',
+      description: 'Switch to a specific tab by its ID (T[number]).',
       worksWith: []
     })
     .expect({
       name: 'points',
       type: 'string',
       abbreviation: 'p',
+      description: 'Navigate to a saved point in a tab session.',
       worksWith: []
     })
     .expect({
       name: 'reload',
       type: 'string',
       abbreviation: 'r',
+      description: 'Reload a specific tab by its ID (T[number]).',
       worksWith: []
     })
     .expect({
       name: 'close',
       type: 'string',
       abbreviation: 'c',
+      description: 'Close a specific tab by its ID (T[number]).',
       worksWith: []
     })
     .expect({
       name: 'open',
       type: 'string',
       abbreviation: 'o',
+      description: 'Open a URL in a new tab.',
       validate: [isURL],
       worksWith: []
     })
@@ -77,12 +89,21 @@ export const createTABS = () => {
       name: 'current',
       type: 'boolean',
       abbreviation: 'C',
+      description: 'Show the current active tab.',
       worksWith: []
     })
     .expect({
       name: 'pointing',
       type: 'boolean',
       abbreviation: 'P',
+      description: 'Show the tab currently pointed to by the terminal.',
+      worksWith: []
+    })
+    .expect({
+      name: 'help',
+      type: 'boolean',
+      abbreviation: 'h',
+      description: 'Display help about the options available for this command.',
       worksWith: []
     })
 }

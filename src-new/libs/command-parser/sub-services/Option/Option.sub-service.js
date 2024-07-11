@@ -1,9 +1,19 @@
 export class Option {
-  constructor({ name, value, type, abbreviation, validations, dependencies, strictDependencies }) {
+  constructor({
+    name,
+    value,
+    type,
+    abbreviation,
+    description,
+    validations,
+    dependencies,
+    strictDependencies
+  }) {
     this.name = name
     this.value = value
     this.type = type
     this.abbreviation = abbreviation
+    this.description = description
     this.validations = validations
     this.dependencies = dependencies
     this.strictDependencies = strictDependencies

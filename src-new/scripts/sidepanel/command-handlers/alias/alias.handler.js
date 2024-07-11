@@ -1,4 +1,5 @@
 import { getColor as C } from '@src/theme/theme.helpers'
+import { displayHelp } from '../command-handlers.helpers'
 
 export const handleALIAS = async command => {
   const P = name => command.props[name]
@@ -45,4 +46,6 @@ export const handleALIAS = async command => {
 
     command.update(`${C`purple`}"${key}" ${C`yellow`}"${existingAlias.value}"`)
   }
+
+  if (P`help`) displayHelp(command)
 }

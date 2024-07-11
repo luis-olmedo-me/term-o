@@ -1,5 +1,6 @@
 import { clickElement, findDOMElement, getDOMElements } from '@sidepanel/proccesses/workers'
 import {
+  displayHelp,
   formatElement,
   formatEvent,
   getNumberTabId,
@@ -52,4 +53,6 @@ export const handleDOM = async command => {
     command.reset()
     command.update(...textElements)
   }
+
+  if (P`help`) displayHelp(command)
 }

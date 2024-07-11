@@ -1,6 +1,7 @@
 import { applyElementStyles, getElementStyles } from '@sidepanel/proccesses/workers'
 import { getQuotedString } from '@src/helpers/utils.helpers'
 import { getColor as C } from '@src/theme/theme.helpers'
+import { displayHelp } from '../command-handlers.helpers'
 
 export const handleSTYLES = async command => {
   const { tab } = command.data
@@ -54,4 +55,6 @@ export const handleSTYLES = async command => {
 
     if (rules.length) command.update(...formattedStyles)
   }
+
+  if (P`help`) displayHelp(command)
 }

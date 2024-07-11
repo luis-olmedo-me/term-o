@@ -33,7 +33,7 @@ export const InputWrapper = styled.div`
   gap: ${t('space.400')};
   background-color: ${t('colors.background')};
   color: ${t('colors.foreground')};
-  padding: ${t('space.300')} ${t('space.500')};
+  padding: ${t('space.300')} ${t('space.600')};
   cursor: text;
 
   &[aria-disabled='true'],

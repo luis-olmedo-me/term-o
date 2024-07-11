@@ -17,9 +17,9 @@ export const validateSchema = (option, schema, value) => {
   const name = option.displayName
 
   for (let key in schema) {
-    if (!schema.hasOwnProperty(key)) continue
+    if (!(key in schema)) continue
 
-    if (!value.hasOwnProperty(key))
+    if (!(key in value))
       throw `${C`brightRed`}${name}${C`red`} expects a valid JSON. Instead, it is missing property ${C`brightRed`}"${key}"${C`red`} in object.`
 
     const expectedType = schema[key]

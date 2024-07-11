@@ -111,7 +111,7 @@ export const onLocationChange = callback => {
   let oldHref = document.location.href,
     bodyDOM = document.body
 
-  const observer = new MutationObserver(function(_mutations) {
+  const observer = new MutationObserver(function() {
     if (oldHref != document.location.href) {
       oldHref = document.location.href
 

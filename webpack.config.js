@@ -6,7 +6,6 @@ module.exports = (_env, { watch, mode }) => ({
   entry: {
     background: './src-new/scripts/background/background.js',
     content: './src-new/scripts/content/content.js',
-    popup: './src-new/scripts/popup/popup.js',
     sidepanel: './src-new/scripts/sidepanel/sidepanel.js'
   },
   output: {

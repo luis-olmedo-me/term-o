@@ -157,7 +157,7 @@ export const getArgs = value => {
 
     const startsWithQuote = /^"|^'/g.test(fragment)
     const startsWithBracket = /^\[/g.test(fragment)
-    const isFlag = /^\-([a-zA-Z]+)/g.test(fragment)
+    const isFlag = /^-([a-zA-Z]+)/g.test(fragment)
 
     if (startsWithBracket) {
       const endBrancket = ']'

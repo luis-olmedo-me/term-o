@@ -74,7 +74,7 @@ export const findCSSRuleForElement = (element, propertyName) => {
   const computedStyles = window.getComputedStyle(element)
 
   const inlineStyles = getStylesFromStyleAttribute(element)
-  const isInlineStyle = inlineStyles.hasOwnProperty(propertyName)
+  const isInlineStyle = propertyName in inlineStyles
 
   for (const styleSheet of styleSheets) {
     const isCrossOrigin = styleSheet.href

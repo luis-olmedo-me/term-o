@@ -13,7 +13,7 @@ export const convertStringToObjects = input => {
     const colorString = colorFragments[index]
 
     if (colorString === '[termo.none]') return [...fragments, { content, color: null }]
-    const [_match, color] = colorString.match(/#([0-9A-Fa-f]{6})/)
+    const [, color] = colorString.match(/#([0-9A-Fa-f]{6})/)
 
     return [...fragments, { content, color: `#${color}` }]
   }, [])

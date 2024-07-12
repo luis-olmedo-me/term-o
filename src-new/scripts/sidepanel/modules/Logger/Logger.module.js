@@ -26,3 +26,8 @@ export const Logger = ({ logs, loggerRef }) => {
     </S.LoggerWrapper>
   )
 }
+
+Logger.propTypes = {
+  logs: Array,
+  loggerRef: Object
+}

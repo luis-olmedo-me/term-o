@@ -33,13 +33,19 @@ export const Log = ({ command, prefix, onUpdate }) => {
         {prefix} {command.title}
       </S.LogItem>
 
-      {updates.map(update => {
+      {updates.map((update, index) => {
         return (
-          <S.LogItem>
+          <S.LogItem key={index}>
             <ColoredText value={update} />
           </S.LogItem>
         )
       })}
     </S.LogWrapper>
   )
+}
+
+Log.propTypes = {
+  command: Object,
+  prefix: String,
+  onUpdate: Function
 }

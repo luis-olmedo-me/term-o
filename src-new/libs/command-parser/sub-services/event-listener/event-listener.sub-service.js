@@ -31,7 +31,7 @@ export class EventListener {
       return
     }
 
-    this.listeners = { ...this.listeners, [eventName]: filteredEvents }
+    this.listeners = { ...this.listeners, [eventName]: filteredListeners }
 
     return this
   }

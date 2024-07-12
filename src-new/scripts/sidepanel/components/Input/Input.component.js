@@ -20,3 +20,13 @@ export const Input = ({ onChange, onKeyDown, placeholder, value, prefix, inputRe
     </S.InputWrapper>
   )
 }
+
+Input.propTypes = {
+  onChange: Function,
+  onKeyDown: Function,
+  placeholder: String,
+  value: String,
+  prefix: String,
+  inputRef: Object,
+  disabled: Boolean
+}

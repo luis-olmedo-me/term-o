@@ -69,3 +69,10 @@ export const Prompt = ({ onEnter, inputRef, tab, pso }) => {
     </S.PromptWrapper>
   )
 }
+
+Prompt.propTypes = {
+  onEnter: Function,
+  inputRef: Object,
+  tab: Object,
+  pso: String
+}

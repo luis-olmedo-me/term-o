@@ -36,12 +36,10 @@ const createWorkerRequest = ({ tabId, type, data, defaultResponse }) => {
 
 export const createWorkerProcessRequest = ({ tabId, type, data, defaultResponse }) => {
   return new Promise((resolve, reject) => {
-    let timeoutId = null
-
     const callback = process => {
       switch (process.state) {
         case states.IN_PROGRESS: {
-          timeoutId = setTimeout(() => createWorker({ id: process.id, data }), 100)
+          setTimeout(() => createWorker({ id: process.id, data }), 100)
           break
         }
 

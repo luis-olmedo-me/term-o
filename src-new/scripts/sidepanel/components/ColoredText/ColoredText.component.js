@@ -10,9 +10,15 @@ export const ColoredText = ({ value }) => {
 
   return (
     <>
-      {sections.map(({ color, content }) => (
-        <S.Text color={color}>{content}</S.Text>
+      {sections.map(({ color, content }, index) => (
+        <S.Text key={index} color={color}>
+          {content}
+        </S.Text>
       ))}
     </>
   )
+}
+
+ColoredText.propTypes = {
+  value: Object
 }

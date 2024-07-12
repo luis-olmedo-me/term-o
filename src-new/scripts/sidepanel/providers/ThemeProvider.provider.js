@@ -33,3 +33,8 @@ export const ThemeProvider = ({ children }) => {
 
   return <StyleProvider theme={{ ...defaultTheme, colors }}>{children}</StyleProvider>
 }
+
+ThemeProvider.propTypes = {
+  value: Object,
+  children: Array
+}

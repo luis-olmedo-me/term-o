@@ -1,6 +1,6 @@
 {
   "name": "Term-O",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Simple terminal for browser",
   "manifest_version": 3,
   "permissions": ["tabs", "activeTab", "storage", "scripting", "history", "sidePanel"],

@@ -9,9 +9,20 @@ export default [
       react: { version: '17.0' }
     }
   },
-  { languageOptions: { parserOptions: { ecmaFeatures: { jsx: true } } } },
   {
-    languageOptions: { globals: { ...globals.webextensions, ...globals.browser } }
+    languageOptions: {
+      parserOptions: {
+        ecmaFeatures: { jsx: true }
+      }
+    }
+  },
+  {
+    languageOptions: {
+      globals: {
+        ...globals.webextensions,
+        ...globals.browser
+      }
+    }
   },
   pluginJs.configs.recommended,
   pluginReactConfig

@@ -2,7 +2,7 @@ import * as React from 'preact'
 import { useEffect, useRef, useState } from 'preact/hooks'
 import { useTheme } from 'styled-components'
 
-import commandParser from '../../../../libs/command-parser'
+import commandParser from '@src/libs/command-parser'
 import useStorage from '../../../background/hooks/useStorage'
 import commandHandlers from '../../command-handlers'
 import Prompt from '../../components/Prompt'

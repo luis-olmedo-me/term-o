@@ -1,4 +1,4 @@
-import { commandNames } from '../../../libs/command-parser'
+import { commandNames } from '@src/libs/command-parser'
 import { handleALIAS } from './alias/alias.handler'
 import { handleDOM } from './dom/dom.handler'
 import { handleSTORAGE } from './storage/storage.handler'

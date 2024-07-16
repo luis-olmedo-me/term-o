@@ -1,4 +1,4 @@
-import { delay } from '../../../../helpers/utils.helpers'
+import { delay } from '@src/helpers/utils.helpers'
 
 export const getTab = async tabIdRaw => {
   const tabIdString = tabIdRaw.replace(/^T/, '')

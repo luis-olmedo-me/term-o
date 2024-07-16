@@ -1,5 +1,5 @@
+import { getQuotedString } from '@src/helpers/utils.helpers'
 import { getColor as C } from '@src/theme/theme.helpers'
-import { getQuotedString } from '../../../../helpers/utils.helpers'
 import { applyElementStyles, getElementStyles } from '../../proccesses/workers'
 import { displayHelp } from '../command-handlers.helpers'
 

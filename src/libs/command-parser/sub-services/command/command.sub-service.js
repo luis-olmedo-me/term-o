@@ -1,5 +1,5 @@
+import { createUUIDv4 } from '@src/helpers/utils.helpers'
 import { getColor as C } from '@src/theme/theme.helpers'
-import { createUUIDv4 } from '../../../../helpers/utils.helpers'
 
 import { Options } from '../Options/Options.sub-service'
 import Argument from '../argument'

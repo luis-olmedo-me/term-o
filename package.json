@@ -1,7 +1,7 @@
 {
   "name": "term-o",
   "version": "0.6.0",
-  "description": "Simple and lightweight terminal for browser",
+  "description": "Browser Command Line: Execute commands directly from your browser.",
   "repository": "https://github.com/luis-olmedo-me/term-o",
   "author": "olmedoluis012@gmail.com",
   "license": "ISC",

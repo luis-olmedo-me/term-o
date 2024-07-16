@@ -37,19 +37,19 @@ export const displayHelp = command => {
 
   Object.entries(optionsWithDependencies).forEach(([name, dependencies], mainIndex) => {
     const option = options.getByName(name)
-    const displayName = option.displayName
+    const displayName = getQuotedString(option.displayName)
 
     outputs.push(
-      `${C`cyan`}${mainIndex} ${C`purple`}${displayName}${C`foreground`}: ${option.description}`
+      `${C`cyan`}${mainIndex} - ${C`purple`}${displayName} ${C`yellow`}${option.description}`
     )
 
     dependencies.forEach((dependencyName, index) => {
       const dependencyOption = options.getByName(dependencyName)
-      const displayName = dependencyOption.displayName
-      const description = dependencyOption.description
+      const displayName = getQuotedString(dependencyOption.displayName)
+      const description = getQuotedString(dependencyOption.description)
 
       outputs.push(
-        `${C`cyan`}${mainIndex} ${index} ${C`brightPurple`}${displayName}${C`foreground`}: ${description}`
+        `${C`cyan`}${mainIndex} ${index} ${C`brightPurple`}${displayName} ${C`yellow`}${description}`
       )
     })
   })

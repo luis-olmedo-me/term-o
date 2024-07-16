@@ -1,5 +1,5 @@
+import { getStorage } from '@sidepanel/proccesses/workers'
 import { getColor as C } from '@src/theme/theme.helpers'
-import { getStorage } from '../../proccesses/workers'
 import { displayHelp } from '../command-handlers.helpers'
 
 export const handleSTORAGE = async command => {

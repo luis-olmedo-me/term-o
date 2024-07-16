@@ -23,7 +23,9 @@ export const Prompt = ({ onEnter, inputRef, tab, pso }) => {
     const key = event.key
     const targetValue = event.target.value
 
-    if (key === 'Enter' && targetValue) {
+    if (key === 'Enter' && !targetValue) return event.preventDefault()
+
+    if (!event.shiftKey && key === 'Enter' && targetValue) {
       onEnter(targetValue)
       setHistorial(history => [...history, targetValue].slice(HISTORIAL_SIZE * -1))
       setHistorialIndex(0)
@@ -65,6 +67,7 @@ export const Prompt = ({ onEnter, inputRef, tab, pso }) => {
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         prefix={historialIndex || '$'}
+        rows="1"
       />
     </S.PromptWrapper>
   )

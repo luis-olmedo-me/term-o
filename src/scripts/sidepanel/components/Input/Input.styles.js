@@ -14,6 +14,7 @@ export const Input = styled.textarea`
   background-color: ${t('colors.background')};
   color: ${t('colors.foreground')};
   letter-spacing: ${t('space.50')};
+  resize: none;
 
   &:active,
   &:focus,

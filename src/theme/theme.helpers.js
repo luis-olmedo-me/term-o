@@ -1,4 +1,4 @@
-import colorSet from '../libs/color-set'
+import colorSet from '@src/libs/color-set'
 
 export const theme = pathsString => props => {
   const paths = pathsString.split('.')

@@ -1,5 +1,5 @@
+import { defaultSets, getDefaultMode } from '@src/libs/color-set'
 import { getColor as C } from '@src/theme/theme.helpers'
-import { defaultSets, getDefaultMode } from '../../../../libs/color-set'
 import { displayHelp } from '../command-handlers.helpers'
 import { getStorageValue, setStorageValue } from '../storage/storage.helpers'
 

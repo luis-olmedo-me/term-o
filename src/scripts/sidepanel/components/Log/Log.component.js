@@ -1,7 +1,7 @@
 import * as React from 'preact'
 import { useEffect, useRef, useState } from 'preact/hooks'
 
-import { MAX_LINES_PER_COMMAND } from '../../config'
+import { MAX_LINES_PER_COMMAND } from '@sidepanel/config'
 import ColoredText from '../ColoredText'
 import * as S from './Log.styles'
 

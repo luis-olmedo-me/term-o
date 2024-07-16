@@ -1,8 +1,8 @@
 import * as React from 'preact'
 
+import colorSet, { defaultSets } from '@src/libs/color-set'
 import { useEffect, useState } from 'preact/hooks'
 import { ThemeProvider as StyleProvider } from 'styled-components'
-import colorSet, { defaultSets } from '../../../libs/color-set'
 import { defaultTheme } from '../../../theme/theme.colors'
 import useStorage from '../../background/hooks/useStorage'
 

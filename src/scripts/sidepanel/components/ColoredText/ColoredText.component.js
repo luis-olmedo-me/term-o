@@ -1,7 +1,7 @@
 import * as React from 'preact'
 import { useMemo } from 'preact/hooks'
 
-import colorSet from '../../../../libs/color-set'
+import colorSet from '@src/libs/color-set'
 import { convertStringToObjects } from './ColoredText.helpers'
 import * as S from './ColoredText.styles'
 

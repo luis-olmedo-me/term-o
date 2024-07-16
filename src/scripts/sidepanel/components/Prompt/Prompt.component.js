@@ -1,7 +1,7 @@
 import * as React from 'preact'
 import { useState } from 'preact/hooks'
 
-import { HISTORIAL_SIZE } from '../../config'
+import { HISTORIAL_SIZE } from '@sidepanel/config'
 import ColoredText from '../ColoredText'
 import Input from '../Input'
 import { createPSO } from './Prompt.helpers'

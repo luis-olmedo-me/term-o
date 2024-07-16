@@ -3,13 +3,13 @@
   "version": "0.6.0",
   "description": "Simple and lightweight terminal for browser",
   "repository": "https://github.com/luis-olmedo-me/term-o",
+  "author": "olmedoluis012@gmail.com",
+  "license": "ISC",
   "scripts": {
     "start": "yarn webpack -c webpack.config.js --mode development --devtool cheap-module-source-map --watch --progress",
     "build-dev": "yarn webpack -c webpack.config.js --mode development",
     "build-prod": "yarn webpack -c webpack.config.js --mode production"
   },
-  "author": "olmedoluis012@gmail.com",
-  "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.6.4",
     "@babel/plugin-proposal-class-properties": "^7.5.5",

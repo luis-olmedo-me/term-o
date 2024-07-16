@@ -2,27 +2,26 @@
 
 ## Introduction
 
-This browser extension aims to provide a powerful terminal, easy to use where you can handle your browser as you please.
+TERM-O is a powerful and user-friendly browser extension that provides a terminal-like interface directly in your Chrome browser. Manage your browsing experience efficiently with command line commands.
 
 ## Installation
 
 Clone the repo:
 
 ```
-git clone git@github.com:olmedoluis/term-o.git term-o
+git clone git@github.com:luis-olmedo-me/term-o.git term-o
 ```
 
-Set git to track your own repository instead of this one:
+Open the downloaded folder:
 
 ```
-git remote set-url --delete origin git@github.com:olmedoluis/term-o.git # Remove old origin
-git remote set-url --add origin https://github.com/olmedoluis/term-o # Add new origin
+cd term-o
 ```
 
 Install dependencies:
 
 ```
-npm install # or yarn install
+yarn install
 ```
 
 ## Usage
@@ -30,18 +29,18 @@ npm install # or yarn install
 To run a development server that will watch for file changes and rebuild the scripts, run:
 
 ```
-npm run start
+yarn start
 ```
 
 To just build the files without the development server:
 
 ```
-npm run build
+yarn build-prod
 ```
 
 Both commands will create a `build/` directory, it will contain the built files that should be loaded into the browser or packed.
 
-Then go to any page outside internal browser pages and type "alt + t":
+Then, type `alt + t`:
 
 ![Developer Mode Checkbox](src/images/tutorial-usage.png)
 
@@ -57,7 +56,7 @@ Click on "Load unpacked":
 
 ![Load Unpacked Button](src/images/tutorial-step-2.png)
 
-Find the `dist/` directory on your system and open it.
+Find the `build/` directory on your system and open it.
 
 The extension should be now at the top of the page:
 

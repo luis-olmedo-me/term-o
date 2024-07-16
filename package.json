@@ -1,27 +1,32 @@
 {
   "name": "term-o",
   "version": "0.6.0",
-  "description": "Simple and lightweight terminal for browser",
+  "description": "Browser Command Line: Execute commands directly from your browser.",
   "repository": "https://github.com/luis-olmedo-me/term-o",
+  "author": "olmedoluis012@gmail.com",
+  "license": "ISC",
   "scripts": {
     "start": "yarn webpack -c webpack.config.js --mode development --devtool cheap-module-source-map --watch --progress",
+    "eslint": "npx eslint src",
     "build-dev": "yarn webpack -c webpack.config.js --mode development",
     "build-prod": "yarn webpack -c webpack.config.js --mode production"
   },
-  "author": "olmedoluis012@gmail.com",
-  "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.6.4",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/preset-env": "^7.6.3",
     "@babel/preset-react": "^7.6.3",
+    "@eslint/js": "^9.6.0",
     "babel-loader": "^8.0.6",
     "babel-plugin-styled-components": "^2.0.7",
     "clean-webpack-plugin": "^3.0.0",
-    "copy-webpack-plugin": "^5.0.4",
+    "copy-webpack-plugin": "^12.0.2",
+    "eslint": "8.x",
+    "eslint-plugin-react": "^7.34.3",
+    "globals": "^15.8.0",
     "prettier": "^1.18.2",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.9"
+    "webpack": "^5.93.0",
+    "webpack-cli": "^5.1.4"
   },
   "dependencies": {
     "preact": "^10.0.1",

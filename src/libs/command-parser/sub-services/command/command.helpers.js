@@ -55,8 +55,9 @@ const parseOptions = (index, arg, argsBySpace, type) => {
 
       const arrayValue = getArray(argValue)
       const isValidValue = arrayValue.every(value => typeof value === 'string' && value)
+      const hasItems = arrayValue.length > 0
 
-      if (!isValidValue)
+      if (!isValidValue || !hasItems)
         throw `${C`brightRed`}${arg} ${C`red`}expects for valid content in ${C`brightRed`}[string-array]${C`red`} value(s). Instead, it received ${C`brightRed`}${argValue}${C`red`}.`
 
       return { value: arrayValue, newIndex: index }

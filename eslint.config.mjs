@@ -20,7 +20,8 @@ export default [
     languageOptions: {
       globals: {
         ...globals.webextensions,
-        ...globals.browser
+        ...globals.browser,
+        ...globals.node
       }
     }
   },

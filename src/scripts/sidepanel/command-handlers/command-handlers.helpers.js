@@ -35,18 +35,31 @@ export const displayHelp = command => {
 
   let outputs = []
 
-  Object.entries(optionsWithDependencies).forEach(([name, dependencies]) => {
+  Object.entries(optionsWithDependencies).forEach(([name, dependencies], mainIndex) => {
     const option = options.getByName(name)
-    const displayName = option.displayName
+    const displayName = getQuotedString(option.displayName)
+    const formattedMainIndex = mainIndex.toLocaleString('en-US', {
+      minimumIntegerDigits: 2,
+      useGrouping: false
+    })
 
-    outputs.push(`• ${C`purple`}${displayName}${C`foreground`}: ${option.description}`)
+    outputs.push(
+      `${C`cyan`}${formattedMainIndex} -- ${C`purple`}${displayName} ${C`yellow`}${
+        option.description
+      }`
+    )
 
-    dependencies.forEach(dependencyName => {
+    dependencies.forEach((dependencyName, index) => {
       const dependencyOption = options.getByName(dependencyName)
-      const displayName = dependencyOption.displayName
+      const displayName = getQuotedString(dependencyOption.displayName)
+      const description = getQuotedString(dependencyOption.description)
+      const formattedIndex = index.toLocaleString('en-US', {
+        minimumIntegerDigits: 2,
+        useGrouping: false
+      })
 
       outputs.push(
-        `| • ${C`brightPurple`}${displayName}${C`foreground`}: ${dependencyOption.description}`
+        `${C`cyan`}${formattedMainIndex} ${formattedIndex} ${C`brightPurple`}${displayName} ${C`yellow`}${description}`
       )
     })
   })

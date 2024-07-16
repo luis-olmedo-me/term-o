@@ -20,3 +20,9 @@ export const createTab = async options => {
 
   return tab
 }
+
+export const getCurrentTab = async () => {
+  const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true })
+
+  return tab
+}

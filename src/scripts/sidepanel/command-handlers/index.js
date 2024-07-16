@@ -6,6 +6,8 @@ import { handleSTYLES } from './style/style.handler'
 import { handleTABS } from './tabs/tabs.handler'
 import { handleTHEME } from './theme/theme.handler'
 
+import { getCurrentTab } from './tabs/tabs.helpers'
+
 export default {
   [commandNames.DOM]: handleDOM,
   [commandNames.STORAGE]: handleSTORAGE,
@@ -14,3 +16,5 @@ export default {
   [commandNames.THEME]: handleTHEME,
   [commandNames.STYLE]: handleSTYLES
 }
+
+export { getCurrentTab }

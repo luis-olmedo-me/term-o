@@ -7,6 +7,7 @@
   "license": "ISC",
   "scripts": {
     "start": "yarn webpack -c webpack.config.js --mode development --devtool cheap-module-source-map --watch --progress",
+    "eslint": "npx eslint src",
     "build-dev": "yarn webpack -c webpack.config.js --mode development",
     "build-prod": "yarn webpack -c webpack.config.js --mode production"
   },

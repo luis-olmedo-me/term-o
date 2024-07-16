@@ -38,18 +38,28 @@ export const displayHelp = command => {
   Object.entries(optionsWithDependencies).forEach(([name, dependencies], mainIndex) => {
     const option = options.getByName(name)
     const displayName = getQuotedString(option.displayName)
+    const formattedMainIndex = mainIndex.toLocaleString('en-US', {
+      minimumIntegerDigits: 2,
+      useGrouping: false
+    })
 
     outputs.push(
-      `${C`cyan`}${mainIndex} - ${C`purple`}${displayName} ${C`yellow`}${option.description}`
+      `${C`cyan`}${formattedMainIndex} -- ${C`purple`}${displayName} ${C`yellow`}${
+        option.description
+      }`
     )
 
     dependencies.forEach((dependencyName, index) => {
       const dependencyOption = options.getByName(dependencyName)
       const displayName = getQuotedString(dependencyOption.displayName)
       const description = getQuotedString(dependencyOption.description)
+      const formattedIndex = index.toLocaleString('en-US', {
+        minimumIntegerDigits: 2,
+        useGrouping: false
+      })
 
       outputs.push(
-        `${C`cyan`}${mainIndex} ${index} ${C`brightPurple`}${displayName} ${C`yellow`}${description}`
+        `${C`cyan`}${formattedMainIndex} ${formattedIndex} ${C`brightPurple`}${displayName} ${C`yellow`}${description}`
       )
     })
   })

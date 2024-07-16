@@ -1,4 +1,4 @@
-import processWaitList from '../../libs/process-wait-list'
+import processWaitList from '@src/libs/process-wait-list'
 import processes from './processes'
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {

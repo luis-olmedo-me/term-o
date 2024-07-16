@@ -1,4 +1,4 @@
-import { states } from '../../../libs/process-wait-list'
+import { states } from '@src/libs/process-wait-list'
 
 const errorMessagesOverwritten = [
   {

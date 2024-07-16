@@ -1,4 +1,4 @@
-import { getColor as C } from '../../../theme/theme.helpers'
+import { getColor as C } from '@src/theme/theme.helpers'
 import { validateSchema } from './helpers'
 
 export const isRegExp = (option, value) => {

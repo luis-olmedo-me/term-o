@@ -1,4 +1,4 @@
-import { getColor as C } from '../../../../theme/theme.helpers'
+import { getColor as C } from '@src/theme/theme.helpers'
 import { Option } from '../Option/Option.sub-service'
 import { validate } from './Options.helpers'
 

@@ -1,4 +1,4 @@
-import { getColor as C } from '../../../theme/theme.helpers'
+import { getColor as C } from '@src/theme/theme.helpers'
 
 const isValidType = (value, type) => {
   switch (type) {

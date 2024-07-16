@@ -1,4 +1,4 @@
-import { getColor as C } from '../../theme/theme.helpers'
+import { getColor as C } from '@src/theme/theme.helpers'
 import { splitBy } from './command-parser.helpers'
 import { createALIAS } from './commands/alias/alias.command'
 import { createCLEAR } from './commands/clear/clear.command'

@@ -1,5 +1,5 @@
+import { theme as t } from '@src/theme/theme.helpers'
 import styled from 'styled-components'
-import { theme as t } from '../../../../theme/theme.helpers'
 
 export const Input = styled.input`
   font-family: ${t('font.primary')};

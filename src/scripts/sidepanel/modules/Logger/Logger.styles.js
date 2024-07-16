@@ -1,5 +1,5 @@
+import { theme as t } from '@src/theme/theme.helpers'
 import styled from 'styled-components'
-import { theme as t } from '../../../../theme/theme.helpers'
 
 export const LoggerWrapper = styled.div`
   display: flex;

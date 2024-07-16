@@ -1,5 +1,5 @@
+import { theme as t } from '@src/theme/theme.helpers'
 import styled from 'styled-components'
-import { theme as t } from '../../../../theme/theme.helpers'
 import { LoggerWrapper } from '../Logger/Logger.styles'
 
 export const TerminalWrapper = styled.div`

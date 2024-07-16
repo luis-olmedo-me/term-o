@@ -1,4 +1,4 @@
-import { getColor as C } from '../../../../theme/theme.helpers'
+import { getColor as C } from '@src/theme/theme.helpers'
 import { getStorage } from '../../proccesses/workers'
 import { displayHelp } from '../command-handlers.helpers'
 

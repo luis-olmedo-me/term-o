@@ -1,5 +1,5 @@
+import { getColor as C } from '@src/theme/theme.helpers'
 import { getQuotedString } from '../../../helpers/utils.helpers'
-import { getColor as C } from '../../../theme/theme.helpers'
 import { errorMessagesOverwritten } from './command-helpers.constants'
 
 export const prependCounters = array => {

@@ -1,5 +1,5 @@
+import { theme as t } from '@src/theme/theme.helpers'
 import { createGlobalStyle } from 'styled-components'
-import { theme as t } from '../../../theme/theme.helpers'
 
 const GlobalStyle = createGlobalStyle`
   @font-face{

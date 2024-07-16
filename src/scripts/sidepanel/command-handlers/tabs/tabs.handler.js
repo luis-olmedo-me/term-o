@@ -1,4 +1,4 @@
-import { getColor as C } from '../../../../theme/theme.helpers'
+import { getColor as C } from '@src/theme/theme.helpers'
 import { displayHelp, renameError } from '../command-handlers.helpers'
 import { createTab, getTab } from './tabs.helpers'
 

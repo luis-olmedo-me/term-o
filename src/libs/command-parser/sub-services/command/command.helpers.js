@@ -63,7 +63,14 @@ const parseOptions = (index, arg, argsBySpace, type) => {
         throw `${C`brightRed`}${arg} ${C`red`}expects for ${C`brightRed`}[string-array]${C`red`} value. Instead, it received ${C`brightRed`}${argValue}${C`red`}.`
 
       const arrayValue = getArray(argValue)
-      const isValidValue = arrayValue.every(value => typeof value === 'string' && value)
+      const isValidValue = arrayValue.every(value => {
+        const isString = typeof value === 'string'
+        const hasContent = Boolean(value)
+        const startsWithQuote = /^"|^'/.test(value)
+        const endsWithQuote = /^"|^'/.test(value)
+
+        return isString && hasContent && startsWithQuote && endsWithQuote
+      })
       const hasItems = arrayValue.length > 0
 
       if (!isValidValue || !hasItems)

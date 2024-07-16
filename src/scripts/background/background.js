@@ -1,6 +1,11 @@
 import { extensionKeyEventNames, extensionKeyEvents } from './background.constants'
 
-console.log('Hello world from background!')
+let open = false
+
+const closeSidePanel = async () => {
+  await chrome.sidePanel.setOptions({ enabled: false })
+  await chrome.sidePanel.setOptions({ enabled: true })
+}
 
 chrome.commands.onCommand.addListener(function(command) {
   if (!extensionKeyEventNames.includes(command)) return
@@ -9,7 +14,10 @@ chrome.commands.onCommand.addListener(function(command) {
     const [{ id }] = tabs
 
     if (command === extensionKeyEvents.OPEN_TERMINAL) {
-      chrome.sidePanel.open({ tabId: id })
+      open = !open
+
+      if (open) chrome.sidePanel.open({ tabId: id })
+      else closeSidePanel()
     }
   })
 })

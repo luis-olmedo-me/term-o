@@ -1,13 +1,5 @@
 import { getColor as C } from '@src/theme/theme.helpers'
 
-const getJSONValue = stringValue => {
-  try {
-    return JSON.parse(stringValue)
-  } catch {
-    return null
-  }
-}
-
 const parseOptions = (index, arg, argsBySpace, type) => {
   switch (type) {
     case 'string': {
@@ -61,15 +53,13 @@ const parseOptions = (index, arg, argsBySpace, type) => {
       if (!startsWithBracket || !endsWithBracket)
         throw `${C`brightRed`}${arg} ${C`red`}expects for ${C`brightRed`}[string-array]${C`red`} value. Instead, it received ${C`brightRed`}${argValue}${C`red`}.`
 
-      const argValueWithComas = argValue.replaceAll('" "', '","')
-      const value = getJSONValue(argValueWithComas)
-      const isValidValue =
-        value && Object.values(value).every(value => typeof value === 'string' && value)
+      const arrayValue = getArray(argValue)
+      const isValidValue = arrayValue.every(value => typeof value === 'string' && value)
 
       if (!isValidValue)
-        throw `${C`brightRed`}${arg} ${C`red`}expects for content in ${C`brightRed`}[string-array]${C`red`} value(s). Instead, it received ${C`brightRed`}${argValue}${C`red`}.`
+        throw `${C`brightRed`}${arg} ${C`red`}expects for valid content in ${C`brightRed`}[string-array]${C`red`} value(s). Instead, it received ${C`brightRed`}${argValue}${C`red`}.`
 
-      return { value, newIndex: index }
+      return { value: arrayValue, newIndex: index }
     }
 
     default:
@@ -220,6 +210,15 @@ export const getArgs = value => {
   }
 
   return output
+}
+
+export const getArray = value => {
+  const items = value.slice(1).slice(0, -1)
+  const itemsAsArgs = getArgs(items)
+
+  return itemsAsArgs.map(item => {
+    return /^"|^'/.test(item) ? item.slice(1).slice(0, -1) : item
+  })
 }
 
 const getParamValue = (indexes, values) => {

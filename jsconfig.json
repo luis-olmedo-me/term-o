@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src-new",
+    "baseUrl": "src",
     "paths": {
       "@src/*": ["*"],
       "@sidepanel/*": ["scripts/sidepanel/*"],

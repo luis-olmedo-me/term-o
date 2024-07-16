@@ -1,5 +1,14 @@
 import { getColor as C } from '@src/theme/theme.helpers'
 
+export const getArray = value => {
+  const items = value.slice(1).slice(0, -1)
+  const itemsAsArgs = getArgs(items)
+
+  return itemsAsArgs.map(item => {
+    return /^"|^'/.test(item) ? item.slice(1).slice(0, -1) : item
+  })
+}
+
 const parseOptions = (index, arg, argsBySpace, type) => {
   switch (type) {
     case 'string': {
@@ -211,15 +220,6 @@ export const getArgs = value => {
   }
 
   return output
-}
-
-export const getArray = value => {
-  const items = value.slice(1).slice(0, -1)
-  const itemsAsArgs = getArgs(items)
-
-  return itemsAsArgs.map(item => {
-    return /^"|^'/.test(item) ? item.slice(1).slice(0, -1) : item
-  })
 }
 
 const getParamValue = (indexes, values) => {

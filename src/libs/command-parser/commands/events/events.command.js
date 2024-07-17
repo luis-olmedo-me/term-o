@@ -8,7 +8,7 @@ export const createEVENTS = () => {
       name: 'add',
       type: 'boolean',
       abbreviation: 'a',
-      worksWith: [],
+      worksWith: ['url', 'command'],
       mustHave: ['url', 'command'],
       description: 'Add a new event. You can specify the event details with props.'
     })

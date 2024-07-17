@@ -26,10 +26,6 @@ export const Terminal = () => {
     defaultValue: []
   })
 
-  useEffect(function focusOnInputAtFirstTime() {
-    focusOnInput()
-  }, [])
-
   useEffect(function handlePanelFocus() {
     const updateTab = () => getCurrentTab().then(setTab)
 

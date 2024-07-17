@@ -7,6 +7,7 @@ import { handleSTYLES } from './style/style.handler'
 import { handleTABS } from './tabs/tabs.handler'
 import { handleTHEME } from './theme/theme.handler'
 
+import { handleEVENTS } from './events/events.handler'
 import { getCurrentTab } from './tabs/tabs.helpers'
 
 export default {
@@ -16,7 +17,8 @@ export default {
   [commandNames.ALIAS]: handleALIAS,
   [commandNames.THEME]: handleTHEME,
   [commandNames.STYLE]: handleSTYLES,
-  [commandNames.CLEAR]: handleCLEAR
+  [commandNames.CLEAR]: handleCLEAR,
+  [commandNames.EVENTS]: handleEVENTS
 }
 
 export { getCurrentTab }

@@ -1,6 +1,6 @@
 import { commandNames } from '../../command-parser.constants'
 import Command from '../../sub-services/command'
-import { isURL } from '../validators'
+import { isRegExp } from '../validators'
 
 export const createEVENTS = () => {
   return new Command({ name: commandNames.EVENTS })
@@ -16,8 +16,8 @@ export const createEVENTS = () => {
       name: 'url',
       type: 'string',
       abbreviation: 'u',
-      validate: [isURL],
-      description: 'Define the URL where the event will be executed.'
+      validate: [isRegExp],
+      description: 'Define the URL textual pattern where the event will be executed.'
     })
     .expect({
       name: 'command',

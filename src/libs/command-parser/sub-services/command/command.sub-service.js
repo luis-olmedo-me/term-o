@@ -140,6 +140,7 @@ export class Command extends EventListener {
     })
 
     nextCommand.appendsData(this.data)
+    nextCommand.setTitle(this.title)
 
     if (hasArgsHoldingUp) await executePerUpdates(nextCommand, currentUpdates)
     else await nextCommand.execute()

@@ -54,7 +54,7 @@ export const Terminal = () => {
     inputRef.current?.focus()
   }
 
-  const clearLogs = () => setLogs([])
+  const clearLogs = exception => setLogs(exception ? [exception] : [])
 
   const handleEnter = value => {
     const newLog = commandParser.read(value)

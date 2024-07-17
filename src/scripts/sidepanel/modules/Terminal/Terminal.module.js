@@ -5,7 +5,7 @@ import { useTheme } from 'styled-components'
 import useStorage from '@background/hooks/useStorage'
 import commandHandlers, { getCurrentTab } from '@sidepanel/command-handlers'
 import Prompt from '@sidepanel/components/Prompt'
-import { CAN_COPY_ON_SELECTION, PSO } from '@sidepanel/config'
+import { CAN_COPY_ON_SELECTION } from '@sidepanel/config'
 import Logger from '@sidepanel/modules/Logger'
 import commandParser from '@src/libs/command-parser'
 import * as S from './Terminal.styles'
@@ -89,7 +89,7 @@ export const Terminal = () => {
     <S.TerminalWrapper onMouseUp={focusOnInput}>
       <Logger logs={logs} loggerRef={loggerRef} />
 
-      <Prompt onEnter={handleEnter} inputRef={inputRef} tab={tab} pso={PSO} />
+      <Prompt onEnter={handleEnter} inputRef={inputRef} tab={tab} />
     </S.TerminalWrapper>
   )
 }

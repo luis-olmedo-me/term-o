@@ -7,8 +7,8 @@ import Input from '../Input'
 import { createPSO } from './Prompt.helpers'
 import * as S from './Prompt.styles'
 
-export const Prompt = ({ onEnter, inputRef, tab, disabled }) => {
-  const [value, setValue] = useState('')
+export const Prompt = ({ onEnter, inputRef, tab, disabled, defaultValue }) => {
+  const [value, setValue] = useState(defaultValue || '')
   const [historialIndex, setHistorialIndex] = useState(0)
   const [historial, setHistorial] = useState([])
 
@@ -75,5 +75,6 @@ Prompt.propTypes = {
   onEnter: Function,
   inputRef: Object,
   tab: Object,
-  disabled: Boolean
+  disabled: Boolean,
+  defaultValue: String
 }

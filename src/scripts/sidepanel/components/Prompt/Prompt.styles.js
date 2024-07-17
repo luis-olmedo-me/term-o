@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 export const Decoration = styled.p`
   margin: 0;
-  padding: ${t('space.300')} ${t('space.600')};
+  padding: ${t('space.300')} ${t('space.600')} 0;
   cursor: text;
 
   &::selection {

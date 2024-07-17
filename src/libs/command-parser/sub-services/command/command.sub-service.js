@@ -1,5 +1,4 @@
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
-import { getColor as C } from '@src/theme/theme.helpers'
 
 import { Options } from '../Options/Options.sub-service'
 import Argument from '../argument'
@@ -74,7 +73,7 @@ export class Command extends EventListener {
       if (!hasNewProps && itExpectProps && !hasArgsHoldingUp) {
         const name = this.name
 
-        throw `${C`brightRed`}"${name}" ${C`red`}command expects for props. Instead, it received nothing.`
+        throw `"${name}" command expects for props. Instead, it received nothing.`
       }
 
       if (!hasArgsHoldingUp) this.options.setValues(newProps)
@@ -115,7 +114,7 @@ export class Command extends EventListener {
 
   throw(message) {
     this.reset()
-    this.update(`${C`red`}✕ ${message}`)
+    this.update(`✕ ${message}`)
 
     this.finish()
     this.error = true

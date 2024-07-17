@@ -1,5 +1,3 @@
-import { getColor as C } from '@src/theme/theme.helpers'
-
 export const getArray = value => {
   const items = value.slice(1).slice(0, -1)
   const itemsAsArgs = getArgs(items)
@@ -20,16 +18,16 @@ const parseOptions = (index, arg, argsBySpace, type) => {
       const endsWithQUote = argValue.endsWith(quote)
 
       if ((!startsWithQuote || !endsWithQUote) && !argValue)
-        throw `${C`brightRed`}${arg} ${C`red`}expects for quoted ${C`brightRed`}[string]${C`red`} value. Instead, it received nothing.`
+        throw `${arg} expects for quoted [string] value. Instead, it received nothing.`
 
       if (!startsWithQuote || !endsWithQUote)
-        throw `${C`brightRed`}${arg} ${C`red`}expects for quoted ${C`brightRed`}[string]${C`red`} value. Instead, it received ${C`brightRed`}${argValue}${C`red`}.`
+        throw `${arg} expects for quoted [string] value. Instead, it received ${argValue}.`
 
       const quotesPattern = new RegExp(`^${quote}|${quote}$`, 'g')
       const value = argValue.replace(quotesPattern, '')
 
       if (!value)
-        throw `${C`brightRed`}${arg} ${C`red`}expects for content inside of quoted ${C`brightRed`}[string]${C`red`} value. Instead, it received ${C`brightRed`}${argValue}${C`red`}.`
+        throw `${arg} expects for content inside of quoted [string] value. Instead, it received ${argValue}.`
 
       return { value, newIndex: index }
     }
@@ -43,8 +41,7 @@ const parseOptions = (index, arg, argsBySpace, type) => {
       const value = Number(nextArg)
       const isValidNumber = !Number.isNaN(value)
 
-      if (!isValidNumber)
-        throw `"${C`brightRed`}${arg}${C`red`}"expects ${C`brightRed`}[number]${C`red`} value. Instead, it received ${C`brightRed`}${nextArg}${C`red`}.`
+      if (!isValidNumber) throw `"${arg}"expects [number] value. Instead, it received ${nextArg}.`
 
       return { value, newIndex: index }
     }
@@ -57,10 +54,10 @@ const parseOptions = (index, arg, argsBySpace, type) => {
       const endsWithBracket = argValue.endsWith(']')
 
       if ((!startsWithBracket || !endsWithBracket) && !argValue)
-        throw `${C`brightRed`}${arg} ${C`red`}expects for ${C`brightRed`}[string-array]${C`red`} value. Instead, it received nothing.`
+        throw `${arg} expects for [string-array] value. Instead, it received nothing.`
 
       if (!startsWithBracket || !endsWithBracket)
-        throw `${C`brightRed`}${arg} ${C`red`}expects for ${C`brightRed`}[string-array]${C`red`} value. Instead, it received ${C`brightRed`}${argValue}${C`red`}.`
+        throw `${arg} expects for [string-array] value. Instead, it received ${argValue}.`
 
       const arrayValue = getArray(argValue)
       const isValidValue = arrayValue.every(value => {
@@ -74,13 +71,13 @@ const parseOptions = (index, arg, argsBySpace, type) => {
       const hasItems = arrayValue.length > 0
 
       if (!isValidValue || !hasItems)
-        throw `${C`brightRed`}${arg} ${C`red`}expects for valid content in ${C`brightRed`}[string-array]${C`red`} value(s). Instead, it received ${C`brightRed`}${argValue}${C`red`}.`
+        throw `${arg} expects for valid content in [string-array] value(s). Instead, it received ${argValue}.`
 
       return { value: arrayValue, newIndex: index }
     }
 
     default:
-      throw `Option type ${C`brightRed`}${type}${C`red`} is not recognized.`
+      throw `Option type ${type} is not recognized.`
   }
 }
 
@@ -143,7 +140,7 @@ export const getPropsFromString = command => {
       continue
     }
 
-    throw `${C`brightRed`}${argValue}${C`red`} is an unexpected argument.`
+    throw `${argValue} is an unexpected argument.`
   }
 
   return props

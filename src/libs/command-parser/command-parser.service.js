@@ -1,4 +1,3 @@
-import { getColor as C } from '@src/theme/theme.helpers'
 import { splitBy } from './command-parser.helpers'
 import { createALIAS } from './commands/alias/alias.command'
 import { createCLEAR } from './commands/clear/clear.command'
@@ -53,7 +52,7 @@ class CommandParser extends EventListener {
 
     if (!createCommand) {
       return createERROR().mock({
-        title: `'The command "${C`brightRed`}${cleanedName}${C`red`}" is unrecognized.'`
+        title: `'The command "${cleanedName}" is unrecognized.'`
       })
     }
 

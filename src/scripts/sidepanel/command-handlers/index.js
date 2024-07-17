@@ -1,5 +1,6 @@
 import { commandNames } from '@src/libs/command-parser'
 import { handleALIAS } from './alias/alias.handler'
+import { handleCLEAR } from './clear/clear.handler'
 import { handleDOM } from './dom/dom.handler'
 import { handleSTORAGE } from './storage/storage.handler'
 import { handleSTYLES } from './style/style.handler'
@@ -14,7 +15,8 @@ export default {
   [commandNames.TABS]: handleTABS,
   [commandNames.ALIAS]: handleALIAS,
   [commandNames.THEME]: handleTHEME,
-  [commandNames.STYLE]: handleSTYLES
+  [commandNames.STYLE]: handleSTYLES,
+  [commandNames.CLEAR]: handleCLEAR
 }
 
 export { getCurrentTab }

@@ -46,19 +46,6 @@ export const Terminal = () => {
     [aliases]
   )
 
-  useEffect(
-    function addExternalDataOnNewCommands() {
-      const clearLogs = () => setLogs([])
-
-      commandParser.addEventListener('on-create-clear', clearLogs)
-
-      return () => {
-        commandParser.removeEventListener('on-create-clear', clearLogs)
-      }
-    },
-    [tab, theme]
-  )
-
   const focusOnInput = () => {
     const selection = window.getSelection()
     const selectedText = selection.toString()
@@ -67,9 +54,11 @@ export const Terminal = () => {
     inputRef.current?.focus()
   }
 
+  const clearLogs = () => setLogs([])
+
   const handleEnter = value => {
     const newLog = commandParser.read(value)
-    newLog.appendsData({ tab, setTab, theme })
+    newLog.appendsData({ tab, setTab, theme, clearLogs })
 
     setLogs(oldLogs => [newLog, ...oldLogs])
     focusOnInput()

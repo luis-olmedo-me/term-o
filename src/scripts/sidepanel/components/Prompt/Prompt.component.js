@@ -7,7 +7,7 @@ import Input from '../Input'
 import { createPSO } from './Prompt.helpers'
 import * as S from './Prompt.styles'
 
-export const Prompt = ({ onEnter, inputRef, tab, pso }) => {
+export const Prompt = ({ onEnter, inputRef, tab, pso, disabled }) => {
   const [value, setValue] = useState('')
   const [historialIndex, setHistorialIndex] = useState(0)
   const [historial, setHistorial] = useState([])
@@ -68,6 +68,7 @@ export const Prompt = ({ onEnter, inputRef, tab, pso }) => {
         value={historialIndex ? historial.at(historialIndex) : value}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
+        disabled={disabled}
         prefix={historialIndex || '$'}
         rows="1"
       />
@@ -79,5 +80,6 @@ Prompt.propTypes = {
   onEnter: Function,
   inputRef: Object,
   tab: Object,
-  pso: String
+  pso: String,
+  disabled: Boolean
 }

@@ -33,7 +33,7 @@ export const displayHelp = command => {
     option => !option.dependencies && !dependencies.includes(option.name)
   )
 
-  let outputs = []
+  let helps = []
 
   Object.entries(optionsWithDependencies).forEach(([name, dependencies], mainIndex) => {
     const option = options.getByName(name)
@@ -43,7 +43,7 @@ export const displayHelp = command => {
       useGrouping: false
     })
 
-    outputs.push(
+    helps.push(
       `${C`cyan`}${formattedMainIndex} -- ${C`purple`}${displayName} ${C`yellow`}${
         option.description
       }`
@@ -58,7 +58,7 @@ export const displayHelp = command => {
         useGrouping: false
       })
 
-      outputs.push(
+      helps.push(
         `${C`cyan`}${formattedMainIndex} ${formattedIndex} ${C`brightPurple`}${displayName} ${C`yellow`}${description}`
       )
     })
@@ -67,10 +67,10 @@ export const displayHelp = command => {
   optionsIndependents.forEach(option => {
     const displayName = option.displayName
 
-    outputs.push(`${displayName}: ${option.description}`)
+    helps.push(`${displayName}: ${option.description}`)
   })
 
-  command.update(...outputs)
+  command.update(...helps)
 }
 
 export const formatElement = ({ tagName, attributes, xpath, textContent, tabId }) => {

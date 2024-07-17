@@ -15,7 +15,6 @@ export class Command extends EventListener {
     this.title = ''
     this.data = {}
     this.props = {}
-    this.outputs = []
     this.updates = []
     this.staticUpdates = []
     this.error = false

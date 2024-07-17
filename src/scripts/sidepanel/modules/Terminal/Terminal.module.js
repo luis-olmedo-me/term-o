@@ -5,7 +5,7 @@ import { useTheme } from 'styled-components'
 import useStorage from '@background/hooks/useStorage'
 import commandHandlers, { getCurrentTab } from '@sidepanel/command-handlers'
 import Prompt from '@sidepanel/components/Prompt'
-import { CAN_COPY_ON_SELECTION, PSO } from '@sidepanel/config'
+import { CAN_COPY_ON_SELECTION } from '@sidepanel/config'
 import Logger from '@sidepanel/modules/Logger'
 import commandParser from '@src/libs/command-parser'
 import * as S from './Terminal.styles'
@@ -26,10 +26,6 @@ export const Terminal = () => {
     defaultValue: []
   })
 
-  useEffect(function focusOnInputAtFirstTime() {
-    focusOnInput()
-  }, [])
-
   useEffect(function handlePanelFocus() {
     const updateTab = () => getCurrentTab().then(setTab)
 
@@ -46,30 +42,6 @@ export const Terminal = () => {
     [aliases]
   )
 
-  useEffect(
-    function addExternalDataOnNewCommands() {
-      const clearLogs = () => setLogs([])
-      const appendData = command => command.appendsData({ tab, setTab, theme })
-
-      commandParser.addEventListener('on-create-dom', appendData)
-      commandParser.addEventListener('on-create-style', appendData)
-      commandParser.addEventListener('on-create-storage', appendData)
-      commandParser.addEventListener('on-create-tabs', appendData)
-      commandParser.addEventListener('on-create-theme', appendData)
-      commandParser.addEventListener('on-create-clear', clearLogs)
-
-      return () => {
-        commandParser.removeEventListener('on-create-dom', appendData)
-        commandParser.removeEventListener('on-create-style', appendData)
-        commandParser.removeEventListener('on-create-storage', appendData)
-        commandParser.removeEventListener('on-create-tabs', appendData)
-        commandParser.removeEventListener('on-create-theme', appendData)
-        commandParser.removeEventListener('on-create-clear', clearLogs)
-      }
-    },
-    [tab, theme]
-  )
-
   const focusOnInput = () => {
     const selection = window.getSelection()
     const selectedText = selection.toString()
@@ -78,8 +50,11 @@ export const Terminal = () => {
     inputRef.current?.focus()
   }
 
+  const clearLogs = exception => setLogs(exception ? [exception] : [])
+
   const handleEnter = value => {
     const newLog = commandParser.read(value)
+    newLog.appendsData({ tab, setTab, theme, clearLogs })
 
     setLogs(oldLogs => [newLog, ...oldLogs])
     focusOnInput()
@@ -89,7 +64,7 @@ export const Terminal = () => {
     <S.TerminalWrapper onMouseUp={focusOnInput}>
       <Logger logs={logs} loggerRef={loggerRef} />
 
-      <Prompt onEnter={handleEnter} inputRef={inputRef} tab={tab} pso={PSO} />
+      <Prompt onEnter={handleEnter} inputRef={inputRef} tab={tab} />
     </S.TerminalWrapper>
   )
 }

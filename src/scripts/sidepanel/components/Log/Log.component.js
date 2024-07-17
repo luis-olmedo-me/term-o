@@ -3,9 +3,10 @@ import { useEffect, useRef, useState } from 'preact/hooks'
 
 import { MAX_LINES_PER_COMMAND } from '@sidepanel/config'
 import ColoredText from '../ColoredText'
+import Prompt from '../Prompt'
 import * as S from './Log.styles'
 
-export const Log = ({ command, prefix, onUpdate }) => {
+export const Log = ({ command, onUpdate }) => {
   const [updates, setUpdates] = useState(command.updates)
   const wrapper = useRef(null)
 
@@ -28,10 +29,8 @@ export const Log = ({ command, prefix, onUpdate }) => {
   )
 
   return (
-    <S.LogWrapper ref={wrapper} hidden={command.hidden}>
-      <S.LogItem>
-        {prefix} {command.title}
-      </S.LogItem>
+    <S.LogWrapper ref={wrapper}>
+      <Prompt tab={command.data.tab} defaultValue={command.title} disabled />
 
       {updates.map((update, index) => {
         return (
@@ -46,6 +45,5 @@ export const Log = ({ command, prefix, onUpdate }) => {
 
 Log.propTypes = {
   command: Object,
-  prefix: String,
   onUpdate: Function
 }

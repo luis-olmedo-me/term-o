@@ -1,14 +1,14 @@
 import * as React from 'preact'
 import { useState } from 'preact/hooks'
 
-import { HISTORIAL_SIZE } from '@sidepanel/config'
+import { HISTORIAL_SIZE, PSO } from '@sidepanel/config'
 import ColoredText from '../ColoredText'
 import Input from '../Input'
 import { createPSO } from './Prompt.helpers'
 import * as S from './Prompt.styles'
 
-export const Prompt = ({ onEnter, inputRef, tab, pso }) => {
-  const [value, setValue] = useState('')
+export const Prompt = ({ onEnter, inputRef, tab, disabled, defaultValue }) => {
+  const [value, setValue] = useState(defaultValue || '')
   const [historialIndex, setHistorialIndex] = useState(0)
   const [historial, setHistorial] = useState([])
 
@@ -56,7 +56,7 @@ export const Prompt = ({ onEnter, inputRef, tab, pso }) => {
   return (
     <S.PromptWrapper>
       <S.Decoration>
-        <ColoredText value={createPSO(pso, tab)} />
+        <ColoredText value={createPSO(PSO, tab)} />
       </S.Decoration>
 
       <Input
@@ -64,6 +64,7 @@ export const Prompt = ({ onEnter, inputRef, tab, pso }) => {
         value={historialIndex ? historial.at(historialIndex) : value}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
+        disabled={disabled}
         prefix={historialIndex || '$'}
       />
     </S.PromptWrapper>
@@ -74,5 +75,6 @@ Prompt.propTypes = {
   onEnter: Function,
   inputRef: Object,
   tab: Object,
-  pso: String
+  disabled: Boolean,
+  defaultValue: String
 }

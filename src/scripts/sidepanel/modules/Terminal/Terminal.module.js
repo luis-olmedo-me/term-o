@@ -49,21 +49,10 @@ export const Terminal = () => {
   useEffect(
     function addExternalDataOnNewCommands() {
       const clearLogs = () => setLogs([])
-      const appendData = command => command.appendsData({ tab, setTab, theme })
 
-      commandParser.addEventListener('on-create-dom', appendData)
-      commandParser.addEventListener('on-create-style', appendData)
-      commandParser.addEventListener('on-create-storage', appendData)
-      commandParser.addEventListener('on-create-tabs', appendData)
-      commandParser.addEventListener('on-create-theme', appendData)
       commandParser.addEventListener('on-create-clear', clearLogs)
 
       return () => {
-        commandParser.removeEventListener('on-create-dom', appendData)
-        commandParser.removeEventListener('on-create-style', appendData)
-        commandParser.removeEventListener('on-create-storage', appendData)
-        commandParser.removeEventListener('on-create-tabs', appendData)
-        commandParser.removeEventListener('on-create-theme', appendData)
         commandParser.removeEventListener('on-create-clear', clearLogs)
       }
     },
@@ -80,6 +69,7 @@ export const Terminal = () => {
 
   const handleEnter = value => {
     const newLog = commandParser.read(value)
+    newLog.appendsData({ tab, setTab, theme })
 
     setLogs(oldLogs => [newLog, ...oldLogs])
     focusOnInput()

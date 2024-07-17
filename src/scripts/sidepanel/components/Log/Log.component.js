@@ -6,7 +6,7 @@ import ColoredText from '../ColoredText'
 import Prompt from '../Prompt'
 import * as S from './Log.styles'
 
-export const Log = ({ command, prefix, onUpdate }) => {
+export const Log = ({ command, onUpdate }) => {
   const [updates, setUpdates] = useState(command.updates)
   const wrapper = useRef(null)
 
@@ -45,6 +45,5 @@ export const Log = ({ command, prefix, onUpdate }) => {
 
 Log.propTypes = {
   command: Object,
-  prefix: String,
   onUpdate: Function
 }

@@ -19,7 +19,6 @@ export const Logger = ({ logs, loggerRef }) => {
             key={command.id}
             command={command}
             scrollLogsToBottom={isLastLog ? scrollLogsToBottom : null}
-            prefix="$"
           />
         )
       })}

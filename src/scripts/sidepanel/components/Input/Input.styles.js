@@ -38,7 +38,7 @@ export const InputWrapper = styled.div`
 
   &[aria-disabled='true'],
   &[aria-disabled='true'] ${Input}:disabled {
-    cursor: not-allowed;
+    cursor: text;
   }
 `
 

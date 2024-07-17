@@ -1,7 +1,7 @@
 import { theme as t } from '@src/theme/theme.helpers'
 import styled from 'styled-components'
 
-export const Input = styled.textarea`
+export const Input = styled.input`
   font-family: ${t('font.primary')};
   width: 100%;
   box-sizing: border-box;

@@ -14,7 +14,6 @@ export const Input = styled.input`
   background-color: ${t('colors.background')};
   color: ${t('colors.foreground')};
   letter-spacing: ${t('space.50')};
-  resize: none;
 
   &:active,
   &:focus,

@@ -10,7 +10,7 @@ export const Logger = ({ logs, loggerRef }) => {
   }, [])
 
   return (
-    <S.LoggerWrapper ref={loggerRef}>
+    <S.LoggerWrapper ref={loggerRef} className="vertical-scroller">
       {logs.map((command, index) => {
         const isLastLog = index === logs.length - 1
 

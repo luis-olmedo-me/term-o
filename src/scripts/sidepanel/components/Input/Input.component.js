@@ -18,6 +18,7 @@ export const Input = ({
 
       <S.Input
         ref={inputRef}
+        className="vertical-scroller"
         spellCheck="false"
         type="text"
         value={value}

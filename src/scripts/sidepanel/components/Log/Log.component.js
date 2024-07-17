@@ -29,7 +29,7 @@ export const Log = ({ command, onUpdate }) => {
   )
 
   return (
-    <S.LogWrapper ref={wrapper} hidden={command.hidden}>
+    <S.LogWrapper ref={wrapper}>
       <Prompt tab={command.data.tab} defaultValue={command.title} disabled />
 
       {updates.map((update, index) => {

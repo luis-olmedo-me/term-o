@@ -8,7 +8,7 @@ import { defaultValues } from './command.constants'
 import { executePerUpdates, getPropsFromString } from './command.helpers'
 
 export class Command extends EventListener {
-  constructor({ name, hidden = false }) {
+  constructor({ name }) {
     super()
 
     this.id = createUUIDv4()
@@ -19,7 +19,6 @@ export class Command extends EventListener {
     this.outputs = []
     this.updates = []
     this.staticUpdates = []
-    this.hidden = hidden
     this.error = false
     this.finished = false
     this.executing = false

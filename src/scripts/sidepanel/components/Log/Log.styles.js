@@ -5,8 +5,6 @@ import { InputWrapper, Prefix } from '../Input/Input.styles'
 import { Decoration } from '../Prompt/Prompt.styles'
 
 export const LogWrapper = styled.div`
-  display: ${({ hidden }) => (hidden ? 'none' : 'block')};
-
   ${Decoration} , ${InputWrapper}{
     padding: ${t('space.300')} 0 0;
   }

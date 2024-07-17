@@ -4,6 +4,7 @@ import { createALIAS } from './commands/alias/alias.command'
 import { createCLEAR } from './commands/clear/clear.command'
 import { createDOM } from './commands/dom/dom.command'
 import { createERROR } from './commands/error/error.command'
+import { createEVENTS } from './commands/events/events.command'
 import { createSTORAGE } from './commands/storage/storage.command'
 import { createSTYLE } from './commands/style/style.command'
 import { createTABS } from './commands/tabs/tabs.command'
@@ -84,5 +85,6 @@ export const commandParser = new CommandParser({
   alias: createALIAS,
   theme: createTHEME,
   style: createSTYLE,
-  error: createERROR
+  error: createERROR,
+  events: createEVENTS
 })

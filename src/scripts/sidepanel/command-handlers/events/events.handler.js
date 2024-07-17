@@ -13,7 +13,7 @@ export const handleEVENTS = async command => {
       const quotedURL = getQuotedString(url)
       const quotedLine = getQuotedString(line)
 
-      command.update(`${C`purple`}${quotedId} ${C`blue`}${quotedURL} ${C`yellow`}${quotedLine}`)
+      command.update(`${C`purple`}${quotedId} ${C`yellow`}${quotedURL} ${quotedLine}`)
     })
   }
 
@@ -29,7 +29,7 @@ export const handleEVENTS = async command => {
     const quotedURL = getQuotedString(P`url`)
     const quotedLine = getQuotedString(P`command`)
 
-    command.update(`${C`purple`}${quotedId} ${C`blue`}${quotedURL} ${C`yellow`}${quotedLine}`)
+    command.update(`${C`purple`}${quotedId} ${C`yellow`}${quotedURL} ${quotedLine}`)
   }
 
   if (P`delete`) {
@@ -50,7 +50,7 @@ export const handleEVENTS = async command => {
     const quotedURL = getQuotedString(existingEvent.url)
     const quotedLine = getQuotedString(existingEvent.line)
 
-    command.update(`${C`purple`}${quotedId} ${C`blue`}${quotedURL} ${C`yellow`}${quotedLine}`)
+    command.update(`${C`purple`}${quotedId} ${C`yellow`}${quotedURL} ${quotedLine}`)
   }
 
   if (P`help`) displayHelp(command)

@@ -162,6 +162,7 @@ export const getArgs = value => {
     const isFlag = /^-([a-zA-Z]+)/g.test(fragment)
 
     if (startsWithBracket) {
+      const startBrancket = '['
       const endBrancket = ']'
       const endsWithQuote = fragment.endsWith(endBrancket)
 
@@ -172,11 +173,14 @@ export const getArgs = value => {
 
       const nextFragments = fragments.slice(++index)
       let fragmentValue = fragment
+      let ignoredEndBrackets = 0
 
       for (const nextFragment of nextFragments) {
         fragmentValue += ` ${nextFragment}`
 
-        if (nextFragment.endsWith(endBrancket)) break
+        if (nextFragment.startsWith(startBrancket)) ++ignoredEndBrackets
+        if (nextFragment.endsWith(endBrancket) && !ignoredEndBrackets) break
+        if (nextFragment.endsWith(endBrancket) && ignoredEndBrackets) --ignoredEndBrackets
 
         index++
       }

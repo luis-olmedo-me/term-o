@@ -1,5 +1,4 @@
 import { defaultSets, getDefaultMode } from '@src/libs/color-set'
-import { getColor as C } from '@src/theme/theme.helpers'
 import { displayHelp, formatTheme } from '../command-handlers.helpers'
 import { getStorageValue, setStorageValue } from '../storage/storage.helpers'
 
@@ -30,7 +29,7 @@ export const handleTHEME = async command => {
     const alreadyExists = colorSets.some(set => set.name.includes(newSet.name))
 
     if (alreadyExists) {
-      return command.throw(`The theme "${C`brightRed`}${newSet.name}${C`red`}" already exists.`)
+      return command.throw(`The theme "${newSet.name}" already exists.`)
     }
 
     const newColorSets = colorSets.concat(newSet)
@@ -53,13 +52,11 @@ export const handleTHEME = async command => {
     const isDefault = defaultSets.some(set => set.name === name)
 
     if (isDefault) {
-      return command.throw(
-        `The theme ${C`brightRed`}"${name}"${C`red`} is a default theme that can not be deleted.`
-      )
+      return command.throw(`The theme "${name}" is a default theme that can not be deleted.`)
     }
 
     if (!alreadyExists) {
-      return command.throw(`The theme ${C`brightRed`}"${name}"${C`red`} does not exist.`)
+      return command.throw(`The theme "${name}" does not exist.`)
     }
 
     const newColorSets = colorSets.filter(set => set.name !== name)
@@ -79,7 +76,7 @@ export const handleTHEME = async command => {
     const alreadyExists = colorSets.some(set => set.name === name)
 
     if (!alreadyExists) {
-      return command.throw(`The theme ${C`brightRed`}"${name}"${C`red`} is unrecognized.`)
+      return command.throw(`The theme "${name}" is unrecognized.`)
     }
 
     const update = formatTheme({ name })

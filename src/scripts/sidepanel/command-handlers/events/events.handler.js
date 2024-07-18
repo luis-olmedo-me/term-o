@@ -1,5 +1,4 @@
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
-import { getColor as C } from '@src/theme/theme.helpers'
 import { displayHelp, formatEvent } from '../command-handlers.helpers'
 
 export const handleEVENTS = async command => {
@@ -31,7 +30,7 @@ export const handleEVENTS = async command => {
     const existingEvent = events.find(event => event.id === id)
 
     if (!existingEvent) {
-      return command.throw(`The event ${C`brightRed`}"${id}"${C`red`} does not exist.`)
+      return command.throw(`The event "${id}" does not exist.`)
     }
 
     const newEvents = events.filter(alias => alias.id !== id)

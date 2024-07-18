@@ -101,3 +101,10 @@ export const formatEvent = ({ name, target, tabId }) => {
 
   return `${quotedTabId}${C`purple`}${quotedName} ${C`yellow`}${quotedTarget}`
 }
+
+export const formatStorageProp = ({ key, value }) => {
+  const quotedKey = getQuotedString(key)
+  const quotedValue = getQuotedString(value)
+
+  return `${C`purple`}${quotedKey} ${C`yellow`}${quotedValue}`
+}

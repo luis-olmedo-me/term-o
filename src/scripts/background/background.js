@@ -17,14 +17,15 @@ const handleStorageChanges = (changes, currentChanges) => {
     }
   }
 }
-
-chrome.storage.onChanged.addListener(handleStorageChanges)
-
 const getUserEventsFromLS = async () => {
   const events = await getStorageValue('local', 'events')
 
   userEvents = events || []
 }
+
+getUserEventsFromLS()
+chrome.storage.onChanged.addListener(handleStorageChanges)
+
 const executeEvents = async (events, data) => {
   events.forEach(event => {
     const command = commandParser.read(event.line)
@@ -33,8 +34,6 @@ const executeEvents = async (events, data) => {
     if (!command.finished) command.execute()
   })
 }
-
-getUserEventsFromLS()
 
 chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {
   if (changeInfo.status !== 'complete') return

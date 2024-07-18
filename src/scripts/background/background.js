@@ -1,4 +1,5 @@
 import commandHandlers from '@background/command-handlers'
+import { getStorageValue } from '@background/command-handlers/storage/storage.helpers'
 import commandParser from '@src/libs/command-parser'
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
@@ -7,10 +8,22 @@ commandParser.setHandlers(commandHandlers)
 
 let userEvents = []
 
-const getUserEventsFromLS = async () => {
-  const { events = [] } = await chrome.storage.local.get('events')
+const handleStorageChanges = (changes, currentChanges) => {
+  if (currentChanges !== 'local') return
 
-  userEvents = events
+  for (let [storageKey, { newValue }] of Object.entries(changes)) {
+    if (storageKey === 'events') {
+      userEvents = newValue
+    }
+  }
+}
+
+chrome.storage.onChanged.addListener(handleStorageChanges)
+
+const getUserEventsFromLS = async () => {
+  const events = await getStorageValue('local', 'events')
+
+  userEvents = events || []
 }
 const executeEvents = async (events, data) => {
   events.forEach(event => {

@@ -13,19 +13,19 @@ export const createSTORAGE = () => {
     .expect({
       name: 'local',
       type: 'boolean',
-      abbreviation: 'l',
+      abbreviation: 'L',
       description: 'Get local storage from the pointed tab in the terminal.'
     })
     .expect({
       name: 'session',
       type: 'boolean',
-      abbreviation: 's',
+      abbreviation: 'S',
       description: 'Get local session from the pointed tab in the terminal.'
     })
     .expect({
       name: 'cookie',
       type: 'boolean',
-      abbreviation: 'c',
+      abbreviation: 'C',
       description: 'Get cookies from the pointed tab in the terminal.'
     })
     .expect({

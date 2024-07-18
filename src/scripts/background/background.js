@@ -1,30 +1,10 @@
 import commandHandlers from '@background/command-handlers'
-import { getStorageValue } from '@background/command-handlers/storage/storage.helpers'
 import commandParser from '@src/libs/command-parser'
+import eventManager from './packages/event-manager.package'
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
 
 commandParser.setHandlers(commandHandlers)
-
-let userEvents = []
-
-const handleStorageChanges = (changes, currentChanges) => {
-  if (currentChanges !== 'local') return
-
-  for (let [storageKey, { newValue }] of Object.entries(changes)) {
-    if (storageKey === 'events') {
-      userEvents = newValue
-    }
-  }
-}
-const getUserEventsFromLS = async () => {
-  const events = await getStorageValue('local', 'events')
-
-  userEvents = events || []
-}
-
-getUserEventsFromLS()
-chrome.storage.onChanged.addListener(handleStorageChanges)
 
 const executeEvents = async (events, data) => {
   events.forEach(event => {
@@ -38,7 +18,8 @@ const executeEvents = async (events, data) => {
 chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {
   if (changeInfo.status !== 'complete') return
 
-  const pendingEvents = userEvents.filter(event => new RegExp(event.url).test(updatedTab.url))
+  const events = eventManager.getEvents()
+  const pendingEvents = events.filter(event => new RegExp(event.url).test(updatedTab.url))
 
   if (pendingEvents.length === 0) return
 

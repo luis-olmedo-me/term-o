@@ -3,7 +3,7 @@ export const getArray = value => {
   const itemsAsArgs = getArgs(items)
 
   return itemsAsArgs.map(item => {
-    return /^"|^'/.test(item) ? item.slice(1).slice(0, -1) : item
+    return /^"|^'/.test(item) ? item.slice(1).slice(0, -1) : ''
   })
 }
 
@@ -63,10 +63,8 @@ const parseOptions = (index, arg, argsBySpace, type) => {
       const isValidValue = arrayValue.every(value => {
         const isString = typeof value === 'string'
         const hasContent = Boolean(value)
-        const startsWithQuote = /^"|^'/.test(value)
-        const endsWithQuote = /^"|^'/.test(value)
 
-        return isString && hasContent && startsWithQuote && endsWithQuote
+        return isString && hasContent
       })
       const hasItems = arrayValue.length > 0
 

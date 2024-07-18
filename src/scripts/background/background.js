@@ -14,10 +14,10 @@ const getUserEventsFromLS = async () => {
 }
 const executeEvents = async (events, data) => {
   events.forEach(event => {
-    const command = commandParser.read(event.command)
+    const command = commandParser.read(event.line)
 
     command.appendsData(data)
-    command.execute()
+    if (!command.finished) command.execute()
   })
 }
 

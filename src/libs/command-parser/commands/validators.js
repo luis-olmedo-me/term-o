@@ -34,13 +34,11 @@ export const isJSONScheme = scheme => {
   }
 }
 
+const xpathPattern = /^\/?\/?(?:id\("[^"]+"\)|[a-zA-Z0-9_-]+)(?:\[[0-9]+\])?(?:\/(?:id\("[^"]+"\)|[a-zA-Z0-9_-]+)(?:\[[0-9]+\])?)*$/
 export const isXpath = (option, value) => {
   if (Array.isArray(value)) return value.forEach(isXpath)
 
-  try {
-    window.document.evaluate(value, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
-      .singleNodeValue
-  } catch (error) {
+  if (!xpathPattern.test(value)) {
     const name = option.displayName
 
     throw `${name} expects a valid XPath. Instead, it received "${value}".`

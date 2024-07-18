@@ -15,7 +15,7 @@ export const handleALIAS = async command => {
     const newAlias = { key, value }
 
     const { aliases = [] } = await chrome.storage.local.get('aliases')
-    const alreadyExists = aliases.some(alias => alias.key.includes(key))
+    const alreadyExists = aliases.some(alias => alias.key === key)
 
     if (alreadyExists) {
       return command.throw(`The alias "${key}" already exists.`)
@@ -32,7 +32,7 @@ export const handleALIAS = async command => {
     const key = P`delete`
 
     const { aliases = [] } = await chrome.storage.local.get('aliases')
-    const existingAlias = aliases.find(alias => alias.key.includes(key))
+    const existingAlias = aliases.find(alias => alias.key === key)
 
     if (!existingAlias) {
       return command.throw(`The alias "${key}" does not exist.`)

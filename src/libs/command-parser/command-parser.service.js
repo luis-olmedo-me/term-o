@@ -12,16 +12,21 @@ import { getArgs } from './sub-services/command/command.helpers'
 import EventListener from './sub-services/event-listener'
 
 class CommandParser extends EventListener {
-  constructor(commands) {
+  constructor(commands, formatter) {
     super()
 
     this.commands = commands
     this.handlers = {}
     this.aliases = []
+    this.formatter = formatter || null
   }
 
   setAliases(aliases) {
     this.aliases = aliases
+  }
+
+  setFormatter(formatter) {
+    this.formatter = formatter
   }
 
   read(rawScript) {
@@ -51,12 +56,15 @@ class CommandParser extends EventListener {
     const cleanedName = name.replace('"', '\\"')
 
     if (!createCommand) {
-      return createERROR().mock({
-        title: `'The command "${cleanedName}" is unrecognized.'`
-      })
+      return createERROR()
+        .setFormatter(this.formatter)
+        .mock({ title: `'The command "${cleanedName}" is unrecognized.'` })
     }
 
-    const command = createCommand().prepare(scriptArgs)
+    const command = createCommand()
+      .setFormatter(this.formatter)
+      .prepare(scriptArgs)
+
     this.dispatchEvent(`on-create-${name}`, command)
 
     if (handler) command.addEventListener('execute', handler)

@@ -11,6 +11,7 @@ export class Command extends EventListener {
     super()
 
     this.id = createUUIDv4()
+    this.formatter = null
     this.name = name
     this.title = ''
     this.data = {}
@@ -41,6 +42,12 @@ export class Command extends EventListener {
     this.updates = updates
 
     this.dispatchEvent('update', this)
+  }
+
+  setFormatter(newFormatter) {
+    this.formatter = newFormatter
+
+    return this
   }
 
   expect({ name, type, defaultValue, abbreviation, validate, worksWith, mustHave, description }) {
@@ -112,8 +119,10 @@ export class Command extends EventListener {
   }
 
   throw(message) {
+    const formattedMessage = this.formatter?.(`✕ ${message}`) || `✕ ${message}`
+
     this.reset()
-    this.update(`✕ ${message}`)
+    this.update(formattedMessage)
 
     this.finish()
     this.error = true

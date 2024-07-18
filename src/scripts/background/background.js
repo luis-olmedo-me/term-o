@@ -1,4 +1,4 @@
-import commandHandlers, { getCurrentTab } from '@background/command-handlers'
+import commandHandlers from '@background/command-handlers'
 import commandParser from '@src/libs/command-parser'
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
@@ -12,28 +12,28 @@ const getUserEventsFromLS = async () => {
 
   userEvents = events
 }
-const executeEvents = async events => {
-  const tab = await getCurrentTab()
-
+const executeEvents = async (events, data) => {
   events.forEach(event => {
     const command = commandParser.read(event.command)
 
-    command.appendsData({ tab })
-
+    command.appendsData(data)
     command.execute()
   })
 }
 
 getUserEventsFromLS()
 
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {
   if (changeInfo.status !== 'complete') return
 
-  const pendingEvents = userEvents.filter(event => new RegExp(event.url).test(tab.url))
+  const pendingEvents = userEvents.filter(event => new RegExp(event.url).test(updatedTab.url))
 
   if (pendingEvents.length === 0) return
 
-  executeEvents(pendingEvents)
+  let tab = updatedTab
+  const theme = {}
+  const setTab = newTab => (tab = newTab)
+  const clearLogs = () => {}
 
-  console.log(tab, tab, changeInfo)
+  executeEvents(pendingEvents, { tab, setTab, theme, clearLogs })
 })

@@ -1,4 +1,4 @@
-import commandHandlers, { getCurrentTab } from '@sidepanel/command-handlers'
+import commandHandlers, { getCurrentTab } from '@background/command-handlers'
 import commandParser from '@src/libs/command-parser'
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })

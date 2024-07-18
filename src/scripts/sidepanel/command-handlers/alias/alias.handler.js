@@ -1,15 +1,14 @@
 import { getColor as C } from '@src/theme/theme.helpers'
-import { displayHelp } from '../command-handlers.helpers'
+import { displayHelp, formatAlias } from '../command-handlers.helpers'
 
 export const handleALIAS = async command => {
   const P = name => command.props[name]
 
   if (P`list`) {
     const { aliases = [] } = await chrome.storage.local.get('aliases')
+    const updates = aliases.map(formatAlias)
 
-    aliases.forEach(({ key, value }) => {
-      command.update(`${C`purple`}"${key}" ${C`yellow`}"${value}"`)
-    })
+    command.update(...updates)
   }
 
   if (P`add`.length) {
@@ -24,10 +23,10 @@ export const handleALIAS = async command => {
     }
 
     const newAliases = aliases.concat(newAlias)
+    const update = formatAlias(newAlias)
 
     await chrome.storage.local.set({ aliases: newAliases })
-
-    command.update(`${C`purple`}"${key}" ${C`yellow`}"${value}"`)
+    command.update(update)
   }
 
   if (P`delete`) {
@@ -41,10 +40,10 @@ export const handleALIAS = async command => {
     }
 
     const newAliases = aliases.filter(alias => alias.key !== key)
+    const update = formatAlias(existingAlias)
 
     await chrome.storage.local.set({ aliases: newAliases })
-
-    command.update(`${C`purple`}"${key}" ${C`yellow`}"${existingAlias.value}"`)
+    command.update(update)
   }
 
   if (P`help`) displayHelp(command)

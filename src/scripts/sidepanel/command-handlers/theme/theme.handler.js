@@ -1,6 +1,6 @@
 import { defaultSets, getDefaultMode } from '@src/libs/color-set'
 import { getColor as C } from '@src/theme/theme.helpers'
-import { displayHelp } from '../command-handlers.helpers'
+import { displayHelp, formatTheme } from '../command-handlers.helpers'
 import { getStorageValue, setStorageValue } from '../storage/storage.helpers'
 
 export const handleTHEME = async command => {
@@ -10,16 +10,16 @@ export const handleTHEME = async command => {
   if (P`list`) {
     const colorSetsFromLS = await getStorageValue('local', 'color-sets')
     const colorSets = colorSetsFromLS || defaultSets
+    const updates = colorSets.map(formatTheme)
 
-    colorSets.forEach(({ name }) => {
-      command.update(`${C`purple`}"${name}"`)
-    })
+    command.update(...updates)
   }
 
   if (P`current`) {
-    const currentName = theme.colors.name
+    const name = theme.colors.name
+    const update = formatTheme({ name })
 
-    command.update(`${C`purple`}"${currentName}"`)
+    command.update(update)
   }
 
   if (P`import`) {
@@ -34,11 +34,12 @@ export const handleTHEME = async command => {
     }
 
     const newColorSets = colorSets.concat(newSet)
+    const update = formatTheme(newSet)
 
     await setStorageValue('local', 'color-sets', newColorSets)
     await setStorageValue('local', 'color-set-name', newSet.name)
 
-    command.update(`${C`purple`}"${newSet.name}"`)
+    command.update(update)
   }
 
   if (P`delete`) {
@@ -62,11 +63,12 @@ export const handleTHEME = async command => {
     }
 
     const newColorSets = colorSets.filter(set => set.name !== name)
+    const update = formatTheme({ name })
 
     if (name === currentName) await setStorageValue('local', 'color-set-name', defaultName)
     await setStorageValue('local', 'color-sets', newColorSets)
 
-    command.update(`${C`purple`}"${name}"`)
+    command.update(update)
   }
 
   if (P`apply`) {
@@ -80,9 +82,10 @@ export const handleTHEME = async command => {
       return command.throw(`The theme ${C`brightRed`}"${name}"${C`red`} is unrecognized.`)
     }
 
-    await setStorageValue('local', 'color-set-name', name)
+    const update = formatTheme({ name })
 
-    command.update(`${C`purple`}"${name}"`)
+    await setStorageValue('local', 'color-set-name', name)
+    command.update(update)
   }
 
   if (P`help`) displayHelp(command)

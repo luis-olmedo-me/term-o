@@ -1,7 +1,5 @@
 import { applyElementStyles, getElementStyles } from '@sidepanel/proccesses/workers'
-import { getQuotedString } from '@src/helpers/utils.helpers'
-import { getColor as C } from '@src/theme/theme.helpers'
-import { displayHelp } from '../command-handlers.helpers'
+import { displayHelp, formatRule } from '../command-handlers.helpers'
 
 export const handleSTYLES = async command => {
   const { tab } = command.data
@@ -15,19 +13,7 @@ export const handleSTYLES = async command => {
       searchBySelector: P`selector`
     })
 
-    const formattedStyles = rules.map(({ styles, selector }) => {
-      const quotedSelector = getQuotedString(selector)
-      const css = styles
-        .map(([name, value]) => {
-          const coloredName = `${C`green`}${getQuotedString(name)}`
-          const coloredValue = value ? ` ${C`yellow`}${getQuotedString(value)}` : ''
-
-          return `${C`purple`}[${coloredName}${coloredValue}${C`purple`}]`
-        })
-        .join(' ')
-
-      return css ? `${C`cyan`}${quotedSelector} ${css}` : `${C`cyan`}${quotedSelector}`
-    })
+    const formattedStyles = rules.map(formatRule)
 
     command.reset()
     if (rules.length) command.update(...formattedStyles)
@@ -39,19 +25,7 @@ export const handleSTYLES = async command => {
       newInlineStyles: P`apply`
     })
 
-    const formattedStyles = rules.map(({ styles, selector }) => {
-      const quotedSelector = getQuotedString(selector)
-      const css = styles
-        .map(([name, value]) => {
-          const coloredName = `${C`green`}${getQuotedString(name)}`
-          const coloredValue = value ? ` ${C`yellow`}${getQuotedString(value)}` : ''
-
-          return `${C`purple`}[${coloredName}${coloredValue}${C`purple`}]`
-        })
-        .join(' ')
-
-      return css ? `${C`cyan`}${quotedSelector} ${css}` : `${C`cyan`}${quotedSelector}`
-    })
+    const formattedStyles = rules.map(formatRule)
 
     if (rules.length) command.update(...formattedStyles)
   }

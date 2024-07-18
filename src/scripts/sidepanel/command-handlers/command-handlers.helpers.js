@@ -94,7 +94,7 @@ export const formatElement = ({ tagName, attributes, xpath, textContent, tabId }
     : `${quotedTabId}${C`red`}${quotedTagName}`
 }
 
-export const formatEvent = ({ name, target, tabId }) => {
+export const formatDOMEvent = ({ name, target, tabId }) => {
   const quotedTabId = tabId ? `${C`blue`}${getQuotedString(tabId)} ` : ''
   const quotedName = getQuotedString(name)
   const quotedTarget = getQuotedString(target)
@@ -107,4 +107,48 @@ export const formatStorageProp = ({ key, value }) => {
   const quotedValue = getQuotedString(value)
 
   return `${C`purple`}${quotedKey} ${C`yellow`}${quotedValue}`
+}
+export const formatAlias = ({ key, value }) => {
+  const quotedKey = getQuotedString(key)
+  const quotedValue = getQuotedString(value)
+
+  return `${C`purple`}${quotedKey} ${C`yellow`}${quotedValue}`
+}
+
+export const formatEvent = ({ url, line, id }) => {
+  const quotedId = getQuotedString(id)
+  const quotedURL = getQuotedString(url)
+  const quotedLine = getQuotedString(line)
+
+  return `${C`purple`}${quotedId} ${C`yellow`}${quotedURL} ${quotedLine}`
+}
+
+export const formatTab = ({ windowId, id, title, url }) => {
+  const quotedWindowId = getQuotedString(`W${windowId}`)
+  const quotedId = getQuotedString(`T${id}`)
+  const quotedTitle = getQuotedString(title)
+  const quotedURL = getQuotedString(url)
+
+  return `${C`purple`}${quotedWindowId} ${C`blue`}${quotedId} ${C`yellow`}${quotedTitle} ${quotedURL}`
+}
+
+export const formatTheme = ({ name }) => {
+  const quotedName = getQuotedString(name)
+
+  return `${C`purple`}${quotedName}`
+}
+
+export const formatRule = ({ styles, selector }) => {
+  const quotedSelector = getQuotedString(selector)
+
+  const css = styles
+    .map(([name, value]) => {
+      const coloredName = `${C`green`}${getQuotedString(name)}`
+      const coloredValue = value ? ` ${C`yellow`}${getQuotedString(value)}` : ''
+
+      return `${C`purple`}[${coloredName}${coloredValue}${C`purple`}]`
+    })
+    .join(' ')
+
+  return css ? `${C`cyan`}${quotedSelector} ${css}` : `${C`cyan`}${quotedSelector}`
 }

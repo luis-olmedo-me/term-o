@@ -1,5 +1,4 @@
-import { getColor as C } from '@src/theme/theme.helpers'
-import { displayHelp, renameError } from '../command-handlers.helpers'
+import { displayHelp, formatTab, renameError } from '../command-handlers.helpers'
 import { createTab, getTab } from './tabs.helpers'
 
 export const handleTABS = async command => {
@@ -7,60 +6,67 @@ export const handleTABS = async command => {
   const P = name => command.props[name]
 
   if (P`reload`) {
-    const { windowId, id, title, url } = await getTab(P`reload`).catch(renameError)
-    await chrome.tabs.reload(id).catch(renameError)
+    const tab = await getTab(P`reload`).catch(renameError)
+    const update = formatTab(tab)
+    await chrome.tabs.reload(tab.id).catch(renameError)
 
-    command.update(`${C`purple`}"W${windowId}" ${C`blue`}"T${id}" ${C`yellow`}"${title}" "${url}"`)
+    command.update(update)
   }
 
   if (P`points`) {
     const tab = await getTab(P`points`).catch(renameError)
-    const { windowId, id, title, url } = tab
+    const update = formatTab(tab)
 
     setTab(tab)
 
-    command.update(`${C`purple`}"W${windowId}" ${C`blue`}"T${id}" ${C`yellow`}"${title}" "${url}"`)
+    command.update(update)
   }
 
   if (P`switch`) {
-    const { windowId, id, title, url } = await getTab(P`switch`).catch(renameError)
-    const { focused } = await chrome.windows.get(windowId).catch(renameError)
+    const tab = await getTab(P`switch`).catch(renameError)
+    const { focused } = await chrome.windows.get(tab.windowId).catch(renameError)
 
-    if (!focused) await chrome.windows.update(windowId, { focused: true })
-    await chrome.tabs.update(id, { selected: true })
+    if (!focused) await chrome.windows.update(tab.windowId, { focused: true })
+    await chrome.tabs.update(tab.id, { selected: true })
 
-    command.update(`${C`purple`}"W${windowId}" ${C`blue`}"T${id}" ${C`yellow`}"${title}" "${url}"`)
+    const update = formatTab(tab)
+
+    command.update(update)
   }
 
   if (P`close`) {
-    const { windowId, id, title, url } = await getTab(P`close`).catch(renameError)
+    const tab = await getTab(P`close`).catch(renameError)
+    const update = formatTab(tab)
 
-    await chrome.tabs.remove(id)
+    await chrome.tabs.remove(tab.id)
 
-    command.update(`${C`purple`}"W${windowId}" ${C`blue`}"T${id}" ${C`yellow`}"${title}" "${url}"`)
+    command.update(update)
   }
 
   if (P`open`) {
     command.update(`Please wait while the page is loading.`)
-    const { windowId, id, title, url } = await createTab({ url: P`open` }).catch(renameError)
+    const tab = await createTab({ url: P`open` }).catch(renameError)
+    const update = formatTab(tab)
 
     command.reset()
-    command.update(`${C`purple`}"W${windowId}" ${C`blue`}"T${id}" ${C`yellow`}"${title}" "${url}"`)
+    command.update(update)
   }
 
   if (P`current`) {
-    const [{ windowId, id, title, url }] = await chrome.tabs.query({
+    const [tab] = await chrome.tabs.query({
       active: true,
       lastFocusedWindow: true
     })
 
-    command.update(`${C`purple`}"W${windowId}" ${C`blue`}"T${id}" ${C`yellow`}"${title}" "${url}"`)
+    const update = formatTab(tab)
+
+    command.update(update)
   }
 
   if (P`pointing`) {
-    const { windowId, id, title, url } = tab
+    const update = formatTab(tab)
 
-    command.update(`${C`purple`}"W${windowId}" ${C`blue`}"T${id}" ${C`yellow`}"${title}" "${url}"`)
+    command.update(update)
   }
 
   if (P`list`) {
@@ -78,16 +84,16 @@ export const handleTABS = async command => {
     })
 
     for (const tab of tabs) {
-      const { windowId, id, title, url, incognito } = tab
+      const { windowId, title, url, incognito } = tab
 
       if (onlyIncognito && !incognito) continue
       if (onlyTitle && !onlyTitle.test(title)) continue
       if (onlyURL && !onlyURL.test(url)) continue
       if (onlyWindowId && !onlyWindowId.test(`W${windowId}`)) continue
 
-      command.update(
-        `${C`purple`}"W${windowId}" ${C`blue`}"T${id}" ${C`yellow`}"${title}" "${url}"`
-      )
+      const update = formatTab(tab)
+
+      command.update(update)
     }
   }
 

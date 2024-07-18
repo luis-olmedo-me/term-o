@@ -1,35 +1,27 @@
-import { createUUIDv4, getQuotedString } from '@src/helpers/utils.helpers'
+import { createUUIDv4 } from '@src/helpers/utils.helpers'
 import { getColor as C } from '@src/theme/theme.helpers'
-import { displayHelp } from '../command-handlers.helpers'
+import { displayHelp, formatEvent } from '../command-handlers.helpers'
 
 export const handleEVENTS = async command => {
   const P = name => command.props[name]
 
   if (P`list`) {
     const { events = [] } = await chrome.storage.local.get('events')
+    const updates = events.map(formatEvent)
 
-    events.forEach(({ url, line, id }) => {
-      const quotedId = getQuotedString(id)
-      const quotedURL = getQuotedString(url)
-      const quotedLine = getQuotedString(line)
-
-      command.update(`${C`purple`}${quotedId} ${C`yellow`}${quotedURL} ${quotedLine}`)
-    })
+    command.update(...updates)
   }
 
   if (P`add`) {
-    const { events = [] } = await chrome.storage.local.get('events')
     const id = createUUIDv4()
+    const { events = [] } = await chrome.storage.local.get('events')
+    const newEvent = { url: P`url`, line: P`command`, id }
 
-    const newEvents = events.concat({ url: P`url`, line: P`command`, id })
+    const newEvents = events.concat(newEvent)
+    const update = formatEvent(newEvent)
 
     await chrome.storage.local.set({ events: newEvents })
-
-    const quotedId = getQuotedString(id)
-    const quotedURL = getQuotedString(P`url`)
-    const quotedLine = getQuotedString(P`command`)
-
-    command.update(`${C`purple`}${quotedId} ${C`yellow`}${quotedURL} ${quotedLine}`)
+    command.update(update)
   }
 
   if (P`delete`) {
@@ -43,14 +35,10 @@ export const handleEVENTS = async command => {
     }
 
     const newEvents = events.filter(alias => alias.id !== id)
+    const update = formatEvent(existingEvent)
 
     await chrome.storage.local.set({ events: newEvents })
-
-    const quotedId = getQuotedString(id)
-    const quotedURL = getQuotedString(existingEvent.url)
-    const quotedLine = getQuotedString(existingEvent.line)
-
-    command.update(`${C`purple`}${quotedId} ${C`yellow`}${quotedURL} ${quotedLine}`)
+    command.update(update)
   }
 
   if (P`help`) displayHelp(command)

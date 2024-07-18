@@ -1,8 +1,8 @@
 import { clickElement, findDOMElement, getDOMElements } from '@sidepanel/proccesses/workers'
 import {
   displayHelp,
+  formatDOMEvent,
   formatElement,
-  formatEvent,
   getNumberTabId,
   prependCounters
 } from '../command-handlers.helpers'
@@ -32,7 +32,7 @@ export const handleDOM = async command => {
       searchByXpath: P`search-xpath`
     })
 
-    const textEvent = formatEvent({ ...event, tabId: P`tab-id` })
+    const textEvent = formatDOMEvent({ ...event, tabId: P`tab-id` })
     command.update(textEvent)
   }
 

@@ -45,7 +45,7 @@ export const isXpath = (option, value) => {
   }
 }
 
-const tabIdPattern = /^\/?\/?(?:id\("[^"]+"\)|[a-zA-Z0-9_-]+)(?:\[[0-9]+\])?(?:\/(?:id\("[^"]+"\)|[a-zA-Z0-9_-]+)(?:\[[0-9]+\])?)*$/
+const tabIdPattern = /T(\d)+/
 export const isTabId = (option, value) => {
   if (Array.isArray(value)) return value.forEach(isXpath)
 

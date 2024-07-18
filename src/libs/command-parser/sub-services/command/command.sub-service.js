@@ -1,5 +1,4 @@
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
-import { getColor as C } from '@src/theme/theme.helpers'
 
 import { Options } from '../Options/Options.sub-service'
 import Argument from '../argument'
@@ -12,11 +11,11 @@ export class Command extends EventListener {
     super()
 
     this.id = createUUIDv4()
+    this.formatter = null
     this.name = name
     this.title = ''
     this.data = {}
     this.props = {}
-    this.outputs = []
     this.updates = []
     this.staticUpdates = []
     this.error = false
@@ -43,6 +42,12 @@ export class Command extends EventListener {
     this.updates = updates
 
     this.dispatchEvent('update', this)
+  }
+
+  setFormatter(newFormatter) {
+    this.formatter = newFormatter
+
+    return this
   }
 
   expect({ name, type, defaultValue, abbreviation, validate, worksWith, mustHave, description }) {
@@ -74,7 +79,7 @@ export class Command extends EventListener {
       if (!hasNewProps && itExpectProps && !hasArgsHoldingUp) {
         const name = this.name
 
-        throw `${C`brightRed`}"${name}" ${C`red`}command expects for props. Instead, it received nothing.`
+        throw `"${name}" command expects for props. Instead, it received nothing.`
       }
 
       if (!hasArgsHoldingUp) this.options.setValues(newProps)
@@ -114,8 +119,10 @@ export class Command extends EventListener {
   }
 
   throw(message) {
+    const formattedMessage = this.formatter?.(`✕ ${message}`) || `✕ ${message}`
+
     this.reset()
-    this.update(`${C`red`}✕ ${message}`)
+    this.update(formattedMessage)
 
     this.finish()
     this.error = true

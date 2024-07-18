@@ -1,4 +1,4 @@
-import { getDefaultMode } from './color-set.helpers'
+import { defaultlDarkMode } from './color-set.constants'
 
 class ColorSet {
   constructor(defaultColors) {
@@ -20,4 +20,4 @@ class ColorSet {
   }
 }
 
-export const colorSet = new ColorSet(getDefaultMode())
+export const colorSet = new ColorSet(defaultlDarkMode)

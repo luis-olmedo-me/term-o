@@ -1,4 +1,3 @@
-import { getColor as C } from '@src/theme/theme.helpers'
 import { validateSchema } from './helpers'
 
 export const isRegExp = (option, value) => {
@@ -9,7 +8,7 @@ export const isRegExp = (option, value) => {
   } catch (error) {
     const name = option.displayName
 
-    throw `${C`brightRed`}${name}${C`red`} expects a valid regular expression. Instead, it received ${C`brightRed`}"${value}"${C`red`}.`
+    throw `${name} expects a valid regular expression. Instead, it received "${value}".`
   }
 }
 
@@ -21,7 +20,7 @@ export const isJSON = (option, value) => {
   } catch (error) {
     const name = option.displayName
 
-    throw `${C`brightRed`}${name}${C`red`} expects a valid JSON. Instead, it received ${C`brightRed`}"${value}"${C`red`}.`
+    throw `${name} expects a valid JSON. Instead, it received "${value}".`
   }
 }
 
@@ -35,16 +34,14 @@ export const isJSONScheme = scheme => {
   }
 }
 
+const xpathPattern = /^\/?\/?(?:id\("[^"]+"\)|[a-zA-Z0-9_-]+)(?:\[[0-9]+\])?(?:\/(?:id\("[^"]+"\)|[a-zA-Z0-9_-]+)(?:\[[0-9]+\])?)*$/
 export const isXpath = (option, value) => {
   if (Array.isArray(value)) return value.forEach(isXpath)
 
-  try {
-    window.document.evaluate(value, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
-      .singleNodeValue
-  } catch (error) {
+  if (!xpathPattern.test(value)) {
     const name = option.displayName
 
-    throw `${C`brightRed`}${name}${C`red`} expects a valid XPath. Instead, it received ${C`brightRed`}"${value}"${C`red`}.`
+    throw `${name} expects a valid XPath. Instead, it received "${value}".`
   }
 }
 
@@ -56,7 +53,7 @@ export const isURL = (option, value) => {
   } catch (error) {
     const name = option.displayName
 
-    throw `${C`brightRed`}${name}${C`red`} expects a valid URL. Instead, it received ${C`brightRed`}"${value}"${C`red`}.`
+    throw `${name} expects a valid URL. Instead, it received "${value}".`
   }
 }
 
@@ -66,7 +63,7 @@ export const hasNoSpaces = (option, value) => {
   if (value.includes(' ')) {
     const name = option.displayName
 
-    throw `${C`brightRed`}${name}${C`red`} expects a value without space characters. Instead, it received ${C`brightRed`}"${value}"${C`red`}.`
+    throw `${name} expects a value without space characters. Instead, it received "${value}".`
   }
 }
 
@@ -91,7 +88,7 @@ export const isInlineStyles = (option, value) => {
     if (isMissingContent || isInvalidPropName || isInvalidPropValue) {
       const name = option.displayName
 
-      throw `${C`brightRed`}${name}${C`red`} expects valid inline styles. Instead, it received ${C`brightRed`}"${value}"${C`red`}.`
+      throw `${name} expects valid inline styles. Instead, it received "${value}".`
     }
   }
 }
@@ -104,7 +101,7 @@ export const hasItems = staticLength => {
       const name = option.displayName
       const count = value.length
 
-      throw `${C`brightRed`}${name}${C`red`}expects ${staticLength} value(s). Instead, it received ${C`brightRed`}${count}${C`red`}.`
+      throw `${name}expects ${staticLength} value(s). Instead, it received ${count}.`
     }
   }
 }
@@ -117,7 +114,7 @@ export const isInRange = (min, max) => {
       const name = option.displayName
       const count = value.length
 
-      throw `${C`brightRed`}${name}${C`red`}expects between ${min} and ${max} value(s). Instead, it received ${C`brightRed`}${count}${C`red`}.`
+      throw `${name}expects between ${min} and ${max} value(s). Instead, it received ${count}.`
     }
   }
 }

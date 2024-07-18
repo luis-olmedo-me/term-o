@@ -1,5 +1,3 @@
-import { getColor as C } from '@src/theme/theme.helpers'
-
 const isValidType = (value, type) => {
   switch (type) {
     case 'string':
@@ -20,7 +18,7 @@ export const validateSchema = (option, schema, value) => {
     if (!(key in schema)) continue
 
     if (!(key in value))
-      throw `${C`brightRed`}${name}${C`red`} expects a valid JSON. Instead, it is missing property ${C`brightRed`}"${key}"${C`red`} in object.`
+      throw `${name} expects a valid JSON. Instead, it is missing property "${key}" in object.`
 
     const expectedType = schema[key]
     const supposedValue = value[key]
@@ -30,7 +28,7 @@ export const validateSchema = (option, schema, value) => {
 
     if (shouldBeString) {
       if (!isValidType(supposedValue, expectedType))
-        throw `${C`brightRed`}${name}${C`red`} expects a valid JSON. Instead, the value of ${C`brightRed`}"${key}"${C`red`} does not match type ${C`brightRed`}"${expectedType}"${C`red`}.`
+        throw `${name} expects a valid JSON. Instead, the value of "${key}" does not match type "${expectedType}".`
 
       continue
     }
@@ -39,13 +37,13 @@ export const validateSchema = (option, schema, value) => {
       const isArray = Array.isArray(supposedValue)
 
       if (!isArray)
-        throw `${C`brightRed`}${name}${C`red`} expects a valid JSON. Instead, the property ${C`brightRed`}"${key}"${C`red`} should be an array according to the schema.`
+        throw `${name} expects a valid JSON. Instead, the property "${key}" should be an array according to the schema.`
 
       const firstExpectedType = expectedType[0]
       const isValid = supposedValue.every(item => isValidType(item, firstExpectedType))
 
       if (!isValid)
-        throw `${C`brightRed`}${name}${C`red`} expects a valid JSON. Instead, the element ${C`brightRed`}"${supposedValue}"${C`red`} does not match type ${C`brightRed`}"${firstExpectedType}"${C`red`}.`
+        throw `${name} expects a valid JSON. Instead, the element "${supposedValue}" does not match type "${firstExpectedType}".`
 
       continue
     }
@@ -55,11 +53,11 @@ export const validateSchema = (option, schema, value) => {
       continue
     }
 
-    throw `${C`brightRed`}${name}${C`red`} expects a valid JSON. Instead, the type for ${C`brightRed`}"${key}"${C`red`} is unrecognized.`
+    throw `${name} expects a valid JSON. Instead, the type for "${key}" is unrecognized.`
   }
 
   const invalidKey = Object.keys(value).find(key => typeof schema[key] === 'undefined')
 
   if (invalidKey)
-    throw `${C`brightRed`}${name}${C`red`} expects a valid JSON. Instead, it received an value with unexpected key ${C`brightRed`}"${invalidKey}"${C`red`}.`
+    throw `${name} expects a valid JSON. Instead, it received an value with unexpected key "${invalidKey}".`
 }

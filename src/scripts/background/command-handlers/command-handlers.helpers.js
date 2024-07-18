@@ -1,5 +1,4 @@
 import { getQuotedString } from '@src/helpers/utils.helpers'
-import { getColor as C } from '@src/theme/theme.helpers'
 import { errorMessagesOverwritten } from './command-helpers.constants'
 
 export const prependCounters = array => {
@@ -43,11 +42,7 @@ export const displayHelp = command => {
       useGrouping: false
     })
 
-    helps.push(
-      `${C`cyan`}${formattedMainIndex} -- ${C`purple`}${displayName} ${C`yellow`}${
-        option.description
-      }`
-    )
+    helps.push(`${formattedMainIndex} -- ${displayName} ${option.description}`)
 
     dependencies.forEach((dependencyName, index) => {
       const dependencyOption = options.getByName(dependencyName)
@@ -58,9 +53,7 @@ export const displayHelp = command => {
         useGrouping: false
       })
 
-      helps.push(
-        `${C`cyan`}${formattedMainIndex} ${formattedIndex} ${C`brightPurple`}${displayName} ${C`yellow`}${description}`
-      )
+      helps.push(`${formattedMainIndex} ${formattedIndex} ${displayName} ${description}`)
     })
   })
 
@@ -74,45 +67,43 @@ export const displayHelp = command => {
 }
 
 export const formatElement = ({ tagName, attributes, xpath, textContent, tabId }) => {
-  const quotedTabId = tabId ? `${C`blue`}${getQuotedString(tabId)} ` : ''
-  if (xpath !== null) return `${quotedTabId}${C`yellow`}${getQuotedString(xpath)}`
-  if (textContent !== null) return `${quotedTabId}${C`yellow`}${getQuotedString(textContent)}`
+  const quotedTabId = tabId ? `${getQuotedString(tabId)} ` : ''
+  if (xpath !== null) return `${quotedTabId}${getQuotedString(xpath)}`
+  if (textContent !== null) return `${quotedTabId}${getQuotedString(textContent)}`
 
   const attrs = Object.entries(attributes)
     .map(([name, value]) => {
-      const attrName = `${C`green`}${getQuotedString(name)}`
-      const attrValue = value ? ` ${C`yellow`}${getQuotedString(value)}` : ''
+      const attrName = `${getQuotedString(name)}`
+      const attrValue = value ? ` ${getQuotedString(value)}` : ''
 
-      return `${C`purple`}[${attrName}${attrValue}${C`purple`}]`
+      return `[${attrName}${attrValue}]`
     })
     .join(' ')
 
   const quotedTagName = getQuotedString(tagName)
 
-  return attrs
-    ? `${quotedTabId}${C`red`}${quotedTagName} ${attrs}`
-    : `${quotedTabId}${C`red`}${quotedTagName}`
+  return attrs ? `${quotedTabId}${quotedTagName} ${attrs}` : `${quotedTabId}${quotedTagName}`
 }
 
 export const formatDOMEvent = ({ name, target, tabId }) => {
-  const quotedTabId = tabId ? `${C`blue`}${getQuotedString(tabId)} ` : ''
+  const quotedTabId = tabId ? `${getQuotedString(tabId)} ` : ''
   const quotedName = getQuotedString(name)
   const quotedTarget = getQuotedString(target)
 
-  return `${quotedTabId}${C`purple`}${quotedName} ${C`yellow`}${quotedTarget}`
+  return `${quotedTabId}${quotedName} ${quotedTarget}`
 }
 
 export const formatStorageProp = ({ key, value }) => {
   const quotedKey = getQuotedString(key)
   const quotedValue = getQuotedString(value)
 
-  return `${C`purple`}${quotedKey} ${C`yellow`}${quotedValue}`
+  return `${quotedKey} ${quotedValue}`
 }
 export const formatAlias = ({ key, value }) => {
   const quotedKey = getQuotedString(key)
   const quotedValue = getQuotedString(value)
 
-  return `${C`purple`}${quotedKey} ${C`yellow`}${quotedValue}`
+  return `${quotedKey} ${quotedValue}`
 }
 
 export const formatEvent = ({ url, line, id }) => {
@@ -120,7 +111,7 @@ export const formatEvent = ({ url, line, id }) => {
   const quotedURL = getQuotedString(url)
   const quotedLine = getQuotedString(line)
 
-  return `${C`purple`}${quotedId} ${C`yellow`}${quotedURL} ${quotedLine}`
+  return `${quotedId} ${quotedURL} ${quotedLine}`
 }
 
 export const formatTab = ({ windowId, id, title, url }) => {
@@ -129,13 +120,13 @@ export const formatTab = ({ windowId, id, title, url }) => {
   const quotedTitle = getQuotedString(title)
   const quotedURL = getQuotedString(url)
 
-  return `${C`purple`}${quotedWindowId} ${C`blue`}${quotedId} ${C`yellow`}${quotedTitle} ${quotedURL}`
+  return `${quotedWindowId} ${quotedId} ${quotedTitle} ${quotedURL}`
 }
 
 export const formatTheme = ({ name }) => {
   const quotedName = getQuotedString(name)
 
-  return `${C`purple`}${quotedName}`
+  return `${quotedName}`
 }
 
 export const formatRule = ({ styles, selector }) => {
@@ -143,12 +134,12 @@ export const formatRule = ({ styles, selector }) => {
 
   const css = styles
     .map(([name, value]) => {
-      const coloredName = `${C`green`}${getQuotedString(name)}`
-      const coloredValue = value ? ` ${C`yellow`}${getQuotedString(value)}` : ''
+      const coloredName = `${getQuotedString(name)}`
+      const coloredValue = value ? ` ${getQuotedString(value)}` : ''
 
-      return `${C`purple`}[${coloredName}${coloredValue}${C`purple`}]`
+      return `[${coloredName}${coloredValue}]`
     })
     .join(' ')
 
-  return css ? `${C`cyan`}${quotedSelector} ${css}` : `${C`cyan`}${quotedSelector}`
+  return css ? `${quotedSelector} ${css}` : `${quotedSelector}`
 }

@@ -1,5 +1,3 @@
-import { getColor as C } from '@src/theme/theme.helpers'
-
 const validatePropDependencies = (propDependencies, propNames, propName) => {
   if (!propDependencies) return
 
@@ -8,9 +6,9 @@ const validatePropDependencies = (propDependencies, propNames, propName) => {
   )
 
   if (propsCollapsing.length) {
-    const useless = propsCollapsing.map(name => `${C`brightRed`}--${name}${C`red`}`).join(' or ')
+    const useless = propsCollapsing.map(name => `--${name}`).join(' or ')
 
-    throw `${C`brightRed`}--${propName}${C`red`} can not work with ${useless}`
+    throw `--${propName} can not work with ${useless}`
   }
 }
 
@@ -28,11 +26,9 @@ const validateAsDependency = (dependencies, newProps, propName) => {
   const isValidSkiping = missedDependencyFrom.length - 1 === missingDependencies.length
 
   if (missingDependencies.length && !isValidSkiping) {
-    const matches = missingDependencies
-      .map(name => `${C`brightRed`}--${name}${C`red`}`)
-      .join(' or ')
+    const matches = missingDependencies.map(name => `--${name}`).join(' or ')
 
-    throw `${C`brightRed`}--${propName}${C`red`} requires to be executed with ${matches}.`
+    throw `--${propName} requires to be executed with ${matches}.`
   }
 }
 
@@ -44,11 +40,9 @@ const validatePropStrictDependencies = (dependencies, newProps, propName) => {
   )
 
   if (missingDependencies.length) {
-    const matches = missingDependencies
-      .map(name => `${C`brightRed`}--${name}${C`red`}`)
-      .join(' and ')
+    const matches = missingDependencies.map(name => `--${name}`).join(' and ')
 
-    throw `${C`brightRed`}--${propName}${C`red`} requires to be executed with ${matches}.`
+    throw `--${propName} requires to be executed with ${matches}.`
   }
 }
 

@@ -1,4 +1,4 @@
-import { defaultSets, getDefaultMode } from '@src/libs/color-set'
+import { defaultlDarkMode, defaultSets } from '@src/libs/color-set'
 import { displayHelp, formatTheme } from '../command-handlers.helpers'
 import { getStorageValue, setStorageValue } from '../storage/storage.helpers'
 
@@ -44,7 +44,7 @@ export const handleTHEME = async command => {
   if (P`delete`) {
     const name = P`delete`
     const currentName = theme.colors.name
-    const defaultName = getDefaultMode().name
+    const defaultName = defaultlDarkMode.name
 
     const colorSetsFromLS = await getStorageValue('local', 'color-sets')
     const colorSets = colorSetsFromLS || defaultSets

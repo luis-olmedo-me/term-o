@@ -1,6 +1,6 @@
 import { commandNames } from '../../command-parser.constants'
 import Command from '../../sub-services/command'
-import { isInRange, isRegExp, isXpath } from '../validators'
+import { isInRange, isRegExp, isTabId, isXpath } from '../validators'
 
 export const createDOM = () => {
   return new Command({ name: commandNames.DOM })
@@ -75,6 +75,7 @@ export const createDOM = () => {
       name: 'tab-id',
       type: 'string',
       abbreviation: 'i',
+      validate: [isTabId],
       description: 'Get elements on a specific tab ID (T[number]).'
     })
     .expect({

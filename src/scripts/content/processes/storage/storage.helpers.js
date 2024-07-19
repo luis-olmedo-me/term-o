@@ -1,5 +1,3 @@
-import { silentQuotes } from '../processes.helpers'
-
 export const getCookies = () => {
   if (!document.cookie) return {}
 
@@ -9,9 +7,9 @@ export const getCookies = () => {
     return { ...parsedCookies, [key]: value }
   }, {})
 
-  return silentQuotes(cookies)
+  return cookies
 }
 
-export const getSession = () => silentQuotes({ ...sessionStorage })
+export const getSession = () => ({ ...sessionStorage })
 
-export const getLocal = () => silentQuotes({ ...localStorage })
+export const getLocal = () => ({ ...localStorage })

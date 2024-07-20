@@ -1,5 +1,6 @@
 import { commandNames } from '../../command-parser.constants'
 import Command from '../../sub-services/command'
+import { isTabId } from '../validators'
 
 export const createSTORAGE = () => {
   return new Command({ name: commandNames.STORAGE })
@@ -29,6 +30,13 @@ export const createSTORAGE = () => {
       type: 'boolean',
       abbreviation: 'j',
       description: 'Get storages selected as JSON.'
+    })
+    .expect({
+      name: 'tab-id',
+      type: 'string',
+      abbreviation: 'i',
+      validate: [isTabId],
+      description: 'Get storage on a specific tab ID (T[number]).'
     })
     .expect({
       name: 'help',

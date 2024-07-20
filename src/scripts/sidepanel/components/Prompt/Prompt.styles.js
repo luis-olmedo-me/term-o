@@ -1,7 +1,7 @@
 import { theme as t } from '@src/theme/theme.helpers'
 import styled from 'styled-components'
 
-export const Decoration = styled.p`
+export const Line = styled.p`
   margin: 0;
   padding: ${t('space.300')} ${t('space.600')} 0;
   cursor: text;

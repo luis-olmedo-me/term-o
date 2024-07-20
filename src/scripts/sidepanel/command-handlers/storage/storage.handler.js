@@ -1,27 +1,23 @@
 import { getStorage } from '@sidepanel/proccesses/workers'
-import { displayHelp, formatStorageProp } from '../command-handlers.helpers'
+import { displayHelp, formatStorageAsString, formatStorageProp } from '../command-handlers.helpers'
 
 export const handleSTORAGE = async command => {
   const { tab } = command.data
   const P = name => command.props[name]
 
-  if (P`list`) {
-    const showAll = !P`local` && !P`session` && !P`cookie`
-
-    const storages = await getStorage(tab.id, {
-      includeLocal: P`local` || showAll,
-      includeSession: P`session` || showAll,
-      includeCookies: P`cookie` || showAll
+  if (P`local` || P`session` || P`cookie`) {
+    const storage = await getStorage(tab.id, {
+      includeLocal: P`local`,
+      includeSession: P`session`,
+      includeCookies: P`cookie`
     })
 
     command.reset()
-    Object.values(storages).forEach(values => {
-      Object.entries(values).forEach(([key, value]) => {
-        const update = formatStorageProp({ key, value })
+    const updates = P`json`
+      ? [formatStorageAsString({ storage })]
+      : Object.entries(storage).map(([key, value]) => formatStorageProp({ key, value }))
 
-        command.update(update)
-      })
-    })
+    command.update(...updates)
   }
 
   if (P`help`) displayHelp(command)

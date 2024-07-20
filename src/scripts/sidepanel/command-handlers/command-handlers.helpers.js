@@ -108,6 +108,12 @@ export const formatStorageProp = ({ key, value }) => {
 
   return `${C`purple`}${quotedKey} ${C`yellow`}${quotedValue}`
 }
+export const formatStorageAsString = ({ storage }) => {
+  const stringStorage = JSON.stringify(storage)
+  const quotedStorage = getQuotedString(stringStorage)
+
+  return `${C`yellow`}${quotedStorage}`
+}
 export const formatAlias = ({ key, value }) => {
   const quotedKey = getQuotedString(key)
   const quotedValue = getQuotedString(value)

@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     font-family: "${t('font.primary')}", Courier, monospace;
     background-color: ${t('colors.background')};
+    font-size: ${t('fontSize.50')};
   }
 
   .vertical-scroller {

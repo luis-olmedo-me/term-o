@@ -53,20 +53,27 @@ export const Prompt = ({ onEnter, inputRef, tab, disabled, defaultValue }) => {
     }
   }
 
+  const prefix = historialIndex || '$'
+
   return (
     <S.PromptWrapper>
-      <S.Decoration>
+      <S.Line>
         <ColoredText value={createPSO(PSO, tab)} />
-      </S.Decoration>
+      </S.Line>
 
-      <Input
-        inputRef={inputRef}
-        value={historialIndex ? historial.at(historialIndex) : value}
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-        disabled={disabled}
-        prefix={historialIndex || '$'}
-      />
+      {disabled ? (
+        <S.Line>
+          <ColoredText value={`${prefix} ${value}`} />
+        </S.Line>
+      ) : (
+        <Input
+          inputRef={inputRef}
+          value={historialIndex ? historial.at(historialIndex) : value}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          prefix={prefix}
+        />
+      )}
     </S.PromptWrapper>
   )
 }

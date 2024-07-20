@@ -102,11 +102,25 @@ export const formatDOMEvent = ({ name, target, tabId }) => {
   return `${quotedTabId}${C`purple`}${quotedName} ${C`yellow`}${quotedTarget}`
 }
 
-export const formatStorageProp = ({ key, value }) => {
+export const formatText = ({ text }) => {
+  const quotedText = getQuotedString(text)
+
+  return `${C`yellow`}${quotedText}`
+}
+
+export const formatStorageProp = ({ key, value, tabId }) => {
+  const quotedTabId = tabId ? `${C`blue`}${getQuotedString(tabId)} ` : ''
   const quotedKey = getQuotedString(key)
   const quotedValue = getQuotedString(value)
 
-  return `${C`purple`}${quotedKey} ${C`yellow`}${quotedValue}`
+  return `${quotedTabId}${C`purple`}${quotedKey} ${C`yellow`}${quotedValue}`
+}
+export const formatStorageAsString = ({ storage, tabId }) => {
+  const quotedTabId = tabId ? `${C`blue`}${getQuotedString(tabId)} ` : ''
+  const stringStorage = JSON.stringify(storage)
+  const quotedStorage = getQuotedString(stringStorage)
+
+  return `${quotedTabId}${C`yellow`}${quotedStorage}`
 }
 export const formatAlias = ({ key, value }) => {
   const quotedKey = getQuotedString(key)

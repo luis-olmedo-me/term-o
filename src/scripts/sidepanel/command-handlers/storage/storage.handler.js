@@ -1,27 +1,41 @@
 import { getStorage } from '@sidepanel/proccesses/workers'
-import { displayHelp, formatStorageProp } from '../command-handlers.helpers'
+import {
+  displayHelp,
+  formatStorageAsString,
+  formatStorageProp,
+  formatText,
+  getNumberTabId
+} from '../command-handlers.helpers'
 
 export const handleSTORAGE = async command => {
   const { tab } = command.data
   const P = name => command.props[name]
 
-  if (P`list`) {
-    const showAll = !P`local` && !P`session` && !P`cookie`
+  const tabId = P`tab-id` ? getNumberTabId(P`tab-id`) : tab.id
 
-    const storages = await getStorage(tab.id, {
-      includeLocal: P`local` || showAll,
-      includeSession: P`session` || showAll,
-      includeCookies: P`cookie` || showAll
+  if (P`local` || P`session` || P`cookie`) {
+    const storage = await getStorage(tabId, {
+      includeLocal: P`local`,
+      includeSession: P`session`,
+      includeCookies: P`cookie`
     })
+    const storageEntries = Object.entries(storage)
 
     command.reset()
-    Object.values(storages).forEach(values => {
-      Object.entries(values).forEach(([key, value]) => {
-        const update = formatStorageProp({ key, value })
+    const updates = P`json`
+      ? [formatStorageAsString({ storage, tabId: P`tab-id` })]
+      : storageEntries.map(([key, value]) => formatStorageProp({ key, value, tabId: P`tab-id` }))
 
-        command.update(update)
-      })
-    })
+    command.update(...updates)
+  }
+
+  if (P`copy`) {
+    const text = P`copy`
+    const update = formatText({ text })
+
+    await navigator.clipboard.writeText(text)
+
+    command.update(update)
   }
 
   if (P`help`) displayHelp(command)

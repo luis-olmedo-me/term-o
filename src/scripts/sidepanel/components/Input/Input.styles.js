@@ -43,8 +43,6 @@ export const InputWrapper = styled.div`
 `
 
 export const Prefix = styled.span`
-  width: 3ch;
-
   &::selection {
     color: ${t('colors.brightGreen')};
     background-color: ${t('colors.selectionBackground')};

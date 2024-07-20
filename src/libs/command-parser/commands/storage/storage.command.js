@@ -8,21 +8,21 @@ export const createSTORAGE = () => {
       name: 'local',
       type: 'boolean',
       abbreviation: 'l',
-      worksWith: ['json'],
+      worksWith: ['json', 'tab-id'],
       description: 'Get local storage from the pointed tab in the terminal.'
     })
     .expect({
       name: 'session',
       type: 'boolean',
       abbreviation: 's',
-      worksWith: ['json'],
+      worksWith: ['json', 'tab-id'],
       description: 'Get local session from the pointed tab in the terminal.'
     })
     .expect({
       name: 'cookie',
       type: 'boolean',
       abbreviation: 'c',
-      worksWith: ['json'],
+      worksWith: ['json', 'tab-id'],
       description: 'Get cookies from the pointed tab in the terminal.'
     })
     .expect({

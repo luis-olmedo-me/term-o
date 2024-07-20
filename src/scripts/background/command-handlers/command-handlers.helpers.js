@@ -108,6 +108,12 @@ export const formatStorageAsString = ({ storage, tabId }) => {
   return `${quotedTabId}${quotedStorage}`
 }
 
+export const formatText = ({ text }) => {
+  const quotedText = getQuotedString(text)
+
+  return `${quotedText}`
+}
+
 export const formatAlias = ({ key, value }) => {
   const quotedKey = getQuotedString(key)
   const quotedValue = getQuotedString(value)

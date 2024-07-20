@@ -20,7 +20,7 @@ export const defaultTheme = {
   },
 
   fontSize: {
-    50: '.8rem',
+    50: '.75rem',
     100: '1rem',
     200: '1.25rem'
   },

@@ -39,6 +39,13 @@ export const createSTORAGE = () => {
       description: 'Get storage on a specific tab ID (T[number]).'
     })
     .expect({
+      name: 'copy',
+      type: 'string',
+      abbreviation: 'C',
+      worksWith: [],
+      description: 'Copy to clipboard the given [string] value.'
+    })
+    .expect({
       name: 'help',
       type: 'boolean',
       abbreviation: 'h',

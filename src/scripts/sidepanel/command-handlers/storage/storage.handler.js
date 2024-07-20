@@ -3,6 +3,7 @@ import {
   displayHelp,
   formatStorageAsString,
   formatStorageProp,
+  formatText,
   getNumberTabId
 } from '../command-handlers.helpers'
 
@@ -26,6 +27,15 @@ export const handleSTORAGE = async command => {
       : storageEntries.map(([key, value]) => formatStorageProp({ key, value, tabId: P`tab-id` }))
 
     command.update(...updates)
+  }
+
+  if (P`copy`) {
+    const text = P`copy`
+    const update = formatText({ text })
+
+    await navigator.clipboard.writeText(text)
+
+    command.update(update)
   }
 
   if (P`help`) displayHelp(command)

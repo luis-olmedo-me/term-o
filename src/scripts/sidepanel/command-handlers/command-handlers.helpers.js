@@ -102,6 +102,12 @@ export const formatDOMEvent = ({ name, target, tabId }) => {
   return `${quotedTabId}${C`purple`}${quotedName} ${C`yellow`}${quotedTarget}`
 }
 
+export const formatText = ({ text }) => {
+  const quotedText = getQuotedString(text)
+
+  return `${C`yellow`}${quotedText}`
+}
+
 export const formatStorageProp = ({ key, value, tabId }) => {
   const quotedTabId = tabId ? `${C`blue`}${getQuotedString(tabId)} ` : ''
   const quotedKey = getQuotedString(key)

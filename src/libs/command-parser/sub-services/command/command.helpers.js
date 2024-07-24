@@ -245,7 +245,7 @@ const getParamValue = (indexes, values) => {
 
 export const executePerUpdates = async (command, updates) => {
   const argsHoldingUp = command.args.filter(arg => arg.isHoldingUp)
-  const colorPattern = /\[termo\.#(?:[0-9a-fA-F]{3}){1,2}\]/g
+  const colorPattern = /\[termo\.[A-Za-z]+\]/g
 
   for (let update of updates) {
     let cleanedUpdate = update.replace(colorPattern, '')

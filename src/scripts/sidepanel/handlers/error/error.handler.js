@@ -1,4 +1,4 @@
-import { formatError } from '../command-handlers.helpers'
+import { formatError } from '../handlers.helpers'
 
 export const handleERROR = async command => {
   const P = name => command.props[name]

@@ -1,5 +1,5 @@
 import themer from '@src/libs/themer'
-import { displayHelp, formatTheme } from '../command-handlers.helpers'
+import { displayHelp, formatTheme } from '../handlers.helpers'
 
 export const handleTHEME = async command => {
   const P = name => command.props[name]

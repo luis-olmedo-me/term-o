@@ -1,8 +1,7 @@
 import EventListener from '@src/libs/event-listener'
 import { splitBy } from './command-parser.helpers'
-import commandTemplates from './commands'
-import errorTemplate from './commands/error/error.command'
 import { getArgs } from './sub-services/command/command.helpers'
+import templates, { errorTemplate } from './templates'
 
 class CommandParser extends EventListener {
   constructor(templates) {
@@ -73,4 +72,4 @@ class CommandParser extends EventListener {
   }
 }
 
-export const commandParser = new CommandParser(commandTemplates)
+export const commandParser = new CommandParser(templates)

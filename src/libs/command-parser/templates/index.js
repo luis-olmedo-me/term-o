@@ -19,3 +19,15 @@ export default [
   errorTemplate,
   eventsTemplate
 ]
+
+export {
+  aliasTemplate,
+  clearTemplate,
+  domTemplate,
+  errorTemplate,
+  eventsTemplate,
+  storageTemplate,
+  styleTemplate,
+  tabsTemplate,
+  themeTemplate
+}

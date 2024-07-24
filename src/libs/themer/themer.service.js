@@ -2,7 +2,7 @@ import EventListener from '@src/libs/event-listener'
 import {
   getStorageValue,
   setStorageValue
-} from '@src/scripts/sidepanel/command-handlers/storage/storage.helpers'
+} from '@src/scripts/sidepanel/handlers/storage/storage.helpers'
 import { defaultColorTheme, defaultTheme } from './themer.constants'
 
 class Themer extends EventListener {

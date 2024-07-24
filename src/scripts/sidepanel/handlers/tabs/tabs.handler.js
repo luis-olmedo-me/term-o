@@ -1,4 +1,4 @@
-import { displayHelp, formatTab, renameError } from '../command-handlers.helpers'
+import { displayHelp, formatTab, renameError } from '../handlers.helpers'
 import { createTab, getTab } from './tabs.helpers'
 
 export const handleTABS = async command => {

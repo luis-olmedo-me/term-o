@@ -1,4 +1,4 @@
-import commandHandlers from '@sidepanel/command-handlers'
+import commandHandlers from '@sidepanel/handlers'
 import commandParser from '@src/libs/command-parser'
 import eventManager from './packages/event-manager.package'
 

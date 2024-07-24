@@ -1,4 +1,4 @@
-import { displayHelp, formatAlias } from '../command-handlers.helpers'
+import { displayHelp, formatAlias } from '../handlers.helpers'
 
 export const handleALIAS = async command => {
   const P = name => command.props[name]

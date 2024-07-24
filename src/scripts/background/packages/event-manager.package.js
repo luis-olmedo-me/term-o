@@ -1,4 +1,4 @@
-import { getStorageValue } from '@sidepanel/command-handlers/storage/storage.helpers'
+import { getStorageValue } from '@sidepanel/handlers/storage/storage.helpers'
 
 const eventManager = (function() {
   let values = []

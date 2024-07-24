@@ -5,7 +5,7 @@ import {
   formatStorageProp,
   formatText,
   getNumberTabId
-} from '../command-handlers.helpers'
+} from '../handlers.helpers'
 
 export const handleSTORAGE = async command => {
   const { tab } = command.data

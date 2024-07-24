@@ -1,5 +1,5 @@
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
-import { displayHelp, formatEvent } from '../command-handlers.helpers'
+import { displayHelp, formatEvent } from '../handlers.helpers'
 
 export const handleEVENTS = async command => {
   const P = name => command.props[name]

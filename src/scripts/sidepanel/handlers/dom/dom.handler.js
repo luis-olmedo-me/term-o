@@ -5,7 +5,7 @@ import {
   formatElement,
   getNumberTabId,
   prependCounters
-} from '../command-handlers.helpers'
+} from '../handlers.helpers'
 
 export const handleDOM = async command => {
   const { tab } = command.data

@@ -1,5 +1,5 @@
 import { applyElementStyles, getElementStyles } from '@sidepanel/proccesses/workers'
-import { displayHelp, formatRule } from '../command-handlers.helpers'
+import { displayHelp, formatRule } from '../handlers.helpers'
 
 export const handleSTYLES = async command => {
   const { tab } = command.data

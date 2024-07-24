@@ -1,6 +1,6 @@
 import { getQuotedString } from '@src/helpers/utils.helpers'
 import { getColor as C } from '@src/libs/themer'
-import { errorMessagesOverwritten } from './command-helpers.constants'
+import { errorMessagesOverwritten } from './handlers.constants'
 
 export const prependCounters = array => {
   const counters = array.reduce((results, value) => {

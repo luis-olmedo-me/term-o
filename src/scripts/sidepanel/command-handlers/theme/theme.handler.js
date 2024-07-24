@@ -36,10 +36,10 @@ export const handleTHEME = async command => {
 
   if (P`delete`) {
     const name = P`delete`
-    const currentName = themer.colorTheme.name
 
     const alreadyExists = themer.colorThemes.some(set => set.name === name)
     const isDefault = themer.isDefault(name)
+    const isCurrentTheme = name === themer.colorTheme.name
 
     if (isDefault) {
       return command.throw(`The theme "${name}" is a default theme that can not be deleted.`)
@@ -49,7 +49,7 @@ export const handleTHEME = async command => {
       return command.throw(`The theme "${name}" does not exist.`)
     }
 
-    if (name === currentName) await themer.applyColorTheme(themer.defaultColorName)
+    if (isCurrentTheme) await themer.applyColorTheme(themer.defaultColorName)
     await themer.removeColorTheme(name)
 
     const update = formatTheme({ name })
@@ -60,11 +60,15 @@ export const handleTHEME = async command => {
   if (P`apply`) {
     const name = P`apply`
 
-    const colorSets = themer.colorThemes
-    const alreadyExists = colorSets.some(set => set.name === name)
+    const alreadyExists = themer.colorThemes.some(set => set.name === name)
+    const isCurrentTheme = name === themer.colorTheme.name
 
     if (!alreadyExists) {
       return command.throw(`The theme "${name}" is unrecognized.`)
+    }
+
+    if (isCurrentTheme) {
+      return command.throw(`The theme "${name}" is already applied.`)
     }
 
     themer.applyColorTheme(name)

@@ -1,6 +1,6 @@
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
-
 import EventListener from '@src/libs/event-listener'
+
 import { formatError } from '../../handlers/handlers.helpers'
 import Argument from '../argument'
 import { executePerUpdates, getPropsFromString } from './command.helpers'

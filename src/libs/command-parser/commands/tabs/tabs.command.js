@@ -1,6 +1,6 @@
 import { commandNames } from '../../command-parser.constants'
 import Command from '../../sub-services/command'
-import { isRegExp, isURL } from '../validators'
+import { isRegExp, isTabId, isURL } from '../validators'
 
 export const createTABS = () => {
   return new Command({ name: commandNames.TABS })
@@ -54,13 +54,15 @@ export const createTABS = () => {
       type: 'string',
       abbreviation: 's',
       description: 'Switch to a specific tab by its ID (T[number]).',
+      validate: [isTabId],
       worksWith: []
     })
     .expect({
-      name: 'points',
+      name: 'point',
       type: 'string',
       abbreviation: 'p',
-      description: 'Navigate to a saved point in a tab session.',
+      description: 'Focus terminal on a tab by its ID (T[number]).',
+      validate: [isTabId],
       worksWith: []
     })
     .expect({
@@ -68,6 +70,7 @@ export const createTABS = () => {
       type: 'string',
       abbreviation: 'r',
       description: 'Reload a specific tab by its ID (T[number]).',
+      validate: [isTabId],
       worksWith: []
     })
     .expect({
@@ -75,6 +78,7 @@ export const createTABS = () => {
       type: 'string',
       abbreviation: 'c',
       description: 'Close a specific tab by its ID (T[number]).',
+      validate: [isTabId],
       worksWith: []
     })
     .expect({

@@ -10,6 +10,7 @@ import { handleSTYLES } from './style/style.handler'
 import { handleTABS } from './tabs/tabs.handler'
 import { handleTHEME } from './theme/theme.handler'
 
+import { getStorageValue, setStorageValue } from './storage/storage.helpers'
 import { getCurrentTab } from './tabs/tabs.helpers'
 
 export default {
@@ -24,4 +25,4 @@ export default {
   [commandNames.ERROR]: handleERROR
 }
 
-export { getCurrentTab }
+export { getCurrentTab, getStorageValue, setStorageValue }

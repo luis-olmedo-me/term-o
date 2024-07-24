@@ -1,17 +1,15 @@
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 
 import EventListener from '@src/libs/event-listener'
-import { Options } from '../Options/Options.sub-service'
 import Argument from '../argument'
-import { defaultValues } from './command.constants'
 import { executePerUpdates, getPropsFromString } from './command.helpers'
 
 export class Command extends EventListener {
-  constructor({ name }) {
+  constructor({ name, options, formatter }) {
     super()
 
     this.id = createUUIDv4()
-    this.formatter = null
+    this.formatter = formatter
     this.name = name
     this.title = ''
     this.data = {}
@@ -22,7 +20,7 @@ export class Command extends EventListener {
     this.finished = false
     this.executing = false
     this.nextCommand = null
-    this.options = new Options()
+    this.options = options
     this.args = []
   }
 
@@ -46,23 +44,6 @@ export class Command extends EventListener {
 
   setFormatter(newFormatter) {
     this.formatter = newFormatter
-
-    return this
-  }
-
-  expect({ name, type, defaultValue, abbreviation, validate, worksWith, mustHave, description }) {
-    const value = (defaultValue || defaultValues[type]) ?? defaultValues.none
-
-    this.options.add({
-      name,
-      value,
-      type,
-      abbreviation,
-      description,
-      validations: validate,
-      dependencies: worksWith,
-      strictDependencies: mustHave
-    })
 
     return this
   }

@@ -1,13 +1,15 @@
 import { commandNames } from '@src/libs/command-parser'
+
 import { handleALIAS } from './alias/alias.handler'
 import { handleCLEAR } from './clear/clear.handler'
 import { handleDOM } from './dom/dom.handler'
+import { handleERROR } from './error/error.handler'
+import { handleEVENTS } from './events/events.handler'
 import { handleSTORAGE } from './storage/storage.handler'
 import { handleSTYLES } from './style/style.handler'
 import { handleTABS } from './tabs/tabs.handler'
 import { handleTHEME } from './theme/theme.handler'
 
-import { handleEVENTS } from './events/events.handler'
 import { getCurrentTab } from './tabs/tabs.helpers'
 
 export default {
@@ -18,7 +20,8 @@ export default {
   [commandNames.THEME]: handleTHEME,
   [commandNames.STYLE]: handleSTYLES,
   [commandNames.CLEAR]: handleCLEAR,
-  [commandNames.EVENTS]: handleEVENTS
+  [commandNames.EVENTS]: handleEVENTS,
+  [commandNames.ERROR]: handleERROR
 }
 
 export { getCurrentTab }

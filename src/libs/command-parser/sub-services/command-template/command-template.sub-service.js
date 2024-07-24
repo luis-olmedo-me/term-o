@@ -1,5 +1,6 @@
-import { defaultValues } from '../command/command.constants'
+import { Command } from '../command/command.sub-service'
 import { Options } from '../Options/Options.sub-service'
+import { defaultValues } from './command-template.constants'
 
 export class CommandTemplate {
   constructor({ name }) {
@@ -31,5 +32,11 @@ export class CommandTemplate {
     return this
   }
 
-  from() {}
+  create() {
+    return new Command({
+      name: this.name,
+      options: this.options,
+      formatter: this.formatter
+    })
+  }
 }

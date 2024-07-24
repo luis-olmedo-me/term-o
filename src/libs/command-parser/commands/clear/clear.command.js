@@ -1,6 +1,4 @@
 import { commandNames } from '../../command-parser.constants'
-import Command from '../../sub-services/command'
+import CommandTemplate from '../../sub-services/command-template'
 
-export const createCLEAR = () => {
-  return new Command({ name: commandNames.CLEAR })
-}
+export default new CommandTemplate({ name: commandNames.CLEAR })

@@ -1,6 +1,5 @@
 import * as React from 'preact'
 import { useEffect, useRef, useState } from 'preact/hooks'
-import { useTheme } from 'styled-components'
 
 import useStorage from '@background/hooks/useStorage'
 import commandHandlers, { getCurrentTab } from '@sidepanel/command-handlers'
@@ -21,8 +20,6 @@ export const Terminal = () => {
   const [tab, setTab] = useState(null)
   const inputRef = useRef(null)
   const loggerRef = useRef(null)
-
-  const theme = useTheme()
 
   const [aliases] = useStorage({
     namespace: 'local',
@@ -58,7 +55,7 @@ export const Terminal = () => {
 
   const handleEnter = value => {
     const newLog = commandParser.read(value)
-    newLog.appendsData({ tab, setTab, theme, clearLogs })
+    newLog.appendsData({ tab, setTab, clearLogs })
 
     setLogs(oldLogs => [newLog, ...oldLogs])
     focusOnInput()

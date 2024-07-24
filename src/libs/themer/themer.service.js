@@ -70,17 +70,22 @@ class Themer extends EventListener {
   }
 
   applyColorTheme(name) {
+    const newTheme = this.colorThemes.find(theme => theme.name === name)
+    if (newTheme) this.colorTheme = newTheme
+
     return setStorageValue('local', 'color-set-name', name)
   }
 
   addColorTheme(newTheme) {
     const newColorThemes = this.colorThemes.concat(newTheme)
+    this.colorThemes = newColorThemes
 
     return setStorageValue('local', 'color-sets', newColorThemes)
   }
 
   removeColorTheme(name) {
     const newColorThemes = this.colorThemes.filter(set => set.name !== name)
+    this.colorThemes = newColorThemes
 
     return setStorageValue('local', 'color-sets', newColorThemes)
   }

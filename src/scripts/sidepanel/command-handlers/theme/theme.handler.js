@@ -26,10 +26,10 @@ export const handleTHEME = async command => {
       return command.throw(`The theme "${newSet.name}" already exists.`)
     }
 
-    const update = formatTheme(newSet)
-
     await themer.addColorTheme(newSet)
     await themer.applyColorTheme(newSet.name)
+
+    const update = formatTheme(newSet)
 
     command.update(update)
   }
@@ -49,10 +49,10 @@ export const handleTHEME = async command => {
       return command.throw(`The theme "${name}" does not exist.`)
     }
 
-    const update = formatTheme({ name })
-
     if (name === currentName) await themer.applyColorTheme(themer.defaultColorName)
     await themer.removeColorTheme(name)
+
+    const update = formatTheme({ name })
 
     command.update(update)
   }
@@ -67,9 +67,10 @@ export const handleTHEME = async command => {
       return command.throw(`The theme "${name}" is unrecognized.`)
     }
 
+    themer.applyColorTheme(name)
+
     const update = formatTheme({ name })
 
-    themer.applyColorTheme(name)
     command.update(update)
   }
 

@@ -5,11 +5,10 @@ import Argument from '../argument'
 import { executePerUpdates, getPropsFromString } from './command.helpers'
 
 export class Command extends EventListener {
-  constructor({ name, options, formatter }) {
+  constructor({ name, options }) {
     super()
 
     this.id = createUUIDv4()
-    this.formatter = formatter
     this.name = name
     this.title = ''
     this.data = {}
@@ -40,12 +39,6 @@ export class Command extends EventListener {
     this.updates = updates
 
     this.dispatchEvent('update', this)
-  }
-
-  setFormatter(newFormatter) {
-    this.formatter = newFormatter
-
-    return this
   }
 
   prepare(args) {
@@ -100,10 +93,8 @@ export class Command extends EventListener {
   }
 
   throw(message) {
-    const formattedMessage = this.formatter?.(`✕ ${message}`) || `✕ ${message}`
-
     this.reset()
-    this.update(formattedMessage)
+    this.update(`✕ ${message}`)
 
     this.finish()
     this.error = true

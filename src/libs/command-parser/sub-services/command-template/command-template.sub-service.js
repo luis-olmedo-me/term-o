@@ -4,15 +4,8 @@ import { defaultValues } from './command-template.constants'
 
 export class CommandTemplate {
   constructor({ name }) {
-    this.formatter = null
     this.name = name
     this.options = new Options()
-  }
-
-  setFormatter(newFormatter) {
-    this.formatter = newFormatter
-
-    return this
   }
 
   expect({ name, type, defaultValue, abbreviation, validate, worksWith, mustHave, description }) {
@@ -35,8 +28,7 @@ export class CommandTemplate {
   create() {
     return new Command({
       name: this.name,
-      options: this.options,
-      formatter: this.formatter
+      options: this.options
     })
   }
 }

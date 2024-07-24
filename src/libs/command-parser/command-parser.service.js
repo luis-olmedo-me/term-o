@@ -5,13 +5,12 @@ import errorTemplate from './commands/error/error.command'
 import { getArgs } from './sub-services/command/command.helpers'
 
 class CommandParser extends EventListener {
-  constructor(templates, formatter) {
+  constructor(templates) {
     super()
 
     this.templates = templates
     this.handlers = {}
     this.aliases = []
-    this.formatter = formatter || null
   }
 
   setAliases(aliases) {

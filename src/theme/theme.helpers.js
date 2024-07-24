@@ -1,5 +1,3 @@
-import themer from '@src/libs/themer'
-
 export const theme = pathsString => props => {
   const paths = pathsString.split('.')
 
@@ -7,7 +5,5 @@ export const theme = pathsString => props => {
 }
 
 export const getColor = color => {
-  const colorFound = themer.getColor(color)
-
-  return `[termo.${colorFound || color}]`
+  return `[termo.${color}]`
 }

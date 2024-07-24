@@ -10,9 +10,9 @@ export const ThemeProvider = ({ children }) => {
   useEffect(function updateColorsReference() {
     const updateTheme = ({ theme }) => setTheme(theme)
 
-    themer.addEventListener('theme-update', updateTheme)
+    themer.addEventListener('themes-update', updateTheme)
 
-    return () => themer.removeEventListener('theme-update', updateTheme)
+    return () => themer.removeEventListener('themes-update', updateTheme)
   }, [])
 
   return <StyleProvider theme={theme}>{children}</StyleProvider>

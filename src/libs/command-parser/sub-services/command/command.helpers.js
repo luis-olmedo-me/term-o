@@ -1,3 +1,5 @@
+import { statuses } from './command.constants'
+
 export const getArray = value => {
   const items = value.slice(1).slice(0, -1)
   const itemsAsArgs = getArgs(items)
@@ -248,7 +250,7 @@ export const executePerUpdates = async (command, updates) => {
   const colorPattern = /\[termo\.[A-Za-z]+\]/g
 
   for (let update of updates) {
-    let cleanedUpdate = update.replace(colorPattern, '')
+    const cleanedUpdate = update.replace(colorPattern, '')
     const availableArgs = getArgs(cleanedUpdate)
 
     argsHoldingUp.forEach(arg => {
@@ -257,9 +259,10 @@ export const executePerUpdates = async (command, updates) => {
 
       arg.setValue(newValue)
     })
+
     command.prepare()
 
-    if (command.error) break
+    if (command.status === statuses.ERROR) break
 
     await command.execute()
   }

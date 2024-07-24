@@ -3,6 +3,7 @@ import EventListener from '@src/libs/event-listener'
 
 import { formatError } from '../../handlers/handlers.helpers'
 import Argument from '../argument'
+import { statuses } from './command.constants'
 import { executePerUpdates, getPropsFromString } from './command.helpers'
 
 export class Command extends EventListener {
@@ -16,12 +17,14 @@ export class Command extends EventListener {
     this.props = {}
     this.updates = []
     this.staticUpdates = []
-    this.error = false
-    this.finished = false
-    this.executing = false
+    this.status = statuses.IDLE
     this.nextCommand = null
     this.options = options
     this.args = []
+  }
+
+  get finished() {
+    return [statuses.ERROR, statuses.DONE].includes(this.status)
   }
 
   reset() {
@@ -99,8 +102,7 @@ export class Command extends EventListener {
     this.reset()
     this.update(errorUpdate)
 
-    this.finish()
-    this.error = true
+    this.status = statuses.ERROR
   }
 
   async executeNext() {
@@ -135,13 +137,11 @@ export class Command extends EventListener {
   }
 
   startExecuting() {
-    this.finished = false
-    this.executing = true
+    this.status = statuses.EXECUTING
   }
 
   finish() {
-    this.finished = true
-    this.executing = false
+    this.status = statuses.DONE
     this.staticUpdates = [...this.staticUpdates, ...this.updates]
   }
 }

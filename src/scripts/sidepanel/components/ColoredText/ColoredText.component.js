@@ -1,12 +1,12 @@
 import * as React from 'preact'
 import { useMemo } from 'preact/hooks'
 
-import colorSet from '@src/libs/color-set'
+import themer from '@src/libs/themer'
 import { convertStringToObjects } from './ColoredText.helpers'
 import * as S from './ColoredText.styles'
 
 export const ColoredText = ({ value }) => {
-  const sections = useMemo(() => convertStringToObjects(value), [value, colorSet.name])
+  const sections = useMemo(() => convertStringToObjects(value), [value, themer.colorTheme.name])
 
   return (
     <>

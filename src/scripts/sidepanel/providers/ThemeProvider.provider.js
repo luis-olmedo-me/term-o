@@ -1,37 +1,21 @@
 import * as React from 'preact'
 
-import colorSet, { defaultSets } from '@src/libs/color-set'
+import themer from '@src/libs/themer'
 import { useEffect, useState } from 'preact/hooks'
 import { ThemeProvider as StyleProvider } from 'styled-components'
-import { defaultTheme } from '../../../theme/theme.colors'
-import useStorage from '../../background/hooks/useStorage'
 
 export const ThemeProvider = ({ children }) => {
-  const [colors, setColors] = useState(colorSet.colors)
+  const [theme, setTheme] = useState(themer.theme)
 
-  const [updatedColorSets] = useStorage({
-    namespace: 'local',
-    key: 'color-sets',
-    defaultValue: defaultSets
-  })
+  useEffect(function updateColorsReference() {
+    const updateTheme = ({ theme }) => setTheme(theme)
 
-  const [updatedColorSetName] = useStorage({
-    namespace: 'local',
-    key: 'color-set-name',
-    defaultValue: colorSet.name
-  })
+    themer.addEventListener('theme-update', updateTheme)
 
-  useEffect(
-    function updateColorsReference() {
-      const newColorSetSelected = updatedColorSets.find(set => set.name === updatedColorSetName)
+    return () => themer.removeEventListener('theme-update', updateTheme)
+  }, [])
 
-      colorSet.setColors(newColorSetSelected)
-      setColors(colorSet.colors)
-    },
-    [updatedColorSetName, updatedColorSets]
-  )
-
-  return <StyleProvider theme={{ ...defaultTheme, colors }}>{children}</StyleProvider>
+  return <StyleProvider theme={theme}>{children}</StyleProvider>
 }
 
 ThemeProvider.propTypes = {

@@ -1,7 +1,6 @@
 import commandHandlers from '@background/command-handlers'
 import commandParser from '@src/libs/command-parser'
 import eventManager from './packages/event-manager.package'
-import themeManager from './packages/theme-manager.package'
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
 
@@ -25,9 +24,8 @@ chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {
   if (pendingEvents.length === 0) return
 
   let tab = updatedTab
-  const theme = themeManager.getTheme()
   const setTab = newTab => (tab = newTab)
   const clearLogs = () => {}
 
-  executeEvents(pendingEvents, { tab, setTab, theme, clearLogs })
+  executeEvents(pendingEvents, { tab, setTab, clearLogs })
 })

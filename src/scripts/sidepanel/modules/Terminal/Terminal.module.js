@@ -4,12 +4,12 @@ import { useEffect, useRef, useState } from 'preact/hooks'
 import useStorage from '@background/hooks/useStorage'
 import Prompt from '@sidepanel/components/Prompt'
 import { CAN_COPY_ON_SELECTION } from '@sidepanel/config'
-import commandHandlers, { getCurrentTab } from '@sidepanel/handlers'
 import Logger from '@sidepanel/modules/Logger'
 import commandParser from '@src/libs/command-parser'
+import handlers, { getCurrentTab } from '@src/libs/command-parser/handlers'
 import * as S from './Terminal.styles'
 
-commandParser.setHandlers(commandHandlers)
+commandParser.setHandlers(handlers)
 
 export const Terminal = () => {
   const [logs, setLogs] = useState([])

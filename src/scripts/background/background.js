@@ -1,10 +1,10 @@
-import commandHandlers from '@sidepanel/handlers'
 import commandParser from '@src/libs/command-parser'
+import handlers from '@src/libs/command-parser/handlers'
 import eventManager from './packages/event-manager.package'
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
 
-commandParser.setHandlers(commandHandlers)
+commandParser.setHandlers(handlers)
 
 const executeEvents = async (events, data) => {
   events.forEach(event => {

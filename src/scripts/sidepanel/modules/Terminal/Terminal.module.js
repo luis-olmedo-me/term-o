@@ -7,7 +7,7 @@ import Prompt from '@sidepanel/components/Prompt'
 import { CAN_COPY_ON_SELECTION } from '@sidepanel/config'
 import Logger from '@sidepanel/modules/Logger'
 import commandParser from '@src/libs/command-parser'
-import { getColor as C } from '@src/theme/theme.helpers'
+import { getColor as C } from '@src/libs/themer'
 import * as S from './Terminal.styles'
 
 const formatter = value => `${C`red`}${value}`

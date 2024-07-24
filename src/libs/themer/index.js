@@ -1,5 +1,5 @@
-import { defaultColorTheme, defaultTheme } from './themer.constants'
+import { getColor, theme } from './themer.helpers'
 import { themer } from './themer.service'
 
 export default themer
-export { defaultColorTheme, defaultTheme }
+export { getColor, theme }

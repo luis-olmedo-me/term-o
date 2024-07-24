@@ -47,6 +47,7 @@ export const createTABS = () => {
       name: 'window-id',
       type: 'string',
       abbreviation: 'w',
+      validate: [isRegExp],
       description: 'Filter tabs by window ID.'
     })
     .expect({

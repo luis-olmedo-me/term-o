@@ -1,7 +1,7 @@
 import {
   getStorageValue,
   setStorageValue
-} from '@src/scripts/background/command-handlers/storage/storage.helpers'
+} from '@src/scripts/sidepanel/command-handlers/storage/storage.helpers'
 import EventListener from '../command-parser/sub-services/event-listener'
 import { defaultColorTheme, defaultTheme } from './themer.constants'
 
@@ -67,6 +67,7 @@ class Themer extends EventListener {
     const newTheme = this.colorThemes.find(theme => theme.name === newThemeName)
 
     if (newTheme) this.colorTheme = newTheme
+    this.dispatchEvent('themes-update', { theme: this.theme })
   }
 
   applyColorTheme(name) {

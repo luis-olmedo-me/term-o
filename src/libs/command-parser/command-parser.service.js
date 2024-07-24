@@ -30,7 +30,6 @@ class CommandParser extends EventListener {
     let [firstFragment, ...nextFragments] = splitBy(scriptFormatted, '&&')
 
     const command = this.get(firstFragment)
-    console.log('💬  command:', command)
     let carriedCommand = command
 
     for (let fragment of nextFragments) {
@@ -48,7 +47,7 @@ class CommandParser extends EventListener {
   get(scriptRaw) {
     const [name, ...scriptArgs] = getArgs(scriptRaw)
 
-    const template = this.templates[name]
+    const template = this.templates.find(template => template.name === name)
     const handler = this.handlers[name]
     const cleanedName = name.replace('"', '\\"')
 
@@ -82,14 +81,14 @@ class CommandParser extends EventListener {
   }
 }
 
-export const commandParser = new CommandParser({
-  clear: clearTemplate,
-  dom: domTemplate,
-  storage: storageTemplate,
-  tabs: tabsTemplate,
-  alias: aliasTemplate,
-  theme: themeTemplate,
-  style: styleTemplate,
-  error: errorTemplate,
-  events: eventsTemplate
-})
+export const commandParser = new CommandParser([
+  clearTemplate,
+  domTemplate,
+  storageTemplate,
+  tabsTemplate,
+  aliasTemplate,
+  themeTemplate,
+  styleTemplate,
+  errorTemplate,
+  eventsTemplate
+])

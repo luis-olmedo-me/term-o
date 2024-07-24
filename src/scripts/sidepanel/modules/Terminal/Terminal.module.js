@@ -9,10 +9,6 @@ import Logger from '@sidepanel/modules/Logger'
 import commandParser from '@src/libs/command-parser'
 import * as S from './Terminal.styles'
 
-// import { getColor as C } from '@src/libs/themer'
-// const formatter = value => `${C`red`}${value}`
-// commandParser.setFormatter(formatter)
-
 commandParser.setHandlers(commandHandlers)
 
 export const Terminal = () => {

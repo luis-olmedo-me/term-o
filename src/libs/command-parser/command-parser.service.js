@@ -1,14 +1,20 @@
 import EventListener from '@src/libs/event-listener'
 import { splitBy } from './command-parser.helpers'
+import handlers from './handlers'
 import { getArgs } from './sub-services/command/command.helpers'
 import templates, { errorTemplate } from './templates'
+
+templates.map(template => {
+  const handler = handlers[template.name]
+
+  if (handler) template.setHandler(handler)
+})
 
 class CommandParser extends EventListener {
   constructor(templates) {
     super()
 
     this.templates = templates
-    this.handlers = {}
     this.aliases = []
   }
 
@@ -39,15 +45,12 @@ class CommandParser extends EventListener {
     const [name, ...scriptArgs] = getArgs(scriptRaw)
 
     const template = this.templates.find(template => template.name === name)
-    const handler = this.handlers[name]
     const cleanedName = name.replace('"', '\\"')
 
     if (!template) {
       const error = errorTemplate.create()
-      const handler = this.handlers.error
 
       error.mock({ title: `'The command "${cleanedName}" is unrecognized.'` })
-      if (handler) error.addEventListener('execute', handler)
       error.execute()
 
       return error
@@ -55,13 +58,7 @@ class CommandParser extends EventListener {
 
     const command = template.create().prepare(scriptArgs)
 
-    if (handler) command.addEventListener('execute', handler)
-
     return command
-  }
-
-  setHandlers(commandHandlers) {
-    this.handlers = commandHandlers
   }
 
   getWithAliasesResolved(script) {

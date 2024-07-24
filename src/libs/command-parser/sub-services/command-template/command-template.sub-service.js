@@ -6,6 +6,13 @@ export class CommandTemplate {
   constructor({ name }) {
     this.name = name
     this.options = new Options()
+    this.handler = null
+  }
+
+  setHandler(handler) {
+    this.handler = handler
+
+    return this
   }
 
   expect({ name, type, defaultValue, abbreviation, validate, worksWith, mustHave, description }) {
@@ -26,9 +33,11 @@ export class CommandTemplate {
   }
 
   create() {
-    return new Command({
+    const newCommand = new Command({
       name: this.name,
       options: this.options
     })
+
+    return this.handler ? newCommand.addEventListener('execute', this.handler) : newCommand
   }
 }

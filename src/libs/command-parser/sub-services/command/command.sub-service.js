@@ -1,8 +1,8 @@
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 
+import EventListener from '@src/libs/event-listener'
 import { Options } from '../Options/Options.sub-service'
 import Argument from '../argument'
-import EventListener from '../event-listener'
 import { defaultValues } from './command.constants'
 import { executePerUpdates, getPropsFromString } from './command.helpers'
 

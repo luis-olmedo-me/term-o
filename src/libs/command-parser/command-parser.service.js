@@ -1,3 +1,4 @@
+import EventListener from '@src/libs/event-listener'
 import { splitBy } from './command-parser.helpers'
 import { createALIAS } from './commands/alias/alias.command'
 import { createCLEAR } from './commands/clear/clear.command'
@@ -9,7 +10,6 @@ import { createSTYLE } from './commands/style/style.command'
 import { createTABS } from './commands/tabs/tabs.command'
 import { createTHEME } from './commands/theme/theme.command'
 import { getArgs } from './sub-services/command/command.helpers'
-import EventListener from './sub-services/event-listener'
 
 class CommandParser extends EventListener {
   constructor(commands, formatter) {

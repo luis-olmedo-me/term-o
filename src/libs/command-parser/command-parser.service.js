@@ -1,14 +1,7 @@
 import EventListener from '@src/libs/event-listener'
 import { splitBy } from './command-parser.helpers'
-import aliasTemplate from './commands/alias/alias.command'
-import clearTemplate from './commands/clear/clear.command'
-import domTemplate from './commands/dom/dom.command'
+import commandTemplates from './commands'
 import errorTemplate from './commands/error/error.command'
-import eventsTemplate from './commands/events/events.command'
-import storageTemplate from './commands/storage/storage.command'
-import styleTemplate from './commands/style/style.command'
-import tabsTemplate from './commands/tabs/tabs.command'
-import themeTemplate from './commands/theme/theme.command'
 import { getArgs } from './sub-services/command/command.helpers'
 
 class CommandParser extends EventListener {
@@ -81,14 +74,4 @@ class CommandParser extends EventListener {
   }
 }
 
-export const commandParser = new CommandParser([
-  clearTemplate,
-  domTemplate,
-  storageTemplate,
-  tabsTemplate,
-  aliasTemplate,
-  themeTemplate,
-  styleTemplate,
-  errorTemplate,
-  eventsTemplate
-])
+export const commandParser = new CommandParser(commandTemplates)

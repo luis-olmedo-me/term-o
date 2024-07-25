@@ -33,9 +33,15 @@ export class CommandTemplate {
   }
 
   create() {
+    const optionsCopy = new Options()
+
+    this.options.values.forEach(option => {
+      optionsCopy.add(option)
+    })
+
     const newCommand = new Command({
       name: this.name,
-      options: this.options
+      options: optionsCopy
     })
 
     return this.handler ? newCommand.addEventListener('execute', this.handler) : newCommand

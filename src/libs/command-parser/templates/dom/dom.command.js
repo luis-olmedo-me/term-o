@@ -1,6 +1,6 @@
 import { commandNames } from '../../command-parser.constants'
 import CommandTemplate from '../../sub-services/command-template'
-import { isInRange, isRegExp, isTabId, isXpath } from '../validators'
+import { isInRange, isInteger, isPositive, isRegExp, isTabId, isXpath } from '../validators'
 
 export default new CommandTemplate({ name: commandNames.DOM })
   .expect({
@@ -22,19 +22,22 @@ export default new CommandTemplate({ name: commandNames.DOM })
     type: 'number',
     abbreviation: 'b',
     description:
-      'Get sibling by index on the selected element. Positive indexes means next siblings, and negative indexes, previous siblings.'
+      'Get sibling by index on the selected element. Positive indexes means next siblings, and negative indexes, previous siblings.',
+    validate: [isInteger]
   })
   .expect({
     name: 'parent',
     type: 'number',
     abbreviation: 'p',
-    description: 'Get parent by index on the selected element. Must be positive index.'
+    description: 'Get parent by index on the selected element. Must be positive index.',
+    validate: [isInteger, isPositive]
   })
   .expect({
     name: 'child',
     type: 'number',
     abbreviation: 'd',
-    description: 'Get child by index on the selected element. Must be positive index.'
+    description: 'Get child by index on the selected element. Must be positive index.',
+    validate: [isInteger, isPositive]
   })
   .expect({
     name: 'search',

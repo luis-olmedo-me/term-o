@@ -1,4 +1,4 @@
-import { formatError } from '../handlers.helpers'
+import { displayHelp, formatError } from '../handlers.helpers'
 
 export const handleERROR = async command => {
   const P = name => command.props[name]
@@ -8,4 +8,6 @@ export const handleERROR = async command => {
 
     command.throw(errorUpdate)
   }
+
+  if (P`help`) displayHelp(command)
 }

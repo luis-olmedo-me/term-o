@@ -61,3 +61,9 @@ export const getElementParent = (element, parentIndex) => {
 
   return foundParent
 }
+
+export const getElementChild = (element, childIndex) => {
+  if (!childIndex) return element
+
+  return element.children.item(childIndex)
+}

@@ -1,7 +1,12 @@
-import { getElementByXPath, getElementParent, getElementSibling } from './dom.helpers'
+import {
+  getElementByXPath,
+  getElementChild,
+  getElementParent,
+  getElementSibling
+} from './dom.helpers'
 
 export const findDOMElement = async (resolve, data) => {
-  const { searchByXpath, siblingIndex, parentIndex } = data
+  const { searchByXpath, siblingIndex, parentIndex, childIndex } = data
 
   const xpathElement = getElementByXPath(searchByXpath)
   if (!xpathElement) return resolve(null)
@@ -9,7 +14,10 @@ export const findDOMElement = async (resolve, data) => {
   const siblingElement = getElementSibling(xpathElement, siblingIndex)
   if (!siblingElement) return resolve(null)
 
-  const element = getElementParent(siblingElement, parentIndex)
+  const parentElement = getElementParent(siblingElement, parentIndex)
+  if (!parentElement) return resolve(null)
+
+  const element = getElementChild(parentElement, childIndex)
   if (!element) return resolve(null)
 
   const tagName = element.tagName.toLowerCase()

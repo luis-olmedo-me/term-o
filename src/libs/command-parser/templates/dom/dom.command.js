@@ -7,7 +7,7 @@ export default new CommandTemplate({ name: commandNames.DOM })
     name: 'search-xpath',
     type: 'string',
     abbreviation: 'X',
-    worksWith: ['click', 'tab-id', 'sibling', 'parent'],
+    worksWith: ['click', 'tab-id', 'sibling', 'parent', 'child'],
     description: 'Search for elements using XPath expression.',
     validate: [isXpath]
   })
@@ -29,6 +29,12 @@ export default new CommandTemplate({ name: commandNames.DOM })
     type: 'number',
     abbreviation: 'p',
     description: 'Get parent by index on the selected element. Must be positive index.'
+  })
+  .expect({
+    name: 'child',
+    type: 'number',
+    abbreviation: 'd',
+    description: 'Get child by index on the selected element. Must be positive index.'
   })
   .expect({
     name: 'search',

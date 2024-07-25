@@ -17,7 +17,8 @@ export const handleDOM = async command => {
     const element = await findDOMElement(tabId, {
       searchByXpath: P`search-xpath`,
       siblingIndex: P`sibling`,
-      parentIndex: P`parent`
+      parentIndex: P`parent`,
+      childIndex: P`child`
     })
 
     command.reset()

@@ -30,3 +30,20 @@ export const getElementByXPath = xpath => {
   return document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
     .singleNodeValue
 }
+
+export const getElementSibling = (element, siblingIndex) => {
+  if (!siblingIndex) return element
+
+  const isBelow = siblingIndex > 0
+  const step = isBelow ? 1 : -1
+
+  let foundSibling = element
+
+  for (let index = 0; index !== siblingIndex; index += step) {
+    foundSibling = isBelow ? foundSibling.nextSibling : foundSibling.previousSibling
+
+    if (foundSibling === null) break
+  }
+
+  return foundSibling
+}

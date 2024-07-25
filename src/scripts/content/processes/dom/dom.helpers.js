@@ -47,3 +47,17 @@ export const getElementSibling = (element, siblingIndex) => {
 
   return foundSibling
 }
+
+export const getElementParent = (element, parentIndex) => {
+  if (!parentIndex) return element
+
+  let foundParent = element
+
+  for (let index = 0; index !== parentIndex; index++) {
+    foundParent = foundParent.parentElement
+
+    if (foundParent === null) break
+  }
+
+  return foundParent
+}

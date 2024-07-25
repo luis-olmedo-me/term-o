@@ -1,13 +1,13 @@
 import { commandNames } from '../../command-parser.constants'
 import CommandTemplate from '../../sub-services/command-template'
-import { isInRange, isRegExp, isTabId, isXpath } from '../validators'
+import { isInRange, isInteger, isPositive, isRegExp, isTabId, isXpath } from '../validators'
 
 export default new CommandTemplate({ name: commandNames.DOM })
   .expect({
     name: 'search-xpath',
     type: 'string',
     abbreviation: 'X',
-    worksWith: ['click', 'tab-id'],
+    worksWith: ['click', 'tab-id', 'sibling', 'parent', 'child'],
     description: 'Search for elements using XPath expression.',
     validate: [isXpath]
   })
@@ -16,6 +16,28 @@ export default new CommandTemplate({ name: commandNames.DOM })
     type: 'boolean',
     abbreviation: 'c',
     description: 'Simulate a click action on the selected element.'
+  })
+  .expect({
+    name: 'sibling',
+    type: 'number',
+    abbreviation: 'b',
+    description:
+      'Get sibling by index on the selected element. Positive indexes means next siblings, and negative indexes, previous siblings.',
+    validate: [isInteger]
+  })
+  .expect({
+    name: 'parent',
+    type: 'number',
+    abbreviation: 'p',
+    description: 'Get parent by index on the selected element. Must be positive index.',
+    validate: [isInteger, isPositive]
+  })
+  .expect({
+    name: 'child',
+    type: 'number',
+    abbreviation: 'd',
+    description: 'Get child by index on the selected element. Must be positive index.',
+    validate: [isInteger, isPositive]
   })
   .expect({
     name: 'search',

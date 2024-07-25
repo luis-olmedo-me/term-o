@@ -35,7 +35,7 @@ export class CommandTemplate {
   create() {
     const newCommand = new Command({
       name: this.name,
-      options: this.options
+      options: this.options.copy()
     })
 
     return this.handler ? newCommand.addEventListener('execute', this.handler) : newCommand

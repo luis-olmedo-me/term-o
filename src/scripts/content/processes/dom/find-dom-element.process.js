@@ -1,10 +1,23 @@
-import { getElementByXPath } from './dom.helpers'
+import {
+  getElementByXPath,
+  getElementChild,
+  getElementParent,
+  getElementSibling
+} from './dom.helpers'
 
 export const findDOMElement = async (resolve, data) => {
-  const { searchByXpath } = data
+  const { searchByXpath, siblingIndex, parentIndex, childIndex } = data
 
-  const element = getElementByXPath(searchByXpath)
+  const xpathElement = getElementByXPath(searchByXpath)
+  if (!xpathElement) return resolve(null)
 
+  const siblingElement = getElementSibling(xpathElement, siblingIndex)
+  if (!siblingElement) return resolve(null)
+
+  const parentElement = getElementParent(siblingElement, parentIndex)
+  if (!parentElement) return resolve(null)
+
+  const element = getElementChild(parentElement, childIndex)
   if (!element) return resolve(null)
 
   const tagName = element.tagName.toLowerCase()

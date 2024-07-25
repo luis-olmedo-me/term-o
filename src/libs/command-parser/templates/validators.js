@@ -47,7 +47,7 @@ export const isXpath = (option, value) => {
 
 const tabIdPattern = /T(\d)+/
 export const isTabId = (option, value) => {
-  if (Array.isArray(value)) return value.forEach(isXpath)
+  if (Array.isArray(value)) return value.forEach(isTabId)
 
   if (!tabIdPattern.test(value)) {
     const name = option.displayName
@@ -65,6 +65,22 @@ export const isURL = (option, value) => {
     const name = option.displayName
 
     throw `${name} expects a valid URL. Instead, it received "${value}".`
+  }
+}
+
+export const isPositive = (option, value) => {
+  if (value > 0) {
+    const name = option.displayName
+
+    throw `${name} expects a positive value. Instead, it received "${value}".`
+  }
+}
+
+export const isInteger = (option, value) => {
+  if (value % 1 !== 0) {
+    const name = option.displayName
+
+    throw `${name} expects an integer value. Instead, it received "${value}".`
   }
 }
 

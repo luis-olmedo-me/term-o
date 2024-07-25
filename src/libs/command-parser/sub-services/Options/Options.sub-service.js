@@ -58,4 +58,14 @@ export class Options {
 
     return foundValue
   }
+
+  copy() {
+    const optionsCopy = new Options()
+
+    this.values.forEach(option => {
+      optionsCopy.add(option)
+    })
+
+    return optionsCopy
+  }
 }

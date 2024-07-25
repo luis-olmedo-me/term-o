@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { theme as t } from '@src/theme/theme.helpers'
+import { theme as t } from '@src/libs/themer'
 import { InputWrapper, Prefix } from '../Input/Input.styles'
 import { Line } from '../Prompt/Prompt.styles'
 

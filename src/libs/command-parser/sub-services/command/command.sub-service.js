@@ -1,29 +1,30 @@
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
+import EventListener from '@src/libs/event-listener'
 
-import { Options } from '../Options/Options.sub-service'
+import { formatError } from '../../handlers/handlers.helpers'
 import Argument from '../argument'
-import EventListener from '../event-listener'
-import { defaultValues } from './command.constants'
+import { statuses } from './command.constants'
 import { executePerUpdates, getPropsFromString } from './command.helpers'
 
 export class Command extends EventListener {
-  constructor({ name }) {
+  constructor({ name, options }) {
     super()
 
     this.id = createUUIDv4()
-    this.formatter = null
     this.name = name
     this.title = ''
     this.data = {}
     this.props = {}
     this.updates = []
     this.staticUpdates = []
-    this.error = false
-    this.finished = false
-    this.executing = false
+    this.status = statuses.IDLE
     this.nextCommand = null
-    this.options = new Options()
+    this.options = options
     this.args = []
+  }
+
+  get finished() {
+    return [statuses.ERROR, statuses.DONE].includes(this.status)
   }
 
   reset() {
@@ -42,29 +43,6 @@ export class Command extends EventListener {
     this.updates = updates
 
     this.dispatchEvent('update', this)
-  }
-
-  setFormatter(newFormatter) {
-    this.formatter = newFormatter
-
-    return this
-  }
-
-  expect({ name, type, defaultValue, abbreviation, validate, worksWith, mustHave, description }) {
-    const value = (defaultValue || defaultValues[type]) ?? defaultValues.none
-
-    this.options.add({
-      name,
-      value,
-      type,
-      abbreviation,
-      description,
-      validations: validate,
-      dependencies: worksWith,
-      strictDependencies: mustHave
-    })
-
-    return this
   }
 
   prepare(args) {
@@ -104,7 +82,7 @@ export class Command extends EventListener {
       this.startExecuting()
 
       await this.dispatchEvent('execute', this)
-      await this.executeNext()
+      if (!this.finished) await this.executeNext()
 
       this.finish()
     } catch (error) {
@@ -119,13 +97,12 @@ export class Command extends EventListener {
   }
 
   throw(message) {
-    const formattedMessage = this.formatter?.(`✕ ${message}`) || `✕ ${message}`
+    const errorUpdate = formatError({ title: `✕ ${message}` })
 
     this.reset()
-    this.update(formattedMessage)
+    this.update(errorUpdate)
 
-    this.finish()
-    this.error = true
+    this.status = statuses.ERROR
   }
 
   async executeNext() {
@@ -137,9 +114,7 @@ export class Command extends EventListener {
     const hasArgsHoldingUp = nextCommand.args.some(arg => arg.isHoldingUp)
 
     if (nextCommand.finished) {
-      this.setUpdates(...currentUpdates, ...nextCommand.staticUpdates)
-
-      return
+      return this.setUpdates(...currentUpdates, ...nextCommand.staticUpdates)
     }
 
     nextCommand.addEventListener('update', ({ staticUpdates, updates }) => {
@@ -160,13 +135,11 @@ export class Command extends EventListener {
   }
 
   startExecuting() {
-    this.finished = false
-    this.executing = true
+    this.status = statuses.EXECUTING
   }
 
   finish() {
-    this.finished = true
-    this.executing = false
+    this.status = statuses.DONE
     this.staticUpdates = [...this.staticUpdates, ...this.updates]
   }
 }

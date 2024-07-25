@@ -245,10 +245,10 @@ const getParamValue = (indexes, values) => {
 
 export const executePerUpdates = async (command, updates) => {
   const argsHoldingUp = command.args.filter(arg => arg.isHoldingUp)
-  const colorPattern = /\[termo\.#(?:[0-9a-fA-F]{3}){1,2}\]/g
+  const colorPattern = /\[termo\.[A-Za-z]+\]/g
 
   for (let update of updates) {
-    let cleanedUpdate = update.replace(colorPattern, '')
+    const cleanedUpdate = update.replace(colorPattern, '')
     const availableArgs = getArgs(cleanedUpdate)
 
     argsHoldingUp.forEach(arg => {
@@ -257,9 +257,10 @@ export const executePerUpdates = async (command, updates) => {
 
       arg.setValue(newValue)
     })
+
     command.prepare()
 
-    if (command.error) break
+    if (command.finished) break
 
     await command.execute()
   }

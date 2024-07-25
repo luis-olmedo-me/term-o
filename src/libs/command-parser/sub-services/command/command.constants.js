@@ -1,7 +1,6 @@
-export const defaultValues = {
-  'string-array': [],
-  string: '',
-  boolean: false,
-  number: 0,
-  none: null
+export const statuses = {
+  IDLE: 'idle',
+  EXECUTING: 'executing',
+  DONE: 'done',
+  ERROR: 'error'
 }

@@ -1,4 +1,4 @@
-import { theme as t } from '@src/theme/theme.helpers'
+import { theme as t } from '@src/libs/themer'
 import styled from 'styled-components'
 
 export const Line = styled.p`

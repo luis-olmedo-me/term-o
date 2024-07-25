@@ -1,32 +1,25 @@
+import EventListener from '@src/libs/event-listener'
 import { splitBy } from './command-parser.helpers'
-import { createALIAS } from './commands/alias/alias.command'
-import { createCLEAR } from './commands/clear/clear.command'
-import { createDOM } from './commands/dom/dom.command'
-import { createERROR } from './commands/error/error.command'
-import { createEVENTS } from './commands/events/events.command'
-import { createSTORAGE } from './commands/storage/storage.command'
-import { createSTYLE } from './commands/style/style.command'
-import { createTABS } from './commands/tabs/tabs.command'
-import { createTHEME } from './commands/theme/theme.command'
+import handlers from './handlers'
 import { getArgs } from './sub-services/command/command.helpers'
-import EventListener from './sub-services/event-listener'
+import templates, { errorTemplate } from './templates'
+
+templates.map(template => {
+  const handler = handlers[template.name]
+
+  if (handler) template.setHandler(handler)
+})
 
 class CommandParser extends EventListener {
-  constructor(commands, formatter) {
+  constructor(templates) {
     super()
 
-    this.commands = commands
-    this.handlers = {}
+    this.templates = templates
     this.aliases = []
-    this.formatter = formatter || null
   }
 
   setAliases(aliases) {
     this.aliases = aliases
-  }
-
-  setFormatter(formatter) {
-    this.formatter = formatter
   }
 
   read(rawScript) {
@@ -38,10 +31,10 @@ class CommandParser extends EventListener {
 
     for (let fragment of nextFragments) {
       const nextCommand = this.get(fragment)
-      carriedCommand.nextCommand = nextCommand
 
       if (nextCommand.finished) break
 
+      carriedCommand.nextCommand = nextCommand
       carriedCommand = nextCommand
     }
 
@@ -51,29 +44,21 @@ class CommandParser extends EventListener {
   get(scriptRaw) {
     const [name, ...scriptArgs] = getArgs(scriptRaw)
 
-    const createCommand = this.commands[name]
-    const handler = this.handlers[name]
+    const template = this.templates.find(template => template.name === name)
     const cleanedName = name.replace('"', '\\"')
 
-    if (!createCommand) {
-      return createERROR()
-        .setFormatter(this.formatter)
-        .mock({ title: `'The command "${cleanedName}" is unrecognized.'` })
+    if (!template) {
+      const error = errorTemplate.create()
+
+      error.mock({ title: `'The command "${cleanedName}" is unrecognized.'` })
+      error.execute()
+
+      return error
     }
 
-    const command = createCommand()
-      .setFormatter(this.formatter)
-      .prepare(scriptArgs)
-
-    this.dispatchEvent(`on-create-${name}`, command)
-
-    if (handler) command.addEventListener('execute', handler)
+    const command = template.create().prepare(scriptArgs)
 
     return command
-  }
-
-  setHandlers(commandHandlers) {
-    this.handlers = commandHandlers
   }
 
   getWithAliasesResolved(script) {
@@ -84,14 +69,4 @@ class CommandParser extends EventListener {
   }
 }
 
-export const commandParser = new CommandParser({
-  clear: createCLEAR,
-  dom: createDOM,
-  storage: createSTORAGE,
-  tabs: createTABS,
-  alias: createALIAS,
-  theme: createTHEME,
-  style: createSTYLE,
-  error: createERROR,
-  events: createEVENTS
-})
+export const commandParser = new CommandParser(templates)

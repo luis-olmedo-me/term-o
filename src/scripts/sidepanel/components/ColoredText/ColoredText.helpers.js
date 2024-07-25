@@ -1,5 +1,5 @@
 export const convertStringToObjects = input => {
-  const colorPattern = /\[termo\.#[0-9A-Fa-f]+\]/g
+  const colorPattern = /\[termo\.[A-Za-z]+\]/g
   const hasColors = colorPattern.test(input)
 
   if (!hasColors) return [{ color: null, content: input }]
@@ -13,8 +13,8 @@ export const convertStringToObjects = input => {
     const colorString = colorFragments[index]
 
     if (colorString === '[termo.none]') return [...fragments, { content, color: null }]
-    const [, color] = colorString.match(/#([0-9A-Fa-f]{6})/)
+    const [, color] = colorString.match(/\[termo\.([A-Za-z]+)\]/)
 
-    return [...fragments, { content, color: `#${color}` }]
+    return [...fragments, { content, color }]
   }, [])
 }

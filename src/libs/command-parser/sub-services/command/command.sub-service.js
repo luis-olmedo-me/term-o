@@ -82,8 +82,9 @@ export class Command extends EventListener {
       this.startExecuting()
 
       await this.dispatchEvent('execute', this)
-      if (!this.finished) await this.executeNext()
+      await this.executeNext()
 
+      this.status = statuses.DONE
       this.finish()
     } catch (error) {
       this.throw(error)
@@ -103,6 +104,7 @@ export class Command extends EventListener {
     this.update(errorUpdate)
 
     this.status = statuses.ERROR
+    this.finish()
   }
 
   async executeNext() {
@@ -139,7 +141,6 @@ export class Command extends EventListener {
   }
 
   finish() {
-    this.status = statuses.DONE
     this.staticUpdates = [...this.staticUpdates, ...this.updates]
   }
 }

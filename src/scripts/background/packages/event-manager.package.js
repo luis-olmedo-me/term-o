@@ -1,4 +1,4 @@
-import { getStorageValue } from '@src/libs/command-parser/handlers'
+import { getStorageValue } from '@src/libs/command-parser/handlers/storage/storage.helpers'
 
 const eventManager = (function() {
   let values = []

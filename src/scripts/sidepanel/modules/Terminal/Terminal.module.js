@@ -6,7 +6,7 @@ import Prompt from '@sidepanel/components/Prompt'
 import { CAN_COPY_ON_SELECTION } from '@sidepanel/config'
 import Logger from '@sidepanel/modules/Logger'
 import commandParser from '@src/libs/command-parser'
-import { getCurrentTab } from '@src/libs/command-parser/handlers'
+import { getCurrentTab } from '@src/libs/command-parser/handlers/tabs/tabs.helpers'
 import * as S from './Terminal.styles'
 
 export const Terminal = () => {

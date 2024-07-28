@@ -3,7 +3,7 @@ import { getColor as C } from '@src/libs/themer'
 export const configSections = [
   {
     id: 'terminal',
-    name: 'Terminal Settings',
+    name: 'Terminal',
     description: 'Configure various settings related to the terminal appearance and behavior.',
     inputs: [
       {
@@ -33,7 +33,7 @@ export const configSections = [
   },
   {
     id: 'prompt',
-    name: 'Prompt Configuration',
+    name: 'Prompt',
     description:
       'Adjust settings related to the command prompt appearance and information display.',
     inputs: [

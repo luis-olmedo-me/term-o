@@ -12,6 +12,7 @@ import Modal from '../../components/Modal'
 import * as S from './Terminal.styles'
 
 export const Terminal = () => {
+  const [isConfigModalOpen, setIsConfigModalOpen] = useState(false)
   const [logs, setLogs] = useState([])
   const [tab, setTab] = useState(null)
   const inputRef = useRef(null)
@@ -59,12 +60,16 @@ export const Terminal = () => {
 
   return (
     <S.TerminalWrapper onMouseUp={focusOnInput}>
-      <Modal open title="Preferences" onClose={() => console.log('closed')}>
+      <Modal
+        open={isConfigModalOpen}
+        title="Preferences"
+        onClose={() => setIsConfigModalOpen(false)}
+      >
         test
       </Modal>
 
       <S.TerminalHeader>
-        <Button text="⚙" />
+        <Button text="⚙" onClick={() => setIsConfigModalOpen(!isConfigModalOpen)} />
       </S.TerminalHeader>
 
       <Logger logs={logs} loggerRef={loggerRef} />

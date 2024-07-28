@@ -7,6 +7,7 @@ import { CAN_COPY_ON_SELECTION } from '@sidepanel/config'
 import Logger from '@sidepanel/modules/Logger'
 import commandParser from '@src/libs/command-parser'
 import { getCurrentTab } from '@src/libs/command-parser/handlers/tabs/tabs.helpers'
+import Button from '../../components/Button'
 import * as S from './Terminal.styles'
 
 export const Terminal = () => {
@@ -57,6 +58,10 @@ export const Terminal = () => {
 
   return (
     <S.TerminalWrapper onMouseUp={focusOnInput}>
+      <S.TerminalHeader>
+        <Button text="⚙" />
+      </S.TerminalHeader>
+
       <Logger logs={logs} loggerRef={loggerRef} />
 
       <Prompt onEnter={handleEnter} inputRef={inputRef} tab={tab} />

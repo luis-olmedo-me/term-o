@@ -38,15 +38,14 @@ export const displayHelp = command => {
   Object.entries(optionsWithDependencies).forEach(([name, dependencies], mainIndex) => {
     const option = options.getByName(name)
     const displayName = getQuotedString(option.displayName)
+    const description = getQuotedString(option.description)
     const formattedMainIndex = mainIndex.toLocaleString('en-US', {
       minimumIntegerDigits: 2,
       useGrouping: false
     })
 
     helps.push(
-      `${C`cyan`}${formattedMainIndex} -- ${C`purple`}${displayName} ${C`yellow`}${
-        option.description
-      }`
+      `${C`cyan`}${formattedMainIndex} -- ${C`purple`}${displayName} ${C`yellow`}${description}`
     )
 
     dependencies.forEach((dependencyName, index) => {
@@ -59,7 +58,7 @@ export const displayHelp = command => {
       })
 
       helps.push(
-        `${C`cyan`}${formattedMainIndex} ${formattedIndex} ${C`brightPurple`}${displayName} ${C`yellow`}${description}`
+        `${C`cyan`}-- ${formattedIndex} ${C`brightPurple`}${displayName} ${C`yellow`}${description}`
       )
     })
   })

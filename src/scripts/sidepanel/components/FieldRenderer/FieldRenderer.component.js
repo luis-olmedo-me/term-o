@@ -1,17 +1,29 @@
 import * as React from 'preact'
-import * as S from './FieldRenderer.styles'
 
-export const FieldRenderer = ({ text, onClick, fullWidth, fullHeight }) => {
-  return (
-    <S.ButtonWrapper onClick={onClick} fullWidth={fullWidth} fullHeight={fullHeight}>
-      {text}
-    </S.ButtonWrapper>
-  )
+import useConfig from '@src/hooks/useConfig'
+import Input from '../Input'
+
+export const FieldRenderer = ({ value, sectionId, inputId, type }) => {
+  const { changeConfig } = useConfig()
+
+  const inputs = {
+    text: () => (
+      <Input
+        value={value}
+        onChange={({ target }) => changeConfig(sectionId, inputId, target.value)}
+      />
+    ),
+    default: () => <span>Default Input</span>
+  }
+
+  const InputComponent = inputs[type] || inputs.default
+
+  return <InputComponent />
 }
 
 FieldRenderer.propTypes = {
-  text: String,
-  onClick: Function,
-  fullWidth: Boolean,
-  fullHeight: Boolean
+  value: String | Number | Boolean,
+  sectionId: String,
+  inputId: String,
+  type: String
 }

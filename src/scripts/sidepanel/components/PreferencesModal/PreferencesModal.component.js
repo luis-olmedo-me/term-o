@@ -1,21 +1,11 @@
 import useConfig from '@src/hooks/useConfig'
 import * as React from 'preact'
-import Input from '../Input'
+import { FieldRenderer } from '../FieldRenderer/FieldRenderer.component'
 import Modal from '../Modal'
 import * as S from './PreferencesModal.styles'
 
 export const PreferencesModal = ({ open, onClose }) => {
-  const { config, changeConfig } = useConfig()
-
-  const inputs = {
-    text: ({ value, sectionId, inputId }) => (
-      <Input
-        value={value}
-        onChange={({ target }) => changeConfig(sectionId, inputId, target.value)}
-      />
-    ),
-    default: () => <span>Default Input</span>
-  }
+  const { config } = useConfig()
 
   return (
     <Modal open={open} title="Preferences" onClose={onClose}>
@@ -28,17 +18,16 @@ export const PreferencesModal = ({ open, onClose }) => {
                 <S.Description>{section.description}</S.Description>
 
                 {section.inputs.map(input => {
-                  const InputComponent = inputs[input.type] || inputs.default
-
                   return (
                     <S.InputWrapper key={input.id}>
                       <S.InputTitle>{input.name}</S.InputTitle>
                       <S.Description>{input.description}</S.Description>
 
-                      <InputComponent
+                      <FieldRenderer
                         value={input.value}
                         sectionId={section.id}
                         inputId={input.id}
+                        type={input.type}
                       />
                     </S.InputWrapper>
                   )

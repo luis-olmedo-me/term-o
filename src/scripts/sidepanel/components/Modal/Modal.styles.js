@@ -1,4 +1,4 @@
-// import { theme as t } from '@src/libs/themer'
+import { theme as t } from '@src/libs/themer'
 import styled from 'styled-components'
 
 export const ModalWrapper = styled.dialog`
@@ -8,4 +8,6 @@ export const ModalWrapper = styled.dialog`
   height: 100%;
   padding: 0;
   border: none;
+  background-color: ${t('colors.background')};
+  color: ${t('colors.foreground')};
 `

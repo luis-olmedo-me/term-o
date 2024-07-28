@@ -9,7 +9,6 @@ export const Input = ({ onChange, onKeyDown, placeholder, value, prefix, inputRe
 
       <S.Input
         ref={inputRef}
-        className="vertical-scroller"
         spellCheck="false"
         type="text"
         value={value}

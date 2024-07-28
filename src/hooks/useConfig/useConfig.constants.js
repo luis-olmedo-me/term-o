@@ -48,10 +48,3 @@ export const configSections = [
     ]
   }
 ]
-
-export const defaultConfigValues = configSections.map(section => {
-  return {
-    id: section.id,
-    inputs: section.inputs.reduce((values, input) => ({ ...values, [input.id]: input.value }), {})
-  }
-})

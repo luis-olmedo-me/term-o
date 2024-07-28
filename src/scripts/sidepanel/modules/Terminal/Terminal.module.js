@@ -41,6 +41,8 @@ export const Terminal = () => {
   )
 
   const focusOnInput = () => {
+    if (isConfigModalOpen) return
+
     const selection = window.getSelection()
     const selectedText = selection.toString()
 

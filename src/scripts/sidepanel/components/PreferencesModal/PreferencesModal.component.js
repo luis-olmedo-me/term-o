@@ -1,19 +1,26 @@
-import { configSections } from '@src/hooks/useConfig/useConfig.constants'
+import useConfig from '@src/hooks/useConfig'
 import * as React from 'preact'
 import Input from '../Input'
 import Modal from '../Modal'
 import * as S from './PreferencesModal.styles'
 
 export const PreferencesModal = ({ open, onClose }) => {
+  const { config, changeConfig } = useConfig()
+
   const inputs = {
-    text: ({ value }) => <Input value={value} />,
+    text: ({ value, sectionId, inputId }) => (
+      <Input
+        value={value}
+        onChange={({ target }) => changeConfig(sectionId, inputId, target.value)}
+      />
+    ),
     default: () => <span>Default Input</span>
   }
 
   return (
     <Modal open={open} title="Preferences" onClose={onClose}>
       <div className="vertical-scroller">
-        {configSections.map(section => {
+        {config.map(section => {
           return (
             <>
               <div key={section.id}>
@@ -28,7 +35,11 @@ export const PreferencesModal = ({ open, onClose }) => {
                       <S.InputTitle>{input.name}</S.InputTitle>
                       <S.Description>{input.description}</S.Description>
 
-                      <InputComponent value={input.value} />
+                      <InputComponent
+                        value={input.value}
+                        sectionId={section.id}
+                        inputId={input.id}
+                      />
                     </S.InputWrapper>
                   )
                 })}

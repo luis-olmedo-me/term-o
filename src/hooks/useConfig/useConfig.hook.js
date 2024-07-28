@@ -1,13 +1,13 @@
 import { useCallback } from 'preact/hooks'
 
 import useStorage from '@src/hooks/useStorage'
-import { defaultConfigValues } from './useConfig.constants'
+import { configSections } from './useConfig.constants'
 
 export const useConfig = () => {
   const [config, setConfig] = useStorage({
     namespace: 'local',
     key: 'config',
-    defaultValue: defaultConfigValues
+    defaultValue: configSections
   })
 
   const getConfigById = useCallback(
@@ -21,5 +21,24 @@ export const useConfig = () => {
     [config]
   )
 
-  return { config, setConfig, getConfigById }
+  const changeConfig = useCallback(
+    (sectionId, inputId, newValue) => {
+      const newConfig = config.map(section => {
+        const inputs = section.inputs.map(input => {
+          return input.id === inputId ? { ...input, value: newValue } : input
+        }, {})
+
+        return section.id === sectionId ? { ...section, inputs } : section
+      })
+
+      setConfig(newConfig)
+    },
+    [config]
+  )
+
+  return {
+    config,
+    getConfigById,
+    changeConfig
+  }
 }

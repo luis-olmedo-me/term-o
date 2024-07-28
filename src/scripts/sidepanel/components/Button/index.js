@@ -1,3 +1,3 @@
-const { Button } = require('./Button.component')
+import { Button } from './Button.component'
 
 export default Button

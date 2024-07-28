@@ -1,9 +1,15 @@
 import { configSections } from '@src/hooks/useConfig/useConfig.constants'
 import * as React from 'preact'
+import Input from '../Input'
 import Modal from '../Modal'
 import * as S from './PreferencesModal.styles'
 
 export const PreferencesModal = ({ open, onClose }) => {
+  const inputs = {
+    text: ({ value }) => <Input value={value} />,
+    default: () => <span>Default Input</span>
+  }
+
   return (
     <Modal open={open} title="Preferences" onClose={onClose}>
       <div className="vertical-scroller">
@@ -15,12 +21,14 @@ export const PreferencesModal = ({ open, onClose }) => {
                 <S.Description>{section.description}</S.Description>
 
                 {section.inputs.map(input => {
+                  const InputComponent = inputs[input.type] || inputs.default
+
                   return (
                     <S.InputWrapper key={input.id}>
                       <S.InputTitle>{input.name}</S.InputTitle>
                       <S.Description>{input.description}</S.Description>
 
-                      <div>Input: {input.type}</div>
+                      <InputComponent value={input.value} />
                     </S.InputWrapper>
                   )
                 })}

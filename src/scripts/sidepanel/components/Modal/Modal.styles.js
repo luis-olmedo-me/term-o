@@ -11,3 +11,19 @@ export const ModalWrapper = styled.dialog`
   background-color: ${t('colors.background')};
   color: ${t('colors.foreground')};
 `
+
+export const ModalHeader = styled.header`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: ${t('space.400')} ${t('space.600')};
+`
+
+export const ModalHeaderTitle = styled.h2`
+  font-size: ${t('fontSize.100')};
+  margin: 0;
+`
+
+export const ModalContent = styled.header`
+  padding: 0 ${t('space.600')};
+`

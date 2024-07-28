@@ -1,10 +1,17 @@
 import * as React from 'preact'
+import Button from '../Button'
 import * as S from './Modal.styles'
 
-export const Modal = ({ children, onClose, open }) => {
+export const Modal = ({ children, onClose, open, title }) => {
   return (
     <S.ModalWrapper onClose={onClose} open={open}>
-      {children}
+      <S.ModalHeader>
+        <S.ModalHeaderTitle>{title}</S.ModalHeaderTitle>
+
+        <Button text="x" />
+      </S.ModalHeader>
+
+      <S.ModalContent>{children}</S.ModalContent>
     </S.ModalWrapper>
   )
 }
@@ -12,5 +19,6 @@ export const Modal = ({ children, onClose, open }) => {
 Modal.propTypes = {
   children: Array,
   onClose: Function,
-  open: Boolean
+  open: Boolean,
+  title: String
 }

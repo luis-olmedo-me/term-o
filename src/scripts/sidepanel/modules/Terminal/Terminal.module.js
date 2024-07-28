@@ -59,7 +59,7 @@ export const Terminal = () => {
 
   return (
     <S.TerminalWrapper onMouseUp={focusOnInput}>
-      <Modal open onClose={() => console.log('closed')}>
+      <Modal open title="Preferences" onClose={() => console.log('closed')}>
         test
       </Modal>
 

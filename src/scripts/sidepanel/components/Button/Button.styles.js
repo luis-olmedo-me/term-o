@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 export const ButtonWrapper = styled.button`
   width: ${({ fullWidth }) => (fullWidth ? '100%' : 'fit-content')};
+  height: ${({ fullHeight }) => (fullHeight ? '100%' : 'fit-content')};
   border: none;
   font-weight: bold;
   color: ${t('colors.black')};

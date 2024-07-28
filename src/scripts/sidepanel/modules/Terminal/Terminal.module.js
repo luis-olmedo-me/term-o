@@ -8,6 +8,7 @@ import Logger from '@sidepanel/modules/Logger'
 import commandParser from '@src/libs/command-parser'
 import { getCurrentTab } from '@src/libs/command-parser/handlers/tabs/tabs.helpers'
 import Button from '../../components/Button'
+import Modal from '../../components/Modal'
 import * as S from './Terminal.styles'
 
 export const Terminal = () => {
@@ -58,6 +59,10 @@ export const Terminal = () => {
 
   return (
     <S.TerminalWrapper onMouseUp={focusOnInput}>
+      <Modal open onClose={() => console.log('closed')}>
+        test
+      </Modal>
+
       <S.TerminalHeader>
         <Button text="⚙" />
       </S.TerminalHeader>

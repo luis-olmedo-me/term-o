@@ -1,6 +1,6 @@
 import { useCallback } from 'preact/hooks'
 
-import useStorage from '@background/hooks/useStorage'
+import useStorage from '@src/hooks/useStorage'
 import { defaultConfigValues } from './useConfig.constants'
 
 export const useConfig = () => {

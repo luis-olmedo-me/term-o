@@ -1,10 +1,10 @@
 import * as React from 'preact'
 import { useEffect, useRef, useState } from 'preact/hooks'
 
-import useStorage from '@background/hooks/useStorage'
 import Prompt from '@sidepanel/components/Prompt'
 import { CAN_COPY_ON_SELECTION } from '@sidepanel/config'
 import Logger from '@sidepanel/modules/Logger'
+import useStorage from '@src/hooks/useStorage'
 import commandParser from '@src/libs/command-parser'
 import { getCurrentTab } from '@src/libs/command-parser/handlers/tabs/tabs.helpers'
 import Button from '../../components/Button'

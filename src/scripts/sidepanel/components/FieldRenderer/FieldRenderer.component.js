@@ -17,6 +17,14 @@ export const FieldRenderer = ({ value, sectionId, inputId, type }) => {
         onChange={({ target }) => setLocalValue(target.value)}
       />
     ),
+    number: (
+      <Input
+        type="number"
+        value={localValue}
+        onBlur={({ target }) => changeConfig(sectionId, inputId, target.value)}
+        onChange={({ target }) => setLocalValue(target.value)}
+      />
+    ),
     default: () => <span>Default Input</span>
   }
 

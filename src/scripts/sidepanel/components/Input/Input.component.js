@@ -10,7 +10,8 @@ export const Input = ({
   value,
   prefix,
   inputRef,
-  disabled
+  disabled,
+  type = 'text'
 }) => {
   return (
     <S.InputWrapper aria-disabled={disabled}>
@@ -19,7 +20,7 @@ export const Input = ({
       <S.Input
         ref={inputRef}
         spellCheck="false"
-        type="text"
+        type={type}
         value={value}
         onChange={onChange}
         onKeyDown={onKeyDown}
@@ -39,5 +40,6 @@ Input.propTypes = {
   value: String,
   prefix: String,
   inputRef: Object,
-  disabled: Boolean
+  disabled: Boolean,
+  type: String
 }

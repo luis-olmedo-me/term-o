@@ -1,7 +1,7 @@
 import * as React from 'preact'
-import { useState } from 'preact/hooks'
+import { useMemo, useState } from 'preact/hooks'
 
-import { HISTORIAL_SIZE, PSO } from '@sidepanel/config'
+import useConfig from '@src/hooks/useConfig'
 import ColoredText from '../ColoredText'
 import Input from '../Input'
 import { createPSO } from './Prompt.helpers'
@@ -11,6 +11,10 @@ export const Prompt = ({ onEnter, inputRef, tab, disabled, defaultValue }) => {
   const [value, setValue] = useState(defaultValue || '')
   const [historialIndex, setHistorialIndex] = useState(0)
   const [historial, setHistorial] = useState([])
+
+  const { config, getConfigById } = useConfig()
+  const hsitorialSize = useMemo(() => getConfigById('terminal', 'historial-size'), [config])
+  const status = useMemo(() => getConfigById('prompt', 'status'), [config])
 
   const handleChange = event => {
     const targetValue = event.target.value
@@ -25,7 +29,7 @@ export const Prompt = ({ onEnter, inputRef, tab, disabled, defaultValue }) => {
 
     if (key === 'Enter' && targetValue) {
       onEnter(targetValue)
-      setHistorial(history => [...history, targetValue].slice(HISTORIAL_SIZE * -1))
+      setHistorial(history => [...history, targetValue].slice(hsitorialSize * -1))
       setHistorialIndex(0)
       setValue('')
     }
@@ -58,7 +62,7 @@ export const Prompt = ({ onEnter, inputRef, tab, disabled, defaultValue }) => {
   return (
     <S.PromptWrapper>
       <S.Line>
-        <ColoredText value={createPSO(PSO, tab)} />
+        <ColoredText value={createPSO(status, tab)} />
       </S.Line>
 
       {disabled ? (

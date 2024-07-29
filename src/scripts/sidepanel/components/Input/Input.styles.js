@@ -25,6 +25,10 @@ export const Input = styled.input`
     color: ${t('colors.brightGreen')};
     background-color: ${t('colors.selectionBackground')};
   }
+
+  &[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
 `
 
 export const InputWrapper = styled.div`

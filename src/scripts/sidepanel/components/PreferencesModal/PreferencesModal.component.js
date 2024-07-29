@@ -18,7 +18,10 @@ export const PreferencesModal = ({ open, onClose }) => {
             {section.inputs.map(input => {
               return (
                 <S.InputsWrapper key={input.id}>
-                  <S.InputTitle>{input.name}</S.InputTitle>
+                  <S.InputTitle>
+                    {input.name} [{input.type}]
+                  </S.InputTitle>
+
                   <S.Description>{input.description}</S.Description>
 
                   <FieldRenderer

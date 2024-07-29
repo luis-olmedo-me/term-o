@@ -11,7 +11,7 @@ export const SectionWrapper = styled.div`
 `
 
 export const SectionTitle = styled.h3`
-  margin: ${t('space.400')} 0;
+  margin: 0 0 ${t('space.400')} 0;
 `
 
 export const InputsWrapper = styled.div`

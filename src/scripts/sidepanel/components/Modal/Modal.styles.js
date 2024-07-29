@@ -10,11 +10,6 @@ export const ModalWrapper = styled.dialog`
   border: none;
   background-color: ${t('colors.background')};
   color: ${t('colors.foreground')};
-
-  &[open] {
-    display: flex;
-    flex-direction: column;
-  }
 `
 
 export const ModalHeader = styled.header`
@@ -22,6 +17,7 @@ export const ModalHeader = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: ${t('space.400')} ${t('space.600')};
+  margin-bottom: ${t('space.400')};
 `
 
 export const ModalHeaderTitle = styled.h2`
@@ -31,10 +27,11 @@ export const ModalHeaderTitle = styled.h2`
 
 export const ModalContentWrapper = styled.div`
   padding: 0 ${t('space.600')};
-  flex-grow: 1;
+  height: calc(100% - ${t('fontSize.100')} - (${t('space.400')} * 2) - ${t('space.600')});
 `
 
 export const ModalContent = styled.div`
   overflow-y: scroll;
   padding-right: ${t('space.600')};
+  height: calc(100% - ${t('space.600')});
 `

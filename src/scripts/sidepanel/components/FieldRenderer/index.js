@@ -1,3 +1,3 @@
-import { Button } from './FieldRenderer.component'
+import { FieldRenderer } from './FieldRenderer.component'
 
-export default Button
+export default FieldRenderer

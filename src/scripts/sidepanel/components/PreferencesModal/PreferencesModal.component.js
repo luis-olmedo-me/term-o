@@ -1,6 +1,6 @@
 import useConfig from '@src/hooks/useConfig'
 import * as React from 'preact'
-import { FieldRenderer } from '../FieldRenderer/FieldRenderer.component'
+import FieldRenderer from '../FieldRenderer'
 import Modal from '../Modal'
 import * as S from './PreferencesModal.styles'
 

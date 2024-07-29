@@ -1,16 +1,20 @@
 import * as React from 'preact'
+import { useState } from 'preact/hooks'
 
 import useConfig from '@src/hooks/useConfig'
 import Input from '../Input'
 
 export const FieldRenderer = ({ value, sectionId, inputId, type }) => {
+  const [localValue, setLocalValue] = useState(value)
+
   const { changeConfig } = useConfig()
 
   const inputs = {
-    text: () => (
+    text: (
       <Input
-        value={value}
-        onChange={({ target }) => changeConfig(sectionId, inputId, target.value)}
+        value={localValue}
+        onBlur={({ target }) => changeConfig(sectionId, inputId, target.value)}
+        onChange={({ target }) => setLocalValue(target.value)}
       />
     ),
     default: () => <span>Default Input</span>
@@ -18,7 +22,7 @@ export const FieldRenderer = ({ value, sectionId, inputId, type }) => {
 
   const InputComponent = inputs[type] || inputs.default
 
-  return <InputComponent />
+  return InputComponent
 }
 
 FieldRenderer.propTypes = {

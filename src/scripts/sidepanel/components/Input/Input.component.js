@@ -2,7 +2,16 @@ import * as React from 'preact'
 
 import * as S from './Input.styles'
 
-export const Input = ({ onChange, onKeyDown, placeholder, value, prefix, inputRef, disabled }) => {
+export const Input = ({
+  onChange,
+  onKeyDown,
+  onBlur,
+  placeholder,
+  value,
+  prefix,
+  inputRef,
+  disabled
+}) => {
   return (
     <S.InputWrapper aria-disabled={disabled}>
       {prefix && <S.Prefix>{prefix}</S.Prefix>}
@@ -14,6 +23,7 @@ export const Input = ({ onChange, onKeyDown, placeholder, value, prefix, inputRe
         value={value}
         onChange={onChange}
         onKeyDown={onKeyDown}
+        onBlur={onBlur}
         placeholder={placeholder}
         disabled={disabled}
       />
@@ -24,6 +34,7 @@ export const Input = ({ onChange, onKeyDown, placeholder, value, prefix, inputRe
 Input.propTypes = {
   onChange: Function,
   onKeyDown: Function,
+  onBlur: Function,
   placeholder: String,
   value: String,
   prefix: String,

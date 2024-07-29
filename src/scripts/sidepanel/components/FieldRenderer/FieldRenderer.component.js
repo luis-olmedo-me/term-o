@@ -29,8 +29,7 @@ export const FieldRenderer = ({ value, sectionId, inputId, type }) => {
       <Input
         type="checkbox"
         checked={localValue}
-        onBlur={({ target }) => changeConfig(sectionId, inputId, target.value)}
-        onChange={({ target }) => setLocalValue(target.value)}
+        onChange={({ target }) => changeConfig(sectionId, inputId, target.value)}
         endText={localValue ? 'Yes' : 'No'}
       />
     ),

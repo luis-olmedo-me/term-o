@@ -48,6 +48,11 @@ export const InputWrapper = styled.div`
   &:has(${Input}[type="checkbox"]) {
     width: fit-content;
   }
+
+  input[type='checkbox'] {
+    margin: 0;
+    accent-color: ${t('colors.brightGreen')};
+  }
 `
 
 export const Prefix = styled.span`

@@ -27,10 +27,6 @@ export const InputsWrapper = styled.div`
     border-radius: ${t('radius.200')};
     padding-left: 5px;
   }
-
-  input[type='checkbox'] {
-    margin: 0;
-  }
 `
 
 export const InputTitle = styled.h4`

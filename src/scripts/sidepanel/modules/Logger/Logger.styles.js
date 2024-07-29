@@ -8,7 +8,6 @@ export const LoggerWrapper = styled.div`
   background-color: ${t('colors.background')};
   color: ${t('colors.foreground')};
   padding: 0 ${t('space.600')};
-  margin-top: ${t('space.600')};
   margin-right: ${t('space.600')};
   cursor: text;
 `

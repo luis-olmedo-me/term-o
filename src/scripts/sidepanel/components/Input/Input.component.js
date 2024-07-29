@@ -2,22 +2,37 @@ import * as React from 'preact'
 
 import * as S from './Input.styles'
 
-export const Input = ({ onChange, onKeyDown, placeholder, value, prefix, inputRef, disabled }) => {
+export const Input = ({
+  onChange,
+  onKeyDown,
+  onBlur,
+  placeholder,
+  value,
+  checked,
+  prefix,
+  inputRef,
+  disabled,
+  type = 'text',
+  endText
+}) => {
   return (
     <S.InputWrapper aria-disabled={disabled}>
-      <S.Prefix>{prefix}</S.Prefix>
+      {prefix && <S.Prefix>{prefix}</S.Prefix>}
 
       <S.Input
         ref={inputRef}
-        className="vertical-scroller"
         spellCheck="false"
-        type="text"
+        type={type}
         value={value}
+        checked={checked}
         onChange={onChange}
         onKeyDown={onKeyDown}
+        onBlur={onBlur}
         placeholder={placeholder}
         disabled={disabled}
       />
+
+      {endText && <span>{endText}</span>}
     </S.InputWrapper>
   )
 }
@@ -25,9 +40,13 @@ export const Input = ({ onChange, onKeyDown, placeholder, value, prefix, inputRe
 Input.propTypes = {
   onChange: Function,
   onKeyDown: Function,
+  onBlur: Function,
   placeholder: String,
   value: String,
+  checked: Boolean,
   prefix: String,
   inputRef: Object,
-  disabled: Boolean
+  disabled: Boolean,
+  type: String,
+  endText: String
 }

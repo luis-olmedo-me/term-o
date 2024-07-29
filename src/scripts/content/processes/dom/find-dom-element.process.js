@@ -2,11 +2,12 @@ import {
   getElementByXPath,
   getElementChild,
   getElementParent,
-  getElementSibling
+  getElementSibling,
+  getElementXPath
 } from './dom.helpers'
 
 export const findDOMElement = async (resolve, data) => {
-  const { searchByXpath, siblingIndex, parentIndex, childIndex } = data
+  const { searchByXpath, siblingIndex, parentIndex, childIndex, appendXpath } = data
 
   const xpathElement = getElementByXPath(searchByXpath)
   if (!xpathElement) return resolve(null)
@@ -28,5 +29,7 @@ export const findDOMElement = async (resolve, data) => {
     {}
   )
 
-  resolve({ tagName, attributes: attrs, xpath: null, textContent: null })
+  const xpath = appendXpath ? getElementXPath(element) : null
+
+  resolve({ tagName, attributes: attrs, xpath, textContent: null })
 }

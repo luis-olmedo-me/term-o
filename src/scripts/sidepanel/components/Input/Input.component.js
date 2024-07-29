@@ -8,10 +8,12 @@ export const Input = ({
   onBlur,
   placeholder,
   value,
+  checked,
   prefix,
   inputRef,
   disabled,
-  type = 'text'
+  type = 'text',
+  endText
 }) => {
   return (
     <S.InputWrapper aria-disabled={disabled}>
@@ -22,12 +24,15 @@ export const Input = ({
         spellCheck="false"
         type={type}
         value={value}
+        checked={checked}
         onChange={onChange}
         onKeyDown={onKeyDown}
         onBlur={onBlur}
         placeholder={placeholder}
         disabled={disabled}
       />
+
+      {endText && <span>{endText}</span>}
     </S.InputWrapper>
   )
 }
@@ -38,8 +43,10 @@ Input.propTypes = {
   onBlur: Function,
   placeholder: String,
   value: String,
+  checked: Boolean,
   prefix: String,
   inputRef: Object,
   disabled: Boolean,
-  type: String
+  type: String,
+  endText: String
 }

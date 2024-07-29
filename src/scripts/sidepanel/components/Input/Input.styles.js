@@ -44,6 +44,10 @@ export const InputWrapper = styled.div`
   &[aria-disabled='true'] ${Input}:disabled {
     cursor: text;
   }
+
+  &:has(${Input}[type="checkbox"]) {
+    width: fit-content;
+  }
 `
 
 export const Prefix = styled.span`

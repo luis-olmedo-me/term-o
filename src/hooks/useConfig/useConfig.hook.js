@@ -16,7 +16,7 @@ export const useConfig = () => {
 
       if (!section) return null
 
-      return section.inputs.find(input => input.id === inputId)
+      return section.inputs.find(input => input.id === inputId).value
     },
     [config]
   )

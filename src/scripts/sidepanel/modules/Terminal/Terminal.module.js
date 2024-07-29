@@ -1,9 +1,9 @@
 import * as React from 'preact'
-import { useEffect, useRef, useState } from 'preact/hooks'
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks'
 
 import Prompt from '@sidepanel/components/Prompt'
-import { CAN_COPY_ON_SELECTION } from '@sidepanel/config'
 import Logger from '@sidepanel/modules/Logger'
+import useConfig from '@src/hooks/useConfig'
 import useStorage from '@src/hooks/useStorage'
 import commandParser from '@src/libs/command-parser'
 import { getCurrentTab } from '@src/libs/command-parser/handlers/tabs/tabs.helpers'
@@ -23,6 +23,9 @@ export const Terminal = () => {
     key: 'aliases',
     defaultValue: []
   })
+
+  const { config, getConfigById } = useConfig()
+  const canCopyOnSelection = useMemo(() => getConfigById('terminal', 'copy-on-selection'), [config])
 
   useEffect(function handlePanelFocus() {
     const updateTab = () => getCurrentTab().then(setTab)
@@ -46,7 +49,7 @@ export const Terminal = () => {
     const selection = window.getSelection()
     const selectedText = selection.toString()
 
-    if (CAN_COPY_ON_SELECTION && selectedText) navigator.clipboard.writeText(selectedText)
+    if (canCopyOnSelection && selectedText) navigator.clipboard.writeText(selectedText)
     inputRef.current?.focus()
   }
 

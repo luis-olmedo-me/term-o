@@ -1,5 +1,3 @@
-import { getColor as C } from '@src/libs/themer'
-
 export const configSections = [
   {
     id: 'terminal',
@@ -43,7 +41,7 @@ export const configSections = [
         description:
           'Text displayed before the prompt input field, typically used to show dynamic information or context.',
         type: 'string',
-        value: `On ${C`brightBlue`}{origin}`
+        value: `On [termo.brightBlue]{origin}`
       }
     ]
   }

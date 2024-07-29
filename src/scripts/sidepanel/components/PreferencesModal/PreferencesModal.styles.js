@@ -1,15 +1,23 @@
 import { theme as t } from '@src/libs/themer'
 import styled from 'styled-components'
-import { InputWrapper as InputContainer } from '../Input/Input.styles'
+import { InputWrapper } from '../Input/Input.styles'
+
+export const SectionWrapper = styled.div`
+  margin-bottom: ${t('space.600')};
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+`
 
 export const SectionTitle = styled.h3`
   margin: ${t('space.400')} 0;
 `
 
-export const InputWrapper = styled.div`
-  padding: 0 0 0 ${t('space.600')};
+export const InputsWrapper = styled.div`
+  margin: ${t('space.600')} 0 0 ${t('space.600')};
 
-  ${InputContainer} {
+  ${InputWrapper} {
     padding: 0;
   }
 

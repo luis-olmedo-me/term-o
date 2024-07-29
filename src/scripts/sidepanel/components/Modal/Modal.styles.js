@@ -10,6 +10,11 @@ export const ModalWrapper = styled.dialog`
   border: none;
   background-color: ${t('colors.background')};
   color: ${t('colors.foreground')};
+
+  &[open] {
+    display: flex;
+    flex-direction: column;
+  }
 `
 
 export const ModalHeader = styled.header`
@@ -24,6 +29,8 @@ export const ModalHeaderTitle = styled.h2`
   margin: 0;
 `
 
-export const ModalContent = styled.header`
+export const ModalContent = styled.div`
   padding: 0 ${t('space.600')};
+  flex-grow: 1;
+  overflow-y: scroll;
 `

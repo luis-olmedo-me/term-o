@@ -20,7 +20,7 @@ export const FieldRenderer = ({ value, sectionId, inputId, type }) => {
   )
 
   const inputs = {
-    text: (
+    string: (
       <Input
         value={localValue}
         onBlur={({ target }) => changeConfig(sectionId, inputId, target.value)}
@@ -35,20 +35,17 @@ export const FieldRenderer = ({ value, sectionId, inputId, type }) => {
         onChange={({ target }) => setLocalValue(target.value)}
       />
     ),
-    checkbox: (
+    boolean: (
       <Input
         type="checkbox"
         checked={localValue}
         onChange={({ target }) => changeConfig(sectionId, inputId, target.checked)}
         endText={localValue ? 'Yes' : 'No'}
       />
-    ),
-    default: () => <span>Default Input</span>
+    )
   }
 
-  const InputComponent = inputs[type] || inputs.default
-
-  return InputComponent
+  return inputs[type]
 }
 
 FieldRenderer.propTypes = {

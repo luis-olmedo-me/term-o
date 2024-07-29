@@ -11,7 +11,7 @@ export const configSections = [
         name: 'Automatic Copy on Selection',
         description:
           'Automatically copies text to the clipboard when it is selected using the mouse.',
-        type: 'checkbox',
+        type: 'boolean',
         value: true
       },
       {
@@ -42,7 +42,7 @@ export const configSections = [
         name: 'Prompt Status Label',
         description:
           'Text displayed before the prompt input field, typically used to show dynamic information or context.',
-        type: 'text',
+        type: 'string',
         value: `On ${C`brightBlue`}{origin}`
       }
     ]

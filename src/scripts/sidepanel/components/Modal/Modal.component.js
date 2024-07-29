@@ -11,7 +11,9 @@ export const Modal = ({ children, onClose, open, title }) => {
         <Button text="x" onClick={onClose} />
       </S.ModalHeader>
 
-      <S.ModalContent className="vertical-scroller">{children}</S.ModalContent>
+      <S.ModalContentWrapper className="vertical-scroller">
+        <S.ModalContent className="vertical-scroller">{children}</S.ModalContent>
+      </S.ModalContentWrapper>
     </S.ModalWrapper>
   )
 }

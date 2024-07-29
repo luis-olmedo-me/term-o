@@ -29,8 +29,12 @@ export const ModalHeaderTitle = styled.h2`
   margin: 0;
 `
 
-export const ModalContent = styled.div`
+export const ModalContentWrapper = styled.div`
   padding: 0 ${t('space.600')};
   flex-grow: 1;
+`
+
+export const ModalContent = styled.div`
   overflow-y: scroll;
+  padding-right: ${t('space.600')};
 `

@@ -1,11 +1,16 @@
 import * as React from 'preact'
 
+import useConfig from '@src/hooks/useConfig'
 import themer from '@src/libs/themer'
 import { useEffect, useState } from 'preact/hooks'
 import { ThemeProvider as StyleProvider } from 'styled-components'
+import ThemeStyle from '../styles/Theme.styles'
 
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(themer.theme)
+
+  const { listening } = useConfig({ get: ['font-size', 'font-family'] })
+  const [fontSize] = listening
 
   useEffect(function updateColorsReference() {
     const updateTheme = ({ theme }) => setTheme(theme)
@@ -15,7 +20,13 @@ export const ThemeProvider = ({ children }) => {
     return () => themer.removeEventListener('themes-update', updateTheme)
   }, [])
 
-  return <StyleProvider theme={theme}>{children}</StyleProvider>
+  return (
+    <StyleProvider theme={theme}>
+      <ThemeStyle mainFontSize={fontSize} />
+
+      {children}
+    </StyleProvider>
+  )
 }
 
 ThemeProvider.propTypes = {

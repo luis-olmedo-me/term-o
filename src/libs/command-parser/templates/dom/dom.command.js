@@ -43,7 +43,7 @@ export default new CommandTemplate({ name: commandNames.DOM })
     name: 'search',
     type: 'boolean',
     abbreviation: 's',
-    worksWith: ['attr', 'style', 'tag', 'group', 'text', 'content', 'xpath', 'tab-id'],
+    worksWith: ['attr', 'style', 'tag', 'group', 'text', 'content', 'xpath', 'tab-id', 'below'],
     description: 'Search for elements based on various criteria.'
   })
   .expect({

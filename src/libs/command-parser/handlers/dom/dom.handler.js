@@ -44,6 +44,7 @@ export const handleDOM = async command => {
   if (P`search`) {
     command.update('Getting elements.')
     const elements = await getDOMElements(tabId, {
+      searchBelow: P`below`,
       searchByTag: P`tag`,
       searchByAttribute: P`attr`,
       searchByStyle: P`style`,

@@ -24,17 +24,24 @@ export const Terminal = () => {
     defaultValue: []
   })
 
-  const { listening } = useConfig({ get: ['copy-on-selection', 'focus-prompt-on-click'] })
-  const [canCopyOnSelection, focusPromptOnClick] = listening
+  const { listening } = useConfig({
+    get: ['copy-on-selection', 'focus-prompt-on-click', 'switch-tab-automatically']
+  })
+  const [canCopyOnSelection, focusPromptOnClick, switchTabAutomatically] = listening
 
-  useEffect(function handlePanelFocus() {
-    const updateTab = () => getCurrentTab().then(setTab)
+  useEffect(
+    function focusTabAutomatically() {
+      if (!switchTabAutomatically) return
 
-    updateTab()
-    window.addEventListener('focus', updateTab)
+      const updateTab = () => getCurrentTab().then(setTab)
 
-    return () => window.removeEventListener('focus', updateTab)
-  }, [])
+      updateTab()
+      window.addEventListener('focus', updateTab)
+
+      return () => window.removeEventListener('focus', updateTab)
+    },
+    [switchTabAutomatically]
+  )
 
   useEffect(
     function expectAliasChanges() {

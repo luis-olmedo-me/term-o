@@ -21,6 +21,14 @@ export const configSections = [
         value: true
       },
       {
+        id: 'switch-tab-automatically',
+        name: 'Switch Tab Automatically',
+        description:
+          'Automatically switches to a new tab when it is created or activated. This setting improves workflow efficiency by ensuring that the user is always working in the current tab.',
+        type: 'boolean',
+        value: true
+      },
+      {
         id: 'max-lines-per-command',
         name: 'Maximum Lines per Command',
         description:

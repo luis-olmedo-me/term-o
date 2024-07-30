@@ -104,7 +104,7 @@ export default new CommandTemplate({ name: commandNames.DOM })
     type: 'string',
     abbreviation: 'B',
     validate: [isXpath],
-    description: 'Specify under what element the search should be done.'
+    description: 'Specify under what element the search should be done using Xpath.'
   })
   .expect({
     name: 'help',

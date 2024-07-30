@@ -3,7 +3,9 @@ import { useCallback, useMemo } from 'preact/hooks'
 import useStorage from '@src/hooks/useStorage'
 import { configSections } from './useConfig.constants'
 
-export const useConfig = ({ get = [] }) => {
+export const useConfig = props => {
+  const { get = [] } = props || {}
+
   const [config, setConfig] = useStorage({
     namespace: 'local',
     key: 'config',

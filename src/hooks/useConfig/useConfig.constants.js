@@ -5,6 +5,14 @@ export const configSections = [
     description: 'Configure various settings related to the terminal appearance and behavior.',
     inputs: [
       {
+        id: 'focus-prompt-on-click',
+        name: 'Focus Prompt on Click',
+        description:
+          'Automatically brings the prompt input field into focus when it is clicked with the mouse. This helps streamline user input by ensuring the prompt is active without needing additional key presses.',
+        type: 'boolean',
+        value: true
+      },
+      {
         id: 'copy-on-selection',
         name: 'Automatic Copy on Selection',
         description:
@@ -26,14 +34,6 @@ export const configSections = [
         description: 'Defines the number of previous commands to be stored in the command history.',
         type: 'number',
         value: 40
-      },
-      {
-        id: 'focus-prompt-on-click',
-        name: 'Focus Prompt on Click',
-        description:
-          'Automatically brings the prompt input field into focus when it is clicked with the mouse. This helps streamline user input by ensuring the prompt is active without needing additional key presses.',
-        type: 'boolean',
-        value: false
       }
     ]
   },

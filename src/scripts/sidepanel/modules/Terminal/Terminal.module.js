@@ -1,5 +1,5 @@
 import * as React from 'preact'
-import { useEffect, useMemo, useRef, useState } from 'preact/hooks'
+import { useEffect, useRef, useState } from 'preact/hooks'
 
 import Prompt from '@sidepanel/components/Prompt'
 import Logger from '@sidepanel/modules/Logger'
@@ -24,8 +24,8 @@ export const Terminal = () => {
     defaultValue: []
   })
 
-  const { config, getConfigById } = useConfig()
-  const canCopyOnSelection = useMemo(() => getConfigById('terminal', 'copy-on-selection'), [config])
+  const { listening } = useConfig({ get: ['copy-on-selection'] })
+  const [canCopyOnSelection] = listening
 
   useEffect(function handlePanelFocus() {
     const updateTab = () => getCurrentTab().then(setTab)

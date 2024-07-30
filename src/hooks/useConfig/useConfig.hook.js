@@ -1,9 +1,9 @@
-import { useCallback } from 'preact/hooks'
+import { useCallback, useMemo } from 'preact/hooks'
 
 import useStorage from '@src/hooks/useStorage'
 import { configSections } from './useConfig.constants'
 
-export const useConfig = () => {
+export const useConfig = ({ get = [] }) => {
   const [config, setConfig] = useStorage({
     namespace: 'local',
     key: 'config',
@@ -11,12 +11,14 @@ export const useConfig = () => {
   })
 
   const getConfigById = useCallback(
-    (sectionId, inputId) => {
-      const section = config.find(section => section.id === sectionId)
+    inputId => {
+      for (const section of config) {
+        for (const input of section.inputs) {
+          if (input.id === inputId) return input.value
+        }
+      }
 
-      if (!section) return null
-
-      return section.inputs.find(input => input.id === inputId).value
+      return null
     },
     [config]
   )
@@ -36,7 +38,10 @@ export const useConfig = () => {
     [config]
   )
 
+  const configListeners = useMemo(() => get.map(getConfigById), [getConfigById, config])
+
   return {
+    listening: configListeners,
     config,
     getConfigById,
     changeConfig

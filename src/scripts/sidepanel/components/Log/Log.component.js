@@ -1,5 +1,5 @@
 import * as React from 'preact'
-import { useEffect, useMemo, useRef, useState } from 'preact/hooks'
+import { useEffect, useRef, useState } from 'preact/hooks'
 
 import useConfig from '@src/hooks/useConfig'
 import ColoredText from '../ColoredText'
@@ -11,10 +11,8 @@ export const Log = ({ command, onUpdate }) => {
 
   const wrapper = useRef(null)
 
-  const { config, getConfigById } = useConfig()
-  const maxLinesPerCommand = useMemo(() => getConfigById('terminal', 'max-lines-per-command'), [
-    config
-  ])
+  const { listening } = useConfig({ get: ['max-lines-per-command'] })
+  const [maxLinesPerCommand] = listening
 
   useEffect(
     function listenUpdates() {

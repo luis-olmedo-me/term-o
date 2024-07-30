@@ -1,5 +1,5 @@
 import * as React from 'preact'
-import { useMemo, useState } from 'preact/hooks'
+import { useState } from 'preact/hooks'
 
 import useConfig from '@src/hooks/useConfig'
 import ColoredText from '../ColoredText'
@@ -12,9 +12,8 @@ export const Prompt = ({ onEnter, inputRef, tab, disabled, defaultValue }) => {
   const [historialIndex, setHistorialIndex] = useState(0)
   const [historial, setHistorial] = useState([])
 
-  const { config, getConfigById } = useConfig()
-  const hsitorialSize = useMemo(() => getConfigById('terminal', 'historial-size'), [config])
-  const status = useMemo(() => getConfigById('prompt', 'status'), [config])
+  const { listening } = useConfig({ get: ['historial-size', 'status'] })
+  const [hsitorialSize, status] = listening
 
   const handleChange = event => {
     const targetValue = event.target.value

@@ -10,7 +10,7 @@ export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(themer.theme)
 
   const { listening } = useConfig({ get: ['font-size', 'font-family'] })
-  const [fontSize] = listening
+  const [fontSize, fontFamily] = listening
 
   useEffect(function updateColorsReference() {
     const updateTheme = ({ theme }) => setTheme(theme)
@@ -21,7 +21,7 @@ export const ThemeProvider = ({ children }) => {
   }, [])
 
   return (
-    <StyleProvider theme={theme}>
+    <StyleProvider theme={{ ...theme, font: { primary: fontFamily } }}>
       <ThemeStyle mainFontSize={fontSize} />
 
       {children}

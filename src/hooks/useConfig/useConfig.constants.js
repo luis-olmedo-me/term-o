@@ -44,5 +44,26 @@ export const configSections = [
         value: `On [termo.brightBlue]{origin}`
       }
     ]
+  },
+  {
+    id: 'theme',
+    name: 'Theme',
+    description: 'Customize the visual appearance of the terminal, including font settings.',
+    inputs: [
+      {
+        id: 'font-family',
+        name: 'Font Family',
+        description: 'Specifies the font family used for displaying text in the terminal.',
+        type: 'string',
+        value: 'monospace'
+      },
+      {
+        id: 'font-size',
+        name: 'Font Size',
+        description: 'Defines the size of the font used in the terminal.',
+        type: 'number',
+        value: 14
+      }
+    ]
   }
 ]

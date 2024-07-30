@@ -62,7 +62,7 @@ export const configSections = [
         name: 'Font Size',
         description: 'Defines the size of the font used in the terminal.',
         type: 'number',
-        value: 14
+        value: 16
       }
     ]
   }

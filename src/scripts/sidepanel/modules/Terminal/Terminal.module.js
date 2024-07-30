@@ -24,8 +24,8 @@ export const Terminal = () => {
     defaultValue: []
   })
 
-  const { listening } = useConfig({ get: ['copy-on-selection'] })
-  const [canCopyOnSelection] = listening
+  const { listening } = useConfig({ get: ['copy-on-selection', 'focus-prompt-on-click'] })
+  const [canCopyOnSelection, focusPromptOnClick] = listening
 
   useEffect(function handlePanelFocus() {
     const updateTab = () => getCurrentTab().then(setTab)
@@ -50,7 +50,7 @@ export const Terminal = () => {
     const selectedText = selection.toString()
 
     if (canCopyOnSelection && selectedText) navigator.clipboard.writeText(selectedText)
-    inputRef.current?.focus()
+    if (focusPromptOnClick) inputRef.current?.focus()
   }
 
   const clearLogs = exception => setLogs(exception ? [exception] : [])

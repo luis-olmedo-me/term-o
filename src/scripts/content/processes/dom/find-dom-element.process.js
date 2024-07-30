@@ -7,9 +7,11 @@ import {
 } from './dom.helpers'
 
 export const findDOMElement = async (resolve, data) => {
-  const { searchByXpath, siblingIndex, parentIndex, childIndex, appendXpath } = data
+  const { searchByXpath, searchBelow, siblingIndex, parentIndex, childIndex, appendXpath } = data
 
-  const xpathElement = getElementByXPath(searchByXpath)
+  const elementBelow = searchBelow && getElementByXPath(searchBelow)
+
+  const xpathElement = getElementByXPath(searchByXpath, elementBelow)
   if (!xpathElement) return resolve(null)
 
   const siblingElement = getElementSibling(xpathElement, siblingIndex)

@@ -12,9 +12,24 @@ export const useConfig = props => {
     defaultValue: configSections
   })
 
+  const validatedConfig = useMemo(() => {
+    return configSections.map(section => {
+      const lsSection = config.find(lsSection => lsSection.id === section.id)
+
+      return lsSection
+        ? {
+            ...lsSection,
+            inputs: section.inputs.map(input => {
+              return lsSection.inputs.find(lsInput => lsInput.id === input.id) || input
+            })
+          }
+        : section
+    })
+  }, [config])
+
   const getConfigById = useCallback(
     inputId => {
-      for (const section of config) {
+      for (const section of validatedConfig) {
         for (const input of section.inputs) {
           if (input.id === inputId) return input.value
         }
@@ -22,12 +37,12 @@ export const useConfig = props => {
 
       return null
     },
-    [config]
+    [validatedConfig]
   )
 
   const changeConfig = useCallback(
     (sectionId, inputId, newValue) => {
-      const newConfig = config.map(section => {
+      const newConfig = validatedConfig.map(section => {
         const inputs = section.inputs.map(input => {
           return input.id === inputId ? { ...input, value: newValue } : input
         }, {})
@@ -37,14 +52,14 @@ export const useConfig = props => {
 
       setConfig(newConfig)
     },
-    [config]
+    [validatedConfig]
   )
 
-  const configListeners = useMemo(() => get.map(getConfigById), [getConfigById, config])
+  const configListeners = useMemo(() => get.map(getConfigById), [getConfigById, validatedConfig])
 
   return {
     listening: configListeners,
-    config,
+    config: validatedConfig,
     getConfigById,
     changeConfig
   }

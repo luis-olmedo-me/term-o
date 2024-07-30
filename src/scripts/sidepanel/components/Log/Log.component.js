@@ -1,20 +1,26 @@
 import * as React from 'preact'
-import { useEffect, useRef, useState } from 'preact/hooks'
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks'
 
-import { MAX_LINES_PER_COMMAND } from '@sidepanel/config'
+import useConfig from '@src/hooks/useConfig'
 import ColoredText from '../ColoredText'
 import Prompt from '../Prompt'
 import * as S from './Log.styles'
 
 export const Log = ({ command, onUpdate }) => {
   const [updates, setUpdates] = useState(command.updates)
+
   const wrapper = useRef(null)
+
+  const { config, getConfigById } = useConfig()
+  const maxLinesPerCommand = useMemo(() => getConfigById('terminal', 'max-lines-per-command'), [
+    config
+  ])
 
   useEffect(
     function listenUpdates() {
       const handleUpdate = ({ updates: newUpdates }) => {
         if (onUpdate) onUpdate()
-        const limitedUpdates = newUpdates.slice(MAX_LINES_PER_COMMAND * -1)
+        const limitedUpdates = newUpdates.slice(maxLinesPerCommand * -1)
 
         setUpdates(limitedUpdates)
       }
@@ -25,7 +31,7 @@ export const Log = ({ command, onUpdate }) => {
 
       return () => command.removeEventListener('update', handleUpdate)
     },
-    [command, onUpdate]
+    [command, onUpdate, maxLinesPerCommand]
   )
 
   return (

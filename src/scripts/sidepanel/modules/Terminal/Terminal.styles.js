@@ -15,3 +15,8 @@ export const TerminalWrapper = styled.div`
     overflow-x: hidden;
   }
 `
+
+export const TerminalHeader = styled.header`
+  padding: ${t('space.400')} ${t('space.600')};
+  margin-left: auto;
+`

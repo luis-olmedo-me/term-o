@@ -69,7 +69,7 @@ export const isURL = (option, value) => {
 }
 
 export const isPositive = (option, value) => {
-  if (value > 0) {
+  if (value <= 0) {
     const name = option.displayName
 
     throw `${name} expects a positive value. Instead, it received "${value}".`

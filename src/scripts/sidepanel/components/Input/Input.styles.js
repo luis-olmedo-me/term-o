@@ -25,6 +25,10 @@ export const Input = styled.input`
     color: ${t('colors.brightGreen')};
     background-color: ${t('colors.selectionBackground')};
   }
+
+  &[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
 `
 
 export const InputWrapper = styled.div`
@@ -39,6 +43,15 @@ export const InputWrapper = styled.div`
   &[aria-disabled='true'],
   &[aria-disabled='true'] ${Input}:disabled {
     cursor: text;
+  }
+
+  &:has(${Input}[type="checkbox"]) {
+    width: fit-content;
+  }
+
+  input[type='checkbox'] {
+    margin: 0;
+    accent-color: ${t('colors.brightGreen')};
   }
 `
 

@@ -7,7 +7,7 @@ export default new CommandTemplate({ name: commandNames.DOM })
     name: 'search-xpath',
     type: 'string',
     abbreviation: 'X',
-    worksWith: ['click', 'tab-id', 'sibling', 'parent', 'child'],
+    worksWith: ['click', 'tab-id', 'sibling', 'parent', 'child', 'xpath'],
     description: 'Search for elements using XPath expression.',
     validate: [isXpath]
   })

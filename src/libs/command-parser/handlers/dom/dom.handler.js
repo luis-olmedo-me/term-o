@@ -18,7 +18,8 @@ export const handleDOM = async command => {
       searchByXpath: P`search-xpath`,
       siblingIndex: P`sibling`,
       parentIndex: P`parent`,
-      childIndex: P`child`
+      childIndex: P`child`,
+      appendXpath: P`xpath`
     })
 
     command.reset()

@@ -110,7 +110,7 @@ export class Command extends EventListener {
   async executeNext() {
     const nextCommand = this.nextCommand
 
-    if (!nextCommand) return
+    if (!nextCommand || this.finished) return
 
     const currentUpdates = this.updates
     const hasArgsHoldingUp = nextCommand.args.some(arg => arg.isHoldingUp)

@@ -26,9 +26,14 @@ export const getElementXPath = element => {
   return ''
 }
 
-export const getElementByXPath = xpath => {
-  return document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
-    .singleNodeValue
+export const getElementByXPath = (xpath, below) => {
+  return (below || window.document).evaluate(
+    xpath,
+    document,
+    null,
+    XPathResult.FIRST_ORDERED_NODE_TYPE,
+    null
+  ).singleNodeValue
 }
 
 export const getElementSibling = (element, siblingIndex) => {

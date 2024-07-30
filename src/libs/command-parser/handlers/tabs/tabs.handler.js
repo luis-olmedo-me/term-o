@@ -13,8 +13,8 @@ export const handleTABS = async command => {
     command.update(update)
   }
 
-  if (P`points`) {
-    const tab = await getTab(P`points`).catch(renameError)
+  if (P`point`) {
+    const tab = await getTab(P`point`).catch(renameError)
     const update = formatTab(tab)
 
     setTab(tab)

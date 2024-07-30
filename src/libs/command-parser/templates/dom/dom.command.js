@@ -7,7 +7,7 @@ export default new CommandTemplate({ name: commandNames.DOM })
     name: 'search-xpath',
     type: 'string',
     abbreviation: 'X',
-    worksWith: ['click', 'tab-id', 'sibling', 'parent', 'child', 'xpath'],
+    worksWith: ['click', 'tab-id', 'sibling', 'parent', 'child', 'xpath', 'below'],
     description: 'Search for elements using XPath expression.',
     validate: [isXpath]
   })
@@ -43,7 +43,7 @@ export default new CommandTemplate({ name: commandNames.DOM })
     name: 'search',
     type: 'boolean',
     abbreviation: 's',
-    worksWith: ['attr', 'style', 'tag', 'group', 'text', 'content', 'xpath', 'tab-id'],
+    worksWith: ['attr', 'style', 'tag', 'group', 'text', 'content', 'xpath', 'tab-id', 'below'],
     description: 'Search for elements based on various criteria.'
   })
   .expect({
@@ -98,6 +98,13 @@ export default new CommandTemplate({ name: commandNames.DOM })
     abbreviation: 'i',
     validate: [isTabId],
     description: 'Get elements on a specific tab ID (T[number]).'
+  })
+  .expect({
+    name: 'below',
+    type: 'string',
+    abbreviation: 'B',
+    validate: [isXpath],
+    description: 'Specify under what element the search should be done using Xpath.'
   })
   .expect({
     name: 'help',

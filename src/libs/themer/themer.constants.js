@@ -57,6 +57,6 @@ export const defaultTheme = {
   },
 
   font: {
-    primary: 'Cascadia Code'
+    primary: 'monospace'
   }
 }

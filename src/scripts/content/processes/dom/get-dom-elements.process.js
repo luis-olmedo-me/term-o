@@ -1,7 +1,8 @@
-import { getElementXPath } from './dom.helpers'
+import { getElementByXPath, getElementXPath } from './dom.helpers'
 
 export const getDOMElements = async (resolve, data) => {
   const {
+    searchBelow,
     searchByTag,
     searchByAttribute,
     searchByStyle,
@@ -19,7 +20,8 @@ export const getDOMElements = async (resolve, data) => {
   const styleNamePattern = searchByStyleName && new RegExp(searchByStyleName)
   const styleValuePattern = searchByStyleValue && new RegExp(searchByStyleValue)
 
-  const allElements = window.document.querySelectorAll('*') || []
+  const below = searchBelow && getElementByXPath(searchBelow)
+  const allElements = (below || window.document).querySelectorAll('*') || []
 
   const elements = Array.from(allElements).reduce((formattedElements, element) => {
     const tagName = element.tagName.toLowerCase()

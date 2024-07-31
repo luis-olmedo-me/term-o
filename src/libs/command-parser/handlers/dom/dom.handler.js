@@ -16,6 +16,7 @@ export const handleDOM = async command => {
   if (P`search-xpath`) {
     const element = await findDOMElement(tabId, {
       searchByXpath: P`search-xpath`,
+      searchBelow: P`below`,
       siblingIndex: P`sibling`,
       parentIndex: P`parent`,
       childIndex: P`child`,
@@ -43,6 +44,7 @@ export const handleDOM = async command => {
   if (P`search`) {
     command.update('Getting elements.')
     const elements = await getDOMElements(tabId, {
+      searchBelow: P`below`,
       searchByTag: P`tag`,
       searchByAttribute: P`attr`,
       searchByStyle: P`style`,

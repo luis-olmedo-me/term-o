@@ -1,29 +1,48 @@
-import { useCallback } from 'preact/hooks'
+import { useCallback, useMemo } from 'preact/hooks'
 
 import useStorage from '@src/hooks/useStorage'
 import { configSections } from './useConfig.constants'
 
-export const useConfig = () => {
+export const useConfig = props => {
+  const { get = [] } = props || {}
+
   const [config, setConfig] = useStorage({
     namespace: 'local',
     key: 'config',
     defaultValue: configSections
   })
 
+  const validatedConfig = useMemo(() => {
+    return configSections.map(section => {
+      const lsSection = config.find(lsSection => lsSection.id === section.id)
+
+      return lsSection
+        ? {
+            ...lsSection,
+            inputs: section.inputs.map(input => {
+              return lsSection.inputs.find(lsInput => lsInput.id === input.id) || input
+            })
+          }
+        : section
+    })
+  }, [config])
+
   const getConfigById = useCallback(
-    (sectionId, inputId) => {
-      const section = config.find(section => section.id === sectionId)
+    inputId => {
+      for (const section of validatedConfig) {
+        for (const input of section.inputs) {
+          if (input.id === inputId) return input.value
+        }
+      }
 
-      if (!section) return null
-
-      return section.inputs.find(input => input.id === inputId).value
+      return null
     },
-    [config]
+    [validatedConfig]
   )
 
   const changeConfig = useCallback(
     (sectionId, inputId, newValue) => {
-      const newConfig = config.map(section => {
+      const newConfig = validatedConfig.map(section => {
         const inputs = section.inputs.map(input => {
           return input.id === inputId ? { ...input, value: newValue } : input
         }, {})
@@ -33,11 +52,14 @@ export const useConfig = () => {
 
       setConfig(newConfig)
     },
-    [config]
+    [validatedConfig]
   )
 
+  const configListeners = useMemo(() => get.map(getConfigById), [getConfigById, validatedConfig])
+
   return {
-    config,
+    listening: configListeners,
+    config: validatedConfig,
     getConfigById,
     changeConfig
   }

@@ -1,5 +1,5 @@
 import * as React from 'preact'
-import { useEffect, useMemo, useRef, useState } from 'preact/hooks'
+import { useEffect, useRef, useState } from 'preact/hooks'
 
 import Prompt from '@sidepanel/components/Prompt'
 import Logger from '@sidepanel/modules/Logger'
@@ -24,17 +24,24 @@ export const Terminal = () => {
     defaultValue: []
   })
 
-  const { config, getConfigById } = useConfig()
-  const canCopyOnSelection = useMemo(() => getConfigById('terminal', 'copy-on-selection'), [config])
+  const { listening } = useConfig({
+    get: ['copy-on-selection', 'focus-prompt-on-click', 'switch-tab-automatically']
+  })
+  const [canCopyOnSelection, focusPromptOnClick, switchTabAutomatically] = listening
 
-  useEffect(function handlePanelFocus() {
-    const updateTab = () => getCurrentTab().then(setTab)
+  useEffect(
+    function focusTabAutomatically() {
+      if (!switchTabAutomatically) return
 
-    updateTab()
-    window.addEventListener('focus', updateTab)
+      const updateTab = () => getCurrentTab().then(setTab)
 
-    return () => window.removeEventListener('focus', updateTab)
-  }, [])
+      updateTab()
+      window.addEventListener('focus', updateTab)
+
+      return () => window.removeEventListener('focus', updateTab)
+    },
+    [switchTabAutomatically]
+  )
 
   useEffect(
     function expectAliasChanges() {
@@ -50,7 +57,7 @@ export const Terminal = () => {
     const selectedText = selection.toString()
 
     if (canCopyOnSelection && selectedText) navigator.clipboard.writeText(selectedText)
-    inputRef.current?.focus()
+    if (focusPromptOnClick) inputRef.current?.focus()
   }
 
   const clearLogs = exception => setLogs(exception ? [exception] : [])

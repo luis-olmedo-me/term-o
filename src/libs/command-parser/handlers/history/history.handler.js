@@ -7,7 +7,7 @@ export const handleHistory = async command => {
     const titlePattern = P`title` && new RegExp(P`title`)
     const urlPattern = P`url` && new RegExp(P`url`)
 
-    const history = await chrome.history.search({ text: '', maxResults: 1000 })
+    const history = await chrome.history.search({ text: '', maxResults: P`max-results` })
     const historyFiltered = history.filter(historyItem => {
       let validations = []
 

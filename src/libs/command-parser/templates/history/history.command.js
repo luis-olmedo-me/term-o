@@ -1,13 +1,13 @@
 import { commandNames } from '../../command-parser.constants'
 import CommandTemplate from '../../sub-services/command-template'
-import { isRegExp } from '../validators'
+import { isInteger, isPositive, isRegExp } from '../validators'
 
 export default new CommandTemplate({ name: commandNames.HISTORY })
   .expect({
     name: 'list',
     type: 'boolean',
     abbreviation: 'l',
-    worksWith: ['title', 'url'],
+    worksWith: ['title', 'url', 'max-results'],
     description: 'Show a list of pages open in the past.'
   })
   .expect({
@@ -23,6 +23,14 @@ export default new CommandTemplate({ name: commandNames.HISTORY })
     abbreviation: 'u',
     description: 'Filter pages by URL using a regular expression.',
     validate: [isRegExp]
+  })
+  .expect({
+    name: 'max-results',
+    type: 'number',
+    abbreviation: 'r',
+    description: 'Specify a certain value of items to be displayed. Defaults to 100.',
+    validate: [isPositive, isInteger],
+    defaultValue: 100
   })
   .expect({
     name: 'help',

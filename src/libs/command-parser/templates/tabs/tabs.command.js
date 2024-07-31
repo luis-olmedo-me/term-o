@@ -104,6 +104,13 @@ export default new CommandTemplate({ name: commandNames.TABS })
     worksWith: []
   })
   .expect({
+    name: 'history',
+    type: 'boolean',
+    abbreviation: 'H',
+    worksWith: [],
+    description: 'Show a list of tabs open in the past.'
+  })
+  .expect({
     name: 'help',
     type: 'boolean',
     abbreviation: 'h',

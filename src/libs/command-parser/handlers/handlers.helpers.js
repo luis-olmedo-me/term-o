@@ -146,7 +146,18 @@ export const formatTab = ({ windowId, id, title, url }) => {
   const quotedTitle = getQuotedString(title)
   const quotedURL = getQuotedString(url)
 
-  return `${C`purple`}${quotedWindowId} ${C`blue`}${quotedId} ${C`yellow`}${quotedTitle} ${quotedURL}`
+  return `${C`purple`}${quotedWindowId} ${C`blue`}${quotedId} ${C`brightYellow`}${quotedTitle} ${C`yellow`}${quotedURL}`
+}
+
+export const formatHistoryItem = ({ id, url, title, lastVisitTime }) => {
+  const dateTime = new Date(lastVisitTime).toISOString()
+
+  const quotedDateTime = getQuotedString(dateTime)
+  const quotedId = getQuotedString(`H${id}`)
+  const quotedTitle = getQuotedString(title)
+  const quotedURL = getQuotedString(url)
+
+  return `${C`purple`}${quotedId} ${C`green`}${quotedDateTime} ${C`brightYellow`}${quotedTitle} ${C`yellow`}${quotedURL}`
 }
 
 export const formatTheme = ({ name }) => {

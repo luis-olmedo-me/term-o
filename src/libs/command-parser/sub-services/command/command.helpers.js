@@ -41,7 +41,7 @@ const parseOptions = (index, arg, argsBySpace, type) => {
       const value = Number(nextArg)
       const isValidNumber = !Number.isNaN(value)
 
-      if (!isValidNumber) throw `"${arg}"expects [number] value. Instead, it received ${nextArg}.`
+      if (!isValidNumber) throw `"${arg}" expects [number] value. Instead, it received ${nextArg}.`
 
       return { value, newIndex: index }
     }

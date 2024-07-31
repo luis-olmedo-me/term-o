@@ -62,10 +62,16 @@ class CommandParser extends EventListener {
   }
 
   getWithAliasesResolved(script) {
-    const [name, ...scriptArgs] = getArgs(script)
-    const aliasFound = this.aliases.find(alias => alias.key === name)?.value || null
+    const fragments = splitBy(script, '&&')
 
-    return aliasFound ? [aliasFound, ...scriptArgs].join(' ') : script
+    const fragmentsWithAliases = fragments.map(fragment => {
+      const [name, ...scriptArgs] = getArgs(fragment)
+      const aliasFound = this.aliases.find(alias => alias.key === name)?.value || null
+
+      return [aliasFound || name, ...scriptArgs].join(' ')
+    })
+
+    return fragmentsWithAliases.join(' && ')
   }
 }
 

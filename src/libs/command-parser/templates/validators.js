@@ -77,7 +77,7 @@ export const isPositive = (option, value) => {
 }
 
 export const isInteger = (option, value) => {
-  if (value % 1 !== 0 || Number.isNaN(value)) {
+  if (value % 1 !== 0 || isNaN(value)) {
     const name = option.displayName
 
     throw `${name} expects an integer value. Instead, it received "${value}".`

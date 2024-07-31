@@ -6,12 +6,14 @@ export const handleHistory = async command => {
   if (P`list`) {
     const titlePattern = P`title` && new RegExp(P`title`)
     const urlPattern = P`url` && new RegExp(P`url`)
-    const dateFrom = P`from` && new Date(P`from`).getTime()
+    const dateTimeFrom = P`from` && new Date(P`from`).getTime()
+    const dateTimeTo = P`to` && new Date(P`to`).getTime()
 
     const history = await chrome.history.search({
       text: '',
       maxResults: P`max-results`,
-      ...(P`from` ? { startTime: dateFrom } : {})
+      ...(P`from` ? { startTime: dateTimeFrom } : {}),
+      ...(P`to` ? { endTime: dateTimeTo } : {})
     })
 
     const historyFiltered = history.filter(historyItem => {

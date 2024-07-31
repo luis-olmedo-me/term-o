@@ -7,7 +7,7 @@ export default new CommandTemplate({ name: commandNames.HISTORY })
     name: 'list',
     type: 'boolean',
     abbreviation: 'l',
-    worksWith: ['title', 'url', 'max-results', 'from'],
+    worksWith: ['title', 'url', 'max-results', 'from', 'to'],
     description: 'Show a list of pages open in the past.'
   })
   .expect({
@@ -27,8 +27,15 @@ export default new CommandTemplate({ name: commandNames.HISTORY })
   .expect({
     name: 'from',
     type: 'string',
-    abbreviation: 'f',
-    description: 'Filter pages by date-from using a Date value.',
+    abbreviation: 'F',
+    description: 'Filter pages by date-time-from using a date value.',
+    validate: [isDate]
+  })
+  .expect({
+    name: 'to',
+    type: 'string',
+    abbreviation: 'T',
+    description: 'Filter pages by date-time-end using a date value.',
     validate: [isDate]
   })
   .expect({

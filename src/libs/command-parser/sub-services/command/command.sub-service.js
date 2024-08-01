@@ -16,7 +16,6 @@ export class Command extends EventListener {
     this.data = {}
     this.props = {}
     this.updates = []
-    this.staticUpdates = []
     this.status = statuses.IDLE
     this.nextCommand = null
     this.options = options
@@ -115,8 +114,8 @@ export class Command extends EventListener {
 
     if (nextCommand.finished) return this.update(...nextCommand.updates)
 
-    nextCommand.addEventListener('update', ({ staticUpdates, updates }) => {
-      this.setUpdates(...currentUpdates, ...staticUpdates, ...updates)
+    nextCommand.addEventListener('update', ({ updates }) => {
+      this.setUpdates(...currentUpdates, ...updates)
     })
 
     nextCommand.appendsData(this.data)
@@ -138,6 +137,5 @@ export class Command extends EventListener {
 
   finish(newStatus) {
     this.status = newStatus
-    this.staticUpdates = [...this.staticUpdates, ...this.updates]
   }
 }

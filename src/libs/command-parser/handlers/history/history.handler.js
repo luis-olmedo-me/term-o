@@ -1,0 +1,55 @@
+import { displayHelp, formatHistoryItem } from '../handlers.helpers'
+
+export const handleHistory = async command => {
+  const P = name => command.props[name]
+
+  if (P`list`) {
+    const titlePattern = P`title` && new RegExp(P`title`)
+    const urlPattern = P`url` && new RegExp(P`url`)
+    const dateTimeFrom = P`from` && new Date(P`from`).getTime()
+    const dateTimeTo = P`to` && new Date(P`to`).getTime()
+
+    const history = await chrome.history.search({
+      text: '',
+      maxResults: P`max-results`,
+      ...(P`from` ? { startTime: dateTimeFrom } : {}),
+      ...(P`to` ? { endTime: dateTimeTo } : {})
+    })
+
+    const historyFiltered = history.filter(historyItem => {
+      let validations = []
+
+      if (P`title`) validations.push(() => titlePattern.test(historyItem.title))
+      if (P`url`) validations.push(() => urlPattern.test(historyItem.url))
+
+      return validations.every(validation => validation())
+    })
+
+    const updates = historyFiltered.map(formatHistoryItem)
+
+    command.update(...updates)
+  }
+
+  if (P`delete`) {
+    const dateTimeFrom = P`from` && new Date(P`from`).getTime()
+    const dateTimeTo = P`to` && new Date(P`to`).getTime()
+
+    const history = await chrome.history.search({
+      text: '',
+      maxResults: 1000,
+      ...(P`from` ? { startTime: dateTimeFrom } : {}),
+      ...(P`to` ? { endTime: dateTimeTo } : {})
+    })
+
+    await chrome.history.deleteRange({
+      ...(P`from` ? { startTime: dateTimeFrom } : {}),
+      ...(P`to` ? { endTime: dateTimeTo } : {})
+    })
+
+    const updates = history.map(formatHistoryItem)
+
+    command.update(...updates)
+  }
+
+  if (P`help`) displayHelp(command)
+}

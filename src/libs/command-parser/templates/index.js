@@ -3,6 +3,7 @@ import clearTemplate from './clear/clear.command'
 import domTemplate from './dom/dom.command'
 import errorTemplate from './error/error.command'
 import eventsTemplate from './events/events.command'
+import historyTemplate from './history/history.command'
 import storageTemplate from './storage/storage.command'
 import styleTemplate from './style/style.command'
 import tabsTemplate from './tabs/tabs.command'
@@ -17,7 +18,8 @@ export default [
   themeTemplate,
   styleTemplate,
   errorTemplate,
-  eventsTemplate
+  eventsTemplate,
+  historyTemplate
 ]
 
 export {
@@ -26,6 +28,7 @@ export {
   domTemplate,
   errorTemplate,
   eventsTemplate,
+  historyTemplate,
   storageTemplate,
   styleTemplate,
   tabsTemplate,

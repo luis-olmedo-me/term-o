@@ -1,3 +1,5 @@
+import { statuses } from './command.constants'
+
 export const getArray = value => {
   const items = value.slice(1).slice(0, -1)
   const itemsAsArgs = getArgs(items)
@@ -41,7 +43,7 @@ const parseOptions = (index, arg, argsBySpace, type) => {
       const value = Number(nextArg)
       const isValidNumber = !Number.isNaN(value)
 
-      if (!isValidNumber) throw `"${arg}"expects [number] value. Instead, it received ${nextArg}.`
+      if (!isValidNumber) throw `"${arg}" expects [number] value. Instead, it received ${nextArg}.`
 
       return { value, newIndex: index }
     }
@@ -243,11 +245,12 @@ const getParamValue = (indexes, values) => {
   return `[ ${valuesInLine} ]`
 }
 
-export const executePerUpdates = async (command, updates) => {
-  const argsHoldingUp = command.args.filter(arg => arg.isHoldingUp)
+export const executePerUpdates = async (nextCommand, updates) => {
+  const originalUpdates = [...updates]
+  const argsHoldingUp = nextCommand.args.filter(arg => arg.isHoldingUp)
   const colorPattern = /\[termo\.[A-Za-z]+\]/g
 
-  for (let update of updates) {
+  for (let update of originalUpdates) {
     const cleanedUpdate = update.replace(colorPattern, '')
     const availableArgs = getArgs(cleanedUpdate)
 
@@ -258,10 +261,12 @@ export const executePerUpdates = async (command, updates) => {
       arg.setValue(newValue)
     })
 
-    command.prepare()
+    nextCommand.prepare()
 
-    if (command.finished) break
+    if (nextCommand.status === statuses.ERROR) break
+    await nextCommand.execute()
+    if (nextCommand.status === statuses.ERROR) break
 
-    await command.execute()
+    updates.push(...nextCommand.updates)
   }
 }

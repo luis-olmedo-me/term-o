@@ -1,10 +1,14 @@
 import * as React from 'preact'
 
+import useConfig from '@src/hooks/useConfig'
 import { useCallback } from 'preact/hooks'
 import Log from '../../components/Log'
 import * as S from './Logger.styles'
 
 export const Logger = ({ logs, loggerRef }) => {
+  const { listening } = useConfig({ get: ['max-lines-per-command'] })
+  const [maxLinesPerCommand] = listening
+
   const scrollLogsToBottom = useCallback(() => {
     loggerRef.current.scrollTo({ top: loggerRef.current.scrollHeight })
   }, [])
@@ -18,6 +22,7 @@ export const Logger = ({ logs, loggerRef }) => {
           <Log
             key={command.id}
             command={command}
+            maxLinesPerCommand={maxLinesPerCommand}
             scrollLogsToBottom={isLastLog ? scrollLogsToBottom : null}
           />
         )

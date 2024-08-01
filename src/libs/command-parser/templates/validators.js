@@ -12,6 +12,17 @@ export const isRegExp = (option, value) => {
   }
 }
 
+export const isDate = (option, value) => {
+  if (Array.isArray(value)) return value.forEach(isDate)
+  const date = new Date(value)
+
+  if (date === 'Invalid Date' || isNaN(date)) {
+    const name = option.displayName
+
+    throw `${name} expects a valid Date value. Instead, it received "${value}".`
+  }
+}
+
 export const isJSON = (option, value) => {
   if (Array.isArray(value)) return value.forEach(isJSON)
 
@@ -77,7 +88,7 @@ export const isPositive = (option, value) => {
 }
 
 export const isInteger = (option, value) => {
-  if (value % 1 !== 0) {
+  if (value % 1 !== 0 || isNaN(value)) {
     const name = option.displayName
 
     throw `${name} expects an integer value. Instead, it received "${value}".`

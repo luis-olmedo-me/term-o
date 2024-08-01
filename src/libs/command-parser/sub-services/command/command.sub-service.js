@@ -16,7 +16,6 @@ export class Command extends EventListener {
     this.data = {}
     this.props = {}
     this.updates = []
-    this.staticUpdates = []
     this.status = statuses.IDLE
     this.nextCommand = null
     this.options = options
@@ -82,10 +81,12 @@ export class Command extends EventListener {
       this.startExecuting()
 
       await this.dispatchEvent('execute', this)
-      await this.executeNext()
 
-      this.status = statuses.DONE
-      this.finish()
+      if (!this.finished) {
+        await this.executeNext()
+
+        this.finish(statuses.DONE)
+      }
     } catch (error) {
       this.throw(error)
     }
@@ -103,30 +104,27 @@ export class Command extends EventListener {
     this.reset()
     this.update(errorUpdate)
 
-    this.status = statuses.ERROR
-    this.finish()
+    this.finish(statuses.ERROR)
   }
 
   async executeNext() {
     const nextCommand = this.nextCommand
 
-    if (!nextCommand || this.finished) return
+    if (!nextCommand) return
 
-    const currentUpdates = this.updates
+    const staticUpdates = [...this.updates]
     const hasArgsHoldingUp = nextCommand.args.some(arg => arg.isHoldingUp)
 
-    if (nextCommand.finished) {
-      return this.setUpdates(...currentUpdates, ...nextCommand.staticUpdates)
-    }
+    if (nextCommand.finished) return this.update(...nextCommand.updates)
 
-    nextCommand.addEventListener('update', ({ staticUpdates, updates }) => {
-      this.setUpdates(...currentUpdates, ...staticUpdates, ...updates)
+    nextCommand.addEventListener('update', ({ updates }) => {
+      this.setUpdates(...staticUpdates, ...updates)
     })
 
     nextCommand.appendsData(this.data)
     nextCommand.setTitle(this.title)
 
-    if (hasArgsHoldingUp) await executePerUpdates(nextCommand, currentUpdates)
+    if (hasArgsHoldingUp) await executePerUpdates(nextCommand, staticUpdates)
     else await nextCommand.execute()
   }
 
@@ -138,9 +136,10 @@ export class Command extends EventListener {
 
   startExecuting() {
     this.status = statuses.EXECUTING
+    this.updates = []
   }
 
-  finish() {
-    this.staticUpdates = [...this.staticUpdates, ...this.updates]
+  finish(newStatus) {
+    this.status = newStatus
   }
 }

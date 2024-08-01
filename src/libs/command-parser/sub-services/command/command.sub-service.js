@@ -115,9 +115,7 @@ export class Command extends EventListener {
     const currentUpdates = this.updates
     const hasArgsHoldingUp = nextCommand.args.some(arg => arg.isHoldingUp)
 
-    if (nextCommand.finished) {
-      return this.setUpdates(...currentUpdates, ...nextCommand.staticUpdates)
-    }
+    if (nextCommand.finished) return this.update(...nextCommand.updates)
 
     nextCommand.addEventListener('update', ({ staticUpdates, updates }) => {
       this.setUpdates(...currentUpdates, ...staticUpdates, ...updates)

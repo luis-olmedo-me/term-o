@@ -35,7 +35,7 @@ module.exports = (_env, { watch, mode }) => ({
     new CopyPlugin({
       patterns: [
         { from: './src/manifest.json', to: './manifest.json' },
-        { from: './src/images', to: './images' },
+        { from: './src/images/required', to: './images' },
         { from: './src/sidepanel.html', to: './sidepanel.html' }
       ]
     }),

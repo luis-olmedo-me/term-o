@@ -112,15 +112,15 @@ export class Command extends EventListener {
 
     if (!nextCommand || this.finished) return
 
-    const currentUpdates = [...this.updates]
+    const currentUpdates = this.updates
     const hasArgsHoldingUp = nextCommand.args.some(arg => arg.isHoldingUp)
 
     if (nextCommand.finished) {
-      return this.setUpdates(...currentUpdates, ...nextCommand.updates)
+      return this.setUpdates(...currentUpdates, ...nextCommand.staticUpdates)
     }
 
-    nextCommand.addEventListener('update', ({ updates }) => {
-      this.setUpdates(...currentUpdates, ...updates)
+    nextCommand.addEventListener('update', ({ staticUpdates, updates }) => {
+      this.setUpdates(...currentUpdates, ...staticUpdates, ...updates)
     })
 
     nextCommand.appendsData(this.data)
@@ -138,8 +138,9 @@ export class Command extends EventListener {
 
   startExecuting() {
     this.status = statuses.EXECUTING
-    this.updates = []
   }
 
-  finish() {}
+  finish() {
+    this.staticUpdates = [...this.staticUpdates, ...this.updates]
+  }
 }

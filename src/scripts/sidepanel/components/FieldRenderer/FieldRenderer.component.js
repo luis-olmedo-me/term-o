@@ -28,7 +28,7 @@ export const FieldRenderer = ({ value, sectionId, inputId, type }) => {
       <Input
         type="number"
         value={localValue}
-        onBlur={({ target }) => changeConfig(sectionId, inputId, target.value)}
+        onBlur={({ target }) => changeConfig(sectionId, inputId, Number(target.value))}
         onChange={({ target }) => setLocalValue(target.value)}
       />
     ),

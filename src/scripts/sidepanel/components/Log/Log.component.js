@@ -6,7 +6,7 @@ import ColoredText from '../ColoredText'
 import Prompt from '../Prompt'
 import * as S from './Log.styles'
 
-export const Log = ({ command, onUpdate }) => {
+export const Log = ({ command }) => {
   const [updates, setUpdates] = useState(command.updates)
 
   const wrapper = useRef(null)
@@ -17,7 +17,6 @@ export const Log = ({ command, onUpdate }) => {
   useEffect(
     function listenUpdates() {
       const handleUpdate = ({ updates: newUpdates }) => {
-        if (onUpdate) onUpdate()
         const limitedUpdates = newUpdates.slice(maxLinesPerCommand * -1)
 
         setUpdates(limitedUpdates)
@@ -29,7 +28,7 @@ export const Log = ({ command, onUpdate }) => {
 
       return () => command.removeEventListener('update', handleUpdate)
     },
-    [command, onUpdate, maxLinesPerCommand]
+    [command, maxLinesPerCommand]
   )
 
   return (
@@ -48,6 +47,5 @@ export const Log = ({ command, onUpdate }) => {
 }
 
 Log.propTypes = {
-  command: Object,
-  onUpdate: Function
+  command: Object
 }

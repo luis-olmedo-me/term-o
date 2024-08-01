@@ -1,18 +1,14 @@
 import * as React from 'preact'
 import { useEffect, useRef, useState } from 'preact/hooks'
 
-import useConfig from '@src/hooks/useConfig'
 import ColoredText from '../ColoredText'
 import Prompt from '../Prompt'
 import * as S from './Log.styles'
 
-export const Log = ({ command }) => {
+export const Log = ({ command, maxLinesPerCommand }) => {
   const [updates, setUpdates] = useState(command.updates)
 
   const wrapper = useRef(null)
-
-  const { listening } = useConfig({ get: ['max-lines-per-command'] })
-  const [maxLinesPerCommand] = listening
 
   useEffect(
     function listenUpdates() {
@@ -47,5 +43,6 @@ export const Log = ({ command }) => {
 }
 
 Log.propTypes = {
-  command: Object
+  command: Object,
+  maxLinesPerCommand: Number
 }

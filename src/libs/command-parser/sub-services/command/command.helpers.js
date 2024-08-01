@@ -1,3 +1,5 @@
+import { statuses } from './command.constants'
+
 export const getArray = value => {
   const items = value.slice(1).slice(0, -1)
   const itemsAsArgs = getArgs(items)
@@ -260,8 +262,8 @@ export const executePerUpdates = async (command, updates) => {
 
     command.prepare()
 
-    if (command.finished) break
-
+    if (command.status === statuses.ERROR) break
     await command.execute()
+    if (command.status === statuses.ERROR) break
   }
 }

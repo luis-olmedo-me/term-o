@@ -81,9 +81,12 @@ export class Command extends EventListener {
       this.startExecuting()
 
       await this.dispatchEvent('execute', this)
-      await this.executeNext()
 
-      this.finish(statuses.DONE)
+      if (!this.finished) {
+        await this.executeNext()
+
+        this.finish(statuses.DONE)
+      }
     } catch (error) {
       this.throw(error)
     }
@@ -107,7 +110,7 @@ export class Command extends EventListener {
   async executeNext() {
     const nextCommand = this.nextCommand
 
-    if (!nextCommand || this.finished) return
+    if (!nextCommand) return
 
     const currentUpdates = this.updates
     const hasArgsHoldingUp = nextCommand.args.some(arg => arg.isHoldingUp)

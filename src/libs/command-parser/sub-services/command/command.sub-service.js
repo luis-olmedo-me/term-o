@@ -112,19 +112,19 @@ export class Command extends EventListener {
 
     if (!nextCommand) return
 
-    const currentUpdates = this.updates
+    const staticUpdates = [...this.updates]
     const hasArgsHoldingUp = nextCommand.args.some(arg => arg.isHoldingUp)
 
     if (nextCommand.finished) return this.update(...nextCommand.updates)
 
     nextCommand.addEventListener('update', ({ updates }) => {
-      this.setUpdates(...currentUpdates, ...updates)
+      this.setUpdates(...staticUpdates, ...updates)
     })
 
     nextCommand.appendsData(this.data)
     nextCommand.setTitle(this.title)
 
-    if (hasArgsHoldingUp) await executePerUpdates(nextCommand, currentUpdates)
+    if (hasArgsHoldingUp) await executePerUpdates(nextCommand, staticUpdates)
     else await nextCommand.execute()
   }
 
@@ -136,6 +136,7 @@ export class Command extends EventListener {
 
   startExecuting() {
     this.status = statuses.EXECUTING
+    this.updates = []
   }
 
   finish(newStatus) {

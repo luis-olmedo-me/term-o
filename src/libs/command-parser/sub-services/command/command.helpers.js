@@ -269,4 +269,8 @@ export const executePerUpdates = async (nextCommand, updates) => {
 
     updates.push(...nextCommand.updates)
   }
+
+  if (nextCommand.nextCommand && nextCommand.status !== statuses.ERROR) {
+    nextCommand.status = statuses.EXECUTING
+  }
 }

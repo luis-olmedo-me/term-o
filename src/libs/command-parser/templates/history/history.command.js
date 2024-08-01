@@ -25,6 +25,22 @@ export default new CommandTemplate({ name: commandNames.HISTORY })
     validate: [isRegExp]
   })
   .expect({
+    name: 'max-results',
+    type: 'number',
+    abbreviation: 'r',
+    description: 'Specify a certain value of items to be displayed. Defaults to 100.',
+    validate: [isPositive, isInteger],
+    defaultValue: 100
+  })
+  .expect({
+    name: 'delete',
+    type: 'boolean',
+    abbreviation: 'd',
+    description: 'Delete a page by time range.',
+    worksWith: ['from', 'to'],
+    mustHave: ['from', 'to']
+  })
+  .expect({
     name: 'from',
     type: 'string',
     abbreviation: 'F',
@@ -37,14 +53,6 @@ export default new CommandTemplate({ name: commandNames.HISTORY })
     abbreviation: 'T',
     description: 'Filter pages by date-time-end using a date value.',
     validate: [isDate]
-  })
-  .expect({
-    name: 'max-results',
-    type: 'number',
-    abbreviation: 'r',
-    description: 'Specify a certain value of items to be displayed. Defaults to 100.',
-    validate: [isPositive, isInteger],
-    defaultValue: 100
   })
   .expect({
     name: 'help',

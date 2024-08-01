@@ -30,5 +30,26 @@ export const handleHistory = async command => {
     command.update(...updates)
   }
 
+  if (P`delete`) {
+    const dateTimeFrom = P`from` && new Date(P`from`).getTime()
+    const dateTimeTo = P`to` && new Date(P`to`).getTime()
+
+    const history = await chrome.history.search({
+      text: '',
+      maxResults: 1000,
+      ...(P`from` ? { startTime: dateTimeFrom } : {}),
+      ...(P`to` ? { endTime: dateTimeTo } : {})
+    })
+
+    await chrome.history.deleteRange({
+      ...(P`from` ? { startTime: dateTimeFrom } : {}),
+      ...(P`to` ? { endTime: dateTimeTo } : {})
+    })
+
+    const updates = history.map(formatHistoryItem)
+
+    command.update(...updates)
+  }
+
   if (P`help`) displayHelp(command)
 }

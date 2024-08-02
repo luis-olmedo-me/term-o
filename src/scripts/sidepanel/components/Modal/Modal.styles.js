@@ -27,7 +27,9 @@ export const ModalHeaderTitle = styled.h2`
 
 export const ModalContentWrapper = styled.div`
   padding: 0 ${t('space.600')};
-  height: calc(100% - ${t('fontSize.100')} - (${t('space.400')} * 2) - ${t('space.600')});
+  height: calc(
+    100% - ${t('fontSize.100')} - (${t('space.400')} * 2) - ${t('space.600')} - ${t('line-height.300')}
+  );
 `
 
 export const ModalContent = styled.div`

@@ -6,7 +6,7 @@ export const SectionWrapper = styled.div`
   margin-bottom: ${t('space.600')};
 
   &:last-child {
-    margin-bottom: 0;
+    margin-bottom: ${t('space.800')};
   }
 `
 

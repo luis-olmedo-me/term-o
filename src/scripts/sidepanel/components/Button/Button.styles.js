@@ -7,11 +7,15 @@ export const ButtonWrapper = styled.button`
   border: none;
   font-weight: bold;
   color: ${t('colors.black')};
-  border-radius: ${t('radius.300')};
+  border-radius: ${t('radius.200')};
   background-color: ${t('colors.white')};
   font-size: ${t('fontSize.100')};
+  line-height: ${t('line-height.300')};
+  font-family: ${t('font.primary')};
   cursor: pointer;
-  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:active,
   &:focus,

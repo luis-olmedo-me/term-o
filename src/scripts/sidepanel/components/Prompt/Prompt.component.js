@@ -12,7 +12,7 @@ export const Prompt = ({ onEnter, inputRef, tab, disabled, defaultValue }) => {
   const [historialIndex, setHistorialIndex] = useState(0)
   const [historial, setHistorial] = useState([])
 
-  const { listening } = useConfig({ get: ['historial-size', 'status'] })
+  const { listening } = useConfig({ get: ['historial-size', 'status', 'prefix'] })
   const [hsitorialSize, status] = listening
 
   const handleChange = event => {

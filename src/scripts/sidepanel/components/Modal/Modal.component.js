@@ -8,7 +8,7 @@ export const Modal = ({ children, onClose, open, title }) => {
       <S.ModalHeader>
         <S.ModalHeaderTitle>{title}</S.ModalHeaderTitle>
 
-        <Button text="x" onClick={onClose} />
+        <Button text="✖" onClick={onClose} />
       </S.ModalHeader>
 
       <S.ModalContentWrapper>

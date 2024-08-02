@@ -17,19 +17,17 @@ export const ModalHeader = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: ${t('space.400')} ${t('space.600')};
-  margin-bottom: ${t('space.400')};
 `
 
 export const ModalHeaderTitle = styled.h2`
   font-size: ${t('fontSize.100')};
+  line-height: ${t('line-height.300')};
   margin: 0;
 `
 
 export const ModalContentWrapper = styled.div`
   padding: 0 ${t('space.600')};
-  height: calc(
-    100% - ${t('fontSize.100')} - (${t('space.400')} * 2) - ${t('space.600')} - ${t('line-height.300')}
-  );
+  height: calc(100% - ${t('line-height.300')} - (${t('space.400')} * 2) - ${t('space.600')});
 `
 
 export const ModalContent = styled.div`

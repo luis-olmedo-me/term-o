@@ -13,7 +13,7 @@ export const Prompt = ({ onEnter, inputRef, tab, disabled, defaultValue }) => {
   const [historial, setHistorial] = useState([])
 
   const { listening } = useConfig({ get: ['historial-size', 'status', 'prefix'] })
-  const [hsitorialSize, status, prefix] = listening
+  const [hsitorialSize, status] = listening
 
   const handleChange = event => {
     const targetValue = event.target.value
@@ -56,7 +56,7 @@ export const Prompt = ({ onEnter, inputRef, tab, disabled, defaultValue }) => {
     }
   }
 
-  const currentPrefix = historialIndex || prefix
+  const prefix = historialIndex || '$'
 
   return (
     <S.PromptWrapper>
@@ -66,7 +66,7 @@ export const Prompt = ({ onEnter, inputRef, tab, disabled, defaultValue }) => {
 
       {disabled ? (
         <S.Line>
-          <ColoredText value={`${currentPrefix} ${value}`} />
+          <ColoredText value={`${prefix} ${value}`} />
         </S.Line>
       ) : (
         <Input
@@ -74,7 +74,7 @@ export const Prompt = ({ onEnter, inputRef, tab, disabled, defaultValue }) => {
           value={historialIndex ? historial.at(historialIndex) : value}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
-          prefix={currentPrefix}
+          prefix={prefix}
         />
       )}
     </S.PromptWrapper>

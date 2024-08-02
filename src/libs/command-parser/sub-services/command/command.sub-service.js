@@ -16,18 +16,23 @@ export class Command extends EventListener {
     this.data = {}
     this.props = {}
     this.updates = []
+    this.staticUpdates = []
     this.status = statuses.IDLE
     this.nextCommand = null
     this.options = options
     this.args = []
+    this.canExecuteNext = true
   }
 
   get finished() {
     return [statuses.ERROR, statuses.DONE].includes(this.status)
   }
+  get failed() {
+    return [statuses.ERROR].includes(this.status)
+  }
 
   reset() {
-    this.updates = []
+    this.updates = this.staticUpdates
 
     this.dispatchEvent('update', this)
   }
@@ -42,6 +47,16 @@ export class Command extends EventListener {
     this.updates = updates
 
     this.dispatchEvent('update', this)
+  }
+
+  saveUpdates() {
+    this.staticUpdates = this.updates
+  }
+
+  allowToExecuteNext(permission) {
+    this.canExecuteNext = permission
+
+    return this
   }
 
   prepare(args) {
@@ -83,7 +98,7 @@ export class Command extends EventListener {
       await this.dispatchEvent('execute', this)
 
       if (!this.finished) {
-        await this.executeNext()
+        if (this.canExecuteNext) await this.executeNext()
 
         this.finish(statuses.DONE)
       }
@@ -117,8 +132,9 @@ export class Command extends EventListener {
 
     if (nextCommand.finished) return this.update(...nextCommand.updates)
 
+    this.saveUpdates()
     nextCommand.addEventListener('update', ({ updates }) => {
-      this.setUpdates(...staticUpdates, ...updates)
+      this.setUpdates(...this.staticUpdates, ...updates)
     })
 
     nextCommand.appendsData(this.data)
@@ -136,7 +152,7 @@ export class Command extends EventListener {
 
   startExecuting() {
     this.status = statuses.EXECUTING
-    this.updates = []
+    this.reset()
   }
 
   finish(newStatus) {

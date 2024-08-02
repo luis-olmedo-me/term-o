@@ -58,6 +58,14 @@ export const configSections = [
           'Text displayed before the prompt input field, typically used to show dynamic information or context.',
         type: 'string',
         value: `On [termo.brightBlue]{origin}`
+      },
+      {
+        id: 'prefix',
+        name: 'Prefix',
+        description:
+          'Character or string that appears before the command input in the prompt, commonly used to indicate the prompt position.',
+        type: 'string',
+        value: '$'
       }
     ]
   },

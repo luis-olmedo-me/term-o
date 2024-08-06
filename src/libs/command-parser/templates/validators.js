@@ -79,6 +79,19 @@ export const isURL = (option, value) => {
   }
 }
 
+export const isStringLike = validValues => {
+  return (option, value) => {
+    if (Array.isArray(value)) return value.forEach(isStringLike)
+
+    if (!validValues.includes(value)) {
+      const name = option.displayName
+      const availableValues = validValues.map(val => `"${val}"`).join(' or ')
+
+      throw `${name} expects one of the following values: ${availableValues}. Instead, it received "${value}".`
+    }
+  }
+}
+
 export const isPositive = (option, value) => {
   if (value <= 0) {
     const name = option.displayName

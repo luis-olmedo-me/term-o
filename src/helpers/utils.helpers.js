@@ -31,3 +31,9 @@ export const getQuotedString = value => {
   else if (!hasDoubleQuote && hasSingleQuote) return `"${value}"`
   else return `"${value.replace('"', '\\"')}"`
 }
+
+export const getUnquotedString = value => {
+  return String(value)
+    .replace(/^"|^'/, '')
+    .replace(/"$|'$/, '')
+}

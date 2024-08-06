@@ -1,3 +1,4 @@
+import { getUnquotedString } from '@src/helpers/utils.helpers'
 import { displayHelp, formatJSONAsString } from '../handlers.helpers'
 
 export const handleREQUEST = async command => {
@@ -5,11 +6,21 @@ export const handleREQUEST = async command => {
 
   if (P`fetch`) {
     try {
-      const jsonResponse = await fetch(P`url`).then(response => response.json())
+      command.update('API request in progress.')
+      const response = await fetch(P`url`)
 
-      const update = formatJSONAsString({ json: jsonResponse })
+      if (!response.ok) return command.throw(`API failed with status "${response.status}".`)
+
+      const jsonResponse = await response[P`read-as`]()
+
+      const update = formatJSONAsString({
+        json: P`read-as` === 'text' ? getUnquotedString(jsonResponse) : jsonResponse
+      })
+
+      command.reset()
       command.update(update)
     } catch (error) {
+      console.log('💬  error:', error)
       command.throw('Error while calling API.')
     }
   }

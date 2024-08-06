@@ -1,6 +1,6 @@
 import { commandNames } from '../../command-parser.constants'
 import CommandTemplate from '../../sub-services/command-template'
-import { isURL } from '../validators'
+import { isStringLike, isURL } from '../validators'
 
 export default new CommandTemplate({ name: commandNames.REQUEST })
   .expect({
@@ -35,6 +35,14 @@ export default new CommandTemplate({ name: commandNames.REQUEST })
     abbreviation: 'u',
     description: 'API URL where request will be made.',
     validate: [isURL]
+  })
+  .expect({
+    name: 'read-as',
+    type: 'string',
+    abbreviation: 'r',
+    description: 'API URL where request will be made.',
+    validate: [isStringLike(['blob', 'text', 'json'])],
+    defaultValue: 'json'
   })
   .expect({
     name: 'help',

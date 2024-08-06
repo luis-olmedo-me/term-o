@@ -5,5 +5,5 @@ export const theme = pathsString => props => {
 }
 
 export const getColor = color => {
-  return `[termo.${color}]`
+  return `[termo.color.${color}]`
 }

@@ -7,7 +7,7 @@ export default new CommandTemplate({ name: commandNames.REQUEST })
     name: 'fetch',
     type: 'boolean',
     abbreviation: 'f',
-    worksWith: ['headers', 'payload', 'method', 'url'],
+    worksWith: ['headers', 'payload', 'method', 'url', 'read-as'],
     mustHave: ['url'],
     description: 'Start an API call.'
   })

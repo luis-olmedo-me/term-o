@@ -20,8 +20,7 @@ export const handleREQUEST = async command => {
       command.reset()
       command.update(update)
     } catch (error) {
-      console.log('💬  error:', error)
-      command.throw('Error while calling API.')
+      command.throw(`Error while reading response as "${P`read-as`}".`)
     }
   }
 

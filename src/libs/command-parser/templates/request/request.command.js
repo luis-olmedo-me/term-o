@@ -1,12 +1,14 @@
 import { commandNames } from '../../command-parser.constants'
 import CommandTemplate from '../../sub-services/command-template'
+import { isURL } from '../validators'
 
 export default new CommandTemplate({ name: commandNames.REQUEST })
   .expect({
     name: 'fetch',
     type: 'boolean',
     abbreviation: 'f',
-    worksWith: ['headers', 'body', 'method'],
+    worksWith: ['headers', 'payload', 'method', 'url'],
+    mustHave: ['url'],
     description: 'Start an API call.'
   })
   .expect({
@@ -24,8 +26,15 @@ export default new CommandTemplate({ name: commandNames.REQUEST })
   .expect({
     name: 'method',
     type: 'string',
-    abbreviation: 'b',
+    abbreviation: 'm',
     description: 'Select the method for request.'
+  })
+  .expect({
+    name: 'url',
+    type: 'string',
+    abbreviation: 'u',
+    description: 'API URL where request will be made.',
+    validate: [isURL]
   })
   .expect({
     name: 'help',

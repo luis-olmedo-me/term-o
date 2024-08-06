@@ -4,6 +4,7 @@ import domTemplate from './dom/dom.command'
 import errorTemplate from './error/error.command'
 import eventsTemplate from './events/events.command'
 import historyTemplate from './history/history.command'
+import requestTemplate from './request/request.command'
 import storageTemplate from './storage/storage.command'
 import styleTemplate from './style/style.command'
 import tabsTemplate from './tabs/tabs.command'
@@ -19,7 +20,8 @@ export default [
   styleTemplate,
   errorTemplate,
   eventsTemplate,
-  historyTemplate
+  historyTemplate,
+  requestTemplate
 ]
 
 export {
@@ -29,6 +31,7 @@ export {
   errorTemplate,
   eventsTemplate,
   historyTemplate,
+  requestTemplate,
   storageTemplate,
   styleTemplate,
   tabsTemplate,

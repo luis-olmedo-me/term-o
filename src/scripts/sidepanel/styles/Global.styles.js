@@ -18,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
 
     &::-webkit-scrollbar-track {
       background-color: ${t('colors.black')};
-      border-radius: 3px;
+      border-radius: ${t('radius.150')};
       cursor: pointer;
 
       &:active,
@@ -28,7 +28,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     &::-webkit-scrollbar-thumb {
-      border-radius: 3px;
+      border-radius: ${t('radius.150')};
       background-color: ${t('colors.brightBlack')};
       cursor: pointer;
 

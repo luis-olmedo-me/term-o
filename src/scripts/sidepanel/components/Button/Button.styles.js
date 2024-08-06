@@ -10,7 +10,7 @@ export const ButtonWrapper = styled.button`
   border-radius: ${t('radius.200')};
   background-color: ${t('colors.white')};
   font-size: ${t('fontSize.100')};
-  line-height: ${t('line-height.300')};
+  line-height: ${t('lineHeight.300')};
   font-family: ${t('font.primary')};
   cursor: pointer;
   display: flex;

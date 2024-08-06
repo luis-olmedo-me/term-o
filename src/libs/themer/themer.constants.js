@@ -26,6 +26,7 @@ export const defaultTheme = {
   radius: {
     50: '1px',
     100: '2px',
+    150: '3px',
     200: '4px',
     300: '8px',
     400: '10px',
@@ -51,7 +52,7 @@ export const defaultTheme = {
     200: '1.25rem'
   },
 
-  'line-height': {
+  lineHeight: {
     50: '.8rem',
     100: '1rem',
     200: '1.25rem',

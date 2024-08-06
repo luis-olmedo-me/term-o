@@ -57,7 +57,7 @@ export const configSections = [
         description:
           'Text displayed before the prompt input field, typically used to show dynamic information or context.',
         type: 'string',
-        value: `On [termo.brightBlue]{origin}`
+        value: `On [termo.color.brightBlue]{origin}`
       }
     ]
   },

@@ -10,7 +10,7 @@ export const Input = styled.input`
   border: none;
   display: block;
   caret-color: ${t('colors.cursorColor')};
-  line-height: ${t('line-height.300')};
+  line-height: ${t('lineHeight.300')};
   background-color: ${t('colors.background')};
   color: ${t('colors.foreground')};
   letter-spacing: ${t('space.50')};

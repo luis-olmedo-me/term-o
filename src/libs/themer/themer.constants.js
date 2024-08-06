@@ -52,7 +52,7 @@ export const defaultTheme = {
     200: '1.25rem'
   },
 
-  'line-height': {
+  lineHeight: {
     50: '.8rem',
     100: '1rem',
     200: '1.25rem',

@@ -5,6 +5,8 @@ export const Text = styled.span`
   color: ${({ color, theme }) => theme.colors[color]};
   background-color: ${({ bgcolor, theme }) => theme.colors[bgcolor]};
   line-height: ${t('line-height.300')};
+  border-radius: ${t('radius.150')};
+  white-space: pre-line;
 
   &::selection {
     color: ${t('colors.brightGreen')};

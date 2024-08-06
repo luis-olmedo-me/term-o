@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 export const Text = styled.span`
   color: ${({ color, theme }) => theme.colors[color]};
+  background-color: ${({ bgcolor, theme }) => theme.colors[bgcolor]};
   line-height: ${t('line-height.300')};
 
   &::selection {

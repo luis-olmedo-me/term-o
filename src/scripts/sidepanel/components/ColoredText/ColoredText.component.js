@@ -9,8 +9,8 @@ export const ColoredText = ({ value }) => {
 
   return (
     <>
-      {sections.map(({ color, content }, index) => (
-        <S.Text key={index} color={color}>
+      {sections.map(({ color, bgcolor, content }, index) => (
+        <S.Text key={index} color={color} bgcolor={bgcolor}>
           {content}
         </S.Text>
       ))}

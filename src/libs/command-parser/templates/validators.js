@@ -144,6 +144,28 @@ export const isInlineStyles = (option, value) => {
   }
 }
 
+export const hasinlineHeaders = (option, values) => {
+  values.forEach(value => {
+    const name = option.displayName
+    const validPropertyName = /^-?\w+$/
+    const validPropertyValue = /^[\w\s]+$/
+
+    const trimmedHeader = value.trim()
+
+    if (trimmedHeader === '' || !value.includes(':'))
+      throw `${name} expects valid inline header. Instead, it received "${value}".`
+
+    const [propName, propValue] = trimmedHeader.split(':').map(part => part?.trim())
+    const isMissingContent = propName === '' || propValue === ''
+    const isInvalidPropName = !validPropertyName.test(propName)
+    const isInvalidPropValue = !validPropertyValue.test(propValue)
+
+    if (isMissingContent || isInvalidPropName || isInvalidPropValue) {
+      throw `${name} expects valid inline header. Instead, it received "${value}".`
+    }
+  })
+}
+
 export const hasItems = staticLength => {
   return (option, value) => {
     const isValid = value.length === staticLength

@@ -7,7 +7,15 @@ export const handleREQUEST = async command => {
   if (P`fetch`) {
     try {
       command.update('API request in progress.')
-      const response = await fetch(P`url`)
+      const headers = new Headers()
+
+      P`headers`.forEach(header => {
+        const [name, value] = header.split(':').map(part => part?.trim())
+
+        headers.append(name, value)
+      })
+
+      const response = await fetch(P`url`, { headers, method: P`method` })
 
       if (!response.ok) return command.throw(`API failed with status "${response.status}".`)
 

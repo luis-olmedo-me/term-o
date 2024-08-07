@@ -153,7 +153,7 @@ export const hasinlineHeaders = (option, values) => {
     const trimmedHeader = value.trim()
 
     if (trimmedHeader === '' || !value.includes(':'))
-      throw `${name} expects valid inline header. Instead, it received "${value}".`
+      throw `${name} must follow this pattern "name: value". Instead, it received "${value}".`
 
     const [propName, propValue] = trimmedHeader.split(':').map(part => part?.trim())
     const isMissingContent = propName === '' || propValue === ''

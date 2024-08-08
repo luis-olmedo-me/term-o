@@ -136,11 +136,10 @@ export const formatResponse = ({ response, responseBody, method }) => {
 
 export const formatStorageAsString = ({ storage, tabId }) => {
   const quotedTabId = tabId ? `${C`blue`}${getQuotedString(tabId)} ` : ''
-
   const stringStorage = JSON.stringify(storage)
   const quotedStorage = getQuotedString(stringStorage)
 
-  return `${quotedTabId}${quotedStorage}`
+  return `${quotedTabId}${C`yellow`}${quotedStorage}`
 }
 
 export const formatAlias = ({ key, value }) => {

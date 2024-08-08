@@ -1,5 +1,4 @@
-import { getUnquotedString } from '@src/helpers/utils.helpers'
-import { displayHelp, formatJSONAsString } from '../handlers.helpers'
+import { displayHelp, formatResponse } from '../handlers.helpers'
 
 export const handleREQUEST = async command => {
   const P = name => command.props[name]
@@ -16,14 +15,9 @@ export const handleREQUEST = async command => {
       })
 
       const response = await fetch(P`url`, { headers, method: P`method` })
+      const responseBody = await response[P`read-as`]()
 
-      if (!response.ok) return command.throw(`API failed with status "${response.status}".`)
-
-      const jsonResponse = await response[P`read-as`]()
-
-      const update = formatJSONAsString({
-        json: P`read-as` === 'text' ? getUnquotedString(jsonResponse) : jsonResponse
-      })
+      const update = formatResponse({ response, responseBody, method: P`method` })
 
       command.reset()
       command.update(update)

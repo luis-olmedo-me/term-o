@@ -119,18 +119,24 @@ export const formatStorageProp = ({ key, value, tabId }) => {
   return `${quotedTabId}${C`purple`}${quotedKey} ${C`yellow`}${quotedValue}`
 }
 
-export const formatJSONAsString = ({ json }) => {
-  const stringStorage = JSON.stringify(json)
-  const quotedStorage = getQuotedString(stringStorage)
+export const formatResponse = ({ response, responseBody, method }) => {
+  const quotedURL = getQuotedString(response.url)
+  const status = response.status
 
-  return `${C`yellow`}${quotedStorage}`
+  const responseBodyString = JSON.stringify(responseBody)
+  const quotedResponseBody = getQuotedString(responseBodyString)
+  const quotedMethod = getQuotedString(method)
+
+  return `${C`cyan`}${status} ${C`green`}${quotedMethod} ${C`brightYellow`}${quotedURL} ${C`yellow`}${quotedResponseBody}`
 }
 
 export const formatStorageAsString = ({ storage, tabId }) => {
   const quotedTabId = tabId ? `${C`blue`}${getQuotedString(tabId)} ` : ''
-  const stringStorage = formatJSONAsString(storage)
 
-  return `${quotedTabId}${stringStorage}`
+  const stringStorage = JSON.stringify(storage)
+  const quotedStorage = getQuotedString(stringStorage)
+
+  return `${quotedTabId}${quotedStorage}`
 }
 
 export const formatAlias = ({ key, value }) => {

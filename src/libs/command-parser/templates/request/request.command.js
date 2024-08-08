@@ -28,7 +28,8 @@ export default new CommandTemplate({ name: commandNames.REQUEST })
     name: 'method',
     type: 'string',
     abbreviation: 'm',
-    description: 'Select the method for request.'
+    description: 'Select the method for request.',
+    defaultValue: 'GET'
   })
   .expect({
     name: 'url',

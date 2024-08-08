@@ -43,7 +43,7 @@ export default new CommandTemplate({ name: commandNames.REQUEST })
     name: 'read-as',
     type: 'string',
     abbreviation: 'r',
-    description: 'API URL where request will be made.',
+    description: 'How the response data should be read as.',
     validate: [isStringLike(['blob', 'text', 'json'])],
     defaultValue: 'json'
   })

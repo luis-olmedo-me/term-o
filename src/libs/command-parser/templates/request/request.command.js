@@ -1,6 +1,6 @@
 import { commandNames } from '../../command-parser.constants'
 import CommandTemplate from '../../sub-services/command-template'
-import { hasinlineHeaders, isStringLike, isURL } from '../validators'
+import { hasinlineHeaders, isJSON, isStringLike, isURL } from '../validators'
 
 export default new CommandTemplate({ name: commandNames.REQUEST })
   .expect({
@@ -20,9 +20,10 @@ export default new CommandTemplate({ name: commandNames.REQUEST })
   })
   .expect({
     name: 'payload',
-    type: 'string-array',
+    type: 'string',
     abbreviation: 'p',
-    description: 'Add payload to API request.'
+    description: 'Add payload to API request.',
+    validate: [isJSON]
   })
   .expect({
     name: 'method',

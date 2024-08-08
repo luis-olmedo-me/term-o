@@ -14,7 +14,11 @@ export const handleREQUEST = async command => {
         headers.append(name, value)
       })
 
-      const response = await fetch(P`url`, { headers, method: P`method` })
+      const response = await fetch(P`url`, {
+        headers,
+        method: P`method`,
+        ...(P`payload` ? { body: P`payload` } : {})
+      })
       const responseBody = await response[P`read-as`]()
 
       const update = formatResponse({ response, responseBody, method: P`method` })

@@ -6,8 +6,7 @@ export const handleTABS = async command => {
   const P = name => command.props[name]
 
   if (P`reload`) {
-    let tab = await reloadTab({ tabId: P`reload`, wait: P`wait` }).catch(renameError)
-
+    const tab = await reloadTab({ tabId: P`reload`, wait: P`wait` }).catch(renameError)
     const update = formatTab(tab)
 
     command.update(update)

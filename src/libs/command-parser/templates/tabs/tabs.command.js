@@ -71,7 +71,13 @@ export default new CommandTemplate({ name: commandNames.TABS })
     abbreviation: 'r',
     description: 'Reload a specific tab by its ID (T[number]).',
     validate: [isTabId],
-    worksWith: []
+    worksWith: ['wait']
+  })
+  .expect({
+    name: 'wait',
+    type: 'boolean',
+    abbreviation: 'W',
+    description: 'Wait until page is completely loaded.'
   })
   .expect({
     name: 'close',

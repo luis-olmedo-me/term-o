@@ -1,14 +1,14 @@
 import { displayHelp, formatTab, renameError } from '../handlers.helpers'
-import { createTab, getTab } from './tabs.helpers'
+import { createTab, getTab, reloadTab } from './tabs.helpers'
 
 export const handleTABS = async command => {
   const { tab, setTab } = command.data
   const P = name => command.props[name]
 
   if (P`reload`) {
-    const tab = await getTab(P`reload`).catch(renameError)
+    let tab = await reloadTab({ tabId: P`reload`, wait: P`wait` }).catch(renameError)
+
     const update = formatTab(tab)
-    await chrome.tabs.reload(tab.id).catch(renameError)
 
     command.update(update)
   }

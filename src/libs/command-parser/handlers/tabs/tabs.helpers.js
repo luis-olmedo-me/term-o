@@ -21,6 +21,23 @@ export const createTab = async options => {
   return tab
 }
 
+export const reloadTab = async options => {
+  let tab = await getTab(options.tabId)
+
+  await chrome.tabs.reload(tab.id)
+
+  if (options.wait) {
+    tab = await chrome.tabs.get(tab.id)
+
+    while (tab.status !== 'complete') {
+      await delay(100)
+      tab = await chrome.tabs.get(tab.id)
+    }
+  }
+
+  return tab
+}
+
 export const getCurrentTab = async () => {
   const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true })
 

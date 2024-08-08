@@ -11,11 +11,13 @@ export const getTab = async tabIdRaw => {
 }
 
 export const createTab = async options => {
-  let tab = await chrome.tabs.create(options)
+  let tab = await chrome.tabs.create(options.config)
 
-  while (tab.status !== 'complete') {
-    await delay(100)
-    tab = await chrome.tabs.get(tab.id)
+  if (options.wait) {
+    while (tab.status !== 'complete') {
+      await delay(100)
+      tab = await chrome.tabs.get(tab.id)
+    }
   }
 
   return tab

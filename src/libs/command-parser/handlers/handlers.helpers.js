@@ -2,6 +2,10 @@ import { getQuotedString } from '@src/helpers/utils.helpers'
 import { getColor as C } from '@src/libs/themer'
 import { errorMessagesOverwritten } from './handlers.constants'
 
+export const spreadIf = (condition, value) => {
+  return condition ? value : {}
+}
+
 export const prependCounters = array => {
   const counters = array.reduce((results, value) => {
     const oldValue = results[value] || 0

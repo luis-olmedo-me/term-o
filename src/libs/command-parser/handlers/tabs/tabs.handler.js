@@ -1,4 +1,4 @@
-import { displayHelp, formatTab, renameError } from '../handlers.helpers'
+import { displayHelp, formatTab, renameError, spreadIf } from '../handlers.helpers'
 import { createTab, getTab, reloadTab } from './tabs.helpers'
 
 export const handleTABS = async command => {
@@ -6,6 +6,7 @@ export const handleTABS = async command => {
   const P = name => command.props[name]
 
   if (P`reload`) {
+    if (P`wait`) command.update(`Please wait while the page is loading.`)
     const tab = await reloadTab({ tabId: P`reload`, wait: P`wait` }).catch(renameError)
     const update = formatTab(tab)
 
@@ -43,9 +44,13 @@ export const handleTABS = async command => {
   }
 
   if (P`open`) {
-    command.update(`Please wait while the page is loading.`)
-    const tab = await createTab({ url: P`open` }).catch(renameError)
-    const update = formatTab(tab)
+    if (P`wait`) command.update(`Please wait while the page is loading.`)
+    const tab = await createTab({ config: { url: P`open` }, wait: P`wait` }).catch(renameError)
+
+    const update = formatTab({
+      ...tab,
+      ...spreadIf(!P`wait`, { url: P`open` })
+    })
 
     command.reset()
     command.update(update)

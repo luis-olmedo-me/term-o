@@ -74,12 +74,6 @@ export default new CommandTemplate({ name: commandNames.TABS })
     worksWith: ['wait']
   })
   .expect({
-    name: 'wait',
-    type: 'boolean',
-    abbreviation: 'W',
-    description: 'Wait until page is completely loaded.'
-  })
-  .expect({
     name: 'close',
     type: 'string',
     abbreviation: 'c',
@@ -93,7 +87,13 @@ export default new CommandTemplate({ name: commandNames.TABS })
     abbreviation: 'o',
     description: 'Open a URL in a new tab.',
     validate: [isURL],
-    worksWith: []
+    worksWith: ['wait']
+  })
+  .expect({
+    name: 'wait',
+    type: 'boolean',
+    abbreviation: 'W',
+    description: 'Wait until page is completely loaded.'
   })
   .expect({
     name: 'current',

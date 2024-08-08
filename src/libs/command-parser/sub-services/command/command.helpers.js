@@ -247,7 +247,7 @@ const getParamValue = (indexes, values) => {
 
 export const executePerUpdates = async (nextCommand, updates) => {
   const argsHoldingUp = nextCommand.args.filter(arg => arg.isHoldingUp)
-  const colorPattern = /\[termo\.[A-Za-z]+\]/g
+  const colorPattern = /\[termo\.color\.[A-Za-z]+\]|\[termo\.bgcolor\.[A-Za-z]+\]/g
 
   nextCommand.allowToExecuteNext(false)
 

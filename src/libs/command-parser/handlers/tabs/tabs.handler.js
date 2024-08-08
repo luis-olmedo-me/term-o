@@ -10,6 +10,7 @@ export const handleTABS = async command => {
     const tab = await reloadTab({ tabId: P`reload`, wait: P`wait` }).catch(renameError)
     const update = formatTab(tab)
 
+    command.reset()
     command.update(update)
   }
 

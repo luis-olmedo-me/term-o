@@ -79,6 +79,19 @@ export const isURL = (option, value) => {
   }
 }
 
+export const isStringLike = validValues => {
+  return (option, value) => {
+    if (Array.isArray(value)) return value.forEach(isStringLike)
+
+    if (!validValues.includes(value)) {
+      const name = option.displayName
+      const availableValues = validValues.map(val => `"${val}"`).join(' or ')
+
+      throw `${name} expects one of the following values: ${availableValues}. Instead, it received "${value}".`
+    }
+  }
+}
+
 export const isPositive = (option, value) => {
   if (value <= 0) {
     const name = option.displayName
@@ -129,6 +142,25 @@ export const isInlineStyles = (option, value) => {
       throw `${name} expects valid inline styles. Instead, it received "${value}".`
     }
   }
+}
+
+export const hasInlineHeaders = (option, values) => {
+  values.forEach(value => {
+    const name = option.displayName
+
+    const trimmedHeader = value.trim()
+
+    if (trimmedHeader === '' || !value.includes(':'))
+      throw `${name} must follow this pattern "name: value". Instead, it received "${value}".`
+
+    const [propName, propValue] = trimmedHeader.split(':').map(part => part?.trim())
+    const isMissingContent = propName === '' || propValue === ''
+    const isInvalidPropName = propName.includes(' ')
+
+    if (isMissingContent || isInvalidPropName) {
+      throw `${name} expects valid inline header. Instead, it received "${value}".`
+    }
+  })
 }
 
 export const hasItems = staticLength => {

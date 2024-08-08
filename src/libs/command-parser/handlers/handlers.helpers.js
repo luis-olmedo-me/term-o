@@ -2,6 +2,10 @@ import { getQuotedString } from '@src/helpers/utils.helpers'
 import { getColor as C } from '@src/libs/themer'
 import { errorMessagesOverwritten } from './handlers.constants'
 
+export const spreadIf = (condition, value) => {
+  return condition ? value : {}
+}
+
 export const prependCounters = array => {
   const counters = array.reduce((results, value) => {
     const oldValue = results[value] || 0
@@ -118,6 +122,18 @@ export const formatStorageProp = ({ key, value, tabId }) => {
 
   return `${quotedTabId}${C`purple`}${quotedKey} ${C`yellow`}${quotedValue}`
 }
+
+export const formatResponse = ({ response, responseBody, method }) => {
+  const quotedURL = getQuotedString(response.url)
+  const status = response.status
+
+  const responseBodyString = JSON.stringify(responseBody)
+  const quotedResponseBody = getQuotedString(responseBodyString)
+  const quotedMethod = getQuotedString(method)
+
+  return `${C`cyan`}${status} ${C`green`}${quotedMethod} ${C`brightYellow`}${quotedURL} ${C`yellow`}${quotedResponseBody}`
+}
+
 export const formatStorageAsString = ({ storage, tabId }) => {
   const quotedTabId = tabId ? `${C`blue`}${getQuotedString(tabId)} ` : ''
   const stringStorage = JSON.stringify(storage)
@@ -125,6 +141,7 @@ export const formatStorageAsString = ({ storage, tabId }) => {
 
   return `${quotedTabId}${C`yellow`}${quotedStorage}`
 }
+
 export const formatAlias = ({ key, value }) => {
   const quotedKey = getQuotedString(key)
   const quotedValue = getQuotedString(value)

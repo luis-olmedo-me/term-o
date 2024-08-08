@@ -8,5 +8,6 @@ export const commandNames = {
   THEME: 'theme',
   STYLE: 'style',
   EVENTS: 'events',
-  HISTORY: 'history'
+  HISTORY: 'history',
+  REQUEST: 'request'
 }

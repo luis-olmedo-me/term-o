@@ -1,6 +1,6 @@
 import { commandNames } from '../../command-parser.constants'
 import CommandTemplate from '../../sub-services/command-template'
-import { hasinlineHeaders, isJSON, isStringLike, isURL } from '../validators'
+import { hasInlineHeaders, isJSON, isStringLike, isURL } from '../validators'
 
 export default new CommandTemplate({ name: commandNames.REQUEST })
   .expect({
@@ -15,7 +15,7 @@ export default new CommandTemplate({ name: commandNames.REQUEST })
     name: 'headers',
     type: 'string-array',
     abbreviation: 'H',
-    validate: [hasinlineHeaders],
+    validate: [hasInlineHeaders],
     description: 'Add as much headers are needed.'
   })
   .expect({

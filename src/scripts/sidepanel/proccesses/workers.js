@@ -27,6 +27,15 @@ export const getStorage = (tabId, data) => {
   })
 }
 
+export const setStorage = (tabId, data) => {
+  return createWorkerProcessRequest({
+    type: 'set-storage',
+    defaultResponse: {},
+    tabId,
+    data
+  })
+}
+
 export const getElementStyles = (tabId, data) => {
   return createWorkerProcessRequest({
     type: 'get-element-styles',

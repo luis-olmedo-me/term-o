@@ -9,3 +9,12 @@ export const getStorageValue = async (namespace, key) => {
 export const setStorageValue = (namespace, key, value) => {
   return chrome.storage[namespace].set({ [key]: value })
 }
+
+export const getStorageNamespace = (includeLocal, includeSession, includeCookies) => {
+  return (
+    (includeLocal && 'local') ||
+    (includeSession && 'session') ||
+    (includeCookies && 'cookie') ||
+    null
+  )
+}

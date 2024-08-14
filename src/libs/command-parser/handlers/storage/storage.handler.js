@@ -1,4 +1,4 @@
-import { getStorage } from '@sidepanel/proccesses/workers'
+import { getStorage, setStorage } from '@sidepanel/proccesses/workers'
 import {
   displayHelp,
   formatStorageAsString,
@@ -6,6 +6,7 @@ import {
   formatText,
   getNumberTabId
 } from '../handlers.helpers'
+import { getStorageNamespace } from './storage.helpers'
 
 export const handleSTORAGE = async command => {
   const { tab } = command.data
@@ -14,11 +15,20 @@ export const handleSTORAGE = async command => {
   const tabId = P`tab-id` ? getNumberTabId(P`tab-id`) : tab.id
 
   if (P`local` || P`session` || P`cookie`) {
-    const storage = await getStorage(tabId, {
-      includeLocal: P`local`,
-      includeSession: P`session`,
-      includeCookies: P`cookie`
-    })
+    const [key, value] = P`set`
+    const namespace = getStorageNamespace(P`local`, P`session`, P`cookie`)
+
+    const storage = P`set`.length
+      ? await setStorage(tabId, {
+          namespace,
+          key,
+          value
+        })
+      : await getStorage(tabId, {
+          includeLocal: P`local`,
+          includeSession: P`session`,
+          includeCookies: P`cookie`
+        })
     const storageEntries = Object.entries(storage)
 
     command.reset()

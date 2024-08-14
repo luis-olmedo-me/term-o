@@ -1,27 +1,27 @@
 import { commandNames } from '../../command-parser.constants'
 import CommandTemplate from '../../sub-services/command-template'
-import { isTabId } from '../validators'
+import { hasItems, isTabId } from '../validators'
 
 export default new CommandTemplate({ name: commandNames.STORAGE })
   .expect({
     name: 'local',
     type: 'boolean',
     abbreviation: 'l',
-    worksWith: ['json', 'tab-id'],
+    worksWith: ['json', 'tab-id', 'set'],
     description: 'Get local storage from the pointed tab in the terminal.'
   })
   .expect({
     name: 'session',
     type: 'boolean',
     abbreviation: 's',
-    worksWith: ['json', 'tab-id'],
+    worksWith: ['json', 'tab-id', 'set'],
     description: 'Get local session from the pointed tab in the terminal.'
   })
   .expect({
     name: 'cookie',
     type: 'boolean',
     abbreviation: 'c',
-    worksWith: ['json', 'tab-id'],
+    worksWith: ['json', 'tab-id', 'set'],
     description: 'Get cookies from the pointed tab in the terminal.'
   })
   .expect({
@@ -29,6 +29,13 @@ export default new CommandTemplate({ name: commandNames.STORAGE })
     type: 'boolean',
     abbreviation: 'j',
     description: 'Get storages selected as JSON.'
+  })
+  .expect({
+    name: 'set',
+    type: 'string-array',
+    validate: [hasItems(2)],
+    abbreviation: 'S',
+    description: 'Set key and value in the storage selected.'
   })
   .expect({
     name: 'tab-id',

@@ -15,7 +15,17 @@ export const handleSCRIPTS = async command => {
     const file = await uploadFile()
     command.update('Reading uploaded file.')
     const fileContent = await readFileContent(file)
-    console.log('💬  fileContent:', fileContent)
+    const newScript = { name: file.name, content: fileContent }
+
+    const { scripts = [] } = await chrome.storage.local.get('scripts')
+    const alreadyExists = scripts.some(script => script.name === file.name)
+
+    if (alreadyExists) {
+      return command.throw(`The script "${file.name}" already exists.`)
+    }
+
+    const newScripts = scripts.concat(newScript)
+    await chrome.storage.local.set({ scripts: newScripts })
 
     const update = formatFile(file)
 

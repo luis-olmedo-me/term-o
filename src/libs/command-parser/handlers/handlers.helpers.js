@@ -187,6 +187,12 @@ export const formatTheme = ({ name }) => {
   return `${C`purple`}${quotedName}`
 }
 
+export const formatScript = ({ name }) => {
+  const quotedName = getQuotedString(name)
+
+  return `${C`brightPurple`}${quotedName}`
+}
+
 export const formatRule = ({ styles, selector }) => {
   const quotedSelector = getQuotedString(selector)
 

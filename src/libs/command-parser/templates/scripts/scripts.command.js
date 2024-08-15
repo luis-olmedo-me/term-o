@@ -1,16 +1,7 @@
 import { commandNames } from '../../command-parser.constants'
 import CommandTemplate from '../../sub-services/command-template'
-import { hasItems, hasNoSpaces, onItem } from '../validators'
 
 export default new CommandTemplate({ name: commandNames.SCRIPTS })
-  .expect({
-    name: 'add',
-    type: 'string-array',
-    abbreviation: 'a',
-    validate: [hasItems(2), onItem(0, hasNoSpaces)],
-    worksWith: [],
-    description: 'Add a new script. Format: ["script-name" "file://path/to/"]'
-  })
   .expect({
     name: 'list',
     type: 'boolean',

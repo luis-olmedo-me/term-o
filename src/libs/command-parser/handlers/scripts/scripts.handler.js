@@ -1,4 +1,4 @@
-import { displayHelp, formatAlias, formatFile } from '../handlers.helpers'
+import { displayHelp, formatFile, formatScript } from '../handlers.helpers'
 import { readFileContent, uploadFile } from './scripts.helpers'
 
 export const handleSCRIPTS = async command => {
@@ -6,27 +6,9 @@ export const handleSCRIPTS = async command => {
 
   if (P`list`) {
     const { scripts = [] } = await chrome.storage.local.get('scripts')
-    const updates = scripts.map(formatAlias)
+    const updates = scripts.map(formatScript)
 
     command.update(...updates)
-  }
-
-  if (P`add`.length) {
-    const [key, value] = P`add`
-    const newScript = { key, value }
-
-    const { scripts = [] } = await chrome.storage.local.get('scripts')
-    const alreadyExists = scripts.some(script => script.key === key)
-
-    if (alreadyExists) {
-      return command.throw(`The script "${key}" already exists.`)
-    }
-
-    const newScripts = scripts.concat(newScript)
-    const update = formatAlias(newScript)
-
-    await chrome.storage.local.set({ aliases: newScripts })
-    command.update(update)
   }
 
   if (P`upload`) {
@@ -52,9 +34,9 @@ export const handleSCRIPTS = async command => {
     }
 
     const newScripts = scripts.filter(script => script.key !== key)
-    const update = formatAlias(existingScript)
+    const update = formatScript(existingScript)
 
-    await chrome.storage.local.set({ aliases: newScripts })
+    await chrome.storage.local.set({ scripts: newScripts })
     command.update(update)
   }
 

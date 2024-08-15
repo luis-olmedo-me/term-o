@@ -5,6 +5,7 @@ import { handleERROR } from './error/error.handler'
 import { handleEVENTS } from './events/events.handler'
 import { handleHistory } from './history/history.handler'
 import { handleREQUEST } from './request/request.handler'
+import { handleSCRIPTS } from './scripts/scripts.handler'
 import { handleSTORAGE } from './storage/storage.handler'
 import { handleSTYLES } from './style/style.handler'
 import { handleTABS } from './tabs/tabs.handler'
@@ -23,5 +24,6 @@ export default {
   [commandNames.EVENTS]: handleEVENTS,
   [commandNames.ERROR]: handleERROR,
   [commandNames.HISTORY]: handleHistory,
-  [commandNames.REQUEST]: handleREQUEST
+  [commandNames.REQUEST]: handleREQUEST,
+  [commandNames.SCRIPTS]: handleSCRIPTS
 }

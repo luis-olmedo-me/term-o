@@ -1,7 +1,10 @@
+import { getQuotedString } from '@src/helpers/utils.helpers'
+
 export const uploadFile = () => {
   return new Promise((resolve, reject) => {
     const fileInput = document.createElement('input')
     fileInput.setAttribute('type', 'file')
+    fileInput.setAttribute('accept', '.termo.js')
 
     const cancel = () => {
       fileInput.removeEventListener('change', receiveFile)
@@ -11,10 +14,16 @@ export const uploadFile = () => {
       reject('No file was uploaded.')
     }
     const receiveFile = event => {
-      const [firstFile] = Array.from(event.currentTarget.files)
+      const [file] = Array.from(event.currentTarget.files)
+      const fileName = getQuotedString(file.name)
 
-      if (firstFile) resolve(firstFile)
-      else cancel()
+      if (!file) cancel()
+
+      if (fileName.endsWith('.termo.js')) resolve(file)
+      else
+        reject(
+          `Invalid file extension. "*.termo.js" was expected. Instead, it received ${fileName}`
+        )
     }
 
     fileInput.addEventListener('change', receiveFile)

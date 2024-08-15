@@ -36,14 +36,14 @@ export const handleSCRIPTS = async command => {
     const key = P`delete`
 
     const { scripts = [] } = await chrome.storage.local.get('scripts')
-    const existingAlias = scripts.find(script => script.key === key)
+    const existingScript = scripts.find(script => script.key === key)
 
-    if (!existingAlias) {
+    if (!existingScript) {
       return command.throw(`The script "${key}" does not exist.`)
     }
 
     const newScripts = scripts.filter(script => script.key !== key)
-    const update = formatAlias(existingAlias)
+    const update = formatAlias(existingScript)
 
     await chrome.storage.local.set({ aliases: newScripts })
     command.update(update)

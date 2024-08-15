@@ -19,7 +19,7 @@ export const uploadFile = () => {
 
       if (!file) cancel()
 
-      if (fileName.endsWith('.termo.js')) resolve(file)
+      if (file.name.endsWith('.termo.js')) resolve(file)
       else
         reject(
           `Invalid file extension. "*.termo.js" was expected. Instead, it received ${fileName}`

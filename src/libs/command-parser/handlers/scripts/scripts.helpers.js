@@ -22,23 +22,20 @@ export const uploadFile = () => {
 
     fileInput.click()
   })
+}
 
-  //   if (fileInput.files.length === 0) {
-  //     throw new Error('No se ha seleccionado ningún archivo.')
-  //   }
+export const readFileContent = file => {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader()
 
-  //   const archivo = fileInput.files[0]
-  //   const lector = new FileReader()
+    fileReader.addEventListener('load', () => {
+      resolve(fileReader.result)
+    })
 
-  //   return new Promise((resolve, reject) => {
-  //     lector.onload = () => {
-  //       resolve(lector.result)
-  //     }
+    fileReader.addEventListener('error', () => {
+      reject('There was an error reading the file content.')
+    })
 
-  //     lector.onerror = () => {
-  //       reject(new Error('Error al leer el archivo.'))
-  //     }
-
-  //     lector.readAsText(archivo)
-  //   })
+    fileReader.readAsText(file)
+  })
 }

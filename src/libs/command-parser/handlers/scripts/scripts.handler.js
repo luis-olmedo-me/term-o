@@ -1,5 +1,5 @@
 import { displayHelp, formatAlias, formatFile } from '../handlers.helpers'
-import { uploadFile } from './scripts.helpers'
+import { readFileContent, uploadFile } from './scripts.helpers'
 
 export const handleSCRIPTS = async command => {
   const P = name => command.props[name]
@@ -31,9 +31,13 @@ export const handleSCRIPTS = async command => {
 
   if (P`upload`) {
     const file = await uploadFile()
+    command.update('Reading uploaded file.')
+    const fileContent = await readFileContent(file)
+    console.log('💬  fileContent:', fileContent)
 
     const update = formatFile(file)
 
+    command.reset()
     command.update(update)
   }
 

@@ -9,7 +9,7 @@ export default new CommandTemplate({ name: commandNames.SCRIPTS })
     abbreviation: 'a',
     validate: [hasItems(2), onItem(0, hasNoSpaces)],
     worksWith: [],
-    description: 'Add a new script. Format: ["script-name" "javascript-code"]'
+    description: 'Add a new script. Format: ["script-name" "file://path/to/"]'
   })
   .expect({
     name: 'list',

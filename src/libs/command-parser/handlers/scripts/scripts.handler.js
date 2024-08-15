@@ -1,4 +1,5 @@
 import { displayHelp, formatAlias } from '../handlers.helpers'
+import { uploadFile } from './scripts.helpers'
 
 export const handleSCRIPTS = async command => {
   const P = name => command.props[name]
@@ -29,7 +30,9 @@ export const handleSCRIPTS = async command => {
   }
 
   if (P`upload`) {
-    // test
+    await uploadFile()
+
+    command.update('File uploaded.')
   }
 
   if (P`delete`) {

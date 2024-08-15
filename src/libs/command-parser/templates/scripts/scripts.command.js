@@ -19,6 +19,13 @@ export default new CommandTemplate({ name: commandNames.SCRIPTS })
     description: 'List all defined scripts.'
   })
   .expect({
+    name: 'upload',
+    type: 'boolean',
+    abbreviation: 'u',
+    worksWith: [],
+    description: 'Upload a file to add as script.'
+  })
+  .expect({
     name: 'delete',
     type: 'string',
     abbreviation: 'd',

@@ -3,17 +3,18 @@ export const uploadFile = () => {
     const fileInput = document.createElement('input')
     fileInput.setAttribute('type', 'file')
 
+    const cancel = () => {
+      fileInput.removeEventListener('change', receiveFile)
+      fileInput.removeEventListener('cancel', cancel)
+      fileInput.remove()
+
+      reject('No file was uploaded.')
+    }
     const receiveFile = event => {
       const [firstFile] = Array.from(event.currentTarget.files)
 
       if (firstFile) resolve(firstFile)
-      else reject('No file was uploaded.')
-    }
-
-    const cancel = () => {
-      fileInput.remove()
-
-      reject('No file was uploaded.')
+      else cancel()
     }
 
     fileInput.addEventListener('change', receiveFile)

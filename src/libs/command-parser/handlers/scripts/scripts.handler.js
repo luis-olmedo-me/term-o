@@ -1,4 +1,4 @@
-import { displayHelp, formatAlias } from '../handlers.helpers'
+import { displayHelp, formatAlias, formatFile } from '../handlers.helpers'
 import { uploadFile } from './scripts.helpers'
 
 export const handleSCRIPTS = async command => {
@@ -30,9 +30,11 @@ export const handleSCRIPTS = async command => {
   }
 
   if (P`upload`) {
-    await uploadFile()
+    const file = await uploadFile()
 
-    command.update('File uploaded.')
+    const update = formatFile(file)
+
+    command.update(update)
   }
 
   if (P`delete`) {

@@ -18,6 +18,22 @@ class CommandParser extends EventListener {
     this.aliases = []
   }
 
+  get commandsAPI() {
+    return this.templates.reduce((env, command) => {
+      return {
+        ...env,
+        [command.name]: async props => {
+          command.mock(props)
+
+          if (command.failed) throw command.updates
+          if (!command.finished) await command.execute()
+
+          return command.updates
+        }
+      }
+    }, {})
+  }
+
   setAliases(aliases) {
     this.aliases = aliases
   }

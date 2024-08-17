@@ -1,5 +1,7 @@
 import commandParser from '@src/libs/command-parser'
+import processWaitList from '@src/libs/process-wait-list'
 import eventManager from './packages/event-manager.package'
+import processes from './processes'
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
 
@@ -25,4 +27,15 @@ chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {
   const clearLogs = () => {}
 
   executeEvents(pendingEvents, { tab, setTab, clearLogs })
+})
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  const { id, data } = request.data
+  const handler = processes[request.type]
+
+  const process = id
+    ? processWaitList.getProcessById(id)
+    : processWaitList.add(resolve => handler(resolve, data))
+
+  return sendResponse({ status: 'ok', data: process })
 })

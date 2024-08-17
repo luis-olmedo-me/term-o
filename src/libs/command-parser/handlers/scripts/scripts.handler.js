@@ -1,3 +1,5 @@
+import { executeCode } from '@src/scripts/sidepanel/proccesses/workers'
+// import { executeInEnvironment } from '../../command-parser.exec'
 import { displayHelp, formatFile, formatScript } from '../handlers.helpers'
 import { readFileContent, uploadFile } from './scripts.helpers'
 
@@ -48,6 +50,24 @@ export const handleSCRIPTS = async command => {
 
     await chrome.storage.local.set({ scripts: newScripts })
     command.update(update)
+  }
+
+  if (P`run`) {
+    const name = P`run`
+    const { scripts = [] } = await chrome.storage.local.get('scripts')
+    const existingScript = scripts.find(script => script.name === name)
+
+    if (!existingScript) {
+      return command.throw(`The script "${name}" does not exist.`)
+    }
+
+    const { updates } = await executeCode({
+      scriptContent: existingScript.content
+    })
+
+    command.update(...updates)
+
+    // executeInEnvironment(existingScript.content, command)
   }
 
   if (P`help`) displayHelp(command)

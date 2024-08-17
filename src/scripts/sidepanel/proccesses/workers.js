@@ -1,7 +1,7 @@
-import { createWorkerProcessRequest } from './worker-creator'
+import { createTabWorkerProcessRequest, createWorkerProcessRequest } from './worker-creator'
 
 export const findDOMElement = (tabId, data) => {
-  return createWorkerProcessRequest({
+  return createTabWorkerProcessRequest({
     type: 'find-dom-element',
     defaultResponse: null,
     tabId,
@@ -10,7 +10,7 @@ export const findDOMElement = (tabId, data) => {
 }
 
 export const getDOMElements = (tabId, data) => {
-  return createWorkerProcessRequest({
+  return createTabWorkerProcessRequest({
     type: 'get-dom-elements',
     defaultResponse: [],
     tabId,
@@ -19,7 +19,7 @@ export const getDOMElements = (tabId, data) => {
 }
 
 export const getStorage = (tabId, data) => {
-  return createWorkerProcessRequest({
+  return createTabWorkerProcessRequest({
     type: 'get-storage',
     defaultResponse: {},
     tabId,
@@ -28,7 +28,7 @@ export const getStorage = (tabId, data) => {
 }
 
 export const setStorage = (tabId, data) => {
-  return createWorkerProcessRequest({
+  return createTabWorkerProcessRequest({
     type: 'set-storage',
     defaultResponse: {},
     tabId,
@@ -37,7 +37,7 @@ export const setStorage = (tabId, data) => {
 }
 
 export const getElementStyles = (tabId, data) => {
-  return createWorkerProcessRequest({
+  return createTabWorkerProcessRequest({
     type: 'get-element-styles',
     defaultResponse: [],
     tabId,
@@ -46,7 +46,7 @@ export const getElementStyles = (tabId, data) => {
 }
 
 export const applyElementStyles = (tabId, data) => {
-  return createWorkerProcessRequest({
+  return createTabWorkerProcessRequest({
     type: 'apply-element-styles',
     defaultResponse: [],
     tabId,
@@ -55,10 +55,18 @@ export const applyElementStyles = (tabId, data) => {
 }
 
 export const clickElement = (tabId, data) => {
-  return createWorkerProcessRequest({
+  return createTabWorkerProcessRequest({
     type: 'click-element',
     defaultResponse: null,
     tabId,
+    data
+  })
+}
+
+export const executeCode = data => {
+  return createWorkerProcessRequest({
+    type: 'execute-code',
+    defaultResponse: {},
     data
   })
 }

@@ -14,7 +14,7 @@ const getErrorMessage = error => {
   return replacement ? replacement.new : error
 }
 
-const createWorkerRequest = ({ tabId, type, data, defaultResponse }) => {
+const createTabWorkerRequest = ({ tabId, type, data, defaultResponse }) => {
   return new Promise((resolve, reject) => {
     const callback = response => {
       const lastError = chrome.runtime.lastError
@@ -34,7 +34,27 @@ const createWorkerRequest = ({ tabId, type, data, defaultResponse }) => {
   })
 }
 
-export const createWorkerProcessRequest = ({ tabId, type, data, defaultResponse }) => {
+const createWorkerRequest = ({ type, data, defaultResponse }) => {
+  return new Promise((resolve, reject) => {
+    const callback = response => {
+      const lastError = chrome.runtime.lastError
+
+      if (lastError) {
+        const error = getErrorMessage(lastError.message)
+
+        return reject(error)
+      }
+
+      if (response.status !== 'ok') return reject(response.error)
+
+      resolve(response.data || defaultResponse)
+    }
+
+    chrome.runtime.sendMessage({ type, data }, callback)
+  })
+}
+
+export const createWorkerProcessRequest = ({ type, data, defaultResponse }) => {
   return new Promise((resolve, reject) => {
     const callback = process => {
       switch (process.state) {
@@ -61,7 +81,43 @@ export const createWorkerProcessRequest = ({ tabId, type, data, defaultResponse 
     }
 
     const createWorker = data => {
-      createWorkerRequest({ tabId, type, data, defaultResponse: {} })
+      createWorkerRequest({ type, data, defaultResponse: {} })
+        .then(callback)
+        .catch(reject)
+    }
+
+    createWorker({ id: null, data })
+  })
+}
+
+export const createTabWorkerProcessRequest = ({ tabId, type, data, defaultResponse }) => {
+  return new Promise((resolve, reject) => {
+    const callback = process => {
+      switch (process.state) {
+        case states.IN_PROGRESS: {
+          setTimeout(() => createWorker({ id: process.id, data }), 50)
+          break
+        }
+
+        case states.ERROR: {
+          reject(process.data || defaultResponse)
+          break
+        }
+
+        case states.DONE: {
+          resolve(process.data || defaultResponse)
+          break
+        }
+
+        default: {
+          reject('Unexpected status when waiting for process.')
+          break
+        }
+      }
+    }
+
+    const createWorker = data => {
+      createTabWorkerRequest({ tabId, type, data, defaultResponse: {} })
         .then(callback)
         .catch(reject)
     }

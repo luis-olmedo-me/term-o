@@ -1,4 +1,4 @@
-import { createTabWorkerProcessRequest, createWorkerProcessRequest } from './worker-creator'
+import { createTabWorkerProcessRequest } from './worker-creator'
 
 export const findDOMElement = (tabId, data) => {
   return createTabWorkerProcessRequest({
@@ -63,10 +63,17 @@ export const clickElement = (tabId, data) => {
   })
 }
 
-export const executeCode = data => {
-  return createWorkerProcessRequest({
-    type: 'execute-code',
-    defaultResponse: {},
-    data
-  })
+export const executeCode = () => {
+  const iframe = document.createElement('iframe')
+  iframe.setAttribute('src', 'sandbox.html')
+  document.body.appendChild(iframe)
+
+  iframe.onload = () => {
+    window.addEventListener('message', event => {
+      console.log('EVAL output', event.data)
+      document.body.removeChild(iframe)
+    })
+
+    iframe.contentWindow.postMessage('10 + 20', '*')
+  }
 }

@@ -48,3 +48,18 @@ export const readFileContent = file => {
     fileReader.readAsText(file)
   })
 }
+
+export const executeCode = () => {
+  const iframe = document.createElement('iframe')
+  iframe.setAttribute('src', 'sandbox.html')
+  document.body.appendChild(iframe)
+
+  iframe.onload = () => {
+    window.addEventListener('message', event => {
+      console.log('EVAL output', event.data)
+      document.body.removeChild(iframe)
+    })
+
+    iframe.contentWindow.postMessage('10 + 20', '*')
+  }
+}

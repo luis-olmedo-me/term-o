@@ -61,13 +61,10 @@ export const handleSCRIPTS = async command => {
       return command.throw(`The script "${name}" does not exist.`)
     }
 
-    const { updates } = await executeCode({
+    await executeCode({
       scriptContent: existingScript.content
     })
-
-    command.update(...updates)
-
-    // executeInEnvironment(existingScript.content, command)
+    command.update('Executed!')
   }
 
   if (P`help`) displayHelp(command)

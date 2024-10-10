@@ -1,7 +1,7 @@
-import { createTabWorkerProcessRequest } from './worker-creator'
+import { createWorkerProcessRequest } from './worker-creator'
 
 export const findDOMElement = (tabId, data) => {
-  return createTabWorkerProcessRequest({
+  return createWorkerProcessRequest({
     type: 'find-dom-element',
     defaultResponse: null,
     tabId,
@@ -10,7 +10,7 @@ export const findDOMElement = (tabId, data) => {
 }
 
 export const getDOMElements = (tabId, data) => {
-  return createTabWorkerProcessRequest({
+  return createWorkerProcessRequest({
     type: 'get-dom-elements',
     defaultResponse: [],
     tabId,
@@ -19,7 +19,7 @@ export const getDOMElements = (tabId, data) => {
 }
 
 export const getStorage = (tabId, data) => {
-  return createTabWorkerProcessRequest({
+  return createWorkerProcessRequest({
     type: 'get-storage',
     defaultResponse: {},
     tabId,
@@ -28,7 +28,7 @@ export const getStorage = (tabId, data) => {
 }
 
 export const setStorage = (tabId, data) => {
-  return createTabWorkerProcessRequest({
+  return createWorkerProcessRequest({
     type: 'set-storage',
     defaultResponse: {},
     tabId,
@@ -37,7 +37,7 @@ export const setStorage = (tabId, data) => {
 }
 
 export const getElementStyles = (tabId, data) => {
-  return createTabWorkerProcessRequest({
+  return createWorkerProcessRequest({
     type: 'get-element-styles',
     defaultResponse: [],
     tabId,
@@ -46,7 +46,7 @@ export const getElementStyles = (tabId, data) => {
 }
 
 export const applyElementStyles = (tabId, data) => {
-  return createTabWorkerProcessRequest({
+  return createWorkerProcessRequest({
     type: 'apply-element-styles',
     defaultResponse: [],
     tabId,
@@ -55,25 +55,10 @@ export const applyElementStyles = (tabId, data) => {
 }
 
 export const clickElement = (tabId, data) => {
-  return createTabWorkerProcessRequest({
+  return createWorkerProcessRequest({
     type: 'click-element',
     defaultResponse: null,
     tabId,
     data
   })
-}
-
-export const executeCode = () => {
-  const iframe = document.createElement('iframe')
-  iframe.setAttribute('src', 'sandbox.html')
-  document.body.appendChild(iframe)
-
-  iframe.onload = () => {
-    window.addEventListener('message', event => {
-      console.log('EVAL output', event.data)
-      document.body.removeChild(iframe)
-    })
-
-    iframe.contentWindow.postMessage('10 + 20', '*')
-  }
 }

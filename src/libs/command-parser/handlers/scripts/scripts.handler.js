@@ -1,5 +1,4 @@
 import { executeCode } from '@src/scripts/sidepanel/proccesses/workers'
-// import { executeInEnvironment } from '../../command-parser.exec'
 import { displayHelp, formatFile, formatScript } from '../handlers.helpers'
 import { readFileContent, uploadFile } from './scripts.helpers'
 

@@ -1,0 +1,3 @@
+window.addEventListener('message', async function(event) {
+  event.source.window.postMessage(eval(event.data), event.origin)
+})

@@ -1,6 +1,5 @@
-import { executeCode } from '@src/scripts/sidepanel/proccesses/workers'
 import { displayHelp, formatFile, formatScript } from '../handlers.helpers'
-import { readFileContent, uploadFile } from './scripts.helpers'
+import { executeCode, readFileContent, uploadFile } from './scripts.helpers'
 
 export const handleSCRIPTS = async command => {
   const P = name => command.props[name]

@@ -59,9 +59,10 @@ export const handleSCRIPTS = async command => {
       return command.throw(`The script "${name}" does not exist.`)
     }
 
-    await executeCode({
+    const test = await executeCode({
       scriptContent: existingScript.content
     })
+    console.log('💬  codeExecutionTest:', test)
     command.update('Executed!')
   }
 

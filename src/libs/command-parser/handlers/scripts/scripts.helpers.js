@@ -49,17 +49,26 @@ export const readFileContent = file => {
   })
 }
 
-export const executeCode = () => {
-  const iframe = document.createElement('iframe')
-  iframe.setAttribute('src', 'sandbox.html')
-  document.body.appendChild(iframe)
+export const executeCode = ({ scriptContent }) => {
+  return new Promise((resolve, reject) => {
+    const iframe = document.createElement('iframe')
+    iframe.setAttribute('src', 'sandbox.html')
+    iframe.setAttribute('style', 'display: none;')
+    document.body.appendChild(iframe)
 
-  iframe.onload = () => {
-    window.addEventListener('message', event => {
-      console.log('EVAL output', event.data)
+    const handleCodeEval = function(event) {
       document.body.removeChild(iframe)
-    })
+      window.removeEventListener('message', handleCodeEval)
+      resolve(event.data)
+    }
 
-    iframe.contentWindow.postMessage('10 + 20', '*')
-  }
+    iframe.onload = () => {
+      window.addEventListener('message', handleCodeEval)
+
+      iframe.contentWindow.postMessage({ type: 'sandbox-code', code: { scriptContent } }, '*')
+    }
+    iframe.onerror = () => {
+      reject('error')
+    }
+  })
 }

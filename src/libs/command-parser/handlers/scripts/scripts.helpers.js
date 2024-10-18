@@ -57,9 +57,20 @@ export const executeCode = ({ scriptContent }) => {
     document.body.appendChild(iframe)
 
     const handleCodeEval = function(event) {
-      document.body.removeChild(iframe)
-      window.removeEventListener('message', handleCodeEval)
-      resolve(event.data)
+      const type = event.data?.type
+      const data = event.data?.data
+
+      switch (type) {
+        case 'sandbox-command-update':
+          console.log('💬  event:', event)
+          break
+
+        case 'sandbox-command-finish':
+          document.body.removeChild(iframe)
+          window.removeEventListener('message', handleCodeEval)
+          resolve(data)
+          break
+      }
     }
 
     iframe.onload = () => {

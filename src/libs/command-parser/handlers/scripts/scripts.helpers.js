@@ -49,7 +49,7 @@ export const readFileContent = file => {
   })
 }
 
-export const executeCode = ({ scriptContent }) => {
+export const executeCode = ({ scriptContent, command }) => {
   return new Promise((resolve, reject) => {
     const iframe = document.createElement('iframe')
     iframe.setAttribute('src', 'sandbox.html')
@@ -62,7 +62,7 @@ export const executeCode = ({ scriptContent }) => {
 
       switch (type) {
         case 'sandbox-command-update':
-          console.log('💬  event:', event)
+          command.update(...data.updates)
           break
 
         case 'sandbox-command-finish':

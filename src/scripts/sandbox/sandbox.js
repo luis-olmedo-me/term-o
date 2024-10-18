@@ -1,22 +1,32 @@
-function evaluarCodigo(code) {
+function evaluarCodigo(event) {
+  const code = 'return update("Testing my case!");' // event.data.code
+
   const queso = 2
   const leche = 3
   const queso2 = 5
-  const queso3 = () => {
-    console.log('test')
-    return 54
+
+  const update = (...args) => {
+    event.source.window.postMessage(
+      { type: 'sandbox-command-update', data: { updates: args } },
+      event.origin
+    )
   }
 
   const restrictedEval = new Function(
     'queso',
     'leche',
     'queso2',
-    'queso3',
-    `"use strict"; return (function() { ${code} })();`
+    'update',
+    `
+      "use strict";
+      return (function() {
+        ${code}
+      })();
+    `
   )
 
   try {
-    return restrictedEval(queso, leche, queso2, queso3)
+    return restrictedEval(queso, leche, queso2, update)
   } catch (error) {
     return `Error: ${error.message}`
   }
@@ -72,7 +82,7 @@ window.addEventListener('message', async function(event) {
   if (event.data?.type !== 'sandbox-code') return
 
   event.source.window.postMessage(
-    { type: 'sandbox-command-finish', data: evaluarCodigo('return queso3();') },
+    { type: 'sandbox-command-finish', data: evaluarCodigo(event) },
     event.origin
   )
 })

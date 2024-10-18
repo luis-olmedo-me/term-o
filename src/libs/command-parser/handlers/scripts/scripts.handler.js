@@ -60,7 +60,8 @@ export const handleSCRIPTS = async command => {
     }
 
     const test = await executeCode({
-      scriptContent: existingScript.content
+      scriptContent: existingScript.content,
+      command
     })
     console.log('💬  codeExecutionTest:', test)
     command.update('Executed!')

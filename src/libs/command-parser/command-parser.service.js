@@ -66,7 +66,7 @@ class CommandParser extends EventListener {
     if (!template) {
       const error = errorTemplate.create()
 
-      error.mock({ title: `'The command "${cleanedName}" is unrecognized.'` })
+      error.mock({ title: `The command "${cleanedName}" is unrecognized.` })
       error.execute()
 
       return error

@@ -82,7 +82,7 @@ export const executeCode = ({ scriptContent, command }) => {
               const isString = /^"|^'/.test(arg) && /"$|'$/.test(arg)
 
               if (isArray) return getArray(arg)
-              else if (isString) return arg
+              else if (isString) return arg.slice(1).slice(0, -1)
               else {
                 const argAsNumber = Number(arg)
                 return Number.isNaN(argAsNumber) ? null : argAsNumber

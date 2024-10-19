@@ -1,4 +1,4 @@
-import { createUUIDv4 } from '@src/helpers/utils.helpers'
+import { createUUIDv4, getQuotedString } from '@src/helpers/utils.helpers'
 import EventListener from '@src/libs/event-listener'
 
 import { formatError } from '../../handlers/handlers.helpers'
@@ -94,6 +94,10 @@ export class Command extends EventListener {
 
         case 'boolean': {
           return [...args, `--${name}`]
+        }
+
+        case 'string': {
+          return [...args, `--${name}`, getQuotedString(value)]
         }
 
         default: {

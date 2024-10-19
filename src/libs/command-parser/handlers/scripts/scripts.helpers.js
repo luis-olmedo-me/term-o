@@ -90,7 +90,10 @@ export const executeCode = ({ scriptContent, command }) => {
         case 'sandbox-command-finish': {
           document.body.removeChild(iframe)
           window.removeEventListener('message', handleCodeEval)
-          resolve(data)
+
+          if (data.error) reject(data.error)
+          else resolve()
+
           break
         }
       }

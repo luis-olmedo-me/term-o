@@ -57,15 +57,17 @@ async function safeEval(event) {
   )
 
   try {
-    return await restrictedEval(...handlers, update, setUpdates)?.([])
+    await restrictedEval(...handlers, update, setUpdates)?.([])
+    return ''
   } catch (error) {
     setUpdates(`${error}`)
+    return `${error}`
   }
 }
 
 window.addEventListener('message', async function(event) {
   if (event.data?.type !== 'sandbox-code') return
 
-  await safeEval(event)
-  event.source.window.postMessage({ type: 'sandbox-command-finish' }, event.origin)
+  const error = await safeEval(event)
+  event.source.window.postMessage({ type: 'sandbox-command-finish', data: { error } }, event.origin)
 })

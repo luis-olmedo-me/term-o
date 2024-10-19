@@ -1,7 +1,8 @@
+import { commandNames } from '@src/libs/command-parser/command-parser.constants'
+
 async function safeEval(event) {
   const code = event.data.data.code
-
-  const storage = props => {
+  const createHandlerFor = name => props => {
     return new Promise(resolve => {
       const handleSandboxCommand = event => {
         if (event.data?.type !== 'sandbox-command-return') return
@@ -13,11 +14,14 @@ async function safeEval(event) {
       window.addEventListener('message', handleSandboxCommand)
 
       event.source.window.postMessage(
-        { type: 'sandbox-command', data: { props, name: 'storage' } },
+        { type: 'sandbox-command', data: { props, name } },
         event.origin
       )
     })
   }
+
+  const handledCommandNames = Object.values(commandNames)
+  const handlers = handledCommandNames.map(createHandlerFor)
 
   const update = (...args) => {
     event.source.window.postMessage(
@@ -27,8 +31,8 @@ async function safeEval(event) {
   }
 
   const restrictedEval = new Function(
+    ...handledCommandNames,
     'update',
-    'storage',
     `
       "use strict";
       return (function() {
@@ -44,7 +48,7 @@ async function safeEval(event) {
   )
 
   try {
-    return await restrictedEval(update, storage)?.()
+    return await restrictedEval(...handlers, update)?.()
   } catch (error) {
     return `Error: ${error.message}`
   }

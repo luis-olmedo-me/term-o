@@ -62,7 +62,7 @@ async function safeEval(event) {
     const matchesWithName = main?.name === 'main'
 
     if (!isFunction || !matchesWithName) throw 'Executed script must use a function called "main".'
-    main([])
+    await main([])
 
     return ''
   } catch (error) {

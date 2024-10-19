@@ -48,7 +48,7 @@ async function safeEval(event) {
         try {
           ${code}
   
-          return main
+          return main || null
         } catch(error) {
           setUpdates(error)
         }
@@ -57,7 +57,13 @@ async function safeEval(event) {
   )
 
   try {
-    await restrictedEval(...handlers, update, setUpdates)?.([])
+    const main = await restrictedEval(...handlers, update, setUpdates)
+    const isFunction = typeof main === 'function'
+    const matchesWithName = main?.name === 'main'
+
+    if (!isFunction || !matchesWithName) throw 'Executed script must use a function called "main".'
+    main([])
+
     return ''
   } catch (error) {
     setUpdates(`${error}`)

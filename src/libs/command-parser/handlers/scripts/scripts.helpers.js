@@ -76,7 +76,7 @@ export const executeCode = ({ scriptContent, command }) => {
     iframe.onload = () => {
       window.addEventListener('message', handleCodeEval)
 
-      iframe.contentWindow.postMessage({ type: 'sandbox-code', code: { scriptContent } }, '*')
+      iframe.contentWindow.postMessage({ type: 'sandbox-code', data: { code: scriptContent } }, '*')
     }
     iframe.onerror = () => {
       reject('error')

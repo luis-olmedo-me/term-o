@@ -1,5 +1,5 @@
 function evaluarCodigo(event) {
-  const code = 'return update("Testing my case!");' // event.data.code
+  const code = event.data.data.code
 
   const queso = 2
   const leche = 3
@@ -21,6 +21,8 @@ function evaluarCodigo(event) {
       "use strict";
       return (function() {
         ${code}
+
+        main?.([])
       })();
     `
   )

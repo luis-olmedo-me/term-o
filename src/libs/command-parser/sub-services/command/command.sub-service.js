@@ -84,7 +84,22 @@ export class Command extends EventListener {
 
   mock(mockedProps) {
     const scriptArgs = Object.entries(mockedProps).reduce((args, [name, value]) => {
-      return [...args, `--${name}`, value]
+      switch (typeof value) {
+        case 'object': {
+          const isArray = Array.isArray(value)
+          const formattedValues = isArray ? value.map(item => `"${item}"`) : []
+
+          return isArray ? [...args, `--${name}`, `[${formattedValues.join(' ')}]`] : args
+        }
+
+        case 'boolean': {
+          return [...args, `--${name}`]
+        }
+
+        default: {
+          return [...args, `--${name}`, value]
+        }
+      }
     }, [])
 
     return this.prepare(scriptArgs)

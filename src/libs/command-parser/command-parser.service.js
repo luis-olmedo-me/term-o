@@ -89,6 +89,10 @@ class CommandParser extends EventListener {
 
     return fragmentsWithAliases.join(' && ')
   }
+
+  getTemplateByName(name) {
+    return this.templates.find(template => template.name === name)
+  }
 }
 
 export const commandParser = new CommandParser(templates)

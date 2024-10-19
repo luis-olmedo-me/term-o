@@ -1,4 +1,5 @@
 import { getQuotedString } from '@src/helpers/utils.helpers'
+import commandParser from '../..'
 
 export const uploadFile = () => {
   return new Promise((resolve, reject) => {
@@ -56,20 +57,39 @@ export const executeCode = ({ scriptContent, command }) => {
     iframe.setAttribute('style', 'display: none;')
     document.body.appendChild(iframe)
 
-    const handleCodeEval = function(event) {
+    const handleCodeEval = async function(event) {
       const type = event.data?.type
       const data = event.data?.data
 
       switch (type) {
-        case 'sandbox-command-update':
+        case 'sandbox-command': {
+          const newCommand = commandParser.getTemplateByName(data.name).create()
+
+          newCommand.mock(data.props)
+          newCommand.appendsData(command.data)
+
+          console.log('💬  newCommand:', newCommand.finished, newCommand)
+          console.log('💬  newCommand.updates:', newCommand.updates)
+          if (!newCommand.finished) await newCommand.execute()
+
+          iframe.contentWindow.postMessage(
+            { type: 'sandbox-command-return', data: { updates: newCommand.updates } },
+            '*'
+          )
+          break
+        }
+
+        case 'sandbox-command-update': {
           command.update(...data.updates)
           break
+        }
 
-        case 'sandbox-command-finish':
+        case 'sandbox-command-finish': {
           document.body.removeChild(iframe)
           window.removeEventListener('message', handleCodeEval)
           resolve(data)
           break
+        }
       }
     }
 

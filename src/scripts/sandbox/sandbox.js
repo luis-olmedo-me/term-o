@@ -1,9 +1,23 @@
-function evaluarCodigo(event) {
+async function safeEval(event) {
   const code = event.data.data.code
 
-  const queso = 2
-  const leche = 3
-  const queso2 = 5
+  const storage = props => {
+    return new Promise(resolve => {
+      const handleSandboxCommand = event => {
+        if (event.data?.type !== 'sandbox-command-return') return
+
+        window.removeEventListener('message', handleSandboxCommand)
+        resolve(event.data.data.updates)
+      }
+
+      window.addEventListener('message', handleSandboxCommand)
+
+      event.source.window.postMessage(
+        { type: 'sandbox-command', data: { props, name: 'storage' } },
+        event.origin
+      )
+    })
+  }
 
   const update = (...args) => {
     event.source.window.postMessage(
@@ -13,78 +27,32 @@ function evaluarCodigo(event) {
   }
 
   const restrictedEval = new Function(
-    'queso',
-    'leche',
-    'queso2',
     'update',
+    'storage',
     `
       "use strict";
       return (function() {
-        ${code}
-
-        main?.([])
+        try {
+          ${code}
+  
+          return main
+        } catch(error) {
+          update(error)
+        }
       })();
     `
   )
 
   try {
-    return restrictedEval(queso, leche, queso2, update)
+    return await restrictedEval(update, storage)?.()
   } catch (error) {
     return `Error: ${error.message}`
   }
 }
 
-// const safeEval = event => {
-//   const code = event.data.code
-
-//   const storage = props => {
-//     return new Promise(resolve => {
-//       const handleSandboxCommand = event => {
-//         if (event.data?.type !== 'sandbox-command-return') return
-
-//         window.removeEventListener('message', handleSandboxCommand)
-//         resolve(event.data.updates)
-//       }
-
-//       window.addEventListener('message', handleSandboxCommand)
-
-//       event.source.window.postMessage(
-//         { type: 'sandbox-command', data: { props, name: 'storage' } },
-//         event.origin
-//       )
-//     })
-//   }
-
-// const update = (...args) => {
-//   event.source.window.postMessage(
-//     { type: 'sandbox-command-update', data: { updates: args } },
-//     event.origin
-//   )
-// }
-
-//   const restrictedEval = new Function(
-//     'update',
-//     'storage',
-//     `
-//         "use strict";
-//         return (function() {
-//             ${code}
-//         })();
-//     `
-//   )
-
-//   try {
-//     return restrictedEval(storage, update)
-//   } catch (error) {
-//     return `Error: ${error.message}`
-//   }
-// }
-
 window.addEventListener('message', async function(event) {
   if (event.data?.type !== 'sandbox-code') return
 
-  event.source.window.postMessage(
-    { type: 'sandbox-command-finish', data: evaluarCodigo(event) },
-    event.origin
-  )
+  await safeEval(event)
+  event.source.window.postMessage({ type: 'sandbox-command-finish' }, event.origin)
 })

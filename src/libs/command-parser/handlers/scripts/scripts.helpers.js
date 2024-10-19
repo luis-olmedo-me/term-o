@@ -1,4 +1,5 @@
 import { getQuotedString } from '@src/helpers/utils.helpers'
+import { cleanColors } from '@src/libs/themer/themer.helpers'
 import commandParser from '../..'
 
 export const uploadFile = () => {
@@ -69,9 +70,13 @@ export const executeCode = ({ scriptContent, command }) => {
           newCommand.appendsData(command.data)
 
           if (!newCommand.finished) await newCommand.execute()
+          const cleanedUpdates = newCommand.updates.map(cleanColors)
 
           iframe.contentWindow.postMessage(
-            { type: 'sandbox-command-return', data: { updates: newCommand.updates } },
+            {
+              type: 'sandbox-command-return',
+              data: { updates: cleanedUpdates, hasError: newCommand.failed }
+            },
             '*'
           )
           break

@@ -4,12 +4,15 @@ async function safeEval(event) {
   const code = event.data.data.code
 
   const createHandlerFor = name => props => {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       const handleSandboxCommand = event => {
         if (event.data?.type !== 'sandbox-command-return') return
+        const data = event.data.data
+        const errorMessage = data.updates.at(0)?.slice(2)
 
         window.removeEventListener('message', handleSandboxCommand)
-        resolve(event.data.data.updates)
+        if (!data.hasError) resolve(data.updates)
+        else reject(errorMessage)
       }
 
       window.addEventListener('message', handleSandboxCommand)

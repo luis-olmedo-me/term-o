@@ -68,8 +68,6 @@ export const executeCode = ({ scriptContent, command }) => {
           newCommand.mock(data.props)
           newCommand.appendsData(command.data)
 
-          console.log('💬  newCommand:', newCommand.finished, newCommand)
-          console.log('💬  newCommand.updates:', newCommand.updates)
           if (!newCommand.finished) await newCommand.execute()
 
           iframe.contentWindow.postMessage(
@@ -81,6 +79,11 @@ export const executeCode = ({ scriptContent, command }) => {
 
         case 'sandbox-command-update': {
           command.update(...data.updates)
+          break
+        }
+
+        case 'sandbox-command-set-updates': {
+          command.setUpdates(...data.updates)
           break
         }
 

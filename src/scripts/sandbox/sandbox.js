@@ -2,6 +2,7 @@ import { commandNames } from '@src/libs/command-parser/command-parser.constants'
 
 async function safeEval(event) {
   const code = event.data.data.code
+
   const createHandlerFor = name => props => {
     return new Promise(resolve => {
       const handleSandboxCommand = event => {
@@ -20,9 +21,6 @@ async function safeEval(event) {
     })
   }
 
-  const handledCommandNames = Object.values(commandNames)
-  const handlers = handledCommandNames.map(createHandlerFor)
-
   const update = (...args) => {
     event.source.window.postMessage(
       { type: 'sandbox-command-update', data: { updates: args } },
@@ -30,9 +28,20 @@ async function safeEval(event) {
     )
   }
 
+  const setUpdates = (...args) => {
+    event.source.window.postMessage(
+      { type: 'sandbox-command-set-updates', data: { updates: args } },
+      event.origin
+    )
+  }
+
+  const handledCommandNames = Object.values(commandNames)
+  const handlers = handledCommandNames.map(createHandlerFor)
+
   const restrictedEval = new Function(
     ...handledCommandNames,
     'update',
+    'setUpdates',
     `
       "use strict";
       return (function() {
@@ -41,16 +50,16 @@ async function safeEval(event) {
   
           return main
         } catch(error) {
-          update(error)
+          setUpdates(error)
         }
       })();
     `
   )
 
   try {
-    return await restrictedEval(...handlers, update)?.()
+    return await restrictedEval(...handlers, update, setUpdates)?.([])
   } catch (error) {
-    return `Error: ${error.message}`
+    setUpdates(`${error}`)
   }
 }
 

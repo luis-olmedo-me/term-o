@@ -34,5 +34,8 @@
       "suggested_key": { "default": "Alt+T" },
       "description": "Toggle Term-O"
     }
+  },
+  "sandbox": {
+    "pages": ["sandbox.html"]
   }
 }

@@ -148,6 +148,11 @@ export const formatAlias = ({ key, value }) => {
 
   return `${C`purple`}${quotedKey} ${C`yellow`}${quotedValue}`
 }
+export const formatFile = ({ name }) => {
+  const quotedName = getQuotedString(name)
+
+  return `${C`purple`}${quotedName} `
+}
 
 export const formatEvent = ({ url, line, id }) => {
   const quotedId = getQuotedString(id)
@@ -180,6 +185,12 @@ export const formatTheme = ({ name }) => {
   const quotedName = getQuotedString(name)
 
   return `${C`purple`}${quotedName}`
+}
+
+export const formatScript = ({ name }) => {
+  const quotedName = getQuotedString(name)
+
+  return `${C`brightPurple`}${quotedName}`
 }
 
 export const formatRule = ({ styles, selector }) => {

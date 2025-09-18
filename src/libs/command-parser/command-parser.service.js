@@ -4,7 +4,7 @@ import handlers from './handlers'
 import { getArgs } from './sub-services/command/command.helpers'
 import templates, { errorTemplate } from './templates'
 
-templates.map(template => {
+templates.forEach(template => {
   const handler = handlers[template.name]
 
   if (handler) template.setHandler(handler)
@@ -50,7 +50,7 @@ class CommandParser extends EventListener {
     if (!template) {
       const error = errorTemplate.create()
 
-      error.mock({ title: `'The command "${cleanedName}" is unrecognized.'` })
+      error.mock({ title: `The command "${cleanedName}" is unrecognized.` })
       error.execute()
 
       return error
@@ -72,6 +72,10 @@ class CommandParser extends EventListener {
     })
 
     return fragmentsWithAliases.join(' && ')
+  }
+
+  getTemplateByName(name) {
+    return this.templates.find(template => template.name === name)
   }
 }
 

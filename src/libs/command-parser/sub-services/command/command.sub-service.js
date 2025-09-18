@@ -1,10 +1,11 @@
-import { createUUIDv4 } from '@src/helpers/utils.helpers'
+import { createUUIDv4, getQuotedString } from '@src/helpers/utils.helpers'
 import EventListener from '@src/libs/event-listener'
 
+import { cleanColors } from '@src/libs/themer/themer.helpers'
 import { formatError } from '../../handlers/handlers.helpers'
 import Argument from '../argument'
 import { statuses } from './command.constants'
-import { executePerUpdates, getPropsFromString } from './command.helpers'
+import { executePerUpdates, getArgs, getArray, getPropsFromString } from './command.helpers'
 
 export class Command extends EventListener {
   constructor({ name, options }) {
@@ -29,6 +30,26 @@ export class Command extends EventListener {
   }
   get failed() {
     return [statuses.ERROR].includes(this.status)
+  }
+  get cleanUpdates() {
+    return this.updates.map(update => {
+      const cleanedUpdate = cleanColors(update)
+      const updateByArgs = getArgs(cleanedUpdate)
+
+      if (this.failed) return cleanedUpdate.replace(/^✕ /, '')
+
+      return updateByArgs.map(arg => {
+        const isArray = /^\[/g.test(arg) && /\]$/g.test(arg)
+        const isString = /^"|^'/.test(arg) && /"$|'$/.test(arg)
+
+        if (isArray) return getArray(arg)
+        else if (isString) return arg.slice(1).slice(0, -1)
+        else {
+          const argAsNumber = Number(arg)
+          return Number.isNaN(argAsNumber) ? null : argAsNumber
+        }
+      })
+    })
   }
 
   reset() {
@@ -84,7 +105,26 @@ export class Command extends EventListener {
 
   mock(mockedProps) {
     const scriptArgs = Object.entries(mockedProps).reduce((args, [name, value]) => {
-      return [...args, `--${name}`, value]
+      switch (typeof value) {
+        case 'object': {
+          const isArray = Array.isArray(value)
+          const formattedValues = isArray ? value.map(item => `"${item}"`) : []
+
+          return isArray ? [...args, `--${name}`, `[${formattedValues.join(' ')}]`] : args
+        }
+
+        case 'boolean': {
+          return [...args, `--${name}`]
+        }
+
+        case 'string': {
+          return [...args, `--${name}`, getQuotedString(value)]
+        }
+
+        default: {
+          return [...args, `--${name}`, value]
+        }
+      }
     }, [])
 
     return this.prepare(scriptArgs)
@@ -100,7 +140,7 @@ export class Command extends EventListener {
       if (!this.finished) {
         if (this.canExecuteNext) await this.executeNext()
 
-        this.finish(statuses.DONE)
+        this.changeStatus(statuses.DONE)
       }
     } catch (error) {
       this.throw(error)
@@ -119,7 +159,7 @@ export class Command extends EventListener {
     this.reset()
     this.update(errorUpdate)
 
-    this.finish(statuses.ERROR)
+    this.changeStatus(statuses.ERROR)
   }
 
   async executeNext() {
@@ -155,7 +195,7 @@ export class Command extends EventListener {
     this.reset()
   }
 
-  finish(newStatus) {
+  changeStatus(newStatus) {
     this.status = newStatus
   }
 }

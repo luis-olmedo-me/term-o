@@ -140,7 +140,7 @@ export class Command extends EventListener {
       if (!this.finished) {
         if (this.canExecuteNext) await this.executeNext()
 
-        this.finish(statuses.DONE)
+        this.changeStatus(statuses.DONE)
       }
     } catch (error) {
       this.throw(error)
@@ -159,7 +159,7 @@ export class Command extends EventListener {
     this.reset()
     this.update(errorUpdate)
 
-    this.finish(statuses.ERROR)
+    this.changeStatus(statuses.ERROR)
   }
 
   async executeNext() {
@@ -195,7 +195,7 @@ export class Command extends EventListener {
     this.reset()
   }
 
-  finish(newStatus) {
+  changeStatus(newStatus) {
     this.status = newStatus
   }
 }

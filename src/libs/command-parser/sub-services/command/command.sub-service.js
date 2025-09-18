@@ -1,10 +1,11 @@
 import { createUUIDv4, getQuotedString } from '@src/helpers/utils.helpers'
 import EventListener from '@src/libs/event-listener'
 
+import { cleanColors } from '@src/libs/themer/themer.helpers'
 import { formatError } from '../../handlers/handlers.helpers'
 import Argument from '../argument'
 import { statuses } from './command.constants'
-import { executePerUpdates, getPropsFromString } from './command.helpers'
+import { executePerUpdates, getArgs, getArray, getPropsFromString } from './command.helpers'
 
 export class Command extends EventListener {
   constructor({ name, options }) {
@@ -29,6 +30,26 @@ export class Command extends EventListener {
   }
   get failed() {
     return [statuses.ERROR].includes(this.status)
+  }
+  get cleanUpdates() {
+    return this.updates.map(update => {
+      const cleanedUpdate = cleanColors(update)
+      const updateByArgs = getArgs(cleanedUpdate)
+
+      if (this.failed) return cleanedUpdate.replace(/^✕ /, '')
+
+      return updateByArgs.map(arg => {
+        const isArray = /^\[/g.test(arg) && /\]$/g.test(arg)
+        const isString = /^"|^'/.test(arg) && /"$|'$/.test(arg)
+
+        if (isArray) return getArray(arg)
+        else if (isString) return arg.slice(1).slice(0, -1)
+        else {
+          const argAsNumber = Number(arg)
+          return Number.isNaN(argAsNumber) ? null : argAsNumber
+        }
+      })
+    })
   }
 
   reset() {

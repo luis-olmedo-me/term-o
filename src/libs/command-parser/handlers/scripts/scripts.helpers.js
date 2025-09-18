@@ -1,7 +1,5 @@
 import { getQuotedString } from '@src/helpers/utils.helpers'
-import { cleanColors } from '@src/libs/themer/themer.helpers'
 import commandParser from '../..'
-import { getArgs, getArray } from '../../sub-services/command/command.helpers'
 
 export const uploadFile = () => {
   return new Promise((resolve, reject) => {
@@ -71,29 +69,11 @@ export const executeCode = ({ scriptContent, command }) => {
           newCommand.appendsData(command.data)
 
           if (!newCommand.finished) await newCommand.execute()
-          const formatedUpdates = newCommand.updates.map(update => {
-            const cleanedUpdate = cleanColors(update)
-            const updateByArgs = getArgs(cleanedUpdate)
-
-            if (newCommand.failed) return cleanedUpdate.replace(/^✕ /, '')
-
-            return updateByArgs.map(arg => {
-              const isArray = /^\[/g.test(arg) && /\]$/g.test(arg)
-              const isString = /^"|^'/.test(arg) && /"$|'$/.test(arg)
-
-              if (isArray) return getArray(arg)
-              else if (isString) return arg.slice(1).slice(0, -1)
-              else {
-                const argAsNumber = Number(arg)
-                return Number.isNaN(argAsNumber) ? null : argAsNumber
-              }
-            })
-          })
 
           iframe.contentWindow.postMessage(
             {
               type: 'sandbox-command-return',
-              data: { updates: formatedUpdates, hasError: newCommand.failed }
+              data: { updates: newCommand.cleanUpdates, hasError: newCommand.failed }
             },
             '*'
           )

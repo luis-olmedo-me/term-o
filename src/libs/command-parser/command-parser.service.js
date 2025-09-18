@@ -4,7 +4,7 @@ import handlers from './handlers'
 import { getArgs } from './sub-services/command/command.helpers'
 import templates, { errorTemplate } from './templates'
 
-templates.map(template => {
+templates.forEach(template => {
   const handler = handlers[template.name]
 
   if (handler) template.setHandler(handler)

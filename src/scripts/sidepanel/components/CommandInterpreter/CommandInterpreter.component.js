@@ -5,7 +5,7 @@ import ColoredText from '../ColoredText'
 import Prompt from '../Prompt'
 import * as S from './CommandInterpreter.styles'
 
-export const Log = ({ command, onFinished, context }) => {
+export const CommandInterpreter = ({ command, onFinished, context }) => {
   const [updates, setUpdates] = useState(command.updates)
 
   const wrapper = useRef(null)
@@ -42,21 +42,21 @@ export const Log = ({ command, onFinished, context }) => {
   )
 
   return (
-    <S.LogWrapper ref={wrapper}>
+    <S.CommandInterpreterWrapper ref={wrapper}>
       <Prompt context={context} defaultValue={command.title} disabled />
 
       {updates.map((update, index) => {
         return (
-          <S.LogItem key={index}>
+          <S.CommandInterpreterItem key={index}>
             <ColoredText value={update} />
-          </S.LogItem>
+          </S.CommandInterpreterItem>
         )
       })}
-    </S.LogWrapper>
+    </S.CommandInterpreterWrapper>
   )
 }
 
-Log.propTypes = {
+CommandInterpreter.propTypes = {
   command: Object,
   context: String,
   onFinished: Function

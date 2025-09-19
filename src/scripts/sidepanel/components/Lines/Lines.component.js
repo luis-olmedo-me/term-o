@@ -5,15 +5,15 @@ import * as S from '../CommandInterpreter/CommandInterpreter.styles'
 
 export const Lines = ({ updates }) => {
   return (
-    <S.LogWrapper>
+    <S.CommandInterpreterWrapper>
       {updates.map((update, index) => {
         return (
-          <S.LogItem key={index}>
+          <S.CommandInterpreterItem key={index}>
             <ColoredText value={update} />
-          </S.LogItem>
+          </S.CommandInterpreterItem>
         )
       })}
-    </S.LogWrapper>
+    </S.CommandInterpreterWrapper>
   )
 }
 

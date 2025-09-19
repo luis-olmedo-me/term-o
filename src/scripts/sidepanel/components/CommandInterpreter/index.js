@@ -1,3 +1,3 @@
-import { Log } from './CommandInterpreter.component'
+import { CommandInterpreter } from './CommandInterpreter.component'
 
-export default Log
+export default CommandInterpreter

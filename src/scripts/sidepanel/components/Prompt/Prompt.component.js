@@ -4,10 +4,9 @@ import { useEffect, useState } from 'preact/hooks'
 import useConfig, { configInputIds } from '@src/hooks/useConfig'
 import ColoredText from '../ColoredText'
 import Input from '../Input'
-import { createPSO } from './Prompt.helpers'
 import * as S from './Prompt.styles'
 
-export const Prompt = ({ onEnter, inputRef, tab, disabled, defaultValue }) => {
+export const Prompt = ({ onEnter, inputRef, disabled, defaultValue, context }) => {
   const [value, setValue] = useState(defaultValue || '')
   const [historialIndex, setHistorialIndex] = useState(0)
   const [historial, setHistorial] = useState([])
@@ -15,7 +14,7 @@ export const Prompt = ({ onEnter, inputRef, tab, disabled, defaultValue }) => {
   const { listening } = useConfig({
     get: [configInputIds.HISTORIAL_SIZE, configInputIds.STATUS]
   })
-  const [hsitorialSize, status] = listening
+  const [hsitorialSize] = listening
 
   useEffect(
     function expectForDefaultValueChanges() {
@@ -70,7 +69,7 @@ export const Prompt = ({ onEnter, inputRef, tab, disabled, defaultValue }) => {
   return (
     <S.PromptWrapper>
       <S.Line>
-        <ColoredText value={createPSO(status, tab)} />
+        <ColoredText value={context} />
       </S.Line>
 
       {disabled ? (
@@ -93,7 +92,7 @@ export const Prompt = ({ onEnter, inputRef, tab, disabled, defaultValue }) => {
 Prompt.propTypes = {
   onEnter: Function,
   inputRef: Object,
-  tab: Object,
+  context: String,
   disabled: Boolean,
   defaultValue: String
 }

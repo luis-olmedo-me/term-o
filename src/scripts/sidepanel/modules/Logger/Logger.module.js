@@ -5,21 +5,22 @@ import Lines from '../../components/Lines'
 import Log from '../../components/Log'
 import * as S from './Logger.styles'
 
-export const Logger = ({ command, updates, onInProgressCommandFinished }) => {
+export const Logger = ({ command, updates, onInProgressCommandFinished, context }) => {
   const { listening } = useConfig({ get: ['max-lines-per-command'] })
   const [maxLinesPerCommand] = listening
 
   return (
     <S.LoggerWrapper className="vertical-scroller">
-      <Lines updates={updates} />
-
       {command && (
         <Log
           command={command}
           maxLinesPerCommand={maxLinesPerCommand}
           onFinished={onInProgressCommandFinished}
+          context={context}
         />
       )}
+
+      <Lines updates={updates} />
     </S.LoggerWrapper>
   )
 }
@@ -27,5 +28,6 @@ export const Logger = ({ command, updates, onInProgressCommandFinished }) => {
 Logger.propTypes = {
   command: Object,
   updates: Array,
+  context: String,
   onInProgressCommandFinished: Function
 }

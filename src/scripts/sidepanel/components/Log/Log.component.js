@@ -5,7 +5,7 @@ import ColoredText from '../ColoredText'
 import Prompt from '../Prompt'
 import * as S from './Log.styles'
 
-export const Log = ({ command, maxLinesPerCommand, onFinished }) => {
+export const Log = ({ command, maxLinesPerCommand, onFinished, context }) => {
   const [updates, setUpdates] = useState(command.updates)
 
   const wrapper = useRef(null)
@@ -41,7 +41,7 @@ export const Log = ({ command, maxLinesPerCommand, onFinished }) => {
 
   return (
     <S.LogWrapper ref={wrapper}>
-      <Prompt tab={command.data.tab} defaultValue={command.title} disabled />
+      <Prompt context={context} defaultValue={command.title} disabled />
 
       {updates.map((update, index) => {
         return (
@@ -57,5 +57,6 @@ export const Log = ({ command, maxLinesPerCommand, onFinished }) => {
 Log.propTypes = {
   command: Object,
   maxLinesPerCommand: Number,
+  context: String,
   onFinished: Function
 }

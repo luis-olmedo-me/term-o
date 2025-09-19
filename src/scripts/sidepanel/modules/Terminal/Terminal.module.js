@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'preact/hooks'
 import Prompt from '@sidepanel/components/Prompt'
 import Logger from '@sidepanel/modules/Logger'
 import { storageKeys } from '@src/constants/storage.constants'
+import { createContext } from '@src/helpers/contexts.helpers'
 import useConfig, { configInputIds } from '@src/hooks/useConfig'
 import useStorage, { namespaces } from '@src/hooks/useStorage'
 import commandParser from '@src/libs/command-parser'
@@ -30,14 +31,16 @@ export const Terminal = () => {
       configInputIds.COPY_ON_SELECTION,
       configInputIds.FOCUS_PROMPT_ON_CLICK,
       configInputIds.SWITCH_TAB_AUTOMATICALLY,
-      configInputIds.MAX_LINES_PER_COMMAND
+      configInputIds.MAX_LINES_PER_COMMAND,
+      configInputIds.STATUS
     ]
   })
   const [
     canCopyOnSelection,
     focusPromptOnClick,
     switchTabAutomatically,
-    maxLinesPerCommand
+    maxLinesPerCommand,
+    status
   ] = listening
 
   useEffect(
@@ -83,12 +86,13 @@ export const Terminal = () => {
   }
 
   const handleInProgressCommandFinished = () => {
-    setCommandUpdates(updates => [...updates, currentCommand.title, ...currentCommand.updates])
+    setCommandUpdates(updates => [...currentCommand.updates, currentCommand.title, ...updates])
     setCurrentCommand(null)
     focusOnInput()
   }
 
-  const cutUpdates = commandUpdates.slice(maxLinesPerCommand)
+  const cutUpdates = commandUpdates.reverse().slice(maxLinesPerCommand * -1)
+  const context = createContext(status, tab)
 
   return (
     <S.TerminalWrapper onMouseUp={focusOnInput}>
@@ -101,6 +105,7 @@ export const Terminal = () => {
       <Logger
         command={currentCommand}
         updates={cutUpdates}
+        context={context}
         onInProgressCommandFinished={handleInProgressCommandFinished}
       />
 
@@ -108,7 +113,7 @@ export const Terminal = () => {
         inputRef={inputRef}
         onEnter={handleEnter}
         disabled={currentCommand !== null}
-        tab={tab}
+        context={context}
       />
     </S.TerminalWrapper>
   )

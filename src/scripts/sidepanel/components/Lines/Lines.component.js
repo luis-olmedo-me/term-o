@@ -6,7 +6,7 @@ import * as S from '../Log/Log.styles'
 export const Lines = ({ updates }) => {
   return (
     <S.LogWrapper>
-      {updates.reverse().map((update, index) => {
+      {updates.map((update, index) => {
         return (
           <S.LogItem key={index}>
             <ColoredText value={update} />

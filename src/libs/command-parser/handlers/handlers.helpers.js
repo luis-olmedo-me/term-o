@@ -49,7 +49,7 @@ export const displayHelp = command => {
     })
 
     helps.push(
-      `${C`cyan`}${formattedMainIndex} -- ${C`purple`}${displayName} ${C`yellow`}${description}`
+      `${C`cyan`}${formattedMainIndex} null ${C`purple`}${displayName} ${C`yellow`}${description}`
     )
 
     dependencies.forEach((dependencyName, index) => {
@@ -62,7 +62,7 @@ export const displayHelp = command => {
       })
 
       helps.push(
-        `${C`cyan`}-- ${formattedIndex} ${C`brightPurple`}${displayName} ${C`yellow`}${description}`
+        `${C`cyan`}null ${formattedIndex} ${C`brightPurple`}${displayName} ${C`yellow`}${description}`
       )
     })
   })

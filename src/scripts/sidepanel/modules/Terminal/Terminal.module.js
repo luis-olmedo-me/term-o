@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'preact/hooks'
 
 import Prompt from '@sidepanel/components/Prompt'
 import Logger from '@sidepanel/modules/Logger'
-import useConfig from '@src/hooks/useConfig'
+import useConfig, { configInputIds } from '@src/hooks/useConfig'
 import useStorage from '@src/hooks/useStorage'
 import commandParser from '@src/libs/command-parser'
 import { getCurrentTab } from '@src/libs/command-parser/handlers/tabs/tabs.helpers'
@@ -25,7 +25,11 @@ export const Terminal = () => {
   })
 
   const { listening } = useConfig({
-    get: ['copy-on-selection', 'focus-prompt-on-click', 'switch-tab-automatically']
+    get: [
+      configInputIds.COPY_ON_SELECTION,
+      configInputIds.FOCUS_PROMPT_ON_CLICK,
+      configInputIds.SWITCH_TAB_AUTOMATICALLY
+    ]
   })
   const [canCopyOnSelection, focusPromptOnClick, switchTabAutomatically] = listening
 

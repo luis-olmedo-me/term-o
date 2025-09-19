@@ -1,7 +1,7 @@
 import * as React from 'preact'
 import { useState } from 'preact/hooks'
 
-import useConfig from '@src/hooks/useConfig'
+import useConfig, { configInputIds } from '@src/hooks/useConfig'
 import ColoredText from '../ColoredText'
 import Input from '../Input'
 import { createPSO } from './Prompt.helpers'
@@ -12,7 +12,9 @@ export const Prompt = ({ onEnter, inputRef, tab, disabled, defaultValue }) => {
   const [historialIndex, setHistorialIndex] = useState(0)
   const [historial, setHistorial] = useState([])
 
-  const { listening } = useConfig({ get: ['historial-size', 'status', 'prefix'] })
+  const { listening } = useConfig({
+    get: [configInputIds.HISTORIAL_SIZE, configInputIds.STATUS]
+  })
   const [hsitorialSize, status] = listening
 
   const handleChange = event => {

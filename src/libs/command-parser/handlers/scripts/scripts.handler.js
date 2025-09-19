@@ -1,3 +1,4 @@
+import { storageKeys } from '@src/constants/storage.constants'
 import { displayHelp, formatFile, formatScript } from '../handlers.helpers'
 import { executeCode, readFileContent, uploadFile } from './scripts.helpers'
 
@@ -5,7 +6,7 @@ export const handleSCRIPTS = async command => {
   const P = name => command.props[name]
 
   if (P`list`) {
-    const { scripts = [] } = await chrome.storage.local.get('scripts')
+    const { scripts = [] } = await chrome.storage.local.get(storageKeys.SCRIPTS)
     const updates = scripts.map(formatScript)
 
     command.update(...updates)
@@ -17,7 +18,7 @@ export const handleSCRIPTS = async command => {
     const fileContent = await readFileContent(file)
     const newScript = { name: file.name, content: fileContent }
 
-    const { scripts = [] } = await chrome.storage.local.get('scripts')
+    const { scripts = [] } = await chrome.storage.local.get(storageKeys.SCRIPTS)
     const alreadyExists = scripts.some(script => script.name === file.name)
 
     if (alreadyExists) {
@@ -36,7 +37,7 @@ export const handleSCRIPTS = async command => {
   if (P`delete`) {
     const name = P`delete`
 
-    const { scripts = [] } = await chrome.storage.local.get('scripts')
+    const { scripts = [] } = await chrome.storage.local.get(storageKeys.SCRIPTS)
     const existingScript = scripts.find(script => script.name === name)
 
     if (!existingScript) {
@@ -52,7 +53,7 @@ export const handleSCRIPTS = async command => {
 
   if (P`run`) {
     const name = P`run`
-    const { scripts = [] } = await chrome.storage.local.get('scripts')
+    const { scripts = [] } = await chrome.storage.local.get(storageKeys.SCRIPTS)
     const existingScript = scripts.find(script => script.name === name)
 
     if (!existingScript) {

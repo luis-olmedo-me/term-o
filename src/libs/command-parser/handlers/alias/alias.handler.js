@@ -1,10 +1,11 @@
+import { storageKeys } from '@src/constants/storage.constants'
 import { displayHelp, formatAlias } from '../handlers.helpers'
 
 export const handleALIAS = async command => {
   const P = name => command.props[name]
 
   if (P`list`) {
-    const { aliases = [] } = await chrome.storage.local.get('aliases')
+    const { aliases = [] } = await chrome.storage.local.get(storageKeys.ALIASES)
     const updates = aliases.map(formatAlias)
 
     command.update(...updates)
@@ -14,7 +15,7 @@ export const handleALIAS = async command => {
     const [key, value] = P`add`
     const newAlias = { key, value }
 
-    const { aliases = [] } = await chrome.storage.local.get('aliases')
+    const { aliases = [] } = await chrome.storage.local.get(storageKeys.ALIASES)
     const alreadyExists = aliases.some(alias => alias.key === key)
 
     if (alreadyExists) {
@@ -31,7 +32,7 @@ export const handleALIAS = async command => {
   if (P`delete`) {
     const key = P`delete`
 
-    const { aliases = [] } = await chrome.storage.local.get('aliases')
+    const { aliases = [] } = await chrome.storage.local.get(storageKeys.ALIASES)
     const existingAlias = aliases.find(alias => alias.key === key)
 
     if (!existingAlias) {

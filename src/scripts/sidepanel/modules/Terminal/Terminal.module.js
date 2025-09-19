@@ -3,8 +3,9 @@ import { useEffect, useRef, useState } from 'preact/hooks'
 
 import Prompt from '@sidepanel/components/Prompt'
 import Logger from '@sidepanel/modules/Logger'
+import { storageKeys } from '@src/constants/storage.constants'
 import useConfig, { configInputIds } from '@src/hooks/useConfig'
-import useStorage from '@src/hooks/useStorage'
+import useStorage, { namespaces } from '@src/hooks/useStorage'
 import commandParser from '@src/libs/command-parser'
 import { getCurrentTab } from '@src/libs/command-parser/handlers/tabs/tabs.helpers'
 import Button from '../../components/Button'
@@ -19,8 +20,8 @@ export const Terminal = () => {
   const loggerRef = useRef(null)
 
   const [aliases] = useStorage({
-    namespace: 'local',
-    key: 'aliases',
+    namespace: namespaces.LOCAL,
+    key: storageKeys.ALIASES,
     defaultValue: []
   })
 

@@ -15,6 +15,7 @@ import * as S from './Terminal.styles'
 export const Terminal = () => {
   const [isConfigModalOpen, setIsConfigModalOpen] = useState(false)
   const [logs, setLogs] = useState([])
+  const [currentCommand, setCurrentCommand] = useState(null)
   const [tab, setTab] = useState(null)
   const inputRef = useRef(null)
   const loggerRef = useRef(null)
@@ -71,6 +72,7 @@ export const Terminal = () => {
     const newLog = commandParser.read(value)
     newLog.appendsData({ tab, setTab, clearLogs })
 
+    setCurrentCommand(newLog)
     setLogs(oldLogs => [newLog, ...oldLogs])
     focusOnInput()
   }
@@ -83,7 +85,7 @@ export const Terminal = () => {
         <Button text="⚙" onClick={() => setIsConfigModalOpen(!isConfigModalOpen)} />
       </S.TerminalHeader>
 
-      <Logger logs={logs} loggerRef={loggerRef} />
+      <Logger logs={logs} loggerRef={loggerRef} command={currentCommand} />
 
       <Prompt onEnter={handleEnter} inputRef={inputRef} tab={tab} />
     </S.TerminalWrapper>

@@ -1,5 +1,5 @@
 import * as React from 'preact'
-import { useState } from 'preact/hooks'
+import { useEffect, useState } from 'preact/hooks'
 
 import useConfig, { configInputIds } from '@src/hooks/useConfig'
 import ColoredText from '../ColoredText'
@@ -16,6 +16,13 @@ export const Prompt = ({ onEnter, inputRef, tab, disabled, defaultValue }) => {
     get: [configInputIds.HISTORIAL_SIZE, configInputIds.STATUS]
   })
   const [hsitorialSize, status] = listening
+
+  useEffect(
+    function expectForDefaultValueChanges() {
+      setValue(defaultValue)
+    },
+    [defaultValue]
+  )
 
   const handleChange = event => {
     const targetValue = event.target.value

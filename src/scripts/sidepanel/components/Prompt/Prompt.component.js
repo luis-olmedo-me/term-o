@@ -31,6 +31,8 @@ export const Prompt = ({ onEnter, inputRef, disabled, defaultValue, context, loa
   }
 
   const handleKeyDown = event => {
+    if (loading) return
+
     const key = event.key
     const targetValue = event.target.value
 

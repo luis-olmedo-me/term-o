@@ -1,6 +1,7 @@
 import * as React from 'preact'
 
 import useConfig from '@src/hooks/useConfig'
+import { configInputIds } from '@src/hooks/useConfig/useConfig.constants'
 import themer from '@src/libs/themer'
 import { useEffect, useState } from 'preact/hooks'
 import { ThemeProvider as StyleProvider } from 'styled-components'
@@ -9,7 +10,8 @@ import ThemeStyle from '../styles/Theme.styles'
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(themer.theme)
 
-  const { listening } = useConfig({ get: ['font-size', 'font-family'] })
+  const { listening } = useConfig({ get: [configInputIds.FONT_SIZE, configInputIds.FONT_FAMILY] })
+
   const [fontSize, fontFamily] = listening
 
   useEffect(function updateColorsReference() {

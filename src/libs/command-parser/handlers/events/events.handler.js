@@ -1,3 +1,4 @@
+import { storageKeys } from '@src/constants/storage.constants'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 import { displayHelp, formatEvent } from '../handlers.helpers'
 
@@ -5,7 +6,7 @@ export const handleEVENTS = async command => {
   const P = name => command.props[name]
 
   if (P`list`) {
-    const { events = [] } = await chrome.storage.local.get('events')
+    const { events = [] } = await chrome.storage.local.get(storageKeys.EVENTS)
     const updates = events.map(formatEvent)
 
     command.update(...updates)
@@ -13,7 +14,7 @@ export const handleEVENTS = async command => {
 
   if (P`add`) {
     const id = createUUIDv4()
-    const { events = [] } = await chrome.storage.local.get('events')
+    const { events = [] } = await chrome.storage.local.get(storageKeys.EVENTS)
     const newEvent = { url: P`url`, line: P`command`, id }
 
     const newEvents = events.concat(newEvent)
@@ -26,7 +27,7 @@ export const handleEVENTS = async command => {
   if (P`delete`) {
     const id = P`delete`
 
-    const { events = [] } = await chrome.storage.local.get('events')
+    const { events = [] } = await chrome.storage.local.get(storageKeys.EVENTS)
     const existingEvent = events.find(event => event.id === id)
 
     if (!existingEvent) {

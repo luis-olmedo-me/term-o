@@ -1,19 +1,27 @@
 import * as React from 'preact'
-import { useState } from 'preact/hooks'
+import { useEffect, useState } from 'preact/hooks'
 
-import useConfig from '@src/hooks/useConfig'
+import useConfig, { configInputIds } from '@src/hooks/useConfig'
 import ColoredText from '../ColoredText'
 import Input from '../Input'
-import { createPSO } from './Prompt.helpers'
 import * as S from './Prompt.styles'
 
-export const Prompt = ({ onEnter, inputRef, tab, disabled, defaultValue }) => {
+export const Prompt = ({ onEnter, inputRef, disabled, defaultValue, context, loading }) => {
   const [value, setValue] = useState(defaultValue || '')
   const [historialIndex, setHistorialIndex] = useState(0)
   const [historial, setHistorial] = useState([])
 
-  const { listening } = useConfig({ get: ['historial-size', 'status', 'prefix'] })
-  const [hsitorialSize, status] = listening
+  const { listening } = useConfig({
+    get: [configInputIds.HISTORIAL_SIZE, configInputIds.STATUS]
+  })
+  const [hsitorialSize] = listening
+
+  useEffect(
+    function expectForDefaultValueChanges() {
+      setValue(defaultValue)
+    },
+    [defaultValue]
+  )
 
   const handleChange = event => {
     const targetValue = event.target.value
@@ -23,6 +31,8 @@ export const Prompt = ({ onEnter, inputRef, tab, disabled, defaultValue }) => {
   }
 
   const handleKeyDown = event => {
+    if (loading) return
+
     const key = event.key
     const targetValue = event.target.value
 
@@ -59,9 +69,9 @@ export const Prompt = ({ onEnter, inputRef, tab, disabled, defaultValue }) => {
   const prefix = historialIndex || '$'
 
   return (
-    <S.PromptWrapper>
+    <S.PromptWrapper className={loading ? 'loading' : null}>
       <S.Line>
-        <ColoredText value={createPSO(status, tab)} />
+        <ColoredText value={context} />
       </S.Line>
 
       {disabled ? (
@@ -84,7 +94,8 @@ export const Prompt = ({ onEnter, inputRef, tab, disabled, defaultValue }) => {
 Prompt.propTypes = {
   onEnter: Function,
   inputRef: Object,
-  tab: Object,
+  context: String,
   disabled: Boolean,
+  loading: Boolean,
   defaultValue: String
 }

@@ -151,6 +151,8 @@ export class Command extends EventListener {
 
   appendsData(data) {
     this.data = { ...this.data, ...data }
+
+    return this
   }
 
   throw(message) {
@@ -191,11 +193,12 @@ export class Command extends EventListener {
   }
 
   startExecuting() {
-    this.status = statuses.EXECUTING
+    this.changeStatus(statuses.EXECUTING)
     this.reset()
   }
 
   changeStatus(newStatus) {
     this.status = newStatus
+    this.dispatchEvent('statuschange', this)
   }
 }

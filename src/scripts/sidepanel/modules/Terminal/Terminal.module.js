@@ -2,32 +2,46 @@ import * as React from 'preact'
 import { useEffect, useRef, useState } from 'preact/hooks'
 
 import Prompt from '@sidepanel/components/Prompt'
-import Logger from '@sidepanel/modules/Logger'
-import useConfig from '@src/hooks/useConfig'
-import useStorage from '@src/hooks/useStorage'
+import { storageKeys } from '@src/constants/storage.constants'
+import { createContext } from '@src/helpers/contexts.helpers'
+import useConfig, { configInputIds } from '@src/hooks/useConfig'
+import useStorage, { namespaces } from '@src/hooks/useStorage'
 import commandParser from '@src/libs/command-parser'
 import { getCurrentTab } from '@src/libs/command-parser/handlers/tabs/tabs.helpers'
+import CommandsViewer from '@src/scripts/sidepanel/modules/CommandsViewer'
 import Button from '../../components/Button'
 import PreferencesModal from '../../components/PreferencesModal'
 import * as S from './Terminal.styles'
 
 export const Terminal = () => {
   const [isConfigModalOpen, setIsConfigModalOpen] = useState(false)
-  const [logs, setLogs] = useState([])
+  const [currentCommand, setCurrentCommand] = useState(null)
+  const [commandUpdates, setCommandUpdates] = useState([])
   const [tab, setTab] = useState(null)
   const inputRef = useRef(null)
-  const loggerRef = useRef(null)
 
   const [aliases] = useStorage({
-    namespace: 'local',
-    key: 'aliases',
+    namespace: namespaces.LOCAL,
+    key: storageKeys.ALIASES,
     defaultValue: []
   })
 
   const { listening } = useConfig({
-    get: ['copy-on-selection', 'focus-prompt-on-click', 'switch-tab-automatically']
+    get: [
+      configInputIds.COPY_ON_SELECTION,
+      configInputIds.FOCUS_PROMPT_ON_CLICK,
+      configInputIds.SWITCH_TAB_AUTOMATICALLY,
+      configInputIds.MAX_LINES_PER_COMMAND,
+      configInputIds.STATUS
+    ]
   })
-  const [canCopyOnSelection, focusPromptOnClick, switchTabAutomatically] = listening
+  const [
+    canCopyOnSelection,
+    focusPromptOnClick,
+    switchTabAutomatically,
+    maxLinesPerCommand,
+    status
+  ] = listening
 
   useEffect(
     function focusTabAutomatically() {
@@ -60,15 +74,30 @@ export const Terminal = () => {
     if (focusPromptOnClick) inputRef.current?.focus()
   }
 
-  const clearLogs = exception => setLogs(exception ? [exception] : [])
+  const clearLogs = exception => {
+    setCommandUpdates(exception ? exception.updates : [])
+  }
 
   const handleEnter = value => {
-    const newLog = commandParser.read(value)
-    newLog.appendsData({ tab, setTab, clearLogs })
+    const newCommand = commandParser.read(value).appendsData({ tab, setTab, clearLogs })
 
-    setLogs(oldLogs => [newLog, ...oldLogs])
+    setCurrentCommand(newCommand)
     focusOnInput()
   }
+
+  const handleInProgressCommandFinished = () => {
+    setCommandUpdates(updates => [
+      ...updates,
+      context,
+      currentCommand.title,
+      ...currentCommand.updates
+    ])
+    setCurrentCommand(null)
+    focusOnInput()
+  }
+
+  const cutUpdates = commandUpdates.slice(maxLinesPerCommand * -1)
+  const context = createContext(status, tab)
 
   return (
     <S.TerminalWrapper onMouseUp={focusOnInput}>
@@ -78,9 +107,19 @@ export const Terminal = () => {
         <Button text="⚙" onClick={() => setIsConfigModalOpen(!isConfigModalOpen)} />
       </S.TerminalHeader>
 
-      <Logger logs={logs} loggerRef={loggerRef} />
+      <CommandsViewer
+        command={currentCommand}
+        updates={cutUpdates}
+        context={context}
+        onInProgressCommandFinished={handleInProgressCommandFinished}
+      />
 
-      <Prompt onEnter={handleEnter} inputRef={inputRef} tab={tab} />
+      <Prompt
+        inputRef={inputRef}
+        onEnter={handleEnter}
+        loading={currentCommand !== null}
+        context={context}
+      />
     </S.TerminalWrapper>
   )
 }

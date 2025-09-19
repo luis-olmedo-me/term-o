@@ -5,7 +5,7 @@ import ColoredText from '../ColoredText'
 import Prompt from '../Prompt'
 import * as S from './Log.styles'
 
-export const Log = ({ command, maxLinesPerCommand, onFinished, context }) => {
+export const Log = ({ command, onFinished, context }) => {
   const [updates, setUpdates] = useState(command.updates)
 
   const wrapper = useRef(null)
@@ -13,7 +13,7 @@ export const Log = ({ command, maxLinesPerCommand, onFinished, context }) => {
   useEffect(
     async function listenUpdates() {
       const handleUpdate = ({ updates: newUpdates }) => {
-        const limitedUpdates = newUpdates.slice(maxLinesPerCommand * -1)
+        const limitedUpdates = newUpdates
 
         setUpdates(limitedUpdates)
       }
@@ -36,7 +36,7 @@ export const Log = ({ command, maxLinesPerCommand, onFinished, context }) => {
         command.removeEventListener('statuschange', handleUpdate)
       }
     },
-    [command, maxLinesPerCommand]
+    [command]
   )
 
   return (
@@ -56,7 +56,6 @@ export const Log = ({ command, maxLinesPerCommand, onFinished, context }) => {
 
 Log.propTypes = {
   command: Object,
-  maxLinesPerCommand: Number,
   context: String,
   onFinished: Function
 }

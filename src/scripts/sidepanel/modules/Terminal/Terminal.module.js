@@ -29,10 +29,16 @@ export const Terminal = () => {
     get: [
       configInputIds.COPY_ON_SELECTION,
       configInputIds.FOCUS_PROMPT_ON_CLICK,
-      configInputIds.SWITCH_TAB_AUTOMATICALLY
+      configInputIds.SWITCH_TAB_AUTOMATICALLY,
+      configInputIds.MAX_LINES_PER_COMMAND
     ]
   })
-  const [canCopyOnSelection, focusPromptOnClick, switchTabAutomatically] = listening
+  const [
+    canCopyOnSelection,
+    focusPromptOnClick,
+    switchTabAutomatically,
+    maxLinesPerCommand
+  ] = listening
 
   useEffect(
     function focusTabAutomatically() {
@@ -81,6 +87,8 @@ export const Terminal = () => {
     focusOnInput()
   }
 
+  const cutUpdates = commandUpdates.slice(maxLinesPerCommand)
+
   return (
     <S.TerminalWrapper onMouseUp={focusOnInput}>
       <PreferencesModal open={isConfigModalOpen} onClose={() => setIsConfigModalOpen(false)} />
@@ -91,7 +99,7 @@ export const Terminal = () => {
 
       <Logger
         command={currentCommand}
-        updates={commandUpdates}
+        updates={cutUpdates}
         onInProgressCommandFinished={handleInProgressCommandFinished}
       />
 

@@ -1,6 +1,6 @@
 import { theme as t } from '@src/libs/themer'
 import styled from 'styled-components'
-import { LoggerWrapper } from '../Logger/Logger.styles'
+import { LoggerWrapper } from '../CommandsViewer/CommandsViewer.styles'
 
 export const TerminalWrapper = styled.div`
   position: relative;

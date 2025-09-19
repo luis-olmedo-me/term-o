@@ -3,9 +3,9 @@ import * as React from 'preact'
 import useConfig from '@src/hooks/useConfig'
 import Lines from '../../components/Lines'
 import Log from '../../components/Log'
-import * as S from './Logger.styles'
+import * as S from './CommandsViewer.styles'
 
-export const Logger = ({ command, updates, onInProgressCommandFinished, context }) => {
+export const CommandsViewer = ({ command, updates, onInProgressCommandFinished, context }) => {
   const { listening } = useConfig({ get: ['max-lines-per-command'] })
   const [maxLinesPerCommand] = listening
 
@@ -25,7 +25,7 @@ export const Logger = ({ command, updates, onInProgressCommandFinished, context 
   )
 }
 
-Logger.propTypes = {
+CommandsViewer.propTypes = {
   command: Object,
   updates: Array,
   context: String,

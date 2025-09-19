@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'preact/hooks'
 
 import ColoredText from '../ColoredText'
 import Prompt from '../Prompt'
-import * as S from './Log.styles'
+import * as S from './CommandInterpreter.styles'
 
 export const Log = ({ command, onFinished, context }) => {
   const [updates, setUpdates] = useState(command.updates)

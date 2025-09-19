@@ -1,7 +1,7 @@
 import * as React from 'preact'
 
 import ColoredText from '../ColoredText'
-import * as S from '../Log/Log.styles'
+import * as S from '../CommandInterpreter/CommandInterpreter.styles'
 
 export const Lines = ({ updates }) => {
   return (

@@ -1,7 +1,7 @@
 import * as React from 'preact'
 
+import Log from '../../components/CommandInterpreter'
 import Lines from '../../components/Lines'
-import Log from '../../components/Log'
 import * as S from './CommandsViewer.styles'
 
 export const CommandsViewer = ({ command, updates, onInProgressCommandFinished, context }) => {

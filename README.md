@@ -1,4 +1,4 @@
-# <img src="src/images/required/logo-16_x_16.png" style="box-shadow: 0 0 15px #11111122;" width="20"/> TERM-O
+# <img src="src/images/required/logo-48_x_48.png" style="box-shadow: 0 0 15px #11111122;" width="20"/> TERM-O
 
 ## Introduction
 

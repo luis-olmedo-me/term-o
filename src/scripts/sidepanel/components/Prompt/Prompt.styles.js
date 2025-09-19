@@ -1,9 +1,10 @@
 import { theme as t } from '@src/libs/themer'
 import styled from 'styled-components'
+import { InputWrapper } from '../Input/Input.styles'
 
 export const Line = styled.p`
   margin: 0;
-  padding: ${t('space.300')} ${t('space.600')} 0;
+  padding: 0 ${t('space.600')} 0;
   cursor: text;
 
   &::selection {
@@ -16,4 +17,8 @@ export const PromptWrapper = styled.div`
   cursor: text;
   background-color: ${t('colors.background')};
   color: ${t('colors.foreground')};
+
+  ${InputWrapper} {
+    padding: 0 ${t('space.600')} ${t('space.300')};
+  }
 `

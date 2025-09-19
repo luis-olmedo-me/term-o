@@ -74,10 +74,9 @@ export const Terminal = () => {
   const clearLogs = exception => setCommandUpdates(exception ? exception.updates : [])
 
   const handleEnter = value => {
-    const newLog = commandParser.read(value)
-    newLog.appendsData({ tab, setTab, clearLogs })
+    const newCommand = commandParser.read(value).appendsData({ tab, setTab, clearLogs })
 
-    setCurrentCommand(newLog)
+    setCurrentCommand(newCommand)
     focusOnInput()
   }
 

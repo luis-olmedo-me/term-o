@@ -151,6 +151,8 @@ export class Command extends EventListener {
 
   appendsData(data) {
     this.data = { ...this.data, ...data }
+
+    return this
   }
 
   throw(message) {

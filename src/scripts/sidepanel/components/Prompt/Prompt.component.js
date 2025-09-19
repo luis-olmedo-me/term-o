@@ -6,7 +6,7 @@ import ColoredText from '../ColoredText'
 import Input from '../Input'
 import * as S from './Prompt.styles'
 
-export const Prompt = ({ onEnter, inputRef, disabled, defaultValue, context }) => {
+export const Prompt = ({ onEnter, inputRef, disabled, defaultValue, context, loading }) => {
   const [value, setValue] = useState(defaultValue || '')
   const [historialIndex, setHistorialIndex] = useState(0)
   const [historial, setHistorial] = useState([])
@@ -67,7 +67,7 @@ export const Prompt = ({ onEnter, inputRef, disabled, defaultValue, context }) =
   const prefix = historialIndex || '$'
 
   return (
-    <S.PromptWrapper>
+    <S.PromptWrapper className={loading ? 'loading' : null}>
       <S.Line>
         <ColoredText value={context} />
       </S.Line>
@@ -94,5 +94,6 @@ Prompt.propTypes = {
   inputRef: Object,
   context: String,
   disabled: Boolean,
+  loading: Boolean,
   defaultValue: String
 }

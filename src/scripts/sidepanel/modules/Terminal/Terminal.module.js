@@ -117,7 +117,7 @@ export const Terminal = () => {
       <Prompt
         inputRef={inputRef}
         onEnter={handleEnter}
-        disabled={currentCommand !== null}
+        loading={currentCommand !== null}
         context={context}
       />
     </S.TerminalWrapper>

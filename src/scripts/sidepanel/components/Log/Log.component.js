@@ -5,24 +5,36 @@ import ColoredText from '../ColoredText'
 import Prompt from '../Prompt'
 import * as S from './Log.styles'
 
-export const Log = ({ command, maxLinesPerCommand }) => {
+export const Log = ({ command, maxLinesPerCommand, onFinished }) => {
   const [updates, setUpdates] = useState(command.updates)
 
   const wrapper = useRef(null)
 
   useEffect(
-    function listenUpdates() {
+    async function listenUpdates() {
       const handleUpdate = ({ updates: newUpdates }) => {
         const limitedUpdates = newUpdates.slice(maxLinesPerCommand * -1)
 
         setUpdates(limitedUpdates)
       }
 
+      const handleChangeStatus = () => {
+        if (command.finished) onFinished()
+      }
+
       handleUpdate(command)
+
+      if (command.failed) return onFinished()
+
       command.addEventListener('update', handleUpdate)
+      command.addEventListener('statuschange', handleChangeStatus)
+
       if (!command.finished) command.execute()
 
-      return () => command.removeEventListener('update', handleUpdate)
+      return () => {
+        command.removeEventListener('update', handleUpdate)
+        command.removeEventListener('statuschange', handleUpdate)
+      }
     },
     [command, maxLinesPerCommand]
   )
@@ -44,5 +56,6 @@ export const Log = ({ command, maxLinesPerCommand }) => {
 
 Log.propTypes = {
   command: Object,
-  maxLinesPerCommand: Number
+  maxLinesPerCommand: Number,
+  onFinished: Function
 }

@@ -14,11 +14,10 @@ import * as S from './Terminal.styles'
 
 export const Terminal = () => {
   const [isConfigModalOpen, setIsConfigModalOpen] = useState(false)
-  const [logs, setLogs] = useState([])
   const [currentCommand, setCurrentCommand] = useState(null)
+  const [commandUpdates, setCommandUpdates] = useState([])
   const [tab, setTab] = useState(null)
   const inputRef = useRef(null)
-  const loggerRef = useRef(null)
 
   const [aliases] = useStorage({
     namespace: namespaces.LOCAL,
@@ -66,14 +65,19 @@ export const Terminal = () => {
     if (focusPromptOnClick) inputRef.current?.focus()
   }
 
-  const clearLogs = exception => setLogs(exception ? [exception] : [])
+  const clearLogs = exception => setCommandUpdates(exception ? exception.updates : [])
 
   const handleEnter = value => {
     const newLog = commandParser.read(value)
     newLog.appendsData({ tab, setTab, clearLogs })
 
     setCurrentCommand(newLog)
-    setLogs(oldLogs => [newLog, ...oldLogs])
+    focusOnInput()
+  }
+
+  const handleInProgressCommandFinished = () => {
+    setCommandUpdates(updates => [...updates, currentCommand.title, ...currentCommand.updates])
+    setCurrentCommand(null)
     focusOnInput()
   }
 
@@ -85,9 +89,18 @@ export const Terminal = () => {
         <Button text="⚙" onClick={() => setIsConfigModalOpen(!isConfigModalOpen)} />
       </S.TerminalHeader>
 
-      <Logger logs={logs} loggerRef={loggerRef} command={currentCommand} />
+      <Logger
+        command={currentCommand}
+        updates={commandUpdates}
+        onInProgressCommandFinished={handleInProgressCommandFinished}
+      />
 
-      <Prompt onEnter={handleEnter} inputRef={inputRef} tab={tab} />
+      <Prompt
+        inputRef={inputRef}
+        onEnter={handleEnter}
+        disabled={currentCommand !== null}
+        tab={tab}
+      />
     </S.TerminalWrapper>
   )
 }

@@ -12,6 +12,8 @@ export const Log = ({ command, onFinished, context }) => {
 
   useEffect(
     async function listenUpdates() {
+      wrapper.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
+
       const handleUpdate = ({ updates: newUpdates }) => {
         const limitedUpdates = newUpdates
 

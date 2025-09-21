@@ -52,6 +52,20 @@ export class Command extends EventListener {
       })
     })
   }
+  get allCommands() {
+    let tempCommand = this.nextCommand
+    let commands = this.nextCommand ? [this.nextCommand] : []
+
+    while (tempCommand != null) {
+      commands.push(tempCommand)
+      tempCommand = tempCommand.nextCommand
+    }
+
+    return commands
+  }
+  get lastCommandVisibleInChain() {
+    return this.allCommands.reverse().find(command => command.alive)
+  }
 
   reset() {
     this.updates = this.staticUpdates

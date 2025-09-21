@@ -88,11 +88,10 @@ export const Terminal = () => {
   }
 
   const handleInProgressCommandFinished = async () => {
-    const currentCommandUpdates = currentCommand.alive
-      ? [context, currentCommand.title, ...currentCommand.updates]
-      : []
+    const command = currentCommand.lastCommandVisibleInChain
+    const newUpdates = command ? [context, command.title, ...command.updates] : []
 
-    setCommandUpdates(updates => [...updates, ...currentCommandUpdates])
+    setCommandUpdates(updates => [...updates, ...newUpdates])
     setCurrentCommand(null)
     focusOnInput()
   }

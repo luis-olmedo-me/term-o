@@ -16,13 +16,17 @@ import * as S from './Terminal.styles'
 export const Terminal = () => {
   const [isConfigModalOpen, setIsConfigModalOpen] = useState(false)
   const [currentCommand, setCurrentCommand] = useState(null)
-  const [commandUpdates, setCommandUpdates] = useState([])
   const [tab, setTab] = useState(null)
   const inputRef = useRef(null)
 
   const [aliases] = useStorage({
     namespace: namespaces.LOCAL,
     key: storageKeys.ALIASES,
+    defaultValue: []
+  })
+  const [commandUpdates, setCommandUpdates] = useStorage({
+    namespace: namespaces.LOCAL,
+    key: storageKeys.HISTORY,
     defaultValue: []
   })
 

@@ -23,7 +23,7 @@ export class Command extends EventListener {
     this.options = options
     this.args = []
     this.canExecuteNext = true
-    this.alive = true
+    this.visible = true
   }
 
   get finished() {
@@ -215,16 +215,16 @@ export class Command extends EventListener {
     this.dispatchEvent('statuschange', this)
   }
 
-  kill() {
-    this.alive = false
+  hide() {
+    this.visible = false
   }
 
   getCommandVisibleInChain() {
     const allCommands = this.allCommands
-    const hasAnyHidden = allCommands.some(command => !command.alive)
+    const hasAnyHidden = allCommands.some(command => !command.visible)
 
     return this.failed || !hasAnyHidden
-      ? allCommands.find(command => command.alive)
-      : allCommands.reverse().find(command => command.alive)
+      ? allCommands.find(command => command.visible)
+      : allCommands.reverse().find(command => command.visible)
   }
 }

@@ -26,11 +26,11 @@ class CommandParser extends EventListener {
     const scriptFormatted = this.getWithAliasesResolved(rawScript)
     let [firstFragment, ...nextFragments] = splitBy(scriptFormatted, '&&')
 
-    const command = this.get(firstFragment)
+    const command = this.parse(firstFragment, rawScript)
     let carriedCommand = command
 
     for (let fragment of nextFragments) {
-      const nextCommand = this.get(fragment)
+      const nextCommand = this.parse(fragment, rawScript)
       carriedCommand.nextCommand = nextCommand
 
       if (nextCommand.finished) break
@@ -41,7 +41,7 @@ class CommandParser extends EventListener {
     return command.setTitle(rawScript)
   }
 
-  get(scriptRaw) {
+  parse(scriptRaw, title) {
     const [name, ...scriptArgs] = getArgs(scriptRaw)
 
     const template = this.templates.find(template => template.name === name)
@@ -50,6 +50,7 @@ class CommandParser extends EventListener {
     if (!template) {
       const error = errorTemplate.create()
 
+      error.setTitle(title)
       error.mock({ title: `The command "${cleanedName}" is unrecognized.` })
       error.execute()
 

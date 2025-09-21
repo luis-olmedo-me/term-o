@@ -63,9 +63,6 @@ export class Command extends EventListener {
 
     return commands
   }
-  get lastCommandVisibleInChain() {
-    return this.allCommands.reverse().find(command => command.alive)
-  }
 
   reset() {
     this.updates = this.staticUpdates
@@ -219,5 +216,14 @@ export class Command extends EventListener {
 
   kill() {
     this.alive = false
+  }
+
+  getCommandVisibleInChain() {
+    const allCommands = this.allCommands
+    const hasAnyHidden = allCommands.some(command => !command.alive)
+
+    return this.failed || !hasAnyHidden
+      ? allCommands.find(command => command.alive)
+      : allCommands.reverse().find(command => command.alive)
   }
 }

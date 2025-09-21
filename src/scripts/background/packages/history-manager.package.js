@@ -11,12 +11,24 @@ const historyManager = (function() {
   let history = []
   let status = ''
 
+  const getStatusFromConfig = config => {
+    if (!config) return ''
+
+    const promptConfig = config.find(config => config.id === configIds.PROMPT)
+    const statusInputConfig = promptConfig?.inputs.find(input => input.id === configInputIds.STATUS)
+
+    return statusInputConfig?.value
+  }
+
   const handleStorageChanges = (changes, currentChanges) => {
     if (currentChanges !== namespaces.LOCAL) return
 
     for (let [storageKey, { newValue }] of Object.entries(changes)) {
       if (storageKey === storageKeys.HISTORY) {
         history = newValue
+      }
+      if (storageKey === storageKeys.CONFIG) {
+        status = getStatusFromConfig(newValue)
       }
     }
   }
@@ -25,11 +37,8 @@ const historyManager = (function() {
     const configFromLS = await getStorageValue(namespaces.LOCAL, storageKeys.CONFIG)
     const historyFromLS = await getStorageValue(namespaces.LOCAL, storageKeys.HISTORY)
 
-    const promptConfig = configFromLS?.find(config => config.id === configIds.PROMPT)
-    const statusInputConfig = promptConfig?.inputs.find(input => input.id === configInputIds.STATUS)
-
     history = historyFromLS || []
-    status = statusInputConfig?.value || ''
+    status = getStatusFromConfig(configFromLS)
   }
 
   const setHistoryFromLS = async value => {

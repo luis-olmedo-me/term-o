@@ -1,6 +1,9 @@
 import { storageKeys } from '@src/constants/storage.constants'
 import { namespaces } from '@src/hooks/useStorage'
-import { getStorageValue } from '@src/libs/command-parser/handlers/storage/storage.helpers'
+import {
+  getStorageValue,
+  setStorageValue
+} from '@src/libs/command-parser/handlers/storage/storage.helpers'
 
 const historyManager = (function() {
   let values = []
@@ -15,16 +18,20 @@ const historyManager = (function() {
     }
   }
 
-  const getUserEventsFromLS = async () => {
+  const getHistoryFromLS = async () => {
     const history = await getStorageValue(namespaces.LOCAL, storageKeys.HISTORY)
 
     values = history || []
   }
 
-  getUserEventsFromLS()
+  const setHistoryFromLS = async value => {
+    setStorageValue(namespaces.LOCAL, storageKeys.HISTORY, value)
+  }
+
+  getHistoryFromLS()
   chrome.storage.onChanged.addListener(handleStorageChanges)
 
-  return { getEvents: () => values }
+  return { getHistory: () => values, setHistory: setHistoryFromLS }
 })()
 
 export default historyManager

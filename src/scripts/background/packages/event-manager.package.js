@@ -1,12 +1,11 @@
-import { storageKeys } from '@src/constants/storage.constants'
-import { namespaces } from '@src/hooks/useStorage'
+import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 import { getStorageValue } from '@src/libs/command-parser/handlers/storage/storage.helpers'
 
 const eventManager = (function() {
   let values = []
 
   const handleStorageChanges = (changes, currentChanges) => {
-    if (currentChanges !== namespaces.LOCAL) return
+    if (currentChanges !== storageNamespaces.LOCAL) return
 
     for (let [storageKey, { newValue }] of Object.entries(changes)) {
       if (storageKey === storageKeys.EVENTS) {
@@ -16,7 +15,7 @@ const eventManager = (function() {
   }
 
   const getUserEventsFromLS = async () => {
-    const events = await getStorageValue(namespaces.LOCAL, storageKeys.EVENTS)
+    const events = await getStorageValue(storageNamespaces.LOCAL, storageKeys.EVENTS)
 
     values = events || []
   }

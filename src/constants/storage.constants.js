@@ -6,3 +6,7 @@ export const storageKeys = {
   HISTORY: 'history',
   PROMPT_HISTORY: 'prompt-history'
 }
+
+export const storageNamespaces = {
+  LOCAL: 'local'
+}

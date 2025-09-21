@@ -1,14 +1,14 @@
 import { useCallback, useMemo } from 'preact/hooks'
 
-import { storageKeys } from '@src/constants/storage.constants'
-import useStorage, { namespaces } from '@src/hooks/useStorage'
+import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
+import useStorage from '@src/hooks/useStorage'
 import { configSections } from './useConfig.constants'
 
 export const useConfig = props => {
   const { get = [] } = props || {}
 
   const [config, setConfig] = useStorage({
-    namespace: namespaces.LOCAL,
+    namespace: storageNamespaces.LOCAL,
     key: storageKeys.CONFIG,
     defaultValue: configSections
   })

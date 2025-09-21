@@ -1,7 +1,6 @@
-import { storageKeys } from '@src/constants/storage.constants'
+import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
 import { configIds, configInputIds } from '@src/hooks/useConfig'
-import { namespaces } from '@src/hooks/useStorage'
 import {
   getStorageValue,
   setStorageValue
@@ -21,7 +20,7 @@ const historyManager = (function() {
   }
 
   const handleStorageChanges = (changes, currentChanges) => {
-    if (currentChanges !== namespaces.LOCAL) return
+    if (currentChanges !== storageNamespaces.LOCAL) return
 
     for (let [storageKey, { newValue }] of Object.entries(changes)) {
       if (storageKey === storageKeys.HISTORY) {
@@ -34,15 +33,15 @@ const historyManager = (function() {
   }
 
   const getHistoryFromLS = async () => {
-    const configFromLS = await getStorageValue(namespaces.LOCAL, storageKeys.CONFIG)
-    const historyFromLS = await getStorageValue(namespaces.LOCAL, storageKeys.HISTORY)
+    const configFromLS = await getStorageValue(storageNamespaces.LOCAL, storageKeys.CONFIG)
+    const historyFromLS = await getStorageValue(storageNamespaces.LOCAL, storageKeys.HISTORY)
 
     history = historyFromLS || []
     status = getStatusFromConfig(configFromLS)
   }
 
   const setHistoryFromLS = value => {
-    setStorageValue(namespaces.LOCAL, storageKeys.HISTORY, value)
+    setStorageValue(storageNamespaces.LOCAL, storageKeys.HISTORY, value)
   }
 
   const getContext = tab => {

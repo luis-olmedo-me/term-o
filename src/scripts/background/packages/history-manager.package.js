@@ -41,11 +41,11 @@ const historyManager = (function() {
     status = getStatusFromConfig(configFromLS)
   }
 
-  const setHistoryFromLS = async value => {
+  const setHistoryFromLS = value => {
     setStorageValue(namespaces.LOCAL, storageKeys.HISTORY, value)
   }
 
-  const getContext = async tab => {
+  const getContext = tab => {
     return createContext(status, tab)
   }
 

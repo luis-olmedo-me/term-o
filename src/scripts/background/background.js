@@ -5,7 +5,7 @@ import historyManager from './packages/history-manager.package'
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
 
 const executeEvents = async (events, defaultTab) => {
-  let updates = historyManager.getHistory()
+  let updates = await historyManager.getHistory()
   let tab = defaultTab
   const setTab = newTab => (tab = newTab)
   const clearLogs = () => historyManager.setHistory([])

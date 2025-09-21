@@ -53,8 +53,8 @@ export class Command extends EventListener {
     })
   }
   get allCommands() {
-    let tempCommand = this.nextCommand
-    let commands = this.nextCommand ? [this.nextCommand] : []
+    let tempCommand = this
+    let commands = []
 
     while (tempCommand != null) {
       commands.push(tempCommand)

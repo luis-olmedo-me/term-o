@@ -1,6 +1,6 @@
-import { configInputIds, configSections } from './useConfig.constants'
+import { configIds, configInputIds, configSections } from './useConfig.constants'
 import { useConfig } from './useConfig.hook'
 
 export default useConfig
 
-export { configInputIds, configSections, useConfig }
+export { configIds, configInputIds, configSections, useConfig }

@@ -161,8 +161,12 @@ export class Command extends EventListener {
     return this
   }
 
-  appendsData(data) {
-    this.data = { ...this.data, ...data }
+  applyData(data) {
+    const newData = { ...this.data, ...data }
+
+    this.allCommands.forEach(command => {
+      command.data = newData
+    })
 
     return this
   }
@@ -190,9 +194,6 @@ export class Command extends EventListener {
     nextCommand.addEventListener('update', ({ updates }) => {
       this.setUpdates(...this.staticUpdates, ...updates)
     })
-
-    nextCommand.appendsData(this.data)
-    nextCommand.setTitle(this.title)
 
     if (hasArgsHoldingUp) await executePerUpdates(nextCommand, staticUpdates)
     else await nextCommand.execute()

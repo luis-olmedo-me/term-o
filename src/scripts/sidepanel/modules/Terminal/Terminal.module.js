@@ -79,7 +79,7 @@ export const Terminal = () => {
   }
 
   const handleEnter = value => {
-    const newCommand = commandParser.read(value).appendsData({ tab, setTab, clearLogs })
+    const newCommand = commandParser.read(value).applyData({ tab, setTab, clearLogs })
 
     setCurrentCommand(newCommand)
     focusOnInput()

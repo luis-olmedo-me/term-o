@@ -4,12 +4,13 @@ import eventManager from './packages/event-manager.package'
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
 
 const executeEvents = async (events, data) => {
-  events.forEach(event => {
+  for (let index = 0; index < events.length; index++) {
+    const event = events[index]
     const command = commandParser.read(event.line)
 
     command.applyData(data)
-    if (!command.finished) command.execute()
-  })
+    if (!command.finished) await command.execute()
+  }
 }
 
 chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {

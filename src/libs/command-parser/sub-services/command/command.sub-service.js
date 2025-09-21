@@ -23,6 +23,7 @@ export class Command extends EventListener {
     this.options = options
     this.args = []
     this.canExecuteNext = true
+    this.alive = true
   }
 
   get finished() {
@@ -200,5 +201,9 @@ export class Command extends EventListener {
   changeStatus(newStatus) {
     this.status = newStatus
     this.dispatchEvent('statuschange', this)
+  }
+
+  kill() {
+    this.alive = false
   }
 }

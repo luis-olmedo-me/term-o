@@ -7,7 +7,7 @@ const executeEvents = async (events, data) => {
   events.forEach(event => {
     const command = commandParser.read(event.line)
 
-    command.appendsData(data)
+    command.applyData(data)
     if (!command.finished) command.execute()
   })
 }

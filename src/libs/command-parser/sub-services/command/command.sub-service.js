@@ -23,6 +23,7 @@ export class Command extends EventListener {
     this.options = options
     this.args = []
     this.canExecuteNext = true
+    this.visible = true
   }
 
   get finished() {
@@ -50,6 +51,17 @@ export class Command extends EventListener {
         }
       })
     })
+  }
+  get allCommands() {
+    let tempCommand = this
+    let commands = []
+
+    while (tempCommand != null) {
+      commands.push(tempCommand)
+      tempCommand = tempCommand.nextCommand
+    }
+
+    return commands
   }
 
   reset() {
@@ -149,8 +161,12 @@ export class Command extends EventListener {
     return this
   }
 
-  appendsData(data) {
-    this.data = { ...this.data, ...data }
+  applyData(data) {
+    const newData = { ...this.data, ...data }
+
+    this.allCommands.forEach(command => {
+      command.data = newData
+    })
 
     return this
   }
@@ -179,9 +195,6 @@ export class Command extends EventListener {
       this.setUpdates(...this.staticUpdates, ...updates)
     })
 
-    nextCommand.appendsData(this.data)
-    nextCommand.setTitle(this.title)
-
     if (hasArgsHoldingUp) await executePerUpdates(nextCommand, staticUpdates)
     else await nextCommand.execute()
   }
@@ -200,5 +213,18 @@ export class Command extends EventListener {
   changeStatus(newStatus) {
     this.status = newStatus
     this.dispatchEvent('statuschange', this)
+  }
+
+  hide() {
+    this.visible = false
+  }
+
+  getCommandVisibleInChain() {
+    const allCommands = this.allCommands
+    const hasAnyHidden = allCommands.some(command => !command.visible)
+
+    return this.failed || !hasAnyHidden
+      ? allCommands.find(command => command.visible)
+      : allCommands.reverse().find(command => command.visible)
   }
 }

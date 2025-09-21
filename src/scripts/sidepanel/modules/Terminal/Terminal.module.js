@@ -74,24 +74,22 @@ export const Terminal = () => {
     if (focusPromptOnClick) inputRef.current?.focus()
   }
 
-  const clearLogs = exception => {
-    setCommandUpdates(exception ? exception.updates : [])
+  const clearLogs = () => {
+    setCommandUpdates([])
   }
 
   const handleEnter = value => {
-    const newCommand = commandParser.read(value).appendsData({ tab, setTab, clearLogs })
+    const newCommand = commandParser.read(value).applyData({ tab, setTab, clearLogs })
 
     setCurrentCommand(newCommand)
     focusOnInput()
   }
 
-  const handleInProgressCommandFinished = () => {
-    setCommandUpdates(updates => [
-      ...updates,
-      context,
-      currentCommand.title,
-      ...currentCommand.updates
-    ])
+  const handleInProgressCommandFinished = async () => {
+    const command = currentCommand.getCommandVisibleInChain()
+    const newUpdates = command ? [context, command.title, ...command.updates] : []
+
+    setCommandUpdates(updates => [...updates, ...newUpdates])
     setCurrentCommand(null)
     focusOnInput()
   }

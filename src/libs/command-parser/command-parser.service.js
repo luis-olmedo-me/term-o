@@ -26,11 +26,11 @@ class CommandParser extends EventListener {
     const scriptFormatted = this.getWithAliasesResolved(rawScript)
     let [firstFragment, ...nextFragments] = splitBy(scriptFormatted, '&&')
 
-    const command = this.get(firstFragment)
+    const command = this.parse(firstFragment).setTitle(rawScript)
     let carriedCommand = command
 
     for (let fragment of nextFragments) {
-      const nextCommand = this.get(fragment)
+      const nextCommand = this.parse(fragment).setTitle(rawScript)
       carriedCommand.nextCommand = nextCommand
 
       if (nextCommand.finished) break
@@ -38,11 +38,11 @@ class CommandParser extends EventListener {
       carriedCommand = nextCommand
     }
 
-    return command.setTitle(rawScript)
+    return command
   }
 
-  get(scriptRaw) {
-    const [name, ...scriptArgs] = getArgs(scriptRaw)
+  parse(fragment) {
+    const [name, ...scriptArgs] = getArgs(fragment)
 
     const template = this.templates.find(template => template.name === name)
     const cleanedName = name.replace('"', '\\"')

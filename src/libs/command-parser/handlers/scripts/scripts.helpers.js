@@ -66,7 +66,7 @@ export const executeCode = ({ scriptContent, command }) => {
           const newCommand = commandParser.getTemplateByName(data.name).create()
 
           newCommand.mock(data.props)
-          newCommand.appendsData(command.data)
+          newCommand.applyData(command.data)
 
           if (!newCommand.finished) await newCommand.execute()
 

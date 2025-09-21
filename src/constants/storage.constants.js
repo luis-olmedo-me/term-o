@@ -3,5 +3,6 @@ export const storageKeys = {
   CONFIG: 'config',
   EVENTS: 'events',
   SCRIPTS: 'scripts',
-  HISTORY: 'history'
+  HISTORY: 'history',
+  PROMPT_HISTORY: 'prompt-history'
 }

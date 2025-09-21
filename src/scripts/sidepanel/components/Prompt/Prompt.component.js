@@ -1,7 +1,9 @@
 import * as React from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
+import { storageKeys } from '@src/constants/storage.constants'
 import useConfig, { configInputIds } from '@src/hooks/useConfig'
+import useStorage, { namespaces } from '@src/hooks/useStorage'
 import ColoredText from '../ColoredText'
 import Input from '../Input'
 import * as S from './Prompt.styles'
@@ -9,7 +11,11 @@ import * as S from './Prompt.styles'
 export const Prompt = ({ onEnter, inputRef, disabled, defaultValue, context, loading }) => {
   const [value, setValue] = useState(defaultValue || '')
   const [historialIndex, setHistorialIndex] = useState(0)
-  const [historial, setHistorial] = useState([])
+  const [historial, setHistorial] = useStorage({
+    namespace: namespaces.LOCAL,
+    key: storageKeys.PROMPT_HISTORY,
+    defaultValue: []
+  })
 
   const { listening } = useConfig({
     get: [configInputIds.HISTORIAL_SIZE, configInputIds.STATUS]

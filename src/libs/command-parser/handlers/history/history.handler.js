@@ -25,7 +25,7 @@ export const handleHistory = async command => {
       return validations.every(validation => validation())
     })
 
-    const updates = historyFiltered.map(formatHistoryItem)
+    const updates = historyFiltered.map(formatHistoryItem).reverse()
 
     command.update(...updates)
   }
@@ -46,7 +46,7 @@ export const handleHistory = async command => {
       ...(P`to` ? { endTime: dateTimeTo } : {})
     })
 
-    const updates = history.map(formatHistoryItem)
+    const updates = history.map(formatHistoryItem).reverse()
 
     command.update(...updates)
   }

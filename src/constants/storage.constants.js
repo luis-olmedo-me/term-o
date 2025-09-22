@@ -8,5 +8,7 @@ export const storageKeys = {
 }
 
 export const storageNamespaces = {
-  LOCAL: 'local'
+  LOCAL: 'local',
+  SESSION: 'session',
+  COOKIE: 'cookie'
 }

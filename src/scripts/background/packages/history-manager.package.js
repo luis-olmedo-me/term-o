@@ -1,10 +1,7 @@
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
+import { getStorageValue, setStorageValue } from '@src/helpers/storage.helpers'
 import { configIds, configInputIds } from '@src/hooks/useConfig'
-import {
-  getStorageValue,
-  setStorageValue
-} from '@src/libs/command-parser/handlers/storage/storage.helpers'
 
 const historyManager = (function() {
   let history = []

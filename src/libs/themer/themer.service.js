@@ -1,7 +1,4 @@
-import {
-  getStorageValue,
-  setStorageValue
-} from '@src/libs/command-parser/handlers/storage/storage.helpers'
+import { getStorageValue, setStorageValue } from '@src/helpers/storage.helpers'
 import EventListener from '@src/libs/event-listener'
 import { defaultColorTheme, defaultTheme } from './themer.constants'
 

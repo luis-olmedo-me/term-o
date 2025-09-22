@@ -1,5 +1,5 @@
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
-import { getStorageValue } from '@src/libs/command-parser/handlers/storage/storage.helpers'
+import { getStorageValue } from '@src/helpers/storage.helpers'
 
 const eventManager = (function() {
   let values = []

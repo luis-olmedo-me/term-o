@@ -104,6 +104,8 @@ export const getPropsFromString = command => {
       const option = command.options.getByName(propName)
       const nextArg = args[index + 1]
 
+      if (typeof props[option.name] !== 'undefined') throw `${argValue} is a repeated argument.`
+
       if (isParam(option, nextArg)) {
         index++
         nextArg.holdUp()
@@ -123,6 +125,8 @@ export const getPropsFromString = command => {
       const propAbbreviation = argValue.slice(1)
       const option = command.options.getByAbbreviation(propAbbreviation)
       const nextArg = args[index + 1]
+
+      if (typeof props[option.name] !== 'undefined') throw `${argValue} is a repeated argument.`
 
       if (isParam(option, nextArg)) {
         index++

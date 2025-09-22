@@ -30,7 +30,7 @@ export default new CommandTemplate({ name: commandNames.HISTORY })
     abbreviation: 'r',
     description: 'Specify a certain value of items to be displayed. Defaults to 100.',
     validate: [isPositive, isInteger],
-    defaultValue: 100
+    defaultValue: 0
   })
   .expect({
     name: 'delete',

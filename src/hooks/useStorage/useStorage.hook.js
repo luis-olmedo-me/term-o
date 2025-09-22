@@ -31,7 +31,13 @@ export const useStorage = ({ namespace, key, defaultValue }) => {
 
   const setStateInStorage = useCallback(
     async value => {
-      await chrome.storage[namespace].set({ [key]: value })
+      setState(oldState => {
+        const validatedValue = typeof value === 'function' ? value(oldState) : value
+
+        chrome.storage[namespace].set({ [key]: validatedValue })
+
+        return validatedValue
+      })
     },
     [namespace, key]
   )

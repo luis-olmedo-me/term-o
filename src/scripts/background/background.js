@@ -1,15 +1,30 @@
 import commandParser from '@src/libs/command-parser'
 import eventManager from './packages/event-manager.package'
+import historyManager from './packages/history-manager.package'
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
 
-const executeEvents = async (events, data) => {
-  events.forEach(event => {
+const executeEvents = async (events, defaultTab) => {
+  let updates = await historyManager.getHistory()
+  let tab = defaultTab
+  const setTab = newTab => (tab = newTab)
+  const clearLogs = () => historyManager.setHistory([])
+
+  for (let index = 0; index < events.length; index++) {
+    const event = events[index]
     const command = commandParser.read(event.line)
 
-    command.applyData(data)
-    if (!command.finished) command.execute()
-  })
+    command.applyData({ tab, setTab, clearLogs })
+    if (!command.finished) await command.execute()
+
+    const context = historyManager.getContext(tab)
+    const commandVisible = command.getCommandVisibleInChain()
+    const newUpdates = command ? [context, commandVisible.title, ...commandVisible.updates] : []
+
+    updates = [...updates, ...newUpdates]
+  }
+
+  historyManager.setHistory(updates)
 }
 
 chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {
@@ -20,9 +35,5 @@ chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {
 
   if (pendingEvents.length === 0) return
 
-  let tab = updatedTab
-  const setTab = newTab => (tab = newTab)
-  const clearLogs = () => {}
-
-  executeEvents(pendingEvents, { tab, setTab, clearLogs })
+  executeEvents(pendingEvents, updatedTab)
 })

@@ -1,7 +1,5 @@
-import {
-  getStorageValue,
-  setStorageValue
-} from '@src/libs/command-parser/handlers/storage/storage.helpers'
+import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
+import { getStorageValue, setStorageValue } from '@src/helpers/storage.helpers'
 import EventListener from '@src/libs/event-listener'
 import { defaultColorTheme, defaultTheme } from './themer.constants'
 
@@ -39,15 +37,15 @@ class Themer extends EventListener {
   }
 
   handleStorageChanges(changes, currentChanges) {
-    if (currentChanges !== 'local') return
+    if (currentChanges !== storageNamespaces.LOCAL) return
 
     for (let [storageKey, { newValue }] of Object.entries(changes)) {
-      if (storageKey === 'color-sets') {
+      if (storageKey === storageKeys.COLOR_SETS) {
         this.colorThemes = newValue
         this.dispatchEvent('themes-update', { theme: this.theme })
       }
 
-      if (storageKey === 'color-set-name') {
+      if (storageKey === storageKeys.COLOR_SET_NAME) {
         const newTheme = this.colorThemes.find(theme => theme.name === newValue)
 
         if (newTheme) {
@@ -59,8 +57,8 @@ class Themer extends EventListener {
   }
 
   async getThemesFromLS() {
-    const newThemes = await getStorageValue('local', 'color-sets')
-    const newThemeName = await getStorageValue('local', 'color-set-name')
+    const newThemes = await getStorageValue(storageNamespaces.LOCAL, storageKeys.COLOR_SETS)
+    const newThemeName = await getStorageValue(storageNamespaces.LOCAL, storageKeys.COLOR_SET_NAME)
 
     if (newThemes) this.colorThemes = newThemes
 
@@ -74,21 +72,21 @@ class Themer extends EventListener {
     const newTheme = this.colorThemes.find(theme => theme.name === name)
     if (newTheme) this.colorTheme = newTheme
 
-    return setStorageValue('local', 'color-set-name', name)
+    return setStorageValue(storageNamespaces.LOCAL, storageKeys.COLOR_SET_NAME, name)
   }
 
   addColorTheme(newTheme) {
     const newColorThemes = this.colorThemes.concat(newTheme)
     this.colorThemes = newColorThemes
 
-    return setStorageValue('local', 'color-sets', newColorThemes)
+    return setStorageValue(storageNamespaces.LOCAL, storageKeys.COLOR_SETS, newColorThemes)
   }
 
   removeColorTheme(name) {
     const newColorThemes = this.colorThemes.filter(set => set.name !== name)
     this.colorThemes = newColorThemes
 
-    return setStorageValue('local', 'color-sets', newColorThemes)
+    return setStorageValue(storageNamespaces.LOCAL, storageKeys.COLOR_SETS, newColorThemes)
   }
 
   destroy() {

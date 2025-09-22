@@ -2,10 +2,10 @@ import * as React from 'preact'
 import { useEffect, useRef, useState } from 'preact/hooks'
 
 import Prompt from '@sidepanel/components/Prompt'
-import { storageKeys } from '@src/constants/storage.constants'
+import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
 import useConfig, { configInputIds } from '@src/hooks/useConfig'
-import useStorage, { namespaces } from '@src/hooks/useStorage'
+import useStorage from '@src/hooks/useStorage'
 import commandParser from '@src/libs/command-parser'
 import { getCurrentTab } from '@src/libs/command-parser/handlers/tabs/tabs.helpers'
 import CommandsViewer from '@src/scripts/sidepanel/modules/CommandsViewer'
@@ -16,13 +16,17 @@ import * as S from './Terminal.styles'
 export const Terminal = () => {
   const [isConfigModalOpen, setIsConfigModalOpen] = useState(false)
   const [currentCommand, setCurrentCommand] = useState(null)
-  const [commandUpdates, setCommandUpdates] = useState([])
   const [tab, setTab] = useState(null)
   const inputRef = useRef(null)
 
   const [aliases] = useStorage({
-    namespace: namespaces.LOCAL,
+    namespace: storageNamespaces.LOCAL,
     key: storageKeys.ALIASES,
+    defaultValue: []
+  })
+  const [commandUpdates, setCommandUpdates] = useStorage({
+    namespace: storageNamespaces.LOCAL,
+    key: storageKeys.HISTORY,
     defaultValue: []
   })
 

@@ -4,7 +4,9 @@ export const storageKeys = {
   EVENTS: 'events',
   SCRIPTS: 'scripts',
   HISTORY: 'history',
-  PROMPT_HISTORY: 'prompt-history'
+  PROMPT_HISTORY: 'prompt-history',
+  COLOR_SETS: 'color-sets',
+  COLOR_SET_NAME: 'color-set-name'
 }
 
 export const storageNamespaces = {

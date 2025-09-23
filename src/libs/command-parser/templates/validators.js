@@ -1,8 +1,6 @@
 import { validateSchema } from './helpers'
 
 export const isRegExp = (option, value) => {
-  if (Array.isArray(value)) return value.forEach(isRegExp)
-
   try {
     new RegExp(value)
   } catch (error) {
@@ -13,7 +11,6 @@ export const isRegExp = (option, value) => {
 }
 
 export const isDate = (option, value) => {
-  if (Array.isArray(value)) return value.forEach(isDate)
   const date = new Date(value)
 
   if (date === 'Invalid Date' || isNaN(date)) {
@@ -24,8 +21,6 @@ export const isDate = (option, value) => {
 }
 
 export const isJSON = (option, value) => {
-  if (Array.isArray(value)) return value.forEach(isJSON)
-
   try {
     JSON.parse(value)
   } catch (error) {
@@ -47,8 +42,6 @@ export const isJSONScheme = scheme => {
 
 const xpathPattern = /^\/?\/?(?:id\("[^"]+"\)|[a-zA-Z0-9_-]+)(?:\[[0-9]+\])?(?:\/(?:id\("[^"]+"\)|[a-zA-Z0-9_-]+)(?:\[[0-9]+\])?)*$/
 export const isXpath = (option, value) => {
-  if (Array.isArray(value)) return value.forEach(isXpath)
-
   if (!xpathPattern.test(value)) {
     const name = option.displayName
 
@@ -58,8 +51,6 @@ export const isXpath = (option, value) => {
 
 const tabIdPattern = /T(\d)+/
 export const isTabId = (option, value) => {
-  if (Array.isArray(value)) return value.forEach(isTabId)
-
   if (!tabIdPattern.test(value)) {
     const name = option.displayName
 
@@ -68,8 +59,6 @@ export const isTabId = (option, value) => {
 }
 
 export const isURL = (option, value) => {
-  if (Array.isArray(value)) return value.forEach(isURL)
-
   try {
     new URL(value)
   } catch (error) {
@@ -81,8 +70,6 @@ export const isURL = (option, value) => {
 
 export const isStringLike = validValues => {
   return (option, value) => {
-    if (Array.isArray(value)) return value.forEach(isStringLike)
-
     if (!validValues.includes(value)) {
       const name = option.displayName
       const availableValues = validValues.map(val => `"${val}"`).join(' or ')
@@ -108,9 +95,7 @@ export const isInteger = (option, value) => {
   }
 }
 
-export const hasNoSpaces = (option, value) => {
-  if (Array.isArray(value)) return value.forEach(hasNoSpaces)
-
+export const isSpaceForbidden = (option, value) => {
   if (value.includes(' ')) {
     const name = option.displayName
 
@@ -119,8 +104,6 @@ export const hasNoSpaces = (option, value) => {
 }
 
 export const isInlineStyles = (option, value) => {
-  if (Array.isArray(value)) return value.forEach(isInlineStyles)
-
   const validPropertyName = /^-?\w+$/
   const validPropertyValue = /^[\w\s.%#()-]+$/
 
@@ -163,7 +146,7 @@ export const hasInlineHeaders = (option, values) => {
   })
 }
 
-export const hasItems = staticLength => {
+export const hasLength = staticLength => {
   return (option, value) => {
     const isValid = value.length === staticLength
 
@@ -176,7 +159,7 @@ export const hasItems = staticLength => {
   }
 }
 
-export const isInRange = (min, max) => {
+export const hasLengthBetween = (min, max) => {
   return (option, value) => {
     const isValid = value.length >= min && value.length <= max
 
@@ -189,10 +172,18 @@ export const isInRange = (min, max) => {
   }
 }
 
-export const onItem = (index, validation) => {
+export const hasItemAs = (index, validation) => {
   return (option, value) => {
     value.forEach((item, itemIndex) => {
       if (itemIndex === index) validation(option, item)
+    })
+  }
+}
+
+export const hasAllItemsAs = (...validations) => {
+  return (option, value) => {
+    value.forEach(item => {
+      validations.forEach(validation => validation(option, item))
     })
   }
 }

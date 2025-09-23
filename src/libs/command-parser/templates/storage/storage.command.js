@@ -1,6 +1,6 @@
 import { commandNames } from '../../command-parser.constants'
 import CommandTemplate from '../../sub-services/command-template'
-import { hasItems, isTabId } from '../validators'
+import { hasLength, isTabId } from '../validators'
 
 export default new CommandTemplate({ name: commandNames.STORAGE })
   .expect({
@@ -33,7 +33,7 @@ export default new CommandTemplate({ name: commandNames.STORAGE })
   .expect({
     name: 'set',
     type: 'string-array',
-    validate: [hasItems(2)],
+    validate: [hasLength(2)],
     abbreviation: 'S',
     description: 'Set key and value in the storage selected.'
   })

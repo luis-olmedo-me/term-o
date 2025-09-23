@@ -2,7 +2,7 @@ import { commandNames } from '../../command-parser.constants'
 import CommandTemplate from '../../sub-services/command-template'
 import {
   hasAllItemsAs,
-  hasInRangeLength,
+  hasLengthBetween,
   isInteger,
   isPositive,
   isRegExp,
@@ -71,14 +71,14 @@ export default new CommandTemplate({ name: commandNames.DOM })
     type: 'string-array',
     abbreviation: 'a',
     description: 'Filter elements by attributes matching specified patterns.',
-    validate: [hasAllItemsAs(isRegExp), hasInRangeLength(0, 2)]
+    validate: [hasAllItemsAs(isRegExp), hasLengthBetween(0, 2)]
   })
   .expect({
     name: 'style',
     type: 'string-array',
     abbreviation: 'S',
     description: 'Filter elements by CSS styles matching specified regular expressions.',
-    validate: [hasAllItemsAs(isRegExp), hasInRangeLength(0, 2)]
+    validate: [hasAllItemsAs(isRegExp), hasLengthBetween(0, 2)]
   })
   .expect({
     name: 'tag',

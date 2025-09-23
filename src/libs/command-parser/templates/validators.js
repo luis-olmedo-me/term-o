@@ -95,9 +95,7 @@ export const isInteger = (option, value) => {
   }
 }
 
-export const hasNoSpaces = (option, value) => {
-  if (Array.isArray(value)) return value.forEach(hasNoSpaces)
-
+export const isSpaceForbidden = (option, value) => {
   if (value.includes(' ')) {
     const name = option.displayName
 
@@ -148,7 +146,7 @@ export const hasInlineHeaders = (option, values) => {
   })
 }
 
-export const hasItems = staticLength => {
+export const hasLength = staticLength => {
   return (option, value) => {
     const isValid = value.length === staticLength
 
@@ -161,7 +159,7 @@ export const hasItems = staticLength => {
   }
 }
 
-export const hasInRangeLength = (min, max) => {
+export const hasLengthBetween = (min, max) => {
   return (option, value) => {
     const isValid = value.length >= min && value.length <= max
 

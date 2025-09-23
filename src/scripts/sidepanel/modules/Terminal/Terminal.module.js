@@ -68,13 +68,16 @@ export const Terminal = () => {
     [aliases]
   )
 
-  const focusOnInput = () => {
+  const copySelectedText = () => {
     if (isConfigModalOpen) return
 
     const selection = window.getSelection()
     const selectedText = selection.toString()
 
     if (canCopyOnSelection && selectedText) navigator.clipboard.writeText(selectedText)
+  }
+
+  const focusOnPrompt = () => {
     if (focusPromptOnClick) inputRef.current?.focus()
   }
 
@@ -86,7 +89,7 @@ export const Terminal = () => {
     const newCommand = commandParser.read(value).applyData({ tab, setTab, clearLogs })
 
     setCurrentCommand(newCommand)
-    focusOnInput()
+    focusOnPrompt()
   }
 
   const handleInProgressCommandFinished = async () => {
@@ -95,14 +98,17 @@ export const Terminal = () => {
 
     setCommandUpdates(updates => [...updates, ...newUpdates])
     setCurrentCommand(null)
-    focusOnInput()
+    copySelectedText()
+
+    focusOnPrompt()
+    window.addEventListener('keydown', () => focusOnPrompt())
   }
 
   const cutUpdates = commandUpdates.slice(maxLinesPerCommand * -1)
   const context = createContext(status, tab)
 
   return (
-    <S.TerminalWrapper onMouseUp={focusOnInput}>
+    <S.TerminalWrapper onMouseUp={copySelectedText}>
       <PreferencesModal open={isConfigModalOpen} onClose={() => setIsConfigModalOpen(false)} />
 
       <S.TerminalHeader>

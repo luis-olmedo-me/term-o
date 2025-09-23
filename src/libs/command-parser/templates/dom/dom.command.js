@@ -1,6 +1,14 @@
 import { commandNames } from '../../command-parser.constants'
 import CommandTemplate from '../../sub-services/command-template'
-import { isInRange, isInteger, isPositive, isRegExp, isTabId, isXpath } from '../validators'
+import {
+  isInRange,
+  isInteger,
+  isPositive,
+  isRegExp,
+  isTabId,
+  isXpath,
+  onAllItems
+} from '../validators'
 
 export default new CommandTemplate({ name: commandNames.DOM })
   .expect({
@@ -63,14 +71,14 @@ export default new CommandTemplate({ name: commandNames.DOM })
     type: 'string-array',
     abbreviation: 'a',
     description: 'Filter elements by attributes matching specified patterns.',
-    validate: [isRegExp, isInRange(0, 2)]
+    validate: [onAllItems(isRegExp), isInRange(0, 2)]
   })
   .expect({
     name: 'style',
     type: 'string-array',
     abbreviation: 'S',
     description: 'Filter elements by CSS styles matching specified regular expressions.',
-    validate: [isRegExp, isInRange(0, 2)]
+    validate: [onAllItems(isRegExp), isInRange(0, 2)]
   })
   .expect({
     name: 'tag',

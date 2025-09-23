@@ -196,3 +196,11 @@ export const onItem = (index, validation) => {
     })
   }
 }
+
+export const onAllItems = (...validations) => {
+  return (option, value) => {
+    value.forEach(item => {
+      validations.forEach(validation => validation(option, item))
+    })
+  }
+}

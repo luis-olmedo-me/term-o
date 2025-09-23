@@ -9,7 +9,6 @@
         "transpileTemplateLiterals": true,
         "pure": true
       }
-    ],
-    "@babel/plugin-proposal-class-properties"
+    ]
   ]
 }

@@ -8,7 +8,16 @@ import ColoredText from '../ColoredText'
 import Input from '../Input'
 import * as S from './Prompt.styles'
 
-export const Prompt = ({ onEnter, inputRef, disabled, defaultValue, context, loading }) => {
+export const Prompt = ({
+  onEnter,
+  onFocus,
+  onBlur,
+  inputRef,
+  disabled,
+  defaultValue,
+  context,
+  loading
+}) => {
   const [value, setValue] = useState(defaultValue || '')
   const [historialIndex, setHistorialIndex] = useState(0)
   const [historial, setHistorial] = useStorage({
@@ -90,6 +99,8 @@ export const Prompt = ({ onEnter, inputRef, disabled, defaultValue, context, loa
           value={historialIndex ? historial.at(historialIndex) : value}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
+          onBlur={onBlur}
+          onFocus={onFocus}
           prefix={prefix}
         />
       )}
@@ -99,6 +110,8 @@ export const Prompt = ({ onEnter, inputRef, disabled, defaultValue, context, loa
 
 Prompt.propTypes = {
   onEnter: Function,
+  onFocus: Function,
+  onBlur: Function,
   inputRef: Object,
   context: String,
   disabled: Boolean,

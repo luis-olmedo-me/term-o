@@ -1,5 +1,5 @@
 import * as React from 'preact'
-import { useEffect, useRef, useState } from 'preact/hooks'
+import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 
 import Prompt from '@sidepanel/components/Prompt'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
@@ -47,6 +47,12 @@ export const Terminal = () => {
     status
   ] = listening
 
+  const focusOnPrompt = useCallback(() => {
+    if (!focusPromptOnClick && isConfigModalOpen) return
+
+    inputRef.current?.focus()
+  }, [focusPromptOnClick, isConfigModalOpen])
+
   useEffect(
     function focusTabAutomatically() {
       if (!switchTabAutomatically) return
@@ -68,21 +74,27 @@ export const Terminal = () => {
     [aliases]
   )
 
+  const getSelectedText = () => {
+    return window.getSelection().toString()
+  }
   const copySelectedText = () => {
     if (isConfigModalOpen) return
-
-    const selection = window.getSelection()
-    const selectedText = selection.toString()
+    const selectedText = getSelectedText()
 
     if (canCopyOnSelection && selectedText) navigator.clipboard.writeText(selectedText)
   }
 
-  const focusOnPrompt = () => {
-    if (focusPromptOnClick) inputRef.current?.focus()
-  }
-
   const clearLogs = () => {
     setCommandUpdates([])
+  }
+
+  const removePromptFocusEvent = () => {
+    window.removeEventListener('keydown', focusOnPrompt)
+  }
+
+  const WaitForKeyPressToFocusOnPrompt = () => {
+    removePromptFocusEvent()
+    window.addEventListener('keydown', focusOnPrompt)
   }
 
   const handleEnter = value => {
@@ -98,17 +110,24 @@ export const Terminal = () => {
 
     setCommandUpdates(updates => [...updates, ...newUpdates])
     setCurrentCommand(null)
-    copySelectedText()
-
-    focusOnPrompt()
-    window.addEventListener('keydown', () => focusOnPrompt())
   }
 
   const cutUpdates = commandUpdates.slice(maxLinesPerCommand * -1)
   const context = createContext(status, tab)
 
+  const handleMouseUp = () => {
+    const selectedText = getSelectedText()
+
+    if (selectedText) {
+      copySelectedText()
+    } else {
+      removePromptFocusEvent()
+      focusOnPrompt()
+    }
+  }
+
   return (
-    <S.TerminalWrapper onMouseUp={copySelectedText}>
+    <S.TerminalWrapper onMouseUp={handleMouseUp}>
       <PreferencesModal open={isConfigModalOpen} onClose={() => setIsConfigModalOpen(false)} />
 
       <S.TerminalHeader>
@@ -125,6 +144,8 @@ export const Terminal = () => {
       <Prompt
         inputRef={inputRef}
         onEnter={handleEnter}
+        onBlur={WaitForKeyPressToFocusOnPrompt}
+        onFocus={removePromptFocusEvent()}
         loading={currentCommand !== null}
         context={context}
       />

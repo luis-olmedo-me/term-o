@@ -5,6 +5,7 @@ import * as S from './Input.styles'
 export const Input = ({
   onChange,
   onKeyDown,
+  onFocus,
   onBlur,
   placeholder,
   value,
@@ -27,6 +28,7 @@ export const Input = ({
         checked={checked}
         onChange={onChange}
         onKeyDown={onKeyDown}
+        onFocus={onFocus}
         onBlur={onBlur}
         placeholder={placeholder}
         disabled={disabled}
@@ -40,6 +42,7 @@ export const Input = ({
 Input.propTypes = {
   onChange: Function,
   onKeyDown: Function,
+  onFocus: Function,
   onBlur: Function,
   placeholder: String,
   value: String,

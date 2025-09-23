@@ -106,8 +106,6 @@ export const hasNoSpaces = (option, value) => {
 }
 
 export const isInlineStyles = (option, value) => {
-  if (Array.isArray(value)) return value.forEach(isInlineStyles)
-
   const validPropertyName = /^-?\w+$/
   const validPropertyValue = /^[\w\s.%#()-]+$/
 
@@ -163,7 +161,7 @@ export const hasItems = staticLength => {
   }
 }
 
-export const isInRange = (min, max) => {
+export const hasInRangeLength = (min, max) => {
   return (option, value) => {
     const isValid = value.length >= min && value.length <= max
 

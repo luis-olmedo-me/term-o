@@ -174,7 +174,7 @@ export const hasInRangeLength = (min, max) => {
   }
 }
 
-export const onItem = (index, validation) => {
+export const hasItemAs = (index, validation) => {
   return (option, value) => {
     value.forEach((item, itemIndex) => {
       if (itemIndex === index) validation(option, item)
@@ -182,7 +182,7 @@ export const onItem = (index, validation) => {
   }
 }
 
-export const onAllItems = (...validations) => {
+export const hasAllItemsAs = (...validations) => {
   return (option, value) => {
     value.forEach(item => {
       validations.forEach(validation => validation(option, item))

@@ -1,6 +1,6 @@
 import { commandNames } from '../../command-parser.constants'
 import CommandTemplate from '../../sub-services/command-template'
-import { hasInRangeLength, isInlineStyles, isRegExp, isXpath, onAllItems } from '../validators'
+import { hasAllItemsAs, hasInRangeLength, isInlineStyles, isRegExp, isXpath } from '../validators'
 
 export default new CommandTemplate({ name: commandNames.STYLE })
   .expect({
@@ -31,14 +31,14 @@ export default new CommandTemplate({ name: commandNames.STYLE })
     name: 'property',
     type: 'string-array',
     abbreviation: 'p',
-    validate: [onAllItems(isRegExp), hasInRangeLength(0, 2)],
+    validate: [hasAllItemsAs(isRegExp), hasInRangeLength(0, 2)],
     description: 'Filter styles by property names matching specified patterns.'
   })
   .expect({
     name: 'selector',
     type: 'string',
     abbreviation: 's',
-    validate: [onAllItems(isRegExp)],
+    validate: [hasAllItemsAs(isRegExp)],
     description: 'Filter elements by CSS selector matching a regular expression.'
   })
   .expect({

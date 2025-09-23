@@ -1,13 +1,13 @@
 import { commandNames } from '../../command-parser.constants'
 import CommandTemplate from '../../sub-services/command-template'
-import { hasItems, hasNoSpaces, onItem } from '../validators'
+import { hasItemAs, hasItems, hasNoSpaces } from '../validators'
 
 export default new CommandTemplate({ name: commandNames.ALIAS })
   .expect({
     name: 'add',
     type: 'string-array',
     abbreviation: 'a',
-    validate: [hasItems(2), onItem(0, hasNoSpaces)],
+    validate: [hasItems(2), hasItemAs(0, hasNoSpaces)],
     worksWith: [],
     description: 'Add a new alias. Format: ["alias-name" "command"]'
   })

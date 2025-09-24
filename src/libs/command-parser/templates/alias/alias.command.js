@@ -1,21 +1,27 @@
 import { commandNames } from '../../command-parser.constants'
 import CommandTemplate from '../../sub-services/command-template'
 import { hasItemAs, hasLength, isSpaceForbidden } from '../validators'
+import { aliasHelpSections, aliasHelpSectionTitles } from './alias.constants'
 
-export default new CommandTemplate({ name: commandNames.ALIAS })
+export default new CommandTemplate({
+  name: commandNames.ALIAS,
+  helpSectionTitles: aliasHelpSectionTitles
+})
   .expect({
     name: 'add',
     type: 'string-array',
     abbreviation: 'a',
     validate: [hasLength(2), hasItemAs(0, isSpaceForbidden)],
     worksWith: [],
-    description: 'Add a new alias. Format: ["alias-name" "command"]'
+    helpSection: aliasHelpSections.MANAGEMENT,
+    description: 'Add a new alias. Format: ["name" "command"].'
   })
   .expect({
     name: 'list',
     type: 'boolean',
     abbreviation: 'l',
     worksWith: [],
+    helpSection: aliasHelpSections.MANAGEMENT,
     description: 'List all defined aliases.'
   })
   .expect({
@@ -23,12 +29,14 @@ export default new CommandTemplate({ name: commandNames.ALIAS })
     type: 'string',
     abbreviation: 'd',
     worksWith: [],
-    description: 'Delete an alias by its name.'
+    helpSection: aliasHelpSections.MANAGEMENT,
+    description: 'Remove an alias by name.'
   })
   .expect({
     name: 'help',
     type: 'boolean',
     abbreviation: 'h',
-    description: 'Display help about the options available for this command.',
+    helpSection: aliasHelpSections.GENERAL,
+    description: 'Show help for this command.',
     worksWith: []
   })

@@ -33,6 +33,8 @@ export const displayHelp = command => {
   const options = command.options
   const helpSectionsNames = Object.keys(command.helpSectionTitles)
 
+  helps.push(`${C`foreground`}Usage: ${command.name} [options]\n`)
+
   helpSectionsNames.forEach(sectionName => {
     const optionsBySection = options.getByHelpSection(sectionName)
     const sectionTitle = command.helpSectionTitles[sectionName]
@@ -44,14 +46,14 @@ export const displayHelp = command => {
       const description = option.description
       const type = option.type
 
-      const shouldBeDoubledTabulated = `${displayName} <${type}>`.length < 25
+      const shouldBeDoubledTabulated = `${displayName} <${type}>`.length < 22
       const tab = shouldBeDoubledTabulated ? `\t\t` : '\t'
 
       const isLastOption = index === optionsBySection.length - 1
       const lineJump = isLastOption ? '\n' : ''
 
       helps.push(
-        `\t${C`green`}${displayName} ${C`yellow`}<${type}>${tab}${C`brightBlack`}${description}${lineJump}`
+        `  ${C`green`}${displayName} ${C`yellow`}<${type}>${tab}${C`brightBlack`}${description}${lineJump}`
       )
     })
 

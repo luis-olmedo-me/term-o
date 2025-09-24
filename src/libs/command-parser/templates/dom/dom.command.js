@@ -122,7 +122,7 @@ export default new CommandTemplate({
     abbreviation: 'i',
     validate: [isTabId],
     helpSection: domHelpSections.SEARCH,
-    description: 'Search elements in a specific tab (tab id only)'
+    description: 'Search elements in a specific tab (T[number])'
   })
   .expect({
     name: 'below',

@@ -46,11 +46,14 @@ export const displayHelp = command => {
       const description = option.description
       const type = option.type
 
+      const shouldBeDoubledTabulated = `${displayName} <${type}>`.length < 25
+      const tab = shouldBeDoubledTabulated ? `\t\t` : '\t'
+
       const isLastOption = index === optionsBySection.length - 1
       const lineJump = isLastOption ? '\n' : ''
 
       helps.push(
-        `\t${C`cyan`}${displayName} ${C`green`}<${type}>\t${C`foreground`}${description}${lineJump}`
+        `\t${C`green`}${displayName} ${C`yellow`}<${type}>${tab}${C`brightBlack`}${description}${lineJump}`
       )
     })
 

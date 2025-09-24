@@ -68,7 +68,7 @@ export default new CommandTemplate({
     type: 'boolean',
     abbreviation: 'x',
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
-    description: 'Show XPath(s) of matched elements'
+    description: 'Show XPath(s) of matched element(s)'
   })
   .expect({
     name: 'group',
@@ -90,7 +90,7 @@ export default new CommandTemplate({
     type: 'string-array',
     abbreviation: 'S',
     helpSection: domHelpSections.FILTERS,
-    description: 'Filter by CSS styles (regex supported)',
+    description: 'Filter by CSS styles (regex supported in items)',
     validate: [hasAllItemsAs(isRegExp), hasLengthBetween(0, 2)]
   })
   .expect({
@@ -114,7 +114,7 @@ export default new CommandTemplate({
     type: 'boolean',
     abbreviation: 'C',
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
-    description: 'Show textual content of matched elements'
+    description: 'Show textual content of matched element(s)'
   })
   .expect({
     name: 'tab-id',

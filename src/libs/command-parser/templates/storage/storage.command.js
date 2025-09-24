@@ -13,7 +13,7 @@ export default new CommandTemplate({
     abbreviation: 'l',
     helpSection: storageHelpSections.RETRIEVAL,
     worksWith: ['json', 'tab-id', 'set'],
-    description: 'Get local storage from the selected tab.'
+    description: 'Get local storage from the selected tab'
   })
   .expect({
     name: 'session',
@@ -21,7 +21,7 @@ export default new CommandTemplate({
     abbreviation: 's',
     helpSection: storageHelpSections.RETRIEVAL,
     worksWith: ['json', 'tab-id', 'set'],
-    description: 'Get session storage from the selected tab.'
+    description: 'Get session storage from the selected tab'
   })
   .expect({
     name: 'cookie',
@@ -29,14 +29,14 @@ export default new CommandTemplate({
     abbreviation: 'c',
     helpSection: storageHelpSections.RETRIEVAL,
     worksWith: ['json', 'tab-id', 'set'],
-    description: 'Get cookies from the selected tab.'
+    description: 'Get cookies from the selected tab'
   })
   .expect({
     name: 'json',
     type: 'boolean',
     abbreviation: 'j',
     helpSection: storageHelpSections.RETRIEVAL,
-    description: 'Return storage as JSON.'
+    description: 'Return storage as JSON'
   })
   .expect({
     name: 'set',
@@ -44,7 +44,7 @@ export default new CommandTemplate({
     validate: [hasLength(2)],
     abbreviation: 'S',
     helpSection: storageHelpSections.MODIFICATION,
-    description: 'Set a key-value pair in the selected storage.'
+    description: 'Set a key-value pair in the selected storage'
   })
   .expect({
     name: 'tab-id',
@@ -52,7 +52,7 @@ export default new CommandTemplate({
     abbreviation: 'i',
     helpSection: storageHelpSections.RETRIEVAL,
     validate: [isTabId],
-    description: 'Specify a tab ID (T[number]) to get storage from.'
+    description: 'Specify a tab ID (T[number]) to get storage from'
   })
   .expect({
     name: 'copy',
@@ -60,7 +60,7 @@ export default new CommandTemplate({
     abbreviation: 'C',
     helpSection: storageHelpSections.MODIFICATION,
     worksWith: [],
-    description: 'Copy a value to the clipboard.'
+    description: 'Copy a value to the clipboard'
   })
   .expect({
     name: 'help',
@@ -68,5 +68,5 @@ export default new CommandTemplate({
     abbreviation: 'h',
     helpSection: storageHelpSections.GENERAL,
     worksWith: [],
-    description: 'Show help for this command.'
+    description: 'Show help for this command'
   })

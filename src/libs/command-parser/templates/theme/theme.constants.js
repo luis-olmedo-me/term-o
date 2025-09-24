@@ -21,3 +21,15 @@ export const colorScheme = {
   selectionBackground: 'string',
   cursorColor: 'string'
 }
+
+export const themeHelpSections = {
+  GENERAL: 'general',
+  MANAGEMENT: 'management',
+  APPLICATION: 'application'
+}
+
+export const themeHelpSectionTitles = {
+  [themeHelpSections.GENERAL]: 'General',
+  [themeHelpSections.MANAGEMENT]: 'Management',
+  [themeHelpSections.APPLICATION]: 'Application'
+}

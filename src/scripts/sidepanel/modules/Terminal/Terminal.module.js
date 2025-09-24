@@ -11,6 +11,7 @@ import { getCurrentTab } from '@src/libs/command-parser/handlers/tabs/tabs.helpe
 import CommandsViewer from '@src/scripts/sidepanel/modules/CommandsViewer'
 import Button from '../../components/Button'
 import PreferencesModal from '../../components/PreferencesModal'
+import { copyText, getSelectedText } from './Terminal.helpers'
 import * as S from './Terminal.styles'
 
 export const Terminal = () => {
@@ -74,14 +75,10 @@ export const Terminal = () => {
     [aliases]
   )
 
-  const getSelectedText = () => {
-    return window.getSelection().toString()
-  }
   const copySelectedText = () => {
-    if (isConfigModalOpen) return
     const selectedText = getSelectedText()
 
-    if (canCopyOnSelection && selectedText) navigator.clipboard.writeText(selectedText)
+    if (canCopyOnSelection) copyText(selectedText)
   }
 
   const clearLogs = () => {
@@ -127,7 +124,7 @@ export const Terminal = () => {
   }
 
   return (
-    <S.TerminalWrapper onMouseUp={handleMouseUp}>
+    <S.TerminalWrapper onMouseUp={isConfigModalOpen ? null : handleMouseUp}>
       <PreferencesModal open={isConfigModalOpen} onClose={() => setIsConfigModalOpen(false)} />
 
       <S.TerminalHeader>

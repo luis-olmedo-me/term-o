@@ -21,7 +21,7 @@ export default new CommandTemplate({
     abbreviation: 'X',
     worksWith: ['click', 'tab-id', 'sibling', 'parent', 'child', 'xpath', 'below'],
     helpSection: domHelpSections.SEARCH,
-    description: 'Search for elements using XPath expression.',
+    description: 'Find elements with an XPath query',
     validate: [isXpath]
   })
   .expect({
@@ -29,15 +29,14 @@ export default new CommandTemplate({
     type: 'boolean',
     abbreviation: 'c',
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
-    description: 'Simulate a click action on the selected element.'
+    description: 'Click the selected element(s)'
   })
   .expect({
     name: 'sibling',
     type: 'number',
     abbreviation: 'b',
     helpSection: domHelpSections.DOM_NAVIGATION,
-    description:
-      'Get sibling by index on the selected element. Positive indexes means next siblings, and negative indexes, previous siblings.',
+    description: 'Select sibling by index (positive = next, negative = previous)',
     validate: [isInteger]
   })
   .expect({
@@ -45,7 +44,7 @@ export default new CommandTemplate({
     type: 'number',
     abbreviation: 'p',
     helpSection: domHelpSections.DOM_NAVIGATION,
-    description: 'Get parent by index on the selected element. Must be positive index.',
+    description: 'Select parent element by index (positive only)',
     validate: [isInteger, isPositive]
   })
   .expect({
@@ -53,7 +52,7 @@ export default new CommandTemplate({
     type: 'number',
     abbreviation: 'd',
     helpSection: domHelpSections.DOM_NAVIGATION,
-    description: 'Get child by index on the selected element. Must be positive index.',
+    description: 'Select child element by index (positive only)',
     validate: [isInteger, isPositive]
   })
   .expect({
@@ -61,29 +60,29 @@ export default new CommandTemplate({
     type: 'boolean',
     abbreviation: 's',
     worksWith: ['attr', 'style', 'tag', 'group', 'text', 'content', 'xpath', 'tab-id', 'below'],
-    helpSection: domHelpSections.SEARCHS,
-    description: 'Search for elements based on various criteria.'
+    helpSection: domHelpSections.SEARCH,
+    description: 'Find elements by criteria'
   })
   .expect({
     name: 'xpath',
     type: 'boolean',
     abbreviation: 'x',
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
-    description: 'Get the xpaths of the found elements.'
+    description: 'Show XPath(s) of matched elements'
   })
   .expect({
     name: 'group',
     type: 'boolean',
     abbreviation: 'g',
     helpSection: domHelpSections.FILTERS,
-    description: 'Group elements based on their attributes and tag names.'
+    description: 'Count elements by attributes and tag names'
   })
   .expect({
     name: 'attr',
     type: 'string-array',
     abbreviation: 'a',
     helpSection: domHelpSections.FILTERS,
-    description: 'Filter elements by attributes matching specified patterns.',
+    description: 'Filter by attributes (regex supported in items)',
     validate: [hasAllItemsAs(isRegExp), hasLengthBetween(0, 2)]
   })
   .expect({
@@ -91,7 +90,7 @@ export default new CommandTemplate({
     type: 'string-array',
     abbreviation: 'S',
     helpSection: domHelpSections.FILTERS,
-    description: 'Filter elements by CSS styles matching specified regular expressions.',
+    description: 'Filter by CSS styles (regex supported)',
     validate: [hasAllItemsAs(isRegExp), hasLengthBetween(0, 2)]
   })
   .expect({
@@ -99,7 +98,7 @@ export default new CommandTemplate({
     type: 'string',
     abbreviation: 't',
     helpSection: domHelpSections.FILTERS,
-    description: 'Filter elements by tag name matching a regular expression.',
+    description: 'Filter by tag name (regex supported)',
     validate: [isRegExp]
   })
   .expect({
@@ -107,7 +106,7 @@ export default new CommandTemplate({
     type: 'string',
     abbreviation: 'T',
     helpSection: domHelpSections.FILTERS,
-    description: 'Filter elements by their textual content matching a regular expression.',
+    description: 'Filter by text content (regex supported)',
     validate: [isRegExp]
   })
   .expect({
@@ -115,7 +114,7 @@ export default new CommandTemplate({
     type: 'boolean',
     abbreviation: 'C',
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
-    description: 'Get the textual content of the found elements.'
+    description: 'Show textual content of matched elements'
   })
   .expect({
     name: 'tab-id',
@@ -123,7 +122,7 @@ export default new CommandTemplate({
     abbreviation: 'i',
     validate: [isTabId],
     helpSection: domHelpSections.SEARCH,
-    description: 'Get elements on a specific tab ID (T[number]).'
+    description: 'Search elements in a specific tab (tab id only)'
   })
   .expect({
     name: 'below',
@@ -131,13 +130,13 @@ export default new CommandTemplate({
     abbreviation: 'B',
     validate: [isXpath],
     helpSection: domHelpSections.SEARCH,
-    description: 'Specify under what element the search should be done using Xpath.'
+    description: 'Limit search scope under a specific element'
   })
   .expect({
     name: 'help',
     type: 'boolean',
     abbreviation: 'h',
     helpSection: domHelpSections.GENERAL,
-    description: 'Display help about the options available for this command.',
+    description: 'Show this help message',
     worksWith: []
   })

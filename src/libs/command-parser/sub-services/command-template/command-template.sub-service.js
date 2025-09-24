@@ -15,7 +15,17 @@ export class CommandTemplate {
     return this
   }
 
-  expect({ name, type, defaultValue, abbreviation, validate, worksWith, mustHave, description }) {
+  expect({
+    name,
+    type,
+    defaultValue,
+    abbreviation,
+    validate,
+    worksWith,
+    mustHave,
+    description,
+    helpSection
+  }) {
     const value = (defaultValue || defaultValues[type]) ?? defaultValues.none
 
     this.options.add({
@@ -23,6 +33,7 @@ export class CommandTemplate {
       value,
       type,
       abbreviation,
+      helpSection,
       description,
       validations: validate,
       dependencies: worksWith,

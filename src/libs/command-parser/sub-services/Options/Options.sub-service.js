@@ -59,6 +59,10 @@ export class Options {
     return foundValue
   }
 
+  getByHelpSection(helpSectionName) {
+    return this.values.filter(value => value.helpSection === helpSectionName)
+  }
+
   copy() {
     const optionsCopy = new Options()
 

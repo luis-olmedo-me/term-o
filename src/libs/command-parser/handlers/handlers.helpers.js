@@ -29,15 +29,35 @@ export const getNumberTabId = tabIdRaw => {
 }
 
 export const displayHelp = command => {
+  let helps = []
+  let helps1 = []
   const options = command.options
+  const helpSectionsNames = Object.keys(command.helpSectionTitles)
   const optionsWithDependencies = options.getDependencies()
+
+  helpSectionsNames.forEach(sectionName => {
+    const optionsBySection = options.getByHelpSection(sectionName)
+    const sectionTitle = command.helpSectionTitles[sectionName]
+
+    helps.push(`${C`foreground`}${sectionTitle}:\n`)
+
+    optionsBySection.forEach((option, index) => {
+      const displayName = option.displayName
+      const description = option.description
+
+      const isLastOption = index === optionsBySection.length - 1
+      const lineJump = isLastOption ? '\n' : ''
+
+      helps.push(`\t${C`cyan`}${displayName}\t${C`foreground`}${description}${lineJump}`)
+    })
+
+    helps.push('')
+  })
 
   const dependencies = Object.values(optionsWithDependencies).flat()
   const optionsIndependents = options.values.filter(
     option => !option.dependencies && !dependencies.includes(option.name)
   )
-
-  let helps = []
 
   Object.entries(optionsWithDependencies).forEach(([name, dependencies], mainIndex) => {
     const option = options.getByName(name)
@@ -48,7 +68,7 @@ export const displayHelp = command => {
       useGrouping: false
     })
 
-    helps.push(
+    helps1.push(
       `${C`cyan`}${formattedMainIndex} ${C`brightBlack`}null ${C`purple`}${displayName} ${C`yellow`}${description}`
     )
 
@@ -61,7 +81,7 @@ export const displayHelp = command => {
         useGrouping: false
       })
 
-      helps.push(
+      helps1.push(
         `${C`brightBlack`}null ${C`cyan`}${formattedIndex} ${C`brightPurple`}${displayName} ${C`yellow`}${description}`
       )
     })
@@ -70,7 +90,7 @@ export const displayHelp = command => {
   optionsIndependents.forEach(option => {
     const displayName = option.displayName
 
-    helps.push(`${displayName}: ${option.description}`)
+    helps1.push(`${displayName}: ${option.description}`)
   })
 
   command.update(...helps)

@@ -1,5 +1,5 @@
 import * as React from 'preact'
-import { useEffect, useRef, useState } from 'preact/hooks'
+import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 
 import Prompt from '@sidepanel/components/Prompt'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
@@ -11,6 +11,7 @@ import { getCurrentTab } from '@src/libs/command-parser/handlers/tabs/tabs.helpe
 import CommandsViewer from '@src/scripts/sidepanel/modules/CommandsViewer'
 import Button from '../../components/Button'
 import PreferencesModal from '../../components/PreferencesModal'
+import { copyText, getSelectedText } from './Terminal.helpers'
 import * as S from './Terminal.styles'
 
 export const Terminal = () => {
@@ -47,6 +48,12 @@ export const Terminal = () => {
     status
   ] = listening
 
+  const focusOnPrompt = useCallback(() => {
+    if (!focusPromptOnClick && isConfigModalOpen) return
+
+    inputRef.current?.focus()
+  }, [focusPromptOnClick, isConfigModalOpen])
+
   useEffect(
     function focusTabAutomatically() {
       if (!switchTabAutomatically) return
@@ -68,25 +75,30 @@ export const Terminal = () => {
     [aliases]
   )
 
-  const focusOnInput = () => {
-    if (isConfigModalOpen) return
+  const copySelectedText = () => {
+    const selectedText = getSelectedText()
 
-    const selection = window.getSelection()
-    const selectedText = selection.toString()
-
-    if (canCopyOnSelection && selectedText) navigator.clipboard.writeText(selectedText)
-    if (focusPromptOnClick) inputRef.current?.focus()
+    if (canCopyOnSelection) copyText(selectedText)
   }
 
   const clearLogs = () => {
     setCommandUpdates([])
   }
 
+  const removePromptFocusEvent = () => {
+    window.removeEventListener('keydown', focusOnPrompt)
+  }
+
+  const WaitForKeyPressToFocusOnPrompt = () => {
+    removePromptFocusEvent()
+    window.addEventListener('keydown', focusOnPrompt)
+  }
+
   const handleEnter = value => {
     const newCommand = commandParser.read(value).applyData({ tab, setTab, clearLogs })
 
     setCurrentCommand(newCommand)
-    focusOnInput()
+    focusOnPrompt()
   }
 
   const handleInProgressCommandFinished = async () => {
@@ -95,14 +107,24 @@ export const Terminal = () => {
 
     setCommandUpdates(updates => [...updates, ...newUpdates])
     setCurrentCommand(null)
-    focusOnInput()
   }
 
   const cutUpdates = commandUpdates.slice(maxLinesPerCommand * -1)
   const context = createContext(status, tab)
 
+  const handleMouseUp = () => {
+    const selectedText = getSelectedText()
+
+    if (selectedText) {
+      copySelectedText()
+    } else {
+      removePromptFocusEvent()
+      focusOnPrompt()
+    }
+  }
+
   return (
-    <S.TerminalWrapper onMouseUp={focusOnInput}>
+    <S.TerminalWrapper onMouseUp={isConfigModalOpen ? null : handleMouseUp}>
       <PreferencesModal open={isConfigModalOpen} onClose={() => setIsConfigModalOpen(false)} />
 
       <S.TerminalHeader>
@@ -119,6 +141,8 @@ export const Terminal = () => {
       <Prompt
         inputRef={inputRef}
         onEnter={handleEnter}
+        onBlur={WaitForKeyPressToFocusOnPrompt}
+        onFocus={removePromptFocusEvent}
         loading={currentCommand !== null}
         context={context}
       />

@@ -13,14 +13,14 @@ export default new CommandTemplate({
     abbreviation: 'l',
     helpSection: historyHelpSections.GENERAL,
     worksWith: ['title', 'url', 'max-results', 'from', 'to'],
-    description: 'Show a list of previously opened pages.'
+    description: 'Show a list of previously opened pages'
   })
   .expect({
     name: 'title',
     type: 'string',
     abbreviation: 't',
     helpSection: historyHelpSections.FILTERS,
-    description: 'Filter pages by title (supports regular expressions).',
+    description: 'Filter pages by title (supports regular expressions)',
     validate: [isRegExp]
   })
   .expect({
@@ -28,7 +28,7 @@ export default new CommandTemplate({
     type: 'string',
     abbreviation: 'u',
     helpSection: historyHelpSections.FILTERS,
-    description: 'Filter pages by URL (supports regular expressions).',
+    description: 'Filter pages by URL (supports regular expressions)',
     validate: [isRegExp]
   })
   .expect({
@@ -36,7 +36,7 @@ export default new CommandTemplate({
     type: 'number',
     abbreviation: 'r',
     helpSection: historyHelpSections.FILTERS,
-    description: 'Limit the number of items displayed.',
+    description: 'Limit the number of items displayed',
     validate: [isPositive, isInteger],
     defaultValue: 0
   })
@@ -45,7 +45,7 @@ export default new CommandTemplate({
     type: 'boolean',
     abbreviation: 'd',
     helpSection: historyHelpSections.MANAGEMENT,
-    description: 'Delete pages in a specific date range.',
+    description: 'Delete pages in a specific date range',
     worksWith: ['from', 'to'],
     mustHave: ['from', 'to']
   })
@@ -54,7 +54,7 @@ export default new CommandTemplate({
     type: 'string',
     abbreviation: 'F',
     helpSection: historyHelpSections.FILTERS,
-    description: 'Start date for deletion or filtering.',
+    description: 'Start date for deletion or filtering',
     validate: [isDate]
   })
   .expect({
@@ -62,7 +62,7 @@ export default new CommandTemplate({
     type: 'string',
     abbreviation: 'T',
     helpSection: historyHelpSections.FILTERS,
-    description: 'End date for deletion or filtering.',
+    description: 'End date for deletion or filtering',
     validate: [isDate]
   })
   .expect({
@@ -70,6 +70,6 @@ export default new CommandTemplate({
     type: 'boolean',
     abbreviation: 'h',
     helpSection: historyHelpSections.GENERAL,
-    description: 'Show help for this command.',
+    description: 'Show help for this command',
     worksWith: []
   })

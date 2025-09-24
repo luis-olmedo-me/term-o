@@ -14,7 +14,7 @@ export default new CommandTemplate({
     helpSection: requestHelpSections.API_CALL,
     worksWith: ['headers', 'payload', 'method', 'url', 'read-as'],
     mustHave: ['url'],
-    description: 'Start an API request.'
+    description: 'Start an API request'
   })
   .expect({
     name: 'headers',
@@ -22,14 +22,14 @@ export default new CommandTemplate({
     abbreviation: 'H',
     helpSection: requestHelpSections.OPTIONS,
     validate: [hasInlineHeaders],
-    description: 'Include request headers.'
+    description: 'Include request headers'
   })
   .expect({
     name: 'payload',
     type: 'string',
     abbreviation: 'p',
     helpSection: requestHelpSections.OPTIONS,
-    description: 'Add a payload to the request.',
+    description: 'Add a payload to the request',
     validate: [isJSON]
   })
   .expect({
@@ -37,7 +37,7 @@ export default new CommandTemplate({
     type: 'string',
     abbreviation: 'm',
     helpSection: requestHelpSections.OPTIONS,
-    description: 'HTTP method to use.',
+    description: 'HTTP method to use',
     defaultValue: 'GET'
   })
   .expect({
@@ -45,7 +45,7 @@ export default new CommandTemplate({
     type: 'string',
     abbreviation: 'u',
     helpSection: requestHelpSections.API_CALL,
-    description: 'URL for the API request.',
+    description: 'URL for the API request',
     validate: [isURL]
   })
   .expect({
@@ -53,7 +53,7 @@ export default new CommandTemplate({
     type: 'string',
     abbreviation: 'r',
     helpSection: requestHelpSections.OPTIONS,
-    description: 'Format to read the response: blob, text, or json.',
+    description: 'Format to read the response: blob, text, or json',
     validate: [isStringLike(['blob', 'text', 'json'])],
     defaultValue: 'json'
   })
@@ -62,6 +62,6 @@ export default new CommandTemplate({
     type: 'boolean',
     abbreviation: 'h',
     helpSection: requestHelpSections.GENERAL,
-    description: 'Show help for this command.',
+    description: 'Show help for this command',
     worksWith: []
   })

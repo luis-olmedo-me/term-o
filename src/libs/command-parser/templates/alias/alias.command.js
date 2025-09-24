@@ -14,7 +14,7 @@ export default new CommandTemplate({
     validate: [hasLength(2), hasItemAs(0, isSpaceForbidden)],
     worksWith: [],
     helpSection: aliasHelpSections.MANAGEMENT,
-    description: 'Add a new alias. Format: ["name" "command"].'
+    description: 'Add a new alias. Format: ["name" "command"]'
   })
   .expect({
     name: 'list',
@@ -22,7 +22,7 @@ export default new CommandTemplate({
     abbreviation: 'l',
     worksWith: [],
     helpSection: aliasHelpSections.MANAGEMENT,
-    description: 'List all defined aliases.'
+    description: 'List all defined aliases'
   })
   .expect({
     name: 'delete',
@@ -30,13 +30,13 @@ export default new CommandTemplate({
     abbreviation: 'd',
     worksWith: [],
     helpSection: aliasHelpSections.MANAGEMENT,
-    description: 'Remove an alias by name.'
+    description: 'Remove an alias by name'
   })
   .expect({
     name: 'help',
     type: 'boolean',
     abbreviation: 'h',
     helpSection: aliasHelpSections.GENERAL,
-    description: 'Show help for this command.',
+    description: 'Show help for this command',
     worksWith: []
   })

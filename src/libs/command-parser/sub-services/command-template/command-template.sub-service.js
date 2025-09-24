@@ -3,8 +3,9 @@ import { Options } from '../Options/Options.sub-service'
 import { defaultValues } from './command-template.constants'
 
 export class CommandTemplate {
-  constructor({ name }) {
+  constructor({ name, helpSectionTitles }) {
     this.name = name
+    this.helpSectionTitles = helpSectionTitles
     this.options = new Options()
     this.handler = null
   }
@@ -46,7 +47,8 @@ export class CommandTemplate {
   create() {
     const newCommand = new Command({
       name: this.name,
-      options: this.options.copy()
+      options: this.options.copy(),
+      helpSectionTitles: this.helpSectionTitles
     })
 
     return this.handler ? newCommand.addEventListener('execute', this.handler) : newCommand

@@ -9,9 +9,12 @@ import {
   isTabId,
   isXpath
 } from '../validators'
-import { domHelpSections } from './dom.constants'
+import { domHelpSectionTitles, domHelpSections } from './dom.constants'
 
-export default new CommandTemplate({ name: commandNames.DOM })
+export default new CommandTemplate({
+  name: commandNames.DOM,
+  helpSectionTitles: domHelpSectionTitles
+})
   .expect({
     name: 'search-xpath',
     type: 'string',

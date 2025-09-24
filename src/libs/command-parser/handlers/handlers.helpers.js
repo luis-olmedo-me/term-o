@@ -44,11 +44,14 @@ export const displayHelp = command => {
     optionsBySection.forEach((option, index) => {
       const displayName = option.displayName
       const description = option.description
+      const type = option.type
 
       const isLastOption = index === optionsBySection.length - 1
       const lineJump = isLastOption ? '\n' : ''
 
-      helps.push(`\t${C`cyan`}${displayName}\t${C`foreground`}${description}${lineJump}`)
+      helps.push(
+        `\t${C`cyan`}${displayName} ${C`green`}<${type}>\t${C`foreground`}${description}${lineJump}`
+      )
     })
 
     helps.push('')

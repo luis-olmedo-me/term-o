@@ -1,49 +1,59 @@
 import { commandNames } from '../../command-parser.constants'
 import CommandTemplate from '../../sub-services/command-template'
 import { hasInlineHeaders, isJSON, isStringLike, isURL } from '../validators'
+import { requestHelpSections, requestHelpSectionTitles } from './request.constants'
 
-export default new CommandTemplate({ name: commandNames.REQUEST })
+export default new CommandTemplate({
+  name: commandNames.REQUEST,
+  helpSectionTitles: requestHelpSectionTitles
+})
   .expect({
     name: 'fetch',
     type: 'boolean',
     abbreviation: 'f',
+    helpSection: requestHelpSections.API_CALL,
     worksWith: ['headers', 'payload', 'method', 'url', 'read-as'],
     mustHave: ['url'],
-    description: 'Start an API call.'
+    description: 'Start an API request'
   })
   .expect({
     name: 'headers',
     type: 'string-array',
     abbreviation: 'H',
+    helpSection: requestHelpSections.OPTIONS,
     validate: [hasInlineHeaders],
-    description: 'Add as much headers are needed.'
+    description: 'Include request headers'
   })
   .expect({
     name: 'payload',
     type: 'string',
     abbreviation: 'p',
-    description: 'Add payload to API request.',
+    helpSection: requestHelpSections.OPTIONS,
+    description: 'Add a payload to the request',
     validate: [isJSON]
   })
   .expect({
     name: 'method',
     type: 'string',
     abbreviation: 'm',
-    description: 'Select the method for request.',
+    helpSection: requestHelpSections.OPTIONS,
+    description: 'HTTP method to use',
     defaultValue: 'GET'
   })
   .expect({
     name: 'url',
     type: 'string',
     abbreviation: 'u',
-    description: 'API URL where request will be made.',
+    helpSection: requestHelpSections.API_CALL,
+    description: 'URL for the API request',
     validate: [isURL]
   })
   .expect({
     name: 'read-as',
     type: 'string',
     abbreviation: 'r',
-    description: 'How the response data should be read as.',
+    helpSection: requestHelpSections.OPTIONS,
+    description: 'Format to read the response: blob, text, or json',
     validate: [isStringLike(['blob', 'text', 'json'])],
     defaultValue: 'json'
   })
@@ -51,6 +61,7 @@ export default new CommandTemplate({ name: commandNames.REQUEST })
     name: 'help',
     type: 'boolean',
     abbreviation: 'h',
-    description: 'Display help about the options available for this command.',
+    helpSection: requestHelpSections.GENERAL,
+    description: 'Show help for this command',
     worksWith: []
   })

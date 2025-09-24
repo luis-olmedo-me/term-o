@@ -1,59 +1,71 @@
 import { commandNames } from '../../command-parser.constants'
 import CommandTemplate from '../../sub-services/command-template'
 import { isRegExp, isTabId, isURL } from '../validators'
+import { tabsHelpSections, tabsHelpSectionTitles } from './tabs.constants'
 
-export default new CommandTemplate({ name: commandNames.TABS })
+export default new CommandTemplate({
+  name: commandNames.TABS,
+  helpSectionTitles: tabsHelpSectionTitles
+})
   .expect({
     name: 'list',
     type: 'boolean',
     abbreviation: 'l',
     worksWith: ['incognito', 'muted', 'unmuted', 'title', 'url', 'window-id'],
-    description: 'Show a list of tabs currently open.'
+    helpSection: tabsHelpSections.GENERAL,
+    description: 'List all currently open tabs'
   })
   .expect({
     name: 'incognito',
     type: 'boolean',
     abbreviation: 'i',
-    description: 'Filter tabs in incognito mode.'
+    helpSection: tabsHelpSections.FILTERS,
+    description: 'Show only tabs in incognito mode'
   })
   .expect({
     name: 'title',
     type: 'string',
     abbreviation: 't',
-    description: 'Filter tabs by title using a regular expression.',
+    helpSection: tabsHelpSections.FILTERS,
+    description: 'Filter tabs by title (supports regular expressions)',
     validate: [isRegExp]
   })
   .expect({
     name: 'url',
     type: 'string',
     abbreviation: 'u',
-    description: 'Filter tabs by URL using a regular expression.',
+    helpSection: tabsHelpSections.FILTERS,
+    description: 'Filter tabs by URL (supports regular expressions)',
     validate: [isRegExp]
   })
   .expect({
     name: 'muted',
     type: 'boolean',
     abbreviation: 'm',
-    description: 'Filter muted tabs.'
+    helpSection: tabsHelpSections.FILTERS,
+    description: 'Show only muted tabs'
   })
   .expect({
     name: 'unmuted',
     type: 'boolean',
     abbreviation: 'M',
-    description: 'Filter unmuted tabs.'
+    helpSection: tabsHelpSections.FILTERS,
+    description: 'Show only unmuted tabs'
   })
   .expect({
     name: 'window-id',
     type: 'string',
     abbreviation: 'w',
     validate: [isRegExp],
-    description: 'Filter tabs by window ID.'
+    helpSection: tabsHelpSections.FILTERS,
+    description: 'Filter tabs by window ID'
   })
   .expect({
     name: 'switch',
     type: 'string',
     abbreviation: 's',
-    description: 'Switch to a specific tab by its ID (T[number]).',
+    helpSection: tabsHelpSections.TAB_ACTIONS,
+    description: 'Switch focus to a specific tab by ID (T[number])',
     validate: [isTabId],
     worksWith: []
   })
@@ -61,7 +73,8 @@ export default new CommandTemplate({ name: commandNames.TABS })
     name: 'point',
     type: 'string',
     abbreviation: 'p',
-    description: 'Focus terminal on a tab by its ID (T[number]).',
+    helpSection: tabsHelpSections.TAB_ACTIONS,
+    description: 'Point the terminal to a specific tab by ID (T[number])',
     validate: [isTabId],
     worksWith: []
   })
@@ -69,7 +82,8 @@ export default new CommandTemplate({ name: commandNames.TABS })
     name: 'reload',
     type: 'string',
     abbreviation: 'r',
-    description: 'Reload a specific tab by its ID (T[number]).',
+    helpSection: tabsHelpSections.TAB_ACTIONS,
+    description: 'Reload a specific tab by ID (T[number])',
     validate: [isTabId],
     worksWith: ['wait']
   })
@@ -77,7 +91,8 @@ export default new CommandTemplate({ name: commandNames.TABS })
     name: 'close',
     type: 'string',
     abbreviation: 'c',
-    description: 'Close a specific tab by its ID (T[number]).',
+    helpSection: tabsHelpSections.TAB_ACTIONS,
+    description: 'Close a specific tab by ID (T[number])',
     validate: [isTabId],
     worksWith: []
   })
@@ -85,7 +100,8 @@ export default new CommandTemplate({ name: commandNames.TABS })
     name: 'open',
     type: 'string',
     abbreviation: 'o',
-    description: 'Open a URL in a new tab.',
+    helpSection: tabsHelpSections.TAB_ACTIONS,
+    description: 'Open a new tab with the given URL',
     validate: [isURL],
     worksWith: ['wait']
   })
@@ -93,26 +109,30 @@ export default new CommandTemplate({ name: commandNames.TABS })
     name: 'wait',
     type: 'boolean',
     abbreviation: 'W',
-    description: 'Wait until page is completely loaded.'
+    helpSection: tabsHelpSections.TAB_ACTIONS,
+    description: 'Wait until the tab finishes loading'
   })
   .expect({
     name: 'current',
     type: 'boolean',
     abbreviation: 'C',
-    description: 'Show the current active tab.',
+    helpSection: tabsHelpSections.GENERAL,
+    description: 'Show the currently active tab',
     worksWith: []
   })
   .expect({
     name: 'pointing',
     type: 'boolean',
     abbreviation: 'P',
-    description: 'Show the tab currently pointed to by the terminal.',
+    helpSection: tabsHelpSections.GENERAL,
+    description: 'Show the tab currently targeted by the terminal',
     worksWith: []
   })
   .expect({
     name: 'help',
     type: 'boolean',
     abbreviation: 'h',
-    description: 'Display help about the options available for this command.',
+    helpSection: tabsHelpSections.GENERAL,
+    description: 'Show help for this command',
     worksWith: []
   })

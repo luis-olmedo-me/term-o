@@ -29,48 +29,35 @@ export const getNumberTabId = tabIdRaw => {
 }
 
 export const displayHelp = command => {
-  const options = command.options
-  const optionsWithDependencies = options.getDependencies()
-
-  const dependencies = Object.values(optionsWithDependencies).flat()
-  const optionsIndependents = options.values.filter(
-    option => !option.dependencies && !dependencies.includes(option.name)
-  )
-
   let helps = []
+  const options = command.options
+  const helpSectionsNames = Object.keys(command.helpSectionTitles)
 
-  Object.entries(optionsWithDependencies).forEach(([name, dependencies], mainIndex) => {
-    const option = options.getByName(name)
-    const displayName = getQuotedString(option.displayName)
-    const description = getQuotedString(option.description)
-    const formattedMainIndex = mainIndex.toLocaleString('en-US', {
-      minimumIntegerDigits: 2,
-      useGrouping: false
-    })
+  helps.push(`${C`foreground`}Usage: ${command.name} [options]\n`)
 
-    helps.push(
-      `${C`cyan`}${formattedMainIndex} ${C`brightBlack`}null ${C`purple`}${displayName} ${C`yellow`}${description}`
-    )
+  helpSectionsNames.forEach(sectionName => {
+    const optionsBySection = options.getByHelpSection(sectionName)
+    const sectionTitle = command.helpSectionTitles[sectionName]
 
-    dependencies.forEach((dependencyName, index) => {
-      const dependencyOption = options.getByName(dependencyName)
-      const displayName = getQuotedString(dependencyOption.displayName)
-      const description = getQuotedString(dependencyOption.description)
-      const formattedIndex = index.toLocaleString('en-US', {
-        minimumIntegerDigits: 2,
-        useGrouping: false
-      })
+    helps.push(`${C`foreground`}${sectionTitle}:\n`)
+
+    optionsBySection.forEach((option, index) => {
+      const displayName = option.displayName
+      const description = option.description
+      const type = option.type
+
+      const shouldBeDoubledTabulated = `${displayName} <${type}>`.length < 22
+      const tab = shouldBeDoubledTabulated ? `\t\t` : '\t'
+
+      const isLastOption = index === optionsBySection.length - 1
+      const lineJump = isLastOption ? '\n' : ''
 
       helps.push(
-        `${C`brightBlack`}null ${C`cyan`}${formattedIndex} ${C`brightPurple`}${displayName} ${C`yellow`}${description}`
+        `  ${C`green`}${displayName} ${C`yellow`}<${type}>${tab}${C`brightBlack`}${description}${lineJump}`
       )
     })
-  })
 
-  optionsIndependents.forEach(option => {
-    const displayName = option.displayName
-
-    helps.push(`${displayName}: ${option.description}`)
+    helps.push('')
   })
 
   command.update(...helps)

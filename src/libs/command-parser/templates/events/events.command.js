@@ -1,47 +1,57 @@
 import { commandNames } from '../../command-parser.constants'
 import CommandTemplate from '../../sub-services/command-template'
 import { isRegExp } from '../validators'
+import { eventsHelpSections, eventsHelpSectionTitles } from './events.constants'
 
-export default new CommandTemplate({ name: commandNames.EVENTS })
+export default new CommandTemplate({
+  name: commandNames.EVENTS,
+  helpSectionTitles: eventsHelpSectionTitles
+})
   .expect({
     name: 'add',
     type: 'boolean',
     abbreviation: 'a',
+    helpSection: eventsHelpSections.CREATION,
     worksWith: ['url', 'command'],
     mustHave: ['url', 'command'],
-    description: 'Add a new event. You can specify the event details with props.'
+    description: 'Create a new event'
   })
   .expect({
     name: 'url',
     type: 'string',
     abbreviation: 'u',
+    helpSection: eventsHelpSections.CREATION,
     validate: [isRegExp],
-    description: 'Define the URL textual pattern where the event will be executed.'
+    description: 'URL pattern where the event will trigger (regex supported)'
   })
   .expect({
     name: 'command',
     type: 'string',
     abbreviation: 'c',
-    description: 'Define what line of command(s) will be executed.'
+    helpSection: eventsHelpSections.CREATION,
+    description: 'Command line to execute'
   })
   .expect({
     name: 'list',
     type: 'boolean',
     abbreviation: 'l',
+    helpSection: eventsHelpSections.MANAGEMENT,
     worksWith: [],
-    description: 'List all defined events.'
+    description: 'List all events'
   })
   .expect({
     name: 'delete',
     type: 'string',
     abbreviation: 'd',
+    helpSection: eventsHelpSections.MANAGEMENT,
     worksWith: [],
-    description: 'Delete an event by its Id ([string]).'
+    description: 'Delete an event by its id'
   })
   .expect({
     name: 'help',
     type: 'boolean',
     abbreviation: 'h',
-    description: 'Display help about the options available for this command.',
+    helpSection: eventsHelpSections.GENERAL,
+    description: 'Show help for this command',
     worksWith: []
   })

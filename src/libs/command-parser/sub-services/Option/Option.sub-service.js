@@ -4,6 +4,7 @@ export class Option {
     value,
     type,
     abbreviation,
+    helpSection,
     description,
     validations,
     dependencies,
@@ -13,6 +14,7 @@ export class Option {
     this.value = value
     this.type = type
     this.abbreviation = abbreviation
+    this.helpSection = helpSection
     this.description = description
     this.validations = validations
     this.dependencies = dependencies

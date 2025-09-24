@@ -142,7 +142,7 @@ export const Terminal = () => {
         inputRef={inputRef}
         onEnter={handleEnter}
         onBlur={WaitForKeyPressToFocusOnPrompt}
-        onFocus={removePromptFocusEvent()}
+        onFocus={removePromptFocusEvent}
         loading={currentCommand !== null}
         context={context}
       />

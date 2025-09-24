@@ -30,10 +30,8 @@ export const getNumberTabId = tabIdRaw => {
 
 export const displayHelp = command => {
   let helps = []
-  let helps1 = []
   const options = command.options
   const helpSectionsNames = Object.keys(command.helpSectionTitles)
-  const optionsWithDependencies = options.getDependencies()
 
   helpSectionsNames.forEach(sectionName => {
     const optionsBySection = options.getByHelpSection(sectionName)
@@ -58,45 +56,6 @@ export const displayHelp = command => {
     })
 
     helps.push('')
-  })
-
-  const dependencies = Object.values(optionsWithDependencies).flat()
-  const optionsIndependents = options.values.filter(
-    option => !option.dependencies && !dependencies.includes(option.name)
-  )
-
-  Object.entries(optionsWithDependencies).forEach(([name, dependencies], mainIndex) => {
-    const option = options.getByName(name)
-    const displayName = getQuotedString(option.displayName)
-    const description = getQuotedString(option.description)
-    const formattedMainIndex = mainIndex.toLocaleString('en-US', {
-      minimumIntegerDigits: 2,
-      useGrouping: false
-    })
-
-    helps1.push(
-      `${C`cyan`}${formattedMainIndex} ${C`brightBlack`}null ${C`purple`}${displayName} ${C`yellow`}${description}`
-    )
-
-    dependencies.forEach((dependencyName, index) => {
-      const dependencyOption = options.getByName(dependencyName)
-      const displayName = getQuotedString(dependencyOption.displayName)
-      const description = getQuotedString(dependencyOption.description)
-      const formattedIndex = index.toLocaleString('en-US', {
-        minimumIntegerDigits: 2,
-        useGrouping: false
-      })
-
-      helps1.push(
-        `${C`brightBlack`}null ${C`cyan`}${formattedIndex} ${C`brightPurple`}${displayName} ${C`yellow`}${description}`
-      )
-    })
-  })
-
-  optionsIndependents.forEach(option => {
-    const displayName = option.displayName
-
-    helps1.push(`${displayName}: ${option.description}`)
   })
 
   command.update(...helps)

@@ -13,10 +13,14 @@ export const TerminalWrapper = styled.div`
     flex-grow: 1;
     overflow-y: scroll;
     overflow-x: hidden;
+    padding-top: ${t('space.700')};
   }
 `
 
 export const TerminalHeader = styled.header`
   padding: 0;
-  margin-left: auto;
+  box-shadow: 0 0 15px 15px ${t('colors.background')};
+  z-index: 1;
+  display: flex;
+  justify-content: end;
 `

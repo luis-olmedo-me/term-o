@@ -6,6 +6,7 @@ import { storageKeys, storageNamespaces } from '@src/constants/storage.constants
 import { createContext } from '@src/helpers/contexts.helpers'
 import useConfig, { configInputIds } from '@src/hooks/useConfig'
 import useStorage from '@src/hooks/useStorage'
+import { Gear } from '@src/icons/Gear.component'
 import commandParser from '@src/libs/command-parser'
 import { getCurrentTab } from '@src/libs/command-parser/handlers/tabs/tabs.helpers'
 import CommandsViewer from '@src/scripts/sidepanel/modules/CommandsViewer'
@@ -128,7 +129,7 @@ export const Terminal = () => {
       <PreferencesModal open={isConfigModalOpen} onClose={() => setIsConfigModalOpen(false)} />
 
       <S.TerminalHeader>
-        <Button text="⚙" onClick={() => setIsConfigModalOpen(!isConfigModalOpen)} />
+        <Button onClick={() => setIsConfigModalOpen(!isConfigModalOpen)} Icon={Gear} />
       </S.TerminalHeader>
 
       <CommandsViewer

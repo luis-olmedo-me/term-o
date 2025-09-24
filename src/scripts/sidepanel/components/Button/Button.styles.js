@@ -7,7 +7,7 @@ export const ButtonWrapper = styled.button`
   border: none;
   font-weight: bold;
   color: ${t('colors.foreground')};
-  background-color: ${t('colors.black')};
+  background-color: ${t('colors.background')};
   font-size: ${t('fontSize.100')};
   line-height: ${t('lineHeight.300')};
   font-family: ${t('font.primary')};
@@ -15,7 +15,7 @@ export const ButtonWrapper = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: ${t('space.300')} ${t('space.450')};
+  padding: ${t('space.300')} ${t('space.300')};
   transition:
     background-color 0.1s ease-in-out,
     color 0.1s ease-in-out;
@@ -27,6 +27,7 @@ export const ButtonWrapper = styled.button`
   }
 
   &:hover {
-    background-color: ${t('colors.selectionBackground')};
+    background-color: ${t('colors.black')};
+    color: ${t('colors.brightWhite')};
   }
 `

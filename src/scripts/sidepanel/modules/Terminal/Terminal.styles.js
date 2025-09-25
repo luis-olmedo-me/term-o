@@ -19,7 +19,7 @@ export const TerminalWrapper = styled.div`
 
 export const TerminalHeader = styled.header`
   padding: 0;
-  box-shadow: 0 0 15px 15px ${t('colors.background')};
+  box-shadow: 0 -${t('space.400')} ${t('space.900')} ${t('space.900')} ${t('colors.background')};
   z-index: 1;
   display: flex;
   justify-content: end;

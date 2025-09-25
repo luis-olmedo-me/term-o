@@ -44,7 +44,8 @@ export const defaultTheme = {
     500: '14px',
     600: '16px',
     700: '18px',
-    800: '20px'
+    800: '20px',
+    900: '25px'
   },
 
   fontSize: {

@@ -123,12 +123,16 @@ export const Terminal = () => {
     }
   }
 
+  const openConfiguration = () => {
+    setIsConfigModalOpen(!isConfigModalOpen)
+  }
+
   return (
     <S.TerminalWrapper onMouseUp={isConfigModalOpen ? null : handleMouseUp}>
       <PreferencesModal open={isConfigModalOpen} onClose={() => setIsConfigModalOpen(false)} />
 
       <S.TerminalHeader>
-        <Button onClick={() => setIsConfigModalOpen(!isConfigModalOpen)} Icon={Gear} />
+        <Button onClick={openConfiguration} Icon={Gear} />
       </S.TerminalHeader>
 
       <CommandsViewer

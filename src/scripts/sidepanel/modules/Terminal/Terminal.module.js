@@ -1,7 +1,6 @@
 import * as React from 'preact'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 
-import Prompt from '@sidepanel/components/Prompt'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
 import useConfig, { configInputIds } from '@src/hooks/useConfig'

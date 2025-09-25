@@ -139,7 +139,7 @@ export const Terminal = () => {
         onInProgressCommandFinished={handleInProgressCommandFinished}
       />
 
-      <Prompt
+      <S.TerminalPrompt
         inputRef={inputRef}
         onEnter={handleEnter}
         onBlur={WaitForKeyPressToFocusOnPrompt}

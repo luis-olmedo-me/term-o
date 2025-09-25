@@ -16,7 +16,8 @@ export const Prompt = ({
   disabled,
   defaultValue,
   context,
-  loading
+  loading,
+  className
 }) => {
   const [value, setValue] = useState(defaultValue || '')
   const [historialIndex, setHistorialIndex] = useState(0)
@@ -84,7 +85,7 @@ export const Prompt = ({
   const prefix = historialIndex || '$'
 
   return (
-    <S.PromptWrapper className={loading ? 'loading' : null}>
+    <S.PromptWrapper className={`${className} ${loading ? 'loading' : null}`}>
       <S.Line>
         <ColoredText value={context} />
       </S.Line>
@@ -116,5 +117,6 @@ Prompt.propTypes = {
   context: String,
   disabled: Boolean,
   loading: Boolean,
-  defaultValue: String
+  defaultValue: String,
+  className: String
 }

@@ -1,5 +1,6 @@
 import { theme as t } from '@src/libs/themer'
 import styled from 'styled-components'
+import Prompt from '../../components/Prompt'
 import { LoggerWrapper } from '../CommandsViewer/CommandsViewer.styles'
 
 export const TerminalWrapper = styled.div`
@@ -23,4 +24,8 @@ export const TerminalHeader = styled.header`
   z-index: 1;
   display: flex;
   justify-content: end;
+`
+
+export const TerminalPrompt = styled(Prompt)`
+  box-shadow: 0 ${t('space.100')} ${t('space.300')} ${t('space.300')} ${t('colors.background')};
 `

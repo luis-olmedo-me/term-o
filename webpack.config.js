@@ -37,8 +37,8 @@ module.exports = (_env, { watch, mode }) => ({
       patterns: [
         { from: './src/manifest.json', to: './manifest.json' },
         { from: './src/images/required', to: './images' },
-        { from: './src/sidepanel.html', to: './sidepanel.html' },
-        { from: './src/sandbox.html', to: './sandbox.html' }
+        { from: './src/scripts/sidepanel/sidepanel.html', to: './sidepanel.html' },
+        { from: './src/scripts/sandbox/sandbox.html', to: './sandbox.html' }
       ]
     }),
     ...(watch ? [] : [new CleanWebpackPlugin()])

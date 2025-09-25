@@ -34,7 +34,7 @@ const GlobalStyle = createGlobalStyle`
 
       &:active,
       &:hover {
-        background-color: ${t('colors.selectionBackground')};
+        background-color: ${t('colors.brightWhite')};
       }
     }
   }

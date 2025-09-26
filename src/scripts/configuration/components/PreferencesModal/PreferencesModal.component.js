@@ -1,7 +1,7 @@
 import useConfig from '@src/hooks/useConfig'
+import FieldRenderer from '@src/scripts/sidepanel/components/FieldRenderer'
+import Modal from '@src/scripts/sidepanel/components/Modal'
 import * as React from 'preact'
-import FieldRenderer from '../FieldRenderer'
-import Modal from '../Modal'
 import * as S from './PreferencesModal.styles'
 
 export const PreferencesModal = ({ open, onClose }) => {

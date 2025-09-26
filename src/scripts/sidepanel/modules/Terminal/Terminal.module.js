@@ -125,6 +125,8 @@ export const Terminal = () => {
 
   const openConfiguration = () => {
     setIsConfigModalOpen(!isConfigModalOpen)
+
+    chrome.tabs.create({ url: chrome.runtime.getURL('configuration.html') })
   }
 
   return (

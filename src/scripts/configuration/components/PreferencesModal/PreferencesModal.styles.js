@@ -1,6 +1,6 @@
 import { theme as t } from '@src/libs/themer'
+import { InputWrapper } from '@src/scripts/sidepanel/components/Input/Input.styles'
 import styled from 'styled-components'
-import { InputWrapper } from '../Input/Input.styles'
 
 export const SectionWrapper = styled.div`
   margin-bottom: ${t('space.600')};

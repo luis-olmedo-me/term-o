@@ -1,8 +1,8 @@
 import * as React from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
+import Input from '@src/components/Input'
 import useConfig from '@src/hooks/useConfig'
-import Input from '../Input'
 
 export const FieldRenderer = ({ value, sectionId, inputId, type }) => {
   const [localValue, setLocalValue] = useState(value)

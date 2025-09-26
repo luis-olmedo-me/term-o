@@ -1,5 +1,5 @@
+import { InputWrapper } from '@src/components/Input'
 import { theme as t } from '@src/libs/themer'
-import { InputWrapper } from '@src/scripts/sidepanel/components/Input/Input.styles'
 import styled from 'styled-components'
 
 export const SectionWrapper = styled.div`

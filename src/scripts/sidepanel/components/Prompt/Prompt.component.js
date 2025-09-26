@@ -1,11 +1,11 @@
 import * as React from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
+import Input from '@src/components/Input'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 import useConfig, { configInputIds } from '@src/hooks/useConfig'
 import useStorage from '@src/hooks/useStorage'
 import ColoredText from '../ColoredText'
-import Input from '../Input'
 import * as S from './Prompt.styles'
 
 export const Prompt = ({

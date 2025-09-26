@@ -1,3 +1,3 @@
-import { Preferences } from './PreferencesModal.component'
+import { Preferences } from './Preferences.component'
 
 export default Preferences

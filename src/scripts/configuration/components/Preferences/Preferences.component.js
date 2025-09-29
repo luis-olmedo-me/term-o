@@ -1,47 +1,51 @@
 import * as React from 'preact'
+import { useState } from 'preact/hooks'
 
-import useConfig from '@src/hooks/useConfig'
+import useConfig, { configIds, configSections } from '@src/hooks/useConfig'
 import FieldRenderer from '../FieldRenderer'
 import SidePanel from '../SidePanel'
 import * as S from './Preferences.styles'
 
+const sidePanelOptions = configSections.map(section => ({ id: section.id, name: section.name }))
+
 export const Preferences = () => {
   const { config } = useConfig()
+  const [selectedSectionId, setSelectedSectionId] = useState(configIds.TERMINAL)
 
-  const sidePanelOptions = config.map(section => ({ id: section.id, name: section.name }))
+  const sectionSelected = config.find(({ id }) => id === selectedSectionId)
 
   return (
     <S.PreferencesWrapper>
-      <SidePanel options={sidePanelOptions} />
+      <SidePanel
+        options={sidePanelOptions}
+        selectedOptionId={selectedSectionId}
+        onChange={setSelectedSectionId}
+      />
 
       <S.ContentWrapper className="vertical-scroller">
-        {config.map(section => {
-          return (
-            <S.SectionWrapper key={section.id}>
-              <S.SectionTitle>{section.name}</S.SectionTitle>
-              <S.SectionDescription>{section.description}</S.SectionDescription>
+        <S.SectionWrapper key={sectionSelected.id}>
+          <S.SectionTitle>{sectionSelected.name}</S.SectionTitle>
+          <S.SectionDescription>{sectionSelected.description}</S.SectionDescription>
 
-              {section.inputs.map(input => {
-                return (
-                  <S.InputsWrapper key={input.id}>
-                    <S.InputTitle>
-                      {input.name} [{input.type}]
-                    </S.InputTitle>
+          {sectionSelected.inputs.map(input => {
+            return (
+              <S.InputsWrapper key={input.id}>
+                <S.InputTitle>
+                  {input.name} [{input.type}]
+                </S.InputTitle>
 
-                    <S.Description>{input.description}</S.Description>
+                <S.Description>{input.description}</S.Description>
 
-                    <FieldRenderer
-                      value={input.value}
-                      sectionId={section.id}
-                      inputId={input.id}
-                      type={input.type}
-                    />
-                  </S.InputsWrapper>
-                )
-              })}
-            </S.SectionWrapper>
-          )
-        })}
+                <FieldRenderer
+                  value={input.value}
+                  sectionId={sectionSelected.id}
+                  inputId={input.id}
+                  type={input.type}
+                />
+              </S.InputsWrapper>
+            )
+          })}
+        </S.SectionWrapper>
       </S.ContentWrapper>
     </S.PreferencesWrapper>
   )

@@ -3,5 +3,6 @@ import styled from 'styled-components'
 
 export const SidePanelWrapper = styled.div`
   border-right: ${t('space.50')} solid ${t('colors.brightBlack')};
+  padding-right: ${t('space.600')};
   min-width: 200px;
 `

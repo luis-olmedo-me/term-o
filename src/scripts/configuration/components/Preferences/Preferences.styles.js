@@ -19,15 +19,16 @@ export const ContentWrapper = styled.div`
 `
 
 export const SectionWrapper = styled.div`
-  margin-bottom: ${t('space.600')};
-
-  &:last-child {
-    margin-bottom: ${t('space.800')};
-  }
+  margin-top: ${t('space.600')};
 `
 
 export const SectionTitle = styled.h3`
   margin: 0 0 ${t('space.400')} 0;
+  font-size: ${t('fontSize.200')};
+`
+
+export const SectionDescription = styled.p`
+  font-size: ${t('fontSize.100')};
 `
 
 export const InputsWrapper = styled.div`
@@ -42,22 +43,25 @@ export const InputsWrapper = styled.div`
 
   input[type='text'],
   input[type='number'] {
-    border: 1px solid ${t('colors.brightBlack')};
-    background-color: ${t('colors.brightBlack')};
+    border: ${t('space.50')} solid ${t('colors.brightBlack', '40')};
+    background-color: ${t('colors.brightBlack', '40')};
     border-radius: ${t('radius.200')};
-    padding-left: 5px;
+    padding-left: ${t('space.200')};
     transition: border-color 0.1s ease-in-out;
 
     &:focus {
-      border: 1px solid ${t('colors.green')};
+      border: ${t('space.50')} solid ${t('colors.green')};
     }
   }
 `
 
 export const InputTitle = styled.h4`
   margin: ${t('space.400')} 0;
+  font-size: ${t('fontSize.100')};
 `
 
 export const Description = styled.p`
   margin: ${t('space.400')} 0;
+  font-size: ${t('fontSize.50')};
+  font-style: italic;
 `

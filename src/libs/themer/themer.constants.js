@@ -51,7 +51,8 @@ export const defaultTheme = {
   fontSize: {
     50: '.75rem',
     100: '1rem',
-    200: '1.25rem'
+    200: '1.25rem',
+    300: '1.50rem'
   },
 
   lineHeight: {

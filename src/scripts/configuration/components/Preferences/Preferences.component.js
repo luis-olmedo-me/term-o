@@ -17,7 +17,7 @@ export const Preferences = () => {
           return (
             <S.SectionWrapper key={section.id}>
               <S.SectionTitle>{section.name}</S.SectionTitle>
-              <S.Description>{section.description}</S.Description>
+              <S.SectionDescription>{section.description}</S.SectionDescription>
 
               {section.inputs.map(input => {
                 return (

@@ -2,11 +2,16 @@ import { InputWrapper } from '@src/components/Input'
 import { theme as t } from '@src/libs/themer'
 import styled from 'styled-components'
 
+export const PreferencesWrapper = styled.div`
+  color: ${t('colors.foreground')};
+  display: flex;
+  gap: ${t('space.600')};
+`
+
 export const SectionWrapper = styled.div`
   margin-bottom: ${t('space.600')};
   padding-bottom: ${t('space.600')};
   border-bottom: ${t('space.50')} solid ${t('colors.brightBlack')};
-  color: ${t('colors.foreground')};
 
   &:last-child {
     margin-bottom: ${t('space.800')};

@@ -3,12 +3,16 @@ import * as React from 'preact'
 import Button from '@src/scripts/sidepanel/components/Button'
 import * as S from './SidePanel.styles'
 
-export const SidePanel = () => {
+export const SidePanel = ({ options }) => {
   return (
     <S.SidePanelWrapper>
-      <Button text={'Terminal'} fullWidth />
-      <Button text={'Prompt'} fullWidth />
-      <Button text={'Theme'} fullWidth />
+      {options.map(option => {
+        return <Button key={option.id} text={option.name} fullWidth />
+      })}
     </S.SidePanelWrapper>
   )
+}
+
+SidePanel.propTypes = {
+  options: Array
 }

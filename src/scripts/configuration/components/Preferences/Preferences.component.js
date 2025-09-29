@@ -8,9 +8,11 @@ import * as S from './Preferences.styles'
 export const Preferences = () => {
   const { config } = useConfig()
 
+  const sidePanelOptions = config.map(section => ({ id: section.id, name: section.name }))
+
   return (
     <S.PreferencesWrapper>
-      <SidePanel />
+      <SidePanel options={sidePanelOptions} />
 
       <S.ContentWrapper className="vertical-scroller">
         {config.map(section => {

@@ -10,7 +10,7 @@ const sidePanelOptions = configSections.map(section => ({ id: section.id, name: 
 
 export const Preferences = () => {
   const { config } = useConfig()
-  const [selectedSectionId, setSelectedSectionId] = useState(configIds.TERMINAL)
+  const [selectedSectionId, setSelectedSectionId] = useState(configIds.GENERAL)
 
   const sectionSelected = config.find(({ id }) => id === selectedSectionId)
 

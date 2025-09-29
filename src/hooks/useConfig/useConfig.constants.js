@@ -1,7 +1,7 @@
 export const configIds = {
-  TERMINAL: 'terminal',
+  GENERAL: 'general',
   PROMPT: 'prompt',
-  THEME: 'theme'
+  APPEARENCE: 'appearence'
 }
 
 export const configInputIds = {
@@ -17,8 +17,8 @@ export const configInputIds = {
 
 export const configSections = [
   {
-    id: configIds.TERMINAL,
-    name: 'Terminal',
+    id: configIds.GENERAL,
+    name: 'General',
     description: 'Configure various settings related to the terminal appearance and behavior.',
     inputs: [
       {
@@ -79,8 +79,8 @@ export const configSections = [
     ]
   },
   {
-    id: configIds.THEME,
-    name: 'Theme',
+    id: configIds.APPEARENCE,
+    name: 'Appearence',
     description: 'Customize the visual appearance of the terminal, including font settings.',
     inputs: [
       {

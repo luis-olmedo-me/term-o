@@ -28,7 +28,7 @@ export const SectionTitle = styled.h3`
 `
 
 export const SectionDescription = styled.p`
-  font-size: ${t('fontSize.100')};
+  font-size: ${t('fontSize.50')};
 `
 
 export const InputsWrapper = styled.div`
@@ -61,7 +61,8 @@ export const InputsWrapper = styled.div`
 
 export const InputTitle = styled.h4`
   margin: ${t('space.400')} 0;
-  font-size: ${t('fontSize.100')};
+  font-size: ${t('fontSize.50')};
+  font-weight: bold;
 `
 
 export const Description = styled.p`

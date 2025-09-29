@@ -4,6 +4,9 @@ import styled from 'styled-components'
 
 export const SectionWrapper = styled.div`
   margin-bottom: ${t('space.600')};
+  padding-bottom: ${t('space.600')};
+  border-bottom: ${t('space.50')} solid ${t('colors.brightBlack')};
+  color: ${t('colors.foreground')};
 
   &:last-child {
     margin-bottom: ${t('space.800')};
@@ -19,6 +22,7 @@ export const InputsWrapper = styled.div`
 
   ${InputWrapper} {
     padding: 0;
+    max-width: 500px;
   }
 
   input[type='text'],

@@ -8,7 +8,7 @@ export const Preferences = () => {
   const { config } = useConfig()
 
   return (
-    <div>
+    <>
       {config.map(section => {
         return (
           <S.SectionWrapper key={section.id}>
@@ -36,7 +36,7 @@ export const Preferences = () => {
           </S.SectionWrapper>
         )
       })}
-    </div>
+    </>
   )
 }
 

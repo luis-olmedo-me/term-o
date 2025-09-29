@@ -6,12 +6,20 @@ export const PreferencesWrapper = styled.div`
   color: ${t('colors.foreground')};
   display: flex;
   gap: ${t('space.600')};
+  padding: ${t('space.600')};
+  box-sizing: content-box;
+`
+
+export const ContentWrapper = styled.div`
+  width: 100%;
+  height: calc(100vh - ${t('space.600')} * 2);
+  overflow: hidden scroll;
+  padding-right: ${t('space.600')};
+  box-sizing: content-box;
 `
 
 export const SectionWrapper = styled.div`
   margin-bottom: ${t('space.600')};
-  padding-bottom: ${t('space.600')};
-  border-bottom: ${t('space.50')} solid ${t('colors.brightBlack')};
 
   &:last-child {
     margin-bottom: ${t('space.800')};
@@ -23,7 +31,9 @@ export const SectionTitle = styled.h3`
 `
 
 export const InputsWrapper = styled.div`
-  margin: ${t('space.600')} 0 0 ${t('space.600')};
+  margin: ${t('space.900')} 0 0 ${t('space.900')};
+  padding-bottom: ${t('space.900')};
+  border-bottom: ${t('space.50')} solid ${t('colors.brightBlack')};
 
   ${InputWrapper} {
     padding: 0;

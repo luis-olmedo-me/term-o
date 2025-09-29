@@ -12,7 +12,7 @@ export const Preferences = () => {
     <S.PreferencesWrapper>
       <SidePanel />
 
-      <div>
+      <S.ContentWrapper className="vertical-scroller">
         {config.map(section => {
           return (
             <S.SectionWrapper key={section.id}>
@@ -40,7 +40,7 @@ export const Preferences = () => {
             </S.SectionWrapper>
           )
         })}
-      </div>
+      </S.ContentWrapper>
     </S.PreferencesWrapper>
   )
 }

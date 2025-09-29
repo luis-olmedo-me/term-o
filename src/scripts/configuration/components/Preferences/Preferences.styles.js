@@ -43,8 +43,14 @@ export const InputsWrapper = styled.div`
   input[type='text'],
   input[type='number'] {
     border: 1px solid ${t('colors.brightBlack')};
+    background-color: ${t('colors.brightBlack')};
     border-radius: ${t('radius.200')};
     padding-left: 5px;
+    transition: border-color 0.1s ease-in-out;
+
+    &:focus {
+      border: 1px solid ${t('colors.green')};
+    }
   }
 `
 

@@ -41,6 +41,10 @@ export const InputsWrapper = styled.div`
     max-width: 500px;
   }
 
+  &:last-child {
+    border-bottom: none;
+  }
+
   input[type='text'],
   input[type='number'] {
     border: ${t('space.50')} solid ${t('colors.brightBlack', '40')};

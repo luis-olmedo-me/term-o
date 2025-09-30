@@ -7,7 +7,7 @@ export const Button = ({ text, onClick, fullWidth, fullHeight, Icon, selected })
       onClick={onClick}
       fullWidth={fullWidth}
       fullHeight={fullHeight}
-      selected={selected == true}
+      selected={selected}
     >
       {Icon && <Icon />}
       {text}

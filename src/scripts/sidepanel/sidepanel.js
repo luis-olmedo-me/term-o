@@ -1,6 +1,6 @@
 import * as React from 'preact'
 
-import { ThemeProvider } from '@src/providers/ThemeProvider.provider'
+import ThemeProvider from '@src/providers/ThemeProvider'
 import GlobalStyle from '@src/styles/Global.styles'
 import Terminal from './modules/Terminal'
 

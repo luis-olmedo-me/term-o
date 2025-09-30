@@ -3,9 +3,9 @@ import * as React from 'preact'
 import useConfig from '@src/hooks/useConfig'
 import { configInputIds } from '@src/hooks/useConfig/useConfig.constants'
 import themer from '@src/libs/themer'
-import ThemeStyle from '@src/styles/Theme.styles'
 import { useEffect, useState } from 'preact/hooks'
 import { ThemeProvider as StyleProvider } from 'styled-components'
+import ThemeStyle from './ThemeProvider.styles'
 
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(themer.theme)

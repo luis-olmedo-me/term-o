@@ -9,6 +9,7 @@ import ThemeStyle from './ThemeProvider.styles'
 
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(themer.theme)
+  const [isReady, setIsReady] = useState(false)
 
   const { listening } = useConfig({ get: [configInputIds.FONT_SIZE, configInputIds.FONT_FAMILY] })
 
@@ -16,17 +17,25 @@ export const ThemeProvider = ({ children }) => {
 
   useEffect(function updateColorsReference() {
     const updateTheme = ({ theme }) => setTheme(theme)
+    const showContent = () => setIsReady(true)
 
+    updateTheme(themer)
     themer.addEventListener('themes-update', updateTheme)
 
-    return () => themer.removeEventListener('themes-update', updateTheme)
+    if (themer.isInitiated) showContent()
+    else themer.addEventListener('init', showContent)
+
+    return () => {
+      themer.removeEventListener('themes-update', updateTheme)
+      themer.removeEventListener('init', showContent)
+    }
   }, [])
 
   return (
     <StyleProvider theme={{ ...theme, font: { primary: fontFamily } }}>
       <ThemeStyle mainFontSize={fontSize} />
 
-      {children}
+      {isReady && children}
     </StyleProvider>
   )
 }

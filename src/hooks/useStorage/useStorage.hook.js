@@ -14,7 +14,7 @@ export const useStorage = ({ namespace, key, defaultValue }) => {
       }
 
       const updateState = async () => {
-        const data = await chrome.storage.local.get(key)
+        const data = await chrome.storage[namespace].get(key)
         const newValue = data[key]
         const hasValue = typeof newValue !== 'undefined'
 

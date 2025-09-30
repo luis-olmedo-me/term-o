@@ -1,7 +1,8 @@
-export const theme = pathsString => props => {
+export const theme = (pathsString, appendedString) => props => {
   const paths = pathsString.split('.')
+  const value = paths.reduce((theme, path) => theme[path], props.theme)
 
-  return paths.reduce((theme, path) => theme[path], props.theme)
+  return appendedString ? `${value}${appendedString}` : value
 }
 
 export const getColor = color => {

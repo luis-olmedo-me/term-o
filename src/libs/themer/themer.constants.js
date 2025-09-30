@@ -40,16 +40,19 @@ export const defaultTheme = {
     200: '4px',
     300: '8px',
     400: '10px',
+    450: '12px',
     500: '14px',
     600: '16px',
     700: '18px',
-    800: '20px'
+    800: '20px',
+    900: '25px'
   },
 
   fontSize: {
     50: '.75rem',
     100: '1rem',
-    200: '1.25rem'
+    200: '1.25rem',
+    300: '1.50rem'
   },
 
   lineHeight: {

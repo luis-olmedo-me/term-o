@@ -1,21 +1,19 @@
 import * as React from 'preact'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 
-import Prompt from '@sidepanel/components/Prompt'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
 import useConfig, { configInputIds } from '@src/hooks/useConfig'
 import useStorage from '@src/hooks/useStorage'
+import { Gear } from '@src/icons/Gear.component'
 import commandParser from '@src/libs/command-parser'
 import { getCurrentTab } from '@src/libs/command-parser/handlers/tabs/tabs.helpers'
 import CommandsViewer from '@src/scripts/sidepanel/modules/CommandsViewer'
 import Button from '../../components/Button'
-import PreferencesModal from '../../components/PreferencesModal'
 import { copyText, getSelectedText } from './Terminal.helpers'
 import * as S from './Terminal.styles'
 
 export const Terminal = () => {
-  const [isConfigModalOpen, setIsConfigModalOpen] = useState(false)
   const [currentCommand, setCurrentCommand] = useState(null)
   const [tab, setTab] = useState(null)
   const inputRef = useRef(null)
@@ -49,10 +47,10 @@ export const Terminal = () => {
   ] = listening
 
   const focusOnPrompt = useCallback(() => {
-    if (!focusPromptOnClick && isConfigModalOpen) return
+    if (!focusPromptOnClick) return
 
     inputRef.current?.focus()
-  }, [focusPromptOnClick, isConfigModalOpen])
+  }, [focusPromptOnClick])
 
   useEffect(
     function focusTabAutomatically() {
@@ -123,12 +121,14 @@ export const Terminal = () => {
     }
   }
 
-  return (
-    <S.TerminalWrapper onMouseUp={isConfigModalOpen ? null : handleMouseUp}>
-      <PreferencesModal open={isConfigModalOpen} onClose={() => setIsConfigModalOpen(false)} />
+  const openConfiguration = () => {
+    chrome.tabs.create({ url: chrome.runtime.getURL('configuration.html') })
+  }
 
+  return (
+    <S.TerminalWrapper onMouseUp={handleMouseUp}>
       <S.TerminalHeader>
-        <Button text="⚙" onClick={() => setIsConfigModalOpen(!isConfigModalOpen)} />
+        <Button onClick={openConfiguration} Icon={Gear} />
       </S.TerminalHeader>
 
       <CommandsViewer
@@ -138,7 +138,7 @@ export const Terminal = () => {
         onInProgressCommandFinished={handleInProgressCommandFinished}
       />
 
-      <Prompt
+      <S.TerminalPrompt
         inputRef={inputRef}
         onEnter={handleEnter}
         onBlur={WaitForKeyPressToFocusOnPrompt}

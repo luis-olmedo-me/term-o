@@ -7,6 +7,7 @@ class Themer extends EventListener {
   constructor(defaultColorTheme, defaultTheme) {
     super()
 
+    this.isInitiated = false
     this.defaultColorThemes = [defaultColorTheme]
     this.defaultColorTheme = defaultColorTheme
 
@@ -16,7 +17,7 @@ class Themer extends EventListener {
 
     this.handleStorageChanges = this.handleStorageChanges.bind(this)
 
-    this.getThemesFromLS()
+    this.getThemesFromLS().then(this.handleInit.bind(this))
     chrome.storage.onChanged.addListener(this.handleStorageChanges)
   }
 
@@ -34,6 +35,11 @@ class Themer extends EventListener {
 
   getColor(colorName) {
     return this.colorTheme[colorName]
+  }
+
+  handleInit() {
+    this.isInitiated = true
+    this.dispatchEvent('init')
   }
 
   handleStorageChanges(changes, currentChanges) {

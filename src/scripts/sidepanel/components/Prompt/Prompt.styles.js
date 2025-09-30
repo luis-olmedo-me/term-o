@@ -1,6 +1,6 @@
+import { InputWrapper } from '@src/components/Input'
 import { theme as t } from '@src/libs/themer'
 import styled, { keyframes } from 'styled-components'
-import { InputWrapper } from '../Input/Input.styles'
 
 const slide = keyframes`
   from {

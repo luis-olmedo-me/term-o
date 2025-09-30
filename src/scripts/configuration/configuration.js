@@ -2,14 +2,14 @@ import * as React from 'preact'
 
 import ThemeProvider from '@src/providers/ThemeProvider'
 import GlobalStyle from '@src/styles/Global.styles'
-import Terminal from './modules/Terminal'
+import Preferences from './components/Preferences'
 
 // eslint-disable-next-line react/no-deprecated
 React.render(
   <ThemeProvider>
     <GlobalStyle />
 
-    <Terminal />
+    <Preferences />
   </ThemeProvider>,
   document.getElementById('root')
 )

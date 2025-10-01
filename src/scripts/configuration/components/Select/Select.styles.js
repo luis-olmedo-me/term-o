@@ -8,6 +8,7 @@ export const Selecter = styled.select`
   background-color: ${t('colors.brightBlack', '40')};
   border-radius: ${t('radius.200')};
   padding: ${t('space.250')} ${t('space.300')};
+  cursor: pointer;
 
   &:focus {
     border: ${t('space.50')} solid ${t('colors.green')};

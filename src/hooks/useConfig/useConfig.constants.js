@@ -12,7 +12,8 @@ export const configInputIds = {
   HISTORIAL_SIZE: 'historial-size',
   STATUS: 'status',
   FONT_FAMILY: 'font-family',
-  FONT_SIZE: 'font-size'
+  FONT_SIZE: 'font-size',
+  THEME: 'theme'
 }
 
 export const configSections = [
@@ -83,6 +84,13 @@ export const configSections = [
     name: 'Appearence',
     description: 'Customize the visual appearance of the terminal, including font settings.',
     inputs: [
+      {
+        id: configInputIds.THEME,
+        name: 'Theme',
+        description: 'Theme used.',
+        type: 'string',
+        value: 'dark'
+      },
       {
         id: configInputIds.FONT_FAMILY,
         name: 'Font Family',

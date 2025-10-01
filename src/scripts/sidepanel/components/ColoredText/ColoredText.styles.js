@@ -9,7 +9,7 @@ export const Text = styled.span`
   white-space: break-spaces;
 
   &::selection {
-    color: ${t('colors.brightGreen')};
+    color: ${t('colors.green')};
     background-color: ${t('colors.selectionBackground')};
   }
 `

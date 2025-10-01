@@ -12,18 +12,18 @@ const GlobalStyle = createGlobalStyle`
 
   .vertical-scroller {
     &::-webkit-scrollbar {
-      height: 10px;
-      width: 10px;
+      height: 8px;
+      width: 8px;
     }
 
     &::-webkit-scrollbar-track {
-      background-color: ${t('colors.black')};
+      background-color: ${t('colors.white', '40')};
       border-radius: ${t('radius.150')};
       cursor: pointer;
 
       &:active,
       &:hover {
-        background-color: ${t('colors.black')};
+      background-color: ${t('colors.white', '80')};
       }
     }
 
@@ -34,7 +34,7 @@ const GlobalStyle = createGlobalStyle`
 
       &:active,
       &:hover {
-        background-color: ${t('colors.brightWhite')};
+        background-color: ${t('colors.green')};
       }
     }
   }

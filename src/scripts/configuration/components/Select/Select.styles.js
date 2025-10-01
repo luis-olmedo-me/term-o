@@ -21,8 +21,13 @@ export const Selecter = styled.select`
   &::picker-icon {
     transition: 0.2s rotate;
   }
-  &:open::picker-icon {
-    rotate: 180deg;
+  &:open {
+    border-radius: ${t('radius.200')} ${t('radius.200')} 0 0;
+    border-bottom: ${t('space.50')} solid ${t('colors.brightBlack')};
+
+    &::picker-icon {
+      rotate: 180deg;
+    }
   }
 `
 
@@ -30,14 +35,19 @@ export const Option = styled.option`
   background-color: ${t('colors.black')};
   border-top: ${t('space.50')} solid ${t('colors.brightBlack')};
   color: ${t('colors.foreground')};
-  transition: 0.4s;
+  transition:
+    background-color 0.1s ease-in-out,
+    color 0.1s ease-in-out;
   padding: ${t('space.200')} ${t('space.300')};
   cursor: pointer;
+
+  &:first-of-type {
+    border-top: none;
+  }
 
   &:hover,
   &:focus {
     color: ${t('colors.green')};
-    font-weight: bold;
   }
 
   :is(selected) {

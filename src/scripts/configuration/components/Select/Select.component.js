@@ -1,35 +1,24 @@
 import * as React from 'preact'
 import * as S from './Select.styles'
 
-export const Select = () => {
+export const Select = ({ options }) => {
   return (
     <S.Selecter>
       <button>
         <selectedcontent></selectedcontent>
       </button>
 
-      <S.Option value="">
-        <span></span>
-        Please select a pet
-      </S.Option>
-      <S.Option value="cat">
-        <span>Cat</span>
-      </S.Option>
-      <S.Option value="dog">
-        <span>Dog</span>
-      </S.Option>
-      <S.Option value="hamster">
-        <span>Hamster</span>
-      </S.Option>
-      <S.Option value="chicken">
-        <span>Chicken</span>
-      </S.Option>
-      <S.Option value="fish">
-        <span>Fish</span>
-      </S.Option>
-      <S.Option value="snake">
-        <span>Snake</span>
-      </S.Option>
+      {options.map(option => {
+        return (
+          <S.Option key={option.id} value={option.name}>
+            <span>{option.name}</span>
+          </S.Option>
+        )
+      })}
     </S.Selecter>
   )
+}
+
+Select.propTypes = {
+  options: Array
 }

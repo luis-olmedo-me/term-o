@@ -41,6 +41,7 @@ export const Preferences = () => {
                   sectionId={sectionSelected.id}
                   inputId={input.id}
                   type={input.type}
+                  options={input.options}
                 />
               </S.InputsWrapper>
             )

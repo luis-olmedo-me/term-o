@@ -28,6 +28,7 @@ export const configSections = [
         description:
           'Automatically brings the prompt input field into focus when it is clicked with the mouse. This helps streamline user input by ensuring the prompt is active without needing additional key presses.',
         type: 'boolean',
+        options: [],
         value: true
       },
       {
@@ -36,6 +37,7 @@ export const configSections = [
         description:
           'Automatically copies text to the clipboard when it is selected using the mouse.',
         type: 'boolean',
+        options: [],
         value: true
       },
       {
@@ -44,6 +46,7 @@ export const configSections = [
         description:
           'Automatically switches to a new tab when it is created or activated. This setting improves workflow efficiency by ensuring that the user is always working in the current tab.',
         type: 'boolean',
+        options: [],
         value: true
       },
       {
@@ -52,6 +55,7 @@ export const configSections = [
         description:
           'Sets the maximum number of lines that a single command can output before scrolling begins.',
         type: 'number',
+        options: [],
         value: 50
       },
       {
@@ -59,6 +63,7 @@ export const configSections = [
         name: 'Command History Size',
         description: 'Defines the number of previous commands to be stored in the command history.',
         type: 'number',
+        options: [],
         value: 40
       }
     ]
@@ -75,6 +80,7 @@ export const configSections = [
         description:
           'Text displayed before the prompt input field, typically used to show dynamic information or context.',
         type: 'string',
+        options: [],
         value: `On [termo.color.brightBlue]{origin}`
       }
     ]
@@ -89,6 +95,20 @@ export const configSections = [
         name: 'Theme',
         description: 'Theme used.',
         type: 'select',
+        options: [
+          {
+            id: 'system',
+            name: 'System'
+          },
+          {
+            id: 'dark',
+            name: 'Dark'
+          },
+          {
+            id: 'light',
+            name: 'Light'
+          }
+        ],
         value: 'dark'
       },
       {
@@ -96,6 +116,7 @@ export const configSections = [
         name: 'Font Family',
         description: 'Specifies the font family used for displaying text in the terminal.',
         type: 'string',
+        options: [],
         value: 'monospace'
       },
       {
@@ -103,6 +124,7 @@ export const configSections = [
         name: 'Font Size',
         description: 'Defines the size of the font used in the terminal.',
         type: 'number',
+        options: [],
         value: 16
       }
     ]

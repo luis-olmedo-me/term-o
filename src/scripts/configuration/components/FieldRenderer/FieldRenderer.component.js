@@ -5,7 +5,7 @@ import Input from '@src/components/Input'
 import useConfig from '@src/hooks/useConfig'
 import Select from '../Select'
 
-export const FieldRenderer = ({ value, sectionId, inputId, type }) => {
+export const FieldRenderer = ({ value, sectionId, inputId, type, options }) => {
   const [localValue, setLocalValue] = useState(value)
 
   const { changeConfig } = useConfig()
@@ -41,7 +41,7 @@ export const FieldRenderer = ({ value, sectionId, inputId, type }) => {
         endText={localValue ? 'Enabled' : 'Disabled'}
       />
     ),
-    select: <Select />
+    select: <Select options={options} />
   }
 
   return inputs[type]
@@ -51,5 +51,6 @@ FieldRenderer.propTypes = {
   value: String | Number | Boolean,
   sectionId: String,
   inputId: String,
-  type: String
+  type: String,
+  options: Array
 }

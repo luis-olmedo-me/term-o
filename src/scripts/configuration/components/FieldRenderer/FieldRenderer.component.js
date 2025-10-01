@@ -41,7 +41,13 @@ export const FieldRenderer = ({ value, sectionId, inputId, type, options }) => {
         endText={localValue ? 'Enabled' : 'Disabled'}
       />
     ),
-    select: <Select options={options} value={value} />
+    select: (
+      <Select
+        options={options}
+        value={value}
+        onChange={({ target }) => changeConfig(sectionId, inputId, target.value)}
+      />
+    )
   }
 
   return inputs[type]

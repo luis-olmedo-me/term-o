@@ -1,3 +1,5 @@
+import { ThemeTypes } from '@src/constants/themes.constants'
+
 export const configIds = {
   GENERAL: 'general',
   PROMPT: 'prompt',
@@ -93,23 +95,23 @@ export const configSections = [
       {
         id: configInputIds.THEME,
         name: 'Theme',
-        description: 'Theme used.',
+        description: 'Prefered theme in color schemes.',
         type: 'select',
         options: [
           {
             id: 'system',
-            name: 'System'
+            name: ThemeTypes.SYSTEM
           },
           {
             id: 'dark',
-            name: 'Dark'
+            name: ThemeTypes.DARK
           },
           {
             id: 'light',
-            name: 'Light'
+            name: ThemeTypes.LIGHT
           }
         ],
-        value: 'dark'
+        value: ThemeTypes.SYSTEM
       },
       {
         id: configInputIds.FONT_FAMILY,

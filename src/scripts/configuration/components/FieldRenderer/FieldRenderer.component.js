@@ -17,40 +17,48 @@ export const FieldRenderer = ({ value, sectionId, inputId, type, options }) => {
     [value]
   )
 
-  const inputs = {
-    string: (
-      <Input
-        value={localValue}
-        onBlur={({ target }) => changeConfig(sectionId, inputId, target.value)}
-        onChange={({ target }) => setLocalValue(target.value)}
-      />
-    ),
-    number: (
-      <Input
-        type="number"
-        value={localValue}
-        onBlur={({ target }) => changeConfig(sectionId, inputId, Number(target.value))}
-        onChange={({ target }) => setLocalValue(target.value)}
-      />
-    ),
-    boolean: (
-      <Input
-        type="checkbox"
-        checked={value}
-        onChange={() => changeConfig(sectionId, inputId, !value)}
-        endText={localValue ? 'Enabled' : 'Disabled'}
-      />
-    ),
-    select: (
-      <Select
-        options={options}
-        value={value}
-        onChange={({ target }) => changeConfig(sectionId, inputId, target.value)}
-      />
-    )
-  }
+  switch (type) {
+    case 'string':
+      return (
+        <Input
+          value={localValue}
+          onBlur={({ target }) => changeConfig(sectionId, inputId, target.value)}
+          onChange={({ target }) => setLocalValue(target.value)}
+        />
+      )
 
-  return inputs[type]
+    case 'number':
+      return (
+        <Input
+          type="number"
+          value={localValue}
+          onBlur={({ target }) => changeConfig(sectionId, inputId, Number(target.value))}
+          onChange={({ target }) => setLocalValue(target.value)}
+        />
+      )
+
+    case 'boolean':
+      return (
+        <Input
+          type="checkbox"
+          checked={value}
+          onChange={() => changeConfig(sectionId, inputId, !value)}
+          endText={localValue ? 'Enabled' : 'Disabled'}
+        />
+      )
+
+    case 'select':
+      return (
+        <Select
+          options={options}
+          value={value}
+          onChange={({ target }) => changeConfig(sectionId, inputId, target.value)}
+        />
+      )
+
+    default:
+      return null
+  }
 }
 
 FieldRenderer.propTypes = {

@@ -1,9 +1,9 @@
 import * as React from 'preact'
 import * as S from './Select.styles'
 
-export const Select = ({ options }) => {
+export const Select = ({ options, value }) => {
   return (
-    <S.Selecter>
+    <S.Selecter value={value}>
       <button>
         <selectedcontent></selectedcontent>
       </button>
@@ -20,5 +20,6 @@ export const Select = ({ options }) => {
 }
 
 Select.propTypes = {
-  options: Array
+  options: Array,
+  value: String
 }

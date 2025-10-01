@@ -38,6 +38,12 @@ const GlobalStyle = createGlobalStyle`
       }
     }
   }
+  
+  select,
+  ::picker(select) {
+    appearance: base-select;
+    border: none;
+  }
 `
 
 export default GlobalStyle

@@ -1,49 +1,35 @@
 import * as React from 'preact'
+import * as S from './Select.styles'
 
 export const Select = () => {
   return (
-    <select id="pet-select">
+    <S.Selecter>
       <button>
         <selectedcontent></selectedcontent>
       </button>
 
-      <option value="">Please select a pet</option>
-      <option value="cat">
-        <span className="icon" aria-hidden="true">
-          🐱
-        </span>
-        <span className="option-label">Cat</span>
-      </option>
-      <option value="dog">
-        <span className="icon" aria-hidden="true">
-          🐶
-        </span>
-        <span className="option-label">Dog</span>
-      </option>
-      <option value="hamster">
-        <span className="icon" aria-hidden="true">
-          🐹
-        </span>
-        <span className="option-label">Hamster</span>
-      </option>
-      <option value="chicken">
-        <span className="icon" aria-hidden="true">
-          🐔
-        </span>
-        <span className="option-label">Chicken</span>
-      </option>
-      <option value="fish">
-        <span className="icon" aria-hidden="true">
-          🐟
-        </span>
-        <span className="option-label">Fish</span>
-      </option>
-      <option value="snake">
-        <span className="icon" aria-hidden="true">
-          🐍
-        </span>
-        <span className="option-label">Snake</span>
-      </option>
-    </select>
+      <S.Option value="">
+        <span></span>
+        Please select a pet
+      </S.Option>
+      <S.Option value="cat">
+        <span>Cat</span>
+      </S.Option>
+      <S.Option value="dog">
+        <span>Dog</span>
+      </S.Option>
+      <S.Option value="hamster">
+        <span>Hamster</span>
+      </S.Option>
+      <S.Option value="chicken">
+        <span>Chicken</span>
+      </S.Option>
+      <S.Option value="fish">
+        <span>Fish</span>
+      </S.Option>
+      <S.Option value="snake">
+        <span>Snake</span>
+      </S.Option>
+    </S.Selecter>
   )
 }

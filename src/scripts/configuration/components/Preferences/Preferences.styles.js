@@ -56,6 +56,11 @@ export const InputsWrapper = styled.div`
     &:focus {
       border: ${t('space.50')} solid ${t('colors.green')};
     }
+
+    &:hover {
+      background-color: ${t('colors.black')};
+      color: ${({ selected }) => (selected ? t('colors.brightGreen') : t('colors.brightWhite'))};
+    }
   }
 `
 

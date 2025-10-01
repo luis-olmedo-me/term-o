@@ -88,7 +88,7 @@ export const configSections = [
         id: configInputIds.THEME,
         name: 'Theme',
         description: 'Theme used.',
-        type: 'string',
+        type: 'select',
         value: 'dark'
       },
       {

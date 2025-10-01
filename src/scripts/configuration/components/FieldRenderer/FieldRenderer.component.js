@@ -3,6 +3,7 @@ import { useEffect, useState } from 'preact/hooks'
 
 import Input from '@src/components/Input'
 import useConfig from '@src/hooks/useConfig'
+import Select from '../Select'
 
 export const FieldRenderer = ({ value, sectionId, inputId, type }) => {
   const [localValue, setLocalValue] = useState(value)
@@ -39,7 +40,8 @@ export const FieldRenderer = ({ value, sectionId, inputId, type }) => {
         onChange={() => changeConfig(sectionId, inputId, !value)}
         endText={localValue ? 'Enabled' : 'Disabled'}
       />
-    )
+    ),
+    select: <Select />
   }
 
   return inputs[type]

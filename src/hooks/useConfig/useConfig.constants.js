@@ -99,16 +99,16 @@ export const configSections = [
         type: 'select',
         options: [
           {
-            id: 'system',
-            name: ThemeTypes.SYSTEM
+            id: ThemeTypes.SYSTEM,
+            name: 'System'
           },
           {
-            id: 'dark',
-            name: ThemeTypes.DARK
+            id: ThemeTypes.DARK,
+            name: 'Dark'
           },
           {
-            id: 'light',
-            name: ThemeTypes.LIGHT
+            id: ThemeTypes.LIGHT,
+            name: 'Light'
           }
         ],
         value: ThemeTypes.SYSTEM

@@ -11,7 +11,7 @@ export const Select = ({ options, value, onChange }) => {
       <S.OptionsWrapper className="vertical-scroller">
         {options.map(option => {
           return (
-            <S.Option key={option.id} value={option.name}>
+            <S.Option key={option.id} value={option.id}>
               <span>{option.name}</span>
             </S.Option>
           )

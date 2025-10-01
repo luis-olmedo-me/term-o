@@ -39,6 +39,7 @@ export const OptionsWrapper = styled.div`
   border-bottom: ${t('space.50')} solid ${t('colors.brightBlack')};
   border-left: ${t('space.50')} solid ${t('colors.brightBlack')};
   border-right: ${t('space.50')} solid ${t('colors.brightBlack')};
+  background-color: ${t('colors.brightBlack')};
 `
 
 export const Option = styled.option`

@@ -33,9 +33,18 @@ export const Selecter = styled.select`
   }
 `
 
+export const OptionsWrapper = styled.div`
+  overflow: hidden scroll;
+  height: 8rem;
+  border-bottom: ${t('space.50')} solid ${t('colors.brightBlack')};
+  border-left: ${t('space.50')} solid ${t('colors.brightBlack')};
+  border-right: ${t('space.50')} solid ${t('colors.brightBlack')};
+`
+
 export const Option = styled.option`
   background-color: ${t('colors.background')};
   border-top: ${t('space.50')} solid ${t('colors.brightBlack')};
+  border-right: ${t('space.50')} solid ${t('colors.brightBlack')};
   color: ${t('colors.foreground')};
   transition:
     background-color 0.1s ease-in-out,

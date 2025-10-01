@@ -17,18 +17,11 @@ const GlobalStyle = createGlobalStyle`
     }
 
     &::-webkit-scrollbar-track {
-      background-color: ${t('colors.white', '40')};
-      border-radius: ${t('radius.150')};
+      background-color: ${t('colors.background')};
       cursor: pointer;
-
-      &:active,
-      &:hover {
-      background-color: ${t('colors.white', '80')};
-      }
     }
 
     &::-webkit-scrollbar-thumb {
-      border-radius: ${t('radius.150')};
       background-color: ${t('colors.brightBlack')};
       cursor: pointer;
 

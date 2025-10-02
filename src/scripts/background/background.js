@@ -41,7 +41,6 @@ chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {
 })
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  console.log('💬 ~ request:', request)
   const { id, data } = request.data
   const handler = processHandlers[request.type]
 

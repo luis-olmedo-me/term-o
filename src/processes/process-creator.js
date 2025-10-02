@@ -17,10 +17,10 @@ const createWorkerRequest = ({ tabId, type, data, defaultResponse }) => {
       resolve(response.data || defaultResponse)
     }
 
-    chrome.tabs.sendMessage(tabId, { type, data }, callback)
+    if (tabId) chrome.tabs.sendMessage(tabId, { type, data }, callback)
+    else chrome.runtime.sendMessage({ type, data }, callback)
   })
 }
-
 export const createWorkerProcessRequest = ({ tabId, type, data, defaultResponse }) => {
   return new Promise((resolve, reject) => {
     const callback = process => {

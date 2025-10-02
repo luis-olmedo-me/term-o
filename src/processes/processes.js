@@ -62,3 +62,11 @@ export const clickElement = (tabId, data) => {
     data
   })
 }
+
+export const getFontsAvailable = () => {
+  return createWorkerProcessRequest({
+    type: 'get-fonts-available',
+    defaultResponse: [],
+    data: null
+  })
+}

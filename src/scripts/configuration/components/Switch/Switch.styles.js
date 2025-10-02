@@ -48,13 +48,13 @@ export const Input = styled.input`
   z-index: 1;
 
   &:hover + ${SimulatedSwitch}::after {
-    background-color: ${t('colors.foreground', '60')};
+    background-color: ${t('colors.white', 'aa')};
   }
   &:hover + ${SimulatedSwitch}.selected::after {
-    background-color: ${t('colors.foreground')};
+    background-color: ${t('colors.brightWhite')};
   }
   &:hover + ${SimulatedSwitch} {
-    background-color: ${t('colors.green', '60')};
+    background-color: ${t('colors.green', '40')};
   }
   &:hover + ${SimulatedSwitch}.selected {
     background-color: ${t('colors.green')};

@@ -15,7 +15,8 @@ export const Input = ({
   disabled,
   type = 'text',
   endText,
-  name
+  name,
+  variant
 }) => {
   return (
     <S.InputWrapper aria-disabled={disabled}>
@@ -34,6 +35,7 @@ export const Input = ({
         onBlur={onBlur}
         placeholder={placeholder}
         disabled={disabled}
+        className={variant}
       />
 
       {endText && <span>{endText}</span>}
@@ -54,5 +56,6 @@ Input.propTypes = {
   disabled: Boolean,
   type: String,
   endText: String,
-  name: String
+  name: String,
+  variant: String
 }

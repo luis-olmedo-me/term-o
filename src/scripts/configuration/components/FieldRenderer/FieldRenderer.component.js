@@ -1,7 +1,7 @@
 import * as React from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
-import Input from '@src/components/Input'
+import Input, { inputVariants } from '@src/components/Input'
 import useConfig from '@src/hooks/useConfig'
 import FontSelect from '../FontSelect'
 import Select from '../Select'
@@ -28,6 +28,7 @@ export const FieldRenderer = ({ value, sectionId, inputId, type, options, name }
           value={localValue}
           onBlur={({ target }) => changeConfig(sectionId, inputId, target.value)}
           onChange={({ target }) => setLocalValue(target.value)}
+          variant={inputVariants.OUTLINED}
         />
       )
 
@@ -39,6 +40,7 @@ export const FieldRenderer = ({ value, sectionId, inputId, type, options, name }
           value={localValue}
           onBlur={({ target }) => changeConfig(sectionId, inputId, Number(target.value))}
           onChange={({ target }) => setLocalValue(target.value)}
+          variant={inputVariants.OUTLINED}
         />
       )
 

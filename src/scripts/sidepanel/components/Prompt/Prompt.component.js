@@ -1,7 +1,7 @@
 import * as React from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
-import Input from '@src/components/Input'
+import Input, { inputVariants } from '@src/components/Input'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 import useConfig from '@src/hooks/useConfig'
@@ -106,6 +106,7 @@ export const Prompt = ({
           onFocus={onFocus}
           prefix={prefix}
           name={name}
+          variant={inputVariants.GHOST}
         />
       )}
     </S.PromptWrapper>

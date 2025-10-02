@@ -49,7 +49,7 @@ export const defaultConfigSections = [
         description:
           'Sets the maximum number of lines that a single command can output before scrolling begins.',
         type: 'number',
-        postFix: null,
+        postFix: 'px',
         options: [],
         value: 50
       },
@@ -58,7 +58,7 @@ export const defaultConfigSections = [
         name: 'Command History Size',
         description: 'Defines the number of previous commands to be stored in the command history.',
         type: 'number',
-        postFix: null,
+        postFix: 'px',
         options: [],
         value: 40
       }

@@ -31,7 +31,7 @@ export const FieldRenderer = ({
 
   const tryApplyChange = (sectionId, inputId, newValue) => {
     try {
-      validations?.forEach(primitiveValidation => validate(primitiveValidation, newValue))
+      validations.forEach(primitiveValidation => validate(primitiveValidation, newValue))
 
       changeConfig(sectionId, inputId, newValue)
     } catch (error) {

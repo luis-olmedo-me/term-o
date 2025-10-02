@@ -31,6 +31,7 @@ export const defaultConfigSections = [
         type: 'boolean',
         postFix: null,
         options: [],
+        validations: [],
         value: true
       },
       {
@@ -41,6 +42,7 @@ export const defaultConfigSections = [
         type: 'boolean',
         postFix: null,
         options: [],
+        validations: [],
         value: true
       },
       {
@@ -51,8 +53,8 @@ export const defaultConfigSections = [
         type: 'number',
         postFix: 'px',
         options: [],
-        value: 50,
-        validations: [['is-between', 0, 1000]]
+        validations: [['is-between', 0, 1000]],
+        value: 50
       },
       {
         id: configInputIds.HISTORIAL_SIZE,
@@ -61,6 +63,7 @@ export const defaultConfigSections = [
         type: 'number',
         postFix: 'px',
         options: [],
+        validations: [['is-between', 0, 1000]],
         value: 40
       }
     ]
@@ -79,6 +82,7 @@ export const defaultConfigSections = [
         type: 'string',
         postFix: null,
         options: [],
+        validations: [],
         value: `On [termo.color.brightBlue]{origin}`
       }
     ]
@@ -95,6 +99,7 @@ export const defaultConfigSections = [
         type: 'theme-select',
         postFix: null,
         options: [],
+        validations: [],
         value: defaultColorTheme.name
       },
       {
@@ -104,6 +109,7 @@ export const defaultConfigSections = [
         type: 'font-select',
         postFix: null,
         options: [],
+        validations: [],
         value: 'Consolas'
       },
       {
@@ -118,6 +124,7 @@ export const defaultConfigSections = [
           { id: '16', name: 'Normal' },
           { id: '18', name: 'Large' }
         ],
+        validations: [],
         value: '16'
       }
     ]

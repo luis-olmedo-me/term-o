@@ -1,7 +1,7 @@
 import * as React from 'preact'
 import * as S from './Select.styles'
 
-export const Select = ({ options, value, onChange, loading = true }) => {
+export const Select = ({ options, value, onChange, loading = false }) => {
   const optionsDefined = typeof options === 'function' ? options() : options
 
   return (

@@ -27,6 +27,9 @@ export const Selecter = styled.select`
   color: ${t('colors.foreground')};
   border-radius: ${t('radius.200')};
   padding: ${t('space.250')} ${t('space.300')};
+  transition:
+    background-color 0.1s ease-in-out,
+    color 0.1s ease-in-out;
   cursor: pointer;
 
   &:focus {

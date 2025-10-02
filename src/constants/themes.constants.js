@@ -70,6 +70,6 @@ export const defaultTheme = {
   },
 
   font: {
-    primary: 'monospace'
+    primary: 'Consolas'
   }
 }

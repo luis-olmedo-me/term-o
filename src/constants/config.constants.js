@@ -106,15 +106,20 @@ export const defaultConfigSections = [
         description: 'Specifies the font family used for displaying text in the terminal.',
         type: 'font-select',
         options: [],
-        value: 'monospace'
+        value: 'Consolas'
       },
       {
         id: configInputIds.FONT_SIZE,
         name: 'Font Size',
         description: 'Defines the size of the font used in the terminal.',
-        type: 'number',
-        options: [],
-        value: 16
+        type: 'select',
+        options: [
+          { id: '12', name: 'Extra-Small' },
+          { id: '14', name: 'Small' },
+          { id: '16', name: 'Normal' },
+          { id: '18', name: 'Large' }
+        ],
+        value: '16'
       }
     ]
   }

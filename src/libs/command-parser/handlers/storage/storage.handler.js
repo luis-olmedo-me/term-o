@@ -1,4 +1,4 @@
-import { getStorage, setStorage } from '@sidepanel/proccesses/workers'
+import { getStorage, setStorage } from '@src/proccesses/workers'
 import {
   displayHelp,
   formatStorageAsString,

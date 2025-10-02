@@ -5,6 +5,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   const { id, data } = request.data
   const handler = processHandlers[request.type]
 
+  if (!handler) return
+
   const process = id
     ? processWaitList.getProcessById(id)
     : processWaitList.add(resolve => handler(resolve, data))

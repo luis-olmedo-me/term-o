@@ -1,4 +1,4 @@
-import { createWorkerProcessRequest } from './worker-creator'
+import { createWorkerProcessRequest } from './process-creator'
 
 export const findDOMElement = (tabId, data) => {
   return createWorkerProcessRequest({

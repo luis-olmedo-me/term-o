@@ -1,7 +1,9 @@
 import * as React from 'preact'
 import { useState } from 'preact/hooks'
 
-import useConfig, { configIds } from '@src/hooks/useConfig'
+import useConfig from '@src/hooks/useConfig'
+
+import { configIds } from '@src/constants/config.constants'
 import FieldRenderer from '../FieldRenderer'
 import SidePanel from '../SidePanel'
 import { sidePanelOptions } from './Preferences.constants'

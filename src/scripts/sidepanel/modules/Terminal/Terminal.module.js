@@ -1,9 +1,10 @@
 import * as React from 'preact'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 
+import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
-import useConfig, { configInputIds } from '@src/hooks/useConfig'
+import useConfig from '@src/hooks/useConfig'
 import useStorage from '@src/hooks/useStorage'
 import { Gear } from '@src/icons/Gear.component'
 import commandParser from '@src/libs/command-parser'

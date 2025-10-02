@@ -1,4 +1,4 @@
-import { defaultConfigSections } from '@src/hooks/useConfig'
+import { defaultConfigSections } from '@src/constants/config.constants'
 
 export const sidePanelOptions = defaultConfigSections.map(section => ({
   id: section.id,

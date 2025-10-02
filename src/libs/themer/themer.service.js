@@ -1,6 +1,9 @@
-import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
-import { getStorageValue, setStorageValue } from '@src/helpers/storage.helpers'
 import EventListener from '@src/libs/event-listener'
+
+import { configInputIds, defaultConfigSections } from '@src/constants/config.constants'
+import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
+import { getConfigValueByInputId } from '@src/helpers/config.helpers'
+import { getStorageValue, setStorageValue } from '@src/helpers/storage.helpers'
 import { defaultColorTheme, defaultTheme } from './themer.constants'
 
 class Themer extends EventListener {
@@ -63,8 +66,16 @@ class Themer extends EventListener {
   }
 
   async getThemesFromLS() {
+    const config = await getStorageValue(
+      storageNamespaces.LOCAL,
+      storageKeys.CONFIG,
+      defaultConfigSections
+    )
+    console.log('💬 ~ config:', config)
+
     const newThemes = await getStorageValue(storageNamespaces.LOCAL, storageKeys.COLOR_SETS)
-    const newThemeName = await getStorageValue(storageNamespaces.LOCAL, storageKeys.COLOR_SET_NAME)
+    const newThemeName = getConfigValueByInputId(configInputIds.THEME_NAME, config)
+    console.log('💬 ~ newThemeName:', newThemeName)
 
     if (newThemes) this.colorThemes = newThemes
 

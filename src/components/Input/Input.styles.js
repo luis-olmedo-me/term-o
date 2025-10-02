@@ -22,7 +22,7 @@ export const Input = styled.input`
   }
 
   &::selection {
-    color: ${t('colors.brightGreen')};
+    color: ${t('colors.green')};
     background-color: ${t('colors.selectionBackground')};
   }
 
@@ -57,7 +57,7 @@ export const InputWrapper = styled.div`
 
 export const Prefix = styled.span`
   &::selection {
-    color: ${t('colors.brightGreen')};
+    color: ${t('colors.green')};
     background-color: ${t('colors.selectionBackground')};
   }
 `

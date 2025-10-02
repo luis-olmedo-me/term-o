@@ -12,31 +12,30 @@ const GlobalStyle = createGlobalStyle`
 
   .vertical-scroller {
     &::-webkit-scrollbar {
-      height: 10px;
-      width: 10px;
+      height: 8px;
+      width: 8px;
     }
 
     &::-webkit-scrollbar-track {
-      background-color: ${t('colors.black')};
-      border-radius: ${t('radius.150')};
+      background-color: ${t('colors.background')};
       cursor: pointer;
-
-      &:active,
-      &:hover {
-        background-color: ${t('colors.black')};
-      }
     }
 
     &::-webkit-scrollbar-thumb {
-      border-radius: ${t('radius.150')};
       background-color: ${t('colors.brightBlack')};
       cursor: pointer;
 
       &:active,
       &:hover {
-        background-color: ${t('colors.brightWhite')};
+        background-color: ${t('colors.green')};
       }
     }
+  }
+  
+  select,
+  ::picker(select) {
+    appearance: base-select;
+    border: none;
   }
 `
 

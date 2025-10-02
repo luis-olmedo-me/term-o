@@ -27,7 +27,7 @@ export const Line = styled.p`
   cursor: text;
 
   &::selection {
-    color: ${t('colors.brightGreen')};
+    color: ${t('colors.green')};
     background-color: ${t('colors.selectionBackground')};
   }
 `

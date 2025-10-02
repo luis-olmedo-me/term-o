@@ -27,7 +27,7 @@ export const ButtonWrapper = styled.button`
   }
 
   &:hover {
-    background-color: ${t('colors.black')};
-    color: ${({ selected }) => (selected ? t('colors.brightGreen') : t('colors.brightWhite'))};
+    background-color: ${({ selected }) => (selected ? t('colors.green') : t('colors.black'))};
+    color: ${({ selected }) => (selected ? t('colors.brightWhite') : t('colors.brightGreen'))};
   }
 `

@@ -3,8 +3,10 @@ import { useEffect, useState } from 'preact/hooks'
 
 import Input from '@src/components/Input'
 import useConfig from '@src/hooks/useConfig'
+import Select from '../Select'
+import ThemeSelect from '../ThemeSelect'
 
-export const FieldRenderer = ({ value, sectionId, inputId, type }) => {
+export const FieldRenderer = ({ value, sectionId, inputId, type, options }) => {
   const [localValue, setLocalValue] = useState(value)
 
   const { changeConfig } = useConfig()
@@ -16,38 +18,62 @@ export const FieldRenderer = ({ value, sectionId, inputId, type }) => {
     [value]
   )
 
-  const inputs = {
-    string: (
-      <Input
-        value={localValue}
-        onBlur={({ target }) => changeConfig(sectionId, inputId, target.value)}
-        onChange={({ target }) => setLocalValue(target.value)}
-      />
-    ),
-    number: (
-      <Input
-        type="number"
-        value={localValue}
-        onBlur={({ target }) => changeConfig(sectionId, inputId, Number(target.value))}
-        onChange={({ target }) => setLocalValue(target.value)}
-      />
-    ),
-    boolean: (
-      <Input
-        type="checkbox"
-        checked={value}
-        onChange={() => changeConfig(sectionId, inputId, !value)}
-        endText={localValue ? 'Enabled' : 'Disabled'}
-      />
-    )
-  }
+  switch (type) {
+    case 'string':
+      return (
+        <Input
+          value={localValue}
+          onBlur={({ target }) => changeConfig(sectionId, inputId, target.value)}
+          onChange={({ target }) => setLocalValue(target.value)}
+        />
+      )
 
-  return inputs[type]
+    case 'number':
+      return (
+        <Input
+          type="number"
+          value={localValue}
+          onBlur={({ target }) => changeConfig(sectionId, inputId, Number(target.value))}
+          onChange={({ target }) => setLocalValue(target.value)}
+        />
+      )
+
+    case 'boolean':
+      return (
+        <Input
+          type="checkbox"
+          checked={value}
+          onChange={() => changeConfig(sectionId, inputId, !value)}
+          endText={localValue ? 'Enabled' : 'Disabled'}
+        />
+      )
+
+    case 'select':
+      return (
+        <Select
+          options={options}
+          value={value}
+          onChange={({ target }) => changeConfig(sectionId, inputId, target.value)}
+        />
+      )
+
+    case 'theme-select':
+      return (
+        <ThemeSelect
+          value={value}
+          onChange={({ target }) => changeConfig(sectionId, inputId, target.value)}
+        />
+      )
+
+    default:
+      return null
+  }
 }
 
 FieldRenderer.propTypes = {
   value: String | Number | Boolean,
   sectionId: String,
   inputId: String,
-  type: String
+  type: String,
+  options: Array
 }

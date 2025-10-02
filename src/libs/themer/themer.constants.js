@@ -38,6 +38,7 @@ export const defaultTheme = {
     50: '1px',
     100: '2px',
     200: '4px',
+    250: '6px',
     300: '8px',
     400: '10px',
     450: '12px',

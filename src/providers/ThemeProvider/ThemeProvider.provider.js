@@ -1,7 +1,7 @@
 import * as React from 'preact'
 
+import { configInputIds } from '@src/constants/config.constants'
 import useConfig from '@src/hooks/useConfig'
-import { configInputIds } from '@src/hooks/useConfig/useConfig.constants'
 import themer from '@src/libs/themer'
 import { useEffect, useState } from 'preact/hooks'
 import { ThemeProvider as StyleProvider } from 'styled-components'

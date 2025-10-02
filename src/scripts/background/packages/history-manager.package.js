@@ -1,9 +1,9 @@
+import { configIds, configInputIds } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
 import { getStorageValue, setStorageValue } from '@src/helpers/storage.helpers'
-import { configIds, configInputIds } from '@src/hooks/useConfig'
 
-const historyManager = (function() {
+const historyManager = (function () {
   let history = []
   let status = ''
 

@@ -43,24 +43,6 @@ export const ConfigInputWrapper = styled.div`
   &:last-child {
     border-bottom: none;
   }
-
-  input[type='text'],
-  input[type='number'] {
-    border: ${t('space.50')} solid ${t('colors.white', '40')};
-    background-color: ${t('colors.white', '40')};
-    border-radius: ${t('radius.200')};
-    padding-left: ${t('space.200')};
-    transition: border-color 0.1s ease-in-out;
-
-    &:focus {
-      border: ${t('space.50')} solid ${t('colors.green')};
-    }
-
-    &:hover {
-      background-color: ${t('colors.green')};
-      color: ${({ selected }) => (selected ? t('colors.brightGreen') : t('colors.brightWhite'))};
-    }
-  }
 `
 
 export const ConfigInputTitle = styled.h4`

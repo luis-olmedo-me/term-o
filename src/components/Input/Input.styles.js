@@ -1,5 +1,6 @@
 import { theme as t } from '@src/libs/themer'
 import styled from 'styled-components'
+import { inputVariants } from './Input.constants'
 
 export const Input = styled.input`
   font-family: ${t('font.primary')};
@@ -29,6 +30,23 @@ export const Input = styled.input`
   &[type='number']::-webkit-inner-spin-button {
     -webkit-appearance: none;
   }
+
+  &.${inputVariants.OUTLINED} {
+    border: ${t('space.50')} solid ${t('colors.white', '40')};
+    background-color: ${t('colors.white', '40')};
+    border-radius: ${t('radius.200')};
+    padding-left: ${t('space.200')};
+    transition: border-color 0.1s ease-in-out;
+
+    &:focus {
+      border: ${t('space.50')} solid ${t('colors.green')};
+    }
+
+    &:hover {
+      background-color: ${t('colors.green')};
+      color: ${({ selected }) => (selected ? t('colors.brightGreen') : t('colors.brightWhite'))};
+    }
+  }
 `
 
 export const InputWrapper = styled.div`
@@ -42,15 +60,6 @@ export const InputWrapper = styled.div`
   &[aria-disabled='true'],
   &[aria-disabled='true'] ${Input}:disabled {
     cursor: text;
-  }
-
-  &:has(${Input}[type="checkbox"]) {
-    width: fit-content;
-  }
-
-  input[type='checkbox'] {
-    margin: 0;
-    accent-color: ${t('colors.brightGreen')};
   }
 `
 

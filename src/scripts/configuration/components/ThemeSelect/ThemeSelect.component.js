@@ -4,7 +4,7 @@ import { useEffect, useState } from 'preact/hooks'
 import themer from '@src/libs/themer'
 import Select from '../Select'
 
-export const ThemeSelect = ({ value, onChange }) => {
+export const ThemeSelect = ({ value, onChange, name }) => {
   const [options, setOptions] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
@@ -28,10 +28,13 @@ export const ThemeSelect = ({ value, onChange }) => {
     }
   }, [])
 
-  return <Select loading={isLoading} options={options} value={value} onChange={onChange} />
+  return (
+    <Select loading={isLoading} options={options} value={value} onChange={onChange} name={name} />
+  )
 }
 
 ThemeSelect.propTypes = {
   value: String,
+  name: String,
   onChange: Function
 }

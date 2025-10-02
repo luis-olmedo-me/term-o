@@ -8,7 +8,7 @@ import Select from '../Select'
 import Switch from '../Switch'
 import ThemeSelect from '../ThemeSelect'
 
-export const FieldRenderer = ({ value, sectionId, inputId, type, options }) => {
+export const FieldRenderer = ({ value, sectionId, inputId, type, options, name }) => {
   const [localValue, setLocalValue] = useState(value)
 
   const { changeConfig } = useConfig()
@@ -24,6 +24,7 @@ export const FieldRenderer = ({ value, sectionId, inputId, type, options }) => {
     case 'string':
       return (
         <Input
+          name={name}
           value={localValue}
           onBlur={({ target }) => changeConfig(sectionId, inputId, target.value)}
           onChange={({ target }) => setLocalValue(target.value)}
@@ -33,6 +34,7 @@ export const FieldRenderer = ({ value, sectionId, inputId, type, options }) => {
     case 'number':
       return (
         <Input
+          name={name}
           type="number"
           value={localValue}
           onBlur={({ target }) => changeConfig(sectionId, inputId, Number(target.value))}
@@ -44,6 +46,7 @@ export const FieldRenderer = ({ value, sectionId, inputId, type, options }) => {
       return (
         <Switch
           type="checkbox"
+          name={name}
           value={value}
           onChange={() => changeConfig(sectionId, inputId, !value)}
         />
@@ -54,6 +57,7 @@ export const FieldRenderer = ({ value, sectionId, inputId, type, options }) => {
         <Select
           options={options}
           value={value}
+          name={name}
           onChange={({ target }) => changeConfig(sectionId, inputId, target.value)}
         />
       )
@@ -61,6 +65,7 @@ export const FieldRenderer = ({ value, sectionId, inputId, type, options }) => {
     case 'theme-select':
       return (
         <ThemeSelect
+          name={name}
           value={value}
           onChange={({ target }) => changeConfig(sectionId, inputId, target.value)}
         />
@@ -69,6 +74,7 @@ export const FieldRenderer = ({ value, sectionId, inputId, type, options }) => {
     case 'font-select':
       return (
         <FontSelect
+          name={name}
           value={value}
           onChange={({ target }) => changeConfig(sectionId, inputId, target.value)}
         />
@@ -84,5 +90,6 @@ FieldRenderer.propTypes = {
   sectionId: String,
   inputId: String,
   type: String,
+  name: String,
   options: Array
 }

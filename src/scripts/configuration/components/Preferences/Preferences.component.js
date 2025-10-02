@@ -43,6 +43,7 @@ export const Preferences = () => {
                   inputId={input.id}
                   type={input.type}
                   options={input.options}
+                  name={`${sectionSelected.id}-${input.id}`}
                 />
               </S.InputsWrapper>
             )

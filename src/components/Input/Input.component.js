@@ -14,7 +14,8 @@ export const Input = ({
   inputRef,
   disabled,
   type = 'text',
-  endText
+  endText,
+  name
 }) => {
   return (
     <S.InputWrapper aria-disabled={disabled}>
@@ -22,6 +23,7 @@ export const Input = ({
 
       <S.Input
         ref={inputRef}
+        name={name}
         spellCheck="false"
         type={type}
         value={value}
@@ -51,5 +53,6 @@ Input.propTypes = {
   inputRef: Object,
   disabled: Boolean,
   type: String,
-  endText: String
+  endText: String,
+  name: String
 }

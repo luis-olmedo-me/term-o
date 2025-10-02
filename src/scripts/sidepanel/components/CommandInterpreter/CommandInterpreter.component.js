@@ -43,7 +43,7 @@ export const CommandInterpreter = ({ command, onFinished, context }) => {
 
   return (
     <S.CommandInterpreterWrapper ref={wrapper}>
-      <Prompt context={context} defaultValue={command.title} disabled />
+      <Prompt name="current-command" context={context} defaultValue={command.title} disabled />
 
       {updates.map((update, index) => {
         return (

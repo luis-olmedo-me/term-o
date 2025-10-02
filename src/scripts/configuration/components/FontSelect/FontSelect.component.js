@@ -4,7 +4,7 @@ import { useEffect, useState } from 'preact/hooks'
 import { getFontsAvailable } from '@src/processes/processes'
 import Select from '../Select'
 
-export const FontSelect = ({ value, onChange }) => {
+export const FontSelect = ({ value, onChange, name }) => {
   const [options, setOptions] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
@@ -20,10 +20,13 @@ export const FontSelect = ({ value, onChange }) => {
     updateOptions()
   }, [])
 
-  return <Select loading={isLoading} options={options} value={value} onChange={onChange} />
+  return (
+    <Select loading={isLoading} options={options} value={value} onChange={onChange} name={name} />
+  )
 }
 
 FontSelect.propTypes = {
   value: String,
+  name: String,
   onChange: Function
 }

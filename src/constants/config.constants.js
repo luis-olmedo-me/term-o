@@ -97,7 +97,7 @@ export const defaultConfigSections = [
         name: 'Theme',
         description: 'Prefered theme in color schemes.',
         type: 'theme-select',
-        options: [themer.defaultColorName],
+        options: [],
         value: themer.defaultColorName
       },
       {

@@ -3,7 +3,7 @@ import { useCallback, useMemo } from 'preact/hooks'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 import { getConfigValueByInputId, mergeConfigSections } from '@src/helpers/config.helpers'
 import useStorage from '@src/hooks/useStorage'
-import { configSections } from './useConfig.constants'
+import { defaultConfigSections } from './useConfig.constants'
 
 export const useConfig = props => {
   const { get = [] } = props || {}
@@ -11,10 +11,13 @@ export const useConfig = props => {
   const [config, setConfig] = useStorage({
     namespace: storageNamespaces.LOCAL,
     key: storageKeys.CONFIG,
-    defaultValue: configSections
+    defaultValue: defaultConfigSections
   })
 
-  const validatedConfig = useMemo(() => mergeConfigSections(configSections, config), [config])
+  const validatedConfig = useMemo(
+    () => mergeConfigSections(defaultConfigSections, config),
+    [config]
+  )
 
   const getConfigById = useCallback(
     inputId => getConfigValueByInputId(inputId, validatedConfig),

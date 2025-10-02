@@ -18,7 +18,7 @@ export const configInputIds = {
   THEME_NAME: 'theme-name'
 }
 
-export const configSections = [
+export const defaultConfigSections = [
   {
     id: configIds.GENERAL,
     name: 'General',

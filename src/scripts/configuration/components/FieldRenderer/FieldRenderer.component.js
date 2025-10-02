@@ -1,17 +1,26 @@
 import * as React from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
-import Input from '@src/components/Input'
-import useConfig from '@src/hooks/useConfig'
+import Input, { inputVariants } from '@src/components/Input'
+import { validate } from '@src/helpers/primitive-validation.helpers'
 import FontSelect from '../FontSelect'
 import Select from '../Select'
 import Switch from '../Switch'
 import ThemeSelect from '../ThemeSelect'
 
-export const FieldRenderer = ({ value, sectionId, inputId, type, options }) => {
+export const FieldRenderer = ({
+  value,
+  sectionId,
+  inputId,
+  type,
+  options,
+  name,
+  postFix,
+  changeConfig,
+  validations
+}) => {
   const [localValue, setLocalValue] = useState(value)
-
-  const { changeConfig } = useConfig()
+  const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(
     function updateLocalValue() {
@@ -20,23 +29,42 @@ export const FieldRenderer = ({ value, sectionId, inputId, type, options }) => {
     [value]
   )
 
+  const tryApplyChange = (sectionId, inputId, newValue) => {
+    try {
+      validations.forEach(primitiveValidation => validate(primitiveValidation, newValue))
+
+      changeConfig(sectionId, inputId, newValue)
+      setErrorMessage(null)
+    } catch (error) {
+      setErrorMessage(error)
+    }
+  }
+
   switch (type) {
     case 'string':
       return (
         <Input
+          name={name}
           value={localValue}
-          onBlur={({ target }) => changeConfig(sectionId, inputId, target.value)}
+          onBlur={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
           onChange={({ target }) => setLocalValue(target.value)}
+          variant={inputVariants.OUTLINED}
+          postFix={postFix}
+          errorMessage={errorMessage}
         />
       )
 
     case 'number':
       return (
         <Input
+          name={name}
           type="number"
           value={localValue}
-          onBlur={({ target }) => changeConfig(sectionId, inputId, Number(target.value))}
+          onBlur={({ target }) => tryApplyChange(sectionId, inputId, Number(target.value))}
           onChange={({ target }) => setLocalValue(target.value)}
+          variant={inputVariants.OUTLINED}
+          postFix={postFix}
+          errorMessage={errorMessage}
         />
       )
 
@@ -44,8 +72,9 @@ export const FieldRenderer = ({ value, sectionId, inputId, type, options }) => {
       return (
         <Switch
           type="checkbox"
+          name={name}
           value={value}
-          onChange={() => changeConfig(sectionId, inputId, !value)}
+          onChange={() => tryApplyChange(sectionId, inputId, !value)}
         />
       )
 
@@ -54,23 +83,26 @@ export const FieldRenderer = ({ value, sectionId, inputId, type, options }) => {
         <Select
           options={options}
           value={value}
-          onChange={({ target }) => changeConfig(sectionId, inputId, target.value)}
+          name={name}
+          onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
         />
       )
 
     case 'theme-select':
       return (
         <ThemeSelect
+          name={name}
           value={value}
-          onChange={({ target }) => changeConfig(sectionId, inputId, target.value)}
+          onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
         />
       )
 
     case 'font-select':
       return (
         <FontSelect
+          name={name}
           value={value}
-          onChange={({ target }) => changeConfig(sectionId, inputId, target.value)}
+          onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
         />
       )
 
@@ -84,5 +116,9 @@ FieldRenderer.propTypes = {
   sectionId: String,
   inputId: String,
   type: String,
-  options: Array
+  name: String,
+  postFix: String,
+  options: Array,
+  validations: Array,
+  changeConfig: Function
 }

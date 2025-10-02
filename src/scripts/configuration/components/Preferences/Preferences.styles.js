@@ -31,46 +31,26 @@ export const SectionDescription = styled.p`
   font-size: ${t('fontSize.50')};
 `
 
-export const InputsWrapper = styled.div`
+export const ConfigInputWrapper = styled.div`
   margin: ${t('space.900')} 0 0 ${t('space.900')};
   padding-bottom: ${t('space.900')};
   border-bottom: ${t('space.50')} solid ${t('colors.white')};
 
   ${InputWrapper} {
-    padding: 0;
-    max-width: 500px;
   }
 
   &:last-child {
     border-bottom: none;
   }
-
-  input[type='text'],
-  input[type='number'] {
-    border: ${t('space.50')} solid ${t('colors.white', '40')};
-    background-color: ${t('colors.white', '40')};
-    border-radius: ${t('radius.200')};
-    padding-left: ${t('space.200')};
-    transition: border-color 0.1s ease-in-out;
-
-    &:focus {
-      border: ${t('space.50')} solid ${t('colors.green')};
-    }
-
-    &:hover {
-      background-color: ${t('colors.green')};
-      color: ${({ selected }) => (selected ? t('colors.brightGreen') : t('colors.brightWhite'))};
-    }
-  }
 `
 
-export const InputTitle = styled.h4`
+export const ConfigInputTitle = styled.h4`
   margin: ${t('space.400')} 0;
   font-size: ${t('fontSize.50')};
   font-weight: bold;
 `
 
-export const Description = styled.p`
+export const ConfigInputDescription = styled.p`
   margin: ${t('space.400')} 0;
   font-size: ${t('fontSize.50')};
   font-style: italic;

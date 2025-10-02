@@ -1,5 +1,6 @@
 import { theme as t } from '@src/libs/themer'
 import { createGlobalStyle } from 'styled-components'
+import { slide } from './animations.styles'
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -31,7 +32,25 @@ const GlobalStyle = createGlobalStyle`
       }
     }
   }
-  
+
+  &.loading {
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      animation: ${slide} 1s linear infinite alternate;
+      animation-timing-function: ease-in-out;
+      width: 5%;
+      height: ${t('space.100')};
+      background: ${t('colors.blue')};
+      bottom: 0;
+      left: 0;
+      border-radius: ${t('radius.100')} ${t('radius.100')} 0 0;
+      box-shadow: 0 -10px 25px 5px ${t('colors.blue')};
+    }
+  }
+
   select,
   ::picker(select) {
     appearance: base-select;

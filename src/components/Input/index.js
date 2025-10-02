@@ -1,6 +1,7 @@
 import { Input } from './Input.component'
-import { InputWrapper } from './Input.styles'
+import { inputVariants } from './Input.constants'
+import { InputWrapper, Prefix } from './Input.styles'
 
 export default Input
 
-export { InputWrapper }
+export { inputVariants, InputWrapper, Prefix }

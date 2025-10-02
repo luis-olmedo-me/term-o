@@ -1,7 +1,7 @@
 import * as React from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
-import Input from '@src/components/Input'
+import Input, { inputVariants } from '@src/components/Input'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 import useConfig from '@src/hooks/useConfig'
@@ -18,7 +18,8 @@ export const Prompt = ({
   defaultValue,
   context,
   loading,
-  className
+  className,
+  name
 }) => {
   const [value, setValue] = useState(defaultValue || '')
   const [historialIndex, setHistorialIndex] = useState(0)
@@ -104,6 +105,9 @@ export const Prompt = ({
           onBlur={onBlur}
           onFocus={onFocus}
           prefix={prefix}
+          name={name}
+          variant={inputVariants.GHOST}
+          fullWidth={true}
         />
       )}
     </S.PromptWrapper>
@@ -119,5 +123,6 @@ Prompt.propTypes = {
   disabled: Boolean,
   loading: Boolean,
   defaultValue: String,
-  className: String
+  className: String,
+  name: String
 }

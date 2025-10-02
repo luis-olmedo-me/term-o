@@ -137,6 +137,7 @@ export const Terminal = () => {
         onFocus={removePromptFocusEvent}
         loading={currentCommand !== null}
         context={context}
+        name="terminal-prompt"
       />
     </S.TerminalWrapper>
   )

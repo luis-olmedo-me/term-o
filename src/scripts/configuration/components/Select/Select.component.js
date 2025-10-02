@@ -1,12 +1,12 @@
 import * as React from 'preact'
 import * as S from './Select.styles'
 
-export const Select = ({ options, value, onChange, loading = false }) => {
+export const Select = ({ options, value, onChange, name, loading = false }) => {
   const optionsDefined = typeof options === 'function' ? options() : options
 
   return (
     <S.SelecterWrapper className={loading ? 'loading' : null}>
-      <S.Selecter value={value} onChange={onChange} disabled={loading}>
+      <S.Selecter value={value} onChange={onChange} disabled={loading} name={name}>
         <button>
           <selectedcontent></selectedcontent>
         </button>
@@ -28,6 +28,7 @@ export const Select = ({ options, value, onChange, loading = false }) => {
 Select.propTypes = {
   options: Array,
   value: String,
+  name: String,
   onChange: Function,
   loading: Boolean
 }

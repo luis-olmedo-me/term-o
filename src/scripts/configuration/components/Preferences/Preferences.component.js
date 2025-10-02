@@ -10,7 +10,7 @@ import { sidePanelOptions } from './Preferences.constants'
 import * as S from './Preferences.styles'
 
 export const Preferences = () => {
-  const { config } = useConfig()
+  const { config, changeConfig } = useConfig()
   const [selectedSectionId, setSelectedSectionId] = useState(configIds.GENERAL)
 
   const sectionSelected = config.find(({ id }) => id === selectedSectionId)
@@ -30,12 +30,12 @@ export const Preferences = () => {
 
           {sectionSelected.inputs.map(input => {
             return (
-              <S.InputsWrapper key={input.id}>
-                <S.InputTitle>
+              <S.ConfigInputWrapper key={input.id}>
+                <S.ConfigInputTitle>
                   {input.name} [{input.type}]
-                </S.InputTitle>
+                </S.ConfigInputTitle>
 
-                <S.Description>{input.description}</S.Description>
+                <S.ConfigInputDescription>{input.description}</S.ConfigInputDescription>
 
                 <FieldRenderer
                   value={input.value}
@@ -43,8 +43,12 @@ export const Preferences = () => {
                   inputId={input.id}
                   type={input.type}
                   options={input.options}
+                  validations={input.validations}
+                  postFix={input.postFix}
+                  name={`${sectionSelected.id}-${input.id}`}
+                  changeConfig={changeConfig}
                 />
-              </S.InputsWrapper>
+              </S.ConfigInputWrapper>
             )
           })}
         </S.SectionWrapper>

@@ -2,10 +2,20 @@ import * as React from 'preact'
 
 import * as S from './Switch.styles'
 
-export const Switch = ({ onChange, onKeyDown, onFocus, onBlur, value, inputRef, disabled }) => {
+export const Switch = ({
+  onChange,
+  onKeyDown,
+  onFocus,
+  onBlur,
+  value,
+  inputRef,
+  disabled,
+  name
+}) => {
   return (
     <S.SwitchWrapper aria-disabled={disabled}>
       <S.Input
+        name={name}
         ref={inputRef}
         checked={value}
         onChange={onChange}
@@ -30,5 +40,6 @@ Switch.propTypes = {
   checked: Boolean,
   inputRef: Object,
   disabled: Boolean,
-  type: String
+  type: String,
+  name: String
 }

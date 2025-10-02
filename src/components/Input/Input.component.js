@@ -14,28 +14,44 @@ export const Input = ({
   inputRef,
   disabled,
   type = 'text',
-  endText
+  postFix,
+  name,
+  variant,
+  errorMessage,
+  fullWidth
 }) => {
   return (
-    <S.InputWrapper aria-disabled={disabled}>
-      {prefix && <S.Prefix>{prefix}</S.Prefix>}
+    <>
+      <S.InputWrapper
+        aria-disabled={disabled}
+        className={`
+          ${errorMessage ? 'error' : null}
+          ${!fullWidth ? 'fit-content' : null}
+        `}
+      >
+        {prefix && <S.Prefix>{prefix}</S.Prefix>}
 
-      <S.Input
-        ref={inputRef}
-        spellCheck="false"
-        type={type}
-        value={value}
-        checked={checked}
-        onChange={onChange}
-        onKeyDown={onKeyDown}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        placeholder={placeholder}
-        disabled={disabled}
-      />
+        <S.Input
+          ref={inputRef}
+          name={name}
+          spellCheck="false"
+          type={type}
+          value={value}
+          checked={checked}
+          onChange={onChange}
+          onKeyDown={onKeyDown}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          placeholder={placeholder}
+          disabled={disabled}
+          className={variant}
+        />
 
-      {endText && <span>{endText}</span>}
-    </S.InputWrapper>
+        {postFix && <S.Postfix>{postFix}</S.Postfix>}
+      </S.InputWrapper>
+
+      {errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
+    </>
   )
 }
 
@@ -48,8 +64,12 @@ Input.propTypes = {
   value: String,
   checked: Boolean,
   prefix: String,
+  postFix: String,
   inputRef: Object,
   disabled: Boolean,
   type: String,
-  endText: String
+  name: String,
+  variant: String,
+  errorMessage: String,
+  fullWidth: Boolean
 }

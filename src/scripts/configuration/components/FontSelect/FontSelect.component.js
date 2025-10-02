@@ -6,7 +6,7 @@ import Select from '../Select'
 
 export const FontSelect = ({ value, onChange }) => {
   const [options, setOptions] = useState([])
-  setOptions
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(function getColorThemes() {
     const updateOptions = async () => {
@@ -14,12 +14,13 @@ export const FontSelect = ({ value, onChange }) => {
       const newOptions = fonts.map(font => ({ id: font.fontId, name: font.displayName }))
 
       setOptions(newOptions)
+      setIsLoading(false)
     }
 
     updateOptions()
   }, [])
 
-  return <Select options={options} value={value} onChange={onChange} />
+  return <Select loading={isLoading} options={options} value={value} onChange={onChange} />
 }
 
 FontSelect.propTypes = {

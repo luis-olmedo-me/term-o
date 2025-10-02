@@ -33,25 +33,16 @@ export const Terminal = () => {
   const { listening } = useConfig({
     get: [
       configInputIds.COPY_ON_SELECTION,
-      configInputIds.FOCUS_PROMPT_ON_CLICK,
       configInputIds.SWITCH_TAB_AUTOMATICALLY,
       configInputIds.MAX_LINES_PER_COMMAND,
       configInputIds.STATUS
     ]
   })
-  const [
-    canCopyOnSelection,
-    focusPromptOnClick,
-    switchTabAutomatically,
-    maxLinesPerCommand,
-    status
-  ] = listening
+  const [canCopyOnSelection, switchTabAutomatically, maxLinesPerCommand, status] = listening
 
   const focusOnPrompt = useCallback(() => {
-    if (!focusPromptOnClick) return
-
     inputRef.current?.focus()
-  }, [focusPromptOnClick])
+  }, [])
 
   useEffect(
     function focusTabAutomatically() {

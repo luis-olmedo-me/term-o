@@ -1,9 +1,9 @@
 import processWaitList from '@src/libs/process-wait-list'
-import processes from './processes'
+import processHandlers from './process-handlers'
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   const { id, data } = request.data
-  const handler = processes[request.type]
+  const handler = processHandlers[request.type]
 
   const process = id
     ? processWaitList.getProcessById(id)

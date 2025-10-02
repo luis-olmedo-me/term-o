@@ -97,7 +97,7 @@ export const configSections = [
         name: 'Theme',
         description: 'Prefered theme in color schemes.',
         type: 'select',
-        options: () => themer.colorThemes.map(scheme => ({ id: scheme.name, name: scheme.name })),
+        options: [themer.defaultColorName],
         value: themer.defaultColorName
       },
       {

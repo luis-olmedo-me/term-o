@@ -24,7 +24,7 @@ export const Select = ({ options, value, onChange }) => {
 }
 
 Select.propTypes = {
-  options: Array | Function,
+  options: Array,
   value: String,
   onChange: Function
 }

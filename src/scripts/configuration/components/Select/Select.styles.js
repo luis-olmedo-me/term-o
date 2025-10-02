@@ -12,9 +12,15 @@ export const Selecter = styled.select`
     background-color 0.1s ease-in-out,
     color 0.1s ease-in-out;
   cursor: pointer;
+  outline: none;
 
   &:focus {
     border: ${t('space.50')} solid ${t('colors.green')};
+  }
+
+  &:focus,
+  &:active {
+    outline: none;
   }
 
   &:hover {
@@ -88,6 +94,11 @@ export const Option = styled.option`
   &:hover,
   &:focus {
     color: ${t('colors.green')};
+  }
+
+  &:focus,
+  &:active {
+    outline: none;
   }
 
   :is(selected) {

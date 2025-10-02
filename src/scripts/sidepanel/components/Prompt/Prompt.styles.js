@@ -20,5 +20,6 @@ export const PromptWrapper = styled.div`
 
   ${InputWrapper} {
     padding: 0 ${t('space.600')} ${t('space.300')};
+    gap: ${t('space.200')};
   }
 `

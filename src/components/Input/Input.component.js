@@ -21,7 +21,7 @@ export const Input = ({
 }) => {
   return (
     <>
-      <S.InputWrapper aria-disabled={disabled}>
+      <S.InputWrapper aria-disabled={disabled} className={errorMessage ? 'error' : null}>
         {prefix && <S.Prefix>{prefix}</S.Prefix>}
 
         <S.Input
@@ -43,7 +43,7 @@ export const Input = ({
         {postFix && <S.Postfix>{postFix}</S.Postfix>}
       </S.InputWrapper>
 
-      {errorMessage && <span>{errorMessage}</span>}
+      {errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
     </>
   )
 }

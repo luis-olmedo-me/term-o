@@ -68,6 +68,11 @@ export const InputWrapper = styled.div`
   &[aria-disabled='true'] ${Input}:disabled {
     cursor: text;
   }
+
+  &.error {
+    outline: ${t('space.150')} dashed ${t('colors.red')};
+    border-radius: ${t('space.200')};
+  }
 `
 
 export const Prefix = styled.span`
@@ -89,4 +94,10 @@ export const Postfix = styled.span`
   border-radius: 0 ${t('space.200')} ${t('space.200')} 0;
   pointer-events: unset;
   cursor: help;
+`
+
+export const ErrorMessage = styled.span`
+  margin-top: ${t('space.400')};
+  display: block;
+  color: ${t('colors.red')};
 `

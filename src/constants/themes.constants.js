@@ -43,6 +43,7 @@ export const defaultTheme = {
   space: {
     50: '1px',
     100: '2px',
+    150: '3px',
     200: '4px',
     250: '6px',
     300: '8px',

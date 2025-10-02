@@ -38,6 +38,7 @@ export const ConfigInputWrapper = styled.div`
 
   ${InputWrapper} {
     max-width: 500px;
+    width: fit-content;
   }
 
   &:last-child {

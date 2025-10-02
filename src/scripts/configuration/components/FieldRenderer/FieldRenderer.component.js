@@ -4,6 +4,7 @@ import { useEffect, useState } from 'preact/hooks'
 import Input from '@src/components/Input'
 import useConfig from '@src/hooks/useConfig'
 import Select from '../Select'
+import ThemeSelect from '../ThemeSelect'
 
 export const FieldRenderer = ({ value, sectionId, inputId, type, options }) => {
   const [localValue, setLocalValue] = useState(value)
@@ -51,6 +52,14 @@ export const FieldRenderer = ({ value, sectionId, inputId, type, options }) => {
       return (
         <Select
           options={options}
+          value={value}
+          onChange={({ target }) => changeConfig(sectionId, inputId, target.value)}
+        />
+      )
+
+    case 'theme-select':
+      return (
+        <ThemeSelect
           value={value}
           onChange={({ target }) => changeConfig(sectionId, inputId, target.value)}
         />

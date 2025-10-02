@@ -96,7 +96,7 @@ export const configSections = [
         id: configInputIds.THEME,
         name: 'Theme',
         description: 'Prefered theme in color schemes.',
-        type: 'select',
+        type: 'theme-select',
         options: [themer.defaultColorName],
         value: themer.defaultColorName
       },

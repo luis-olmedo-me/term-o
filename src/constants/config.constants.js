@@ -1,4 +1,4 @@
-import themer from '@src/libs/themer'
+import { defaultColorTheme } from './themes.constants'
 
 export const configIds = {
   GENERAL: 'general',
@@ -98,7 +98,7 @@ export const defaultConfigSections = [
         description: 'Prefered theme in color schemes.',
         type: 'theme-select',
         options: [],
-        value: themer.defaultColorName
+        value: defaultColorTheme.name
       },
       {
         id: configInputIds.FONT_FAMILY,

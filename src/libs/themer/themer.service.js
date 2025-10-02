@@ -2,9 +2,9 @@ import EventListener from '@src/libs/event-listener'
 
 import { configIds, configInputIds, defaultConfigSections } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
+import { defaultColorTheme, defaultTheme } from '@src/constants/themes.constants'
 import { getConfigValueByInputId, updateConfigValueIn } from '@src/helpers/config.helpers'
 import { getStorageValue, setStorageValue } from '@src/helpers/storage.helpers'
-import { defaultColorTheme, defaultTheme } from './themer.constants'
 
 class Themer extends EventListener {
   constructor(defaultColorTheme, defaultTheme) {

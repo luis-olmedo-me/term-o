@@ -1,6 +1,7 @@
 import * as React from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
+import { getFontsAvailable } from '@src/processes/processes'
 import Select from '../Select'
 
 export const FontSelect = ({ value, onChange }) => {
@@ -9,9 +10,10 @@ export const FontSelect = ({ value, onChange }) => {
 
   useEffect(function getColorThemes() {
     const updateOptions = async () => {
-      // const newOptions = chrome.fontSettings.getFontList()
-      // console.log('💬 ~ newOptions:', newOptions)
-      // setOptions(newOptions)
+      const fonts = await getFontsAvailable()
+      const newOptions = fonts.map(font => ({ id: font.fontId, name: font.displayName }))
+
+      setOptions(newOptions)
     }
 
     updateOptions()

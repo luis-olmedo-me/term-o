@@ -41,14 +41,15 @@ chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {
 })
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  console.log('💬 ~ request:', request)
   const { id, data } = request.data
   const handler = processHandlers[request.type]
 
-  if (!handler) return
+  if (handler) {
+    const process = id
+      ? processWaitList.getProcessById(id)
+      : processWaitList.add(resolve => handler(resolve, data))
 
-  const process = id
-    ? processWaitList.getProcessById(id)
-    : processWaitList.add(resolve => handler(resolve, data))
-
-  return sendResponse({ status: 'ok', data: process })
+    return sendResponse({ status: 'ok', data: process })
+  }
 })

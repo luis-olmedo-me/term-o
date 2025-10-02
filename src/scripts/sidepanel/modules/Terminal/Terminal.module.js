@@ -25,7 +25,7 @@ export const Terminal = () => {
     defaultValue: []
   })
   const [commandUpdates, setCommandUpdates] = useStorage({
-    namespace: storageNamespaces.LOCAL,
+    namespace: storageNamespaces.SESSION,
     key: storageKeys.HISTORY,
     defaultValue: []
   })

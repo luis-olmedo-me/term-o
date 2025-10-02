@@ -2,12 +2,36 @@ import { theme as t } from '@src/libs/themer'
 import styled from 'styled-components'
 
 export const SimulatedSwitch = styled.div`
-  height: 100px;
-  width: 100px;
   background-color: red;
+  height: 1.5rem;
+  width: 2.5rem;
+  border: ${t('space.50')} solid ${t('colors.white', '40')};
+  background-color: ${t('colors.white', '40')};
+  border-radius: ${t('radius.200')};
+  transition:
+    background-color 0.1s ease-in-out,
+    color 0.1s ease-in-out;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 30%;
+    height: calc(100% - ${t('space.100')} * 2);
+    background-color: ${t('colors.white', '80')};
+    bottom: ${t('space.100')};
+    left: ${t('space.100')};
+    border-radius: ${t('radius.200')};
+    transition:
+      background-color 0.1s ease-in-out,
+      color 0.1s ease-in-out,
+      left 0.1s ease-in-out;
+  }
 
   &.selected {
-    background-color: green;
+    &::after {
+      background-color: ${t('colors.brightGreen')};
+      left: calc(70% - ${t('space.100')});
+    }
   }
 `
 
@@ -19,6 +43,7 @@ export const Input = styled.input`
   width: 100%;
   height: 100%;
   opacity: 0;
+  cursor: pointer;
 
   &:active,
   &:focus,
@@ -38,7 +63,6 @@ export const SwitchWrapper = styled.div`
   gap: ${t('space.400')};
   background-color: ${t('colors.background')};
   color: ${t('colors.foreground')};
-  padding: ${t('space.300')} ${t('space.600')};
   cursor: text;
   position: relative;
 

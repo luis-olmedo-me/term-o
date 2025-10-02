@@ -14,7 +14,7 @@ export const Select = ({ options, value, onChange }) => {
         {optionsDefined?.map(option => {
           return (
             <S.Option key={option.id} value={option.id}>
-              <span>{option.name}</span>
+              <S.OptionText>{option.name}</S.OptionText>
             </S.Option>
           )
         })}

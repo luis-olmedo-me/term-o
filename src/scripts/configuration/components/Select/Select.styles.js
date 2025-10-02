@@ -2,8 +2,7 @@ import { theme as t } from '@src/libs/themer'
 import styled from 'styled-components'
 
 export const Selecter = styled.select`
-  min-width: 200px;
-  max-width: 300px;
+  width: 300px;
   border: ${t('space.50')} solid ${t('colors.white', '40')};
   background-color: ${t('colors.white', '40')};
   color: ${t('colors.foreground')};
@@ -71,4 +70,11 @@ export const Option = styled.option`
     margin-left: auto;
     content: '◉';
   }
+`
+
+export const OptionText = styled.span`
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 250px;
 `

@@ -37,7 +37,6 @@ export const InputsWrapper = styled.div`
   border-bottom: ${t('space.50')} solid ${t('colors.white')};
 
   ${InputWrapper} {
-    padding: 0;
     max-width: 500px;
   }
 

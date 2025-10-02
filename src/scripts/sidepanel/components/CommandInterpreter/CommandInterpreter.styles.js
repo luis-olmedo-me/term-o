@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
+import { InputWrapper, Prefix } from '@src/components/Input'
 import { theme as t } from '@src/libs/themer'
-import { InputWrapper, Prefix } from '../../../../components/Input/Input.styles'
 import { Line } from '../Prompt/Prompt.styles'
 
 export const CommandInterpreterWrapper = styled.div`

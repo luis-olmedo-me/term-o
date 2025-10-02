@@ -2,6 +2,10 @@ import * as React from 'preact'
 import * as S from './Select.styles'
 
 export const Select = ({ options, value, onChange }) => {
+  console.log('💬 ~ options:', options)
+  const optionsDefined = typeof options === 'function' ? options() : options
+  console.log('💬 ~ optionsDefined:', optionsDefined)
+
   return (
     <S.Selecter value={value} onChange={onChange}>
       <button>
@@ -9,7 +13,7 @@ export const Select = ({ options, value, onChange }) => {
       </button>
 
       <S.OptionsWrapper className="vertical-scroller">
-        {options.map(option => {
+        {optionsDefined?.map(option => {
           return (
             <S.Option key={option.id} value={option.id}>
               <span>{option.name}</span>
@@ -22,7 +26,7 @@ export const Select = ({ options, value, onChange }) => {
 }
 
 Select.propTypes = {
-  options: Array,
+  options: Array | Function,
   value: String,
   onChange: Function
 }

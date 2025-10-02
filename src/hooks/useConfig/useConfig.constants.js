@@ -1,4 +1,4 @@
-import { ThemeTypes } from '@src/constants/themes.constants'
+import themer from '@src/libs/themer'
 
 export const configIds = {
   GENERAL: 'general',
@@ -97,21 +97,8 @@ export const configSections = [
         name: 'Theme',
         description: 'Prefered theme in color schemes.',
         type: 'select',
-        options: [
-          {
-            id: ThemeTypes.SYSTEM,
-            name: 'System'
-          },
-          {
-            id: ThemeTypes.DARK,
-            name: 'Dark'
-          },
-          {
-            id: ThemeTypes.LIGHT,
-            name: 'Light'
-          }
-        ],
-        value: ThemeTypes.SYSTEM
+        options: () => themer.colorThemes.map(scheme => ({ id: scheme.name, name: scheme.name })),
+        value: themer.defaultColorName
       },
       {
         id: configInputIds.FONT_FAMILY,

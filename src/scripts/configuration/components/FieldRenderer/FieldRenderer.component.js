@@ -66,5 +66,5 @@ FieldRenderer.propTypes = {
   sectionId: String,
   inputId: String,
   type: String,
-  options: Array
+  options: Array | Function
 }

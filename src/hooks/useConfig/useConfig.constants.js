@@ -15,7 +15,7 @@ export const configInputIds = {
   STATUS: 'status',
   FONT_FAMILY: 'font-family',
   FONT_SIZE: 'font-size',
-  THEME: 'theme'
+  THEME_NAME: 'theme-name'
 }
 
 export const configSections = [
@@ -93,7 +93,7 @@ export const configSections = [
     description: 'Customize the visual appearance of the terminal, including font settings.',
     inputs: [
       {
-        id: configInputIds.THEME,
+        id: configInputIds.THEME_NAME,
         name: 'Theme',
         description: 'Prefered theme in color schemes.',
         type: 'theme-select',

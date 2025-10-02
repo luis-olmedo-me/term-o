@@ -7,3 +7,21 @@ export const getConfigValueByInputId = (inputId, configSections, defaultValue = 
 
   return defaultValue
 }
+
+export const mergeConfigSections = (configSectionsA, configSectionsB) => {
+  return configSectionsA.map(sectionA => {
+    const sectionB = configSectionsB.find(section => section.id === sectionA.id)
+
+    return {
+      ...sectionB,
+      inputs: sectionA.inputs.map(inputA => {
+        const inputB = sectionB.inputs.find(input => input.id === inputA.id)
+
+        return {
+          ...inputA,
+          ...inputB
+        }
+      })
+    }
+  })
+}

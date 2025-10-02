@@ -25,3 +25,16 @@ export const mergeConfigSections = (configSectionsA, configSectionsB) => {
     }
   })
 }
+
+export const updateConfigValueIn = (configSections, sectionId, inputId, newValue) => {
+  return configSections.map(section => {
+    return section.id === sectionId
+      ? {
+          ...section,
+          inputs: section.inputs.map(input => {
+            return input.id === inputId ? { ...input, value: newValue } : input
+          }, {})
+        }
+      : { ...section }
+  })
+}

@@ -1,7 +1,11 @@
 import { useCallback, useMemo } from 'preact/hooks'
 
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
-import { getConfigValueByInputId, mergeConfigSections } from '@src/helpers/config.helpers'
+import {
+  getConfigValueByInputId,
+  mergeConfigSections,
+  updateConfigValueIn
+} from '@src/helpers/config.helpers'
 import useStorage from '@src/hooks/useStorage'
 import { defaultConfigSections } from './useConfig.constants'
 
@@ -26,13 +30,7 @@ export const useConfig = props => {
 
   const changeConfig = useCallback(
     (sectionId, inputId, newValue) => {
-      const newConfig = validatedConfig.map(section => {
-        const inputs = section.inputs.map(input => {
-          return input.id === inputId ? { ...input, value: newValue } : input
-        }, {})
-
-        return section.id === sectionId ? { ...section, inputs } : section
-      })
+      const newConfig = updateConfigValueIn(validatedConfig, sectionId, inputId, newValue)
 
       setConfig(newConfig)
     },

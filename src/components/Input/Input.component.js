@@ -17,11 +17,18 @@ export const Input = ({
   postFix,
   name,
   variant,
-  errorMessage
+  errorMessage,
+  fullWidth
 }) => {
   return (
     <>
-      <S.InputWrapper aria-disabled={disabled} className={errorMessage ? 'error' : null}>
+      <S.InputWrapper
+        aria-disabled={disabled}
+        className={`
+          ${errorMessage ? 'error' : null}
+          ${!fullWidth ? 'fit-content' : null}
+        `}
+      >
         {prefix && <S.Prefix>{prefix}</S.Prefix>}
 
         <S.Input
@@ -63,5 +70,6 @@ Input.propTypes = {
   type: String,
   name: String,
   variant: String,
-  errorMessage: String
+  errorMessage: String,
+  fullWidth: Boolean
 }

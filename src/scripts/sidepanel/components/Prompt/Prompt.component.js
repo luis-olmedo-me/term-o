@@ -107,6 +107,7 @@ export const Prompt = ({
           prefix={prefix}
           name={name}
           variant={inputVariants.GHOST}
+          fullWidth={true}
         />
       )}
     </S.PromptWrapper>

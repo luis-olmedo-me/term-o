@@ -37,8 +37,6 @@ export const ConfigInputWrapper = styled.div`
   border-bottom: ${t('space.50')} solid ${t('colors.white')};
 
   ${InputWrapper} {
-    max-width: 500px;
-    width: fit-content;
   }
 
   &:last-child {

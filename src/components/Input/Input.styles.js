@@ -64,6 +64,10 @@ export const InputWrapper = styled.div`
   background-color: ${t('colors.background')};
   color: ${t('colors.foreground')};
 
+  &.fit-content {
+    width: fit-content;
+  }
+
   &[aria-disabled='true'],
   &[aria-disabled='true'] ${Input}:disabled {
     cursor: text;

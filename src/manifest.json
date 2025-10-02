@@ -3,7 +3,15 @@
   "version": "0.8.0",
   "description": "Browser Command Line: Execute commands directly from your browser.",
   "manifest_version": 3,
-  "permissions": ["tabs", "activeTab", "storage", "scripting", "history", "sidePanel"],
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "scripting",
+    "history",
+    "sidePanel",
+    "fontSettings"
+  ],
   "host_permissions": ["http://*/", "https://*/"],
   "icons": {
     "16": "images/logo-16_x_16.png",

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'preact/hooks'
 
 import Input from '@src/components/Input'
 import useConfig from '@src/hooks/useConfig'
+import FontSelect from '../FontSelect'
 import Select from '../Select'
 import ThemeSelect from '../ThemeSelect'
 
@@ -60,6 +61,14 @@ export const FieldRenderer = ({ value, sectionId, inputId, type, options }) => {
     case 'theme-select':
       return (
         <ThemeSelect
+          value={value}
+          onChange={({ target }) => changeConfig(sectionId, inputId, target.value)}
+        />
+      )
+
+    case 'font-select':
+      return (
+        <FontSelect
           value={value}
           onChange={({ target }) => changeConfig(sectionId, inputId, target.value)}
         />

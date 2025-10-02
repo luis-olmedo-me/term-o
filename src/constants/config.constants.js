@@ -104,7 +104,7 @@ export const defaultConfigSections = [
         id: configInputIds.FONT_FAMILY,
         name: 'Font Family',
         description: 'Specifies the font family used for displaying text in the terminal.',
-        type: 'string',
+        type: 'font-select',
         options: [],
         value: 'monospace'
       },

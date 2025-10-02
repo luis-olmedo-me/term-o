@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'preact/hooks'
 
+import { defaultConfigSections } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 import {
   getConfigValueByInputId,
@@ -7,7 +8,6 @@ import {
   updateConfigValueIn
 } from '@src/helpers/config.helpers'
 import useStorage from '@src/hooks/useStorage'
-import { defaultConfigSections } from './useConfig.constants'
 
 export const useConfig = props => {
   const { get = [] } = props || {}

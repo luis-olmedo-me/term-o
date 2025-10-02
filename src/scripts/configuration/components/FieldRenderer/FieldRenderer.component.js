@@ -15,9 +15,12 @@ export const FieldRenderer = ({
   options,
   name,
   postFix,
-  changeConfig
+  changeConfig,
+  validations
 }) => {
   const [localValue, setLocalValue] = useState(value)
+  const [errorMessage, setErrorMessage] = useState(null)
+  console.log('💬 ~ errorMessage:', errorMessage)
 
   useEffect(
     function updateLocalValue() {
@@ -26,13 +29,23 @@ export const FieldRenderer = ({
     [value]
   )
 
+  const tryApplyChange = (sectionId, inputId, newValue) => {
+    try {
+      validations?.forEach(validation => validation(newValue))
+
+      changeConfig(sectionId, inputId, newValue)
+    } catch (error) {
+      setErrorMessage(error)
+    }
+  }
+
   switch (type) {
     case 'string':
       return (
         <Input
           name={name}
           value={localValue}
-          onBlur={({ target }) => changeConfig(sectionId, inputId, target.value)}
+          onBlur={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
           onChange={({ target }) => setLocalValue(target.value)}
           variant={inputVariants.OUTLINED}
           postFix={postFix}
@@ -45,7 +58,7 @@ export const FieldRenderer = ({
           name={name}
           type="number"
           value={localValue}
-          onBlur={({ target }) => changeConfig(sectionId, inputId, Number(target.value))}
+          onBlur={({ target }) => tryApplyChange(sectionId, inputId, Number(target.value))}
           onChange={({ target }) => setLocalValue(target.value)}
           variant={inputVariants.OUTLINED}
           postFix={postFix}
@@ -58,7 +71,7 @@ export const FieldRenderer = ({
           type="checkbox"
           name={name}
           value={value}
-          onChange={() => changeConfig(sectionId, inputId, !value)}
+          onChange={() => tryApplyChange(sectionId, inputId, !value)}
         />
       )
 
@@ -68,7 +81,7 @@ export const FieldRenderer = ({
           options={options}
           value={value}
           name={name}
-          onChange={({ target }) => changeConfig(sectionId, inputId, target.value)}
+          onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
         />
       )
 
@@ -77,7 +90,7 @@ export const FieldRenderer = ({
         <ThemeSelect
           name={name}
           value={value}
-          onChange={({ target }) => changeConfig(sectionId, inputId, target.value)}
+          onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
         />
       )
 
@@ -86,7 +99,7 @@ export const FieldRenderer = ({
         <FontSelect
           name={name}
           value={value}
-          onChange={({ target }) => changeConfig(sectionId, inputId, target.value)}
+          onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
         />
       )
 
@@ -103,5 +116,6 @@ FieldRenderer.propTypes = {
   name: String,
   postFix: String,
   options: Array,
+  validations: Array,
   changeConfig: Function
 }

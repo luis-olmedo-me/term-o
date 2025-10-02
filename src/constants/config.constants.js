@@ -53,7 +53,7 @@ export const defaultConfigSections = [
         postFix: 'px',
         options: [],
         value: 50,
-        validation: [isBetween(0, 1000)]
+        validations: [isBetween(0, 1000)]
       },
       {
         id: configInputIds.HISTORIAL_SIZE,

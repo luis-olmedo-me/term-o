@@ -1,3 +1,4 @@
+import { isBetween } from '@src/helpers/validation.helpers'
 import { defaultColorTheme } from './themes.constants'
 
 export const configIds = {
@@ -51,7 +52,8 @@ export const defaultConfigSections = [
         type: 'number',
         postFix: 'px',
         options: [],
-        value: 50
+        value: 50,
+        validation: [isBetween(0, 1000)]
       },
       {
         id: configInputIds.HISTORIAL_SIZE,

@@ -5,6 +5,8 @@ import * as S from './Switch.styles'
 export const Switch = ({ onChange, onKeyDown, onFocus, onBlur, value, inputRef, disabled }) => {
   return (
     <S.SwitchWrapper aria-disabled={disabled}>
+      <S.SimulatedSwitch className={value ? 'selected' : null} />
+
       <S.Input
         ref={inputRef}
         checked={value}

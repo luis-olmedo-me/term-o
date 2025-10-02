@@ -1,19 +1,24 @@
 import { theme as t } from '@src/libs/themer'
 import styled from 'styled-components'
 
+export const SimulatedSwitch = styled.div`
+  height: 100px;
+  width: 100px;
+  background-color: red;
+
+  &.selected {
+    background-color: green;
+  }
+`
+
 export const Input = styled.input`
-  font-family: ${t('font.primary')};
-  width: 100%;
-  box-sizing: border-box;
-  white-space: nowrap;
-  font-size: ${t('fontSize.50')};
-  border: none;
   display: block;
-  caret-color: ${t('colors.cursorColor')};
-  line-height: ${t('lineHeight.300')};
-  background-color: ${t('colors.background')};
-  color: ${t('colors.foreground')};
-  letter-spacing: ${t('space.50')};
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
 
   &:active,
   &:focus,
@@ -35,6 +40,7 @@ export const SwitchWrapper = styled.div`
   color: ${t('colors.foreground')};
   padding: ${t('space.300')} ${t('space.600')};
   cursor: text;
+  position: relative;
 
   &[aria-disabled='true'],
   &[aria-disabled='true'] ${Input}:disabled {

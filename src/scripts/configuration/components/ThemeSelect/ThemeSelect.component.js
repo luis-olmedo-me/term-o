@@ -6,6 +6,7 @@ import Select from '../Select'
 
 export const ThemeSelect = ({ value, onChange }) => {
   const [options, setOptions] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(function getColorThemes() {
     const isInitiated = themer.isInitiated
@@ -13,6 +14,7 @@ export const ThemeSelect = ({ value, onChange }) => {
       const newOptions = colorThemes.map(theme => ({ id: theme.name, name: theme.name }))
 
       setOptions(newOptions)
+      setIsLoading(false)
     }
 
     updateOptions(themer)
@@ -26,7 +28,7 @@ export const ThemeSelect = ({ value, onChange }) => {
     }
   }, [])
 
-  return <Select options={options} value={value} onChange={onChange} />
+  return <Select loading={isLoading} options={options} value={value} onChange={onChange} />
 }
 
 ThemeSelect.propTypes = {

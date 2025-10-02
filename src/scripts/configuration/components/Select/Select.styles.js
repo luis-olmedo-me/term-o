@@ -1,14 +1,35 @@
 import { theme as t } from '@src/libs/themer'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
+
+const slide = keyframes`
+  from {
+    left: 0;
+    opacity: 0;
+  }
+
+  40%{
+    opacity: 1;
+  }
+  60%{
+    opacity: 1;
+  }
+
+  to {
+    left: 95%;
+    opacity: 0;
+  }
+`
 
 export const Selecter = styled.select`
-  min-width: 200px;
-  max-width: 300px;
+  width: 300px;
   border: ${t('space.50')} solid ${t('colors.white', '40')};
   background-color: ${t('colors.white', '40')};
   color: ${t('colors.foreground')};
   border-radius: ${t('radius.200')};
   padding: ${t('space.250')} ${t('space.300')};
+  transition:
+    background-color 0.1s ease-in-out,
+    color 0.1s ease-in-out;
   cursor: pointer;
 
   &:focus {
@@ -20,6 +41,22 @@ export const Selecter = styled.select`
     color: ${({ selected }) => (selected ? t('colors.brightGreen') : t('colors.brightWhite'))};
   }
 
+  &:disabled {
+    background-color: ${t('colors.white', '20')};
+    border: ${t('space.50')} solid ${t('colors.white', '20')};
+    color: ${t('colors.white', '60')};
+    cursor: no-drop;
+
+    &:focus {
+      border: ${t('space.50')} solid ${t('colors.white', '20')};
+    }
+
+    &:hover {
+      background-color: ${t('colors.white', '20')};
+      color: ${t('colors.white', '80')};
+    }
+  }
+
   &::picker-icon {
     transition: 0.2s rotate;
   }
@@ -29,6 +66,31 @@ export const Selecter = styled.select`
 
     &::picker-icon {
       rotate: 180deg;
+    }
+  }
+`
+
+export const SelecterWrapper = styled.div`
+  &.loading {
+    position: relative;
+    width: fit-content;
+
+    &::after {
+      content: '';
+      position: absolute;
+      animation: ${slide} 1s linear infinite alternate;
+      animation-timing-function: ease-in-out;
+      width: 5%;
+      height: ${t('space.100')};
+      background: ${t('colors.blue')};
+      bottom: 0;
+      left: 0;
+      border-radius: ${t('radius.100')} ${t('radius.100')} 0 0;
+      box-shadow: 0 -10px 25px 5px ${t('colors.blue')};
+    }
+
+    ${Selecter} {
+      cursor: progress;
     }
   }
 `
@@ -71,4 +133,11 @@ export const Option = styled.option`
     margin-left: auto;
     content: '◉';
   }
+`
+
+export const OptionText = styled.span`
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 250px;
 `

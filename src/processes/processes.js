@@ -1,4 +1,4 @@
-import { createWorkerProcessRequest } from './worker-creator'
+import { createWorkerProcessRequest } from './process-creator'
 
 export const findDOMElement = (tabId, data) => {
   return createWorkerProcessRequest({
@@ -60,5 +60,13 @@ export const clickElement = (tabId, data) => {
     defaultResponse: null,
     tabId,
     data
+  })
+}
+
+export const getFontsAvailable = () => {
+  return createWorkerProcessRequest({
+    type: 'get-fonts-available',
+    defaultResponse: [],
+    data: null
   })
 }

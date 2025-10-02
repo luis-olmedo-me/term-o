@@ -3,8 +3,7 @@ import { ButtonWrapper } from '@src/scripts/sidepanel/components/Button'
 import styled from 'styled-components'
 
 export const SidePanelWrapper = styled.div`
-  border-right: ${t('space.50')} solid ${t('colors.brightBlack')};
-  padding-right: ${t('space.600')};
+  border-right: ${t('space.50')} solid ${t('colors.white')};
   min-width: 200px;
 
   ${ButtonWrapper} {

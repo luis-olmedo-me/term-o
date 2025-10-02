@@ -6,7 +6,7 @@ export const PreferencesWrapper = styled.div`
   color: ${t('colors.foreground')};
   display: flex;
   gap: ${t('space.600')};
-  padding: ${t('space.600')};
+  padding: ${t('space.600')} ${t('space.600')} ${t('space.600')} 0;
   box-sizing: content-box;
 `
 

@@ -1,4 +1,4 @@
-import themer from '@src/libs/themer'
+import { defaultColorTheme } from './themes.constants'
 
 export const configIds = {
   GENERAL: 'general',
@@ -7,7 +7,6 @@ export const configIds = {
 }
 
 export const configInputIds = {
-  FOCUS_PROMPT_ON_CLICK: 'focus-prompt-on-click',
   COPY_ON_SELECTION: 'copy-on-selection',
   SWITCH_TAB_AUTOMATICALLY: 'switch-tab-automatically',
   MAX_LINES_PER_COMMAND: 'max-lines-per-command',
@@ -24,15 +23,6 @@ export const defaultConfigSections = [
     name: 'General',
     description: 'Configure various settings related to the terminal appearance and behavior.',
     inputs: [
-      {
-        id: configInputIds.FOCUS_PROMPT_ON_CLICK,
-        name: 'Focus Prompt on Click',
-        description:
-          'Automatically brings the prompt input field into focus when it is clicked with the mouse. This helps streamline user input by ensuring the prompt is active without needing additional key presses.',
-        type: 'boolean',
-        options: [],
-        value: true
-      },
       {
         id: configInputIds.COPY_ON_SELECTION,
         name: 'Automatic Copy on Selection',
@@ -98,23 +88,28 @@ export const defaultConfigSections = [
         description: 'Prefered theme in color schemes.',
         type: 'theme-select',
         options: [],
-        value: themer.defaultColorName
+        value: defaultColorTheme.name
       },
       {
         id: configInputIds.FONT_FAMILY,
         name: 'Font Family',
         description: 'Specifies the font family used for displaying text in the terminal.',
-        type: 'string',
+        type: 'font-select',
         options: [],
-        value: 'monospace'
+        value: 'Consolas'
       },
       {
         id: configInputIds.FONT_SIZE,
         name: 'Font Size',
         description: 'Defines the size of the font used in the terminal.',
-        type: 'number',
-        options: [],
-        value: 16
+        type: 'select',
+        options: [
+          { id: '12', name: 'Extra-Small' },
+          { id: '14', name: 'Small' },
+          { id: '16', name: 'Normal' },
+          { id: '18', name: 'Large' }
+        ],
+        value: '16'
       }
     ]
   }

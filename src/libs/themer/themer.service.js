@@ -2,9 +2,9 @@ import EventListener from '@src/libs/event-listener'
 
 import { configIds, configInputIds, defaultConfigSections } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
+import { defaultColorTheme, defaultTheme } from '@src/constants/themes.constants'
 import { getConfigValueByInputId, updateConfigValueIn } from '@src/helpers/config.helpers'
 import { getStorageValue, setStorageValue } from '@src/helpers/storage.helpers'
-import { defaultColorTheme, defaultTheme } from './themer.constants'
 
 class Themer extends EventListener {
   constructor(defaultColorTheme, defaultTheme) {
@@ -51,7 +51,7 @@ class Themer extends EventListener {
     for (let [storageKey, { newValue }] of Object.entries(changes)) {
       if (storageKey === storageKeys.COLOR_SETS) {
         this.colorThemes = newValue
-        this.dispatchEvent('themes-update', { theme: this.theme })
+        this.dispatchEvent('themes-update', this)
       }
 
       if (storageKey === storageKeys.CONFIG) {
@@ -60,7 +60,7 @@ class Themer extends EventListener {
 
         if (newTheme && newThemeName !== this.theme.name) {
           this.colorTheme = newTheme
-          this.dispatchEvent('themes-update', { theme: this.theme })
+          this.dispatchEvent('themes-update', this)
         }
       }
     }
@@ -81,7 +81,7 @@ class Themer extends EventListener {
     const newTheme = this.colorThemes.find(theme => theme.name === newThemeName)
 
     if (newTheme) this.colorTheme = newTheme
-    this.dispatchEvent('themes-update', { theme: this.theme })
+    this.dispatchEvent('themes-update', this)
   }
 
   async applyColorTheme(name) {

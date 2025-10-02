@@ -3,7 +3,9 @@ import { useEffect, useState } from 'preact/hooks'
 
 import Input from '@src/components/Input'
 import useConfig from '@src/hooks/useConfig'
+import FontSelect from '../FontSelect'
 import Select from '../Select'
+import Switch from '../Switch'
 import ThemeSelect from '../ThemeSelect'
 
 export const FieldRenderer = ({ value, sectionId, inputId, type, options }) => {
@@ -40,11 +42,10 @@ export const FieldRenderer = ({ value, sectionId, inputId, type, options }) => {
 
     case 'boolean':
       return (
-        <Input
+        <Switch
           type="checkbox"
-          checked={value}
+          value={value}
           onChange={() => changeConfig(sectionId, inputId, !value)}
-          endText={localValue ? 'Enabled' : 'Disabled'}
         />
       )
 
@@ -60,6 +61,14 @@ export const FieldRenderer = ({ value, sectionId, inputId, type, options }) => {
     case 'theme-select':
       return (
         <ThemeSelect
+          value={value}
+          onChange={({ target }) => changeConfig(sectionId, inputId, target.value)}
+        />
+      )
+
+    case 'font-select':
+      return (
+        <FontSelect
           value={value}
           onChange={({ target }) => changeConfig(sectionId, inputId, target.value)}
         />

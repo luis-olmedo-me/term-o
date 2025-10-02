@@ -2,6 +2,7 @@ import * as React from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
 import Input, { inputVariants } from '@src/components/Input'
+import { validate } from '@src/helpers/primitive-validation.helpers'
 import FontSelect from '../FontSelect'
 import Select from '../Select'
 import Switch from '../Switch'
@@ -20,7 +21,6 @@ export const FieldRenderer = ({
 }) => {
   const [localValue, setLocalValue] = useState(value)
   const [errorMessage, setErrorMessage] = useState(null)
-  console.log('💬 ~ errorMessage:', errorMessage)
 
   useEffect(
     function updateLocalValue() {
@@ -31,7 +31,7 @@ export const FieldRenderer = ({
 
   const tryApplyChange = (sectionId, inputId, newValue) => {
     try {
-      validations?.forEach(validation => validation(newValue))
+      validations?.forEach(primitiveValidation => validate(primitiveValidation, newValue))
 
       changeConfig(sectionId, inputId, newValue)
     } catch (error) {
@@ -49,6 +49,7 @@ export const FieldRenderer = ({
           onChange={({ target }) => setLocalValue(target.value)}
           variant={inputVariants.OUTLINED}
           postFix={postFix}
+          errorMessage={errorMessage}
         />
       )
 
@@ -62,6 +63,7 @@ export const FieldRenderer = ({
           onChange={({ target }) => setLocalValue(target.value)}
           variant={inputVariants.OUTLINED}
           postFix={postFix}
+          errorMessage={errorMessage}
         />
       )
 

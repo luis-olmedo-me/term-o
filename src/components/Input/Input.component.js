@@ -16,30 +16,35 @@ export const Input = ({
   type = 'text',
   postFix,
   name,
-  variant
+  variant,
+  errorMessage
 }) => {
   return (
-    <S.InputWrapper aria-disabled={disabled}>
-      {prefix && <S.Prefix>{prefix}</S.Prefix>}
+    <>
+      <S.InputWrapper aria-disabled={disabled}>
+        {prefix && <S.Prefix>{prefix}</S.Prefix>}
 
-      <S.Input
-        ref={inputRef}
-        name={name}
-        spellCheck="false"
-        type={type}
-        value={value}
-        checked={checked}
-        onChange={onChange}
-        onKeyDown={onKeyDown}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        placeholder={placeholder}
-        disabled={disabled}
-        className={variant}
-      />
+        <S.Input
+          ref={inputRef}
+          name={name}
+          spellCheck="false"
+          type={type}
+          value={value}
+          checked={checked}
+          onChange={onChange}
+          onKeyDown={onKeyDown}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          placeholder={placeholder}
+          disabled={disabled}
+          className={variant}
+        />
 
-      {postFix && <S.Postfix>{postFix}</S.Postfix>}
-    </S.InputWrapper>
+        {postFix && <S.Postfix>{postFix}</S.Postfix>}
+      </S.InputWrapper>
+
+      {errorMessage && <span>{errorMessage}</span>}
+    </>
   )
 }
 
@@ -57,5 +62,6 @@ Input.propTypes = {
   disabled: Boolean,
   type: String,
   name: String,
-  variant: String
+  variant: String,
+  errorMessage: String
 }

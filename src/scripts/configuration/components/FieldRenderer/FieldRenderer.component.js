@@ -34,6 +34,7 @@ export const FieldRenderer = ({
       validations.forEach(primitiveValidation => validate(primitiveValidation, newValue))
 
       changeConfig(sectionId, inputId, newValue)
+      setErrorMessage(null)
     } catch (error) {
       setErrorMessage(error)
     }

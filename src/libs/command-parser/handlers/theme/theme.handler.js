@@ -71,7 +71,7 @@ export const handleTHEME = async command => {
       return command.throw(`The theme "${name}" is already applied.`)
     }
 
-    themer.applyColorTheme(name)
+    await themer.applyColorTheme(name)
 
     const update = formatTheme({ name })
 

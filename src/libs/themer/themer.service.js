@@ -1,8 +1,8 @@
 import EventListener from '@src/libs/event-listener'
 
-import { configInputIds, defaultConfigSections } from '@src/constants/config.constants'
+import { configIds, configInputIds, defaultConfigSections } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
-import { getConfigValueByInputId } from '@src/helpers/config.helpers'
+import { getConfigValueByInputId, updateConfigValueIn } from '@src/helpers/config.helpers'
 import { getStorageValue, setStorageValue } from '@src/helpers/storage.helpers'
 import { defaultColorTheme, defaultTheme } from './themer.constants'
 
@@ -54,10 +54,11 @@ class Themer extends EventListener {
         this.dispatchEvent('themes-update', { theme: this.theme })
       }
 
-      if (storageKey === storageKeys.COLOR_SET_NAME) {
-        const newTheme = this.colorThemes.find(theme => theme.name === newValue)
+      if (storageKey === storageKeys.CONFIG) {
+        const newThemeName = getConfigValueByInputId(configInputIds.THEME_NAME, newValue)
+        const newTheme = this.colorThemes.find(theme => theme.name === newThemeName)
 
-        if (newTheme) {
+        if (newTheme && newThemeName !== this.theme.name) {
           this.colorTheme = newTheme
           this.dispatchEvent('themes-update', { theme: this.theme })
         }
@@ -71,11 +72,9 @@ class Themer extends EventListener {
       storageKeys.CONFIG,
       defaultConfigSections
     )
-    console.log('💬 ~ config:', config)
 
     const newThemes = await getStorageValue(storageNamespaces.LOCAL, storageKeys.COLOR_SETS)
     const newThemeName = getConfigValueByInputId(configInputIds.THEME_NAME, config)
-    console.log('💬 ~ newThemeName:', newThemeName)
 
     if (newThemes) this.colorThemes = newThemes
 
@@ -85,11 +84,23 @@ class Themer extends EventListener {
     this.dispatchEvent('themes-update', { theme: this.theme })
   }
 
-  applyColorTheme(name) {
+  async applyColorTheme(name) {
     const newTheme = this.colorThemes.find(theme => theme.name === name)
     if (newTheme) this.colorTheme = newTheme
 
-    return setStorageValue(storageNamespaces.LOCAL, storageKeys.COLOR_SET_NAME, name)
+    const config = await getStorageValue(
+      storageNamespaces.LOCAL,
+      storageKeys.CONFIG,
+      defaultConfigSections
+    )
+    const newConfig = updateConfigValueIn(
+      config,
+      configIds.APPEARENCE,
+      configInputIds.THEME_NAME,
+      name
+    )
+
+    return setStorageValue(storageNamespaces.LOCAL, storageKeys.CONFIG, newConfig)
   }
 
   addColorTheme(newTheme) {

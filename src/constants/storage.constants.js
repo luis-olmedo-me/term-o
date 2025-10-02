@@ -5,8 +5,7 @@ export const storageKeys = {
   SCRIPTS: 'scripts',
   HISTORY: 'history',
   PROMPT_HISTORY: 'prompt-history',
-  COLOR_SETS: 'color-sets',
-  COLOR_SET_NAME: 'color-set-name'
+  COLOR_SETS: 'color-sets'
 }
 
 export const storageNamespaces = {

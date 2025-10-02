@@ -2,16 +2,22 @@ import * as React from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
 import Input, { inputVariants } from '@src/components/Input'
-import useConfig from '@src/hooks/useConfig'
 import FontSelect from '../FontSelect'
 import Select from '../Select'
 import Switch from '../Switch'
 import ThemeSelect from '../ThemeSelect'
 
-export const FieldRenderer = ({ value, sectionId, inputId, type, options, name, postFix }) => {
+export const FieldRenderer = ({
+  value,
+  sectionId,
+  inputId,
+  type,
+  options,
+  name,
+  postFix,
+  changeConfig
+}) => {
   const [localValue, setLocalValue] = useState(value)
-
-  const { changeConfig } = useConfig()
 
   useEffect(
     function updateLocalValue() {
@@ -96,5 +102,6 @@ FieldRenderer.propTypes = {
   type: String,
   name: String,
   postFix: String,
-  options: Array
+  options: Array,
+  changeConfig: Function
 }

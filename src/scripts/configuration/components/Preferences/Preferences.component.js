@@ -10,7 +10,7 @@ import { sidePanelOptions } from './Preferences.constants'
 import * as S from './Preferences.styles'
 
 export const Preferences = () => {
-  const { config } = useConfig()
+  const { config, changeConfig } = useConfig()
   const [selectedSectionId, setSelectedSectionId] = useState(configIds.GENERAL)
 
   const sectionSelected = config.find(({ id }) => id === selectedSectionId)
@@ -45,6 +45,7 @@ export const Preferences = () => {
                   options={input.options}
                   postFix={input.postFix}
                   name={`${sectionSelected.id}-${input.id}`}
+                  changeConfig={changeConfig}
                 />
               </S.ConfigInputWrapper>
             )

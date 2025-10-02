@@ -2,9 +2,9 @@ import { theme as t } from '@src/libs/themer'
 import styled from 'styled-components'
 
 export const ButtonWrapper = styled.button`
-  width: ${({ fullWidth }) => (fullWidth ? '100%' : 'fit-content')};
-  height: ${({ fullHeight }) => (fullHeight ? '100%' : 'fit-content')};
-  color: ${({ selected }) => (selected ? t('colors.green') : t('colors.foreground'))};
+  width: fit-content;
+  height: fit-content;
+  color: ${t('colors.foreground')};
   background-color: ${t('colors.background')};
   border: none;
   font-weight: bold;
@@ -19,6 +19,16 @@ export const ButtonWrapper = styled.button`
   transition:
     background-color 0.1s ease-in-out,
     color 0.1s ease-in-out;
+
+  &.full-width {
+    width: 100%;
+  }
+  &.full-height {
+    height: 100%;
+  }
+  &.selected {
+    color: ${t('colors.green')};
+  }
 
   &:active,
   &:focus,

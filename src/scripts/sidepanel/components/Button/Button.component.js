@@ -5,9 +5,12 @@ export const Button = ({ text, onClick, fullWidth, fullHeight, Icon, selected })
   return (
     <S.ButtonWrapper
       onClick={onClick}
-      fullWidth={fullWidth}
-      fullHeight={fullHeight}
       selected={selected}
+      className={`
+        ${fullWidth ? 'full-width' : null}
+        ${fullHeight ? 'full-height' : null}
+        ${selected ? 'selected' : null}
+      `}
     >
       {Icon && <Icon />}
       {text}

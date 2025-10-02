@@ -2,9 +2,7 @@ import * as React from 'preact'
 import * as S from './Select.styles'
 
 export const Select = ({ options, value, onChange }) => {
-  console.log('💬 ~ options:', options)
   const optionsDefined = typeof options === 'function' ? options() : options
-  console.log('💬 ~ optionsDefined:', optionsDefined)
 
   return (
     <S.Selecter value={value} onChange={onChange}>

@@ -17,14 +17,17 @@ export const useConfig = props => {
     return configSections.map(section => {
       const lsSection = config.find(lsSection => lsSection.id === section.id)
 
-      return lsSection
-        ? {
-            ...lsSection,
-            inputs: section.inputs.map(input => {
-              return lsSection.inputs.find(lsInput => lsInput.id === input.id) || input
-            })
+      return {
+        ...lsSection,
+        inputs: section.inputs.map(input => {
+          const lsInput = lsSection.inputs.find(lsInput => lsInput.id === input.id)
+
+          return {
+            ...input,
+            ...lsInput
           }
-        : section
+        })
+      }
     })
   }, [config])
 

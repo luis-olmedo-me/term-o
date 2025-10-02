@@ -30,12 +30,12 @@ export const Preferences = () => {
 
           {sectionSelected.inputs.map(input => {
             return (
-              <S.InputsWrapper key={input.id}>
-                <S.InputTitle>
+              <S.ConfigInputWrapper key={input.id}>
+                <S.ConfigInputTitle>
                   {input.name} [{input.type}]
-                </S.InputTitle>
+                </S.ConfigInputTitle>
 
-                <S.Description>{input.description}</S.Description>
+                <S.ConfigInputDescription>{input.description}</S.ConfigInputDescription>
 
                 <FieldRenderer
                   value={input.value}
@@ -45,7 +45,7 @@ export const Preferences = () => {
                   options={input.options}
                   name={`${sectionSelected.id}-${input.id}`}
                 />
-              </S.InputsWrapper>
+              </S.ConfigInputWrapper>
             )
           })}
         </S.SectionWrapper>

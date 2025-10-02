@@ -31,7 +31,7 @@ export const SectionDescription = styled.p`
   font-size: ${t('fontSize.50')};
 `
 
-export const InputsWrapper = styled.div`
+export const ConfigInputWrapper = styled.div`
   margin: ${t('space.900')} 0 0 ${t('space.900')};
   padding-bottom: ${t('space.900')};
   border-bottom: ${t('space.50')} solid ${t('colors.white')};
@@ -63,13 +63,13 @@ export const InputsWrapper = styled.div`
   }
 `
 
-export const InputTitle = styled.h4`
+export const ConfigInputTitle = styled.h4`
   margin: ${t('space.400')} 0;
   font-size: ${t('fontSize.50')};
   font-weight: bold;
 `
 
-export const Description = styled.p`
+export const ConfigInputDescription = styled.p`
   margin: ${t('space.400')} 0;
   font-size: ${t('fontSize.50')};
   font-style: italic;

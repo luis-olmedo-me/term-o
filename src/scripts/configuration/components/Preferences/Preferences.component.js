@@ -1,12 +1,15 @@
 import * as React from 'preact'
 import { useState } from 'preact/hooks'
 
-import useConfig, { configIds, configSections } from '@src/hooks/useConfig'
+import useConfig, { configIds, defaultConfigSections } from '@src/hooks/useConfig'
 import FieldRenderer from '../FieldRenderer'
 import SidePanel from '../SidePanel'
 import * as S from './Preferences.styles'
 
-const sidePanelOptions = configSections.map(section => ({ id: section.id, name: section.name }))
+const sidePanelOptions = defaultConfigSections.map(section => ({
+  id: section.id,
+  name: section.name
+}))
 
 export const Preferences = () => {
   const { config } = useConfig()

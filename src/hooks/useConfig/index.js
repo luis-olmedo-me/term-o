@@ -3,4 +3,4 @@ import { useConfig } from './useConfig.hook'
 
 export default useConfig
 
-export { configIds, configInputIds, defaultConfigSections as configSections }
+export { configIds, configInputIds, defaultConfigSections }

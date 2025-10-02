@@ -8,7 +8,7 @@ import Select from '../Select'
 import Switch from '../Switch'
 import ThemeSelect from '../ThemeSelect'
 
-export const FieldRenderer = ({ value, sectionId, inputId, type, options, name }) => {
+export const FieldRenderer = ({ value, sectionId, inputId, type, options, name, postFix }) => {
   const [localValue, setLocalValue] = useState(value)
 
   const { changeConfig } = useConfig()
@@ -29,6 +29,7 @@ export const FieldRenderer = ({ value, sectionId, inputId, type, options, name }
           onBlur={({ target }) => changeConfig(sectionId, inputId, target.value)}
           onChange={({ target }) => setLocalValue(target.value)}
           variant={inputVariants.OUTLINED}
+          postFix={postFix}
         />
       )
 
@@ -41,7 +42,7 @@ export const FieldRenderer = ({ value, sectionId, inputId, type, options, name }
           onBlur={({ target }) => changeConfig(sectionId, inputId, Number(target.value))}
           onChange={({ target }) => setLocalValue(target.value)}
           variant={inputVariants.OUTLINED}
-          endText={'px'}
+          postFix={postFix}
         />
       )
 
@@ -94,5 +95,6 @@ FieldRenderer.propTypes = {
   inputId: String,
   type: String,
   name: String,
+  postFix: String,
   options: Array
 }

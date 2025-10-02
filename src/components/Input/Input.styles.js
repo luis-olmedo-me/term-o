@@ -15,6 +15,7 @@ export const Input = styled.input`
   background-color: ${t('colors.background')};
   color: ${t('colors.foreground')};
   letter-spacing: ${t('space.50')};
+  cursor: text;
 
   &:active,
   &:focus,
@@ -38,9 +39,13 @@ export const Input = styled.input`
   &.${inputVariants.OUTLINED} {
     border: ${t('space.50')} solid ${t('colors.white', '40')};
     background-color: ${t('colors.white', '40')};
-    border-radius: ${t('radius.200')};
+    border-radius: ${t('radius.200')} 0 0 ${t('radius.200')};
     padding-left: ${t('space.200')};
     transition: border-color 0.1s ease-in-out;
+
+    &:last-child {
+      border-radius: ${t('radius.200')};
+    }
 
     &:focus {
       border: ${t('space.50')} solid ${t('colors.green')};
@@ -58,7 +63,6 @@ export const InputWrapper = styled.div`
   align-items: center;
   background-color: ${t('colors.background')};
   color: ${t('colors.foreground')};
-  cursor: text;
 
   &[aria-disabled='true'],
   &[aria-disabled='true'] ${Input}:disabled {
@@ -78,8 +82,11 @@ export const Postfix = styled.span`
   height: -webkit-fill-available;
   display: flex;
   align-items: center;
-  border: ${t('space.50')} solid ${t('colors.brightBlack', '40')};
-  background-color: ${t('colors.brightBlack', '40')};
+  border: solid ${t('colors.white', '20')};
+  border-width: ${t('space.50')} ${t('space.50')} ${t('space.50')} 0;
+  background-color: ${t('colors.white', '20')};
   color: ${t('colors.foreground')};
   border-radius: 0 ${t('space.200')} ${t('space.200')} 0;
+  pointer-events: unset;
+  cursor: help;
 `

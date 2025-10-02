@@ -14,7 +14,7 @@ export const Input = ({
   inputRef,
   disabled,
   type = 'text',
-  endText,
+  postFix,
   name,
   variant
 }) => {
@@ -38,7 +38,7 @@ export const Input = ({
         className={variant}
       />
 
-      {endText && <S.Postfix>{endText}</S.Postfix>}
+      {postFix && <S.Postfix>{postFix}</S.Postfix>}
     </S.InputWrapper>
   )
 }
@@ -52,10 +52,10 @@ Input.propTypes = {
   value: String,
   checked: Boolean,
   prefix: String,
+  postFix: String,
   inputRef: Object,
   disabled: Boolean,
   type: String,
-  endText: String,
   name: String,
   variant: String
 }

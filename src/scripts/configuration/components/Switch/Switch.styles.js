@@ -21,6 +21,7 @@ export const SimulatedSwitch = styled.div`
     bottom: ${t('space.100')};
     left: ${t('space.100')};
     border-radius: ${t('radius.200')};
+    cursor: pointer;
     transition:
       background-color 0.1s ease-in-out,
       color 0.1s ease-in-out,
@@ -44,6 +45,20 @@ export const Input = styled.input`
   height: 100%;
   opacity: 0;
   cursor: pointer;
+  z-index: 1;
+
+  &:hover + ${SimulatedSwitch}::after {
+    background-color: ${t('colors.foreground', '60')};
+  }
+  &:hover + ${SimulatedSwitch}.selected::after {
+    background-color: ${t('colors.foreground')};
+  }
+  &:hover + ${SimulatedSwitch} {
+    background-color: ${t('colors.green', '60')};
+  }
+  &:hover + ${SimulatedSwitch}.selected {
+    background-color: ${t('colors.green')};
+  }
 
   &:active,
   &:focus,

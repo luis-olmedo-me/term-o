@@ -41,6 +41,7 @@ export const FieldRenderer = ({ value, sectionId, inputId, type, options, name }
           onBlur={({ target }) => changeConfig(sectionId, inputId, Number(target.value))}
           onChange={({ target }) => setLocalValue(target.value)}
           variant={inputVariants.OUTLINED}
+          endText={'px'}
         />
       )
 

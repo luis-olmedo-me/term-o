@@ -27,6 +27,10 @@ export const Input = styled.input`
     background-color: ${t('colors.selectionBackground')};
   }
 
+  &[type='number'] {
+    width: 100px;
+  }
+
   &[type='number']::-webkit-inner-spin-button {
     -webkit-appearance: none;
   }
@@ -52,7 +56,6 @@ export const Input = styled.input`
 export const InputWrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: ${t('space.400')};
   background-color: ${t('colors.background')};
   color: ${t('colors.foreground')};
   cursor: text;
@@ -68,4 +71,15 @@ export const Prefix = styled.span`
     color: ${t('colors.green')};
     background-color: ${t('colors.selectionBackground')};
   }
+`
+
+export const Postfix = styled.span`
+  padding-inline: ${t('space.400')};
+  height: -webkit-fill-available;
+  display: flex;
+  align-items: center;
+  border: ${t('space.50')} solid ${t('colors.brightBlack', '40')};
+  background-color: ${t('colors.brightBlack', '40')};
+  color: ${t('colors.foreground')};
+  border-radius: 0 ${t('space.200')} ${t('space.200')} 0;
 `

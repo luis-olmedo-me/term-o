@@ -38,7 +38,7 @@ export const Input = ({
         className={variant}
       />
 
-      {endText && <span>{endText}</span>}
+      {endText && <S.Postfix>{endText}</S.Postfix>}
     </S.InputWrapper>
   )
 }

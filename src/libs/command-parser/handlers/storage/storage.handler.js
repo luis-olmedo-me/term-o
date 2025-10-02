@@ -1,4 +1,4 @@
-import { getStorage, setStorage } from '@src/proccesses/workers'
+import { getStorage, setStorage } from '@src/processes/workers'
 import {
   displayHelp,
   formatStorageAsString,

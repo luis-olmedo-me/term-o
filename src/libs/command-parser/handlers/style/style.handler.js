@@ -1,4 +1,4 @@
-import { applyElementStyles, getElementStyles } from '@src/proccesses/workers'
+import { applyElementStyles, getElementStyles } from '@src/processes/workers'
 import { displayHelp, formatRule } from '../handlers.helpers'
 
 export const handleSTYLES = async command => {

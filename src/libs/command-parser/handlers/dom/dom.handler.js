@@ -1,4 +1,4 @@
-import { clickElement, findDOMElement, getDOMElements } from '@src/proccesses/workers'
+import { clickElement, findDOMElement, getDOMElements } from '@src/processes/workers'
 import {
   displayHelp,
   formatDOMEvent,

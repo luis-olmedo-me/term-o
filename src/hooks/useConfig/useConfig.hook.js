@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from 'preact/hooks'
 
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
+import { getConfigValueByInputId } from '@src/helpers/config.helpers'
 import useStorage from '@src/hooks/useStorage'
 import { configSections } from './useConfig.constants'
 
@@ -32,15 +33,7 @@ export const useConfig = props => {
   }, [config])
 
   const getConfigById = useCallback(
-    inputId => {
-      for (const section of validatedConfig) {
-        for (const input of section.inputs) {
-          if (input.id === inputId) return input.value
-        }
-      }
-
-      return null
-    },
+    inputId => getConfigValueByInputId(inputId, validatedConfig),
     [validatedConfig]
   )
 

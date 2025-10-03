@@ -1,9 +1,3 @@
-export const ThemeTypes = {
-  SYSTEM: 'system',
-  DARK: 'dark',
-  LIGHT: 'light'
-}
-
 export const defaultColorTheme = {
   name: 'Default Dark Mode',
   background: '#000000',

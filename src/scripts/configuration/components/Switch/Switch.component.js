@@ -14,7 +14,7 @@ export const Switch = ({
 }) => {
   return (
     <S.SwitchWrapper aria-disabled={disabled}>
-      <S.Input
+      <S.SwitchInput
         name={name}
         ref={inputRef}
         checked={value}

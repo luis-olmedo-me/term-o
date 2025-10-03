@@ -1,6 +1,7 @@
 import * as React from 'preact'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 
+import Button, { buttonVariants } from '@src/components/Button'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
@@ -10,7 +11,6 @@ import { Gear } from '@src/icons/Gear.component'
 import commandParser from '@src/libs/command-parser'
 import { getCurrentTab } from '@src/libs/command-parser/handlers/tabs/tabs.helpers'
 import CommandsViewer from '@src/scripts/sidepanel/modules/CommandsViewer'
-import Button from '../../components/Button'
 import { copyText, getSelectedText } from './Terminal.helpers'
 import * as S from './Terminal.styles'
 
@@ -35,7 +35,7 @@ export const Terminal = () => {
       configInputIds.COPY_ON_SELECTION,
       configInputIds.SWITCH_TAB_AUTOMATICALLY,
       configInputIds.MAX_LINES_PER_COMMAND,
-      configInputIds.STATUS
+      configInputIds.CONTEXT
     ]
   })
   const [canCopyOnSelection, switchTabAutomatically, maxLinesPerCommand, status] = listening
@@ -120,7 +120,7 @@ export const Terminal = () => {
   return (
     <S.TerminalWrapper onMouseUp={handleMouseUp}>
       <S.TerminalHeader>
-        <Button onClick={openConfiguration} Icon={Gear} />
+        <Button onClick={openConfiguration} Icon={Gear} variant={buttonVariants.GHOST} />
       </S.TerminalHeader>
 
       <CommandsViewer

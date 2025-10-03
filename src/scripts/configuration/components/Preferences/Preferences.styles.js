@@ -1,4 +1,3 @@
-import { InputWrapper } from '@src/components/Input'
 import { theme as t } from '@src/libs/themer'
 import styled from 'styled-components'
 
@@ -36,9 +35,6 @@ export const ConfigInputWrapper = styled.div`
   padding-bottom: ${t('space.900')};
   border-bottom: ${t('space.50')} solid ${t('colors.white')};
 
-  ${InputWrapper} {
-  }
-
   &:last-child {
     border-bottom: none;
   }
@@ -54,4 +50,7 @@ export const ConfigInputDescription = styled.p`
   margin: ${t('space.400')} 0;
   font-size: ${t('fontSize.50')};
   font-style: italic;
+`
+export const ConfigInputField = styled.div`
+  max-width: 30rem;
 `

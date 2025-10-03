@@ -36,7 +36,7 @@ export const SimulatedSwitch = styled.div`
   }
 `
 
-export const Input = styled.input`
+export const SwitchInput = styled.input`
   display: block;
   position: absolute;
   bottom: 0;
@@ -46,6 +46,7 @@ export const Input = styled.input`
   opacity: 0;
   cursor: pointer;
   z-index: 1;
+  margin: 0;
 
   &:hover + ${SimulatedSwitch}::after {
     background-color: ${t('colors.white', 'aa')};
@@ -80,20 +81,7 @@ export const SwitchWrapper = styled.div`
   color: ${t('colors.foreground')};
   cursor: text;
   position: relative;
-
-  &[aria-disabled='true'],
-  &[aria-disabled='true'] ${Input}:disabled {
-    cursor: text;
-  }
-
-  &:has(${Input}[type="checkbox"]) {
-    width: fit-content;
-  }
-
-  input[type='checkbox'] {
-    margin: 0;
-    accent-color: ${t('colors.brightGreen')};
-  }
+  width: fit-content;
 `
 
 export const Prefix = styled.span`

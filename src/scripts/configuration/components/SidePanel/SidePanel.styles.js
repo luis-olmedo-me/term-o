@@ -1,5 +1,5 @@
+import { ButtonWrapper } from '@src/components/Button'
 import { theme as t } from '@src/libs/themer'
-import { ButtonWrapper } from '@src/scripts/sidepanel/components/Button'
 import styled from 'styled-components'
 
 export const SidePanelWrapper = styled.div`

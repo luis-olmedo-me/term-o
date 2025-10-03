@@ -13,21 +13,19 @@ export const Input = ({
   prefix,
   inputRef,
   disabled,
-  type = 'text',
+  type,
   postFix,
   name,
   variant,
-  errorMessage,
-  fullWidth
+  fullWidth,
+  errorMessage = null
 }) => {
   return (
     <>
       <S.InputWrapper
         aria-disabled={disabled}
-        className={`
-          ${errorMessage ? 'error' : null}
-          ${!fullWidth ? 'fit-content' : null}
-        `}
+        aria-error={typeof errorMessage === 'string'}
+        aria-fit-content={!fullWidth}
       >
         {prefix && <S.Prefix>{prefix}</S.Prefix>}
 

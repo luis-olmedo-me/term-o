@@ -1,7 +1,7 @@
 import * as React from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
-import Input, { inputVariants } from '@src/components/Input'
+import Input, { inputTypes, inputVariants } from '@src/components/Input'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 import useConfig from '@src/hooks/useConfig'
@@ -14,12 +14,12 @@ export const Prompt = ({
   onFocus,
   onBlur,
   inputRef,
-  disabled,
   defaultValue,
   context,
-  loading,
-  className,
-  name
+  name,
+  disabled = false,
+  loading = false,
+  className = null
 }) => {
   const [value, setValue] = useState(defaultValue || '')
   const [historialIndex, setHistorialIndex] = useState(0)
@@ -30,7 +30,7 @@ export const Prompt = ({
   })
 
   const { listening } = useConfig({
-    get: [configInputIds.HISTORIAL_SIZE, configInputIds.STATUS]
+    get: [configInputIds.HISTORIAL_SIZE, configInputIds.CONTEXT]
   })
   const [hsitorialSize] = listening
 
@@ -87,7 +87,7 @@ export const Prompt = ({
   const prefix = historialIndex || '$'
 
   return (
-    <S.PromptWrapper className={`${className} ${loading ? 'loading' : null}`}>
+    <S.PromptWrapper aria-loading={loading} className={className}>
       <S.Line>
         <ColoredText value={context} />
       </S.Line>
@@ -107,7 +107,8 @@ export const Prompt = ({
           prefix={prefix}
           name={name}
           variant={inputVariants.GHOST}
-          fullWidth={true}
+          type={inputTypes.TEXT}
+          fullWidth
         />
       )}
     </S.PromptWrapper>

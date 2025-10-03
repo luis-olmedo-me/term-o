@@ -1,7 +1,7 @@
 import * as React from 'preact'
 
+import Button, { buttonVariants } from '@src/components/Button'
 import { Logo } from '@src/icons/Logo.component'
-import Button from '@src/scripts/sidepanel/components/Button'
 import * as S from './SidePanel.styles'
 
 export const SidePanel = ({ options, selectedOptionId, onChange }) => {
@@ -17,6 +17,7 @@ export const SidePanel = ({ options, selectedOptionId, onChange }) => {
             selected={selectedOptionId == option.id}
             onClick={() => onChange(option.id)}
             fullWidth
+            variant={buttonVariants.GHOST}
           />
         )
       })}

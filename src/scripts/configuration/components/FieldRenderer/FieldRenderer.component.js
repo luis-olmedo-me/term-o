@@ -1,7 +1,8 @@
 import * as React from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
-import Input, { inputVariants } from '@src/components/Input'
+import Button, { buttonVariants } from '@src/components/Button'
+import Input, { inputTypes, inputVariants } from '@src/components/Input'
 import { validate } from '@src/helpers/primitive-validation.helpers'
 import FontSelect from '../FontSelect'
 import Select from '../Select'
@@ -17,7 +18,8 @@ export const FieldRenderer = ({
   name,
   postFix,
   changeConfig,
-  validations
+  validations,
+  handleClickInButtons
 }) => {
   const [localValue, setLocalValue] = useState(value)
   const [errorMessage, setErrorMessage] = useState(null)
@@ -49,8 +51,10 @@ export const FieldRenderer = ({
           onBlur={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
           onChange={({ target }) => setLocalValue(target.value)}
           variant={inputVariants.OUTLINED}
+          type={inputTypes.TEXT}
           postFix={postFix}
           errorMessage={errorMessage}
+          fullWidth
         />
       )
 
@@ -58,11 +62,11 @@ export const FieldRenderer = ({
       return (
         <Input
           name={name}
-          type="number"
           value={localValue}
           onBlur={({ target }) => tryApplyChange(sectionId, inputId, Number(target.value))}
           onChange={({ target }) => setLocalValue(target.value)}
           variant={inputVariants.OUTLINED}
+          type={inputTypes.NUMBER}
           postFix={postFix}
           errorMessage={errorMessage}
         />
@@ -106,6 +110,15 @@ export const FieldRenderer = ({
         />
       )
 
+    case 'button':
+      return (
+        <Button
+          text={value}
+          onClick={() => handleClickInButtons(sectionId, inputId)}
+          variant={buttonVariants.OUTLINED_DANGER}
+        />
+      )
+
     default:
       return null
   }
@@ -120,5 +133,6 @@ FieldRenderer.propTypes = {
   postFix: String,
   options: Array,
   validations: Array,
-  changeConfig: Function
+  changeConfig: Function,
+  handleClickInButtons: Function
 }

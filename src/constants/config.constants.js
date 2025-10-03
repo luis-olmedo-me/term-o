@@ -1,9 +1,9 @@
 import { defaultColorTheme } from './themes.constants'
 
 export const configIds = {
-  GENERAL: 'general',
-  PROMPT: 'prompt',
-  APPEARENCE: 'appearence'
+  FUNCTIONALITY: 'general',
+  APPEARENCE: 'appearence',
+  DATA: 'data'
 }
 
 export const configInputIds = {
@@ -11,23 +11,23 @@ export const configInputIds = {
   SWITCH_TAB_AUTOMATICALLY: 'switch-tab-automatically',
   MAX_LINES_PER_COMMAND: 'max-lines-per-command',
   HISTORIAL_SIZE: 'historial-size',
-  STATUS: 'status',
+  CONTEXT: 'status',
   FONT_FAMILY: 'font-family',
   FONT_SIZE: 'font-size',
-  THEME_NAME: 'theme-name'
+  THEME_NAME: 'theme-name',
+  RESET_DATA: 'reset-data'
 }
 
 export const defaultConfigSections = [
   {
-    id: configIds.GENERAL,
-    name: 'General',
-    description: 'Configure various settings related to the terminal appearance and behavior.',
+    id: configIds.FUNCTIONALITY,
+    name: 'Functionality',
+    description: 'Adjust how the terminal behaves and interacts with the browser.',
     inputs: [
       {
         id: configInputIds.COPY_ON_SELECTION,
-        name: 'Automatic Copy on Selection',
-        description:
-          'Automatically copies text to the clipboard when it is selected using the mouse.',
+        name: 'Auto-copy selected text',
+        description: 'Automatically copy highlighted text to the clipboard.',
         type: 'boolean',
         postFix: null,
         options: [],
@@ -36,9 +36,9 @@ export const defaultConfigSections = [
       },
       {
         id: configInputIds.SWITCH_TAB_AUTOMATICALLY,
-        name: 'Switch Tab Automatically',
+        name: 'Sync terminal tab with UI tab change',
         description:
-          'Automatically switches to a new tab when it is created or activated. This setting improves workflow efficiency by ensuring that the user is always working in the current tab.',
+          'When switching or opening tabs in the browser, the terminal pointer updates to follow the active tab.',
         type: 'boolean',
         postFix: null,
         options: [],
@@ -47,9 +47,9 @@ export const defaultConfigSections = [
       },
       {
         id: configInputIds.MAX_LINES_PER_COMMAND,
-        name: 'Maximum Lines per Command',
+        name: 'Max visible lines in terminal',
         description:
-          'Sets the maximum number of lines that a single command can output before scrolling begins.',
+          'Define how many lines are displayed in the terminal before older ones are trimmed.',
         type: 'number',
         postFix: 'px',
         options: [],
@@ -58,27 +58,19 @@ export const defaultConfigSections = [
       },
       {
         id: configInputIds.HISTORIAL_SIZE,
-        name: 'Command History Size',
-        description: 'Defines the number of previous commands to be stored in the command history.',
+        name: 'Max command history size',
+        description: 'Define how many commands will be remembered.',
         type: 'number',
         postFix: 'px',
         options: [],
         validations: [['is-between', 0, 1000]],
         value: 40
-      }
-    ]
-  },
-  {
-    id: configIds.PROMPT,
-    name: 'Prompt',
-    description:
-      'Adjust settings related to the command prompt appearance and information display.',
-    inputs: [
+      },
       {
-        id: configInputIds.STATUS,
-        name: 'Prompt Status Label',
+        id: configInputIds.CONTEXT,
+        name: 'Prompt Context',
         description:
-          'Text displayed before the prompt input field, typically used to show dynamic information or context.',
+          'Define a custom text to be displayed in the terminal prompt as context information.',
         type: 'string',
         postFix: null,
         options: [],
@@ -126,6 +118,23 @@ export const defaultConfigSections = [
         ],
         validations: [],
         value: '16'
+      }
+    ]
+  },
+  {
+    id: configIds.DATA,
+    name: 'Data',
+    description: 'Manage storage and configuration backups.',
+    inputs: [
+      {
+        id: configInputIds.RESET_DATA,
+        name: 'Restore factory defaults',
+        description: 'Reset all settings to their original factory values.',
+        type: 'button',
+        postFix: null,
+        options: [],
+        validations: [],
+        value: 'Reset'
       }
     ]
   }

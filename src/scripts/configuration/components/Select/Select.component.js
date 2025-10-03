@@ -5,7 +5,7 @@ export const Select = ({ options, value, onChange, name, loading = false }) => {
   const optionsDefined = typeof options === 'function' ? options() : options
 
   return (
-    <S.SelecterWrapper className={loading ? 'loading' : null}>
+    <S.SelecterWrapper aria-loading={loading}>
       <S.Selecter value={value} onChange={onChange} disabled={loading} name={name}>
         <button>
           <selectedcontent></selectedcontent>

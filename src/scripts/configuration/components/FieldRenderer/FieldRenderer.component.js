@@ -4,6 +4,7 @@ import { useEffect, useState } from 'preact/hooks'
 import Button, { buttonVariants } from '@src/components/Button'
 import Input, { inputTypes, inputVariants } from '@src/components/Input'
 import { validate } from '@src/helpers/primitive-validation.helpers'
+import ColorSelect from '../ColorSelect'
 import FontSelect from '../FontSelect'
 import Select from '../Select'
 import Switch from '../Switch'
@@ -105,6 +106,16 @@ export const FieldRenderer = ({
       return (
         <FontSelect
           name={name}
+          value={value}
+          onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
+        />
+      )
+
+    case 'color-select':
+      return (
+        <ColorSelect
+          name={name}
+          options={options}
           value={value}
           onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
         />

@@ -99,7 +99,7 @@ export const defaultConfigSections = [
         id: configInputIds.COLOR_ACCENT,
         name: 'Accent Color',
         description: 'Select the primary accent color used in the interface.',
-        type: 'select',
+        type: 'color-select',
         postFix: null,
         options: [{ id: 'red', name: 'Red' }],
         validations: [],

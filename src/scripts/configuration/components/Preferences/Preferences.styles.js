@@ -51,3 +51,6 @@ export const ConfigInputDescription = styled.p`
   font-size: ${t('fontSize.50')};
   font-style: italic;
 `
+export const ConfigInputField = styled.div`
+  max-width: 30rem;
+`

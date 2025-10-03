@@ -14,12 +14,12 @@ export const Prompt = ({
   onFocus,
   onBlur,
   inputRef,
-  disabled,
   defaultValue,
   context,
-  loading,
-  className,
-  name
+  name,
+  disabled = false,
+  loading = false,
+  className = null
 }) => {
   const [value, setValue] = useState(defaultValue || '')
   const [historialIndex, setHistorialIndex] = useState(0)
@@ -87,7 +87,7 @@ export const Prompt = ({
   const prefix = historialIndex || '$'
 
   return (
-    <S.PromptWrapper className={`${className} ${loading ? 'loading' : null}`}>
+    <S.PromptWrapper aria-loading={loading} className={className}>
       <S.Line>
         <ColoredText value={context} />
       </S.Line>

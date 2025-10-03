@@ -58,7 +58,7 @@ export const Selecter = styled.select`
 `
 
 export const SelecterWrapper = styled.div`
-  &.loading {
+  &[aria-loading='true'] {
     width: fit-content;
 
     ${Selecter} {

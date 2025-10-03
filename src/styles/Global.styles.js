@@ -1,6 +1,6 @@
 import { theme as t } from '@src/libs/themer'
 import { createGlobalStyle } from 'styled-components'
-import { slide } from './animations.styles'
+import { slide } from './Animations.styles'
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -33,7 +33,7 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
-  &.loading {
+  &[aria-loading='true'] {
     position: relative;
 
     &::after {

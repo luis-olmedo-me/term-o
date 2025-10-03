@@ -29,7 +29,13 @@ export const ThemeSelect = ({ value, onChange, name }) => {
   }, [])
 
   return (
-    <Select loading={isLoading} options={options} value={value} onChange={onChange} name={name} />
+    <Select
+      aria-loading={isLoading}
+      options={options}
+      value={value}
+      onChange={onChange}
+      name={name}
+    />
   )
 }
 

@@ -1,4 +1,3 @@
-import { InputWrapper } from '@src/components/Input'
 import { theme as t } from '@src/libs/themer'
 import styled from 'styled-components'
 
@@ -35,9 +34,6 @@ export const ConfigInputWrapper = styled.div`
   margin: ${t('space.900')} 0 0 ${t('space.900')};
   padding-bottom: ${t('space.900')};
   border-bottom: ${t('space.50')} solid ${t('colors.white')};
-
-  ${InputWrapper} {
-  }
 
   &:last-child {
     border-bottom: none;

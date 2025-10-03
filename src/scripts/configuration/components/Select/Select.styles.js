@@ -14,6 +14,12 @@ export const Selecter = styled.select`
   cursor: pointer;
   outline: none;
 
+  & .selected-content {
+    display: flex;
+    gap: ${t('space.250')};
+    align-items: center;
+  }
+
   &:focus {
     border: ${t('space.50')} solid ${t('colors.green')};
   }

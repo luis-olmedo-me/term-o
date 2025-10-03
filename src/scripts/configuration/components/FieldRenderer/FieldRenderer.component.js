@@ -51,6 +51,7 @@ export const FieldRenderer = ({
           variant={inputVariants.OUTLINED}
           postFix={postFix}
           errorMessage={errorMessage}
+          fullWidth={true}
         />
       )
 
@@ -65,6 +66,7 @@ export const FieldRenderer = ({
           variant={inputVariants.OUTLINED}
           postFix={postFix}
           errorMessage={errorMessage}
+          fullWidth={true}
         />
       )
 

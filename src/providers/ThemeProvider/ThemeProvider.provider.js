@@ -1,6 +1,7 @@
 import * as React from 'preact'
 
 import { configInputIds } from '@src/constants/config.constants'
+import { toTitleCase } from '@src/helpers/string.helpers'
 import useConfig from '@src/hooks/useConfig'
 import themer from '@src/libs/themer'
 import { useEffect, useState } from 'preact/hooks'
@@ -11,9 +12,11 @@ export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(themer.theme)
   const [isReady, setIsReady] = useState(false)
 
-  const { listening } = useConfig({ get: [configInputIds.FONT_SIZE, configInputIds.FONT_FAMILY] })
+  const { listening } = useConfig({
+    get: [configInputIds.FONT_SIZE, configInputIds.FONT_FAMILY, configInputIds.COLOR_ACCENT]
+  })
 
-  const [fontSize, fontFamily] = listening
+  const [fontSize, fontFamily, colorAccent] = listening
 
   useEffect(function updateColorsReference() {
     const updateTheme = ({ theme }) => setTheme(theme)
@@ -31,8 +34,24 @@ export const ThemeProvider = ({ children }) => {
     }
   }, [])
 
+  const colorAccentTitleCase = toTitleCase(colorAccent)
+  const brightColorAccent = `bright${colorAccentTitleCase}`
+
+  const accent = theme.colors[colorAccent]
+  const brightAccent = theme.colors[brightColorAccent]
+
   return (
-    <StyleProvider theme={{ ...theme, font: { primary: fontFamily } }}>
+    <StyleProvider
+      theme={{
+        ...theme,
+        colors: {
+          ...theme.colors,
+          accent: accent,
+          brightAccent: brightAccent
+        },
+        font: { primary: fontFamily }
+      }}
+    >
       <ThemeStyle mainFontSize={fontSize} />
 
       {isReady && children}

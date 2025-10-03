@@ -64,7 +64,7 @@ export const InputWrapper = styled.div`
   background-color: ${t('colors.background')};
   color: ${t('colors.foreground')};
 
-  &.fit-content {
+  &[aria-fit-content='true'] {
     width: fit-content;
   }
 
@@ -73,7 +73,7 @@ export const InputWrapper = styled.div`
     cursor: text;
   }
 
-  &.error {
+  &[aria-error='true'] {
     outline: ${t('space.150')} dashed ${t('colors.red')};
     border-radius: ${t('space.200')};
   }

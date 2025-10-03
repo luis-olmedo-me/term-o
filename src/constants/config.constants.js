@@ -1,4 +1,4 @@
-import { inputTypes } from './inputs.constants'
+import { availableInputTypes } from './inputs.constants'
 import { basicColorKeys, colorThemeKeys, defaultColorTheme } from './themes.constants'
 
 export const configIds = {
@@ -30,7 +30,7 @@ export const defaultConfigSections = [
         id: configInputIds.COPY_ON_SELECTION,
         name: 'Auto-copy selected text',
         description: 'Automatically copy highlighted text to the clipboard.',
-        type: inputTypes.BOOLEAN,
+        type: availableInputTypes.BOOLEAN,
         postFix: null,
         options: [],
         validations: [],
@@ -41,7 +41,7 @@ export const defaultConfigSections = [
         name: 'Sync terminal tab with UI tab change',
         description:
           'When switching or opening tabs in the browser, the terminal pointer updates to follow the active tab.',
-        type: inputTypes.BOOLEAN,
+        type: availableInputTypes.BOOLEAN,
         postFix: null,
         options: [],
         validations: [],
@@ -52,7 +52,7 @@ export const defaultConfigSections = [
         name: 'Max visible lines in terminal',
         description:
           'Define how many lines are displayed in the terminal before older ones are trimmed.',
-        type: inputTypes.NUMBER,
+        type: availableInputTypes.NUMBER,
         postFix: 'px',
         options: [],
         validations: [['is-between', 0, 1000]],
@@ -62,7 +62,7 @@ export const defaultConfigSections = [
         id: configInputIds.HISTORIAL_SIZE,
         name: 'Max command history size',
         description: 'Define how many commands will be remembered.',
-        type: inputTypes.NUMBER,
+        type: availableInputTypes.NUMBER,
         postFix: 'px',
         options: [],
         validations: [['is-between', 0, 1000]],
@@ -73,7 +73,7 @@ export const defaultConfigSections = [
         name: 'Prompt Context',
         description:
           'Define a custom text to be displayed in the terminal prompt as context information.',
-        type: inputTypes.STRING,
+        type: availableInputTypes.STRING,
         postFix: null,
         options: [],
         validations: [],
@@ -90,7 +90,7 @@ export const defaultConfigSections = [
         id: configInputIds.THEME_NAME,
         name: 'Theme',
         description: 'Prefered theme in color schemes.',
-        type: inputTypes.THEME_SELECT,
+        type: availableInputTypes.THEME_SELECT,
         postFix: null,
         options: [],
         validations: [],
@@ -100,7 +100,7 @@ export const defaultConfigSections = [
         id: configInputIds.COLOR_ACCENT,
         name: 'Accent Color',
         description: 'Select the primary accent color used in the interface.',
-        type: inputTypes.COLOR_SELECT,
+        type: availableInputTypes.COLOR_SELECT,
         postFix: null,
         options: basicColorKeys.map(key => ({ id: key, name: key })),
         validations: [],
@@ -110,7 +110,7 @@ export const defaultConfigSections = [
         id: configInputIds.FONT_FAMILY,
         name: 'Font Family',
         description: 'Specifies the font family used for displaying text in the terminal.',
-        type: inputTypes.FONT_SELECT,
+        type: availableInputTypes.FONT_SELECT,
         postFix: null,
         options: [],
         validations: [],
@@ -120,7 +120,7 @@ export const defaultConfigSections = [
         id: configInputIds.FONT_SIZE,
         name: 'Font Size',
         description: 'Defines the size of the font used in the terminal.',
-        type: inputTypes.SELECT,
+        type: availableInputTypes.SELECT,
         postFix: null,
         options: [
           { id: '12', name: 'Extra-Small' },
@@ -142,7 +142,7 @@ export const defaultConfigSections = [
         id: configInputIds.RESET_DATA,
         name: 'Restore factory defaults',
         description: 'Reset all settings to their original factory values.',
-        type: inputTypes.BUTTON,
+        type: availableInputTypes.BUTTON,
         postFix: null,
         options: [],
         validations: [],

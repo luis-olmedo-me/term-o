@@ -2,8 +2,8 @@ import * as React from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
 import Button, { buttonVariants } from '@src/components/Button'
-import Input, { inputTypes as inputComponentTypes, inputVariants } from '@src/components/Input'
-import { inputTypes } from '@src/constants/inputs.constants'
+import Input, { inputTypes, inputVariants } from '@src/components/Input'
+import { availableInputTypes } from '@src/constants/inputs.constants'
 import { validate } from '@src/helpers/primitive-validation.helpers'
 import FontSelect from '../FontSelect'
 import Select from '../Select'
@@ -45,7 +45,7 @@ export const FieldRenderer = ({
   }
 
   switch (type) {
-    case inputTypes.STRING:
+    case availableInputTypes.STRING:
       return (
         <Input
           name={name}
@@ -53,14 +53,14 @@ export const FieldRenderer = ({
           onBlur={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
           onChange={({ target }) => setLocalValue(target.value)}
           variant={inputVariants.OUTLINED}
-          type={inputComponentTypes.TEXT}
+          type={inputTypes.TEXT}
           postFix={postFix}
           errorMessage={errorMessage}
           fullWidth
         />
       )
 
-    case inputTypes.NUMBER:
+    case availableInputTypes.NUMBER:
       return (
         <Input
           name={name}
@@ -68,13 +68,13 @@ export const FieldRenderer = ({
           onBlur={({ target }) => tryApplyChange(sectionId, inputId, Number(target.value))}
           onChange={({ target }) => setLocalValue(target.value)}
           variant={inputVariants.OUTLINED}
-          type={inputComponentTypes.NUMBER}
+          type={inputTypes.NUMBER}
           postFix={postFix}
           errorMessage={errorMessage}
         />
       )
 
-    case inputTypes.BOOLEAN:
+    case availableInputTypes.BOOLEAN:
       return (
         <Switch
           type="checkbox"
@@ -84,7 +84,7 @@ export const FieldRenderer = ({
         />
       )
 
-    case inputTypes.SELECT:
+    case availableInputTypes.SELECT:
       return (
         <Select
           options={options}
@@ -94,7 +94,7 @@ export const FieldRenderer = ({
         />
       )
 
-    case inputTypes.COLOR_SELECT:
+    case availableInputTypes.COLOR_SELECT:
       return (
         <Select
           OptionPrefix={({ option }) => <ColorDot color={option.id} />}
@@ -105,7 +105,7 @@ export const FieldRenderer = ({
         />
       )
 
-    case inputTypes.THEME_SELECT:
+    case availableInputTypes.THEME_SELECT:
       return (
         <ThemeSelect
           name={name}
@@ -114,7 +114,7 @@ export const FieldRenderer = ({
         />
       )
 
-    case inputTypes.FONT_SELECT:
+    case availableInputTypes.FONT_SELECT:
       return (
         <FontSelect
           name={name}
@@ -123,7 +123,7 @@ export const FieldRenderer = ({
         />
       )
 
-    case inputTypes.BUTTON:
+    case availableInputTypes.BUTTON:
       return (
         <Button
           text={value}

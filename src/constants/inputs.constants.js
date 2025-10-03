@@ -1,4 +1,4 @@
-export const inputTypes = {
+export const availableInputTypes = {
   STRING: 'string',
   NUMBER: 'number',
   BOOLEAN: 'boolean',

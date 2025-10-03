@@ -39,7 +39,7 @@ export const Input = styled.input`
   }
 
   &::selection {
-    color: ${t('colors.green')};
+    color: ${t('colors.accent')};
     background-color: ${t('colors.selectionBackground')};
   }
 
@@ -63,16 +63,16 @@ export const Input = styled.input`
     }
 
     &:focus {
-      border: ${t('space.50')} solid ${t('colors.green')};
+      border: ${t('space.50')} solid ${t('colors.accent')};
     }
 
     &:hover {
-      background-color: ${t('colors.green')};
-      color: ${({ selected }) => (selected ? t('colors.brightGreen') : t('colors.brightWhite'))};
+      background-color: ${t('colors.accent')};
+      color: ${({ selected }) => (selected ? t('colors.brightAccent') : t('colors.brightWhite'))};
 
       &,
       & + ${Postfix} {
-        border-color: ${t('colors.green')};
+        border-color: ${t('colors.accent')};
       }
     }
   }
@@ -101,7 +101,7 @@ export const InputWrapper = styled.div`
 
 export const Prefix = styled.span`
   &::selection {
-    color: ${t('colors.green')};
+    color: ${t('colors.accent')};
     background-color: ${t('colors.selectionBackground')};
   }
 `

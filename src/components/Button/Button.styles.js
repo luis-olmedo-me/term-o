@@ -29,10 +29,10 @@ export const ButtonWrapper = styled.button`
 
   &:hover {
     background-color: ${t('colors.black')};
-    color: ${t('colors.brightGreen')};
+    color: ${t('colors.brightAccent')};
   }
   &[aria-selected='true']:hover {
-    background-color: ${t('colors.green')};
+    background-color: ${t('colors.accent')};
     color: ${t('colors.brightWhite')};
   }
 
@@ -41,7 +41,7 @@ export const ButtonWrapper = styled.button`
   }
 
   &[aria-selected='true'] {
-    color: ${t('colors.green')};
+    color: ${t('colors.accent')};
   }
 
   &[aria-variant='${buttonVariants.OUTLINED}'] {
@@ -51,15 +51,15 @@ export const ButtonWrapper = styled.button`
     padding: ${t('space.200')} ${t('space.300')};
 
     &:focus {
-      border: ${t('space.50')} solid ${t('colors.green')};
+      border: ${t('space.50')} solid ${t('colors.accent')};
     }
 
     &:hover {
-      background-color: ${t('colors.green')};
+      background-color: ${t('colors.accent')};
       color: ${t('colors.brightWhite')};
     }
     &[aria-selected='true']:hover {
-      color: ${t('colors.brightGreen')};
+      color: ${t('colors.brightAccent')};
     }
   }
   &[aria-variant='${buttonVariants.OUTLINED_DANGER}'] {

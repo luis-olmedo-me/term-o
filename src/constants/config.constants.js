@@ -73,7 +73,7 @@ export const defaultConfigSections = [
         name: 'Prompt Context',
         description:
           'Define a custom text to be displayed in the terminal prompt as context information.',
-        type: availableInputTypes.STRING,
+        type: availableInputTypes.TEXT_AREA,
         postFix: null,
         options: [],
         validations: [],

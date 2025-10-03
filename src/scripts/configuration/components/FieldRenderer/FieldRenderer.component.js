@@ -9,6 +9,7 @@ import FontSelect from '../FontSelect'
 import Select from '../Select'
 import { ColorDot } from '../Select/OptionPrefixes'
 import Switch from '../Switch'
+import { TextArea } from '../TextArea'
 import ThemeSelect from '../ThemeSelect'
 
 export const FieldRenderer = ({
@@ -71,6 +72,16 @@ export const FieldRenderer = ({
           type={inputTypes.NUMBER}
           postFix={postFix}
           errorMessage={errorMessage}
+        />
+      )
+
+    case availableInputTypes.TEXT_AREA:
+      return (
+        <TextArea
+          name={name}
+          value={localValue}
+          onBlur={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
+          onChange={({ target }) => setLocalValue(target.value)}
         />
       )
 

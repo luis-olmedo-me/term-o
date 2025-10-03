@@ -94,7 +94,6 @@ export const defaultTheme = {
 }
 
 export const basicColorKeys = [
-  colorThemeKeys.BLACK,
   colorThemeKeys.BLUE,
   colorThemeKeys.CYAN,
   colorThemeKeys.GREEN,

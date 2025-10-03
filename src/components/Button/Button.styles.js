@@ -23,9 +23,6 @@ export const ButtonWrapper = styled.button`
   &.full-width {
     width: 100%;
   }
-  &.full-height {
-    height: 100%;
-  }
   &.selected {
     color: ${t('colors.green')};
   }

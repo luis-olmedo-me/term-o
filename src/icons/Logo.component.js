@@ -23,7 +23,7 @@ export const Logo = () => {
         />
         <path
           d="M239.351 470.445L149.502 380.16L273.141 256L189.355 171.861L279.199 81.5806L431.037 234.099C436.581 239.683 440 247.462 440 256C440 264.599 436.381 272.487 431.006 277.901L239.351 470.445Z"
-          fill={theme.colors.green}
+          fill={theme.colors.accent}
         />
       </g>
       <rect
@@ -33,7 +33,7 @@ export const Logo = () => {
         height="119.84"
         rx="6"
         transform="rotate(-45 227.555 81.6208)"
-        fill={theme.colors.foreground}
+        fill={theme.colors.brightWhite}
       />
       <defs>
         <filter

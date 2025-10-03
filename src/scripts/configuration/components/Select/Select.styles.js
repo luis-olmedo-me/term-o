@@ -14,8 +14,14 @@ export const Selecter = styled.select`
   cursor: pointer;
   outline: none;
 
+  & .selected-content {
+    display: flex;
+    gap: ${t('space.250')};
+    align-items: center;
+  }
+
   &:focus {
-    border: ${t('space.50')} solid ${t('colors.green')};
+    border: ${t('space.50')} solid ${t('colors.accent')};
   }
 
   &:focus,
@@ -24,8 +30,8 @@ export const Selecter = styled.select`
   }
 
   &:hover {
-    background-color: ${t('colors.green')};
-    color: ${({ selected }) => (selected ? t('colors.brightGreen') : t('colors.brightWhite'))};
+    background-color: ${t('colors.accent')};
+    color: ${({ selected }) => (selected ? t('colors.brightAccent') : t('colors.brightWhite'))};
   }
 
   &:disabled {
@@ -93,7 +99,7 @@ export const Option = styled.option`
 
   &:hover,
   &:focus {
-    color: ${t('colors.green')};
+    color: ${t('colors.accent')};
   }
 
   &:focus,
@@ -102,7 +108,7 @@ export const Option = styled.option`
   }
 
   :is(selected) {
-    color: ${t('colors.brightGreen')};
+    color: ${t('colors.brightAccent')};
   }
 
   &::checkmark {

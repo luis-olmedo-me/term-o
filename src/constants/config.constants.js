@@ -1,4 +1,4 @@
-import { defaultColorTheme } from './themes.constants'
+import { basicColorKeys, colorThemeKeys, defaultColorTheme } from './themes.constants'
 
 export const configIds = {
   FUNCTIONALITY: 'general',
@@ -15,6 +15,7 @@ export const configInputIds = {
   FONT_FAMILY: 'font-family',
   FONT_SIZE: 'font-size',
   THEME_NAME: 'theme-name',
+  COLOR_ACCENT: 'color-accent',
   RESET_DATA: 'reset-data'
 }
 
@@ -93,6 +94,16 @@ export const defaultConfigSections = [
         options: [],
         validations: [],
         value: defaultColorTheme.name
+      },
+      {
+        id: configInputIds.COLOR_ACCENT,
+        name: 'Accent Color',
+        description: 'Select the primary accent color used in the interface.',
+        type: 'color-select',
+        postFix: null,
+        options: basicColorKeys.map(key => ({ id: key, name: key })),
+        validations: [],
+        value: colorThemeKeys.GREEN
       },
       {
         id: configInputIds.FONT_FAMILY,

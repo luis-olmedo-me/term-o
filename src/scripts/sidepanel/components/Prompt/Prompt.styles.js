@@ -8,7 +8,7 @@ export const Line = styled.p`
   cursor: text;
 
   &::selection {
-    color: ${t('colors.green')};
+    color: ${t('colors.foreground')};
     background-color: ${t('colors.selectionBackground')};
   }
 `

@@ -30,7 +30,7 @@ export const SimulatedSwitch = styled.div`
 
   &.selected {
     &::after {
-      background-color: ${t('colors.brightGreen')};
+      background-color: ${t('colors.brightAccent')};
       left: calc(70% - ${t('space.100')});
     }
   }
@@ -55,21 +55,16 @@ export const SwitchInput = styled.input`
     background-color: ${t('colors.brightWhite')};
   }
   &:hover + ${SimulatedSwitch} {
-    background-color: ${t('colors.green', '40')};
+    background-color: ${t('colors.accent', '40')};
   }
   &:hover + ${SimulatedSwitch}.selected {
-    background-color: ${t('colors.green')};
+    background-color: ${t('colors.accent')};
   }
 
   &:active,
   &:focus,
   &:focus-visible {
     outline: none;
-  }
-
-  &::selection {
-    color: ${t('colors.green')};
-    background-color: ${t('colors.selectionBackground')};
   }
 `
 
@@ -86,7 +81,7 @@ export const SwitchWrapper = styled.div`
 
 export const Prefix = styled.span`
   &::selection {
-    color: ${t('colors.green')};
+    color: ${t('colors.accent')};
     background-color: ${t('colors.selectionBackground')};
   }
 `

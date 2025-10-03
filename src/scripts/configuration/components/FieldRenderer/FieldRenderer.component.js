@@ -6,6 +6,7 @@ import Input, { inputTypes, inputVariants } from '@src/components/Input'
 import { validate } from '@src/helpers/primitive-validation.helpers'
 import FontSelect from '../FontSelect'
 import Select from '../Select'
+import { ColorDot } from '../Select/OptionPrefixes'
 import Switch from '../Switch'
 import ThemeSelect from '../ThemeSelect'
 
@@ -89,6 +90,17 @@ export const FieldRenderer = ({
           value={value}
           name={name}
           onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
+        />
+      )
+
+    case 'color-select':
+      return (
+        <Select
+          OptionPrefix={({ option }) => <ColorDot color={option.id} />}
+          options={options}
+          value={value}
+          onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
+          name={name}
         />
       )
 

@@ -11,9 +11,11 @@ export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(themer.theme)
   const [isReady, setIsReady] = useState(false)
 
-  const { listening } = useConfig({ get: [configInputIds.FONT_SIZE, configInputIds.FONT_FAMILY] })
+  const { listening } = useConfig({
+    get: [configInputIds.FONT_SIZE, configInputIds.FONT_FAMILY, configInputIds.COLOR_ACCENT]
+  })
 
-  const [fontSize, fontFamily] = listening
+  const [fontSize, fontFamily, colorAccent] = listening
 
   useEffect(function updateColorsReference() {
     const updateTheme = ({ theme }) => setTheme(theme)
@@ -32,7 +34,16 @@ export const ThemeProvider = ({ children }) => {
   }, [])
 
   return (
-    <StyleProvider theme={{ ...theme, font: { primary: fontFamily } }}>
+    <StyleProvider
+      theme={{
+        ...theme,
+        colors: {
+          ...theme.colors,
+          ...themer.getAccentColors(colorAccent)
+        },
+        font: { primary: fontFamily }
+      }}
+    >
       <ThemeStyle mainFontSize={fontSize} />
 
       {isReady && children}

@@ -2,6 +2,21 @@ import { theme as t } from '@src/libs/themer'
 import styled from 'styled-components'
 import { inputVariants } from './Input.constants'
 
+export const Postfix = styled.span`
+  padding-inline: ${t('space.400')};
+  height: -webkit-fill-available;
+  display: flex;
+  align-items: center;
+  border: solid ${t('colors.white', '60')};
+  border-width: ${t('space.50')} ${t('space.50')} ${t('space.50')} 0;
+  background-color: ${t('colors.white', '20')};
+  color: ${t('colors.foreground')};
+  border-radius: 0 ${t('space.200')} ${t('space.200')} 0;
+  pointer-events: unset;
+  transition: border-color 0.1s ease-in-out;
+  cursor: help;
+`
+
 export const Input = styled.input`
   font-family: ${t('font.primary')};
   width: 100%;
@@ -24,7 +39,7 @@ export const Input = styled.input`
   }
 
   &::selection {
-    color: ${t('colors.green')};
+    color: ${t('colors.accent')};
     background-color: ${t('colors.selectionBackground')};
   }
 
@@ -48,12 +63,17 @@ export const Input = styled.input`
     }
 
     &:focus {
-      border: ${t('space.50')} solid ${t('colors.green')};
+      border: ${t('space.50')} solid ${t('colors.accent')};
     }
 
     &:hover {
-      background-color: ${t('colors.green')};
-      color: ${({ selected }) => (selected ? t('colors.brightGreen') : t('colors.brightWhite'))};
+      background-color: ${t('colors.accent')};
+      color: ${({ selected }) => (selected ? t('colors.brightAccent') : t('colors.brightWhite'))};
+
+      &,
+      & + ${Postfix} {
+        border-color: ${t('colors.accent')};
+      }
     }
   }
 `
@@ -81,23 +101,9 @@ export const InputWrapper = styled.div`
 
 export const Prefix = styled.span`
   &::selection {
-    color: ${t('colors.green')};
+    color: ${t('colors.accent')};
     background-color: ${t('colors.selectionBackground')};
   }
-`
-
-export const Postfix = styled.span`
-  padding-inline: ${t('space.400')};
-  height: -webkit-fill-available;
-  display: flex;
-  align-items: center;
-  border: solid ${t('colors.white', '20')};
-  border-width: ${t('space.50')} ${t('space.50')} ${t('space.50')} 0;
-  background-color: ${t('colors.white', '20')};
-  color: ${t('colors.foreground')};
-  border-radius: 0 ${t('space.200')} ${t('space.200')} 0;
-  pointer-events: unset;
-  cursor: help;
 `
 
 export const ErrorMessage = styled.span`

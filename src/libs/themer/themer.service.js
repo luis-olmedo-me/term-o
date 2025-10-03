@@ -5,6 +5,7 @@ import { storageKeys, storageNamespaces } from '@src/constants/storage.constants
 import { defaultColorTheme, defaultTheme } from '@src/constants/themes.constants'
 import { getConfigValueByInputId, updateConfigValueIn } from '@src/helpers/config.helpers'
 import { getStorageValue, setStorageValue } from '@src/helpers/storage.helpers'
+import { toTitleCase } from '@src/helpers/string.helpers'
 
 class Themer extends EventListener {
   constructor(defaultColorTheme, defaultTheme) {
@@ -115,6 +116,19 @@ class Themer extends EventListener {
     this.colorThemes = newColorThemes
 
     return setStorageValue(storageNamespaces.LOCAL, storageKeys.COLOR_SETS, newColorThemes)
+  }
+
+  getAccentColors(accentName) {
+    const accentNameTitleCase = toTitleCase(accentName)
+    const brightAccentName = `bright${accentNameTitleCase}`
+
+    const accent = this.theme.colors[accentName]
+    const brightAccent = this.theme.colors[brightAccentName]
+
+    return {
+      accent: accent,
+      brightAccent: brightAccent
+    }
   }
 
   destroy() {

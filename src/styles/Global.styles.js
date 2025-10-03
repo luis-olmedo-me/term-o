@@ -28,7 +28,7 @@ const GlobalStyle = createGlobalStyle`
 
       &:active,
       &:hover {
-        background-color: ${t('colors.green')};
+        background-color: ${t('colors.accent')};
       }
     }
   }
@@ -43,11 +43,11 @@ const GlobalStyle = createGlobalStyle`
       animation-timing-function: ease-in-out;
       width: 5%;
       height: ${t('space.100')};
-      background: ${t('colors.blue')};
+      background: ${t('colors.accent')};
       bottom: 0;
       left: 0;
       border-radius: ${t('radius.100')} ${t('radius.100')} 0 0;
-      box-shadow: 0 -10px 25px 5px ${t('colors.blue')};
+      box-shadow: 0 -10px 25px 5px ${t('colors.accent')};
     }
   }
 

@@ -11,11 +11,7 @@ export const FontSelect = ({ value, onChange, name }) => {
   useEffect(function getColorThemes() {
     const updateOptions = async () => {
       const fonts = await getFontsAvailable()
-      const newOptions = fonts.map(font => ({
-        id: font.fontId,
-        name: font.displayName,
-        color: null
-      }))
+      const newOptions = fonts.map(font => ({ id: font.fontId, name: font.displayName }))
 
       setOptions(newOptions)
       setIsLoading(false)

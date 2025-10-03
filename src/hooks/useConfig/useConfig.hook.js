@@ -37,12 +37,17 @@ export const useConfig = props => {
     [validatedConfig]
   )
 
+  const resetConfig = () => {
+    setConfig(defaultConfigSections)
+  }
+
   const configListeners = useMemo(() => get.map(getConfigById), [getConfigById, validatedConfig])
 
   return {
     listening: configListeners,
     config: validatedConfig,
     getConfigById,
-    changeConfig
+    changeConfig,
+    resetConfig
   }
 }

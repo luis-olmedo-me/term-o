@@ -3,6 +3,7 @@ import { useEffect, useState } from 'preact/hooks'
 
 import Input, { inputVariants } from '@src/components/Input'
 import { validate } from '@src/helpers/primitive-validation.helpers'
+import Button from '@src/scripts/sidepanel/components/Button'
 import FontSelect from '../FontSelect'
 import Select from '../Select'
 import Switch from '../Switch'
@@ -17,7 +18,8 @@ export const FieldRenderer = ({
   name,
   postFix,
   changeConfig,
-  validations
+  validations,
+  handleClickInButtons
 }) => {
   const [localValue, setLocalValue] = useState(value)
   const [errorMessage, setErrorMessage] = useState(null)
@@ -108,6 +110,9 @@ export const FieldRenderer = ({
         />
       )
 
+    case 'button':
+      return <Button text={value} onClick={() => handleClickInButtons(sectionId, inputId)} />
+
     default:
       return null
   }
@@ -122,5 +127,6 @@ FieldRenderer.propTypes = {
   postFix: String,
   options: Array,
   validations: Array,
-  changeConfig: Function
+  changeConfig: Function,
+  handleClickInButtons: Function
 }

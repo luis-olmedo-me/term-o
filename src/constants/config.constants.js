@@ -2,7 +2,8 @@ import { defaultColorTheme } from './themes.constants'
 
 export const configIds = {
   FUNCTIONALITY: 'general',
-  APPEARENCE: 'appearence'
+  APPEARENCE: 'appearence',
+  DATA: 'data'
 }
 
 export const configInputIds = {
@@ -13,7 +14,8 @@ export const configInputIds = {
   CONTEXT: 'status',
   FONT_FAMILY: 'font-family',
   FONT_SIZE: 'font-size',
-  THEME_NAME: 'theme-name'
+  THEME_NAME: 'theme-name',
+  RESET_DATA: 'reset-data'
 }
 
 export const defaultConfigSections = [
@@ -116,6 +118,23 @@ export const defaultConfigSections = [
         ],
         validations: [],
         value: '16'
+      }
+    ]
+  },
+  {
+    id: configIds.DATA,
+    name: 'Data',
+    description: 'Manage storage and configuration backups.',
+    inputs: [
+      {
+        id: configInputIds.RESET_DATA,
+        name: 'Restore factory defaults',
+        description: 'Reset all settings to their original factory values.',
+        type: 'button',
+        postFix: null,
+        options: [],
+        validations: [],
+        value: 'Reset'
       }
     ]
   }

@@ -20,10 +20,10 @@ export const ButtonWrapper = styled.button`
     background-color 0.1s ease-in-out,
     color 0.1s ease-in-out;
 
-  &.full-width {
+  &[aria-full-width='true'] {
     width: 100%;
   }
-  &.selected {
+  &[aria-selected='true'] {
     color: ${t('colors.green')};
   }
 

@@ -6,10 +6,8 @@ export const Button = ({ text, onClick, Icon = null, fullWidth = false, selected
     <S.ButtonWrapper
       onClick={onClick}
       selected={selected}
-      className={`
-        ${fullWidth ? 'full-width' : null}
-        ${selected ? 'selected' : null}
-      `}
+      aria-full-width={fullWidth}
+      aria-selected={selected}
     >
       {Icon && <Icon />}
       {text}

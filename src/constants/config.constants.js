@@ -1,4 +1,4 @@
-import { defaultColorTheme } from './themes.constants'
+import { basicColorKeys, defaultColorTheme } from './themes.constants'
 
 export const configIds = {
   FUNCTIONALITY: 'general',
@@ -101,7 +101,7 @@ export const defaultConfigSections = [
         description: 'Select the primary accent color used in the interface.',
         type: 'color-select',
         postFix: null,
-        options: [{ id: 'red', name: 'Red' }],
+        options: basicColorKeys.map(key => ({ id: key, name: key })),
         validations: [],
         value: 'red'
       },

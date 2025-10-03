@@ -1,25 +1,49 @@
+export const colorThemeKeys = {
+  NAME: 'name',
+  BACKGROUND: 'background',
+  FOREGROUND: 'foreground',
+  SELECTION_BACKGROUND: 'selectionBackground',
+  BRIGHT_BLACK: 'brightBlack',
+  BRIGHT_BLUE: 'brightBlue',
+  BRIGHT_CYAN: 'brightCyan',
+  BRIGHT_GREEN: 'brightGreen',
+  BRIGHT_PURPLE: 'brightPurple',
+  BRIGHT_RED: 'brightRed',
+  BRIGHT_WHITE: 'brightWhite',
+  BRIGHT_YELLOW: 'brightYellow',
+  CURSOR_COLOR: 'cursorColor',
+  BLACK: 'black',
+  BLUE: 'blue',
+  CYAN: 'cyan',
+  GREEN: 'green',
+  PURPLE: 'purple',
+  RED: 'red',
+  WHITE: 'white',
+  YELLOW: 'yellow'
+}
+
 export const defaultColorTheme = {
-  name: 'Default Dark Mode',
-  background: '#000000',
-  foreground: '#ECEDEE',
-  selectionBackground: '#27272a',
-  brightBlack: '#A1A1AA',
-  brightBlue: '#338EF7',
-  brightCyan: '#A5EEFD',
-  brightGreen: '#45D483',
-  brightPurple: '#9353D3',
-  brightRed: '#F54180',
-  brightWhite: '#D4D4D8',
-  brightYellow: '#F7B750',
-  cursorColor: '#ECEDEE',
-  black: '#18181B',
-  blue: '#006FEE',
-  cyan: '#7EE7FC',
-  green: '#17C964',
-  purple: '#7828C8',
-  red: '#F31260',
-  white: '#F4F4F5',
-  yellow: '#F5A524'
+  [colorThemeKeys.NAME]: 'Default Dark Mode',
+  [colorThemeKeys.BACKGROUND]: '#000000',
+  [colorThemeKeys.FOREGROUND]: '#ECEDEE',
+  [colorThemeKeys.SELECTION_BACKGROUND]: '#27272a',
+  [colorThemeKeys.BRIGHT_BLACK]: '#A1A1AA',
+  [colorThemeKeys.BRIGHT_BLUE]: '#338EF7',
+  [colorThemeKeys.BRIGHT_CYAN]: '#A5EEFD',
+  [colorThemeKeys.BRIGHT_GREEN]: '#45D483',
+  [colorThemeKeys.BRIGHT_PURPLE]: '#9353D3',
+  [colorThemeKeys.BRIGHT_RED]: '#F54180',
+  [colorThemeKeys.BRIGHT_WHITE]: '#D4D4D8',
+  [colorThemeKeys.BRIGHT_YELLOW]: '#F7B750',
+  [colorThemeKeys.CURSOR_COLOR]: '#ECEDEE',
+  [colorThemeKeys.BLACK]: '#18181B',
+  [colorThemeKeys.BLUE]: '#006FEE',
+  [colorThemeKeys.CYAN]: '#7EE7FC',
+  [colorThemeKeys.GREEN]: '#17C964',
+  [colorThemeKeys.PURPLE]: '#7828C8',
+  [colorThemeKeys.RED]: '#F31260',
+  [colorThemeKeys.WHITE]: '#F4F4F5',
+  [colorThemeKeys.YELLOW]: '#F5A524'
 }
 
 export const defaultTheme = {
@@ -68,3 +92,14 @@ export const defaultTheme = {
     primary: 'Consolas'
   }
 }
+
+export const basicColorKeys = [
+  colorThemeKeys.BLACK,
+  colorThemeKeys.BLUE,
+  colorThemeKeys.CYAN,
+  colorThemeKeys.GREEN,
+  colorThemeKeys.PURPLE,
+  colorThemeKeys.RED,
+  colorThemeKeys.WHITE,
+  colorThemeKeys.YELLOW
+]

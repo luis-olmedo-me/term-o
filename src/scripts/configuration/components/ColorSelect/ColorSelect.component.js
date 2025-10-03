@@ -1,7 +1,6 @@
 import * as React from 'preact'
 
-import { ColorDot } from '../ColorDot/ColorDot.component'
-import Select from '../Select'
+import Select, { ColorDot } from '../Select'
 
 export const ColorSelect = ({ value, onChange, name, options }) => {
   return (

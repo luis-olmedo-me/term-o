@@ -9,7 +9,6 @@ export const Dot = styled.span`
 
   &.red {
     background-color: ${t('colors.red')};
-    border: ${t('space.50')} solid ${t('colors.white', '60')};
-    color: ${t('colors.red')};
+    border: ${t('space.50')} solid currentColor;
   }
 `

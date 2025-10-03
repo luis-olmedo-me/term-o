@@ -82,6 +82,7 @@ export const FieldRenderer = ({
           value={localValue}
           onBlur={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
           onChange={({ target }) => setLocalValue(target.value)}
+          maxLines={6}
         />
       )
 

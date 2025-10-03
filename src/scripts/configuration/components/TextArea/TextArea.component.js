@@ -2,14 +2,14 @@ import * as React from 'preact'
 import { useRef } from 'preact/hooks'
 import * as S from './TextArea.styles'
 
-export const TextArea = ({ onChange, onBlur, value, name, disabled = false }) => {
+export const TextArea = ({ onChange, onBlur, value, name, maxLines, disabled = false }) => {
   const inputRef = useRef(null)
 
   const handleChange = event => {
     var lines = inputRef.current.value.split('\n')
 
-    if (lines.length > 6) {
-      inputRef.current.value = lines.slice(0, 6).join('\n')
+    if (lines.length > maxLines) {
+      inputRef.current.value = lines.slice(0, maxLines).join('\n')
     } else {
       onChange(event)
     }
@@ -24,7 +24,7 @@ export const TextArea = ({ onChange, onBlur, value, name, disabled = false }) =>
       onChange={handleChange}
       spellCheck="false"
       className="vertical-scroller"
-      rows={6}
+      rows={maxLines}
       value={value}
     ></S.TextAreaInput>
   )
@@ -34,5 +34,6 @@ TextArea.propTypes = {
   onBlur: Function,
   value: Boolean,
   disabled: Boolean,
+  maxLines: Number,
   name: String
 }

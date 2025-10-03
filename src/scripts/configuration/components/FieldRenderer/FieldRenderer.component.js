@@ -97,7 +97,7 @@ export const FieldRenderer = ({
     case availableInputTypes.COLOR_SELECT:
       return (
         <Select
-          OptionPrefix={({ option }) => <ColorDot color={option.id} />}
+          OptionPrefix={ColorDot}
           options={options}
           value={value}
           onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}

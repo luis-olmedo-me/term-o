@@ -1,7 +1,6 @@
 import * as React from 'preact'
 
 import { configInputIds } from '@src/constants/config.constants'
-import { toTitleCase } from '@src/helpers/string.helpers'
 import useConfig from '@src/hooks/useConfig'
 import themer from '@src/libs/themer'
 import { useEffect, useState } from 'preact/hooks'
@@ -34,20 +33,13 @@ export const ThemeProvider = ({ children }) => {
     }
   }, [])
 
-  const colorAccentTitleCase = toTitleCase(colorAccent)
-  const brightColorAccent = `bright${colorAccentTitleCase}`
-
-  const accent = theme.colors[colorAccent]
-  const brightAccent = theme.colors[brightColorAccent]
-
   return (
     <StyleProvider
       theme={{
         ...theme,
         colors: {
           ...theme.colors,
-          accent: accent,
-          brightAccent: brightAccent
+          ...themer.getAccentColors(colorAccent)
         },
         font: { primary: fontFamily }
       }}

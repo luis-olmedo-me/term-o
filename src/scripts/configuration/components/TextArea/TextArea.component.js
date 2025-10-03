@@ -1,10 +1,19 @@
 import * as React from 'preact'
+import * as S from './TextArea.styles'
 
 export const TextArea = ({ onChange, onBlur, value, name, disabled = false }) => {
   return (
-    <textarea name={name} disabled={disabled} onBlur={onBlur} onChange={onChange}>
+    <S.TextAreaInput
+      name={name}
+      disabled={disabled}
+      onBlur={onBlur}
+      onChange={onChange}
+      spellCheck="false"
+      className="vertical-scroller"
+      rows={6}
+    >
       {value}
-    </textarea>
+    </S.TextAreaInput>
   )
 }
 TextArea.propTypes = {

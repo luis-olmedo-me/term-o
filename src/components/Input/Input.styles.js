@@ -55,7 +55,7 @@ export const Input = styled.input`
     border: ${t('space.50')} solid ${t('colors.white', '40')};
     background-color: ${t('colors.white', '40')};
     border-radius: ${t('radius.200')} 0 0 ${t('radius.200')};
-    padding-left: ${t('space.200')};
+    padding-left: ${t('space.300')};
     transition: border-color 0.1s ease-in-out;
 
     &:last-child {

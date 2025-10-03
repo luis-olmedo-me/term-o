@@ -44,7 +44,7 @@ export const FieldRenderer = ({
   }
 
   switch (type) {
-    case 'string':
+    case inputTypes.STRING:
       return (
         <Input
           name={name}
@@ -59,7 +59,7 @@ export const FieldRenderer = ({
         />
       )
 
-    case 'number':
+    case inputTypes.NUMBER:
       return (
         <Input
           name={name}
@@ -73,7 +73,7 @@ export const FieldRenderer = ({
         />
       )
 
-    case 'boolean':
+    case inputTypes.BOOLEAN:
       return (
         <Switch
           type="checkbox"
@@ -83,7 +83,7 @@ export const FieldRenderer = ({
         />
       )
 
-    case 'select':
+    case inputTypes.SELECT:
       return (
         <Select
           options={options}
@@ -93,7 +93,7 @@ export const FieldRenderer = ({
         />
       )
 
-    case 'color-select':
+    case inputTypes.COLOR_SELECT:
       return (
         <Select
           OptionPrefix={({ option }) => <ColorDot color={option.id} />}
@@ -104,7 +104,7 @@ export const FieldRenderer = ({
         />
       )
 
-    case 'theme-select':
+    case inputTypes.THEME_SELECT:
       return (
         <ThemeSelect
           name={name}
@@ -113,7 +113,7 @@ export const FieldRenderer = ({
         />
       )
 
-    case 'font-select':
+    case inputTypes.FONT_SELECT:
       return (
         <FontSelect
           name={name}
@@ -122,7 +122,7 @@ export const FieldRenderer = ({
         />
       )
 
-    case 'button':
+    case inputTypes.BUTTON:
       return (
         <Button
           text={value}

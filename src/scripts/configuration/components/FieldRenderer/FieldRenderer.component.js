@@ -1,9 +1,9 @@
 import * as React from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
+import Button from '@src/components/Button'
 import Input, { inputVariants } from '@src/components/Input'
 import { validate } from '@src/helpers/primitive-validation.helpers'
-import Button from '@src/scripts/sidepanel/components/Button'
 import FontSelect from '../FontSelect'
 import Select from '../Select'
 import Switch from '../Switch'

@@ -1,6 +1,7 @@
 import * as React from 'preact'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 
+import Button from '@src/components/Button'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
@@ -10,7 +11,6 @@ import { Gear } from '@src/icons/Gear.component'
 import commandParser from '@src/libs/command-parser'
 import { getCurrentTab } from '@src/libs/command-parser/handlers/tabs/tabs.helpers'
 import CommandsViewer from '@src/scripts/sidepanel/modules/CommandsViewer'
-import Button from '../../components/Button'
 import { copyText, getSelectedText } from './Terminal.helpers'
 import * as S from './Terminal.styles'
 

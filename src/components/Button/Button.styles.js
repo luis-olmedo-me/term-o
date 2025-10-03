@@ -28,8 +28,12 @@ export const ButtonWrapper = styled.button`
   }
 
   &:hover {
-    background-color: ${({ selected }) => (selected ? t('colors.green') : t('colors.black'))};
-    color: ${({ selected }) => (selected ? t('colors.brightWhite') : t('colors.brightGreen'))};
+    background-color: ${t('colors.black')};
+    color: ${t('colors.brightGreen')};
+  }
+  &[aria-selected='true']:hover {
+    background-color: ${t('colors.green')};
+    color: ${t('colors.brightWhite')};
   }
 
   &[aria-full-width='true'] {
@@ -52,7 +56,10 @@ export const ButtonWrapper = styled.button`
 
     &:hover {
       background-color: ${t('colors.green')};
-      color: ${({ selected }) => (selected ? t('colors.brightGreen') : t('colors.brightWhite'))};
+      color: ${t('colors.brightWhite')};
+    }
+    &[aria-selected='true']:hover {
+      color: ${t('colors.brightGreen')};
     }
   }
   &[aria-variant='${buttonVariants.OUTLINED_DANGER}'] {
@@ -67,7 +74,10 @@ export const ButtonWrapper = styled.button`
 
     &:hover {
       background-color: ${t('colors.red')};
-      color: ${({ selected }) => (selected ? t('colors.brightRed') : t('colors.brightWhite'))};
+      color: ${t('colors.brightWhite')};
+    }
+    &[aria-selected='true']:hover {
+      color: ${t('colors.brightRed')};
     }
   }
 `

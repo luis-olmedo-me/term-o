@@ -11,7 +11,7 @@ import * as S from './Preferences.styles'
 
 export const Preferences = () => {
   const { config, changeConfig } = useConfig()
-  const [selectedSectionId, setSelectedSectionId] = useState(configIds.GENERAL)
+  const [selectedSectionId, setSelectedSectionId] = useState(configIds.FUNCTIONALITY)
 
   const sectionSelected = config.find(({ id }) => id === selectedSectionId)
 

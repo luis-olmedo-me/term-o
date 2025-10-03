@@ -30,7 +30,7 @@ export const Prompt = ({
   })
 
   const { listening } = useConfig({
-    get: [configInputIds.HISTORIAL_SIZE, configInputIds.STATUS]
+    get: [configInputIds.HISTORIAL_SIZE, configInputIds.CONTEXT]
   })
   const [hsitorialSize] = listening
 

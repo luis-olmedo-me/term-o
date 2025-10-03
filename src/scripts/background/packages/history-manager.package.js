@@ -10,8 +10,10 @@ const historyManager = (function () {
   const getStatusFromConfig = config => {
     if (!config) return ''
 
-    const promptConfig = config.find(config => config.id === configIds.PROMPT)
-    const statusInputConfig = promptConfig?.inputs.find(input => input.id === configInputIds.STATUS)
+    const promptConfig = config.find(config => config.id === configIds.FUNCTIONALITY)
+    const statusInputConfig = promptConfig?.inputs.find(
+      input => input.id === configInputIds.CONTEXT
+    )
 
     return statusInputConfig?.value
   }

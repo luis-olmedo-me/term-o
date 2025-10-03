@@ -35,7 +35,7 @@ export const Terminal = () => {
       configInputIds.COPY_ON_SELECTION,
       configInputIds.SWITCH_TAB_AUTOMATICALLY,
       configInputIds.MAX_LINES_PER_COMMAND,
-      configInputIds.STATUS
+      configInputIds.CONTEXT
     ]
   })
   const [canCopyOnSelection, switchTabAutomatically, maxLinesPerCommand, status] = listening

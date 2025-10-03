@@ -93,6 +93,17 @@ export const FieldRenderer = ({
         />
       )
 
+    case 'color-select':
+      return (
+        <Select
+          OptionPrefix={({ option }) => <ColorDot color={option.id} />}
+          options={options}
+          value={value}
+          onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
+          name={name}
+        />
+      )
+
     case 'theme-select':
       return (
         <ThemeSelect
@@ -108,17 +119,6 @@ export const FieldRenderer = ({
           name={name}
           value={value}
           onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
-        />
-      )
-
-    case 'color-select':
-      return (
-        <Select
-          OptionPrefix={({ option }) => <ColorDot color={option.id} />}
-          options={options}
-          value={value}
-          onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
-          name={name}
         />
       )
 

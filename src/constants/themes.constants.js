@@ -99,6 +99,5 @@ export const basicColorKeys = [
   colorThemeKeys.GREEN,
   colorThemeKeys.PURPLE,
   colorThemeKeys.RED,
-  colorThemeKeys.WHITE,
   colorThemeKeys.YELLOW
 ]

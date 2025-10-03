@@ -1,6 +1,7 @@
 import * as React from 'preact'
 
-import Select, { ColorDot } from '../Select'
+import Select from '../Select'
+import { ColorDot } from '../Select/OptionPrefixes'
 
 export const ColorSelect = ({ value, onChange, name, options }) => {
   return (

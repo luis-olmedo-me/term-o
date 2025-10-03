@@ -19,7 +19,7 @@ export const configInputIds = {
 export const defaultConfigSections = [
   {
     id: configIds.FUNCTIONALITY,
-    name: 'General',
+    name: 'Functionality',
     description: 'Adjust how the terminal behaves and interacts with the browser.',
     inputs: [
       {

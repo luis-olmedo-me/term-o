@@ -2,7 +2,7 @@ import * as React from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
 import Button from '@src/components/Button'
-import Input, { inputVariants } from '@src/components/Input'
+import Input, { inputTypes, inputVariants } from '@src/components/Input'
 import { validate } from '@src/helpers/primitive-validation.helpers'
 import FontSelect from '../FontSelect'
 import Select from '../Select'
@@ -51,6 +51,7 @@ export const FieldRenderer = ({
           onBlur={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
           onChange={({ target }) => setLocalValue(target.value)}
           variant={inputVariants.OUTLINED}
+          type={inputTypes.TEXT}
           postFix={postFix}
           errorMessage={errorMessage}
           fullWidth
@@ -61,11 +62,11 @@ export const FieldRenderer = ({
       return (
         <Input
           name={name}
-          type="number"
           value={localValue}
           onBlur={({ target }) => tryApplyChange(sectionId, inputId, Number(target.value))}
           onChange={({ target }) => setLocalValue(target.value)}
           variant={inputVariants.OUTLINED}
+          type={inputTypes.NUMBER}
           postFix={postFix}
           errorMessage={errorMessage}
         />

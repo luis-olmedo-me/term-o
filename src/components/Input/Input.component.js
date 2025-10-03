@@ -13,7 +13,7 @@ export const Input = ({
   prefix,
   inputRef,
   disabled,
-  type = 'text',
+  type,
   postFix,
   name,
   variant,

@@ -21,6 +21,25 @@ export const ButtonWrapper = styled.button`
     background-color 0.1s ease-in-out,
     color 0.1s ease-in-out;
 
+  &:active,
+  &:focus,
+  &:focus-visible {
+    outline: none;
+  }
+
+  &:hover {
+    background-color: ${({ selected }) => (selected ? t('colors.green') : t('colors.black'))};
+    color: ${({ selected }) => (selected ? t('colors.brightWhite') : t('colors.brightGreen'))};
+  }
+
+  &[aria-full-width='true'] {
+    width: 100%;
+  }
+
+  &[aria-selected='true'] {
+    color: ${t('colors.green')};
+  }
+
   &[aria-variant='${buttonVariants.OUTLINED}'] {
     border: ${t('space.50')} solid ${t('colors.white', '40')};
     background-color: ${t('colors.white', '40')};
@@ -50,23 +69,5 @@ export const ButtonWrapper = styled.button`
       background-color: ${t('colors.red')};
       color: ${({ selected }) => (selected ? t('colors.brightRed') : t('colors.brightWhite'))};
     }
-  }
-
-  &[aria-full-width='true'] {
-    width: 100%;
-  }
-  &[aria-selected='true'] {
-    color: ${t('colors.green')};
-  }
-
-  &:active,
-  &:focus,
-  &:focus-visible {
-    outline: none;
-  }
-
-  &:hover {
-    background-color: ${({ selected }) => (selected ? t('colors.green') : t('colors.black'))};
-    color: ${({ selected }) => (selected ? t('colors.brightWhite') : t('colors.brightGreen'))};
   }
 `

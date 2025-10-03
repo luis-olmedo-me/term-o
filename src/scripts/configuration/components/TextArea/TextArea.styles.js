@@ -17,6 +17,16 @@ export const TextAreaInput = styled.textarea`
     outline: none;
   }
 
+  &:focus {
+    border: ${t('space.50')} solid ${t('colors.accent')};
+  }
+
+  &:hover {
+    background-color: ${t('colors.accent')};
+    color: ${({ selected }) => (selected ? t('colors.brightAccent') : t('colors.brightWhite'))};
+    border-color: ${t('colors.accent')};
+  }
+
   &::selection {
     color: ${t('colors.accent')};
     background-color: ${t('colors.selectionBackground')};

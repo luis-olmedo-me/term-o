@@ -14,10 +14,8 @@ export const Selecter = styled.select`
   cursor: pointer;
   outline: none;
 
-  & .selected-content {
-    display: flex;
-    gap: ${t('space.250')};
-    align-items: center;
+  & .selected-content > *:not(.select-option) {
+    display: none;
   }
 
   &:focus {

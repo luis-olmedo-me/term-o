@@ -1,7 +1,7 @@
 import * as React from 'preact'
 import * as S from './Button.styles'
 
-export const Button = ({ text, onClick, fullWidth, Icon, selected }) => {
+export const Button = ({ text, onClick, Icon = null, fullWidth = false, selected = false }) => {
   return (
     <S.ButtonWrapper
       onClick={onClick}

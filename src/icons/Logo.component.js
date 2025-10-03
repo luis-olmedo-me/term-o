@@ -33,7 +33,7 @@ export const Logo = () => {
         height="119.84"
         rx="6"
         transform="rotate(-45 227.555 81.6208)"
-        fill={theme.colors.foreground}
+        fill={theme.colors.brightWhite}
       />
       <defs>
         <filter

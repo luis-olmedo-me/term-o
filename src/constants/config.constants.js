@@ -129,10 +129,10 @@ export const defaultConfigSections = [
         type: 'select',
         postFix: null,
         options: [
-          { id: '12', name: 'Extra-Small' },
-          { id: '14', name: 'Small' },
-          { id: '16', name: 'Normal' },
-          { id: '18', name: 'Large' }
+          { id: '12', name: 'Extra-Small', color: null },
+          { id: '14', name: 'Small', color: null },
+          { id: '16', name: 'Normal', color: null },
+          { id: '18', name: 'Large', color: null }
         ],
         validations: [],
         value: '16'

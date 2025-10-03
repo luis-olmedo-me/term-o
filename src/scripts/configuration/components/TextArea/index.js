@@ -1,3 +1,3 @@
-const { TextArea } = require('./TextArea.component')
+import { TextArea } from './TextArea.component'
 
 export { TextArea }

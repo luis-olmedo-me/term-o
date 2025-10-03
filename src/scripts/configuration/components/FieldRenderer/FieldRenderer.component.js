@@ -1,7 +1,7 @@
 import * as React from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
-import Button from '@src/components/Button'
+import Button, { buttonVariants } from '@src/components/Button'
 import Input, { inputTypes, inputVariants } from '@src/components/Input'
 import { validate } from '@src/helpers/primitive-validation.helpers'
 import FontSelect from '../FontSelect'
@@ -111,7 +111,13 @@ export const FieldRenderer = ({
       )
 
     case 'button':
-      return <Button text={value} onClick={() => handleClickInButtons(sectionId, inputId)} />
+      return (
+        <Button
+          text={value}
+          onClick={() => handleClickInButtons(sectionId, inputId)}
+          variant={buttonVariants.GHOST}
+        />
+      )
 
     default:
       return null

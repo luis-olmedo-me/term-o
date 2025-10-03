@@ -1,7 +1,7 @@
 import * as React from 'preact'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 
-import Button from '@src/components/Button'
+import Button, { buttonVariants } from '@src/components/Button'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
@@ -120,7 +120,7 @@ export const Terminal = () => {
   return (
     <S.TerminalWrapper onMouseUp={handleMouseUp}>
       <S.TerminalHeader>
-        <Button onClick={openConfiguration} Icon={Gear} />
+        <Button onClick={openConfiguration} Icon={Gear} variant={buttonVariants.GHOST} />
       </S.TerminalHeader>
 
       <CommandsViewer

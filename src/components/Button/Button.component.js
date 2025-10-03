@@ -1,13 +1,21 @@
 import * as React from 'preact'
 import * as S from './Button.styles'
 
-export const Button = ({ text, onClick, Icon = null, fullWidth = false, selected = false }) => {
+export const Button = ({
+  text,
+  onClick,
+  variant,
+  Icon = null,
+  fullWidth = false,
+  selected = false
+}) => {
   return (
     <S.ButtonWrapper
       onClick={onClick}
       selected={selected}
       aria-full-width={fullWidth}
       aria-selected={selected}
+      aria-variant={variant}
     >
       {Icon && <Icon />}
       {text}
@@ -20,5 +28,6 @@ Button.propTypes = {
   onClick: Function,
   fullWidth: Boolean,
   selected: Boolean,
-  Icon: Object
+  Icon: Object,
+  variant: String
 }

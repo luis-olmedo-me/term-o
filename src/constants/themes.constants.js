@@ -24,7 +24,7 @@ export const colorThemeKeys = {
 
 export const defaultColorTheme = {
   [colorThemeKeys.NAME]: 'Default Dark Mode',
-  [colorThemeKeys.BACKGROUND]: '#000000',
+  [colorThemeKeys.BACKGROUND]: '#121212',
   [colorThemeKeys.FOREGROUND]: '#ECEDEE',
   [colorThemeKeys.SELECTION_BACKGROUND]: '#27272a',
   [colorThemeKeys.BRIGHT_BLACK]: '#A1A1AA',
@@ -33,8 +33,8 @@ export const defaultColorTheme = {
   [colorThemeKeys.BRIGHT_GREEN]: '#45D483',
   [colorThemeKeys.BRIGHT_PURPLE]: '#9353D3',
   [colorThemeKeys.BRIGHT_RED]: '#F54180',
-  [colorThemeKeys.BRIGHT_WHITE]: '#D4D4D8',
-  [colorThemeKeys.BRIGHT_YELLOW]: '#F7B750',
+  [colorThemeKeys.BRIGHT_WHITE]: '#FFFFFF',
+  [colorThemeKeys.BRIGHT_YELLOW]: '#FFD369',
   [colorThemeKeys.CURSOR_COLOR]: '#ECEDEE',
   [colorThemeKeys.BLACK]: '#18181B',
   [colorThemeKeys.BLUE]: '#006FEE',

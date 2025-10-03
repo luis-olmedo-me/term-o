@@ -1,4 +1,4 @@
-import { basicColorKeys, defaultColorTheme } from './themes.constants'
+import { basicColorKeys, colorThemeKeys, defaultColorTheme } from './themes.constants'
 
 export const configIds = {
   FUNCTIONALITY: 'general',
@@ -103,7 +103,7 @@ export const defaultConfigSections = [
         postFix: null,
         options: basicColorKeys.map(key => ({ id: key, name: key })),
         validations: [],
-        value: 'red'
+        value: colorThemeKeys.GREEN
       },
       {
         id: configInputIds.FONT_FAMILY,

@@ -1,3 +1,4 @@
+import { getColor } from '@src/libs/themer'
 import { defaultColorTheme } from './themes.constants'
 
 export const configIds = {
@@ -15,6 +16,7 @@ export const configInputIds = {
   FONT_FAMILY: 'font-family',
   FONT_SIZE: 'font-size',
   THEME_NAME: 'theme-name',
+  COLOR_ACCENT: 'color-accent',
   RESET_DATA: 'reset-data'
 }
 
@@ -93,6 +95,22 @@ export const defaultConfigSections = [
         options: [],
         validations: [],
         value: defaultColorTheme.name
+      },
+      {
+        id: configInputIds.COLOR_ACCENT,
+        name: 'Accent Color',
+        description: 'Select the primary accent color used in the interface.',
+        type: 'select',
+        postFix: null,
+        options: [
+          {
+            id: 'red',
+            name: 'Red',
+            color: getColor('red')
+          }
+        ],
+        validations: [],
+        value: 'red'
       },
       {
         id: configInputIds.FONT_FAMILY,

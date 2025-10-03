@@ -11,7 +11,11 @@ export const ThemeSelect = ({ value, onChange, name }) => {
   useEffect(function getColorThemes() {
     const isInitiated = themer.isInitiated
     const updateOptions = ({ colorThemes }) => {
-      const newOptions = colorThemes.map(theme => ({ id: theme.name, name: theme.name }))
+      const newOptions = colorThemes.map(theme => ({
+        id: theme.name,
+        name: theme.name,
+        color: null
+      }))
 
       setOptions(newOptions)
       setIsLoading(false)

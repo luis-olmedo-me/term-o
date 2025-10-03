@@ -1,5 +1,6 @@
 import { theme as t } from '@src/libs/themer'
 import styled from 'styled-components'
+import { buttonVariants } from './Button.constants'
 
 export const ButtonWrapper = styled.button`
   width: fit-content;
@@ -19,6 +20,22 @@ export const ButtonWrapper = styled.button`
   transition:
     background-color 0.1s ease-in-out,
     color 0.1s ease-in-out;
+
+  &[aria-variant='${buttonVariants.OUTLINED}'] {
+    border: ${t('space.50')} solid ${t('colors.white', '40')};
+    background-color: ${t('colors.white', '40')};
+    border-radius: ${t('radius.200')};
+    padding: ${t('space.200')} ${t('space.300')};
+
+    &:focus {
+      border: ${t('space.50')} solid ${t('colors.green')};
+    }
+
+    &:hover {
+      background-color: ${t('colors.green')};
+      color: ${({ selected }) => (selected ? t('colors.brightGreen') : t('colors.brightWhite'))};
+    }
+  }
 
   &[aria-full-width='true'] {
     width: 100%;

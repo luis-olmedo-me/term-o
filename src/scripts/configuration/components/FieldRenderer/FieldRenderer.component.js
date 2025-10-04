@@ -3,11 +3,13 @@ import { useEffect, useState } from 'preact/hooks'
 
 import Button, { buttonVariants } from '@src/components/Button'
 import Input, { inputTypes, inputVariants } from '@src/components/Input'
+import { availableInputTypes } from '@src/constants/inputs.constants'
 import { validate } from '@src/helpers/primitive-validation.helpers'
 import FontSelect from '../FontSelect'
 import Select from '../Select'
 import { ColorDot } from '../Select/OptionPrefixes'
 import Switch from '../Switch'
+import { TextArea } from '../TextArea'
 import ThemeSelect from '../ThemeSelect'
 
 export const FieldRenderer = ({
@@ -44,7 +46,7 @@ export const FieldRenderer = ({
   }
 
   switch (type) {
-    case 'string':
+    case availableInputTypes.STRING:
       return (
         <Input
           name={name}
@@ -59,7 +61,7 @@ export const FieldRenderer = ({
         />
       )
 
-    case 'number':
+    case availableInputTypes.NUMBER:
       return (
         <Input
           name={name}
@@ -73,7 +75,17 @@ export const FieldRenderer = ({
         />
       )
 
-    case 'boolean':
+    case availableInputTypes.TEXT_AREA:
+      return (
+        <TextArea
+          name={name}
+          value={localValue}
+          onBlur={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
+          onChange={({ target }) => setLocalValue(target.value)}
+        />
+      )
+
+    case availableInputTypes.BOOLEAN:
       return (
         <Switch
           type="checkbox"
@@ -83,7 +95,7 @@ export const FieldRenderer = ({
         />
       )
 
-    case 'select':
+    case availableInputTypes.SELECT:
       return (
         <Select
           options={options}
@@ -93,10 +105,10 @@ export const FieldRenderer = ({
         />
       )
 
-    case 'color-select':
+    case availableInputTypes.COLOR_SELECT:
       return (
         <Select
-          OptionPrefix={({ option }) => <ColorDot color={option.id} />}
+          OptionPrefix={ColorDot}
           options={options}
           value={value}
           onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
@@ -104,7 +116,7 @@ export const FieldRenderer = ({
         />
       )
 
-    case 'theme-select':
+    case availableInputTypes.THEME_SELECT:
       return (
         <ThemeSelect
           name={name}
@@ -113,7 +125,7 @@ export const FieldRenderer = ({
         />
       )
 
-    case 'font-select':
+    case availableInputTypes.FONT_SELECT:
       return (
         <FontSelect
           name={name}
@@ -122,7 +134,7 @@ export const FieldRenderer = ({
         />
       )
 
-    case 'button':
+    case availableInputTypes.BUTTON:
       return (
         <Button
           text={value}

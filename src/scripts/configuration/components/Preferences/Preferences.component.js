@@ -4,6 +4,7 @@ import { useState } from 'preact/hooks'
 import useConfig from '@src/hooks/useConfig'
 
 import { configIds, configInputIds } from '@src/constants/config.constants'
+import { useTheme } from 'styled-components'
 import FieldRenderer from '../FieldRenderer'
 import SidePanel from '../SidePanel'
 import { sidePanelOptions } from './Preferences.constants'
@@ -11,6 +12,7 @@ import * as S from './Preferences.styles'
 
 export const Preferences = () => {
   const { config, changeConfig, resetConfig } = useConfig()
+  const theme = useTheme()
   const [selectedSectionId, setSelectedSectionId] = useState(configIds.FUNCTIONALITY)
 
   const sectionSelected = config.find(({ id }) => id === selectedSectionId)
@@ -36,7 +38,7 @@ export const Preferences = () => {
 
           {sectionSelected.inputs.map(input => {
             return (
-              <S.ConfigInputWrapper key={input.id}>
+              <S.ConfigInputWrapper key={`${input.id}-${theme.colors.name}`}>
                 <S.ConfigInputTitle>
                   {input.name} [{input.type}]
                 </S.ConfigInputTitle>

@@ -11,7 +11,7 @@ export const TextArea = ({ onChange, onBlur, value, name, maxLines, disabled = f
       rows={maxLines}
       value={value}
       spellCheck="false"
-    ></S.TextAreaInput>
+    />
   )
 }
 TextArea.propTypes = {

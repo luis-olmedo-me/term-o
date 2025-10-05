@@ -1,3 +1,4 @@
+import { colorThemeKeys } from '@src/constants/themes.constants'
 import { theme as t } from '@src/libs/themer'
 import styled from 'styled-components'
 
@@ -8,22 +9,22 @@ export const Dot = styled.span`
   border-radius: ${t('radius.200')};
   border: ${t('space.50')} solid currentColor;
 
-  &.blue {
+  &.${colorThemeKeys.BLUE} {
     background-color: ${t('colors.blue')};
   }
-  &.cyan {
+  &.${colorThemeKeys.CYAN} {
     background-color: ${t('colors.cyan')};
   }
-  &.green {
+  &.${colorThemeKeys.GREEN} {
     background-color: ${t('colors.green')};
   }
-  &.purple {
+  &.${colorThemeKeys.PURPLE} {
     background-color: ${t('colors.purple')};
   }
-  &.red {
+  &.${colorThemeKeys.RED} {
     background-color: ${t('colors.red')};
   }
-  &.yellow {
+  &.${colorThemeKeys.YELLOW} {
     background-color: ${t('colors.yellow')};
   }
 `

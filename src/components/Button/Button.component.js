@@ -12,7 +12,6 @@ export const Button = ({
   return (
     <S.ButtonWrapper
       onClick={onClick}
-      selected={selected}
       aria-full-width={fullWidth}
       aria-selected={selected}
       aria-variant={variant}

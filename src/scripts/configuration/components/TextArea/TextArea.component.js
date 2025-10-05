@@ -23,7 +23,6 @@ export const TextArea = ({ onChange, onBlur, value, name, maxLines, disabled = f
       onBlur={onBlur}
       onChange={handleChange}
       spellCheck="false"
-      className="vertical-scroller"
       rows={maxLines}
       value={value}
     ></S.TextAreaInput>

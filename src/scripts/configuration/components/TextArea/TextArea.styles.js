@@ -11,6 +11,10 @@ export const TextAreaInput = styled.textarea`
   resize: none;
   width: 100%;
 
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   &:active,
   &:focus,
   &:focus-visible {

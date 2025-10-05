@@ -139,7 +139,7 @@ export const FieldRenderer = ({
       return (
         <Button
           onClick={() => handleClickInButtons(sectionId, inputId)}
-          text={value}
+          value={value}
           variant={buttonVariants.OUTLINED_DANGER}
         />
       )

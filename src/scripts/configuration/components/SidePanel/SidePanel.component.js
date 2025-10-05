@@ -12,11 +12,11 @@ export const SidePanel = ({ options, selectedOptionId, onChange }) => {
       {options.map(option => {
         return (
           <Button
-            key={option.id}
-            text={option.name}
-            selected={selectedOptionId == option.id}
-            onClick={() => onChange(option.id)}
             fullWidth
+            key={option.id}
+            onClick={() => onChange(option.id)}
+            selected={selectedOptionId == option.id}
+            value={option.name}
             variant={buttonVariants.GHOST}
           />
         )

@@ -49,71 +49,71 @@ export const FieldRenderer = ({
     case availableInputTypes.STRING:
       return (
         <Input
-          name={name}
-          value={localValue}
-          onBlur={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
-          onChange={({ target }) => setLocalValue(target.value)}
-          variant={inputVariants.OUTLINED}
-          type={inputTypes.TEXT}
-          postFix={postFix}
           errorMessage={errorMessage}
           fullWidth
+          name={name}
+          onBlur={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
+          onChange={({ target }) => setLocalValue(target.value)}
+          postFix={postFix}
+          type={inputTypes.TEXT}
+          value={localValue}
+          variant={inputVariants.OUTLINED}
         />
       )
 
     case availableInputTypes.NUMBER:
       return (
         <Input
+          errorMessage={errorMessage}
           name={name}
-          value={localValue}
           onBlur={({ target }) => tryApplyChange(sectionId, inputId, Number(target.value))}
           onChange={({ target }) => setLocalValue(target.value)}
-          variant={inputVariants.OUTLINED}
-          type={inputTypes.NUMBER}
           postFix={postFix}
-          errorMessage={errorMessage}
+          type={inputTypes.NUMBER}
+          value={localValue}
+          variant={inputVariants.OUTLINED}
         />
       )
 
     case availableInputTypes.TEXT_AREA:
       return (
         <TextArea
+          maxLines={6}
           name={name}
-          value={localValue}
           onBlur={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
           onChange={({ target }) => setLocalValue(target.value)}
-          maxLines={6}
+          value={localValue}
         />
       )
 
     case availableInputTypes.BOOLEAN:
       return (
         <Switch
-          type="checkbox"
           name={name}
-          value={value}
           onChange={() => tryApplyChange(sectionId, inputId, !value)}
+          type="checkbox"
+          value={value}
         />
       )
 
     case availableInputTypes.SELECT:
       return (
         <Select
-          options={options}
-          value={value}
           name={name}
           onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
+          options={options}
+          value={value}
         />
       )
 
     case availableInputTypes.COLOR_SELECT:
       return (
         <Select
-          OptionPrefix={ColorDot}
+          name={name}
+          onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
+          OptionPrefixComponent={ColorDot}
           options={options}
           value={value}
-          onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
-          name={name}
         />
       )
 
@@ -121,8 +121,8 @@ export const FieldRenderer = ({
       return (
         <ThemeSelect
           name={name}
-          value={value}
           onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
+          value={value}
         />
       )
 
@@ -130,16 +130,16 @@ export const FieldRenderer = ({
       return (
         <FontSelect
           name={name}
-          value={value}
           onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
+          value={value}
         />
       )
 
     case availableInputTypes.BUTTON:
       return (
         <Button
-          text={value}
           onClick={() => handleClickInButtons(sectionId, inputId)}
+          text={value}
           variant={buttonVariants.OUTLINED_DANGER}
         />
       )

@@ -28,7 +28,7 @@ export const CommandsViewer = ({ commands }) => {
       <div ref={wrapper}>
         {commands.map(command => {
           return (
-            <div key={command.id}>
+            <S.Command key={command.id}>
               <Line>
                 <ColoredText value={command.context} />
               </Line>
@@ -44,7 +44,7 @@ export const CommandsViewer = ({ commands }) => {
                   </Line>
                 )
               })}
-            </div>
+            </S.Command>
           )
         })}
       </div>

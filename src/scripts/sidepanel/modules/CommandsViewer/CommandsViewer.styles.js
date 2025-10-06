@@ -25,10 +25,7 @@ export const Command = styled.div`
     top: 0.5rem;
     left: 0;
     border-radius: 0 ${t('radius.200')} ${t('radius.200')} 0;
-    transition:
-      background-color 0.1s ease-in-out,
-      color 0.1s ease-in-out,
-      left 0.1s ease-in-out;
+    transition: background-color 0.1s ease-in-out;
   }
 
   &[aria-status=${statuses.DONE}]::after {

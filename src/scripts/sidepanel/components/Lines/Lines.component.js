@@ -5,7 +5,7 @@ import * as S from '../CommandInterpreter/CommandInterpreter.styles'
 
 export const Lines = ({ updates }) => {
   return (
-    <S.CommandInterpreterWrapper>
+    <div>
       {updates.map((update, index) => {
         return (
           <S.CommandInterpreterItem key={index}>
@@ -13,7 +13,7 @@ export const Lines = ({ updates }) => {
           </S.CommandInterpreterItem>
         )
       })}
-    </S.CommandInterpreterWrapper>
+    </div>
   )
 }
 

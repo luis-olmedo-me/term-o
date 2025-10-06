@@ -1,9 +1,9 @@
 import * as React from 'preact'
 import { useEffect, useRef, useState } from 'preact/hooks'
 
+import { PROMPT_MARK } from '@src/constants/config.constants'
 import ColoredText from '../ColoredText'
-import Prompt from '../Prompt'
-import * as S from './CommandInterpreter.styles'
+import { Line } from '../Prompt'
 
 export const CommandInterpreter = ({ command, onFinished, context }) => {
   const [updates, setUpdates] = useState(command.updates)
@@ -42,17 +42,23 @@ export const CommandInterpreter = ({ command, onFinished, context }) => {
   )
 
   return (
-    <S.CommandInterpreterWrapper ref={wrapper}>
-      <Prompt name="current-command" context={context} defaultValue={command.title} disabled />
+    <div ref={wrapper}>
+      <Line>
+        <ColoredText value={context} />
+      </Line>
+
+      <Line>
+        <ColoredText value={`${PROMPT_MARK} ${command.title}`} />
+      </Line>
 
       {updates.map((update, index) => {
         return (
-          <S.CommandInterpreterItem key={index}>
+          <Line key={index}>
             <ColoredText value={update} />
-          </S.CommandInterpreterItem>
+          </Line>
         )
       })}
-    </S.CommandInterpreterWrapper>
+    </div>
   )
 }
 

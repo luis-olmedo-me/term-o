@@ -1,7 +1,7 @@
 import { theme as t } from '@src/libs/themer'
 import styled from 'styled-components'
 import Prompt from '../../components/Prompt'
-import { LoggerWrapper } from '../CommandsViewer/CommandsViewer.styles'
+import { ViewWrapper } from '../CommandsViewer/CommandsViewer.styles'
 
 export const TerminalWrapper = styled.div`
   position: relative;
@@ -10,7 +10,7 @@ export const TerminalWrapper = styled.div`
   background-color: ${t('colors.background')};
   height: 100vh;
 
-  & ${LoggerWrapper} {
+  & ${ViewWrapper} {
     flex-grow: 1;
     overflow-y: scroll;
     overflow-x: hidden;

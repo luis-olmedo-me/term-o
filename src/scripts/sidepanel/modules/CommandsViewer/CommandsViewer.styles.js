@@ -1,7 +1,7 @@
 import { theme as t } from '@src/libs/themer'
 import styled from 'styled-components'
 
-export const LoggerWrapper = styled.div`
+export const ViewWrapper = styled.div`
   display: flex;
   flex-direction: column-reverse;
   gap: ${t('space.400')};
@@ -10,4 +10,8 @@ export const LoggerWrapper = styled.div`
   padding: 0 ${t('space.600')};
   margin-right: ${t('space.500')};
   cursor: text;
+`
+
+export const InterpreterWrapper = styled.div`
+  word-break: break-all;
 `

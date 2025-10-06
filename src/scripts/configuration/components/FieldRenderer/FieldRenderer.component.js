@@ -12,10 +12,12 @@ export const FieldRenderer = ({
   type,
   options,
   name,
+  title,
   postFix,
   changeConfig,
   validations,
-  handleClickInButtons
+  handleClickInButtons,
+  description
 }) => {
   const [errorMessage, setErrorMessage] = useState(null)
 
@@ -31,8 +33,12 @@ export const FieldRenderer = ({
   }
 
   return (
-    <>
-      <S.FieldWrapper aria-error={typeof errorMessage === 'string'} aria-type={type}>
+    <S.FieldWrapper>
+      <S.FieldTitle>{title}</S.FieldTitle>
+
+      <S.FieldDescription>{description}</S.FieldDescription>
+
+      <S.InputWrapper aria-error={typeof errorMessage === 'string'} aria-type={type}>
         <DynamicInput
           errorMessage={errorMessage}
           handleClickInButtons={handleClickInButtons}
@@ -45,10 +51,10 @@ export const FieldRenderer = ({
           type={type}
           value={value}
         />
-      </S.FieldWrapper>
+      </S.InputWrapper>
 
       {errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
-    </>
+    </S.FieldWrapper>
   )
 }
 
@@ -57,10 +63,12 @@ FieldRenderer.propTypes = {
   sectionId: String,
   inputId: String,
   type: String,
+  title: String,
   name: String,
   postFix: String,
   options: Array,
   validations: Array,
   changeConfig: Function,
-  handleClickInButtons: Function
+  handleClickInButtons: Function,
+  description: String
 }

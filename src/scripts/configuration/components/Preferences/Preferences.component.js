@@ -38,26 +38,21 @@ export const Preferences = () => {
 
           {sectionSelected.inputs.map(input => {
             return (
-              <S.ConfigInputWrapper key={`${input.id}-${theme.colors.name}`}>
-                <S.ConfigInputTitle>
-                  {input.name} [{input.type}]
-                </S.ConfigInputTitle>
-
-                <S.ConfigInputDescription>{input.description}</S.ConfigInputDescription>
-
-                <FieldRenderer
-                  value={input.value}
-                  sectionId={sectionSelected.id}
-                  inputId={input.id}
-                  type={input.type}
-                  options={input.options}
-                  validations={input.validations}
-                  postFix={input.postFix}
-                  name={`${sectionSelected.id}-${input.id}`}
-                  changeConfig={changeConfig}
-                  handleClickInButtons={handleClicksInButtonFields}
-                />
-              </S.ConfigInputWrapper>
+              <FieldRenderer
+                key={`${input.id}-${theme.colors.name}`}
+                description={input.description}
+                value={input.value}
+                sectionId={sectionSelected.id}
+                inputId={input.id}
+                type={input.type}
+                options={input.options}
+                validations={input.validations}
+                postFix={input.postFix}
+                name={`${sectionSelected.id}-${input.id}`}
+                title={input.name}
+                changeConfig={changeConfig}
+                handleClickInButtons={handleClicksInButtonFields}
+              />
             )
           })}
         </S.SectionWrapper>

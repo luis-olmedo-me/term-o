@@ -29,28 +29,3 @@ export const SectionTitle = styled.h3`
 export const SectionDescription = styled.p`
   font-size: ${t('fontSize.50')};
 `
-
-export const ConfigInputWrapper = styled.div`
-  margin: ${t('space.900')} 0 0 ${t('space.900')};
-  padding-bottom: ${t('space.900')};
-  border-bottom: ${t('space.50')} solid ${t('colors.white')};
-
-  &:last-child {
-    border-bottom: none;
-  }
-`
-
-export const ConfigInputTitle = styled.h4`
-  margin: ${t('space.400')} 0;
-  font-size: ${t('fontSize.50')};
-  font-weight: bold;
-`
-
-export const ConfigInputDescription = styled.p`
-  margin: ${t('space.400')} 0;
-  font-size: ${t('fontSize.50')};
-  font-style: italic;
-`
-export const ConfigInputField = styled.div`
-  max-width: 30rem;
-`

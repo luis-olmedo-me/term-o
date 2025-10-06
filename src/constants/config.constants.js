@@ -19,7 +19,8 @@ export const configInputIds = {
   FONT_SIZE: 'font-size',
   THEME_NAME: 'theme-name',
   COLOR_ACCENT: 'color-accent',
-  RESET_DATA: 'reset-data'
+  RESET_DATA: 'reset-data',
+  STATUS_INDICATOR: 'status-indicator'
 }
 
 export const defaultConfigSections = [

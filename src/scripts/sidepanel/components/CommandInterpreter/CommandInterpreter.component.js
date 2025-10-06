@@ -11,7 +11,7 @@ export const CommandInterpreter = ({ command, onFinished, context }) => {
   const wrapper = useRef(null)
 
   useEffect(
-    async function listenUpdates() {
+    function listenUpdates() {
       wrapper.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
 
       const handleUpdate = ({ updates: newUpdates }) => {

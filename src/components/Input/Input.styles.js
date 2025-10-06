@@ -67,7 +67,7 @@ export const Input = styled.input`
     }
 
     &:hover {
-      background-color: ${t('colors.accent')};
+      background-color: ${t('colors.accent', 'cc')};
       color: ${({ selected }) => (selected ? t('colors.brightAccent') : t('colors.brightWhite'))};
 
       &,

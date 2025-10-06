@@ -32,7 +32,7 @@ export const ButtonWrapper = styled.button`
     color: ${t('colors.brightAccent')};
   }
   &[aria-selected='true']:hover {
-    background-color: ${t('colors.accent')};
+    background-color: ${t('colors.accent', 'cc')};
     color: ${t('colors.brightWhite')};
   }
 
@@ -55,7 +55,7 @@ export const ButtonWrapper = styled.button`
     }
 
     &:hover {
-      background-color: ${t('colors.accent')};
+      background-color: ${t('colors.accent', 'cc')};
       color: ${t('colors.brightWhite')};
     }
     &[aria-selected='true']:hover {

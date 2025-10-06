@@ -28,7 +28,7 @@ const GlobalStyle = createGlobalStyle`
 
       &:active,
       &:hover {
-        background-color: ${t('colors.accent')};
+        background-color: ${t('colors.accent', 'cc')};
       }
     }
   }

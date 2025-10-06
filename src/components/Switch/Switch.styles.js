@@ -58,7 +58,7 @@ export const SwitchInput = styled.input`
     background-color: ${t('colors.accent', '40')};
   }
   &:hover + ${SimulatedSwitch}.selected {
-    background-color: ${t('colors.accent')};
+    background-color: ${t('colors.accent', 'cc')};
   }
 
   &:active,

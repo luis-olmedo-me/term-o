@@ -71,6 +71,20 @@ export const defaultConfigSections = [
         value: 40
       },
       {
+        id: configInputIds.STATUS_INDICATOR,
+        name: 'Status indicator',
+        description: 'Defines how the status indicator is shown in the terminal prompt.',
+        type: availableInputTypes.SELECT,
+        postFix: null,
+        options: [
+          { id: 'none', name: 'None' },
+          { id: 'half-dot', name: 'Half Dot' },
+          { id: 'dot', name: 'Dot' }
+        ],
+        validations: [],
+        value: 'half-dot'
+      },
+      {
         id: configInputIds.CONTEXT,
         name: 'Prompt Context',
         description:

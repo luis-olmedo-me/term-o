@@ -54,8 +54,7 @@ export const Selecter = styled.select`
     transition: 0.2s rotate;
   }
   &:open {
-    border-radius: ${t('radius.200')} ${t('radius.200')} 0 0;
-    border-bottom: ${t('space.50')} solid ${t('colors.brightBlack')};
+    border-radius: 0;
 
     &::picker-icon {
       rotate: 180deg;

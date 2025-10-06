@@ -45,20 +45,18 @@ export const Preferences = () => {
 
                 <S.ConfigInputDescription>{input.description}</S.ConfigInputDescription>
 
-                <S.ConfigInputField>
-                  <FieldRenderer
-                    value={input.value}
-                    sectionId={sectionSelected.id}
-                    inputId={input.id}
-                    type={input.type}
-                    options={input.options}
-                    validations={input.validations}
-                    postFix={input.postFix}
-                    name={`${sectionSelected.id}-${input.id}`}
-                    changeConfig={changeConfig}
-                    handleClickInButtons={handleClicksInButtonFields}
-                  />
-                </S.ConfigInputField>
+                <FieldRenderer
+                  value={input.value}
+                  sectionId={sectionSelected.id}
+                  inputId={input.id}
+                  type={input.type}
+                  options={input.options}
+                  validations={input.validations}
+                  postFix={input.postFix}
+                  name={`${sectionSelected.id}-${input.id}`}
+                  changeConfig={changeConfig}
+                  handleClickInButtons={handleClicksInButtonFields}
+                />
               </S.ConfigInputWrapper>
             )
           })}

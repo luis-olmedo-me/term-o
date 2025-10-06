@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 export const FieldWrapper = styled.div`
   width: fit-content;
+  max-width: 30rem;
 
   &[aria-type='${availableInputTypes.TEXT_AREA}'],
   &[aria-type='${availableInputTypes.STRING}'] {

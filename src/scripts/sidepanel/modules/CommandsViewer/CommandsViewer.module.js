@@ -12,6 +12,5 @@ export const CommandsViewer = ({ commands }) => {
 }
 
 CommandsViewer.propTypes = {
-  updates: Array,
   commands: Array
 }

@@ -64,7 +64,6 @@ export const ButtonWrapper = styled.button`
   }
   &[aria-variant='${buttonVariants.OUTLINED_DANGER}'] {
     border: ${t('space.50')} solid ${t('colors.red', '40')};
-    background-color: ${t('colors.red', '40')};
     border-radius: ${t('radius.200')};
     padding: ${t('space.200')} ${t('space.300')};
 

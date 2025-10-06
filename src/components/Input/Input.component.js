@@ -17,39 +17,30 @@ export const Input = ({
   postFix,
   name,
   variant,
-  fullWidth,
-  errorMessage = null
+  fullWidth
 }) => {
   return (
-    <>
-      <S.InputWrapper
-        aria-disabled={disabled}
-        aria-error={typeof errorMessage === 'string'}
-        aria-fit-content={!fullWidth}
-      >
-        {prefix && <S.Prefix>{prefix}</S.Prefix>}
+    <S.InputWrapper aria-disabled={disabled} aria-fit-content={!fullWidth}>
+      {prefix && <S.Prefix>{prefix}</S.Prefix>}
 
-        <S.Input
-          ref={inputRef}
-          name={name}
-          spellCheck="false"
-          type={type}
-          value={value}
-          checked={checked}
-          onChange={onChange}
-          onKeyDown={onKeyDown}
-          onFocus={onFocus}
-          onBlur={onBlur}
-          placeholder={placeholder}
-          disabled={disabled}
-          className={variant}
-        />
+      <S.Input
+        ref={inputRef}
+        name={name}
+        spellCheck="false"
+        type={type}
+        value={value}
+        checked={checked}
+        onChange={onChange}
+        onKeyDown={onKeyDown}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        placeholder={placeholder}
+        disabled={disabled}
+        className={variant}
+      />
 
-        {postFix && <S.Postfix>{postFix}</S.Postfix>}
-      </S.InputWrapper>
-
-      {errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
-    </>
+      {postFix && <S.Postfix>{postFix}</S.Postfix>}
+    </S.InputWrapper>
   )
 }
 
@@ -68,6 +59,5 @@ Input.propTypes = {
   type: String,
   name: String,
   variant: String,
-  errorMessage: String,
   fullWidth: Boolean
 }

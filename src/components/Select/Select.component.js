@@ -1,7 +1,14 @@
 import * as React from 'preact'
 import * as S from './Select.styles'
 
-export const Select = ({ options, value, onChange, name, loading = false, OptionPrefix }) => {
+export const Select = ({
+  options,
+  value,
+  onChange,
+  name,
+  loading = false,
+  OptionPrefixComponent = null
+}) => {
   return (
     <S.SelecterWrapper aria-loading={loading}>
       <S.Selecter value={value} onChange={onChange} disabled={loading} name={name}>
@@ -13,7 +20,7 @@ export const Select = ({ options, value, onChange, name, loading = false, Option
           {options?.map(option => {
             return (
               <S.Option key={option.id} value={option.id}>
-                {OptionPrefix && <OptionPrefix option={option} />}
+                {OptionPrefixComponent && <OptionPrefixComponent option={option} />}
 
                 <S.OptionText className="select-option">{option.name}</S.OptionText>
               </S.Option>
@@ -31,5 +38,5 @@ Select.propTypes = {
   name: String,
   onChange: Function,
   loading: Boolean,
-  OptionPrefix: Object
+  OptionPrefixComponent: Object
 }

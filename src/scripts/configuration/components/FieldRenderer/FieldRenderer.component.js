@@ -1,14 +1,9 @@
 import * as React from 'preact'
-import { useEffect, useState } from 'preact/hooks'
+import { useState } from 'preact/hooks'
 
-import Button, { buttonVariants } from '@src/components/Button'
-import Input, { inputTypes, inputVariants } from '@src/components/Input'
 import { validate } from '@src/helpers/primitive-validation.helpers'
-import FontSelect from '../FontSelect'
-import Select from '../Select'
-import { ColorDot } from '../Select/OptionPrefixes'
-import Switch from '../Switch'
-import ThemeSelect from '../ThemeSelect'
+import DynamicInput from '../DynamicInput'
+import * as S from './FieldRenderer.styles'
 
 export const FieldRenderer = ({
   value,
@@ -17,20 +12,14 @@ export const FieldRenderer = ({
   type,
   options,
   name,
+  title,
   postFix,
   changeConfig,
   validations,
-  handleClickInButtons
+  handleClickInButtons,
+  description
 }) => {
-  const [localValue, setLocalValue] = useState(value)
   const [errorMessage, setErrorMessage] = useState(null)
-
-  useEffect(
-    function updateLocalValue() {
-      setLocalValue(value)
-    },
-    [value]
-  )
 
   const tryApplyChange = (sectionId, inputId, newValue) => {
     try {
@@ -43,97 +32,30 @@ export const FieldRenderer = ({
     }
   }
 
-  switch (type) {
-    case 'string':
-      return (
-        <Input
-          name={name}
-          value={localValue}
-          onBlur={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
-          onChange={({ target }) => setLocalValue(target.value)}
-          variant={inputVariants.OUTLINED}
-          type={inputTypes.TEXT}
-          postFix={postFix}
+  return (
+    <S.FieldWrapper>
+      <S.FieldTitle>{title}</S.FieldTitle>
+
+      <S.FieldDescription>{description}</S.FieldDescription>
+
+      <S.InputWrapper aria-error={typeof errorMessage === 'string'} aria-type={type}>
+        <DynamicInput
           errorMessage={errorMessage}
-          fullWidth
-        />
-      )
-
-    case 'number':
-      return (
-        <Input
+          handleClickInButtons={handleClickInButtons}
+          inputId={inputId}
           name={name}
-          value={localValue}
-          onBlur={({ target }) => tryApplyChange(sectionId, inputId, Number(target.value))}
-          onChange={({ target }) => setLocalValue(target.value)}
-          variant={inputVariants.OUTLINED}
-          type={inputTypes.NUMBER}
+          onChange={tryApplyChange}
+          options={options}
           postFix={postFix}
-          errorMessage={errorMessage}
-        />
-      )
-
-    case 'boolean':
-      return (
-        <Switch
-          type="checkbox"
-          name={name}
+          sectionId={sectionId}
+          type={type}
           value={value}
-          onChange={() => tryApplyChange(sectionId, inputId, !value)}
         />
-      )
+      </S.InputWrapper>
 
-    case 'select':
-      return (
-        <Select
-          options={options}
-          value={value}
-          name={name}
-          onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
-        />
-      )
-
-    case 'color-select':
-      return (
-        <Select
-          OptionPrefix={({ option }) => <ColorDot color={option.id} />}
-          options={options}
-          value={value}
-          onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
-          name={name}
-        />
-      )
-
-    case 'theme-select':
-      return (
-        <ThemeSelect
-          name={name}
-          value={value}
-          onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
-        />
-      )
-
-    case 'font-select':
-      return (
-        <FontSelect
-          name={name}
-          value={value}
-          onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
-        />
-      )
-
-    case 'button':
-      return (
-        <Button
-          text={value}
-          onClick={() => handleClickInButtons(sectionId, inputId)}
-          variant={buttonVariants.OUTLINED_DANGER}
-        />
-      )
-
-    default:
-      return null
-  }
+      {errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
+    </S.FieldWrapper>
+  )
 }
 
 FieldRenderer.propTypes = {
@@ -141,10 +63,12 @@ FieldRenderer.propTypes = {
   sectionId: String,
   inputId: String,
   type: String,
+  title: String,
   name: String,
   postFix: String,
   options: Array,
   validations: Array,
   changeConfig: Function,
-  handleClickInButtons: Function
+  handleClickInButtons: Function,
+  description: String
 }

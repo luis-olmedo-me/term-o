@@ -120,7 +120,7 @@ export const Terminal = () => {
   return (
     <S.TerminalWrapper onMouseUp={handleMouseUp}>
       <S.TerminalHeader>
-        <Button onClick={openConfiguration} Icon={Gear} variant={buttonVariants.GHOST} />
+        <Button Icon={Gear} onClick={openConfiguration} variant={buttonVariants.GHOST} />
       </S.TerminalHeader>
 
       <CommandsViewer

@@ -4,6 +4,7 @@ import { useState } from 'preact/hooks'
 import useConfig from '@src/hooks/useConfig'
 
 import { configIds, configInputIds } from '@src/constants/config.constants'
+import { useTheme } from 'styled-components'
 import FieldRenderer from '../FieldRenderer'
 import SidePanel from '../SidePanel'
 import { sidePanelOptions } from './Preferences.constants'
@@ -11,6 +12,7 @@ import * as S from './Preferences.styles'
 
 export const Preferences = () => {
   const { config, changeConfig, resetConfig } = useConfig()
+  const theme = useTheme()
   const [selectedSectionId, setSelectedSectionId] = useState(configIds.FUNCTIONALITY)
 
   const sectionSelected = config.find(({ id }) => id === selectedSectionId)
@@ -36,28 +38,21 @@ export const Preferences = () => {
 
           {sectionSelected.inputs.map(input => {
             return (
-              <S.ConfigInputWrapper key={input.id}>
-                <S.ConfigInputTitle>
-                  {input.name} [{input.type}]
-                </S.ConfigInputTitle>
-
-                <S.ConfigInputDescription>{input.description}</S.ConfigInputDescription>
-
-                <S.ConfigInputField>
-                  <FieldRenderer
-                    value={input.value}
-                    sectionId={sectionSelected.id}
-                    inputId={input.id}
-                    type={input.type}
-                    options={input.options}
-                    validations={input.validations}
-                    postFix={input.postFix}
-                    name={`${sectionSelected.id}-${input.id}`}
-                    changeConfig={changeConfig}
-                    handleClickInButtons={handleClicksInButtonFields}
-                  />
-                </S.ConfigInputField>
-              </S.ConfigInputWrapper>
+              <FieldRenderer
+                key={`${input.id}-${theme.colors.name}`}
+                description={input.description}
+                value={input.value}
+                sectionId={sectionSelected.id}
+                inputId={input.id}
+                type={input.type}
+                options={input.options}
+                validations={input.validations}
+                postFix={input.postFix}
+                name={`${sectionSelected.id}-${input.id}`}
+                title={input.name}
+                changeConfig={changeConfig}
+                handleClickInButtons={handleClicksInButtonFields}
+              />
             )
           })}
         </S.SectionWrapper>

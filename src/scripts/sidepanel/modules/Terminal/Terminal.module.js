@@ -2,7 +2,7 @@ import * as React from 'preact'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 
 import Button, { buttonVariants } from '@src/components/Button'
-import { configInputIds } from '@src/constants/config.constants'
+import { configInputIds, PROMPT_MARK } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
 import useConfig from '@src/hooks/useConfig'
@@ -93,7 +93,9 @@ export const Terminal = () => {
 
   const handleInProgressCommandFinished = async () => {
     const command = currentCommand.getCommandVisibleInChain()
-    const newUpdates = command ? [context, command.title, ...command.updates] : []
+    const newUpdates = command
+      ? [context, `${PROMPT_MARK} ${command.title}`, ...command.updates]
+      : []
 
     setCommandUpdates(updates => [...updates, ...newUpdates])
     setCurrentCommand(null)

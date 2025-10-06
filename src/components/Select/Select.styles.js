@@ -75,9 +75,7 @@ export const SelecterWrapper = styled.div`
 export const OptionsWrapper = styled.div`
   overflow: hidden scroll;
   height: 8rem;
-  border-bottom: ${t('space.50')} solid ${t('colors.brightBlack')};
-  border-left: ${t('space.50')} solid ${t('colors.brightBlack')};
-  border-right: ${t('space.50')} solid ${t('colors.brightBlack')};
+  border: ${t('space.50')} solid ${t('colors.brightBlack')};
   background-color: ${t('colors.brightBlack')};
 `
 

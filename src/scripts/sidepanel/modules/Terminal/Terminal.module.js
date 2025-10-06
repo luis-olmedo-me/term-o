@@ -5,18 +5,17 @@ import Button, { buttonVariants } from '@src/components/Button'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
-import { debounce } from '@src/helpers/utils.helpers'
 import useConfig from '@src/hooks/useConfig'
 import useStorage from '@src/hooks/useStorage'
 import { Gear } from '@src/icons/Gear.component'
 import commandParser from '@src/libs/command-parser'
 import { getCurrentTab } from '@src/libs/command-parser/handlers/tabs/tabs.helpers'
+import { statuses } from '@src/libs/command-parser/sub-services/command'
 import CommandsViewer from '@src/scripts/sidepanel/modules/CommandsViewer'
 import { copyText, getSelectedText, updateUpdatesHistoryWith } from './Terminal.helpers'
 import * as S from './Terminal.styles'
 
 export const Terminal = () => {
-  const [currentCommand, setCurrentCommand] = useState(null)
   const [tab, setTab] = useState(null)
   const inputRef = useRef(null)
 
@@ -85,32 +84,29 @@ export const Terminal = () => {
     window.addEventListener('keydown', focusOnPrompt)
   }
 
+  const handleCommandUpdate = command => {
+    const newUpdates = updateUpdatesHistoryWith(simplifiedCommands, command)
+
+    setSimplifiedCommands(newUpdates)
+  }
+
+  const handleCommandStatusChange = command => {
+    if (!command.finished) return
+    command.removeAllEventListeners()
+
+    handleCommandUpdate(command.getCommandVisibleInChain())
+  }
+
   const handleEnter = value => {
     const newCommand = commandParser.read(value).applyData({ tab, setTab, clearLogs })
     newCommand.setContext(context)
 
-    const handleUpdate = debounce(command => {
-      const newUpdates = updateUpdatesHistoryWith(simplifiedCommands, command)
-
-      setSimplifiedCommands(newUpdates)
-    }, 50)
-    const handleChangeStatus = debounce(command => {
-      if (!command.finished) return
-      newCommand.removeEventListener('update', handleUpdate)
-      newCommand.removeEventListener('statuschange', handleChangeStatus)
-
-      handleUpdate(command.getCommandVisibleInChain())
-      setCurrentCommand(null)
-    }, 50)
-
     if (!newCommand.failed) {
-      newCommand.addEventListener('update', handleUpdate)
-      newCommand.addEventListener('statuschange', handleChangeStatus)
+      newCommand.addEventListener('update', handleCommandUpdate)
+      newCommand.addEventListener('statuschange', handleCommandStatusChange)
       newCommand.execute()
-
-      setCurrentCommand(newCommand)
     } else {
-      handleChangeStatus(newCommand)
+      handleCommandStatusChange(newCommand)
     }
 
     focusOnPrompt()
@@ -140,14 +136,14 @@ export const Terminal = () => {
         <Button Icon={Gear} onClick={openConfiguration} variant={buttonVariants.GHOST} />
       </S.TerminalHeader>
 
-      <CommandsViewer command={currentCommand} updates={cutUpdates} commands={simplifiedCommands} />
+      <CommandsViewer updates={cutUpdates} commands={simplifiedCommands} />
 
       <S.TerminalPrompt
         inputRef={inputRef}
         onEnter={handleEnter}
         onBlur={WaitForKeyPressToFocusOnPrompt}
         onFocus={removePromptFocusEvent}
-        loading={currentCommand !== null}
+        loading={simplifiedCommands.some(command => command.status === statuses.EXECUTING)}
         context={context}
         name="terminal-prompt"
       />

@@ -5,14 +5,22 @@ import ColoredText from '../ColoredText'
 import { Line } from '../Prompt'
 import * as S from './CommandInterpreter.styles'
 
-export const CommandInterpreter = ({ command, commands }) => {
+export const CommandInterpreter = ({ commands }) => {
   const wrapper = useRef(null)
 
   useEffect(
     function listenUpdates() {
-      wrapper.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
+      const commandElements = wrapper.current?.children
+      const lastCommandElement = commandElements.item(commandElements.length - 1)
+
+      const timeoutId = setTimeout(
+        () => lastCommandElement?.scrollIntoView({ behavior: 'smooth', block: 'end' }),
+        0
+      )
+
+      return () => clearTimeout(timeoutId)
     },
-    [command]
+    [commands]
   )
 
   return (

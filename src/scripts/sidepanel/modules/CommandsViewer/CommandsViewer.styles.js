@@ -20,8 +20,8 @@ export const Command = styled.div`
   &::after {
     content: '';
     position: absolute;
-    width: 8px;
-    height: 8px;
+    width: ${t('space.200')};
+    height: ${t('space.300')};
     top: 0.5rem;
     left: 0;
     border-radius: 0 ${t('radius.200')} ${t('radius.200')} 0;

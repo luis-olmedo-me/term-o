@@ -2,15 +2,16 @@ import * as React from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
 import Button, { buttonVariants } from '@src/components/Button'
+import FontSelect from '@src/components/FontSelect'
 import Input, { inputTypes, inputVariants } from '@src/components/Input'
+import Select from '@src/components/Select'
+import { ColorDot } from '@src/components/Select/OptionPrefixes'
+import Switch from '@src/components/Switch'
+import TextArea from '@src/components/TextArea'
+import ThemeSelect from '@src/components/ThemeSelect'
+
 import { availableInputTypes } from '@src/constants/inputs.constants'
 import { validate } from '@src/helpers/primitive-validation.helpers'
-import FontSelect from '../FontSelect'
-import Select from '../Select'
-import { ColorDot } from '../Select/OptionPrefixes'
-import Switch from '../Switch'
-import { TextArea } from '../TextArea'
-import ThemeSelect from '../ThemeSelect'
 
 export const FieldRenderer = ({
   value,

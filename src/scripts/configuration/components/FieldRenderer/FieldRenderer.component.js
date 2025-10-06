@@ -45,104 +45,108 @@ export const FieldRenderer = ({
     }
   }
 
-  const inputs = {
-    [availableInputTypes.STRING]: (
-      <Input
-        errorMessage={errorMessage}
-        fullWidth
-        name={name}
-        onBlur={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
-        onChange={({ target }) => setLocalValue(target.value)}
-        postFix={postFix}
-        type={inputTypes.TEXT}
-        value={localValue}
-        variant={inputVariants.OUTLINED}
-      />
-    ),
+  switch (type) {
+    case availableInputTypes.STRING:
+      return (
+        <Input
+          errorMessage={errorMessage}
+          fullWidth
+          name={name}
+          onBlur={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
+          onChange={({ target }) => setLocalValue(target.value)}
+          postFix={postFix}
+          type={inputTypes.TEXT}
+          value={localValue}
+          variant={inputVariants.OUTLINED}
+        />
+      )
 
-    [availableInputTypes.NUMBER]: (
-      <Input
-        errorMessage={errorMessage}
-        name={name}
-        onBlur={({ target }) => tryApplyChange(sectionId, inputId, Number(target.value))}
-        onChange={({ target }) => setLocalValue(target.value)}
-        postFix={postFix}
-        type={inputTypes.NUMBER}
-        value={localValue}
-        variant={inputVariants.OUTLINED}
-      />
-    ),
+    case availableInputTypes.NUMBER:
+      return (
+        <Input
+          errorMessage={errorMessage}
+          name={name}
+          onBlur={({ target }) => tryApplyChange(sectionId, inputId, Number(target.value))}
+          onChange={({ target }) => setLocalValue(target.value)}
+          postFix={postFix}
+          type={inputTypes.NUMBER}
+          value={localValue}
+          variant={inputVariants.OUTLINED}
+        />
+      )
 
-    [availableInputTypes.TEXT_AREA]: (
-      <TextArea
-        maxLines={6}
-        name={name}
-        onBlur={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
-        onChange={({ target }) => setLocalValue(target.value)}
-        value={localValue}
-      />
-    ),
+    case availableInputTypes.TEXT_AREA:
+      return (
+        <TextArea
+          maxLines={6}
+          name={name}
+          onBlur={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
+          onChange={({ target }) => setLocalValue(target.value)}
+          value={localValue}
+        />
+      )
 
-    [availableInputTypes.BOOLEAN]: (
-      <Switch
-        name={name}
-        onChange={() => tryApplyChange(sectionId, inputId, !value)}
-        type="checkbox"
-        value={value}
-      />
-    ),
+    case availableInputTypes.BOOLEAN:
+      return (
+        <Switch
+          name={name}
+          onChange={() => tryApplyChange(sectionId, inputId, !value)}
+          type="checkbox"
+          value={value}
+        />
+      )
 
-    [availableInputTypes.SELECT]: (
-      <Select
-        name={name}
-        onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
-        options={options}
-        value={value}
-      />
-    ),
+    case availableInputTypes.SELECT:
+      return (
+        <Select
+          name={name}
+          onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
+          options={options}
+          value={value}
+        />
+      )
 
-    [availableInputTypes.COLOR_SELECT]: (
-      <Select
-        name={name}
-        onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
-        OptionPrefixComponent={ColorDot}
-        options={options}
-        value={value}
-      />
-    ),
+    case availableInputTypes.COLOR_SELECT:
+      return (
+        <Select
+          name={name}
+          onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
+          OptionPrefixComponent={ColorDot}
+          options={options}
+          value={value}
+        />
+      )
 
-    [availableInputTypes.THEME_SELECT]: (
-      <ThemeSelect
-        name={name}
-        onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
-        value={value}
-      />
-    ),
+    case availableInputTypes.THEME_SELECT:
+      return (
+        <ThemeSelect
+          name={name}
+          onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
+          value={value}
+        />
+      )
 
-    [availableInputTypes.FONT_SELECT]: (
-      <FontSelect
-        name={name}
-        onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
-        value={value}
-      />
-    ),
+    case availableInputTypes.FONT_SELECT:
+      return (
+        <FontSelect
+          name={name}
+          onChange={({ target }) => tryApplyChange(sectionId, inputId, target.value)}
+          value={value}
+        />
+      )
 
-    [availableInputTypes.BUTTON]: (
-      <Button
-        onClick={() => handleClickInButtons(sectionId, inputId)}
-        value={value}
-        variant={buttonVariants.OUTLINED_DANGER}
-      />
-    )
+    case availableInputTypes.BUTTON:
+      return (
+        <Button
+          onClick={() => handleClickInButtons(sectionId, inputId)}
+          value={value}
+          variant={buttonVariants.OUTLINED_DANGER}
+        />
+      )
+
+    default:
+      return null
   }
-
-  return (
-    <>
-      {inputs[type]}
-
-      <div></div>
-    </>
-  )
 }
 
 FieldRenderer.propTypes = {

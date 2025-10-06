@@ -1,6 +1,8 @@
 import { availableInputTypes } from './inputs.constants'
 import { basicColorKeys, colorThemeKeys, defaultColorTheme } from './themes.constants'
 
+export const PROMPT_MARK = '$'
+
 export const configIds = {
   FUNCTIONALITY: 'general',
   APPEARENCE: 'appearence',

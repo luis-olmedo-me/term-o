@@ -2,7 +2,7 @@ import * as React from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
 import Input, { inputTypes, inputVariants } from '@src/components/Input'
-import { configInputIds } from '@src/constants/config.constants'
+import { configInputIds, PROMPT_MARK } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 import useConfig from '@src/hooks/useConfig'
 import useStorage from '@src/hooks/useStorage'
@@ -84,7 +84,7 @@ export const Prompt = ({
     }
   }
 
-  const prefix = historialIndex || '$'
+  const prefix = historialIndex || PROMPT_MARK
 
   return (
     <S.PromptWrapper aria-loading={loading} className={className}>

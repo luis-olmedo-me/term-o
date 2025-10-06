@@ -28,7 +28,7 @@ export const CommandsViewer = ({ commands }) => {
       <div ref={wrapper}>
         {commands.map(command => {
           return (
-            <S.Command key={command.id}>
+            <S.Command key={command.id} aria-status={command.status}>
               <Line>
                 <ColoredText value={command.context} />
               </Line>

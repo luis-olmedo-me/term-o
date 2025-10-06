@@ -1,3 +1,4 @@
+import { statuses } from '@src/libs/command-parser/sub-services/command'
 import { theme as t } from '@src/libs/themer'
 import styled from 'styled-components'
 
@@ -21,7 +22,6 @@ export const Command = styled.div`
     position: absolute;
     width: 8px;
     height: 8px;
-    background-color: ${t('colors.accent')};
     top: 0.5rem;
     left: 0;
     border-radius: 0 ${t('radius.200')} ${t('radius.200')} 0;
@@ -29,5 +29,15 @@ export const Command = styled.div`
       background-color 0.1s ease-in-out,
       color 0.1s ease-in-out,
       left 0.1s ease-in-out;
+  }
+
+  &[aria-status=${statuses.DONE}]::after {
+    background-color: ${t('colors.green')};
+  }
+  &[aria-status=${statuses.ERROR}]::after {
+    background-color: ${t('colors.red')};
+  }
+  &[aria-status=${statuses.EXECUTING}]::after {
+    background-color: ${t('colors.white')};
   }
 `

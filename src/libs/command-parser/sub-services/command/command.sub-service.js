@@ -39,7 +39,7 @@ export class Command extends EventListener {
       const cleanedUpdate = cleanColors(update)
       const updateByArgs = getArgs(cleanedUpdate)
 
-      if (this.failed) return cleanedUpdate.replace(/^✕ /, '')
+      if (this.failed) return cleanedUpdate
 
       return updateByArgs.map(arg => {
         const isArray = /^\[/g.test(arg) && /\]$/g.test(arg)
@@ -174,7 +174,7 @@ export class Command extends EventListener {
   }
 
   throw(message) {
-    const errorUpdate = formatError({ title: `✕ ${message}` })
+    const errorUpdate = formatError({ title: message })
 
     this.reset()
     this.update(errorUpdate)

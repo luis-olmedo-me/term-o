@@ -20,11 +20,7 @@ export const Command = styled.div`
   &::after {
     content: '';
     position: absolute;
-    width: ${t('space.200')};
-    height: ${t('space.300')};
     top: 0.5rem;
-    left: 0;
-    border-radius: 0 ${t('radius.200')} ${t('radius.200')} 0;
     transition: background-color 0.1s ease-in-out;
   }
 
@@ -36,5 +32,21 @@ export const Command = styled.div`
   }
   &[aria-status=${statuses.EXECUTING}]::after {
     background-color: ${t('colors.white')};
+  }
+
+  &[aria-variant=${'half-dot'}]::after {
+    border-radius: 0 ${t('radius.200')} ${t('radius.200')} 0;
+    left: 0;
+    width: ${t('space.200')};
+    height: ${t('space.300')};
+  }
+  &[aria-variant=${'dot'}]::after {
+    border-radius: ${t('radius.200')};
+    left: ${t('space.200')};
+    width: ${t('space.300')};
+    height: ${t('space.300')};
+  }
+  &[aria-variant=${'none'}]::after {
+    display: none;
   }
 `

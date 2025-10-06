@@ -40,10 +40,17 @@ export const Terminal = () => {
       configInputIds.COPY_ON_SELECTION,
       configInputIds.SWITCH_TAB_AUTOMATICALLY,
       configInputIds.MAX_LINES_PER_COMMAND,
-      configInputIds.CONTEXT
+      configInputIds.CONTEXT,
+      configInputIds.STATUS_INDICATOR
     ]
   })
-  const [canCopyOnSelection, switchTabAutomatically, maxLinesPerCommand, status] = listening
+  const [
+    canCopyOnSelection,
+    switchTabAutomatically,
+    maxLinesPerCommand,
+    rawContext,
+    statusIndicator
+  ] = listening
 
   const focusOnPrompt = useCallback(() => {
     inputRef.current?.focus()
@@ -118,7 +125,7 @@ export const Terminal = () => {
     focusOnPrompt()
   }
 
-  const context = createContext(status, tab)
+  const context = createContext(rawContext, tab)
 
   const handleMouseUp = () => {
     const selectedText = getSelectedText()
@@ -141,7 +148,7 @@ export const Terminal = () => {
         <Button Icon={Gear} onClick={openConfiguration} variant={buttonVariants.GHOST} />
       </S.TerminalHeader>
 
-      <CommandsViewer commands={simplifiedCommands} />
+      <CommandsViewer commands={simplifiedCommands} statusIndicator={statusIndicator} />
 
       <S.TerminalPrompt
         inputRef={inputRef}

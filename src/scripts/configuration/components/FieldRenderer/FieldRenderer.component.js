@@ -3,6 +3,7 @@ import { useState } from 'preact/hooks'
 
 import { validate } from '@src/helpers/primitive-validation.helpers'
 import DynamicInput from '../DynamicInput'
+import * as S from './FieldRenderer.styles'
 
 export const FieldRenderer = ({
   value,
@@ -30,18 +31,24 @@ export const FieldRenderer = ({
   }
 
   return (
-    <DynamicInput
-      errorMessage={errorMessage}
-      handleClickInButtons={handleClickInButtons}
-      inputId={inputId}
-      name={name}
-      onChange={tryApplyChange}
-      options={options}
-      postFix={postFix}
-      sectionId={sectionId}
-      type={type}
-      value={value}
-    />
+    <>
+      <S.FieldWrapper aria-error={typeof errorMessage === 'string'} aria-type={type}>
+        <DynamicInput
+          errorMessage={errorMessage}
+          handleClickInButtons={handleClickInButtons}
+          inputId={inputId}
+          name={name}
+          onChange={tryApplyChange}
+          options={options}
+          postFix={postFix}
+          sectionId={sectionId}
+          type={type}
+          value={value}
+        />
+      </S.FieldWrapper>
+
+      {errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
+    </>
   )
 }
 

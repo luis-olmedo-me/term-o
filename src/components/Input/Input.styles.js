@@ -92,11 +92,6 @@ export const InputWrapper = styled.div`
   &[aria-disabled='true'] ${Input}:disabled {
     cursor: text;
   }
-
-  &[aria-error='true'] {
-    outline: ${t('space.150')} dashed ${t('colors.red')};
-    border-radius: ${t('space.200')};
-  }
 `
 
 export const Prefix = styled.span`
@@ -104,10 +99,4 @@ export const Prefix = styled.span`
     color: ${t('colors.accent')};
     background-color: ${t('colors.selectionBackground')};
   }
-`
-
-export const ErrorMessage = styled.span`
-  margin-top: ${t('space.400')};
-  display: block;
-  color: ${t('colors.red')};
 `

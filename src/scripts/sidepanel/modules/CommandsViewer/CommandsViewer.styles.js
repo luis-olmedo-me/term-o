@@ -10,8 +10,5 @@ export const ViewWrapper = styled.div`
   padding: 0 ${t('space.600')};
   margin-right: ${t('space.500')};
   cursor: text;
-`
-
-export const InterpreterWrapper = styled.div`
   word-break: break-all;
 `

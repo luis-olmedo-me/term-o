@@ -25,7 +25,7 @@ export const CommandsViewer = ({ commands }) => {
 
   return (
     <S.ViewWrapper className="vertical-scroller">
-      <S.InterpreterWrapper ref={wrapper}>
+      <div ref={wrapper}>
         {commands.map(command => {
           return (
             <div key={command.id}>
@@ -47,7 +47,7 @@ export const CommandsViewer = ({ commands }) => {
             </div>
           )
         })}
-      </S.InterpreterWrapper>
+      </div>
     </S.ViewWrapper>
   )
 }

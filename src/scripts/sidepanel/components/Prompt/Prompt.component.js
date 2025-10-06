@@ -17,7 +17,6 @@ export const Prompt = ({
   defaultValue,
   context,
   name,
-  disabled = false,
   loading = false,
   className = null
 }) => {
@@ -92,25 +91,19 @@ export const Prompt = ({
         <ColoredText value={context} />
       </S.Line>
 
-      {disabled ? (
-        <S.Line>
-          <ColoredText value={`${prefix} ${value}`} />
-        </S.Line>
-      ) : (
-        <Input
-          inputRef={inputRef}
-          value={historialIndex ? historial.at(historialIndex) : value}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          onBlur={onBlur}
-          onFocus={onFocus}
-          prefix={prefix}
-          name={name}
-          variant={inputVariants.GHOST}
-          type={inputTypes.TEXT}
-          fullWidth
-        />
-      )}
+      <Input
+        inputRef={inputRef}
+        value={historialIndex ? historial.at(historialIndex) : value}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        onBlur={onBlur}
+        onFocus={onFocus}
+        prefix={prefix}
+        name={name}
+        variant={inputVariants.GHOST}
+        type={inputTypes.TEXT}
+        fullWidth
+      />
     </S.PromptWrapper>
   )
 }
@@ -121,7 +114,6 @@ Prompt.propTypes = {
   onBlur: Function,
   inputRef: Object,
   context: String,
-  disabled: Boolean,
   loading: Boolean,
   defaultValue: String,
   className: String,

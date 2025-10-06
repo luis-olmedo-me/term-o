@@ -4,7 +4,6 @@ import styled from 'styled-components'
 
 export const Line = styled.p`
   margin: 0;
-  padding: 0 ${t('space.600')} 0;
   cursor: text;
 
   &::selection {
@@ -17,9 +16,10 @@ export const PromptWrapper = styled.div`
   cursor: text;
   background-color: ${t('colors.background')};
   color: ${t('colors.foreground')};
+  padding: 0 ${t('space.600')};
 
   ${InputWrapper} {
-    padding: 0 ${t('space.600')} ${t('space.300')};
+    padding: 0 0 ${t('space.300')};
     gap: ${t('space.200')};
   }
 `

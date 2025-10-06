@@ -1,69 +1,50 @@
 import * as React from 'preact'
-import { useEffect, useRef, useState } from 'preact/hooks'
+import { useEffect, useRef } from 'preact/hooks'
 
-import { PROMPT_MARK } from '@src/constants/config.constants'
 import ColoredText from '../ColoredText'
 import { Line } from '../Prompt'
+import * as S from './CommandInterpreter.styles'
 
-export const CommandInterpreter = ({ command, onFinished, context }) => {
-  const [updates, setUpdates] = useState(command.updates)
-
+export const CommandInterpreter = ({ command, commands }) => {
   const wrapper = useRef(null)
 
   useEffect(
     function listenUpdates() {
       wrapper.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
-
-      const handleUpdate = ({ updates: newUpdates }) => {
-        const limitedUpdates = newUpdates
-
-        setUpdates(limitedUpdates)
-      }
-
-      const handleChangeStatus = () => {
-        if (command.finished) onFinished()
-      }
-
-      handleUpdate(command)
-
-      if (command.failed) return onFinished()
-
-      command.addEventListener('update', handleUpdate)
-      command.addEventListener('statuschange', handleChangeStatus)
-
-      if (!command.finished) command.execute()
-
-      return () => {
-        command.removeEventListener('update', handleUpdate)
-        command.removeEventListener('statuschange', handleUpdate)
-      }
     },
     [command]
   )
 
   return (
-    <div ref={wrapper}>
-      <Line>
-        <ColoredText value={context} />
-      </Line>
-
-      <Line>
-        <ColoredText value={`${PROMPT_MARK} ${command.title}`} />
-      </Line>
-
-      {updates.map((update, index) => {
+    <S.CommandInterpreterWrapper ref={wrapper}>
+      {commands.map(command => {
         return (
-          <Line key={index}>
-            <ColoredText value={update} />
-          </Line>
+          <div key={command.id}>
+            <Line>
+              <ColoredText value={command.context} />
+            </Line>
+
+            <Line>
+              <ColoredText value={command.title} />
+            </Line>
+
+            {command.updates.map(update => {
+              return (
+                <Line key={update}>
+                  <ColoredText value={update} />
+                </Line>
+              )
+            })}
+          </div>
         )
       })}
-    </div>
+    </S.CommandInterpreterWrapper>
   )
 }
 
 CommandInterpreter.propTypes = {
   command: Object,
   context: String,
-  onFinished: Function
+  onFinished: Function,
+  commands: Object
 }

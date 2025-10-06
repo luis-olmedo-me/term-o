@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 
-export const CommandInterpreterItem = styled.p`
+export const CommandInterpreterWrapper = styled.div`
   word-break: break-all;
-  margin: 0;
 `

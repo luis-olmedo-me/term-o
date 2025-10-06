@@ -14,6 +14,7 @@ export class Command extends EventListener {
     this.id = createUUIDv4()
     this.name = name
     this.title = ''
+    this.context = ''
     this.data = {}
     this.props = {}
     this.updates = []
@@ -206,6 +207,12 @@ export class Command extends EventListener {
     return this
   }
 
+  setContext(newContext) {
+    this.context = newContext
+
+    return this
+  }
+
   startExecuting() {
     this.changeStatus(statuses.EXECUTING)
     this.reset()
@@ -227,5 +234,15 @@ export class Command extends EventListener {
     return this.failed || !hasAnyHidden
       ? allCommands.find(command => command.visible)
       : allCommands.reverse().find(command => command.visible)
+  }
+
+  simplify() {
+    return {
+      id: this.id,
+      title: this.title,
+      status: this.status,
+      updates: this.updates,
+      context: this.context
+    }
   }
 }

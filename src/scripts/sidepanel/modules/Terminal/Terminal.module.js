@@ -2,16 +2,17 @@ import * as React from 'preact'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 
 import Button, { buttonVariants } from '@src/components/Button'
-import { configInputIds, PROMPT_MARK } from '@src/constants/config.constants'
+import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
+import { debounce } from '@src/helpers/utils.helpers'
 import useConfig from '@src/hooks/useConfig'
 import useStorage from '@src/hooks/useStorage'
 import { Gear } from '@src/icons/Gear.component'
 import commandParser from '@src/libs/command-parser'
 import { getCurrentTab } from '@src/libs/command-parser/handlers/tabs/tabs.helpers'
 import CommandsViewer from '@src/scripts/sidepanel/modules/CommandsViewer'
-import { copyText, getSelectedText } from './Terminal.helpers'
+import { copyText, getSelectedText, updateUpdatesHistoryWith } from './Terminal.helpers'
 import * as S from './Terminal.styles'
 
 export const Terminal = () => {
@@ -24,7 +25,7 @@ export const Terminal = () => {
     key: storageKeys.ALIASES,
     defaultValue: []
   })
-  const [commandUpdates, setCommandUpdates] = useStorage({
+  const [simplifiedCommands, setSimplifiedCommands] = useStorage({
     namespace: storageNamespaces.SESSION,
     key: storageKeys.HISTORY,
     defaultValue: []
@@ -72,7 +73,7 @@ export const Terminal = () => {
   }
 
   const clearLogs = () => {
-    setCommandUpdates([])
+    setSimplifiedCommands([])
   }
 
   const removePromptFocusEvent = () => {
@@ -86,22 +87,36 @@ export const Terminal = () => {
 
   const handleEnter = value => {
     const newCommand = commandParser.read(value).applyData({ tab, setTab, clearLogs })
+    newCommand.setContext(context)
 
-    setCurrentCommand(newCommand)
+    const handleUpdate = debounce(command => {
+      const newUpdates = updateUpdatesHistoryWith(simplifiedCommands, command)
+
+      setSimplifiedCommands(newUpdates)
+    }, 50)
+    const handleChangeStatus = debounce(command => {
+      if (!command.finished) return
+      newCommand.removeEventListener('update', handleUpdate)
+      newCommand.removeEventListener('statuschange', handleChangeStatus)
+
+      handleUpdate(command.getCommandVisibleInChain())
+      setCurrentCommand(null)
+    }, 50)
+
+    if (!newCommand.failed) {
+      newCommand.addEventListener('update', handleUpdate)
+      newCommand.addEventListener('statuschange', handleChangeStatus)
+      newCommand.execute()
+
+      setCurrentCommand(newCommand)
+    } else {
+      handleChangeStatus(newCommand)
+    }
+
     focusOnPrompt()
   }
 
-  const handleInProgressCommandFinished = async () => {
-    const command = currentCommand.getCommandVisibleInChain()
-    const newUpdates = command
-      ? [context, `${PROMPT_MARK} ${command.title}`, ...command.updates]
-      : []
-
-    setCommandUpdates(updates => [...updates, ...newUpdates])
-    setCurrentCommand(null)
-  }
-
-  const cutUpdates = commandUpdates.slice(maxLinesPerCommand * -1)
+  const cutUpdates = simplifiedCommands.slice(maxLinesPerCommand * -1)
   const context = createContext(status, tab)
 
   const handleMouseUp = () => {
@@ -125,12 +140,7 @@ export const Terminal = () => {
         <Button Icon={Gear} onClick={openConfiguration} variant={buttonVariants.GHOST} />
       </S.TerminalHeader>
 
-      <CommandsViewer
-        command={currentCommand}
-        updates={cutUpdates}
-        context={context}
-        onInProgressCommandFinished={handleInProgressCommandFinished}
-      />
+      <CommandsViewer command={currentCommand} updates={cutUpdates} commands={simplifiedCommands} />
 
       <S.TerminalPrompt
         inputRef={inputRef}

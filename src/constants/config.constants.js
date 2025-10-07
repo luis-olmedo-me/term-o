@@ -23,6 +23,19 @@ export const configInputIds = {
   STATUS_INDICATOR: 'status-indicator'
 }
 
+export const fontSizes = {
+  EXTRA_SMALL: '12',
+  SMALL: '14',
+  NORMAL: '16',
+  LARGE: '18'
+}
+
+export const statusIndicators = {
+  HALF_DOT: 'half-dot',
+  DOT: 'dot',
+  NONE: 'none'
+}
+
 export const configDefaultValues = {
   [configInputIds.COPY_ON_SELECTION]: true,
   [configInputIds.SWITCH_TAB_AUTOMATICALLY]: true,
@@ -30,11 +43,11 @@ export const configDefaultValues = {
   [configInputIds.HISTORIAL_SIZE]: 40,
   [configInputIds.CONTEXT]: 'On [termo.color.brightBlue]{origin}',
   [configInputIds.FONT_FAMILY]: 'Consolas',
-  [configInputIds.FONT_SIZE]: '16',
+  [configInputIds.FONT_SIZE]: fontSizes.NORMAL,
   [configInputIds.THEME_NAME]: defaultColorTheme.name,
   [configInputIds.COLOR_ACCENT]: colorThemeKeys.GREEN,
   [configInputIds.RESET_DATA]: 'Reset',
-  [configInputIds.STATUS_INDICATOR]: 'half-dot'
+  [configInputIds.STATUS_INDICATOR]: statusIndicators.HALF_DOT
 }
 
 export const defaultConfigSections = [
@@ -92,9 +105,9 @@ export const defaultConfigSections = [
         type: availableInputTypes.SELECT,
         postFix: null,
         options: [
-          { id: 'none', name: 'None' },
-          { id: 'half-dot', name: 'Half Dot' },
-          { id: 'dot', name: 'Dot' }
+          { id: statusIndicators.DOT, name: 'Dot' },
+          { id: statusIndicators.HALF_DOT, name: 'Half Dot' },
+          { id: statusIndicators.NONE, name: 'None' }
         ],
         validations: [],
         value: configDefaultValues[configInputIds.STATUS_INDICATOR]
@@ -154,10 +167,10 @@ export const defaultConfigSections = [
         type: availableInputTypes.SELECT,
         postFix: null,
         options: [
-          { id: '12', name: 'Extra-Small' },
-          { id: '14', name: 'Small' },
-          { id: '16', name: 'Normal' },
-          { id: '18', name: 'Large' }
+          { id: fontSizes.EXTRA_SMALL, name: 'Extra-Small' },
+          { id: fontSizes.SMALL, name: 'Small' },
+          { id: fontSizes.NORMAL, name: 'Normal' },
+          { id: fontSizes.LARGE, name: 'Large' }
         ],
         validations: [],
         value: configDefaultValues[configInputIds.FONT_SIZE]

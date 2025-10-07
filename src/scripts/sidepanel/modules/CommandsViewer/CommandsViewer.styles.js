@@ -74,7 +74,7 @@ export const Command = styled.div`
   &[aria-variant=${statusIndicators.HALF_DOT}]::after {
     border-radius: 0 ${t('radius.200')} ${t('radius.200')} 0;
     left: 0;
-    width: ${t('space.200')};
+    width: ${t('space.250')};
     height: ${t('space.200')};
   }
   &[aria-variant=${statusIndicators.HALF_DOT}][aria-light='true']::after,

@@ -1,23 +1,25 @@
 import * as React from 'preact'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 
+import useConfig from '@src/hooks/useConfig'
+import useStorage from '@src/hooks/useStorage'
+
 import Button, { buttonVariants } from '@src/components/Button'
+import { Gear } from '@src/icons/Gear.component'
+import CommandsViewer from '@src/scripts/sidepanel/modules/CommandsViewer'
+
+import commandParser, {
+  limitSimplifiedCommands,
+  updateSimplifiedCommandsWith
+} from '@src/libs/command-parser'
+
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
-import useConfig from '@src/hooks/useConfig'
-import useStorage from '@src/hooks/useStorage'
-import { Gear } from '@src/icons/Gear.component'
-import commandParser from '@src/libs/command-parser'
 import { getCurrentTab } from '@src/libs/command-parser/handlers/tabs/tabs.helpers'
 import { statuses } from '@src/libs/command-parser/sub-services/command'
-import CommandsViewer from '@src/scripts/sidepanel/modules/CommandsViewer'
-import {
-  copyText,
-  getSelectedText,
-  limitSimplifiedCommands,
-  updateUpdatesHistoryWith
-} from './Terminal.helpers'
+import { copyText, getSelectedText } from './Terminal.helpers'
+
 import * as S from './Terminal.styles'
 
 export const Terminal = () => {
@@ -97,8 +99,8 @@ export const Terminal = () => {
   }
 
   const handleCommandUpdate = command => {
-    const commands = updateUpdatesHistoryWith(simplifiedCommands, command)
-    const commandsLimited = limitSimplifiedCommands(commands, maxLinesPerCommand)
+    const updatedCommands = updateSimplifiedCommandsWith(simplifiedCommands, command)
+    const commandsLimited = limitSimplifiedCommands(updatedCommands, maxLinesPerCommand)
 
     setSimplifiedCommands(commandsLimited)
   }

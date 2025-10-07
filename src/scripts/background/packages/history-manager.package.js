@@ -19,7 +19,7 @@ const historyManager = (function () {
   }
 
   const handleStorageChanges = (changes, currentChanges) => {
-    if (currentChanges !== storageNamespaces.LOCAL || currentChanges !== storageNamespaces.SESSION)
+    if (currentChanges !== storageNamespaces.LOCAL && currentChanges !== storageNamespaces.SESSION)
       return
 
     for (let [storageKey, { newValue }] of Object.entries(changes)) {

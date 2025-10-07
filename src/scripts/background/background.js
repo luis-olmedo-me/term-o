@@ -15,15 +15,15 @@ const executeEvents = async (events, defaultTab) => {
   for (let index = 0; index < events.length; index++) {
     const event = events[index]
     const command = commandParser.read(event.line)
+    const context = historyManager.getContext(tab)
 
-    command.applyData({ tab, setTab, clearLogs })
+    command.applyData({ tab, setTab, clearLogs }).setContext(context)
     if (!command.finished) await command.execute()
 
-    const context = historyManager.getContext(tab)
     const commandVisible = command.getCommandVisibleInChain()
-    const newUpdates = command ? [context, commandVisible.title, ...commandVisible.updates] : []
+    const newCommands = command ? commandVisible.simplify() : []
 
-    updates = [...updates, ...newUpdates]
+    updates = [...updates, ...newCommands]
   }
 
   historyManager.setHistory(updates)

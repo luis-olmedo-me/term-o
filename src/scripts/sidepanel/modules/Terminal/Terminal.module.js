@@ -45,7 +45,8 @@ export const Terminal = () => {
       configInputIds.SWITCH_TAB_AUTOMATICALLY,
       configInputIds.MAX_LINES_PER_COMMAND,
       configInputIds.CONTEXT,
-      configInputIds.STATUS_INDICATOR
+      configInputIds.STATUS_INDICATOR,
+      configInputIds.STATUS_BAR
     ]
   })
   const [
@@ -53,7 +54,8 @@ export const Terminal = () => {
     switchTabAutomatically,
     maxLinesPerCommand,
     rawContext,
-    statusIndicator
+    statusIndicator,
+    hasStatusBar
   ] = listening
 
   const focusOnPrompt = useCallback(() => {
@@ -163,7 +165,11 @@ export const Terminal = () => {
         <Button Icon={Gear} onClick={openConfiguration} variant={buttonVariants.GHOST} />
       </S.TerminalHeader>
 
-      <CommandsViewer commands={simplifiedCommands} statusIndicator={statusIndicator} />
+      <CommandsViewer
+        commands={simplifiedCommands}
+        statusIndicator={statusIndicator}
+        hasStatusBar={hasStatusBar}
+      />
 
       <S.TerminalPrompt
         inputRef={inputRef}

@@ -5,7 +5,7 @@ import ColoredText from '../../components/ColoredText'
 import { Line } from '../../components/Prompt'
 import * as S from './CommandsViewer.styles'
 
-export const CommandsViewer = ({ commands, statusIndicator }) => {
+export const CommandsViewer = ({ commands, statusIndicator, hasStatusBar }) => {
   const wrapper = useRef(null)
 
   useEffect(
@@ -31,8 +31,8 @@ export const CommandsViewer = ({ commands, statusIndicator }) => {
             <S.Command
               key={command.id}
               aria-status={command.status}
+              aria-execution-context={hasStatusBar ? command.executionContext : null}
               aria-variant={statusIndicator}
-              aria-execution-context={command.executionContext}
             >
               <Line>
                 <ColoredText value={command.context} />
@@ -59,5 +59,6 @@ export const CommandsViewer = ({ commands, statusIndicator }) => {
 
 CommandsViewer.propTypes = {
   commands: Array,
-  statusIndicator: String
+  statusIndicator: String,
+  hasStatusBar: Boolean
 }

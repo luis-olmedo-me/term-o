@@ -24,7 +24,9 @@ import * as S from './Terminal.styles'
 
 export const Terminal = () => {
   const [tab, setTab] = useState(null)
+
   const inputRef = useRef(null)
+  const currentCommandRef = useRef(null)
 
   const [aliases] = useStorage({
     namespace: storageNamespaces.LOCAL,
@@ -85,10 +87,6 @@ export const Terminal = () => {
     if (canCopyOnSelection) copyText(selectedText)
   }
 
-  const clearLogs = () => {
-    setSimplifiedCommands([])
-  }
-
   const removePromptFocusEvent = () => {
     window.removeEventListener('keydown', focusOnPrompt)
   }
@@ -96,6 +94,18 @@ export const Terminal = () => {
   const WaitForKeyPressToFocusOnPrompt = () => {
     removePromptFocusEvent()
     window.addEventListener('keydown', focusOnPrompt)
+  }
+
+  const clearCurrentCommandRef = () => {
+    if (currentCommandRef.current) {
+      currentCommandRef.current.removeAllEventListeners()
+      currentCommandRef.current = null
+    }
+  }
+
+  const clearLogs = () => {
+    clearCurrentCommandRef()
+    setSimplifiedCommands([])
   }
 
   const handleCommandUpdate = command => {
@@ -110,11 +120,14 @@ export const Terminal = () => {
     command.removeAllEventListeners()
 
     handleCommandUpdate(command.getCommandVisibleInChain())
+    clearCurrentCommandRef()
   }
 
   const handleEnter = value => {
-    const newCommand = commandParser.read(value).applyData({ tab, setTab, clearLogs })
+    const newCommand = commandParser.read(value)
+    newCommand.applyData({ tab, setTab, clearLogs })
     newCommand.setContext(context)
+    currentCommandRef.current = newCommand
 
     if (!newCommand.failed) {
       newCommand.addEventListener('update', handleCommandUpdate)

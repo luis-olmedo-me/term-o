@@ -243,7 +243,8 @@ export class Command extends EventListener {
       title: this.title,
       status: this.status,
       updates: this.updates,
-      context: this.context
+      context: this.context,
+      executionContext: this.executionContext
     }
   }
 }

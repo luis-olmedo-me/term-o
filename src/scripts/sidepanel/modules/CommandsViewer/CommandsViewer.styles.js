@@ -33,7 +33,7 @@ export const Command = styled.div`
       position: absolute;
       top: 0.5rem;
       transition: background-color 0.1s ease-in-out;
-      background-color: ${t('colors.brightBlack', '40')};
+      background-color: ${t('colors.brightBlack', '30')};
       border-radius: ${t('radius.200')};
       left: ${t('space.300')};
       width: ${t('space.200')};

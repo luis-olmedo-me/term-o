@@ -50,7 +50,8 @@ export const configDefaultValues = {
   [configInputIds.COLOR_ACCENT]: colorThemeKeys.GREEN,
   [configInputIds.RESET_DATA]: 'Reset',
   [configInputIds.STATUS_INDICATOR]: statusIndicators.HALF_DOT,
-  [configInputIds.STATUS_BAR]: true
+  [configInputIds.STATUS_BAR]: true,
+  [configInputIds.STATUS_LIGHT]: true
 }
 
 export const defaultConfigSections = [

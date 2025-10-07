@@ -1,3 +1,4 @@
+import { statusIndicators } from '@src/constants/config.constants'
 import { executionContexts } from '@src/libs/command-parser'
 import { statuses } from '@src/libs/command-parser/sub-services/command'
 import { theme as t } from '@src/libs/themer'
@@ -40,8 +41,8 @@ export const Command = styled.div`
       left: ${t('space.250')};
     }
 
-    &[aria-variant=${'half-dot'}]::before,
-    &[aria-variant=${'light-half-dot'}]::before {
+    &[aria-variant=${statusIndicators.HALF_DOT}]::before,
+    &[aria-variant=${statusIndicators.LIGHT}]::before {
       border-radius: 0 ${t('radius.200')} ${t('radius.200')} 0;
       left: 0;
     }
@@ -63,26 +64,26 @@ export const Command = styled.div`
     background-color: ${t('colors.white')};
   }
 
-  &[aria-variant=${'half-dot'}]::after {
+  &[aria-variant=${statusIndicators.HALF_DOT}]::after {
     border-radius: 0 ${t('radius.200')} ${t('radius.200')} 0;
     left: 0;
     width: ${t('space.200')};
     height: ${t('space.300')};
   }
-  &[aria-variant=${'light-half-dot'}]::after {
+  &[aria-variant=${statusIndicators.LIGHT}]::after {
     border-radius: 0 ${t('radius.200')} ${t('radius.200')} 0;
     left: 0;
     width: ${t('space.200')};
     height: ${t('space.300')};
     box-shadow: 0 0 ${t('space.200')} ${t('space.100')} currentColor;
   }
-  &[aria-variant=${'dot'}]::after {
+  &[aria-variant=${statusIndicators.DOT}]::after {
     border-radius: ${t('radius.200')};
     left: ${t('space.200')};
     width: ${t('space.300')};
     height: ${t('space.300')};
   }
-  &[aria-variant=${'none'}]::after {
+  &[aria-variant=${statusIndicators.NONE}]::after {
     display: none;
   }
 `

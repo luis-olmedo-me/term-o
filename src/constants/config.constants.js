@@ -33,6 +33,7 @@ export const fontSizes = {
 
 export const statusIndicators = {
   HALF_DOT: 'half-dot',
+  LIGHT_HALF_DOT: 'light-half-dot',
   DOT: 'dot',
   NONE: 'none'
 }
@@ -109,6 +110,7 @@ export const defaultConfigSections = [
         options: [
           { id: statusIndicators.DOT, name: 'Dot' },
           { id: statusIndicators.HALF_DOT, name: 'Half Dot' },
+          { id: statusIndicators.LIGHT_HALF_DOT, name: 'Light Half Dot' },
           { id: statusIndicators.NONE, name: 'None' }
         ],
         validations: [],

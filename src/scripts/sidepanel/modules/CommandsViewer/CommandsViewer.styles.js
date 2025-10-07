@@ -40,7 +40,8 @@ export const Command = styled.div`
       left: ${t('space.250')};
     }
 
-    &[aria-variant=${'half-dot'}]::before {
+    &[aria-variant=${'half-dot'}]::before,
+    &[aria-variant=${'light-half-dot'}]::before {
       border-radius: 0 ${t('radius.200')} ${t('radius.200')} 0;
       left: 0;
     }
@@ -50,12 +51,15 @@ export const Command = styled.div`
   }
 
   &[aria-status=${statuses.DONE}]::after {
+    color: ${t('colors.green')};
     background-color: ${t('colors.green')};
   }
   &[aria-status=${statuses.ERROR}]::after {
+    color: ${t('colors.red')};
     background-color: ${t('colors.red')};
   }
   &[aria-status=${statuses.EXECUTING}]::after {
+    color: ${t('colors.white')};
     background-color: ${t('colors.white')};
   }
 
@@ -64,6 +68,13 @@ export const Command = styled.div`
     left: 0;
     width: ${t('space.200')};
     height: ${t('space.300')};
+  }
+  &[aria-variant=${'light-half-dot'}]::after {
+    border-radius: 0 ${t('radius.200')} ${t('radius.200')} 0;
+    left: 0;
+    width: ${t('space.200')};
+    height: ${t('space.300')};
+    box-shadow: 0 0 ${t('space.200')} ${t('space.100')} currentColor;
   }
   &[aria-variant=${'dot'}]::after {
     border-radius: ${t('radius.200')};

@@ -57,7 +57,7 @@ export const executeCode = ({ scriptContent, command }) => {
     iframe.setAttribute('style', 'display: none;')
     document.body.appendChild(iframe)
 
-    const handleCodeEval = async function(event) {
+    const handleCodeEval = async function (event) {
       const type = event.data?.type
       const data = event.data?.data
 

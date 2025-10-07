@@ -1,22 +1,12 @@
 import { configIds, configInputIds } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
+import { getConfigValueByInputId } from '@src/helpers/config.helpers'
 import { createContext } from '@src/helpers/contexts.helpers'
 import { getStorageValue, setStorageValue } from '@src/helpers/storage.helpers'
 
 const historyManager = (function () {
   let history = []
-  let status = ''
-
-  const getStatusFromConfig = config => {
-    if (!config) return ''
-
-    const promptConfig = config.find(config => config.id === configIds.FUNCTIONALITY)
-    const statusInputConfig = promptConfig?.inputs.find(
-      input => input.id === configInputIds.CONTEXT
-    )
-
-    return statusInputConfig?.value
-  }
+  let context = ''
 
   const handleStorageChanges = (changes, currentChanges) => {
     if (currentChanges !== storageNamespaces.LOCAL && currentChanges !== storageNamespaces.SESSION)
@@ -27,7 +17,7 @@ const historyManager = (function () {
         history = newValue
       }
       if (storageKey === storageKeys.CONFIG) {
-        status = getStatusFromConfig(newValue)
+        context = getConfigValueByInputId(configInputIds.CONTEXT, newValue, '')
       }
     }
   }
@@ -37,7 +27,7 @@ const historyManager = (function () {
     const historyFromLS = await getStorageValue(storageNamespaces.SESSION, storageKeys.HISTORY)
 
     history = historyFromLS || []
-    status = getStatusFromConfig(configFromLS)
+    context = getConfigValueByInputId(configInputIds.CONTEXT, configFromLS, '')
   }
 
   const setHistoryFromLS = value => {
@@ -45,7 +35,7 @@ const historyManager = (function () {
   }
 
   const getContext = tab => {
-    return createContext(status, tab)
+    return createContext(context, tab)
   }
 
   getHistoryFromLS()

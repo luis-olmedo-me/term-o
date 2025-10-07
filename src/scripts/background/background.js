@@ -7,7 +7,7 @@ import processHandlers from './process-handlers'
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
 
 const executeEvents = async (events, defaultTab) => {
-  let updates = await historyManager.getHistory()
+  let commands = await historyManager.getHistory()
   let tab = defaultTab
   const setTab = newTab => (tab = newTab)
   const clearLogs = () => historyManager.setHistory([])
@@ -21,12 +21,12 @@ const executeEvents = async (events, defaultTab) => {
     if (!command.finished) await command.execute()
 
     const commandVisible = command.getCommandVisibleInChain()
-    const newCommands = command ? commandVisible.simplify() : []
+    const newCommand = command ? commandVisible.simplify() : []
 
-    updates = [...updates, ...newCommands]
+    commands = [...commands, newCommand]
   }
 
-  historyManager.setHistory(updates)
+  historyManager.setHistory(commands)
 }
 
 chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {

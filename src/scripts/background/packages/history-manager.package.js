@@ -19,7 +19,8 @@ const historyManager = (function () {
   }
 
   const handleStorageChanges = (changes, currentChanges) => {
-    if (currentChanges !== storageNamespaces.LOCAL) return
+    if (currentChanges !== storageNamespaces.LOCAL || currentChanges !== storageNamespaces.SESSION)
+      return
 
     for (let [storageKey, { newValue }] of Object.entries(changes)) {
       if (storageKey === storageKeys.HISTORY) {
@@ -33,14 +34,14 @@ const historyManager = (function () {
 
   const getHistoryFromLS = async () => {
     const configFromLS = await getStorageValue(storageNamespaces.LOCAL, storageKeys.CONFIG)
-    const historyFromLS = await getStorageValue(storageNamespaces.LOCAL, storageKeys.HISTORY)
+    const historyFromLS = await getStorageValue(storageNamespaces.SESSION, storageKeys.HISTORY)
 
     history = historyFromLS || []
     status = getStatusFromConfig(configFromLS)
   }
 
   const setHistoryFromLS = value => {
-    setStorageValue(storageNamespaces.LOCAL, storageKeys.HISTORY, value)
+    setStorageValue(storageNamespaces.SESSION, storageKeys.HISTORY, value)
   }
 
   const getContext = tab => {

@@ -79,9 +79,9 @@ export const Command = styled.div`
   }
   &[aria-variant=${statusIndicators.DOT}]::after {
     border-radius: ${t('radius.200')};
-    left: ${t('space.200')};
-    width: ${t('space.300')};
-    height: ${t('space.300')};
+    left: ${t('space.250')};
+    width: ${t('space.200')};
+    height: ${t('space.200')};
   }
   &[aria-variant=${statusIndicators.NONE}]::after {
     display: none;

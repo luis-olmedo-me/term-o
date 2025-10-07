@@ -20,7 +20,8 @@ export const configInputIds = {
   THEME_NAME: 'theme-name',
   COLOR_ACCENT: 'color-accent',
   RESET_DATA: 'reset-data',
-  STATUS_INDICATOR: 'status-indicator'
+  STATUS_INDICATOR: 'status-indicator',
+  STATUS_BAR: 'status-bar'
 }
 
 export const fontSizes = {
@@ -47,7 +48,8 @@ export const configDefaultValues = {
   [configInputIds.THEME_NAME]: defaultColorTheme.name,
   [configInputIds.COLOR_ACCENT]: colorThemeKeys.GREEN,
   [configInputIds.RESET_DATA]: 'Reset',
-  [configInputIds.STATUS_INDICATOR]: statusIndicators.HALF_DOT
+  [configInputIds.STATUS_INDICATOR]: statusIndicators.HALF_DOT,
+  [configInputIds.STATUS_BAR]: true
 }
 
 export const defaultConfigSections = [
@@ -111,6 +113,16 @@ export const defaultConfigSections = [
         ],
         validations: [],
         value: configDefaultValues[configInputIds.STATUS_INDICATOR]
+      },
+      {
+        id: configInputIds.STATUS_BAR,
+        name: 'Status bar',
+        description: 'Display the status bar in the terminal prompt.',
+        type: availableInputTypes.BOOLEAN,
+        postFix: null,
+        options: [],
+        validations: [],
+        value: configDefaultValues[configInputIds.STATUS_BAR]
       },
       {
         id: configInputIds.CONTEXT,

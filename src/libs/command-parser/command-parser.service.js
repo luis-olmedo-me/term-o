@@ -16,10 +16,14 @@ class CommandParser extends EventListener {
 
     this.templates = templates
     this.aliases = []
+    this.executionContext = null
   }
 
   setAliases(aliases) {
     this.aliases = aliases
+  }
+  setExecutionContext(executionContext) {
+    this.executionContext = executionContext
   }
 
   read(rawScript) {
@@ -48,7 +52,7 @@ class CommandParser extends EventListener {
     const cleanedName = name.replace('"', '\\"')
 
     if (!template) {
-      const error = errorTemplate.create()
+      const error = errorTemplate.create(this.executionContext)
 
       error.mock({ title: `The command "${cleanedName}" is unrecognized.` })
       error.execute()
@@ -56,7 +60,7 @@ class CommandParser extends EventListener {
       return error
     }
 
-    const command = template.create().prepare(scriptArgs)
+    const command = template.create(this.executionContext).prepare(scriptArgs)
 
     return command
   }

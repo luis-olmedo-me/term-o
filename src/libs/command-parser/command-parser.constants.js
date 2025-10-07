@@ -12,3 +12,8 @@ export const commandNames = {
   REQUEST: 'request',
   SCRIPTS: 'scripts'
 }
+
+export const executionContexts = {
+  BACKGROUND: 'background',
+  SIDEPANEL: 'sidepanel'
+}

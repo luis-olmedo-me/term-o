@@ -63,7 +63,9 @@ export const executeCode = ({ scriptContent, command }) => {
 
       switch (type) {
         case 'sandbox-command': {
-          const newCommand = commandParser.getTemplateByName(data.name).create()
+          const newCommand = commandParser
+            .getTemplateByName(data.name)
+            .create(commandParser.executionContext)
 
           newCommand.mock(data.props)
           newCommand.applyData(command.data)

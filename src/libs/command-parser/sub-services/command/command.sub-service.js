@@ -8,13 +8,14 @@ import { statuses } from './command.constants'
 import { executePerUpdates, getArgs, getArray, getPropsFromString } from './command.helpers'
 
 export class Command extends EventListener {
-  constructor({ name, options, helpSectionTitles }) {
+  constructor({ name, options, helpSectionTitles, executionContext }) {
     super()
 
     this.id = createUUIDv4()
     this.name = name
-    this.title = ''
+    this.executionContext = executionContext
     this.context = ''
+    this.title = ''
     this.data = {}
     this.props = {}
     this.updates = []

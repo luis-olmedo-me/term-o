@@ -17,7 +17,7 @@ export const ViewWrapper = styled.div`
 
 export const Command = styled.div`
   position: relative;
-  padding: 0 ${t('space.600')};
+  padding: 0 ${t('space.600')} 0 ${t('space.800')};
 
   &::after {
     content: '';
@@ -35,10 +35,9 @@ export const Command = styled.div`
       transition: background-color 0.1s ease-in-out;
       background-color: ${t('colors.brightBlack', '40')};
       border-radius: ${t('radius.200')};
-      left: ${t('space.250')};
+      left: ${t('space.300')};
       width: ${t('space.200')};
       height: calc(100% - 1rem);
-      left: ${t('space.250')};
     }
 
     &[aria-variant=${statusIndicators.HALF_DOT}]::before {
@@ -68,7 +67,7 @@ export const Command = styled.div`
   }
   &[aria-variant=${statusIndicators.DOT}]::after {
     border-radius: ${t('radius.200')};
-    left: ${t('space.250')};
+    left: ${t('space.300')};
     height: ${t('space.200')};
     width: ${t('space.200')};
   }
@@ -76,8 +75,7 @@ export const Command = styled.div`
     border-radius: 0 ${t('radius.200')} ${t('radius.200')} 0;
     left: 0;
     width: ${t('space.200')};
-    height: ${t('space.300')};
-    width: ${t('space.200')};
+    height: ${t('space.200')};
   }
   &[aria-variant=${statusIndicators.HALF_DOT}][aria-light='true']::after,
   &[aria-variant=${statusIndicators.DOT}][aria-light='true']::after {

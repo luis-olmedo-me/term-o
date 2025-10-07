@@ -15,6 +15,8 @@ const executeEvents = async (events, defaultTab) => {
   const clearLogs = () => historyManager.setHistory([])
 
   for (let index = 0; index < events.length; index++) {
+    commandParser.setAliases(historyManager.getAliases())
+
     const event = events[index]
     const command = commandParser.read(event.line)
     const context = historyManager.getContext(tab)

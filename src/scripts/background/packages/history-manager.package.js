@@ -1,4 +1,4 @@
-import { configIds, configInputIds } from '@src/constants/config.constants'
+import { configDefaultValues, configInputIds } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 import { getConfigValueByInputId } from '@src/helpers/config.helpers'
 import { createContext } from '@src/helpers/contexts.helpers'
@@ -6,7 +6,8 @@ import { getStorageValue, setStorageValue } from '@src/helpers/storage.helpers'
 
 const historyManager = (function () {
   let history = []
-  let context = ''
+  let context = configDefaultValues[configInputIds.CONTEXT]
+  let maxLines = configDefaultValues[configInputIds.MAX_LINES_PER_COMMAND]
 
   const handleStorageChanges = (changes, currentChanges) => {
     if (currentChanges !== storageNamespaces.LOCAL && currentChanges !== storageNamespaces.SESSION)
@@ -17,7 +18,8 @@ const historyManager = (function () {
         history = newValue
       }
       if (storageKey === storageKeys.CONFIG) {
-        context = getConfigValueByInputId(configInputIds.CONTEXT, newValue, '')
+        context = getConfigValueByInputId(configInputIds.CONTEXT, newValue, context)
+        maxLines = getConfigValueByInputId(configInputIds.MAX_LINES_PER_COMMAND, newValue, maxLines)
       }
     }
   }
@@ -27,24 +29,18 @@ const historyManager = (function () {
     const historyFromLS = await getStorageValue(storageNamespaces.SESSION, storageKeys.HISTORY)
 
     history = historyFromLS || []
-    context = getConfigValueByInputId(configInputIds.CONTEXT, configFromLS, '')
-  }
-
-  const setHistoryFromLS = value => {
-    setStorageValue(storageNamespaces.SESSION, storageKeys.HISTORY, value)
-  }
-
-  const getContext = tab => {
-    return createContext(context, tab)
+    context = getConfigValueByInputId(configInputIds.CONTEXT, configFromLS, context)
+    maxLines = getConfigValueByInputId(configInputIds.MAX_LINES_PER_COMMAND, configFromLS, maxLines)
   }
 
   getHistoryFromLS()
   chrome.storage.onChanged.addListener(handleStorageChanges)
 
   return {
+    getMaxLines: () => maxLines,
     getHistory: () => history,
-    setHistory: setHistoryFromLS,
-    getContext
+    getContext: tab => createContext(context, tab),
+    setHistory: value => setStorageValue(storageNamespaces.SESSION, storageKeys.HISTORY, value)
   }
 })()
 

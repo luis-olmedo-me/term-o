@@ -23,6 +23,20 @@ export const configInputIds = {
   STATUS_INDICATOR: 'status-indicator'
 }
 
+export const configDefaultValues = {
+  [configInputIds.COPY_ON_SELECTION]: true,
+  [configInputIds.SWITCH_TAB_AUTOMATICALLY]: true,
+  [configInputIds.MAX_LINES_PER_COMMAND]: 50,
+  [configInputIds.HISTORIAL_SIZE]: 40,
+  [configInputIds.CONTEXT]: 'On [termo.color.brightBlue]{origin}',
+  [configInputIds.FONT_FAMILY]: 'Consolas',
+  [configInputIds.FONT_SIZE]: '16',
+  [configInputIds.THEME_NAME]: defaultColorTheme.name,
+  [configInputIds.COLOR_ACCENT]: colorThemeKeys.GREEN,
+  [configInputIds.RESET_DATA]: 'Reset',
+  [configInputIds.STATUS_INDICATOR]: 'half-dot'
+}
+
 export const defaultConfigSections = [
   {
     id: configIds.FUNCTIONALITY,
@@ -37,7 +51,7 @@ export const defaultConfigSections = [
         postFix: null,
         options: [],
         validations: [],
-        value: true
+        value: configDefaultValues[configInputIds.COPY_ON_SELECTION]
       },
       {
         id: configInputIds.SWITCH_TAB_AUTOMATICALLY,
@@ -48,7 +62,7 @@ export const defaultConfigSections = [
         postFix: null,
         options: [],
         validations: [],
-        value: true
+        value: configDefaultValues[configInputIds.SWITCH_TAB_AUTOMATICALLY]
       },
       {
         id: configInputIds.MAX_LINES_PER_COMMAND,
@@ -59,7 +73,7 @@ export const defaultConfigSections = [
         postFix: 'px',
         options: [],
         validations: [['is-between', 0, 1000]],
-        value: 50
+        value: configDefaultValues[configInputIds.MAX_LINES_PER_COMMAND]
       },
       {
         id: configInputIds.HISTORIAL_SIZE,
@@ -69,7 +83,7 @@ export const defaultConfigSections = [
         postFix: 'px',
         options: [],
         validations: [['is-between', 0, 1000]],
-        value: 40
+        value: configDefaultValues[configInputIds.HISTORIAL_SIZE]
       },
       {
         id: configInputIds.STATUS_INDICATOR,
@@ -83,7 +97,7 @@ export const defaultConfigSections = [
           { id: 'dot', name: 'Dot' }
         ],
         validations: [],
-        value: 'half-dot'
+        value: configDefaultValues[configInputIds.STATUS_INDICATOR]
       },
       {
         id: configInputIds.CONTEXT,
@@ -94,7 +108,7 @@ export const defaultConfigSections = [
         postFix: null,
         options: [],
         validations: [],
-        value: `On [termo.color.brightBlue]{origin}`
+        value: configDefaultValues[configInputIds.CONTEXT]
       }
     ]
   },
@@ -111,7 +125,7 @@ export const defaultConfigSections = [
         postFix: null,
         options: [],
         validations: [],
-        value: defaultColorTheme.name
+        value: configDefaultValues[configInputIds.THEME_NAME]
       },
       {
         id: configInputIds.COLOR_ACCENT,
@@ -121,7 +135,7 @@ export const defaultConfigSections = [
         postFix: null,
         options: basicColorKeys.map(key => ({ id: key, name: key })),
         validations: [],
-        value: colorThemeKeys.GREEN
+        value: configDefaultValues[configInputIds.COLOR_ACCENT]
       },
       {
         id: configInputIds.FONT_FAMILY,
@@ -131,7 +145,7 @@ export const defaultConfigSections = [
         postFix: null,
         options: [],
         validations: [],
-        value: 'Consolas'
+        value: configDefaultValues[configInputIds.FONT_FAMILY]
       },
       {
         id: configInputIds.FONT_SIZE,
@@ -146,7 +160,7 @@ export const defaultConfigSections = [
           { id: '18', name: 'Large' }
         ],
         validations: [],
-        value: '16'
+        value: configDefaultValues[configInputIds.FONT_SIZE]
       }
     ]
   },
@@ -163,7 +177,7 @@ export const defaultConfigSections = [
         postFix: null,
         options: [],
         validations: [],
-        value: 'Reset'
+        value: configDefaultValues[configInputIds.RESET_DATA]
       }
     ]
   }

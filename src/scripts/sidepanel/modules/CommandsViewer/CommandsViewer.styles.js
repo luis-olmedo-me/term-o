@@ -25,8 +25,28 @@ export const Command = styled.div`
     transition: background-color 0.1s ease-in-out;
   }
 
+  &[aria-execution-context=${executionContexts.SIDEPANEL}],
   &[aria-execution-context=${executionContexts.BACKGROUND}] {
-    opacity: 0.7;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0.5rem;
+      transition: background-color 0.1s ease-in-out;
+      background-color: ${t('colors.brightBlack', '40')};
+      border-radius: ${t('radius.200')};
+      left: ${t('space.250')};
+      width: ${t('space.200')};
+      height: calc(100% - 1rem);
+      left: ${t('space.250')};
+    }
+
+    &[aria-variant=${'half-dot'}]::before {
+      border-radius: 0 ${t('radius.200')} ${t('radius.200')} 0;
+      left: 0;
+    }
+  }
+  &[aria-execution-context=${executionContexts.BACKGROUND}]::before {
+    opacity: 0.4;
   }
 
   &[aria-status=${statuses.DONE}]::after {

@@ -1,3 +1,4 @@
+import { executionContexts } from '@src/libs/command-parser'
 import { statuses } from '@src/libs/command-parser/sub-services/command'
 import { theme as t } from '@src/libs/themer'
 import styled from 'styled-components'
@@ -22,6 +23,10 @@ export const Command = styled.div`
     position: absolute;
     top: 0.5rem;
     transition: background-color 0.1s ease-in-out;
+  }
+
+  &[aria-execution-context=${executionContexts.BACKGROUND}] {
+    opacity: 0.7;
   }
 
   &[aria-status=${statuses.DONE}]::after {

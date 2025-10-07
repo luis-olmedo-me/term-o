@@ -1,4 +1,4 @@
-import commandParser from '@src/libs/command-parser'
+import commandParser, { limitSimplifiedCommands } from '@src/libs/command-parser'
 import processWaitList from '@src/libs/process-wait-list'
 import eventManager from './packages/event-manager.package'
 import historyManager from './packages/history-manager.package'
@@ -21,12 +21,16 @@ const executeEvents = async (events, defaultTab) => {
     if (!command.finished) await command.execute()
 
     const commandVisible = command.getCommandVisibleInChain()
-    const newCommand = command ? commandVisible.simplify() : []
 
-    commands = [...commands, newCommand]
+    if (commandVisible) {
+      commands = [...commands, commandVisible.simplify()]
+    }
   }
 
-  historyManager.setHistory([...historyManager.getHistory(), ...commands])
+  const newCommands = [...historyManager.getHistory(), ...commands]
+  const commandsLimited = limitSimplifiedCommands(newCommands, historyManager.getMaxLines())
+
+  historyManager.setHistory(commandsLimited)
 }
 
 chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {

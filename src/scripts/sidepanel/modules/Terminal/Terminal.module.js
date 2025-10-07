@@ -46,7 +46,8 @@ export const Terminal = () => {
       configInputIds.MAX_LINES_PER_COMMAND,
       configInputIds.CONTEXT,
       configInputIds.STATUS_INDICATOR,
-      configInputIds.STATUS_BAR
+      configInputIds.STATUS_BAR,
+      configInputIds.STATUS_LIGHT
     ]
   })
   const [
@@ -55,7 +56,8 @@ export const Terminal = () => {
     maxLinesPerCommand,
     rawContext,
     statusIndicator,
-    hasStatusBar
+    hasStatusBar,
+    hasStatusLight
   ] = listening
 
   const focusOnPrompt = useCallback(() => {
@@ -169,6 +171,7 @@ export const Terminal = () => {
         commands={simplifiedCommands}
         statusIndicator={statusIndicator}
         hasStatusBar={hasStatusBar}
+        hasStatusLight={hasStatusLight}
       />
 
       <S.TerminalPrompt

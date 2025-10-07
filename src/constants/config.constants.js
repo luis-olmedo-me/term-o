@@ -21,7 +21,8 @@ export const configInputIds = {
   COLOR_ACCENT: 'color-accent',
   RESET_DATA: 'reset-data',
   STATUS_INDICATOR: 'status-indicator',
-  STATUS_BAR: 'status-bar'
+  STATUS_BAR: 'status-bar',
+  STATUS_LIGHT: 'status-light'
 }
 
 export const fontSizes = {
@@ -33,7 +34,6 @@ export const fontSizes = {
 
 export const statusIndicators = {
   HALF_DOT: 'half-dot',
-  LIGHT: 'light',
   DOT: 'dot',
   NONE: 'none'
 }
@@ -110,7 +110,6 @@ export const defaultConfigSections = [
         options: [
           { id: statusIndicators.HALF_DOT, name: 'Half Dot' },
           { id: statusIndicators.DOT, name: 'Dot' },
-          { id: statusIndicators.LIGHT, name: 'Light' },
           { id: statusIndicators.NONE, name: 'None' }
         ],
         validations: [],
@@ -125,6 +124,16 @@ export const defaultConfigSections = [
         options: [],
         validations: [],
         value: configDefaultValues[configInputIds.STATUS_BAR]
+      },
+      {
+        id: configInputIds.STATUS_LIGHT,
+        name: 'Status light',
+        description: 'Display the status light in the terminal prompt.',
+        type: availableInputTypes.BOOLEAN,
+        postFix: null,
+        options: [],
+        validations: [],
+        value: configDefaultValues[configInputIds.STATUS_LIGHT]
       },
       {
         id: configInputIds.CONTEXT,

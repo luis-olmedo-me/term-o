@@ -1,10 +1,9 @@
-import EventListener from '@src/libs/event-listener'
-
 import templates, { errorTemplate } from '@src/commands'
 
-import { getArgs } from '@src/templates/Command'
+import EventListener from '@src/libs/event-listener'
 
-import { splitBy } from '@src/helpers/arguments.helpers'
+import { getArgs, splitBy } from '@src/helpers/arguments.helpers'
+
 import handlers from './handlers'
 
 templates.forEach(template => {

@@ -1,15 +1,30 @@
-import { statuses } from './Command.constants'
+import { getArray } from './arguments.helpers'
 
-export const getArray = value => {
-  const items = value.slice(1).slice(0, -1)
-  const itemsAsArgs = getArgs(items)
+export const isParam = (option, arg) => {
+  const isBoolean = option.type === 'boolean'
 
-  return itemsAsArgs.map(item => {
-    return /^"|^'/.test(item) ? item.slice(1).slice(0, -1) : ''
-  })
+  const paramPattern = /^\$\d+(,\d+)?(-\d+)?$/
+  const argValue = arg?.value
+
+  return !isBoolean && Boolean(argValue) && paramPattern.test(argValue)
 }
 
-const parseOptions = (index, arg, argsBySpace, type) => {
+export const getParamValue = (indexes, values) => {
+  if (indexes.length === 1) {
+    const [index] = indexes
+
+    return values[index] || ''
+  }
+
+  const parsedValues = indexes.map(index => values[index]).filter(Boolean)
+  const valuesInLine = parsedValues.join(' ')
+
+  if (!parsedValues.length) return ''
+
+  return `[ ${valuesInLine} ]`
+}
+
+export const parseOptions = (index, arg, argsBySpace, type) => {
   switch (type) {
     case 'string': {
       index++
@@ -81,15 +96,6 @@ const parseOptions = (index, arg, argsBySpace, type) => {
   }
 }
 
-const isParam = (option, arg) => {
-  const isBoolean = option.type === 'boolean'
-
-  const paramPattern = /^\$\d+(,\d+)?(-\d+)?$/
-  const argValue = arg?.value
-
-  return !isBoolean && Boolean(argValue) && paramPattern.test(argValue)
-}
-
 export const getPropsFromString = command => {
   const args = command.args
   const argValues = args.map(arg => arg.value)
@@ -148,133 +154,4 @@ export const getPropsFromString = command => {
   }
 
   return props
-}
-
-export const getArgs = value => {
-  const fragments = value.split(' ')
-
-  let output = []
-  const addFragment = (...fragment) => {
-    output = output.concat(...fragment)
-  }
-
-  for (let index = 0; index < fragments.length; index++) {
-    const fragment = fragments[index]
-
-    if (!fragment) continue
-
-    const startsWithQuote = /^"|^'/g.test(fragment)
-    const startsWithBracket = /^\[/g.test(fragment)
-    const isFlag = /^-([a-zA-Z]+)/g.test(fragment)
-
-    if (startsWithBracket) {
-      const startBrancket = '['
-      const endBrancket = ']'
-      const endsWithQuote = fragment.endsWith(endBrancket)
-
-      if (endsWithQuote && fragment.length > 1) {
-        addFragment(fragment)
-        continue
-      }
-
-      const nextFragments = fragments.slice(++index)
-      let fragmentValue = fragment
-      let ignoredEndBrackets = 0
-
-      for (const nextFragment of nextFragments) {
-        fragmentValue += ` ${nextFragment}`
-
-        if (nextFragment.startsWith(startBrancket)) ++ignoredEndBrackets
-        if (nextFragment.endsWith(endBrancket) && !ignoredEndBrackets) break
-        if (nextFragment.endsWith(endBrancket) && ignoredEndBrackets) --ignoredEndBrackets
-
-        index++
-      }
-
-      addFragment(fragmentValue)
-      continue
-    }
-
-    if (startsWithQuote) {
-      const quote = fragment.charAt(0)
-      const endsWithQuote = fragment.endsWith(quote)
-
-      if (endsWithQuote && fragment.length > 1) {
-        addFragment(fragment)
-        continue
-      }
-
-      const nextFragments = fragments.slice(++index)
-      let fragmentValue = fragment
-
-      for (const nextFragment of nextFragments) {
-        fragmentValue += ` ${nextFragment}`
-
-        if (nextFragment.endsWith(quote)) break
-
-        index++
-      }
-
-      addFragment(fragmentValue)
-      continue
-    }
-    if (isFlag) {
-      const flags = fragment
-        .replace('-', '')
-        .split('')
-        .map(flag => `-${flag}`)
-
-      addFragment(...flags)
-      continue
-    }
-
-    addFragment(fragment)
-  }
-
-  return output
-}
-
-const getParamValue = (indexes, values) => {
-  if (indexes.length === 1) {
-    const [index] = indexes
-
-    return values[index] || ''
-  }
-
-  const parsedValues = indexes.map(index => values[index]).filter(Boolean)
-  const valuesInLine = parsedValues.join(' ')
-
-  if (!parsedValues.length) return ''
-
-  return `[ ${valuesInLine} ]`
-}
-
-export const executePerUpdates = async (nextCommand, updates) => {
-  const argsHoldingUp = nextCommand.args.filter(arg => arg.isHoldingUp)
-  const colorPattern = /\[termo\.color\.[A-Za-z]+\]|\[termo\.bgcolor\.[A-Za-z]+\]/g
-
-  nextCommand.allowToExecuteNext(false)
-
-  for (let update of updates) {
-    const cleanedUpdate = update.replace(colorPattern, '')
-    const availableArgs = getArgs(cleanedUpdate)
-
-    argsHoldingUp.forEach(arg => {
-      const indexes = arg.getIndexes()
-      const newValue = getParamValue(indexes, availableArgs)
-
-      arg.setValue(newValue)
-    })
-
-    nextCommand.prepare()
-
-    if (nextCommand.status === statuses.ERROR) break
-    await nextCommand.execute()
-    nextCommand.saveUpdates()
-    if (nextCommand.status === statuses.ERROR) break
-  }
-
-  if (nextCommand.nextCommand && !nextCommand.failed) {
-    await nextCommand.executeNext()
-  }
 }

@@ -1,11 +1,15 @@
-import { createUUIDv4, getQuotedString } from '@src/helpers/utils.helpers'
-import EventListener from '@src/libs/event-listener'
-
 import { formatError } from '@src/libs/command-parser/handlers/handlers.helpers'
+import EventListener from '@src/libs/event-listener'
 import { cleanColors } from '@src/libs/themer/themer.helpers'
-import Argument from '../Argument'
+
+import Argument from '@src/templates/Argument'
+
+import { getArgs, getArray } from '@src/helpers/arguments.helpers'
+import { executePerUpdates } from '@src/helpers/command.helpers'
+import { getPropsFromString } from '@src/helpers/options.helpers'
+import { createUUIDv4, getQuotedString } from '@src/helpers/utils.helpers'
+
 import { statuses } from './Command.constants'
-import { executePerUpdates, getArgs, getArray, getPropsFromString } from './Command.helpers'
 
 export class Command extends EventListener {
   constructor({ name, options, helpSectionTitles, executionContext }) {

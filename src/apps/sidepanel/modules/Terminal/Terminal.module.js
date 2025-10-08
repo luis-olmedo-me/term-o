@@ -6,8 +6,8 @@ import useStorage from '@src/hooks/useStorage'
 
 import Button, { buttonVariants } from '@src/components/Button'
 import Gear from '@src/icons/Gear.component'
-import CommandsViewer from '@src/scripts/sidepanel/modules/CommandsViewer'
 import Prompt from '../../components/Prompt'
+import CommandsViewer from '../CommandsViewer'
 
 import commandParser, {
   limitSimplifiedCommands,

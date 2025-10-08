@@ -1,7 +1,7 @@
 import { statusIndicators } from '@src/constants/config.constants'
 import { executionContexts } from '@src/libs/command-parser'
-import { statuses } from '@src/libs/command-parser/sub-services/command'
 import { theme as t } from '@src/libs/themer'
+import { statuses } from '@src/templates/Command'
 import styled from 'styled-components'
 
 export const ViewWrapper = styled.div`

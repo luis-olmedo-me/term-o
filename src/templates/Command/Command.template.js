@@ -1,8 +1,8 @@
 import { createUUIDv4, getQuotedString } from '@src/helpers/utils.helpers'
 import EventListener from '@src/libs/event-listener'
 
+import { formatError } from '@src/libs/command-parser/handlers/handlers.helpers'
 import { cleanColors } from '@src/libs/themer/themer.helpers'
-import { formatError } from '../../handlers/handlers.helpers'
 import Argument from '../Argument'
 import { statuses } from './Command.constants'
 import { executePerUpdates, getArgs, getArray, getPropsFromString } from './Command.helpers'

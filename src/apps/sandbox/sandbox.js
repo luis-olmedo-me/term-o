@@ -1,4 +1,4 @@
-import { commandNames } from '@src/libs/command-parser/command-parser.constants'
+import { commandNames } from '@src/constants/command.constants'
 
 async function safeEval(event) {
   const code = event.data.data.code
@@ -74,7 +74,7 @@ async function safeEval(event) {
   }
 }
 
-window.addEventListener('message', async function(event) {
+window.addEventListener('message', async function (event) {
   if (event.data?.type !== 'sandbox-code') return
 
   const error = await safeEval(event)

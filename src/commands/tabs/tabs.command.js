@@ -1,6 +1,6 @@
 import CommandBase from '@src/templates/CommandBase'
 
-import { commandNames } from '../../command-parser.constants'
+import { commandNames } from '@src/constants/command.constants'
 import { isRegExp, isTabId, isURL } from '../validators'
 import { tabsHelpSections, tabsHelpSectionTitles } from './tabs.constants'
 

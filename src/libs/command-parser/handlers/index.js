@@ -1,3 +1,5 @@
+import { commandNames } from '@src/constants/command.constants'
+
 import { handleALIAS } from './alias/alias.handler'
 import { handleCLEAR } from './clear/clear.handler'
 import { handleDOM } from './dom/dom.handler'
@@ -10,8 +12,6 @@ import { handleSTORAGE } from './storage/storage.handler'
 import { handleSTYLES } from './style/style.handler'
 import { handleTABS } from './tabs/tabs.handler'
 import { handleTHEME } from './theme/theme.handler'
-
-import { commandNames } from '@src/libs/command-parser'
 
 export default {
   [commandNames.DOM]: handleDOM,

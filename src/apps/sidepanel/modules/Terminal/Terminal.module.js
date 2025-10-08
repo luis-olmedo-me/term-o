@@ -5,21 +5,20 @@ import useConfig from '@src/hooks/useConfig'
 import useStorage from '@src/hooks/useStorage'
 
 import Button, { buttonVariants } from '@src/components/Button'
-import Gear from '@src/icons/Gear.component'
+import Gear from '@src/icons/Gear.icon'
 import Prompt from '../../components/Prompt'
 import CommandsViewer from '../CommandsViewer'
 
 import commandParser from '@src/libs/command-parser'
 
+import { commandStatuses } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
+
+import { limitSimplifiedCommands, updateSimplifiedCommandsWith } from '@src/helpers/command.helpers'
 import { createContext } from '@src/helpers/contexts.helpers'
 import { getCurrentTab } from '@src/libs/command-parser/handlers/tabs/tabs.helpers'
 import { copyText, getSelectedText } from './Terminal.helpers'
-
-import { commandStatuses } from '@src/constants/command.constants'
-
-import { limitSimplifiedCommands, updateSimplifiedCommandsWith } from '@src/helpers/command.helpers'
 
 import * as S from './Terminal.styles'
 

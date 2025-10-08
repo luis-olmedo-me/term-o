@@ -1,7 +1,7 @@
 import * as React from 'preact'
 
 import Button, { buttonVariants } from '@src/components/Button'
-import { Logo } from '@src/icons/Logo.component'
+import { Logo } from '@src/icons/Logo.icon'
 import * as S from './SidePanel.styles'
 
 export const SidePanel = ({ options, selectedOptionId, onChange }) => {

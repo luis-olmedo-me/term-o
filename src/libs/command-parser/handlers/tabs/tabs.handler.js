@@ -1,5 +1,7 @@
 import { overwriteMessage } from '@src/helpers/messages.helpers'
-import { displayHelp, formatTab, spreadIf } from '../handlers.helpers'
+import { spreadIf } from '@src/helpers/utils.helpers'
+
+import { displayHelp, formatTab } from '../handlers.helpers'
 import { createTab, getTab, reloadTab } from './tabs.helpers'
 
 export const handleTABS = async command => {

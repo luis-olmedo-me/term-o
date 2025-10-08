@@ -12,7 +12,7 @@ export const PromptWrapper = styled.div`
   background-color: ${t('colors.background')};
   color: ${t('colors.foreground')};
   padding: 0 ${t('space.600')};
-  box-shadow: 0 0 ${t('space.100')} ${t('space.100')} ${t('colors.background')};
+  box-shadow: 0 0 ${t('space.200')} ${t('space.100')} ${t('colors.background')};
   z-index: 1;
 
   ${InputWrapper} {

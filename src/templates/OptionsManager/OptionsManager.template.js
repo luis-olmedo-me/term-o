@@ -1,6 +1,6 @@
 import Option from '@src/templates/Option'
 
-import { validate } from '@src/helpers/properties.helpers'
+import { validate } from '@src/helpers/validation-props.helpers'
 
 export class OptionsManager {
   constructor() {

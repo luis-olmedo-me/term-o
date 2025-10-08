@@ -3,9 +3,9 @@ import EventListener from '@src/libs/event-listener'
 
 import { cleanColors } from '@src/libs/themer/themer.helpers'
 import { formatError } from '../../handlers/handlers.helpers'
-import Argument from '../argument'
-import { statuses } from './command.constants'
-import { executePerUpdates, getArgs, getArray, getPropsFromString } from './command.helpers'
+import Argument from '../Argument'
+import { statuses } from './Command.constants'
+import { executePerUpdates, getArgs, getArray, getPropsFromString } from './Command.helpers'
 
 export class Command extends EventListener {
   constructor({ name, options, helpSectionTitles, executionContext }) {

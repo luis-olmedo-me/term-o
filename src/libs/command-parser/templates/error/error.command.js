@@ -1,8 +1,9 @@
+import CommandBase from '@src/templates/CommandBase'
+
 import { commandNames } from '../../command-parser.constants'
-import CommandTemplate from '../../sub-services/command-template'
 import { errorHelpSections, errorHelpSectionTitles } from './error.constants'
 
-export default new CommandTemplate({
+export default new CommandBase({
   name: commandNames.ERROR,
   helpSectionTitles: errorHelpSectionTitles
 })

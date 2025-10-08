@@ -1,7 +1,8 @@
-import { Option } from '../Option/Option.sub-service'
-import { validate } from './Options.helpers'
+import Option from '@src/templates/Option'
 
-export class Options {
+import { validate } from './OptionsManager.helpers'
+
+export class OptionsManager {
   constructor() {
     this.values = []
   }
@@ -64,7 +65,7 @@ export class Options {
   }
 
   copy() {
-    const optionsCopy = new Options()
+    const optionsCopy = new OptionsManager()
 
     this.values.forEach(option => {
       optionsCopy.add(option)

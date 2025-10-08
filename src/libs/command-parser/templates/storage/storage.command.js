@@ -1,9 +1,10 @@
+import CommandBase from '@src/templates/CommandBase'
+
 import { commandNames } from '../../command-parser.constants'
-import CommandTemplate from '../../sub-services/command-template'
 import { hasLength, isTabId } from '../validators'
 import { storageHelpSections, storageHelpSectionTitles } from './storage.constants'
 
-export default new CommandTemplate({
+export default new CommandBase({
   name: commandNames.STORAGE,
   helpSectionTitles: storageHelpSectionTitles
 })

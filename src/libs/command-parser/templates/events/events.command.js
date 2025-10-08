@@ -1,9 +1,10 @@
+import CommandBase from '@src/templates/CommandBase'
+
 import { commandNames } from '../../command-parser.constants'
-import CommandTemplate from '../../sub-services/command-template'
 import { isRegExp } from '../validators'
 import { eventsHelpSections, eventsHelpSectionTitles } from './events.constants'
 
-export default new CommandTemplate({
+export default new CommandBase({
   name: commandNames.EVENTS,
   helpSectionTitles: eventsHelpSectionTitles
 })

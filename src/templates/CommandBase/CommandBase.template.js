@@ -1,12 +1,13 @@
-import { Command } from '../command/command.sub-service'
-import { Options } from '../Options/Options.sub-service'
-import { defaultValues } from './command-template.constants'
+import Command from '@src/templates/Command'
+import OptionsManager from '@src/templates/OptionsManager'
 
-export class CommandTemplate {
+import { defaultValues } from './CommandBase.constants'
+
+export class CommandBase {
   constructor({ name, helpSectionTitles }) {
     this.name = name
     this.helpSectionTitles = helpSectionTitles
-    this.options = new Options()
+    this.options = new OptionsManager()
     this.handler = null
   }
 

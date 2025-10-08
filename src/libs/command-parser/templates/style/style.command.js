@@ -1,9 +1,10 @@
+import CommandBase from '@src/templates/CommandBase'
+
 import { commandNames } from '../../command-parser.constants'
-import CommandTemplate from '../../sub-services/command-template'
 import { hasAllItemsAs, hasLengthBetween, isInlineStyles, isRegExp, isXpath } from '../validators'
 import { styleHelpSections, styleHelpSectionTitles } from './style.constants'
 
-export default new CommandTemplate({
+export default new CommandBase({
   name: commandNames.STYLE,
   helpSectionTitles: styleHelpSectionTitles
 })

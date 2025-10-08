@@ -1,9 +1,10 @@
+import CommandBase from '@src/templates/CommandBase'
+
 import { commandNames } from '../../command-parser.constants'
-import CommandTemplate from '../../sub-services/command-template'
 import { hasItemAs, hasLength, isSpaceForbidden } from '../validators'
 import { aliasHelpSections, aliasHelpSectionTitles } from './alias.constants'
 
-export default new CommandTemplate({
+export default new CommandBase({
   name: commandNames.ALIAS,
   helpSectionTitles: aliasHelpSectionTitles
 })

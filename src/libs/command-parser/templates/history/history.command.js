@@ -1,9 +1,10 @@
+import CommandBase from '@src/templates/CommandBase'
+
 import { commandNames } from '../../command-parser.constants'
-import CommandTemplate from '../../sub-services/command-template'
 import { isDate, isInteger, isPositive, isRegExp } from '../validators'
 import { historyHelpSections, historyHelpSectionTitles } from './history.constants'
 
-export default new CommandTemplate({
+export default new CommandBase({
   name: commandNames.HISTORY,
   helpSectionTitles: historyHelpSectionTitles
 })

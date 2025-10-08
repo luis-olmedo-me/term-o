@@ -1,4 +1,4 @@
-import { getArgs } from './sub-services/command/command.helpers'
+import { getArgs } from '@src/templates/Command/Command.helpers'
 
 export const splitBy = (value, key) => {
   const fragments = getArgs(value)

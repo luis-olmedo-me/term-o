@@ -49,21 +49,25 @@ export const Command = styled.div`
       left: 0;
     }
   }
-  &[aria-execution-context=${executionContexts.BACKGROUND}]::before {
-    opacity: 0.4;
+  &[aria-execution-context=${executionContexts.BACKGROUND}] {
+    opacity: 0.8;
+  }
+  &[aria-execution-context=${executionContexts.BACKGROUND}]::before,
+  &[aria-execution-context=${executionContexts.BACKGROUND}]::after {
+    opacity: 0.6;
   }
 
   &[aria-status=${statuses.DONE}]::after {
-    color: ${t('colors.green')};
-    background-color: ${t('colors.green')};
+    color: ${t('colors.brightGreen')};
+    background-color: ${t('colors.brightGreen')};
   }
   &[aria-status=${statuses.ERROR}]::after {
-    color: ${t('colors.red')};
-    background-color: ${t('colors.red')};
+    color: ${t('colors.brightRed')};
+    background-color: ${t('colors.brightRed')};
   }
   &[aria-status=${statuses.EXECUTING}]::after {
-    color: ${t('colors.white')};
-    background-color: ${t('colors.white')};
+    color: ${t('colors.brightWhite')};
+    background-color: ${t('colors.brightWhite')};
   }
 
   &[aria-indicator=${statusIndicators.NONE}]::after {

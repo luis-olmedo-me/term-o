@@ -1,10 +1,6 @@
 import { getQuotedString } from '@src/helpers/utils.helpers'
 import { getColor as C } from '@src/libs/themer'
 
-export const spreadIf = (condition, value) => {
-  return condition ? value : {}
-}
-
 export const getNumberTabId = tabIdRaw => {
   const tabIdString = tabIdRaw.replace(/^T/, '')
 

@@ -1,13 +1,15 @@
 import * as React from 'preact'
 import { useTheme } from 'styled-components'
 
-export const Logo = () => {
+import { iconPropType } from './Icon.constants'
+
+const Logo = ({ size }) => {
   const theme = useTheme()
 
   return (
     <svg
-      width={100}
-      height={100}
+      width={size}
+      height={size}
       viewBox="0 0 512 512"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -68,4 +70,6 @@ export const Logo = () => {
   )
 }
 
-Logo.propTypes = {}
+Logo.propTypes = iconPropType
+
+export default Logo

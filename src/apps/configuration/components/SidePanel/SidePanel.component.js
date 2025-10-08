@@ -1,13 +1,16 @@
 import * as React from 'preact'
 
 import Button, { buttonVariants } from '@src/components/Button'
-import { Logo } from '@src/icons/Logo.icon'
+import Logo from '@src/icons/Logo.icon'
+
+import { iconSizes } from '@src/icons/Icon.constants'
+
 import * as S from './SidePanel.styles'
 
 export const SidePanel = ({ options, selectedOptionId, onChange }) => {
   return (
     <S.SidePanelWrapper>
-      <Logo />
+      <Logo size={iconSizes.LARGE} />
 
       {options.map(option => {
         return (

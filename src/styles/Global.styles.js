@@ -11,7 +11,7 @@ const GlobalStyle = createGlobalStyle`
     font-size: ${t('fontSize.50')};
 
     &::selection {
-      color: ${t('colors.accent')};
+      color: ${t('colors.foreground')};
       background-color: ${t('colors.selectionBackground')};
     }
   }

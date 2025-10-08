@@ -5,16 +5,6 @@ export const spreadIf = (condition, value) => {
   return condition ? value : {}
 }
 
-export const preAppendCounters = array => {
-  const counters = array.reduce((results, value) => {
-    const oldValue = results[value] || 0
-
-    return { ...results, [value]: oldValue + 1 }
-  }, {})
-
-  return Object.entries(counters).map(([value, count]) => `${count} ${value}`)
-}
-
 export const getNumberTabId = tabIdRaw => {
   const tabIdString = tabIdRaw.replace(/^T/, '')
 

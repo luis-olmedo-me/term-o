@@ -5,7 +5,7 @@ export const spreadIf = (condition, value) => {
   return condition ? value : {}
 }
 
-export const prependCounters = array => {
+export const preAppendCounters = array => {
   const counters = array.reduce((results, value) => {
     const oldValue = results[value] || 0
 

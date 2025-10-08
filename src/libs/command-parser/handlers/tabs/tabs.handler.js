@@ -1,4 +1,4 @@
-import { renameError } from '@src/helpers/messages.helpers'
+import { overwriteMessage } from '@src/helpers/messages.helpers'
 import { displayHelp, formatTab, spreadIf } from '../handlers.helpers'
 import { createTab, getTab, reloadTab } from './tabs.helpers'
 
@@ -8,7 +8,7 @@ export const handleTABS = async command => {
 
   if (P`reload`) {
     if (P`wait`) command.update(`Please wait while the page is loading.`)
-    const tab = await reloadTab({ tabId: P`reload`, wait: P`wait` }).catch(renameError)
+    const tab = await reloadTab({ tabId: P`reload`, wait: P`wait` }).catch(overwriteMessage)
     const update = formatTab(tab)
 
     command.reset()
@@ -16,7 +16,7 @@ export const handleTABS = async command => {
   }
 
   if (P`point`) {
-    const tab = await getTab(P`point`).catch(renameError)
+    const tab = await getTab(P`point`).catch(overwriteMessage)
     const update = formatTab(tab)
 
     setTab(tab)
@@ -25,8 +25,8 @@ export const handleTABS = async command => {
   }
 
   if (P`switch`) {
-    const tab = await getTab(P`switch`).catch(renameError)
-    const { focused } = await chrome.windows.get(tab.windowId).catch(renameError)
+    const tab = await getTab(P`switch`).catch(overwriteMessage)
+    const { focused } = await chrome.windows.get(tab.windowId).catch(overwriteMessage)
 
     if (!focused) await chrome.windows.update(tab.windowId, { focused: true })
     await chrome.tabs.update(tab.id, { selected: true })
@@ -37,7 +37,7 @@ export const handleTABS = async command => {
   }
 
   if (P`close`) {
-    const tab = await getTab(P`close`).catch(renameError)
+    const tab = await getTab(P`close`).catch(overwriteMessage)
     const update = formatTab(tab)
 
     await chrome.tabs.remove(tab.id)
@@ -50,7 +50,7 @@ export const handleTABS = async command => {
     const tab = await createTab({
       config: { url: P`open`, active: P`active` },
       wait: P`wait`
-    }).catch(renameError)
+    }).catch(overwriteMessage)
 
     const update = formatTab({
       ...tab,

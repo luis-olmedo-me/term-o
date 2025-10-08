@@ -4,7 +4,7 @@ import {
   formatDOMEvent,
   formatElement,
   getNumberTabId,
-  prependCounters
+  preAppendCounters
 } from '../handlers.helpers'
 
 export const handleDOM = async command => {
@@ -54,7 +54,7 @@ export const handleDOM = async command => {
     })
 
     let textElements = elements.map(element => formatElement({ ...element, tabId: P`tab-id` }))
-    if (P`group`) textElements = prependCounters(textElements)
+    if (P`group`) textElements = preAppendCounters(textElements)
 
     command.reset()
     command.update(...textElements)

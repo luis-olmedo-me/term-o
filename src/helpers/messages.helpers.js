@@ -1,7 +1,17 @@
 import { messages } from '@src/constants/messages.constants'
 
-export const renameError = error => {
-  const replacement = messages.find(message => message.original.test(error))
+export const overwriteMessage = value => {
+  const replacement = messages.find(message => message.original.test(value))
 
-  throw replacement ? replacement.new : error
+  throw replacement ? replacement.new : value
+}
+
+export const preAppendCounters = array => {
+  const counters = array.reduce((results, value) => {
+    const oldValue = results[value] || 0
+
+    return { ...results, [value]: oldValue + 1 }
+  }, {})
+
+  return Object.entries(counters).map(([value, count]) => `${count} ${value}`)
 }

@@ -17,3 +17,10 @@ export const executionContexts = {
   BACKGROUND: 'background',
   SIDEPANEL: 'sidepanel'
 }
+
+export const commandStatuses = {
+  IDLE: 'idle',
+  EXECUTING: 'executing',
+  DONE: 'done',
+  ERROR: 'error'
+}

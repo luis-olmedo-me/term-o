@@ -1,4 +1,5 @@
-import { statuses } from '@src/templates/Command'
+import { commandStatuses } from '@src/constants/command.constants'
+
 import { getArgs } from './arguments.helpers'
 import { getParamValue } from './options.helpers'
 
@@ -21,10 +22,10 @@ export const executePerUpdates = async (nextCommand, updates) => {
 
     nextCommand.prepare()
 
-    if (nextCommand.status === statuses.ERROR) break
+    if (nextCommand.status === commandStatuses.ERROR) break
     await nextCommand.execute()
     nextCommand.saveUpdates()
-    if (nextCommand.status === statuses.ERROR) break
+    if (nextCommand.status === commandStatuses.ERROR) break
   }
 
   if (nextCommand.nextCommand && !nextCommand.failed) {

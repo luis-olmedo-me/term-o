@@ -18,9 +18,9 @@ import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
 import { getCurrentTab } from '@src/libs/command-parser/handlers/tabs/tabs.helpers'
-import { statuses } from '@src/templates/Command'
 import { copyText, getSelectedText } from './Terminal.helpers'
 
+import { commandStatuses } from '@src/constants/command.constants'
 import * as S from './Terminal.styles'
 
 export const Terminal = () => {
@@ -185,7 +185,7 @@ export const Terminal = () => {
         onEnter={handleEnter}
         onBlur={WaitForKeyPressToFocusOnPrompt}
         onFocus={removePromptFocusEvent}
-        loading={simplifiedCommands.some(command => command.status === statuses.EXECUTING)}
+        loading={simplifiedCommands.some(command => command.status === commandStatuses.EXECUTING)}
         context={context}
         name="terminal-prompt"
       />

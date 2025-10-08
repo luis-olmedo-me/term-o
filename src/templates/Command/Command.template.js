@@ -4,12 +4,12 @@ import { cleanColors } from '@src/libs/themer/themer.helpers'
 
 import Argument from '@src/templates/Argument'
 
+import { commandStatuses } from '@src/constants/command.constants'
+
 import { getArgs, getArray } from '@src/helpers/arguments.helpers'
 import { executePerUpdates } from '@src/helpers/command.helpers'
 import { getPropsFromString } from '@src/helpers/options.helpers'
 import { createUUIDv4, getQuotedString } from '@src/helpers/utils.helpers'
-
-import { statuses } from './Command.constants'
 
 export class Command extends EventListener {
   constructor({ name, options, helpSectionTitles, executionContext }) {
@@ -24,7 +24,7 @@ export class Command extends EventListener {
     this.props = {}
     this.updates = []
     this.staticUpdates = []
-    this.status = statuses.IDLE
+    this.status = commandStatuses.IDLE
     this.helpSectionTitles = helpSectionTitles
     this.nextCommand = null
     this.options = options
@@ -34,10 +34,10 @@ export class Command extends EventListener {
   }
 
   get finished() {
-    return [statuses.ERROR, statuses.DONE].includes(this.status)
+    return [commandStatuses.ERROR, commandStatuses.DONE].includes(this.status)
   }
   get failed() {
-    return [statuses.ERROR].includes(this.status)
+    return [commandStatuses.ERROR].includes(this.status)
   }
   get cleanUpdates() {
     return this.updates.map(update => {
@@ -159,7 +159,7 @@ export class Command extends EventListener {
       if (!this.finished) {
         if (this.canExecuteNext) await this.executeNext()
 
-        this.changeStatus(statuses.DONE)
+        this.changeStatus(commandStatuses.DONE)
       } else {
         this.changeStatus(this.status)
       }
@@ -186,7 +186,7 @@ export class Command extends EventListener {
     this.reset()
     this.update(errorUpdate)
 
-    this.changeStatus(statuses.ERROR)
+    this.changeStatus(commandStatuses.ERROR)
   }
 
   async executeNext() {
@@ -226,7 +226,7 @@ export class Command extends EventListener {
   }
 
   startExecuting() {
-    this.changeStatus(statuses.EXECUTING)
+    this.changeStatus(commandStatuses.EXECUTING)
     this.reset()
   }
 

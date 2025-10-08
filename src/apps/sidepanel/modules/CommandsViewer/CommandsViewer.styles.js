@@ -2,9 +2,8 @@ import styled from 'styled-components'
 
 import { theme as t } from '@src/libs/themer'
 
-import { executionContexts } from '@src/constants/command.constants'
+import { commandStatuses, executionContexts } from '@src/constants/command.constants'
 import { statusIndicators } from '@src/constants/config.constants'
-import { statuses } from '@src/templates/Command'
 
 export const ViewWrapper = styled.div`
   display: flex;
@@ -59,15 +58,15 @@ export const Command = styled.div`
     opacity: 0.6;
   }
 
-  &[aria-status=${statuses.DONE}]::after {
+  &[aria-status=${commandStatuses.DONE}]::after {
     color: ${t('colors.brightGreen')};
     background-color: ${t('colors.brightGreen')};
   }
-  &[aria-status=${statuses.ERROR}]::after {
+  &[aria-status=${commandStatuses.ERROR}]::after {
     color: ${t('colors.brightRed')};
     background-color: ${t('colors.brightRed')};
   }
-  &[aria-status=${statuses.EXECUTING}]::after {
+  &[aria-status=${commandStatuses.EXECUTING}]::after {
     color: ${t('colors.brightWhite')};
     background-color: ${t('colors.brightWhite')};
   }

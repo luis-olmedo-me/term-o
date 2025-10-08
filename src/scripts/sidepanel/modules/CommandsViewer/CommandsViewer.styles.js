@@ -44,7 +44,7 @@ export const Command = styled.div`
       height: calc(100% - 1rem);
     }
 
-    &[aria-variant=${statusIndicators.HALF_DOT}]::before {
+    &[aria-indicator=${statusIndicators.HALF_DOT}]::before {
       border-radius: 0 ${t('radius.200')} ${t('radius.200')} 0;
       left: 0;
     }

@@ -66,23 +66,28 @@ export const Command = styled.div`
     background-color: ${t('colors.white')};
   }
 
-  &[aria-variant=${statusIndicators.NONE}]::after {
+  &[aria-indicator=${statusIndicators.NONE}]::after {
     display: none;
   }
-  &[aria-variant=${statusIndicators.DOT}]::after {
+  &[aria-indicator=${statusIndicators.DOT}]::after {
     border-radius: ${t('radius.200')};
     left: ${t('space.300')};
     height: ${t('space.200')};
     width: ${t('space.200')};
   }
-  &[aria-variant=${statusIndicators.HALF_DOT}]::after {
-    border-radius: 0 ${t('radius.200')} ${t('radius.200')} 0;
-    left: 0;
-    width: ${t('space.250')};
-    height: ${t('space.200')};
+
+  &[aria-indicator=${statusIndicators.HALF_DOT}] {
+    padding: 0 ${t('space.600')};
+
+    &::after {
+      border-radius: 0 ${t('radius.200')} ${t('radius.200')} 0;
+      left: 0;
+      width: ${t('space.250')};
+      height: ${t('space.200')};
+    }
   }
-  &[aria-variant=${statusIndicators.HALF_DOT}][aria-light='true']::after,
-  &[aria-variant=${statusIndicators.DOT}][aria-light='true']::after {
+  &[aria-indicator=${statusIndicators.HALF_DOT}][aria-light='true']::after,
+  &[aria-indicator=${statusIndicators.DOT}][aria-light='true']::after {
     box-shadow: 0 0 ${t('space.200')} ${t('space.100')} currentColor;
   }
 `

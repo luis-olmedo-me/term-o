@@ -29,9 +29,9 @@ export const Prompt = ({
   })
 
   const { listening } = useConfig({
-    get: [configInputIds.HISTORIAL_SIZE, configInputIds.CONTEXT]
+    get: [configInputIds.HISTORIAL_SIZE, configInputIds.STATUS_INDICATOR]
   })
-  const [hsitorialSize] = listening
+  const [hsitorialSize, statusIndicator] = listening
 
   useEffect(
     function expectForDefaultValueChanges() {
@@ -86,7 +86,7 @@ export const Prompt = ({
   const prefix = historialIndex || PROMPT_MARK
 
   return (
-    <S.PromptWrapper aria-loading={loading} className={className}>
+    <S.PromptWrapper aria-loading={loading} aria-indicator={statusIndicator} className={className}>
       <S.Line>
         <ColoredText value={context} />
       </S.Line>

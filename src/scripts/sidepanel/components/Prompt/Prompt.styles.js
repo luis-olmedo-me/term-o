@@ -1,4 +1,5 @@
 import { InputWrapper } from '@src/components/Input'
+import { statusIndicators } from '@src/constants/config.constants'
 import { theme as t } from '@src/libs/themer'
 import styled from 'styled-components'
 
@@ -11,9 +12,13 @@ export const PromptWrapper = styled.div`
   cursor: text;
   background-color: ${t('colors.background')};
   color: ${t('colors.foreground')};
-  padding: 0 ${t('space.600')};
+  padding: 0 ${t('space.600')} 0 ${t('space.800')};
   box-shadow: 0 0 ${t('space.200')} ${t('space.100')} ${t('colors.background')};
   z-index: 1;
+
+  &[aria-indicator=${statusIndicators.HALF_DOT}] {
+    padding: 0 ${t('space.600')};
+  }
 
   ${InputWrapper} {
     padding: 0 0 ${t('space.300')};

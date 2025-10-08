@@ -49,7 +49,7 @@ export const configDefaultValues = {
   [configInputIds.THEME_NAME]: defaultColorTheme.name,
   [configInputIds.COLOR_ACCENT]: colorThemeKeys.GREEN,
   [configInputIds.RESET_DATA]: 'Reset',
-  [configInputIds.STATUS_INDICATOR]: statusIndicators.HALF_DOT,
+  [configInputIds.STATUS_INDICATOR]: statusIndicators.DOT,
   [configInputIds.STATUS_BAR]: true,
   [configInputIds.STATUS_LIGHT]: true
 }
@@ -109,8 +109,8 @@ export const defaultConfigSections = [
         type: availableInputTypes.SELECT,
         postFix: null,
         options: [
-          { id: statusIndicators.HALF_DOT, name: 'Half Dot' },
           { id: statusIndicators.DOT, name: 'Dot' },
+          { id: statusIndicators.HALF_DOT, name: 'Half Dot' },
           { id: statusIndicators.NONE, name: 'None' }
         ],
         validations: [],

@@ -32,7 +32,7 @@ export const CommandsViewer = ({ commands, statusIndicator, hasStatusBar, hasSta
               key={command.id}
               aria-status={command.status}
               aria-execution-context={hasStatusBar ? command.executionContext : null}
-              aria-variant={statusIndicator}
+              aria-indicator={statusIndicator}
               aria-light={hasStatusLight}
             >
               <Line>

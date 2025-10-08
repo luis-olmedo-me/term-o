@@ -57,13 +57,15 @@ export const executeCode = ({ scriptContent, command }) => {
     iframe.setAttribute('style', 'display: none;')
     document.body.appendChild(iframe)
 
-    const handleCodeEval = async function(event) {
+    const handleCodeEval = async function (event) {
       const type = event.data?.type
       const data = event.data?.data
 
       switch (type) {
         case 'sandbox-command': {
-          const newCommand = commandParser.getTemplateByName(data.name).create()
+          const newCommand = commandParser
+            .getTemplateByName(data.name)
+            .create(commandParser.executionContext)
 
           newCommand.mock(data.props)
           newCommand.applyData(command.data)

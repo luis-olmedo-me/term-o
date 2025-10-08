@@ -1,6 +1,6 @@
 import * as React from 'preact'
 
-export const Gear = () => {
+const Gear = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -20,3 +20,5 @@ export const Gear = () => {
 }
 
 Gear.propTypes = {}
+
+export default Gear

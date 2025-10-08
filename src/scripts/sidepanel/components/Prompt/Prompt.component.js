@@ -2,7 +2,7 @@ import * as React from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
 import Input, { inputTypes, inputVariants } from '@src/components/Input'
-import { configInputIds } from '@src/constants/config.constants'
+import { configInputIds, PROMPT_MARK } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 import useConfig from '@src/hooks/useConfig'
 import useStorage from '@src/hooks/useStorage'
@@ -17,7 +17,6 @@ export const Prompt = ({
   defaultValue,
   context,
   name,
-  disabled = false,
   loading = false,
   className = null
 }) => {
@@ -30,9 +29,9 @@ export const Prompt = ({
   })
 
   const { listening } = useConfig({
-    get: [configInputIds.HISTORIAL_SIZE, configInputIds.CONTEXT]
+    get: [configInputIds.HISTORIAL_SIZE, configInputIds.STATUS_INDICATOR]
   })
-  const [hsitorialSize] = listening
+  const [hsitorialSize, statusIndicator] = listening
 
   useEffect(
     function expectForDefaultValueChanges() {
@@ -84,33 +83,27 @@ export const Prompt = ({
     }
   }
 
-  const prefix = historialIndex || '$'
+  const prefix = historialIndex || PROMPT_MARK
 
   return (
-    <S.PromptWrapper aria-loading={loading} className={className}>
+    <S.PromptWrapper aria-loading={loading} aria-indicator={statusIndicator} className={className}>
       <S.Line>
         <ColoredText value={context} />
       </S.Line>
 
-      {disabled ? (
-        <S.Line>
-          <ColoredText value={`${prefix} ${value}`} />
-        </S.Line>
-      ) : (
-        <Input
-          inputRef={inputRef}
-          value={historialIndex ? historial.at(historialIndex) : value}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          onBlur={onBlur}
-          onFocus={onFocus}
-          prefix={prefix}
-          name={name}
-          variant={inputVariants.GHOST}
-          type={inputTypes.TEXT}
-          fullWidth
-        />
-      )}
+      <Input
+        inputRef={inputRef}
+        value={historialIndex ? historial.at(historialIndex) : value}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        onBlur={onBlur}
+        onFocus={onFocus}
+        prefix={prefix}
+        name={name}
+        variant={inputVariants.GHOST}
+        type={inputTypes.TEXT}
+        fullWidth
+      />
     </S.PromptWrapper>
   )
 }
@@ -121,7 +114,6 @@ Prompt.propTypes = {
   onBlur: Function,
   inputRef: Object,
   context: String,
-  disabled: Boolean,
   loading: Boolean,
   defaultValue: String,
   className: String,

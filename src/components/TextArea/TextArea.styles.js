@@ -26,13 +26,8 @@ export const TextAreaInput = styled.textarea`
   }
 
   &:hover {
-    background-color: ${t('colors.accent')};
+    background-color: ${t('colors.accent', 'cc')};
     color: ${({ selected }) => (selected ? t('colors.brightAccent') : t('colors.brightWhite'))};
     border-color: ${t('colors.accent')};
-  }
-
-  &::selection {
-    color: ${t('colors.accent')};
-    background-color: ${t('colors.selectionBackground')};
   }
 `

@@ -30,7 +30,7 @@ export const Selecter = styled.select`
   }
 
   &:hover {
-    background-color: ${t('colors.accent')};
+    background-color: ${t('colors.accent', 'cc')};
     color: ${({ selected }) => (selected ? t('colors.brightAccent') : t('colors.brightWhite'))};
   }
 
@@ -54,8 +54,7 @@ export const Selecter = styled.select`
     transition: 0.2s rotate;
   }
   &:open {
-    border-radius: ${t('radius.200')} ${t('radius.200')} 0 0;
-    border-bottom: ${t('space.50')} solid ${t('colors.brightBlack')};
+    border-radius: 0;
 
     &::picker-icon {
       rotate: 180deg;
@@ -76,9 +75,7 @@ export const SelecterWrapper = styled.div`
 export const OptionsWrapper = styled.div`
   overflow: hidden scroll;
   height: 8rem;
-  border-bottom: ${t('space.50')} solid ${t('colors.brightBlack')};
-  border-left: ${t('space.50')} solid ${t('colors.brightBlack')};
-  border-right: ${t('space.50')} solid ${t('colors.brightBlack')};
+  border: ${t('space.50')} solid ${t('colors.brightBlack')};
   background-color: ${t('colors.brightBlack')};
 `
 

@@ -1,6 +1,8 @@
 import { availableInputTypes } from './inputs.constants'
 import { basicColorKeys, colorThemeKeys, defaultColorTheme } from './themes.constants'
 
+export const PROMPT_MARK = '$'
+
 export const configIds = {
   FUNCTIONALITY: 'general',
   APPEARENCE: 'appearence',
@@ -17,7 +19,39 @@ export const configInputIds = {
   FONT_SIZE: 'font-size',
   THEME_NAME: 'theme-name',
   COLOR_ACCENT: 'color-accent',
-  RESET_DATA: 'reset-data'
+  RESET_DATA: 'reset-data',
+  STATUS_INDICATOR: 'status-indicator',
+  STATUS_BAR: 'status-bar',
+  STATUS_LIGHT: 'status-light'
+}
+
+export const fontSizes = {
+  EXTRA_SMALL: '12',
+  SMALL: '14',
+  NORMAL: '16',
+  LARGE: '18'
+}
+
+export const statusIndicators = {
+  HALF_DOT: 'half-dot',
+  DOT: 'dot',
+  NONE: 'none'
+}
+
+export const configDefaultValues = {
+  [configInputIds.COPY_ON_SELECTION]: true,
+  [configInputIds.SWITCH_TAB_AUTOMATICALLY]: true,
+  [configInputIds.MAX_LINES_PER_COMMAND]: 50,
+  [configInputIds.HISTORIAL_SIZE]: 40,
+  [configInputIds.CONTEXT]: 'On [termo.color.brightBlue]{origin}',
+  [configInputIds.FONT_FAMILY]: 'Consolas',
+  [configInputIds.FONT_SIZE]: fontSizes.NORMAL,
+  [configInputIds.THEME_NAME]: defaultColorTheme.name,
+  [configInputIds.COLOR_ACCENT]: colorThemeKeys.GREEN,
+  [configInputIds.RESET_DATA]: 'Reset',
+  [configInputIds.STATUS_INDICATOR]: statusIndicators.DOT,
+  [configInputIds.STATUS_BAR]: true,
+  [configInputIds.STATUS_LIGHT]: true
 }
 
 export const defaultConfigSections = [
@@ -34,7 +68,7 @@ export const defaultConfigSections = [
         postFix: null,
         options: [],
         validations: [],
-        value: true
+        value: configDefaultValues[configInputIds.COPY_ON_SELECTION]
       },
       {
         id: configInputIds.SWITCH_TAB_AUTOMATICALLY,
@@ -45,7 +79,7 @@ export const defaultConfigSections = [
         postFix: null,
         options: [],
         validations: [],
-        value: true
+        value: configDefaultValues[configInputIds.SWITCH_TAB_AUTOMATICALLY]
       },
       {
         id: configInputIds.MAX_LINES_PER_COMMAND,
@@ -56,7 +90,7 @@ export const defaultConfigSections = [
         postFix: 'px',
         options: [],
         validations: [['is-between', 0, 1000]],
-        value: 50
+        value: configDefaultValues[configInputIds.MAX_LINES_PER_COMMAND]
       },
       {
         id: configInputIds.HISTORIAL_SIZE,
@@ -66,7 +100,41 @@ export const defaultConfigSections = [
         postFix: 'px',
         options: [],
         validations: [['is-between', 0, 1000]],
-        value: 40
+        value: configDefaultValues[configInputIds.HISTORIAL_SIZE]
+      },
+      {
+        id: configInputIds.STATUS_INDICATOR,
+        name: 'Status indicator',
+        description: 'Defines how the status indicator is shown in the terminal prompt.',
+        type: availableInputTypes.SELECT,
+        postFix: null,
+        options: [
+          { id: statusIndicators.DOT, name: 'Dot' },
+          { id: statusIndicators.HALF_DOT, name: 'Half Dot' },
+          { id: statusIndicators.NONE, name: 'None' }
+        ],
+        validations: [],
+        value: configDefaultValues[configInputIds.STATUS_INDICATOR]
+      },
+      {
+        id: configInputIds.STATUS_BAR,
+        name: 'Status bar',
+        description: 'Display the status bar in the terminal prompt.',
+        type: availableInputTypes.BOOLEAN,
+        postFix: null,
+        options: [],
+        validations: [],
+        value: configDefaultValues[configInputIds.STATUS_BAR]
+      },
+      {
+        id: configInputIds.STATUS_LIGHT,
+        name: 'Status light',
+        description: 'Display the status light in the terminal prompt.',
+        type: availableInputTypes.BOOLEAN,
+        postFix: null,
+        options: [],
+        validations: [],
+        value: configDefaultValues[configInputIds.STATUS_LIGHT]
       },
       {
         id: configInputIds.CONTEXT,
@@ -77,7 +145,7 @@ export const defaultConfigSections = [
         postFix: null,
         options: [],
         validations: [],
-        value: `On [termo.color.brightBlue]{origin}`
+        value: configDefaultValues[configInputIds.CONTEXT]
       }
     ]
   },
@@ -94,7 +162,7 @@ export const defaultConfigSections = [
         postFix: null,
         options: [],
         validations: [],
-        value: defaultColorTheme.name
+        value: configDefaultValues[configInputIds.THEME_NAME]
       },
       {
         id: configInputIds.COLOR_ACCENT,
@@ -104,7 +172,7 @@ export const defaultConfigSections = [
         postFix: null,
         options: basicColorKeys.map(key => ({ id: key, name: key })),
         validations: [],
-        value: colorThemeKeys.GREEN
+        value: configDefaultValues[configInputIds.COLOR_ACCENT]
       },
       {
         id: configInputIds.FONT_FAMILY,
@@ -114,7 +182,7 @@ export const defaultConfigSections = [
         postFix: null,
         options: [],
         validations: [],
-        value: 'Consolas'
+        value: configDefaultValues[configInputIds.FONT_FAMILY]
       },
       {
         id: configInputIds.FONT_SIZE,
@@ -123,13 +191,13 @@ export const defaultConfigSections = [
         type: availableInputTypes.SELECT,
         postFix: null,
         options: [
-          { id: '12', name: 'Extra-Small' },
-          { id: '14', name: 'Small' },
-          { id: '16', name: 'Normal' },
-          { id: '18', name: 'Large' }
+          { id: fontSizes.EXTRA_SMALL, name: 'Extra-Small' },
+          { id: fontSizes.SMALL, name: 'Small' },
+          { id: fontSizes.NORMAL, name: 'Normal' },
+          { id: fontSizes.LARGE, name: 'Large' }
         ],
         validations: [],
-        value: '16'
+        value: configDefaultValues[configInputIds.FONT_SIZE]
       }
     ]
   },
@@ -146,7 +214,7 @@ export const defaultConfigSections = [
         postFix: null,
         options: [],
         validations: [],
-        value: 'Reset'
+        value: configDefaultValues[configInputIds.RESET_DATA]
       }
     ]
   }

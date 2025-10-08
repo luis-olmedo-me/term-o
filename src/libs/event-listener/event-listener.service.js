@@ -35,4 +35,8 @@ export class EventListener {
 
     return this
   }
+
+  removeAllEventListeners() {
+    this.listeners = {}
+  }
 }

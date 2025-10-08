@@ -7,9 +7,4 @@ export const Text = styled.span`
   line-height: ${t('lineHeight.300')};
   border-radius: ${t('radius.150')};
   white-space: break-spaces;
-
-  &::selection {
-    color: ${t('colors.foreground')};
-    background-color: ${t('colors.selectionBackground')};
-  }
 `

@@ -9,12 +9,17 @@ const GlobalStyle = createGlobalStyle`
     font-family: "${t('font.primary')}", Courier, monospace;
     background-color: ${t('colors.background')};
     font-size: ${t('fontSize.50')};
+
+    &::selection {
+      color: ${t('colors.accent')};
+      background-color: ${t('colors.selectionBackground')};
+    }
   }
 
   .vertical-scroller {
     &::-webkit-scrollbar {
-      height: 8px;
-      width: 8px;
+      height: ${t('space.300')};
+      width: ${t('space.300')};
     }
 
     &::-webkit-scrollbar-track {
@@ -28,7 +33,7 @@ const GlobalStyle = createGlobalStyle`
 
       &:active,
       &:hover {
-        background-color: ${t('colors.accent')};
+        background-color: ${t('colors.accent', 'cc')};
       }
     }
   }

@@ -8,11 +8,13 @@ import { statuses } from './command.constants'
 import { executePerUpdates, getArgs, getArray, getPropsFromString } from './command.helpers'
 
 export class Command extends EventListener {
-  constructor({ name, options, helpSectionTitles }) {
+  constructor({ name, options, helpSectionTitles, executionContext }) {
     super()
 
     this.id = createUUIDv4()
     this.name = name
+    this.executionContext = executionContext
+    this.context = ''
     this.title = ''
     this.data = {}
     this.props = {}
@@ -38,7 +40,7 @@ export class Command extends EventListener {
       const cleanedUpdate = cleanColors(update)
       const updateByArgs = getArgs(cleanedUpdate)
 
-      if (this.failed) return cleanedUpdate.replace(/^✕ /, '')
+      if (this.failed) return cleanedUpdate
 
       return updateByArgs.map(arg => {
         const isArray = /^\[/g.test(arg) && /\]$/g.test(arg)
@@ -173,7 +175,7 @@ export class Command extends EventListener {
   }
 
   throw(message) {
-    const errorUpdate = formatError({ title: `✕ ${message}` })
+    const errorUpdate = formatError({ title: message })
 
     this.reset()
     this.update(errorUpdate)
@@ -206,6 +208,12 @@ export class Command extends EventListener {
     return this
   }
 
+  setContext(newContext) {
+    this.context = newContext
+
+    return this
+  }
+
   startExecuting() {
     this.changeStatus(statuses.EXECUTING)
     this.reset()
@@ -227,5 +235,16 @@ export class Command extends EventListener {
     return this.failed || !hasAnyHidden
       ? allCommands.find(command => command.visible)
       : allCommands.reverse().find(command => command.visible)
+  }
+
+  simplify() {
+    return {
+      id: this.id,
+      title: this.title,
+      status: this.status,
+      updates: this.updates,
+      context: this.context,
+      executionContext: this.executionContext
+    }
   }
 }

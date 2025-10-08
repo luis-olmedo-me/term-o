@@ -1,59 +1,53 @@
-import { configIds, configInputIds } from '@src/constants/config.constants'
+import { configDefaultValues, configInputIds } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
+import { getConfigValueByInputId } from '@src/helpers/config.helpers'
 import { createContext } from '@src/helpers/contexts.helpers'
 import { getStorageValue, setStorageValue } from '@src/helpers/storage.helpers'
 
 const historyManager = (function () {
   let history = []
-  let status = ''
-
-  const getStatusFromConfig = config => {
-    if (!config) return ''
-
-    const promptConfig = config.find(config => config.id === configIds.FUNCTIONALITY)
-    const statusInputConfig = promptConfig?.inputs.find(
-      input => input.id === configInputIds.CONTEXT
-    )
-
-    return statusInputConfig?.value
-  }
+  let aliases = []
+  let context = configDefaultValues[configInputIds.CONTEXT]
+  let maxLines = configDefaultValues[configInputIds.MAX_LINES_PER_COMMAND]
 
   const handleStorageChanges = (changes, currentChanges) => {
-    if (currentChanges !== storageNamespaces.LOCAL) return
+    if (currentChanges !== storageNamespaces.LOCAL && currentChanges !== storageNamespaces.SESSION)
+      return
 
     for (let [storageKey, { newValue }] of Object.entries(changes)) {
       if (storageKey === storageKeys.HISTORY) {
         history = newValue
       }
+      if (storageKey === storageKeys.ALIASES) {
+        aliases = newValue
+      }
       if (storageKey === storageKeys.CONFIG) {
-        status = getStatusFromConfig(newValue)
+        context = getConfigValueByInputId(configInputIds.CONTEXT, newValue, context)
+        maxLines = getConfigValueByInputId(configInputIds.MAX_LINES_PER_COMMAND, newValue, maxLines)
       }
     }
   }
 
   const getHistoryFromLS = async () => {
     const configFromLS = await getStorageValue(storageNamespaces.LOCAL, storageKeys.CONFIG)
-    const historyFromLS = await getStorageValue(storageNamespaces.LOCAL, storageKeys.HISTORY)
+    const aliasesFromLS = await getStorageValue(storageNamespaces.LOCAL, storageKeys.ALIASES)
+    const historyFromLS = await getStorageValue(storageNamespaces.SESSION, storageKeys.HISTORY)
 
     history = historyFromLS || []
-    status = getStatusFromConfig(configFromLS)
-  }
-
-  const setHistoryFromLS = value => {
-    setStorageValue(storageNamespaces.LOCAL, storageKeys.HISTORY, value)
-  }
-
-  const getContext = tab => {
-    return createContext(status, tab)
+    aliases = aliasesFromLS || []
+    context = getConfigValueByInputId(configInputIds.CONTEXT, configFromLS, context)
+    maxLines = getConfigValueByInputId(configInputIds.MAX_LINES_PER_COMMAND, configFromLS, maxLines)
   }
 
   getHistoryFromLS()
   chrome.storage.onChanged.addListener(handleStorageChanges)
 
   return {
+    getMaxLines: () => maxLines,
     getHistory: () => history,
-    setHistory: setHistoryFromLS,
-    getContext
+    getAliases: () => aliases,
+    getContext: tab => createContext(context, tab),
+    setHistory: value => setStorageValue(storageNamespaces.SESSION, storageKeys.HISTORY, value)
   }
 })()
 

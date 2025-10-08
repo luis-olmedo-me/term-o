@@ -103,7 +103,7 @@ export default new CommandTemplate({
     helpSection: tabsHelpSections.TAB_ACTIONS,
     description: 'Open a new tab with the given URL',
     validate: [isURL],
-    worksWith: ['wait']
+    worksWith: ['wait', 'active']
   })
   .expect({
     name: 'wait',
@@ -111,6 +111,13 @@ export default new CommandTemplate({
     abbreviation: 'W',
     helpSection: tabsHelpSections.TAB_ACTIONS,
     description: 'Wait until the tab finishes loading'
+  })
+  .expect({
+    name: 'active',
+    type: 'boolean',
+    abbreviation: 'a',
+    helpSection: tabsHelpSections.TAB_ACTIONS,
+    description: 'Focus the tab open'
   })
   .expect({
     name: 'current',

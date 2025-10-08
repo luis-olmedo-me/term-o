@@ -44,11 +44,12 @@ export class CommandTemplate {
     return this
   }
 
-  create() {
+  create(executionContext) {
     const newCommand = new Command({
       name: this.name,
       options: this.options.copy(),
-      helpSectionTitles: this.helpSectionTitles
+      helpSectionTitles: this.helpSectionTitles,
+      executionContext
     })
 
     return this.handler ? newCommand.addEventListener('execute', this.handler) : newCommand

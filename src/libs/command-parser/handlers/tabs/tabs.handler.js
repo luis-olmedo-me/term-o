@@ -46,7 +46,10 @@ export const handleTABS = async command => {
 
   if (P`open`) {
     if (P`wait`) command.update(`Please wait while the page is loading.`)
-    const tab = await createTab({ config: { url: P`open` }, wait: P`wait` }).catch(renameError)
+    const tab = await createTab({
+      config: { url: P`open`, active: P`active` },
+      wait: P`wait`
+    }).catch(renameError)
 
     const update = formatTab({
       ...tab,

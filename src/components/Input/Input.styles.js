@@ -38,11 +38,6 @@ export const Input = styled.input`
     outline: none;
   }
 
-  &::selection {
-    color: ${t('colors.accent')};
-    background-color: ${t('colors.selectionBackground')};
-  }
-
   &[type='number'] {
     width: 100px;
   }
@@ -67,7 +62,7 @@ export const Input = styled.input`
     }
 
     &:hover {
-      background-color: ${t('colors.accent')};
+      background-color: ${t('colors.accent', 'cc')};
       color: ${({ selected }) => (selected ? t('colors.brightAccent') : t('colors.brightWhite'))};
 
       &,
@@ -91,12 +86,5 @@ export const InputWrapper = styled.div`
   &[aria-disabled='true'],
   &[aria-disabled='true'] ${Input}:disabled {
     cursor: text;
-  }
-`
-
-export const Prefix = styled.span`
-  &::selection {
-    color: ${t('colors.accent')};
-    background-color: ${t('colors.selectionBackground')};
   }
 `

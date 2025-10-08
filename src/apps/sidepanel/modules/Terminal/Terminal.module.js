@@ -9,10 +9,7 @@ import Gear from '@src/icons/Gear.component'
 import Prompt from '../../components/Prompt'
 import CommandsViewer from '../CommandsViewer'
 
-import commandParser, {
-  limitSimplifiedCommands,
-  updateSimplifiedCommandsWith
-} from '@src/libs/command-parser'
+import commandParser from '@src/libs/command-parser'
 
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
@@ -21,6 +18,9 @@ import { getCurrentTab } from '@src/libs/command-parser/handlers/tabs/tabs.helpe
 import { copyText, getSelectedText } from './Terminal.helpers'
 
 import { commandStatuses } from '@src/constants/command.constants'
+
+import { limitSimplifiedCommands, updateSimplifiedCommandsWith } from '@src/helpers/command.helpers'
+
 import * as S from './Terminal.styles'
 
 export const Terminal = () => {

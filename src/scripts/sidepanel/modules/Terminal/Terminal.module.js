@@ -5,8 +5,9 @@ import useConfig from '@src/hooks/useConfig'
 import useStorage from '@src/hooks/useStorage'
 
 import Button, { buttonVariants } from '@src/components/Button'
-import { Gear } from '@src/icons/Gear.component'
+import Gear from '@src/icons/Gear.component'
 import CommandsViewer from '@src/scripts/sidepanel/modules/CommandsViewer'
+import Prompt from '../../components/Prompt'
 
 import commandParser, {
   limitSimplifiedCommands,
@@ -174,7 +175,7 @@ export const Terminal = () => {
         hasStatusLight={hasStatusLight}
       />
 
-      <S.TerminalPrompt
+      <Prompt
         inputRef={inputRef}
         onEnter={handleEnter}
         onBlur={WaitForKeyPressToFocusOnPrompt}

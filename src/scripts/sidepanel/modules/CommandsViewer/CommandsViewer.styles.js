@@ -13,6 +13,10 @@ export const ViewWrapper = styled.div`
   margin-right: ${t('space.500')};
   cursor: text;
   word-break: break-all;
+  flex-grow: 1;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding-top: ${t('space.700')};
 `
 
 export const Command = styled.div`

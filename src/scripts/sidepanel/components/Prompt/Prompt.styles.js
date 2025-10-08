@@ -1,4 +1,4 @@
-import { InputWrapper } from '@src/components/Input'
+import { InputWrapper, RealInput } from '@src/components/Input'
 import { statusIndicators } from '@src/constants/config.constants'
 import { theme as t } from '@src/libs/themer'
 import styled from 'styled-components'
@@ -18,6 +18,10 @@ export const PromptWrapper = styled.div`
 
   &[aria-indicator=${statusIndicators.HALF_DOT}] {
     padding: 0 ${t('space.600')};
+  }
+
+  &[aria-loading='true'] ${InputWrapper}, &[aria-loading='true'] ${RealInput} {
+    color: ${t('colors.foreground', '60')};
   }
 
   ${InputWrapper} {

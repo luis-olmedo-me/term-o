@@ -17,7 +17,7 @@ export const Postfix = styled.span`
   cursor: help;
 `
 
-export const Input = styled.input`
+export const RealInput = styled.input`
   font-family: ${t('font.primary')};
   width: 100%;
   box-sizing: border-box;
@@ -84,7 +84,7 @@ export const InputWrapper = styled.div`
   }
 
   &[aria-disabled='true'],
-  &[aria-disabled='true'] ${Input}:disabled {
+  &[aria-disabled='true'] ${RealInput}:disabled {
     cursor: text;
   }
 `

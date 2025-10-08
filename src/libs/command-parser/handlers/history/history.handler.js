@@ -1,4 +1,5 @@
-import { displayHelp, formatHistoryItem } from '../handlers.helpers'
+import { createHelpView } from '@src/helpers/command.helpers'
+import { formatHistoryItem } from '../handlers.helpers'
 
 export const handleHistory = async command => {
   const P = name => command.props[name]
@@ -51,5 +52,5 @@ export const handleHistory = async command => {
     command.update(...updates)
   }
 
-  if (P`help`) displayHelp(command)
+  if (P`help`) createHelpView(command)
 }

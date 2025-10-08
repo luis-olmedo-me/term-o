@@ -1,6 +1,8 @@
 import { storageKeys } from '@src/constants/storage.constants'
+
+import { createHelpView } from '@src/helpers/command.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
-import { displayHelp, formatEvent } from '../handlers.helpers'
+import { formatEvent } from '../handlers.helpers'
 
 export const handleEVENTS = async command => {
   const P = name => command.props[name]
@@ -41,5 +43,5 @@ export const handleEVENTS = async command => {
     command.update(update)
   }
 
-  if (P`help`) displayHelp(command)
+  if (P`help`) createHelpView(command)
 }

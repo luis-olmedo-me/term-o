@@ -1,5 +1,7 @@
 import themer from '@src/libs/themer'
-import { displayHelp, formatTheme } from '../handlers.helpers'
+
+import { createHelpView } from '@src/helpers/command.helpers'
+import { formatTheme } from '../handlers.helpers'
 
 export const handleTHEME = async command => {
   const P = name => command.props[name]
@@ -78,5 +80,5 @@ export const handleTHEME = async command => {
     command.update(update)
   }
 
-  if (P`help`) displayHelp(command)
+  if (P`help`) createHelpView(command)
 }

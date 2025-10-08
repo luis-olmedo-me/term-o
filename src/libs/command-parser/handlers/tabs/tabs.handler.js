@@ -1,7 +1,8 @@
 import { overwriteMessage } from '@src/helpers/messages.helpers'
 import { spreadIf } from '@src/helpers/utils.helpers'
 
-import { displayHelp, formatTab } from '../handlers.helpers'
+import { createHelpView } from '@src/helpers/command.helpers'
+import { formatTab } from '../handlers.helpers'
 import { createTab, getTab, reloadTab } from './tabs.helpers'
 
 export const handleTABS = async command => {
@@ -108,5 +109,5 @@ export const handleTABS = async command => {
     }
   }
 
-  if (P`help`) displayHelp(command)
+  if (P`help`) createHelpView(command)
 }

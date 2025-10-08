@@ -1,5 +1,7 @@
 import { applyElementStyles, getElementStyles } from '@src/processes/processes'
-import { displayHelp, formatRule } from '../handlers.helpers'
+
+import { createHelpView } from '@src/helpers/command.helpers'
+import { formatRule } from '../handlers.helpers'
 
 export const handleSTYLES = async command => {
   const { tab } = command.data
@@ -30,5 +32,5 @@ export const handleSTYLES = async command => {
     if (rules.length) command.update(...formattedStyles)
   }
 
-  if (P`help`) displayHelp(command)
+  if (P`help`) createHelpView(command)
 }

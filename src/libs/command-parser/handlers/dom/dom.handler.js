@@ -2,8 +2,9 @@ import { clickElement, findDOMElement, getDOMElements } from '@src/processes/pro
 
 import { preAppendCounters } from '@src/helpers/messages.helpers'
 
+import { createHelpView } from '@src/helpers/command.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
-import { displayHelp, formatDOMEvent, formatElement } from '../handlers.helpers'
+import { formatDOMEvent, formatElement } from '../handlers.helpers'
 
 export const handleDOM = async command => {
   const { tab } = command.data
@@ -58,5 +59,5 @@ export const handleDOM = async command => {
     command.update(...textElements)
   }
 
-  if (P`help`) displayHelp(command)
+  if (P`help`) createHelpView(command)
 }

@@ -1,4 +1,5 @@
-import { displayHelp, formatResponse } from '../handlers.helpers'
+import { createHelpView } from '@src/helpers/command.helpers'
+import { formatResponse } from '../handlers.helpers'
 
 export const handleREQUEST = async command => {
   const P = name => command.props[name]
@@ -30,5 +31,5 @@ export const handleREQUEST = async command => {
     }
   }
 
-  if (P`help`) displayHelp(command)
+  if (P`help`) createHelpView(command)
 }

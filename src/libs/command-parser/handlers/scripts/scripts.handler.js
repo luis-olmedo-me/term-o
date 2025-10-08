@@ -1,5 +1,6 @@
 import { storageKeys } from '@src/constants/storage.constants'
-import { displayHelp, formatFile, formatScript } from '../handlers.helpers'
+import { createHelpView } from '@src/helpers/command.helpers'
+import { formatFile, formatScript } from '../handlers.helpers'
 import { executeCode, readFileContent, uploadFile } from './scripts.helpers'
 
 export const handleSCRIPTS = async command => {
@@ -66,5 +67,5 @@ export const handleSCRIPTS = async command => {
     })
   }
 
-  if (P`help`) displayHelp(command)
+  if (P`help`) createHelpView(command)
 }

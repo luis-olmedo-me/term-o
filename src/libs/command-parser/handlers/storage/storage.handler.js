@@ -1,13 +1,8 @@
 import { getStorage, setStorage } from '@src/processes/processes'
 
+import { createHelpView } from '@src/helpers/command.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
-
-import {
-  displayHelp,
-  formatStorageAsString,
-  formatStorageProp,
-  formatText
-} from '../handlers.helpers'
+import { formatStorageAsString, formatStorageProp, formatText } from '../handlers.helpers'
 import { getStorageNamespace } from './storage.helpers'
 
 export const handleSTORAGE = async command => {
@@ -50,5 +45,5 @@ export const handleSTORAGE = async command => {
     command.update(update)
   }
 
-  if (P`help`) displayHelp(command)
+  if (P`help`) createHelpView(command)
 }

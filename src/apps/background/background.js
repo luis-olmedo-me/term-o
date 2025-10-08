@@ -1,8 +1,10 @@
-import commandParser, { executionContexts, limitSimplifiedCommands } from '@src/libs/command-parser'
+import commandParser, { limitSimplifiedCommands } from '@src/libs/command-parser'
 import processWaitList from '@src/libs/process-wait-list'
 import eventManager from './packages/event-manager.package'
 import historyManager from './packages/history-manager.package'
 import processHandlers from './process-handlers'
+
+import { executionContexts } from '@src/constants/command.constants'
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
 

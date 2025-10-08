@@ -1,9 +1,11 @@
 import * as React from 'preact'
 
-import commandParser, { executionContexts } from '@src/libs/command-parser'
+import commandParser from '@src/libs/command-parser'
 import ThemeProvider from '@src/providers/ThemeProvider'
 import GlobalStyle from '@src/styles/Global.styles'
 import Terminal from './modules/Terminal'
+
+import { executionContexts } from '@src/constants/command.constants'
 
 commandParser.setExecutionContext(executionContexts.SIDEPANEL)
 

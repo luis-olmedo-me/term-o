@@ -1,8 +1,10 @@
-import { statusIndicators } from '@src/constants/config.constants'
-import { executionContexts } from '@src/libs/command-parser'
-import { theme as t } from '@src/libs/themer'
-import { statuses } from '@src/templates/Command'
 import styled from 'styled-components'
+
+import { theme as t } from '@src/libs/themer'
+
+import { executionContexts } from '@src/constants/command.constants'
+import { statusIndicators } from '@src/constants/config.constants'
+import { statuses } from '@src/templates/Command'
 
 export const ViewWrapper = styled.div`
   display: flex;

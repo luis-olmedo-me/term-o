@@ -1,4 +1,4 @@
-export const defaultValues = {
+export const optionDefaultValues = {
   'string-array': [],
   string: '',
   boolean: false,

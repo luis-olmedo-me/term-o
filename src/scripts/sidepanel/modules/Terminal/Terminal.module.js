@@ -115,18 +115,21 @@ export const Terminal = () => {
 
   const handleCommandUpdate = command => {
     setSimplifiedCommands(oldSimplifiedCommands => {
-      const updatedCommands = updateSimplifiedCommandsWith(oldSimplifiedCommands, command)
+      const updatedCommands = updateSimplifiedCommandsWith(
+        oldSimplifiedCommands,
+        command.getCommandVisibleInChain(),
+        command.id
+      )
       const commandsLimited = limitSimplifiedCommands(updatedCommands, maxLinesPerCommand)
 
       return commandsLimited
     })
   }
 
-  const handleCommandStatusChange = command => {
-    if (!command.finished) return
-    command.removeAllEventListeners()
+  const handleCommandExecuted = command => {
+    handleCommandUpdate(command)
 
-    handleCommandUpdate(command.getCommandVisibleInChain())
+    command.removeAllEventListeners()
     clearCurrentCommandRef()
   }
 
@@ -138,10 +141,9 @@ export const Terminal = () => {
 
     if (!newCommand.failed) {
       newCommand.addEventListener('update', handleCommandUpdate)
-      newCommand.addEventListener('statuschange', handleCommandStatusChange)
-      newCommand.execute()
+      newCommand.execute().then(() => handleCommandExecuted(newCommand))
     } else {
-      handleCommandStatusChange(newCommand)
+      handleCommandExecuted(newCommand)
     }
 
     focusOnPrompt()

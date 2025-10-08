@@ -48,12 +48,14 @@ export const limitSimplifiedCommands = (commands, maxCount) => {
   return newCommands
 }
 
-export const updateSimplifiedCommandsWith = (simplifiedCommands, command) => {
-  const isAlreadyAdded = simplifiedCommands.some(oldCommand => oldCommand.id === command.id)
+export const updateSimplifiedCommandsWith = (simplifiedCommands, command, commandId) => {
+  if (!command) return simplifiedCommands
+
+  const isAlreadyAdded = simplifiedCommands.some(oldCommand => oldCommand.id === commandId)
 
   return isAlreadyAdded
     ? simplifiedCommands.map(oldCommand =>
-        oldCommand.id === command.id
+        oldCommand.id === commandId
           ? { ...oldCommand, updates: command.updates, status: command.status }
           : oldCommand
       )

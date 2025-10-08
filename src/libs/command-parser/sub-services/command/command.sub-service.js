@@ -156,6 +156,8 @@ export class Command extends EventListener {
         if (this.canExecuteNext) await this.executeNext()
 
         this.changeStatus(statuses.DONE)
+      } else {
+        this.changeStatus(this.status)
       }
     } catch (error) {
       this.throw(error)
@@ -197,6 +199,9 @@ export class Command extends EventListener {
     nextCommand.addEventListener('update', ({ updates }) => {
       this.setUpdates(...this.staticUpdates, ...updates)
     })
+    nextCommand.addEventListener('statuschange', command => {
+      if (command.finished) this.changeStatus(nextCommand.status)
+    })
 
     if (hasArgsHoldingUp) await executePerUpdates(nextCommand, staticUpdates)
     else await nextCommand.execute()
@@ -210,6 +215,8 @@ export class Command extends EventListener {
 
   setContext(newContext) {
     this.context = newContext
+
+    if (this.nextCommand) this.nextCommand.setContext(newContext)
 
     return this
   }

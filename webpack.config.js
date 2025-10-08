@@ -4,11 +4,11 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = (_env, { watch, mode }) => ({
   entry: {
-    background: './src/scripts/background/background.js',
-    content: './src/scripts/content/content.js',
-    sidepanel: './src/scripts/sidepanel/sidepanel.js',
-    sandbox: './src/scripts/sandbox/sandbox.js',
-    configuration: './src/scripts/configuration/configuration.js'
+    background: './src/apps/background/background.js',
+    content: './src/apps/content/content.js',
+    sidepanel: './src/apps/sidepanel/sidepanel.js',
+    sandbox: './src/apps/sandbox/sandbox.js',
+    configuration: './src/apps/configuration/configuration.js'
   },
   output: {
     filename: '[name].js',
@@ -18,8 +18,8 @@ module.exports = (_env, { watch, mode }) => ({
     extensions: ['.js', '.jsx', '.css'],
     modules: [path.resolve(__dirname, 'src'), 'node_modules'],
     alias: {
-      '@sidepanel': path.resolve(__dirname, 'src/scripts/sidepanel'),
-      '@background': path.resolve(__dirname, 'src/scripts/background'),
+      '@sidepanel': path.resolve(__dirname, 'src/apps/sidepanel'),
+      '@background': path.resolve(__dirname, 'src/apps/background'),
       '@src': path.resolve(__dirname, 'src'),
       react: 'preact/compat'
     }
@@ -38,9 +38,9 @@ module.exports = (_env, { watch, mode }) => ({
       patterns: [
         { from: './src/manifest.json', to: './manifest.json' },
         { from: './src/images/required', to: './images' },
-        { from: './src/scripts/sidepanel/sidepanel.html', to: './sidepanel.html' },
-        { from: './src/scripts/sandbox/sandbox.html', to: './sandbox.html' },
-        { from: './src/scripts/configuration/configuration.html', to: './configuration.html' }
+        { from: './src/apps/sidepanel/sidepanel.html', to: './sidepanel.html' },
+        { from: './src/apps/sandbox/sandbox.html', to: './sandbox.html' },
+        { from: './src/apps/configuration/configuration.html', to: './configuration.html' }
       ]
     }),
     ...(watch ? [] : [new CleanWebpackPlugin()])

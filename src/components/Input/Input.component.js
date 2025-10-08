@@ -21,7 +21,7 @@ export const Input = ({
 }) => {
   return (
     <S.InputWrapper aria-disabled={disabled} aria-fit-content={!fullWidth}>
-      {prefix && <S.Prefix>{prefix}</S.Prefix>}
+      {prefix && <span>{prefix}</span>}
 
       <S.Input
         ref={inputRef}

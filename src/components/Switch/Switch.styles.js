@@ -78,10 +78,3 @@ export const SwitchWrapper = styled.div`
   position: relative;
   width: fit-content;
 `
-
-export const Prefix = styled.span`
-  &::selection {
-    color: ${t('colors.accent')};
-    background-color: ${t('colors.selectionBackground')};
-  }
-`

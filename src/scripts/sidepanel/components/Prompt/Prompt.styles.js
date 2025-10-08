@@ -5,11 +5,6 @@ import styled from 'styled-components'
 export const Line = styled.p`
   margin: 0;
   cursor: text;
-
-  &::selection {
-    color: ${t('colors.foreground')};
-    background-color: ${t('colors.selectionBackground')};
-  }
 `
 
 export const PromptWrapper = styled.div`

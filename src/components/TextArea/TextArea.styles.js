@@ -30,9 +30,4 @@ export const TextAreaInput = styled.textarea`
     color: ${({ selected }) => (selected ? t('colors.brightAccent') : t('colors.brightWhite'))};
     border-color: ${t('colors.accent')};
   }
-
-  &::selection {
-    color: ${t('colors.accent')};
-    background-color: ${t('colors.selectionBackground')};
-  }
 `

@@ -114,10 +114,12 @@ export const Terminal = () => {
   }
 
   const handleCommandUpdate = command => {
-    const updatedCommands = updateSimplifiedCommandsWith(simplifiedCommands, command)
-    const commandsLimited = limitSimplifiedCommands(updatedCommands, maxLinesPerCommand)
+    setSimplifiedCommands(oldSimplifiedCommands => {
+      const updatedCommands = updateSimplifiedCommandsWith(oldSimplifiedCommands, command)
+      const commandsLimited = limitSimplifiedCommands(updatedCommands, maxLinesPerCommand)
 
-    setSimplifiedCommands(commandsLimited)
+      return commandsLimited
+    })
   }
 
   const handleCommandStatusChange = command => {

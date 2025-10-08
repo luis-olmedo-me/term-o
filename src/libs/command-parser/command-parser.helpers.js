@@ -53,7 +53,9 @@ export const updateSimplifiedCommandsWith = (simplifiedCommands, command) => {
 
   return isAlreadyAdded
     ? simplifiedCommands.map(oldCommand =>
-        oldCommand.id === command.id ? { ...oldCommand, updates: command.updates } : oldCommand
+        oldCommand.id === command.id
+          ? { ...oldCommand, updates: command.updates, status: command.status }
+          : oldCommand
       )
     : [...simplifiedCommands, command.simplify()]
 }

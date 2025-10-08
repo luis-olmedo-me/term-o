@@ -21,7 +21,7 @@ const executeEvents = async (events, defaultTab) => {
     const command = commandParser.read(event.line)
     const context = historyManager.getContext(tab)
 
-    command.applyData({ tab, setTab, clearLogs }).setContext(context)
+    command.applyData({ tab, setTab, clearLogs }).applyContext(context)
     if (!command.finished) await command.execute()
 
     const commandVisible = command.getCommandVisibleInChain()

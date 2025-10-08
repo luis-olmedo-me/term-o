@@ -213,10 +213,10 @@ export class Command extends EventListener {
     return this
   }
 
-  setContext(newContext) {
+  applyContext(newContext) {
     this.context = newContext
 
-    if (this.nextCommand) this.nextCommand.setContext(newContext)
+    if (this.nextCommand) this.nextCommand.applyContext(newContext)
 
     return this
   }

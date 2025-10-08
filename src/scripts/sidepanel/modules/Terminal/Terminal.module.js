@@ -134,9 +134,10 @@ export const Terminal = () => {
   }
 
   const handleEnter = value => {
-    const newCommand = commandParser.read(value)
-    newCommand.applyData({ tab, setTab, clearLogs })
-    newCommand.setContext(context)
+    const newCommand = commandParser
+      .read(value)
+      .applyData({ tab, setTab, clearLogs })
+      .applyContext(context)
     currentCommandRef.current = newCommand
 
     if (!newCommand.failed) {

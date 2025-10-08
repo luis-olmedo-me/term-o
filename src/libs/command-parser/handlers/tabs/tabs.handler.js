@@ -1,4 +1,5 @@
-import { displayHelp, formatTab, renameError, spreadIf } from '../handlers.helpers'
+import { renameError } from '@src/helpers/messages.helpers'
+import { displayHelp, formatTab, spreadIf } from '../handlers.helpers'
 import { createTab, getTab, reloadTab } from './tabs.helpers'
 
 export const handleTABS = async command => {

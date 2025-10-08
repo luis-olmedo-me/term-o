@@ -1,6 +1,5 @@
 import { getQuotedString } from '@src/helpers/utils.helpers'
 import { getColor as C } from '@src/libs/themer'
-import { errorMessagesOverwritten } from './handlers.constants'
 
 export const spreadIf = (condition, value) => {
   return condition ? value : {}
@@ -14,12 +13,6 @@ export const prependCounters = array => {
   }, {})
 
   return Object.entries(counters).map(([value, count]) => `${count} ${value}`)
-}
-
-export const renameError = error => {
-  const replacement = errorMessagesOverwritten.find(message => message.original.test(error))
-
-  throw replacement ? replacement.new : error
 }
 
 export const getNumberTabId = tabIdRaw => {

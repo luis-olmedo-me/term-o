@@ -1,5 +1,5 @@
 import { statuses } from './Command.constants'
-import { Command } from './Command.template'
+import { Command } from './command.template'
 
 export default Command
 

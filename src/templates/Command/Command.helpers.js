@@ -1,4 +1,4 @@
-import { statuses } from './command.constants'
+import { statuses } from './Command.constants'
 
 export const getArray = value => {
   const items = value.slice(1).slice(0, -1)

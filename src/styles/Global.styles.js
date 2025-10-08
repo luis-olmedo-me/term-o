@@ -1,4 +1,4 @@
-import { theme as t } from '@src/libs/themer'
+import { theme as t } from '@src/helpers/themes.helpers'
 import { createGlobalStyle } from 'styled-components'
 import { slide } from './Animations.styles'
 

@@ -1,6 +1,5 @@
 import { formatError } from '@src/libs/command-parser/handlers/handlers.helpers'
 import EventListener from '@src/libs/event-listener'
-import { cleanColors } from '@src/libs/themer/themer.helpers'
 
 import Argument from '@src/templates/Argument'
 
@@ -9,6 +8,7 @@ import { commandStatuses } from '@src/constants/command.constants'
 import { getArgs, getArray } from '@src/helpers/arguments.helpers'
 import { executePerUpdates } from '@src/helpers/command.helpers'
 import { getPropsFromString } from '@src/helpers/options.helpers'
+import { cleanColors } from '@src/helpers/themes.helpers'
 import { createUUIDv4, getQuotedString } from '@src/helpers/utils.helpers'
 
 export class Command extends EventListener {

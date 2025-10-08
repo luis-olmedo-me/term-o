@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { theme as t } from '@src/libs/themer'
+import { theme as t } from '@src/helpers/themes.helpers'
 
 import { commandStatuses, executionContexts } from '@src/constants/command.constants'
 import { statusIndicators } from '@src/constants/config.constants'

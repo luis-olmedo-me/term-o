@@ -1,4 +1,4 @@
-import { theme as t } from '@src/libs/themer'
+import { theme as t } from '@src/helpers/themes.helpers'
 import styled from 'styled-components'
 import { buttonVariants } from './Button.constants'
 

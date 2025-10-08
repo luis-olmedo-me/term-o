@@ -1,6 +1,6 @@
 import { InputWrapper, RealInput } from '@src/components/Input'
 import { statusIndicators } from '@src/constants/config.constants'
-import { theme as t } from '@src/libs/themer'
+import { theme as t } from '@src/helpers/themes.helpers'
 import styled from 'styled-components'
 
 export const Line = styled.p`

@@ -1,7 +1,6 @@
 import { commandStatuses } from '@src/constants/command.constants'
 
-import { getColor as C } from '@src/libs/themer'
-
+import { getColor as C } from '@src/helpers/themes.helpers'
 import { getArgs } from './arguments.helpers'
 import { getParamValue } from './options.helpers'
 

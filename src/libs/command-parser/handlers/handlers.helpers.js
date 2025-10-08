@@ -1,5 +1,5 @@
+import { getColor as C } from '@src/helpers/themes.helpers'
 import { getQuotedString } from '@src/helpers/utils.helpers'
-import { getColor as C } from '@src/libs/themer'
 
 export const formatElement = ({ tagName, attributes, xpath, textContent, tabId }) => {
   const quotedTabId = tabId ? `${C`blue`}${getQuotedString(tabId)} ` : ''

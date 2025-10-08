@@ -1,12 +1,6 @@
 import { getQuotedString } from '@src/helpers/utils.helpers'
 import { getColor as C } from '@src/libs/themer'
 
-export const getNumberTabId = tabIdRaw => {
-  const tabIdString = tabIdRaw.replace(/^T/, '')
-
-  return Number(tabIdString)
-}
-
 export const displayHelp = command => {
   let helps = []
   const options = command.options

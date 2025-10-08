@@ -1,10 +1,12 @@
 import { getStorage, setStorage } from '@src/processes/processes'
+
+import { cleanTabId } from '@src/helpers/tabs.helpers'
+
 import {
   displayHelp,
   formatStorageAsString,
   formatStorageProp,
-  formatText,
-  getNumberTabId
+  formatText
 } from '../handlers.helpers'
 import { getStorageNamespace } from './storage.helpers'
 
@@ -12,7 +14,7 @@ export const handleSTORAGE = async command => {
   const { tab } = command.data
   const P = name => command.props[name]
 
-  const tabId = P`tab-id` ? getNumberTabId(P`tab-id`) : tab.id
+  const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : tab.id
 
   if (P`local` || P`session` || P`cookie`) {
     const [key, value] = P`set`

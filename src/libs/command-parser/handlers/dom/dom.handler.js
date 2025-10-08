@@ -2,13 +2,14 @@ import { clickElement, findDOMElement, getDOMElements } from '@src/processes/pro
 
 import { preAppendCounters } from '@src/helpers/messages.helpers'
 
-import { displayHelp, formatDOMEvent, formatElement, getNumberTabId } from '../handlers.helpers'
+import { cleanTabId } from '@src/helpers/tabs.helpers'
+import { displayHelp, formatDOMEvent, formatElement } from '../handlers.helpers'
 
 export const handleDOM = async command => {
   const { tab } = command.data
   const P = name => command.props[name]
 
-  const tabId = P`tab-id` ? getNumberTabId(P`tab-id`) : tab.id
+  const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : tab.id
 
   if (P`search-xpath`) {
     const element = await findDOMElement(tabId, {

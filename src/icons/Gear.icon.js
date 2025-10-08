@@ -1,11 +1,13 @@
 import * as React from 'preact'
 
-const Gear = () => {
+import { iconPropType } from '@src/constants/icon.constants'
+
+const Gear = ({ size }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={22}
-      height={22}
+      width={size}
+      height={size}
       viewBox="0 0 512 512"
       fill="none"
     >
@@ -19,6 +21,6 @@ const Gear = () => {
   )
 }
 
-Gear.propTypes = {}
+Gear.propTypes = iconPropType
 
 export default Gear

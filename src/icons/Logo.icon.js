@@ -1,7 +1,7 @@
 import * as React from 'preact'
 import { useTheme } from 'styled-components'
 
-import { iconPropType } from './Icon.constants'
+import { iconPropType } from '@src/constants/icon.constants'
 
 const Logo = ({ size }) => {
   const theme = useTheme()

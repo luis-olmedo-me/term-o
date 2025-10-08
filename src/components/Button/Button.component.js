@@ -1,6 +1,6 @@
 import * as React from 'preact'
 
-import { iconSizes } from '@src/icons/Icon.constants'
+import { iconSizes } from '@src/constants/icon.constants'
 
 import * as S from './Button.styles'
 

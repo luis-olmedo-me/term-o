@@ -1,3 +1,4 @@
+import { overwriteError } from '@src/helpers/messages.helpers'
 import { delay } from '@src/helpers/utils.helpers'
 
 export const getTab = async tabIdRaw => {
@@ -7,16 +8,16 @@ export const getTab = async tabIdRaw => {
 
   if (!isValidId) throw 'The tab id provided is not valid.'
 
-  return await chrome.tabs.get(tabId)
+  return await chrome.tabs.get(tabId).catch(overwriteError)
 }
 
 export const createTab = async options => {
-  let tab = await chrome.tabs.create(options.config)
+  let tab = await chrome.tabs.create(options.config).catch(overwriteError)
 
   if (options.wait) {
     while (tab.status !== 'complete') {
       await delay(100)
-      tab = await chrome.tabs.get(tab.id)
+      tab = await chrome.tabs.get(tab.id).catch(overwriteError)
     }
   }
 
@@ -24,16 +25,16 @@ export const createTab = async options => {
 }
 
 export const reloadTab = async options => {
-  let tab = await getTab(options.tabId)
+  let tab = await getTab(options.tabId).catch(overwriteError)
 
-  await chrome.tabs.reload(tab.id)
+  await chrome.tabs.reload(tab.id).catch(overwriteError)
 
   if (options.wait) {
-    tab = await chrome.tabs.get(tab.id)
+    tab = await chrome.tabs.get(tab.id).catch(overwriteError)
 
     while (tab.status !== 'complete') {
       await delay(100)
-      tab = await chrome.tabs.get(tab.id)
+      tab = await chrome.tabs.get(tab.id).catch(overwriteError)
     }
   }
 
@@ -41,7 +42,9 @@ export const reloadTab = async options => {
 }
 
 export const getCurrentTab = async () => {
-  const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true })
+  const [tab] = await chrome.tabs
+    .query({ active: true, lastFocusedWindow: true })
+    .catch(overwriteError)
 
   return tab
 }

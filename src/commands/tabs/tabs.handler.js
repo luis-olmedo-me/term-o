@@ -1,4 +1,3 @@
-import { overwriteMessage } from '@src/helpers/messages.helpers'
 import { spreadIf } from '@src/helpers/utils.helpers'
 
 import { createHelpView } from '@src/helpers/command.helpers'
@@ -11,7 +10,7 @@ export default async command => {
 
   if (P`reload`) {
     if (P`wait`) command.update(`Please wait while the page is loading.`)
-    const tab = await reloadTab({ tabId: P`reload`, wait: P`wait` }).catch(overwriteMessage)
+    const tab = await reloadTab({ tabId: P`reload`, wait: P`wait` })
     const update = formatTab(tab)
 
     command.reset()
@@ -19,7 +18,7 @@ export default async command => {
   }
 
   if (P`point`) {
-    const tab = await getTab(P`point`).catch(overwriteMessage)
+    const tab = await getTab(P`point`)
     const update = formatTab(tab)
 
     setTab(tab)
@@ -28,8 +27,8 @@ export default async command => {
   }
 
   if (P`switch`) {
-    const tab = await getTab(P`switch`).catch(overwriteMessage)
-    const { focused } = await chrome.windows.get(tab.windowId).catch(overwriteMessage)
+    const tab = await getTab(P`switch`)
+    const { focused } = await chrome.windows.get(tab.windowId)
 
     if (!focused) await chrome.windows.update(tab.windowId, { focused: true })
     await chrome.tabs.update(tab.id, { selected: true })
@@ -40,7 +39,7 @@ export default async command => {
   }
 
   if (P`close`) {
-    const tab = await getTab(P`close`).catch(overwriteMessage)
+    const tab = await getTab(P`close`)
     const update = formatTab(tab)
 
     await chrome.tabs.remove(tab.id)
@@ -53,7 +52,7 @@ export default async command => {
     const tab = await createTab({
       config: { url: P`open`, active: P`active` },
       wait: P`wait`
-    }).catch(overwriteMessage)
+    })
 
     const update = formatTab({
       ...tab,

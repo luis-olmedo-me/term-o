@@ -1,8 +1,9 @@
+import { processNames } from '@src/constants/process.constants'
 import { createWorkerProcessRequest } from './process-creator'
 
 export const findDOMElement = (tabId, data) => {
   return createWorkerProcessRequest({
-    type: 'find-dom-element',
+    type: processNames.FIND_DOM_ELEMENT,
     defaultResponse: null,
     tabId,
     data
@@ -11,7 +12,7 @@ export const findDOMElement = (tabId, data) => {
 
 export const getDOMElements = (tabId, data) => {
   return createWorkerProcessRequest({
-    type: 'get-dom-elements',
+    type: processNames.GET_DOM_ELEMENTS,
     defaultResponse: [],
     tabId,
     data
@@ -20,7 +21,7 @@ export const getDOMElements = (tabId, data) => {
 
 export const getStorage = (tabId, data) => {
   return createWorkerProcessRequest({
-    type: 'get-storage',
+    type: processNames.GET_STORAGE,
     defaultResponse: {},
     tabId,
     data
@@ -29,7 +30,7 @@ export const getStorage = (tabId, data) => {
 
 export const setStorage = (tabId, data) => {
   return createWorkerProcessRequest({
-    type: 'set-storage',
+    type: processNames.SET_STORAGE,
     defaultResponse: {},
     tabId,
     data
@@ -38,7 +39,7 @@ export const setStorage = (tabId, data) => {
 
 export const getElementStyles = (tabId, data) => {
   return createWorkerProcessRequest({
-    type: 'get-element-styles',
+    type: processNames.GET_ELEMENT_STYLES,
     defaultResponse: [],
     tabId,
     data
@@ -47,7 +48,7 @@ export const getElementStyles = (tabId, data) => {
 
 export const applyElementStyles = (tabId, data) => {
   return createWorkerProcessRequest({
-    type: 'apply-element-styles',
+    type: processNames.APPLY_ELEMENT_STYLES,
     defaultResponse: [],
     tabId,
     data
@@ -56,7 +57,7 @@ export const applyElementStyles = (tabId, data) => {
 
 export const clickElement = (tabId, data) => {
   return createWorkerProcessRequest({
-    type: 'click-element',
+    type: processNames.CLICK_ELEMENT,
     defaultResponse: null,
     tabId,
     data
@@ -65,7 +66,7 @@ export const clickElement = (tabId, data) => {
 
 export const getFontsAvailable = () => {
   return createWorkerProcessRequest({
-    type: 'get-fonts-available',
+    type: processNames.GET_FONTS_AVAILABLE,
     defaultResponse: [],
     data: null
   })

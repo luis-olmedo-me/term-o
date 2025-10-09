@@ -1,10 +1,7 @@
+import { executionContexts } from '@src/constants/command.constants'
+import { limitSimplifiedCommands } from '@src/helpers/command.helpers'
 import commandParser from '@src/libs/command-parser'
 import processWaitList from '@src/libs/process-wait-list'
-
-import { executionContexts } from '@src/constants/command.constants'
-
-import { limitSimplifiedCommands } from '@src/helpers/command.helpers'
-
 import eventManager from './packages/event-manager.package'
 import historyManager from './packages/history-manager.package'
 import processHandlers from './process-handlers'

@@ -1,7 +1,7 @@
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 import { getStorageValue } from '@src/helpers/storage.helpers'
 
-const eventManager = (function() {
+const eventManager = (function () {
   let values = []
 
   const handleStorageChanges = (changes, currentChanges) => {

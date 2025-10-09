@@ -1,6 +1,7 @@
+import styled from 'styled-components'
+
 import { availableInputTypes } from '@src/constants/inputs.constants'
 import { theme as t } from '@src/helpers/themes.helpers'
-import styled from 'styled-components'
 
 export const InputWrapper = styled.div`
   width: fit-content;

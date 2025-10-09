@@ -4,12 +4,10 @@ import { useEffect, useState } from 'preact/hooks'
 import Button, { buttonVariants } from '@src/components/Button'
 import FontSelect from '@src/components/FontSelect'
 import Input, { inputTypes, inputVariants } from '@src/components/Input'
-import Select from '@src/components/Select'
-import { ColorDot } from '@src/components/Select/OptionPrefixes'
+import Select, { ColorDot } from '@src/components/Select'
 import Switch from '@src/components/Switch'
 import TextArea from '@src/components/TextArea'
 import ThemeSelect from '@src/components/ThemeSelect'
-
 import { availableInputTypes } from '@src/constants/inputs.constants'
 
 export const DynamicInput = ({

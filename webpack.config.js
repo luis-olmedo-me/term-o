@@ -20,6 +20,8 @@ module.exports = (_env, { watch, mode }) => ({
     alias: {
       '@sidepanel': path.resolve(__dirname, 'src/apps/sidepanel'),
       '@background': path.resolve(__dirname, 'src/apps/background'),
+      '@configuration': path.resolve(__dirname, 'src/apps/configuration'),
+      '@content': path.resolve(__dirname, 'src/apps/content'),
       '@src': path.resolve(__dirname, 'src'),
       react: 'preact/compat'
     }

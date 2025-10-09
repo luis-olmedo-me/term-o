@@ -1,12 +1,11 @@
 import * as React from 'preact'
 import { useState } from 'preact/hooks'
-
-import useConfig from '@src/hooks/useConfig'
-
-import { configIds, configInputIds } from '@src/constants/config.constants'
 import { useTheme } from 'styled-components'
-import FieldRenderer from '../FieldRenderer'
-import SidePanel from '../SidePanel'
+
+import FieldRenderer from '@configuration/components/FieldRenderer'
+import SidePanel from '@configuration/components/SidePanel'
+import { configIds, configInputIds } from '@src/constants/config.constants'
+import useConfig from '@src/hooks/useConfig'
 import { sidePanelOptions } from './Preferences.constants'
 import * as S from './Preferences.styles'
 

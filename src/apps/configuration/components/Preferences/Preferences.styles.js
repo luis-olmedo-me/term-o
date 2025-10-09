@@ -1,5 +1,6 @@
-import { theme as t } from '@src/helpers/themes.helpers'
 import styled from 'styled-components'
+
+import { theme as t } from '@src/helpers/themes.helpers'
 
 export const PreferencesWrapper = styled.div`
   color: ${t('colors.foreground')};

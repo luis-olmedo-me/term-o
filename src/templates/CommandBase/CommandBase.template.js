@@ -1,7 +1,6 @@
+import { optionDefaultValues } from '@src/constants/options.constants'
 import Command from '@src/templates/Command'
 import OptionsManager from '@src/templates/OptionsManager'
-
-import { optionDefaultValues } from '@src/constants/options.constants'
 
 export class CommandBase {
   constructor({ name, helpSectionTitles }) {

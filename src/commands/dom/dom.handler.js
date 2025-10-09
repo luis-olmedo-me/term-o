@@ -1,4 +1,4 @@
-import { clickElement, findDOMElement, getDOMElements } from '@src/processes/processes'
+import { clickElement, findDOMElement, getDOMElements } from '@src/processes'
 
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatDOMEvent, formatElement } from '@src/helpers/format.helpers'

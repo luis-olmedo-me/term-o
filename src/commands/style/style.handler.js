@@ -1,4 +1,4 @@
-import { applyElementStyles, getElementStyles } from '@src/processes/processes'
+import { applyElementStyles, getElementStyles } from '@src/processes'
 
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatRule } from '@src/helpers/format.helpers'

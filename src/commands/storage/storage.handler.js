@@ -1,4 +1,4 @@
-import { getStorage, setStorage } from '@src/processes/processes'
+import { getStorage, setStorage } from '@src/processes'
 
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatStorageAsString, formatStorageProp, formatText } from '@src/helpers/format.helpers'

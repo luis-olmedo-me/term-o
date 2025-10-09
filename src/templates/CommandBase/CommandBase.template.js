@@ -11,7 +11,7 @@ export class CommandBase {
     this.handler = null
   }
 
-  setHandler(handler) {
+  handledBy(handler) {
     this.handler = handler
 
     return this

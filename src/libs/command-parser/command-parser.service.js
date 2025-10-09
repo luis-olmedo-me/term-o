@@ -1,16 +1,8 @@
-import templates, { errorTemplate } from '@src/commands'
+import commandBases, { errorBase } from '@src/commands'
 
 import EventListener from '@src/libs/event-listener'
 
 import { getArgs, splitBy } from '@src/helpers/arguments.helpers'
-
-import handlers from './handlers'
-
-templates.forEach(template => {
-  const handler = handlers[template.name]
-
-  if (handler) template.setHandler(handler)
-})
 
 class CommandParser extends EventListener {
   constructor(templates) {
@@ -54,7 +46,7 @@ class CommandParser extends EventListener {
     const cleanedName = name.replace('"', '\\"')
 
     if (!template) {
-      const error = errorTemplate.create(this.executionContext)
+      const error = errorBase.create(this.executionContext)
 
       error.mock({ title: `The command "${cleanedName}" is unrecognized.` })
       error.execute()
@@ -85,4 +77,4 @@ class CommandParser extends EventListener {
   }
 }
 
-export const commandParser = new CommandParser(templates)
+export const commandParser = new CommandParser(commandBases)

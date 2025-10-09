@@ -1,5 +1,5 @@
 import { getQuotedString } from '@src/helpers/utils.helpers'
-import commandParser from '../..'
+import commandParser from '@src/libs/command-parser'
 
 export const uploadFile = () => {
   return new Promise((resolve, reject) => {

@@ -15,9 +15,9 @@ import { commandStatuses } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 
+import { getCurrentTab } from '@src/commands/tabs/tabs.helpers'
 import { limitSimplifiedCommands, updateSimplifiedCommandsWith } from '@src/helpers/command.helpers'
 import { createContext } from '@src/helpers/contexts.helpers'
-import { getCurrentTab } from '@src/libs/command-parser/handlers/tabs/tabs.helpers'
 import { copyText, getSelectedText } from './Terminal.helpers'
 
 import * as S from './Terminal.styles'

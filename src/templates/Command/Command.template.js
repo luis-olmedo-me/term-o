@@ -1,10 +1,10 @@
-import { formatError } from '@src/libs/command-parser/handlers/handlers.helpers'
 import EventListener from '@src/libs/event-listener'
 
 import Argument from '@src/templates/Argument'
 
 import { commandStatuses } from '@src/constants/command.constants'
 
+import { formatError } from '@src/commands/handlers.helpers'
 import { getArgs, getArray } from '@src/helpers/arguments.helpers'
 import { executePerUpdates } from '@src/helpers/command.helpers'
 import { getPropsFromString } from '@src/helpers/options.helpers'

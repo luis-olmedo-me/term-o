@@ -1,9 +1,9 @@
-import { getElementByXPath } from '@content/helpers/dom-management.helpers'
 import {
   clearMockedCrossOriginStyleSheets,
   findCSSRuleForElement,
   mockCrossOriginStyleSheets
-} from './style.helpers'
+} from '@content/helpers/css-management.helpers'
+import { getElementByXPath } from '@content/helpers/dom-management.helpers'
 
 export const getElementStyles = async (resolve, data) => {
   const { searchByXpath, searchByProperty, searchBySelector } = data

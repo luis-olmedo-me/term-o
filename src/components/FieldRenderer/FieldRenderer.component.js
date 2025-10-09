@@ -1,7 +1,7 @@
 import * as React from 'preact'
 import { useState } from 'preact/hooks'
 
-import DynamicInput from '@configuration/components/DynamicInput'
+import DynamicInput from '@src/components/DynamicInput'
 import { validate } from '@src/helpers/validation-primitive.helpers'
 import * as S from './FieldRenderer.styles'
 

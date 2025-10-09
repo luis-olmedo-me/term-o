@@ -1,4 +1,4 @@
-import EventListener from '@src/libs/event-listener'
+import EventListener from '@src/templates/event-listener'
 
 import { configIds, configInputIds, defaultConfigSections } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'

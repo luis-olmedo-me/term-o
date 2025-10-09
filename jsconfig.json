@@ -3,8 +3,10 @@
     "baseUrl": "src",
     "paths": {
       "@src/*": ["*"],
-      "@sidepanel/*": ["scripts/sidepanel/*"],
-      "@background/*": ["scripts/background/*"]
+      "@sidepanel/*": ["apps/sidepanel/*"],
+      "@background/*": ["apps/background/*"],
+      "@content/*": ["apps/content/*"],
+      "@configuration/*": ["apps/configuration/*"]
     }
   },
   "exclude": ["build", "images", "node_modules"]

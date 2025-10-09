@@ -1,4 +1,4 @@
-import { theme as t } from '@src/libs/themer'
+import { theme as t } from '@src/helpers/themes.helpers'
 import { createGlobalStyle } from 'styled-components'
 import { slide } from './Animations.styles'
 
@@ -11,7 +11,7 @@ const GlobalStyle = createGlobalStyle`
     font-size: ${t('fontSize.50')};
 
     &::selection {
-      color: ${t('colors.accent')};
+      color: ${t('colors.foreground')};
       background-color: ${t('colors.selectionBackground')};
     }
   }

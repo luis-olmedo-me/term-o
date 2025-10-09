@@ -1,4 +1,7 @@
 import * as React from 'preact'
+
+import { iconSizes } from '@src/constants/icon.constants'
+
 import * as S from './Button.styles'
 
 export const Button = ({
@@ -16,7 +19,7 @@ export const Button = ({
       aria-selected={selected}
       aria-variant={variant}
     >
-      {Icon && <Icon />}
+      {Icon && <Icon size={iconSizes.NORMAL} />}
 
       {value}
     </S.ButtonWrapper>

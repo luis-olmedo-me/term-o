@@ -1,7 +1,7 @@
 import * as React from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
-import { getFontsAvailable } from '@src/processes/processes'
+import { getFontsAvailable } from '@src/processes'
 import Select from '../Select'
 
 export const FontSelect = ({ value, onChange, name }) => {

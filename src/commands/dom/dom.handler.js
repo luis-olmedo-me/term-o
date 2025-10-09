@@ -1,10 +1,9 @@
 import { clickElement, findDOMElement, getDOMElements } from '@src/processes/processes'
 
-import { preAppendCounters } from '@src/helpers/messages.helpers'
-
 import { createHelpView } from '@src/helpers/command.helpers'
+import { formatDOMEvent, formatElement } from '@src/helpers/format.helpers'
+import { preAppendCounters } from '@src/helpers/messages.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
-import { formatDOMEvent, formatElement } from '../handlers.helpers'
 
 export const handleDOM = async command => {
   const { tab } = command.data

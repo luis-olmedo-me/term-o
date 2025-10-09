@@ -1,5 +1,5 @@
 import { createHelpView } from '@src/helpers/command.helpers'
-import { formatHistoryItem } from '../handlers.helpers'
+import { formatHistoryItem } from '@src/helpers/format.helpers'
 
 export const handleHistory = async command => {
   const P = name => command.props[name]

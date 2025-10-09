@@ -4,9 +4,9 @@ import Argument from '@src/templates/Argument'
 
 import { commandStatuses } from '@src/constants/command.constants'
 
-import { formatError } from '@src/commands/handlers.helpers'
 import { getArgs, getArray } from '@src/helpers/arguments.helpers'
 import { executePerUpdates } from '@src/helpers/command.helpers'
+import { formatError } from '@src/helpers/format.helpers'
 import { getPropsFromString } from '@src/helpers/options.helpers'
 import { cleanColors } from '@src/helpers/themes.helpers'
 import { createUUIDv4, getQuotedString } from '@src/helpers/utils.helpers'

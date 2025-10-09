@@ -1,6 +1,6 @@
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
-import { formatFile, formatScript } from '../handlers.helpers'
+import { formatFile, formatScript } from '@src/helpers/format.helpers'
 import { executeCode, readFileContent, uploadFile } from './scripts.helpers'
 
 export const handleSCRIPTS = async command => {

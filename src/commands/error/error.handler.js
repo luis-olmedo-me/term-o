@@ -1,5 +1,5 @@
 import { createHelpView } from '@src/helpers/command.helpers'
-import { formatError } from '../handlers.helpers'
+import { formatError } from '@src/helpers/format.helpers'
 
 export const handleERROR = async command => {
   const P = name => command.props[name]

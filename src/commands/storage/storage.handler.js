@@ -1,8 +1,8 @@
 import { getStorage, setStorage } from '@src/processes/processes'
 
 import { createHelpView } from '@src/helpers/command.helpers'
+import { formatStorageAsString, formatStorageProp, formatText } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
-import { formatStorageAsString, formatStorageProp, formatText } from '../handlers.helpers'
 import { getStorageNamespace } from './storage.helpers'
 
 export const handleSTORAGE = async command => {

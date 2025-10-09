@@ -2,7 +2,7 @@ import { overwriteMessage } from '@src/helpers/messages.helpers'
 import { spreadIf } from '@src/helpers/utils.helpers'
 
 import { createHelpView } from '@src/helpers/command.helpers'
-import { formatTab } from '../handlers.helpers'
+import { formatTab } from '@src/helpers/format.helpers'
 import { createTab, getTab, reloadTab } from './tabs.helpers'
 
 export const handleTABS = async command => {

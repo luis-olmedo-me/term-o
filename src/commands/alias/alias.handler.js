@@ -1,7 +1,7 @@
 import { storageKeys } from '@src/constants/storage.constants'
-import { createHelpView } from '@src/helpers/command.helpers'
 
-import { formatAlias } from '../handlers.helpers'
+import { createHelpView } from '@src/helpers/command.helpers'
+import { formatAlias } from '@src/helpers/format.helpers'
 
 export const handleALIAS = async command => {
   const P = name => command.props[name]

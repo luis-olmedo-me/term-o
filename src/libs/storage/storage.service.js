@@ -9,12 +9,12 @@ class Storage extends EventListener {
     this.events = []
 
     this.init()
-
-    chrome.storage.onChanged.addListener(this.handleStorageChanges.bind(this))
   }
 
   async init() {
     this.events = await getStorageValue(storageNamespaces.LOCAL, storageKeys.EVENTS, [])
+
+    chrome.storage.onChanged.addListener(this.handleStorageChanges.bind(this))
   }
 
   handleStorageChanges(changes, changesNamespace) {

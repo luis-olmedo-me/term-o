@@ -1,6 +1,5 @@
-import EventListener from '@src/libs/event-listener'
-
 import Argument from '@src/templates/Argument'
+import EventListener from '@src/templates/event-listener'
 
 import { commandStatuses } from '@src/constants/command.constants'
 

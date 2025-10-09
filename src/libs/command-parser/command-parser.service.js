@@ -1,6 +1,6 @@
 import commandBases, { errorBase } from '@src/commands'
 
-import EventListener from '@src/libs/event-listener'
+import EventListener from '@src/templates/event-listener'
 
 import { getArgs, splitBy } from '@src/helpers/arguments.helpers'
 

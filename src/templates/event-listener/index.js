@@ -1,3 +1,3 @@
-import { EventListener } from './event-listener.service'
+import { EventListener } from './event-listener.template'
 
 export default EventListener

@@ -1,10 +1,10 @@
-import { clickElement } from './dom/click-element.process'
-import { findDOMElement } from './dom/find-dom-element.process'
-import { getDOMElements } from './dom/get-dom-elements.process'
-import { getStorage } from './storage/get-storage.process'
-import { setStorage } from './storage/set-storage.process'
-import { applyElementStyles } from './style/apply-element-styles.process'
-import { getElementStyles } from './style/get-element-styles.process'
+import { applyElementStyles } from './apply-element-styles.process'
+import { clickElement } from './click-element.process'
+import { findDOMElement } from './find-dom-element.process'
+import { getDOMElements } from './get-dom-elements.process'
+import { getElementStyles } from './get-element-styles.process'
+import { getStorage } from './get-storage.process'
+import { setStorage } from './set-storage.process'
 
 export default {
   'get-dom-elements': getDOMElements,

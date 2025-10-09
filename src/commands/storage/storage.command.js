@@ -3,10 +3,12 @@ import CommandBase from '@src/templates/CommandBase'
 import { commandNames } from '@src/constants/command.constants'
 import { hasLength, isTabId } from '../validators'
 import { storageHelpSections, storageHelpSectionTitles } from './storage.constants'
+import storageHandler from './storage.handler'
 
 export default new CommandBase({
   name: commandNames.STORAGE,
-  helpSectionTitles: storageHelpSectionTitles
+  helpSectionTitles: storageHelpSectionTitles,
+  handler: storageHandler
 })
   .expect({
     name: 'local',

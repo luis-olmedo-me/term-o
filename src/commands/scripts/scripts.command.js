@@ -2,10 +2,12 @@ import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames } from '@src/constants/command.constants'
 import { scriptsHelpSections, scriptsHelpSectionTitles } from './scripts.constants'
+import scriptsHandler from './scripts.handler'
 
 export default new CommandBase({
   name: commandNames.SCRIPTS,
-  helpSectionTitles: scriptsHelpSectionTitles
+  helpSectionTitles: scriptsHelpSectionTitles,
+  handler: scriptsHandler
 })
   .expect({
     name: 'list',

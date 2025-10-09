@@ -2,10 +2,12 @@ import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames } from '@src/constants/command.constants'
 import { errorHelpSections, errorHelpSectionTitles } from './error.constants'
+import errorHandler from './error.handler'
 
 export default new CommandBase({
   name: commandNames.ERROR,
-  helpSectionTitles: errorHelpSectionTitles
+  helpSectionTitles: errorHelpSectionTitles,
+  handler: errorHandler
 })
   .expect({
     name: 'title',

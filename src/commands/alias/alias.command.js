@@ -3,10 +3,12 @@ import CommandBase from '@src/templates/CommandBase'
 import { commandNames } from '@src/constants/command.constants'
 import { hasItemAs, hasLength, isSpaceForbidden } from '../validators'
 import { aliasHelpSections, aliasHelpSectionTitles } from './alias.constants'
+import aliasHandler from './alias.handler'
 
 export default new CommandBase({
   name: commandNames.ALIAS,
-  helpSectionTitles: aliasHelpSectionTitles
+  helpSectionTitles: aliasHelpSectionTitles,
+  handler: aliasHandler
 })
   .expect({
     name: 'add',

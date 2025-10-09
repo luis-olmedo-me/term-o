@@ -3,10 +3,12 @@ import CommandBase from '@src/templates/CommandBase'
 import { commandNames } from '@src/constants/command.constants'
 import { isJSONScheme } from '../validators'
 import { colorScheme, themeHelpSections, themeHelpSectionTitles } from './theme.constants'
+import themeHandler from './theme.handler'
 
 export default new CommandBase({
   name: commandNames.THEME,
-  helpSectionTitles: themeHelpSectionTitles
+  helpSectionTitles: themeHelpSectionTitles,
+  handler: themeHandler
 })
   .expect({
     name: 'import',

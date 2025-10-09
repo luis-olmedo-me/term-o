@@ -3,10 +3,12 @@ import CommandBase from '@src/templates/CommandBase'
 import { commandNames } from '@src/constants/command.constants'
 import { isRegExp, isTabId, isURL } from '../validators'
 import { tabsHelpSections, tabsHelpSectionTitles } from './tabs.constants'
+import tabsHandler from './tabs.handler'
 
 export default new CommandBase({
   name: commandNames.TABS,
-  helpSectionTitles: tabsHelpSectionTitles
+  helpSectionTitles: tabsHelpSectionTitles,
+  handler: tabsHandler
 })
   .expect({
     name: 'list',

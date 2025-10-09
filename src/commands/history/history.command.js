@@ -3,10 +3,12 @@ import CommandBase from '@src/templates/CommandBase'
 import { commandNames } from '@src/constants/command.constants'
 import { isDate, isInteger, isPositive, isRegExp } from '../validators'
 import { historyHelpSections, historyHelpSectionTitles } from './history.constants'
+import historyHandler from './history.handler'
 
 export default new CommandBase({
   name: commandNames.HISTORY,
-  helpSectionTitles: historyHelpSectionTitles
+  helpSectionTitles: historyHelpSectionTitles,
+  handler: historyHandler
 })
   .expect({
     name: 'list',

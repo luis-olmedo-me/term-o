@@ -3,10 +3,12 @@ import CommandBase from '@src/templates/CommandBase'
 import { commandNames } from '@src/constants/command.constants'
 import { isRegExp } from '../validators'
 import { eventsHelpSections, eventsHelpSectionTitles } from './events.constants'
+import eventsHandler from './events.handler'
 
 export default new CommandBase({
   name: commandNames.EVENTS,
-  helpSectionTitles: eventsHelpSectionTitles
+  helpSectionTitles: eventsHelpSectionTitles,
+  handler: eventsHandler
 })
   .expect({
     name: 'add',

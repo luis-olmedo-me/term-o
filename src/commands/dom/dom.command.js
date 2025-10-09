@@ -11,10 +11,12 @@ import {
   isXpath
 } from '../validators'
 import { domHelpSectionTitles, domHelpSections } from './dom.constants'
+import domHandler from './dom.handler'
 
 export default new CommandBase({
   name: commandNames.DOM,
-  helpSectionTitles: domHelpSectionTitles
+  helpSectionTitles: domHelpSectionTitles,
+  handler: domHandler
 })
   .expect({
     name: 'search-xpath',

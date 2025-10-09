@@ -3,17 +3,11 @@ import Command from '@src/templates/Command'
 import OptionsManager from '@src/templates/OptionsManager'
 
 export class CommandBase {
-  constructor({ name, helpSectionTitles }) {
+  constructor({ name, helpSectionTitles, handler }) {
     this.name = name
     this.helpSectionTitles = helpSectionTitles
     this.options = new OptionsManager()
-    this.handler = null
-  }
-
-  handledBy(handler) {
     this.handler = handler
-
-    return this
   }
 
   expect({

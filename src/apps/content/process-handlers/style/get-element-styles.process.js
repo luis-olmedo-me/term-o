@@ -1,4 +1,4 @@
-import { getElementByXPath } from '../dom/dom.helpers'
+import { getElementByXPath } from '@content/helpers/dom-management.helpers'
 import {
   clearMockedCrossOriginStyleSheets,
   findCSSRuleForElement,

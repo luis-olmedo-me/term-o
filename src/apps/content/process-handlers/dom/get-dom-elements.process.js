@@ -1,4 +1,4 @@
-import { getElementByXPath, getElementXPath } from './dom.helpers'
+import { getElementByXPath, getElementXPath } from '@content/helpers/dom-management.helpers'
 
 export const getDOMElements = async (resolve, data) => {
   const {

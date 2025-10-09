@@ -1,4 +1,4 @@
-import { getElementByXPath } from './dom.helpers'
+import { getElementByXPath } from '@content/helpers/dom-management.helpers'
 
 export const clickElement = async (resolve, data) => {
   const { searchByXpath } = data

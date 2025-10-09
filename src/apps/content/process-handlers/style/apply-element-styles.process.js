@@ -1,4 +1,4 @@
-import { getElementByXPath } from '@content/process-handlers/dom/dom.helpers'
+import { getElementByXPath } from '@content/helpers/dom-management.helpers'
 import { styleStringToArray } from './style.helpers'
 
 export const applyElementStyles = async (resolve, data) => {

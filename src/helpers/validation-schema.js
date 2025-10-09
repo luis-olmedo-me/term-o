@@ -25,37 +25,18 @@ export const validateSchema = (option, schema, value) => {
     const expectedType = schema[key]
     const supposedValue = value[key]
 
-    const shouldBeString = typeof expectedType === 'string'
-    const shouldBeArray = Array.isArray(expectedType)
+    const isObject =
+      typeof expectedType === 'object' && !isExpectedType(expectedType, schemaTypes.ARRAY)
 
-    if (shouldBeString) {
-      if (!isExpectedType(supposedValue, expectedType))
-        throw `${name} expects a valid JSON. Instead, the value of "${key}" does not match type "${expectedType}".`
-
-      continue
-    }
-
-    if (shouldBeArray) {
-      const isArray = Array.isArray(supposedValue)
-
-      if (!isArray)
-        throw `${name} expects a valid JSON. Instead, the property "${key}" should be an array according to the schema.`
-
-      const firstExpectedType = expectedType[0]
-      const isValid = supposedValue.every(item => isExpectedType(item, firstExpectedType))
-
-      if (!isValid)
-        throw `${name} expects a valid JSON. Instead, the element "${supposedValue}" does not match type "${firstExpectedType}".`
-
-      continue
-    }
-
-    if (typeof expectedType === 'object') {
+    if (isObject) {
       validateSchema(option, supposedValue, expectedType)
+
       continue
     }
 
-    throw `${name} expects a valid JSON. Instead, the type for "${key}" is unrecognized.`
+    if (!isExpectedType(supposedValue, expectedType)) {
+      throw `${name} expects a valid JSON. Instead, the value of "${key}" does not match type "${expectedType}".`
+    }
   }
 
   const invalidKey = Object.keys(value).find(key => typeof schema[key] === 'undefined')

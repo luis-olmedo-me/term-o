@@ -8,6 +8,7 @@ class Storage extends EventListener {
 
     this.events = []
     this.history = []
+    this.aliases = []
 
     this.init()
   }
@@ -15,6 +16,7 @@ class Storage extends EventListener {
   async init() {
     this.events = await getStorageValue(storageNamespaces.LOCAL, storageKeys.EVENTS, [])
     this.history = await getStorageValue(storageNamespaces.SESSION, storageKeys.HISTORY, [])
+    this.aliases = await getStorageValue(storageNamespaces.LOCAL, storageKeys.ALIASES, [])
 
     chrome.storage.onChanged.addListener(this.handleStorageChanges.bind(this))
   }
@@ -26,6 +28,9 @@ class Storage extends EventListener {
       }
       if (storageKey === storageKeys.HISTORY) {
         this.history = newValue
+      }
+      if (storageKey === storageKeys.ALIASES) {
+        this.aliases = newValue
       }
     }
   }

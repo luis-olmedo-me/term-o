@@ -2,7 +2,7 @@ import { executionContexts } from '@src/constants/command.constants'
 import { limitSimplifiedCommands } from '@src/helpers/command.helpers'
 import commandParser from '@src/libs/command-parser'
 import processWaitList from '@src/libs/process-wait-list'
-import eventManager from './packages/event-manager.package'
+import storage from '@src/libs/storage'
 import historyManager from './packages/history-manager.package'
 import processHandlers from './process-handlers'
 
@@ -38,12 +38,10 @@ const executeEvents = async (events, defaultTab) => {
 
   historyManager.setHistory(commandsLimited)
 }
-
 chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {
   if (changeInfo.status !== 'complete') return
 
-  const events = eventManager.getEvents()
-  const pendingEvents = events.filter(event => new RegExp(event.url).test(updatedTab.url))
+  const pendingEvents = storage.events.filter(event => new RegExp(event.url).test(updatedTab.url))
 
   if (pendingEvents.length === 0) return
 

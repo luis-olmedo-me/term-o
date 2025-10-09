@@ -4,7 +4,7 @@ import { createHelpView } from '@src/helpers/command.helpers'
 import { formatEvent } from '@src/helpers/format.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 
-export const handleEVENTS = async command => {
+export default async command => {
   const P = name => command.props[name]
 
   if (P`list`) {

@@ -3,7 +3,7 @@ import themer from '@src/libs/themer'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatTheme } from '@src/helpers/format.helpers'
 
-export const handleTHEME = async command => {
+export default async command => {
   const P = name => command.props[name]
 
   if (P`list`) {

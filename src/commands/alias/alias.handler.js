@@ -3,7 +3,7 @@ import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatAlias } from '@src/helpers/format.helpers'
 
-export const handleALIAS = async command => {
+export default async command => {
   const P = name => command.props[name]
 
   if (P`list`) {

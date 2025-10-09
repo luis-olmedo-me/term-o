@@ -5,7 +5,7 @@ import { formatStorageAsString, formatStorageProp, formatText } from '@src/helpe
 import { cleanTabId } from '@src/helpers/tabs.helpers'
 import { getStorageNamespace } from './storage.helpers'
 
-export const handleSTORAGE = async command => {
+export default async command => {
   const { tab } = command.data
   const P = name => command.props[name]
 

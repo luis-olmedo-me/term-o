@@ -3,7 +3,7 @@ import { createHelpView } from '@src/helpers/command.helpers'
 import { formatFile, formatScript } from '@src/helpers/format.helpers'
 import { executeCode, readFileContent, uploadFile } from './scripts.helpers'
 
-export const handleSCRIPTS = async command => {
+export default async command => {
   const P = name => command.props[name]
 
   if (P`list`) {

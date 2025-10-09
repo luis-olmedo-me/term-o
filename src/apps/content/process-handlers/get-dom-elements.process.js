@@ -1,6 +1,6 @@
 import { getElementByXPath, getElementXPath } from '@content/helpers/dom-management.helpers'
 
-export const getDOMElements = async (resolve, data) => {
+export default async (resolve, data) => {
   const {
     searchBelow,
     searchByTag,

@@ -1,4 +1,4 @@
-export const getFontsAvailable = async resolve => {
+export default async resolve => {
   const fonts = await chrome.fontSettings.getFontList()
 
   resolve(fonts)

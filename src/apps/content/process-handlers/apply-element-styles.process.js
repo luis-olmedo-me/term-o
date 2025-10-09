@@ -1,7 +1,7 @@
 import { styleStringToArray } from '@content/helpers/css-management.helpers'
 import { getElementByXPath } from '@content/helpers/dom-management.helpers'
 
-export const applyElementStyles = async (resolve, data) => {
+export default async (resolve, data) => {
   const { searchByXpath, newInlineStyles } = data
 
   const element = getElementByXPath(searchByXpath)

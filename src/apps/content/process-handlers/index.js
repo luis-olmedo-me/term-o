@@ -1,11 +1,11 @@
 import { processNames } from '@src/constants/process.constants'
-import { applyElementStyles } from './apply-element-styles.process'
-import { clickElement } from './click-element.process'
-import { findDOMElement } from './find-dom-element.process'
-import { getDOMElements } from './get-dom-elements.process'
-import { getElementStyles } from './get-element-styles.process'
-import { getStorage } from './get-storage.process'
-import { setStorage } from './set-storage.process'
+import applyElementStyles from './apply-element-styles.process'
+import clickElement from './click-element.process'
+import findDOMElement from './find-dom-element.process'
+import getDOMElements from './get-dom-elements.process'
+import getElementStyles from './get-element-styles.process'
+import getStorage from './get-storage.process'
+import setStorage from './set-storage.process'
 
 export default {
   [processNames.GET_DOM_ELEMENTS]: getDOMElements,

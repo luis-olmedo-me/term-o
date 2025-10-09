@@ -6,7 +6,7 @@ import {
   getElementXPath
 } from '@content/helpers/dom-management.helpers'
 
-export const findDOMElement = async (resolve, data) => {
+export default async (resolve, data) => {
   const { searchByXpath, searchBelow, siblingIndex, parentIndex, childIndex, appendXpath } = data
 
   const elementBelow = searchBelow && getElementByXPath(searchBelow)

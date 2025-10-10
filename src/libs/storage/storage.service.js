@@ -10,7 +10,9 @@ class Storage extends EventListener {
     this.events = []
     this.history = []
     this.aliases = []
-    this.config = this.init()
+    this.config = defaultConfigSections
+
+    this.init()
   }
 
   async init() {

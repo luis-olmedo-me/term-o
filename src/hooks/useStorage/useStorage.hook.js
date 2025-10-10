@@ -1,32 +1,23 @@
+import storage from '@src/libs/storage'
 import { useCallback, useEffect, useState } from 'preact/hooks'
 
-export const useStorage = ({ namespace, key, defaultValue }) => {
+export const useStorage = ({ key }) => {
+  const defaultValue = storage.get(key)
   const [state, setState] = useState(defaultValue)
 
   useEffect(
     function expectStorageChanges() {
-      const handleStorageChanges = (changes, currentChanges) => {
-        if (currentChanges !== namespace) return
+      const handleStorageChanges = updatedStorage => {
+        const newState = updatedStorage.get(key)
 
-        for (let [storageKey, { newValue }] of Object.entries(changes)) {
-          if (storageKey === key) setState(newValue)
-        }
+        setState(newState)
       }
 
-      const updateState = async () => {
-        const data = await chrome.storage[namespace].get(key)
-        const newValue = data[key]
-        const hasValue = typeof newValue !== 'undefined'
+      storage.addEventListener(key, handleStorageChanges)
 
-        setState(hasValue ? newValue : defaultValue)
-      }
-
-      updateState()
-      chrome.storage.onChanged.addListener(handleStorageChanges)
-
-      return () => chrome.storage.onChanged.removeListener(handleStorageChanges)
+      return () => storage.removeEventListener(key, handleStorageChanges)
     },
-    [namespace, key]
+    [key]
   )
 
   const setStateInStorage = useCallback(
@@ -34,12 +25,12 @@ export const useStorage = ({ namespace, key, defaultValue }) => {
       setState(oldState => {
         const validatedValue = typeof value === 'function' ? value(oldState) : value
 
-        chrome.storage[namespace].set({ [key]: validatedValue })
+        storage.set(key, validatedValue)
 
         return validatedValue
       })
     },
-    [namespace, key]
+    [key]
   )
 
   return [state, setStateInStorage]

@@ -1,6 +1,6 @@
 import { defaultConfigSections } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
-import { getStorageValue } from '@src/helpers/storage.helpers'
+import { getStorageValue, setStorageValue } from '@src/helpers/storage.helpers'
 import EventListener from '@src/templates/event-listener'
 
 class Storage extends EventListener {
@@ -26,6 +26,25 @@ class Storage extends EventListener {
     )
 
     chrome.storage.onChanged.addListener(this.handleStorageChanges.bind(this))
+  }
+
+  get(storageKey) {
+    if (storageKey === storageKeys.EVENTS) return this.events
+    if (storageKey === storageKeys.HISTORY) return this.history
+    if (storageKey === storageKeys.ALIASES) return this.aliases
+    if (storageKey === storageKeys.CONFIG) return this.config
+    return null
+  }
+
+  set(storageKey, newValue) {
+    if (storageKey === storageKeys.EVENTS)
+      return setStorageValue(storageNamespaces.LOCAL, storageKey, newValue)
+    if (storageKey === storageKeys.HISTORY)
+      return setStorageValue(storageNamespaces.SESSION, storageKey, newValue)
+    if (storageKey === storageKeys.ALIASES)
+      return setStorageValue(storageNamespaces.LOCAL, storageKey, newValue)
+    if (storageKey === storageKeys.CONFIG)
+      return setStorageValue(storageNamespaces.LOCAL, storageKey, newValue)
   }
 
   handleStorageChanges(changes) {

@@ -28,18 +28,28 @@ class Storage extends EventListener {
 
   handleStorageChanges(changes) {
     for (let [storageKey, { newValue }] of Object.entries(changes)) {
-      if (storageKey === storageKeys.EVENTS) {
-        this.events = newValue
+      switch (storageKey) {
+        case storageKeys.EVENTS:
+          this.events = newValue
+          break
+
+        case storageKeys.HISTORY:
+          this.history = newValue
+          break
+
+        case storageKeys.ALIASES:
+          this.aliases = newValue
+          break
+
+        case storageKeys.CONFIG:
+          this.config = newValue
+          break
+
+        default:
+          return
       }
-      if (storageKey === storageKeys.HISTORY) {
-        this.history = newValue
-      }
-      if (storageKey === storageKeys.ALIASES) {
-        this.aliases = newValue
-      }
-      if (storageKey === storageKeys.CONFIG) {
-        this.config = newValue
-      }
+
+      this.dispatchEvent(storageKey, this)
     }
   }
 }

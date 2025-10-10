@@ -13,7 +13,7 @@ import commandParser from '@src/libs/command-parser'
 
 import { commandStatuses } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
-import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
+import { storageKeys } from '@src/constants/storage.constants'
 
 import { getCurrentTab } from '@src/commands/tabs/tabs.helpers'
 import { limitSimplifiedCommands, updateSimplifiedCommandsWith } from '@src/helpers/command.helpers'
@@ -28,16 +28,8 @@ export const Terminal = () => {
   const inputRef = useRef(null)
   const currentCommandRef = useRef(null)
 
-  const [aliases] = useStorage({
-    namespace: storageNamespaces.LOCAL,
-    key: storageKeys.ALIASES,
-    defaultValue: []
-  })
-  const [simplifiedCommands, setSimplifiedCommands] = useStorage({
-    namespace: storageNamespaces.SESSION,
-    key: storageKeys.HISTORY,
-    defaultValue: []
-  })
+  const [aliases] = useStorage({ key: storageKeys.ALIASES })
+  const [simplifiedCommands, setSimplifiedCommands] = useStorage({ key: storageKeys.HISTORY })
 
   const { listening } = useConfig({
     get: [

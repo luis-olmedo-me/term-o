@@ -3,7 +3,7 @@ import { useEffect, useState } from 'preact/hooks'
 
 import Input, { inputTypes, inputVariants } from '@src/components/Input'
 import { configInputIds, PROMPT_MARK } from '@src/constants/config.constants'
-import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
+import { storageKeys } from '@src/constants/storage.constants'
 import useConfig from '@src/hooks/useConfig'
 import useStorage from '@src/hooks/useStorage'
 import ColoredText from '../ColoredText'
@@ -22,11 +22,7 @@ export const Prompt = ({
 }) => {
   const [value, setValue] = useState(defaultValue || '')
   const [historialIndex, setHistorialIndex] = useState(0)
-  const [historial, setHistorial] = useStorage({
-    namespace: storageNamespaces.LOCAL,
-    key: storageKeys.PROMPT_HISTORY,
-    defaultValue: []
-  })
+  const [historial, setHistorial] = useStorage({ key: storageKeys.PROMPT_HISTORY })
 
   const { listening } = useConfig({
     get: [configInputIds.HISTORIAL_SIZE, configInputIds.STATUS_INDICATOR]

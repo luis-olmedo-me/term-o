@@ -9,6 +9,7 @@ class Storage extends EventListener {
 
     this.events = []
     this.history = []
+    this.promptHistory = []
     this.aliases = []
     this.config = defaultConfigSections
 
@@ -19,6 +20,11 @@ class Storage extends EventListener {
     this.events = await getStorageValue(storageNamespaces.LOCAL, storageKeys.EVENTS, [])
     this.history = await getStorageValue(storageNamespaces.SESSION, storageKeys.HISTORY, [])
     this.aliases = await getStorageValue(storageNamespaces.LOCAL, storageKeys.ALIASES, [])
+    this.promptHistory = await getStorageValue(
+      storageNamespaces.LOCAL,
+      storageKeys.PROMPT_HISTORY,
+      []
+    )
     this.config = await getStorageValue(
       storageNamespaces.LOCAL,
       storageKeys.CONFIG,
@@ -33,6 +39,7 @@ class Storage extends EventListener {
     if (storageKey === storageKeys.HISTORY) return this.history
     if (storageKey === storageKeys.ALIASES) return this.aliases
     if (storageKey === storageKeys.CONFIG) return this.config
+    if (storageKey === storageKeys.PROMPT_HISTORY) return this.promptHistory
     return null
   }
 
@@ -44,6 +51,8 @@ class Storage extends EventListener {
     if (storageKey === storageKeys.ALIASES)
       return setStorageValue(storageNamespaces.LOCAL, storageKey, newValue)
     if (storageKey === storageKeys.CONFIG)
+      return setStorageValue(storageNamespaces.LOCAL, storageKey, newValue)
+    if (storageKey === storageKeys.PROMPT_HISTORY)
       return setStorageValue(storageNamespaces.LOCAL, storageKey, newValue)
   }
 
@@ -64,6 +73,10 @@ class Storage extends EventListener {
 
         case storageKeys.CONFIG:
           this.config = newValue
+          break
+
+        case storageKeys.PROMPT_HISTORY:
+          this.promptHistory = newValue
           break
 
         default:

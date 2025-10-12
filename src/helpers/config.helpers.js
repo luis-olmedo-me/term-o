@@ -13,13 +13,13 @@ export const mergeConfigSections = (configSectionsA, configSectionsB) => {
     const sectionB = configSectionsB.find(section => section.id === sectionA.id)
 
     return {
-      ...sectionB,
+      ...sectionA,
       inputs: sectionA.inputs.map(inputA => {
         const inputB = sectionB.inputs.find(input => input.id === inputA.id)
 
         return {
           ...inputA,
-          ...inputB
+          value: inputB.value
         }
       })
     }

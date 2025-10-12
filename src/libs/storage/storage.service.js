@@ -1,5 +1,4 @@
-import { defaultConfigSections } from '@src/constants/config.constants'
-import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
+import { storageValues } from '@src/constants/storage.constants'
 import { getStorageValue, setStorageValue } from '@src/helpers/storage.helpers'
 import EventListener from '@src/templates/event-listener'
 
@@ -7,80 +6,36 @@ class Storage extends EventListener {
   constructor() {
     super()
 
-    this.events = []
-    this.history = []
-    this.promptHistory = []
-    this.aliases = []
-    this.config = defaultConfigSections
+    this.values = {}
 
     this.init()
   }
 
   async init() {
-    this.events = await getStorageValue(storageNamespaces.LOCAL, storageKeys.EVENTS, [])
-    this.history = await getStorageValue(storageNamespaces.SESSION, storageKeys.HISTORY, [])
-    this.aliases = await getStorageValue(storageNamespaces.LOCAL, storageKeys.ALIASES, [])
-    this.promptHistory = await getStorageValue(
-      storageNamespaces.LOCAL,
-      storageKeys.PROMPT_HISTORY,
-      []
-    )
-    this.config = await getStorageValue(
-      storageNamespaces.LOCAL,
-      storageKeys.CONFIG,
-      defaultConfigSections
-    )
+    for (const value of storageValues) {
+      this.values[value.key] = await getStorageValue(value.namespace, value.key, value.default)
+    }
 
     chrome.storage.onChanged.addListener(this.handleStorageChanges.bind(this))
   }
 
   get(storageKey) {
-    if (storageKey === storageKeys.EVENTS) return this.events
-    if (storageKey === storageKeys.HISTORY) return this.history
-    if (storageKey === storageKeys.ALIASES) return this.aliases
-    if (storageKey === storageKeys.CONFIG) return this.config
-    if (storageKey === storageKeys.PROMPT_HISTORY) return this.promptHistory
-    return null
+    if (storageKey in this.values) return this.values[storageKey]
+    else return null
   }
 
   set(storageKey, newValue) {
-    if (storageKey === storageKeys.EVENTS)
-      return setStorageValue(storageNamespaces.LOCAL, storageKey, newValue)
-    if (storageKey === storageKeys.HISTORY)
-      return setStorageValue(storageNamespaces.SESSION, storageKey, newValue)
-    if (storageKey === storageKeys.ALIASES)
-      return setStorageValue(storageNamespaces.LOCAL, storageKey, newValue)
-    if (storageKey === storageKeys.CONFIG)
-      return setStorageValue(storageNamespaces.LOCAL, storageKey, newValue)
-    if (storageKey === storageKeys.PROMPT_HISTORY)
-      return setStorageValue(storageNamespaces.LOCAL, storageKey, newValue)
+    if (storageKey in this.values) {
+      const storageDefaults = storageValues.find(value => value.key === storageKey)
+
+      setStorageValue(storageDefaults.namespace, storageKey, newValue)
+    }
   }
 
   handleStorageChanges(changes) {
     for (let [storageKey, { newValue }] of Object.entries(changes)) {
-      switch (storageKey) {
-        case storageKeys.EVENTS:
-          this.events = newValue
-          break
-
-        case storageKeys.HISTORY:
-          this.history = newValue
-          break
-
-        case storageKeys.ALIASES:
-          this.aliases = newValue
-          break
-
-        case storageKeys.CONFIG:
-          this.config = newValue
-          break
-
-        case storageKeys.PROMPT_HISTORY:
-          this.promptHistory = newValue
-          break
-
-        default:
-          return
+      if (storageKey in this.values) {
+        this.values[storageKey] = newValue
       }
 
       this.dispatchEvent(storageKey, this)

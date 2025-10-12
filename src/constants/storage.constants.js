@@ -1,3 +1,5 @@
+import { defaultConfigSections } from './config.constants'
+
 export const storageKeys = {
   ALIASES: 'aliases',
   CONFIG: 'config',
@@ -13,3 +15,41 @@ export const storageNamespaces = {
   SESSION: 'session',
   COOKIE: 'cookie'
 }
+
+export const storageValues = [
+  {
+    key: storageKeys.ALIASES,
+    namespace: storageNamespaces.LOCAL,
+    default: []
+  },
+  {
+    key: storageKeys.CONFIG,
+    namespace: storageNamespaces.LOCAL,
+    default: defaultConfigSections
+  },
+  {
+    key: storageKeys.EVENTS,
+    namespace: storageNamespaces.LOCAL,
+    default: []
+  },
+  {
+    key: storageKeys.SCRIPTS,
+    namespace: storageNamespaces.LOCAL,
+    default: []
+  },
+  {
+    key: storageKeys.HISTORY,
+    namespace: storageNamespaces.SESSION,
+    default: []
+  },
+  {
+    key: storageKeys.PROMPT_HISTORY,
+    namespace: storageNamespaces.LOCAL,
+    default: []
+  },
+  {
+    key: storageKeys.COLOR_SETS,
+    namespace: storageNamespaces.LOCAL,
+    default: []
+  }
+]

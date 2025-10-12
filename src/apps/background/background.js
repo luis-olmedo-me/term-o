@@ -1,4 +1,5 @@
 import { executionContexts } from '@src/constants/command.constants'
+import { storageKeys } from '@src/constants/storage.constants'
 import { limitSimplifiedCommands } from '@src/helpers/command.helpers'
 import commandParser from '@src/libs/command-parser'
 import processWaitList from '@src/libs/process-wait-list'
@@ -41,7 +42,9 @@ const executeEvents = async (events, defaultTab) => {
 chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {
   if (changeInfo.status !== 'complete') return
 
-  const pendingEvents = storage.events.filter(event => new RegExp(event.url).test(updatedTab.url))
+  const pendingEvents = storage
+    .get(storageKeys.EVENTS)
+    .filter(event => new RegExp(event.url).test(updatedTab.url))
 
   if (pendingEvents.length === 0) return
 

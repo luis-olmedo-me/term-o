@@ -12,9 +12,15 @@ class Storage extends EventListener {
   }
 
   async init() {
-    for (const value of storageValues) {
-      this.values[value.key] = await getStorageValue(value.namespace, value.key, value.default)
-    }
+    const promises = storageValues.map(({ namespace, key, defaultValue }) => {
+      return getStorageValue(namespace, key, defaultValue)
+    })
+
+    const results = await Promise.all(promises)
+
+    storageValues.forEach((value, index) => {
+      this.values[value.key] = results[index]
+    })
 
     chrome.storage.onChanged.addListener(this.handleStorageChanges.bind(this))
   }

@@ -20,40 +20,40 @@ export const storageValues = [
   {
     key: storageKeys.ALIASES,
     namespace: storageNamespaces.LOCAL,
-    default: []
+    defaultValue: []
   },
   {
     key: storageKeys.CONFIG,
     namespace: storageNamespaces.LOCAL,
-    default: defaultConfigSections
+    defaultValue: defaultConfigSections
   },
   {
     key: storageKeys.EVENTS,
     namespace: storageNamespaces.LOCAL,
-    default: []
+    defaultValue: []
   },
   {
     key: storageKeys.SCRIPTS,
     namespace: storageNamespaces.LOCAL,
-    default: []
+    defaultValue: []
   },
   {
     key: storageKeys.HISTORY,
     namespace: storageNamespaces.SESSION,
-    default: []
+    defaultValue: []
   },
   {
     key: storageKeys.PROMPT_HISTORY,
     namespace: storageNamespaces.LOCAL,
-    default: []
+    defaultValue: []
   },
   {
     key: storageKeys.COLOR_SETS,
     namespace: storageNamespaces.LOCAL,
-    default: []
+    defaultValue: []
   }
 ]
 
 export const storageDefaultValues = storageValues.reduce((values, value) => {
-  return { ...values, [value.key]: value.default }
+  return { ...values, [value.key]: value.defaultValue }
 }, {})

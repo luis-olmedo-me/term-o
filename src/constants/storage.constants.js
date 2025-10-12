@@ -53,3 +53,7 @@ export const storageValues = [
     default: []
   }
 ]
+
+export const storageDefaultValues = storageValues.reduce((values, value) => {
+  return { ...values, [value.key]: value.default }
+}, {})

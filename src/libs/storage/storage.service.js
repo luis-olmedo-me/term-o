@@ -6,6 +6,7 @@ class Storage extends EventListener {
   constructor() {
     super()
 
+    this.initiated = false
     this.values = storageDefaultValues
 
     this.init()
@@ -23,6 +24,9 @@ class Storage extends EventListener {
     })
 
     chrome.storage.onChanged.addListener(this.handleStorageChanges.bind(this))
+
+    this.initiated = true
+    this.dispatchEvent('init', this)
   }
 
   get(storageKey) {

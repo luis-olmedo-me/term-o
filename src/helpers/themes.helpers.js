@@ -1,3 +1,5 @@
+import { toTitleCase } from './string.helpers'
+
 export const theme = (pathsString, appendedString) => props => {
   const paths = pathsString.split('.')
   const value = paths.reduce((theme, path) => theme[path], props.theme)
@@ -13,4 +15,17 @@ export const cleanColors = value => {
   const colorPattern = /\[termo\.color\.[A-Za-z]+\]|\[termo\.bgcolor\.[A-Za-z]+\]/g
 
   return value.replace(colorPattern, '')
+}
+
+export const getAccentColors = (colorThemes, accentName) => {
+  const accentNameTitleCase = toTitleCase(accentName)
+  const brightAccentName = `bright${accentNameTitleCase}`
+
+  const accent = colorThemes[accentName]
+  const brightAccent = colorThemes[brightAccentName]
+
+  return {
+    accent: accent,
+    brightAccent: brightAccent
+  }
 }

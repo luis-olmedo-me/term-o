@@ -1,51 +1,39 @@
 import * as React from 'preact'
+import { ThemeProvider as StyleProvider } from 'styled-components'
+
+import useConfig from '@src/hooks/useConfig'
+import useStorage from '@src/hooks/useStorage'
 
 import { configInputIds } from '@src/constants/config.constants'
-import useConfig from '@src/hooks/useConfig'
-import themer from '@src/libs/themer'
-import { useEffect, useState } from 'preact/hooks'
-import { ThemeProvider as StyleProvider } from 'styled-components'
+import { storageKeys } from '@src/constants/storage.constants'
+import { defaultTheme } from '@src/constants/themes.constants'
+import { getAccentColors } from '@src/helpers/themes.helpers'
 import ThemeStyle from './ThemeProvider.styles'
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState(themer.theme)
-  const [isReady, setIsReady] = useState(false)
-
+  const [colorThemes] = useStorage({ key: storageKeys.COLOR_SETS })
   const config = useConfig()
+  const themeName = config.get(configInputIds.THEME_NAME)
   const fontSize = config.get(configInputIds.FONT_SIZE)
   const fontFamily = config.get(configInputIds.FONT_FAMILY)
   const colorAccent = config.get(configInputIds.COLOR_ACCENT)
 
-  useEffect(function updateColorsReference() {
-    const updateTheme = ({ theme }) => setTheme(theme)
-    const showContent = () => setIsReady(true)
-
-    updateTheme(themer)
-    themer.addEventListener('themes-update', updateTheme)
-
-    if (themer.isInitiated) showContent()
-    else themer.addEventListener('init', showContent)
-
-    return () => {
-      themer.removeEventListener('themes-update', updateTheme)
-      themer.removeEventListener('init', showContent)
-    }
-  }, [])
+  const selectedTheme = colorThemes.find(theme => theme.name === themeName)
 
   return (
     <StyleProvider
       theme={{
-        ...theme,
+        ...defaultTheme,
         colors: {
-          ...theme.colors,
-          ...themer.getAccentColors(colorAccent)
+          ...selectedTheme,
+          ...getAccentColors(selectedTheme, colorAccent)
         },
         font: { primary: fontFamily }
       }}
     >
       <ThemeStyle mainFontSize={fontSize} />
 
-      {isReady && children}
+      {children}
     </StyleProvider>
   )
 }

@@ -13,8 +13,10 @@ class Storage extends EventListener {
   }
 
   async init() {
-    const promises = storageValues.map(({ namespace, key, defaultValue }) => {
-      return getStorageValue(namespace, key, defaultValue)
+    const promises = storageValues.map(({ namespace, key, defaultValue, Template }) => {
+      return getStorageValue(namespace, key, defaultValue).then(result =>
+        Template ? new Template(this, result) : result
+      )
     })
 
     const results = await Promise.all(promises)

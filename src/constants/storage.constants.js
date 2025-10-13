@@ -1,3 +1,4 @@
+import { Configuration } from '@src/templates/Configuration/Configuration.template'
 import { defaultConfig } from './config.constants'
 import { defaultColorTheme } from './themes.constants'
 
@@ -26,7 +27,8 @@ export const storageValues = [
   {
     key: storageKeys.CONFIG,
     namespace: storageNamespaces.LOCAL,
-    defaultValue: defaultConfig
+    defaultValue: defaultConfig,
+    Template: Configuration
   },
   {
     key: storageKeys.EVENTS,

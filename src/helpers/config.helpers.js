@@ -28,17 +28,3 @@ export const buildDetailedConfig = simplifiedConfig => {
 export const updateConfigValueIn = (config, inputId, newValue) => {
   return { ...config, [inputId]: newValue }
 }
-
-export const simplifyConfig = config => {
-  return config.reduce((simplifiedConfig, section) => {
-    const sectionInputValues = section.inputs.reduce(
-      (simplifiedInputs, input) => ({ ...simplifiedInputs, [input.id]: input.value }),
-      {}
-    )
-
-    return {
-      ...simplifiedConfig,
-      ...sectionInputValues
-    }
-  }, {})
-}

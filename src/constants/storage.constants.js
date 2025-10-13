@@ -1,4 +1,6 @@
-import { Configuration } from '@src/templates/Configuration/Configuration.template'
+import ConfigApi from '@src/templates/ConfigApi'
+import SimpleApi from '@src/templates/SimpleApi'
+
 import { defaultConfig } from './config.constants'
 import { defaultColorTheme } from './themes.constants'
 
@@ -22,38 +24,44 @@ export const storageValues = [
   {
     key: storageKeys.ALIASES,
     namespace: storageNamespaces.LOCAL,
-    defaultValue: []
+    defaultValue: [],
+    Template: SimpleApi
   },
   {
     key: storageKeys.CONFIG,
     namespace: storageNamespaces.LOCAL,
     defaultValue: defaultConfig,
-    Template: Configuration
+    Template: ConfigApi
   },
   {
     key: storageKeys.EVENTS,
     namespace: storageNamespaces.LOCAL,
-    defaultValue: []
+    defaultValue: [],
+    Template: SimpleApi
   },
   {
     key: storageKeys.SCRIPTS,
     namespace: storageNamespaces.LOCAL,
-    defaultValue: []
+    defaultValue: [],
+    Template: SimpleApi
   },
   {
     key: storageKeys.HISTORY,
     namespace: storageNamespaces.SESSION,
-    defaultValue: []
+    defaultValue: [],
+    Template: SimpleApi
   },
   {
     key: storageKeys.PROMPT_HISTORY,
     namespace: storageNamespaces.LOCAL,
-    defaultValue: []
+    defaultValue: [],
+    Template: SimpleApi
   },
   {
     key: storageKeys.COLOR_SETS,
     namespace: storageNamespaces.LOCAL,
-    defaultValue: [defaultColorTheme]
+    defaultValue: [defaultColorTheme],
+    Template: SimpleApi
   }
 ]
 

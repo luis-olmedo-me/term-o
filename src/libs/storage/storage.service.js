@@ -32,7 +32,7 @@ class Storage extends EventListener {
   }
 
   get(storageKey) {
-    if (storageKey in this.values) return this.values[storageKey]
+    if (storageKey in this.values) return this.values[storageKey].get()
     else return null
   }
 
@@ -47,7 +47,7 @@ class Storage extends EventListener {
   handleStorageChanges(changes) {
     for (let [storageKey, { newValue }] of Object.entries(changes)) {
       if (storageKey in this.values) {
-        this.values[storageKey] = newValue
+        this.values[storageKey].set(newValue)
       }
 
       this.dispatchEvent(storageKey, this)

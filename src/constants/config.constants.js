@@ -1,4 +1,3 @@
-import { simplifyConfig } from '@src/helpers/config.helpers'
 import { availableInputTypes } from './inputs.constants'
 import { basicColorKeys, colorThemeKeys, defaultColorTheme } from './themes.constants'
 
@@ -221,4 +220,14 @@ export const defaultConfigSections = [
   }
 ]
 
-export const defaultConfig = simplifyConfig(defaultConfigSections)
+export const defaultConfig = defaultConfigSections.reduce((simplifiedConfig, section) => {
+  const sectionInputValues = section.inputs.reduce(
+    (simplifiedInputs, input) => ({ ...simplifiedInputs, [input.id]: input.value }),
+    {}
+  )
+
+  return {
+    ...simplifiedConfig,
+    ...sectionInputValues
+  }
+}, {})

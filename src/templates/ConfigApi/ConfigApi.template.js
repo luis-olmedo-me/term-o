@@ -1,3 +1,5 @@
+import SimpleApi from '@src/templates/SimpleApi'
+
 import { storageKeys } from '@src/constants/storage.constants'
 import {
   buildDetailedConfig,
@@ -5,19 +7,14 @@ import {
   updateConfigValueIn
 } from '@src/helpers/config.helpers'
 
-export class Configuration {
+export class ConfigApi extends SimpleApi {
   constructor(storageService, value) {
-    this.storageService = storageService
-    this.value = value
+    super(storageService, value)
+
     this.details = buildDetailedConfig(value)
   }
 
-  set(value) {
-    this.value = value
-    this.details = buildDetailedConfig(value)
-  }
-
-  get(inputId) {
+  getById(inputId) {
     return getConfigValueByInputId(this.value, inputId)
   }
 

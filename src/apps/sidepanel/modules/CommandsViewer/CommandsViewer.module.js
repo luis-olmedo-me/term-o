@@ -1,12 +1,20 @@
 import * as React from 'preact'
 import { useEffect, useRef } from 'preact/hooks'
 
-import ColoredText from '../../components/ColoredText'
-import { Line } from '../../components/Prompt'
+import ColoredText from '@sidepanel/components/ColoredText'
+import { Line } from '@sidepanel/components/Prompt'
+import useConfig from '@src/hooks/useConfig'
+
+import { configInputIds } from '@src/constants/config.constants'
 import * as S from './CommandsViewer.styles'
 
-export const CommandsViewer = ({ commands, statusIndicator, hasStatusBar, hasStatusLight }) => {
+export const CommandsViewer = ({ commands }) => {
   const wrapper = useRef(null)
+
+  const config = useConfig()
+  const statusIndicator = config.get(configInputIds.STATUS_INDICATOR)
+  const hasStatusBar = config.get(configInputIds.STATUS_BAR)
+  const hasStatusLight = config.get(configInputIds.STATUS_LIGHT)
 
   useEffect(
     function listenUpdates() {
@@ -59,8 +67,5 @@ export const CommandsViewer = ({ commands, statusIndicator, hasStatusBar, hasSta
 }
 
 CommandsViewer.propTypes = {
-  commands: Array,
-  statusIndicator: String,
-  hasStatusBar: Boolean,
-  hasStatusLight: Boolean
+  commands: Array
 }

@@ -1,3 +1,4 @@
+import { onlyColorKeys } from '@src/constants/themes.constants'
 import { toTitleCase } from './string.helpers'
 
 export const theme = (pathsString, appendedString) => props => {
@@ -28,4 +29,16 @@ export const getAccentColors = (colorThemes, accentName) => {
     accent: accent,
     brightAccent: brightAccent
   }
+}
+
+export const createAriaColorThemer = ({ theme }) => {
+  return onlyColorKeys
+    .map(color => `[aria-color="${color}"] { color: ${theme.colors[color]}; }`)
+    .join('')
+}
+
+export const createAriaBgColorThemer = ({ theme }) => {
+  return onlyColorKeys
+    .map(color => `[aria-bg-color="${color}"] { background-color: ${theme.colors[color]}; }`)
+    .join('')
 }

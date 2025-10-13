@@ -101,3 +101,14 @@ export const basicColorKeys = [
   colorThemeKeys.RED,
   colorThemeKeys.YELLOW
 ]
+
+export const brightColorKeys = [
+  colorThemeKeys.BRIGHT_BLUE,
+  colorThemeKeys.BRIGHT_CYAN,
+  colorThemeKeys.BRIGHT_GREEN,
+  colorThemeKeys.BRIGHT_PURPLE,
+  colorThemeKeys.BRIGHT_RED,
+  colorThemeKeys.BRIGHT_YELLOW
+]
+
+export const onlyColorKeys = [...basicColorKeys, ...brightColorKeys]

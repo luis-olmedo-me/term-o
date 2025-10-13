@@ -1,18 +1,17 @@
 import * as React from 'preact'
 import { useState } from 'preact/hooks'
-import { useTheme } from 'styled-components'
 
 import SidePanel from '@configuration/components/SidePanel'
 import FieldRenderer from '@src/components/FieldRenderer'
-import { configIds, configInputIds } from '@src/constants/config.constants'
 import useConfig from '@src/hooks/useConfig'
+
+import { configIds, configInputIds } from '@src/constants/config.constants'
 import { sidePanelOptions } from './Preferences.constants'
 import * as S from './Preferences.styles'
 
 export const Preferences = () => {
   const [selectedSectionId, setSelectedSectionId] = useState(configIds.FUNCTIONALITY)
 
-  const theme = useTheme()
   const config = useConfig()
 
   const sectionSelected = config.details.find(({ id }) => id === selectedSectionId)
@@ -39,7 +38,7 @@ export const Preferences = () => {
           {sectionSelected.inputs.map(input => {
             return (
               <FieldRenderer
-                key={`${input.id}-${theme.colors.name}`}
+                key={input.id}
                 description={input.description}
                 value={input.value}
                 inputId={input.id}

@@ -1,4 +1,8 @@
-import { theme as t } from '@src/helpers/themes.helpers'
+import {
+  createAriaBgColorThemer,
+  createAriaColorThemer,
+  theme as t
+} from '@src/helpers/themes.helpers'
 import { createGlobalStyle } from 'styled-components'
 import { slide } from './Animations.styles'
 
@@ -38,6 +42,7 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
+
   &[aria-loading='true'] {
     position: relative;
 
@@ -61,6 +66,9 @@ const GlobalStyle = createGlobalStyle`
     appearance: base-select;
     border: none;
   }
+
+  ${createAriaColorThemer}
+  ${createAriaBgColorThemer}
 `
 
 export default GlobalStyle

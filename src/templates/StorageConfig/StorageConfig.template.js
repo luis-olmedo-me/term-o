@@ -1,4 +1,4 @@
-import SimpleApi from '@src/templates/SimpleApi'
+import StorageSimple from '@src/templates/StorageSimple'
 
 import { storageKeys } from '@src/constants/storage.constants'
 import {
@@ -7,7 +7,7 @@ import {
   updateConfigValueIn
 } from '@src/helpers/config.helpers'
 
-export class ConfigApi extends SimpleApi {
+export class StorageConfig extends StorageSimple {
   constructor(storageService, value) {
     super(storageService, value)
 

@@ -1,4 +1,4 @@
-export class SimpleApi {
+export class StorageSimple {
   constructor(storageService, value) {
     this.storageService = storageService
     this.value = value

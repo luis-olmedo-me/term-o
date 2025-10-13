@@ -6,7 +6,7 @@ export const ButtonWrapper = styled.button`
   width: fit-content;
   height: fit-content;
   color: ${t('colors.foreground')};
-  background-color: ${t('colors.background')};
+  background-color: transparent;
   border: none;
   font-weight: bold;
   font-size: ${t('fontSize.100')};

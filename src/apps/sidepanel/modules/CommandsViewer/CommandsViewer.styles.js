@@ -9,7 +9,7 @@ export const ViewWrapper = styled.div`
   display: flex;
   flex-direction: column-reverse;
   gap: ${t('space.400')};
-  background-color: ${t('colors.background')};
+  background-color: transparent;
   color: ${t('colors.foreground')};
   margin-right: ${t('space.500')};
   cursor: text;
@@ -37,7 +37,9 @@ export const Command = styled.div`
       content: '';
       position: absolute;
       top: 0.5rem;
-      transition: background-color 0.1s ease-in-out;
+      transition:
+        background-color 0.2s ease-in-out,
+        box-shadow 0.2s ease-in-out;
       background-color: ${t('colors.brightBlack', '30')};
       border-radius: ${t('radius.200')};
       left: ${t('space.300')};

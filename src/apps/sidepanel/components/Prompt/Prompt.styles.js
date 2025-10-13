@@ -10,10 +10,11 @@ export const Line = styled.p`
 
 export const PromptWrapper = styled.div`
   cursor: text;
-  background-color: ${t('colors.background')};
+  background-color: transparent;
   color: ${t('colors.foreground')};
   padding: 0 ${t('space.600')} 0 ${t('space.800')};
   box-shadow: 0 0 ${t('space.200')} ${t('space.100')} ${t('colors.background')};
+  transition: box-shadow 0.2s ease-in-out;
   z-index: 1;
 
   &[aria-indicator=${statusIndicators.HALF_DOT}] {

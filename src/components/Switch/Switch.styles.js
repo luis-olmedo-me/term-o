@@ -72,7 +72,7 @@ export const SwitchWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: ${t('space.400')};
-  background-color: ${t('colors.background')};
+  background-color: transparent;
   color: ${t('colors.foreground')};
   cursor: text;
   position: relative;

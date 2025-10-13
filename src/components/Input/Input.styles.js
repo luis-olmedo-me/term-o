@@ -27,7 +27,7 @@ export const RealInput = styled.input`
   display: block;
   caret-color: ${t('colors.cursorColor')};
   line-height: ${t('lineHeight.300')};
-  background-color: ${t('colors.background')};
+  background-color: transparent;
   color: ${t('colors.foreground')};
   letter-spacing: ${t('space.50')};
   cursor: text;
@@ -76,7 +76,7 @@ export const RealInput = styled.input`
 export const InputWrapper = styled.div`
   display: flex;
   align-items: center;
-  background-color: ${t('colors.background')};
+  background-color: transparent;
   color: ${t('colors.foreground')};
 
   &[aria-fit-content='true'] {

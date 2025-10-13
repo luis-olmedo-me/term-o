@@ -14,9 +14,8 @@ export class StorageConfig extends StorageSimple {
     this.details = buildDetailedConfig(value)
   }
 
-  set(value) {
-    this.value = value
-    this.details = buildDetailedConfig(value)
+  replicate(value) {
+    return new StorageConfig(this.storageService, value)
   }
 
   get() {

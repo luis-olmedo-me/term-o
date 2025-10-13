@@ -47,7 +47,9 @@ class Storage extends EventListener {
   handleStorageChanges(changes) {
     for (let [storageKey, { newValue }] of Object.entries(changes)) {
       if (storageKey in this.values) {
-        this.values[storageKey].set(newValue)
+        const instance = this.values[storageKey]
+
+        this.values[storageKey] = instance.replicate(newValue)
       }
 
       this.dispatchEvent(storageKey, this)

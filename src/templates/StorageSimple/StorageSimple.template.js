@@ -4,8 +4,8 @@ export class StorageSimple {
     this.value = value
   }
 
-  set(value) {
-    this.value = value
+  replicate(value) {
+    return new StorageSimple(this.storageService, value)
   }
 
   get() {

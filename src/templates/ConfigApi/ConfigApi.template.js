@@ -14,7 +14,16 @@ export class ConfigApi extends SimpleApi {
     this.details = buildDetailedConfig(value)
   }
 
-  getById(inputId) {
+  set(value) {
+    this.value = value
+    this.details = buildDetailedConfig(value)
+  }
+
+  get() {
+    return this
+  }
+
+  getValueById(inputId) {
     return getConfigValueByInputId(this.value, inputId)
   }
 

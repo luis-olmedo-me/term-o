@@ -4,7 +4,6 @@ import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 import Prompt from '@sidepanel/components/Prompt'
 import CommandsViewer from '@sidepanel/modules/CommandsViewer'
 import Button, { buttonVariants } from '@src/components/Button'
-import useConfig from '@src/hooks/useConfig'
 import useStorage from '@src/hooks/useStorage'
 import Gear from '@src/icons/Gear.icon'
 import commandParser from '@src/libs/command-parser'
@@ -26,12 +25,12 @@ export const Terminal = () => {
 
   const [aliases] = useStorage({ key: storageKeys.ALIASES })
   const [simplifiedCommands, setSimplifiedCommands] = useStorage({ key: storageKeys.HISTORY })
+  const [config] = useStorage({ key: storageKeys.CONFIG })
 
-  const config = useConfig()
-  const canCopyOnSelection = config.get(configInputIds.COPY_ON_SELECTION)
-  const switchTabAutomatically = config.get(configInputIds.SWITCH_TAB_AUTOMATICALLY)
-  const maxLinesPerCommand = config.get(configInputIds.MAX_LINES_PER_COMMAND)
-  const rawContext = config.get(configInputIds.CONTEXT)
+  const canCopyOnSelection = config.getValueById(configInputIds.COPY_ON_SELECTION)
+  const switchTabAutomatically = config.getValueById(configInputIds.SWITCH_TAB_AUTOMATICALLY)
+  const maxLinesPerCommand = config.getValueById(configInputIds.MAX_LINES_PER_COMMAND)
+  const rawContext = config.getValueById(configInputIds.CONTEXT)
 
   const focusOnPrompt = useCallback(() => {
     inputRef.current?.focus()

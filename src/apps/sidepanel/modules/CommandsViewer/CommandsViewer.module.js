@@ -3,18 +3,19 @@ import { useEffect, useRef } from 'preact/hooks'
 
 import ColoredText from '@sidepanel/components/ColoredText'
 import { Line } from '@sidepanel/components/Prompt'
-import useConfig from '@src/hooks/useConfig'
 
 import { configInputIds } from '@src/constants/config.constants'
+import { storageKeys } from '@src/constants/storage.constants'
+import useStorage from '@src/hooks/useStorage'
 import * as S from './CommandsViewer.styles'
 
 export const CommandsViewer = ({ commands }) => {
   const wrapper = useRef(null)
 
-  const config = useConfig()
-  const statusIndicator = config.get(configInputIds.STATUS_INDICATOR)
-  const hasStatusBar = config.get(configInputIds.STATUS_BAR)
-  const hasStatusLight = config.get(configInputIds.STATUS_LIGHT)
+  const [config] = useStorage({ key: storageKeys.CONFIG })
+  const statusIndicator = config.getValueById(configInputIds.STATUS_INDICATOR)
+  const hasStatusBar = config.getValueById(configInputIds.STATUS_BAR)
+  const hasStatusLight = config.getValueById(configInputIds.STATUS_LIGHT)
 
   useEffect(
     function listenUpdates() {

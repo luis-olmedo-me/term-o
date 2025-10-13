@@ -3,16 +3,17 @@ import { useState } from 'preact/hooks'
 
 import SidePanel from '@configuration/components/SidePanel'
 import FieldRenderer from '@src/components/FieldRenderer'
-import useConfig from '@src/hooks/useConfig'
+import useStorage from '@src/hooks/useStorage'
 
 import { configIds, configInputIds } from '@src/constants/config.constants'
+import { storageKeys } from '@src/constants/storage.constants'
 import { sidePanelOptions } from './Preferences.constants'
 import * as S from './Preferences.styles'
 
 export const Preferences = () => {
   const [selectedSectionId, setSelectedSectionId] = useState(configIds.FUNCTIONALITY)
 
-  const config = useConfig()
+  const [config] = useStorage({ key: storageKeys.CONFIG })
 
   const sectionSelected = config.details.find(({ id }) => id === selectedSectionId)
 

@@ -4,7 +4,7 @@ import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { defaultColorTheme } from '@src/constants/themes.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
-import { getConfigValueByInputId, updateConfigValueIn } from '@src/helpers/config.helpers'
+import { updateConfigValueIn } from '@src/helpers/config.helpers'
 import { formatTheme } from '@src/helpers/format.helpers'
 
 export default async command => {
@@ -18,7 +18,7 @@ export default async command => {
 
   if (P`current`) {
     const config = storage.get(storageKeys.CONFIG)
-    const themeName = getConfigValueByInputId(config, configInputIds.THEME_NAME)
+    const themeName = config.getValueById(config, configInputIds.THEME_NAME)
 
     const update = formatTheme({ name: themeName })
 
@@ -52,7 +52,7 @@ export default async command => {
 
     const config = storage.get(storageKeys.CONFIG)
     const themes = storage.get(storageKeys.COLOR_SETS)
-    const themeName = getConfigValueByInputId(config, configInputIds.THEME_NAME)
+    const themeName = config.getValueById(config, configInputIds.THEME_NAME)
 
     const alreadyExists = themes.some(set => set.name === name)
     const isDefault = defaultColorTheme.name === name
@@ -82,7 +82,7 @@ export default async command => {
 
     const config = storage.get(storageKeys.CONFIG)
     const themes = storage.get(storageKeys.COLOR_SETS)
-    const themeName = getConfigValueByInputId(config, configInputIds.THEME_NAME)
+    const themeName = config.getValueById(config, configInputIds.THEME_NAME)
 
     const alreadyExists = themes.some(set => set.name === name)
     const isCurrentTheme = name === themeName

@@ -1,7 +1,6 @@
 import * as React from 'preact'
 import { ThemeProvider as StyleProvider } from 'styled-components'
 
-import useConfig from '@src/hooks/useConfig'
 import useStorage from '@src/hooks/useStorage'
 
 import { configInputIds } from '@src/constants/config.constants'
@@ -12,11 +11,12 @@ import ThemeStyle from './ThemeProvider.styles'
 
 export const ThemeProvider = ({ children }) => {
   const [colorThemes] = useStorage({ key: storageKeys.COLOR_SETS })
-  const config = useConfig()
-  const themeName = config.get(configInputIds.THEME_NAME)
-  const fontSize = config.get(configInputIds.FONT_SIZE)
-  const fontFamily = config.get(configInputIds.FONT_FAMILY)
-  const colorAccent = config.get(configInputIds.COLOR_ACCENT)
+  const [config] = useStorage({ key: storageKeys.CONFIG })
+
+  const themeName = config.getValueById(configInputIds.THEME_NAME)
+  const fontSize = config.getValueById(configInputIds.FONT_SIZE)
+  const fontFamily = config.getValueById(configInputIds.FONT_FAMILY)
+  const colorAccent = config.getValueById(configInputIds.COLOR_ACCENT)
 
   const selectedTheme = colorThemes.find(theme => theme.name === themeName)
 

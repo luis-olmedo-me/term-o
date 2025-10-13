@@ -11,11 +11,10 @@ export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(themer.theme)
   const [isReady, setIsReady] = useState(false)
 
-  const { listening } = useConfig({
-    get: [configInputIds.FONT_SIZE, configInputIds.FONT_FAMILY, configInputIds.COLOR_ACCENT]
-  })
-
-  const [fontSize, fontFamily, colorAccent] = listening
+  const config = useConfig()
+  const fontSize = config.get(configInputIds.FONT_SIZE)
+  const fontFamily = config.get(configInputIds.FONT_FAMILY)
+  const colorAccent = config.get(configInputIds.COLOR_ACCENT)
 
   useEffect(function updateColorsReference() {
     const updateTheme = ({ theme }) => setTheme(theme)

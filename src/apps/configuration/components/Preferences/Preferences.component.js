@@ -10,15 +10,16 @@ import { sidePanelOptions } from './Preferences.constants'
 import * as S from './Preferences.styles'
 
 export const Preferences = () => {
-  const { config, changeConfig, resetConfig } = useConfig()
-  const theme = useTheme()
   const [selectedSectionId, setSelectedSectionId] = useState(configIds.FUNCTIONALITY)
 
-  const sectionSelected = config.find(({ id }) => id === selectedSectionId)
+  const theme = useTheme()
+  const config = useConfig()
 
-  const handleClicksInButtonFields = (sectionId, inputId) => {
-    if (sectionId === configIds.DATA && inputId === configInputIds.RESET_DATA) {
-      resetConfig()
+  const sectionSelected = config.details.find(({ id }) => id === selectedSectionId)
+
+  const handleClicksInButtonFields = inputId => {
+    if (inputId === configInputIds.RESET_DATA) {
+      config.reset()
     }
   }
 
@@ -41,7 +42,6 @@ export const Preferences = () => {
                 key={`${input.id}-${theme.colors.name}`}
                 description={input.description}
                 value={input.value}
-                sectionId={sectionSelected.id}
                 inputId={input.id}
                 type={input.type}
                 options={input.options}
@@ -49,7 +49,7 @@ export const Preferences = () => {
                 postFix={input.postFix}
                 name={`${sectionSelected.id}-${input.id}`}
                 title={input.name}
-                changeConfig={changeConfig}
+                changeConfig={config.change.bind(config)}
                 handleClickInButtons={handleClicksInButtonFields}
               />
             )

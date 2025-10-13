@@ -1,4 +1,4 @@
-import { defaultConfigSections } from './config.constants'
+import { defaultConfig } from './config.constants'
 
 export const storageKeys = {
   ALIASES: 'aliases',
@@ -25,7 +25,7 @@ export const storageValues = [
   {
     key: storageKeys.CONFIG,
     namespace: storageNamespaces.LOCAL,
-    defaultValue: defaultConfigSections
+    defaultValue: defaultConfig
   },
   {
     key: storageKeys.EVENTS,

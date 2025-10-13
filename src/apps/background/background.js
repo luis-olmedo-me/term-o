@@ -1,10 +1,12 @@
 import { executionContexts } from '@src/constants/command.constants'
+import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { limitSimplifiedCommands } from '@src/helpers/command.helpers'
+import { getConfigValueByInputId } from '@src/helpers/config.helpers'
+import { createContext } from '@src/helpers/contexts.helpers'
 import commandParser from '@src/libs/command-parser'
 import processWaitList from '@src/libs/process-wait-list'
 import storage from '@src/libs/storage'
-import historyManager from './packages/history-manager.package'
 import processHandlers from './process-handlers'
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
@@ -15,16 +17,22 @@ const executeEvents = async (events, defaultTab) => {
   let commands = []
   let tab = defaultTab
   const setTab = newTab => (tab = newTab)
-  const clearLogs = () => historyManager.setHistory([])
+  const clearLogs = () => storage.set(storageKeys.HISTORY, [])
 
   for (let index = 0; index < events.length; index++) {
-    commandParser.setAliases(historyManager.getAliases())
+    const aliases = storage.get(storageKeys.ALIASES)
+    commandParser.setAliases(aliases)
+
+    const config = storage.get(storageKeys.CONFIG)
+    const contextInputValue = getConfigValueByInputId(config, configInputIds.CONTEXT)
 
     const event = events[index]
-    const command = commandParser.read(event.line)
-    const context = historyManager.getContext(tab)
+    const context = createContext(contextInputValue, tab)
+    const command = commandParser
+      .read(event.line)
+      .applyData({ tab, setTab, clearLogs })
+      .applyContext(context)
 
-    command.applyData({ tab, setTab, clearLogs }).applyContext(context)
     if (!command.finished) await command.execute()
 
     const commandVisible = command.getCommandVisibleInChain()
@@ -34,10 +42,13 @@ const executeEvents = async (events, defaultTab) => {
     }
   }
 
-  const newCommands = [...historyManager.getHistory(), ...commands]
-  const commandsLimited = limitSimplifiedCommands(newCommands, historyManager.getMaxLines())
+  const config = storage.get(storageKeys.CONFIG)
+  const maxLinesInputValue = getConfigValueByInputId(config, configInputIds.MAX_LINES_PER_COMMAND)
 
-  historyManager.setHistory(commandsLimited)
+  const newCommands = [...storage.get(storageKeys.HISTORY), ...commands]
+  const commandsLimited = limitSimplifiedCommands(newCommands, maxLinesInputValue)
+
+  storage.set(storageKeys.HISTORY, commandsLimited)
 }
 chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {
   if (changeInfo.status !== 'complete') return

@@ -1,25 +1,20 @@
 import * as React from 'preact'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 
-import useConfig from '@src/hooks/useConfig'
-import useStorage from '@src/hooks/useStorage'
-
+import { getCurrentTab } from '@src/commands/tabs/tabs.helpers'
 import Button, { buttonVariants } from '@src/components/Button'
-import Gear from '@src/icons/Gear.icon'
-import Prompt from '../../components/Prompt'
-import CommandsViewer from '../CommandsViewer'
-
-import commandParser from '@src/libs/command-parser'
-
 import { commandStatuses } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
-
-import { getCurrentTab } from '@src/commands/tabs/tabs.helpers'
 import { limitSimplifiedCommands, updateSimplifiedCommandsWith } from '@src/helpers/command.helpers'
 import { createContext } from '@src/helpers/contexts.helpers'
+import useConfig from '@src/hooks/useConfig'
+import useStorage from '@src/hooks/useStorage'
+import Gear from '@src/icons/Gear.icon'
+import commandParser from '@src/libs/command-parser'
+import Prompt from '../../components/Prompt'
+import CommandsViewer from '../CommandsViewer'
 import { copyText, getSelectedText } from './Terminal.helpers'
-
 import * as S from './Terminal.styles'
 
 export const Terminal = () => {
@@ -31,26 +26,14 @@ export const Terminal = () => {
   const [aliases] = useStorage({ key: storageKeys.ALIASES })
   const [simplifiedCommands, setSimplifiedCommands] = useStorage({ key: storageKeys.HISTORY })
 
-  const { listening } = useConfig({
-    get: [
-      configInputIds.COPY_ON_SELECTION,
-      configInputIds.SWITCH_TAB_AUTOMATICALLY,
-      configInputIds.MAX_LINES_PER_COMMAND,
-      configInputIds.CONTEXT,
-      configInputIds.STATUS_INDICATOR,
-      configInputIds.STATUS_BAR,
-      configInputIds.STATUS_LIGHT
-    ]
-  })
-  const [
-    canCopyOnSelection,
-    switchTabAutomatically,
-    maxLinesPerCommand,
-    rawContext,
-    statusIndicator,
-    hasStatusBar,
-    hasStatusLight
-  ] = listening
+  const config = useConfig()
+  const canCopyOnSelection = config.get(configInputIds.COPY_ON_SELECTION)
+  const switchTabAutomatically = config.get(configInputIds.SWITCH_TAB_AUTOMATICALLY)
+  const maxLinesPerCommand = config.get(configInputIds.MAX_LINES_PER_COMMAND)
+  const rawContext = config.get(configInputIds.CONTEXT)
+  const statusIndicator = config.get(configInputIds.STATUS_INDICATOR)
+  const hasStatusBar = config.get(configInputIds.STATUS_BAR)
+  const hasStatusLight = config.get(configInputIds.STATUS_LIGHT)
 
   const focusOnPrompt = useCallback(() => {
     inputRef.current?.focus()

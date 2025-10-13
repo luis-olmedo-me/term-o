@@ -1,49 +1,36 @@
 import { useCallback, useMemo } from 'preact/hooks'
 
-import { defaultConfigSections } from '@src/constants/config.constants'
+import { defaultConfig } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import {
+  buildDetailedConfig,
   getConfigValueByInputId,
-  mergeConfigSections,
   updateConfigValueIn
 } from '@src/helpers/config.helpers'
 import useStorage from '@src/hooks/useStorage'
 
-export const useConfig = props => {
-  const { get = [] } = props || {}
-
+export const useConfig = () => {
   const [config, setConfig] = useStorage({ key: storageKeys.CONFIG })
 
-  const validatedConfig = useMemo(
-    () => mergeConfigSections(defaultConfigSections, config),
-    [config]
-  )
+  const detailedConfig = useMemo(() => buildDetailedConfig(config), [config])
 
-  const getConfigById = useCallback(
-    inputId => getConfigValueByInputId(inputId, validatedConfig),
-    [validatedConfig]
-  )
-
-  const changeConfig = useCallback(
-    (sectionId, inputId, newValue) => {
-      const newConfig = updateConfigValueIn(validatedConfig, sectionId, inputId, newValue)
+  const change = useCallback(
+    (inputId, newValue) => {
+      const newConfig = updateConfigValueIn(config, inputId, newValue)
 
       setConfig(newConfig)
     },
-    [validatedConfig]
+    [config]
   )
 
-  const resetConfig = () => {
-    setConfig(defaultConfigSections)
+  const reset = () => {
+    setConfig(defaultConfig)
   }
 
-  const configListeners = useMemo(() => get.map(getConfigById), [getConfigById, validatedConfig])
-
   return {
-    listening: configListeners,
-    config: validatedConfig,
-    getConfigById,
-    changeConfig,
-    resetConfig
+    get: inputId => getConfigValueByInputId(config, inputId),
+    details: detailedConfig,
+    change,
+    reset
   }
 }

@@ -7,7 +7,6 @@ import * as S from './FieldRenderer.styles'
 
 export const FieldRenderer = ({
   value,
-  sectionId,
   inputId,
   type,
   options,
@@ -21,11 +20,11 @@ export const FieldRenderer = ({
 }) => {
   const [errorMessage, setErrorMessage] = useState(null)
 
-  const tryApplyChange = (sectionId, inputId, newValue) => {
+  const tryApplyChange = (inputId, newValue) => {
     try {
       validations.forEach(primitiveValidation => validate(primitiveValidation, newValue))
 
-      changeConfig(sectionId, inputId, newValue)
+      changeConfig(inputId, newValue)
       setErrorMessage(null)
     } catch (error) {
       setErrorMessage(error)
@@ -47,7 +46,6 @@ export const FieldRenderer = ({
           onChange={tryApplyChange}
           options={options}
           postFix={postFix}
-          sectionId={sectionId}
           type={type}
           value={value}
         />
@@ -60,7 +58,6 @@ export const FieldRenderer = ({
 
 FieldRenderer.propTypes = {
   value: String | Number | Boolean,
-  sectionId: String,
   inputId: String,
   type: String,
   title: String,

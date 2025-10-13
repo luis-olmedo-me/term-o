@@ -1,6 +1,6 @@
 import EventListener from '@src/templates/event-listener'
 
-import { configIds, configInputIds, defaultConfigSections } from '@src/constants/config.constants'
+import { configInputIds, defaultConfigSections } from '@src/constants/config.constants'
 import { storageKeys, storageNamespaces } from '@src/constants/storage.constants'
 import { defaultColorTheme, defaultTheme } from '@src/constants/themes.constants'
 import { getConfigValueByInputId, updateConfigValueIn } from '@src/helpers/config.helpers'
@@ -56,7 +56,7 @@ class Themer extends EventListener {
       }
 
       if (storageKey === storageKeys.CONFIG) {
-        const newThemeName = getConfigValueByInputId(configInputIds.THEME_NAME, newValue)
+        const newThemeName = getConfigValueByInputId(newValue, configInputIds.THEME_NAME)
         const newTheme = this.colorThemes.find(theme => theme.name === newThemeName)
 
         if (newTheme && newThemeName !== this.theme.name) {
@@ -75,7 +75,7 @@ class Themer extends EventListener {
     )
 
     const newThemes = await getStorageValue(storageNamespaces.LOCAL, storageKeys.COLOR_SETS)
-    const newThemeName = getConfigValueByInputId(configInputIds.THEME_NAME, config)
+    const newThemeName = getConfigValueByInputId(config, configInputIds.THEME_NAME)
 
     if (newThemes) this.colorThemes = newThemes
 
@@ -94,12 +94,7 @@ class Themer extends EventListener {
       storageKeys.CONFIG,
       defaultConfigSections
     )
-    const newConfig = updateConfigValueIn(
-      config,
-      configIds.APPEARENCE,
-      configInputIds.THEME_NAME,
-      name
-    )
+    const newConfig = updateConfigValueIn(config, configInputIds.THEME_NAME, name)
 
     return setStorageValue(storageNamespaces.LOCAL, storageKeys.CONFIG, newConfig)
   }

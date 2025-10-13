@@ -12,7 +12,6 @@ import { availableInputTypes } from '@src/constants/inputs.constants'
 
 export const DynamicInput = ({
   value,
-  sectionId,
   inputId,
   type,
   options,
@@ -38,7 +37,7 @@ export const DynamicInput = ({
           errorMessage={errorMessage}
           fullWidth
           name={name}
-          onBlur={({ target }) => onChange(sectionId, inputId, target.value)}
+          onBlur={({ target }) => onChange(inputId, target.value)}
           onChange={({ target }) => setLocalValue(target.value)}
           postFix={postFix}
           type={inputTypes.TEXT}
@@ -52,7 +51,7 @@ export const DynamicInput = ({
         <Input
           errorMessage={errorMessage}
           name={name}
-          onBlur={({ target }) => onChange(sectionId, inputId, Number(target.value))}
+          onBlur={({ target }) => onChange(inputId, Number(target.value))}
           onChange={({ target }) => setLocalValue(target.value)}
           postFix={postFix}
           type={inputTypes.NUMBER}
@@ -66,7 +65,7 @@ export const DynamicInput = ({
         <TextArea
           maxLines={6}
           name={name}
-          onBlur={({ target }) => onChange(sectionId, inputId, target.value)}
+          onBlur={({ target }) => onChange(inputId, target.value)}
           onChange={({ target }) => setLocalValue(target.value)}
           value={localValue}
         />
@@ -76,7 +75,7 @@ export const DynamicInput = ({
       return (
         <Switch
           name={name}
-          onChange={() => onChange(sectionId, inputId, !value)}
+          onChange={({ target }) => onChange(inputId, target.checked)}
           type="checkbox"
           value={value}
         />
@@ -86,7 +85,7 @@ export const DynamicInput = ({
       return (
         <Select
           name={name}
-          onChange={({ target }) => onChange(sectionId, inputId, target.value)}
+          onChange={({ target }) => onChange(inputId, target.value)}
           options={options}
           value={value}
         />
@@ -96,7 +95,7 @@ export const DynamicInput = ({
       return (
         <Select
           name={name}
-          onChange={({ target }) => onChange(sectionId, inputId, target.value)}
+          onChange={({ target }) => onChange(inputId, target.value)}
           OptionPrefixComponent={ColorDot}
           options={options}
           value={value}
@@ -107,7 +106,7 @@ export const DynamicInput = ({
       return (
         <ThemeSelect
           name={name}
-          onChange={({ target }) => onChange(sectionId, inputId, target.value)}
+          onChange={({ target }) => onChange(inputId, target.value)}
           value={value}
         />
       )
@@ -116,7 +115,7 @@ export const DynamicInput = ({
       return (
         <FontSelect
           name={name}
-          onChange={({ target }) => onChange(sectionId, inputId, target.value)}
+          onChange={({ target }) => onChange(inputId, target.value)}
           value={value}
         />
       )
@@ -124,7 +123,7 @@ export const DynamicInput = ({
     case availableInputTypes.BUTTON:
       return (
         <Button
-          onClick={() => handleClickInButtons(sectionId, inputId)}
+          onClick={() => handleClickInButtons(inputId)}
           value={value}
           variant={buttonVariants.OUTLINED_DANGER}
         />
@@ -137,7 +136,6 @@ export const DynamicInput = ({
 
 DynamicInput.propTypes = {
   value: String | Number | Boolean,
-  sectionId: String,
   inputId: String,
   errorMessage: String,
   type: String,

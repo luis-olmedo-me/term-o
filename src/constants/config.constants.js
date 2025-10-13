@@ -1,10 +1,11 @@
+import { simplifyConfig } from '@src/helpers/config.helpers'
 import { availableInputTypes } from './inputs.constants'
 import { basicColorKeys, colorThemeKeys, defaultColorTheme } from './themes.constants'
 
 export const PROMPT_MARK = '$'
 
 export const configIds = {
-  FUNCTIONALITY: 'general',
+  FUNCTIONALITY: 'functionality',
   APPEARENCE: 'appearence',
   DATA: 'data'
 }
@@ -219,3 +220,5 @@ export const defaultConfigSections = [
     ]
   }
 ]
+
+export const defaultConfig = simplifyConfig(defaultConfigSections)

@@ -1,40 +1,44 @@
-export const getConfigValueByInputId = (inputId, configSections, defaultValue = null) => {
-  for (const section of configSections) {
-    for (const input of section.inputs) {
-      if (input.id === inputId) return input.value
-    }
-  }
+import { configDefaultValues, defaultConfigSections } from '@src/constants/config.constants'
+
+export const getConfigValueByInputId = (config, inputId) => {
+  const defaultValue = configDefaultValues[inputId]
+  const foundInput = config[inputId]
+
+  if (typeof foundInput !== 'undefined') return foundInput
 
   return defaultValue
 }
 
-export const mergeConfigSections = (configSectionsA, configSectionsB) => {
-  return configSectionsA.map(sectionA => {
-    const sectionB = configSectionsB.find(section => section.id === sectionA.id)
-
+export const buildDetailedConfig = simplifiedConfig => {
+  return defaultConfigSections.map(defaultSection => {
     return {
-      ...sectionA,
-      inputs: sectionA.inputs.map(inputA => {
-        const inputB = sectionB.inputs.find(input => input.id === inputA.id)
+      ...defaultSection,
+      inputs: defaultSection.inputs.map(defaultInput => {
+        const preferedValue = simplifiedConfig[defaultInput.id]
 
         return {
-          ...inputA,
-          value: inputB.value
+          ...defaultInput,
+          value: typeof preferedValue === 'undefined' ? defaultInput.value : preferedValue
         }
       })
     }
   })
 }
 
-export const updateConfigValueIn = (configSections, sectionId, inputId, newValue) => {
-  return configSections.map(section => {
-    return section.id === sectionId
-      ? {
-          ...section,
-          inputs: section.inputs.map(input => {
-            return input.id === inputId ? { ...input, value: newValue } : input
-          }, {})
-        }
-      : { ...section }
-  })
+export const updateConfigValueIn = (config, inputId, newValue) => {
+  return { ...config, [inputId]: newValue }
+}
+
+export const simplifyConfig = config => {
+  return config.reduce((simplifiedConfig, section) => {
+    const sectionInputValues = section.inputs.reduce(
+      (simplifiedInputs, input) => ({ ...simplifiedInputs, [input.id]: input.value }),
+      {}
+    )
+
+    return {
+      ...simplifiedConfig,
+      ...sectionInputValues
+    }
+  }, {})
 }

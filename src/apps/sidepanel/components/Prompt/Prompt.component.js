@@ -24,10 +24,9 @@ export const Prompt = ({
   const [historialIndex, setHistorialIndex] = useState(0)
   const [historial, setHistorial] = useStorage({ key: storageKeys.PROMPT_HISTORY })
 
-  const { listening } = useConfig({
-    get: [configInputIds.HISTORIAL_SIZE, configInputIds.STATUS_INDICATOR]
-  })
-  const [hsitorialSize, statusIndicator] = listening
+  const config = useConfig()
+  const historialSize = config.get(configInputIds.HISTORIAL_SIZE)
+  const statusIndicator = config.get(configInputIds.STATUS_INDICATOR)
 
   useEffect(
     function expectForDefaultValueChanges() {
@@ -51,7 +50,7 @@ export const Prompt = ({
 
     if (key === 'Enter' && targetValue) {
       onEnter(targetValue)
-      setHistorial(history => [...history, targetValue].slice(hsitorialSize * -1))
+      setHistorial(history => [...history, targetValue].slice(historialSize * -1))
       setHistorialIndex(0)
       setValue('')
     }

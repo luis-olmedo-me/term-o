@@ -1,6 +1,6 @@
 import CommandBase from '@src/templates/CommandBase'
 
-import { commandNames } from '@src/constants/command.constants'
+import { commandNames, commandTypes } from '@src/constants/command.constants'
 import { hasLength, isTabId } from '../validators'
 import { storageHelpSections, storageHelpSectionTitles } from './storage.constants'
 import storageHandler from './storage.handler'
@@ -12,64 +12,64 @@ export default new CommandBase({
 })
   .expect({
     name: 'local',
-    type: 'boolean',
     abbreviation: 'l',
+    type: commandTypes.BOOLEAN,
     helpSection: storageHelpSections.RETRIEVAL,
-    worksWith: ['json', 'tab-id', 'set'],
-    description: 'Get local storage from the selected tab'
+    description: 'Get local storage from the selected tab',
+    worksWith: ['json', 'tab-id', 'set']
   })
   .expect({
     name: 'session',
-    type: 'boolean',
     abbreviation: 's',
+    type: commandTypes.BOOLEAN,
     helpSection: storageHelpSections.RETRIEVAL,
-    worksWith: ['json', 'tab-id', 'set'],
-    description: 'Get session storage from the selected tab'
+    description: 'Get session storage from the selected tab',
+    worksWith: ['json', 'tab-id', 'set']
   })
   .expect({
     name: 'cookie',
-    type: 'boolean',
     abbreviation: 'c',
+    type: commandTypes.BOOLEAN,
     helpSection: storageHelpSections.RETRIEVAL,
-    worksWith: ['json', 'tab-id', 'set'],
-    description: 'Get cookies from the selected tab'
+    description: 'Get cookies from the selected tab',
+    worksWith: ['json', 'tab-id', 'set']
   })
   .expect({
     name: 'json',
-    type: 'boolean',
     abbreviation: 'j',
+    type: commandTypes.BOOLEAN,
     helpSection: storageHelpSections.RETRIEVAL,
     description: 'Return storage as JSON'
   })
   .expect({
     name: 'set',
-    type: 'string-array',
-    validate: [hasLength(2)],
     abbreviation: 'S',
+    type: commandTypes.STRING_ARRAY,
     helpSection: storageHelpSections.MODIFICATION,
-    description: 'Set a key-value pair in the selected storage'
+    description: 'Set a key-value pair in the selected storage',
+    validate: [hasLength(2)]
   })
   .expect({
     name: 'tab-id',
-    type: 'string',
     abbreviation: 'i',
+    type: 'string',
     helpSection: storageHelpSections.RETRIEVAL,
-    validate: [isTabId],
-    description: 'Specify a tab ID (T[number]) to get storage from'
+    description: 'Specify a tab ID (T[number]) to get storage from',
+    validate: [isTabId]
   })
   .expect({
     name: 'copy',
-    type: 'string',
     abbreviation: 'C',
+    type: 'string',
     helpSection: storageHelpSections.MODIFICATION,
-    worksWith: [],
-    description: 'Copy a value to the clipboard'
+    description: 'Copy a value to the clipboard',
+    worksWith: []
   })
   .expect({
     name: 'help',
-    type: 'boolean',
     abbreviation: 'h',
+    type: commandTypes.BOOLEAN,
     helpSection: storageHelpSections.GENERAL,
-    worksWith: [],
-    description: 'Show help for this command'
+    description: 'Show help for this command',
+    worksWith: []
   })

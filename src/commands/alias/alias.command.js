@@ -1,6 +1,6 @@
 import CommandBase from '@src/templates/CommandBase'
 
-import { commandNames } from '@src/constants/command.constants'
+import { commandNames, commandTypes } from '@src/constants/command.constants'
 import { hasItemAs, hasLength, isSpaceForbidden } from '../validators'
 import { aliasHelpSections, aliasHelpSectionTitles } from './alias.constants'
 import aliasHandler from './alias.handler'
@@ -12,33 +12,33 @@ export default new CommandBase({
 })
   .expect({
     name: 'add',
-    type: 'string-array',
     abbreviation: 'a',
-    validate: [hasLength(2), hasItemAs(0, isSpaceForbidden)],
-    worksWith: [],
+    type: commandTypes.STRING_ARRAY,
     helpSection: aliasHelpSections.MANAGEMENT,
-    description: 'Add a new alias. Format: ["name" "command"]'
+    description: 'Add a new alias. Format: ["name" "command"]',
+    validate: [hasLength(2), hasItemAs(0, isSpaceForbidden)],
+    worksWith: []
   })
   .expect({
     name: 'list',
-    type: 'boolean',
     abbreviation: 'l',
-    worksWith: [],
+    type: commandTypes.BOOLEAN,
     helpSection: aliasHelpSections.MANAGEMENT,
-    description: 'List all defined aliases'
+    description: 'List all defined aliases',
+    worksWith: []
   })
   .expect({
     name: 'delete',
-    type: 'string',
     abbreviation: 'd',
-    worksWith: [],
+    type: 'string',
     helpSection: aliasHelpSections.MANAGEMENT,
-    description: 'Remove an alias by name'
+    description: 'Remove an alias by name',
+    worksWith: []
   })
   .expect({
     name: 'help',
-    type: 'boolean',
     abbreviation: 'h',
+    type: commandTypes.BOOLEAN,
     helpSection: aliasHelpSections.GENERAL,
     description: 'Show help for this command',
     worksWith: []

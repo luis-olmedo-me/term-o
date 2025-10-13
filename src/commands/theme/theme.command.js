@@ -1,6 +1,6 @@
 import CommandBase from '@src/templates/CommandBase'
 
-import { commandNames } from '@src/constants/command.constants'
+import { commandNames, commandTypes } from '@src/constants/command.constants'
 import { isJSONScheme } from '../validators'
 import { colorScheme, themeHelpSections, themeHelpSectionTitles } from './theme.constants'
 import themeHandler from './theme.handler'
@@ -12,50 +12,50 @@ export default new CommandBase({
 })
   .expect({
     name: 'import',
-    type: 'string',
     abbreviation: 'i',
+    type: 'string',
     helpSection: themeHelpSections.MANAGEMENT,
-    validate: [isJSONScheme(colorScheme)],
+    description: 'Import a color scheme in JSON format',
     worksWith: [],
-    description: 'Import a color scheme in JSON format'
+    validate: [isJSONScheme(colorScheme)]
   })
   .expect({
     name: 'list',
-    type: 'boolean',
     abbreviation: 'l',
+    type: commandTypes.BOOLEAN,
     helpSection: themeHelpSections.MANAGEMENT,
-    worksWith: [],
-    description: 'List all available themes'
+    description: 'List all available themes',
+    worksWith: []
   })
   .expect({
     name: 'delete',
-    type: 'string',
     abbreviation: 'd',
+    type: 'string',
     helpSection: themeHelpSections.MANAGEMENT,
-    worksWith: [],
-    description: 'Delete a theme by name'
+    description: 'Delete a theme by name',
+    worksWith: []
   })
   .expect({
     name: 'apply',
-    type: 'string',
     abbreviation: 'a',
+    type: 'string',
     helpSection: themeHelpSections.APPLICATION,
-    worksWith: [],
-    description: 'Apply a theme by name'
+    description: 'Apply a theme by name',
+    worksWith: []
   })
   .expect({
     name: 'current',
-    type: 'boolean',
     abbreviation: 'C',
+    type: commandTypes.BOOLEAN,
     helpSection: themeHelpSections.APPLICATION,
-    worksWith: [],
-    description: 'Show the currently applied theme'
+    description: 'Show the currently applied theme',
+    worksWith: []
   })
   .expect({
     name: 'help',
-    type: 'boolean',
     abbreviation: 'h',
+    type: commandTypes.BOOLEAN,
     helpSection: themeHelpSections.GENERAL,
-    worksWith: [],
-    description: 'Show help for this command'
+    description: 'Show help for this command',
+    worksWith: []
   })

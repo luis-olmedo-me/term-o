@@ -1,6 +1,6 @@
 import CommandBase from '@src/templates/CommandBase'
 
-import { commandNames } from '@src/constants/command.constants'
+import { commandNames, commandTypes } from '@src/constants/command.constants'
 import {
   hasAllItemsAs,
   hasLengthBetween,
@@ -20,24 +20,24 @@ export default new CommandBase({
 })
   .expect({
     name: 'search-xpath',
-    type: 'string',
     abbreviation: 'X',
-    worksWith: ['click', 'tab-id', 'sibling', 'parent', 'child', 'xpath', 'below'],
+    type: 'string',
     helpSection: domHelpSections.SEARCH,
     description: 'Find elements with an XPath query',
+    worksWith: ['click', 'tab-id', 'sibling', 'parent', 'child', 'xpath', 'below'],
     validate: [isXpath]
   })
   .expect({
     name: 'click',
-    type: 'boolean',
     abbreviation: 'c',
+    type: commandTypes.BOOLEAN,
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
     description: 'Click the selected element(s)'
   })
   .expect({
     name: 'sibling',
-    type: 'number',
     abbreviation: 'b',
+    type: 'number',
     helpSection: domHelpSections.DOM_NAVIGATION,
     description: 'Select sibling by index (positive = next, negative = previous)',
     validate: [isInteger]
@@ -52,80 +52,80 @@ export default new CommandBase({
   })
   .expect({
     name: 'child',
-    type: 'number',
     abbreviation: 'd',
+    type: 'number',
     helpSection: domHelpSections.DOM_NAVIGATION,
     description: 'Select child element by index (positive only)',
     validate: [isInteger, isPositive]
   })
   .expect({
     name: 'search',
-    type: 'boolean',
     abbreviation: 's',
+    type: commandTypes.BOOLEAN,
+    description: 'Find elements by criteria',
     worksWith: ['attr', 'style', 'tag', 'group', 'text', 'content', 'xpath', 'tab-id', 'below'],
-    helpSection: domHelpSections.SEARCH,
-    description: 'Find elements by criteria'
+    helpSection: domHelpSections.SEARCH
   })
   .expect({
     name: 'xpath',
-    type: 'boolean',
     abbreviation: 'x',
+    type: commandTypes.BOOLEAN,
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
     description: 'Show XPath(s) of matched element(s)'
   })
   .expect({
     name: 'group',
-    type: 'boolean',
     abbreviation: 'g',
+    type: commandTypes.BOOLEAN,
     helpSection: domHelpSections.FILTERS,
     description: 'Count elements by attributes and tag names'
   })
   .expect({
     name: 'attr',
-    type: 'string-array',
     abbreviation: 'a',
+    type: commandTypes.STRING_ARRAY,
     helpSection: domHelpSections.FILTERS,
     description: 'Filter by attributes (regex supported in items)',
     validate: [hasAllItemsAs(isRegExp), hasLengthBetween(0, 2)]
   })
   .expect({
     name: 'style',
-    type: 'string-array',
     abbreviation: 'S',
+    type: commandTypes.STRING_ARRAY,
     helpSection: domHelpSections.FILTERS,
     description: 'Filter by CSS styles (regex supported in items)',
     validate: [hasAllItemsAs(isRegExp), hasLengthBetween(0, 2)]
   })
   .expect({
     name: 'tag',
-    type: 'string',
     abbreviation: 't',
+    type: 'string',
     helpSection: domHelpSections.FILTERS,
     description: 'Filter by tag name (regex supported)',
     validate: [isRegExp]
   })
   .expect({
     name: 'text',
-    type: 'string',
     abbreviation: 'T',
+    type: 'string',
     helpSection: domHelpSections.FILTERS,
     description: 'Filter by text content (regex supported)',
     validate: [isRegExp]
   })
   .expect({
     name: 'content',
-    type: 'boolean',
     abbreviation: 'C',
+    type: commandTypes.BOOLEAN,
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
     description: 'Show textual content of matched element(s)'
   })
   .expect({
     name: 'tab-id',
-    type: 'string',
     abbreviation: 'i',
-    validate: [isTabId],
+    type: 'string',
     helpSection: domHelpSections.SEARCH,
-    description: 'Search elements in a specific tab (T[number])'
+    description: 'Search elements in a specific tab (T[number])',
+    validate: [isTabId]
   })
   .expect({
     name: 'below',
@@ -137,7 +137,7 @@ export default new CommandBase({
   })
   .expect({
     name: 'help',
-    type: 'boolean',
+    type: commandTypes.BOOLEAN,
     abbreviation: 'h',
     helpSection: domHelpSections.GENERAL,
     description: 'Show this help message',

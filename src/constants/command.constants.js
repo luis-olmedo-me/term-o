@@ -24,3 +24,10 @@ export const commandStatuses = {
   DONE: 'done',
   ERROR: 'error'
 }
+
+export const commandTypes = {
+  STRING: 'string',
+  STRING_ARRAY: 'string-array',
+  NUMBER: 'number',
+  BOOLEAN: 'boolean'
+}

@@ -1,6 +1,6 @@
 import CommandBase from '@src/templates/CommandBase'
 
-import { commandNames } from '@src/constants/command.constants'
+import { commandNames, commandTypes } from '@src/constants/command.constants'
 import { scriptsHelpSections, scriptsHelpSectionTitles } from './scripts.constants'
 import scriptsHandler from './scripts.handler'
 
@@ -11,41 +11,41 @@ export default new CommandBase({
 })
   .expect({
     name: 'list',
-    type: 'boolean',
     abbreviation: 'l',
+    type: commandTypes.BOOLEAN,
     helpSection: scriptsHelpSections.MANAGEMENT,
-    worksWith: [],
-    description: 'List all scripts'
+    description: 'List all scripts',
+    worksWith: []
   })
   .expect({
     name: 'upload',
-    type: 'boolean',
     abbreviation: 'u',
+    type: commandTypes.BOOLEAN,
     helpSection: scriptsHelpSections.MANAGEMENT,
-    worksWith: [],
-    description: 'Upload a file to add as a script'
+    description: 'Upload a file to add as a script',
+    worksWith: []
   })
   .expect({
     name: 'delete',
-    type: 'string',
     abbreviation: 'd',
+    type: 'string',
     helpSection: scriptsHelpSections.MANAGEMENT,
-    worksWith: [],
-    description: 'Delete a script by name'
+    description: 'Delete a script by name',
+    worksWith: []
   })
   .expect({
     name: 'run',
-    type: 'string',
     abbreviation: 'r',
+    type: 'string',
     helpSection: scriptsHelpSections.EXECUTION,
-    worksWith: [],
-    description: 'Run a script by name'
+    description: 'Run a script by name',
+    worksWith: []
   })
   .expect({
     name: 'help',
-    type: 'boolean',
     abbreviation: 'h',
+    type: commandTypes.BOOLEAN,
     helpSection: scriptsHelpSections.GENERAL,
-    worksWith: [],
-    description: 'Show help for this command'
+    description: 'Show help for this command',
+    worksWith: []
   })

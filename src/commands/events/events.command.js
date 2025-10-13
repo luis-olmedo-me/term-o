@@ -1,6 +1,6 @@
 import CommandBase from '@src/templates/CommandBase'
 
-import { commandNames } from '@src/constants/command.constants'
+import { commandNames, commandTypes } from '@src/constants/command.constants'
 import { isRegExp } from '../validators'
 import { eventsHelpSections, eventsHelpSectionTitles } from './events.constants'
 import eventsHandler from './events.handler'
@@ -12,48 +12,48 @@ export default new CommandBase({
 })
   .expect({
     name: 'add',
-    type: 'boolean',
     abbreviation: 'a',
+    type: commandTypes.BOOLEAN,
     helpSection: eventsHelpSections.CREATION,
+    description: 'Create a new event',
     worksWith: ['url', 'command'],
-    mustHave: ['url', 'command'],
-    description: 'Create a new event'
+    mustHave: ['url', 'command']
   })
   .expect({
     name: 'url',
-    type: 'string',
     abbreviation: 'u',
+    type: 'string',
     helpSection: eventsHelpSections.CREATION,
-    validate: [isRegExp],
-    description: 'URL pattern where the event will trigger (regex supported)'
+    description: 'URL pattern where the event will trigger (regex supported)',
+    validate: [isRegExp]
   })
   .expect({
     name: 'command',
-    type: 'string',
     abbreviation: 'c',
+    type: 'string',
     helpSection: eventsHelpSections.CREATION,
     description: 'Command line to execute'
   })
   .expect({
     name: 'list',
-    type: 'boolean',
     abbreviation: 'l',
+    type: commandTypes.BOOLEAN,
     helpSection: eventsHelpSections.MANAGEMENT,
-    worksWith: [],
-    description: 'List all events'
+    description: 'List all events',
+    worksWith: []
   })
   .expect({
     name: 'delete',
-    type: 'string',
     abbreviation: 'd',
+    type: 'string',
     helpSection: eventsHelpSections.MANAGEMENT,
-    worksWith: [],
-    description: 'Delete an event by its id'
+    description: 'Delete an event by its id',
+    worksWith: []
   })
   .expect({
     name: 'help',
-    type: 'boolean',
     abbreviation: 'h',
+    type: commandTypes.BOOLEAN,
     helpSection: eventsHelpSections.GENERAL,
     description: 'Show help for this command',
     worksWith: []

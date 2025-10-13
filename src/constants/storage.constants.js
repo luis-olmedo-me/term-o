@@ -1,4 +1,5 @@
 import { defaultConfig } from './config.constants'
+import { defaultColorTheme } from './themes.constants'
 
 export const storageKeys = {
   ALIASES: 'aliases',
@@ -50,7 +51,7 @@ export const storageValues = [
   {
     key: storageKeys.COLOR_SETS,
     namespace: storageNamespaces.LOCAL,
-    defaultValue: []
+    defaultValue: [defaultColorTheme]
   }
 ]
 

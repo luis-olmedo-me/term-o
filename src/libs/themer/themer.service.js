@@ -125,10 +125,6 @@ class Themer extends EventListener {
       brightAccent: brightAccent
     }
   }
-
-  destroy() {
-    chrome.storage.onChanged.removeListener(this.handleStorageChanges)
-  }
 }
 
 export const themer = new Themer(defaultColorTheme, defaultTheme)

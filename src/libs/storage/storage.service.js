@@ -1,6 +1,6 @@
 import { storageDefaultValues, storageValues } from '@src/constants/storage.constants'
 import { getStorageValue, setStorageValue } from '@src/helpers/storage.helpers'
-import EventListener from '@src/templates/event-listener'
+import EventListener from '@src/templates/EventListener'
 
 class Storage extends EventListener {
   constructor() {

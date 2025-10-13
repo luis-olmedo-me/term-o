@@ -1,20 +1,26 @@
-import themer from '@src/libs/themer'
+import storage from '@src/libs/storage'
 
+import { configInputIds } from '@src/constants/config.constants'
+import { storageKeys } from '@src/constants/storage.constants'
+import { defaultColorTheme } from '@src/constants/themes.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
+import { getConfigValueByInputId, updateConfigValueIn } from '@src/helpers/config.helpers'
 import { formatTheme } from '@src/helpers/format.helpers'
 
 export default async command => {
   const P = name => command.props[name]
 
   if (P`list`) {
-    const updates = themer.colorThemes.map(formatTheme)
+    const updates = storage.get(storageKeys.COLOR_SETS).map(formatTheme)
 
     command.update(...updates)
   }
 
   if (P`current`) {
-    const name = themer.colorTheme.name
-    const update = formatTheme({ name })
+    const config = storage.get(storageKeys.CONFIG)
+    const themeName = getConfigValueByInputId(config, configInputIds.THEME_NAME)
+
+    const update = formatTheme({ name: themeName })
 
     command.update(update)
   }
@@ -22,14 +28,19 @@ export default async command => {
   if (P`import`) {
     const newSet = JSON.parse(P`import`)
 
-    const alreadyExists = themer.colorThemes.some(set => set.name.includes(newSet.name))
+    const config = storage.get(storageKeys.CONFIG)
+    const themes = storage.get(storageKeys.COLOR_SETS)
+    const alreadyExists = themes.some(set => set.name === newSet.name)
 
     if (alreadyExists) {
       return command.throw(`The theme "${newSet.name}" already exists.`)
     }
 
-    await themer.addColorTheme(newSet)
-    await themer.applyColorTheme(newSet.name)
+    const newConfig = updateConfigValueIn(config, configInputIds.THEME_NAME, newSet.name)
+    const newThemes = [...themes, newSet]
+
+    storage.set(storageKeys.COLOR_SETS, newThemes)
+    storage.set(storageKeys.CONFIG, newConfig)
 
     const update = formatTheme(newSet)
 
@@ -39,9 +50,13 @@ export default async command => {
   if (P`delete`) {
     const name = P`delete`
 
-    const alreadyExists = themer.colorThemes.some(set => set.name === name)
-    const isDefault = themer.isDefault(name)
-    const isCurrentTheme = name === themer.colorTheme.name
+    const config = storage.get(storageKeys.CONFIG)
+    const themes = storage.get(storageKeys.COLOR_SETS)
+    const themeName = getConfigValueByInputId(config, configInputIds.THEME_NAME)
+
+    const alreadyExists = themes.some(set => set.name === name)
+    const isDefault = defaultColorTheme.name === name
+    const isCurrentTheme = name === themeName
 
     if (isDefault) {
       return command.throw(`The theme "${name}" is a default theme that can not be deleted.`)
@@ -51,8 +66,11 @@ export default async command => {
       return command.throw(`The theme "${name}" does not exist.`)
     }
 
-    if (isCurrentTheme) await themer.applyColorTheme(themer.defaultColorName)
-    await themer.removeColorTheme(name)
+    const newConfig = updateConfigValueIn(config, configInputIds.THEME_NAME, defaultColorTheme.name)
+    const newThemes = themes.filter(set => set.name !== name)
+
+    if (isCurrentTheme) storage.set(storageKeys.CONFIG, newConfig)
+    storage.set(storageKeys.COLOR_SETS, newThemes)
 
     const update = formatTheme({ name })
 
@@ -62,8 +80,12 @@ export default async command => {
   if (P`apply`) {
     const name = P`apply`
 
-    const alreadyExists = themer.colorThemes.some(set => set.name === name)
-    const isCurrentTheme = name === themer.colorTheme.name
+    const config = storage.get(storageKeys.CONFIG)
+    const themes = storage.get(storageKeys.COLOR_SETS)
+    const themeName = getConfigValueByInputId(config, configInputIds.THEME_NAME)
+
+    const alreadyExists = themes.some(set => set.name === name)
+    const isCurrentTheme = name === themeName
 
     if (!alreadyExists) {
       return command.throw(`The theme "${name}" is unrecognized.`)
@@ -73,7 +95,9 @@ export default async command => {
       return command.throw(`The theme "${name}" is already applied.`)
     }
 
-    await themer.applyColorTheme(name)
+    const newConfig = updateConfigValueIn(config, configInputIds.THEME_NAME, name)
+
+    storage.set(storageKeys.CONFIG, newConfig)
 
     const update = formatTheme({ name })
 

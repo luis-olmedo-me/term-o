@@ -8,7 +8,7 @@ import useStorage from '@src/hooks/useStorage'
 import Gear from '@src/icons/Gear.icon'
 import commandParser from '@src/libs/command-parser'
 
-import { getCurrentTab } from '@src/browser-api/tabs.api'
+import { createTab, getCurrentTab } from '@src/browser-api/tabs.api'
 import { commandStatuses } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
@@ -135,7 +135,7 @@ export const Terminal = () => {
   }
 
   const openConfiguration = () => {
-    chrome.tabs.create({ url: chrome.runtime.getURL('configuration.html') })
+    createTab({ url: chrome.runtime.getURL('configuration.html') })
   }
 
   return (

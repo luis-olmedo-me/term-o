@@ -3,7 +3,7 @@ import CommandBase from '@src/templates/CommandBase'
 import { commandNames, commandTypes } from '@src/constants/command.constants'
 import { isRegExp } from '@src/helpers/validation-command.helpers'
 import { eventsHelpSections, eventsHelpSectionTitles } from './events.constants'
-import eventsHandler from './events.handler'
+import { eventsHandler } from './events.handler'
 
 export default new CommandBase({
   name: commandNames.EVENTS,

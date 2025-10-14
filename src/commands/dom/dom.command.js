@@ -11,7 +11,7 @@ import {
   isXpath
 } from '@src/helpers/validation-command.helpers'
 import { domHelpSectionTitles, domHelpSections } from './dom.constants'
-import domHandler from './dom.handler'
+import { domHandler } from './dom.handler'
 
 export default new CommandBase({
   name: commandNames.DOM,

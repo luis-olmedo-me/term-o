@@ -3,7 +3,7 @@ import CommandBase from '@src/templates/CommandBase'
 import { commandNames, commandTypes } from '@src/constants/command.constants'
 import { isDate, isInteger, isPositive, isRegExp } from '@src/helpers/validation-command.helpers'
 import { historyHelpSections, historyHelpSectionTitles } from './history.constants'
-import historyHandler from './history.handler'
+import { historyHandler } from './history.handler'
 
 export default new CommandBase({
   name: commandNames.HISTORY,

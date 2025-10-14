@@ -9,7 +9,7 @@ import {
   isXpath
 } from '@src/helpers/validation-command.helpers'
 import { styleHelpSections, styleHelpSectionTitles } from './style.constants'
-import styleHandler from './style.handler'
+import { styleHandler } from './style.handler'
 
 export default new CommandBase({
   name: commandNames.STYLE,

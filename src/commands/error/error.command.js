@@ -2,7 +2,7 @@ import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
 import { errorHelpSections, errorHelpSectionTitles } from './error.constants'
-import errorHandler from './error.handler'
+import { errorHandler } from './error.handler'
 
 export default new CommandBase({
   name: commandNames.ERROR,

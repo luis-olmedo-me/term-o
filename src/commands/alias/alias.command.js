@@ -3,7 +3,7 @@ import CommandBase from '@src/templates/CommandBase'
 import { commandNames, commandTypes } from '@src/constants/command.constants'
 import { hasItemAs, hasLength, isSpaceForbidden } from '@src/helpers/validation-command.helpers'
 import { aliasHelpSections, aliasHelpSectionTitles } from './alias.constants'
-import aliasHandler from './alias.handler'
+import { aliasHandler } from './alias.handler'
 
 export default new CommandBase({
   name: commandNames.ALIAS,

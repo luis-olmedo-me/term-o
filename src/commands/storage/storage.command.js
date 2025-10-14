@@ -3,7 +3,7 @@ import CommandBase from '@src/templates/CommandBase'
 import { commandNames, commandTypes } from '@src/constants/command.constants'
 import { hasLength, isTabId } from '@src/helpers/validation-command.helpers'
 import { storageHelpSections, storageHelpSectionTitles } from './storage.constants'
-import storageHandler from './storage.handler'
+import { storageHandler } from './storage.handler'
 
 export default new CommandBase({
   name: commandNames.STORAGE,

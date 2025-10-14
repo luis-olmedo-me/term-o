@@ -4,7 +4,7 @@ import { createHelpView } from '@src/helpers/command.helpers'
 import { formatTab } from '@src/helpers/format.helpers'
 import { createTab, getTab, reloadTab } from './tabs.helpers'
 
-export default async command => {
+export const tabsHandler = async command => {
   const { tab, setTab } = command.data
   const P = name => command.props[name]
 

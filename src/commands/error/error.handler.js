@@ -1,7 +1,7 @@
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatError } from '@src/helpers/format.helpers'
 
-export default async command => {
+export const errorHandler = async command => {
   const P = name => command.props[name]
 
   if (P`title`) {

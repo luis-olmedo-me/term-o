@@ -8,7 +8,7 @@ import {
   isURL
 } from '@src/helpers/validation-command.helpers'
 import { requestHelpSections, requestHelpSectionTitles } from './request.constants'
-import requestHandler from './request.handler'
+import { requestHandler } from './request.handler'
 
 export default new CommandBase({
   name: commandNames.REQUEST,

@@ -3,7 +3,7 @@ import { applyElementStyles, getElementStyles } from '@src/processes'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatRule } from '@src/helpers/format.helpers'
 
-export default async command => {
+export const styleHandler = async command => {
   const { tab } = command.data
   const P = name => command.props[name]
 

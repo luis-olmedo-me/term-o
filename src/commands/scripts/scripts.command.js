@@ -2,7 +2,7 @@ import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
 import { scriptsHelpSections, scriptsHelpSectionTitles } from './scripts.constants'
-import scriptsHandler from './scripts.handler'
+import { scriptsHandler } from './scripts.handler'
 
 export default new CommandBase({
   name: commandNames.SCRIPTS,

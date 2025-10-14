@@ -5,7 +5,7 @@ import { formatDOMEvent, formatElement } from '@src/helpers/format.helpers'
 import { preAppendCounters } from '@src/helpers/messages.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
 
-export default async command => {
+export const domHandler = async command => {
   const { tab } = command.data
   const P = name => command.props[name]
 

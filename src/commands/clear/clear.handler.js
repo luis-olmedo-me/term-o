@@ -1,4 +1,4 @@
-export default async command => {
+export const clearHandler = async command => {
   const { clearLogs } = command.data
 
   clearLogs()

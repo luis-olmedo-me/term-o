@@ -1,7 +1,7 @@
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatHistoryItem } from '@src/helpers/format.helpers'
 
-export default async command => {
+export const historyHandler = async command => {
   const P = name => command.props[name]
 
   if (P`list`) {

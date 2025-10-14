@@ -18,7 +18,7 @@ export const Postfix = styled.span`
 `
 
 export const RealInput = styled.input`
-  font-family: ${t('font.primary')};
+  font-family: ${t('font')};
   width: 100%;
   box-sizing: border-box;
   white-space: nowrap;

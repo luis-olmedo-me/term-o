@@ -27,7 +27,7 @@ export const ThemeProvider = ({ children }) => {
           ...selectedTheme,
           ...getAccentColors(selectedTheme, colorAccent)
         },
-        font: { primary: fontFamily }
+        font: fontFamily
       }}
     >
       <ThemeStyle mainFontSize={fontSize} />

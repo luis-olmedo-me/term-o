@@ -10,7 +10,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
-    font-family: "${t('font.primary')}", Courier, monospace;
+    font-family: "${t('font')}", Courier, monospace;
     background-color: ${t('colors.background')};
     font-size: ${t('fontSize.50')};
     transition: background-color 0.2s ease-in-out;

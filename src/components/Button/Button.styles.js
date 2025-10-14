@@ -11,7 +11,7 @@ export const ButtonWrapper = styled.button`
   font-weight: bold;
   font-size: ${t('fontSize.100')};
   line-height: ${t('lineHeight.300')};
-  font-family: ${t('font.primary')};
+  font-family: ${t('font')};
   cursor: pointer;
   display: flex;
   align-items: center;

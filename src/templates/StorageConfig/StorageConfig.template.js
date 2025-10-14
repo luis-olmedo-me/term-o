@@ -8,10 +8,10 @@ import {
 } from '@src/helpers/config.helpers'
 
 export class StorageConfig extends StorageSimple {
-  constructor(storageService, value) {
-    super(storageService, value)
+  constructor(storageService, storageValue) {
+    super(storageService, storageValue)
 
-    this.details = buildDetailedConfig(value)
+    this.details = buildDetailedConfig(storageValue.value)
     this.themes = null
 
     this.handleInitRef = this.handleInit.bind(this)
@@ -21,6 +21,26 @@ export class StorageConfig extends StorageSimple {
     else this.storageService.addEventListener('init', this.handleInitRef)
   }
 
+  get value() {
+    return {
+      getValueById: this.getValueById.bind(this),
+      change: this.change.bind(this),
+      reset: this.reset.bind(this),
+      details: this.details,
+      themes: this.themes
+    }
+  }
+
+  set(storageValue) {
+    if (this.storageValue.version === storageValue.version) return
+
+    this.storageValue = {
+      value: storageValue.value,
+      version: storageValue.version
+    }
+    this.details = buildDetailedConfig(storageValue.value)
+  }
+
   handleInit() {
     this.themes = this.storageService.get(storageKeys.COLOR_SETS)
 
@@ -28,25 +48,16 @@ export class StorageConfig extends StorageSimple {
   }
   handleThemesChanges() {
     this.themes = this.storageService.get(storageKeys.COLOR_SETS)
-  }
 
-  replicate(value) {
-    this.storageService.removeEventListener('init', this.handleInitRef)
-    this.storageService.removeEventListener(storageKeys.COLOR_SETS, this.handleThemesChangesRef)
-
-    return new StorageConfig(this.storageService, value)
-  }
-
-  get() {
-    return this
+    this.storageService.dispatch(storageKeys.CONFIG, this.storageService)
   }
 
   getValueById(inputId) {
-    return getConfigValueByInputId(this.value, inputId)
+    return getConfigValueByInputId(this.latest().value, inputId)
   }
 
   change(inputId, newValue) {
-    const newConfig = updateConfigValueIn(this.value, inputId, newValue)
+    const newConfig = updateConfigValueIn(this.latest().value, inputId, newValue)
 
     this.storageService.set(storageKeys.CONFIG, newConfig)
   }

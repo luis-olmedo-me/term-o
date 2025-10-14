@@ -49,7 +49,7 @@ export const Preferences = () => {
                 postFix={input.postFix}
                 name={`${sectionSelected.id}-${input.id}`}
                 title={input.name}
-                changeConfig={config.change.bind(config)}
+                changeConfig={config.change}
                 handleClickInButtons={handleClicksInButtonFields}
               />
             )

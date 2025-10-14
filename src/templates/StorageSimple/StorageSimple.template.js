@@ -1,14 +1,32 @@
 export class StorageSimple {
-  constructor(storageService, value) {
+  constructor(storageService, storageValue) {
     this.storageService = storageService
-    this.value = value
+    this.storageValue = {
+      value: storageValue.value,
+      version: storageValue.version
+    }
   }
 
-  replicate(value) {
-    return new StorageSimple(this.storageService, value)
+  get value() {
+    return this.latest().value
   }
 
-  get() {
-    return this.value
+  set(storageValue) {
+    if (this.storageValue.version === storageValue.version) return
+
+    this.storageValue = {
+      value: storageValue.value,
+      version: storageValue.version
+    }
+  }
+
+  update(storageValue) {
+    if (storageValue.version === this.storageValue.version) return
+
+    this.storageValue = storageValue
+  }
+
+  latest() {
+    return this.storageValue
   }
 }

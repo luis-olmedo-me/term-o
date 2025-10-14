@@ -42,9 +42,10 @@ const executeEvents = async (events, defaultTab) => {
   }
 
   const config = storage.get(storageKeys.CONFIG)
+  const oldCommands = storage.get(storageKeys.HISTORY)
   const maxLinesInputValue = config.getValueById(configInputIds.MAX_LINES_PER_COMMAND)
 
-  const newCommands = [...storage.get(storageKeys.HISTORY), ...commands]
+  const newCommands = [...oldCommands, ...commands]
   const commandsLimited = limitSimplifiedCommands(newCommands, maxLinesInputValue)
 
   storage.set(storageKeys.HISTORY, commandsLimited)

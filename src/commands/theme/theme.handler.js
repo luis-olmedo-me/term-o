@@ -26,22 +26,19 @@ export const themeHandler = async command => {
   }
 
   if (P`import`) {
-    const newSet = JSON.parse(P`import`)
+    const newTheme = JSON.parse(P`import`)
 
     const config = storage.get(storageKeys.CONFIG)
-    const alreadyExists = config.themes.some(set => set.name === newSet.name)
+    const alreadyExists = config.themes.some(set => set.name === newTheme.name)
 
     if (alreadyExists) {
-      return command.throw(`The theme "${newSet.name}" already exists.`)
+      return command.throw(`The theme "${newTheme.name}" already exists.`)
     }
 
-    const newConfig = updateConfigValueIn(config, configInputIds.THEME_NAME, newSet.name)
-    const newThemes = [...config.themes, newSet]
+    config.addTheme(newTheme)
+    config.change(configInputIds.THEME_NAME, newTheme.name)
 
-    storage.set(storageKeys.COLOR_SETS, newThemes)
-    storage.set(storageKeys.CONFIG, newConfig)
-
-    const update = formatTheme(newSet)
+    const update = formatTheme(newTheme)
 
     command.update(update)
   }

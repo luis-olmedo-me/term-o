@@ -24,6 +24,7 @@ export class StorageConfig extends StorageSimple {
     return {
       getValueById: this.getValueById.bind(this),
       removeTheme: this.removeTheme.bind(this),
+      addTheme: this.addTheme.bind(this),
       change: this.change.bind(this),
       reset: this.reset.bind(this),
       details: this.details,
@@ -65,6 +66,12 @@ export class StorageConfig extends StorageSimple {
 
   removeTheme(name) {
     const newThemes = this.themes().filter(theme => theme.name !== name)
+
+    this.storageService.set(storageKeys.COLOR_SETS, newThemes)
+  }
+
+  addTheme(newTheme) {
+    const newThemes = this.themes().concat(newTheme)
 
     this.storageService.set(storageKeys.COLOR_SETS, newThemes)
   }

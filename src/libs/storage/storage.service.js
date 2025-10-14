@@ -1,5 +1,5 @@
+import { getStorageValue, setStorageValue } from '@src/browser-api/storage.api'
 import { storageDefaultValues, storageValues } from '@src/constants/storage.constants'
-import { getStorageValue, setStorageValue } from '@src/helpers/storage.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 import EventListener from '@src/templates/EventListener'
 

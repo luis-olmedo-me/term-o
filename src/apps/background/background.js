@@ -1,12 +1,13 @@
+import commandParser from '@src/libs/command-parser'
+import processWaitList from '@src/libs/process-wait-list'
+import storage from '@src/libs/storage'
+import processHandlers from './process-handlers'
+
 import { executionContexts } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { limitSimplifiedCommands } from '@src/helpers/command.helpers'
 import { createContext } from '@src/helpers/contexts.helpers'
-import commandParser from '@src/libs/command-parser'
-import processWaitList from '@src/libs/process-wait-list'
-import storage from '@src/libs/storage'
-import processHandlers from './process-handlers'
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
 

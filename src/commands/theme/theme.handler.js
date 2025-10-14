@@ -18,7 +18,7 @@ export const themeHandler = async command => {
 
   if (P`current`) {
     const config = storage.get(storageKeys.CONFIG)
-    const themeName = config.getValueById(config, configInputIds.THEME_NAME)
+    const themeName = config.getValueById(configInputIds.THEME_NAME)
 
     const update = formatTheme({ name: themeName })
 
@@ -52,7 +52,7 @@ export const themeHandler = async command => {
 
     const config = storage.get(storageKeys.CONFIG)
     const themes = storage.get(storageKeys.COLOR_SETS)
-    const themeName = config.getValueById(config, configInputIds.THEME_NAME)
+    const themeName = config.getValueById(configInputIds.THEME_NAME)
 
     const alreadyExists = themes.some(set => set.name === name)
     const isDefault = defaultColorTheme.name === name
@@ -66,10 +66,9 @@ export const themeHandler = async command => {
       return command.throw(`The theme "${name}" does not exist.`)
     }
 
-    const newConfig = updateConfigValueIn(config, configInputIds.THEME_NAME, defaultColorTheme.name)
     const newThemes = themes.filter(set => set.name !== name)
 
-    if (isCurrentTheme) storage.set(storageKeys.CONFIG, newConfig)
+    if (isCurrentTheme) config.change(configInputIds.THEME_NAME, defaultColorTheme.name)
     storage.set(storageKeys.COLOR_SETS, newThemes)
 
     const update = formatTheme({ name })
@@ -82,7 +81,7 @@ export const themeHandler = async command => {
 
     const config = storage.get(storageKeys.CONFIG)
     const themes = storage.get(storageKeys.COLOR_SETS)
-    const themeName = config.getValueById(config, configInputIds.THEME_NAME)
+    const themeName = config.getValueById(configInputIds.THEME_NAME)
 
     const alreadyExists = themes.some(set => set.name === name)
     const isCurrentTheme = name === themeName

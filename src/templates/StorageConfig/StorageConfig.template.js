@@ -31,13 +31,10 @@ export class StorageConfig extends StorageSimple {
     }
   }
 
-  set(storageValue) {
+  update(storageValue) {
     if (this.storageValue.version === storageValue.version) return
 
-    this.storageValue = {
-      value: storageValue.value,
-      version: storageValue.version
-    }
+    this.storageValue = storageValue
     this.details = buildDetailedConfig(storageValue.value)
   }
 

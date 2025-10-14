@@ -1,7 +1,13 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
-import { hasAllItemsAs, hasLengthBetween, isInlineStyles, isRegExp, isXpath } from '../validators'
+import {
+  hasAllItemsAs,
+  hasLengthBetween,
+  isInlineStyles,
+  isRegExp,
+  isXpath
+} from '@src/helpers/validation-command.helpers'
 import { styleHelpSections, styleHelpSectionTitles } from './style.constants'
 import styleHandler from './style.handler'
 

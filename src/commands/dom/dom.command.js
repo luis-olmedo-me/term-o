@@ -9,7 +9,7 @@ import {
   isRegExp,
   isTabId,
   isXpath
-} from '../validators'
+} from '@src/helpers/validation-command.helpers'
 import { domHelpSectionTitles, domHelpSections } from './dom.constants'
 import domHandler from './dom.handler'
 

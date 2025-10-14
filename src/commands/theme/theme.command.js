@@ -1,7 +1,7 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
-import { isJSONScheme } from '../validators'
+import { isJSONScheme } from '@src/helpers/validation-command.helpers'
 import { colorScheme, themeHelpSections, themeHelpSectionTitles } from './theme.constants'
 import themeHandler from './theme.handler'
 

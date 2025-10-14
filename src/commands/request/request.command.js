@@ -1,7 +1,12 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
-import { hasInlineHeaders, isJSON, isStringLike, isURL } from '../validators'
+import {
+  hasInlineHeaders,
+  isJSON,
+  isStringLike,
+  isURL
+} from '@src/helpers/validation-command.helpers'
 import { requestHelpSections, requestHelpSectionTitles } from './request.constants'
 import requestHandler from './request.handler'
 

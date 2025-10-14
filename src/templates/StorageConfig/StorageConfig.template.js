@@ -46,7 +46,7 @@ export class StorageConfig extends StorageSimple {
   handleThemesChanges() {
     this.themes = this.storageService.get(storageKeys.COLOR_SETS)
 
-    this.storageService.dispatch(storageKeys.CONFIG, this.storageService)
+    this.storageService.dispatchEvent(storageKeys.CONFIG, this.storageService)
   }
 
   getValueById(inputId) {

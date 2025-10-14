@@ -7,7 +7,7 @@ import useStorage from '@src/hooks/useStorage'
 import { storageKeys } from '@src/constants/storage.constants'
 
 export const ThemeSelect = ({ value, onChange, name }) => {
-  const [colorThemes] = useStorage({ key: storageKeys.COLOR_SETS })
+  const [colorThemes] = useStorage({ key: storageKeys.THEMES })
 
   const options = useMemo(
     () => colorThemes.map(theme => ({ id: theme.name, name: theme.name })),

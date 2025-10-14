@@ -11,7 +11,7 @@ export const storageKeys = {
   SCRIPTS: 'scripts',
   HISTORY: 'history',
   PROMPT_HISTORY: 'prompt-history',
-  COLOR_SETS: 'color-sets'
+  THEMES: 'themes'
 }
 
 export const storageNamespaces = {
@@ -58,7 +58,7 @@ export const storageValues = [
     Template: StorageSimple
   },
   {
-    key: storageKeys.COLOR_SETS,
+    key: storageKeys.THEMES,
     namespace: storageNamespaces.LOCAL,
     defaultValue: [defaultColorTheme],
     Template: StorageSimple

@@ -27,8 +27,8 @@ export class StorageConfig extends StorageSimple {
       addTheme: this.addTheme.bind(this),
       change: this.change.bind(this),
       reset: this.reset.bind(this),
-      details: this.details,
-      themes: this.themes()
+      themes: this.themes(),
+      details: this.details
     }
   }
 
@@ -40,7 +40,7 @@ export class StorageConfig extends StorageSimple {
   }
 
   handleInit() {
-    this.storageService.addEventListener(storageKeys.COLOR_SETS, this.handleThemesChangesRef)
+    this.storageService.addEventListener(storageKeys.THEMES, this.handleThemesChangesRef)
   }
   handleThemesChanges() {
     this.storageService.dispatchEvent(storageKeys.CONFIG, this.storageService)
@@ -61,18 +61,18 @@ export class StorageConfig extends StorageSimple {
   }
 
   themes() {
-    return this.storageService.get(storageKeys.COLOR_SETS)
+    return this.storageService.get(storageKeys.THEMES)
   }
 
   removeTheme(name) {
     const newThemes = this.themes().filter(theme => theme.name !== name)
 
-    this.storageService.set(storageKeys.COLOR_SETS, newThemes)
+    this.storageService.set(storageKeys.THEMES, newThemes)
   }
 
   addTheme(newTheme) {
     const newThemes = this.themes().concat(newTheme)
 
-    this.storageService.set(storageKeys.COLOR_SETS, newThemes)
+    this.storageService.set(storageKeys.THEMES, newThemes)
   }
 }

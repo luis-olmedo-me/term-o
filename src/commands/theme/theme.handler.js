@@ -10,7 +10,7 @@ export const themeHandler = async command => {
   const P = name => command.props[name]
 
   if (P`list`) {
-    const updates = storage.get(storageKeys.COLOR_SETS).map(formatTheme)
+    const updates = storage.get(storageKeys.THEMES).map(formatTheme)
 
     command.update(...updates)
   }

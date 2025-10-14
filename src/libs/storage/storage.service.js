@@ -14,8 +14,8 @@ class Storage extends EventListener {
 
   async init() {
     const promises = storageValues.map(({ namespace, key, defaultValue, Template }) => {
-      return getStorageValue(namespace, key, defaultValue).then(result =>
-        Template ? new Template(this, result) : result
+      return getStorageValue(namespace, key, defaultValue).then(
+        result => new Template(this, result)
       )
     })
 

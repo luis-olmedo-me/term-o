@@ -66,5 +66,5 @@ export const storageValues = [
 ]
 
 export const storageDefaultValues = storageValues.reduce((values, value) => {
-  return { ...values, [value.key]: value.defaultValue }
+  return { ...values, [value.key]: null }
 }, {})

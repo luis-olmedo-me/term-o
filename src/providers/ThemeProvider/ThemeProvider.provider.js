@@ -5,7 +5,7 @@ import useStorage from '@src/hooks/useStorage'
 
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
-import { defaultTheme } from '@src/constants/themes.constants'
+import { defaultStyleMeasures } from '@src/constants/themes.constants'
 import { getAccentColors } from '@src/helpers/themes.helpers'
 import ThemeStyle from './ThemeProvider.styles'
 
@@ -22,7 +22,7 @@ export const ThemeProvider = ({ children }) => {
   return (
     <StyleProvider
       theme={{
-        ...defaultTheme,
+        ...defaultStyleMeasures,
         colors: {
           ...selectedTheme,
           ...getAccentColors(selectedTheme, colorAccent)

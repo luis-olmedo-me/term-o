@@ -11,6 +11,14 @@ export const getTab = async tabIdRaw => {
   return await chrome.tabs.get(tabId).catch(overwriteError)
 }
 
+export const getCurrentTab = async () => {
+  const [tab] = await chrome.tabs
+    .query({ active: true, lastFocusedWindow: true })
+    .catch(overwriteError)
+
+  return tab
+}
+
 export const createTab = async options => {
   let tab = await chrome.tabs.create(options.config).catch(overwriteError)
 
@@ -37,14 +45,6 @@ export const reloadTab = async options => {
       tab = await chrome.tabs.get(tab.id).catch(overwriteError)
     }
   }
-
-  return tab
-}
-
-export const getCurrentTab = async () => {
-  const [tab] = await chrome.tabs
-    .query({ active: true, lastFocusedWindow: true })
-    .catch(overwriteError)
 
   return tab
 }

@@ -1,32 +1,25 @@
+import { deleteTabsHistory, getTabsHistory } from '@src/browser-api/history.api'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatHistoryItem } from '@src/helpers/format.helpers'
+import { spreadIf } from '@src/helpers/utils.helpers'
 
 export const historyHandler = async command => {
   const P = name => command.props[name]
 
   if (P`list`) {
-    const titlePattern = P`title` && new RegExp(P`title`)
-    const urlPattern = P`url` && new RegExp(P`url`)
     const dateTimeFrom = P`from` ? new Date(P`from`).getTime() : 0
     const dateTimeTo = P`to` && new Date(P`to`).getTime()
 
-    const history = await chrome.history.search({
-      text: '',
-      maxResults: P`max-results`,
+    const history = await getTabsHistory({
       startTime: dateTimeFrom,
-      ...(P`to` ? { endTime: dateTimeTo } : {})
+      maxResults: P`max-results`,
+      byTitle: P`title`,
+      byUrl: P`url`,
+      text: '',
+      ...spreadIf(P`to`, { endTime: dateTimeTo })
     })
 
-    const historyFiltered = history.filter(historyItem => {
-      let validations = []
-
-      if (P`title`) validations.push(() => titlePattern.test(historyItem.title))
-      if (P`url`) validations.push(() => urlPattern.test(historyItem.url))
-
-      return validations.every(validation => validation())
-    })
-
-    const updates = historyFiltered.map(formatHistoryItem).reverse()
+    const updates = history.map(formatHistoryItem).reverse()
 
     command.update(...updates)
   }
@@ -35,14 +28,14 @@ export const historyHandler = async command => {
     const dateTimeFrom = new Date(P`from`).getTime()
     const dateTimeTo = new Date(P`to`).getTime()
 
-    const history = await chrome.history.search({
+    const history = await getTabsHistory({
       text: '',
       maxResults: 1000,
       startTime: dateTimeFrom,
       endTime: dateTimeTo
     })
 
-    await chrome.history.deleteRange({
+    await deleteTabsHistory({
       startTime: dateTimeFrom,
       endTime: dateTimeTo
     })

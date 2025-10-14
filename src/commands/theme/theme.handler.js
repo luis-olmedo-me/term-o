@@ -4,7 +4,6 @@ import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { defaultColorTheme } from '@src/constants/themes.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
-import { updateConfigValueIn } from '@src/helpers/config.helpers'
 import { formatTheme } from '@src/helpers/format.helpers'
 
 export const themeHandler = async command => {
@@ -86,9 +85,7 @@ export const themeHandler = async command => {
       return command.throw(`The theme "${name}" is already applied.`)
     }
 
-    const newConfig = updateConfigValueIn(config, configInputIds.THEME_NAME, name)
-
-    storage.set(storageKeys.CONFIG, newConfig)
+    config.change(configInputIds.THEME_NAME, name)
 
     const update = formatTheme({ name })
 

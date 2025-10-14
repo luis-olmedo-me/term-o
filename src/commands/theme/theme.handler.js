@@ -64,10 +64,8 @@ export const themeHandler = async command => {
       return command.throw(`The theme "${name}" does not exist.`)
     }
 
-    const newThemes = config.themes.filter(set => set.name !== name)
-
     if (isCurrentTheme) config.change(configInputIds.THEME_NAME, defaultColorTheme.name)
-    storage.set(storageKeys.COLOR_SETS, newThemes)
+    config.removeTheme(name)
 
     const update = formatTheme({ name })
 

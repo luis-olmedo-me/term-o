@@ -29,15 +29,14 @@ export const themeHandler = async command => {
     const newSet = JSON.parse(P`import`)
 
     const config = storage.get(storageKeys.CONFIG)
-    const themes = storage.get(storageKeys.COLOR_SETS)
-    const alreadyExists = themes.some(set => set.name === newSet.name)
+    const alreadyExists = config.themes.some(set => set.name === newSet.name)
 
     if (alreadyExists) {
       return command.throw(`The theme "${newSet.name}" already exists.`)
     }
 
     const newConfig = updateConfigValueIn(config, configInputIds.THEME_NAME, newSet.name)
-    const newThemes = [...themes, newSet]
+    const newThemes = [...config.themes, newSet]
 
     storage.set(storageKeys.COLOR_SETS, newThemes)
     storage.set(storageKeys.CONFIG, newConfig)
@@ -51,10 +50,9 @@ export const themeHandler = async command => {
     const name = P`delete`
 
     const config = storage.get(storageKeys.CONFIG)
-    const themes = storage.get(storageKeys.COLOR_SETS)
     const themeName = config.getValueById(configInputIds.THEME_NAME)
 
-    const alreadyExists = themes.some(set => set.name === name)
+    const alreadyExists = config.themes.some(set => set.name === name)
     const isDefault = defaultColorTheme.name === name
     const isCurrentTheme = name === themeName
 
@@ -66,7 +64,7 @@ export const themeHandler = async command => {
       return command.throw(`The theme "${name}" does not exist.`)
     }
 
-    const newThemes = themes.filter(set => set.name !== name)
+    const newThemes = config.themes.filter(set => set.name !== name)
 
     if (isCurrentTheme) config.change(configInputIds.THEME_NAME, defaultColorTheme.name)
     storage.set(storageKeys.COLOR_SETS, newThemes)
@@ -80,10 +78,9 @@ export const themeHandler = async command => {
     const name = P`apply`
 
     const config = storage.get(storageKeys.CONFIG)
-    const themes = storage.get(storageKeys.COLOR_SETS)
     const themeName = config.getValueById(configInputIds.THEME_NAME)
 
-    const alreadyExists = themes.some(set => set.name === name)
+    const alreadyExists = config.themes.some(set => set.name === name)
     const isCurrentTheme = name === themeName
 
     if (!alreadyExists) {

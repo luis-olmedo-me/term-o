@@ -22,13 +22,10 @@ export const useStorage = ({ key }) => {
 
   const setStateInStorage = useCallback(
     async value => {
-      setState(oldState => {
-        const validatedValue = typeof value === 'function' ? value(oldState) : value
+      const latestValue = storage.get(key)
+      const validatedValue = typeof value === 'function' ? value(latestValue) : value
 
-        storage.set(key, validatedValue)
-
-        return validatedValue
-      })
+      storage.set(key, validatedValue)
     },
     [key]
   )

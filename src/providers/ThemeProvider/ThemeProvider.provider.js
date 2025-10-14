@@ -10,7 +10,6 @@ import { getAccentColors } from '@src/helpers/themes.helpers'
 import ThemeStyle from './ThemeProvider.styles'
 
 export const ThemeProvider = ({ children }) => {
-  const [colorThemes] = useStorage({ key: storageKeys.COLOR_SETS })
   const [config] = useStorage({ key: storageKeys.CONFIG })
 
   const themeName = config.getValueById(configInputIds.THEME_NAME)
@@ -18,7 +17,7 @@ export const ThemeProvider = ({ children }) => {
   const fontFamily = config.getValueById(configInputIds.FONT_FAMILY)
   const colorAccent = config.getValueById(configInputIds.COLOR_ACCENT)
 
-  const selectedTheme = colorThemes.find(theme => theme.name === themeName)
+  const selectedTheme = config.themes.find(theme => theme.name === themeName)
 
   return (
     <StyleProvider

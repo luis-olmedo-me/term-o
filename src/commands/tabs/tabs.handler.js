@@ -6,6 +6,7 @@ import {
   reloadTab,
   updateTab
 } from '@src/browser-api/tabs.api'
+import { getWindow, updateWindow } from '@src/browser-api/windows.api'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatTab } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
@@ -35,9 +36,9 @@ export const tabsHandler = async command => {
 
   if (P`switch`) {
     const tab = await getTab({ tabId: cleanTabId(P`switch`) })
-    const { focused } = await chrome.windows.get(tab.windowId)
+    const window = await getWindow({ windowId: tab.windowId })
 
-    if (!focused) await chrome.windows.update(tab.windowId, { focused: true })
+    if (!window.focused) await updateWindow({ windowId: tab.windowId, focused: true })
     await updateTab({ tabId: tab.id, selected: true })
 
     const update = formatTab(tab)

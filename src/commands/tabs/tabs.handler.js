@@ -1,4 +1,5 @@
 import {
+  closeTab,
   createTab,
   getCurrentTab,
   getTab,
@@ -10,7 +11,6 @@ import { getWindow, updateWindow } from '@src/browser-api/windows.api'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatTab } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
-import { spreadIf } from '@src/helpers/utils.helpers'
 
 export const tabsHandler = async command => {
   const { tab, setTab } = command.data
@@ -50,7 +50,7 @@ export const tabsHandler = async command => {
     const tab = await getTab({ tabId: cleanTabId(P`close`) })
     const update = formatTab(tab)
 
-    await chrome.tabs.remove(tab.id)
+    await closeTab({ tabId: tab.id })
 
     command.update(update)
   }
@@ -63,10 +63,7 @@ export const tabsHandler = async command => {
       wait: P`wait`
     })
 
-    const update = formatTab({
-      ...tab,
-      ...spreadIf(!P`wait`, { url: P`open` })
-    })
+    const update = formatTab(tab, P`open`)
 
     command.reset()
     command.update(update)

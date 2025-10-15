@@ -87,11 +87,11 @@ export const formatEvent = ({ url, line, id }) => {
   return `${C`purple`}${quotedId} ${C`yellow`}${quotedURL} ${quotedLine}`
 }
 
-export const formatTab = ({ windowId, id, title, url }) => {
+export const formatTab = ({ windowId, id, title, url }, staticUrl) => {
   const quotedWindowId = getQuotedString(`W${windowId}`)
   const quotedId = getQuotedString(`T${id}`)
   const quotedTitle = getQuotedString(title)
-  const quotedURL = getQuotedString(url)
+  const quotedURL = getQuotedString(url || staticUrl)
 
   return `${C`purple`}${quotedWindowId} ${C`blue`}${quotedId} ${C`brightYellow`}${quotedTitle} ${C`yellow`}${quotedURL}`
 }

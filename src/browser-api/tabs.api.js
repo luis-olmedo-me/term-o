@@ -86,3 +86,7 @@ export const updateTab = ({ tabId, selected }) => {
     })
     .catch(overwriteError)
 }
+
+export const closeTab = ({ tabId }) => {
+  return chrome.tabs.remove(tabId).catch(overwriteError)
+}

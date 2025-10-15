@@ -15,7 +15,6 @@ export const historyHandler = async command => {
       maxResults: P`max-results`,
       byTitle: P`title`,
       byUrl: P`url`,
-      text: '',
       ...spreadIf(P`to`, { endTime: dateTimeTo })
     })
 
@@ -29,7 +28,6 @@ export const historyHandler = async command => {
     const dateTimeTo = new Date(P`to`).getTime()
 
     const history = await getTabsHistory({
-      text: '',
       maxResults: 1000,
       startTime: dateTimeFrom,
       endTime: dateTimeTo

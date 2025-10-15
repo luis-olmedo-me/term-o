@@ -1,7 +1,7 @@
-export const getTabsHistory = ({ byTitle, byUrl, ...options }) => {
+export const getTabsHistory = async ({ byTitle, byUrl, startTime, maxResults, endTime }) => {
   const titlePattern = byTitle && new RegExp(byTitle)
   const urlPattern = byUrl && new RegExp(byUrl)
-  const history = chrome.history.search(options)
+  const history = await chrome.history.search({ text: '', startTime, maxResults, endTime })
 
   return history.filter(historyItem => {
     let validations = []
@@ -13,6 +13,6 @@ export const getTabsHistory = ({ byTitle, byUrl, ...options }) => {
   })
 }
 
-export const deleteTabsHistory = options => {
-  return chrome.history.deleteRange(options)
+export const deleteTabsHistory = ({ startTime, endTime }) => {
+  return chrome.history.deleteRange({ startTime, endTime })
 }

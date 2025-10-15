@@ -63,7 +63,7 @@ export const createTab = async ({ url, active, wait }) => {
 }
 
 export const reloadTab = async ({ tabId, wait }) => {
-  let tab = await getTab({ tabId }).catch(overwriteError)
+  let tab = await getTab({ tabId })
 
   await chrome.tabs.reload(tab.id).catch(overwriteError)
 
@@ -77,4 +77,10 @@ export const reloadTab = async ({ tabId, wait }) => {
   }
 
   return tab
+}
+
+export const updateTab = ({ tabId, selected }) => {
+  return chrome.tabs.update(tabId, {
+    ...spreadIf(selected, { selected: true })
+  })
 }

@@ -4,7 +4,7 @@ import { basicColorKeys, colorThemeKeys, defaultColorTheme } from './themes.cons
 export const PROMPT_MARK = '$'
 
 export const configIds = {
-  FUNCTIONALITY: 'general',
+  FUNCTIONALITY: 'functionality',
   APPEARENCE: 'appearence',
   DATA: 'data'
 }
@@ -219,3 +219,15 @@ export const defaultConfigSections = [
     ]
   }
 ]
+
+export const defaultConfig = defaultConfigSections.reduce((simplifiedConfig, section) => {
+  const sectionInputValues = section.inputs.reduce(
+    (simplifiedInputs, input) => ({ ...simplifiedInputs, [input.id]: input.value }),
+    {}
+  )
+
+  return {
+    ...simplifiedConfig,
+    ...sectionInputValues
+  }
+}, {})

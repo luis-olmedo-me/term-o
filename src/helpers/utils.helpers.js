@@ -31,3 +31,7 @@ export const getQuotedString = value => {
   else if (!hasDoubleQuote && hasSingleQuote) return `"${value}"`
   else return `"${value.replace('"', '\\"')}"`
 }
+
+export const spreadIf = (condition, value) => {
+  return condition ? value : {}
+}

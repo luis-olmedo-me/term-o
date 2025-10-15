@@ -1,4 +1,4 @@
-import { theme as t } from '@src/libs/themer'
+import { theme as t } from '@src/helpers/themes.helpers'
 import styled from 'styled-components'
 import { buttonVariants } from './Button.constants'
 
@@ -6,12 +6,12 @@ export const ButtonWrapper = styled.button`
   width: fit-content;
   height: fit-content;
   color: ${t('colors.foreground')};
-  background-color: ${t('colors.background')};
+  background-color: transparent;
   border: none;
   font-weight: bold;
   font-size: ${t('fontSize.100')};
   line-height: ${t('lineHeight.300')};
-  font-family: ${t('font.primary')};
+  font-family: ${t('font')};
   cursor: pointer;
   display: flex;
   align-items: center;

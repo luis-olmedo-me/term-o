@@ -1,4 +1,4 @@
-import { theme as t } from '@src/libs/themer'
+import { theme as t } from '@src/helpers/themes.helpers'
 import styled from 'styled-components'
 
 export const SimulatedSwitch = styled.div`
@@ -72,7 +72,7 @@ export const SwitchWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: ${t('space.400')};
-  background-color: ${t('colors.background')};
+  background-color: transparent;
   color: ${t('colors.foreground')};
   cursor: text;
   position: relative;

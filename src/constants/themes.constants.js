@@ -46,7 +46,7 @@ export const defaultColorTheme = {
   [colorThemeKeys.YELLOW]: '#F5A524'
 }
 
-export const defaultTheme = {
+export const defaultStyleMeasures = {
   radius: {
     50: '1px',
     100: '2px',
@@ -86,10 +86,6 @@ export const defaultTheme = {
     100: '1rem',
     200: '1.25rem',
     300: '1.5rem'
-  },
-
-  font: {
-    primary: 'Consolas'
   }
 }
 
@@ -101,3 +97,14 @@ export const basicColorKeys = [
   colorThemeKeys.RED,
   colorThemeKeys.YELLOW
 ]
+
+export const brightColorKeys = [
+  colorThemeKeys.BRIGHT_BLUE,
+  colorThemeKeys.BRIGHT_CYAN,
+  colorThemeKeys.BRIGHT_GREEN,
+  colorThemeKeys.BRIGHT_PURPLE,
+  colorThemeKeys.BRIGHT_RED,
+  colorThemeKeys.BRIGHT_YELLOW
+]
+
+export const onlyColorKeys = [...basicColorKeys, ...brightColorKeys]

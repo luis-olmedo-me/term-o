@@ -1,8 +1,8 @@
 import * as React from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
-import { getFontsAvailable } from '@src/processes/processes'
-import Select from '../Select'
+import Select from '@src/components/Select'
+import { getFontsAvailable } from '@src/processes'
 
 export const FontSelect = ({ value, onChange, name }) => {
   const [options, setOptions] = useState([])

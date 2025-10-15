@@ -1,52 +1,38 @@
 import * as React from 'preact'
+import { ThemeProvider as StyleProvider } from 'styled-components'
+
+import useStorage from '@src/hooks/useStorage'
 
 import { configInputIds } from '@src/constants/config.constants'
-import useConfig from '@src/hooks/useConfig'
-import themer from '@src/libs/themer'
-import { useEffect, useState } from 'preact/hooks'
-import { ThemeProvider as StyleProvider } from 'styled-components'
+import { storageKeys } from '@src/constants/storage.constants'
+import { defaultStyleMeasures } from '@src/constants/themes.constants'
+import { getAccentColors } from '@src/helpers/themes.helpers'
 import ThemeStyle from './ThemeProvider.styles'
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState(themer.theme)
-  const [isReady, setIsReady] = useState(false)
+  const [config] = useStorage({ key: storageKeys.CONFIG })
 
-  const { listening } = useConfig({
-    get: [configInputIds.FONT_SIZE, configInputIds.FONT_FAMILY, configInputIds.COLOR_ACCENT]
-  })
+  const themeName = config.getValueById(configInputIds.THEME_NAME)
+  const fontSize = config.getValueById(configInputIds.FONT_SIZE)
+  const fontFamily = config.getValueById(configInputIds.FONT_FAMILY)
+  const colorAccent = config.getValueById(configInputIds.COLOR_ACCENT)
 
-  const [fontSize, fontFamily, colorAccent] = listening
-
-  useEffect(function updateColorsReference() {
-    const updateTheme = ({ theme }) => setTheme(theme)
-    const showContent = () => setIsReady(true)
-
-    updateTheme(themer)
-    themer.addEventListener('themes-update', updateTheme)
-
-    if (themer.isInitiated) showContent()
-    else themer.addEventListener('init', showContent)
-
-    return () => {
-      themer.removeEventListener('themes-update', updateTheme)
-      themer.removeEventListener('init', showContent)
-    }
-  }, [])
+  const selectedTheme = config.themes.find(theme => theme.name === themeName)
 
   return (
     <StyleProvider
       theme={{
-        ...theme,
+        ...defaultStyleMeasures,
         colors: {
-          ...theme.colors,
-          ...themer.getAccentColors(colorAccent)
+          ...selectedTheme,
+          ...getAccentColors(selectedTheme, colorAccent)
         },
-        font: { primary: fontFamily }
+        font: fontFamily
       }}
     >
       <ThemeStyle mainFontSize={fontSize} />
 
-      {isReady && children}
+      {children}
     </StyleProvider>
   )
 }

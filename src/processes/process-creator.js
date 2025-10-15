@@ -1,5 +1,5 @@
+import { overwriteMessage } from '@src/helpers/messages.helpers'
 import { states } from '@src/libs/process-wait-list'
-import { getErrorMessage } from './processes.helpers'
 
 const createWorkerRequest = ({ tabId, type, data, defaultResponse }) => {
   return new Promise((resolve, reject) => {
@@ -7,7 +7,7 @@ const createWorkerRequest = ({ tabId, type, data, defaultResponse }) => {
       const lastError = chrome.runtime.lastError
 
       if (lastError) {
-        const error = getErrorMessage(lastError.message)
+        const error = overwriteMessage(lastError.message)
 
         return reject(error)
       }

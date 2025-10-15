@@ -23,7 +23,7 @@ export const Input = ({
     <S.InputWrapper aria-disabled={disabled} aria-fit-content={!fullWidth}>
       {prefix && <span>{prefix}</span>}
 
-      <S.Input
+      <S.RealInput
         ref={inputRef}
         name={name}
         spellCheck="false"

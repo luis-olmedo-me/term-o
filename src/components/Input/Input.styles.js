@@ -1,4 +1,4 @@
-import { theme as t } from '@src/libs/themer'
+import { theme as t } from '@src/helpers/themes.helpers'
 import styled from 'styled-components'
 import { inputVariants } from './Input.constants'
 
@@ -17,8 +17,8 @@ export const Postfix = styled.span`
   cursor: help;
 `
 
-export const Input = styled.input`
-  font-family: ${t('font.primary')};
+export const RealInput = styled.input`
+  font-family: ${t('font')};
   width: 100%;
   box-sizing: border-box;
   white-space: nowrap;
@@ -27,7 +27,7 @@ export const Input = styled.input`
   display: block;
   caret-color: ${t('colors.cursorColor')};
   line-height: ${t('lineHeight.300')};
-  background-color: ${t('colors.background')};
+  background-color: transparent;
   color: ${t('colors.foreground')};
   letter-spacing: ${t('space.50')};
   cursor: text;
@@ -76,7 +76,7 @@ export const Input = styled.input`
 export const InputWrapper = styled.div`
   display: flex;
   align-items: center;
-  background-color: ${t('colors.background')};
+  background-color: transparent;
   color: ${t('colors.foreground')};
 
   &[aria-fit-content='true'] {
@@ -84,7 +84,7 @@ export const InputWrapper = styled.div`
   }
 
   &[aria-disabled='true'],
-  &[aria-disabled='true'] ${Input}:disabled {
+  &[aria-disabled='true'] ${RealInput}:disabled {
     cursor: text;
   }
 `

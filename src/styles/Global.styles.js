@@ -1,17 +1,22 @@
-import { theme as t } from '@src/libs/themer'
-import { createGlobalStyle } from 'styled-components'
+import {
+  createAriaBgColorThemer,
+  createAriaColorThemer,
+  theme as t
+} from '@src/helpers/themes.helpers'
+import styled, { createGlobalStyle } from 'styled-components'
 import { slide } from './Animations.styles'
 
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
-    font-family: "${t('font.primary')}", Courier, monospace;
+    font-family: "${t('font')}", Courier, monospace;
     background-color: ${t('colors.background')};
     font-size: ${t('fontSize.50')};
+    transition: background-color 0.2s ease-in-out;
 
     &::selection {
-      color: ${t('colors.accent')};
+      color: ${t('colors.foreground')};
       background-color: ${t('colors.selectionBackground')};
     }
   }
@@ -38,6 +43,7 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
+
   &[aria-loading='true'] {
     position: relative;
 
@@ -61,6 +67,14 @@ const GlobalStyle = createGlobalStyle`
     appearance: base-select;
     border: none;
   }
+
+  ${createAriaColorThemer}
+  ${createAriaBgColorThemer}
+`
+
+export const Line = styled.p`
+  margin: 0;
+  cursor: text;
 `
 
 export default GlobalStyle

@@ -1,5 +1,5 @@
 import { overwriteError } from '@src/helpers/messages.helpers'
-import { delay } from '@src/helpers/utils.helpers'
+import { delay, spreadIf } from '@src/helpers/utils.helpers'
 
 export const getTab = async ({ tabId }) => {
   const allTabs = await chrome.tabs.query({})
@@ -16,6 +16,35 @@ export const getCurrentTab = async () => {
     .catch(overwriteError)
 
   return tab
+}
+
+export const getTabsSearch = async ({
+  muted,
+  unmuted,
+  byIncognito,
+  byTitle,
+  byUrl,
+  byWindowId
+}) => {
+  const byTitleRegExp = byTitle && new RegExp(byTitle)
+  const byUrlRegExp = byUrl && new RegExp(byUrl)
+  const byWindowIdRegExp = byWindowId && new RegExp(byWindowId)
+
+  const tabs = await chrome.tabs
+    .query({
+      ...spreadIf(muted, { muted: true }),
+      ...spreadIf(unmuted, { muted: false })
+    })
+    .catch(overwriteError)
+
+  return Array.from(tabs).filter(({ windowId, title, url, incognito }) => {
+    if (byIncognito && !incognito) return false
+    if (byTitleRegExp && !byTitleRegExp.test(title)) return false
+    if (byUrlRegExp && !byUrlRegExp.test(url)) return false
+    if (byWindowIdRegExp && !byWindowIdRegExp.test(`W${windowId}`)) return false
+
+    return true
+  })
 }
 
 export const createTab = async ({ url, active, wait }) => {

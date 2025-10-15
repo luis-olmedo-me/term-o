@@ -1,4 +1,4 @@
-import { createTab, getTab, reloadTab } from '@src/browser-api/tabs.api'
+import { createTab, getTab, getTabsSearch, reloadTab } from '@src/browser-api/tabs.api'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatTab } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
@@ -82,28 +82,17 @@ export const tabsHandler = async command => {
   }
 
   if (P`list`) {
-    const onlyIncognito = P`incognito`
-    const onlyTitle = P`title` && new RegExp(P`title`)
-    const onlyURL = P`url` && new RegExp(P`url`)
-    const onlyWindowId = P`window-id` && new RegExp(P`window-id`)
-
-    const tabs = await chrome.tabs.query({
-      ...spreadIf(P`muted`, { muted: true }),
-      ...spreadIf(P`unmuted`, { muted: false })
+    const tabs = await getTabsSearch({
+      muted: P`muted`,
+      unmuted: P`unmuted`,
+      byIncognito: P`incognito`,
+      byTitle: P`title`,
+      byUrl: P`url`,
+      byWindowId: P`window-id`
     })
+    const updates = tabs.map(formatTab)
 
-    for (const tab of tabs) {
-      const { windowId, title, url, incognito } = tab
-
-      if (onlyIncognito && !incognito) continue
-      if (onlyTitle && !onlyTitle.test(title)) continue
-      if (onlyURL && !onlyURL.test(url)) continue
-      if (onlyWindowId && !onlyWindowId.test(`W${windowId}`)) continue
-
-      const update = formatTab(tab)
-
-      command.update(update)
-    }
+    command.update(...updates)
   }
 
   if (P`help`) createHelpView(command)

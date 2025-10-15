@@ -1,15 +1,6 @@
 import { overwriteError } from '@src/helpers/messages.helpers'
 import { delay, spreadIf } from '@src/helpers/utils.helpers'
 
-export const getTab = async ({ tabId }) => {
-  const allTabs = await chrome.tabs.query({})
-  const isValidTabId = allTabs.some(tab => tab.id === tabId)
-
-  if (!isValidTabId) throw 'No tab id found.'
-
-  return chrome.tabs.get(tabId).catch(overwriteError)
-}
-
 export const getTabsSearch = async ({
   muted,
   unmuted,
@@ -41,6 +32,15 @@ export const getTabsSearch = async ({
 
     return true
   })
+}
+
+export const getTab = async ({ tabId }) => {
+  const allTabs = await getTabsSearch({})
+  const isValidTabId = allTabs.some(tab => tab.id === tabId)
+
+  if (!isValidTabId) throw 'No tab id found.'
+
+  return chrome.tabs.get(tabId).catch(overwriteError)
 }
 
 export const getCurrentTab = async () => {

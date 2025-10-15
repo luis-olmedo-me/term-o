@@ -87,12 +87,9 @@ export const tabsHandler = async command => {
     const onlyURL = P`url` && new RegExp(P`url`)
     const onlyWindowId = P`window-id` && new RegExp(P`window-id`)
 
-    const onlyMuted = P`muted` ? { muted: true } : null
-    const onlyUnmuted = P`unmuted` ? { muted: false } : null
-
     const tabs = await chrome.tabs.query({
-      ...onlyMuted,
-      ...onlyUnmuted
+      ...spreadIf(P`muted`, { muted: true }),
+      ...spreadIf(P`unmuted`, { muted: false })
     })
 
     for (const tab of tabs) {

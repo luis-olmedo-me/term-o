@@ -1,11 +1,13 @@
 import * as React from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
+import ColoredText from '@sidepanel/components/ColoredText'
 import Input, { inputTypes, inputVariants } from '@src/components/Input'
+import useStorage from '@src/hooks/useStorage'
+
 import { configInputIds, PROMPT_MARK } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
-import useStorage from '@src/hooks/useStorage'
-import ColoredText from '../ColoredText'
+import { Line } from '@src/styles/Global.styles'
 import * as S from './Prompt.styles'
 
 export const Prompt = ({
@@ -82,9 +84,9 @@ export const Prompt = ({
 
   return (
     <S.PromptWrapper aria-loading={loading} aria-indicator={statusIndicator} className={className}>
-      <S.Line>
+      <Line>
         <ColoredText value={context} />
-      </S.Line>
+      </Line>
 
       <Input
         inputRef={inputRef}

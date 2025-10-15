@@ -3,7 +3,7 @@ import {
   createAriaColorThemer,
   theme as t
 } from '@src/helpers/themes.helpers'
-import { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 import { slide } from './Animations.styles'
 
 const GlobalStyle = createGlobalStyle`
@@ -70,6 +70,11 @@ const GlobalStyle = createGlobalStyle`
 
   ${createAriaColorThemer}
   ${createAriaBgColorThemer}
+`
+
+export const Line = styled.p`
+  margin: 0;
+  cursor: text;
 `
 
 export default GlobalStyle

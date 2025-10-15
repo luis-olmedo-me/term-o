@@ -3,11 +3,6 @@ import { statusIndicators } from '@src/constants/config.constants'
 import { theme as t } from '@src/helpers/themes.helpers'
 import styled from 'styled-components'
 
-export const Line = styled.p`
-  margin: 0;
-  cursor: text;
-`
-
 export const PromptWrapper = styled.div`
   cursor: text;
   background-color: transparent;

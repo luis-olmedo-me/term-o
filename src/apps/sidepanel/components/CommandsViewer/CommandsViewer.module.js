@@ -2,11 +2,11 @@ import * as React from 'preact'
 import { useEffect, useRef } from 'preact/hooks'
 
 import ColoredText from '@sidepanel/components/ColoredText'
-import { Line } from '@sidepanel/components/Prompt'
+import useStorage from '@src/hooks/useStorage'
 
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
-import useStorage from '@src/hooks/useStorage'
+import { Line } from '@src/styles/Global.styles'
 import * as S from './CommandsViewer.styles'
 
 export const CommandsViewer = ({ commands }) => {

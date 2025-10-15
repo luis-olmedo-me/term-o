@@ -1,6 +1,7 @@
 import { createTab, getTab, reloadTab } from '@src/browser-api/tabs.api'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatTab } from '@src/helpers/format.helpers'
+import { cleanTabId } from '@src/helpers/tabs.helpers'
 import { spreadIf } from '@src/helpers/utils.helpers'
 
 export const tabsHandler = async command => {
@@ -9,7 +10,7 @@ export const tabsHandler = async command => {
 
   if (P`reload`) {
     if (P`wait`) command.update(`Please wait while the page is loading.`)
-    const tab = await reloadTab({ tabId: P`reload`, wait: P`wait` })
+    const tab = await reloadTab({ tabId: cleanTabId(P`reload`), wait: P`wait` })
     const update = formatTab(tab)
 
     command.reset()
@@ -17,7 +18,7 @@ export const tabsHandler = async command => {
   }
 
   if (P`point`) {
-    const tab = await getTab(P`point`)
+    const tab = await getTab({ tabId: cleanTabId(P`point`) })
     const update = formatTab(tab)
 
     setTab(tab)
@@ -26,7 +27,7 @@ export const tabsHandler = async command => {
   }
 
   if (P`switch`) {
-    const tab = await getTab(P`switch`)
+    const tab = await getTab({ tabId: cleanTabId(P`switch`) })
     const { focused } = await chrome.windows.get(tab.windowId)
 
     if (!focused) await chrome.windows.update(tab.windowId, { focused: true })
@@ -38,7 +39,7 @@ export const tabsHandler = async command => {
   }
 
   if (P`close`) {
-    const tab = await getTab(P`close`)
+    const tab = await getTab({ tabId: cleanTabId(P`close`) })
     const update = formatTab(tab)
 
     await chrome.tabs.remove(tab.id)
@@ -49,7 +50,8 @@ export const tabsHandler = async command => {
   if (P`open`) {
     if (P`wait`) command.update(`Please wait while the page is loading.`)
     const tab = await createTab({
-      config: { url: P`open`, active: P`active` },
+      url: P`open`,
+      active: P`active`,
       wait: P`wait`
     })
 

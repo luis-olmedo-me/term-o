@@ -1,3 +1,3 @@
-import { CommandsViewer } from './CommandsViewer.module'
+import { CommandsViewer } from './CommandsViewer.component'
 
 export default CommandsViewer

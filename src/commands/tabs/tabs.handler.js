@@ -1,4 +1,10 @@
-import { createTab, getTab, getTabsSearch, reloadTab } from '@src/browser-api/tabs.api'
+import {
+  createTab,
+  getCurrentTab,
+  getTab,
+  getTabsSearch,
+  reloadTab
+} from '@src/browser-api/tabs.api'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatTab } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
@@ -65,11 +71,7 @@ export const tabsHandler = async command => {
   }
 
   if (P`current`) {
-    const [tab] = await chrome.tabs.query({
-      active: true,
-      lastFocusedWindow: true
-    })
-
+    const tab = await getCurrentTab()
     const update = formatTab(tab)
 
     command.update(update)

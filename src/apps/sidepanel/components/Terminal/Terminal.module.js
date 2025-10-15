@@ -1,8 +1,8 @@
 import * as React from 'preact'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 
+import CommandsViewer from '@sidepanel/components/CommandsViewer'
 import Prompt from '@sidepanel/components/Prompt'
-import CommandsViewer from '@sidepanel/modules/CommandsViewer'
 import Button, { buttonVariants } from '@src/components/Button'
 import useStorage from '@src/hooks/useStorage'
 import Gear from '@src/icons/Gear.icon'

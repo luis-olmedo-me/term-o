@@ -10,17 +10,11 @@ export const getTab = async ({ tabId }) => {
   return chrome.tabs.get(tabId).catch(overwriteError)
 }
 
-export const getCurrentTab = async () => {
-  const [tab] = await chrome.tabs
-    .query({ active: true, lastFocusedWindow: true })
-    .catch(overwriteError)
-
-  return tab
-}
-
 export const getTabsSearch = async ({
   muted,
   unmuted,
+  active,
+  lastFocusedWindow,
   byIncognito,
   byTitle,
   byUrl,
@@ -33,7 +27,9 @@ export const getTabsSearch = async ({
   const tabs = await chrome.tabs
     .query({
       ...spreadIf(muted, { muted: true }),
-      ...spreadIf(unmuted, { muted: false })
+      ...spreadIf(active, { active: true }),
+      ...spreadIf(unmuted, { muted: false }),
+      ...spreadIf(lastFocusedWindow, { lastFocusedWindow: true })
     })
     .catch(overwriteError)
 
@@ -45,6 +41,12 @@ export const getTabsSearch = async ({
 
     return true
   })
+}
+
+export const getCurrentTab = async () => {
+  const [tab] = await getTabsSearch({ active: true, lastFocusedWindow: true })
+
+  return tab
 }
 
 export const createTab = async ({ url, active, wait }) => {

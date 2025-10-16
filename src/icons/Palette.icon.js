@@ -2,7 +2,7 @@ import * as React from 'preact'
 
 import { iconPropType } from '@src/constants/icon.constants'
 
-const Brush = ({ size }) => {
+const Palette = ({ size }) => {
   return (
     <svg
       width={size}
@@ -19,6 +19,6 @@ const Brush = ({ size }) => {
   )
 }
 
-Brush.propTypes = iconPropType
+Palette.propTypes = iconPropType
 
-export default Brush
+export default Palette

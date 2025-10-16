@@ -1,6 +1,6 @@
-import Brush from '@src/icons/Brush.icon'
 import Data from '@src/icons/Data.icon'
-import Productivity from '@src/icons/Productivity.icon'
+import Palette from '@src/icons/Palette.icon'
+import Thunder from '@src/icons/Thunder.icon'
 import { availableInputTypes } from './inputs.constants'
 import { basicColorKeys, colorThemeKeys, defaultColorTheme } from './themes.constants'
 
@@ -62,7 +62,7 @@ export const defaultConfigSections = [
     id: configIds.FUNCTIONALITY,
     name: 'Functionality',
     description: 'Adjust how the terminal behaves and interacts with the browser.',
-    Icon: Productivity,
+    Icon: Thunder,
     inputs: [
       {
         id: configInputIds.COPY_ON_SELECTION,
@@ -157,7 +157,7 @@ export const defaultConfigSections = [
     id: configIds.APPEARENCE,
     name: 'Appearence',
     description: 'Customize the visual appearance of the terminal, including font settings.',
-    Icon: Brush,
+    Icon: Palette,
     inputs: [
       {
         id: configInputIds.THEME_NAME,

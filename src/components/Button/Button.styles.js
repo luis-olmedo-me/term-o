@@ -1,3 +1,4 @@
+import { iconSizes } from '@src/constants/icon.constants'
 import { theme as t } from '@src/helpers/themes.helpers'
 import styled from 'styled-components'
 import { buttonVariants } from './Button.constants'
@@ -78,5 +79,14 @@ export const ButtonWrapper = styled.button`
     &[aria-selected='true']:hover {
       color: ${t('colors.brightRed')};
     }
+  }
+`
+
+export const ButtonIconWrapper = styled.span`
+  margin: 0 ${t('space.400')} 0 ${t('space.200')};
+  height: ${iconSizes.NORMAL}px;
+
+  &:only-child {
+    margin: 0;
   }
 `

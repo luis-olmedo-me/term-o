@@ -1,3 +1,6 @@
+import Data from '@src/icons/Data.icon'
+import Palette from '@src/icons/Palette.icon'
+import Thunder from '@src/icons/Thunder.icon'
 import { availableInputTypes } from './inputs.constants'
 import { basicColorKeys, colorThemeKeys, defaultColorTheme } from './themes.constants'
 
@@ -59,6 +62,7 @@ export const defaultConfigSections = [
     id: configIds.FUNCTIONALITY,
     name: 'Functionality',
     description: 'Adjust how the terminal behaves and interacts with the browser.',
+    Icon: Thunder,
     inputs: [
       {
         id: configInputIds.COPY_ON_SELECTION,
@@ -117,26 +121,6 @@ export const defaultConfigSections = [
         value: configDefaultValues[configInputIds.STATUS_INDICATOR]
       },
       {
-        id: configInputIds.STATUS_BAR,
-        name: 'Status bar',
-        description: 'Display the status bar in the terminal prompt.',
-        type: availableInputTypes.BOOLEAN,
-        postFix: null,
-        options: [],
-        validations: [],
-        value: configDefaultValues[configInputIds.STATUS_BAR]
-      },
-      {
-        id: configInputIds.STATUS_LIGHT,
-        name: 'Status light',
-        description: 'Display the status light in the terminal prompt.',
-        type: availableInputTypes.BOOLEAN,
-        postFix: null,
-        options: [],
-        validations: [],
-        value: configDefaultValues[configInputIds.STATUS_LIGHT]
-      },
-      {
         id: configInputIds.CONTEXT,
         name: 'Prompt Context',
         description:
@@ -153,6 +137,7 @@ export const defaultConfigSections = [
     id: configIds.APPEARENCE,
     name: 'Appearence',
     description: 'Customize the visual appearance of the terminal, including font settings.',
+    Icon: Palette,
     inputs: [
       {
         id: configInputIds.THEME_NAME,
@@ -198,6 +183,26 @@ export const defaultConfigSections = [
         ],
         validations: [],
         value: configDefaultValues[configInputIds.FONT_SIZE]
+      },
+      {
+        id: configInputIds.STATUS_BAR,
+        name: 'Status bar',
+        description: 'Display the status bar in the terminal prompt.',
+        type: availableInputTypes.BOOLEAN,
+        postFix: null,
+        options: [],
+        validations: [],
+        value: configDefaultValues[configInputIds.STATUS_BAR]
+      },
+      {
+        id: configInputIds.STATUS_LIGHT,
+        name: 'Status light',
+        description: 'Display the status light in the terminal prompt.',
+        type: availableInputTypes.BOOLEAN,
+        postFix: null,
+        options: [],
+        validations: [],
+        value: configDefaultValues[configInputIds.STATUS_LIGHT]
       }
     ]
   },
@@ -205,6 +210,7 @@ export const defaultConfigSections = [
     id: configIds.DATA,
     name: 'Data',
     description: 'Manage storage and configuration backups.',
+    Icon: Data,
     inputs: [
       {
         id: configInputIds.RESET_DATA,

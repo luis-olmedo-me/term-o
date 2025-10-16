@@ -1,3 +1,3 @@
-import { Terminal } from './Terminal.module'
+import { Terminal } from './Terminal.component'
 
 export default Terminal

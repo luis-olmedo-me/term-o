@@ -1,5 +1,6 @@
 export const iconSizes = {
-  NORMAL: 22,
+  SMALL: 22,
+  NORMAL: 50,
   LARGE: 100
 }
 

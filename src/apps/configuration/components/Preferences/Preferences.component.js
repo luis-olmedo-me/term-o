@@ -4,8 +4,10 @@ import { useState } from 'preact/hooks'
 import SidePanel from '@configuration/components/SidePanel'
 import FieldRenderer from '@src/components/FieldRenderer'
 import useStorage from '@src/hooks/useStorage'
+import Logo from '@src/icons/Logo.icon'
 
 import { configIds, configInputIds } from '@src/constants/config.constants'
+import { iconSizes } from '@src/constants/icon.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { sidePanelOptions } from './Preferences.constants'
 import * as S from './Preferences.styles'
@@ -25,36 +27,44 @@ export const Preferences = () => {
 
   return (
     <S.PreferencesWrapper>
-      <SidePanel
-        options={sidePanelOptions}
-        selectedOptionId={selectedSectionId}
-        onChange={setSelectedSectionId}
-      />
+      <S.HeaderWrapper>
+        <Logo size={iconSizes.NORMAL} />
 
-      <S.ContentWrapper className="vertical-scroller">
-        <S.SectionWrapper key={sectionSelected.id}>
-          <S.SectionTitle>{sectionSelected.name}</S.SectionTitle>
-          <S.SectionDescription>{sectionSelected.description}</S.SectionDescription>
+        <S.HeaderTitle>Configuration</S.HeaderTitle>
+      </S.HeaderWrapper>
 
-          {sectionSelected.inputs.map(input => {
-            return (
-              <FieldRenderer
-                key={input.id}
-                description={input.description}
-                value={input.value}
-                inputId={input.id}
-                type={input.type}
-                options={input.options}
-                validations={input.validations}
-                postFix={input.postFix}
-                name={`${sectionSelected.id}-${input.id}`}
-                title={input.name}
-                changeConfig={config.change}
-                handleClickInButtons={handleClicksInButtonFields}
-              />
-            )
-          })}
-        </S.SectionWrapper>
+      <S.ContentWrapper>
+        <SidePanel
+          options={sidePanelOptions}
+          selectedOptionId={selectedSectionId}
+          onChange={setSelectedSectionId}
+        />
+
+        <S.MainContentWrapper className="vertical-scroller">
+          <S.SectionWrapper key={sectionSelected.id}>
+            <S.SectionTitle>{sectionSelected.name}</S.SectionTitle>
+            <S.SectionDescription>{sectionSelected.description}</S.SectionDescription>
+
+            {sectionSelected.inputs.map(input => {
+              return (
+                <FieldRenderer
+                  key={input.id}
+                  description={input.description}
+                  value={input.value}
+                  inputId={input.id}
+                  type={input.type}
+                  options={input.options}
+                  validations={input.validations}
+                  postFix={input.postFix}
+                  name={`${sectionSelected.id}-${input.id}`}
+                  title={input.name}
+                  changeConfig={config.change}
+                  handleClickInButtons={handleClicksInButtonFields}
+                />
+              )
+            })}
+          </S.SectionWrapper>
+        </S.MainContentWrapper>
       </S.ContentWrapper>
     </S.PreferencesWrapper>
   )

@@ -10,7 +10,8 @@
     "scripting",
     "history",
     "sidePanel",
-    "fontSettings"
+    "fontSettings",
+    "notifications"
   ],
   "host_permissions": ["http://*/", "https://*/"],
   "icons": {

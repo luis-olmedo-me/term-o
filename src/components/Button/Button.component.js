@@ -21,7 +21,7 @@ export const Button = ({
     >
       {Icon && (
         <S.ButtonIconWrapper>
-          <Icon size={iconSizes.NORMAL} />
+          <Icon size={iconSizes.SMALL} />
         </S.ButtonIconWrapper>
       )}
 

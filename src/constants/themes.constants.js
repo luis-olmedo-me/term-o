@@ -78,7 +78,8 @@ export const defaultStyleMeasures = {
     50: '.75rem',
     100: '1rem',
     200: '1.25rem',
-    300: '1.50rem'
+    300: '1.50rem',
+    400: '2rem'
   },
 
   lineHeight: {

@@ -37,35 +37,6 @@ const Logo = ({ size }) => {
         transform="rotate(-45 227.555 81.6208)"
         fill={theme.colors.brightWhite}
       />
-      <defs>
-        <filter
-          id="filter0_d_1228_14"
-          x="102"
-          y="24"
-          width="338"
-          height="464"
-          filterUnits="userSpaceOnUse"
-          colorInterpolationFilters="sRGB"
-        >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feOffset dx="-30" />
-          <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
-          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1228_14" />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_1228_14"
-            result="shape"
-          />
-        </filter>
-      </defs>
     </svg>
   )
 }

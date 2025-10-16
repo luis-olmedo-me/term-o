@@ -18,6 +18,7 @@ export const ButtonWrapper = styled.button`
   align-items: center;
   justify-content: center;
   padding: ${t('space.300')} ${t('space.300')};
+  justify-content: start;
   transition:
     background-color 0.1s ease-in-out,
     color 0.1s ease-in-out;
@@ -84,7 +85,7 @@ export const ButtonWrapper = styled.button`
 
 export const ButtonIconWrapper = styled.span`
   margin: 0 ${t('space.400')} 0 ${t('space.200')};
-  height: ${iconSizes.NORMAL}px;
+  height: ${iconSizes.SMALL}px;
 
   &:only-child {
     margin: 0;

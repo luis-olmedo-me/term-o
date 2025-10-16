@@ -15,7 +15,7 @@ export const ContentWrapper = styled.div`
 
 export const MainContentWrapper = styled.div`
   width: 100%;
-  height: calc(100vh - ${t('space.600')} * 6 - ${t('fontSize.200')});
+  height: calc(100vh - ${t('space.600')} * 6 - ${t('fontSize.300')});
   overflow: hidden scroll;
   padding-right: ${t('space.600')};
   box-sizing: content-box;
@@ -44,6 +44,6 @@ export const HeaderWrapper = styled.header`
 
 export const HeaderTitle = styled.h1`
   display: inline;
-  font-size: ${t('fontSize.200')};
+  font-size: ${t('fontSize.300')};
   margin: 0;
 `

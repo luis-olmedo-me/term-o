@@ -121,26 +121,6 @@ export const defaultConfigSections = [
         value: configDefaultValues[configInputIds.STATUS_INDICATOR]
       },
       {
-        id: configInputIds.STATUS_BAR,
-        name: 'Status bar',
-        description: 'Display the status bar in the terminal prompt.',
-        type: availableInputTypes.BOOLEAN,
-        postFix: null,
-        options: [],
-        validations: [],
-        value: configDefaultValues[configInputIds.STATUS_BAR]
-      },
-      {
-        id: configInputIds.STATUS_LIGHT,
-        name: 'Status light',
-        description: 'Display the status light in the terminal prompt.',
-        type: availableInputTypes.BOOLEAN,
-        postFix: null,
-        options: [],
-        validations: [],
-        value: configDefaultValues[configInputIds.STATUS_LIGHT]
-      },
-      {
         id: configInputIds.CONTEXT,
         name: 'Prompt Context',
         description:
@@ -203,6 +183,26 @@ export const defaultConfigSections = [
         ],
         validations: [],
         value: configDefaultValues[configInputIds.FONT_SIZE]
+      },
+      {
+        id: configInputIds.STATUS_BAR,
+        name: 'Status bar',
+        description: 'Display the status bar in the terminal prompt.',
+        type: availableInputTypes.BOOLEAN,
+        postFix: null,
+        options: [],
+        validations: [],
+        value: configDefaultValues[configInputIds.STATUS_BAR]
+      },
+      {
+        id: configInputIds.STATUS_LIGHT,
+        name: 'Status light',
+        description: 'Display the status light in the terminal prompt.',
+        type: availableInputTypes.BOOLEAN,
+        postFix: null,
+        options: [],
+        validations: [],
+        value: configDefaultValues[configInputIds.STATUS_LIGHT]
       }
     ]
   },

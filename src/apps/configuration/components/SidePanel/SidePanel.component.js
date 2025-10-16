@@ -8,12 +8,15 @@ import * as S from './SidePanel.styles'
 export const SidePanel = ({ options, selectedOptionId, onChange }) => {
   return (
     <S.SidePanelWrapper>
-      <Logo size={iconSizes.LARGE} />
+      <S.IconWrapper>
+        <Logo size={iconSizes.LARGE} />
+      </S.IconWrapper>
 
       {options.map(option => {
         return (
           <Button
             fullWidth
+            Icon={option.Icon}
             key={option.id}
             onClick={() => onChange(option.id)}
             selected={selectedOptionId == option.id}

@@ -1,3 +1,6 @@
+import Brush from '@src/icons/Brush.icon'
+import Data from '@src/icons/Data.icon'
+import Productivity from '@src/icons/Productivity.icon'
 import { availableInputTypes } from './inputs.constants'
 import { basicColorKeys, colorThemeKeys, defaultColorTheme } from './themes.constants'
 
@@ -59,6 +62,7 @@ export const defaultConfigSections = [
     id: configIds.FUNCTIONALITY,
     name: 'Functionality',
     description: 'Adjust how the terminal behaves and interacts with the browser.',
+    Icon: Productivity,
     inputs: [
       {
         id: configInputIds.COPY_ON_SELECTION,
@@ -153,6 +157,7 @@ export const defaultConfigSections = [
     id: configIds.APPEARENCE,
     name: 'Appearence',
     description: 'Customize the visual appearance of the terminal, including font settings.',
+    Icon: Brush,
     inputs: [
       {
         id: configInputIds.THEME_NAME,
@@ -205,6 +210,7 @@ export const defaultConfigSections = [
     id: configIds.DATA,
     name: 'Data',
     description: 'Manage storage and configuration backups.',
+    Icon: Data,
     inputs: [
       {
         id: configInputIds.RESET_DATA,

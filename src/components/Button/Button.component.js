@@ -19,9 +19,13 @@ export const Button = ({
       aria-selected={selected}
       aria-variant={variant}
     >
-      {Icon && <Icon size={iconSizes.NORMAL} />}
+      {Icon && (
+        <S.ButtonIconWrapper>
+          <Icon size={iconSizes.NORMAL} />
+        </S.ButtonIconWrapper>
+      )}
 
-      {value}
+      {value && <span>{value}</span>}
     </S.ButtonWrapper>
   )
 }

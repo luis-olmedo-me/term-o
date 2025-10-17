@@ -38,11 +38,11 @@ export const Terminal = () => {
 
   useEffect(
     function focusTabAutomatically() {
-      if (!switchTabAutomatically) return
-
       const updateTab = () => getCurrentTab().then(setTab)
 
       updateTab()
+
+      if (!switchTabAutomatically) return
       window.addEventListener('focus', updateTab)
 
       return () => window.removeEventListener('focus', updateTab)

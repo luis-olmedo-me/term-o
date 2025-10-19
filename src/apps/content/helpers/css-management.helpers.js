@@ -77,13 +77,13 @@ export const findCSSRuleForElement = (element, propertyName) => {
   const isInlineStyle = propertyName in inlineStyles
 
   for (const styleSheet of styleSheets) {
-    const isCrossOrigin = styleSheet.href
-      ? new URL(styleSheet.href).orgin !== window.location.origin
-      : false
+    let rules = null
 
-    if (isCrossOrigin) continue
-
-    const rules = styleSheet.cssRules || styleSheet.rules
+    try {
+      rules = styleSheet.cssRules || styleSheet.rules
+    } catch {
+      continue
+    }
 
     for (const rule of rules) {
       const isMatch = element.matches(rule.selectorText)
@@ -100,7 +100,7 @@ export const findCSSRuleForElement = (element, propertyName) => {
 }
 
 export const styleStringToArray = styleString => {
-  return styleString.split(';').reduce(function(styleArray, style) {
+  return styleString.split(';').reduce(function (styleArray, style) {
     const parts = style.split(':')
 
     if (parts.length !== 2) return styleArray
@@ -110,4 +110,27 @@ export const styleStringToArray = styleString => {
 
     return key && value ? [...styleArray, [key, value]] : styleArray
   }, [])
+}
+
+export const getNonDefaultComputedStyles = element => {
+  const differences = []
+  const computedStyles = window.getComputedStyle(element)
+  const defaultElement = document.createElement(element.tagName)
+  const defaults = window.getComputedStyle(defaultElement)
+
+  document.body.appendChild(defaultElement)
+
+  for (let i = 0; i < computedStyles.length; i++) {
+    const prop = computedStyles[i]
+    const value = computedStyles.getPropertyValue(prop)
+    const defaultValue = defaults.getPropertyValue(prop)
+
+    if (value !== defaultValue) {
+      differences.push({ prop, value })
+    }
+  }
+
+  document.body.removeChild(defaultElement)
+
+  return differences
 }

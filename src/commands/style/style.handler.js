@@ -1,7 +1,7 @@
 import { applyElementStyles, getElementStyles } from '@src/processes'
 
 import { createHelpView } from '@src/helpers/command.helpers'
-import { formatRule } from '@src/helpers/format.helpers'
+import { formatStyle } from '@src/helpers/format.helpers'
 
 export const styleHandler = async command => {
   const { tab } = command.data
@@ -9,16 +9,14 @@ export const styleHandler = async command => {
 
   if (P`list`) {
     command.update('Searching element styles.')
-    const rules = await getElementStyles(tab.id, {
+    const styles = await getElementStyles(tab.id, {
       searchByXpath: P`on`,
-      searchByProperty: P`property`,
-      searchBySelector: P`selector`
+      searchByProperty: P`property`
     })
-
-    const formattedStyles = rules.map(formatRule)
+    const formattedStyles = styles.map(formatStyle)
 
     command.reset()
-    if (rules.length) command.update(...formattedStyles)
+    command.update(...formattedStyles)
   }
 
   if (P`apply`) {
@@ -27,7 +25,7 @@ export const styleHandler = async command => {
       newInlineStyles: P`apply`
     })
 
-    const formattedStyles = rules.map(formatRule)
+    const formattedStyles = rules.map(formatStyle)
 
     if (rules.length) command.update(...formattedStyles)
   }

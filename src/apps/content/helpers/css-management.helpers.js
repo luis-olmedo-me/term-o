@@ -19,8 +19,8 @@ export const getNonDefaultComputedStyles = element => {
 
   document.body.appendChild(defaultElement)
 
-  for (let i = 0; i < computedStyles.length; i++) {
-    const prop = computedStyles[i]
+  for (let index = 0; index < computedStyles.length; index++) {
+    const prop = computedStyles[index]
     const value = computedStyles.getPropertyValue(prop)
     const defaultValue = defaults.getPropertyValue(prop)
 

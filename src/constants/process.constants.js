@@ -5,7 +5,6 @@ export const processNames = {
   GET_STORAGE: 'get-storage',
   SET_STORAGE: 'set-storage',
   GET_ELEMENT_STYLES: 'get-element-styles',
-  GET_ELEMENT_STYLES_TEST: 'get-element-styles-test',
   APPLY_ELEMENT_STYLES: 'apply-element-styles',
   CLICK_ELEMENT: 'click-element'
 }

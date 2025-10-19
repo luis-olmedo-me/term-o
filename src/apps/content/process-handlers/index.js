@@ -3,7 +3,6 @@ import applyElementStyles from './apply-element-styles.process'
 import clickElement from './click-element.process'
 import findDOMElement from './find-dom-element.process'
 import getDOMElements from './get-dom-elements.process'
-import getElementStylesTest from './get-element-styles-test.process'
 import getElementStyles from './get-element-styles.process'
 import getStorage from './get-storage.process'
 import setStorage from './set-storage.process'
@@ -14,7 +13,6 @@ export default {
   [processNames.GET_STORAGE]: getStorage,
   [processNames.SET_STORAGE]: setStorage,
   [processNames.GET_ELEMENT_STYLES]: getElementStyles,
-  [processNames.GET_ELEMENT_STYLES_TEST]: getElementStylesTest,
   [processNames.APPLY_ELEMENT_STYLES]: applyElementStyles,
   [processNames.CLICK_ELEMENT]: clickElement
 }

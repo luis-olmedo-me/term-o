@@ -11,8 +11,7 @@
     "history",
     "sidePanel",
     "fontSettings",
-    "notifications",
-    "<all_urls>"
+    "notifications"
   ],
   "host_permissions": ["http://*/", "https://*/"],
   "icons": {

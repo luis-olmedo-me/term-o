@@ -46,14 +46,6 @@ export const getElementStyles = (tabId, data) => {
   })
 }
 
-export const getElementStylesTest = tabId => {
-  return createWorkerProcessRequest({
-    type: processNames.GET_ELEMENT_STYLES_TEST,
-    defaultResponse: [],
-    tabId
-  })
-}
-
 export const applyElementStyles = (tabId, data) => {
   return createWorkerProcessRequest({
     type: processNames.APPLY_ELEMENT_STYLES,

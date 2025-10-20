@@ -122,5 +122,5 @@ export const formatStyle = ({ prop, value }) => {
   const quotedProp = getQuotedString(prop)
   const quotedValue = getQuotedString(value)
 
-  return `${C`yellow`}${quotedProp} ${C`yellow`}${quotedValue}`
+  return `${C`cyan`}${quotedProp} ${C`yellow`}${quotedValue}`
 }

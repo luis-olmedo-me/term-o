@@ -11,7 +11,8 @@ export const storageKeys = {
   SCRIPTS: 'scripts',
   HISTORY: 'history',
   PROMPT_HISTORY: 'prompt-history',
-  THEMES: 'themes'
+  THEMES: 'themes',
+  TAB_ID: 'tab-id'
 }
 
 export const storageNamespaces = {
@@ -61,6 +62,12 @@ export const storageValues = [
     key: storageKeys.THEMES,
     namespace: storageNamespaces.LOCAL,
     defaultValue: [defaultColorTheme],
+    Template: StorageSimple
+  },
+  {
+    key: storageKeys.TAB_ID,
+    namespace: storageNamespaces.SESSION,
+    defaultValue: null,
     Template: StorageSimple
   }
 ]

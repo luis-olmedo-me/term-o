@@ -1,3 +1,5 @@
+import globalState, { stateKeys } from '@src/libs/gobal-state'
+
 import {
   closeTab,
   createTab,
@@ -13,7 +15,7 @@ import { formatTab } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
 
 export const tabsHandler = async command => {
-  const { tab, setTab } = command.data
+  const tab = globalState.get(stateKeys.TAB)
   const P = name => command.props[name]
 
   if (P`reload`) {
@@ -29,7 +31,7 @@ export const tabsHandler = async command => {
     const tab = await getTab({ tabId: cleanTabId(P`point`) })
     const update = formatTab(tab)
 
-    setTab(tab)
+    globalState.set(stateKeys.TAB, tab.id)
 
     command.update(update)
   }

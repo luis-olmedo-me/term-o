@@ -1,3 +1,4 @@
+import globalState, { stateKeys } from '@src/libs/gobal-state'
 import { clickElement, findDOMElement, getDOMElements } from '@src/processes'
 
 import { createHelpView } from '@src/helpers/command.helpers'
@@ -6,10 +7,9 @@ import { preAppendCounters } from '@src/helpers/messages.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
 
 export const domHandler = async command => {
-  const { tab } = command.data
   const P = name => command.props[name]
 
-  const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : tab.id
+  const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : globalState.get(stateKeys.TAB)
 
   if (P`search-xpath`) {
     const element = await findDOMElement(tabId, {

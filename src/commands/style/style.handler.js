@@ -1,10 +1,11 @@
+import globalState, { stateKeys } from '@src/libs/gobal-state'
 import { applyElementStyles, getElementStyles } from '@src/processes'
 
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatStyle } from '@src/helpers/format.helpers'
 
 export const styleHandler = async command => {
-  const { tab } = command.data
+  const tab = globalState.get(stateKeys.TAB)
   const P = name => command.props[name]
 
   if (P`list`) {

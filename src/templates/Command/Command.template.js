@@ -19,7 +19,6 @@ export class Command extends EventListener {
     this.executionContext = executionContext
     this.context = ''
     this.title = ''
-    this.data = {}
     this.props = {}
     this.updates = []
     this.staticUpdates = []
@@ -165,16 +164,6 @@ export class Command extends EventListener {
     } catch (error) {
       this.throw(error)
     }
-
-    return this
-  }
-
-  applyData(data) {
-    const newData = { ...this.data, ...data }
-
-    this.allCommands.forEach(command => {
-      command.data = newData
-    })
 
     return this
   }

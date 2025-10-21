@@ -8,6 +8,7 @@ import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { limitSimplifiedCommands } from '@src/helpers/command.helpers'
 import { createContext } from '@src/helpers/contexts.helpers'
+import globalState, { stateKeys } from '@src/libs/gobal-state'
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
 
@@ -15,8 +16,9 @@ commandParser.setExecutionContext(executionContexts.BACKGROUND)
 
 const executeEvents = async (events, defaultTab) => {
   let commands = []
-  let tab = defaultTab
-  const setTab = newTab => (tab = newTab)
+  let previousTab = globalState.get(stateKeys.TAB)
+
+  globalState.set(stateKeys.TAB, defaultTab.id)
 
   for (let index = 0; index < events.length; index++) {
     const aliases = storage.get(storageKeys.ALIASES)
@@ -26,8 +28,9 @@ const executeEvents = async (events, defaultTab) => {
     const contextInputValue = config.getValueById(configInputIds.CONTEXT)
 
     const event = events[index]
+    const tab = globalState.get(stateKeys.TAB)
     const context = createContext(contextInputValue, tab)
-    const command = commandParser.read(event.line).applyData({ tab, setTab }).applyContext(context)
+    const command = commandParser.read(event.line).applyContext(context)
 
     if (!command.finished) await command.execute()
 
@@ -46,6 +49,7 @@ const executeEvents = async (events, defaultTab) => {
   const commandsLimited = limitSimplifiedCommands(newCommands, maxLinesInputValue)
 
   storage.set(storageKeys.HISTORY, commandsLimited)
+  globalState.set(stateKeys.TAB, previousTab.id)
 }
 
 chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {

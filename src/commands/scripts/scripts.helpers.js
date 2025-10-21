@@ -53,7 +53,7 @@ export const readFileContent = file => {
 export const executeCode = ({ scriptContent, command }) => {
   return new Promise((resolve, reject) => {
     const iframe = document.createElement('iframe')
-    iframe.setAttribute('src', 'sandbox.html')
+    iframe.setAttribute('src', chrome.runtime.getURL('sandbox.html'))
     iframe.setAttribute('style', 'display: none;')
     document.body.appendChild(iframe)
 

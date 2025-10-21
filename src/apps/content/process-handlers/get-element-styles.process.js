@@ -1,6 +1,6 @@
 import { getNonDefaultComputedStyles } from '@content/helpers/css-management.helpers'
 import { getElementByXPath } from '@content/helpers/dom-management.helpers'
-import { rgbToHex } from '@src/helpers/utils.helpers'
+import { isRgb, rgbToHex } from '@src/helpers/utils.helpers'
 
 export default async (resolve, data) => {
   const { searchByXpath, searchByProperty } = data
@@ -20,11 +20,9 @@ export default async (resolve, data) => {
     return true
   })
   const stylesWithHexValues = styles.map(style => {
-    const isRgbValue = /\brgba?\(/.test(style.value)
+    const isRgbValue = isRgb(style.value)
 
-    return isRgbValue
-      ? { ...style, value: style.value.replace(/rgba?\([^)]+\)/g, rgbToHex) }
-      : style
+    return isRgbValue ? { ...style, value: rgbToHex(style.value) } : style
   })
 
   resolve(stylesWithHexValues)

@@ -8,7 +8,7 @@ import useStorage from '@src/hooks/useStorage'
 import Gear from '@src/icons/Gear.icon'
 import commandParser from '@src/libs/command-parser'
 
-import { createTab, getCurrentTab } from '@src/browser-api/tabs.api'
+import { createTab, getCurrentTab, getTab } from '@src/browser-api/tabs.api'
 import { commandStatuses } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
@@ -18,11 +18,11 @@ import { copyText, getSelectedText } from './Terminal.helpers'
 import * as S from './Terminal.styles'
 
 export const Terminal = () => {
-  const [tab, setTab] = useState(null)
-
   const inputRef = useRef(null)
-  const currentCommandRef = useRef(null)
 
+  const [tab, setTab] = useState()
+
+  const [tabId, setTabId] = useStorage({ key: storageKeys.TAB_ID })
   const [aliases] = useStorage({ key: storageKeys.ALIASES })
   const [simplifiedCommands, setSimplifiedCommands] = useStorage({ key: storageKeys.HISTORY })
   const [config] = useStorage({ key: storageKeys.CONFIG })
@@ -38,7 +38,7 @@ export const Terminal = () => {
 
   useEffect(
     function focusTabAutomatically() {
-      const updateTab = () => getCurrentTab().then(setTab)
+      const updateTab = () => getCurrentTab().then(tab => setTabId(tab.id))
 
       updateTab()
 
@@ -48,6 +48,13 @@ export const Terminal = () => {
       return () => window.removeEventListener('focus', updateTab)
     },
     [switchTabAutomatically]
+  )
+
+  useEffect(
+    function updateCurrentTab() {
+      getTab({ tabId }).then(tab => setTab(tab))
+    },
+    [tabId]
   )
 
   useEffect(
@@ -92,8 +99,7 @@ export const Terminal = () => {
   }
 
   const handleEnter = value => {
-    const newCommand = commandParser.read(value).applyData({ tab, setTab }).applyContext(context)
-    currentCommandRef.current = newCommand
+    const newCommand = commandParser.read(value).applyContext(context)
 
     if (!newCommand.failed) {
       newCommand.addEventListener('update', handleCommandUpdate)

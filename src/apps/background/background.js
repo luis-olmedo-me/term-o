@@ -3,7 +3,7 @@ import processWaitList from '@src/libs/process-wait-list'
 import storage from '@src/libs/storage'
 import processHandlers from './process-handlers'
 
-import { getTab } from '@src/browser-api/tabs.api'
+import { getCurrentTab, getTab } from '@src/browser-api/tabs.api'
 import { executionContexts } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
@@ -78,3 +78,5 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return sendResponse({ status: 'ok', data: process })
   }
 })
+
+getCurrentTab().then(tab => storage.set(storageKeys.TAB_ID, tab.id))

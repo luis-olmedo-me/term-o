@@ -1,3 +1,6 @@
+const rgbStartPattern = /\brgba?\(/
+const rgbPattern = /rgba?\([^)]+\)/g
+
 export const debounce = (callback, wait) => {
   let timerId
 
@@ -35,3 +38,34 @@ export const getQuotedString = value => {
 export const spreadIf = (condition, value) => {
   return condition ? value : {}
 }
+
+const rgbToHexByFragment = rgb => {
+  const nums = rgb.match(/\d+(\.\d+)?/g).map(Number)
+  const [r, g, b, a, ...rest] = nums
+
+  if (rest.length) return rgb
+
+  if (a === undefined || a === 1) {
+    return (
+      '#' +
+      [r, g, b]
+        .map(x => x.toString(16).padStart(2, '0'))
+        .join('')
+        .toUpperCase()
+    )
+  }
+
+  const alpha = Math.round(a * 255)
+  return (
+    '#' +
+    [r, g, b, alpha]
+      .map(x => x.toString(16).padStart(2, '0'))
+      .join('')
+      .toUpperCase()
+  )
+}
+export const rgbToHex = value => {
+  return value.replace(rgbPattern, rgbToHexByFragment)
+}
+
+export const isRgb = value => rgbStartPattern.test(value)

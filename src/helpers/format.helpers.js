@@ -118,17 +118,9 @@ export const formatScript = ({ name }) => {
   return `${C`brightPurple`}${quotedName}`
 }
 
-export const formatRule = ({ styles, selector }) => {
-  const quotedSelector = getQuotedString(selector)
+export const formatStyle = ({ prop, value }) => {
+  const quotedProp = getQuotedString(prop)
+  const quotedValue = getQuotedString(value)
 
-  const css = styles
-    .map(([name, value]) => {
-      const coloredName = `${C`green`}${getQuotedString(name)}`
-      const coloredValue = value ? ` ${C`yellow`}${getQuotedString(value)}` : ''
-
-      return `${C`purple`}[${coloredName}${coloredValue}${C`purple`}]`
-    })
-    .join(' ')
-
-  return css ? `${C`cyan`}${quotedSelector} ${css}` : `${C`cyan`}${quotedSelector}`
+  return `${C`cyan`}${quotedProp} ${C`yellow`}${quotedValue}`
 }

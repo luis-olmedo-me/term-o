@@ -1,51 +1,29 @@
-import {
-  clearMockedCrossOriginStyleSheets,
-  findCSSRuleForElement,
-  mockCrossOriginStyleSheets
-} from '@content/helpers/css-management.helpers'
+import { getNonDefaultComputedStyles } from '@content/helpers/css-management.helpers'
 import { getElementByXPath } from '@content/helpers/dom-management.helpers'
+import { isRgb, rgbToHex } from '@src/helpers/utils.helpers'
 
 export default async (resolve, data) => {
-  const { searchByXpath, searchByProperty, searchBySelector } = data
+  const { searchByXpath, searchByProperty } = data
   const [searchByPropName, searchByPropValue] = searchByProperty
 
   const propNamePattern = searchByPropName && new RegExp(searchByPropName)
   const propValuePattern = searchByPropValue && new RegExp(searchByPropValue)
-  const selectorPattern = searchBySelector && new RegExp(searchBySelector)
 
   const element = getElementByXPath(searchByXpath)
 
   if (!element) return resolve([])
 
-  const computedStyles = getComputedStyle(element)
-  let rules = []
+  const styles = getNonDefaultComputedStyles(element).filter(({ prop, value }) => {
+    if (propNamePattern) return propNamePattern.test(prop)
+    if (propValuePattern) return propValuePattern.test(value)
 
-  await mockCrossOriginStyleSheets()
+    return true
+  })
+  const stylesWithHexValues = styles.map(style => {
+    const isRgbValue = isRgb(style.value)
 
-  for (let i = 0; i < computedStyles.length; i++) {
-    const propName = computedStyles[i]
-    const propValue = computedStyles.getPropertyValue(propName)
-    const selector = findCSSRuleForElement(element, propName)
+    return isRgbValue ? { ...style, value: rgbToHex(style.value) } : style
+  })
 
-    if (!selector) continue
-    if (propNamePattern && !propNamePattern.test(propName)) continue
-    if (propValuePattern && !propValuePattern.test(propValue)) continue
-    if (selectorPattern && !selectorPattern.test(selector)) continue
-
-    const alreadyExistingRule = rules.find(rule => rule.selector === selector)
-    const style = [propName, propValue]
-
-    rules = alreadyExistingRule
-      ? rules.map(rule =>
-          rule.selector === selector ? { selector, styles: [...rule.styles, style] } : rule
-        )
-      : rules.concat({ selector, styles: [style] })
-  }
-
-  const inlineRule = rules.find(rule => rule.selector === 'element.styles')
-  const restRules = rules.filter(rule => rule.selector !== 'element.styles')
-  const sortedRules = inlineRule ? [inlineRule, ...restRules] : restRules
-
-  clearMockedCrossOriginStyleSheets()
-  resolve(sortedRules)
+  resolve(stylesWithHexValues)
 }

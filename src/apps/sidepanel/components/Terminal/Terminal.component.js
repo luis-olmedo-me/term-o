@@ -72,18 +72,6 @@ export const Terminal = () => {
     window.addEventListener('keydown', focusOnPrompt)
   }
 
-  const clearCurrentCommandRef = () => {
-    if (currentCommandRef.current) {
-      currentCommandRef.current.removeAllEventListeners()
-      currentCommandRef.current = null
-    }
-  }
-
-  const clearLogs = () => {
-    clearCurrentCommandRef()
-    setSimplifiedCommands([])
-  }
-
   const handleCommandUpdate = command => {
     setSimplifiedCommands(oldSimplifiedCommands => {
       const updatedCommands = updateSimplifiedCommandsWith(
@@ -101,14 +89,10 @@ export const Terminal = () => {
     handleCommandUpdate(command)
 
     command.removeAllEventListeners()
-    clearCurrentCommandRef()
   }
 
   const handleEnter = value => {
-    const newCommand = commandParser
-      .read(value)
-      .applyData({ tab, setTab, clearLogs })
-      .applyContext(context)
+    const newCommand = commandParser.read(value).applyData({ tab, setTab }).applyContext(context)
     currentCommandRef.current = newCommand
 
     if (!newCommand.failed) {

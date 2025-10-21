@@ -1,6 +1,7 @@
-export const clearHandler = async command => {
-  const { clearLogs } = command.data
+import { storageKeys } from '@src/constants/storage.constants'
+import storage from '@src/libs/storage'
 
-  clearLogs()
+export const clearHandler = async command => {
+  storage.set(storageKeys.HISTORY, [])
   command.hide()
 }

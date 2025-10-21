@@ -17,7 +17,6 @@ const executeEvents = async (events, defaultTab) => {
   let commands = []
   let tab = defaultTab
   const setTab = newTab => (tab = newTab)
-  const clearLogs = () => storage.set(storageKeys.HISTORY, [])
 
   for (let index = 0; index < events.length; index++) {
     const aliases = storage.get(storageKeys.ALIASES)
@@ -28,10 +27,7 @@ const executeEvents = async (events, defaultTab) => {
 
     const event = events[index]
     const context = createContext(contextInputValue, tab)
-    const command = commandParser
-      .read(event.line)
-      .applyData({ tab, setTab, clearLogs })
-      .applyContext(context)
+    const command = commandParser.read(event.line).applyData({ tab, setTab }).applyContext(context)
 
     if (!command.finished) await command.execute()
 

@@ -3,12 +3,12 @@ import processWaitList from '@src/libs/process-wait-list'
 import storage from '@src/libs/storage'
 import processHandlers from './process-handlers'
 
+import { getTab } from '@src/browser-api/tabs.api'
 import { executionContexts } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { limitSimplifiedCommands } from '@src/helpers/command.helpers'
 import { createContext } from '@src/helpers/contexts.helpers'
-import globalState, { stateKeys } from '@src/libs/gobal-state'
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
 
@@ -16,19 +16,21 @@ commandParser.setExecutionContext(executionContexts.BACKGROUND)
 
 const executeEvents = async (events, defaultTab) => {
   let commands = []
-  let previousTab = globalState.get(stateKeys.TAB)
+  let previousTabId = storage.get(storageKeys.TAB_ID)
 
-  globalState.set(stateKeys.TAB, defaultTab.id)
+  storage.set(storageKeys.TAB_ID, defaultTab.id)
 
   for (let index = 0; index < events.length; index++) {
+    const tabId = storage.get(storageKeys.TAB_ID)
     const aliases = storage.get(storageKeys.ALIASES)
+    const config = storage.get(storageKeys.CONFIG)
+
     commandParser.setAliases(aliases)
 
-    const config = storage.get(storageKeys.CONFIG)
     const contextInputValue = config.getValueById(configInputIds.CONTEXT)
-
+    const tab = await getTab({ tabId })
     const event = events[index]
-    const tab = globalState.get(stateKeys.TAB)
+
     const context = createContext(contextInputValue, tab)
     const command = commandParser.read(event.line).applyContext(context)
 
@@ -49,7 +51,7 @@ const executeEvents = async (events, defaultTab) => {
   const commandsLimited = limitSimplifiedCommands(newCommands, maxLinesInputValue)
 
   storage.set(storageKeys.HISTORY, commandsLimited)
-  globalState.set(stateKeys.TAB, previousTab.id)
+  storage.set(storageKeys.TAB_ID, previousTabId)
 }
 
 chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {

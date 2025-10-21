@@ -1,4 +1,4 @@
-import globalState, { stateKeys } from '@src/libs/gobal-state'
+import storage from '@src/libs/storage'
 
 import {
   closeTab,
@@ -10,12 +10,13 @@ import {
   updateTab
 } from '@src/browser-api/tabs.api'
 import { getWindow, updateWindow } from '@src/browser-api/windows.api'
+import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatTab } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
 
 export const tabsHandler = async command => {
-  const tab = globalState.get(stateKeys.TAB)
+  const tabId = storage.get(storageKeys.TAB_ID)
   const P = name => command.props[name]
 
   if (P`reload`) {
@@ -31,7 +32,7 @@ export const tabsHandler = async command => {
     const tab = await getTab({ tabId: cleanTabId(P`point`) })
     const update = formatTab(tab)
 
-    globalState.set(stateKeys.TAB, tab.id)
+    storage.set(storageKeys.TAB_ID, tab.id)
 
     command.update(update)
   }
@@ -79,6 +80,7 @@ export const tabsHandler = async command => {
   }
 
   if (P`pointing`) {
+    const tab = await getTab({ tabId })
     const update = formatTab(tab)
 
     command.update(update)

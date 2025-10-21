@@ -1,15 +1,16 @@
-import globalState, { stateKeys } from '@src/libs/gobal-state'
-import { getStorage, setStorage } from '@src/processes'
+import storage from '@src/libs/storage'
 
+import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatStorageAsString, formatStorageProp, formatText } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
+import { getStorage, setStorage } from '@src/processes'
 import { getStorageNamespace } from './storage.helpers'
 
 export const storageHandler = async command => {
   const P = name => command.props[name]
 
-  const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : globalState.get(stateKeys.TAB)
+  const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : storage.get(storageKeys.TAB_ID)
 
   if (P`local` || P`session` || P`cookie`) {
     const [key, value] = P`set`

@@ -1,16 +1,17 @@
-import globalState, { stateKeys } from '@src/libs/gobal-state'
-import { applyElementStyles, getElementStyles } from '@src/processes'
+import storage from '@src/libs/storage'
 
+import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatStyle } from '@src/helpers/format.helpers'
+import { applyElementStyles, getElementStyles } from '@src/processes'
 
 export const styleHandler = async command => {
-  const tab = globalState.get(stateKeys.TAB)
+  const tabId = storage.get(storageKeys.TAB_ID)
   const P = name => command.props[name]
 
   if (P`list`) {
     command.update('Searching element styles.')
-    const styles = await getElementStyles(tab.id, {
+    const styles = await getElementStyles(tabId, {
       searchByXpath: P`on`,
       searchByProperty: P`property`
     })
@@ -21,7 +22,7 @@ export const styleHandler = async command => {
   }
 
   if (P`apply`) {
-    const rules = await applyElementStyles(tab.id, {
+    const rules = await applyElementStyles(tabId, {
       searchByXpath: P`on`,
       newInlineStyles: P`apply`
     })

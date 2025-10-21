@@ -20,9 +20,11 @@ export default async (resolve, data) => {
     return true
   })
   const stylesWithHexValues = styles.map(style => {
-    const isRgbValue = /^rgba?\(/.test(style.value)
+    const isRgbValue = /\brgba?\(/.test(style.value)
 
-    return isRgbValue ? { ...style, value: rgbToHex(style.value) } : style
+    return isRgbValue
+      ? { ...style, value: style.value.replace(/rgba?\([^)]+\)/g, rgbToHex) }
+      : style
   })
 
   resolve(stylesWithHexValues)

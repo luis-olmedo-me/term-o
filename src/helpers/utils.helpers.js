@@ -1,3 +1,6 @@
+const rgbStartPattern = /\brgba?\(/
+const rgbPattern = /rgba?\([^)]+\)/g
+
 export const debounce = (callback, wait) => {
   let timerId
 
@@ -36,7 +39,7 @@ export const spreadIf = (condition, value) => {
   return condition ? value : {}
 }
 
-export const rgbToHex = rgb => {
+const rgbToHexByFragment = rgb => {
   const nums = rgb.match(/\d+(\.\d+)?/g).map(Number)
   const [r, g, b, a, ...rest] = nums
 
@@ -61,3 +64,8 @@ export const rgbToHex = rgb => {
       .toUpperCase()
   )
 }
+export const rgbToHex = value => {
+  return value.replace(rgbPattern, rgbToHexByFragment)
+}
+
+export const isRgb = value => rgbStartPattern.test(value)

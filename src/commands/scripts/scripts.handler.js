@@ -64,10 +64,7 @@ export const scriptsHandler = async command => {
       return command.throw(`The script "${name}" does not exist.`)
     }
 
-    await executeCode({
-      scriptContent: existingScript.content,
-      command
-    })
+    await executeCode({ scriptContent: existingScript.content })
   }
 
   if (P`help`) createHelpView(command)

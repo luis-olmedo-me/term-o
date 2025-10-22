@@ -50,12 +50,13 @@ export const readFileContent = file => {
   })
 }
 
-export const executeCode = ({ scriptContent, command }) => {
+export const executeCode = ({ scriptContent }) => {
   return new Promise((resolve, reject) => {
     const iframe = document.createElement('iframe')
     iframe.setAttribute('src', chrome.runtime.getURL('sandbox.html'))
     iframe.setAttribute('style', 'display: none;')
     document.body.appendChild(iframe)
+    let updates = []
 
     const handleCodeEval = async function (event) {
       const type = event.data?.type
@@ -82,12 +83,12 @@ export const executeCode = ({ scriptContent, command }) => {
         }
 
         case 'sandbox-command-update': {
-          command.update(...data.updates)
+          updates = [...updates, ...data.updates]
           break
         }
 
         case 'sandbox-command-set-updates': {
-          command.setUpdates(...data.updates)
+          updates = [...data.updates]
           break
         }
 

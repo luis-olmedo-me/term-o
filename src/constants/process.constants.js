@@ -7,5 +7,6 @@ export const processNames = {
   GET_ELEMENT_STYLES: 'get-element-styles',
   APPLY_ELEMENT_STYLES: 'apply-element-styles',
   CLICK_ELEMENT: 'click-element',
-  EXECUTE_CODE: 'execute-code'
+  EXECUTE_CODE: 'execute-code',
+  EXECUTE_COMMAND: 'execute-command'
 }

@@ -73,6 +73,14 @@ export const executeCode = (tabId, data) => {
   })
 }
 
+export const executeCommand = data => {
+  return createWorkerProcessRequest({
+    type: processNames.EXECUTE_COMMAND,
+    defaultResponse: null,
+    data
+  })
+}
+
 export const getFontsAvailable = () => {
   return createWorkerProcessRequest({
     type: processNames.GET_FONTS_AVAILABLE,

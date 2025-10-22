@@ -28,6 +28,7 @@ const executeEvents = async (events, defaultTab) => {
     commandParser.setAliases(aliases)
 
     const contextInputValue = config.getValueById(configInputIds.CONTEXT)
+    const maxLinesInputValue = config.getValueById(configInputIds.MAX_LINES_PER_COMMAND)
     const tab = await getTab({ tabId })
     const event = events[index]
 
@@ -41,16 +42,15 @@ const executeEvents = async (events, defaultTab) => {
     if (commandVisible) {
       commands = [...commands, commandVisible.simplify()]
     }
+
+    const oldCommands = storage.get(storageKeys.HISTORY)
+
+    const newCommands = [...oldCommands, ...commands]
+    const commandsLimited = limitSimplifiedCommands(newCommands, maxLinesInputValue)
+
+    storage.set(storageKeys.HISTORY, commandsLimited)
   }
 
-  const config = storage.get(storageKeys.CONFIG)
-  const oldCommands = storage.get(storageKeys.HISTORY)
-  const maxLinesInputValue = config.getValueById(configInputIds.MAX_LINES_PER_COMMAND)
-
-  const newCommands = [...oldCommands, ...commands]
-  const commandsLimited = limitSimplifiedCommands(newCommands, maxLinesInputValue)
-
-  storage.set(storageKeys.HISTORY, commandsLimited)
   storage.set(storageKeys.TAB_ID, previousTabId)
 }
 

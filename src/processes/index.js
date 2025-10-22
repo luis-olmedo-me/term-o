@@ -64,6 +64,15 @@ export const clickElement = (tabId, data) => {
   })
 }
 
+export const executeCode = (tabId, data) => {
+  return createWorkerProcessRequest({
+    type: processNames.EXECUTE_CODE,
+    defaultResponse: null,
+    tabId,
+    data
+  })
+}
+
 export const getFontsAvailable = () => {
   return createWorkerProcessRequest({
     type: processNames.GET_FONTS_AVAILABLE,

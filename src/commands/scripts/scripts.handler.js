@@ -3,7 +3,8 @@ import storage from '@src/libs/storage'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatFile, formatScript } from '@src/helpers/format.helpers'
-import { executeCode, readFileContent, uploadFile } from './scripts.helpers'
+import { executeCode } from '@src/processes'
+import { readFileContent, uploadFile } from './scripts.helpers'
 
 export const scriptsHandler = async command => {
   const P = name => command.props[name]
@@ -57,6 +58,7 @@ export const scriptsHandler = async command => {
 
   if (P`run`) {
     const name = P`run`
+    const tabId = storage.get(storageKeys.TAB_ID)
     const scripts = storage.get(storageKeys.SCRIPTS)
     const existingScript = scripts.find(script => script.name === name)
 
@@ -64,7 +66,7 @@ export const scriptsHandler = async command => {
       return command.throw(`The script "${name}" does not exist.`)
     }
 
-    await executeCode({ scriptContent: existingScript.content })
+    await executeCode(tabId, { script: existingScript.content })
   }
 
   if (P`help`) createHelpView(command)

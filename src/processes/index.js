@@ -64,11 +64,10 @@ export const clickElement = (tabId, data) => {
   })
 }
 
-export const executeCode = (tabId, data) => {
+export const executeCode = data => {
   return createWorkerProcessRequest({
     type: processNames.EXECUTE_CODE,
-    defaultResponse: null,
-    tabId,
+    defaultResponse: {},
     data
   })
 }

@@ -1,3 +1,5 @@
+import { getQuotedString } from './utils.helpers'
+
 export const getArgs = value => {
   const fragments = value.split(' ')
 
@@ -115,4 +117,31 @@ export const getArray = value => {
   return itemsAsArgs.map(item => {
     return /^"|^'/.test(item) ? item.slice(1).slice(0, -1) : ''
   })
+}
+
+export const buildLineFromProps = (props, commandName) => {
+  const defaultValue = commandName ? [commandName] : []
+
+  return Object.entries(props).reduce((args, [name, value]) => {
+    switch (typeof value) {
+      case 'object': {
+        const isArray = Array.isArray(value)
+        const formattedValues = isArray ? value.map(item => `"${item}"`) : []
+
+        return isArray ? [...args, `--${name}`, `[${formattedValues.join(' ')}]`] : args
+      }
+
+      case 'boolean': {
+        return [...args, `--${name}`]
+      }
+
+      case 'string': {
+        return [...args, `--${name}`, getQuotedString(value)]
+      }
+
+      default: {
+        return [...args, `--${name}`, value]
+      }
+    }
+  }, defaultValue)
 }

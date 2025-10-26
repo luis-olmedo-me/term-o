@@ -58,7 +58,6 @@ export const scriptsHandler = async command => {
 
   if (P`run`) {
     const name = P`run`
-    const tabId = storage.get(storageKeys.TAB_ID)
     const scripts = storage.get(storageKeys.SCRIPTS)
     const existingScript = scripts.find(script => script.name === name)
 
@@ -66,7 +65,11 @@ export const scriptsHandler = async command => {
       return command.throw(`The script "${name}" does not exist.`)
     }
 
-    await executeCode(tabId, { script: existingScript.content })
+    command.update('Executing.')
+    const { error, updates } = await executeCode({ script: existingScript.content })
+
+    if (error) command.throw(error)
+    else command.setUpdates(...updates)
   }
 
   if (P`help`) createHelpView(command)

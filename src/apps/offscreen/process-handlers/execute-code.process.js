@@ -1,3 +1,8 @@
+import { commandStatuses } from '@src/constants/command.constants'
+import { buildLineFromProps, getRawArgs } from '@src/helpers/arguments.helpers'
+import { cleanColors } from '@src/helpers/themes.helpers'
+import { executeCommand } from '@src/processes'
+
 export default async (resolve, data) => {
   const { script } = data
 
@@ -6,7 +11,7 @@ export default async (resolve, data) => {
   iframe.setAttribute('style', 'display: none;')
   document.body.appendChild(iframe)
 
-  let updates = ['testing']
+  let updates = []
 
   const handleCodeEval = async function (event) {
     const type = event.data?.type
@@ -14,14 +19,18 @@ export default async (resolve, data) => {
 
     switch (type) {
       case 'sandbox-command': {
-        // const { updates } = await executeCommand({
-        //   line: buildLineFromProps(data.name, data.props)
-        // })
+        const { updates, status } = await executeCommand({
+          line: buildLineFromProps(data.props, data.name)
+        })
+        const hasError = status === commandStatuses.ERROR
+
+        const updatesUncolored = updates.map(cleanColors)
+        const formattedUpdates = hasError ? updatesUncolored : updatesUncolored.map(getRawArgs)
 
         iframe.contentWindow.postMessage(
           {
             type: 'sandbox-command-return',
-            data: { updates: [], hasError: false }
+            data: { updates: formattedUpdates, hasError }
           },
           '*'
         )
@@ -30,20 +39,35 @@ export default async (resolve, data) => {
 
       case 'sandbox-command-update': {
         updates = [...updates, ...data.updates]
+
+        iframe.contentWindow.postMessage(
+          {
+            type: 'sandbox-command-update-return',
+            data: { updates, hasError: false }
+          },
+          '*'
+        )
         break
       }
 
       case 'sandbox-command-set-updates': {
         updates = [...data.updates]
+
+        iframe.contentWindow.postMessage(
+          {
+            type: 'sandbox-command-set-updates-return',
+            data: { updates, hasError: false }
+          },
+          '*'
+        )
         break
       }
 
       case 'sandbox-command-finish': {
         document.body.removeChild(iframe)
-        window.removeEventListener('message', handleCodeEval.bind(this))
+        window.removeEventListener('message', handleCodeEval)
 
         resolve({ error: data.error, updates })
-
         break
       }
     }
@@ -53,10 +77,5 @@ export default async (resolve, data) => {
     window.addEventListener('message', handleCodeEval)
 
     iframe.contentWindow.postMessage({ type: 'sandbox-code', data: { code: script } }, '*')
-  }
-  iframe.onerror = () => {
-    document.body.removeChild(iframe)
-    window.removeEventListener('message', handleCodeEval)
-    resolve(['error'])
   }
 }

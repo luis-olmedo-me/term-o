@@ -122,26 +122,38 @@ export const getArray = value => {
 export const buildLineFromProps = (props, commandName) => {
   const defaultValue = commandName ? [commandName] : []
 
-  return Object.entries(props).reduce((args, [name, value]) => {
-    switch (typeof value) {
-      case 'object': {
-        const isArray = Array.isArray(value)
-        const formattedValues = isArray ? value.map(item => `"${item}"`) : []
+  return Object.entries(props)
+    .reduce((args, [name, value]) => {
+      switch (typeof value) {
+        case 'object': {
+          const isArray = Array.isArray(value)
+          const formattedValues = isArray ? value.map(item => `"${item}"`) : []
 
-        return isArray ? [...args, `--${name}`, `[${formattedValues.join(' ')}]`] : args
-      }
+          return isArray ? [...args, `--${name}`, `[${formattedValues.join(' ')}]`] : args
+        }
 
-      case 'boolean': {
-        return [...args, `--${name}`]
-      }
+        case 'boolean': {
+          return [...args, `--${name}`]
+        }
 
-      case 'string': {
-        return [...args, `--${name}`, getQuotedString(value)]
-      }
+        case 'string': {
+          return [...args, `--${name}`, getQuotedString(value)]
+        }
 
-      default: {
-        return [...args, `--${name}`, value]
+        default: {
+          return [...args, `--${name}`, value]
+        }
       }
-    }
-  }, defaultValue)
+    }, defaultValue)
+    .join(' ')
+}
+
+export const getRawArgs = value => {
+  const args = getArgs(value)
+
+  return args.reduce((rawArgs, arg) => {
+    if (arg.startsWith('"') && arg.endsWith('"')) return [...rawArgs, arg.slice(1, -1)]
+    if (arg.startsWith("'") && arg.endsWith("'")) return [...rawArgs, arg.slice(1, -1)]
+    return [...rawArgs, arg]
+  }, [])
 }

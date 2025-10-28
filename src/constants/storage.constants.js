@@ -1,3 +1,4 @@
+import StorageCommandQueue from '@src/templates/StorageCommandQueue'
 import StorageConfig from '@src/templates/StorageConfig'
 import StorageSimple from '@src/templates/StorageSimple'
 
@@ -68,7 +69,7 @@ export const storageValues = [
     key: storageKeys.TAB_ID,
     namespace: storageNamespaces.SESSION,
     defaultValue: null,
-    Template: StorageSimple
+    Template: StorageCommandQueue
   }
 ]
 

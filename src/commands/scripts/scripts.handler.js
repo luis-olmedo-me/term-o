@@ -3,8 +3,7 @@ import storage from '@src/libs/storage'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatFile, formatScript } from '@src/helpers/format.helpers'
-import { executeCode } from '@src/processes'
-import { readFileContent, uploadFile } from './scripts.helpers'
+import { executeCode, uploadFile } from '@src/processes'
 
 export const scriptsHandler = async command => {
   const P = name => command.props[name]
@@ -17,11 +16,10 @@ export const scriptsHandler = async command => {
   }
 
   if (P`upload`) {
-    const file = await uploadFile()
+    const tabId = storage.get(storageKeys.TAB_ID)
+    const file = await uploadFile(tabId)
 
     command.update('Reading uploaded file.')
-    const fileContent = await readFileContent(file)
-    const newScript = { name: file.name, content: fileContent }
 
     const scripts = storage.get(storageKeys.SCRIPTS)
     const alreadyExists = scripts.some(script => script.name === file.name)
@@ -30,7 +28,7 @@ export const scriptsHandler = async command => {
       return command.throw(`The script "${file.name}" already exists.`)
     }
 
-    const newScripts = scripts.concat(newScript)
+    const newScripts = scripts.concat(file)
     const update = formatFile(file)
 
     storage.set(storageKeys.SCRIPTS, newScripts)

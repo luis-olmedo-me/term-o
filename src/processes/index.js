@@ -70,6 +70,15 @@ export const clickElement = (tabId, { searchByXpath }) => {
   })
 }
 
+export const uploadFile = tabId => {
+  return createWorkerProcessRequest({
+    type: processNames.UPLOAD_FILE,
+    defaultResponse: {},
+    tabId,
+    data: null
+  })
+}
+
 export const executeCode = ({ script }) => {
   return createWorkerProcessRequest({
     type: processNames.EXECUTE_CODE,

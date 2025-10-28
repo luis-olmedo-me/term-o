@@ -69,7 +69,6 @@ chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   const { id, data } = request.data
   const handler = processHandlers[request.type]
-  ensureOffscreen()
 
   if (handler) {
     const process = id
@@ -80,9 +79,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 })
 
-getCurrentTab().then(tab => storage.set(storageKeys.TAB_ID, tab.id))
-
-const ensureOffscreen = async () => {
+chrome.runtime.onInstalled.addListener(async () => {
+  const tab = await getCurrentTab()
   const exists = await chrome.offscreen.hasDocument()
 
   if (!exists) {
@@ -92,5 +90,6 @@ const ensureOffscreen = async () => {
       justification: 'Secure execution of dynamic code inside a sandboxed iframe.'
     })
   }
-}
-ensureOffscreen()
+
+  storage.set(storageKeys.TAB_ID, tab.id)
+})

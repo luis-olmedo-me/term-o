@@ -17,9 +17,11 @@ export const scriptsHandler = async command => {
 
   if (P`upload`) {
     const tabId = storage.get(storageKeys.TAB_ID)
+
+    command.update('Upload file.')
     const file = await uploadFile(tabId)
 
-    command.update('Reading uploaded file.')
+    if (!file) throw 'Fail uploading file.'
 
     const scripts = storage.get(storageKeys.SCRIPTS)
     const alreadyExists = scripts.some(script => script.name === file.name)

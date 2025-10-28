@@ -1,15 +1,16 @@
-import { clickElement, findDOMElement, getDOMElements } from '@src/processes'
+import storage from '@src/libs/storage'
 
+import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatDOMEvent, formatElement } from '@src/helpers/format.helpers'
 import { preAppendCounters } from '@src/helpers/messages.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
+import { clickElement, findDOMElement, getDOMElements } from '@src/processes'
 
 export const domHandler = async command => {
-  const { tab } = command.data
   const P = name => command.props[name]
 
-  const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : tab.id
+  const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : storage.get(storageKeys.TAB_ID)
 
   if (P`search-xpath`) {
     const element = await findDOMElement(tabId, {

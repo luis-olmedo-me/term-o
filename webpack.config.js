@@ -8,6 +8,7 @@ module.exports = (_env, { watch, mode }) => ({
     content: './src/apps/content/content.js',
     sidepanel: './src/apps/sidepanel/sidepanel.js',
     sandbox: './src/apps/sandbox/sandbox.js',
+    offscreen: './src/apps/offscreen/offscreen.js',
     configuration: './src/apps/configuration/configuration.js'
   },
   output: {
@@ -42,6 +43,7 @@ module.exports = (_env, { watch, mode }) => ({
         { from: './src/images/required', to: './images' },
         { from: './src/apps/sidepanel/sidepanel.html', to: './sidepanel.html' },
         { from: './src/apps/sandbox/sandbox.html', to: './sandbox.html' },
+        { from: './src/apps/offscreen/offscreen.html', to: './offscreen.html' },
         { from: './src/apps/configuration/configuration.html', to: './configuration.html' }
       ]
     }),

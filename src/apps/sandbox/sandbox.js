@@ -25,17 +25,45 @@ async function safeEval(event) {
   }
 
   const update = (...args) => {
-    event.source.window.postMessage(
-      { type: 'sandbox-command-update', data: { updates: args } },
-      event.origin
-    )
+    return new Promise((resolve, reject) => {
+      const handleSandboxCommand = event => {
+        if (event.data?.type !== 'sandbox-command-update-return') return
+        const data = event.data.data
+        const errorMessage = data.updates.at(0)
+
+        window.removeEventListener('message', handleSandboxCommand)
+        if (!data.hasError) resolve(data.updates)
+        else reject(errorMessage)
+      }
+
+      window.addEventListener('message', handleSandboxCommand)
+
+      event.source.window.postMessage(
+        { type: 'sandbox-command-update', data: { updates: args } },
+        event.origin
+      )
+    })
   }
 
   const setUpdates = (...args) => {
-    event.source.window.postMessage(
-      { type: 'sandbox-command-set-updates', data: { updates: args } },
-      event.origin
-    )
+    return new Promise((resolve, reject) => {
+      const handleSandboxCommand = event => {
+        if (event.data?.type !== 'sandbox-command-set-updates-return') return
+        const data = event.data.data
+        const errorMessage = data.updates.at(0)
+
+        window.removeEventListener('message', handleSandboxCommand)
+        if (!data.hasError) resolve(data.updates)
+        else reject(errorMessage)
+      }
+
+      window.addEventListener('message', handleSandboxCommand)
+
+      event.source.window.postMessage(
+        { type: 'sandbox-command-set-updates', data: { updates: args } },
+        event.origin
+      )
+    })
   }
 
   const handledCommandNames = Object.values(commandNames)
@@ -69,7 +97,7 @@ async function safeEval(event) {
 
     return ''
   } catch (error) {
-    setUpdates(`${error}`)
+    await setUpdates(`${error}`)
     return `${error}`
   }
 }

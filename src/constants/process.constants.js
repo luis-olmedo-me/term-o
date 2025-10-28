@@ -6,5 +6,8 @@ export const processNames = {
   SET_STORAGE: 'set-storage',
   GET_ELEMENT_STYLES: 'get-element-styles',
   APPLY_ELEMENT_STYLES: 'apply-element-styles',
-  CLICK_ELEMENT: 'click-element'
+  CLICK_ELEMENT: 'click-element',
+  EXECUTE_CODE: 'execute-code',
+  EXECUTE_COMMAND: 'execute-command',
+  UPLOAD_FILE: 'upload-file'
 }

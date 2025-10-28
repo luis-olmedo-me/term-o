@@ -3,7 +3,7 @@ import storage from '@src/libs/storage'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatFile, formatScript } from '@src/helpers/format.helpers'
-import { executeCode, readFileContent, uploadFile } from './scripts.helpers'
+import { executeCode, uploadFile } from '@src/processes'
 
 export const scriptsHandler = async command => {
   const P = name => command.props[name]
@@ -16,11 +16,12 @@ export const scriptsHandler = async command => {
   }
 
   if (P`upload`) {
-    const file = await uploadFile()
+    const tabId = storage.get(storageKeys.TAB_ID)
 
-    command.update('Reading uploaded file.')
-    const fileContent = await readFileContent(file)
-    const newScript = { name: file.name, content: fileContent }
+    command.update('Upload file.')
+    const file = await uploadFile(tabId)
+
+    if (!file) throw 'Fail uploading file.'
 
     const scripts = storage.get(storageKeys.SCRIPTS)
     const alreadyExists = scripts.some(script => script.name === file.name)
@@ -29,7 +30,7 @@ export const scriptsHandler = async command => {
       return command.throw(`The script "${file.name}" already exists.`)
     }
 
-    const newScripts = scripts.concat(newScript)
+    const newScripts = scripts.concat(file)
     const update = formatFile(file)
 
     storage.set(storageKeys.SCRIPTS, newScripts)
@@ -64,10 +65,11 @@ export const scriptsHandler = async command => {
       return command.throw(`The script "${name}" does not exist.`)
     }
 
-    await executeCode({
-      scriptContent: existingScript.content,
-      command
-    })
+    command.update('Executing.')
+    const { error, updates } = await executeCode({ script: existingScript.content })
+
+    if (error) command.throw(error)
+    else command.setUpdates(...updates)
   }
 
   if (P`help`) createHelpView(command)

@@ -3,12 +3,12 @@ import EventListener from '@src/templates/EventListener'
 
 import { commandStatuses } from '@src/constants/command.constants'
 
-import { getArgs, getArray } from '@src/helpers/arguments.helpers'
+import { buildArgsFromProps, getArgs, getArray } from '@src/helpers/arguments.helpers'
 import { executePerUpdates } from '@src/helpers/command.helpers'
 import { formatError } from '@src/helpers/format.helpers'
 import { getPropsFromString } from '@src/helpers/options.helpers'
 import { cleanColors } from '@src/helpers/themes.helpers'
-import { createUUIDv4, getQuotedString } from '@src/helpers/utils.helpers'
+import { createUUIDv4 } from '@src/helpers/utils.helpers'
 
 export class Command extends EventListener {
   constructor({ name, options, helpSectionTitles, executionContext }) {
@@ -19,7 +19,6 @@ export class Command extends EventListener {
     this.executionContext = executionContext
     this.context = ''
     this.title = ''
-    this.data = {}
     this.props = {}
     this.updates = []
     this.staticUpdates = []
@@ -122,28 +121,7 @@ export class Command extends EventListener {
   }
 
   mock(mockedProps) {
-    const scriptArgs = Object.entries(mockedProps).reduce((args, [name, value]) => {
-      switch (typeof value) {
-        case 'object': {
-          const isArray = Array.isArray(value)
-          const formattedValues = isArray ? value.map(item => `"${item}"`) : []
-
-          return isArray ? [...args, `--${name}`, `[${formattedValues.join(' ')}]`] : args
-        }
-
-        case 'boolean': {
-          return [...args, `--${name}`]
-        }
-
-        case 'string': {
-          return [...args, `--${name}`, getQuotedString(value)]
-        }
-
-        default: {
-          return [...args, `--${name}`, value]
-        }
-      }
-    }, [])
+    const scriptArgs = buildArgsFromProps(mockedProps)
 
     return this.prepare(scriptArgs)
   }
@@ -165,16 +143,6 @@ export class Command extends EventListener {
     } catch (error) {
       this.throw(error)
     }
-
-    return this
-  }
-
-  applyData(data) {
-    const newData = { ...this.data, ...data }
-
-    this.allCommands.forEach(command => {
-      command.data = newData
-    })
 
     return this
   }

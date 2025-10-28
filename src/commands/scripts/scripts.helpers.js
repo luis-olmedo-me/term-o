@@ -1,5 +1,4 @@
 import { getQuotedString } from '@src/helpers/utils.helpers'
-import commandParser from '@src/libs/command-parser'
 
 export const uploadFile = () => {
   return new Promise((resolve, reject) => {
@@ -47,70 +46,5 @@ export const readFileContent = file => {
     })
 
     fileReader.readAsText(file)
-  })
-}
-
-export const executeCode = ({ scriptContent }) => {
-  return new Promise((resolve, reject) => {
-    const iframe = document.createElement('iframe')
-    iframe.setAttribute('src', chrome.runtime.getURL('sandbox.html'))
-    iframe.setAttribute('style', 'display: none;')
-    document.body.appendChild(iframe)
-    let updates = []
-
-    const handleCodeEval = async function (event) {
-      const type = event.data?.type
-      const data = event.data?.data
-
-      switch (type) {
-        case 'sandbox-command': {
-          const newCommand = commandParser
-            .getTemplateByName(data.name)
-            .create(commandParser.executionContext)
-
-          newCommand.mock(data.props)
-
-          if (!newCommand.finished) await newCommand.execute()
-
-          iframe.contentWindow.postMessage(
-            {
-              type: 'sandbox-command-return',
-              data: { updates: newCommand.cleanUpdates, hasError: newCommand.failed }
-            },
-            '*'
-          )
-          break
-        }
-
-        case 'sandbox-command-update': {
-          updates = [...updates, ...data.updates]
-          break
-        }
-
-        case 'sandbox-command-set-updates': {
-          updates = [...data.updates]
-          break
-        }
-
-        case 'sandbox-command-finish': {
-          document.body.removeChild(iframe)
-          window.removeEventListener('message', handleCodeEval)
-
-          if (data.error) reject(data.error)
-          else resolve()
-
-          break
-        }
-      }
-    }
-
-    iframe.onload = () => {
-      window.addEventListener('message', handleCodeEval)
-
-      iframe.contentWindow.postMessage({ type: 'sandbox-code', data: { code: scriptContent } }, '*')
-    }
-    iframe.onerror = () => {
-      reject('error')
-    }
   })
 }

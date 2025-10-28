@@ -15,29 +15,13 @@ export const findDOMElement = (
 
 export const getDOMElements = (
   tabId,
-  {
-    searchBelow,
-    searchByTag,
-    searchByAttribute,
-    searchByStyle,
-    searchByText,
-    appendTextContent,
-    appendXpath
-  }
+  { searchBelow, searchByTag, searchByAttribute, searchByStyle, searchByText, appendTextContent, appendXpath }
 ) => {
   return createWorkerProcessRequest({
     type: processNames.GET_DOM_ELEMENTS,
     defaultResponse: [],
     tabId,
-    data: {
-      searchBelow,
-      searchByTag,
-      searchByAttribute,
-      searchByStyle,
-      searchByText,
-      appendTextContent,
-      appendXpath
-    }
+    data: { searchBelow, searchByTag, searchByAttribute, searchByStyle, searchByText, appendTextContent, appendXpath }
   })
 }
 

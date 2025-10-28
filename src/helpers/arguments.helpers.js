@@ -119,33 +119,31 @@ export const getArray = value => {
   })
 }
 
-export const buildLineFromProps = (props, commandName) => {
-  const defaultValue = commandName ? [commandName] : []
+export const buildArgsFromProps = (props, name = null) => {
+  const defaultValue = name ? [name] : []
 
-  return Object.entries(props)
-    .reduce((args, [name, value]) => {
-      switch (typeof value) {
-        case 'object': {
-          const isArray = Array.isArray(value)
-          const formattedValues = isArray ? value.map(item => `"${item}"`) : []
+  return Object.entries(props).reduce((args, [name, value]) => {
+    switch (typeof value) {
+      case 'object': {
+        const isArray = Array.isArray(value)
+        const formattedValues = isArray ? value.map(item => `"${item}"`) : []
 
-          return isArray ? [...args, `--${name}`, `[${formattedValues.join(' ')}]`] : args
-        }
-
-        case 'boolean': {
-          return [...args, `--${name}`]
-        }
-
-        case 'string': {
-          return [...args, `--${name}`, getQuotedString(value)]
-        }
-
-        default: {
-          return [...args, `--${name}`, value]
-        }
+        return isArray ? [...args, `--${name}`, `[${formattedValues.join(' ')}]`] : args
       }
-    }, defaultValue)
-    .join(' ')
+
+      case 'boolean': {
+        return [...args, `--${name}`]
+      }
+
+      case 'string': {
+        return [...args, `--${name}`, getQuotedString(value)]
+      }
+
+      default: {
+        return [...args, `--${name}`, value]
+      }
+    }
+  }, defaultValue)
 }
 
 export const getRawArgs = value => {

@@ -12,7 +12,7 @@ import processHandlers from './process-handlers'
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
 
-commandParser.setExecutionContext(origins.BACKGROUND)
+commandParser.setOrigin(origins.BACKGROUND)
 
 const executeEvents = async (events, defaultTab) => {
   let commands = []

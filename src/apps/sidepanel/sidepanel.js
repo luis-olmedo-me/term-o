@@ -8,7 +8,7 @@ import GlobalStyle from '@src/styles/Global.styles'
 
 import { origins } from '@src/constants/command.constants'
 
-commandParser.setExecutionContext(origins.SIDEPANEL)
+commandParser.setOrigin(origins.SIDEPANEL)
 
 // eslint-disable-next-line react/no-deprecated
 React.render(

@@ -14,7 +14,7 @@ export default async (resolve, data) => {
   const config = storage.get(storageKeys.CONFIG)
 
   commandParser.setAliases(aliases)
-  commandParser.setExecutionContext(origin)
+  commandParser.setOrigin(origin)
 
   const contextInputValue = config.getValueById(configInputIds.CONTEXT)
   const tab = await getTab({ tabId })

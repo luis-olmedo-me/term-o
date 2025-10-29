@@ -16,7 +16,7 @@ class CommandParser extends EventListener {
   setAliases(aliases) {
     this.aliases = aliases
   }
-  setExecutionContext(origin) {
+  setOrigin(origin) {
     this.origin = origin
   }
 

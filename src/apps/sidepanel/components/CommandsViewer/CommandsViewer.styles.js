@@ -31,8 +31,8 @@ export const Command = styled.div`
     transition: background-color 0.1s ease-in-out;
   }
 
-  &[aria-execution-context=${origins.SIDEPANEL}],
-  &[aria-execution-context=${origins.BACKGROUND}] {
+  &[aria-origin=${origins.SIDEPANEL}],
+  &[aria-origin=${origins.BACKGROUND}] {
     &::before {
       content: '';
       position: absolute;
@@ -52,11 +52,11 @@ export const Command = styled.div`
       left: 0;
     }
   }
-  &[aria-execution-context=${origins.BACKGROUND}] {
+  &[aria-origin=${origins.BACKGROUND}] {
     opacity: 0.8;
   }
-  &[aria-execution-context=${origins.BACKGROUND}]::before,
-  &[aria-execution-context=${origins.BACKGROUND}]::after {
+  &[aria-origin=${origins.BACKGROUND}]::before,
+  &[aria-origin=${origins.BACKGROUND}]::after {
     opacity: 0.6;
   }
 

@@ -40,7 +40,7 @@ export const CommandsViewer = ({ commands }) => {
             <S.Command
               key={command.id}
               aria-status={command.status}
-              aria-execution-context={hasStatusBar ? command.origin : null}
+              aria-origin={hasStatusBar ? command.origin : null}
               aria-indicator={statusIndicator}
               aria-light={hasStatusLight}
             >

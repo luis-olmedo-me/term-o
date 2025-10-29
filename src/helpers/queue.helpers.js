@@ -1,3 +1,3 @@
-export const updateQueueValueIn = (queue, commandId, newValue) => {
-  return queue.map(value => (value.id === commandId ? newValue : value))
+export const updateQueueValueIn = (queue, queueId, newValue) => {
+  return queue.map(value => (value.id === queueId ? newValue : value))
 }

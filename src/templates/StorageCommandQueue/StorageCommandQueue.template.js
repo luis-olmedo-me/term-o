@@ -30,9 +30,9 @@ export class StorageCommandQueue extends StorageSimple {
     this.storageService.set(storageKeys.COMMAND_QUEUE, newValue)
   }
 
-  change(commandId, newValue) {
-    const newConfig = updateQueueValueIn(this.latest().value, commandId, newValue)
+  change(queueId, newValue) {
+    const newQueue = updateQueueValueIn(this.latest().value, queueId, newValue)
 
-    this.storageService.set(storageKeys.COMMAND_QUEUE, newConfig)
+    this.storageService.set(storageKeys.COMMAND_QUEUE, newQueue)
   }
 }

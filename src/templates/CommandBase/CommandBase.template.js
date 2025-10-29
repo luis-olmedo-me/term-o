@@ -38,12 +38,12 @@ export class CommandBase {
     return this
   }
 
-  create(executionContext) {
+  create(origin) {
     const newCommand = new Command({
       name: this.name,
       options: this.options.copy(),
       helpSectionTitles: this.helpSectionTitles,
-      executionContext
+      origin
     })
 
     return this.handler ? newCommand.addEventListener('execute', this.handler) : newCommand

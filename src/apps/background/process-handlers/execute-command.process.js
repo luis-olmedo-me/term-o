@@ -7,14 +7,14 @@ import { storageKeys } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
 
 export default async (resolve, data) => {
-  const { line, executionContext } = data
+  const { line, origin } = data
 
   const tabId = storage.get(storageKeys.TAB_ID)
   const aliases = storage.get(storageKeys.ALIASES)
   const config = storage.get(storageKeys.CONFIG)
 
   commandParser.setAliases(aliases)
-  commandParser.setExecutionContext(executionContext)
+  commandParser.setExecutionContext(origin)
 
   const contextInputValue = config.getValueById(configInputIds.CONTEXT)
   const tab = await getTab({ tabId })

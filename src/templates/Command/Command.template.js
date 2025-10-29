@@ -11,12 +11,12 @@ import { cleanColors } from '@src/helpers/themes.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 
 export class Command extends EventListener {
-  constructor({ name, options, helpSectionTitles, executionContext }) {
+  constructor({ name, options, helpSectionTitles, origin }) {
     super()
 
     this.id = createUUIDv4()
     this.name = name
-    this.executionContext = executionContext
+    this.origin = origin
     this.context = ''
     this.title = ''
     this.props = {}
@@ -222,7 +222,7 @@ export class Command extends EventListener {
       status: this.status,
       updates: this.updates,
       context: this.context,
-      executionContext: this.executionContext
+      origin: this.origin
     }
   }
 }

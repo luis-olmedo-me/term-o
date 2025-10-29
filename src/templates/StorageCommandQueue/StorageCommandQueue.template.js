@@ -1,23 +1,38 @@
-export class StorageCommandQueue {
+import StorageSimple from '@src/templates/StorageSimple'
+
+import { storageKeys } from '@src/constants/storage.constants'
+import { updateQueueValueIn } from '@src/helpers/queue.helpers'
+import { createUUIDv4 } from '@src/helpers/utils.helpers'
+
+export class StorageCommandQueue extends StorageSimple {
   constructor(storageService, storageValue) {
-    this.storageService = storageService
-    this.storageValue = {
-      value: storageValue.value,
-      version: storageValue.version
-    }
+    super(storageService, storageValue)
   }
 
   get value() {
-    return this.latest().value
+    return {
+      value: this.getUIValues(),
+      managed: this.latest().value,
+      change: this.change.bind(this),
+      add: this.add.bind(this)
+    }
   }
 
-  update(storageValue) {
-    if (storageValue.version === this.storageValue.version) return
-
-    this.storageValue = storageValue
+  getUIValues() {
+    return this.latest()
+      .value.map(item => item.command)
+      .filter(Boolean)
   }
 
-  latest() {
-    return this.storageValue
+  add(line, origin) {
+    const newValue = [...this.latest().value, { id: createUUIDv4(), line, origin, command: null }]
+
+    this.storageService.set(storageKeys.COMMAND_QUEUE, newValue)
+  }
+
+  change(commandId, newValue) {
+    const newConfig = updateQueueValueIn(this.latest().value, commandId, newValue)
+
+    this.storageService.set(storageKeys.COMMAND_QUEUE, newConfig)
   }
 }

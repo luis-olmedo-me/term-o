@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import { theme as t } from '@src/helpers/themes.helpers'
 
-import { commandStatuses, executionContexts } from '@src/constants/command.constants'
+import { commandStatuses, origins } from '@src/constants/command.constants'
 import { statusIndicators } from '@src/constants/config.constants'
 
 export const ViewWrapper = styled.div`
@@ -31,8 +31,8 @@ export const Command = styled.div`
     transition: background-color 0.1s ease-in-out;
   }
 
-  &[aria-execution-context=${executionContexts.SIDEPANEL}],
-  &[aria-execution-context=${executionContexts.BACKGROUND}] {
+  &[aria-execution-context=${origins.SIDEPANEL}],
+  &[aria-execution-context=${origins.BACKGROUND}] {
     &::before {
       content: '';
       position: absolute;
@@ -52,11 +52,11 @@ export const Command = styled.div`
       left: 0;
     }
   }
-  &[aria-execution-context=${executionContexts.BACKGROUND}] {
+  &[aria-execution-context=${origins.BACKGROUND}] {
     opacity: 0.8;
   }
-  &[aria-execution-context=${executionContexts.BACKGROUND}]::before,
-  &[aria-execution-context=${executionContexts.BACKGROUND}]::after {
+  &[aria-execution-context=${origins.BACKGROUND}]::before,
+  &[aria-execution-context=${origins.BACKGROUND}]::after {
     opacity: 0.6;
   }
 

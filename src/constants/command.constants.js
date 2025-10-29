@@ -13,7 +13,7 @@ export const commandNames = {
   SCRIPTS: 'scripts'
 }
 
-export const executionContexts = {
+export const origins = {
   BACKGROUND: 'background',
   SIDEPANEL: 'sidepanel'
 }

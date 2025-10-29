@@ -1,4 +1,4 @@
-import { commandStatuses, executionContexts } from '@src/constants/command.constants'
+import { commandStatuses, origins } from '@src/constants/command.constants'
 import { buildArgsFromProps, getRawArgs } from '@src/helpers/arguments.helpers'
 import { cleanColors } from '@src/helpers/themes.helpers'
 import { executeCommand } from '@src/processes'
@@ -21,7 +21,7 @@ export default async (resolve, data) => {
       case 'sandbox-command': {
         const { updates, status } = await executeCommand({
           line: buildArgsFromProps(data.props, data.name).join(' '),
-          origin: executionContexts.BACKGROUND
+          origin: origins.BACKGROUND
         })
         const hasError = status === commandStatuses.ERROR
 

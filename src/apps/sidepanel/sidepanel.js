@@ -6,9 +6,9 @@ import StorageProvider from '@src/providers/StorageProvider'
 import ThemeProvider from '@src/providers/ThemeProvider'
 import GlobalStyle from '@src/styles/Global.styles'
 
-import { executionContexts } from '@src/constants/command.constants'
+import { origins } from '@src/constants/command.constants'
 
-commandParser.setExecutionContext(executionContexts.SIDEPANEL)
+commandParser.setExecutionContext(origins.SIDEPANEL)
 
 // eslint-disable-next-line react/no-deprecated
 React.render(

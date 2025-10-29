@@ -3,7 +3,7 @@ import processWaitList from '@src/libs/process-wait-list'
 import storage from '@src/libs/storage'
 
 import { getCurrentTab, getTab } from '@src/browser-api/tabs.api'
-import { executionContexts } from '@src/constants/command.constants'
+import { origins } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { limitSimplifiedCommands } from '@src/helpers/command.helpers'
@@ -12,7 +12,7 @@ import processHandlers from './process-handlers'
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
 
-commandParser.setExecutionContext(executionContexts.BACKGROUND)
+commandParser.setExecutionContext(origins.BACKGROUND)
 
 const executeEvents = async (events, defaultTab) => {
   let commands = []

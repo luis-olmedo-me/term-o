@@ -13,7 +13,8 @@ export const storageKeys = {
   HISTORY: 'history',
   PROMPT_HISTORY: 'prompt-history',
   THEMES: 'themes',
-  TAB_ID: 'tab-id'
+  TAB_ID: 'tab-id',
+  COMMAND_QUEUE: 'commandQueue'
 }
 
 export const storageNamespaces = {
@@ -67,6 +68,12 @@ export const storageValues = [
   },
   {
     key: storageKeys.TAB_ID,
+    namespace: storageNamespaces.SESSION,
+    defaultValue: null,
+    Template: StorageSimple
+  },
+  {
+    key: storageKeys.COMMAND_QUEUE,
     namespace: storageNamespaces.SESSION,
     defaultValue: null,
     Template: StorageCommandQueue

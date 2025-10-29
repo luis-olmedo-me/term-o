@@ -1,7 +1,8 @@
+import EventListener from '@src/templates/EventListener'
+
 import { getStorageValue, setStorageValue } from '@src/browser-api/storage.api'
 import { storageDefaultValues, storageValues } from '@src/constants/storage.constants'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
-import EventListener from '@src/templates/EventListener'
 
 class Storage extends EventListener {
   constructor() {

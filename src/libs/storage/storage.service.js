@@ -1,7 +1,7 @@
 import EventListener from '@src/templates/EventListener'
 
 import { getStorageValue, setStorageValue } from '@src/browser-api/storage.api'
-import { storageDefaultValues, storageValues } from '@src/constants/storage.constants'
+import { storageValues } from '@src/constants/storage.constants'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 
 class Storage extends EventListener {
@@ -9,28 +9,25 @@ class Storage extends EventListener {
     super()
 
     this.initiated = false
-    this.values = storageDefaultValues
+    this.values = storageValues.reduce((values, { key, Template, defaultValue }) => {
+      return { ...values, [key]: new Template(this, { value: defaultValue, version: null }) }
+    }, {})
 
     this.init()
   }
 
   async init() {
-    const promises = storageValues.map(({ namespace, key, defaultValue, Template }) => {
-      const defaultStorageValue = { value: defaultValue, version: createUUIDv4() }
+    const promises = storageValues.map(({ namespace, key, defaultValue }) => {
+      const defaultStorageValue = { value: defaultValue, version: null }
 
       return getStorageValue(namespace, key, defaultStorageValue).then(result => {
-        const isDefault = result === defaultStorageValue
+        const isDefault = result.value === defaultValue
 
-        if (isDefault) setStorageValue(namespace, key, result)
-        return new Template(this, result)
+        if (!isDefault) this.getInstance(key).update(result)
       })
     })
 
-    const results = await Promise.all(promises)
-
-    storageValues.forEach((value, index) => {
-      this.values[value.key] = results[index]
-    })
+    await Promise.all(promises)
 
     chrome.storage.onChanged.addListener(this.handleStorageChanges.bind(this))
 

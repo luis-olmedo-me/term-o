@@ -79,7 +79,3 @@ export const storageValues = [
     Template: StorageCommandQueue
   }
 ]
-
-export const storageDefaultValues = storageValues.reduce((values, value) => {
-  return { ...values, [value.key]: null }
-}, {})

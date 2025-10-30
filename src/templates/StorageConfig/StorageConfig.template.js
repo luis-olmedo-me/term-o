@@ -40,6 +40,7 @@ export class StorageConfig extends StorageSimple {
   }
 
   handleInit() {
+    this.storageService.removeEventListener('init', this.handleInitRef)
     this.storageService.addEventListener(storageKeys.THEMES, this.handleThemesChangesRef)
   }
   handleThemesChanges() {

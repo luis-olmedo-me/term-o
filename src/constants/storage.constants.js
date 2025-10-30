@@ -75,7 +75,7 @@ export const storageValues = [
   {
     key: storageKeys.COMMAND_QUEUE,
     namespace: storageNamespaces.SESSION,
-    defaultValue: null,
+    defaultValue: [],
     Template: StorageCommandQueue
   }
 ]

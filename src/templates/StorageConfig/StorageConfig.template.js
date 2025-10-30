@@ -16,8 +16,7 @@ export class StorageConfig extends StorageSimple {
     this.handleInitRef = this.handleInit.bind(this)
     this.handleThemesChangesRef = this.handleThemesChanges.bind(this)
 
-    if (this.storageService.initiated) this.handleInit()
-    else this.storageService.addEventListener('init', this.handleInitRef)
+    this.storageService.addEventListener('init', this.handleInitRef)
   }
 
   get value() {

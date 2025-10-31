@@ -54,6 +54,14 @@ const executeEvents = async (events, defaultTab) => {
   storage.set(storageKeys.TAB_ID, previousTabId)
 }
 
+const handleQueueCommandTrigger = queue => {
+  const { id, origin, command } = queue
+
+  console.log('💬 ~ command:', command)
+  console.log('💬 ~ origin:', origin)
+  console.log('💬 ~ id:', id)
+}
+
 chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {
   if (changeInfo.status !== 'complete') return
 
@@ -92,4 +100,5 @@ chrome.runtime.onInstalled.addListener(async () => {
   }
 
   storage.set(storageKeys.TAB_ID, tab.id)
+  storage.addEventListener('queue-push-execute', handleQueueCommandTrigger)
 })

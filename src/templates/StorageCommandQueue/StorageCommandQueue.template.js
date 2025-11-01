@@ -15,12 +15,12 @@ export class StorageCommandQueue extends StorageSimple {
     this.handleConfigChangesRef = this.handleConfigChanges.bind(this)
   }
 
-  get value() {
+  get $value() {
     return {
+      managed: this.$latest().value,
       value: this.getUIValues(),
       isExecuting: this.getIsExecuting(),
       executable: this.getExecutable(),
-      managed: this.latest().value,
       clearCompleted: this.clearCompleted.bind(this),
       delete: this.delete.bind(this),
       change: this.change.bind(this),
@@ -29,47 +29,47 @@ export class StorageCommandQueue extends StorageSimple {
   }
 
   change(queueId, command) {
-    const newQueue = updateQueueValueIn(this.latest().value, queueId, command)
+    const newQueue = updateQueueValueIn(this.$latest().value, queueId, command)
 
-    this.storageService.set(storageKeys.COMMAND_QUEUE, newQueue)
+    this.$storageService.set(storageKeys.COMMAND_QUEUE, newQueue)
   }
 
   handleInit() {
-    this.storageService.removeEventListener('init', this.handleInitRef)
-    this.storageService.addEventListener(storageKeys.CONFIG, this.handleConfigChangesRef)
+    this.$storageService.removeEventListener('init', this.handleInitRef)
+    this.$storageService.addEventListener(storageKeys.CONFIG, this.handleConfigChangesRef)
   }
   handleConfigChanges() {
-    this.storageService.set(storageKeys.COMMAND_QUEUE, this.latest().value)
+    this.$storageService.set(storageKeys.COMMAND_QUEUE, this.$latest().value)
   }
 
   clearCompleted() {
-    const newQueue = this.latest().value.filter(
+    const newQueue = this.$latest().value.filter(
       ({ command }) => !command || command.status === commandStatuses.EXECUTING
     )
 
-    this.storageService.set(storageKeys.COMMAND_QUEUE, newQueue)
+    this.$storageService.set(storageKeys.COMMAND_QUEUE, newQueue)
   }
 
   delete(queueId) {
-    const newQueue = this.latest().value.filter(({ id }) => id !== queueId)
+    const newQueue = this.$latest().value.filter(({ id }) => id !== queueId)
 
-    this.storageService.set(storageKeys.COMMAND_QUEUE, newQueue)
+    this.$storageService.set(storageKeys.COMMAND_QUEUE, newQueue)
   }
 
   add(line, origin, tab) {
     const newValue = [
-      ...this.latest().value,
+      ...this.$latest().value,
       { id: createUUIDv4(), line, origin, tab, command: null }
     ]
 
-    this.storageService.set(storageKeys.COMMAND_QUEUE, newValue)
+    this.$storageService.set(storageKeys.COMMAND_QUEUE, newValue)
   }
 
   getUIValues() {
-    const config = this.storageService.get(storageKeys.CONFIG)
+    const config = this.$storageService.get(storageKeys.CONFIG)
 
     const maxLinesPerCommand = config.getValueById(configInputIds.MAX_LINES_PER_COMMAND)
-    const commands = this.latest()
+    const commands = this.$latest()
       .value.map(item => item.command)
       .filter(Boolean)
 
@@ -77,10 +77,10 @@ export class StorageCommandQueue extends StorageSimple {
   }
 
   getIsExecuting() {
-    return this.latest().value.some(({ command }) => command?.status === commandStatuses.EXECUTING)
+    return this.$latest().value.some(({ command }) => command?.status === commandStatuses.EXECUTING)
   }
 
   getExecutable() {
-    return this.latest().value.find(({ command }) => !command)
+    return this.$latest().value.find(({ command }) => !command)
   }
 }

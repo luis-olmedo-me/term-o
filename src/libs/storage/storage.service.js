@@ -23,7 +23,7 @@ class Storage extends EventListener {
       return getStorageValue(namespace, key, defaultStorageValue).then(result => {
         const isDefault = result.value === defaultValue
 
-        if (!isDefault) this.getInstance(key).update(result)
+        if (!isDefault) this.getInstance(key).$update(result)
       })
     })
 
@@ -36,7 +36,7 @@ class Storage extends EventListener {
   }
 
   get(storageKey) {
-    return this.getInstance(storageKey).value
+    return this.getInstance(storageKey).$value
   }
 
   set(storageKey, newValue) {
@@ -44,8 +44,8 @@ class Storage extends EventListener {
       const storageDefaults = storageValues.find(value => value.key === storageKey)
       const instance = this.getInstance(storageKey)
 
-      instance.update({ value: newValue, version: createUUIDv4() })
-      setStorageValue(storageDefaults.namespace, storageKey, instance.latest())
+      instance.$update({ value: newValue, version: createUUIDv4() })
+      setStorageValue(storageDefaults.namespace, storageKey, instance.$latest())
     }
   }
 
@@ -58,7 +58,7 @@ class Storage extends EventListener {
       if (!(storageKey in this.values)) return
       const instance = this.getInstance(storageKey)
 
-      instance.update(storageValue)
+      instance.$update(storageValue)
       this.dispatchEvent(storageKey, this)
     }
   }

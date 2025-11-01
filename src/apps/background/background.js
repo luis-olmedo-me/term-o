@@ -46,7 +46,7 @@ const handleCommandQueueChange = async updatedStorage => {
   if (executable.tabId) storage.set(storageKeys.TAB, originalTab)
 }
 
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, updatedTab) => {
+chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {
   if (changeInfo.status !== 'complete') return
 
   const queue = storage.get(storageKeys.COMMAND_QUEUE)

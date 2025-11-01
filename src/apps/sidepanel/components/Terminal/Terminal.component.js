@@ -9,10 +9,9 @@ import Gear from '@src/icons/Gear.icon'
 import commandParser from '@src/libs/command-parser'
 
 import { createTab, getCurrentTab, getTab } from '@src/browser-api/tabs.api'
-import { commandStatuses } from '@src/constants/command.constants'
+import { origins } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
-import { limitSimplifiedCommands, updateSimplifiedCommandsWith } from '@src/helpers/command.helpers'
 import { createContext } from '@src/helpers/contexts.helpers'
 import { copyText, getSelectedText } from './Terminal.helpers'
 import * as S from './Terminal.styles'
@@ -24,12 +23,11 @@ export const Terminal = () => {
 
   const [tabId, setTabId] = useStorage({ key: storageKeys.TAB_ID })
   const [aliases] = useStorage({ key: storageKeys.ALIASES })
-  const [simplifiedCommands, setSimplifiedCommands] = useStorage({ key: storageKeys.HISTORY })
   const [config] = useStorage({ key: storageKeys.CONFIG })
+  const [queue] = useStorage({ key: storageKeys.COMMAND_QUEUE })
 
   const canCopyOnSelection = config.getValueById(configInputIds.COPY_ON_SELECTION)
   const switchTabAutomatically = config.getValueById(configInputIds.SWITCH_TAB_AUTOMATICALLY)
-  const maxLinesPerCommand = config.getValueById(configInputIds.MAX_LINES_PER_COMMAND)
   const rawContext = config.getValueById(configInputIds.CONTEXT)
 
   const focusOnPrompt = useCallback(() => {
@@ -79,34 +77,8 @@ export const Terminal = () => {
     window.addEventListener('keydown', focusOnPrompt)
   }
 
-  const handleCommandUpdate = command => {
-    setSimplifiedCommands(oldSimplifiedCommands => {
-      const updatedCommands = updateSimplifiedCommandsWith(
-        oldSimplifiedCommands,
-        command.getCommandVisibleInChain(),
-        command.id
-      )
-      const commandsLimited = limitSimplifiedCommands(updatedCommands, maxLinesPerCommand)
-
-      return commandsLimited
-    })
-  }
-
-  const handleCommandExecuted = command => {
-    handleCommandUpdate(command)
-
-    command.removeAllEventListeners()
-  }
-
   const handleEnter = value => {
-    const newCommand = commandParser.read(value).applyContext(context)
-
-    if (!newCommand.failed) {
-      newCommand.addEventListener('update', handleCommandUpdate)
-      newCommand.execute().then(() => handleCommandExecuted(newCommand))
-    } else {
-      handleCommandExecuted(newCommand)
-    }
+    queue.add(value, origins.SIDEPANEL)
 
     focusOnPrompt()
   }
@@ -134,14 +106,14 @@ export const Terminal = () => {
         <Button Icon={Gear} onClick={openConfiguration} variant={buttonVariants.GHOST} />
       </S.TerminalHeader>
 
-      <CommandsViewer commands={simplifiedCommands} />
+      <CommandsViewer commands={queue.value} />
 
       <Prompt
         inputRef={inputRef}
         onEnter={handleEnter}
         onBlur={WaitForKeyPressToFocusOnPrompt}
         onFocus={removePromptFocusEvent}
-        loading={simplifiedCommands.some(command => command.status === commandStatuses.EXECUTING)}
+        loading={queue.isExecuting}
         context={context}
         name="terminal-prompt"
       />

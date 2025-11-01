@@ -1,5 +1,5 @@
 import * as React from 'preact'
-import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
+import { useCallback, useEffect, useRef } from 'preact/hooks'
 
 import CommandsViewer from '@sidepanel/components/CommandsViewer'
 import Prompt from '@sidepanel/components/Prompt'
@@ -8,7 +8,7 @@ import useStorage from '@src/hooks/useStorage'
 import Gear from '@src/icons/Gear.icon'
 import commandParser from '@src/libs/command-parser'
 
-import { createTab, getCurrentTab, getTab } from '@src/browser-api/tabs.api'
+import { createTab, getCurrentTab } from '@src/browser-api/tabs.api'
 import { origins } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
@@ -19,9 +19,7 @@ import * as S from './Terminal.styles'
 export const Terminal = () => {
   const inputRef = useRef(null)
 
-  const [tab, setTab] = useState()
-
-  const [tabId, setTabId] = useStorage({ key: storageKeys.TAB_ID })
+  const [tab, setTab] = useStorage({ key: storageKeys.TAB })
   const [aliases] = useStorage({ key: storageKeys.ALIASES })
   const [config] = useStorage({ key: storageKeys.CONFIG })
   const [queue] = useStorage({ key: storageKeys.COMMAND_QUEUE })
@@ -36,7 +34,7 @@ export const Terminal = () => {
 
   useEffect(
     function focusTabAutomatically() {
-      const updateTab = () => getCurrentTab().then(tab => setTabId(tab.id))
+      const updateTab = () => getCurrentTab().then(tab => setTab(tab))
 
       updateTab()
 
@@ -46,13 +44,6 @@ export const Terminal = () => {
       return () => window.removeEventListener('focus', updateTab)
     },
     [switchTabAutomatically]
-  )
-
-  useEffect(
-    function updateCurrentTab() {
-      getTab({ tabId }).then(tab => setTab(tab))
-    },
-    [tabId]
   )
 
   useEffect(

@@ -16,7 +16,7 @@ import { formatTab } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
 
 export const tabsHandler = async command => {
-  const tabId = storage.get(storageKeys.TAB_ID)
+  const tabId = storage.get(storageKeys.TAB).id
   const P = name => command.props[name]
 
   if (P`reload`) {
@@ -32,7 +32,7 @@ export const tabsHandler = async command => {
     const tab = await getTab({ tabId: cleanTabId(P`point`) })
     const update = formatTab(tab)
 
-    storage.set(storageKeys.TAB_ID, tab.id)
+    storage.set(storageKeys.TAB, tab)
 
     command.update(update)
   }

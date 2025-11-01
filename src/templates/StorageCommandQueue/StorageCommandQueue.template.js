@@ -12,7 +12,7 @@ export class StorageCommandQueue extends StorageSimple {
     super(storageService, storageValue)
 
     this.handleInitRef = this.handleInit.bind(this)
-    this.handleThemesChangesRef = this.handleConfigChanges.bind(this)
+    this.handleConfigChangesRef = this.handleConfigChanges.bind(this)
   }
 
   get value() {
@@ -36,7 +36,7 @@ export class StorageCommandQueue extends StorageSimple {
 
   handleInit() {
     this.storageService.removeEventListener('init', this.handleInitRef)
-    this.storageService.addEventListener(storageKeys.CONFIG, this.handleThemesChangesRef)
+    this.storageService.addEventListener(storageKeys.CONFIG, this.handleConfigChangesRef)
   }
   handleConfigChanges() {
     this.storageService.set(storageKeys.COMMAND_QUEUE, this.latest().value)
@@ -56,10 +56,10 @@ export class StorageCommandQueue extends StorageSimple {
     this.storageService.set(storageKeys.COMMAND_QUEUE, newQueue)
   }
 
-  add(line, origin, tabId) {
+  add(line, origin, tab) {
     const newValue = [
       ...this.latest().value,
-      { id: createUUIDv4(), line, origin, tabId, command: null }
+      { id: createUUIDv4(), line, origin, tab, command: null }
     ]
 
     this.storageService.set(storageKeys.COMMAND_QUEUE, newValue)

@@ -16,7 +16,7 @@ export const scriptsHandler = async command => {
   }
 
   if (P`upload`) {
-    const tabId = storage.get(storageKeys.TAB_ID)
+    const tabId = storage.get(storageKeys.TAB).id
 
     command.update('Upload file.')
     const file = await uploadFile(tabId)

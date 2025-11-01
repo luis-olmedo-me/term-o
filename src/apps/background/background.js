@@ -54,12 +54,36 @@ const executeEvents = async (events, defaultTab) => {
   storage.set(storageKeys.TAB_ID, previousTabId)
 }
 
-const handleQueueCommandTrigger = queue => {
-  const { id, origin, command } = queue
+const handleCommandQueueChange = async updatedStorage => {
+  const queue = updatedStorage.get(storageKeys.COMMAND_QUEUE)
+  const executable = queue.executable
 
-  console.log('💬 ~ command:', command)
-  console.log('💬 ~ origin:', origin)
-  console.log('💬 ~ id:', id)
+  if (queue.isExecuting || !executable) return
+
+  commandParser.setOrigin(executable.origin)
+
+  const tabId = storage.get(storageKeys.TAB_ID)
+  const aliases = storage.get(storageKeys.ALIASES)
+  const config = storage.get(storageKeys.CONFIG)
+
+  commandParser.setAliases(aliases)
+
+  const contextInputValue = config.getValueById(configInputIds.CONTEXT)
+  const tab = await getTab({ tabId })
+
+  const context = createContext(contextInputValue, tab)
+  const command = commandParser.read(executable.line).applyContext(context)
+
+  if (!command.finished) {
+    command.startExecuting()
+    queue.change(executable.id, command.simplify())
+    await command.execute()
+  }
+
+  const commandVisible = command.getCommandVisibleInChain()
+
+  if (commandVisible) queue.change(executable.id, commandVisible.simplify())
+  else queue.delete(executable.id)
 }
 
 chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {
@@ -100,5 +124,5 @@ chrome.runtime.onInstalled.addListener(async () => {
   }
 
   storage.set(storageKeys.TAB_ID, tab.id)
-  storage.addEventListener('queue-push-execute', handleQueueCommandTrigger)
+  storage.addEventListener(storageKeys.COMMAND_QUEUE, handleCommandQueueChange)
 })

@@ -13,24 +13,14 @@ export class StorageCommandQueue extends StorageSimple {
   get value() {
     return {
       value: this.getUIValues(),
+      isExecuting: this.getIsExecuting(),
+      executable: this.getExecutable(),
       managed: this.latest().value,
+      clearCompleted: this.clearCompleted.bind(this),
+      delete: this.delete.bind(this),
       change: this.change.bind(this),
       add: this.add.bind(this)
     }
-  }
-
-  getUIValues() {
-    return this.latest()
-      .value.map(item => item.command)
-      .filter(Boolean)
-  }
-
-  add(line, origin) {
-    const newValue = [...this.latest().value, { id: createUUIDv4(), line, origin, command: null }]
-
-    this.storageService.set(storageKeys.COMMAND_QUEUE, newValue)
-
-    this.evalPushExecution()
   }
 
   change(queueId, command) {
@@ -39,13 +29,37 @@ export class StorageCommandQueue extends StorageSimple {
     this.storageService.set(storageKeys.COMMAND_QUEUE, newQueue)
   }
 
-  evalPushExecution() {
-    const isExecuting = this.getUIValues().some(
-      ({ command }) => command?.status === commandStatuses.EXECUTING
+  clearCompleted() {
+    const newQueue = this.latest().value.filter(
+      ({ command }) => !command || command.status === commandStatuses.EXECUTING
     )
 
-    if (isExecuting) return
+    this.storageService.set(storageKeys.COMMAND_QUEUE, newQueue)
+  }
 
-    this.storageService.dispatchEvent('queue-push-execute', this.storageService)
+  delete(queueId) {
+    const newQueue = this.latest().value.filter(({ id }) => id !== queueId)
+
+    this.storageService.set(storageKeys.COMMAND_QUEUE, newQueue)
+  }
+
+  add(line, origin) {
+    const newValue = [...this.latest().value, { id: createUUIDv4(), line, origin, command: null }]
+
+    this.storageService.set(storageKeys.COMMAND_QUEUE, newValue)
+  }
+
+  getUIValues() {
+    return this.latest()
+      .value.map(item => item.command)
+      .filter(Boolean)
+  }
+
+  getIsExecuting() {
+    return this.latest().value.some(({ command }) => command?.status === commandStatuses.EXECUTING)
+  }
+
+  getExecutable() {
+    return this.latest().value.find(({ command }) => !command)
   }
 }

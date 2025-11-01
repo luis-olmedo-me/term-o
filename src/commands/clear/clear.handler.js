@@ -2,6 +2,8 @@ import { storageKeys } from '@src/constants/storage.constants'
 import storage from '@src/libs/storage'
 
 export const clearHandler = async command => {
-  storage.set(storageKeys.HISTORY, [])
+  const queue = storage.get(storageKeys.COMMAND_QUEUE)
+
+  queue.clearCompleted()
   command.hide()
 }

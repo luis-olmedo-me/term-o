@@ -21,7 +21,7 @@ export default async (resolve, data) => {
       case 'sandbox-command': {
         const { updates, status } = await executeCommand({
           line: buildArgsFromProps(data.props, data.name).join(' '),
-          origin: origins.BACKGROUND
+          origin: origins.AUTO
         })
         const hasError = status === commandStatuses.ERROR
 

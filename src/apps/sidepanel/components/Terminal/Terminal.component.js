@@ -69,7 +69,7 @@ export const Terminal = () => {
   }
 
   const handleEnter = value => {
-    queue.add(value, origins.SIDEPANEL)
+    queue.add(value, origins.MANUAL)
 
     focusOnPrompt()
   }

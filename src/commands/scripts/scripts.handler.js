@@ -1,5 +1,6 @@
 import storage from '@src/libs/storage'
 
+import { origins } from '@src/constants/command.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatFile, formatScript } from '@src/helpers/format.helpers'
@@ -17,6 +18,9 @@ export const scriptsHandler = async command => {
 
   if (P`upload`) {
     const tabId = storage.get(storageKeys.TAB).id
+
+    if (command.origin !== origins.MANUAL)
+      throw 'Uploading a file is only allowed through direct user interaction.'
 
     command.update('Upload file.')
     const file = await uploadFile(tabId)

@@ -57,7 +57,7 @@ chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {
   if (pendingEvents.length === 0) return
   const tab = createInternalTab(updatedTab)
 
-  pendingEvents.forEach(event => queue.add(event.line, origins.BACKGROUND, tab))
+  pendingEvents.forEach(event => queue.add(event.line, origins.AUTO, tab))
 })
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {

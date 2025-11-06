@@ -14,8 +14,8 @@ export const commandNames = {
 }
 
 export const origins = {
-  BACKGROUND: 'background',
-  SIDEPANEL: 'sidepanel'
+  AUTO: 'auto',
+  MANUAL: 'manual'
 }
 
 export const commandStatuses = {

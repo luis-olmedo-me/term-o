@@ -12,6 +12,8 @@ class Storage extends EventListener {
     this.values = storageValues.reduce((values, { key, Template, defaultValue }) => {
       return { ...values, [key]: new Template(this, { value: defaultValue, version: null }) }
     }, {})
+    this.handleStorageChangesRef = this.handleStorageChanges.bind(this)
+    this.manualMode = false
 
     this.init()
   }
@@ -29,7 +31,7 @@ class Storage extends EventListener {
 
     await Promise.all(promises)
 
-    chrome.storage.onChanged.addListener(this.handleStorageChanges.bind(this))
+    if (!this.manualMode) chrome.storage.onChanged.addListener(this.handleStorageChangesRef)
 
     this.initiated = true
     this.dispatchEvent('init', this)
@@ -61,6 +63,11 @@ class Storage extends EventListener {
       instance.$update(storageValue)
       this.dispatchEvent(storageKey, this)
     }
+  }
+
+  handleStorageChangesManually() {
+    chrome.storage.onChanged.removeListener(this.handleStorageChangesRef)
+    this.manualMode = true
   }
 }
 

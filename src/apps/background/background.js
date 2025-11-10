@@ -12,7 +12,7 @@ import processHandlers from './process-handlers'
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
 
-const handleCommandQueueChange = async () => {
+const handleCommandQueueChange = async storage => {
   const queue = storage.get(storageKeys.COMMAND_QUEUE)
   const executable = queue.executable
 
@@ -30,10 +30,11 @@ const handleCommandQueueChange = async () => {
   const contextInputValue = config.getValueById(configInputIds.CONTEXT)
 
   const context = createContext(contextInputValue, tab)
-  const command = commandParser.read(executable.line).applyContext(context)
+  const command = commandParser.read(executable.line).applyContext(context).applyQueue(queue)
 
   if (!command.finished) {
     command.startExecuting()
+    command.addEventListener('update', () => queue.change(executable.id, command.simplify()))
     queue.change(executable.id, command.simplify())
     await command.execute()
   }
@@ -85,11 +86,13 @@ chrome.runtime.onInstalled.addListener(async () => {
     })
   }
 
+  storage.handleStorageChangesManually()
   storage.set(storageKeys.TAB, tab)
 })
 
 chrome.storage.onChanged.addListener(changes => {
   const hasQueueChanges = storageKeys.COMMAND_QUEUE in changes
+  storage.handleStorageChanges(changes)
 
-  if (hasQueueChanges) handleCommandQueueChange()
+  if (hasQueueChanges) handleCommandQueueChange(storage)
 })

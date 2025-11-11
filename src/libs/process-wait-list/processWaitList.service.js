@@ -36,9 +36,8 @@ class ProcessWaitList {
     const reject = this.rejecter(newId).bind(this)
 
     this.list = [...this.list, newProcess]
-    callback(resolve).catch(reject)
 
-    return newProcess
+    return callback(resolve).catch(reject)
   }
 
   remove(id) {

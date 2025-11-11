@@ -89,8 +89,6 @@ chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {
   pendingEvents.forEach(event => queue.add(event.line, origins.AUTO, tab))
 })
 
-chrome.runtime.onMessage.addListener(backgroundHandler)
-
 chrome.runtime.onInstalled.addListener(async () => {
   const tab = await getCurrentTab()
   const exists = await chrome.offscreen.hasDocument()
@@ -114,3 +112,5 @@ chrome.idle.onStateChanged.addListener(state => {
 chrome.runtime.onStartup.addListener(ensureRecycledListenersAreActive)
 
 chrome.storage.onChanged.addListener(handleStorageChange)
+
+chrome.runtime.onMessage.addListener(backgroundHandler)

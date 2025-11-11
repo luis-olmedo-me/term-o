@@ -1,5 +1,4 @@
 import commandParser from '@src/libs/command-parser'
-import processWaitList from '@src/libs/process-wait-list'
 import storage from '@src/libs/storage'
 
 import { getCurrentTab } from '@src/browser-api/tabs.api'
@@ -7,8 +6,11 @@ import { origins } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
+import { setUpHandlers } from '@src/helpers/process.helpers'
 import { createInternalTab } from '@src/helpers/tabs.helpers'
 import processHandlers from './process-handlers'
+
+const backgroundHandler = setUpHandlers(processHandlers)
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
 
@@ -87,18 +89,7 @@ chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {
   pendingEvents.forEach(event => queue.add(event.line, origins.AUTO, tab))
 })
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  const { id, data } = request.data
-  const handler = processHandlers[request.type]
-
-  if (handler && !id) {
-    processWaitList
-      .add(resolve => handler(resolve, data))
-      .then(() => sendResponse({ status: 'ok', data: processWaitList.getProcessById(id) }))
-  }
-
-  if (handler) return true
-})
+chrome.runtime.onMessage.addListener(backgroundHandler)
 
 chrome.runtime.onInstalled.addListener(async () => {
   const tab = await getCurrentTab()

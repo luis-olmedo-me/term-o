@@ -1,15 +1,6 @@
-import processWaitList from '@src/libs/process-wait-list'
+import { setUpHandlers } from '@src/helpers/process.helpers'
 import processHandlers from './process-handlers'
 
-chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
-  const { id, data } = request.data
-  const handler = processHandlers[request.type]
+const contentHandler = setUpHandlers(processHandlers)
 
-  if (handler && !id) {
-    processWaitList
-      .add(resolve => handler(resolve, data))
-      .then(() => sendResponse({ status: 'ok', data: processWaitList.getProcessById(id) }))
-  }
-
-  if (handler) return true
-})
+chrome.runtime.onMessage.addListener(contentHandler)

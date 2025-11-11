@@ -1,5 +1,7 @@
+import StorageCommandQueue from '@src/templates/StorageCommandQueue'
 import StorageConfig from '@src/templates/StorageConfig'
 import StorageSimple from '@src/templates/StorageSimple'
+import StorageTab from '@src/templates/StorageTab'
 
 import { defaultConfig } from './config.constants'
 import { defaultColorTheme } from './themes.constants'
@@ -12,7 +14,8 @@ export const storageKeys = {
   HISTORY: 'history',
   PROMPT_HISTORY: 'prompt-history',
   THEMES: 'themes',
-  TAB_ID: 'tab-id'
+  TAB: 'tab',
+  COMMAND_QUEUE: 'commandQueue'
 }
 
 export const storageNamespaces = {
@@ -65,13 +68,15 @@ export const storageValues = [
     Template: StorageSimple
   },
   {
-    key: storageKeys.TAB_ID,
+    key: storageKeys.TAB,
     namespace: storageNamespaces.SESSION,
     defaultValue: null,
-    Template: StorageSimple
+    Template: StorageTab
+  },
+  {
+    key: storageKeys.COMMAND_QUEUE,
+    namespace: storageNamespaces.SESSION,
+    defaultValue: [],
+    Template: StorageCommandQueue
   }
 ]
-
-export const storageDefaultValues = storageValues.reduce((values, value) => {
-  return { ...values, [value.key]: null }
-}, {})

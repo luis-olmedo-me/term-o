@@ -87,11 +87,11 @@ export const executeCode = ({ script }) => {
   })
 }
 
-export const executeCommand = ({ line, executionContext }) => {
+export const executeCommand = ({ line, origin }) => {
   return createWorkerProcessRequest({
     type: processNames.EXECUTE_COMMAND,
     defaultResponse: null,
-    data: { line, executionContext }
+    data: { line, origin }
   })
 }
 

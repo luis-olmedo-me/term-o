@@ -1,7 +1,9 @@
-import { storageKeys } from '@src/constants/storage.constants'
-import storage from '@src/libs/storage'
+import { origins } from '@src/constants/command.constants'
 
 export const clearHandler = async command => {
-  storage.set(storageKeys.HISTORY, [])
+  if (command.origin !== origins.MANUAL)
+    throw 'Clearing the terminal is only allowed through direct user interaction.'
+
+  command.queue.clearCompleted()
   command.hide()
 }

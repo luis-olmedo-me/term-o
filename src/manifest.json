@@ -12,7 +12,8 @@
     "sidePanel",
     "fontSettings",
     "notifications",
-    "offscreen"
+    "offscreen",
+    "idle"
   ],
   "host_permissions": ["http://*/", "https://*/"],
   "icons": {

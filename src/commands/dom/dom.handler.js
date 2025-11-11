@@ -10,7 +10,7 @@ import { clickElement, findDOMElement, getDOMElements } from '@src/processes'
 export const domHandler = async command => {
   const P = name => command.props[name]
 
-  const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : storage.get(storageKeys.TAB_ID)
+  const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : storage.get(storageKeys.TAB).id
 
   if (P`search-xpath`) {
     const element = await findDOMElement(tabId, {

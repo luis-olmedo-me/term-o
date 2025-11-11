@@ -13,9 +13,10 @@ export const commandNames = {
   SCRIPTS: 'scripts'
 }
 
-export const executionContexts = {
-  BACKGROUND: 'background',
-  SIDEPANEL: 'sidepanel'
+export const origins = {
+  AUTO: 'auto',
+  MANUAL: 'manual',
+  FORCED: 'forced'
 }
 
 export const commandStatuses = {

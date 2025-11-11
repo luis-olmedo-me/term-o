@@ -1,69 +1,90 @@
 import commandParser from '@src/libs/command-parser'
 import processWaitList from '@src/libs/process-wait-list'
 import storage from '@src/libs/storage'
-import processHandlers from './process-handlers'
 
-import { getCurrentTab, getTab } from '@src/browser-api/tabs.api'
-import { executionContexts } from '@src/constants/command.constants'
+import { getCurrentTab } from '@src/browser-api/tabs.api'
+import { origins } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
-import { limitSimplifiedCommands } from '@src/helpers/command.helpers'
 import { createContext } from '@src/helpers/contexts.helpers'
+import { createInternalTab } from '@src/helpers/tabs.helpers'
+import processHandlers from './process-handlers'
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
 
-commandParser.setExecutionContext(executionContexts.BACKGROUND)
+const handleCommandQueueChange = async storage => {
+  const queue = storage.get(storageKeys.COMMAND_QUEUE)
+  const executable = queue.executable
 
-const executeEvents = async (events, defaultTab) => {
-  let commands = []
-  let previousTabId = storage.get(storageKeys.TAB_ID)
+  if (queue.isExecuting || !executable) return
 
-  storage.set(storageKeys.TAB_ID, defaultTab.id)
+  const originalTab = storage.get(storageKeys.TAB)
+  const aliases = storage.get(storageKeys.ALIASES)
+  const config = storage.get(storageKeys.CONFIG)
+  const tab = executable.tab || originalTab
 
-  for (let index = 0; index < events.length; index++) {
-    const tabId = storage.get(storageKeys.TAB_ID)
-    const aliases = storage.get(storageKeys.ALIASES)
-    const config = storage.get(storageKeys.CONFIG)
+  commandParser.setOrigin(executable.origin)
+  commandParser.setAliases(aliases)
+  if (executable.tab) storage.set(storageKeys.TAB, executable.tab)
 
-    commandParser.setAliases(aliases)
+  const contextInputValue = config.getValueById(configInputIds.CONTEXT)
 
-    const contextInputValue = config.getValueById(configInputIds.CONTEXT)
-    const maxLinesInputValue = config.getValueById(configInputIds.MAX_LINES_PER_COMMAND)
-    const tab = await getTab({ tabId })
-    const event = events[index]
+  const context = createContext(contextInputValue, tab)
+  const command = commandParser.read(executable.line).applyContext(context).applyQueue(queue)
 
-    const context = createContext(contextInputValue, tab)
-    const command = commandParser.read(event.line).applyContext(context)
-
-    if (!command.finished) await command.execute()
-
-    const commandVisible = command.getCommandVisibleInChain()
-
-    if (commandVisible) {
-      commands = [...commands, commandVisible.simplify()]
-    }
-
-    const oldCommands = storage.get(storageKeys.HISTORY)
-
-    const newCommands = [...oldCommands, ...commands]
-    const commandsLimited = limitSimplifiedCommands(newCommands, maxLinesInputValue)
-
-    storage.set(storageKeys.HISTORY, commandsLimited)
+  if (!command.finished) {
+    command.startExecuting()
+    command.addEventListener('update', () => queue.change(executable.id, command.simplify()))
+    queue.change(executable.id, command.simplify())
+    await command.execute()
   }
 
-  storage.set(storageKeys.TAB_ID, previousTabId)
+  const commandVisible = command.getCommandVisibleInChain()
+
+  if (commandVisible) queue.change(executable.id, commandVisible.simplify())
+  else queue.delete(executable.id)
+
+  if (executable.tabId) storage.set(storageKeys.TAB, originalTab)
+}
+
+const handleStorageChange = changes => {
+  const hasQueueChanges = storageKeys.COMMAND_QUEUE in changes
+  storage.handleStorageChanges(changes)
+
+  if (hasQueueChanges) handleCommandQueueChange(storage)
+}
+const ensureOffscreenIsActive = async () => {
+  const exists = await chrome.offscreen.hasDocument()
+
+  if (!exists) {
+    await chrome.offscreen.createDocument({
+      url: 'offscreen.html',
+      reasons: ['IFRAME_SCRIPTING'],
+      justification: 'Secure execution of dynamic code inside a sandboxed iframe.'
+    })
+  }
+}
+
+const ensureRecycledListenersAreActive = async () => {
+  await ensureOffscreenIsActive()
+
+  chrome.storage.onChanged.removeListener(handleStorageChange)
+  chrome.storage.onChanged.addListener(handleStorageChange)
+  await storage.restart()
 }
 
 chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {
   if (changeInfo.status !== 'complete') return
 
-  const pendingEvents = storage
-    .get(storageKeys.EVENTS)
-    .filter(event => new RegExp(event.url).test(updatedTab.url))
+  const queue = storage.get(storageKeys.COMMAND_QUEUE)
+  const events = storage.get(storageKeys.EVENTS)
+
+  const pendingEvents = events.filter(event => new RegExp(event.url).test(updatedTab.url))
 
   if (pendingEvents.length === 0) return
+  const tab = createInternalTab(updatedTab)
 
-  executeEvents(pendingEvents, updatedTab)
+  pendingEvents.forEach(event => queue.add(event.line, origins.AUTO, tab))
 })
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -91,5 +112,14 @@ chrome.runtime.onInstalled.addListener(async () => {
     })
   }
 
-  storage.set(storageKeys.TAB_ID, tab.id)
+  storage.handleStorageChangesManually()
+  storage.set(storageKeys.TAB, tab)
 })
+
+chrome.idle.onStateChanged.addListener(state => {
+  if (state === 'active') ensureRecycledListenersAreActive()
+})
+
+chrome.runtime.onStartup.addListener(ensureRecycledListenersAreActive)
+
+chrome.storage.onChanged.addListener(handleStorageChange)

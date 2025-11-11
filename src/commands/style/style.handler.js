@@ -6,7 +6,7 @@ import { formatStyle } from '@src/helpers/format.helpers'
 import { applyElementStyles, getElementStyles } from '@src/processes'
 
 export const styleHandler = async command => {
-  const tabId = storage.get(storageKeys.TAB_ID)
+  const tabId = storage.get(storageKeys.TAB).id
   const P = name => command.props[name]
 
   if (P`list`) {

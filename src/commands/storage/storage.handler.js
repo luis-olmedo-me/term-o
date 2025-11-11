@@ -10,7 +10,7 @@ import { getStorageNamespace } from './storage.helpers'
 export const storageHandler = async command => {
   const P = name => command.props[name]
 
-  const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : storage.get(storageKeys.TAB_ID)
+  const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : storage.get(storageKeys.TAB).id
 
   if (P`local` || P`session` || P`cookie`) {
     const [key, value] = P`set`

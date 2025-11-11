@@ -75,19 +75,20 @@ export const getElementChild = (element, childIndex) => {
   return element.children.item(childIndex)
 }
 
-export const createOverlay = (message, theme) => {
+export const createOverlay = (message, theme, fontFamily) => {
   const overlay = document.createElement('div')
+
   overlay.style.position = 'fixed'
-  overlay.style.inset = '0'
-  overlay.style.background = theme[colorThemeKeys.BACKGROUND]
-  overlay.style.cursor = 'crosshair'
-  overlay.style.zIndex = '999999'
   overlay.style.display = 'flex'
   overlay.style.alignItems = 'center'
   overlay.style.justifyContent = 'center'
-  overlay.style.color = theme[colorThemeKeys.FOREGROUND]
+  overlay.style.cursor = 'crosshair'
+  overlay.style.zIndex = '999999'
   overlay.style.fontSize = '18px'
-  document.body.style.cursor = 'crosshair'
+  overlay.style.inset = '0'
+  overlay.style.background = theme[colorThemeKeys.BACKGROUND]
+  overlay.style.color = theme[colorThemeKeys.FOREGROUND]
+  overlay.style.fontFamily = fontFamily
   overlay.textContent = message
   document.body.appendChild(overlay)
 

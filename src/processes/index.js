@@ -79,12 +79,12 @@ export const uploadFile = tabId => {
   })
 }
 
-export const pickColor = (tabId, { theme }) => {
+export const pickColor = (tabId, { theme, fontFamily }) => {
   return createWorkerProcessRequest({
     type: processNames.PICK_COLOR,
     defaultResponse: null,
     tabId,
-    data: { theme }
+    data: { theme, fontFamily }
   })
 }
 

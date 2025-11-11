@@ -38,8 +38,9 @@ export const styleHandler = async command => {
 
     const themeName = config.getValueById(configInputIds.THEME_NAME)
     const selectedTheme = config.themes.find(theme => theme.name === themeName)
+    const fontFamily = config.getValueById(configInputIds.FONT_FAMILY)
 
-    const pick = await pickColor(tabId, { theme: selectedTheme })
+    const pick = await pickColor(tabId, { theme: selectedTheme, fontFamily })
 
     if (pick.error) command.throw(pick.error)
     else command.update(pick.color)

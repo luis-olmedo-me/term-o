@@ -5,7 +5,7 @@ export default async (resolve, data) => {
     resolve({ color: null, error: 'EyeDropper API is not supported in this browser.' })
   }
 
-  const overlay = createOverlay('Click anywhere to pick a color', data.theme)
+  const overlay = createOverlay('Click anywhere to pick a color', data.theme, data.fontFamily)
   const startPicking = async () => {
     overlay.remove()
 
@@ -17,7 +17,6 @@ export default async (resolve, data) => {
     } catch (error) {
       resolve({ color: null, error: 'Unexpected error when trying to pick-up color.' })
     } finally {
-      document.body.style.cursor = ''
       document.removeEventListener('click', startPicking)
     }
   }

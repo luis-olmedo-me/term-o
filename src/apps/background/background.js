@@ -47,6 +47,19 @@ const handleCommandQueueChange = async storage => {
   if (executable.tabId) storage.set(storageKeys.TAB, originalTab)
 }
 
+const handleStorageChange = changes => {
+  const hasQueueChanges = storageKeys.COMMAND_QUEUE in changes
+  storage.handleStorageChanges(changes)
+
+  if (hasQueueChanges) handleCommandQueueChange(storage)
+}
+
+const ensureStorageListener = async () => {
+  chrome.storage.onChanged.removeListener(handleStorageChange)
+  chrome.storage.onChanged.addListener(handleStorageChange)
+  storage.restart()
+}
+
 chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {
   if (changeInfo.status !== 'complete') return
 
@@ -90,9 +103,10 @@ chrome.runtime.onInstalled.addListener(async () => {
   storage.set(storageKeys.TAB, tab)
 })
 
-chrome.storage.onChanged.addListener(changes => {
-  const hasQueueChanges = storageKeys.COMMAND_QUEUE in changes
-  storage.handleStorageChanges(changes)
-
-  if (hasQueueChanges) handleCommandQueueChange(storage)
+chrome.idle.onStateChanged.addListener(state => {
+  if (state === 'active') ensureStorageListener()
 })
+
+chrome.runtime.onStartup.addListener(ensureStorageListener)
+
+chrome.storage.onChanged.addListener(handleStorageChange)

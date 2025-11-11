@@ -9,11 +9,14 @@ class Storage extends EventListener {
     super()
 
     this.initiated = false
-    this.values = storageValues.reduce((values, { key, Template, defaultValue }) => {
-      return { ...values, [key]: new Template(this, { value: defaultValue, version: null }) }
-    }, {})
-    this.handleStorageChangesRef = this.handleStorageChanges.bind(this)
     this.manualMode = false
+    this.handleStorageChangesRef = this.handleStorageChanges.bind(this)
+    this.values = storageValues.reduce((values, { key, Template, defaultValue, namespace }) => {
+      return {
+        ...values,
+        [key]: new Template(this, namespace, { value: defaultValue, version: null })
+      }
+    }, {})
 
     this.init()
   }
@@ -35,6 +38,24 @@ class Storage extends EventListener {
 
     this.initiated = true
     this.dispatchEvent('init', this)
+  }
+
+  async restart() {
+    const promises = Object.entries(this.values).map(([key, instance]) => {
+      return getStorageValue(instance.$namespace, key, instance.$storageValue).then(result => {
+        const isDefault = result.value === instance.$storageValue
+
+        if (!isDefault) this.getInstance(key).$update(result)
+      })
+    })
+
+    await Promise.all(promises)
+
+    if (!this.manualMode) {
+      chrome.storage.onChanged.removeListener(this.handleStorageChangesRef)
+      chrome.storage.onChanged.addListener(this.handleStorageChangesRef)
+    }
+    this.dispatchEvent('restart', this)
   }
 
   get(storageKey) {

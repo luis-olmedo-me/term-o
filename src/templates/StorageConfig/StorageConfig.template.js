@@ -8,8 +8,8 @@ import {
 } from '@src/helpers/config.helpers'
 
 export class StorageConfig extends StorageSimple {
-  constructor(storageService, storageValue) {
-    super(storageService, storageValue)
+  constructor(storageService, namespace, storageValue) {
+    super(storageService, namespace, storageValue)
 
     this.details = buildDetailedConfig(storageValue.value)
 
@@ -32,9 +32,9 @@ export class StorageConfig extends StorageSimple {
   }
 
   $update(storageValue) {
-    if (this.storageValue.version === storageValue.version) return
+    if (this.$storageValue.version === storageValue.version) return
 
-    this.storageValue = storageValue
+    this.$storageValue = storageValue
     this.details = buildDetailedConfig(storageValue.value)
   }
 

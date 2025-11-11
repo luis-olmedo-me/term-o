@@ -3,13 +3,13 @@ import StorageSimple from '@src/templates/StorageSimple'
 import { createInternalTab } from '@src/helpers/tabs.helpers'
 
 export class StorageTab extends StorageSimple {
-  constructor(storageService, storageValue) {
-    super(storageService, storageValue)
+  constructor(storageService, namespace, storageValue) {
+    super(storageService, namespace, storageValue)
   }
 
   $update(storageValue) {
-    if (storageValue.version === this.storageValue.version) return
+    if (storageValue.version === this.$storageValue.version) return
 
-    this.storageValue = { ...storageValue, value: createInternalTab(storageValue.value) }
+    this.$storageValue = { ...storageValue, value: createInternalTab(storageValue.value) }
   }
 }

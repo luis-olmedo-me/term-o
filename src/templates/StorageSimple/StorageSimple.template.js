@@ -1,7 +1,8 @@
 export class StorageSimple {
-  constructor(storageService, storageValue) {
+  constructor(storageService, namespace, storageValue) {
     this.$storageService = storageService
-    this.storageValue = {
+    this.$namespace = namespace
+    this.$storageValue = {
       value: storageValue.value,
       version: storageValue.version
     }
@@ -12,12 +13,12 @@ export class StorageSimple {
   }
 
   $update(storageValue) {
-    if (storageValue.version === this.storageValue.version) return
+    if (storageValue.version === this.$storageValue.version) return
 
-    this.storageValue = storageValue
+    this.$storageValue = storageValue
   }
 
   $latest() {
-    return this.storageValue
+    return this.$storageValue
   }
 }

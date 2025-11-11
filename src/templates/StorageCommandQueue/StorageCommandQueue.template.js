@@ -8,8 +8,8 @@ import { updateQueueValueIn } from '@src/helpers/queue.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 
 export class StorageCommandQueue extends StorageSimple {
-  constructor(storageService, storageValue) {
-    super(storageService, storageValue)
+  constructor(storageService, namespace, storageValue) {
+    super(storageService, namespace, storageValue)
 
     this.handleInitRef = this.handleInit.bind(this)
     this.handleConfigChangesRef = this.handleConfigChanges.bind(this)

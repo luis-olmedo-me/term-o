@@ -1,3 +1,5 @@
+import { colorThemeKeys } from '@src/constants/themes.constants'
+
 export const getElementXPath = element => {
   if (element.id !== '') return 'id("' + element.id + '")'
   if (element.parentElement === null) return element.tagName.toLowerCase()
@@ -71,4 +73,23 @@ export const getElementChild = (element, childIndex) => {
   if (!childIndex) return element
 
   return element.children.item(childIndex)
+}
+
+export const createOverlay = (message, theme) => {
+  const overlay = document.createElement('div')
+  overlay.style.position = 'fixed'
+  overlay.style.inset = '0'
+  overlay.style.background = theme[colorThemeKeys.BACKGROUND]
+  overlay.style.cursor = 'crosshair'
+  overlay.style.zIndex = '999999'
+  overlay.style.display = 'flex'
+  overlay.style.alignItems = 'center'
+  overlay.style.justifyContent = 'center'
+  overlay.style.color = theme[colorThemeKeys.FOREGROUND]
+  overlay.style.fontSize = '18px'
+  document.body.style.cursor = 'crosshair'
+  overlay.textContent = message
+  document.body.appendChild(overlay)
+
+  return overlay
 }

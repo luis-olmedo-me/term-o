@@ -1,8 +1,11 @@
-export default async resolve => {
+import { createOverlay } from '@content/helpers/dom-management.helpers'
+
+export default async (resolve, data) => {
   if (!window.EyeDropper) {
     resolve({ color: null, error: 'EyeDropper API is not supported in this browser.' })
   }
 
+  const overlay = createOverlay('Click anywhere to pick a color', data.theme)
   const startPicking = async () => {
     overlay.remove()
 
@@ -19,20 +22,5 @@ export default async resolve => {
     }
   }
 
-  const overlay = document.createElement('div')
-  overlay.style.position = 'fixed'
-  overlay.style.inset = '0'
-  overlay.style.background = 'rgba(0,0,0,0.7)'
-  overlay.style.cursor = 'crosshair'
-  overlay.style.zIndex = '999999'
-  overlay.style.display = 'flex'
-  overlay.style.alignItems = 'center'
-  overlay.style.justifyContent = 'center'
-  overlay.style.color = '#fff'
-  overlay.style.fontSize = '18px'
-  overlay.textContent = 'Click anywhere to pick a color'
-  document.body.appendChild(overlay)
-
-  document.body.style.cursor = 'crosshair'
   document.addEventListener('click', startPicking, { once: true })
 }

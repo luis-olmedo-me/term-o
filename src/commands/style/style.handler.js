@@ -1,5 +1,6 @@
 import storage from '@src/libs/storage'
 
+import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatStyle } from '@src/helpers/format.helpers'
@@ -33,10 +34,12 @@ export const styleHandler = async command => {
   }
 
   if (P`color-pick`) {
-    const pick = await pickColor(tabId, {
-      searchByXpath: P`on`,
-      newInlineStyles: P`apply`
-    })
+    const config = storage.get(storageKeys.CONFIG)
+
+    const themeName = config.getValueById(configInputIds.THEME_NAME)
+    const selectedTheme = config.themes.find(theme => theme.name === themeName)
+
+    const pick = await pickColor(tabId, { theme: selectedTheme })
 
     if (pick.error) command.throw(pick.error)
     else command.update(pick.color)

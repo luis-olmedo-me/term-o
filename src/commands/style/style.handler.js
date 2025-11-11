@@ -3,7 +3,7 @@ import storage from '@src/libs/storage'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatStyle } from '@src/helpers/format.helpers'
-import { applyElementStyles, getElementStyles } from '@src/processes'
+import { applyElementStyles, getElementStyles, pickColor } from '@src/processes'
 
 export const styleHandler = async command => {
   const tabId = storage.get(storageKeys.TAB).id
@@ -30,6 +30,16 @@ export const styleHandler = async command => {
     const formattedStyles = rules.map(formatStyle)
 
     if (rules.length) command.update(...formattedStyles)
+  }
+
+  if (P`color-pick`) {
+    const pick = await pickColor(tabId, {
+      searchByXpath: P`on`,
+      newInlineStyles: P`apply`
+    })
+
+    if (pick.error) command.throw(pick.error)
+    else command.update(pick.color)
   }
 
   if (P`help`) createHelpView(command)

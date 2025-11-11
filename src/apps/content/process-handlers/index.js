@@ -4,6 +4,7 @@ import findDOMElement from './find-dom-element.process'
 import getDOMElements from './get-dom-elements.process'
 import getElementStyles from './get-element-styles.process'
 import getStorage from './get-storage.process'
+import pickColor from './pick-color.process'
 import setStorage from './set-storage.process'
 import uploadFile from './upload-file.process'
 
@@ -17,5 +18,6 @@ export default {
   [processNames.GET_ELEMENT_STYLES]: getElementStyles,
   [processNames.APPLY_ELEMENT_STYLES]: applyElementStyles,
   [processNames.CLICK_ELEMENT]: clickElement,
-  [processNames.UPLOAD_FILE]: uploadFile
+  [processNames.UPLOAD_FILE]: uploadFile,
+  [processNames.PICK_COLOR]: pickColor
 }

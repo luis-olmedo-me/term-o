@@ -79,6 +79,15 @@ export const uploadFile = tabId => {
   })
 }
 
+export const pickColor = tabId => {
+  return createWorkerProcessRequest({
+    type: processNames.PICK_COLOR,
+    defaultResponse: null,
+    tabId,
+    data: null
+  })
+}
+
 export const executeCode = ({ script }) => {
   return createWorkerProcessRequest({
     type: processNames.EXECUTE_CODE,

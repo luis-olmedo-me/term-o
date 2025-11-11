@@ -26,6 +26,15 @@ export default new CommandBase({
     mustHave: ['on']
   })
   .expect({
+    name: 'color-pick',
+    abbreviation: 'c',
+    type: commandTypes.BOOLEAN,
+    helpSection: styleHelpSections.RETRIEVAL,
+    description: 'Pick a color clicking in web site',
+    worksWith: [],
+    mustHave: []
+  })
+  .expect({
     name: 'apply',
     abbreviation: 'a',
     type: 'string',

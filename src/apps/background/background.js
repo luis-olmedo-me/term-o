@@ -53,11 +53,24 @@ const handleStorageChange = changes => {
 
   if (hasQueueChanges) handleCommandQueueChange(storage)
 }
+const ensureOffscreenIsActive = async () => {
+  const exists = await chrome.offscreen.hasDocument()
 
-const ensureStorageListener = async () => {
+  if (!exists) {
+    await chrome.offscreen.createDocument({
+      url: 'offscreen.html',
+      reasons: ['IFRAME_SCRIPTING'],
+      justification: 'Secure execution of dynamic code inside a sandboxed iframe.'
+    })
+  }
+}
+
+const ensureRecycledListenersAreActive = async () => {
+  await ensureOffscreenIsActive()
+
   chrome.storage.onChanged.removeListener(handleStorageChange)
   chrome.storage.onChanged.addListener(handleStorageChange)
-  storage.restart()
+  await storage.restart()
 }
 
 chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {
@@ -104,9 +117,9 @@ chrome.runtime.onInstalled.addListener(async () => {
 })
 
 chrome.idle.onStateChanged.addListener(state => {
-  if (state === 'active') ensureStorageListener()
+  if (state === 'active') ensureRecycledListenersAreActive()
 })
 
-chrome.runtime.onStartup.addListener(ensureStorageListener)
+chrome.runtime.onStartup.addListener(ensureRecycledListenersAreActive)
 
 chrome.storage.onChanged.addListener(handleStorageChange)

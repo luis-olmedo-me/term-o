@@ -28,10 +28,8 @@ export const scriptsHandler = async command => {
     const theme = config.themes.find(theme => theme.name === themeName)
     const selectedTheme = { ...theme, ...getAccentColors(theme, colorAccent) }
 
-    command.update('Upload file.')
+    command.update('Click the bubble on the page to start uploading a file.')
     const file = await uploadFile(tabId, { theme: selectedTheme, fontFamily })
-
-    if (!file) throw 'Fail uploading file.'
 
     const scripts = storage.get(storageKeys.SCRIPTS)
     const alreadyExists = scripts.some(script => script.name === file.name)

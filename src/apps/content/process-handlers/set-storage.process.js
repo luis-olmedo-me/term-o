@@ -1,6 +1,6 @@
 import { storageNamespaces } from '@src/constants/storage.constants'
 
-export default async (resolve, data) => {
+export default async (resolve, _reject, data) => {
   let { namespace, key, value } = data
 
   switch (namespace) {

@@ -9,5 +9,6 @@ export const processNames = {
   CLICK_ELEMENT: 'click-element',
   EXECUTE_CODE: 'execute-code',
   EXECUTE_COMMAND: 'execute-command',
-  UPLOAD_FILE: 'upload-file'
+  UPLOAD_FILE: 'upload-file',
+  PICK_COLOR: 'pick-color'
 }

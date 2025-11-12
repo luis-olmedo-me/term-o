@@ -21,9 +21,7 @@ export const aliasHandler = async command => {
     const aliases = storage.get(storageKeys.ALIASES)
     const alreadyExists = aliases.some(alias => alias.key === key)
 
-    if (alreadyExists) {
-      return command.throw(`The alias "${key}" already exists.`)
-    }
+    if (alreadyExists) throw `The alias "${key}" already exists.`
 
     const newAliases = aliases.concat(newAlias)
     const update = formatAlias(newAlias)
@@ -38,9 +36,7 @@ export const aliasHandler = async command => {
     const aliases = storage.get(storageKeys.ALIASES)
     const existingAlias = aliases.find(alias => alias.key === key)
 
-    if (!existingAlias) {
-      return command.throw(`The alias "${key}" does not exist.`)
-    }
+    if (!existingAlias) throw `The alias "${key}" does not exist.`
 
     const newAliases = aliases.filter(alias => alias.key !== key)
     const update = formatAlias(existingAlias)

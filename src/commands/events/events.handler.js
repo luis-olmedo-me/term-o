@@ -33,9 +33,7 @@ export const eventsHandler = async command => {
     const events = storage.get(storageKeys.EVENTS)
     const existingEvent = events.find(event => event.id === id)
 
-    if (!existingEvent) {
-      return command.throw(`The event "${id}" does not exist.`)
-    }
+    if (!existingEvent) throw `The event "${id}" does not exist.`
 
     const newEvents = events.filter(alias => alias.id !== id)
     const update = formatEvent(existingEvent)

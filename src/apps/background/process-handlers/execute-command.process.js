@@ -5,7 +5,7 @@ import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
 
-export default async (resolve, data) => {
+export default async (resolve, _reject, data) => {
   const { line, origin } = data
 
   const tab = storage.get(storageKeys.TAB)

@@ -51,10 +51,13 @@ class Storage extends EventListener {
 
     await Promise.all(promises)
 
-    if (!this.manualMode) {
+    if (!this.manualMode && chrome.storage.onChanged.hasListener(this.handleStorageChangesRef)) {
       chrome.storage.onChanged.removeListener(this.handleStorageChangesRef)
+    }
+    if (!this.manualMode) {
       chrome.storage.onChanged.addListener(this.handleStorageChangesRef)
     }
+
     this.dispatchEvent('restart', this)
   }
 

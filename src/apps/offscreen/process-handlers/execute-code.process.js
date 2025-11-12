@@ -3,7 +3,7 @@ import { buildArgsFromProps, getRawArgs } from '@src/helpers/arguments.helpers'
 import { cleanColors } from '@src/helpers/themes.helpers'
 import { executeCommand } from '@src/processes'
 
-export default async (resolve, data) => {
+export default async (resolve, reject, data) => {
   const { script } = data
 
   const iframe = document.createElement('iframe')
@@ -68,7 +68,8 @@ export default async (resolve, data) => {
         document.body.removeChild(iframe)
         window.removeEventListener('message', handleCodeEval)
 
-        resolve({ error: data.error, updates })
+        if (data.error) reject(data.error)
+        else resolve(updates)
         break
       }
     }

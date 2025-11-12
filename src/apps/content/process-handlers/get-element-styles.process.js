@@ -2,7 +2,7 @@ import { getNonDefaultComputedStyles } from '@content/helpers/css-management.hel
 import { getElementByXPath } from '@content/helpers/dom-management.helpers'
 import { isRgb, rgbToHex } from '@src/helpers/utils.helpers'
 
-export default async (resolve, data) => {
+export default async (resolve, reject, data) => {
   const { searchByXpath, searchByProperty } = data
   const [searchByPropName, searchByPropValue] = searchByProperty
 
@@ -11,7 +11,7 @@ export default async (resolve, data) => {
 
   const element = getElementByXPath(searchByXpath)
 
-  if (!element) return resolve([])
+  if (!element) return reject('XPath did not match any element.')
 
   const styles = getNonDefaultComputedStyles(element).filter(({ prop, value }) => {
     if (propNamePattern) return propNamePattern.test(prop)

@@ -36,8 +36,8 @@ export const fontSizes = {
 }
 
 export const statusIndicators = {
-  HALF_DOT: 'half-dot',
   DOT: 'dot',
+  HALF_DOT: 'half-dot',
   NONE: 'none'
 }
 

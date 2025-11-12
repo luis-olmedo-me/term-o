@@ -113,7 +113,9 @@ export const createBubble = (message, theme, fontFamily) => {
     bottom: '12px',
     right: '-100%',
     background: theme[colorThemeKeys.BACKGROUND],
-    color: theme[colorThemeKeys.FOREGROUND],
+    color: theme[customColorThemeKeys.ACCENT],
+    border: `solid ${theme[customColorThemeKeys.ACCENT]}`,
+    borderWidth: '1px 0 1px 1px',
     borderRadius: '20px 0 0 20px',
     padding: '10px 14px',
     fontSize: '13px',
@@ -121,11 +123,11 @@ export const createBubble = (message, theme, fontFamily) => {
     cursor: 'pointer',
     zIndex: '999999',
     boxShadow: '0 4px 10px rgba(0,0,0,0.4)',
-    transition: 'transform 0.15s ease-in-out, opacity 0.4s ease-in-out, right 0.7s ease-in-out'
+    transition:
+      'transform 0.15s ease-in-out, opacity 0.4s ease-in-out, right 1s ease-in-out, color 2.5s ease-in-out, border-color 2.5s ease-in-out'
   })
   bubble.onmouseenter = () => (bubble.style.transform = 'scale(1.05)')
   bubble.onmouseleave = () => (bubble.style.transform = 'scale(1)')
-  bubble.onload = appear
   document.body.appendChild(bubble)
 
   const remove = async () => {
@@ -137,9 +139,11 @@ export const createBubble = (message, theme, fontFamily) => {
   }
 
   const appear = async () => {
-    await delay(10)
+    await delay(50)
     bubble.style.right = '0'
     bubble.style.opacity = '1'
+    bubble.style.color = theme[colorThemeKeys.FOREGROUND]
+    bubble.style.borderColor = 'transparent'
   }
 
   return { element: bubble, remove, appear }

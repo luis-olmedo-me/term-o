@@ -12,22 +12,20 @@ import processHandlers from './process-handlers'
 
 const backgroundHandler = setUpHandlers(processHandlers)
 
-chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
-
-const handleCommandQueueChange = async storage => {
-  const queue = storage.get(storageKeys.COMMAND_QUEUE)
+const handleCommandQueueChange = async storageRef => {
+  const queue = storageRef.get(storageKeys.COMMAND_QUEUE)
   const executable = queue.executable
 
   if (queue.isExecuting || !executable) return
 
-  const originalTab = storage.get(storageKeys.TAB)
-  const aliases = storage.get(storageKeys.ALIASES)
-  const config = storage.get(storageKeys.CONFIG)
+  const originalTab = storageRef.get(storageKeys.TAB)
+  const aliases = storageRef.get(storageKeys.ALIASES)
+  const config = storageRef.get(storageKeys.CONFIG)
   const tab = executable.tab || originalTab
 
   commandParser.setOrigin(executable.origin)
   commandParser.setAliases(aliases)
-  if (executable.tab) storage.set(storageKeys.TAB, executable.tab)
+  if (executable.tab) storageRef.set(storageKeys.TAB, executable.tab)
 
   const contextInputValue = config.getValueById(configInputIds.CONTEXT)
 
@@ -46,14 +44,16 @@ const handleCommandQueueChange = async storage => {
   if (commandVisible) queue.change(executable.id, commandVisible.simplify())
   else queue.delete(executable.id)
 
-  if (executable.tabId) storage.set(storageKeys.TAB, originalTab)
+  if (executable.tabId) storageRef.set(storageKeys.TAB, originalTab)
 }
 
-const handleStorageChange = changes => {
-  const hasQueueChanges = storageKeys.COMMAND_QUEUE in changes
-  storage.handleStorageChanges(changes)
+const handleStorageChange = storageRef => {
+  return changes => {
+    const hasQueueChanges = storageKeys.COMMAND_QUEUE in changes
+    storageRef.handleStorageChanges(changes)
 
-  if (hasQueueChanges) handleCommandQueueChange(storage)
+    if (hasQueueChanges) handleCommandQueueChange(storageRef)
+  }
 }
 const ensureOffscreenIsActive = async () => {
   const exists = await chrome.offscreen.hasDocument()
@@ -67,49 +67,39 @@ const ensureOffscreenIsActive = async () => {
   }
 }
 
-const ensureRecycledListenersAreActive = async () => {
-  await ensureOffscreenIsActive()
+const handleTabsUpdated = storageRef => {
+  return (_tabId, changeInfo, updatedTab) => {
+    if (changeInfo.status !== 'complete') return
 
-  chrome.storage.onChanged.removeListener(handleStorageChange)
-  chrome.storage.onChanged.addListener(handleStorageChange)
-  await storage.restart()
+    const queue = storageRef.get(storageKeys.COMMAND_QUEUE)
+    const events = storageRef.get(storageKeys.EVENTS)
+
+    const pendingEvents = events.filter(event => new RegExp(event.url).test(updatedTab.url))
+
+    if (pendingEvents.length === 0) return
+    const tab = createInternalTab(updatedTab)
+
+    pendingEvents.forEach(event => queue.add(event.line, origins.AUTO, tab))
+  }
 }
 
-chrome.tabs.onUpdated.addListener((_tabId, changeInfo, updatedTab) => {
-  if (changeInfo.status !== 'complete') return
+const handleInstalled = storageRef => {
+  return async () => {
+    storageRef.handleStorageChangesManually()
 
-  const queue = storage.get(storageKeys.COMMAND_QUEUE)
-  const events = storage.get(storageKeys.EVENTS)
+    const tab = await getCurrentTab()
+    await ensureOffscreenIsActive()
 
-  const pendingEvents = events.filter(event => new RegExp(event.url).test(updatedTab.url))
-
-  if (pendingEvents.length === 0) return
-  const tab = createInternalTab(updatedTab)
-
-  pendingEvents.forEach(event => queue.add(event.line, origins.AUTO, tab))
-})
-
-chrome.runtime.onInstalled.addListener(async () => {
-  const tab = await getCurrentTab()
-  const exists = await chrome.offscreen.hasDocument()
-
-  if (!exists) {
-    await chrome.offscreen.createDocument({
-      url: 'offscreen.html',
-      reasons: ['IFRAME_SCRIPTING'],
-      justification: 'Secure execution of dynamic code inside a sandboxed iframe.'
-    })
+    storageRef.set(storageKeys.TAB, tab)
   }
+}
 
-  storage.handleStorageChangesManually()
-  storage.set(storageKeys.TAB, tab)
-})
+chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
 
-chrome.idle.onStateChanged.addListener(state => {
-  if (state === 'active') ensureRecycledListenersAreActive()
-  else chrome.storage.onChanged.removeListener(handleStorageChange)
-})
+chrome.tabs.onUpdated.addListener(handleTabsUpdated(storage))
 
-chrome.storage.onChanged.addListener(handleStorageChange)
+chrome.runtime.onInstalled.addListener(handleInstalled(storage))
+
+chrome.storage.onChanged.addListener(handleStorageChange(storage))
 
 chrome.runtime.onMessage.addListener(backgroundHandler)

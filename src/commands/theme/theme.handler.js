@@ -30,9 +30,7 @@ export const themeHandler = async command => {
     const config = storage.get(storageKeys.CONFIG)
     const alreadyExists = config.themes.some(set => set.name === newTheme.name)
 
-    if (alreadyExists) {
-      return command.throw(`The theme "${newTheme.name}" already exists.`)
-    }
+    if (alreadyExists) throw `The theme "${newTheme.name}" already exists.`
 
     config.addTheme(newTheme)
     config.change(configInputIds.THEME_NAME, newTheme.name)
@@ -52,13 +50,8 @@ export const themeHandler = async command => {
     const isDefault = defaultColorTheme.name === name
     const isCurrentTheme = name === themeName
 
-    if (isDefault) {
-      return command.throw(`The theme "${name}" is a default theme that can not be deleted.`)
-    }
-
-    if (!alreadyExists) {
-      return command.throw(`The theme "${name}" does not exist.`)
-    }
+    if (isDefault) throw `The theme "${name}" is a default theme that can not be deleted.`
+    if (!alreadyExists) throw `The theme "${name}" does not exist.`
 
     if (isCurrentTheme) config.change(configInputIds.THEME_NAME, defaultColorTheme.name)
     config.removeTheme(name)
@@ -77,13 +70,8 @@ export const themeHandler = async command => {
     const alreadyExists = config.themes.some(set => set.name === name)
     const isCurrentTheme = name === themeName
 
-    if (!alreadyExists) {
-      return command.throw(`The theme "${name}" is unrecognized.`)
-    }
-
-    if (isCurrentTheme) {
-      return command.throw(`The theme "${name}" is already applied.`)
-    }
+    if (!alreadyExists) throw `The theme "${name}" is unrecognized.`
+    if (isCurrentTheme) throw `The theme "${name}" is already applied.`
 
     config.change(configInputIds.THEME_NAME, name)
 

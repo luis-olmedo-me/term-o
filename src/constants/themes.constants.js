@@ -22,6 +22,11 @@ export const colorThemeKeys = {
   YELLOW: 'yellow'
 }
 
+export const customColorThemeKeys = {
+  ACCENT: 'accent',
+  BRIGHT_ACCENT: 'bright_accent'
+}
+
 export const defaultColorTheme = {
   [colorThemeKeys.NAME]: 'Default Dark Mode',
   [colorThemeKeys.BACKGROUND]: '#121212',

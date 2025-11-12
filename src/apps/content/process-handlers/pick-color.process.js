@@ -1,13 +1,13 @@
-import { createOverlay } from '@content/helpers/dom-management.helpers'
+import { createBubble } from '@content/helpers/dom-management.helpers'
 
 export default async (resolve, reject, data) => {
   if (!window.EyeDropper) {
     resolve({ color: null, error: 'EyeDropper API is not supported in this browser.' })
   }
 
-  const overlay = createOverlay('Click anywhere to pick a color', data.theme, data.fontFamily)
+  const bubble = createBubble('Pick a color', data.theme, data.fontFamily)
   const startPicking = async () => {
-    await overlay.remove()
+    await bubble.remove()
 
     try {
       const eyeDropper = new EyeDropper()
@@ -21,6 +21,6 @@ export default async (resolve, reject, data) => {
     }
   }
 
-  overlay.appear()
-  overlay.element.addEventListener('click', startPicking, { once: true })
+  bubble.appear()
+  bubble.element.addEventListener('click', startPicking, { once: true })
 }

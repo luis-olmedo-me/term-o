@@ -4,6 +4,7 @@ import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatStyle } from '@src/helpers/format.helpers'
+import { getAccentColors } from '@src/helpers/themes.helpers'
 import { applyElementStyles, getElementStyles, pickColor } from '@src/processes'
 
 export const styleHandler = async command => {
@@ -38,10 +39,12 @@ export const styleHandler = async command => {
 
     const themeName = config.getValueById(configInputIds.THEME_NAME)
     const fontFamily = config.getValueById(configInputIds.FONT_FAMILY)
+    const colorAccent = config.getValueById(configInputIds.COLOR_ACCENT)
 
     const theme = config.themes.find(theme => theme.name === themeName)
+    const selectedTheme = { ...theme, ...getAccentColors(theme, colorAccent) }
 
-    const color = await pickColor(tabId, { theme, fontFamily })
+    const color = await pickColor(tabId, { theme: selectedTheme, fontFamily })
 
     command.update(color)
   }

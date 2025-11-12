@@ -3,7 +3,7 @@ import { buildArgsFromProps, getRawArgs } from '@src/helpers/arguments.helpers'
 import { cleanColors } from '@src/helpers/themes.helpers'
 import { executeCommand } from '@src/processes'
 
-export default async (resolve, data) => {
+export default async (resolve, _reject, data) => {
   const { script } = data
 
   const iframe = document.createElement('iframe')

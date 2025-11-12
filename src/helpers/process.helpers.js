@@ -4,7 +4,11 @@ export const setUpHandlers = processHandlers => (request, sender, sendResponse) 
 
   if (!handler) return
 
-  handler(response => sendResponse({ status: 'ok', data: response }), data)
+  handler(
+    data => sendResponse({ status: 'ok', data }),
+    error => sendResponse({ status: 'error', error }),
+    data
+  )
 
   return true
 }

@@ -1,6 +1,6 @@
 import { getElementByXPath } from '@content/helpers/dom-management.helpers'
 
-export default async (resolve, data) => {
+export default async (resolve, _reject, data) => {
   const { searchByXpath } = data
 
   const element = getElementByXPath(searchByXpath)

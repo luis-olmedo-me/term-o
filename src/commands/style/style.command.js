@@ -29,8 +29,8 @@ export default new CommandBase({
     name: 'color-pick',
     abbreviation: 'c',
     type: commandTypes.BOOLEAN,
-    helpSection: styleHelpSections.RETRIEVAL,
-    description: 'Pick a color clicking in web site',
+    helpSection: styleHelpSections.TOOLS,
+    description: 'Pick a color by clicking on the web page',
     worksWith: [],
     mustHave: []
   })

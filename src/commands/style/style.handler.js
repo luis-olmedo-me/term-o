@@ -37,13 +37,13 @@ export const styleHandler = async command => {
     const config = storage.get(storageKeys.CONFIG)
 
     const themeName = config.getValueById(configInputIds.THEME_NAME)
-    const selectedTheme = config.themes.find(theme => theme.name === themeName)
     const fontFamily = config.getValueById(configInputIds.FONT_FAMILY)
 
-    const pick = await pickColor(tabId, { theme: selectedTheme, fontFamily })
+    const theme = config.themes.find(theme => theme.name === themeName)
 
-    if (pick.error) command.throw(pick.error)
-    else command.update(pick.color)
+    const color = await pickColor(tabId, { theme, fontFamily })
+
+    command.update(color)
   }
 
   if (P`help`) createHelpView(command)

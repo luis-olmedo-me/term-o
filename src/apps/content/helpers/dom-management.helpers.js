@@ -99,6 +99,7 @@ export const createOverlay = (message, theme, fontFamily) => {
 
   const remove = async () => {
     overlay.style.opacity = '0'
+    overlay.style.pointerEvents = 'none'
     await delay(700)
     overlay.remove()
   }

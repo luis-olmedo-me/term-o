@@ -1,6 +1,6 @@
 import { createOverlay } from '@content/helpers/dom-management.helpers'
 
-export default async (resolve, _reject, data) => {
+export default async (resolve, reject, data) => {
   if (!window.EyeDropper) {
     resolve({ color: null, error: 'EyeDropper API is not supported in this browser.' })
   }
@@ -13,9 +13,9 @@ export default async (resolve, _reject, data) => {
       const eyeDropper = new EyeDropper()
       const { sRGBHex } = await eyeDropper.open()
 
-      resolve({ color: sRGBHex, error: null })
-    } catch (error) {
-      resolve({ color: null, error: 'Unexpected error when trying to pick-up color.' })
+      resolve(sRGBHex)
+    } catch {
+      reject('Unexpected error when trying to pick-up color.')
     } finally {
       document.removeEventListener('click', startPicking)
     }

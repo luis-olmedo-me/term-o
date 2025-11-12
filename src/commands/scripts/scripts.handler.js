@@ -1,6 +1,5 @@
 import storage from '@src/libs/storage'
 
-import { origins } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
@@ -19,7 +18,6 @@ export const scriptsHandler = async command => {
   }
 
   if (P`upload`) {
-    if (command.origin !== origins.MANUAL) throw 'File uploads are not allowed from this context.'
     const tabId = storage.get(storageKeys.TAB).id
     const config = storage.get(storageKeys.CONFIG)
 

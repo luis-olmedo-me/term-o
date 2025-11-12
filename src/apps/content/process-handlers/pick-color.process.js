@@ -7,7 +7,7 @@ export default async (resolve, reject, data) => {
 
   const overlay = createOverlay('Click anywhere to pick a color', data.theme, data.fontFamily)
   const startPicking = async () => {
-    overlay.remove()
+    await overlay.remove()
 
     try {
       const eyeDropper = new EyeDropper()

@@ -137,7 +137,7 @@ export const createBubble = (message, theme, fontFamily) => {
   }
 
   const appear = async () => {
-    await delay(50)
+    await delay(10)
     bubble.style.right = '0'
     bubble.style.opacity = '1'
   }

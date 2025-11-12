@@ -3,7 +3,7 @@ import storage from '@src/libs/storage'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
-import { formatStyle } from '@src/helpers/format.helpers'
+import { formatStyle, formatText } from '@src/helpers/format.helpers'
 import { getAccentColors } from '@src/helpers/themes.helpers'
 import { applyElementStyles, getElementStyles, pickColor } from '@src/processes'
 
@@ -44,9 +44,11 @@ export const styleHandler = async command => {
     const theme = config.themes.find(theme => theme.name === themeName)
     const selectedTheme = { ...theme, ...getAccentColors(theme, colorAccent) }
 
+    command.update('Click the bubble on the page to start color picking.')
     const color = await pickColor(tabId, { theme: selectedTheme, fontFamily })
 
-    command.update(color)
+    command.reset()
+    command.update(formatText({ text: color }))
   }
 
   if (P`help`) createHelpView(command)

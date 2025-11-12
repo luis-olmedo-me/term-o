@@ -107,9 +107,8 @@ chrome.runtime.onInstalled.addListener(async () => {
 
 chrome.idle.onStateChanged.addListener(state => {
   if (state === 'active') ensureRecycledListenersAreActive()
+  else chrome.storage.onChanged.removeListener(handleStorageChange)
 })
-
-chrome.runtime.onStartup.addListener(ensureRecycledListenersAreActive)
 
 chrome.storage.onChanged.addListener(handleStorageChange)
 

@@ -116,7 +116,7 @@ export const createBubble = (message, theme, fontFamily) => {
     right: '-100%',
     background: theme[colorThemeKeys.BACKGROUND],
     color: theme[customColorThemeKeys.ACCENT],
-    border: `solid ${theme[customColorThemeKeys.ACCENT]}`,
+    border: `solid transparent`,
     borderWidth: '1px 0 1px 1px',
     borderRadius: '10px 0 0 10px',
     padding: '10px 8px',
@@ -124,9 +124,9 @@ export const createBubble = (message, theme, fontFamily) => {
     fontFamily: fontFamily,
     cursor: 'pointer',
     zIndex: '999999',
-    boxShadow: '0 4px 10px rgba(0,0,0,0.4)',
+    boxShadow: '0 4px 10px #00000066',
     transition:
-      'transform 0.15s ease-in-out, opacity 0.4s ease-in-out, right 1s ease-in-out, color 2.5s ease-in-out, border-color 2s ease-in-out, box-shadow 2s linear'
+      'transform 0.15s ease-in-out, opacity 0.4s ease-in-out, right 1s ease-in-out, color 2s linear, border-color 2s linear, box-shadow 2s linear'
   })
   bubble.onmouseenter = () => (bubble.style.transform = 'scale(1.05)')
   bubble.onmouseleave = () => (bubble.style.transform = 'scale(1)')
@@ -146,7 +146,8 @@ export const createBubble = (message, theme, fontFamily) => {
     await delay(50)
     bubble.style.right = '0'
     bubble.style.opacity = '1'
-    bubble.style.color = theme[colorThemeKeys.FOREGROUND]
+    bubble.style.color = theme[customColorThemeKeys.ACCENT]
+    bubble.style.borderColor = theme[customColorThemeKeys.ACCENT]
     bubble.style.boxShadow = `0 4px 10px ${theme[customColorThemeKeys.ACCENT]}66`
   }
 
@@ -155,13 +156,15 @@ export const createBubble = (message, theme, fontFamily) => {
     const accentColor = theme[customColorThemeKeys.ACCENT]
 
     bubble.style.borderColor = currentColor === 'transparent' ? accentColor : 'transparent'
-    bubble.style.boxShadow = `0 4px 10px ${currentColor === 'transparent' ? `${accentColor}66` : `#00000066`}`
+    bubble.style.boxShadow = `0 4px 10px ${currentColor === 'transparent' ? `${accentColor}66` : '#00000066'}`
+    bubble.style.color =
+      currentColor === 'transparent' ? accentColor : theme[colorThemeKeys.FOREGROUND]
   }
 
   timeoutId = setTimeout(() => {
     timeoutId = null
     bubble.style.transition =
-      'transform 0.15s ease-in-out, opacity 0.4s ease-in-out, right 1s ease-in-out, color 2.5s ease-in-out, border-color 1.5s ease-in-out, box-shadow 1.5s linear'
+      'transform 0.15s ease-in-out, opacity 0.4s ease-in-out, right 1s ease-in-out, color 1.5s linear, border-color 1.5s linear, box-shadow 1.5s linear'
 
     intervalId = setInterval(() => {
       toggleColor()

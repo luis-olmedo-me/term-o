@@ -21,6 +21,5 @@ export default async (resolve, reject, data) => {
     }
   }
 
-  bubble.appear()
   bubble.element.addEventListener('click', startPicking, { once: true })
 }

@@ -77,6 +77,8 @@ export const getElementChild = (element, childIndex) => {
 }
 
 export const createBubble = (message, theme, fontFamily) => {
+  let timeoutId = null
+  let intervalId = null
   const bubble = document.createElement('div')
   bubble.innerHTML = `
     <div style="
@@ -116,15 +118,15 @@ export const createBubble = (message, theme, fontFamily) => {
     color: theme[customColorThemeKeys.ACCENT],
     border: `solid ${theme[customColorThemeKeys.ACCENT]}`,
     borderWidth: '1px 0 1px 1px',
-    borderRadius: '20px 0 0 20px',
-    padding: '10px 14px',
+    borderRadius: '10px 0 0 10px',
+    padding: '10px 8px',
     fontSize: '13px',
     fontFamily: fontFamily,
     cursor: 'pointer',
     zIndex: '999999',
     boxShadow: '0 4px 10px rgba(0,0,0,0.4)',
     transition:
-      'transform 0.15s ease-in-out, opacity 0.4s ease-in-out, right 1s ease-in-out, color 2.5s ease-in-out, border-color 2.5s ease-in-out'
+      'transform 0.15s ease-in-out, opacity 0.4s ease-in-out, right 1s ease-in-out, color 2.5s ease-in-out, border-color 2s ease-in-out, box-shadow 2s linear'
   })
   bubble.onmouseenter = () => (bubble.style.transform = 'scale(1.05)')
   bubble.onmouseleave = () => (bubble.style.transform = 'scale(1)')
@@ -135,6 +137,8 @@ export const createBubble = (message, theme, fontFamily) => {
     bubble.style.pointerEvents = 'none'
     bubble.style.right = '-100%'
     await delay(700)
+    clearTimeout(timeoutId)
+    clearInterval(intervalId)
     bubble.remove()
   }
 
@@ -143,8 +147,27 @@ export const createBubble = (message, theme, fontFamily) => {
     bubble.style.right = '0'
     bubble.style.opacity = '1'
     bubble.style.color = theme[colorThemeKeys.FOREGROUND]
-    bubble.style.borderColor = 'transparent'
+    bubble.style.boxShadow = `0 4px 10px ${theme[customColorThemeKeys.ACCENT]}66`
   }
 
+  const toggleColor = () => {
+    const currentColor = bubble.style.borderColor
+    const accentColor = theme[customColorThemeKeys.ACCENT]
+
+    bubble.style.borderColor = currentColor === 'transparent' ? accentColor : 'transparent'
+    bubble.style.boxShadow = `0 4px 10px ${currentColor === 'transparent' ? `${accentColor}66` : `#00000066`}`
+  }
+
+  timeoutId = setTimeout(() => {
+    timeoutId = null
+    bubble.style.transition =
+      'transform 0.15s ease-in-out, opacity 0.4s ease-in-out, right 1s ease-in-out, color 2.5s ease-in-out, border-color 1.5s ease-in-out, box-shadow 1.5s linear'
+
+    intervalId = setInterval(() => {
+      toggleColor()
+    }, 1000)
+  }, 1950)
+
+  appear()
   return { element: bubble, remove, appear }
 }

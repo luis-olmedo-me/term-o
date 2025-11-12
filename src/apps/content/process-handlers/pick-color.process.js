@@ -21,5 +21,6 @@ export default async (resolve, data) => {
     }
   }
 
-  document.addEventListener('click', startPicking, { once: true })
+  overlay.appear()
+  overlay.element.addEventListener('click', startPicking, { once: true })
 }

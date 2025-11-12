@@ -1,4 +1,5 @@
 import { colorThemeKeys } from '@src/constants/themes.constants'
+import { delay } from '@src/helpers/utils.helpers'
 import { mouseBase64 } from '@src/icons-base64'
 
 export const getElementXPath = element => {
@@ -81,6 +82,7 @@ export const createOverlay = (message, theme, fontFamily) => {
   const cursorUrl = mouseBase64(theme[colorThemeKeys.FOREGROUND])
 
   overlay.style.position = 'fixed'
+  overlay.style.transition = 'opacity 0.7s ease-in-out'
   overlay.style.display = 'flex'
   overlay.style.alignItems = 'center'
   overlay.style.justifyContent = 'center'
@@ -88,11 +90,22 @@ export const createOverlay = (message, theme, fontFamily) => {
   overlay.style.zIndex = '999999'
   overlay.style.fontSize = '18px'
   overlay.style.inset = '0'
+  overlay.style.opacity = '0'
   overlay.style.background = theme[colorThemeKeys.BACKGROUND]
   overlay.style.color = theme[colorThemeKeys.FOREGROUND]
   overlay.style.fontFamily = fontFamily
   overlay.textContent = message
   document.body.appendChild(overlay)
 
-  return overlay
+  const remove = async () => {
+    overlay.style.opacity = '0'
+    await delay(700)
+    overlay.remove()
+  }
+
+  const appear = () => {
+    overlay.style.opacity = '1'
+  }
+
+  return { element: overlay, remove, appear }
 }

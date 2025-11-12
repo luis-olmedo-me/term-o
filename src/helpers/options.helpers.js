@@ -1,4 +1,13 @@
+import { commandTypes } from '@src/constants/command.constants'
 import { getArray } from './arguments.helpers'
+
+export const getOptionTypeLabel = type => {
+  if (type === commandTypes.STRING_ARRAY) return '<string[]>'
+  if (type === commandTypes.STRING) return '<string>'
+  if (type === commandTypes.NUMBER) return '<number>'
+  if (type === commandTypes.BOOLEAN) return '<boolean>'
+  return ''
+}
 
 export const isParam = (option, arg) => {
   const isBoolean = option.type === 'boolean'
@@ -25,8 +34,10 @@ export const getParamValue = (indexes, values) => {
 }
 
 export const parseOptions = (index, arg, argsBySpace, type) => {
+  const typeLabel = getOptionTypeLabel(type)
+
   switch (type) {
-    case 'string': {
+    case commandTypes.STRING: {
       index++
       const argValue = argsBySpace.at(index) || ''
       const quote = argValue.charAt(0)
@@ -35,35 +46,36 @@ export const parseOptions = (index, arg, argsBySpace, type) => {
       const endsWithQUote = argValue.endsWith(quote)
 
       if ((!startsWithQuote || !endsWithQUote) && !argValue)
-        throw `${arg} expects for quoted [string] value. Instead, it received nothing.`
+        throw `${arg} expects for quoted ${typeLabel} value. Instead, it received nothing.`
 
       if (!startsWithQuote || !endsWithQUote)
-        throw `${arg} expects for quoted [string] value. Instead, it received ${argValue}.`
+        throw `${arg} expects for quoted ${typeLabel} value. Instead, it received ${argValue}.`
 
       const quotesPattern = new RegExp(`^${quote}|${quote}$`, 'g')
       const value = argValue.replace(quotesPattern, '')
 
       if (!value)
-        throw `${arg} expects for content inside of quoted [string] value. Instead, it received ${argValue}.`
+        throw `${arg} expects for content inside of quoted ${typeLabel} value. Instead, it received ${argValue}.`
 
       return { value, newIndex: index }
     }
 
-    case 'boolean': {
+    case commandTypes.BOOLEAN: {
       return { value: true, newIndex: index }
     }
 
-    case 'number': {
+    case commandTypes.NUMBER: {
       const nextArg = argsBySpace.at(++index)
       const value = Number(nextArg)
       const isValidNumber = !Number.isNaN(value)
 
-      if (!isValidNumber) throw `"${arg}" expects [number] value. Instead, it received ${nextArg}.`
+      if (!isValidNumber)
+        throw `"${arg}" expects ${typeLabel} value. Instead, it received ${nextArg}.`
 
       return { value, newIndex: index }
     }
 
-    case 'string-array': {
+    case commandTypes.STRING_ARRAY: {
       index++
       const argValue = argsBySpace.at(index) || ''
 
@@ -71,10 +83,10 @@ export const parseOptions = (index, arg, argsBySpace, type) => {
       const endsWithBracket = argValue.endsWith(']')
 
       if ((!startsWithBracket || !endsWithBracket) && !argValue)
-        throw `${arg} expects for [string-array] value. Instead, it received nothing.`
+        throw `${arg} expects for ${typeLabel} value. Instead, it received nothing.`
 
       if (!startsWithBracket || !endsWithBracket)
-        throw `${arg} expects for [string-array] value. Instead, it received ${argValue}.`
+        throw `${arg} expects for ${typeLabel} value. Instead, it received ${argValue}.`
 
       const arrayValue = getArray(argValue)
       const isValidValue = arrayValue.every(value => {
@@ -86,7 +98,7 @@ export const parseOptions = (index, arg, argsBySpace, type) => {
       const hasItems = arrayValue.length > 0
 
       if (!isValidValue || !hasItems)
-        throw `${arg} expects for valid content in [string-array] value(s). Instead, it received ${argValue}.`
+        throw `${arg} expects for valid content in ${typeLabel} value(s). Instead, it received ${argValue}.`
 
       return { value: arrayValue, newIndex: index }
     }

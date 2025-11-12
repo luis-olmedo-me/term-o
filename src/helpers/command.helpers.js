@@ -2,7 +2,7 @@ import { commandStatuses } from '@src/constants/command.constants'
 
 import { getColor as C } from '@src/helpers/themes.helpers'
 import { getArgs } from './arguments.helpers'
-import { getParamValue } from './options.helpers'
+import { getOptionTypeLabel, getParamValue } from './options.helpers'
 
 export const executePerUpdates = async (nextCommand, updates) => {
   const argsHoldingUp = nextCommand.args.filter(arg => arg.isHoldingUp)
@@ -86,16 +86,16 @@ export const createHelpView = command => {
     optionsBySection.forEach((option, index) => {
       const displayName = option.displayName
       const description = option.description
-      const type = option.type
+      const type = getOptionTypeLabel(option.type)
 
-      const shouldBeDoubledTabulated = `${displayName} <${type}>`.length < 22
+      const shouldBeDoubledTabulated = `${displayName} ${type}`.length < 22
       const tab = shouldBeDoubledTabulated ? `\t\t` : '\t'
 
       const isLastOption = index === optionsBySection.length - 1
       const lineJump = isLastOption ? '\n' : ''
 
       helps.push(
-        `  ${C`green`}${displayName} ${C`yellow`}<${type}>${tab}${C`brightBlack`}${description}${lineJump}`
+        `  ${C`green`}${displayName} ${C`yellow`}${type}${tab}${C`brightBlack`}${description}${lineJump}`
       )
     })
 

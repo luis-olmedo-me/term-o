@@ -1,6 +1,6 @@
 import { readFileContent } from '@content/helpers/file-management.helpers'
 
-export default async resolve => {
+export default async (resolve, reject) => {
   const fileInput = document.createElement('input')
   fileInput.setAttribute('type', 'file')
   fileInput.setAttribute('accept', '.termo.js')
@@ -10,14 +10,15 @@ export default async resolve => {
     fileInput.removeEventListener('cancel', cancel)
     fileInput.remove()
 
-    resolve(null)
+    reject('The file selection was canceled by the user.')
   }
   const receiveFile = async event => {
     const [file] = Array.from(event.currentTarget.files)
 
     if (!file) cancel()
 
-    if (!file.name.endsWith('.termo.js')) resolve(null)
+    if (!file.name.endsWith('.termo.js'))
+      reject('The uploaded file does not match the required extension (*.termo.js).')
 
     resolve({ name: file.name, content: await readFileContent(file) })
   }

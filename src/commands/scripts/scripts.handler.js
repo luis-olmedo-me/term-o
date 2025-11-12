@@ -17,10 +17,8 @@ export const scriptsHandler = async command => {
   }
 
   if (P`upload`) {
+    if (command.origin !== origins.MANUAL) throw 'File uploads are not allowed from this context.'
     const tabId = storage.get(storageKeys.TAB).id
-
-    if (command.origin !== origins.MANUAL)
-      throw 'Uploading a file is only allowed through direct user interaction.'
 
     command.update('Upload file.')
     const file = await uploadFile(tabId)
@@ -30,9 +28,7 @@ export const scriptsHandler = async command => {
     const scripts = storage.get(storageKeys.SCRIPTS)
     const alreadyExists = scripts.some(script => script.name === file.name)
 
-    if (alreadyExists) {
-      return command.throw(`The script "${file.name}" already exists.`)
-    }
+    if (alreadyExists) throw `The script "${file.name}" already exists.`
 
     const newScripts = scripts.concat(file)
     const update = formatFile(file)
@@ -49,9 +45,7 @@ export const scriptsHandler = async command => {
     const scripts = storage.get(storageKeys.SCRIPTS)
     const existingScript = scripts.find(script => script.name === name)
 
-    if (!existingScript) {
-      return command.throw(`The script "${name}" does not exist.`)
-    }
+    if (!existingScript) throw `The script "${name}" does not exist.`
 
     const newScripts = scripts.filter(script => script.name !== name)
     const update = formatScript(existingScript)
@@ -65,15 +59,12 @@ export const scriptsHandler = async command => {
     const scripts = storage.get(storageKeys.SCRIPTS)
     const existingScript = scripts.find(script => script.name === name)
 
-    if (!existingScript) {
-      return command.throw(`The script "${name}" does not exist.`)
-    }
+    if (!existingScript) throw `The script "${name}" does not exist.`
 
     command.update('Executing.')
-    const { error, updates } = await executeCode({ script: existingScript.content })
+    const updates = await executeCode({ script: existingScript.content })
 
-    if (error) command.throw(error)
-    else command.setUpdates(...updates)
+    command.setUpdates(...updates)
   }
 
   if (P`help`) createHelpView(command)

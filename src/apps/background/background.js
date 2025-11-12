@@ -17,6 +17,7 @@ const handleCommandQueueChange = async storageRef => {
   const executable = queue.executable
 
   if (queue.isExecuting || !executable) return
+  await storageRef.restart()
 
   const originalTab = storageRef.get(storageKeys.TAB)
   const aliases = storageRef.get(storageKeys.ALIASES)

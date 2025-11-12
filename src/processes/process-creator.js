@@ -28,6 +28,6 @@ export const createWorkerProcessRequest = ({ tabId, type, data, defaultResponse 
       createWorkerRequest({ tabId, type, data, defaultResponse: {} }).then(callback).catch(reject)
     }
 
-    createWorker({ id: null, data })
+    createWorker({ data })
   })
 }

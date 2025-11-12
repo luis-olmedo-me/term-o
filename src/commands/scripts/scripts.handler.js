@@ -1,9 +1,11 @@
 import storage from '@src/libs/storage'
 
 import { origins } from '@src/constants/command.constants'
+import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatFile, formatScript } from '@src/helpers/format.helpers'
+import { getAccentColors } from '@src/helpers/themes.helpers'
 import { executeCode, uploadFile } from '@src/processes'
 
 export const scriptsHandler = async command => {
@@ -19,9 +21,17 @@ export const scriptsHandler = async command => {
   if (P`upload`) {
     if (command.origin !== origins.MANUAL) throw 'File uploads are not allowed from this context.'
     const tabId = storage.get(storageKeys.TAB).id
+    const config = storage.get(storageKeys.CONFIG)
+
+    const themeName = config.getValueById(configInputIds.THEME_NAME)
+    const fontFamily = config.getValueById(configInputIds.FONT_FAMILY)
+    const colorAccent = config.getValueById(configInputIds.COLOR_ACCENT)
+
+    const theme = config.themes.find(theme => theme.name === themeName)
+    const selectedTheme = { ...theme, ...getAccentColors(theme, colorAccent) }
 
     command.update('Upload file.')
-    const file = await uploadFile(tabId)
+    const file = await uploadFile(tabId, { theme: selectedTheme, fontFamily })
 
     if (!file) throw 'Fail uploading file.'
 

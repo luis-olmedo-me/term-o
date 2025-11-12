@@ -1,10 +1,12 @@
+import { createBubble } from '@content/helpers/dom-management.helpers'
 import { readFileContent } from '@content/helpers/file-management.helpers'
 
-export default async (resolve, reject) => {
+export default async (resolve, reject, data) => {
   const fileInput = document.createElement('input')
   fileInput.setAttribute('type', 'file')
   fileInput.setAttribute('accept', '.termo.js')
 
+  const bubble = createBubble('Upload a file', data.theme, data.fontFamily)
   const cancel = () => {
     fileInput.removeEventListener('change', receiveFile)
     fileInput.removeEventListener('cancel', cancel)
@@ -22,9 +24,14 @@ export default async (resolve, reject) => {
 
     resolve({ name: file.name, content: await readFileContent(file) })
   }
+  const openFileDialog = () => {
+    bubble.remove()
+    fileInput.click()
+  }
 
   fileInput.addEventListener('change', receiveFile)
   fileInput.addEventListener('cancel', cancel)
 
-  fileInput.click()
+  bubble.appear()
+  bubble.element.addEventListener('click', openFileDialog, { once: true })
 }

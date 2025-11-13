@@ -1,3 +1,5 @@
+import { deleteStorageValue, getStorageValue, setStorageValue } from '@src/browser-api/storage.api'
+import { storageKeys } from '@src/constants/storage.constants'
 import StorageSimple from '../StorageSimple'
 
 export class StorageScripts extends StorageSimple {
@@ -6,16 +8,38 @@ export class StorageScripts extends StorageSimple {
   }
 
   get $value() {
-    return this.$latest().value
+    return {
+      names: this.$latest().value,
+      delete: this.delete.bind(this),
+      add: this.add.bind(this),
+      get: this.get.bind(this),
+      has: this.has.bind(this)
+    }
   }
 
-  $update(storageValue) {
-    if (storageValue.version === this.$storageValue.version) return
+  add(name, content) {
+    const newScripts = this.$latest().value.concat(name)
 
-    this.$storageValue = storageValue
+    this.$storageService.set(storageKeys.SCRIPTS, newScripts)
+    setStorageValue(this.$namespace, `script_${name}`, content)
   }
 
-  $latest() {
-    return this.$storageValue
+  delete(name) {
+    const newScripts = this.$latest().value.filter(scriptName => scriptName !== name)
+
+    this.$storageService.set(storageKeys.SCRIPTS, newScripts)
+    deleteStorageValue(this.$namespace, `script_${name}`)
+  }
+
+  get(name) {
+    const isValid = this.$latest().value.some(scriptName => scriptName === name)
+
+    if (!isValid) return null
+
+    return getStorageValue(this.$namespace, `script_${name}`, null)
+  }
+
+  has(name) {
+    return this.$latest().value.some(scriptName => scriptName === name)
   }
 }

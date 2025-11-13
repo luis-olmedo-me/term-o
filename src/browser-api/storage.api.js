@@ -9,3 +9,7 @@ export const getStorageValue = async (namespace, key, defaultValue = null) => {
 export const setStorageValue = (namespace, key, value) => {
   return chrome.storage[namespace].set({ [key]: value })
 }
+
+export const deleteStorageValue = (namespace, key) => {
+  return chrome.storage[namespace].remove([key])
+}

@@ -11,6 +11,7 @@ export class StorageScripts extends StorageSimple {
     return {
       values: this.$latest().value,
       delete: this.delete.bind(this),
+      getMetadata: this.getMetadata.bind(this),
       add: this.add.bind(this),
       get: this.get.bind(this),
       has: this.has.bind(this)

@@ -73,10 +73,12 @@ export const formatAlias = ({ key, value }) => {
 
   return `${C`purple`}${quotedKey} ${C`yellow`}${quotedValue}`
 }
-export const formatFile = ({ name }) => {
+export const formatFile = ({ name, lastVisitTime, size }) => {
+  const quotedDateTime = getQuotedString(lastVisitTime)
+  const quotedSize = getQuotedString(size)
   const quotedName = getQuotedString(name)
 
-  return `${C`purple`}${quotedName} `
+  return `${C`green`}${quotedDateTime} ${C`purple`}${quotedName} ${C`cyan`}${quotedSize}`
 }
 
 export const formatEvent = ({ url, line, id }) => {
@@ -110,12 +112,6 @@ export const formatTheme = ({ name }) => {
   const quotedName = getQuotedString(name)
 
   return `${C`purple`}${quotedName}`
-}
-
-export const formatScript = ({ name }) => {
-  const quotedName = getQuotedString(name)
-
-  return `${C`brightPurple`}${quotedName}`
 }
 
 export const formatStyle = ({ prop, value }) => {

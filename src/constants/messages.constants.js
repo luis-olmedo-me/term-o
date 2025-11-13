@@ -11,5 +11,10 @@ export const messages = [
     original:
       /^A listener indicated an asynchronous response by returning true, but the message channel closed before a response was received/,
     new: 'Term-o cannot establish a connection to the tab. Please refresh the page or ensure it is open.'
+  },
+  {
+    original:
+      /^The page keeping the extension port is moved into back\/forward cache, so the message channel is closed\./,
+    new: 'Term-o cannot establish a connection to the tab. Please refresh the page or ensure it is open.'
   }
 ]

@@ -18,11 +18,15 @@ export default async (resolve, reject, data) => {
     const [file] = Array.from(event.currentTarget.files)
 
     if (!file) cancel()
-
     if (!file.name.endsWith('.termo.js'))
       reject('The uploaded file does not match the required extension (*.termo.js).')
 
-    resolve({ name: file.name, content: await readFileContent(file) })
+    resolve({
+      name: file.name,
+      content: await readFileContent(file),
+      lastVisitTime: file.lastModifiedDate.toISOString(),
+      size: `${file.size}B`
+    })
   }
   const openFileDialog = () => {
     bubble.remove()

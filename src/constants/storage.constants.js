@@ -3,6 +3,7 @@ import StorageConfig from '@src/templates/StorageConfig'
 import StorageSimple from '@src/templates/StorageSimple'
 import StorageTab from '@src/templates/StorageTab'
 
+import StorageScripts from '@src/templates/StorageScripts'
 import { defaultConfig } from './config.constants'
 import { defaultColorTheme } from './themes.constants'
 
@@ -47,7 +48,7 @@ export const storageValues = [
     key: storageKeys.SCRIPTS,
     namespace: storageNamespaces.LOCAL,
     defaultValue: [],
-    Template: StorageSimple
+    Template: StorageScripts
   },
   {
     key: storageKeys.HISTORY,

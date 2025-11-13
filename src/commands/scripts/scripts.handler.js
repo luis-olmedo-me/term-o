@@ -3,7 +3,7 @@ import storage from '@src/libs/storage'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
-import { formatFile, formatScript } from '@src/helpers/format.helpers'
+import { formatFile } from '@src/helpers/format.helpers'
 import { getAccentColors } from '@src/helpers/themes.helpers'
 import { executeCode, uploadFile } from '@src/processes'
 
@@ -12,7 +12,7 @@ export const scriptsHandler = async command => {
 
   if (P`list`) {
     const scripts = storage.get(storageKeys.SCRIPTS)
-    const updates = scripts.names.map(name => formatScript({ name }))
+    const updates = scripts.values.map(formatFile)
 
     command.update(...updates)
   }
@@ -36,8 +36,8 @@ export const scriptsHandler = async command => {
 
     if (alreadyExists) throw `The script "${file.name}" already exists.`
 
-    scripts.add(file.name, file.content)
-    const update = formatFile({ name: file.name })
+    scripts.add(file.name, file.lastVisitTime, file.size, file.content)
+    const update = formatFile(file)
 
     command.reset()
     command.update(update)
@@ -50,8 +50,9 @@ export const scriptsHandler = async command => {
     const script = await scripts.get(name)
 
     if (!script) throw `The script "${name}" does not exist.`
+    const metadata = scripts.getMetadata(name)
 
-    const update = formatScript({ name })
+    const update = formatFile(metadata)
 
     scripts.delete(name)
     command.update(update)

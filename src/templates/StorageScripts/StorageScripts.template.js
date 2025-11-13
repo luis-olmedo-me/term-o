@@ -9,7 +9,7 @@ export class StorageScripts extends StorageSimple {
 
   get $value() {
     return {
-      names: this.$latest().value,
+      values: this.$latest().value,
       delete: this.delete.bind(this),
       add: this.add.bind(this),
       get: this.get.bind(this),
@@ -17,29 +17,33 @@ export class StorageScripts extends StorageSimple {
     }
   }
 
-  add(name, content) {
-    const newScripts = this.$latest().value.concat(name)
+  add(name, lastVisitTime, size, content) {
+    const newScripts = this.$latest().value.concat({ name, lastVisitTime, size })
 
     this.$storageService.set(storageKeys.SCRIPTS, newScripts)
     setStorageValue(this.$namespace, `script_${name}`, content)
   }
 
   delete(name) {
-    const newScripts = this.$latest().value.filter(scriptName => scriptName !== name)
+    const newScripts = this.$latest().value.filter(script => script.name !== name)
 
     this.$storageService.set(storageKeys.SCRIPTS, newScripts)
     deleteStorageValue(this.$namespace, `script_${name}`)
   }
 
   get(name) {
-    const isValid = this.$latest().value.some(scriptName => scriptName === name)
+    const isValid = this.$latest().value.some(script => script.name === name)
 
     if (!isValid) return null
 
     return getStorageValue(this.$namespace, `script_${name}`, null)
   }
 
+  getMetadata(name) {
+    return this.$latest().value.find(script => script.name === name)
+  }
+
   has(name) {
-    return this.$latest().value.some(scriptName => scriptName === name)
+    return this.$latest().value.some(script => script.name === name)
   }
 }

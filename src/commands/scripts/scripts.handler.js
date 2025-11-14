@@ -1,10 +1,8 @@
 import storage from '@src/libs/storage'
 
-import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatFile as formatMetadata } from '@src/helpers/format.helpers'
-import { getAccentColors } from '@src/helpers/themes.helpers'
 import { executeCode, uploadFile } from '@src/processes'
 
 export const scriptsHandler = async command => {
@@ -22,15 +20,8 @@ export const scriptsHandler = async command => {
     const config = storage.get(storageKeys.CONFIG)
     const scripts = storage.get(storageKeys.SCRIPTS)
 
-    const themeName = config.getValueById(configInputIds.THEME_NAME)
-    const fontFamily = config.getValueById(configInputIds.FONT_FAMILY)
-    const colorAccent = config.getValueById(configInputIds.COLOR_ACCENT)
-
-    const theme = config.themes.find(theme => theme.name === themeName)
-    const selectedTheme = { ...theme, ...getAccentColors(theme, colorAccent) }
-
     command.update('Click the bubble on the page to start uploading a file.')
-    const file = await uploadFile(tabId, { theme: selectedTheme, fontFamily })
+    const file = await uploadFile(tabId, { theme: config.theme })
 
     const alreadyExists = scripts.has(file.name)
 

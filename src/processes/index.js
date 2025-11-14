@@ -70,12 +70,12 @@ export const clickElement = (tabId, { searchByXpath }) => {
   })
 }
 
-export const uploadFile = (tabId, { theme, fontFamily }) => {
+export const uploadFile = (tabId, { theme }) => {
   return createWorkerProcessRequest({
     type: processNames.UPLOAD_FILE,
     defaultResponse: {},
     tabId,
-    data: { theme, fontFamily }
+    data: { theme }
   })
 }
 

@@ -1,7 +1,10 @@
+import styled from 'styled-components'
+
+import { Text } from '@sidepanel/components/ColoredText'
 import { InputWrapper, RealInput } from '@src/components/Input'
+
 import { statusIndicators } from '@src/constants/config.constants'
 import { theme as t } from '@src/helpers/themes.helpers'
-import styled from 'styled-components'
 
 export const PromptWrapper = styled.div`
   cursor: text;
@@ -23,5 +26,14 @@ export const PromptWrapper = styled.div`
   ${InputWrapper} {
     padding: 0 0 ${t('space.300')};
     gap: ${t('space.200')};
+  }
+`
+
+export const PromptLine = styled.p`
+  margin: 0;
+  cursor: text;
+
+  ${Text} {
+    white-space: break-spaces;
   }
 `

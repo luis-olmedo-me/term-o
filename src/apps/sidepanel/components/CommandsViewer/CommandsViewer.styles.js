@@ -21,11 +21,6 @@ export const ViewWrapper = styled.div`
 `
 export const Line = styled.p`
   margin: 0;
-  cursor: text;
-  min-width: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 `
 
 export const Command = styled.div`
@@ -42,6 +37,13 @@ export const Command = styled.div`
   &[aria-truncated='true'] {
     display: flex;
     flex-direction: column;
+
+    ${Line} {
+      min-width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
   }
 
   &[aria-origin=${origins.MANUAL}],

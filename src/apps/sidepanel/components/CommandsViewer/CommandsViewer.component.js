@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'preact/hooks'
 import ColoredText from '@sidepanel/components/ColoredText'
 import useStorage from '@src/hooks/useStorage'
 
+import { commandStatuses } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import * as S from './CommandsViewer.styles'
@@ -15,7 +16,7 @@ export const CommandsViewer = ({ commands }) => {
   const statusIndicator = config.getValueById(configInputIds.STATUS_INDICATOR)
   const hasStatusBar = config.getValueById(configInputIds.STATUS_BAR)
   const hasStatusLight = config.getValueById(configInputIds.STATUS_LIGHT)
-  const shouldTruncate = true
+  const isTruncated = true
 
   useEffect(
     function listenUpdates() {
@@ -36,6 +37,8 @@ export const CommandsViewer = ({ commands }) => {
     <S.ViewWrapper className="vertical-scroller">
       <div ref={wrapper}>
         {commands.map(command => {
+          const hasErrorMessage = command.status === commandStatuses.ERROR
+
           return (
             <S.Command
               key={command.id}
@@ -43,7 +46,7 @@ export const CommandsViewer = ({ commands }) => {
               aria-origin={hasStatusBar ? command.origin : null}
               aria-indicator={statusIndicator}
               aria-light={hasStatusLight}
-              aria-truncated={shouldTruncate}
+              aria-truncated={isTruncated && !hasErrorMessage}
             >
               <S.Line>
                 <ColoredText value={command.context} />

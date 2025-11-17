@@ -5,8 +5,8 @@ import { storageKeys } from '@src/constants/storage.constants'
 import StorageSimple from '../StorageSimple'
 
 export class StorageScripts extends StorageSimple {
-  constructor(storageService, namespace, storageValue) {
-    super(storageService, namespace, storageValue)
+  constructor(storageService, props) {
+    super(storageService, props)
   }
 
   get $value() {
@@ -24,7 +24,7 @@ export class StorageScripts extends StorageSimple {
     const newScripts = this.$latest().value.concat({ name, lastVisitTime, size })
 
     this.$storageService.set(storageKeys.SCRIPTS, newScripts)
-    setStorageValue(this.$namespace, `script_${name}`, compressToUTF16(content))
+    setStorageValue(this.$namespace, `script_${name}`, compressToUTF16(content), false)
   }
 
   delete(name) {
@@ -39,7 +39,7 @@ export class StorageScripts extends StorageSimple {
 
     if (!isValid) return null
 
-    const content = await getStorageValue(this.$namespace, `script_${name}`, null)
+    const content = await getStorageValue(this.$namespace, `script_${name}`, null, false)
 
     return content && decompressFromUTF16(content)
   }

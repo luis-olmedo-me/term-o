@@ -11,10 +11,10 @@ import {
 import { getAccentColors } from '@src/helpers/themes.helpers'
 
 export class StorageConfig extends StorageSimple {
-  constructor(storageService, namespace, storageValue) {
-    super(storageService, namespace, storageValue)
+  constructor(storageService, props) {
+    super(storageService, props)
 
-    this.details = buildDetailedConfig(storageValue.value)
+    this.details = buildDetailedConfig(props.storageValue.value)
 
     this.handleInitRef = this.handleInit.bind(this)
     this.handleThemesChangesRef = this.handleThemesChanges.bind(this)

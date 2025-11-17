@@ -3,7 +3,7 @@ const conditionPattern = /^\s*([\w]+)\s*==\s*(".*?"|\w+)\s*\?\s*(.*)\s*:\s*(.*)\
 export const createContext = (value, tab) => {
   if (!tab) return value
 
-  const url = tab.url && new URL(tab.url)
+  const url = tab.url ? new URL(tab.url) : {}
 
   const replacements = {
     origin: url.origin || '',

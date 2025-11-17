@@ -1,17 +1,20 @@
 import StorageSimple from '@src/templates/StorageSimple'
 
+import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
+import { defaultStyleMeasures } from '@src/constants/themes.constants'
 import {
   buildDetailedConfig,
   getConfigValueByInputId,
   updateConfigValueIn
 } from '@src/helpers/config.helpers'
+import { getAccentColors } from '@src/helpers/themes.helpers'
 
 export class StorageConfig extends StorageSimple {
-  constructor(storageService, namespace, storageValue) {
-    super(storageService, namespace, storageValue)
+  constructor(storageService, props) {
+    super(storageService, props)
 
-    this.details = buildDetailedConfig(storageValue.value)
+    this.details = buildDetailedConfig(props.storageValue.value)
 
     this.handleInitRef = this.handleInit.bind(this)
     this.handleThemesChangesRef = this.handleThemesChanges.bind(this)
@@ -27,6 +30,7 @@ export class StorageConfig extends StorageSimple {
       change: this.change.bind(this),
       reset: this.reset.bind(this),
       themes: this.themes(),
+      theme: this.theme(),
       details: this.details
     }
   }
@@ -62,6 +66,21 @@ export class StorageConfig extends StorageSimple {
 
   themes() {
     return this.$storageService.get(storageKeys.THEMES)
+  }
+
+  theme() {
+    const themeName = this.getValueById(configInputIds.THEME_NAME)
+    const fontFamily = this.getValueById(configInputIds.FONT_FAMILY)
+    const colorAccent = this.getValueById(configInputIds.COLOR_ACCENT)
+
+    const selectedTheme = this.themes().find(theme => theme.name === themeName)
+    const accentColors = getAccentColors(selectedTheme, colorAccent)
+
+    return {
+      ...defaultStyleMeasures,
+      colors: { ...selectedTheme, ...accentColors },
+      font: fontFamily
+    }
   }
 
   removeTheme(name) {

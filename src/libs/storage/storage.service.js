@@ -3,6 +3,7 @@ import EventListener from '@src/templates/EventListener'
 import { getStorageValue, setStorageValue } from '@src/browser-api/storage.api'
 import { storageValues } from '@src/constants/storage.constants'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
+import { decompressFromUTF16 } from 'lz-string'
 
 class Storage extends EventListener {
   constructor() {
@@ -11,21 +12,27 @@ class Storage extends EventListener {
     this.initiated = false
     this.manualMode = false
     this.handleStorageChangesRef = this.handleStorageChanges.bind(this)
-    this.values = storageValues.reduce((values, { key, Template, defaultValue, namespace }) => {
-      return {
-        ...values,
-        [key]: new Template(this, namespace, { value: defaultValue, version: null })
-      }
-    }, {})
+    this.values = storageValues.reduce(
+      (values, { key, Template, defaultValue, namespace, json }) => {
+        const storageValue = { value: defaultValue, version: null }
+        const props = { key, namespace, json, storageValue }
+
+        return {
+          ...values,
+          [key]: new Template(this, props)
+        }
+      },
+      {}
+    )
 
     this.init()
   }
 
   async init() {
-    const promises = storageValues.map(({ namespace, key, defaultValue }) => {
+    const promises = storageValues.map(({ namespace, key, defaultValue, json }) => {
       const defaultStorageValue = { value: defaultValue, version: null }
 
-      return getStorageValue(namespace, key, defaultStorageValue).then(result => {
+      return getStorageValue(namespace, key, defaultStorageValue, json).then(result => {
         const isDefault = result.value === defaultValue
 
         if (!isDefault) this.getInstance(key).$update(result)
@@ -42,11 +49,13 @@ class Storage extends EventListener {
 
   async restart() {
     const promises = Object.entries(this.values).map(([key, instance]) => {
-      return getStorageValue(instance.$namespace, key, instance.$storageValue).then(result => {
-        const isDefault = result.value === instance.$storageValue
+      return getStorageValue(instance.$namespace, key, instance.$storageValue, instance.$json).then(
+        result => {
+          const isDefault = result.value === instance.$storageValue
 
-        if (!isDefault) this.getInstance(key).$update(result)
-      })
+          if (!isDefault) this.getInstance(key).$update(result)
+        }
+      )
     })
 
     await Promise.all(promises)
@@ -67,11 +76,10 @@ class Storage extends EventListener {
 
   set(storageKey, newValue) {
     if (storageKey in this.values) {
-      const storageDefaults = storageValues.find(value => value.key === storageKey)
       const instance = this.getInstance(storageKey)
 
       instance.$update({ value: newValue, version: createUUIDv4() })
-      setStorageValue(storageDefaults.namespace, storageKey, instance.$latest())
+      setStorageValue(instance.$namespace, storageKey, instance.$latest(), instance.$json)
     }
   }
 
@@ -80,11 +88,14 @@ class Storage extends EventListener {
   }
 
   handleStorageChanges(changes) {
-    for (let [storageKey, { newValue: storageValue }] of Object.entries(changes)) {
+    for (let [storageKey, { newValue: compressedValue }] of Object.entries(changes)) {
       if (!(storageKey in this.values)) return
       const instance = this.getInstance(storageKey)
 
-      instance.$update(storageValue)
+      const decompressedValue = decompressFromUTF16(compressedValue)
+      const value = instance.$json ? JSON.parse(decompressedValue) : decompressedValue
+
+      instance.$update(value)
       this.dispatchEvent(storageKey, this)
     }
   }

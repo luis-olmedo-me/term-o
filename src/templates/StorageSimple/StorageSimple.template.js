@@ -1,11 +1,10 @@
 export class StorageSimple {
-  constructor(storageService, namespace, storageValue) {
+  constructor(storageService, { key, json, namespace, storageValue }) {
     this.$storageService = storageService
+    this.$key = key
+    this.$json = json
     this.$namespace = namespace
-    this.$storageValue = {
-      value: storageValue.value,
-      version: storageValue.version
-    }
+    this.$storageValue = storageValue
   }
 
   get $value() {

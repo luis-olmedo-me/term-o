@@ -1,11 +1,9 @@
 import { createBubble } from '@content/helpers/dom-management.helpers'
 
 export default async (resolve, reject, data) => {
-  if (!window.EyeDropper) {
-    resolve({ color: null, error: 'EyeDropper API is not supported in this browser.' })
-  }
+  if (!window.EyeDropper) return reject('EyeDropper API is not supported in this browser.')
 
-  const bubble = createBubble('Pick a color', data.theme, data.fontFamily)
+  const bubble = createBubble('Pick a color', data.theme)
   const startPicking = async () => {
     await bubble.remove()
 

@@ -30,54 +30,63 @@ export const storageValues = [
     key: storageKeys.ALIASES,
     namespace: storageNamespaces.LOCAL,
     defaultValue: [],
-    Template: StorageSimple
+    Template: StorageSimple,
+    json: true
   },
   {
     key: storageKeys.CONFIG,
     namespace: storageNamespaces.LOCAL,
     defaultValue: defaultConfig,
-    Template: StorageConfig
+    Template: StorageConfig,
+    json: true
   },
   {
     key: storageKeys.EVENTS,
     namespace: storageNamespaces.LOCAL,
     defaultValue: [],
-    Template: StorageSimple
+    Template: StorageSimple,
+    json: true
   },
   {
     key: storageKeys.SCRIPTS,
     namespace: storageNamespaces.LOCAL,
     defaultValue: [],
-    Template: StorageScripts
+    Template: StorageScripts,
+    json: true
   },
   {
     key: storageKeys.HISTORY,
     namespace: storageNamespaces.SESSION,
     defaultValue: [],
-    Template: StorageSimple
+    Template: StorageSimple,
+    json: true
   },
   {
     key: storageKeys.PROMPT_HISTORY,
     namespace: storageNamespaces.LOCAL,
     defaultValue: [],
-    Template: StorageSimple
+    Template: StorageSimple,
+    json: true
   },
   {
     key: storageKeys.THEMES,
     namespace: storageNamespaces.LOCAL,
     defaultValue: [defaultColorTheme],
-    Template: StorageSimple
+    Template: StorageSimple,
+    json: true
   },
   {
     key: storageKeys.TAB,
     namespace: storageNamespaces.SESSION,
-    defaultValue: null,
-    Template: StorageTab
+    defaultValue: {},
+    Template: StorageTab,
+    json: true
   },
   {
     key: storageKeys.COMMAND_QUEUE,
     namespace: storageNamespaces.SESSION,
     defaultValue: [],
-    Template: StorageCommandQueue
+    Template: StorageCommandQueue,
+    json: true
   }
 ]

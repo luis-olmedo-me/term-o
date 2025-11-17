@@ -16,7 +16,7 @@ export const CommandsViewer = ({ commands }) => {
   const statusIndicator = config.getValueById(configInputIds.STATUS_INDICATOR)
   const hasStatusBar = config.getValueById(configInputIds.STATUS_BAR)
   const hasStatusLight = config.getValueById(configInputIds.STATUS_LIGHT)
-  const isTruncated = true
+  const isTruncated = config.getValueById(configInputIds.LINE_TRUNCATION)
 
   useEffect(
     function listenUpdates() {

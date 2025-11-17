@@ -25,7 +25,8 @@ export const configInputIds = {
   RESET_DATA: 'reset-data',
   STATUS_INDICATOR: 'status-indicator',
   STATUS_BAR: 'status-bar',
-  STATUS_LIGHT: 'status-light'
+  STATUS_LIGHT: 'status-light',
+  LINE_TRUNCATION: 'line-truncation'
 }
 
 export const fontSizes = {
@@ -54,7 +55,8 @@ export const configDefaultValues = {
   [configInputIds.RESET_DATA]: 'Reset',
   [configInputIds.STATUS_INDICATOR]: statusIndicators.DOT,
   [configInputIds.STATUS_BAR]: true,
-  [configInputIds.STATUS_LIGHT]: true
+  [configInputIds.STATUS_LIGHT]: true,
+  [configInputIds.LINE_TRUNCATION]: false
 }
 
 export const defaultConfigSections = [
@@ -84,6 +86,16 @@ export const defaultConfigSections = [
         options: [],
         validations: [],
         value: configDefaultValues[configInputIds.SWITCH_TAB_AUTOMATICALLY]
+      },
+      {
+        id: configInputIds.LINE_TRUNCATION,
+        name: 'Line Truncation',
+        description: 'Shortens long command lines with an ellipsis.',
+        type: availableInputTypes.BOOLEAN,
+        postFix: null,
+        options: [],
+        validations: [],
+        value: configDefaultValues[configInputIds.LINE_TRUNCATION]
       },
       {
         id: configInputIds.MAX_LINES_PER_COMMAND,

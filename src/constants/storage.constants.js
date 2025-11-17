@@ -25,15 +25,6 @@ export const storageNamespaces = {
   COOKIE: 'cookie'
 }
 
-const defaultTab = {
-  id: 0,
-  url: '',
-  title: '',
-  status: '',
-  windowId: 0,
-  incognito: false
-}
-
 export const storageValues = [
   {
     key: storageKeys.ALIASES,
@@ -87,7 +78,7 @@ export const storageValues = [
   {
     key: storageKeys.TAB,
     namespace: storageNamespaces.SESSION,
-    defaultValue: defaultTab,
+    defaultValue: {},
     Template: StorageTab,
     json: true
   },

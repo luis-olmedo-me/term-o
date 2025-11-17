@@ -1,5 +1,3 @@
-import { compressToUTF16, decompressFromUTF16 } from 'lz-string'
-
 import { deleteStorageValue, getStorageValue, setStorageValue } from '@src/browser-api/storage.api'
 import { storageKeys } from '@src/constants/storage.constants'
 import StorageSimple from '../StorageSimple'
@@ -24,7 +22,7 @@ export class StorageScripts extends StorageSimple {
     const newScripts = this.$latest().value.concat({ name, lastVisitTime, size })
 
     this.$storageService.set(storageKeys.SCRIPTS, newScripts)
-    setStorageValue(this.$namespace, `script_${name}`, compressToUTF16(content), false)
+    setStorageValue(this.$namespace, `script_${name}`, content, false)
   }
 
   delete(name) {
@@ -39,9 +37,7 @@ export class StorageScripts extends StorageSimple {
 
     if (!isValid) return null
 
-    const content = await getStorageValue(this.$namespace, `script_${name}`, null, false)
-
-    return content && decompressFromUTF16(content)
+    return getStorageValue(this.$namespace, `script_${name}`, null, false)
   }
 
   getMetadata(name) {

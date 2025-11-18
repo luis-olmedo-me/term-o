@@ -80,12 +80,15 @@ export const Prompt = ({
   }
 
   const prefix = historialIndex || PROMPT_MARK
+  const contextLines = context.split(/(?<!\\)\n/).filter(Boolean)
 
   return (
     <S.PromptWrapper aria-loading={loading} aria-indicator={statusIndicator} className={className}>
-      <S.PromptLine>
-        <ColoredText value={context} />
-      </S.PromptLine>
+      {contextLines.map((contextLine, index) => (
+        <S.PromptLine key={`${contextLine}-${index}`}>
+          <ColoredText value={contextLine} />
+        </S.PromptLine>
+      ))}
 
       <Input
         inputRef={inputRef}

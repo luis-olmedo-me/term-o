@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 
-import { Text } from '@sidepanel/components/ColoredText'
 import { InputWrapper, RealInput } from '@src/components/Input'
 
 import { statusIndicators } from '@src/constants/config.constants'
@@ -33,7 +32,11 @@ export const PromptLine = styled.p`
   margin: 0;
   cursor: text;
 
-  ${Text} {
-    white-space: break-spaces;
+  &[aria-truncated='true'] {
+    white-space: pre;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 `

@@ -21,6 +21,10 @@ export const ViewWrapper = styled.div`
 `
 export const Line = styled.p`
   margin: 0;
+
+  &[aria-warning='true'] {
+    opacity: 0.7;
+  }
 `
 
 export const Command = styled.div`
@@ -38,7 +42,7 @@ export const Command = styled.div`
     display: flex;
     flex-direction: column;
 
-    ${Line} {
+    & ${Line}[aria-truncate-skip='false'] {
       min-width: 0;
       overflow: hidden;
       white-space: nowrap;

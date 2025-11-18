@@ -3,8 +3,7 @@ import StorageSimple from '@src/templates/StorageSimple'
 import { commandStatuses } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
-import { limitSimplifiedCommands } from '@src/helpers/command.helpers'
-import { updateQueueValueIn } from '@src/helpers/queue.helpers'
+import { limitQueueByConfig, updateQueueValueIn } from '@src/helpers/queue.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 
 export class StorageCommandQueue extends StorageSimple {
@@ -29,9 +28,14 @@ export class StorageCommandQueue extends StorageSimple {
   }
 
   change(queueId, command) {
-    const newQueue = updateQueueValueIn(this.$latest().value, queueId, command)
+    const config = this.$storageService.get(storageKeys.CONFIG)
 
-    this.$storageService.set(storageKeys.COMMAND_QUEUE, newQueue)
+    const maxLinesPerCommand = config.getValueById(configInputIds.MAX_LINES_PER_COMMAND)
+
+    const newQueue = updateQueueValueIn(this.$latest().value, queueId, command)
+    const limitNewQueue = limitQueueByConfig(newQueue, maxLinesPerCommand)
+
+    this.$storageService.set(storageKeys.COMMAND_QUEUE, limitNewQueue)
   }
 
   handleInit() {
@@ -66,14 +70,9 @@ export class StorageCommandQueue extends StorageSimple {
   }
 
   getUIValues() {
-    const config = this.$storageService.get(storageKeys.CONFIG)
-
-    const maxLinesPerCommand = config.getValueById(configInputIds.MAX_LINES_PER_COMMAND)
-    const commands = this.$latest()
+    return this.$latest()
       .value.map(item => item.command)
       .filter(Boolean)
-
-    return limitSimplifiedCommands(commands, maxLinesPerCommand)
   }
 
   getIsExecuting() {

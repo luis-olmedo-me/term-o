@@ -22,34 +22,35 @@ export const storageKeys = {
 export const storageNamespaces = {
   LOCAL: 'local',
   SESSION: 'session',
-  COOKIE: 'cookie'
+  COOKIE: 'cookie',
+  SYNC: 'sync'
 }
 
 export const storageValues = [
   {
     key: storageKeys.ALIASES,
-    namespace: storageNamespaces.LOCAL,
+    namespace: storageNamespaces.SYNC,
     defaultValue: [],
     Template: StorageSimple,
     json: true
   },
   {
     key: storageKeys.CONFIG,
-    namespace: storageNamespaces.LOCAL,
+    namespace: storageNamespaces.SYNC,
     defaultValue: defaultConfig,
     Template: StorageConfig,
     json: true
   },
   {
     key: storageKeys.EVENTS,
-    namespace: storageNamespaces.LOCAL,
+    namespace: storageNamespaces.SYNC,
     defaultValue: [],
     Template: StorageSimple,
     json: true
   },
   {
     key: storageKeys.SCRIPTS,
-    namespace: storageNamespaces.LOCAL,
+    namespace: storageNamespaces.SYNC,
     defaultValue: [],
     Template: StorageScripts,
     json: true
@@ -63,14 +64,14 @@ export const storageValues = [
   },
   {
     key: storageKeys.PROMPT_HISTORY,
-    namespace: storageNamespaces.LOCAL,
+    namespace: storageNamespaces.SYNC,
     defaultValue: [],
     Template: StorageSimple,
     json: true
   },
   {
     key: storageKeys.THEMES,
-    namespace: storageNamespaces.LOCAL,
+    namespace: storageNamespaces.SYNC,
     defaultValue: [defaultColorTheme],
     Template: StorageSimple,
     json: true

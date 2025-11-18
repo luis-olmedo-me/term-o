@@ -89,7 +89,7 @@ export const defaultConfigSections = [
       },
       {
         id: configInputIds.LINE_TRUNCATION,
-        name: 'Line Truncation',
+        name: 'Line truncation',
         description: 'Shortens long command lines with an ellipsis.',
         type: availableInputTypes.BOOLEAN,
         postFix: null,

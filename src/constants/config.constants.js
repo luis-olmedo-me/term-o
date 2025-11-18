@@ -45,6 +45,7 @@ export const statusIndicators = {
 export const configDefaultValues = {
   [configInputIds.COPY_ON_SELECTION]: true,
   [configInputIds.SWITCH_TAB_AUTOMATICALLY]: true,
+  [configInputIds.LINE_TRUNCATION]: false,
   [configInputIds.MAX_LINES_PER_COMMAND]: 50,
   [configInputIds.HISTORIAL_SIZE]: 40,
   [configInputIds.CONTEXT]: 'On [termo.color.brightBlue]{origin}',
@@ -55,8 +56,7 @@ export const configDefaultValues = {
   [configInputIds.RESET_DATA]: 'Reset',
   [configInputIds.STATUS_INDICATOR]: statusIndicators.DOT,
   [configInputIds.STATUS_BAR]: true,
-  [configInputIds.STATUS_LIGHT]: true,
-  [configInputIds.LINE_TRUNCATION]: false
+  [configInputIds.STATUS_LIGHT]: false
 }
 
 export const defaultConfigSections = [

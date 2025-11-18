@@ -3,6 +3,7 @@ import commandBases, { errorBase } from '@src/commands'
 import EventListener from '@src/templates/EventListener'
 
 import { getArgs, splitBy } from '@src/helpers/arguments.helpers'
+import { truncate } from '@src/helpers/utils.helpers'
 
 class CommandParser extends EventListener {
   constructor(templates) {
@@ -47,8 +48,9 @@ class CommandParser extends EventListener {
 
     if (!template) {
       const error = errorBase.create(this.origin)
+      const truncatedName = truncate(cleanedName, 30)
 
-      error.mock({ title: `The command "${cleanedName}" is unrecognized.` })
+      error.mock({ title: `The command "${truncatedName}" is unrecognized.` })
       error.execute()
 
       return error

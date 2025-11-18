@@ -2,6 +2,7 @@ import { commandStatuses } from '@src/constants/command.constants'
 
 import { getColor as C } from '@src/helpers/themes.helpers'
 import { getArgs } from './arguments.helpers'
+import { formatWarning } from './format.helpers'
 import { getOptionTypeLabel, getParamValue } from './options.helpers'
 
 export const executePerUpdates = async (nextCommand, updates) => {
@@ -43,10 +44,13 @@ export const limitSimplifiedCommands = (commands, maxCount) => {
     count += command.updates.length
 
     if (count > maxCount) {
-      newCommands = [
-        { ...command, updates: command.updates.slice((maxCount - count) * -1) },
-        ...newCommands
-      ]
+      const cutUpdates = command.updates.slice((maxCount - count) * -1)
+      const overflowCount = command.updates.length - cutUpdates.length
+      const warning = formatWarning({
+        title: `Command line limit exceeded. Discarded ${overflowCount} lines.`
+      })
+
+      newCommands = [{ ...command, updates: [warning, ...cutUpdates] }, ...newCommands]
       break
     }
 

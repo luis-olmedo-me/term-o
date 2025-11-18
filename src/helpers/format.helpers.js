@@ -40,6 +40,10 @@ export const formatError = ({ title }) => {
   return `${C`red`}${title}`
 }
 
+export const formatWarning = ({ title }) => {
+  return `${C`yellow`}${title}`
+}
+
 export const formatStorageProp = ({ key, value, tabId }) => {
   const quotedTabId = tabId ? `${C`blue`}${getQuotedString(tabId)} ` : ''
   const quotedKey = getQuotedString(key)

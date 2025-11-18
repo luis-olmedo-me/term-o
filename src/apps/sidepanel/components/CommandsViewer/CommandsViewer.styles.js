@@ -38,7 +38,7 @@ export const Command = styled.div`
     display: flex;
     flex-direction: column;
 
-    ${Line} {
+    & ${Line}[aria-truncate-skip='false'] {
       min-width: 0;
       overflow: hidden;
       white-space: nowrap;

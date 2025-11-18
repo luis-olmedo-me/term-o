@@ -38,6 +38,7 @@ export const CommandsViewer = ({ commands }) => {
       <div ref={wrapper}>
         {commands.map(command => {
           const hasErrorMessage = command.status === commandStatuses.ERROR
+          const contextLines = command.context.split(/(?<!\\)\n/).filter(Boolean)
 
           return (
             <S.Command
@@ -46,19 +47,21 @@ export const CommandsViewer = ({ commands }) => {
               aria-origin={hasStatusBar ? command.origin : null}
               aria-indicator={statusIndicator}
               aria-light={hasStatusLight}
-              aria-truncated={isTruncated && !hasErrorMessage}
+              aria-truncated={isTruncated}
             >
-              <S.Line>
-                <ColoredText value={command.context} />
-              </S.Line>
+              {contextLines.map((context, index) => (
+                <S.Line key={`${context}-${index}`} aria-truncate-skip="false">
+                  <ColoredText value={context} />
+                </S.Line>
+              ))}
 
-              <S.Line>
+              <S.Line aria-truncate-skip="false">
                 <ColoredText value={command.title} />
               </S.Line>
 
               {command.updates.map(update => {
                 return (
-                  <S.Line key={update}>
+                  <S.Line key={update} aria-truncate-skip={hasErrorMessage}>
                     <ColoredText value={update} />
                   </S.Line>
                 )

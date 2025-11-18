@@ -31,9 +31,12 @@ export const PromptWrapper = styled.div`
 export const PromptLine = styled.p`
   margin: 0;
   cursor: text;
-  white-space: pre;
-  min-width: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+
+  &[aria-truncated='true'] {
+    white-space: pre;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 `

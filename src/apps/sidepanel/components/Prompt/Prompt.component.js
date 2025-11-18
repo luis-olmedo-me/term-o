@@ -28,6 +28,7 @@ export const Prompt = ({
 
   const historialSize = config.getValueById(configInputIds.HISTORIAL_SIZE)
   const statusIndicator = config.getValueById(configInputIds.STATUS_INDICATOR)
+  const isTruncated = config.getValueById(configInputIds.LINE_TRUNCATION)
 
   useEffect(
     function expectForDefaultValueChanges() {
@@ -85,7 +86,7 @@ export const Prompt = ({
   return (
     <S.PromptWrapper aria-loading={loading} aria-indicator={statusIndicator} className={className}>
       {contextLines.map((contextLine, index) => (
-        <S.PromptLine key={`${contextLine}-${index}`}>
+        <S.PromptLine key={`${contextLine}-${index}`} aria-truncated={isTruncated}>
           <ColoredText value={contextLine} />
         </S.PromptLine>
       ))}

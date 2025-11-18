@@ -29,9 +29,14 @@ export class StorageCommandQueue extends StorageSimple {
   }
 
   change(queueId, command) {
-    const newQueue = updateQueueValueIn(this.$latest().value, queueId, command)
+    const config = this.$storageService.get(storageKeys.CONFIG)
 
-    this.$storageService.set(storageKeys.COMMAND_QUEUE, newQueue)
+    const maxLinesPerCommand = config.getValueById(configInputIds.MAX_LINES_PER_COMMAND)
+
+    const newQueue = updateQueueValueIn(this.$latest().value, queueId, command)
+    const limitNewQueue = limitSimplifiedCommands(newQueue, maxLinesPerCommand)
+
+    this.$storageService.set(storageKeys.COMMAND_QUEUE, limitNewQueue)
   }
 
   handleInit() {
@@ -66,14 +71,9 @@ export class StorageCommandQueue extends StorageSimple {
   }
 
   getUIValues() {
-    const config = this.$storageService.get(storageKeys.CONFIG)
-
-    const maxLinesPerCommand = config.getValueById(configInputIds.MAX_LINES_PER_COMMAND)
-    const commands = this.$latest()
+    return this.$latest()
       .value.map(item => item.command)
       .filter(Boolean)
-
-    return limitSimplifiedCommands(commands, maxLinesPerCommand)
   }
 
   getIsExecuting() {

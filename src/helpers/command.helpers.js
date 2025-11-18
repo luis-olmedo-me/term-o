@@ -35,29 +35,37 @@ export const executePerUpdates = async (nextCommand, updates) => {
   }
 }
 
-export const limitSimplifiedCommands = (commands, maxCount) => {
+export const limitSimplifiedCommands = (queue, maxCount) => {
   let count = 0
-  let newCommands = []
+  let newQueue = []
 
-  for (let index = -1; index >= -1 * commands.length; index--) {
-    const command = commands.at(index)
-    count += command.updates.length
+  for (let index = -1; index >= -1 * queue.length; index--) {
+    const queueItem = queue.at(index)
+    const command = queueItem.command
+
+    if (!command) {
+      newQueue.unshift(queueItem)
+    }
+    const updates = command.updates
+    let warning = null
+
+    count += updates.length
 
     if (count > maxCount) {
-      const cutUpdates = command.updates.slice((maxCount - count) * -1)
-      const overflowCount = command.updates.length - cutUpdates.length
-      const warning = formatWarning({
+      const cutUpdates = updates.slice((maxCount - count) * -1)
+      const overflowCount = updates.length - cutUpdates.length
+      warning = formatWarning({
         title: `Command line limit exceeded. Discarded ${overflowCount} lines.`
       })
 
-      newCommands = [{ ...command, updates: [warning, ...cutUpdates] }, ...newCommands]
+      newQueue.unshift({ ...queueItem, command: { ...command, warning, updates: cutUpdates } })
       break
     }
 
-    newCommands = [{ ...command, updates: [...command.updates] }, ...newCommands]
+    newQueue.unshift({ ...queueItem, command: { ...command, warning } })
   }
 
-  return newCommands
+  return newQueue
 }
 
 export const updateSimplifiedCommandsWith = (simplifiedCommands, command, commandId) => {

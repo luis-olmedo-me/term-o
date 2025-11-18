@@ -4,9 +4,9 @@ import { useEffect, useRef } from 'preact/hooks'
 import ColoredText from '@sidepanel/components/ColoredText'
 import useStorage from '@src/hooks/useStorage'
 
+import { commandStatuses } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
-import { Line } from '@src/styles/Global.styles'
 import * as S from './CommandsViewer.styles'
 
 export const CommandsViewer = ({ commands }) => {
@@ -16,6 +16,7 @@ export const CommandsViewer = ({ commands }) => {
   const statusIndicator = config.getValueById(configInputIds.STATUS_INDICATOR)
   const hasStatusBar = config.getValueById(configInputIds.STATUS_BAR)
   const hasStatusLight = config.getValueById(configInputIds.STATUS_LIGHT)
+  const isTruncated = config.getValueById(configInputIds.LINE_TRUNCATION)
 
   useEffect(
     function listenUpdates() {
@@ -36,6 +37,8 @@ export const CommandsViewer = ({ commands }) => {
     <S.ViewWrapper className="vertical-scroller">
       <div ref={wrapper}>
         {commands.map(command => {
+          const hasErrorMessage = command.status === commandStatuses.ERROR
+
           return (
             <S.Command
               key={command.id}
@@ -43,20 +46,21 @@ export const CommandsViewer = ({ commands }) => {
               aria-origin={hasStatusBar ? command.origin : null}
               aria-indicator={statusIndicator}
               aria-light={hasStatusLight}
+              aria-truncated={isTruncated && !hasErrorMessage}
             >
-              <Line>
+              <S.Line>
                 <ColoredText value={command.context} />
-              </Line>
+              </S.Line>
 
-              <Line>
+              <S.Line>
                 <ColoredText value={command.title} />
-              </Line>
+              </S.Line>
 
               {command.updates.map(update => {
                 return (
-                  <Line key={update}>
+                  <S.Line key={update}>
                     <ColoredText value={update} />
-                  </Line>
+                  </S.Line>
                 )
               })}
             </S.Command>

@@ -19,6 +19,9 @@ export const ViewWrapper = styled.div`
   overflow-x: hidden;
   padding-top: ${t('space.700')};
 `
+export const Line = styled.p`
+  margin: 0;
+`
 
 export const Command = styled.div`
   position: relative;
@@ -29,6 +32,18 @@ export const Command = styled.div`
     position: absolute;
     top: 0.5rem;
     transition: background-color 0.1s ease-in-out;
+  }
+
+  &[aria-truncated='true'] {
+    display: flex;
+    flex-direction: column;
+
+    ${Line} {
+      min-width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
   }
 
   &[aria-origin=${origins.MANUAL}],

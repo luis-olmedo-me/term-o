@@ -7,7 +7,6 @@ import useStorage from '@src/hooks/useStorage'
 
 import { configInputIds, PROMPT_MARK } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
-import { Line } from '@src/styles/Global.styles'
 import * as S from './Prompt.styles'
 
 export const Prompt = ({
@@ -84,9 +83,9 @@ export const Prompt = ({
 
   return (
     <S.PromptWrapper aria-loading={loading} aria-indicator={statusIndicator} className={className}>
-      <Line>
+      <S.PromptLine>
         <ColoredText value={context} />
-      </Line>
+      </S.PromptLine>
 
       <Input
         inputRef={inputRef}

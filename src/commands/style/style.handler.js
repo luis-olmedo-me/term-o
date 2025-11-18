@@ -37,15 +37,8 @@ export const styleHandler = async command => {
   if (P`color-pick`) {
     const config = storage.get(storageKeys.CONFIG)
 
-    const themeName = config.getValueById(configInputIds.THEME_NAME)
-    const fontFamily = config.getValueById(configInputIds.FONT_FAMILY)
-    const colorAccent = config.getValueById(configInputIds.COLOR_ACCENT)
-
-    const theme = config.themes.find(theme => theme.name === themeName)
-    const selectedTheme = { ...theme, ...getAccentColors(theme, colorAccent) }
-
     command.update('Click the bubble on the page to start color picking.')
-    const color = await pickColor(tabId, { theme: selectedTheme, fontFamily })
+    const color = await pickColor(tabId, { theme: config.theme })
 
     command.reset()
     command.update(formatText({ text: color }))

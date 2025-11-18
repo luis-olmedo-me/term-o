@@ -68,7 +68,7 @@ export const CommandsViewer = ({ commands }) => {
               })}
 
               {command.warning && (
-                <S.Line key={command.warning} aria-truncate-skip="true">
+                <S.Line key={command.warning} aria-truncate-skip="true" aria-warning="true">
                   <ColoredText value={command.warning} />
                 </S.Line>
               )}

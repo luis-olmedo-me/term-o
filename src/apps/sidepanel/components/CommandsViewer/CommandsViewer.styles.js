@@ -21,6 +21,10 @@ export const ViewWrapper = styled.div`
 `
 export const Line = styled.p`
   margin: 0;
+
+  &[aria-warning='true'] {
+    opacity: 0.7;
+  }
 `
 
 export const Command = styled.div`

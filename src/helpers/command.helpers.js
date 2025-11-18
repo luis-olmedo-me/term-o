@@ -2,7 +2,6 @@ import { commandStatuses } from '@src/constants/command.constants'
 
 import { getColor as C } from '@src/helpers/themes.helpers'
 import { getArgs } from './arguments.helpers'
-import { formatWarning } from './format.helpers'
 import { getOptionTypeLabel, getParamValue } from './options.helpers'
 
 export const executePerUpdates = async (nextCommand, updates) => {
@@ -33,39 +32,6 @@ export const executePerUpdates = async (nextCommand, updates) => {
   if (nextCommand.nextCommand && !nextCommand.failed) {
     await nextCommand.executeNext()
   }
-}
-
-export const limitSimplifiedCommands = (queue, maxCount) => {
-  let count = 0
-  let newQueue = []
-
-  for (let index = -1; index >= -1 * queue.length; index--) {
-    const queueItem = queue.at(index)
-    const command = queueItem.command
-
-    if (!command) {
-      newQueue.unshift(queueItem)
-    }
-    const updates = command.updates
-    let warning = null
-
-    count += updates.length
-
-    if (count > maxCount) {
-      const cutUpdates = updates.slice((maxCount - count) * -1)
-      const overflowCount = updates.length - cutUpdates.length
-      warning = formatWarning({
-        title: `Command line limit exceeded. Discarded ${overflowCount} lines.`
-      })
-
-      newQueue.unshift({ ...queueItem, command: { ...command, warning, updates: cutUpdates } })
-      break
-    }
-
-    newQueue.unshift({ ...queueItem, command: { ...command, warning } })
-  }
-
-  return newQueue
 }
 
 export const updateSimplifiedCommandsWith = (simplifiedCommands, command, commandId) => {

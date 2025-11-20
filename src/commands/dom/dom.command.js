@@ -77,7 +77,7 @@ export default new CommandBase({
     name: 'group',
     abbreviation: 'g',
     type: commandTypes.BOOLEAN,
-    helpSection: domHelpSections.FILTERS,
+    helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
     description: 'Count elements by attributes and tag names'
   })
   .expect({

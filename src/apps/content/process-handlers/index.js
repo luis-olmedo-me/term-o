@@ -6,6 +6,7 @@ import getElementStyles from './get-element-styles.process'
 import getStorage from './get-storage.process'
 import pickColor from './pick-color.process'
 import setStorage from './set-storage.process'
+import triggerEvent from './trigger-event.process'
 import uploadFile from './upload-file.process'
 
 import { processNames } from '@src/constants/process.constants'
@@ -19,5 +20,6 @@ export default {
   [processNames.APPLY_ELEMENT_STYLES]: applyElementStyles,
   [processNames.CLICK_ELEMENT]: clickElement,
   [processNames.UPLOAD_FILE]: uploadFile,
-  [processNames.PICK_COLOR]: pickColor
+  [processNames.PICK_COLOR]: pickColor,
+  [processNames.TRIGGER_EVENT]: triggerEvent
 }

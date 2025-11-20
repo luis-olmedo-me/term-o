@@ -1,7 +1,7 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
-import { isRegExp } from '@src/helpers/validation-command.helpers'
+import { isRegExp, isXpath } from '@src/helpers/validation-command.helpers'
 import { eventsHelpSections, eventsHelpSectionTitles } from './events.constants'
 import { eventsHandler } from './events.handler'
 
@@ -10,6 +10,33 @@ export default new CommandBase({
   helpSectionTitles: eventsHelpSectionTitles,
   handler: eventsHandler
 })
+  .expect({
+    name: 'trigger',
+    abbreviation: 't',
+    type: commandTypes.STRING,
+    helpSection: eventsHelpSections.CREATION,
+    description: 'Trigger a new event in page',
+    worksWith: ['xpath', 'event'],
+    mustHave: ['xpath', 'event']
+  })
+  .expect({
+    name: 'xpath',
+    abbreviation: 'x',
+    type: 'string',
+    helpSection: eventsHelpSections.CREATION,
+    description: 'Trigger events on elements searched by an XPath query',
+    worksWith: ['trigger'],
+    validate: [isXpath]
+  })
+  .expect({
+    name: 'event',
+    abbreviation: 'e',
+    type: 'string',
+    helpSection: eventsHelpSections.CREATION,
+    description: 'Choose an event to trigger',
+    worksWith: ['trigger'],
+    validate: [isXpath]
+  })
   .expect({
     name: 'register',
     abbreviation: 'r',

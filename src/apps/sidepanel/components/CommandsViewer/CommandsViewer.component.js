@@ -7,6 +7,7 @@ import useStorage from '@src/hooks/useStorage'
 import { commandStatuses } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
+import { getCaretOffset, getTokenAt, selectToken } from './CommandsViewer.helpers'
 import * as S from './CommandsViewer.styles'
 
 export const CommandsViewer = ({ commands }) => {
@@ -16,7 +17,9 @@ export const CommandsViewer = ({ commands }) => {
   const statusIndicator = config.getValueById(configInputIds.STATUS_INDICATOR)
   const hasStatusBar = config.getValueById(configInputIds.STATUS_BAR)
   const hasStatusLight = config.getValueById(configInputIds.STATUS_LIGHT)
+  const hasAssistedSelection = config.getValueById(configInputIds.ASSISTED_SELECTION)
   const isTruncated = config.getValueById(configInputIds.LINE_TRUNCATION)
+  const canCopyOnSelection = config.getValueById(configInputIds.COPY_ON_SELECTION)
 
   useEffect(
     function listenUpdates() {
@@ -32,6 +35,35 @@ export const CommandsViewer = ({ commands }) => {
     },
     [commands]
   )
+
+  const handleLineMouseUp = event => {
+    let line = event.target
+    const selection = window.getSelection().toString()
+
+    if (!hasAssistedSelection) {
+      if (canCopyOnSelection && selection) navigator.clipboard.writeText(selection)
+
+      return
+    }
+
+    if (selection || line.tagName === 'P') return
+
+    while (line && line.tagName !== 'P') {
+      line = line.parentElement
+    }
+
+    const text = line.textContent
+    const offset = getCaretOffset(line, event)
+
+    const result = getTokenAt(text, offset)
+
+    if (result) {
+      selectToken(line, result.start, result.end)
+      const updatedSelectedText = window.getSelection().toString()
+
+      if (canCopyOnSelection) navigator.clipboard.writeText(updatedSelectedText)
+    }
+  }
 
   return (
     <S.ViewWrapper className="vertical-scroller">
@@ -50,25 +82,38 @@ export const CommandsViewer = ({ commands }) => {
               aria-truncated={isTruncated}
             >
               {contextLines.map((context, index) => (
-                <S.Line key={`${context}-${index}`} aria-truncate-skip="false">
+                <S.Line
+                  key={`${context}-${index}`}
+                  onMouseUp={handleLineMouseUp}
+                  aria-truncate-skip="false"
+                >
                   <ColoredText value={context} />
                 </S.Line>
               ))}
 
-              <S.Line aria-truncate-skip="false">
+              <S.Line aria-truncate-skip="false" onMouseUp={handleLineMouseUp}>
                 <ColoredText value={command.title} />
               </S.Line>
 
               {command.updates.map(update => {
                 return (
-                  <S.Line key={update} aria-truncate-skip={hasErrorMessage}>
+                  <S.Line
+                    key={update}
+                    onMouseUp={handleLineMouseUp}
+                    aria-truncate-skip={hasErrorMessage}
+                  >
                     <ColoredText value={update} />
                   </S.Line>
                 )
               })}
 
               {command.warning && (
-                <S.Line key={command.warning} aria-truncate-skip="true" aria-warning="true">
+                <S.Line
+                  key={command.warning}
+                  aria-truncate-skip="true"
+                  aria-warning="true"
+                  onMouseUp={handleLineMouseUp}
+                >
                   <ColoredText value={command.warning} />
                 </S.Line>
               )}

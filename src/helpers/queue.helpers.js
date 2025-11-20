@@ -4,7 +4,7 @@ export const updateQueueValueIn = (queue, queueId, command) => {
   return queue.map(value => (value.id === queueId ? { ...value, command } : value))
 }
 
-export const limitSimplifiedCommands = (queue, maxCount) => {
+export const limitQueueByConfig = (queue, maxCount) => {
   let count = 0
   let newQueue = []
 

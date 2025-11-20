@@ -26,7 +26,8 @@ export const configInputIds = {
   STATUS_INDICATOR: 'status-indicator',
   STATUS_BAR: 'status-bar',
   STATUS_LIGHT: 'status-light',
-  LINE_TRUNCATION: 'line-truncation'
+  LINE_TRUNCATION: 'line-truncation',
+  ASSISTED_SELECTION: 'assisted-selection'
 }
 
 export const fontSizes = {
@@ -46,6 +47,7 @@ export const configDefaultValues = {
   [configInputIds.COPY_ON_SELECTION]: true,
   [configInputIds.SWITCH_TAB_AUTOMATICALLY]: true,
   [configInputIds.LINE_TRUNCATION]: false,
+  [configInputIds.ASSISTED_SELECTION]: true,
   [configInputIds.MAX_LINES_PER_COMMAND]: 50,
   [configInputIds.HISTORIAL_SIZE]: 40,
   [configInputIds.CONTEXT]: 'On [termo.color.brightBlue]{origin}',
@@ -96,6 +98,16 @@ export const defaultConfigSections = [
         options: [],
         validations: [],
         value: configDefaultValues[configInputIds.LINE_TRUNCATION]
+      },
+      {
+        id: configInputIds.ASSISTED_SELECTION,
+        name: 'Assisted selection',
+        description: 'Automatically selects the full token or segment on click.',
+        type: availableInputTypes.BOOLEAN,
+        postFix: null,
+        options: [],
+        validations: [],
+        value: configDefaultValues[configInputIds.ASSISTED_SELECTION]
       },
       {
         id: configInputIds.MAX_LINES_PER_COMMAND,

@@ -176,7 +176,7 @@ export const createBubble = (message, theme) => {
   return { element: bubble, remove, appear }
 }
 
-export const highlightElement = async element => {
+export const highlightElement = async (element, theme) => {
   const rect = element.getBoundingClientRect()
   const styles = window.getComputedStyle(element)
 
@@ -188,28 +188,31 @@ export const highlightElement = async element => {
   overlay.style.height = `${rect.height}px`
   overlay.style.zIndex = 999999999
   overlay.style.pointerEvents = 'none'
+  overlay.style.backgroundColor = 'transparent'
   overlay.style.border = '1 px solid transparent'
   overlay.style.borderRadius = styles.borderRadius
   overlay.style.boxShadow = '0 0 0 0 transparent'
   overlay.style.opacity = '0'
-  overlay.style.transition = `opacity .1s ease-in-out, transform .1s ease-in-out, box-shadow .1s linear, border-color .1s linear`
+  overlay.style.transition = `opacity .1s ease-in-out, transform .1s ease-in-out, box-shadow .1s linear, border-color .1s linear, background-color .1s linear`
   overlay.style.transform = 'scale(1.2)'
 
   document.body.appendChild(overlay)
 
   await delay(25)
   overlay.style.opacity = '1'
+  overlay.style.backgroundColor = '#00000066'
   overlay.style.transform = 'scale(1)'
-  overlay.style.boxShadow = '0 0 12px 4px rgba(0,194,255,0.6)'
-  overlay.style.borderColor = '#00c2ff'
+  overlay.style.boxShadow = `0 0 18px 4px ${theme.colors[customColorThemeKeys.ACCENT]}`
+  overlay.style.borderColor = theme.colors[customColorThemeKeys.ACCENT]
 
   await delay(100)
-  overlay.style.transition = `opacity .3s ease-in-out, transform .3s ease-in-out, box-shadow .3s linear, border-color .3s linear`
+  overlay.style.transition = `opacity .3s ease-in-out, transform .3s ease-in-out, box-shadow .3s linear, border-color .3s linear, background-color .3s linear`
+  overlay.style.backgroundColor = 'transparent'
   overlay.style.opacity = '0'
 
   await delay(100)
-  overlay.style.transform = 'scale(1.5)'
-  overlay.style.boxShadow = '0 0 22px 4px rgba(0,194,255,0.6)'
+  overlay.style.transform = 'scale(1.35)'
+  overlay.style.boxShadow = `0 0 22px 4px ${theme.colors[customColorThemeKeys.ACCENT]}`
   overlay.style.borderColor = 'transparent'
 
   await delay(300)

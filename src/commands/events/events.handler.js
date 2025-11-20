@@ -46,6 +46,8 @@ export const eventsHandler = async command => {
   }
 
   if (P`trigger`) {
+    const config = storage.get(storageKeys.CONFIG)
+
     const event = P`trigger`
     const xpath = P`xpath`
     const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : storage.get(storageKeys.TAB).id
@@ -54,7 +56,7 @@ export const eventsHandler = async command => {
 
     if (isDomEvent && !xpath) throw `${event} must be triggered on an existing DOM element.`
 
-    await triggerEvent(tabId, { xpath, event })
+    await triggerEvent(tabId, { xpath, event, theme: config.theme })
 
     command.update(`Triggering event at ${tabId}`)
   }

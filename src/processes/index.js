@@ -88,12 +88,12 @@ export const pickColor = (tabId, { theme, fontFamily }) => {
   })
 }
 
-export const triggerEvent = (tabId, { xpath, event }) => {
+export const triggerEvent = (tabId, { xpath, event, theme }) => {
   return createWorkerProcessRequest({
     type: processNames.TRIGGER_EVENT,
     defaultResponse: null,
     tabId,
-    data: { xpath, event }
+    data: { xpath, event, theme }
   })
 }
 

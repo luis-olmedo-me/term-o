@@ -1,12 +1,8 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
-import {
-  hasInlineHeaders,
-  isJSON,
-  isStringLike,
-  isURL
-} from '@src/helpers/validation-command.helpers'
+import { responseFormatSupported } from '@src/constants/options.constants'
+import { hasInlineHeaders, isAnyOf, isJSON, isURL } from '@src/helpers/validation-command.helpers'
 import { requestHelpSections, requestHelpSectionTitles } from './request.constants'
 import { requestHandler } from './request.handler'
 
@@ -62,7 +58,7 @@ export default new CommandBase({
     type: 'string',
     helpSection: requestHelpSections.OPTIONS,
     description: 'Format to read the response: blob, text, or json',
-    validate: [isStringLike(['blob', 'text', 'json'])],
+    validate: [isAnyOf(responseFormatSupported)],
     defaultValue: 'json'
   })
   .expect({

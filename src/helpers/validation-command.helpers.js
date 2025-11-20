@@ -68,7 +68,7 @@ export const isURL = (option, value) => {
   }
 }
 
-export const isStringLike = validValues => {
+export const isAnyOf = validValues => {
   return (option, value) => {
     if (!validValues.includes(value)) {
       const name = option.displayName

@@ -1,7 +1,8 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
-import { isRegExp, isXpath } from '@src/helpers/validation-command.helpers'
+import { eventsSupported } from '@src/constants/options.constants'
+import { isAnyOf, isRegExp, isXpath } from '@src/helpers/validation-command.helpers'
 import { eventsHelpSections, eventsHelpSectionTitles } from './events.constants'
 import { eventsHandler } from './events.handler'
 
@@ -35,7 +36,7 @@ export default new CommandBase({
     helpSection: eventsHelpSections.CREATION,
     description: 'Choose an event to trigger',
     worksWith: ['trigger'],
-    validate: [isXpath]
+    validate: [isAnyOf(eventsSupported)]
   })
   .expect({
     name: 'register',

@@ -1,11 +1,12 @@
 import { getElementByXPath, humanClick } from '@content/helpers/dom-management.helpers'
+import { eventsAvailable } from '@src/constants/options.constants'
 
 export default async (resolve, reject, data) => {
   const element = getElementByXPath(data.xpath)
 
   if (!element) return reject('XPath did not match any element.')
 
-  humanClick(element)
+  if (data.event === eventsAvailable.CLICK) humanClick(element)
 
   resolve(null)
 }

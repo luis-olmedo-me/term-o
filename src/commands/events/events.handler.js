@@ -6,6 +6,7 @@ import { createHelpView } from '@src/helpers/command.helpers'
 import { formatEvent } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
+import { triggerEvent } from '@src/processes'
 
 export const eventsHandler = async command => {
   const P = name => command.props[name]
@@ -52,6 +53,8 @@ export const eventsHandler = async command => {
     const isDomEvent = domEventsSupported.includes(event)
 
     if (isDomEvent && !xpath) throw `${event} must be triggered on an existing DOM element.`
+
+    await triggerEvent(tabId, { xpath, event })
 
     command.update(`Triggering event at ${tabId}`)
   }

@@ -88,6 +88,15 @@ export const pickColor = (tabId, { theme, fontFamily }) => {
   })
 }
 
+export const triggerEvent = (tabId, { xpath, event }) => {
+  return createWorkerProcessRequest({
+    type: processNames.TRIGGER_EVENT,
+    defaultResponse: null,
+    tabId,
+    data: { xpath, event }
+  })
+}
+
 export const executeCode = ({ script }) => {
   return createWorkerProcessRequest({
     type: processNames.EXECUTE_CODE,

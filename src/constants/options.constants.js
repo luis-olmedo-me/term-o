@@ -8,7 +8,7 @@ export const optionDefaultValues = {
   [commandTypes.NONE]: null
 }
 
-const eventsAvailable = {
+export const eventsAvailable = {
   CLICK: 'click'
 }
 

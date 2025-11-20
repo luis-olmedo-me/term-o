@@ -25,7 +25,7 @@ export default new CommandBase({
     abbreviation: 'x',
     type: 'string',
     helpSection: eventsHelpSections.CREATION,
-    description: 'Trigger events on elements searched by an XPath query',
+    description: 'XPath selector for the target element',
     worksWith: ['trigger'],
     validate: [isXpath]
   })
@@ -34,7 +34,7 @@ export default new CommandBase({
     abbreviation: 'e',
     type: 'string',
     helpSection: eventsHelpSections.CREATION,
-    description: 'Choose an event to trigger',
+    description: 'Type of event to trigger',
     worksWith: ['trigger'],
     validate: [isAnyOf(eventsSupported)]
   })
@@ -75,7 +75,7 @@ export default new CommandBase({
     abbreviation: 'd',
     type: 'string',
     helpSection: eventsHelpSections.MANAGEMENT,
-    description: 'Delete an event by its id',
+    description: 'Delete a registered event by its id',
     worksWith: []
   })
   .expect({

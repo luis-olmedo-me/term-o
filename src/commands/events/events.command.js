@@ -18,7 +18,7 @@ export default new CommandBase({
     helpSection: eventsHelpSections.CREATION,
     description: 'Trigger a new event in page',
     worksWith: ['xpath', 'event'],
-    mustHave: ['xpath', 'event']
+    mustHave: ['event']
   })
   .expect({
     name: 'xpath',

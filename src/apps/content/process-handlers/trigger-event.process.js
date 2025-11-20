@@ -1,4 +1,8 @@
-import { getElementByXPath, highlightElement } from '@content/helpers/dom-management.helpers'
+import {
+  getElementByXPath,
+  highlightElement,
+  humanClick
+} from '@content/helpers/dom-management.helpers'
 import { eventsAvailable } from '@src/constants/options.constants'
 
 export default async (resolve, reject, data) => {
@@ -8,7 +12,7 @@ export default async (resolve, reject, data) => {
 
   if (data.event === eventsAvailable.CLICK) {
     await highlightElement(element, data.theme)
-    // humanClick(element)
+    humanClick(element)
   }
 
   resolve(null)

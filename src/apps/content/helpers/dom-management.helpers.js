@@ -207,13 +207,13 @@ export const highlightElement = async (element, theme) => {
 
   await delay(100)
   overlay.style.transition = `opacity .3s ease-in-out, transform .3s ease-in-out, box-shadow .3s linear, border-color .3s linear, background-color .3s linear`
-  overlay.style.backgroundColor = 'transparent'
   overlay.style.opacity = '0'
 
   await delay(100)
   overlay.style.transform = 'scale(1.35)'
   overlay.style.boxShadow = `0 0 22px 4px ${theme.colors[customColorThemeKeys.ACCENT]}`
   overlay.style.borderColor = 'transparent'
+  overlay.style.backgroundColor = 'transparent'
 
   await delay(300)
   overlay.remove()

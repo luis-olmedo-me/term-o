@@ -17,6 +17,7 @@ export const CommandsViewer = ({ commands }) => {
   const statusIndicator = config.getValueById(configInputIds.STATUS_INDICATOR)
   const hasStatusBar = config.getValueById(configInputIds.STATUS_BAR)
   const hasStatusLight = config.getValueById(configInputIds.STATUS_LIGHT)
+  const hasAssistedSelection = config.getValueById(configInputIds.ASSISTED_SELECTION)
   const isTruncated = config.getValueById(configInputIds.LINE_TRUNCATION)
   const canCopyOnSelection = config.getValueById(configInputIds.COPY_ON_SELECTION)
 
@@ -37,9 +38,15 @@ export const CommandsViewer = ({ commands }) => {
 
   const handleLineMouseUp = event => {
     let line = event.target
-    const selectedText = window.getSelection().toString()
+    const selection = window.getSelection().toString()
 
-    if (selectedText || line.tagName === 'P') return
+    if (!hasAssistedSelection) {
+      if (canCopyOnSelection && selection) navigator.clipboard.writeText(selection)
+
+      return
+    }
+
+    if (selection || line.tagName === 'P') return
 
     while (line && line.tagName !== 'P') {
       line = line.parentElement

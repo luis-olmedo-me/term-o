@@ -72,7 +72,7 @@ export const isStringLike = validValues => {
   return (option, value) => {
     if (!validValues.includes(value)) {
       const name = option.displayName
-      const availableValues = validValues.map(val => `"${val}"`).join(' or ')
+      const availableValues = validValues.map(val => `"${val}"`).join(' | ')
 
       throw `${name} expects one of the following values: ${availableValues}. Instead, it received "${value}".`
     }

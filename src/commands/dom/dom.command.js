@@ -39,7 +39,7 @@ export default new CommandBase({
     abbreviation: 'b',
     type: 'number',
     helpSection: domHelpSections.DOM_NAVIGATION,
-    description: 'Select sibling by index (positive = next, negative = previous)',
+    description: 'Select sibling by index (integer)',
     validate: [isInteger]
   })
   .expect({
@@ -47,7 +47,7 @@ export default new CommandBase({
     type: 'number',
     abbreviation: 'p',
     helpSection: domHelpSections.DOM_NAVIGATION,
-    description: 'Select parent element by index (positive only)',
+    description: 'Select parent element by index (positive)',
     validate: [isInteger, isPositive]
   })
   .expect({
@@ -55,7 +55,7 @@ export default new CommandBase({
     abbreviation: 'd',
     type: 'number',
     helpSection: domHelpSections.DOM_NAVIGATION,
-    description: 'Select child element by index (positive only)',
+    description: 'Select child element by index (positive)',
     validate: [isInteger, isPositive]
   })
   .expect({

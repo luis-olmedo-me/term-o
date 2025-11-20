@@ -24,7 +24,7 @@ export default new CommandBase({
     abbreviation: 'u',
     type: 'string',
     helpSection: eventsHelpSections.CREATION,
-    description: 'URL pattern where the event will trigger (regex supported)',
+    description: 'URL pattern where the event will trigger (regex)',
     validate: [isRegExp]
   })
   .expect({

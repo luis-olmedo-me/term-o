@@ -85,7 +85,7 @@ export default new CommandBase({
     abbreviation: 'a',
     type: commandTypes.STRING_ARRAY,
     helpSection: domHelpSections.FILTERS,
-    description: 'Filter by attributes (regex supported in items)',
+    description: 'Filter by attributes (regex[])',
     validate: [hasAllItemsAs(isRegExp), hasLengthBetween(0, 2)]
   })
   .expect({
@@ -93,7 +93,7 @@ export default new CommandBase({
     abbreviation: 'S',
     type: commandTypes.STRING_ARRAY,
     helpSection: domHelpSections.FILTERS,
-    description: 'Filter by CSS styles (regex supported in items)',
+    description: 'Filter by CSS styles (regex[])',
     validate: [hasAllItemsAs(isRegExp), hasLengthBetween(0, 2)]
   })
   .expect({
@@ -101,7 +101,7 @@ export default new CommandBase({
     abbreviation: 't',
     type: 'string',
     helpSection: domHelpSections.FILTERS,
-    description: 'Filter by tag name (regex supported)',
+    description: 'Filter by tag name (regex)',
     validate: [isRegExp]
   })
   .expect({
@@ -109,7 +109,7 @@ export default new CommandBase({
     abbreviation: 'T',
     type: 'string',
     helpSection: domHelpSections.FILTERS,
-    description: 'Filter by text content (regex supported)',
+    description: 'Filter by text content (regex)',
     validate: [isRegExp]
   })
   .expect({

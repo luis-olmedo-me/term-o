@@ -57,7 +57,7 @@ export default new CommandBase({
     abbreviation: 'p',
     type: commandTypes.STRING_ARRAY,
     helpSection: styleHelpSections.FILTERS,
-    description: 'Filter styles by property names (supports regex)',
+    description: 'Filter styles by property names (regex[])',
     validate: [hasAllItemsAs(isRegExp), hasLengthBetween(0, 2)]
   })
   .expect({
@@ -65,7 +65,7 @@ export default new CommandBase({
     abbreviation: 's',
     type: 'string',
     helpSection: styleHelpSections.FILTERS,
-    description: 'Filter elements by CSS selector (supports regex)',
+    description: 'Filter elements by CSS selector (regex[])',
     validate: [hasAllItemsAs(isRegExp)]
   })
   .expect({

@@ -1,5 +1,6 @@
 import storage from '@src/libs/storage'
 
+import { domEventsSupported } from '@src/constants/options.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatEvent } from '@src/helpers/format.helpers'
@@ -40,6 +41,16 @@ export const eventsHandler = async command => {
 
     storage.set(storageKeys.EVENTS, newEvents)
     command.update(update)
+  }
+
+  if (P`trigger`) {
+    const event = P`event`
+    const xpath = P`xpath`
+    const isDomEvent = domEventsSupported.include(event)
+
+    if (isDomEvent && !xpath) throw `${event} must be triggered on an existing DOM element.`
+
+    command.update('Triggering event')
   }
 
   if (P`help`) createHelpView(command)

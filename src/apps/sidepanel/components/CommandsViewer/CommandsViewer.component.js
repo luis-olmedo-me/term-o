@@ -119,7 +119,7 @@ export const CommandsViewer = ({ commands }) => {
     let line = event.target
     const selectedText = window.getSelection().toString()
 
-    if (selectedText) return
+    if (selectedText || line.tagName === 'P') return
 
     while (line && line.tagName !== 'P') {
       line = line.parentElement

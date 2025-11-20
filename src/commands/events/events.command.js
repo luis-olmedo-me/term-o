@@ -39,7 +39,7 @@ export default new CommandBase({
     abbreviation: 'l',
     type: commandTypes.BOOLEAN,
     helpSection: eventsHelpSections.MANAGEMENT,
-    description: 'List all events',
+    description: 'List all registered events',
     worksWith: []
   })
   .expect({

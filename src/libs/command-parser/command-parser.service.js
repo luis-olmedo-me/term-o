@@ -3,6 +3,7 @@ import commandBases, { errorBase } from '@src/commands'
 import EventListener from '@src/templates/EventListener'
 
 import { getArgs, splitBy } from '@src/helpers/arguments.helpers'
+import { getHighestTitleCountInBases } from '@src/helpers/command.helpers'
 import { truncate } from '@src/helpers/utils.helpers'
 
 class CommandParser extends EventListener {
@@ -12,6 +13,7 @@ class CommandParser extends EventListener {
     this.templates = templates
     this.aliases = []
     this.origin = null
+    this.highestTitleCount = getHighestTitleCountInBases(templates)
   }
 
   setAliases(aliases) {
@@ -22,14 +24,15 @@ class CommandParser extends EventListener {
   }
 
   read(rawScript) {
+    const data = { highestTitleCount: this.highestTitleCount }
     const scriptFormatted = this.getWithAliasesResolved(rawScript)
     let [firstFragment, ...nextFragments] = splitBy(scriptFormatted, '&&')
 
-    const command = this.parse(firstFragment).setTitle(rawScript)
+    const command = this.parse(firstFragment).setTitle(rawScript).applyData(data)
     let carriedCommand = command
 
     for (let fragment of nextFragments) {
-      const nextCommand = this.parse(fragment).setTitle(rawScript)
+      const nextCommand = this.parse(fragment).setTitle(rawScript).applyData(data)
       carriedCommand.nextCommand = nextCommand
 
       if (nextCommand.finished) break

@@ -64,11 +64,21 @@ const getHighestTitleCountInSection = (sectionNames, options) => {
   }, 0)
 }
 
+export const getHighestTitleCountInBases = bases => {
+  return bases.reduce((max, base) => {
+    const options = base.options
+    const helpSectionsNames = Object.keys(base.helpSectionTitles)
+    const highestTitleCountInSection = getHighestTitleCountInSection(helpSectionsNames, options)
+
+    return max < highestTitleCountInSection ? highestTitleCountInSection : max
+  }, 0)
+}
+
 export const createHelpView = command => {
   let helps = []
   const options = command.options
+  const highestTitleCount = command.data.highestTitleCount
   const helpSectionsNames = Object.keys(command.helpSectionTitles)
-  const highestTitleCount = getHighestTitleCountInSection(helpSectionsNames, options)
 
   helps.push(`${C`foreground`}Usage: ${command.name} [options]\n`)
 

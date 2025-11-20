@@ -3,7 +3,7 @@ import storage from '@src/libs/storage'
 import { domEventsSupported } from '@src/constants/options.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
-import { formatEvent } from '@src/helpers/format.helpers'
+import { formatEvent, formatRegisteredEvent } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 import { triggerEvent } from '@src/processes'
@@ -13,7 +13,7 @@ export const eventsHandler = async command => {
 
   if (P`list`) {
     const events = storage.get(storageKeys.EVENTS)
-    const updates = events.map(formatEvent)
+    const updates = events.map(formatRegisteredEvent)
 
     command.update(...updates)
   }
@@ -24,7 +24,7 @@ export const eventsHandler = async command => {
     const newEvent = { url: P`url`, line: P`command`, id }
 
     const newEvents = events.concat(newEvent)
-    const update = formatEvent(newEvent)
+    const update = formatRegisteredEvent(newEvent)
 
     storage.set(storageKeys.EVENTS, newEvents)
     command.update(update)
@@ -39,7 +39,7 @@ export const eventsHandler = async command => {
     if (!existingEvent) throw `The event "${id}" does not exist.`
 
     const newEvents = events.filter(alias => alias.id !== id)
-    const update = formatEvent(existingEvent)
+    const update = formatRegisteredEvent(existingEvent)
 
     storage.set(storageKeys.EVENTS, newEvents)
     command.update(update)
@@ -58,7 +58,7 @@ export const eventsHandler = async command => {
 
     await triggerEvent(tabId, { xpath, event, theme: config.theme })
 
-    command.update(`Triggering event at ${tabId}`)
+    command.update(formatEvent({ event, xpath }))
   }
 
   if (P`help`) createHelpView(command)

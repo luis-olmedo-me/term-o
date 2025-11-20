@@ -2,7 +2,7 @@ import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
 import { eventsSupported } from '@src/constants/options.constants'
-import { isAnyOf, isRegExp, isXpath } from '@src/helpers/validation-command.helpers'
+import { isAnyOf, isRegExp, isTabId, isXpath } from '@src/helpers/validation-command.helpers'
 import { eventsHelpSections, eventsHelpSectionTitles } from './events.constants'
 import { eventsHandler } from './events.handler'
 
@@ -17,8 +17,8 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: eventsHelpSections.CREATION,
     description: 'Trigger a new event in page',
-    worksWith: ['xpath', 'event'],
-    mustHave: ['event']
+    worksWith: ['xpath', 'tab-id'],
+    validate: [isAnyOf(eventsSupported)]
   })
   .expect({
     name: 'xpath',
@@ -30,13 +30,13 @@ export default new CommandBase({
     validate: [isXpath]
   })
   .expect({
-    name: 'event',
-    abbreviation: 'e',
+    name: 'tab-id',
+    abbreviation: 'i',
     type: 'string',
     helpSection: eventsHelpSections.CREATION,
-    description: 'Type of event to trigger',
+    description: 'Trigger events in a specific tab (T[number])',
     worksWith: ['trigger'],
-    validate: [isAnyOf(eventsSupported)]
+    validate: [isTabId]
   })
   .expect({
     name: 'register',

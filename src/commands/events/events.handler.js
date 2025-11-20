@@ -4,6 +4,7 @@ import { domEventsSupported } from '@src/constants/options.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatEvent } from '@src/helpers/format.helpers'
+import { cleanTabId } from '@src/helpers/tabs.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 
 export const eventsHandler = async command => {
@@ -44,13 +45,15 @@ export const eventsHandler = async command => {
   }
 
   if (P`trigger`) {
-    const event = P`event`
+    const event = P`trigger`
     const xpath = P`xpath`
+    const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : storage.get(storageKeys.TAB).id
+
     const isDomEvent = domEventsSupported.include(event)
 
     if (isDomEvent && !xpath) throw `${event} must be triggered on an existing DOM element.`
 
-    command.update('Triggering event')
+    command.update(`Triggering event at ${tabId}`)
   }
 
   if (P`help`) createHelpView(command)

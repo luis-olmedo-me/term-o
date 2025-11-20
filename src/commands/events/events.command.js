@@ -11,11 +11,11 @@ export default new CommandBase({
   handler: eventsHandler
 })
   .expect({
-    name: 'add',
-    abbreviation: 'a',
+    name: 'register',
+    abbreviation: 'r',
     type: commandTypes.BOOLEAN,
     helpSection: eventsHelpSections.CREATION,
-    description: 'Create a new event',
+    description: 'Register a new command for future execution',
     worksWith: ['url', 'command'],
     mustHave: ['url', 'command']
   })

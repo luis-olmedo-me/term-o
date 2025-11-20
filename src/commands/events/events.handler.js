@@ -15,7 +15,7 @@ export const eventsHandler = async command => {
     command.update(...updates)
   }
 
-  if (P`add`) {
+  if (P`register`) {
     const id = createUUIDv4()
     const events = storage.get(storageKeys.EVENTS)
     const newEvent = { url: P`url`, line: P`command`, id }

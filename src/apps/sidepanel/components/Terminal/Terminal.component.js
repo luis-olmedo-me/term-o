@@ -13,7 +13,6 @@ import { origins } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
-import { copyText, getSelectedText } from './Terminal.helpers'
 import * as S from './Terminal.styles'
 
 export const Terminal = () => {
@@ -24,7 +23,6 @@ export const Terminal = () => {
   const [config] = useStorage({ key: storageKeys.CONFIG })
   const [queue] = useStorage({ key: storageKeys.COMMAND_QUEUE })
 
-  const canCopyOnSelection = config.getValueById(configInputIds.COPY_ON_SELECTION)
   const switchTabAutomatically = config.getValueById(configInputIds.SWITCH_TAB_AUTOMATICALLY)
   const rawContext = config.getValueById(configInputIds.CONTEXT)
 
@@ -53,12 +51,6 @@ export const Terminal = () => {
     [aliases]
   )
 
-  const copySelectedText = () => {
-    const selectedText = getSelectedText()
-
-    if (canCopyOnSelection) copyText(selectedText)
-  }
-
   const removePromptFocusEvent = () => {
     window.removeEventListener('keydown', focusOnPrompt)
   }
@@ -77,11 +69,9 @@ export const Terminal = () => {
   const context = createContext(rawContext, tab)
 
   const handleMouseUp = () => {
-    const selectedText = getSelectedText()
+    const selectedText = window.getSelection().toString()
 
-    if (selectedText) {
-      copySelectedText()
-    } else {
+    if (!selectedText) {
       removePromptFocusEvent()
       focusOnPrompt()
     }

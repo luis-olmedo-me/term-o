@@ -32,12 +32,15 @@ function getTextNodeAtOffset(root, offset) {
 }
 
 function getCaretOffset(element, event) {
-  const range = document.caretRangeFromPoint(event.clientX, event.clientY)
+  const x = event.clientX
+  const y = event.clientY
 
-  if (!range) return null
+  let pos = document.caretPositionFromPoint?.(x, y)
 
-  let offset = range.startOffset
-  let node = range.startContainer
+  if (!pos) return null
+
+  let node = pos.offsetNode
+  let offset = pos.offset
 
   while (node && node !== element) {
     let prev = 0
@@ -56,7 +59,7 @@ function getCaretOffset(element, event) {
 }
 
 function getTokenAt(text, offset) {
-  const regex = /"[^\"]+"|\w[\w\-]*/g
+  const regex = /"[^"]+"|'[^']+'|\{[^}]+\}|[\w-]+:\/\/[\w\-./]+|[\w.-]+/g
   let match
 
   while ((match = regex.exec(text)) !== null) {
@@ -95,6 +98,7 @@ export const CommandsViewer = ({ commands }) => {
   const hasStatusBar = config.getValueById(configInputIds.STATUS_BAR)
   const hasStatusLight = config.getValueById(configInputIds.STATUS_LIGHT)
   const isTruncated = config.getValueById(configInputIds.LINE_TRUNCATION)
+  const canCopyOnSelection = config.getValueById(configInputIds.COPY_ON_SELECTION)
 
   useEffect(
     function listenUpdates() {
@@ -111,8 +115,11 @@ export const CommandsViewer = ({ commands }) => {
     [commands]
   )
 
-  const handleLineClick = event => {
+  const handleLineMouseUp = event => {
     let line = event.target
+    const selectedText = window.getSelection().toString()
+
+    if (selectedText) return
 
     while (line && line.tagName !== 'P') {
       line = line.parentElement
@@ -125,6 +132,9 @@ export const CommandsViewer = ({ commands }) => {
 
     if (result) {
       selectToken(line, result.start, result.end)
+      const updatedSelectedText = window.getSelection().toString()
+
+      if (canCopyOnSelection) navigator.clipboard.writeText(updatedSelectedText)
     }
   }
 
@@ -147,14 +157,14 @@ export const CommandsViewer = ({ commands }) => {
               {contextLines.map((context, index) => (
                 <S.Line
                   key={`${context}-${index}`}
-                  onClick={handleLineClick}
+                  onMouseUp={handleLineMouseUp}
                   aria-truncate-skip="false"
                 >
                   <ColoredText value={context} />
                 </S.Line>
               ))}
 
-              <S.Line aria-truncate-skip="false" onClick={handleLineClick}>
+              <S.Line aria-truncate-skip="false" onMouseUp={handleLineMouseUp}>
                 <ColoredText value={command.title} />
               </S.Line>
 
@@ -162,7 +172,7 @@ export const CommandsViewer = ({ commands }) => {
                 return (
                   <S.Line
                     key={update}
-                    onClick={handleLineClick}
+                    onMouseUp={handleLineMouseUp}
                     aria-truncate-skip={hasErrorMessage}
                   >
                     <ColoredText value={update} />
@@ -175,7 +185,7 @@ export const CommandsViewer = ({ commands }) => {
                   key={command.warning}
                   aria-truncate-skip="true"
                   aria-warning="true"
-                  onClick={handleLineClick}
+                  onMouseUp={handleLineMouseUp}
                 >
                   <ColoredText value={command.warning} />
                 </S.Line>

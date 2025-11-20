@@ -57,8 +57,9 @@ export const eventsHandler = async command => {
     if (isDomEvent && !xpath) throw `${event} must be triggered on an existing DOM element.`
 
     await triggerEvent(tabId, { xpath, event, theme: config.theme })
+    const update = formatEvent({ event, xpath })
 
-    command.update(formatEvent({ event, xpath }))
+    command.update(update)
   }
 
   if (P`help`) createHelpView(command)

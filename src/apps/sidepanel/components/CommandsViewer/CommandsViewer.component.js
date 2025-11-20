@@ -37,16 +37,15 @@ export const CommandsViewer = ({ commands }) => {
   )
 
   const handleLineMouseUp = event => {
+    event.stopPropagation()
     let line = event.target
     const selection = window.getSelection().toString()
 
-    if (!hasAssistedSelection) {
+    if (!hasAssistedSelection || selection || line.tagName === 'P') {
       if (canCopyOnSelection && selection) navigator.clipboard.writeText(selection)
 
       return
     }
-
-    if (selection || line.tagName === 'P') return
 
     while (line && line.tagName !== 'P') {
       line = line.parentElement
@@ -56,12 +55,12 @@ export const CommandsViewer = ({ commands }) => {
     const offset = getCaretOffset(line, event)
 
     const result = getTokenAt(text, offset)
+    console.log({ result })
 
     if (result) {
       selectToken(line, result.start, result.end)
-      const updatedSelectedText = window.getSelection().toString()
 
-      if (canCopyOnSelection) navigator.clipboard.writeText(updatedSelectedText)
+      if (canCopyOnSelection) navigator.clipboard.writeText(result.token)
     }
   }
 

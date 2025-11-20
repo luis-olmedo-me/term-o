@@ -49,7 +49,7 @@ export const eventsHandler = async command => {
     const xpath = P`xpath`
     const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : storage.get(storageKeys.TAB).id
 
-    const isDomEvent = domEventsSupported.include(event)
+    const isDomEvent = domEventsSupported.includes(event)
 
     if (isDomEvent && !xpath) throw `${event} must be triggered on an existing DOM element.`
 

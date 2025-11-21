@@ -2,9 +2,13 @@ import { colorThemeKeys, customColorThemeKeys } from '@src/constants/themes.cons
 import { delay } from '@src/helpers/utils.helpers'
 
 export const createBubble = (message, theme) => {
+  let errorHandlers = []
   let timeoutId = null
-  let intervalId = null
+  let animationTimeoutId = null
+  let animationIntervalId = null
   const bubble = document.createElement('div')
+
+  const onError = handler => errorHandlers.push(handler)
 
   bubble.innerHTML = `
     <div style="
@@ -64,7 +68,8 @@ export const createBubble = (message, theme) => {
     bubble.style.right = '-100%'
     await delay(700)
     clearTimeout(timeoutId)
-    clearInterval(intervalId)
+    clearTimeout(animationTimeoutId)
+    clearInterval(animationIntervalId)
     bubble.remove()
   }
 
@@ -87,16 +92,24 @@ export const createBubble = (message, theme) => {
       currentColor === 'transparent' ? accentColor : theme.colors[colorThemeKeys.FOREGROUND]
   }
 
-  timeoutId = setTimeout(() => {
-    timeoutId = null
+  animationTimeoutId = setTimeout(() => {
+    animationTimeoutId = null
     bubble.style.transition =
       'transform 0.15s ease-in-out, opacity 0.4s ease-in-out, right 1s ease-in-out, color 1.5s linear, border-color 1.5s linear, box-shadow 1.5s linear'
 
-    intervalId = setInterval(() => {
-      toggleColor()
-    }, 1000)
+    animationIntervalId = setInterval(toggleColor, 1000)
   }, 1950)
 
+  timeoutId = setTimeout(() => {
+    clearTimeout(animationTimeoutId)
+    clearInterval(animationIntervalId)
+    bubble.remove()
+
+    errorHandlers.forEach(handler =>
+      handler('The bubble closed automatically because no action was taken in time.')
+    )
+  }, 10000)
+
   appear()
-  return { element: bubble, remove, appear }
+  return { element: bubble, remove, appear, onError }
 }

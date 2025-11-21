@@ -1,46 +1,68 @@
 import { customColorThemeKeys } from '@src/constants/themes.constants'
 import { delay } from '@src/helpers/utils.helpers'
 
+const APPEAR_DELAY = 20
+const PEAK_DURATION = 400
+const TRANSITION_END_DELAY = 100
+const REMOVE_DELAY = 700
+
 export const highlightElement = async (element, theme) => {
   const rect = element.getBoundingClientRect()
   const styles = window.getComputedStyle(element)
 
   const overlay = document.createElement('div')
-  overlay.style.position = 'fixed'
-  overlay.style.left = `${rect.left}px`
-  overlay.style.top = `${rect.top}px`
-  overlay.style.width = `${rect.width}px`
-  overlay.style.height = `${rect.height}px`
-  overlay.style.zIndex = 999999999
-  overlay.style.pointerEvents = 'none'
-  overlay.style.backgroundColor = 'transparent'
-  overlay.style.border = '1px solid transparent'
-  overlay.style.borderRadius = styles.borderRadius
-  overlay.style.boxShadow = '0 0 0 transparent'
-  overlay.style.opacity = '0'
-  overlay.style.transition = `opacity .2s ease-in-out, transform .2s ease-in-out, box-shadow .2s ease-in-out, border-color .2s ease-in-out, background-color .2s ease-in-out`
-  overlay.style.transform = 'scale(1.4)'
+  const accent = theme.colors[customColorThemeKeys.ACCENT]
+
+  Object.assign(overlay.style, {
+    position: 'fixed',
+    left: `${rect.left}px`,
+    top: `${rect.top}px`,
+    width: `${rect.width}px`,
+    height: `${rect.height}px`,
+    zIndex: 999999999,
+    pointerEvents: 'none',
+
+    backgroundColor: 'transparent',
+    border: '1px solid transparent',
+    borderRadius: styles.borderRadius,
+    boxShadow: '0 0 0 transparent',
+    opacity: '0',
+    transform: 'scale(1.4)',
+    transition:
+      'opacity .2s ease-in-out, transform .2s ease-in-out, box-shadow .2s ease-in-out, border-color .2s ease-in-out, background-color .2s ease-in-out'
+  })
 
   document.body.appendChild(overlay)
 
-  await delay(20)
-  overlay.style.opacity = '1'
-  overlay.style.backgroundColor = `${theme.colors[customColorThemeKeys.ACCENT]}`
-  overlay.style.transform = 'scale(1)'
-  overlay.style.boxShadow = `0 0 15px ${theme.colors[customColorThemeKeys.ACCENT]}`
-  overlay.style.borderColor = theme.colors[customColorThemeKeys.ACCENT]
+  await delay(APPEAR_DELAY)
 
-  await delay(400)
-  overlay.style.transition = `opacity .3s ease-in-out, transform .5s ease-in-out, box-shadow .6s ease-in-out, border-color .5s ease-in-out, background-color .5s ease-in-out`
-  overlay.style.boxShadow = `0 0 10px ${theme.colors[customColorThemeKeys.ACCENT]}`
-  overlay.style.opacity = '0'
-  overlay.style.transform = 'scale(1.3)'
+  Object.assign(overlay.style, {
+    opacity: '1',
+    backgroundColor: accent,
+    transform: 'scale(1)',
+    boxShadow: `0 0 15px ${accent}`,
+    borderColor: accent
+  })
 
-  await delay(100)
-  overlay.style.boxShadow = `0 0 0 ${theme.colors[customColorThemeKeys.ACCENT]}`
-  overlay.style.borderColor = 'transparent'
-  overlay.style.backgroundColor = 'transparent'
+  await delay(PEAK_DURATION)
 
-  await delay(700)
+  overlay.style.transition =
+    'opacity .3s ease-in-out, transform .5s ease-in-out, box-shadow .6s ease-in-out, border-color .5s ease-in-out, background-color .5s ease-in-out'
+
+  Object.assign(overlay.style, {
+    opacity: '0',
+    transform: 'scale(1.3)',
+    boxShadow: `0 0 10px ${accent}`
+  })
+
+  await delay(TRANSITION_END_DELAY)
+
+  Object.assign(overlay.style, {
+    boxShadow: `0 0 0 ${accent}`,
+    borderColor: 'transparent',
+    backgroundColor: 'transparent'
+  })
+
+  await delay(REMOVE_DELAY)
   overlay.remove()
 }

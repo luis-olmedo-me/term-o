@@ -1,4 +1,4 @@
-import { createBubble } from '@content/helpers/dom-management.helpers'
+import { createBubble } from '@content/pure-js'
 
 export default async (resolve, reject, data) => {
   if (!window.EyeDropper) return reject('EyeDropper API is not supported in this browser.')
@@ -19,5 +19,6 @@ export default async (resolve, reject, data) => {
     }
   }
 
+  bubble.onError(reject)
   bubble.element.addEventListener('click', startPicking, { once: true })
 }

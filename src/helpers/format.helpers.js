@@ -22,14 +22,6 @@ export const formatElement = ({ tagName, attributes, xpath, textContent, tabId }
     : `${quotedTabId}${C`red`}${quotedTagName}`
 }
 
-export const formatDOMEvent = ({ name, target, tabId }) => {
-  const quotedTabId = tabId ? `${C`blue`}${getQuotedString(tabId)} ` : ''
-  const quotedName = getQuotedString(name)
-  const quotedTarget = getQuotedString(target)
-
-  return `${quotedTabId}${C`purple`}${quotedName} ${C`yellow`}${quotedTarget}`
-}
-
 export const formatText = ({ text }) => {
   const quotedText = getQuotedString(text)
 
@@ -85,12 +77,19 @@ export const formatFile = ({ name, lastVisitTime, size }) => {
   return `${C`green`}${quotedDateTime} ${C`purple`}${quotedName} ${C`cyan`}${quotedSize}`
 }
 
-export const formatEvent = ({ url, line, id }) => {
+export const formatRegisteredEvent = ({ url, line, id }) => {
   const quotedId = getQuotedString(id)
   const quotedURL = getQuotedString(url)
   const quotedLine = getQuotedString(line)
 
   return `${C`purple`}${quotedId} ${C`yellow`}${quotedURL} ${quotedLine}`
+}
+
+export const formatEvent = ({ event, xpath }) => {
+  const quotedEvent = getQuotedString(event)
+  const quotedXPath = getQuotedString(xpath)
+
+  return `${C`purple`}${quotedEvent} ${C`yellow`}${quotedXPath}`
 }
 
 export const formatTab = ({ windowId, id, title, url }, staticUrl) => {

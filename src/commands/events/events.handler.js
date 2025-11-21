@@ -1,27 +1,30 @@
 import storage from '@src/libs/storage'
 
+import { domEventsSupported } from '@src/constants/options.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
-import { formatEvent } from '@src/helpers/format.helpers'
+import { formatEvent, formatRegisteredEvent } from '@src/helpers/format.helpers'
+import { cleanTabId } from '@src/helpers/tabs.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
+import { triggerEvent } from '@src/processes'
 
 export const eventsHandler = async command => {
   const P = name => command.props[name]
 
   if (P`list`) {
     const events = storage.get(storageKeys.EVENTS)
-    const updates = events.map(formatEvent)
+    const updates = events.map(formatRegisteredEvent)
 
     command.update(...updates)
   }
 
-  if (P`add`) {
+  if (P`register`) {
     const id = createUUIDv4()
     const events = storage.get(storageKeys.EVENTS)
     const newEvent = { url: P`url`, line: P`command`, id }
 
     const newEvents = events.concat(newEvent)
-    const update = formatEvent(newEvent)
+    const update = formatRegisteredEvent(newEvent)
 
     storage.set(storageKeys.EVENTS, newEvents)
     command.update(update)
@@ -36,9 +39,26 @@ export const eventsHandler = async command => {
     if (!existingEvent) throw `The event "${id}" does not exist.`
 
     const newEvents = events.filter(alias => alias.id !== id)
-    const update = formatEvent(existingEvent)
+    const update = formatRegisteredEvent(existingEvent)
 
     storage.set(storageKeys.EVENTS, newEvents)
+    command.update(update)
+  }
+
+  if (P`trigger`) {
+    const config = storage.get(storageKeys.CONFIG)
+
+    const event = P`trigger`
+    const xpath = P`xpath`
+    const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : storage.get(storageKeys.TAB).id
+
+    const isDomEvent = domEventsSupported.includes(event)
+
+    if (isDomEvent && !xpath) throw `${event} must be triggered on an existing DOM element.`
+
+    await triggerEvent(tabId, { xpath, event, theme: config.theme })
+    const update = formatEvent({ event, xpath })
+
     command.update(update)
   }
 

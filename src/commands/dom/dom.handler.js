@@ -2,10 +2,10 @@ import storage from '@src/libs/storage'
 
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
-import { formatDOMEvent, formatElement } from '@src/helpers/format.helpers'
+import { formatElement } from '@src/helpers/format.helpers'
 import { preAppendCounters } from '@src/helpers/messages.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
-import { clickElement, findDOMElement, getDOMElements } from '@src/processes'
+import { findDOMElement, getDOMElements } from '@src/processes'
 
 export const domHandler = async command => {
   const P = name => command.props[name]
@@ -25,19 +25,8 @@ export const domHandler = async command => {
     command.reset()
     if (!element) return
 
-    if (!P`click`) {
-      const textElement = formatElement({ ...element, tabId: P`tab-id` })
-      command.update(textElement)
-
-      return
-    }
-
-    const event = await clickElement(tabId, {
-      searchByXpath: P`search-xpath`
-    })
-
-    const textEvent = formatDOMEvent({ ...event, tabId: P`tab-id` })
-    command.update(textEvent)
+    const textElement = formatElement({ ...element, tabId: P`tab-id` })
+    command.update(textElement)
   }
 
   if (P`search`) {

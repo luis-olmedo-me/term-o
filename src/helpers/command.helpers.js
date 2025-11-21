@@ -48,9 +48,36 @@ export const updateSimplifiedCommandsWith = (simplifiedCommands, command, comman
     : [...simplifiedCommands, command.simplify()]
 }
 
+const getHighestTitleCountInSection = (sectionNames, options) => {
+  return sectionNames.reduce((max, sectionName) => {
+    const optionsBySection = options.getByHelpSection(sectionName)
+
+    const highestTitleCountInOptions = optionsBySection.reduce((optionsMax, option) => {
+      const displayName = option.displayName
+      const type = getOptionTypeLabel(option.type)
+      const titleCount = `${displayName} ${type}`.length
+
+      return optionsMax < titleCount ? titleCount : optionsMax
+    }, 0)
+
+    return max < highestTitleCountInOptions ? highestTitleCountInOptions : max
+  }, 0)
+}
+
+export const getHighestTitleCountInBases = bases => {
+  return bases.reduce((max, base) => {
+    const options = base.options
+    const helpSectionsNames = Object.keys(base.helpSectionTitles)
+    const highestTitleCountInSection = getHighestTitleCountInSection(helpSectionsNames, options)
+
+    return max < highestTitleCountInSection ? highestTitleCountInSection : max
+  }, 0)
+}
+
 export const createHelpView = command => {
   let helps = []
   const options = command.options
+  const highestTitleCount = command.data.highestTitleCount
   const helpSectionsNames = Object.keys(command.helpSectionTitles)
 
   helps.push(`${C`foreground`}Usage: ${command.name} [options]\n`)
@@ -66,14 +93,14 @@ export const createHelpView = command => {
       const description = option.description
       const type = getOptionTypeLabel(option.type)
 
-      const shouldBeDoubledTabulated = `${displayName} ${type}`.length < 22
-      const tab = shouldBeDoubledTabulated ? `\t\t` : '\t'
+      const titleCount = `${displayName} ${type}`.length
+      const tab = `.`.repeat(highestTitleCount + 1 - titleCount)
 
       const isLastOption = index === optionsBySection.length - 1
       const lineJump = isLastOption ? '\n' : ''
 
       helps.push(
-        `  ${C`green`}${displayName} ${C`yellow`}${type}${tab}${C`brightBlack`}${description}${lineJump}`
+        `  ${C`green`}${displayName} ${C`yellow`}${type} ${C`background`}${tab} ${C`brightBlack`}${description}${lineJump}`
       )
     })
 

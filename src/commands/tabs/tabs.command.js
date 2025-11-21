@@ -30,7 +30,7 @@ export default new CommandBase({
     abbreviation: 't',
     type: 'string',
     helpSection: tabsHelpSections.FILTERS,
-    description: 'Filter tabs by title (supports regular expressions)',
+    description: 'Filter tabs by title (regex)',
     validate: [isRegExp]
   })
   .expect({
@@ -38,7 +38,7 @@ export default new CommandBase({
     abbreviation: 'u',
     type: 'string',
     helpSection: tabsHelpSections.FILTERS,
-    description: 'Filter tabs by URL (supports regular expressions)',
+    description: 'Filter tabs by URL (regex)',
     validate: [isRegExp]
   })
   .expect({
@@ -59,9 +59,9 @@ export default new CommandBase({
     name: 'window-id',
     abbreviation: 'w',
     type: 'string',
-    validate: [isRegExp],
     helpSection: tabsHelpSections.FILTERS,
-    description: 'Filter tabs by window ID'
+    description: 'Filter tabs by window ID (regex)',
+    validate: [isRegExp]
   })
   .expect({
     name: 'switch',

@@ -1,5 +1,5 @@
-import { createBubble } from '@content/helpers/dom-management.helpers'
 import { readFileContent } from '@content/helpers/file-management.helpers'
+import { createBubble } from '@content/pure-js'
 
 export default async (resolve, reject, data) => {
   const fileInput = document.createElement('input')

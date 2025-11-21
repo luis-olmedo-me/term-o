@@ -1,5 +1,5 @@
-import { getElementByXPath, humanClick } from '@content/helpers/dom-management.helpers'
-import { highlightElement } from '@content/pure-js'
+import { getElementByXPath } from '@content/helpers/dom-management.helpers'
+import { highlightElement, humanClick } from '@content/pure-js'
 import { eventsAvailable } from '@src/constants/options.constants'
 
 export default async (resolve, reject, data) => {

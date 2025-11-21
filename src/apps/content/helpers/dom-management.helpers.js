@@ -189,33 +189,34 @@ export const highlightElement = async (element, theme) => {
   overlay.style.zIndex = 999999999
   overlay.style.pointerEvents = 'none'
   overlay.style.backgroundColor = 'transparent'
-  overlay.style.border = '1 px solid transparent'
+  overlay.style.border = '1px solid transparent'
   overlay.style.borderRadius = styles.borderRadius
-  overlay.style.boxShadow = '0 0 0 0 transparent'
+  overlay.style.boxShadow = '0 0 0 transparent'
   overlay.style.opacity = '0'
-  overlay.style.transition = `opacity .1s ease-in-out, transform .1s ease-in-out, box-shadow .1s linear, border-color .1s linear, background-color .1s linear`
-  overlay.style.transform = 'scale(1.2)'
+  overlay.style.transition = `opacity .2s ease-in-out, transform .2s ease-in-out, box-shadow .2s ease-in-out, border-color .2s ease-in-out, background-color .2s ease-in-out`
+  overlay.style.transform = 'scale(1.4)'
 
   document.body.appendChild(overlay)
 
-  await delay(25)
+  await delay(20)
   overlay.style.opacity = '1'
-  overlay.style.backgroundColor = '#00000066'
+  overlay.style.backgroundColor = `${theme.colors[customColorThemeKeys.ACCENT]}`
   overlay.style.transform = 'scale(1)'
-  overlay.style.boxShadow = `0 0 18px 4px ${theme.colors[customColorThemeKeys.ACCENT]}`
+  overlay.style.boxShadow = `0 0 15px ${theme.colors[customColorThemeKeys.ACCENT]}`
   overlay.style.borderColor = theme.colors[customColorThemeKeys.ACCENT]
 
-  await delay(100)
-  overlay.style.transition = `opacity .3s ease-in-out, transform .3s ease-in-out, box-shadow .3s linear, border-color .3s linear, background-color .3s linear`
+  await delay(400)
+  overlay.style.transition = `opacity .3s ease-in-out, transform .5s ease-in-out, box-shadow .6s ease-in-out, border-color .5s ease-in-out, background-color .5s ease-in-out`
+  overlay.style.boxShadow = `0 0 10px ${theme.colors[customColorThemeKeys.ACCENT]}`
   overlay.style.opacity = '0'
+  overlay.style.transform = 'scale(1.3)'
 
   await delay(100)
-  overlay.style.transform = 'scale(1.35)'
-  overlay.style.boxShadow = `0 0 22px 4px ${theme.colors[customColorThemeKeys.ACCENT]}`
+  overlay.style.boxShadow = `0 0 0 ${theme.colors[customColorThemeKeys.ACCENT]}`
   overlay.style.borderColor = 'transparent'
   overlay.style.backgroundColor = 'transparent'
 
-  await delay(300)
+  await delay(700)
   overlay.remove()
 }
 

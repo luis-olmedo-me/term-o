@@ -11,7 +11,7 @@ export default async (resolve, reject, data) => {
   if (!element) return reject('XPath did not match any element.')
 
   if (data.event === eventsAvailable.CLICK) {
-    await highlightElement(element, data.theme)
+    highlightElement(element, data.theme)
     humanClick(element)
   }
 

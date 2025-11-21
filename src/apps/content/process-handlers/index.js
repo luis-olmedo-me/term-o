@@ -1,5 +1,4 @@
 import applyElementStyles from './apply-element-styles.process'
-import clickElement from './click-element.process'
 import findDOMElement from './find-dom-element.process'
 import getDOMElements from './get-dom-elements.process'
 import getElementStyles from './get-element-styles.process'
@@ -18,7 +17,6 @@ export default {
   [processNames.SET_STORAGE]: setStorage,
   [processNames.GET_ELEMENT_STYLES]: getElementStyles,
   [processNames.APPLY_ELEMENT_STYLES]: applyElementStyles,
-  [processNames.CLICK_ELEMENT]: clickElement,
   [processNames.UPLOAD_FILE]: uploadFile,
   [processNames.PICK_COLOR]: pickColor,
   [processNames.TRIGGER_EVENT]: triggerEvent

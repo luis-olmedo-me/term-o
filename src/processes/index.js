@@ -61,15 +61,6 @@ export const applyElementStyles = (tabId, { searchByXpath, newInlineStyles }) =>
   })
 }
 
-export const clickElement = (tabId, { searchByXpath }) => {
-  return createWorkerProcessRequest({
-    type: processNames.CLICK_ELEMENT,
-    defaultResponse: null,
-    tabId,
-    data: { searchByXpath }
-  })
-}
-
 export const uploadFile = (tabId, { theme }) => {
   return createWorkerProcessRequest({
     type: processNames.UPLOAD_FILE,

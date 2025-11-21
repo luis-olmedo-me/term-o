@@ -24,15 +24,8 @@ export default new CommandBase({
     type: 'string',
     helpSection: domHelpSections.SEARCH,
     description: 'Find elements with an XPath query',
-    worksWith: ['click', 'tab-id', 'sibling', 'parent', 'child', 'xpath', 'below'],
+    worksWith: ['tab-id', 'sibling', 'parent', 'child', 'xpath', 'below'],
     validate: [isXpath]
-  })
-  .expect({
-    name: 'click',
-    abbreviation: 'c',
-    type: commandTypes.BOOLEAN,
-    helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
-    description: 'Click the selected element(s)'
   })
   .expect({
     name: 'sibling',

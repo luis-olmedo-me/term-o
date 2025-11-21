@@ -22,14 +22,6 @@ export const formatElement = ({ tagName, attributes, xpath, textContent, tabId }
     : `${quotedTabId}${C`red`}${quotedTagName}`
 }
 
-export const formatDOMEvent = ({ name, target, tabId }) => {
-  const quotedTabId = tabId ? `${C`blue`}${getQuotedString(tabId)} ` : ''
-  const quotedName = getQuotedString(name)
-  const quotedTarget = getQuotedString(target)
-
-  return `${quotedTabId}${C`purple`}${quotedName} ${C`yellow`}${quotedTarget}`
-}
-
 export const formatText = ({ text }) => {
   const quotedText = getQuotedString(text)
 

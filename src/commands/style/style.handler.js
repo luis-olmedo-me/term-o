@@ -22,9 +22,12 @@ export const styleHandler = async command => {
   }
 
   if (P`apply`) {
+    const config = storage.get(storageKeys.CONFIG)
+
     const rules = await applyElementStyles(tabId, {
       searchByXpath: P`on`,
-      newInlineStyles: P`apply`
+      newInlineStyles: P`apply`,
+      theme: config.theme
     })
 
     const formattedStyles = rules.map(formatStyle)

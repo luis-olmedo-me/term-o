@@ -52,12 +52,12 @@ export const getElementStyles = (tabId, { searchByXpath, searchByProperty }) => 
   })
 }
 
-export const applyElementStyles = (tabId, { searchByXpath, newInlineStyles }) => {
+export const applyElementStyles = (tabId, { searchByXpath, newInlineStyles, theme }) => {
   return createWorkerProcessRequest({
     type: processNames.APPLY_ELEMENT_STYLES,
     defaultResponse: [],
     tabId,
-    data: { searchByXpath, newInlineStyles }
+    data: { searchByXpath, newInlineStyles, theme }
   })
 }
 

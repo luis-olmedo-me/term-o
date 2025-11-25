@@ -4,6 +4,7 @@ class TermBubble extends HTMLElement {
   constructor() {
     super()
     this._shadow = this.attachShadow({ mode: 'closed' })
+    this.isFinished = false
 
     this._shadow.innerHTML = `
       <style>
@@ -34,10 +35,12 @@ class TermBubble extends HTMLElement {
           transform: translateX(100%);
           opacity: 0;
           transition: transform .4s ease-in-out, opacity .4s ease-in-out;
+          pointer-events: none;
         }
         .bubble.active {
           transform: translateX(0);
           opacity: 1;
+          pointer-events: all;
         }
         .bubble.pulse {
           animation: bubble-pulse 1s infinite alternate linear;
@@ -86,31 +89,27 @@ class TermBubble extends HTMLElement {
     this.style.setProperty('--foreground', this.getAttribute('foreground'))
     this.style.setProperty('--background', this.getAttribute('background'))
 
-    this._timer = setTimeout(this.closeDueToTimeout.bind(this), 10000)
-
-    this.addEventListener('click', () => {
-      clearTimeout(this._timer)
-      this.remove()
-    })
+    this.addEventListener('click', this.closeDueToClick.bind(this))
 
     this._runAnimation()
   }
 
   async _runAnimation() {
     await delay(20)
+    if (this.isFinished) return
     this.bubble.classList.add('active')
 
     await delay(300)
+    if (this.isFinished) return
     this.bubble.classList.add('pulse')
 
     await delay(8700)
+    if (this.isFinished) return
     this.bubble.classList.remove('active')
 
     await delay(400)
-    if (this._timer) {
-      clearTimeout(this._timer)
-      this.closeDueToTimeout()
-    }
+    if (this.isFinished) return
+    this.closeDueToTimeout()
   }
 
   closeDueToTimeout() {
@@ -119,6 +118,14 @@ class TermBubble extends HTMLElement {
     })
 
     this.dispatchEvent(autoClosedEvent)
+    this.remove()
+  }
+
+  async closeDueToClick() {
+    this.isFinished = true
+    this.bubble.classList.remove('active')
+
+    await delay(300)
     this.remove()
   }
 

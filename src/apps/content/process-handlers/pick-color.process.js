@@ -19,6 +19,6 @@ export default async (resolve, reject, data) => {
     }
   }
 
-  bubble.onError(reject)
-  bubble.element.addEventListener('click', startPicking, { once: true })
+  bubble.addEventListener('click', startPicking)
+  bubble.addEventListener('error', event => reject(event.detail))
 }

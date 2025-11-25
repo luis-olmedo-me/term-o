@@ -55,7 +55,6 @@ export const CommandsViewer = ({ commands }) => {
     const offset = getCaretOffset(line, event)
 
     const result = getTokenAt(text, offset)
-    console.log({ result })
 
     if (result) {
       selectToken(line, result.start, result.end)

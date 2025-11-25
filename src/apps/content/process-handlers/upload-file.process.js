@@ -36,6 +36,6 @@ export default async (resolve, reject, data) => {
   fileInput.addEventListener('change', receiveFile)
   fileInput.addEventListener('cancel', cancel)
 
-  bubble.onError(reject)
-  bubble.element.addEventListener('click', openFileDialog, { once: true })
+  bubble.addEventListener('click', openFileDialog)
+  bubble.addEventListener('error', event => reject(event.detail))
 }

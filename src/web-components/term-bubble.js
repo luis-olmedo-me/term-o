@@ -10,7 +10,7 @@ class TermBubble extends HTMLElement {
       <style>
         :host {
           position: fixed;
-          bottom: 12px;
+          bottom: 0;
           right: 0;
           z-index: 999999;
           display: flex;
@@ -28,10 +28,10 @@ class TermBubble extends HTMLElement {
           background: var(--background);
           color: var(--accent);
           border: 1px solid transparent;
-          border-width: 1px 0 1px 1px;
-          border-radius: 10px 0 0 10px;
-          padding: 10px 8px;
-          box-shadow: 0 4px 10px #00000066;
+          border-width: 1px 0 0 1px;
+          border-radius: 10px 0 0 0;
+          padding: 14px 28px 14px 28px;
+          box-shadow: 0 0 10px transparent;
           transform: translateX(100%);
           opacity: 0;
           transition: transform .4s ease-in-out, opacity .4s ease-in-out;
@@ -43,24 +43,19 @@ class TermBubble extends HTMLElement {
           pointer-events: all;
         }
         .bubble.pulse {
-          animation: bubble-pulse 1s infinite alternate linear;
+          animation: border-throb 1s ease-in-out alternate infinite;
         }
 
-        @keyframes bubble-pulse {
+        @keyframes border-throb {
           0% {
-            border-color: transparent;
             color: var(--foreground);
-            box-shadow: 0 4px 10px #00000066;
-          }
-          50% {
-            border-color: var(--accent);
-            color: var(--accent);
-            box-shadow: 0 4px 10px var(--accent);
+            border-color: transparent;
+            box-shadow: 0 0 10px transparent;
           }
           100% {
-            border-color: transparent;
-            color: var(--foreground);
-            box-shadow: 0 4px 10px #00000066;
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: 0 0 16px var(--accent);
           }
         }
       </style>
@@ -125,7 +120,7 @@ class TermBubble extends HTMLElement {
     this.isFinished = true
     this.bubble.classList.remove('active')
 
-    await delay(300)
+    await delay(400)
     this.remove()
   }
 
@@ -145,7 +140,7 @@ class TermBubble extends HTMLElement {
         />
         <path
           d="M239.351 470.445L149.502 380.16L273.141 256L189.355 171.861L279.199 81.5806L431.037 234.099C436.581 239.683 440 247.462 440 256C440 264.599 436.381 272.487 431.006 277.901L239.351 470.445Z"
-          fill="var(--accent)"
+          fill="currentColor"
         />
       </svg>
     `

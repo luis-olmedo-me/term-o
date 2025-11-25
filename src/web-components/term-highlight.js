@@ -8,9 +8,9 @@ class TermHighlight extends HTMLElement {
   }
 
   connectedCallback() {
-    const color = this.getAttribute('color') || '#3b82f6'
-    const radius = this.getAttribute('radius') || '0px'
-    const duration = Number(this.getAttribute('duration') || 700)
+    const color = this.getAttribute('color')
+    const radius = this.getAttribute('radius')
+    const duration = Number(this.getAttribute('duration'))
 
     this._shadow.innerHTML = `
       <style>

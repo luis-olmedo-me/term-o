@@ -1,3 +1,5 @@
+const { delay } = require('@src/helpers/utils.helpers')
+
 class TermBubble extends HTMLElement {
   constructor() {
     super()
@@ -24,13 +26,21 @@ class TermBubble extends HTMLElement {
 
           background: var(--background);
           color: var(--accent);
-          border: 1px solid var(--accent);
+          border: 1px solid transparent;
           border-width: 1px 0 1px 1px;
           border-radius: 10px 0 0 10px;
           padding: 10px 8px;
           box-shadow: 0 4px 10px #00000066;
-
-          animation: bubble-pulse 1.5s infinite ease-in-out;
+          transform: translateX(100%);
+          opacity: 0;
+          transition: transform .4s ease-in-out, opacity .4s ease-in-out;
+        }
+        .bubble.active {
+          transform: translateX(0);
+          opacity: 1;
+        }
+        .bubble.pulse {
+          animation: bubble-pulse 1s infinite alternate linear;
         }
 
         @keyframes bubble-pulse {
@@ -58,10 +68,14 @@ class TermBubble extends HTMLElement {
     `
   }
 
-  connectedCallback() {
-    const msg = this.getAttribute('message') || 'Bubble'
+  get bubble() {
+    return this._shadow.querySelector('.bubble')
+  }
 
-    this._shadow.querySelector('.bubble').innerHTML = `
+  connectedCallback() {
+    const msg = this.getAttribute('message')
+
+    this.bubble.innerHTML = `
       ${this.getIcon()}
       <span>${msg}</span>
     `
@@ -72,19 +86,40 @@ class TermBubble extends HTMLElement {
     this.style.setProperty('--foreground', this.getAttribute('foreground'))
     this.style.setProperty('--background', this.getAttribute('background'))
 
-    this._timer = setTimeout(() => {
-      const autoClosedEvent = new CustomEvent('error', {
-        detail: 'The bubble closed automatically because no action was taken in time.'
-      })
-
-      this.dispatchEvent(autoClosedEvent)
-      this.remove()
-    }, 10000)
+    this._timer = setTimeout(this.closeDueToTimeout.bind(this), 10000)
 
     this.addEventListener('click', () => {
       clearTimeout(this._timer)
       this.remove()
     })
+
+    this._runAnimation()
+  }
+
+  async _runAnimation() {
+    await delay(20)
+    this.bubble.classList.add('active')
+
+    await delay(300)
+    this.bubble.classList.add('pulse')
+
+    await delay(8700)
+    this.bubble.classList.remove('active')
+
+    await delay(400)
+    if (this._timer) {
+      clearTimeout(this._timer)
+      this.closeDueToTimeout()
+    }
+  }
+
+  closeDueToTimeout() {
+    const autoClosedEvent = new CustomEvent('error', {
+      detail: 'The bubble closed automatically because no action was taken in time.'
+    })
+
+    this.dispatchEvent(autoClosedEvent)
+    this.remove()
   }
 
   getIcon() {

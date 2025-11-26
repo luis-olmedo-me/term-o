@@ -10,10 +10,13 @@ export const styleHandler = async command => {
   const P = name => command.props[name]
 
   if (P`list`) {
+    const config = storage.get(storageKeys.CONFIG)
+
     command.update('Searching element styles.')
     const styles = await getElementStyles(tabId, {
       searchByXpath: P`on`,
-      searchByProperty: P`property`
+      searchByProperty: P`property`,
+      theme: config.theme
     })
     const formattedStyles = styles.map(formatStyle)
 

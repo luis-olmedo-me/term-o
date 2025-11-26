@@ -1,5 +1,6 @@
 import { getNonDefaultComputedStyles } from '@content/helpers/css-management.helpers'
 import { getElementByXPath } from '@content/helpers/dom-management.helpers'
+import { highlightElement } from '@content/pure-js'
 import { isRgb, rgbToHex } from '@src/helpers/utils.helpers'
 
 export default async (resolve, reject, data) => {
@@ -12,6 +13,7 @@ export default async (resolve, reject, data) => {
   const element = getElementByXPath(searchByXpath)
 
   if (!element) return reject('XPath did not match any element.')
+  highlightElement(element, data.theme, false)
 
   const styles = getNonDefaultComputedStyles(element).filter(({ prop, value }) => {
     if (propNamePattern) return propNamePattern.test(prop)

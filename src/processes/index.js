@@ -43,12 +43,12 @@ export const setStorage = (tabId, { namespace, key, value }) => {
   })
 }
 
-export const getElementStyles = (tabId, { searchByXpath, searchByProperty }) => {
+export const getElementStyles = (tabId, { searchByXpath, searchByProperty, theme }) => {
   return createWorkerProcessRequest({
     type: processNames.GET_ELEMENT_STYLES,
     defaultResponse: [],
     tabId,
-    data: { searchByXpath, searchByProperty }
+    data: { searchByXpath, searchByProperty, theme }
   })
 }
 

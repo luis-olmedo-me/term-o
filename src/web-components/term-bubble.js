@@ -43,7 +43,7 @@ class TermBubble extends HTMLElement {
           pointer-events: all;
         }
         .bubble.pulse {
-          animation: border-throb 1s ease-in-out alternate infinite;
+          animation: border-throb 1s ease-out alternate infinite;
         }
 
         @keyframes border-throb {

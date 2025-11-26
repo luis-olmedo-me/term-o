@@ -47,5 +47,11 @@
   },
   "sandbox": {
     "pages": ["sandbox.html"]
-  }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["webComponents.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }

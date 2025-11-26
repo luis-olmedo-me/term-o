@@ -1,6 +1,6 @@
 import { styleStringToArray } from '@content/helpers/css-management.helpers'
 import { getElementByXPath } from '@content/helpers/dom-management.helpers'
-import { highlightElement } from '../pure-js'
+import { highlightElement } from '@content/pure-js'
 
 export default async (resolve, reject, data) => {
   const { searchByXpath, newInlineStyles } = data
@@ -10,7 +10,7 @@ export default async (resolve, reject, data) => {
   if (!element) return reject('XPath did not match any element.')
   const styles = styleStringToArray(newInlineStyles)
 
-  await highlightElement(element, data.theme)
+  await highlightElement(element, data.theme, true)
 
   styles.forEach(({ prop, value }) => {
     element.style.setProperty(prop, value)

@@ -1,4 +1,6 @@
-const { delay } = require('@src/helpers/utils.helpers')
+import BubbleHtml from './term-bubble.raw.html'
+
+import { delay } from '@src/helpers/utils.helpers'
 
 class TermBubble extends HTMLElement {
   constructor() {
@@ -6,64 +8,7 @@ class TermBubble extends HTMLElement {
     this._shadow = this.attachShadow({ mode: 'closed' })
     this.isFinished = false
 
-    this._shadow.innerHTML = `
-      <style>
-        :host {
-          position: fixed;
-          bottom: 0;
-          right: 0;
-          z-index: 999999;
-          display: flex;
-          font-size: 13px;
-          cursor: pointer;
-          user-select: none;
-          font-family: var(--font);
-        }
-
-        .bubble {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-
-          background: var(--background);
-          color: var(--accent);
-          border: 1px solid transparent;
-          border-width: 1px 0 0 1px;
-          border-radius: 10px 0 0 0;
-          padding: 14px 28px 14px 28px;
-          box-shadow: 0 0 10px transparent;
-          transform: translateX(100%);
-          opacity: 0;
-          transition: transform .4s ease-in-out, opacity .4s ease-in-out;
-          pointer-events: none;
-        }
-        .bubble.active {
-          transform: translateX(0);
-          opacity: 1;
-          pointer-events: all;
-        }
-        .bubble.pulse {
-          animation: border-throb 1s ease-out alternate infinite;
-        }
-
-        @keyframes border-throb {
-          0% {
-            color: var(--foreground);
-            border-color: transparent;
-            box-shadow: 0 0 10px transparent;
-          }
-          100% {
-            border-color: var(--accent);
-            color: var(--accent);
-            box-shadow: 0 0 16px var(--accent);
-          }
-        }
-      </style>
-
-      <div class="bubble">
-        <slot></slot>
-      </div>
-    `
+    this._shadow.innerHTML = BubbleHtml
   }
 
   get bubble() {
@@ -147,4 +92,6 @@ class TermBubble extends HTMLElement {
   }
 }
 
-customElements.define('term-bubble', TermBubble)
+if (!customElements.get('term-bubble')) {
+  customElements.define('term-bubble', TermBubble)
+}

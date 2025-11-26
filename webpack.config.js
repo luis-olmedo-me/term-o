@@ -34,6 +34,10 @@ module.exports = (_env, { watch, mode }) => ({
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: [{ loader: 'babel-loader' }]
+      },
+      {
+        test: /\.raw\.html$/i,
+        type: 'asset/source'
       }
     ]
   },

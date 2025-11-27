@@ -23,6 +23,7 @@ module.exports = (_env, { watch, mode }) => ({
       '@sidepanel': path.resolve(__dirname, 'src/apps/sidepanel'),
       '@background': path.resolve(__dirname, 'src/apps/background'),
       '@configuration': path.resolve(__dirname, 'src/apps/configuration'),
+      '@web-components': path.resolve(__dirname, 'src/apps/web-components'),
       '@content': path.resolve(__dirname, 'src/apps/content'),
       '@src': path.resolve(__dirname, 'src'),
       react: 'preact/compat'
@@ -31,7 +32,7 @@ module.exports = (_env, { watch, mode }) => ({
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.js$/,
         exclude: /node_modules/,
         use: [{ loader: 'babel-loader' }]
       },

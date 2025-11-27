@@ -22,7 +22,7 @@ class TermBubble extends HTMLElement {
     this.style.setProperty('--foreground', this.getAttribute('foreground'))
     this.style.setProperty('--background', this.getAttribute('background'))
 
-    this.addEventListener('click', this.closeDueToClick.bind(this))
+    this.addEventListener('click', this._closeDueToClick.bind(this))
 
     this._runAnimation()
   }
@@ -50,10 +50,10 @@ class TermBubble extends HTMLElement {
 
     await delay(400)
     if (this.isFinished) return
-    this.closeDueToTimeout()
+    this._closeDueToTimeout()
   }
 
-  closeDueToTimeout() {
+  _closeDueToTimeout() {
     const autoClosedEvent = new CustomEvent('error', {
       detail: 'The bubble closed automatically because no action was taken in time.'
     })
@@ -62,7 +62,7 @@ class TermBubble extends HTMLElement {
     this.remove()
   }
 
-  async closeDueToClick() {
+  async _closeDueToClick() {
     this.isFinished = true
     this._elements.bubble.classList.remove('active')
 

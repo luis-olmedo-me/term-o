@@ -10,7 +10,7 @@ module.exports = (_env, { watch, mode }) => ({
     sandbox: './src/apps/sandbox/sandbox.js',
     offscreen: './src/apps/offscreen/offscreen.js',
     configuration: './src/apps/configuration/configuration.js',
-    webComponents: './src/web-components/index.js'
+    webComponents: './src/apps/web-components'
   },
   output: {
     filename: '[name].js',

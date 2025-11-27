@@ -1,4 +1,4 @@
-import { getPropsFromAttrs } from '../helpers/props.helpers'
+import { getPropsFromAttrs } from '../../helpers/props.helpers'
 import { bubbleProps } from './term-bubble.constants'
 import BubbleCss from './term-bubble.raw.css'
 import BubbleHtml from './term-bubble.raw.html'

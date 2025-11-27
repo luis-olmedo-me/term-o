@@ -36,7 +36,7 @@ module.exports = (_env, { watch, mode }) => ({
         use: [{ loader: 'babel-loader' }]
       },
       {
-        test: /\.raw\.html$/i,
+        test: /\.raw\.\w+$/i,
         type: 'asset/source'
       }
     ]

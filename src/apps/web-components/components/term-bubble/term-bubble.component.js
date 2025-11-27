@@ -1,5 +1,5 @@
-import { getPropsFromAttrs } from '../../helpers/props.helpers'
-import { bubbleProps } from './term-bubble.constants'
+import { getPropsFromAttrs } from '@web-components/helpers/props.helpers'
+import { bubblePropNames } from './term-bubble.constants'
 import BubbleCss from './term-bubble.raw.css'
 import BubbleHtml from './term-bubble.raw.html'
 
@@ -16,7 +16,7 @@ class TermBubble extends HTMLElement {
   }
 
   connectedCallback() {
-    this._props = getPropsFromAttrs(this, bubbleProps)
+    this._props = getPropsFromAttrs(this, bubblePropNames)
     this._elements.message.innerHTML = this._props.message
 
     this.style.setProperty('--font', this._props.font)

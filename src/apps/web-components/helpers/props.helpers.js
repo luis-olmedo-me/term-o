@@ -1,6 +1,5 @@
-export const getPropsFromAttrs = (element, props) => {
+export const getPropsFromAttrs = (element, propNames) => {
   const attrNames = element.getAttributeNames()
-  const propNames = Object.values(props)
 
   if (attrNames.length !== propNames.length)
     throw '[TERM-O]: The count of attributes does not match with the expected props count.'

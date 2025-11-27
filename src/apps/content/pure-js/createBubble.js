@@ -1,5 +1,6 @@
 export const createBubble = (message, theme) => {
   const bubble = document.createElement('term-bubble')
+
   bubble.setAttribute('message', message)
   bubble.setAttribute('font', theme.font)
   bubble.setAttribute('white', theme.colors.white)

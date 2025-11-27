@@ -1,3 +1,5 @@
+import { getPropsFromAttrs } from '../helpers/props.helpers'
+import { bubbleProps } from './term-bubble.constants'
 import BubbleCss from './term-bubble.raw.css'
 import BubbleHtml from './term-bubble.raw.html'
 
@@ -14,13 +16,14 @@ class TermBubble extends HTMLElement {
   }
 
   connectedCallback() {
-    this._elements.message.innerHTML = this.getAttribute('message')
+    this._props = getPropsFromAttrs(this, bubbleProps)
+    this._elements.message.innerHTML = this._props.message
 
-    this.style.setProperty('--font', this.getAttribute('font'))
-    this.style.setProperty('--white', this.getAttribute('white'))
-    this.style.setProperty('--accent', this.getAttribute('accent'))
-    this.style.setProperty('--foreground', this.getAttribute('foreground'))
-    this.style.setProperty('--background', this.getAttribute('background'))
+    this.style.setProperty('--font', this._props.font)
+    this.style.setProperty('--white', this._props.white)
+    this.style.setProperty('--accent', this._props.accent)
+    this.style.setProperty('--foreground', this._props.foreground)
+    this.style.setProperty('--background', this._props.background)
 
     this.addEventListener('click', this._closeDueToClick.bind(this))
 

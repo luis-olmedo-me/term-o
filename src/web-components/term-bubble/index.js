@@ -1,1 +1,1 @@
-import './term-bubble'
+import './term-bubble.component'

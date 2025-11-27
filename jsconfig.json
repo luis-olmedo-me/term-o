@@ -6,7 +6,8 @@
       "@sidepanel/*": ["apps/sidepanel/*"],
       "@background/*": ["apps/background/*"],
       "@content/*": ["apps/content/*"],
-      "@configuration/*": ["apps/configuration/*"]
+      "@configuration/*": ["apps/configuration/*"],
+      "@web-components/*": ["apps/web-components/*"]
     }
   },
   "exclude": ["build", "images", "node_modules"]

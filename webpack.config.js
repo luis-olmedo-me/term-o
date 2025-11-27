@@ -4,12 +4,12 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = (_env, { watch, mode }) => ({
   entry: {
-    background: './src/apps/background/background.js',
-    content: './src/apps/content/content.js',
-    sidepanel: './src/apps/sidepanel/sidepanel.js',
-    sandbox: './src/apps/sandbox/sandbox.js',
-    offscreen: './src/apps/offscreen/offscreen.js',
-    configuration: './src/apps/configuration/configuration.js',
+    background: './src/apps/background',
+    content: './src/apps/content',
+    sidepanel: './src/apps/sidepanel',
+    sandbox: './src/apps/sandbox',
+    offscreen: './src/apps/offscreen',
+    configuration: './src/apps/configuration',
     webComponents: './src/apps/web-components'
   },
   output: {

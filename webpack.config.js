@@ -1,17 +1,17 @@
 const CopyPlugin = require('copy-webpack-plugin')
+const glob = require('glob')
 const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
+const entries = Object.fromEntries(
+  glob.sync('./src/apps/*/index.js').map(file => {
+    const name = file.replace('./src/apps/', '').replace('/index.js', '')
+    return [name, file]
+  })
+)
+
 module.exports = (_env, { watch, mode }) => ({
-  entry: {
-    background: './src/apps/background',
-    content: './src/apps/content',
-    sidepanel: './src/apps/sidepanel',
-    sandbox: './src/apps/sandbox',
-    offscreen: './src/apps/offscreen',
-    configuration: './src/apps/configuration',
-    webComponents: './src/apps/web-components'
-  },
+  entry: entries,
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'build')

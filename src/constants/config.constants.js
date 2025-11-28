@@ -1,4 +1,6 @@
 import Data from '@src/icons/Data.icon'
+import Export from '@src/icons/Export.icon'
+import Import from '@src/icons/Import.icon'
 import Palette from '@src/icons/Palette.icon'
 import Thunder from '@src/icons/Thunder.icon'
 import Undo from '@src/icons/Undo.icon'
@@ -265,7 +267,7 @@ export const defaultConfigSections = [
           'Load a previously exported configuration file to restore your settings and terminal behavior. Existing configuration values will be overwritten.',
         type: availableInputTypes.BUTTON,
         postFix: null,
-        iconButton: null,
+        iconButton: Import,
         options: [],
         validations: [],
         value: configDefaultValues[configInputIds.IMPORT_CONFIGURATION]
@@ -277,7 +279,7 @@ export const defaultConfigSections = [
           'Generate a backup file containing all your current settings, customizations, and terminal preferences. Use this file to restore your setup later or to replicate your configuration on another device.',
         type: availableInputTypes.BUTTON,
         postFix: null,
-        iconButton: null,
+        iconButton: Export,
         options: [],
         validations: [],
         value: configDefaultValues[configInputIds.EXPORT_CONFIGURATION]

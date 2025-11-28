@@ -14,7 +14,7 @@ const entries = Object.fromEntries(
 module.exports = (_env, { watch, mode }) => ({
   entry: entries,
   output: {
-    filename: '[name].js',
+    filename: 'assets/js/[name].js',
     path: path.resolve(__dirname, 'build')
   },
   resolve: {
@@ -47,7 +47,7 @@ module.exports = (_env, { watch, mode }) => ({
     new CopyPlugin({
       patterns: [
         { from: './src/manifest.json', to: './manifest.json' },
-        { from: './src/images/required', to: './images' },
+        { from: './src/images/required', to: './assets/images' },
         { from: './src/apps/sidepanel/sidepanel.html', to: './sidepanel.html' },
         { from: './src/apps/sandbox/sandbox.html', to: './sandbox.html' },
         { from: './src/apps/offscreen/offscreen.html', to: './offscreen.html' },

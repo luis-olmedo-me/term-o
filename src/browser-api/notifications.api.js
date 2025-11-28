@@ -5,7 +5,7 @@ export const createNotification = async ({ title, message, contextMessage }) => 
 
   chrome.notifications.create(id, {
     type: 'basic',
-    iconUrl: 'images/logo-128_x_128.png',
+    iconUrl: 'assets/images/logo-128_x_128.png',
     title: title,
     message: message,
     contextMessage: contextMessage

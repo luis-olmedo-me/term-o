@@ -1,5 +1,16 @@
-import { createWebElement } from '@content/pure-js'
 import { webElements } from '@src/constants/web-elements.constants'
+
+const createWebElement = (name, props) => {
+  const host = document.createElement(name)
+
+  Object.entries(props).forEach(([propName, propValue]) => {
+    host.setAttribute(propName, propValue)
+  })
+
+  document.body.appendChild(host)
+
+  return host
+}
 
 export const createHighlight = ({ element, theme }) => {
   const rect = element.getBoundingClientRect()

@@ -97,7 +97,7 @@ export const createHelpView = command => {
       const tab = `.`.repeat(highestTitleCount + 1 - titleCount)
 
       helps.push(
-        `  ${C`green`}${displayName} ${C`yellow`}${type} ${C`background`}${tab} ${C`brightBlack`}${description}`
+        `${C`green`}${displayName} ${C`yellow`}${type} ${C`brightBlack`}${tab} ${description}`
       )
     })
 

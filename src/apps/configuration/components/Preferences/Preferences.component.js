@@ -5,6 +5,7 @@ import SidePanel from '@configuration/components/SidePanel'
 import FieldRenderer from '@src/components/FieldRenderer'
 import useStorage from '@src/hooks/useStorage'
 import Logo from '@src/icons/Logo.icon'
+import storage from '@src/libs/storage'
 
 import { configIds, configInputIds } from '@src/constants/config.constants'
 import { iconSizes } from '@src/constants/icon.constants'
@@ -24,7 +25,7 @@ export const Preferences = () => {
       config.reset()
     }
     if (inputId === configInputIds.CLEAR_USER_DATA) {
-      config.reset()
+      storage.reset()
     }
   }
 

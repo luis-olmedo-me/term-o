@@ -26,6 +26,8 @@ export const storageNamespaces = {
   SYNC: 'sync'
 }
 
+export const storageKeysNonResetables = [storageKeys.TAB]
+
 export const storageValues = [
   {
     key: storageKeys.ALIASES,

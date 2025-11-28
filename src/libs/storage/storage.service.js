@@ -1,7 +1,7 @@
 import EventListener from '@src/templates/EventListener'
 
 import { getStorageValue, setStorageValue } from '@src/browser-api/storage.api'
-import { storageValues } from '@src/constants/storage.constants'
+import { storageKeysNonResetables, storageValues } from '@src/constants/storage.constants'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 import { decompressFromUTF16 } from 'lz-string'
 
@@ -68,6 +68,14 @@ class Storage extends EventListener {
     }
 
     this.dispatchEvent('restart', this)
+  }
+
+  reset() {
+    storageValues.forEach(({ key, defaultValue }) => {
+      const canReset = !storageKeysNonResetables.includes(key)
+
+      if (canReset) this.set(key, defaultValue)
+    })
   }
 
   get(storageKey) {

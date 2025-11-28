@@ -17,6 +17,7 @@ export const DynamicInput = ({
   options,
   name,
   postFix,
+  iconButton,
   errorMessage,
   onChange,
   handleClickInButtons
@@ -126,6 +127,7 @@ export const DynamicInput = ({
           onClick={() => handleClickInButtons(inputId)}
           value={value}
           variant={buttonVariants.OUTLINED}
+          Icon={iconButton}
         />
       )
 
@@ -135,6 +137,7 @@ export const DynamicInput = ({
           onClick={() => handleClickInButtons(inputId)}
           value={value}
           variant={buttonVariants.OUTLINED_DANGER}
+          Icon={iconButton}
         />
       )
 
@@ -150,6 +153,7 @@ DynamicInput.propTypes = {
   type: String,
   name: String,
   postFix: String,
+  iconButton: Object,
   options: Array,
   onChange: Function,
   handleClickInButtons: Function

@@ -60,6 +60,7 @@ export const Preferences = () => {
                   options={input.options}
                   validations={input.validations}
                   postFix={input.postFix}
+                  iconButton={input.iconButton}
                   name={`${sectionSelected.id}-${input.id}`}
                   title={input.name}
                   changeConfig={config.change}

@@ -84,7 +84,7 @@ export const ButtonWrapper = styled.button`
 `
 
 export const ButtonIconWrapper = styled.span`
-  margin: 0 ${t('space.400')} 0 ${t('space.200')};
+  margin-right: ${t('space.200')};
   height: ${iconSizes.SMALL}px;
 
   &:only-child {

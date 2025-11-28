@@ -20,7 +20,10 @@ export const Preferences = () => {
   const sectionSelected = config.details.find(({ id }) => id === selectedSectionId)
 
   const handleClicksInButtonFields = inputId => {
-    if (inputId === configInputIds.RESET_DATA) {
+    if (inputId === configInputIds.RESET_CONFIGURATION) {
+      config.reset()
+    }
+    if (inputId === configInputIds.CLEAR_USER_DATA) {
       config.reset()
     }
   }

@@ -44,4 +44,5 @@ export const FieldDescription = styled.p`
   margin: ${t('space.400')} 0;
   font-size: ${t('fontSize.50')};
   font-style: italic;
+  white-space: pre-wrap;
 `

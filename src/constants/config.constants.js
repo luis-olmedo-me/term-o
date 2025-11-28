@@ -22,7 +22,8 @@ export const configInputIds = {
   FONT_SIZE: 'font-size',
   THEME_NAME: 'theme-name',
   COLOR_ACCENT: 'color-accent',
-  RESET_DATA: 'reset-data',
+  CLEAR_USER_DATA: 'clear-user-data',
+  RESET_CONFIGURATION: 'reset-configuration',
   STATUS_INDICATOR: 'status-indicator',
   STATUS_BAR: 'status-bar',
   STATUS_LIGHT: 'status-light',
@@ -55,7 +56,8 @@ export const configDefaultValues = {
   [configInputIds.FONT_SIZE]: fontSizes.NORMAL,
   [configInputIds.THEME_NAME]: defaultColorTheme.name,
   [configInputIds.COLOR_ACCENT]: colorThemeKeys.GREEN,
-  [configInputIds.RESET_DATA]: 'Reset',
+  [configInputIds.RESET_CONFIGURATION]: 'Reset configuration',
+  [configInputIds.CLEAR_USER_DATA]: 'Clear user data',
   [configInputIds.STATUS_INDICATOR]: statusIndicators.DOT,
   [configInputIds.STATUS_BAR]: true,
   [configInputIds.STATUS_LIGHT]: false
@@ -237,14 +239,24 @@ export const defaultConfigSections = [
     Icon: Data,
     inputs: [
       {
-        id: configInputIds.RESET_DATA,
-        name: 'Restore factory defaults',
-        description: 'Reset all settings to their original factory values.',
+        id: configInputIds.RESET_CONFIGURATION,
+        name: 'Reset Configuration',
+        description: `Restore all UI and behavior settings (theme, experimental features, click-to-copy, animations, selection helpers, etc.) back to their default values.\nPersonal preferences will be lost, but your saved commands and registered events will remain intact.`,
         type: availableInputTypes.BUTTON,
         postFix: null,
         options: [],
         validations: [],
-        value: configDefaultValues[configInputIds.RESET_DATA]
+        value: configDefaultValues[configInputIds.RESET_CONFIGURATION]
+      },
+      {
+        id: configInputIds.CLEAR_USER_DATA,
+        name: 'Clear User Data',
+        description: `Delete all stored data such as registered events, per-URL actions, command aliases, logs, and custom command definitions.\nYour UI and behavior settings will not be affected.`,
+        type: availableInputTypes.BUTTON,
+        postFix: null,
+        options: [],
+        validations: [],
+        value: configDefaultValues[configInputIds.CLEAR_USER_DATA]
       }
     ]
   }

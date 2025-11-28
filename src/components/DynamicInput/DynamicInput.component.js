@@ -125,6 +125,15 @@ export const DynamicInput = ({
         <Button
           onClick={() => handleClickInButtons(inputId)}
           value={value}
+          variant={buttonVariants.OUTLINED}
+        />
+      )
+
+    case availableInputTypes.BUTTON_DANGER:
+      return (
+        <Button
+          onClick={() => handleClickInButtons(inputId)}
+          value={value}
           variant={buttonVariants.OUTLINED_DANGER}
         />
       )

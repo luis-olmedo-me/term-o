@@ -1,4 +1,4 @@
-import { getCookies } from '@src/apps/content/helpers/cookies.helpers'
+import { getCookies } from '@content/helpers/cookies.helpers'
 
 export default async (resolve, _reject, data) => {
   let storage = {}

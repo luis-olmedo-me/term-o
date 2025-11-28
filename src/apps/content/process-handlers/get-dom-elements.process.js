@@ -1,4 +1,4 @@
-import { getElementByXPath, getElementXPath } from '@src/apps/content/helpers/dom-locator.helpers'
+import { getElementByXPath, getElementXPath } from '@content/helpers/dom-locator.helpers'
 
 export default async (resolve, _reject, data) => {
   const {

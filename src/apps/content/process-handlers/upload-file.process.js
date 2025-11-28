@@ -6,7 +6,7 @@ export default async (resolve, reject, data) => {
   fileInput.setAttribute('type', 'file')
   fileInput.setAttribute('accept', '.termo.js')
 
-  const bubble = createBubble('Upload a file', data.theme)
+  const bubble = createBubble({ message: 'Upload a file', theme: data.theme })
   const cancel = () => {
     fileInput.removeEventListener('change', receiveFile)
     fileInput.removeEventListener('cancel', cancel)

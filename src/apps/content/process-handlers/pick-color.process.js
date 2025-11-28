@@ -3,7 +3,7 @@ import { createBubble } from '@content/pure-js'
 export default async (resolve, reject, data) => {
   if (!window.EyeDropper) return reject('EyeDropper API is not supported in this browser.')
 
-  const bubble = createBubble('Pick a color', data.theme)
+  const bubble = createBubble({ message: 'Pick a color', theme: data.theme })
   const startPicking = async () => {
     await bubble.remove()
 

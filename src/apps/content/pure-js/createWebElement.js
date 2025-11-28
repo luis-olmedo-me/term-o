@@ -5,5 +5,7 @@ export const createWebElement = (name, props) => {
     host.setAttribute(propName, propValue)
   })
 
+  document.body.appendChild(host)
+
   return host
 }

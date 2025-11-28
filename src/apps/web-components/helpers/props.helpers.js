@@ -1,3 +1,5 @@
+import { getQuotedString } from '@src/helpers/utils.helpers'
+
 export const getPropsFromAttrs = (element, propNames) => {
   const attrNames = element.getAttributeNames()
 
@@ -15,4 +17,15 @@ export const getPropsFromAttrs = (element, propNames) => {
       [propName]: attrValue
     }
   }, {})
+}
+
+export const applyCssVariables = (css, props) => {
+  Object.entries(props).forEach(([propName, propValue]) => {
+    const isPrimitive = propValue.startsWith('#') || propValue.endsWith('px')
+    const value = isPrimitive ? propValue : getQuotedString(propValue)
+
+    css = css.replaceAll(`var(--${propName})`, value)
+  })
+
+  return css
 }

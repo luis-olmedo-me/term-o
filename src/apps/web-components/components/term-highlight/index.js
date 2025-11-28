@@ -3,7 +3,7 @@ import HighlightHtml from './term-highlight.raw.html'
 
 import { webElements } from '@src/constants/web-elements.constants'
 import { delay } from '@src/helpers/utils.helpers'
-import { getPropsFromAttrs } from '@web-components/helpers/props.helpers'
+import { applyCssVariables, getPropsFromAttrs } from '@web-components/helpers/props.helpers'
 import { highlightPropNames } from './term-highlight.constants'
 
 class TermHighlight extends HTMLElement {
@@ -12,7 +12,6 @@ class TermHighlight extends HTMLElement {
 
     this._shadow = this.attachShadow({ mode: 'closed' })
     this._shadow.innerHTML = HighlightHtml
-    this._elements.styles.innerHTML = HighlightCss
   }
 
   get _elements() {
@@ -24,13 +23,14 @@ class TermHighlight extends HTMLElement {
 
   connectedCallback() {
     this._props = getPropsFromAttrs(this, highlightPropNames)
-
-    this.style.setProperty('--color', this._props.color)
-    this.style.setProperty('--radius', this._props.radius)
-    this.style.setProperty('--left', this._props.left)
-    this.style.setProperty('--top', this._props.top)
-    this.style.setProperty('--width', this._props.width)
-    this.style.setProperty('--height', this._props.height)
+    this._elements.styles.innerHTML = applyCssVariables(HighlightCss, {
+      color: this._props.color,
+      radius: this._props.radius,
+      left: this._props.left,
+      top: this._props.top,
+      width: this._props.width,
+      height: this._props.height
+    })
 
     this._runAnimation()
   }

@@ -3,7 +3,7 @@ import BubbleHtml from './term-bubble.raw.html'
 
 import { webElements } from '@src/constants/web-elements.constants'
 import { delay } from '@src/helpers/utils.helpers'
-import { getPropsFromAttrs } from '@web-components/helpers/props.helpers'
+import { applyCssVariables, getPropsFromAttrs } from '@web-components/helpers/props.helpers'
 import { bubblePropNames } from './term-bubble.constants'
 
 class TermBubble extends HTMLElement {
@@ -13,18 +13,18 @@ class TermBubble extends HTMLElement {
     this.isFinished = false
 
     this._shadow.innerHTML = BubbleHtml
-    this._elements.styles.innerHTML = BubbleCss
   }
 
   connectedCallback() {
     this._props = getPropsFromAttrs(this, bubblePropNames)
+    this._elements.styles.innerHTML = applyCssVariables(BubbleCss, {
+      font: this._props.font,
+      white: this._props.white,
+      accent: this._props.accent,
+      foreground: this._props.foreground,
+      background: this._props.background
+    })
     this._elements.message.innerHTML = this._props.message
-
-    this.style.setProperty('--font', this._props.font)
-    this.style.setProperty('--white', this._props.white)
-    this.style.setProperty('--accent', this._props.accent)
-    this.style.setProperty('--foreground', this._props.foreground)
-    this.style.setProperty('--background', this._props.background)
 
     this.addEventListener('click', this._closeDueToClick.bind(this))
 

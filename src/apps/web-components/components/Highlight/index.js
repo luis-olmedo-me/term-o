@@ -1,12 +1,12 @@
-import HighlightCss from './term-highlight.raw.css'
-import HighlightHtml from './term-highlight.raw.html'
+import HighlightCss from './Highlight.raw.css'
+import HighlightHtml from './Highlight.raw.html'
 
 import { webElements } from '@src/constants/web-elements.constants'
 import { delay } from '@src/helpers/utils.helpers'
 import { applyCssVariables, getPropsFromAttrs } from '@web-components/helpers/props.helpers'
-import { highlightPropNames } from './term-highlight.constants'
+import { highlightPropNames } from './Highlight.constants'
 
-class TermHighlight extends HTMLElement {
+class Highlight extends HTMLElement {
   constructor() {
     super()
 
@@ -49,5 +49,5 @@ class TermHighlight extends HTMLElement {
 }
 
 if (!customElements.get(webElements.HIGHLIGHT)) {
-  customElements.define(webElements.HIGHLIGHT, TermHighlight)
+  customElements.define(webElements.HIGHLIGHT, Highlight)
 }

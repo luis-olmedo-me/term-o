@@ -1,12 +1,12 @@
-import BubbleCss from './term-bubble.raw.css'
-import BubbleHtml from './term-bubble.raw.html'
+import BubbleCss from './Bubble.raw.css'
+import BubbleHtml from './Bubble.raw.html'
 
 import { webElements } from '@src/constants/web-elements.constants'
 import { delay } from '@src/helpers/utils.helpers'
 import { applyCssVariables, getPropsFromAttrs } from '@web-components/helpers/props.helpers'
-import { bubblePropNames } from './term-bubble.constants'
+import { bubblePropNames } from './Bubble.constants'
 
-class TermBubble extends HTMLElement {
+class Bubble extends HTMLElement {
   constructor() {
     super()
     this._shadow = this.attachShadow({ mode: 'closed' })
@@ -76,5 +76,5 @@ class TermBubble extends HTMLElement {
 }
 
 if (!customElements.get(webElements.BUBBLE)) {
-  customElements.define(webElements.BUBBLE, TermBubble)
+  customElements.define(webElements.BUBBLE, Bubble)
 }

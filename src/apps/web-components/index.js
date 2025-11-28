@@ -1,2 +1,2 @@
-import './components/term-bubble'
-import './components/term-highlight'
+import './components/Bubble'
+import './components/Highlight'

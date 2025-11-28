@@ -39,7 +39,7 @@ export const HeaderWrapper = styled.header`
   display: flex;
   align-items: center;
   gap: ${t('space.400')};
-  border-bottom: ${t('space.50')} solid ${t('colors.white')};
+  border-bottom: ${t('space.50')} solid ${t('colors.brightBlack')};
 `
 
 export const HeaderTitle = styled.h1`

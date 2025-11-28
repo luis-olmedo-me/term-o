@@ -1,5 +1,5 @@
 import { getElementByXPath } from '@content/helpers/dom-management.helpers'
-import { highlightElement, humanClick } from '@content/pure-js'
+import { createHighlight, humanClick } from '@content/pure-js'
 import { eventsAvailable } from '@src/constants/options.constants'
 import { delay } from '@src/helpers/utils.helpers'
 
@@ -9,7 +9,7 @@ export default async (resolve, reject, data) => {
   if (!element) return reject('XPath did not match any element.')
 
   if (data.event === eventsAvailable.CLICK) {
-    highlightElement(element, data.theme)
+    createHighlight({ element, theme: data.theme })
     await delay(100)
     humanClick(element)
   }

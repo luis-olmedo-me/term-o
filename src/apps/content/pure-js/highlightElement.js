@@ -2,7 +2,7 @@ import { customColorThemeKeys } from '@src/constants/themes.constants'
 import { webElements } from '@src/constants/web-elements.constants'
 import { createWebElement } from './createWebElement'
 
-export const highlightElement = (element, theme) => {
+export const createHighlight = ({ element, theme }) => {
   const rect = element.getBoundingClientRect()
   const radius = window.getComputedStyle(element).borderRadius
   const color = theme.colors[customColorThemeKeys.ACCENT]

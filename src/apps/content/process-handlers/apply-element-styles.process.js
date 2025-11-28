@@ -1,6 +1,6 @@
 import { styleStringToArray } from '@content/helpers/css-management.helpers'
 import { getElementByXPath } from '@content/helpers/dom-management.helpers'
-import { highlightElement } from '@content/pure-js'
+import { createHighlight } from '@content/pure-js'
 import { delay } from '@src/helpers/utils.helpers'
 
 export default async (resolve, reject, data) => {
@@ -11,7 +11,7 @@ export default async (resolve, reject, data) => {
   if (!element) return reject('XPath did not match any element.')
   const styles = styleStringToArray(newInlineStyles)
 
-  highlightElement(element, data.theme)
+  createHighlight({ element, theme: data.theme })
   await delay(600)
 
   styles.forEach(({ prop, value }) => {

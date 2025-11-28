@@ -30,6 +30,7 @@ export class Command extends EventListener {
     this.args = []
     this.canExecuteNext = true
     this.visible = true
+    this.data = null
   }
 
   get finished() {
@@ -187,6 +188,12 @@ export class Command extends EventListener {
 
   applyQueue(newQueue) {
     this.queue = newQueue
+
+    return this
+  }
+
+  applyData(newData) {
+    this.data = newData
 
     return this
   }

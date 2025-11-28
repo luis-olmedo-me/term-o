@@ -23,7 +23,7 @@ export default new CommandBase({
     abbreviation: 't',
     type: 'string',
     helpSection: historyHelpSections.FILTERS,
-    description: 'Filter pages by title (supports regular expressions)',
+    description: 'Filter pages by title (regex)',
     validate: [isRegExp]
   })
   .expect({
@@ -31,7 +31,7 @@ export default new CommandBase({
     abbreviation: 'u',
     type: 'string',
     helpSection: historyHelpSections.FILTERS,
-    description: 'Filter pages by URL (supports regular expressions)',
+    description: 'Filter pages by URL (regex)',
     validate: [isRegExp]
   })
   .expect({

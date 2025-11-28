@@ -7,3 +7,12 @@ export const optionDefaultValues = {
   [commandTypes.NUMBER]: 0,
   [commandTypes.NONE]: null
 }
+
+export const eventsAvailable = {
+  CLICK: 'click'
+}
+
+export const responseFormatSupported = ['blob', 'text', 'json']
+
+export const eventsSupported = [eventsAvailable.CLICK]
+export const domEventsSupported = [eventsAvailable.CLICK]

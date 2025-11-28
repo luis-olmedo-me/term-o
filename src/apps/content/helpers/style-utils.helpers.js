@@ -7,7 +7,7 @@ export const styleStringToArray = styleString => {
     const key = parts[0]?.trim()
     const value = parts[1]?.trim()
 
-    return key && value ? [...styleArray, [key, value]] : styleArray
+    return key && value ? [...styleArray, { prop: key, value }] : styleArray
   }, [])
 }
 

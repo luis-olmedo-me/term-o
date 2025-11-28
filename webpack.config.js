@@ -1,18 +1,20 @@
 const CopyPlugin = require('copy-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
+const glob = require('glob')
 const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
+const entries = Object.fromEntries(
+  glob.sync('./src/apps/*/index.js').map(file => {
+    const name = file.replace('./src/apps/', '').replace('/index.js', '')
+    return [name, file]
+  })
+)
+
 module.exports = (_env, { watch, mode }) => ({
-  entry: {
-    background: './src/apps/background/background.js',
-    content: './src/apps/content/content.js',
-    sidepanel: './src/apps/sidepanel/sidepanel.js',
-    sandbox: './src/apps/sandbox/sandbox.js',
-    offscreen: './src/apps/offscreen/offscreen.js',
-    configuration: './src/apps/configuration/configuration.js'
-  },
+  entry: entries,
   output: {
-    filename: '[name].js',
+    filename: 'assets/js/[name].js',
     path: path.resolve(__dirname, 'build')
   },
   resolve: {
@@ -22,6 +24,7 @@ module.exports = (_env, { watch, mode }) => ({
       '@sidepanel': path.resolve(__dirname, 'src/apps/sidepanel'),
       '@background': path.resolve(__dirname, 'src/apps/background'),
       '@configuration': path.resolve(__dirname, 'src/apps/configuration'),
+      '@web-components': path.resolve(__dirname, 'src/apps/web-components'),
       '@content': path.resolve(__dirname, 'src/apps/content'),
       '@src': path.resolve(__dirname, 'src'),
       react: 'preact/compat'
@@ -30,9 +33,13 @@ module.exports = (_env, { watch, mode }) => ({
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.js$/,
         exclude: /node_modules/,
         use: [{ loader: 'babel-loader' }]
+      },
+      {
+        test: /\.raw\.\w+$/i,
+        type: 'asset/source'
       }
     ]
   },
@@ -40,7 +47,7 @@ module.exports = (_env, { watch, mode }) => ({
     new CopyPlugin({
       patterns: [
         { from: './src/manifest.json', to: './manifest.json' },
-        { from: './src/images/required', to: './images' },
+        { from: './src/images/required', to: './assets/images' },
         { from: './src/apps/sidepanel/sidepanel.html', to: './sidepanel.html' },
         { from: './src/apps/sandbox/sandbox.html', to: './sandbox.html' },
         { from: './src/apps/offscreen/offscreen.html', to: './offscreen.html' },
@@ -49,7 +56,14 @@ module.exports = (_env, { watch, mode }) => ({
     }),
     ...(watch ? [] : [new CleanWebpackPlugin()])
   ],
-  optimization: { minimize: mode === 'production' },
+  optimization: {
+    minimize: mode === 'production',
+    minimizer: [
+      new TerserPlugin({
+        extractComments: false
+      })
+    ]
+  },
   performance: { maxEntrypointSize: 512000, maxAssetSize: 512000 },
   watchOptions: {
     aggregateTimeout: 200,

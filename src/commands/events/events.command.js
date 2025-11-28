@@ -1,7 +1,8 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
-import { isRegExp } from '@src/helpers/validation-command.helpers'
+import { eventsSupported } from '@src/constants/options.constants'
+import { isAnyOf, isRegExp, isTabId, isXpath } from '@src/helpers/validation-command.helpers'
 import { eventsHelpSections, eventsHelpSectionTitles } from './events.constants'
 import { eventsHandler } from './events.handler'
 
@@ -11,11 +12,38 @@ export default new CommandBase({
   handler: eventsHandler
 })
   .expect({
-    name: 'add',
-    abbreviation: 'a',
+    name: 'trigger',
+    abbreviation: 't',
+    type: commandTypes.STRING,
+    helpSection: eventsHelpSections.CREATION,
+    description: 'Trigger a new event in page',
+    worksWith: ['xpath', 'tab-id'],
+    validate: [isAnyOf(eventsSupported)]
+  })
+  .expect({
+    name: 'xpath',
+    abbreviation: 'x',
+    type: 'string',
+    helpSection: eventsHelpSections.CREATION,
+    description: 'XPath selector for the target element',
+    worksWith: ['trigger'],
+    validate: [isXpath]
+  })
+  .expect({
+    name: 'tab-id',
+    abbreviation: 'i',
+    type: 'string',
+    helpSection: eventsHelpSections.CREATION,
+    description: 'Trigger events in a specific tab (T[number])',
+    worksWith: ['trigger'],
+    validate: [isTabId]
+  })
+  .expect({
+    name: 'register',
+    abbreviation: 'r',
     type: commandTypes.BOOLEAN,
     helpSection: eventsHelpSections.CREATION,
-    description: 'Create a new event',
+    description: 'Register a new command for future execution',
     worksWith: ['url', 'command'],
     mustHave: ['url', 'command']
   })
@@ -24,7 +52,7 @@ export default new CommandBase({
     abbreviation: 'u',
     type: 'string',
     helpSection: eventsHelpSections.CREATION,
-    description: 'URL pattern where the event will trigger (regex supported)',
+    description: 'URL pattern where the event will trigger (regex)',
     validate: [isRegExp]
   })
   .expect({
@@ -39,7 +67,7 @@ export default new CommandBase({
     abbreviation: 'l',
     type: commandTypes.BOOLEAN,
     helpSection: eventsHelpSections.MANAGEMENT,
-    description: 'List all events',
+    description: 'List all registered events',
     worksWith: []
   })
   .expect({
@@ -47,7 +75,7 @@ export default new CommandBase({
     abbreviation: 'd',
     type: 'string',
     helpSection: eventsHelpSections.MANAGEMENT,
-    description: 'Delete an event by its id',
+    description: 'Delete a registered event by its id',
     worksWith: []
   })
   .expect({

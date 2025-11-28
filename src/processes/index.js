@@ -43,30 +43,21 @@ export const setStorage = (tabId, { namespace, key, value }) => {
   })
 }
 
-export const getElementStyles = (tabId, { searchByXpath, searchByProperty }) => {
+export const getElementStyles = (tabId, { searchByXpath, searchByProperty, theme }) => {
   return createWorkerProcessRequest({
     type: processNames.GET_ELEMENT_STYLES,
     defaultResponse: [],
     tabId,
-    data: { searchByXpath, searchByProperty }
+    data: { searchByXpath, searchByProperty, theme }
   })
 }
 
-export const applyElementStyles = (tabId, { searchByXpath, newInlineStyles }) => {
+export const applyElementStyles = (tabId, { searchByXpath, newInlineStyles, theme }) => {
   return createWorkerProcessRequest({
     type: processNames.APPLY_ELEMENT_STYLES,
     defaultResponse: [],
     tabId,
-    data: { searchByXpath, newInlineStyles }
-  })
-}
-
-export const clickElement = (tabId, { searchByXpath }) => {
-  return createWorkerProcessRequest({
-    type: processNames.CLICK_ELEMENT,
-    defaultResponse: null,
-    tabId,
-    data: { searchByXpath }
+    data: { searchByXpath, newInlineStyles, theme }
   })
 }
 
@@ -85,6 +76,15 @@ export const pickColor = (tabId, { theme, fontFamily }) => {
     defaultResponse: null,
     tabId,
     data: { theme, fontFamily }
+  })
+}
+
+export const triggerEvent = (tabId, { xpath, event, theme }) => {
+  return createWorkerProcessRequest({
+    type: processNames.TRIGGER_EVENT,
+    defaultResponse: null,
+    tabId,
+    data: { xpath, event, theme }
   })
 }
 

@@ -4,7 +4,7 @@ import {
   getElementParent,
   getElementSibling,
   getElementXPath
-} from '@content/helpers/dom-management.helpers'
+} from '@content/helpers/dom-locator.helpers'
 
 export default async (resolve, reject, data) => {
   const { searchByXpath, searchBelow, siblingIndex, parentIndex, childIndex, appendXpath } = data

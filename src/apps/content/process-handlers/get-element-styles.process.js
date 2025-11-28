@@ -1,6 +1,6 @@
 import { getNonDefaultComputedStyles } from '@content/helpers/css-management.helpers'
 import { getElementByXPath } from '@content/helpers/dom-management.helpers'
-import { createHighlight } from '@content/pure-js'
+import { createHighlight } from '@content/helpers/web-components.helpers'
 import { isRgb, rgbToHex } from '@src/helpers/utils.helpers'
 
 export default async (resolve, reject, data) => {

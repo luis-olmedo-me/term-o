@@ -1,5 +1,6 @@
 import { getElementByXPath } from '@content/helpers/dom-management.helpers'
-import { createHighlight, humanClick } from '@content/pure-js'
+import { createHighlight } from '@content/helpers/web-components.helpers'
+import { humanClick } from '@content/pure-js'
 import { eventsAvailable } from '@src/constants/options.constants'
 import { delay } from '@src/helpers/utils.helpers'
 

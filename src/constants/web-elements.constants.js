@@ -1,4 +1,4 @@
 export const webElements = {
-  BUBBLE: 'term-bubble',
-  HIGHLIGHT: 'term-highlight'
+  BUBBLE: 'term-o-bubble',
+  HIGHLIGHT: 'term-o-highlight'
 }

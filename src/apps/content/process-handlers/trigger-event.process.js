@@ -1,6 +1,6 @@
-import { getElementByXPath } from '@content/helpers/dom-management.helpers'
 import { humanClick } from '@content/helpers/events.helpers'
 import { createHighlight } from '@content/helpers/web-components.helpers'
+import { getElementByXPath } from '@src/apps/content/helpers/dom-locator.helpers'
 import { eventsAvailable } from '@src/constants/options.constants'
 import { delay } from '@src/helpers/utils.helpers'
 

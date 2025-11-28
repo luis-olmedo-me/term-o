@@ -56,7 +56,7 @@ export const configDefaultValues = {
   [configInputIds.FONT_SIZE]: fontSizes.NORMAL,
   [configInputIds.THEME_NAME]: defaultColorTheme.name,
   [configInputIds.COLOR_ACCENT]: colorThemeKeys.GREEN,
-  [configInputIds.RESET_CONFIGURATION]: 'Reset configuration',
+  [configInputIds.RESET_CONFIGURATION]: 'Reset Configuration',
   [configInputIds.CLEAR_USER_DATA]: 'Reset All',
   [configInputIds.STATUS_INDICATOR]: statusIndicators.DOT,
   [configInputIds.STATUS_BAR]: true,

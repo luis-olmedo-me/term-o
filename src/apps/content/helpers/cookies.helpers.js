@@ -9,7 +9,3 @@ export const getCookies = () => {
 
   return cookies
 }
-
-export const getSession = () => ({ ...sessionStorage })
-
-export const getLocal = () => ({ ...localStorage })

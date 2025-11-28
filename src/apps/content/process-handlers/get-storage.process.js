@@ -1,10 +1,10 @@
-import { getCookies, getLocal, getSession } from '@content/helpers/storage-management.helpers'
+import { getCookies } from '@src/apps/content/helpers/cookies.helpers'
 
 export default async (resolve, _reject, data) => {
   let storage = {}
 
-  if (data.includeLocal) storage = getLocal()
-  if (data.includeSession) storage = getSession()
+  if (data.includeLocal) storage = { ...localStorage }
+  if (data.includeSession) storage = { ...sessionStorage }
   if (data.includeCookies) storage = getCookies()
 
   resolve(storage)

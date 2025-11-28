@@ -14,13 +14,6 @@ class Highlight extends HTMLElement {
     this._shadow.innerHTML = HighlightHtml
   }
 
-  get _elements() {
-    return {
-      overlay: this._shadow.querySelector('#overlay'),
-      styles: this._shadow.querySelector('#styles')
-    }
-  }
-
   connectedCallback() {
     this._props = getPropsFromAttrs(this, highlightPropNames)
     this._elements.styles.innerHTML = applyCssVariables(HighlightCss, {
@@ -33,6 +26,13 @@ class Highlight extends HTMLElement {
     })
 
     this._runAnimation()
+  }
+
+  get _elements() {
+    return {
+      overlay: this._shadow.querySelector('#overlay'),
+      styles: this._shadow.querySelector('#styles')
+    }
   }
 
   async _runAnimation() {

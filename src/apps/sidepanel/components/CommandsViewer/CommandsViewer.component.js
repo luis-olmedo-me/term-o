@@ -37,7 +37,6 @@ export const CommandsViewer = ({ commands }) => {
   )
 
   const handleLineMouseUp = event => {
-    event.stopPropagation()
     let line = event.target
     const selection = window.getSelection().toString()
 

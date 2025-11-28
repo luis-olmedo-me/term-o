@@ -8,5 +8,6 @@ export const availableInputTypes = {
   FONT_SELECT: 'font-select',
   BUTTON: 'button',
   BUTTON_DANGER: 'button-danger',
+  BUTTON_WARN: 'button-warn',
   TEXT_AREA: 'text-area'
 }

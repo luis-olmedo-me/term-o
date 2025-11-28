@@ -288,7 +288,7 @@ export const defaultConfigSections = [
         id: configInputIds.RESET_CONFIGURATION,
         name: 'Reset Configuration preferences',
         description: `Restore all UI and behavior settings (theme, experimental features, click-to-copy, animations, selection helpers, etc.) back to their default values.\nPersonal preferences will be lost, but your saved commands and registered events will remain intact.`,
-        type: availableInputTypes.BUTTON_DANGER,
+        type: availableInputTypes.BUTTON_WARN,
         postFix: null,
         iconButton: Undo,
         options: [],

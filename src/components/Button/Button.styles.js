@@ -48,7 +48,6 @@ export const ButtonWrapper = styled.button`
 
   &[aria-variant='${buttonVariants.OUTLINED}'] {
     border: ${t('space.50')} solid ${t('colors.white', '40')};
-    background-color: ${t('colors.white', '40')};
     border-radius: ${t('radius.200')};
     padding: ${t('space.200')} ${t('space.300')};
 
@@ -79,6 +78,23 @@ export const ButtonWrapper = styled.button`
     }
     &[aria-selected='true']:hover {
       color: ${t('colors.brightRed')};
+    }
+  }
+  &[aria-variant='${buttonVariants.OUTLINED_WARN}'] {
+    border: ${t('space.50')} solid ${t('colors.yellow', '40')};
+    border-radius: ${t('radius.200')};
+    padding: ${t('space.200')} ${t('space.300')};
+
+    &:focus {
+      border: ${t('space.50')} solid ${t('colors.yellow')};
+    }
+
+    &:hover {
+      background-color: ${t('colors.yellow')};
+      color: ${t('colors.brightWhite')};
+    }
+    &[aria-selected='true']:hover {
+      color: ${t('colors.brightYellow')};
     }
   }
 `

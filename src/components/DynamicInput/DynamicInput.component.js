@@ -141,6 +141,16 @@ export const DynamicInput = ({
         />
       )
 
+    case availableInputTypes.BUTTON_WARN:
+      return (
+        <Button
+          onClick={() => handleClickInButtons(inputId)}
+          value={value}
+          variant={buttonVariants.OUTLINED_WARN}
+          Icon={iconButton}
+        />
+      )
+
     default:
       return null
   }

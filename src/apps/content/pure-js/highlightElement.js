@@ -9,7 +9,6 @@ export const highlightElement = async (element, theme, waitUntilComplete = false
   const host = document.createElement('term-highlight')
   host.setAttribute('color', color)
   host.setAttribute('radius', radius)
-  host.setAttribute('duration', '700')
 
   host.style.position = 'fixed'
   host.style.left = `${rect.left}px`

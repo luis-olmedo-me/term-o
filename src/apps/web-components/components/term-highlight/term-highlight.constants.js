@@ -1,1 +1,1 @@
-export const highlightPropNames = ['color', 'radius', 'duration']
+export const highlightPropNames = ['color', 'radius']

@@ -23,15 +23,14 @@ class TermHighlight extends HTMLElement {
 
   connectedCallback() {
     this._props = getPropsFromAttrs(this, highlightPropNames)
-    const duration = Number(this._props.duration)
 
     this.style.setProperty('--color', this._props.color)
     this.style.setProperty('--radius', this._props.radius)
 
-    this._runAnimation(duration)
+    this._runAnimation()
   }
 
-  async _runAnimation(duration) {
+  async _runAnimation() {
     await delay(20)
     this._elements.overlay.classList.add('active')
 
@@ -39,7 +38,7 @@ class TermHighlight extends HTMLElement {
     this._elements.overlay.classList.remove('active')
     this._elements.overlay.classList.add('fade-out')
 
-    await delay(duration)
+    await delay(700)
     this.remove()
   }
 }

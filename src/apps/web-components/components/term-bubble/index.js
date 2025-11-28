@@ -1,9 +1,10 @@
-import { getPropsFromAttrs } from '@web-components/helpers/props.helpers'
-import { bubblePropNames } from './term-bubble.constants'
 import BubbleCss from './term-bubble.raw.css'
 import BubbleHtml from './term-bubble.raw.html'
 
+import { webElements } from '@src/constants/web-elements.constants'
 import { delay } from '@src/helpers/utils.helpers'
+import { getPropsFromAttrs } from '@web-components/helpers/props.helpers'
+import { bubblePropNames } from './term-bubble.constants'
 
 class TermBubble extends HTMLElement {
   constructor() {
@@ -74,6 +75,6 @@ class TermBubble extends HTMLElement {
   }
 }
 
-if (!customElements.get('term-bubble')) {
-  customElements.define('term-bubble', TermBubble)
+if (!customElements.get(webElements.BUBBLE)) {
+  customElements.define(webElements.BUBBLE, TermBubble)
 }

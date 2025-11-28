@@ -1,5 +1,7 @@
+import { webElements } from '@src/constants/web-elements.constants'
+
 export const createBubble = (message, theme) => {
-  const bubble = document.createElement('term-bubble')
+  const bubble = document.createElement(webElements.BUBBLE)
 
   bubble.setAttribute('message', message)
   bubble.setAttribute('font', theme.font)

@@ -1,6 +1,7 @@
 import HighlightCss from './term-highlight.raw.css'
 import HighlightHtml from './term-highlight.raw.html'
 
+import { webElements } from '@src/constants/web-elements.constants'
 import { delay } from '@src/helpers/utils.helpers'
 import { getPropsFromAttrs } from '@web-components/helpers/props.helpers'
 import { highlightPropNames } from './term-highlight.constants'
@@ -47,6 +48,6 @@ class TermHighlight extends HTMLElement {
   }
 }
 
-if (!customElements.get('term-highlight')) {
-  customElements.define('term-highlight', TermHighlight)
+if (!customElements.get(webElements.HIGHLIGHT)) {
+  customElements.define(webElements.HIGHLIGHT, TermHighlight)
 }

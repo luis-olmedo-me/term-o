@@ -88,7 +88,7 @@ export const createHelpView = command => {
 
     helps.push(`${C`foreground`}${sectionTitle}:\n`)
 
-    optionsBySection.forEach((option, index) => {
+    optionsBySection.forEach(option => {
       const displayName = option.displayName
       const description = option.description
       const type = getOptionTypeLabel(option.type)
@@ -96,11 +96,8 @@ export const createHelpView = command => {
       const titleCount = `${displayName} ${type}`.length
       const tab = `.`.repeat(highestTitleCount + 1 - titleCount)
 
-      const isLastOption = index === optionsBySection.length - 1
-      const lineJump = isLastOption ? '\n' : ''
-
       helps.push(
-        `  ${C`green`}${displayName} ${C`yellow`}${type} ${C`background`}${tab} ${C`brightBlack`}${description}${lineJump}`
+        `  ${C`green`}${displayName} ${C`yellow`}${type} ${C`background`}${tab} ${C`brightBlack`}${description}`
       )
     })
 

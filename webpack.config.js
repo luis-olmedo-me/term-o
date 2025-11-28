@@ -1,4 +1,5 @@
 const CopyPlugin = require('copy-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 const glob = require('glob')
 const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
@@ -55,7 +56,14 @@ module.exports = (_env, { watch, mode }) => ({
     }),
     ...(watch ? [] : [new CleanWebpackPlugin()])
   ],
-  optimization: { minimize: mode === 'production' },
+  optimization: {
+    minimize: mode === 'production',
+    minimizer: [
+      new TerserPlugin({
+        extractComments: false
+      })
+    ]
+  },
   performance: { maxEntrypointSize: 512000, maxAssetSize: 512000 },
   watchOptions: {
     aggregateTimeout: 200,

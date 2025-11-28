@@ -6,7 +6,7 @@ const contentHandler = setUpHandlers(processHandlers)
 chrome.runtime.onMessage.addListener(contentHandler)
 
 const script = document.createElement('script')
-script.src = chrome.runtime.getURL('webComponents.js')
+script.src = chrome.runtime.getURL('web-components.js')
 
 document.documentElement.appendChild(script)
 script.remove()

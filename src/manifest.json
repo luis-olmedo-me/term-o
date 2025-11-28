@@ -50,7 +50,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["webComponents.js"],
+      "resources": ["web-components.js"],
       "matches": ["<all_urls>"]
     }
   ]

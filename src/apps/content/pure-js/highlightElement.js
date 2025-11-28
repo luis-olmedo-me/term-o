@@ -9,14 +9,10 @@ export const highlightElement = async (element, theme, waitUntilComplete = false
   const host = document.createElement('term-highlight')
   host.setAttribute('color', color)
   host.setAttribute('radius', radius)
-
-  host.style.position = 'fixed'
-  host.style.left = `${rect.left}px`
-  host.style.top = `${rect.top}px`
-  host.style.width = `${rect.width}px`
-  host.style.height = `${rect.height}px`
-  host.style.zIndex = 999999999
-  host.style.pointerEvents = 'none'
+  host.setAttribute('left', `${rect.left}px`)
+  host.setAttribute('top', `${rect.top}px`)
+  host.setAttribute('width', `${rect.width}px`)
+  host.setAttribute('height', `${rect.height}px`)
 
   document.body.appendChild(host)
 

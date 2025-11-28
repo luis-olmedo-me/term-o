@@ -26,6 +26,10 @@ class TermHighlight extends HTMLElement {
 
     this.style.setProperty('--color', this._props.color)
     this.style.setProperty('--radius', this._props.radius)
+    this.style.setProperty('--left', this._props.left)
+    this.style.setProperty('--top', this._props.top)
+    this.style.setProperty('--width', this._props.width)
+    this.style.setProperty('--height', this._props.height)
 
     this._runAnimation()
   }

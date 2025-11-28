@@ -1,3 +1,13 @@
+:host {
+  position: fixed;
+  z-index: 999999;
+  pointer-events: none;
+  left: var(--left);
+  top: var(--top);
+  width: var(--width);
+  height: var(--height);
+}
+
 .overlay {
   position: absolute;
   inset: 0;

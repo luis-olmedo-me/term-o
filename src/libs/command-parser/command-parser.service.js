@@ -7,13 +7,13 @@ import { getHighestTitleCountInBases } from '@src/helpers/command.helpers'
 import { truncate } from '@src/helpers/utils.helpers'
 
 class CommandParser extends EventListener {
-  constructor(templates) {
+  constructor(bases) {
     super()
 
-    this.templates = templates
+    this.bases = bases
     this.aliases = []
     this.origin = null
-    this.highestTitleCount = getHighestTitleCountInBases(templates)
+    this.highestTitleCount = getHighestTitleCountInBases(bases)
   }
 
   setAliases(aliases) {
@@ -46,10 +46,10 @@ class CommandParser extends EventListener {
   parse(fragment) {
     const [name, ...scriptArgs] = getArgs(fragment)
 
-    const template = this.templates.find(template => template.name === name)
+    const base = this.bases.find(base => base.name === name)
     const cleanedName = name.replace('"', '\\"')
 
-    if (!template) {
+    if (!base) {
       const error = errorBase.create(this.origin)
       const truncatedName = truncate(cleanedName, 30)
 
@@ -59,7 +59,7 @@ class CommandParser extends EventListener {
       return error
     }
 
-    const command = template.create(this.origin).prepare(scriptArgs)
+    const command = base.create(this.origin).prepare(scriptArgs)
 
     return command
   }
@@ -75,10 +75,6 @@ class CommandParser extends EventListener {
     })
 
     return fragmentsWithAliases.join(' && ')
-  }
-
-  getTemplateByName(name) {
-    return this.templates.find(template => template.name === name)
   }
 }
 

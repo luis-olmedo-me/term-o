@@ -1,8 +1,7 @@
 import { customColorThemeKeys } from '@src/constants/themes.constants'
 import { webElements } from '@src/constants/web-elements.constants'
-import { delay } from '@src/helpers/utils.helpers'
 
-export const highlightElement = async (element, theme, waitUntilComplete = false) => {
+export const highlightElement = async (element, theme) => {
   const rect = element.getBoundingClientRect()
   const radius = window.getComputedStyle(element).borderRadius
   const color = theme.colors[customColorThemeKeys.ACCENT]
@@ -16,6 +15,4 @@ export const highlightElement = async (element, theme, waitUntilComplete = false
   host.setAttribute('height', `${rect.height}px`)
 
   document.body.appendChild(host)
-
-  if (waitUntilComplete) await delay(600)
 }

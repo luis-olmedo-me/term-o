@@ -13,7 +13,7 @@ export default async (resolve, reject, data) => {
   const element = getElementByXPath(searchByXpath)
 
   if (!element) return reject('XPath did not match any element.')
-  highlightElement(element, data.theme, false)
+  highlightElement(element, data.theme)
 
   const styles = getNonDefaultComputedStyles(element).filter(({ prop, value }) => {
     if (propNamePattern) return propNamePattern.test(prop)

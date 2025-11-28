@@ -11,7 +11,7 @@ export default async (resolve, reject, data) => {
   if (!element) return reject('XPath did not match any element.')
   const styles = styleStringToArray(newInlineStyles)
 
-  await highlightElement(element, data.theme)
+  highlightElement(element, data.theme)
   await delay(600)
 
   styles.forEach(({ prop, value }) => {

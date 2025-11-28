@@ -26,6 +26,8 @@ export const configInputIds = {
   COLOR_ACCENT: 'color-accent',
   CLEAR_USER_DATA: 'clear-user-data',
   RESET_CONFIGURATION: 'reset-configuration',
+  EXPORT_CONFIGURATION: 'export-configuration',
+  IMPORT_CONFIGURATION: 'import-configuration',
   STATUS_INDICATOR: 'status-indicator',
   STATUS_BAR: 'status-bar',
   STATUS_LIGHT: 'status-light',
@@ -58,6 +60,8 @@ export const configDefaultValues = {
   [configInputIds.FONT_SIZE]: fontSizes.NORMAL,
   [configInputIds.THEME_NAME]: defaultColorTheme.name,
   [configInputIds.COLOR_ACCENT]: colorThemeKeys.GREEN,
+  [configInputIds.EXPORT_CONFIGURATION]: 'Export Configuration',
+  [configInputIds.IMPORT_CONFIGURATION]: 'Import Configuration',
   [configInputIds.RESET_CONFIGURATION]: 'Reset Configuration',
   [configInputIds.CLEAR_USER_DATA]: 'Reset All',
   [configInputIds.STATUS_INDICATOR]: statusIndicators.DOT,
@@ -254,6 +258,30 @@ export const defaultConfigSections = [
     description: 'Manage storage and configuration backups.',
     Icon: Data,
     inputs: [
+      {
+        id: configInputIds.IMPORT_CONFIGURATION,
+        name: 'Import Configuration',
+        description:
+          'Load a previously exported configuration file to restore your settings and terminal behavior. Existing configuration values will be overwritten.',
+        type: availableInputTypes.BUTTON,
+        postFix: null,
+        iconButton: null,
+        options: [],
+        validations: [],
+        value: configDefaultValues[configInputIds.IMPORT_CONFIGURATION]
+      },
+      {
+        id: configInputIds.EXPORT_CONFIGURATION,
+        name: 'Export Configuration',
+        description:
+          'Generate a backup file containing all your current settings, customizations, and terminal preferences. Use this file to restore your setup later or to replicate your configuration on another device.',
+        type: availableInputTypes.BUTTON,
+        postFix: null,
+        iconButton: null,
+        options: [],
+        validations: [],
+        value: configDefaultValues[configInputIds.EXPORT_CONFIGURATION]
+      },
       {
         id: configInputIds.RESET_CONFIGURATION,
         name: 'Reset Configuration preferences',

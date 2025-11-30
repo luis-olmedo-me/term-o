@@ -7,7 +7,7 @@ export const Postfix = styled.span`
   height: -webkit-fill-available;
   display: flex;
   align-items: center;
-  border: solid ${t('colors.white', '60')};
+  border: solid ${t('colors.brightBlack')};
   border-width: ${t('space.50')} ${t('space.50')} ${t('space.50')} 0;
   background-color: ${t('colors.white', '20')};
   color: ${t('colors.foreground')};
@@ -47,7 +47,7 @@ export const RealInput = styled.input`
   }
 
   &.${inputVariants.OUTLINED} {
-    border: ${t('space.50')} solid ${t('colors.white', '40')};
+    border: ${t('space.50')} solid ${t('colors.brightBlack')};
     background-color: ${t('colors.white', '40')};
     border-radius: ${t('radius.200')} 0 0 ${t('radius.200')};
     padding-left: ${t('space.300')};

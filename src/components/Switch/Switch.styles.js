@@ -5,9 +5,10 @@ export const SimulatedSwitch = styled.div`
   background-color: red;
   height: 1.5rem;
   width: 2.5rem;
-  border: ${t('space.50')} solid ${t('colors.white', '40')};
+  border: ${t('space.50')} solid ${t('colors.brightBlack')};
   background-color: ${t('colors.white', '40')};
   border-radius: ${t('radius.200')};
+  box-sizing: border-box;
   transition:
     background-color 0.1s ease-in-out,
     color 0.1s ease-in-out;
@@ -17,10 +18,10 @@ export const SimulatedSwitch = styled.div`
     position: absolute;
     width: 30%;
     height: calc(100% - ${t('space.100')} * 2);
-    background-color: ${t('colors.white', '80')};
+    background-color: ${t('colors.accent', '80')};
     bottom: ${t('space.100')};
     left: ${t('space.100')};
-    border-radius: ${t('radius.200')};
+    border-radius: ${t('radius.100')};
     cursor: pointer;
     transition:
       background-color 0.1s ease-in-out,
@@ -51,8 +52,12 @@ export const SwitchInput = styled.input`
   &:hover + ${SimulatedSwitch}::after {
     background-color: ${t('colors.white', 'aa')};
   }
-  &:hover + ${SimulatedSwitch}.selected::after {
-    background-color: ${t('colors.brightWhite')};
+  &:hover + ${SimulatedSwitch}.selected {
+    border-color: ${t('colors.brightBlack')};
+
+    &::after {
+      background-color: ${t('colors.brightWhite')};
+    }
   }
   &:hover + ${SimulatedSwitch} {
     background-color: ${t('colors.accent', '40')};

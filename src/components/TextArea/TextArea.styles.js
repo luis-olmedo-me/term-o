@@ -2,7 +2,7 @@ import { theme as t } from '@src/helpers/themes.helpers'
 import styled from 'styled-components'
 
 export const TextAreaInput = styled.textarea`
-  border: ${t('space.50')} solid ${t('colors.white', '40')};
+  border: ${t('space.50')} solid ${t('colors.brightBlack')};
   background-color: ${t('colors.white', '40')};
   border-radius: ${t('radius.200')};
   padding: ${t('space.300')};

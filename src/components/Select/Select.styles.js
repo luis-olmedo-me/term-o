@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 export const Selecter = styled.select`
   width: 300px;
-  border: ${t('space.50')} solid ${t('colors.white', '40')};
+  border: ${t('space.50')} solid ${t('colors.brightBlack')};
   background-color: ${t('colors.white', '40')};
   color: ${t('colors.foreground')};
   border-radius: ${t('radius.200')};

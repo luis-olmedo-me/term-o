@@ -47,9 +47,10 @@ export const ButtonWrapper = styled.button`
   }
 
   &[aria-variant='${buttonVariants.OUTLINED}'] {
-    border: ${t('space.50')} solid ${t('colors.white', '40')};
+    border: ${t('space.50')} solid ${t('colors.brightBlack')};
     border-radius: ${t('radius.200')};
     padding: ${t('space.200')} ${t('space.300')};
+    background-color: ${t('colors.white', '40')};
 
     &:focus {
       border: ${t('space.50')} solid ${t('colors.accent')};
@@ -64,7 +65,8 @@ export const ButtonWrapper = styled.button`
     }
   }
   &[aria-variant='${buttonVariants.OUTLINED_DANGER}'] {
-    border: ${t('space.50')} solid ${t('colors.red', '40')};
+    border: ${t('space.50')} solid ${t('colors.brightBlack')};
+    background-color: ${t('colors.red', '40')};
     border-radius: ${t('radius.200')};
     padding: ${t('space.200')} ${t('space.300')};
 
@@ -81,7 +83,8 @@ export const ButtonWrapper = styled.button`
     }
   }
   &[aria-variant='${buttonVariants.OUTLINED_WARN}'] {
-    border: ${t('space.50')} solid ${t('colors.yellow', '40')};
+    border: ${t('space.50')} solid ${t('colors.brightBlack')};
+    background-color: ${t('colors.yellow', '40')};
     border-radius: ${t('radius.200')};
     padding: ${t('space.200')} ${t('space.300')};
 

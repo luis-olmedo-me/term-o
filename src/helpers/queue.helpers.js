@@ -14,6 +14,7 @@ export const limitQueueByConfig = (queue, maxCount) => {
 
     if (!command) {
       newQueue.unshift(queueItem)
+      continue
     }
     const updates = command.updates
     let warning = null

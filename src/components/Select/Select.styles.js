@@ -31,7 +31,7 @@ export const Selecter = styled.select`
 
   &:hover {
     background-color: ${t('colors.accent', 'cc')};
-    color: ${({ selected }) => (selected ? t('colors.brightAccent') : t('colors.brightWhite'))};
+    color: ${t('colors.brightWhite')};
   }
 
   &:disabled {

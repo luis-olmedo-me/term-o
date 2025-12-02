@@ -1,5 +1,5 @@
-import { readFileContent } from '@content/helpers/file.helpers'
 import { createBubble } from '@content/helpers/web-components.helpers'
+import { readFileContent } from '@src/helpers/file.helpers'
 
 export default async (resolve, reject, data) => {
   const fileInput = document.createElement('input')

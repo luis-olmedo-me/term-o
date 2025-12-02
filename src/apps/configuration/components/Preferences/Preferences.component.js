@@ -27,6 +27,12 @@ export const Preferences = () => {
     if (inputId === configInputIds.CLEAR_USER_DATA) {
       storage.reset()
     }
+    if (inputId === configInputIds.IMPORT_CONFIGURATION) {
+      console.log('import')
+    }
+    if (inputId === configInputIds.EXPORT_CONFIGURATION) {
+      storage.export()
+    }
   }
 
   return (

@@ -1,7 +1,12 @@
 import EventListener from '@src/templates/EventListener'
 
 import { getStorageValue, setStorageValue } from '@src/browser-api/storage.api'
-import { storageKeysNonResetables, storageValues } from '@src/constants/storage.constants'
+import {
+  storageKeysNonExportables,
+  storageKeysNonResetables,
+  storageValues
+} from '@src/constants/storage.constants'
+import { download } from '@src/helpers/file.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 import { decompressFromUTF16 } from 'lz-string'
 
@@ -76,6 +81,21 @@ class Storage extends EventListener {
 
       if (canReset) this.set(key, defaultValue)
     })
+  }
+
+  export() {
+    const exportables = storageValues.reduce((exportable, { key }) => {
+      const canExport = !storageKeysNonExportables.includes(key)
+
+      const instance = this.getInstance(key)
+      const value = instance.$latest().value
+
+      return canExport ? { ...exportable, [key]: value } : exportable
+    }, {})
+
+    const exportableJson = JSON.stringify(exportables)
+
+    download('term-o-export.termo.json', exportableJson)
   }
 
   get(storageKey) {

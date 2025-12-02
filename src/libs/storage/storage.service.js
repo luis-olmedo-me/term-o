@@ -6,8 +6,9 @@ import {
   storageKeysNonResetables,
   storageValues
 } from '@src/constants/storage.constants'
-import { download } from '@src/helpers/file.helpers'
-import { createUUIDv4 } from '@src/helpers/utils.helpers'
+import { download, readFileContent } from '@src/helpers/file.helpers'
+import { createUUIDv4, safeJsonParse } from '@src/helpers/utils.helpers'
+import { safeDecompress } from '@src/helpers/zip.helpers'
 import { compressToUTF16, decompressFromUTF16 } from 'lz-string'
 
 class Storage extends EventListener {
@@ -96,6 +97,23 @@ class Storage extends EventListener {
     const exportableString = JSON.stringify(exportables)
 
     download('term-o-export.termo.txt', compressToUTF16(exportableString))
+  }
+
+  async import(file) {
+    const content = await readFileContent(file)
+    if (content === null) throw 'File does not contain anything readable'
+
+    const decompressedJsonString = safeDecompress(content)
+    if (decompressedJsonString === null) throw 'Failed to decompress the file content'
+
+    const json = safeJsonParse(decompressedJsonString)
+    if (json === null) throw 'Failed to read the file content'
+
+    Object.entries(json).forEach(([key, value]) => {
+      const canExport = !storageKeysNonExportables.includes(key)
+
+      if (canExport) this.set(key, value)
+    })
   }
 
   get(storageKey) {

@@ -10,6 +10,7 @@ import storage from '@src/libs/storage'
 import { configIds, configInputIds } from '@src/constants/config.constants'
 import { iconSizes } from '@src/constants/icon.constants'
 import { storageKeys } from '@src/constants/storage.constants'
+import { uploader } from '@src/helpers/file.helpers'
 import { sidePanelOptions } from './Preferences.constants'
 import * as S from './Preferences.styles'
 
@@ -20,7 +21,7 @@ export const Preferences = () => {
 
   const sectionSelected = config.details.find(({ id }) => id === selectedSectionId)
 
-  const handleClicksInButtonFields = inputId => {
+  const handleClicksInButtonFields = (inputId, setErrorMessage) => {
     if (inputId === configInputIds.RESET_CONFIGURATION) {
       config.reset()
     }
@@ -28,7 +29,11 @@ export const Preferences = () => {
       storage.reset()
     }
     if (inputId === configInputIds.IMPORT_CONFIGURATION) {
-      console.log('import')
+      uploader({
+        extension: 'txt',
+        onError: setErrorMessage,
+        onUpload: file => storage.import(file).catch(setErrorMessage)
+      }).open()
     }
     if (inputId === configInputIds.EXPORT_CONFIGURATION) {
       storage.export()

@@ -41,7 +41,7 @@ export const FieldRenderer = ({
       <S.InputWrapper aria-error={typeof errorMessage === 'string'} aria-type={type}>
         <DynamicInput
           errorMessage={errorMessage}
-          handleClickInButtons={handleClickInButtons}
+          handleClickInButtons={id => handleClickInButtons(id, setErrorMessage)}
           inputId={inputId}
           name={name}
           onChange={tryApplyChange}

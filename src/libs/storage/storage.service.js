@@ -8,7 +8,7 @@ import {
 } from '@src/constants/storage.constants'
 import { download } from '@src/helpers/file.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
-import { decompressFromUTF16 } from 'lz-string'
+import { compressToUTF16, decompressFromUTF16 } from 'lz-string'
 
 class Storage extends EventListener {
   constructor() {
@@ -93,9 +93,9 @@ class Storage extends EventListener {
       return canExport ? { ...exportable, [key]: value } : exportable
     }, {})
 
-    const exportableJson = JSON.stringify(exportables)
+    const exportableString = JSON.stringify(exportables)
 
-    download('term-o-export.termo.json', exportableJson)
+    download('term-o-export.termo.txt', compressToUTF16(exportableString))
   }
 
   get(storageKey) {

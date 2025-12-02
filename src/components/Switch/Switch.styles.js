@@ -18,7 +18,7 @@ export const SimulatedSwitch = styled.div`
     position: absolute;
     width: 30%;
     height: calc(100% - ${t('space.200')} * 2);
-    background-color: ${t('colors.accent', '80')};
+    background-color: transparent;
     border: ${t('space.50')} solid ${t('colors.foreground', '80')};
     bottom: ${t('space.200')};
     left: ${t('space.200')};

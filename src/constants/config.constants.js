@@ -309,15 +309,3 @@ export const defaultConfigSections = [
     ]
   }
 ]
-
-export const defaultConfig = defaultConfigSections.reduce((simplifiedConfig, section) => {
-  const sectionInputValues = section.inputs.reduce(
-    (simplifiedInputs, input) => ({ ...simplifiedInputs, [input.id]: input.value }),
-    {}
-  )
-
-  return {
-    ...simplifiedConfig,
-    ...sectionInputValues
-  }
-}, {})

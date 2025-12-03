@@ -13,5 +13,6 @@ export const handleImportConfiguration = setErrorMessage => {
         .then(() => setErrorMessage(null))
   })
 
+  setErrorMessage(null)
   input.open()
 }

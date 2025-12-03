@@ -1,7 +1,7 @@
 import * as React from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
-import Button, { buttonVariants } from '@src/components/Button'
+import Button from '@src/components/Button'
 import FontSelect from '@src/components/FontSelect'
 import Input, { inputTypes, inputVariants } from '@src/components/Input'
 import Select, { ColorDot } from '@src/components/Select'
@@ -9,6 +9,7 @@ import Switch from '@src/components/Switch'
 import TextArea from '@src/components/TextArea'
 import ThemeSelect from '@src/components/ThemeSelect'
 import { availableInputTypes } from '@src/constants/inputs.constants'
+import { getButtonVariantFromType } from './DynamicInput.helpers'
 
 export const DynamicInput = ({
   value,
@@ -122,32 +123,14 @@ export const DynamicInput = ({
       )
 
     case availableInputTypes.BUTTON:
-      return (
-        <Button
-          onClick={() => handleClickInButtons(inputId)}
-          value={value}
-          variant={buttonVariants.OUTLINED}
-          Icon={iconButton}
-        />
-      )
-
+    case availableInputTypes.BUTTON_WARN:
     case availableInputTypes.BUTTON_DANGER:
       return (
         <Button
           onClick={() => handleClickInButtons(inputId)}
-          value={value}
-          variant={buttonVariants.OUTLINED_DANGER}
+          variant={getButtonVariantFromType(type)}
           Icon={iconButton}
-        />
-      )
-
-    case availableInputTypes.BUTTON_WARN:
-      return (
-        <Button
-          onClick={() => handleClickInButtons(inputId)}
           value={value}
-          variant={buttonVariants.OUTLINED_WARN}
-          Icon={iconButton}
         />
       )
 

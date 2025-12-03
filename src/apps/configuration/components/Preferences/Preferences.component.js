@@ -21,11 +21,13 @@ export const Preferences = () => {
 
   const sectionSelected = config.details.find(({ id }) => id === selectedSectionId)
 
-  const handleClicksInButtonFields = (inputId, setErrorMessage) => {
+  const handleClicksInButtonFields = (inputId, onError) => {
+    onError(null)
+
     if (inputId === configInputIds.CLEAR_USER_DATA) storage.reset()
     if (inputId === configInputIds.RESET_CONFIGURATION) config.reset()
     if (inputId === configInputIds.EXPORT_CONFIGURATION) storage.export()
-    if (inputId === configInputIds.IMPORT_CONFIGURATION) handleImportConfiguration(setErrorMessage)
+    if (inputId === configInputIds.IMPORT_CONFIGURATION) handleImportConfiguration(onError)
   }
 
   return (

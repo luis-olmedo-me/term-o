@@ -67,6 +67,31 @@ export const rgbToHex = value => {
   })
 }
 
+export const hexToRgbObject = hex => {
+  hex = hex.replace('#', '')
+
+  if (hex.length === 3)
+    hex = hex
+      .split('')
+      .map(c => c + c)
+      .join('')
+
+  const num = parseInt(hex, 16)
+
+  return {
+    red: (num >> 16) & 255,
+    green: (num >> 8) & 255,
+    blue: num & 255
+  }
+}
+
+export const isDarkTheme = hex => {
+  const { red, green, blue } = hexToRgbObject(hex)
+  const luminance = 0.299 * red + 0.587 * green + 0.114 * blue
+
+  return luminance < 128
+}
+
 export const isRgb = value => rgbStartPattern.test(value)
 
 export const truncate = (value, maxCount) => {

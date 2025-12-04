@@ -10,5 +10,6 @@ export const processNames = {
   EXECUTE_COMMAND: 'execute-command',
   UPLOAD_FILE: 'upload-file',
   PICK_COLOR: 'pick-color',
-  TRIGGER_EVENT: 'trigger-event'
+  TRIGGER_EVENT: 'trigger-event',
+  CREATE_NOTIFICATION: 'create-notification'
 }

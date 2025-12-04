@@ -1,6 +1,7 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
+import { isTabId } from '@src/helpers/validation-command.helpers'
 import { notifyHelpSectionTitles, notifyHelpSections } from './notify.constants'
 import { notifyHandler } from './notify.handler'
 
@@ -16,6 +17,14 @@ export default new CommandBase({
     helpSection: notifyHelpSections.ACTIONS,
     description: 'Create a notification',
     worksWith: ['title', 'message']
+  })
+  .expect({
+    name: 'tab-id',
+    abbreviation: 'i',
+    type: commandTypes.STRING,
+    helpSection: notifyHelpSections.ACTIONS,
+    description: 'Display notification in a specific tab (T[number])',
+    validate: [isTabId]
   })
   .expect({
     name: 'title',

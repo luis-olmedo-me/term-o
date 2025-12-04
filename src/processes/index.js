@@ -15,13 +15,29 @@ export const findDOMElement = (
 
 export const getDOMElements = (
   tabId,
-  { searchBelow, searchByTag, searchByAttribute, searchByStyle, searchByText, appendTextContent, appendXpath }
+  {
+    searchBelow,
+    searchByTag,
+    searchByAttribute,
+    searchByStyle,
+    searchByText,
+    appendTextContent,
+    appendXpath
+  }
 ) => {
   return createWorkerProcessRequest({
     type: processNames.GET_DOM_ELEMENTS,
     defaultResponse: [],
     tabId,
-    data: { searchBelow, searchByTag, searchByAttribute, searchByStyle, searchByText, appendTextContent, appendXpath }
+    data: {
+      searchBelow,
+      searchByTag,
+      searchByAttribute,
+      searchByStyle,
+      searchByText,
+      appendTextContent,
+      appendXpath
+    }
   })
 }
 
@@ -70,12 +86,12 @@ export const uploadFile = (tabId, { theme }) => {
   })
 }
 
-export const pickColor = (tabId, { theme, fontFamily }) => {
+export const pickColor = (tabId, { theme }) => {
   return createWorkerProcessRequest({
     type: processNames.PICK_COLOR,
     defaultResponse: null,
     tabId,
-    data: { theme, fontFamily }
+    data: { theme }
   })
 }
 
@@ -85,6 +101,15 @@ export const triggerEvent = (tabId, { xpath, event, theme }) => {
     defaultResponse: null,
     tabId,
     data: { xpath, event, theme }
+  })
+}
+
+export const createNotification = (tabId, { message, theme }) => {
+  return createWorkerProcessRequest({
+    type: processNames.CREATE_NOTIFICATION,
+    defaultResponse: null,
+    tabId,
+    data: { message, theme }
   })
 }
 

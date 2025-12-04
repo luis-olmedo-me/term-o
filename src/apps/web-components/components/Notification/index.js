@@ -33,10 +33,10 @@ class Notification extends HTMLElement {
     })
     this._elements.title.innerHTML = this._props.title
     this._elements.message.innerHTML = this._props.message
+    this._elements.notification.classList.add('hidden')
 
     this.addEventListener('click', this._closeDueToClick.bind(this))
-
-    if (lastNotification) lastNotification.addEventListener('done', this._runAnimation())
+    if (lastNotification) lastNotification.addEventListener('done', this._runAnimation.bind(this))
     else this._runAnimation()
   }
 
@@ -51,6 +51,7 @@ class Notification extends HTMLElement {
 
   async _runAnimation() {
     if (this.isFinished) return
+    this._elements.notification.classList.remove('hidden')
     this._elements.notification.classList.add('activate')
 
     await delay(275)

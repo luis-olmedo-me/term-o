@@ -5,6 +5,7 @@ import { webElements } from '@src/constants/web-elements.constants'
 import { delay } from '@src/helpers/utils.helpers'
 import { applyCssVariables, getPropsFromAttrs } from '@web-components/helpers/props.helpers'
 import { notificationPropNames } from './Notification.constants'
+import { getLastNotificationElement } from './Notification.helpers'
 
 class Notification extends HTMLElement {
   constructor() {
@@ -17,17 +18,22 @@ class Notification extends HTMLElement {
 
   connectedCallback() {
     this._props = getPropsFromAttrs(this, notificationPropNames)
+    this.setAttribute('id', this._props.id)
+
+    const lastNotification = getLastNotificationElement({ currentId: this._props.id })
+    const top = (lastNotification?.getBoundingClientRect().bottom ?? 0) + 12
+
     this._elements.styles.innerHTML = applyCssVariables(NotificationCss, {
       font: this._props.font,
       white: this._props.white,
       accent: this._props.accent,
       brightBlack: this._props.brightBlack,
       foreground: this._props.foreground,
-      background: this._props.background
+      background: this._props.background,
+      top: `${top}px`
     })
     this._elements.title.innerHTML = this._props.title
     this._elements.message.innerHTML = this._props.message
-    this.setAttribute('id', this._props.id)
 
     this.addEventListener('click', this._closeDueToClick.bind(this))
 

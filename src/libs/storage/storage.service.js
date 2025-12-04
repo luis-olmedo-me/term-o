@@ -1,9 +1,15 @@
 import EventListener from '@src/templates/EventListener'
 
 import { getStorageValue, setStorageValue } from '@src/browser-api/storage.api'
-import { storageValues } from '@src/constants/storage.constants'
-import { createUUIDv4 } from '@src/helpers/utils.helpers'
-import { decompressFromUTF16 } from 'lz-string'
+import {
+  storageKeysNonExportables,
+  storageKeysNonResetables,
+  storageValues
+} from '@src/constants/storage.constants'
+import { download, readFileContent } from '@src/helpers/file.helpers'
+import { createUUIDv4, safeJsonParse } from '@src/helpers/utils.helpers'
+import { safeDecompress } from '@src/helpers/zip.helpers'
+import { compressToUTF16, decompressFromUTF16 } from 'lz-string'
 
 class Storage extends EventListener {
   constructor() {
@@ -68,6 +74,46 @@ class Storage extends EventListener {
     }
 
     this.dispatchEvent('restart', this)
+  }
+
+  reset() {
+    storageValues.forEach(({ key, defaultValue }) => {
+      const canReset = !storageKeysNonResetables.includes(key)
+
+      if (canReset) this.set(key, defaultValue)
+    })
+  }
+
+  export() {
+    const exportables = storageValues.reduce((exportable, { key }) => {
+      const canExport = !storageKeysNonExportables.includes(key)
+
+      const instance = this.getInstance(key)
+      const value = instance.$latest().value
+
+      return canExport ? { ...exportable, [key]: value } : exportable
+    }, {})
+
+    const exportableString = JSON.stringify(exportables)
+
+    download('term-o-export.termo.txt', compressToUTF16(exportableString))
+  }
+
+  async import(file) {
+    const content = await readFileContent(file)
+    if (content === null) throw 'File does not contain anything readable'
+
+    const decompressedJsonString = safeDecompress(content)
+    if (decompressedJsonString === null) throw 'Failed to decompress the file content'
+
+    const json = safeJsonParse(decompressedJsonString)
+    if (json === null) throw 'Failed to read the file content'
+
+    Object.entries(json).forEach(([key, value]) => {
+      const canExport = !storageKeysNonExportables.includes(key)
+
+      if (canExport) this.set(key, value)
+    })
   }
 
   get(storageKey) {

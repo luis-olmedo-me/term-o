@@ -5,9 +5,10 @@ export const SimulatedSwitch = styled.div`
   background-color: red;
   height: 1.5rem;
   width: 2.5rem;
-  border: ${t('space.50')} solid ${t('colors.white', '40')};
+  border: ${t('space.50')} solid ${t('colors.brightBlack')};
   background-color: ${t('colors.white', '40')};
   border-radius: ${t('radius.200')};
+  box-sizing: border-box;
   transition:
     background-color 0.1s ease-in-out,
     color 0.1s ease-in-out;
@@ -16,11 +17,13 @@ export const SimulatedSwitch = styled.div`
     content: '';
     position: absolute;
     width: 30%;
-    height: calc(100% - ${t('space.100')} * 2);
-    background-color: ${t('colors.white', '80')};
-    bottom: ${t('space.100')};
-    left: ${t('space.100')};
+    height: calc(100% - ${t('space.200')} * 2);
+    background-color: transparent;
+    border: ${t('space.50')} solid ${t('colors.foreground', '80')};
+    bottom: ${t('space.200')};
+    left: ${t('space.200')};
     border-radius: ${t('radius.200')};
+    box-sizing: border-box;
     cursor: pointer;
     transition:
       background-color 0.1s ease-in-out,
@@ -30,8 +33,9 @@ export const SimulatedSwitch = styled.div`
 
   &.selected {
     &::after {
+      border-color: ${t('colors.foreground')};
       background-color: ${t('colors.brightAccent')};
-      left: calc(70% - ${t('space.100')});
+      left: calc(70% - ${t('space.200')});
     }
   }
 `
@@ -48,17 +52,21 @@ export const SwitchInput = styled.input`
   z-index: 1;
   margin: 0;
 
-  &:hover + ${SimulatedSwitch}::after {
-    background-color: ${t('colors.white', 'aa')};
-  }
-  &:hover + ${SimulatedSwitch}.selected::after {
-    background-color: ${t('colors.brightWhite')};
-  }
   &:hover + ${SimulatedSwitch} {
     background-color: ${t('colors.accent', '40')};
+
+    &::after {
+      border-color: ${t('colors.brightWhite', '80')};
+      background-color: ${t('colors.brightAccent', '40')};
+    }
   }
   &:hover + ${SimulatedSwitch}.selected {
     background-color: ${t('colors.accent', 'cc')};
+
+    &::after {
+      border-color: ${t('colors.brightWhite')};
+      background-color: ${t('colors.brightAccent')};
+    }
   }
 
   &:active,

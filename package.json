@@ -6,10 +6,10 @@
   "author": "olmedoluis012@gmail.com",
   "license": "ISC",
   "scripts": {
-    "start": "yarn webpack -c webpack.config.js --mode development --devtool cheap-module-source-map --watch --progress",
     "eslint": "npx eslint src",
-    "build-dev": "yarn webpack -c webpack.config.js --mode development",
-    "build-prod": "yarn webpack -c webpack.config.js --mode production"
+    "start": "node ./src/scripts/generate-icons.js && yarn webpack -c webpack.config.js --mode development --devtool cheap-module-source-map --watch --progress",
+    "build-dev": "node ./src/scripts/generate-icons.js && yarn webpack -c webpack.config.js --mode development",
+    "build-prod": "node ./src/scripts/generate-icons.js && yarn webpack -c webpack.config.js --mode production"
   },
   "devDependencies": {
     "@babel/core": "7.28.4",
@@ -24,6 +24,7 @@
     "eslint-plugin-react": "7.37.5",
     "globals": "16.4.0",
     "prettier": "3.6.2",
+    "sharp": "0.34.5",
     "webpack": "5.101.3",
     "webpack-cli": "6.0.1"
   },

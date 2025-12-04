@@ -4,7 +4,7 @@ import StorageSimple from '@src/templates/StorageSimple'
 import StorageTab from '@src/templates/StorageTab'
 
 import StorageScripts from '@src/templates/StorageScripts'
-import { defaultConfig } from './config.constants'
+import { configDefaultValues } from './config.constants'
 import { defaultColorTheme } from './themes.constants'
 
 export const storageKeys = {
@@ -12,7 +12,6 @@ export const storageKeys = {
   CONFIG: 'config',
   EVENTS: 'events',
   SCRIPTS: 'scripts',
-  HISTORY: 'history',
   PROMPT_HISTORY: 'prompt-history',
   THEMES: 'themes',
   TAB: 'tab',
@@ -26,19 +25,35 @@ export const storageNamespaces = {
   SYNC: 'sync'
 }
 
+export const storageKeysNonResetables = [storageKeys.TAB]
+
+export const storageKeysNonExportables = [
+  storageKeys.TAB,
+  storageKeys.PROMPT_HISTORY,
+  storageKeys.COMMAND_QUEUE,
+  storageKeys.SCRIPTS
+]
+
 export const storageValues = [
   {
-    key: storageKeys.ALIASES,
+    key: storageKeys.THEMES,
     namespace: storageNamespaces.SYNC,
-    defaultValue: [],
+    defaultValue: [defaultColorTheme],
     Template: StorageSimple,
     json: true
   },
   {
     key: storageKeys.CONFIG,
     namespace: storageNamespaces.SYNC,
-    defaultValue: defaultConfig,
+    defaultValue: configDefaultValues,
     Template: StorageConfig,
+    json: true
+  },
+  {
+    key: storageKeys.ALIASES,
+    namespace: storageNamespaces.SYNC,
+    defaultValue: [],
+    Template: StorageSimple,
     json: true
   },
   {
@@ -56,23 +71,9 @@ export const storageValues = [
     json: true
   },
   {
-    key: storageKeys.HISTORY,
-    namespace: storageNamespaces.SESSION,
-    defaultValue: [],
-    Template: StorageSimple,
-    json: true
-  },
-  {
     key: storageKeys.PROMPT_HISTORY,
     namespace: storageNamespaces.SYNC,
     defaultValue: [],
-    Template: StorageSimple,
-    json: true
-  },
-  {
-    key: storageKeys.THEMES,
-    namespace: storageNamespaces.SYNC,
-    defaultValue: [defaultColorTheme],
     Template: StorageSimple,
     json: true
   },

@@ -1,5 +1,13 @@
 import { webElements } from '@src/constants/web-elements.constants'
 
+export const importWebComponents = () => {
+  const script = document.createElement('script')
+  script.src = chrome.runtime.getURL('assets/js/web-components.js')
+
+  document.documentElement.appendChild(script)
+  script.remove()
+}
+
 const createWebElement = (name, props) => {
   const host = document.createElement(name)
 

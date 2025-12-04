@@ -1,6 +1,10 @@
 import Data from '@src/icons/Data.icon'
+import Export from '@src/icons/Export.icon'
+import Import from '@src/icons/Import.icon'
 import Palette from '@src/icons/Palette.icon'
 import Thunder from '@src/icons/Thunder.icon'
+import Undo from '@src/icons/Undo.icon'
+
 import { availableInputTypes } from './inputs.constants'
 import { basicColorKeys, colorThemeKeys, defaultColorTheme } from './themes.constants'
 
@@ -22,7 +26,10 @@ export const configInputIds = {
   FONT_SIZE: 'font-size',
   THEME_NAME: 'theme-name',
   COLOR_ACCENT: 'color-accent',
-  RESET_DATA: 'reset-data',
+  CLEAR_USER_DATA: 'clear-user-data',
+  RESET_CONFIGURATION: 'reset-configuration',
+  EXPORT_CONFIGURATION: 'export-configuration',
+  IMPORT_CONFIGURATION: 'import-configuration',
   STATUS_INDICATOR: 'status-indicator',
   STATUS_BAR: 'status-bar',
   STATUS_LIGHT: 'status-light',
@@ -55,7 +62,10 @@ export const configDefaultValues = {
   [configInputIds.FONT_SIZE]: fontSizes.NORMAL,
   [configInputIds.THEME_NAME]: defaultColorTheme.name,
   [configInputIds.COLOR_ACCENT]: colorThemeKeys.GREEN,
-  [configInputIds.RESET_DATA]: 'Reset',
+  [configInputIds.EXPORT_CONFIGURATION]: 'Export',
+  [configInputIds.IMPORT_CONFIGURATION]: 'Import',
+  [configInputIds.RESET_CONFIGURATION]: 'Reset',
+  [configInputIds.CLEAR_USER_DATA]: 'Reset All',
   [configInputIds.STATUS_INDICATOR]: statusIndicators.DOT,
   [configInputIds.STATUS_BAR]: true,
   [configInputIds.STATUS_LIGHT]: false
@@ -74,6 +84,7 @@ export const defaultConfigSections = [
         description: 'Automatically copy highlighted text to the clipboard.',
         type: availableInputTypes.BOOLEAN,
         postFix: null,
+        iconButton: null,
         options: [],
         validations: [],
         value: configDefaultValues[configInputIds.COPY_ON_SELECTION]
@@ -84,6 +95,7 @@ export const defaultConfigSections = [
         description:
           'When switching or opening tabs in the browser, the terminal pointer updates to follow the active tab.',
         type: availableInputTypes.BOOLEAN,
+        iconButton: null,
         postFix: null,
         options: [],
         validations: [],
@@ -95,6 +107,7 @@ export const defaultConfigSections = [
         description: 'Shortens long command lines with an ellipsis.',
         type: availableInputTypes.BOOLEAN,
         postFix: null,
+        iconButton: null,
         options: [],
         validations: [],
         value: configDefaultValues[configInputIds.LINE_TRUNCATION]
@@ -105,6 +118,7 @@ export const defaultConfigSections = [
         description: 'Automatically selects the full token or segment on click.',
         type: availableInputTypes.BOOLEAN,
         postFix: null,
+        iconButton: null,
         options: [],
         validations: [],
         value: configDefaultValues[configInputIds.ASSISTED_SELECTION]
@@ -115,6 +129,7 @@ export const defaultConfigSections = [
         description:
           'Define how many lines are displayed in the terminal before older ones are trimmed.',
         type: availableInputTypes.NUMBER,
+        iconButton: null,
         postFix: 'px',
         options: [],
         validations: [['is-between', 0, 1000]],
@@ -126,6 +141,7 @@ export const defaultConfigSections = [
         description: 'Define how many commands will be remembered.',
         type: availableInputTypes.NUMBER,
         postFix: 'px',
+        iconButton: null,
         options: [],
         validations: [['is-between', 0, 1000]],
         value: configDefaultValues[configInputIds.HISTORIAL_SIZE]
@@ -136,6 +152,7 @@ export const defaultConfigSections = [
         description: 'Defines how the status indicator is shown in the terminal prompt.',
         type: availableInputTypes.SELECT,
         postFix: null,
+        iconButton: null,
         options: [
           { id: statusIndicators.DOT, name: 'Dot' },
           { id: statusIndicators.HALF_DOT, name: 'Half Dot' },
@@ -150,6 +167,7 @@ export const defaultConfigSections = [
         description:
           'Define a custom text to be displayed in the terminal prompt as context information.',
         type: availableInputTypes.TEXT_AREA,
+        iconButton: null,
         postFix: null,
         options: [],
         validations: [],
@@ -169,6 +187,7 @@ export const defaultConfigSections = [
         description: 'Prefered theme in color schemes.',
         type: availableInputTypes.THEME_SELECT,
         postFix: null,
+        iconButton: null,
         options: [],
         validations: [],
         value: configDefaultValues[configInputIds.THEME_NAME]
@@ -179,6 +198,7 @@ export const defaultConfigSections = [
         description: 'Select the primary accent color used in the interface.',
         type: availableInputTypes.COLOR_SELECT,
         postFix: null,
+        iconButton: null,
         options: basicColorKeys.map(key => ({ id: key, name: key })),
         validations: [],
         value: configDefaultValues[configInputIds.COLOR_ACCENT]
@@ -189,6 +209,7 @@ export const defaultConfigSections = [
         description: 'Specifies the font family used for displaying text in the terminal.',
         type: availableInputTypes.FONT_SELECT,
         postFix: null,
+        iconButton: null,
         options: [],
         validations: [],
         value: configDefaultValues[configInputIds.FONT_FAMILY]
@@ -199,6 +220,7 @@ export const defaultConfigSections = [
         description: 'Defines the size of the font used in the terminal.',
         type: availableInputTypes.SELECT,
         postFix: null,
+        iconButton: null,
         options: [
           { id: fontSizes.EXTRA_SMALL, name: 'Extra-Small' },
           { id: fontSizes.SMALL, name: 'Small' },
@@ -214,6 +236,7 @@ export const defaultConfigSections = [
         description: 'Display the status bar in the terminal prompt.',
         type: availableInputTypes.BOOLEAN,
         postFix: null,
+        iconButton: null,
         options: [],
         validations: [],
         value: configDefaultValues[configInputIds.STATUS_BAR]
@@ -224,6 +247,7 @@ export const defaultConfigSections = [
         description: 'Display the status light in the terminal prompt.',
         type: availableInputTypes.BOOLEAN,
         postFix: null,
+        iconButton: null,
         options: [],
         validations: [],
         value: configDefaultValues[configInputIds.STATUS_LIGHT]
@@ -237,27 +261,51 @@ export const defaultConfigSections = [
     Icon: Data,
     inputs: [
       {
-        id: configInputIds.RESET_DATA,
-        name: 'Restore factory defaults',
-        description: 'Reset all settings to their original factory values.',
+        id: configInputIds.IMPORT_CONFIGURATION,
+        name: 'Import Configuration',
+        description:
+          'Load a previously exported configuration file to restore your settings and terminal behavior. Existing configuration values will be overwritten.',
         type: availableInputTypes.BUTTON,
         postFix: null,
+        iconButton: Import,
         options: [],
         validations: [],
-        value: configDefaultValues[configInputIds.RESET_DATA]
+        value: configDefaultValues[configInputIds.IMPORT_CONFIGURATION]
+      },
+      {
+        id: configInputIds.EXPORT_CONFIGURATION,
+        name: 'Export Configuration',
+        description:
+          'Generate a backup file containing all your current settings, customizations, and terminal preferences. Use this file to restore your setup later or to replicate your configuration on another device.',
+        type: availableInputTypes.BUTTON,
+        postFix: null,
+        iconButton: Export,
+        options: [],
+        validations: [],
+        value: configDefaultValues[configInputIds.EXPORT_CONFIGURATION]
+      },
+      {
+        id: configInputIds.RESET_CONFIGURATION,
+        name: 'Reset Configuration preferences',
+        description: `Restore all UI and behavior settings (theme, experimental features, click-to-copy, animations, selection helpers, etc.) back to their default values.\nPersonal preferences will be lost, but your saved commands and registered events will remain intact.`,
+        type: availableInputTypes.BUTTON_WARN,
+        postFix: null,
+        iconButton: Undo,
+        options: [],
+        validations: [],
+        value: configDefaultValues[configInputIds.RESET_CONFIGURATION]
+      },
+      {
+        id: configInputIds.CLEAR_USER_DATA,
+        name: 'Restore factory defaults',
+        description: 'Reset all settings to their original factory values.',
+        type: availableInputTypes.BUTTON_DANGER,
+        postFix: null,
+        iconButton: Undo,
+        options: [],
+        validations: [],
+        value: configDefaultValues[configInputIds.CLEAR_USER_DATA]
       }
     ]
   }
 ]
-
-export const defaultConfig = defaultConfigSections.reduce((simplifiedConfig, section) => {
-  const sectionInputValues = section.inputs.reduce(
-    (simplifiedInputs, input) => ({ ...simplifiedInputs, [input.id]: input.value }),
-    {}
-  )
-
-  return {
-    ...simplifiedConfig,
-    ...sectionInputValues
-  }
-}, {})

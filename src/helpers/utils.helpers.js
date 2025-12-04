@@ -39,37 +39,69 @@ export const spreadIf = (condition, value) => {
   return condition ? value : {}
 }
 
-const rgbToHexByFragment = rgb => {
-  const nums = rgb.match(/\d+(\.\d+)?/g).map(Number)
-  const [r, g, b, a, ...rest] = nums
+export const rgbToHex = value => {
+  return value.replace(rgbPattern, rgb => {
+    const nums = rgb.match(/\d+(\.\d+)?/g).map(Number)
+    const [r, g, b, a, ...rest] = nums
 
-  if (rest.length) return rgb
+    if (rest.length) return rgb
 
-  if (a === undefined || a === 1) {
+    if (a === undefined || a === 1) {
+      return (
+        '#' +
+        [r, g, b]
+          .map(x => x.toString(16).padStart(2, '0'))
+          .join('')
+          .toUpperCase()
+      )
+    }
+
+    const alpha = Math.round(a * 255)
     return (
       '#' +
-      [r, g, b]
+      [r, g, b, alpha]
         .map(x => x.toString(16).padStart(2, '0'))
         .join('')
         .toUpperCase()
     )
-  }
-
-  const alpha = Math.round(a * 255)
-  return (
-    '#' +
-    [r, g, b, alpha]
-      .map(x => x.toString(16).padStart(2, '0'))
-      .join('')
-      .toUpperCase()
-  )
+  })
 }
-export const rgbToHex = value => {
-  return value.replace(rgbPattern, rgbToHexByFragment)
+
+export const hexToRgbObject = hex => {
+  hex = hex.replace('#', '')
+
+  if (hex.length === 3)
+    hex = hex
+      .split('')
+      .map(c => c + c)
+      .join('')
+
+  const num = parseInt(hex, 16)
+
+  return {
+    red: (num >> 16) & 255,
+    green: (num >> 8) & 255,
+    blue: num & 255
+  }
+}
+
+export const isDarkTheme = hex => {
+  const { red, green, blue } = hexToRgbObject(hex)
+  const luminance = 0.299 * red + 0.587 * green + 0.114 * blue
+
+  return luminance < 128
 }
 
 export const isRgb = value => rgbStartPattern.test(value)
 
 export const truncate = (value, maxCount) => {
   return value.length > maxCount ? `${value.slice(0, maxCount)}...` : value
+}
+
+export const safeJsonParse = value => {
+  try {
+    return JSON.parse(value)
+  } catch {
+    return null
+  }
 }

@@ -27,7 +27,7 @@ export const ErrorMessage = styled.span`
 export const FieldWrapper = styled.div`
   margin: ${t('space.900')} 0 0 ${t('space.900')};
   padding-bottom: ${t('space.900')};
-  border-bottom: ${t('space.50')} solid ${t('colors.white')};
+  border-bottom: ${t('space.50')} solid ${t('colors.brightBlack')};
 
   &:last-child {
     border-bottom: none;
@@ -44,4 +44,5 @@ export const FieldDescription = styled.p`
   margin: ${t('space.400')} 0;
   font-size: ${t('fontSize.50')};
   font-style: italic;
+  white-space: pre-wrap;
 `

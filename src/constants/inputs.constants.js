@@ -7,5 +7,7 @@ export const availableInputTypes = {
   THEME_SELECT: 'theme-select',
   FONT_SELECT: 'font-select',
   BUTTON: 'button',
+  BUTTON_DANGER: 'button-danger',
+  BUTTON_WARN: 'button-warn',
   TEXT_AREA: 'text-area'
 }

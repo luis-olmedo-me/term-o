@@ -9,6 +9,7 @@ import {
   updateConfigValueIn
 } from '@src/helpers/config.helpers'
 import { getAccentColors } from '@src/helpers/themes.helpers'
+import { isDarkTheme } from '@src/helpers/utils.helpers'
 
 export class StorageConfig extends StorageSimple {
   constructor(storageService, props) {
@@ -79,7 +80,8 @@ export class StorageConfig extends StorageSimple {
     return {
       ...defaultStyleMeasures,
       colors: { ...selectedTheme, ...accentColors },
-      font: fontFamily
+      font: fontFamily,
+      isDarkMode: isDarkTheme(selectedTheme.background)
     }
   }
 

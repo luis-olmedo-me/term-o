@@ -5,11 +5,13 @@ import SidePanel from '@configuration/components/SidePanel'
 import FieldRenderer from '@src/components/FieldRenderer'
 import useStorage from '@src/hooks/useStorage'
 import Logo from '@src/icons/Logo.icon'
+import storage from '@src/libs/storage'
 
 import { configIds, configInputIds } from '@src/constants/config.constants'
 import { iconSizes } from '@src/constants/icon.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { sidePanelOptions } from './Preferences.constants'
+import { handleImportConfiguration } from './Preferences.helpers'
 import * as S from './Preferences.styles'
 
 export const Preferences = () => {
@@ -19,10 +21,13 @@ export const Preferences = () => {
 
   const sectionSelected = config.details.find(({ id }) => id === selectedSectionId)
 
-  const handleClicksInButtonFields = inputId => {
-    if (inputId === configInputIds.RESET_DATA) {
-      config.reset()
-    }
+  const handleClicksInButtonFields = (inputId, onError) => {
+    onError(null)
+
+    if (inputId === configInputIds.CLEAR_USER_DATA) storage.reset()
+    if (inputId === configInputIds.RESET_CONFIGURATION) config.reset()
+    if (inputId === configInputIds.EXPORT_CONFIGURATION) storage.export()
+    if (inputId === configInputIds.IMPORT_CONFIGURATION) handleImportConfiguration({ onError })
   }
 
   return (
@@ -56,6 +61,7 @@ export const Preferences = () => {
                   options={input.options}
                   validations={input.validations}
                   postFix={input.postFix}
+                  iconButton={input.iconButton}
                   name={`${sectionSelected.id}-${input.id}`}
                   title={input.name}
                   changeConfig={config.change}

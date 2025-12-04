@@ -13,6 +13,7 @@ export const FieldRenderer = ({
   name,
   title,
   postFix,
+  iconButton,
   changeConfig,
   validations,
   handleClickInButtons,
@@ -40,7 +41,7 @@ export const FieldRenderer = ({
       <S.InputWrapper aria-error={typeof errorMessage === 'string'} aria-type={type}>
         <DynamicInput
           errorMessage={errorMessage}
-          handleClickInButtons={handleClickInButtons}
+          handleClickInButtons={id => handleClickInButtons(id, setErrorMessage)}
           inputId={inputId}
           name={name}
           onChange={tryApplyChange}
@@ -48,6 +49,7 @@ export const FieldRenderer = ({
           postFix={postFix}
           type={type}
           value={value}
+          iconButton={iconButton}
         />
       </S.InputWrapper>
 
@@ -63,6 +65,7 @@ FieldRenderer.propTypes = {
   title: String,
   name: String,
   postFix: String,
+  iconButton: Object,
   options: Array,
   validations: Array,
   changeConfig: Function,

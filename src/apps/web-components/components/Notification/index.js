@@ -89,8 +89,8 @@ class Notification extends HTMLElement {
   }
 
   _finish() {
-    this._dispatch('done')
     this.remove()
+    this._dispatch('done')
   }
 
   _dispatch(name, message = null) {

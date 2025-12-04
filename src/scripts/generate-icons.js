@@ -5,7 +5,7 @@ const sharp = require('sharp')
 const INPUT_SVG = path.resolve(__dirname, '../images/logo.svg')
 const OUT_DIR = path.resolve(__dirname, '../images/required')
 
-const SIZES = [16, 48, 128, 512]
+const SIZES = [16, 32, 48, 512]
 
 const generate = async () => {
   if (!fs.existsSync(INPUT_SVG)) {

@@ -10,6 +10,16 @@
   font-family: var(--font);
 }
 
+.fill-white {
+  fill: var(--white);
+}
+.fill-accent {
+  fill: var(--accent);
+}
+.stroke-bright-black {
+  stroke: var(--brightBlack);
+}
+
 .notification {
   display: flex;
   align-items: start;
@@ -41,9 +51,6 @@
   color: var(--accent);
   box-shadow: 0 4px 10px 2px var(--accent);
 }
-.notification.pulse {
-  animation: border-throb 10s ease-out;
-}
 .notification .title {
   line-height: normal;
   margin: 0;
@@ -55,18 +62,11 @@
   margin: 0;
   font-size: 11px;
 }
-
-.fill-white {
-  fill: var(--white);
-}
-.fill-accent {
-  fill: var(--accent);
-}
-.stroke-bright-black {
-  stroke: var(--brightBlack);
+.notification.lights-dimming {
+  animation: lights-dimming 10s ease-out;
 }
 
-@keyframes border-throb {
+@keyframes lights-dimming {
   0% {
     border-color: var(--accent);
     box-shadow: 0 4px 10px 2px var(--accent);

@@ -58,7 +58,7 @@ class Notification extends HTMLElement {
     await delay(300)
     if (this.isFinished) return
     this._appear()
-    this._elements.notification.classList.add('pulse')
+    this._elements.notification.classList.add('lights-dimming')
     this._elements.notification.classList.remove('active')
 
     await delay(9600)

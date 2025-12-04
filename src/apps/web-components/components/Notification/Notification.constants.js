@@ -5,6 +5,7 @@ export const notificationPropNames = [
   'font',
   'white',
   'accent',
+  'brightBlack',
   'foreground',
   'background'
 ]

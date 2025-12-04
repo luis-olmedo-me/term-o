@@ -51,8 +51,9 @@ export const createNotification = ({ id, title, message, theme }) => {
     title,
     message,
     font: theme.font,
-    white: theme.colors.white,
-    accent: theme.colors.accent,
+    white: theme.isDarkTheme ? theme.colors.white : theme.colors.brightWhite,
+    accent: theme.isDarkTheme ? theme.colors.accent : theme.colors.brightAccent,
+    brightBlack: theme.isDarkTheme ? theme.colors.brightBlack : theme.colors.black,
     background: theme.colors.background,
     foreground: theme.colors.foreground
   })

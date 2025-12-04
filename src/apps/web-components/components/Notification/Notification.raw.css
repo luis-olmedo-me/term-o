@@ -18,7 +18,7 @@
   width: 300px;
   pointer-events: none;
   background: var(--background);
-  color: var(--accent);
+  color: var(--foreground);
   border: 1px solid #111;
   border-radius: 5px;
   padding: 14px 10px;
@@ -29,7 +29,6 @@
     transform 0.4s ease-in-out,
     opacity 0.4s ease-in-out,
     border-color 0.4s ease-in-out,
-    color 0.4s ease-in-out,
     box-shadow 0.4s ease-in-out;
 }
 .notification.in-view {
@@ -46,28 +45,34 @@
   animation: border-throb 10s ease-out;
 }
 .notification .title {
+  line-height: normal;
   margin: 0;
   font-weight: bold;
   font-size: 14px;
 }
 .notification .message {
+  line-height: normal;
   margin: 0;
   font-size: 11px;
 }
 
-.path-white {
+.fill-white {
   fill: var(--white);
+}
+.fill-accent {
+  fill: var(--accent);
+}
+.stroke-bright-black {
+  stroke: var(--brightBlack);
 }
 
 @keyframes border-throb {
   0% {
     border-color: var(--accent);
-    color: var(--accent);
     box-shadow: 0 4px 10px 2px var(--accent);
   }
   100% {
-    color: var(--foreground);
-    border-color: #111;
+    border-color: var(--brightBlack);
     box-shadow: 0 4px 10px 2px #111;
   }
 }

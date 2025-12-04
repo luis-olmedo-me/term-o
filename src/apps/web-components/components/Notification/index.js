@@ -21,6 +21,7 @@ class Notification extends HTMLElement {
       font: this._props.font,
       white: this._props.white,
       accent: this._props.accent,
+      brightBlack: this._props.brightBlack,
       foreground: this._props.foreground,
       background: this._props.background
     })
@@ -74,7 +75,7 @@ class Notification extends HTMLElement {
 
   async _closeDueToClick() {
     this.isFinished = true
-    this._elements.notification.classList.remove('active')
+    this._elements.notification.classList.remove('in-view')
 
     await delay(400)
     this.remove()

@@ -45,18 +45,20 @@ class Notification extends HTMLElement {
   async _runAnimation() {
     await delay(20)
     if (this.isFinished) return
+    this._elements.notification.classList.add('in-view')
     this._elements.notification.classList.add('active')
 
     await delay(300)
     if (this.isFinished) return
     this._appear()
     this._elements.notification.classList.add('pulse')
-
-    await delay(5000)
-    if (this.isFinished) return
     this._elements.notification.classList.remove('active')
 
-    await delay(500)
+    await delay(9600)
+    if (this.isFinished) return
+    this._elements.notification.classList.remove('in-view')
+
+    await delay(400)
     if (this.isFinished) return
     this._closeDueToTimeout()
   }

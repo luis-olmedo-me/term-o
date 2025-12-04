@@ -19,24 +19,31 @@
   pointer-events: none;
   background: var(--background);
   color: var(--accent);
-  border: 1px solid transparent;
-  border-width: 1px 0 0 1px;
+  border: 1px solid #111;
   border-radius: 5px;
   padding: 14px 10px;
-  box-shadow: 0 0 10px transparent;
+  box-shadow: 0 4px 10px 2px #111;
   transform: translateX(100%);
   opacity: 0;
   transition:
     transform 0.4s ease-in-out,
-    opacity 0.4s ease-in-out;
+    opacity 0.4s ease-in-out,
+    border-color 0.4s ease-in-out,
+    color 0.4s ease-in-out,
+    box-shadow 0.4s ease-in-out;
 }
-.notification.active {
+.notification.in-view {
   transform: translateX(0);
   opacity: 1;
+}
+.notification.active {
   pointer-events: all;
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 4px 10px 2px var(--accent);
 }
 .notification.pulse {
-  animation: border-throb 1s ease-out alternate infinite;
+  animation: border-throb 10s ease-out;
 }
 .notification .title {
   margin: 0;
@@ -54,13 +61,13 @@
 
 @keyframes border-throb {
   0% {
-    color: var(--foreground);
-    border-color: transparent;
-    box-shadow: 0 0 10px transparent;
-  }
-  100% {
     border-color: var(--accent);
     color: var(--accent);
-    box-shadow: 0 0 16px var(--accent);
+    box-shadow: 0 4px 10px 2px var(--accent);
+  }
+  100% {
+    color: var(--foreground);
+    border-color: #111;
+    box-shadow: 0 4px 10px 2px #111;
   }
 }

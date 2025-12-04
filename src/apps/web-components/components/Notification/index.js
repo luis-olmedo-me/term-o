@@ -83,7 +83,7 @@ class Notification extends HTMLElement {
     this._elements.notification.classList.remove('lights-dimming')
     this._elements.notification.classList.remove('activate')
 
-    await delay(400)
+    await delay(275)
     this._finish()
   }
 

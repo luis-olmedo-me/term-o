@@ -85,7 +85,7 @@
     border-color: var(--accent);
     box-shadow: 0 4px 10px 2px var(--accent);
   }
-  100% {
+  15% {
     border-color: var(--brightBlack);
     box-shadow: 0 4px 10px 2px #111;
   }

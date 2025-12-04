@@ -10,7 +10,8 @@ export const commandNames = {
   EVENTS: 'events',
   HISTORY: 'history',
   REQUEST: 'request',
-  SCRIPTS: 'scripts'
+  SCRIPTS: 'scripts',
+  NOTIFY: 'notify'
 }
 
 export const origins = {

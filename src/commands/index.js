@@ -4,6 +4,7 @@ import domBase from './dom/dom.command'
 import errorBase from './error/error.command'
 import eventsBase from './events/events.command'
 import historyBase from './history/history.command'
+import notifyBase from './notify/notify.command'
 import requestBase from './request/request.command'
 import scriptsBase from './scripts/scripts.command'
 import storageBase from './storage/storage.command'
@@ -12,18 +13,19 @@ import tabsBase from './tabs/tabs.command'
 import themeBase from './theme/theme.command'
 
 export default [
+  aliasBase,
   clearBase,
   domBase,
-  storageBase,
-  tabsBase,
-  aliasBase,
-  themeBase,
-  styleBase,
   errorBase,
   eventsBase,
   historyBase,
+  notifyBase,
   requestBase,
-  scriptsBase
+  scriptsBase,
+  storageBase,
+  styleBase,
+  tabsBase,
+  themeBase
 ]
 
 export {
@@ -33,6 +35,7 @@ export {
   errorBase,
   eventsBase,
   historyBase,
+  notifyBase,
   requestBase,
   scriptsBase,
   storageBase,

@@ -22,7 +22,7 @@
   border: 1px solid transparent;
   border-width: 1px 0 0 1px;
   border-radius: 5px;
-  padding: 14px;
+  padding: 14px 10px;
   box-shadow: 0 0 10px transparent;
   transform: translateX(100%);
   opacity: 0;
@@ -38,6 +38,16 @@
 .notification.pulse {
   animation: border-throb 1s ease-out alternate infinite;
 }
+.notification .title {
+  margin: 0;
+  font-weight: bold;
+  font-size: 14px;
+}
+.notification .message {
+  margin: 0;
+  font-size: 11px;
+}
+
 .path-white {
   fill: var(--white);
 }

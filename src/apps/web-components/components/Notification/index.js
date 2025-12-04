@@ -49,9 +49,10 @@ class Notification extends HTMLElement {
 
     await delay(300)
     if (this.isFinished) return
+    this._appear()
     this._elements.notification.classList.add('pulse')
 
-    await delay(8700)
+    await delay(5000)
     if (this.isFinished) return
     this._elements.notification.classList.remove('active')
 
@@ -75,6 +76,12 @@ class Notification extends HTMLElement {
 
     await delay(400)
     this.remove()
+  }
+
+  async _appear() {
+    const appearEvent = new CustomEvent('appear')
+
+    this.dispatchEvent(appearEvent)
   }
 }
 

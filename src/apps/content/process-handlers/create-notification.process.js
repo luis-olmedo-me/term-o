@@ -7,13 +7,10 @@ export default async (resolve, reject, data) => {
     message: data.message,
     theme: data.theme
   })
-  const handleClick = async () => {
-    await notification.remove()
-
-    console.log('notification created')
+  const handleAppear = async () => {
     resolve(null)
   }
 
-  notification.addEventListener('click', handleClick)
+  notification.addEventListener('appear', handleAppear)
   notification.addEventListener('error', event => reject(event.detail))
 }

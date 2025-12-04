@@ -37,6 +37,9 @@
 .notification.pulse {
   animation: border-throb 1s ease-out alternate infinite;
 }
+.path-white {
+  fill: var(--white);
+}
 
 @keyframes border-throb {
   0% {

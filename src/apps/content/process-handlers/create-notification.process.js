@@ -1,14 +1,14 @@
-import { createBubble } from '@content/helpers/web-components.helpers'
+import { createNotification } from '@content/helpers/web-components.helpers'
 
 export default async (resolve, reject, data) => {
-  const bubble = createBubble({ message: data.message, theme: data.theme })
+  const notification = createNotification({ message: data.message, theme: data.theme })
   const handleClick = async () => {
-    await bubble.remove()
+    await notification.remove()
 
     console.log('notification created')
     resolve(null)
   }
 
-  bubble.addEventListener('click', handleClick)
-  bubble.addEventListener('error', event => reject(event.detail))
+  notification.addEventListener('click', handleClick)
+  notification.addEventListener('error', event => reject(event.detail))
 }

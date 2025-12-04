@@ -4,7 +4,6 @@ import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatNotification } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
-import { createUUIDv4 } from '@src/helpers/utils.helpers'
 import { createNotification } from '@src/processes'
 
 export const notifyHandler = async command => {
@@ -13,19 +12,16 @@ export const notifyHandler = async command => {
 
   if (P`create`) {
     const config = storage.get(storageKeys.CONFIG)
-    const id = createUUIDv4()
     const title = P`title`
     const message = P`message`
 
-    const notification = { id, title, message }
-    const update = formatNotification(notification)
-
-    await createNotification(tabId, {
-      id,
+    const notification = await createNotification(tabId, {
       title,
       message,
       theme: config.theme
     })
+
+    const update = formatNotification(notification)
 
     command.update(update)
   }

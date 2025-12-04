@@ -88,12 +88,12 @@ export const triggerEvent = (tabId, { xpath, event, theme }) => {
   })
 }
 
-export const createNotification = (tabId, { id, title, message, theme }) => {
+export const createNotification = (tabId, { title, message, theme }) => {
   return createWorkerProcessRequest({
     type: processNames.CREATE_NOTIFICATION,
-    defaultResponse: null,
+    defaultResponse: {},
     tabId,
-    data: { id, title, message, theme }
+    data: { title, message, theme }
   })
 }
 

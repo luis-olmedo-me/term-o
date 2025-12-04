@@ -1,16 +1,16 @@
 import { createNotification } from '@content/helpers/web-components.helpers'
+import { createUUIDv4, delay } from '@src/helpers/utils.helpers'
 
-export default async (resolve, reject, data) => {
-  const notification = createNotification({
-    id: data.id,
+export default async (resolve, _reject, data) => {
+  const notification = {
+    id: createUUIDv4(),
     title: data.title,
-    message: data.message,
-    theme: data.theme
-  })
-  const handleAppear = async () => {
-    resolve(null)
+    message: data.message
   }
 
-  notification.addEventListener('appear', handleAppear)
-  notification.addEventListener('error', event => reject(event.detail))
+  createNotification({ ...notification, theme: data.theme })
+
+  await delay(200)
+
+  resolve(notification)
 }

@@ -20,8 +20,7 @@ class Notification extends HTMLElement {
     this._props = getPropsFromAttrs(this, notificationPropNames)
     this.setAttribute('id', this._props.id)
 
-    const lastNotification = getLastNotificationElement({ currentId: this._props.id })
-    const top = (lastNotification?.getBoundingClientRect().bottom ?? 0) + 12
+    const { lastNotification, top } = getLastNotificationElement({ currentId: this._props.id })
 
     this._elements.styles.innerHTML = applyCssVariables(NotificationCss, {
       font: this._props.font,
@@ -37,7 +36,8 @@ class Notification extends HTMLElement {
 
     this.addEventListener('click', this._closeDueToClick.bind(this))
 
-    this._runAnimation()
+    if (lastNotification) lastNotification.addEventListener('done', this._runAnimation())
+    else this._runAnimation()
   }
 
   get _elements() {

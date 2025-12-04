@@ -33,13 +33,6 @@
   border-radius: 5px;
   padding: 14px 10px;
   box-shadow: 0 4px 10px 2px #111;
-  transform: translateX(100%);
-  opacity: 0;
-  transition:
-    transform 0.4s ease-in-out,
-    opacity 0.4s ease-in-out,
-    border-color 0.4s ease-in-out,
-    box-shadow 0.4s ease-in-out;
 }
 .notification.in-view {
   transform: translateX(0);
@@ -62,8 +55,29 @@
   margin: 0;
   font-size: 11px;
 }
+.notification.activate {
+  animation: activate 0.3s ease-out;
+}
 .notification.lights-dimming {
   animation: lights-dimming 10s ease-out;
+}
+.notification.desactivate {
+  animation: desactivate 0.3s ease-out;
+}
+
+@keyframes activate {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+    border-color: var(--brightBlack);
+    box-shadow: 0 4px 10px 2px #111;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+    border-color: var(--accent);
+    box-shadow: 0 4px 10px 2px var(--accent);
+  }
 }
 
 @keyframes lights-dimming {
@@ -74,5 +88,18 @@
   100% {
     border-color: var(--brightBlack);
     box-shadow: 0 4px 10px 2px #111;
+  }
+}
+
+@keyframes desactivate {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+    border-color: var(--brightBlack);
+    box-shadow: 0 4px 10px 2px #111;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
   }
 }

@@ -50,45 +50,50 @@ class Notification extends HTMLElement {
   }
 
   async _runAnimation() {
-    await delay(20)
     if (this.isFinished) return
-    this._elements.notification.classList.add('in-view')
-    this._elements.notification.classList.add('active')
+    this._elements.notification.classList.add('activate')
 
-    await delay(300)
+    await delay(275)
     if (this.isFinished) return
-    this._appear()
+    this._dispatch('appear')
     this._elements.notification.classList.add('lights-dimming')
-    this._elements.notification.classList.remove('active')
+    this._elements.notification.classList.remove('activate')
 
-    await delay(9600)
+    await delay(9975)
     if (this.isFinished) return
-    this._elements.notification.classList.remove('in-view')
+    this._elements.notification.classList.remove('activate')
+    this._elements.notification.classList.add('desactivate')
 
-    await delay(400)
+    await delay(275)
     if (this.isFinished) return
     this._closeDueToTimeout()
   }
 
   _closeDueToTimeout() {
-    const autoClosedEvent = new CustomEvent('error', {
-      detail: 'The notification closed automatically because no action was taken in time.'
-    })
-
-    this.dispatchEvent(autoClosedEvent)
-    this.remove()
+    this._dispatch(
+      'error',
+      'The notification closed automatically because no action was taken in time.'
+    )
+    this._finish()
   }
 
   async _closeDueToClick() {
     this.isFinished = true
-    this._elements.notification.classList.remove('in-view')
+    this._elements.notification.classList.add('desactivate')
+    this._elements.notification.classList.remove('lights-dimming')
+    this._elements.notification.classList.remove('activate')
 
     await delay(400)
+    this._finish()
+  }
+
+  _finish() {
+    this._dispatch('done')
     this.remove()
   }
 
-  async _appear() {
-    const appearEvent = new CustomEvent('appear')
+  _dispatch(name, message = null) {
+    const appearEvent = new CustomEvent(name, { detail: message })
 
     this.dispatchEvent(appearEvent)
   }

@@ -55,7 +55,7 @@ class Notification extends HTMLElement {
     if (this.isFinished) return
     this._elements.notification.classList.remove('active')
 
-    await delay(400)
+    await delay(500)
     if (this.isFinished) return
     this._closeDueToTimeout()
   }

@@ -12,7 +12,7 @@
 
 .notification {
   display: flex;
-  align-items: center;
+  align-items: start;
   gap: 6px;
 
   width: 300px;

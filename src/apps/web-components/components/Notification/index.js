@@ -24,7 +24,9 @@ class Notification extends HTMLElement {
       foreground: this._props.foreground,
       background: this._props.background
     })
+    this._elements.title.innerHTML = this._props.title
     this._elements.message.innerHTML = this._props.message
+    this.setAttribute('id', this._props.id)
 
     this.addEventListener('click', this._closeDueToClick.bind(this))
 
@@ -35,6 +37,7 @@ class Notification extends HTMLElement {
     return {
       notification: this._shadow.querySelector('#notification'),
       message: this._shadow.querySelector('#message'),
+      title: this._shadow.querySelector('#title'),
       styles: this._shadow.querySelector('#styles')
     }
   }

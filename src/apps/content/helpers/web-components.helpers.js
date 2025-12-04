@@ -45,9 +45,11 @@ export const createBubble = ({ message, theme }) => {
   })
 }
 
-export const createNotification = ({ message, theme }) => {
+export const createNotification = ({ id, title, message, theme }) => {
   return createWebElement(webElements.NOTIFICATION, {
-    message: message,
+    id,
+    title,
+    message,
     font: theme.font,
     white: theme.colors.white,
     accent: theme.colors.accent,

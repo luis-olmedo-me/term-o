@@ -1,7 +1,12 @@
 import { createNotification } from '@content/helpers/web-components.helpers'
 
 export default async (resolve, reject, data) => {
-  const notification = createNotification({ message: data.message, theme: data.theme })
+  const notification = createNotification({
+    id: data.id,
+    title: data.title,
+    message: data.message,
+    theme: data.theme
+  })
   const handleClick = async () => {
     await notification.remove()
 

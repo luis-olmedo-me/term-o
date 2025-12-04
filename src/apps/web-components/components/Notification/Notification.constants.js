@@ -1,4 +1,6 @@
 export const notificationPropNames = [
+  'id',
+  'title',
   'message',
   'font',
   'white',

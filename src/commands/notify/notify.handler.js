@@ -21,6 +21,8 @@ export const notifyHandler = async command => {
     const update = formatNotification(notification)
 
     await createNotification(tabId, {
+      id,
+      title,
       message,
       theme: config.theme
     })

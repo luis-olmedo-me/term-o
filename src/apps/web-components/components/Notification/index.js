@@ -8,6 +8,10 @@ import { notificationPropNames } from './Notification.constants'
 import { getLastNotificationElement } from './Notification.helpers'
 
 class Notification extends HTMLElement {
+  _timerAppear = null
+  _timerDimming = null
+  _timerRemoval = null
+
   constructor() {
     super()
     this._shadow = this.attachShadow({ mode: 'closed' })
@@ -34,6 +38,7 @@ class Notification extends HTMLElement {
     this._elements.title.innerHTML = this._props.title
     this._elements.message.innerHTML = this._props.message
     this._elements.notification.classList.add('hidden')
+    this._lastNotification = lastNotification
 
     this.addEventListener('click', this._closeDueToClick.bind(this))
     if (lastNotification) lastNotification.addEventListener('done', this._runAnimation.bind(this))
@@ -54,28 +59,28 @@ class Notification extends HTMLElement {
     this._elements.notification.classList.remove('hidden')
     this._elements.notification.classList.add('activate')
 
-    await delay(275)
-    if (this.isFinished) return
-    this._dispatch('appear')
-    this._elements.notification.classList.add('lights-dimming')
-    this._elements.notification.classList.remove('activate')
+    this._timerAppear = this.animate(() => {
+      this._dispatch('appear')
+      this._elements.notification.classList.add('lights-dimming')
+      this._elements.notification.classList.remove('activate')
+    }, 300)
 
-    await delay(9975)
-    if (this.isFinished) return
-    this._elements.notification.classList.remove('activate')
-    this._elements.notification.classList.add('desactivate')
+    this._timerDimming = this.animate(() => {
+      this._elements.notification.classList.remove('activate')
+      this._elements.notification.classList.add('desactivate')
+    }, 10300)
 
-    await delay(275)
-    if (this.isFinished) return
-    this._closeDueToTimeout()
+    this._timerRemoval = this.animate(() => this._finish(), 10600)
   }
 
-  _closeDueToTimeout() {
-    this._dispatch(
-      'error',
-      'The notification closed automatically because no action was taken in time.'
-    )
-    this._finish()
+  animate(callback, time) {
+    return setTimeout(() => {
+      if (this.isFinished) return
+
+      requestAnimationFrame(() => {
+        callback.call(this)
+      })
+    }, time - 25)
   }
 
   async _closeDueToClick() {

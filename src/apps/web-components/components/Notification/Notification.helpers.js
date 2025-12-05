@@ -5,12 +5,5 @@ export const getNotificationBeforeElement = ({ currentId }) => {
   const queryAsArray = Array.from(query)
   const notifications = queryAsArray.filter(element => currentId !== element.getAttribute('id'))
 
-  const notificationBefore = notifications.find(element => element.getAttribute('index') === '1')
-  const lastTop = notificationBefore?.getBoundingClientRect().bottom ?? 0
-
-  return {
-    notificationBefore,
-    top: lastTop + 12,
-    index: notifications.length
-  }
+  return notifications.find(element => element.getAttribute('index') === '1')
 }

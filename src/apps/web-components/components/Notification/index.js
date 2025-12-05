@@ -23,7 +23,7 @@ class Notification extends HTMLElement {
   connectedCallback() {
     this._props = getPropsFromAttrs(this, notificationPropNames)
 
-    const { notificationBefore } = getNotificationBeforeElement({ currentId: this._props.id })
+    const notificationBefore = getNotificationBeforeElement({ currentId: this._props.id })
 
     this.setAttribute('id', this._props.id)
     this.setAttribute('index', '1')

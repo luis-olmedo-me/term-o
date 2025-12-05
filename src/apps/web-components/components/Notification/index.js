@@ -18,18 +18,18 @@ class Notification extends HTMLElement {
 
   connectedCallback() {
     this._props = getPropsFromAttrs(this, notificationPropNames)
+
+    const { lastNotification, index } = getLastNotificationElement({ currentId: this._props.id })
+
     this.setAttribute('id', this._props.id)
-
-    const { lastNotification, top } = getLastNotificationElement({ currentId: this._props.id })
-
+    this.setAttribute('index', index)
     this._elements.styles.innerHTML = applyCssVariables(NotificationCss, {
       font: this._props.font,
       white: this._props.white,
       accent: this._props.accent,
       brightBlack: this._props.brightBlack,
       foreground: this._props.foreground,
-      background: this._props.background,
-      top: `${top}px`
+      background: this._props.background
     })
     this._elements.title.innerHTML = this._props.title
     this._elements.message.innerHTML = this._props.message
@@ -88,9 +88,10 @@ class Notification extends HTMLElement {
     this._finish()
   }
 
-  _finish() {
-    this.remove()
+  async _finish() {
     this._dispatch('done')
+    await delay(10)
+    this.remove()
   }
 
   _dispatch(name, message = null) {

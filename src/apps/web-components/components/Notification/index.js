@@ -5,7 +5,7 @@ import { webElements } from '@src/constants/web-elements.constants'
 import { delay } from '@src/helpers/utils.helpers'
 import { applyCssVariables, getPropsFromAttrs } from '@web-components/helpers/props.helpers'
 import { notificationPropNames } from './Notification.constants'
-import { getLastNotificationElement } from './Notification.helpers'
+import { getNotificationBeforeElement } from './Notification.helpers'
 
 class Notification extends HTMLElement {
   _timerAppear = null
@@ -23,10 +23,10 @@ class Notification extends HTMLElement {
   connectedCallback() {
     this._props = getPropsFromAttrs(this, notificationPropNames)
 
-    const { lastNotification, index } = getLastNotificationElement({ currentId: this._props.id })
+    const { notificationBefore } = getNotificationBeforeElement({ currentId: this._props.id })
 
     this.setAttribute('id', this._props.id)
-    this.setAttribute('index', index)
+    this.setAttribute('index', '1')
     this._elements.styles.innerHTML = applyCssVariables(NotificationCss, {
       font: this._props.font,
       white: this._props.white,
@@ -38,16 +38,24 @@ class Notification extends HTMLElement {
     this._elements.title.innerHTML = this._props.title
     this._elements.message.innerHTML = this._props.message
     this._elements.notification.classList.add('hidden')
-    this._lastNotification = lastNotification
+    this._notificationBefore = notificationBefore
 
     this.addEventListener('click', this._closeDueToClick.bind(this))
-    if (lastNotification) lastNotification.addEventListener('done', this._runAnimation.bind(this))
-    else this._runAnimation()
+
+    if (notificationBefore) notificationBefore.moveDownAt(this._nextStart)
+
+    this._runAnimation({})
+  }
+
+  get _nextStart() {
+    const rect = this._elements.notification.getBoundingClientRect()
+    return rect.top + rect.height + 12
   }
 
   get _elements() {
     return {
       notification: this._shadow.querySelector('#notification'),
+      wrapper: this._shadow.querySelector('#wrapper'),
       message: this._shadow.querySelector('#message'),
       title: this._shadow.querySelector('#title'),
       styles: this._shadow.querySelector('#styles')
@@ -59,18 +67,37 @@ class Notification extends HTMLElement {
     this._elements.notification.classList.remove('hidden')
     this._elements.notification.classList.add('activate')
 
-    this._timerAppear = this.animate(() => {
-      this._dispatch('appear')
-      this._elements.notification.classList.add('lights-dimming')
-      this._elements.notification.classList.remove('activate')
-    }, 300)
+    await delay(275)
+    if (this.isFinished) return
+    this._dispatch('appear')
+    this._elements.notification.classList.add('lights-dimming')
+    this._elements.notification.classList.remove('activate')
 
-    this._timerDimming = this.animate(() => {
-      this._elements.notification.classList.remove('activate')
-      this._elements.notification.classList.add('desactivate')
-    }, 10300)
+    await delay(9975)
+    if (this.isFinished) return
+    this._elements.notification.classList.remove('activate')
+    this._elements.notification.classList.add('desactivate')
 
-    this._timerRemoval = this.animate(() => this._finish(), 10600)
+    await delay(275)
+    if (this.isFinished) return
+    this._finish()
+  }
+
+  cancelAnimation() {
+    clearTimeout(this._timerRemoval)
+  }
+
+  moveDownAt(positionY) {
+    const currentIndex = this.getAttribute('index')
+    const newIndex = Number(currentIndex) + 1
+
+    this.setAttribute('index', newIndex)
+    this._elements.wrapper.style.setProperty('top', `${positionY}px`)
+
+    const rect = this._elements.notification.getBoundingClientRect()
+    const start = rect.height + 12
+
+    if (this._notificationBefore) this._notificationBefore.moveDownAt(start + positionY)
   }
 
   animate(callback, time) {
@@ -99,8 +126,8 @@ class Notification extends HTMLElement {
     this.remove()
   }
 
-  _dispatch(name, message = null) {
-    const appearEvent = new CustomEvent(name, { detail: message })
+  _dispatch(name, detail = null) {
+    const appearEvent = new CustomEvent(name, { detail })
 
     this.dispatchEvent(appearEvent)
   }

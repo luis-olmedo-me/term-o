@@ -1,15 +1,15 @@
 import { webElements } from '@src/constants/web-elements.constants'
 
-export const getLastNotificationElement = ({ currentId }) => {
-  const query = document.querySelectorAll(`${webElements.NOTIFICATION}[index="0"]`)
+export const getNotificationBeforeElement = ({ currentId }) => {
+  const query = document.querySelectorAll(webElements.NOTIFICATION)
+  const queryAsArray = Array.from(query)
+  const notifications = queryAsArray.filter(element => currentId !== element.getAttribute('id'))
 
-  const notificationsRaw = Array.from(query)
-  const notifications = notificationsRaw.filter(element => currentId !== element.getAttribute('id'))
-  const lastNotification = notifications.at(-1)
-  const lastTop = lastNotification?.getBoundingClientRect().bottom ?? 0
+  const notificationBefore = notifications.find(element => element.getAttribute('index') === '1')
+  const lastTop = notificationBefore?.getBoundingClientRect().bottom ?? 0
 
   return {
-    lastNotification,
+    notificationBefore,
     top: lastTop + 12,
     index: notifications.length
   }

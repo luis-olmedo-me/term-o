@@ -49,36 +49,40 @@ class Notification extends HTMLElement {
   }
 
   moveDownAt(positionY) {
-    const currentIndex = this.getAttribute('index')
-    const newIndex = Number(currentIndex) + 1
-
     if (!this.isFinished) {
+      const currentIndex = this.getAttribute('index')
+      const newIndex = Number(currentIndex) + 1
+
       this.setAttribute('index', newIndex)
       this._elements.wrapper.style.setProperty('top', `${positionY}px`)
       this.extendAnimation()
     }
 
-    const rect = this._elements.notification.getBoundingClientRect()
-    const start = rect.height + 12
-
     if (this._notificationBefore) {
-      this._notificationBefore.moveDownAt(this.isFinished ? positionY : start + positionY)
+      const rect = this._elements.notification.getBoundingClientRect()
+      const start = rect.height + 12
+      const emptySpot = start + positionY
+      const nextNotificationPositionY = this.isFinished ? positionY : emptySpot
+
+      this._notificationBefore.moveDownAt(nextNotificationPositionY)
     }
   }
 
   moveUpAt(positionY) {
-    const rect = this._elements.wrapper.getBoundingClientRect()
-    const currentIndex = this.getAttribute('index')
-    const newIndex = Number(currentIndex) - 1
-
     if (!this.isFinished) {
+      const currentIndex = this.getAttribute('index')
+      const newIndex = Number(currentIndex) - 1
+
       this.setAttribute('index', newIndex)
       this._elements.wrapper.style.setProperty('top', `${positionY}px`)
       this.extendAnimation()
     }
 
     if (this._notificationBefore) {
-      this._notificationBefore.moveUpAt(this.isFinished ? positionY : rect.top)
+      const rect = this._elements.wrapper.getBoundingClientRect()
+      const nextNotificationPositionY = this.isFinished ? positionY : rect.top
+
+      this._notificationBefore.moveUpAt(nextNotificationPositionY)
     }
   }
 

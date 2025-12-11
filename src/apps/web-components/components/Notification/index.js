@@ -41,8 +41,8 @@ class Notification extends HTMLElement {
     this.addEventListener('click', this._closeDueToClick.bind(this))
 
     if (notificationBefore) {
-      notificationBefore.moveDownAt(this._nextStart)
       extendAllAnimations({ exeptionId: this._props.id })
+      notificationBefore.moveDownAt(this._nextStart)
     }
 
     this._runAnimation({})
@@ -58,10 +58,9 @@ class Notification extends HTMLElement {
     }
 
     if (this._notificationBefore) {
-      const rect = this._elements.notification.getBoundingClientRect()
-      const start = rect.height + 12
-      const emptySpot = start + positionY
-      const nextNotificationPositionY = this.isFinished ? positionY : emptySpot
+      const rect = this._elements.wrapper.getBoundingClientRect()
+      const start = positionY + rect.height
+      const nextNotificationPositionY = this.isFinished ? positionY : start
 
       this._notificationBefore.moveDownAt(nextNotificationPositionY)
     }
@@ -94,7 +93,7 @@ class Notification extends HTMLElement {
 
   get _nextStart() {
     const rect = this._elements.notification.getBoundingClientRect()
-    return rect.top + rect.height + 12
+    return rect.top + rect.height
   }
 
   get _elements() {

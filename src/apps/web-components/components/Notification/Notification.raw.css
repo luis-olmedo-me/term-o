@@ -10,16 +10,31 @@
 
 .wrapper {
   position: fixed;
-  top: 12px;
-  right: 12px;
+  top: 0;
+  right: 100%;
   z-index: 999999;
   display: flex;
   font-size: 13px;
   cursor: pointer;
   user-select: none;
   pointer-events: all;
-  transition: top 0.5s ease;
+  transition:
+    top 0.5s ease,
+    opacity 0.5s ease;
   font-family: var(--font);
+  opacity: 0;
+}
+.wrapper[index='1'] {
+  opacity: 1;
+  right: 12px;
+}
+.wrapper[index='2'] {
+  opacity: 0.8;
+  right: 12px;
+}
+.wrapper[index='3'] {
+  opacity: 0.5;
+  right: 12px;
 }
 
 .notification {
@@ -35,6 +50,7 @@
   border-radius: 5px;
   padding: 14px 10px;
   box-shadow: 0 4px 10px 2px #111;
+  margin: 12px 0 0 0;
 }
 .notification.in-view {
   transform: translateX(0);
@@ -46,15 +62,30 @@
   color: var(--accent);
   box-shadow: 0 4px 10px 2px var(--accent);
 }
-.notification .title {
-  line-height: normal;
+.notification .title,
+.notification .message {
+  display: -webkit-box;
+  box-orient: vertical;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 0.8rem;
   margin: 0;
+  min-height: calc(0.8rem * 2);
+  max-height: calc(0.8rem * 2);
+}
+
+.notification .message-box {
+  flex: 1;
+  min-width: 0;
+}
+.notification .title {
   font-weight: bold;
   font-size: 14px;
 }
 .notification .message {
-  line-height: normal;
-  margin: 0;
   font-size: 11px;
 }
 .notification.hidden {

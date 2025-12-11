@@ -8,9 +8,7 @@ import { notificationPropNames } from './Notification.constants'
 import { getNotificationBeforeElement } from './Notification.helpers'
 
 class Notification extends HTMLElement {
-  _timerAppear = null
-  _timerDimming = null
-  _timerRemoval = null
+  _dimmingMS = 9975
 
   constructor() {
     super()
@@ -42,9 +40,52 @@ class Notification extends HTMLElement {
 
     this.addEventListener('click', this._closeDueToClick.bind(this))
 
-    if (notificationBefore) notificationBefore.moveDownAt(this._nextStart)
+    if (notificationBefore) {
+      notificationBefore.moveDownAt(this._nextStart)
+      notificationBefore.extendAnimation()
+    }
 
     this._runAnimation({})
+  }
+
+  moveDownAt(positionY) {
+    const currentIndex = this.getAttribute('index')
+    const newIndex = Number(currentIndex) + 1
+
+    if (!this.isFinished) {
+      this.setAttribute('index', newIndex)
+      this._elements.wrapper.style.setProperty('top', `${positionY}px`)
+      this.extendAnimation()
+    }
+
+    const rect = this._elements.notification.getBoundingClientRect()
+    const start = rect.height + 12
+
+    if (this._notificationBefore) {
+      this._notificationBefore.moveDownAt(this.isFinished ? positionY : start + positionY)
+    }
+  }
+
+  moveUpAt(positionY) {
+    const rect = this._elements.wrapper.getBoundingClientRect()
+    const currentIndex = this.getAttribute('index')
+    const newIndex = Number(currentIndex) - 1
+
+    if (!this.isFinished) {
+      this.setAttribute('index', newIndex)
+      this._elements.wrapper.style.setProperty('top', `${positionY}px`)
+      this.extendAnimation()
+    }
+
+    if (this._notificationBefore) {
+      this._notificationBefore.moveUpAt(this.isFinished ? positionY : rect.top)
+    }
+  }
+
+  extendAnimation() {
+    const currentDimmingMS = this._dimmingMS ?? 0
+
+    this._dimmingMS = currentDimmingMS + 500
   }
 
   get _nextStart() {
@@ -73,7 +114,7 @@ class Notification extends HTMLElement {
     this._elements.notification.classList.add('lights-dimming')
     this._elements.notification.classList.remove('activate')
 
-    await delay(9975)
+    await this._waitForDimmingDelay()
     if (this.isFinished) return
     this._elements.notification.classList.remove('activate')
     this._elements.notification.classList.add('desactivate')
@@ -83,39 +124,13 @@ class Notification extends HTMLElement {
     this._finish()
   }
 
-  cancelAnimation() {
-    clearTimeout(this._timerRemoval)
-  }
+  async _waitForDimmingDelay() {
+    while (this._dimmingMS !== null) {
+      if (this.isFinished) break
+      const currentDimmingMS = this._dimmingMS
 
-  moveDownAt(positionY) {
-    const currentIndex = this.getAttribute('index')
-    const newIndex = Number(currentIndex) + 1
-
-    if (!this.isFinished) {
-      this.setAttribute('index', newIndex)
-      this._elements.wrapper.style.setProperty('top', `${positionY}px`)
-    }
-
-    const rect = this._elements.notification.getBoundingClientRect()
-    const start = rect.height + 12
-
-    if (this._notificationBefore) {
-      this._notificationBefore.moveDownAt(this.isFinished ? positionY : start + positionY)
-    }
-  }
-
-  moveUpAt(positionY) {
-    const rect = this._elements.wrapper.getBoundingClientRect()
-    const currentIndex = this.getAttribute('index')
-    const newIndex = Number(currentIndex) - 1
-
-    if (!this.isFinished) {
-      this.setAttribute('index', newIndex)
-      this._elements.wrapper.style.setProperty('top', `${positionY}px`)
-    }
-
-    if (this._notificationBefore) {
-      this._notificationBefore.moveUpAt(this.isFinished ? positionY : rect.top)
+      this._dimmingMS = null
+      await delay(currentDimmingMS)
     }
   }
 
@@ -125,17 +140,17 @@ class Notification extends HTMLElement {
     this._elements.notification.classList.remove('lights-dimming')
     this._elements.notification.classList.remove('activate')
 
+    await delay(275)
+    this._finish()
+  }
+
+  async _finish() {
     if (this._notificationBefore) {
       const rect = this._elements.wrapper.getBoundingClientRect()
 
       this._notificationBefore.moveUpAt(rect.top)
     }
 
-    await delay(275)
-    this._finish()
-  }
-
-  async _finish() {
     this._dispatch('done')
     await delay(10)
     this.remove()

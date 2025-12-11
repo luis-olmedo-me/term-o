@@ -91,23 +91,32 @@ class Notification extends HTMLElement {
     const currentIndex = this.getAttribute('index')
     const newIndex = Number(currentIndex) + 1
 
-    this.setAttribute('index', newIndex)
-    this._elements.wrapper.style.setProperty('top', `${positionY}px`)
+    if (!this.isFinished) {
+      this.setAttribute('index', newIndex)
+      this._elements.wrapper.style.setProperty('top', `${positionY}px`)
+    }
 
     const rect = this._elements.notification.getBoundingClientRect()
     const start = rect.height + 12
 
-    if (this._notificationBefore) this._notificationBefore.moveDownAt(start + positionY)
+    if (this._notificationBefore) {
+      this._notificationBefore.moveDownAt(this.isFinished ? positionY : start + positionY)
+    }
   }
 
-  animate(callback, time) {
-    return setTimeout(() => {
-      if (this.isFinished) return
+  moveUpAt(positionY) {
+    const rect = this._elements.wrapper.getBoundingClientRect()
+    const currentIndex = this.getAttribute('index')
+    const newIndex = Number(currentIndex) - 1
 
-      requestAnimationFrame(() => {
-        callback.call(this)
-      })
-    }, time - 25)
+    if (!this.isFinished) {
+      this.setAttribute('index', newIndex)
+      this._elements.wrapper.style.setProperty('top', `${positionY}px`)
+    }
+
+    if (this._notificationBefore) {
+      this._notificationBefore.moveUpAt(this.isFinished ? positionY : rect.top)
+    }
   }
 
   async _closeDueToClick() {
@@ -115,6 +124,12 @@ class Notification extends HTMLElement {
     this._elements.notification.classList.add('desactivate')
     this._elements.notification.classList.remove('lights-dimming')
     this._elements.notification.classList.remove('activate')
+
+    if (this._notificationBefore) {
+      const rect = this._elements.wrapper.getBoundingClientRect()
+
+      this._notificationBefore.moveUpAt(rect.top)
+    }
 
     await delay(275)
     this._finish()

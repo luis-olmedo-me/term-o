@@ -5,7 +5,7 @@ import { webElements } from '@src/constants/web-elements.constants'
 import { delay } from '@src/helpers/utils.helpers'
 import { applyCssVariables, getPropsFromAttrs } from '@web-components/helpers/props.helpers'
 import { notificationPropNames } from './Notification.constants'
-import { extendAllAnimations, getNotificationBeforeElement } from './Notification.helpers'
+import { getNotificationBeforeElement } from './Notification.helpers'
 
 class Notification extends HTMLElement {
   _dimmingMS = 9975
@@ -39,10 +39,7 @@ class Notification extends HTMLElement {
 
     this.addEventListener('click', this._closeDueToClick.bind(this))
 
-    if (notificationBefore) {
-      extendAllAnimations({ exeptionId: this._props.id })
-      notificationBefore.moveDown()
-    }
+    if (notificationBefore) notificationBefore.moveDown()
 
     this._runAnimation({})
   }
@@ -67,14 +64,6 @@ class Notification extends HTMLElement {
     if (this._notificationBefore) this._notificationBefore.moveUp(nextIndex)
   }
 
-  extendAnimation() {
-    const index = this.getAttribute('index')
-    const numberIndex = Number(index)
-    const currentDimmingMS = this._dimmingMS ?? 0
-
-    this._dimmingMS = currentDimmingMS + 1000 * numberIndex
-  }
-
   get _elements() {
     return {
       notification: this._shadow.querySelector('#notification'),
@@ -88,10 +77,12 @@ class Notification extends HTMLElement {
   _updateIndex(newIndex) {
     const rect = this._elements.wrapper.getBoundingClientRect()
     const positionY = rect.height * (newIndex - 1)
+    const currentDimmingMS = this._dimmingMS ?? 0
 
     this.setAttribute('index', newIndex)
     this._elements.wrapper.setAttribute('index', newIndex)
     this._elements.wrapper.style.setProperty('top', `${positionY}px`)
+    this._dimmingMS = currentDimmingMS + 1000 * newIndex
   }
 
   async _runAnimation() {

@@ -35,7 +35,6 @@ class Notification extends HTMLElement {
     })
     this._elements.title.innerHTML = this._props.title
     this._elements.message.innerHTML = this._props.message
-    this._elements.notification.classList.add('hidden')
     this._notificationBefore = notificationBefore
 
     this.addEventListener('click', this._closeDueToClick.bind(this))
@@ -113,19 +112,16 @@ class Notification extends HTMLElement {
 
   async _runAnimation() {
     if (this.isFinished) return
-    this._elements.notification.classList.remove('hidden')
-    this._elements.notification.classList.add('activate')
+    this._elements.wrapper.classList.add('activate')
 
-    await delay(275)
+    await delay(475)
     if (this.isFinished) return
     this._dispatch('appear')
     this._elements.notification.classList.add('lights-dimming')
-    this._elements.notification.classList.remove('activate')
 
     await this._waitForDimmingDelay()
     if (this.isFinished) return
-    this._elements.notification.classList.remove('activate')
-    this._elements.notification.classList.add('desactivate')
+    this._elements.wrapper.classList.remove('activate')
 
     await delay(275)
     if (this.isFinished) return
@@ -144,9 +140,8 @@ class Notification extends HTMLElement {
 
   async _closeDueToClick() {
     this.isFinished = true
-    this._elements.notification.classList.add('desactivate')
+    this._elements.wrapper.classList.remove('activate')
     this._elements.notification.classList.remove('lights-dimming')
-    this._elements.notification.classList.remove('activate')
 
     await delay(275)
     this._finish()

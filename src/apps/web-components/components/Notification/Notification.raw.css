@@ -11,7 +11,7 @@
 .wrapper {
   position: fixed;
   top: 0;
-  right: 100%;
+  right: -100%;
   z-index: 999999;
   display: flex;
   font-size: 13px;
@@ -20,20 +20,17 @@
   pointer-events: all;
   transition:
     top 0.5s ease,
+    right 0.5s ease,
     opacity 0.5s ease;
   font-family: var(--font);
   opacity: 0;
 }
-.wrapper[index='1'] {
-  opacity: 1;
-  right: 12px;
-}
-.wrapper[index='2'] {
-  opacity: 0.8;
-  right: 12px;
-}
+.wrapper[index='1'],
+.wrapper[index='2'],
 .wrapper[index='3'] {
-  opacity: 0.5;
+  opacity: 1;
+}
+.wrapper.activate {
   right: 12px;
 }
 
@@ -88,32 +85,8 @@
 .notification .message {
   font-size: 11px;
 }
-.notification.hidden {
-  opacity: 0.3;
-}
-.notification.activate {
-  animation: activate 0.3s ease-out;
-}
 .notification.lights-dimming {
   animation: lights-dimming 10s ease-out;
-}
-.notification.desactivate {
-  animation: desactivate 0.3s ease-out;
-}
-
-@keyframes activate {
-  0% {
-    transform: translateX(100%);
-    opacity: 0;
-    border-color: var(--brightBlack);
-    box-shadow: 0 4px 10px 2px #111;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-    border-color: var(--accent);
-    box-shadow: 0 4px 10px 2px var(--accent);
-  }
 }
 
 @keyframes lights-dimming {
@@ -124,18 +97,5 @@
   15% {
     border-color: var(--brightBlack);
     box-shadow: 0 4px 10px 2px #111;
-  }
-}
-
-@keyframes desactivate {
-  0% {
-    transform: translateX(0);
-    opacity: 1;
-    border-color: var(--brightBlack);
-    box-shadow: 0 4px 10px 2px #111;
-  }
-  100% {
-    transform: translateX(100%);
-    opacity: 0;
   }
 }

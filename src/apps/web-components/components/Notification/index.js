@@ -8,7 +8,7 @@ import { notificationPropNames } from './Notification.constants'
 import { getNotificationBeforeElement } from './Notification.helpers'
 
 class Notification extends HTMLElement {
-  DIMMING = 10_000
+  DIMMING = 8_000
   TRANSITION = 475
 
   _dimmingTimeoutID = null
@@ -102,7 +102,6 @@ class Notification extends HTMLElement {
   _handleDesactivation() {
     if (this.isFinished) return
 
-    this._elements.wrapper.classList.remove('activate')
     this._dimmingTimeoutID = null
     this._finish()
   }
@@ -115,8 +114,6 @@ class Notification extends HTMLElement {
 
   async _closeDueToClick() {
     this.isFinished = true
-    this._elements.notification.classList.remove('lights-dimming')
-
     this._finish()
   }
 

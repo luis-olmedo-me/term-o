@@ -49,18 +49,17 @@
   box-shadow: 0 4px 10px 2px #111;
   margin: 12px 0 0 0;
 }
-.notification.in-view {
-  transform: translateX(0);
-  opacity: 1;
+.notification.lights-dimming {
+  animation: lights-dimming 10s ease-out;
 }
-.notification.active {
-  pointer-events: all;
-  border-color: var(--accent);
-  color: var(--accent);
-  box-shadow: 0 4px 10px 2px var(--accent);
+
+.notification .message-box {
+  flex: 1;
+  min-width: 0;
 }
-.notification .title,
-.notification .message {
+
+.title,
+.message {
   display: -webkit-box;
   box-orient: vertical;
   -webkit-box-orient: vertical;
@@ -73,20 +72,12 @@
   min-height: calc(0.8rem * 2);
   max-height: calc(0.8rem * 2);
 }
-
-.notification .message-box {
-  flex: 1;
-  min-width: 0;
-}
-.notification .title {
+.title {
   font-weight: bold;
   font-size: 14px;
 }
-.notification .message {
+.message {
   font-size: 11px;
-}
-.notification.lights-dimming {
-  animation: lights-dimming 10s ease-out;
 }
 
 @keyframes lights-dimming {

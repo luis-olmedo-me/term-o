@@ -45,7 +45,7 @@
   align-items: start;
   gap: 6px;
 
-  width: 300px;
+  width: 350px;
   pointer-events: none;
   background: var(--background);
   color: var(--foreground);

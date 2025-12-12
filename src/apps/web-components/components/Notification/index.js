@@ -8,7 +8,10 @@ import { notificationPropNames } from './Notification.constants'
 import { getNotificationBeforeElement } from './Notification.helpers'
 
 class Notification extends HTMLElement {
-  _dimmingMS = 9975
+  DIMMING = 10_000
+  TRANSITION = 475
+
+  _dimmingTimeoutID = null
 
   constructor() {
     super()
@@ -77,56 +80,52 @@ class Notification extends HTMLElement {
   _updateIndex(newIndex) {
     const rect = this._elements.wrapper.getBoundingClientRect()
     const positionY = rect.height * (newIndex - 1)
-    const currentDimmingMS = this._dimmingMS ?? 0
 
     this.setAttribute('index', newIndex)
     this._elements.wrapper.setAttribute('index', newIndex)
     this._elements.wrapper.style.setProperty('top', `${positionY}px`)
-    this._dimmingMS = currentDimmingMS + 1000 * newIndex
+    this._scheduleDesactivation()
   }
 
   async _runAnimation() {
     if (this.isFinished) return
     this._elements.wrapper.classList.add('activate')
 
-    await delay(475)
+    await delay(this.TRANSITION)
     if (this.isFinished) return
     this._dispatch('appear')
     this._elements.notification.classList.add('lights-dimming')
 
-    await this._waitForDimmingDelay()
-    if (this.isFinished) return
-    this._elements.wrapper.classList.remove('activate')
+    this._scheduleDesactivation()
+  }
 
-    await delay(275)
+  _handleDesactivation() {
     if (this.isFinished) return
+
+    this._elements.wrapper.classList.remove('activate')
+    this._dimmingTimeoutID = null
     this._finish()
   }
 
-  async _waitForDimmingDelay() {
-    while (this._dimmingMS !== null) {
-      if (this.isFinished) break
-      const currentDimmingMS = this._dimmingMS
+  _scheduleDesactivation() {
+    clearTimeout(this._dimmingTimeoutID)
 
-      this._dimmingMS = null
-      await delay(currentDimmingMS)
-    }
+    this._dimmingTimeoutID = setTimeout(this._handleDesactivation.bind(this), this.DIMMING)
   }
 
   async _closeDueToClick() {
     this.isFinished = true
-    this._elements.wrapper.classList.remove('activate')
     this._elements.notification.classList.remove('lights-dimming')
 
-    await delay(275)
     this._finish()
   }
 
   async _finish() {
+    this._elements.wrapper.classList.remove('activate')
     if (this._notificationBefore) this._notificationBefore.moveUp()
 
+    await delay(this.TRANSITION)
     this._dispatch('done')
-    await delay(10)
     this.remove()
   }
 

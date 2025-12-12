@@ -52,8 +52,8 @@
   border: 1px solid #111;
   border-radius: 5px;
   padding: 14px 10px;
-  box-shadow: 0 4px 10px 2px #111;
-  margin: 12px 0 0 0;
+  box-shadow: 0 4px 12px #111;
+  margin: 16px 0 0 0;
 }
 .notification.lights-dimming {
   animation: lights-dimming 10s ease-out;
@@ -89,10 +89,10 @@
 @keyframes lights-dimming {
   0% {
     border-color: var(--accent);
-    box-shadow: 0 4px 10px 2px var(--accent);
+    box-shadow: 0 4px 12px var(--accent);
   }
-  15% {
+  50% {
     border-color: var(--brightBlack);
-    box-shadow: 0 4px 10px 2px #111;
+    box-shadow: 0 4px 12px #111;
   }
 }

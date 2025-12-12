@@ -24,7 +24,7 @@ class Notification extends HTMLElement {
     const notificationBefore = getNotificationBeforeElement({ currentId: this._props.id })
 
     this.setAttribute('id', this._props.id)
-    this._updateIndex('1')
+    this._updateIndex(1)
     this._elements.styles.innerHTML = applyCssVariables(NotificationCss, {
       font: this._props.font,
       white: this._props.white,
@@ -41,45 +41,30 @@ class Notification extends HTMLElement {
 
     if (notificationBefore) {
       extendAllAnimations({ exeptionId: this._props.id })
-      notificationBefore.moveDownAt(this._nextStart)
+      notificationBefore.moveDown()
     }
 
     this._runAnimation({})
   }
 
-  moveDownAt(positionY) {
-    if (!this.isFinished) {
-      const currentIndex = this.getAttribute('index')
-      const newIndex = Number(currentIndex) + 1
+  moveDown(forcedIndex = null) {
+    const index = this.getAttribute('index')
+    const currentIndex = Number(index)
+    const newIndex = forcedIndex ?? currentIndex + 1
+    const nextIndex = this.isFinished ? newIndex : null
 
-      this._updateIndex(newIndex)
-      this._elements.wrapper.style.setProperty('top', `${positionY}px`)
-    }
-
-    if (this._notificationBefore) {
-      const rect = this._elements.wrapper.getBoundingClientRect()
-      const start = positionY + rect.height
-      const nextNotificationPositionY = this.isFinished ? positionY : start
-
-      this._notificationBefore.moveDownAt(nextNotificationPositionY)
-    }
+    if (!this.isFinished) this._updateIndex(newIndex)
+    if (this._notificationBefore) this._notificationBefore.moveDown(nextIndex)
   }
 
-  moveUpAt(positionY) {
-    if (!this.isFinished) {
-      const currentIndex = this.getAttribute('index')
-      const newIndex = Number(currentIndex) - 1
+  moveUp(forcedIndex = null) {
+    const index = this.getAttribute('index')
+    const currentIndex = Number(index)
+    const newIndex = forcedIndex ?? currentIndex - 1
+    const nextIndex = this.isFinished ? newIndex : null
 
-      this._updateIndex(newIndex)
-      this._elements.wrapper.style.setProperty('top', `${positionY}px`)
-    }
-
-    if (this._notificationBefore) {
-      const rect = this._elements.wrapper.getBoundingClientRect()
-      const nextNotificationPositionY = this.isFinished ? positionY : rect.top
-
-      this._notificationBefore.moveUpAt(nextNotificationPositionY)
-    }
+    if (!this.isFinished) this._updateIndex(newIndex)
+    if (this._notificationBefore) this._notificationBefore.moveUp(nextIndex)
   }
 
   extendAnimation() {
@@ -88,11 +73,6 @@ class Notification extends HTMLElement {
     const currentDimmingMS = this._dimmingMS ?? 0
 
     this._dimmingMS = currentDimmingMS + 1000 * numberIndex
-  }
-
-  get _nextStart() {
-    const rect = this._elements.notification.getBoundingClientRect()
-    return rect.top + rect.height
   }
 
   get _elements() {
@@ -106,8 +86,12 @@ class Notification extends HTMLElement {
   }
 
   _updateIndex(newIndex) {
+    const rect = this._elements.wrapper.getBoundingClientRect()
+    const positionY = rect.height * (newIndex - 1)
+
     this.setAttribute('index', newIndex)
     this._elements.wrapper.setAttribute('index', newIndex)
+    this._elements.wrapper.style.setProperty('top', `${positionY}px`)
   }
 
   async _runAnimation() {
@@ -148,11 +132,7 @@ class Notification extends HTMLElement {
   }
 
   async _finish() {
-    if (this._notificationBefore) {
-      const rect = this._elements.wrapper.getBoundingClientRect()
-
-      this._notificationBefore.moveUpAt(rect.top)
-    }
+    if (this._notificationBefore) this._notificationBefore.moveUp()
 
     this._dispatch('done')
     await delay(10)

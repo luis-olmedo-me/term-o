@@ -30,6 +30,12 @@
 .wrapper[index='3'] {
   opacity: 1;
 }
+.wrapper[index='4'] {
+  pointer-events: none;
+}
+.wrapper:not([index='1']):not([index='2']):not([index='3']):not([index='4']) {
+  top: 0 !important;
+}
 .wrapper.activate {
   right: 12px;
 }

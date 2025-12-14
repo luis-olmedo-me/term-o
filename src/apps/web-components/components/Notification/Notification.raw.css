@@ -49,10 +49,10 @@
   pointer-events: none;
   background: var(--background);
   color: var(--foreground);
-  border: 1px solid #111;
+  border: 1px solid var(--brightBlack);
   border-radius: 5px;
   padding: 14px 10px;
-  box-shadow: 0 4px 12px #111;
+  box-shadow: 0 4px 12px transparent;
   margin: 16px 0 0 0;
 }
 .notification.lights-dimming {
@@ -93,6 +93,6 @@
   }
   50% {
     border-color: var(--brightBlack);
-    box-shadow: 0 4px 12px #111;
+    box-shadow: 0 4px 12px transparent;
   }
 }

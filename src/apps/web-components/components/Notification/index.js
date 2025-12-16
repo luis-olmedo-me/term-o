@@ -4,7 +4,7 @@ import NotificationHtml from './Notification.raw.html'
 import { webElements } from '@src/constants/web-elements.constants'
 import { delay } from '@src/helpers/utils.helpers'
 import { applyCssVariables, getPropsFromAttrs } from '@web-components/helpers/props.helpers'
-import { notificationPropNames } from './Notification.constants'
+import { dummyKeyframes, notificationPropNames } from './Notification.constants'
 import { getNotificationBeforeElement } from './Notification.helpers'
 
 class Notification extends HTMLElement {
@@ -12,11 +12,13 @@ class Notification extends HTMLElement {
   TRANSITION = 475
 
   _dimmingTimeoutID = null
+  _timerAnimation = null
 
   constructor() {
     super()
     this._shadow = this.attachShadow({ mode: 'closed' })
     this.isFinished = false
+    this._handleDesactivationRef = this._handleDesactivation.bind(this)
 
     this._shadow.innerHTML = NotificationHtml
   }
@@ -73,7 +75,8 @@ class Notification extends HTMLElement {
       wrapper: this._shadow.querySelector('#wrapper'),
       message: this._shadow.querySelector('#message'),
       title: this._shadow.querySelector('#title'),
-      styles: this._shadow.querySelector('#styles')
+      styles: this._shadow.querySelector('#styles'),
+      timer: this._shadow.querySelector('#timer')
     }
   }
 
@@ -84,7 +87,7 @@ class Notification extends HTMLElement {
     this.setAttribute('index', newIndex)
     this._elements.wrapper.setAttribute('index', newIndex)
     this._elements.wrapper.style.setProperty('top', `${positionY}px`)
-    this._scheduleDesactivation()
+    this._scheduleDesactivation(newIndex * 300)
   }
 
   async _runAnimation() {
@@ -92,7 +95,6 @@ class Notification extends HTMLElement {
     if (this.isFinished) return
     this._elements.wrapper.classList.add('activate')
 
-    await delay(this.TRANSITION)
     if (this.isFinished) return
     this._dispatch('appear')
     this._elements.notification.classList.add('lights-dimming')
@@ -103,14 +105,17 @@ class Notification extends HTMLElement {
   _handleDesactivation() {
     if (this.isFinished) return
 
-    this._dimmingTimeoutID = null
     this._finish()
   }
 
-  _scheduleDesactivation() {
-    clearTimeout(this._dimmingTimeoutID)
+  _scheduleDesactivation(time = 0) {
+    const duration = time + this.DIMMING
 
-    this._dimmingTimeoutID = setTimeout(this._handleDesactivation.bind(this), this.DIMMING)
+    if (this._timerAnimation) this._timerAnimation.cancel()
+
+    this._timerAnimation = this._elements.timer.animate(dummyKeyframes, { duration })
+
+    this._timerAnimation.finished.then(this._handleDesactivationRef)
   }
 
   async _closeDueToClick() {

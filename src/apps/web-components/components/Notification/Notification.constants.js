@@ -9,3 +9,5 @@ export const notificationPropNames = [
   'foreground',
   'background'
 ]
+
+export const dummyKeyframes = [{ opacity: 1 }, { opacity: 1 }]

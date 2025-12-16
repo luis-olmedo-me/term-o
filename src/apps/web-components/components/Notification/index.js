@@ -4,14 +4,15 @@ import NotificationHtml from './Notification.raw.html'
 import { webElements } from '@src/constants/web-elements.constants'
 import { delay } from '@src/helpers/utils.helpers'
 import { applyCssVariables, getPropsFromAttrs } from '@web-components/helpers/props.helpers'
-import { dummyKeyframes, notificationPropNames } from './Notification.constants'
+import {
+  dimmingTime,
+  dummyKeyframes,
+  notificationPropNames,
+  transitionTime
+} from './Notification.constants'
 import { getNotificationBeforeElement } from './Notification.helpers'
 
 class Notification extends HTMLElement {
-  DIMMING = 8_000
-  TRANSITION = 475
-
-  _dimmingTimeoutID = null
   _timerAnimation = null
 
   constructor() {
@@ -109,7 +110,7 @@ class Notification extends HTMLElement {
   }
 
   _scheduleDesactivation(time = 0) {
-    const duration = time + this.DIMMING
+    const duration = time + dimmingTime
 
     if (this._timerAnimation) this._timerAnimation.cancel()
 
@@ -127,7 +128,7 @@ class Notification extends HTMLElement {
     this._elements.wrapper.classList.remove('activate')
     if (this._notificationBefore) this._notificationBefore.moveUp()
 
-    await delay(this.TRANSITION)
+    await delay(transitionTime)
     this._dispatch('done')
     this.remove()
   }

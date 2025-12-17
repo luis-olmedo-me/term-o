@@ -92,13 +92,9 @@ class Notification extends HTMLElement {
   }
 
   async _runAnimation() {
-    await delay(10)
-    if (this.isFinished) return
     this._elements.wrapper.classList.add('activate')
-
-    if (this.isFinished) return
-    this._dispatch('appear')
     this._elements.notification.classList.add('lights-dimming')
+    this._dispatch('appear')
 
     this._scheduleDesactivation()
   }

@@ -50,13 +50,7 @@ export const createNotification = ({ id, title, message, theme }) => {
   const element = createWebElement(webElements.NOTIFICATION, {
     id,
     title,
-    message,
-    font: theme.font,
-    white: theme.isDarkTheme ? theme.colors.white : theme.colors.brightWhite,
-    accent: theme.isDarkTheme ? theme.colors.accent : theme.colors.brightAccent,
-    brightBlack: theme.colors.brightBlack,
-    background: theme.colors.background,
-    foreground: theme.colors.foreground
+    message
   })
 
   element.dispatchEvent(themeEvent)

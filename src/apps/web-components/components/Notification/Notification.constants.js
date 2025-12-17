@@ -1,14 +1,4 @@
-export const notificationPropNames = [
-  'id',
-  'title',
-  'message',
-  'font',
-  'white',
-  'accent',
-  'brightBlack',
-  'foreground',
-  'background'
-]
+export const notificationPropNames = ['id', 'title', 'message']
 
 export const dimmingTime = 8_000
 export const transitionTime = 475

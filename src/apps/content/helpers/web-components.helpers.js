@@ -46,7 +46,8 @@ export const createBubble = ({ message, theme }) => {
 }
 
 export const createNotification = ({ id, title, message, theme }) => {
-  return createWebElement(webElements.NOTIFICATION, {
+  const themeEvent = new CustomEvent('theme', { detail: theme })
+  const element = createWebElement(webElements.NOTIFICATION, {
     id,
     title,
     message,
@@ -57,4 +58,8 @@ export const createNotification = ({ id, title, message, theme }) => {
     background: theme.colors.background,
     foreground: theme.colors.foreground
   })
+
+  element.dispatchEvent(themeEvent)
+
+  return element
 }

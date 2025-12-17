@@ -3,7 +3,10 @@ import NotificationHtml from './Notification.raw.html'
 
 import { webElements } from '@src/constants/web-elements.constants'
 import { delay } from '@src/helpers/utils.helpers'
-import { applyCssVariables, getPropsFromAttrs } from '@web-components/helpers/props.helpers'
+import {
+  applyCssVariablesFromTheme,
+  getPropsFromAttrs
+} from '@web-components/helpers/props.helpers'
 import {
   dimmingTime,
   dummyKeyframes,
@@ -14,14 +17,16 @@ import { getNotificationBeforeElement } from './Notification.helpers'
 
 class Notification extends HTMLElement {
   _timerAnimation = null
+  _isFinished = false
 
   constructor() {
     super()
-    this._shadow = this.attachShadow({ mode: 'closed' })
-    this.isFinished = false
-    this._handleDesactivationRef = this._handleDesactivation.bind(this)
 
+    this._shadow = this.attachShadow({ mode: 'closed' })
     this._shadow.innerHTML = NotificationHtml
+
+    this._handleDesactivationRef = this._handleDesactivation.bind(this)
+    this.addEventListener('theme', this._handleTheme)
   }
 
   connectedCallback() {
@@ -31,14 +36,6 @@ class Notification extends HTMLElement {
 
     this.setAttribute('id', this._props.id)
     this._updateIndex(1)
-    this._elements.styles.innerHTML = applyCssVariables(NotificationCss, {
-      font: this._props.font,
-      white: this._props.white,
-      accent: this._props.accent,
-      brightBlack: this._props.brightBlack,
-      foreground: this._props.foreground,
-      background: this._props.background
-    })
     this._elements.title.innerHTML = this._props.title
     this._elements.message.innerHTML = this._props.message
     this._notificationBefore = notificationBefore
@@ -54,9 +51,9 @@ class Notification extends HTMLElement {
     const index = this.getAttribute('index')
     const currentIndex = Number(index)
     const newIndex = forcedIndex ?? currentIndex + 1
-    const nextIndex = this.isFinished ? newIndex : null
+    const nextIndex = this._isFinished ? newIndex : null
 
-    if (!this.isFinished) this._updateIndex(newIndex)
+    if (!this._isFinished) this._updateIndex(newIndex)
     if (this._notificationBefore) this._notificationBefore.moveDown(nextIndex)
   }
 
@@ -64,9 +61,9 @@ class Notification extends HTMLElement {
     const index = this.getAttribute('index')
     const currentIndex = Number(index)
     const newIndex = forcedIndex ?? currentIndex - 1
-    const nextIndex = this.isFinished ? newIndex : null
+    const nextIndex = this._isFinished ? newIndex : null
 
-    if (!this.isFinished) this._updateIndex(newIndex)
+    if (!this._isFinished) this._updateIndex(newIndex)
     if (this._notificationBefore) this._notificationBefore.moveUp(nextIndex)
   }
 
@@ -79,6 +76,12 @@ class Notification extends HTMLElement {
       styles: this._shadow.querySelector('#styles'),
       timer: this._shadow.querySelector('#timer')
     }
+  }
+
+  _handleTheme(event) {
+    const newTheme = event.detail
+
+    this._elements.styles.innerHTML = applyCssVariablesFromTheme(NotificationCss, newTheme)
   }
 
   _updateIndex(newIndex) {
@@ -100,7 +103,7 @@ class Notification extends HTMLElement {
   }
 
   _handleDesactivation() {
-    if (this.isFinished) return
+    if (this._isFinished) return
 
     this._finish()
   }

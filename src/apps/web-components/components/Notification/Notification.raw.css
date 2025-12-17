@@ -1,11 +1,11 @@
 .fill-white {
-  fill: var(--white);
+  fill: var(--colors-white);
 }
 .fill-accent {
-  fill: var(--accent);
+  fill: var(--colors-accent);
 }
 .stroke-bright-black {
-  stroke: var(--brightBlack);
+  stroke: var(--colors-brightBlack);
 }
 
 .wrapper {
@@ -47,9 +47,9 @@
 
   width: 350px;
   pointer-events: none;
-  background: var(--background);
-  color: var(--foreground);
-  border: 1px solid var(--brightBlack);
+  background: var(--colors-background);
+  color: var(--colors-foreground);
+  border: 1px solid var(--colors-brightBlack);
   border-radius: 5px;
   padding: 14px 10px;
   box-shadow: 0 4px 12px transparent;
@@ -88,11 +88,11 @@
 
 @keyframes lights-dimming {
   0% {
-    border-color: var(--accent);
-    box-shadow: 0 4px 12px var(--accent);
+    border-color: var(--colors-accent);
+    box-shadow: 0 4px 12px var(--colors-accent);
   }
   50% {
-    border-color: var(--brightBlack);
+    border-color: var(--colors-brightBlack);
     box-shadow: 0 4px 12px transparent;
   }
 }

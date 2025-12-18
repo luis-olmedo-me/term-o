@@ -14,7 +14,7 @@ import { storageKeys } from '@src/constants/storage.constants'
 import { getConfigDetailsByInputId } from '@src/helpers/config.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 import { sidePanelOptions } from './Preferences.constants'
-import { handleImportConfig } from './Preferences.helpers'
+import { getInputMessageByType, handleImportConfig } from './Preferences.helpers'
 import * as S from './Preferences.styles'
 
 export const Preferences = () => {
@@ -52,10 +52,12 @@ export const Preferences = () => {
 
   const handleConfigChange = (inputId, newValue) => {
     const inputDetails = getConfigDetailsByInputId(inputId)
+    const oldValue = config.getValueById(inputId)
+    const message = getInputMessageByType(inputDetails, oldValue, newValue)
 
     config.change(inputId, newValue)
 
-    sendNotification(inputDetails.name, 'Changes has been applied successfully!')
+    sendNotification(inputDetails.name, message)
   }
 
   return (

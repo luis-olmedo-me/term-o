@@ -1,5 +1,7 @@
 import storage from '@src/libs/storage'
 
+import { configInputIds } from '@src/constants/config.constants'
+import { availableInputTypes } from '@src/constants/inputs.constants'
 import { uploader } from '@src/helpers/file.helpers'
 
 export const handleImportConfig = ({ onError }) => {
@@ -17,4 +19,26 @@ export const handleImportConfig = ({ onError }) => {
 
     input.open()
   })
+}
+
+export const getInputMessageByType = (input, oldValue, newValue) => {
+  if (input.type === availableInputTypes.BOOLEAN) {
+    const oldUIValue = oldValue ? 'On' : 'Off'
+    const newUIValue = newValue ? 'On' : 'Off'
+
+    return `${oldUIValue} -> ${newUIValue}`
+  }
+
+  if (input.type === availableInputTypes.NUMBER) {
+    return `${oldValue} -> ${newValue}`
+  }
+
+  if (input.id === configInputIds.FONT_SIZE) {
+    const oldUIValue = input.options.find(option => option.id === oldValue).name
+    const newUIValue = input.options.find(option => option.id === newValue).name
+
+    return `"${oldUIValue}" -> "${newUIValue}"`
+  }
+
+  return `"${oldValue}" -> "${newValue}"`
 }

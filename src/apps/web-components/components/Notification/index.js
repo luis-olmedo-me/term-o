@@ -117,7 +117,7 @@ class Notification extends HTMLElement {
 
     this._timerAnimation = this._elements.timer.animate(dummyKeyframes, { duration })
 
-    this._timerAnimation.finished.then(this._handleDesactivationRef)
+    this._timerAnimation.finished.then(this._handleDesactivationRef).catch(() => {})
   }
 
   async _closeDueToClick() {

@@ -50,9 +50,9 @@
   background: var(--colors-background);
   color: var(--colors-foreground);
   border: 1px solid var(--colors-brightBlack);
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 14px 10px;
-  box-shadow: 0 4px 6px #111111aa;
+  box-shadow: 0 4px 6px #11111160;
   margin: 16px 0 0 0;
 }
 .notification.lights-dimming {

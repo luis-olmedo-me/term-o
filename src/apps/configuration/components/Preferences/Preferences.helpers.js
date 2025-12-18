@@ -33,7 +33,7 @@ export const getInputMessageByType = (input, oldValue, newValue) => {
     return `${oldValue} -> ${newValue}`
   }
 
-  if (input.id === configInputIds.FONT_SIZE) {
+  if (input.type === availableInputTypes.SELECT) {
     const oldUIValue = input.options.find(option => option.id === oldValue).name
     const newUIValue = input.options.find(option => option.id === newValue).name
 

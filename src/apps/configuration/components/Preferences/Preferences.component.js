@@ -50,6 +50,14 @@ export const Preferences = () => {
     }
   }
 
+  const handleConfigChange = (inputId, newValue) => {
+    const inputDetails = getConfigDetailsByInputId(inputId)
+
+    config.change(inputId, newValue)
+
+    sendNotification(inputDetails.name, 'Changes has been applied successfully!')
+  }
+
   return (
     <S.PreferencesWrapper>
       <S.HeaderWrapper>
@@ -84,7 +92,7 @@ export const Preferences = () => {
                   iconButton={input.iconButton}
                   name={`${sectionSelected.id}-${input.id}`}
                   title={input.name}
-                  changeConfig={config.change}
+                  changeConfig={handleConfigChange}
                   handleClickInButtons={handleClicksInButtonFields}
                 />
               )

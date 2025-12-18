@@ -70,12 +70,12 @@ export const uploadFile = (tabId, { theme }) => {
   })
 }
 
-export const pickColor = (tabId, { theme, fontFamily }) => {
+export const pickColor = (tabId, { theme }) => {
   return createWorkerProcessRequest({
     type: processNames.PICK_COLOR,
     defaultResponse: null,
     tabId,
-    data: { theme, fontFamily }
+    data: { theme }
   })
 }
 
@@ -85,6 +85,15 @@ export const triggerEvent = (tabId, { xpath, event, theme }) => {
     defaultResponse: null,
     tabId,
     data: { xpath, event, theme }
+  })
+}
+
+export const createNotification = (tabId, { title, message, theme }) => {
+  return createWorkerProcessRequest({
+    type: processNames.CREATE_NOTIFICATION,
+    defaultResponse: {},
+    tabId,
+    data: { title, message, theme }
   })
 }
 

@@ -1,4 +1,5 @@
 import applyElementStyles from './apply-element-styles.process'
+import createNotification from './create-notification.process'
 import findDOMElement from './find-dom-element.process'
 import getDOMElements from './get-dom-elements.process'
 import getElementStyles from './get-element-styles.process'
@@ -19,5 +20,6 @@ export default {
   [processNames.APPLY_ELEMENT_STYLES]: applyElementStyles,
   [processNames.UPLOAD_FILE]: uploadFile,
   [processNames.PICK_COLOR]: pickColor,
-  [processNames.TRIGGER_EVENT]: triggerEvent
+  [processNames.TRIGGER_EVENT]: triggerEvent,
+  [processNames.CREATE_NOTIFICATION]: createNotification
 }

@@ -44,3 +44,16 @@ export const createBubble = ({ message, theme }) => {
     foreground: theme.colors.foreground
   })
 }
+
+export const createNotification = ({ id, title, message, theme }) => {
+  const themeEvent = new CustomEvent('theme', { detail: theme })
+  const element = createWebElement(webElements.NOTIFICATION, {
+    id,
+    title,
+    message
+  })
+
+  element.dispatchEvent(themeEvent)
+
+  return element
+}

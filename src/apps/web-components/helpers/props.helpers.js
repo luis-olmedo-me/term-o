@@ -29,3 +29,22 @@ export const applyCssVariables = (css, props) => {
 
   return css
 }
+
+export const applyCssVariablesFromTheme = (css, props, pre = null) => {
+  Object.entries(props).forEach(([propName, propValue]) => {
+    const name = pre ? `${pre}-${propName}` : propName
+    const validValue = `${propValue}`
+
+    if (typeof propValue === 'object') {
+      css = applyCssVariablesFromTheme(css, propValue, name)
+      return
+    }
+
+    const isPrimitive = validValue.startsWith('#') || validValue.endsWith('px')
+    const value = isPrimitive ? validValue : getQuotedString(validValue)
+
+    css = css.replaceAll(`var(--${name})`, value)
+  })
+
+  return css
+}

@@ -3,7 +3,10 @@ import * as React from 'preact'
 import StorageProvider from '@src/providers/StorageProvider'
 import ThemeProvider from '@src/providers/ThemeProvider'
 import GlobalStyle from '@src/styles/Global.styles'
+import { importWebComponents } from '../content/helpers/web-components.helpers'
 import Preferences from './components/Preferences'
+
+importWebComponents()
 
 // eslint-disable-next-line react/no-deprecated
 React.render(

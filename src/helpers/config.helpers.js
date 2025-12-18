@@ -9,6 +9,18 @@ export const getConfigValueByInputId = (config, inputId) => {
   return defaultValue
 }
 
+export const getConfigDetailsByInputId = inputId => {
+  let inputFound = null
+
+  for (const defaultSection of defaultConfigSections) {
+    inputFound = defaultSection.inputs.find(input => input.id === inputId)
+
+    if (inputFound) break
+  }
+
+  return inputFound
+}
+
 export const buildDetailedConfig = simplifiedConfig => {
   return defaultConfigSections.map(defaultSection => {
     return {

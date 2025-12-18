@@ -2,12 +2,19 @@ import storage from '@src/libs/storage'
 
 import { uploader } from '@src/helpers/file.helpers'
 
-export const handleImportConfiguration = ({ onError }) => {
-  const input = uploader({
-    extension: 'txt',
-    onError,
-    onUpload: file => storage.import(file).catch(onError)
-  })
+export const handleImportConfig = ({ onError }) => {
+  return new Promise((resolve, reject) => {
+    const handleError = message => {
+      onError(message)
+      reject(message)
+    }
 
-  input.open()
+    const input = uploader({
+      extension: 'txt',
+      onError: handleError,
+      onUpload: file => storage.import(file).catch(handleError).then(resolve)
+    })
+
+    input.open()
+  })
 }

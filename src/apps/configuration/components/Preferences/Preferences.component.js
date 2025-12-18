@@ -7,11 +7,14 @@ import useStorage from '@src/hooks/useStorage'
 import Logo from '@src/icons/Logo.icon'
 import storage from '@src/libs/storage'
 
+import { createNotification } from '@src/apps/content/helpers/web-components.helpers'
 import { configIds, configInputIds } from '@src/constants/config.constants'
 import { iconSizes } from '@src/constants/icon.constants'
 import { storageKeys } from '@src/constants/storage.constants'
+import { getConfigDetailsByInputId } from '@src/helpers/config.helpers'
+import { createUUIDv4 } from '@src/helpers/utils.helpers'
 import { sidePanelOptions } from './Preferences.constants'
-import { handleImportConfiguration } from './Preferences.helpers'
+import { handleImportConfig } from './Preferences.helpers'
 import * as S from './Preferences.styles'
 
 export const Preferences = () => {
@@ -21,13 +24,30 @@ export const Preferences = () => {
 
   const sectionSelected = config.details.find(({ id }) => id === selectedSectionId)
 
-  const handleClicksInButtonFields = (inputId, onError) => {
+  const sendNotification = (inputName, message) => {
+    createNotification({
+      id: createUUIDv4(),
+      title: `Term-O | ${inputName}`,
+      message,
+      theme: config.theme
+    })
+  }
+
+  const handleClicksInButtonFields = async (inputId, onError) => {
+    const inputDetails = getConfigDetailsByInputId(inputId)
+
     onError(null)
 
-    if (inputId === configInputIds.CLEAR_USER_DATA) storage.reset()
-    if (inputId === configInputIds.RESET_CONFIGURATION) config.reset()
-    if (inputId === configInputIds.EXPORT_CONFIGURATION) storage.export()
-    if (inputId === configInputIds.IMPORT_CONFIGURATION) handleImportConfiguration({ onError })
+    try {
+      if (inputId === configInputIds.CLEAR_USER_DATA) storage.reset()
+      if (inputId === configInputIds.RESET_CONFIGURATION) config.reset()
+      if (inputId === configInputIds.EXPORT_CONFIGURATION) storage.export()
+      if (inputId === configInputIds.IMPORT_CONFIGURATION) await handleImportConfig({ onError })
+
+      sendNotification(inputDetails.name, 'Task completed successfully!')
+    } catch (message) {
+      sendNotification(inputDetails.name, message)
+    }
   }
 
   return (

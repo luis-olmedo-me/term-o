@@ -126,7 +126,7 @@ class Notification extends HTMLElement {
   }
 
   async _finish() {
-    this._elements.wrapper.classList.remove('activate')
+    requestAnimationFrame(() => this._elements.wrapper.classList.remove('activate'))
     if (this._notificationBefore) this._notificationBefore.moveUp()
 
     await delay(transitionTime)

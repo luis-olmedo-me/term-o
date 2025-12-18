@@ -1,6 +1,5 @@
 import storage from '@src/libs/storage'
 
-import { configInputIds } from '@src/constants/config.constants'
 import { availableInputTypes } from '@src/constants/inputs.constants'
 import { uploader } from '@src/helpers/file.helpers'
 

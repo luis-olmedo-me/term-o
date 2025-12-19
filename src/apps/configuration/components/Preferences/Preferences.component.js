@@ -11,6 +11,7 @@ import { createNotification } from '@src/apps/content/helpers/web-components.hel
 import { configIds, configInputIds } from '@src/constants/config.constants'
 import { iconSizes } from '@src/constants/icon.constants'
 import { storageKeys } from '@src/constants/storage.constants'
+import { durations } from '@src/constants/web-elements.constants'
 import { getConfigDetailsByInputId } from '@src/helpers/config.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 import { sidePanelOptions } from './Preferences.constants'
@@ -29,7 +30,8 @@ export const Preferences = () => {
       id: createUUIDv4(),
       title: `Term-O | ${inputName}`,
       message,
-      theme: config.theme
+      theme: config.theme,
+      duration: durations.QUICK
     })
   }
 

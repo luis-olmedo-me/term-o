@@ -7,17 +7,13 @@ import {
   applyCssVariablesFromTheme,
   getPropsFromAttrs
 } from '@web-components/helpers/props.helpers'
-import {
-  dimmingTime,
-  dummyKeyframes,
-  notificationPropNames,
-  transitionTime
-} from './Notification.constants'
+import { dummyKeyframes, notificationPropNames, transitionTime } from './Notification.constants'
 import { getNotificationBeforeElement } from './Notification.helpers'
 
 class Notification extends HTMLElement {
   _timerAnimation = null
   _isFinished = false
+  _dimmingTime = 0
 
   constructor() {
     super()
@@ -118,7 +114,7 @@ class Notification extends HTMLElement {
   }
 
   _scheduleDesactivation(time = 0) {
-    const duration = time + dimmingTime
+    const duration = time + Number(this._props.duration)
 
     if (this._timerAnimation) this._timerAnimation.cancel()
 

@@ -1,0 +1,16 @@
+@use '@styles/variables.styles' as *;
+
+body {
+  background-color: $colors-red;
+  margin: 0;
+  padding: 0;
+  font-family: $font, Courier, monospace;
+  background-color: $colors-background;
+  font-size: $fontSize-50;
+  transition: background-color 0.2s ease-in-out;
+
+  &::selection {
+    color: $colors-foreground;
+    background-color: $colors-selectionBackground;
+  }
+}

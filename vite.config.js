@@ -55,6 +55,7 @@ export default defineConfig(({ mode }) => ({
   },
   resolve: {
     alias: {
+      '@styles': resolve(__dirname, 'src/styles'),
       '@sidepanel': resolve(__dirname, 'src/apps/sidepanel'),
       '@background': resolve(__dirname, 'src/apps/background'),
       '@configuration': resolve(__dirname, 'src/apps/configuration'),
@@ -62,6 +63,13 @@ export default defineConfig(({ mode }) => ({
       '@src': resolve(__dirname, 'src'),
       react: 'preact/compat',
       'react-dom': 'preact/compat'
+    }
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@use "@styles/variables.styles" as *;`
+      }
     }
   }
 }))

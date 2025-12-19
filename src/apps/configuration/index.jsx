@@ -6,6 +6,7 @@ import Preferences from '@configuration/components/Preferences'
 import StorageProvider from '@src/providers/StorageProvider'
 import ThemeProvider from '@src/providers/ThemeProvider'
 import GlobalStyle from '@src/styles/Global.styles'
+import './index.scss'
 
 import { handleThemeChanges } from '@configuration/helpers/theme-changes.helpers'
 import { configInputIds } from '@src/constants/config.constants'

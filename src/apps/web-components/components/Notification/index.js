@@ -31,7 +31,6 @@ class Notification extends HTMLElement {
 
     const notificationBefore = getNotificationBeforeElement({ currentId: this._props.id })
 
-    this.setAttribute('id', this._props.id)
     this._updateIndex(1)
     this._elements.title.innerHTML = this._props.title
     this._elements.message.innerHTML = this._props.message

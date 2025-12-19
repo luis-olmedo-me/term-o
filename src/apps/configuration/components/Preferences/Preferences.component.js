@@ -13,7 +13,6 @@ import { iconSizes } from '@src/constants/icon.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { durations } from '@src/constants/web-elements.constants'
 import { getConfigDetailsByInputId } from '@src/helpers/config.helpers'
-import { createUUIDv4 } from '@src/helpers/utils.helpers'
 import { sidePanelOptions } from './Preferences.constants'
 import { getInputMessageByType, handleImportConfig } from './Preferences.helpers'
 import * as S from './Preferences.styles'
@@ -27,7 +26,6 @@ export const Preferences = () => {
 
   const sendNotification = (inputName, message) => {
     createNotification({
-      id: createUUIDv4(),
       title: `Term-O | ${inputName}`,
       message,
       theme: config.theme,

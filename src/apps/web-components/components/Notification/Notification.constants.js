@@ -1,4 +1,4 @@
-export const notificationPropNames = ['id', 'title', 'message', 'duration']
+export const notificationPropNames = ['title', 'message', 'duration']
 
 export const transitionTime = 475
 

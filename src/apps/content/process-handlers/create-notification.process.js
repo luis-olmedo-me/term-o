@@ -1,10 +1,9 @@
 import { createNotification } from '@content/helpers/web-components.helpers'
 import { durations } from '@src/constants/web-elements.constants'
-import { createUUIDv4, delay } from '@src/helpers/utils.helpers'
+import { delay } from '@src/helpers/utils.helpers'
 
 export default async (resolve, _reject, data) => {
   const notification = {
-    id: createUUIDv4(),
     title: data.title,
     message: data.message
   }

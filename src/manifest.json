@@ -1,6 +1,6 @@
 {
   "name": "Term-O",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "Browser Command Line: Execute commands directly from your browser.",
   "manifest_version": 3,
   "permissions": [

@@ -5,6 +5,7 @@ import useStorage from '@src/hooks/useStorage'
 
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
+import { createRootVariablesFromTheme } from '@src/helpers/themes.helpers'
 import ThemeStyle from './ThemeProvider.styles'
 
 export const ThemeProvider = ({ children }) => {
@@ -14,6 +15,7 @@ export const ThemeProvider = ({ children }) => {
 
   return (
     <StyleProvider theme={config.theme}>
+      <style>{createRootVariablesFromTheme(config.theme)}</style>
       <ThemeStyle mainFontSize={fontSize} />
 
       {children}

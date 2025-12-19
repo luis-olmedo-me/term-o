@@ -5,6 +5,7 @@ import commandParser from '@src/libs/command-parser'
 import StorageProvider from '@src/providers/StorageProvider'
 import ThemeProvider from '@src/providers/ThemeProvider'
 import GlobalStyle from '@src/styles/Global.styles'
+import './index.scss'
 
 import { origins } from '@src/constants/command.constants'
 

@@ -1,7 +1,7 @@
 {
   "name": "term-o",
   "version": "0.9.0",
-  "description": "Browser Command Line: Execute commands directly from your browser.",
+  "description": "A terminal-style developer tool for interacting with browser APIs and page events.",
   "repository": "https://github.com/luis-olmedo-me/term-o",
   "author": "olmedoluis012@gmail.com",
   "license": "MIT",

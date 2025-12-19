@@ -77,10 +77,10 @@
   -webkit-line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 0.8rem;
+  line-height: 1rem;
   margin: 0;
-  min-height: calc(0.8rem * 2);
-  max-height: calc(0.8rem * 2);
+  min-height: calc(1rem * 2);
+  max-height: calc(1rem * 2);
 }
 .title {
   font-weight: bold;

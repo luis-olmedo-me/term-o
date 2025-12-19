@@ -29,7 +29,7 @@ export default defineConfig(({ mode }) => ({
     flattenHtml(watch),
     copyIcons(watch),
     copyManifest(watch),
-    buildContentScript(mode, watch)
+    buildContentScript(mode)
   ],
   build: {
     outDir: 'build',

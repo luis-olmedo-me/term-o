@@ -3,7 +3,7 @@ import glob from 'glob'
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
 
-import { buildContentScript } from './src/plugins/buildContentScript'
+import { buildContentScript } from './src/plugins/buildContentScript.plugin'
 import { copyIcons } from './src/plugins/copyIcons'
 import { copyManifest } from './src/plugins/copyManifest'
 import { flattenHtml } from './src/plugins/flattenHtml'

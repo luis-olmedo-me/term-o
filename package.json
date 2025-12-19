@@ -23,9 +23,9 @@
   "license": "MIT",
   "scripts": {
     "eslint": "npx eslint src",
-    "start": "node ./src/scripts/generate-icons.js && yarn webpack -c webpack.config.js --mode development --devtool cheap-module-source-map --watch --progress",
-    "build-dev": "node ./src/scripts/generate-icons.js && yarn webpack -c webpack.config.js --mode development",
-    "build-prod": "node ./src/scripts/generate-icons.js && yarn webpack -c webpack.config.js --mode production"
+    "start": "node ./src/scripts/generate-icons.js && vite build --mode development --watch",
+    "build-dev": "node ./src/scripts/generate-icons.js && yarn vite build --mode development",
+    "build-prod": "node ./src/scripts/generate-icons.js && yarn vite build --mode production"
   },
   "devDependencies": {
     "@babel/core": "7.28.4",

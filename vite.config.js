@@ -43,7 +43,13 @@ export default defineConfig(({ mode }) => ({
         manualChunks: () => null,
         entryFileNames: 'assets/js/[name].js',
         chunkFileNames: 'assets/js/shared/[name].js',
-        assetFileNames: 'assets/[name][extname]'
+        assetFileNames: assetInfo => {
+          const isCss = assetInfo.names.some(name => name.endsWith('.css'))
+
+          if (isCss) return 'assets/css/[name][extname]'
+
+          return 'assets/[name][extname]'
+        }
       }
     }
   },

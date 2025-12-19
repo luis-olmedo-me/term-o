@@ -28,12 +28,11 @@ export const formatText = ({ text }) => {
   return `${C`yellow`}${quotedText}`
 }
 
-export const formatNotification = ({ id, title, message }) => {
-  const quotedId = getQuotedString(id)
+export const formatNotification = ({ title, message }) => {
   const quotedTitle = getQuotedString(title)
   const quotedMessage = getQuotedString(message)
 
-  return `${C`purple`}${quotedId} ${C`brightYellow`}${quotedTitle} ${C`yellow`}${quotedMessage}`
+  return `${C`brightYellow`}${quotedTitle} ${C`yellow`}${quotedMessage}`
 }
 
 export const formatError = ({ title }) => {

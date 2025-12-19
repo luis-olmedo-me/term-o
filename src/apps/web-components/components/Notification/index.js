@@ -7,17 +7,13 @@ import {
   applyCssVariablesFromTheme,
   getPropsFromAttrs
 } from '@web-components/helpers/props.helpers'
-import {
-  dimmingTime,
-  dummyKeyframes,
-  notificationPropNames,
-  transitionTime
-} from './Notification.constants'
+import { dummyKeyframes, notificationPropNames, transitionTime } from './Notification.constants'
 import { getNotificationBeforeElement } from './Notification.helpers'
 
 class Notification extends HTMLElement {
   _timerAnimation = null
   _isFinished = false
+  _dimmingTime = 0
 
   constructor() {
     super()
@@ -27,6 +23,7 @@ class Notification extends HTMLElement {
 
     this._handleDesactivationRef = this._handleDesactivation.bind(this)
     this.addEventListener('theme', this._handleTheme)
+    this.addEventListener('new-theme', this._handleNewTheme)
   }
 
   connectedCallback() {
@@ -34,7 +31,6 @@ class Notification extends HTMLElement {
 
     const notificationBefore = getNotificationBeforeElement({ currentId: this._props.id })
 
-    this.setAttribute('id', this._props.id)
     this._updateIndex(1)
     this._elements.title.innerHTML = this._props.title
     this._elements.message.innerHTML = this._props.message
@@ -84,6 +80,12 @@ class Notification extends HTMLElement {
     this._elements.styles.innerHTML = applyCssVariablesFromTheme(NotificationCss, newTheme)
   }
 
+  async _handleNewTheme(event) {
+    this._elements.wrapper.classList.toggle('flip')
+
+    this._handleTheme(event)
+  }
+
   _updateIndex(newIndex) {
     const rect = this._elements.wrapper.getBoundingClientRect()
     const positionY = rect.height * (newIndex - 1)
@@ -111,13 +113,13 @@ class Notification extends HTMLElement {
   }
 
   _scheduleDesactivation(time = 0) {
-    const duration = time + dimmingTime
+    const duration = time + Number(this._props.duration)
 
     if (this._timerAnimation) this._timerAnimation.cancel()
 
     this._timerAnimation = this._elements.timer.animate(dummyKeyframes, { duration })
 
-    this._timerAnimation.finished.then(this._handleDesactivationRef)
+    this._timerAnimation.finished.then(this._handleDesactivationRef).catch(() => {})
   }
 
   async _closeDueToClick() {

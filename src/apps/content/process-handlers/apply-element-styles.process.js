@@ -1,7 +1,7 @@
 import { getElementByXPath } from '@content/helpers/dom-locator.helpers'
 import { styleStringToArray } from '@content/helpers/style-utils.helpers'
-import { createHighlight } from '@content/helpers/web-components.helpers'
 import { delay } from '@src/helpers/utils.helpers'
+import { createHighlight } from '@src/helpers/web-components.helpers'
 
 export default async (resolve, reject, data) => {
   const { searchByXpath, newInlineStyles } = data

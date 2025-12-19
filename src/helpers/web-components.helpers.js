@@ -45,12 +45,12 @@ export const createBubble = ({ message, theme }) => {
   })
 }
 
-export const createNotification = ({ id, title, message, theme }) => {
+export const createNotification = ({ title, message, theme, duration }) => {
   const themeEvent = new CustomEvent('theme', { detail: theme })
   const element = createWebElement(webElements.NOTIFICATION, {
-    id,
     title,
-    message
+    message,
+    duration
   })
 
   element.dispatchEvent(themeEvent)

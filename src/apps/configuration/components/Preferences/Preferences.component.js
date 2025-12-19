@@ -10,8 +10,11 @@ import storage from '@src/libs/storage'
 import { configIds, configInputIds } from '@src/constants/config.constants'
 import { iconSizes } from '@src/constants/icon.constants'
 import { storageKeys } from '@src/constants/storage.constants'
+import { durations } from '@src/constants/web-elements.constants'
+import { getConfigDetailsByInputId } from '@src/helpers/config.helpers'
+import { createNotification } from '@src/helpers/web-components.helpers'
 import { sidePanelOptions } from './Preferences.constants'
-import { handleImportConfiguration } from './Preferences.helpers'
+import { getInputMessageByType, handleImportConfig } from './Preferences.helpers'
 import * as S from './Preferences.styles'
 
 export const Preferences = () => {
@@ -21,13 +24,39 @@ export const Preferences = () => {
 
   const sectionSelected = config.details.find(({ id }) => id === selectedSectionId)
 
-  const handleClicksInButtonFields = (inputId, onError) => {
+  const sendNotification = (inputName, message) => {
+    createNotification({
+      title: `Term-O | ${inputName}`,
+      message,
+      theme: config.theme,
+      duration: durations.QUICK
+    })
+  }
+
+  const handleClicksInButtonFields = async (inputId, onError) => {
+    const inputDetails = getConfigDetailsByInputId(inputId)
+
     onError(null)
 
-    if (inputId === configInputIds.CLEAR_USER_DATA) storage.reset()
-    if (inputId === configInputIds.RESET_CONFIGURATION) config.reset()
-    if (inputId === configInputIds.EXPORT_CONFIGURATION) storage.export()
-    if (inputId === configInputIds.IMPORT_CONFIGURATION) handleImportConfiguration({ onError })
+    try {
+      if (inputId === configInputIds.CLEAR_USER_DATA) storage.reset()
+      if (inputId === configInputIds.RESET_CONFIGURATION) config.reset()
+      if (inputId === configInputIds.EXPORT_CONFIGURATION) storage.export()
+      if (inputId === configInputIds.IMPORT_CONFIGURATION) await handleImportConfig({ onError })
+
+      sendNotification(inputDetails.name, 'Task completed successfully!')
+    } catch (message) {
+      sendNotification(inputDetails.name, message)
+    }
+  }
+
+  const handleConfigChange = (inputId, newValue) => {
+    const inputDetails = getConfigDetailsByInputId(inputId)
+    const oldValue = config.getValueById(inputId)
+    const message = getInputMessageByType(inputDetails, oldValue, newValue)
+
+    sendNotification(inputDetails.name, message)
+    config.change(inputId, newValue)
   }
 
   return (
@@ -64,8 +93,9 @@ export const Preferences = () => {
                   iconButton={input.iconButton}
                   name={`${sectionSelected.id}-${input.id}`}
                   title={input.name}
-                  changeConfig={config.change}
+                  changeConfig={handleConfigChange}
                   handleClickInButtons={handleClicksInButtonFields}
+                  sendNotification={sendNotification}
                 />
               )
             })}

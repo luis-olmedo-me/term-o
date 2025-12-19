@@ -44,6 +44,16 @@ export const Prompt = ({
     if (historialIndex) setHistorialIndex(0)
   }
 
+  const addHistoryValueConditionally = targetValue => {
+    return history => {
+      const lastHistoryValue = history.at(-1)
+      const isRepeatedAtEnd = lastHistoryValue === targetValue
+      const newHistory = isRepeatedAtEnd ? history : [...history, targetValue]
+
+      return newHistory.slice(historialSize * -1)
+    }
+  }
+
   const handleKeyDown = event => {
     if (loading) return
 
@@ -52,7 +62,7 @@ export const Prompt = ({
 
     if (key === 'Enter' && targetValue) {
       onEnter(targetValue)
-      setHistorial(history => [...history, targetValue].slice(historialSize * -1))
+      setHistorial(addHistoryValueConditionally(targetValue))
       setHistorialIndex(0)
       setValue('')
     }

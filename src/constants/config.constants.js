@@ -5,6 +5,7 @@ import Palette from '@src/icons/Palette.icon'
 import Thunder from '@src/icons/Thunder.icon'
 import Undo from '@src/icons/Undo.icon'
 
+import { toTitleCase } from '@src/helpers/string.helpers'
 import { availableInputTypes } from './inputs.constants'
 import { basicColorKeys, colorThemeKeys, defaultColorTheme } from './themes.constants'
 
@@ -199,7 +200,7 @@ export const defaultConfigSections = [
         type: availableInputTypes.COLOR_SELECT,
         postFix: null,
         iconButton: null,
-        options: basicColorKeys.map(key => ({ id: key, name: key })),
+        options: basicColorKeys.map(key => ({ id: key, name: toTitleCase(key) })),
         validations: [],
         value: configDefaultValues[configInputIds.COLOR_ACCENT]
       },

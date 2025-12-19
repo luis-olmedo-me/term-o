@@ -2,6 +2,8 @@ import * as React from 'preact'
 import { useState } from 'preact/hooks'
 
 import DynamicInput from '@src/components/DynamicInput'
+
+import { getConfigDetailsByInputId } from '@src/helpers/config.helpers'
 import { validate } from '@src/helpers/validation-primitive.helpers'
 import * as S from './FieldRenderer.styles'
 
@@ -17,11 +19,14 @@ export const FieldRenderer = ({
   changeConfig,
   validations,
   handleClickInButtons,
+  sendNotification,
   description
 }) => {
   const [errorMessage, setErrorMessage] = useState(null)
 
   const tryApplyChange = (inputId, newValue) => {
+    const inputDetails = getConfigDetailsByInputId(inputId)
+
     try {
       validations.forEach(primitiveValidation => validate(primitiveValidation, newValue))
 
@@ -29,6 +34,7 @@ export const FieldRenderer = ({
       setErrorMessage(null)
     } catch (error) {
       setErrorMessage(error)
+      sendNotification(inputDetails.name, error)
     }
   }
 
@@ -70,5 +76,6 @@ FieldRenderer.propTypes = {
   validations: Array,
   changeConfig: Function,
   handleClickInButtons: Function,
+  sendNotification: Function,
   description: String
 }

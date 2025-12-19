@@ -29,23 +29,14 @@
     "build-prod": "vite build --mode production"
   },
   "devDependencies": {
-    "@babel/core": "7.28.4",
-    "@babel/preset-env": "7.28.3",
-    "@babel/preset-react": "7.27.1",
     "@eslint/js": "9.36.0",
     "@preact/preset-vite": "^2.10.2",
-    "babel-loader": "10.0.0",
-    "babel-plugin-styled-components": "2.1.4",
-    "clean-webpack-plugin": "4.0.0",
-    "copy-webpack-plugin": "13.0.1",
     "eslint": "8.57.1",
     "eslint-plugin-react": "7.37.5",
     "globals": "16.4.0",
     "prettier": "3.6.2",
     "sharp": "0.34.5",
-    "vite": "^7.3.0",
-    "webpack": "5.101.3",
-    "webpack-cli": "6.0.1"
+    "vite": "^7.3.0"
   },
   "dependencies": {
     "lz-string": "^1.5.0",

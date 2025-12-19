@@ -7,26 +7,12 @@ import StorageProvider from '@src/providers/StorageProvider'
 import ThemeProvider from '@src/providers/ThemeProvider'
 import GlobalStyle from '@src/styles/Global.styles'
 
+import { handleThemeChanges } from '@configuration/helpers/theme-changes.helpers'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
-import { webElements } from '@src/constants/web-elements.constants'
 import { importWebComponents } from '@src/helpers/web-components.helpers'
 
 importWebComponents()
-
-const handleThemeChanges = updatedStorage => {
-  const config = updatedStorage.get(storageKeys.CONFIG)
-
-  Object.values(webElements).forEach(name => {
-    const elements = document.querySelectorAll(name)
-
-    elements.forEach(element => {
-      const themeEvent = new CustomEvent('new-theme', { detail: config.theme })
-
-      element.dispatchEvent(themeEvent)
-    })
-  })
-}
 
 storage.addEventListener(`${storageKeys.CONFIG}_${configInputIds.COLOR_ACCENT}`, handleThemeChanges)
 storage.addEventListener(`${storageKeys.CONFIG}_${configInputIds.THEME_NAME}`, handleThemeChanges)

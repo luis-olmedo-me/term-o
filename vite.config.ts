@@ -4,6 +4,7 @@ import { resolve } from 'path'
 import { defineConfig } from 'vite'
 
 import { copyIcons } from './src/plugins/copyIcons'
+import { copyManifest } from './src/plugins/copyManifest'
 import { flattenHtml } from './src/plugins/flattenHtml'
 
 const watch = process.argv.includes('--watch')
@@ -23,7 +24,7 @@ const scriptEntries = {
 }
 
 export default defineConfig(({ mode }) => ({
-  plugins: [preact(), flattenHtml(watch), copyIcons(watch)],
+  plugins: [preact(), flattenHtml(watch), copyIcons(watch), copyManifest(watch)],
   build: {
     outDir: 'dist',
     sourcemap: mode !== 'production',

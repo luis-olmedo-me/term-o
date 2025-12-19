@@ -3,9 +3,9 @@ import glob from 'glob'
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
 
+import { buildContentScript } from './src/plugins/buildContentScript'
 import { copyIcons } from './src/plugins/copyIcons'
 import { copyManifest } from './src/plugins/copyManifest'
-import { duplicateGlobalContentImports } from './src/plugins/duplicateGlobalContentImports'
 import { flattenHtml } from './src/plugins/flattenHtml'
 
 const watch = process.argv.includes('--watch')
@@ -20,7 +20,6 @@ const htmlEntries = Object.fromEntries(
 
 const scriptEntries = {
   background: resolve(__dirname, 'src/apps/background/index.js'),
-  content: resolve(__dirname, 'src/apps/content/index.js'),
   'web-components': resolve(__dirname, 'src/apps/web-components/index.js')
 }
 
@@ -30,10 +29,10 @@ export default defineConfig(({ mode }) => ({
     flattenHtml(watch),
     copyIcons(watch),
     copyManifest(watch),
-    duplicateGlobalContentImports(watch)
+    buildContentScript(mode, watch)
   ],
   build: {
-    outDir: 'dist',
+    outDir: 'build',
     sourcemap: mode !== 'production',
     rollupOptions: {
       input: {

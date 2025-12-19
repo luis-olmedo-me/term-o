@@ -12,20 +12,20 @@ export function flattenHtml(watch) {
     name: 'flatten-html-output',
     closeBundle() {
       const start = performance.now()
-      const dist = path.resolve('dist')
-      const htmlFiles = glob.sync('dist/src/apps/**/index.html')
+      const build = path.resolve('build')
+      const htmlFiles = glob.sync('build/src/apps/**/index.html')
 
       htmlFiles.forEach(file => {
         const appName = file.replace(/.*src[\\/]+apps[\\/]+/, '').replace(/[\\/]+index.html$/, '')
-        const target = path.join(dist, `${appName}.html`)
+        const target = path.join(build, `${appName}.html`)
 
         if (fs.existsSync(target)) fs.unlinkSync(target)
 
         fs.renameSync(file, target)
-        console.log(`${gray}dist/${yellow}${appName}.html${reset}`)
+        console.log(`${gray}build/${yellow}${appName}.html${reset}`)
       })
 
-      const srcDir = path.join(dist, 'src')
+      const srcDir = path.join(build, 'src')
 
       if (fs.existsSync(srcDir)) fs.rmSync(srcDir, { recursive: true, force: true })
 

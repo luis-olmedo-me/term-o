@@ -12,7 +12,7 @@ export function copyManifest(watch) {
     closeBundle() {
       const start = performance.now()
       const src = path.resolve('src/manifest.json')
-      const dest = path.resolve('dist/manifest.json')
+      const dest = path.resolve('build/manifest.json')
 
       if (!fs.existsSync(src)) {
         console.warn('⚠ manifest.json not found')
@@ -24,7 +24,7 @@ export function copyManifest(watch) {
       const end = performance.now()
       const time = Math.round(end - start)
 
-      console.log(`${gray}dist/${cyan}manifest.json${reset}`)
+      console.log(`${gray}build/${cyan}manifest.json${reset}`)
       console.log(`${approvalLabel}Manifest file copied in ${time}ms.${reset}`)
     }
   }

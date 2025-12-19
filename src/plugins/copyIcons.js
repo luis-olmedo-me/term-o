@@ -13,7 +13,7 @@ export function copyIcons(watch) {
     closeBundle() {
       const start = performance.now()
       const srcDir = path.resolve('src/images/icons')
-      const outDir = path.resolve('dist/assets/icons')
+      const outDir = path.resolve('build/assets/icons')
 
       if (!fs.existsSync(srcDir)) return
 
@@ -27,7 +27,7 @@ export function copyIcons(watch) {
 
         fs.copyFileSync(from, to)
 
-        console.log(`${gray}dist/assets/icons/${cyan}${file}${reset}`)
+        console.log(`${gray}build/assets/icons/${cyan}${file}${reset}`)
       })
 
       const end = performance.now()

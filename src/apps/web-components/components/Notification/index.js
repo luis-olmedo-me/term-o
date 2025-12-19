@@ -7,12 +7,17 @@ import {
   applyCssVariablesFromTheme,
   getPropsFromAttrs
 } from '@web-components/helpers/props.helpers'
-import { dummyKeyframes, notificationPropNames, transitionTime } from './Notification.constants'
+import {
+  dummyKeyframes,
+  messages,
+  notificationPropNames,
+  transitionTime
+} from './Notification.constants'
 import { getNotificationBeforeElement } from './Notification.helpers'
 
 class Notification extends HTMLElement {
   _timerAnimation = null
-  _isFinished = false
+  _isClicked = false
   _dimmingTime = 0
 
   constructor() {
@@ -47,9 +52,9 @@ class Notification extends HTMLElement {
     const index = this.getAttribute('index')
     const currentIndex = Number(index)
     const newIndex = forcedIndex ?? currentIndex + 1
-    const nextIndex = this._isFinished ? newIndex : null
+    const nextIndex = this._isClicked ? newIndex : null
 
-    if (!this._isFinished) this._updateIndex(newIndex)
+    if (!this._isClicked) this._updateIndex(newIndex)
     if (this._notificationBefore) this._notificationBefore.moveDown(nextIndex)
   }
 
@@ -57,9 +62,9 @@ class Notification extends HTMLElement {
     const index = this.getAttribute('index')
     const currentIndex = Number(index)
     const newIndex = forcedIndex ?? currentIndex - 1
-    const nextIndex = this._isFinished ? newIndex : null
+    const nextIndex = this._isClicked ? newIndex : null
 
-    if (!this._isFinished) this._updateIndex(newIndex)
+    if (!this._isClicked) this._updateIndex(newIndex)
     if (this._notificationBefore) this._notificationBefore.moveUp(nextIndex)
   }
 
@@ -107,7 +112,7 @@ class Notification extends HTMLElement {
   }
 
   _handleDesactivation() {
-    if (this._isFinished) return
+    if (this._isClicked) return
 
     this._finish()
   }
@@ -123,7 +128,7 @@ class Notification extends HTMLElement {
   }
 
   async _closeDueToClick() {
-    this.isFinished = true
+    this._isClicked = true
     this._finish()
   }
 
@@ -132,7 +137,7 @@ class Notification extends HTMLElement {
     if (this._notificationBefore) this._notificationBefore.moveUp()
 
     await delay(transitionTime)
-    this._dispatch('done')
+    if (!this._isClicked) this._dispatch('timeout', messages.timeout)
     this.remove()
   }
 

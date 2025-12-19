@@ -20,7 +20,7 @@ export const scriptsHandler = async command => {
     const config = storage.get(storageKeys.CONFIG)
     const scripts = storage.get(storageKeys.SCRIPTS)
 
-    command.update('Click the bubble on the page to start uploading a file.')
+    command.update('Click the notification on the page to start uploading a file.')
     const file = await uploadFile(tabId, { theme: config.theme })
 
     const alreadyExists = scripts.has(file.name)

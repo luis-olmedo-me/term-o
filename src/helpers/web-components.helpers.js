@@ -34,17 +34,6 @@ export const createHighlight = ({ element, theme }) => {
   })
 }
 
-export const createBubble = ({ message, theme }) => {
-  return createWebElement(webElements.BUBBLE, {
-    message: message,
-    font: theme.font,
-    white: theme.colors.white,
-    accent: theme.colors.accent,
-    background: theme.colors.background,
-    foreground: theme.colors.foreground
-  })
-}
-
 export const createNotification = ({ title, message, theme, duration }) => {
   const themeEvent = new CustomEvent('theme', { detail: theme })
   const element = createWebElement(webElements.NOTIFICATION, {

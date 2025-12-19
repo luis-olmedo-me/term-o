@@ -41,7 +41,7 @@ export const styleHandler = async command => {
   if (P`color-pick`) {
     const config = storage.get(storageKeys.CONFIG)
 
-    command.update('Click the bubble on the page to start color picking.')
+    command.update('Click the notification on the page to start picking a color.')
     const color = await pickColor(tabId, { theme: config.theme })
 
     command.reset()

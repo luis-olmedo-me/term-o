@@ -4,9 +4,9 @@ import { resolve } from 'path'
 import { defineConfig } from 'vite'
 
 import { buildContentScript } from './src/plugins/buildContentScript.plugin'
-import { copyIcons } from './src/plugins/copyIcons'
-import { copyManifest } from './src/plugins/copyManifest'
-import { flattenHtml } from './src/plugins/flattenHtml'
+import { copyIcons } from './src/plugins/copyIcons.plugin'
+import { copyManifest } from './src/plugins/copyManifest.plugin'
+import { flattenHtml } from './src/plugins/flattenHtml.plugin'
 
 const watch = process.argv.includes('--watch')
 

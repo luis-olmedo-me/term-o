@@ -1,12 +1,17 @@
-import { createBubble } from '@src/helpers/web-components.helpers'
+import { durations } from '@src/constants/web-elements.constants'
+import { createNotification } from '@src/helpers/web-components.helpers'
 
 export default async (resolve, reject, data) => {
   if (!window.EyeDropper) return reject('EyeDropper API is not supported in this browser.')
 
-  const bubble = createBubble({ message: 'Pick a color', theme: data.theme })
-  const startPicking = async () => {
-    await bubble.remove()
+  const notification = createNotification({
+    title: 'Term-O | Action required to proceed',
+    message: 'Click to start picking a color',
+    theme: data.theme,
+    duration: durations.EXTENDED
+  })
 
+  const startPicking = async () => {
     try {
       const eyeDropper = new EyeDropper()
       const { sRGBHex } = await eyeDropper.open()
@@ -19,6 +24,6 @@ export default async (resolve, reject, data) => {
     }
   }
 
-  bubble.addEventListener('click', startPicking)
-  bubble.addEventListener('error', event => reject(event.detail))
+  notification.addEventListener('click', startPicking)
+  notification.addEventListener('error', event => reject(event.detail))
 }

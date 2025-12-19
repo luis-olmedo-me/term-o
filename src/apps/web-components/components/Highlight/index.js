@@ -1,5 +1,5 @@
-import HighlightCss from './Highlight.raw.css'
-import HighlightHtml from './Highlight.raw.html'
+import HighlightCss from './Highlight.raw.css?raw'
+import HighlightHtml from './Highlight.raw.html?raw'
 
 import { webElements } from '@src/constants/web-elements.constants'
 import { delay } from '@src/helpers/utils.helpers'

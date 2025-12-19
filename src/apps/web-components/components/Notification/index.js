@@ -1,5 +1,5 @@
-import NotificationCss from './Notification.raw.css'
-import NotificationHtml from './Notification.raw.html'
+import NotificationCss from './Notification.raw.css?raw'
+import NotificationHtml from './Notification.raw.html?raw'
 
 import { webElements } from '@src/constants/web-elements.constants'
 import { delay } from '@src/helpers/utils.helpers'

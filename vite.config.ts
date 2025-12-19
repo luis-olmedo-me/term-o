@@ -3,6 +3,8 @@ import glob from 'glob'
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
 
+import { flattenHtml } from './src/plugins/flattenHtml'
+
 const htmlEntries = Object.fromEntries(
   glob.sync('src/apps/*/index.html').map(file => {
     const name = file.replace('src/apps/', '').replace('/index.html', '')
@@ -18,7 +20,7 @@ const scriptEntries = {
 }
 
 export default defineConfig(({ mode }) => ({
-  plugins: [preact()],
+  plugins: [preact(), flattenHtml()],
   build: {
     outDir: 'dist',
     sourcemap: mode !== 'production',

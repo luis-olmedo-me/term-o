@@ -3,6 +3,7 @@ import glob from 'glob'
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
 
+import { copyIcons } from './src/plugins/copyIcons'
 import { flattenHtml } from './src/plugins/flattenHtml'
 
 const htmlEntries = Object.fromEntries(
@@ -13,6 +14,8 @@ const htmlEntries = Object.fromEntries(
   })
 )
 
+const watch = process.argv.includes('--watch')
+
 const scriptEntries = {
   background: resolve(__dirname, 'src/apps/background/index.js'),
   content: resolve(__dirname, 'src/apps/content/index.js'),
@@ -20,7 +23,7 @@ const scriptEntries = {
 }
 
 export default defineConfig(({ mode }) => ({
-  plugins: [preact(), flattenHtml()],
+  plugins: [preact(), flattenHtml(watch), copyIcons(watch)],
   build: {
     outDir: 'dist',
     sourcemap: mode !== 'production',

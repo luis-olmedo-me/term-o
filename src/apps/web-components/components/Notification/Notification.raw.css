@@ -14,7 +14,7 @@
   right: -100%;
   z-index: 999999;
   display: flex;
-  font-size: 13px;
+  font-size: 12px;
   cursor: pointer;
   user-select: none;
   pointer-events: all;
@@ -77,10 +77,10 @@
   -webkit-line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 1rem;
+  line-height: 1em;
   margin: 0;
-  min-height: calc(1rem * 2);
-  max-height: calc(1rem * 2);
+  min-height: calc(1em * 2);
+  max-height: calc(1em * 2);
 }
 .title {
   font-weight: bold;

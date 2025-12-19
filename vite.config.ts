@@ -6,6 +6,8 @@ import { defineConfig } from 'vite'
 import { copyIcons } from './src/plugins/copyIcons'
 import { flattenHtml } from './src/plugins/flattenHtml'
 
+const watch = process.argv.includes('--watch')
+
 const htmlEntries = Object.fromEntries(
   glob.sync('src/apps/*/index.html').map(file => {
     const name = file.replace('src/apps/', '').replace('/index.html', '')
@@ -13,8 +15,6 @@ const htmlEntries = Object.fromEntries(
     return [name, resolve(__dirname, file)]
   })
 )
-
-const watch = process.argv.includes('--watch')
 
 const scriptEntries = {
   background: resolve(__dirname, 'src/apps/background/index.js'),

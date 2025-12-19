@@ -3,7 +3,7 @@ const path = require('path')
 const sharp = require('sharp')
 
 const INPUT_SVG = path.resolve(__dirname, '../images/logo.svg')
-const OUT_DIR = path.resolve(__dirname, '../images/required')
+const OUT_DIR = path.resolve(__dirname, '../images/icons')
 
 const SIZES = [16, 32, 48, 512]
 
@@ -23,7 +23,7 @@ const generate = async () => {
 
     await sharp(svgBuffer).resize(size, size, { fit: 'contain' }).png().toFile(outPath)
 
-    console.log(`asset generated \x1b[92msrc/images/required/${pngName}\x1b[0m`)
+    console.log(`asset generated \x1b[92msrc/images/icons/${pngName}\x1b[0m`)
   }
 }
 

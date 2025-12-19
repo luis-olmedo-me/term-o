@@ -1,10 +1,26 @@
 {
   "name": "term-o",
-  "version": "0.8.0",
-  "description": "Browser Command Line: Execute commands directly from your browser.",
-  "repository": "https://github.com/luis-olmedo-me/term-o",
-  "author": "olmedoluis012@gmail.com",
-  "license": "ISC",
+  "version": "0.9.0",
+  "description": "A terminal-style developer tool for interacting with browser APIs and page events.",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/luis-olmedo-me/term-o"
+  },
+  "author": {
+    "name": "Luis Olmedo",
+    "url": "https://github.com/luis-olmedo-me"
+  },
+  "engines": {
+    "node": ">=22.4.1"
+  },
+  "keywords": [
+    "chrome-extension",
+    "developer-tools",
+    "terminal",
+    "preact"
+  ],
+  "license": "MIT",
   "scripts": {
     "eslint": "npx eslint src",
     "start": "node ./src/scripts/generate-icons.js && yarn webpack -c webpack.config.js --mode development --devtool cheap-module-source-map --watch --progress",

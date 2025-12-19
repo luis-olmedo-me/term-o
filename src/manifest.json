@@ -1,7 +1,7 @@
 {
   "name": "Term-O",
-  "version": "0.8.0",
-  "description": "Browser Command Line: Execute commands directly from your browser.",
+  "version": "0.9.0",
+  "description": "A terminal-style developer tool to inspect and interact with web pages through browser APIs.",
   "manifest_version": 3,
   "permissions": [
     "tabs",

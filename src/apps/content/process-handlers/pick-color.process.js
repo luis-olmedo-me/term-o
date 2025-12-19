@@ -25,5 +25,5 @@ export default async (resolve, reject, data) => {
   }
 
   notification.addEventListener('click', startPicking)
-  notification.addEventListener('error', event => reject(event.detail))
+  notification.addEventListener('timeout', event => reject(event.detail))
 }

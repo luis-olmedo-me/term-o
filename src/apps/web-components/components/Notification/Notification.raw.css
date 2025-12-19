@@ -60,7 +60,7 @@
   margin: 16px 0 0 0;
 }
 .notification.lights-dimming {
-  animation: lights-dimming 8s ease-out;
+  animation: lights-dimming 4s ease-out;
 }
 
 .notification .message-box {
@@ -94,7 +94,7 @@
   0% {
     border-color: var(--colors-accent);
   }
-  50% {
+  100% {
     border-color: var(--colors-brightBlack);
   }
 }

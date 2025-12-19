@@ -26,10 +26,10 @@ const scriptEntries = {
 export default defineConfig(({ mode }) => ({
   plugins: [
     preact(),
-    flattenHtml(watch),
     copyIcons(watch),
+    buildContentScript(mode, watch),
     copyManifest(watch),
-    buildContentScript(mode)
+    flattenHtml(watch)
   ],
   build: {
     outDir: 'build',
@@ -53,7 +53,6 @@ export default defineConfig(({ mode }) => ({
       '@background': resolve(__dirname, 'src/apps/background'),
       '@configuration': resolve(__dirname, 'src/apps/configuration'),
       '@web-components': resolve(__dirname, 'src/apps/web-components'),
-      '@content': resolve(__dirname, 'src/apps/content'),
       '@src': resolve(__dirname, 'src'),
       react: 'preact/compat',
       'react-dom': 'preact/compat'

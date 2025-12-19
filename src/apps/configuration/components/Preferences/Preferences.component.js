@@ -55,9 +55,8 @@ export const Preferences = () => {
     const oldValue = config.getValueById(inputId)
     const message = getInputMessageByType(inputDetails, oldValue, newValue)
 
-    config.change(inputId, newValue)
-
     sendNotification(inputDetails.name, message)
+    config.change(inputId, newValue)
   }
 
   return (

@@ -21,7 +21,8 @@
   transition:
     top 0.5s ease,
     right 0.5s ease,
-    opacity 0.5s ease;
+    opacity 0.5s ease,
+    transform 0.7s ease;
   font-family: var(--font);
   opacity: 0;
 }
@@ -38,6 +39,9 @@
 }
 .wrapper.activate {
   right: 12px;
+}
+.wrapper.flip {
+  transform: rotateX(360deg);
 }
 
 .notification {

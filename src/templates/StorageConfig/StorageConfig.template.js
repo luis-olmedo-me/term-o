@@ -59,6 +59,7 @@ export class StorageConfig extends StorageSimple {
     const newConfig = updateConfigValueIn(this.$latest().value, inputId, newValue)
 
     this.$storageService.set(storageKeys.CONFIG, newConfig)
+    this.$storageService.dispatchEvent(`${storageKeys.CONFIG}_${inputId}`, this.$storageService)
   }
 
   reset() {

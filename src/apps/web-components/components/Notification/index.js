@@ -27,6 +27,7 @@ class Notification extends HTMLElement {
 
     this._handleDesactivationRef = this._handleDesactivation.bind(this)
     this.addEventListener('theme', this._handleTheme)
+    this.addEventListener('new-theme', this._handleNewTheme)
   }
 
   connectedCallback() {
@@ -82,6 +83,12 @@ class Notification extends HTMLElement {
     const newTheme = event.detail
 
     this._elements.styles.innerHTML = applyCssVariablesFromTheme(NotificationCss, newTheme)
+  }
+
+  async _handleNewTheme(event) {
+    this._elements.wrapper.classList.toggle('flip')
+
+    this._handleTheme(event)
   }
 
   _updateIndex(newIndex) {

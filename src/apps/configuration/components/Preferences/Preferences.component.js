@@ -95,6 +95,7 @@ export const Preferences = () => {
                   title={input.name}
                   changeConfig={handleConfigChange}
                   handleClickInButtons={handleClicksInButtonFields}
+                  sendNotification={sendNotification}
                 />
               )
             })}

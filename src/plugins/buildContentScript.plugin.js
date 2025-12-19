@@ -35,7 +35,7 @@ export function buildContentScript(mode, watch) {
         const end = performance.now()
         const time = Math.round(end - start)
 
-        console.log(`${gray}build/assets/js/${cyan}content.js${reset}`)
+        console.log(`${gray}build/${cyan}assets/js/content.js${reset}`)
         console.log(`${approvalLabel}Content script copied in ${time}ms.${reset}`)
       }
     }

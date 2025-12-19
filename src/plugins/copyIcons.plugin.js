@@ -27,7 +27,7 @@ export function copyIcons(watch) {
 
         fs.copyFileSync(from, to)
 
-        console.log(`${gray}build/assets/icons/${cyan}${file}${reset}`)
+        console.log(`${gray}build/${cyan}assets/icons/${file}${reset}`)
       })
 
       const end = performance.now()

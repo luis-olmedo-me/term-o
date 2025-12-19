@@ -1,6 +1,6 @@
-import { createNotification } from '@content/helpers/web-components.helpers'
 import { durations } from '@src/constants/web-elements.constants'
 import { delay } from '@src/helpers/utils.helpers'
+import { createNotification } from '@src/helpers/web-components.helpers'
 
 export default async (resolve, _reject, data) => {
   const notification = {

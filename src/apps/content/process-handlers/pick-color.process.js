@@ -1,4 +1,4 @@
-import { createBubble } from '@content/helpers/web-components.helpers'
+import { createBubble } from '@src/helpers/web-components.helpers'
 
 export default async (resolve, reject, data) => {
   if (!window.EyeDropper) return reject('EyeDropper API is not supported in this browser.')

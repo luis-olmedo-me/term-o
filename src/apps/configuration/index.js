@@ -2,14 +2,15 @@ import * as React from 'preact'
 
 import storage from '@src/libs/storage'
 
-import { configInputIds } from '@src/constants/config.constants'
-import { storageKeys } from '@src/constants/storage.constants'
-import { webElements } from '@src/constants/web-elements.constants'
+import Preferences from '@configuration/components/Preferences'
 import StorageProvider from '@src/providers/StorageProvider'
 import ThemeProvider from '@src/providers/ThemeProvider'
 import GlobalStyle from '@src/styles/Global.styles'
-import { importWebComponents } from '../content/helpers/web-components.helpers'
-import Preferences from './components/Preferences'
+
+import { configInputIds } from '@src/constants/config.constants'
+import { storageKeys } from '@src/constants/storage.constants'
+import { webElements } from '@src/constants/web-elements.constants'
+import { importWebComponents } from '@src/helpers/web-components.helpers'
 
 importWebComponents()
 

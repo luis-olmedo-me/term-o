@@ -1,5 +1,5 @@
-import { createBubble } from '@content/helpers/web-components.helpers'
 import { readFileContent, uploader } from '@src/helpers/file.helpers'
+import { createBubble } from '@src/helpers/web-components.helpers'
 
 export default async (resolve, reject, data) => {
   const bubble = createBubble({ message: 'Upload a file', theme: data.theme })

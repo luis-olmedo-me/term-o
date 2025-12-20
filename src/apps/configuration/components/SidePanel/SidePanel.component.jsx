@@ -1,11 +1,11 @@
 import * as React from 'preact'
 
 import Button, { buttonVariants } from '@src/components/Button'
-import * as S from './SidePanel.styles'
+import { sidePanelWrapper } from './SidePanel.module.scss'
 
 export const SidePanel = ({ options, selectedOptionId, onChange }) => {
   return (
-    <S.SidePanelWrapper>
+    <div className={sidePanelWrapper}>
       {options.map(option => {
         return (
           <Button
@@ -19,7 +19,7 @@ export const SidePanel = ({ options, selectedOptionId, onChange }) => {
           />
         )
       })}
-    </S.SidePanelWrapper>
+    </div>
   )
 }
 

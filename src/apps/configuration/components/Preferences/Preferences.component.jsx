@@ -13,8 +13,15 @@ import { storageKeys } from '@src/constants/storage.constants'
 import { durations } from '@src/constants/web-elements.constants'
 import { getConfigDetailsByInputId } from '@src/helpers/config.helpers'
 import { createNotification } from '@src/helpers/web-components.helpers'
+import { verticalScroller } from '@styles/global.module.scss'
 import { sidePanelOptions } from './Preferences.constants'
 import { getInputMessageByType, handleImportConfig } from './Preferences.helpers'
+import {
+  contentWrapper,
+  mainContentWrapper,
+  preferencesWrapper,
+  sectionWrapper
+} from './Preferences.module.scss'
 import * as S from './Preferences.styles'
 
 export const Preferences = () => {
@@ -60,22 +67,22 @@ export const Preferences = () => {
   }
 
   return (
-    <S.PreferencesWrapper>
+    <div className={preferencesWrapper}>
       <S.HeaderWrapper>
         <Logo size={iconSizes.NORMAL} />
 
         <S.HeaderTitle>Configuration</S.HeaderTitle>
       </S.HeaderWrapper>
 
-      <S.ContentWrapper>
+      <div className={contentWrapper}>
         <SidePanel
           options={sidePanelOptions}
           selectedOptionId={selectedSectionId}
           onChange={setSelectedSectionId}
         />
 
-        <S.MainContentWrapper className="vertical-scroller">
-          <S.SectionWrapper key={sectionSelected.id}>
+        <div className={`${mainContentWrapper} ${verticalScroller}`}>
+          <div key={sectionSelected.id} className={sectionWrapper}>
             <S.SectionTitle>{sectionSelected.name}</S.SectionTitle>
             <S.SectionDescription>{sectionSelected.description}</S.SectionDescription>
 
@@ -99,10 +106,10 @@ export const Preferences = () => {
                 />
               )
             })}
-          </S.SectionWrapper>
-        </S.MainContentWrapper>
-      </S.ContentWrapper>
-    </S.PreferencesWrapper>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 

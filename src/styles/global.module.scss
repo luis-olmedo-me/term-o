@@ -1,5 +1,9 @@
-@use '@styles/variables.styles' as *;
-@use '@styles/animations.styles' as *;
+@use '@styles/variables.module' as *;
+@use '@styles/animations.module' as *;
+
+html {
+  font-size: $fontSizeSelected;
+}
 
 body {
   background-color: $colors-red;
@@ -16,7 +20,7 @@ body {
   }
 }
 
-.vertical-scroller {
+.verticalScroller {
   &::-webkit-scrollbar {
     height: $space-300;
     width: $space-300;
@@ -38,7 +42,7 @@ body {
   }
 }
 
-&[aria-loading='true'] {
+[aria-loading='true'] {
   position: relative;
 
   &::after {

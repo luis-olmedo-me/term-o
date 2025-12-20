@@ -29,7 +29,6 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
-
   &[aria-loading='true'] {
     position: relative;
 

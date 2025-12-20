@@ -1,0 +1,22 @@
+.preferencesWrapper {
+  color: $colors-foreground;
+}
+
+.contentWrapper {
+  display: flex;
+  gap: $space-600;
+  padding: $space-600 $space-600 $space-600 0;
+  box-sizing: content-box;
+}
+
+.mainContentWrapper {
+  width: 100%;
+  height: calc(100vh - $space-600 * 6 - $fontSize-300);
+  overflow: hidden scroll;
+  padding-right: $space-600;
+  box-sizing: content-box;
+}
+
+.sectionWrapper {
+  margin-top: $space-600;
+}

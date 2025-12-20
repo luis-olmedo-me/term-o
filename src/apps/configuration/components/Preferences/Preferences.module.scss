@@ -20,3 +20,25 @@
 .sectionWrapper {
   margin-top: $space-600;
 }
+
+.sectionTitle {
+  margin: 0 0 $space-400 0;
+  font-size: $fontSize-200;
+}
+.sectionDescription {
+  font-size: $fontSize-50;
+}
+
+.headerWrapper {
+  padding: $space-600 $space-400;
+  display: flex;
+  align-items: center;
+  gap: $space-400;
+  border-bottom: $space-50 solid $colors-brightBlack;
+}
+
+.headerTitle {
+  display: inline;
+  font-size: $fontSize-300;
+  margin: 0;
+}

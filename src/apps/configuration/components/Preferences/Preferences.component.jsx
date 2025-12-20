@@ -18,11 +18,14 @@ import { sidePanelOptions } from './Preferences.constants'
 import { getInputMessageByType, handleImportConfig } from './Preferences.helpers'
 import {
   contentWrapper,
+  headerTitle,
+  headerWrapper,
   mainContentWrapper,
   preferencesWrapper,
+  sectionDescription,
+  sectionTitle,
   sectionWrapper
 } from './Preferences.module.scss'
-import * as S from './Preferences.styles'
 
 export const Preferences = () => {
   const [selectedSectionId, setSelectedSectionId] = useState(configIds.FUNCTIONALITY)
@@ -68,11 +71,11 @@ export const Preferences = () => {
 
   return (
     <div className={preferencesWrapper}>
-      <S.HeaderWrapper>
+      <header className={headerWrapper}>
         <Logo size={iconSizes.NORMAL} />
 
-        <S.HeaderTitle>Configuration</S.HeaderTitle>
-      </S.HeaderWrapper>
+        <h1 className={headerTitle}>Configuration</h1>
+      </header>
 
       <div className={contentWrapper}>
         <SidePanel
@@ -83,8 +86,8 @@ export const Preferences = () => {
 
         <div className={`${mainContentWrapper} ${verticalScroller}`}>
           <div key={sectionSelected.id} className={sectionWrapper}>
-            <S.SectionTitle>{sectionSelected.name}</S.SectionTitle>
-            <S.SectionDescription>{sectionSelected.description}</S.SectionDescription>
+            <h3 className={sectionTitle}>{sectionSelected.name}</h3>
+            <p className={sectionDescription}>{sectionSelected.description}</p>
 
             {sectionSelected.inputs.map(input => {
               return (

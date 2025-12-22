@@ -1,0 +1,7 @@
+@mixin color-attr-generator($attr, $property, $colors) {
+  @each $name, $value in $colors {
+    [#{$attr}='#{$name}'] {
+      #{$property}: $value;
+    }
+  }
+}

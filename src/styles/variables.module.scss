@@ -61,3 +61,21 @@ $font: var(--font);
 $fontSizeSelected: var(--fontSizeSelected);
 
 $isDarkMode: var(--isDarkMode);
+
+$base-colors: (
+  red: $colors-red,
+  yellow: $colors-yellow,
+  green: $colors-green,
+  purple: $colors-purple,
+  cyan: $colors-cyan,
+  blue: $colors-blue
+);
+
+$bright-colors: (
+  red: $colors-brightRed,
+  yellow: $colors-brightYellow,
+  green: $colors-brightGreen,
+  purple: $colors-brightPurple,
+  cyan: $colors-brightCyan,
+  blue: $colors-brightBlue
+);

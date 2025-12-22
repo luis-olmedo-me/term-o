@@ -1,5 +1,6 @@
 @use '@styles/variables.module' as *;
 @use '@styles/animations.module' as *;
+@use '@styles/mixins.module' as *;
 
 html {
   font-size: $fontSizeSelected;
@@ -66,76 +67,40 @@ select,
   border: none;
 }
 
-[data-color='red'] {
-  color: $colors-red;
-}
-[data-color='yellow'] {
-  color: $colors-yellow;
-}
-[data-color='green'] {
-  color: $colors-green;
-}
-[data-color='purple'] {
-  color: $colors-purple;
-}
-[data-color='cyan'] {
-  color: $colors-cyan;
-}
-[data-color='blue'] {
-  color: $colors-blue;
-}
-[data-color='brightRed'] {
-  color: $colors-brightRed;
-}
-[data-color='brightYellow'] {
-  color: $colors-brightYellow;
-}
-[data-color='brightGreen'] {
-  color: $colors-brightGreen;
-}
-[data-color='brightPurple'] {
-  color: $colors-brightPurple;
-}
-[data-color='brightCyan'] {
-  color: $colors-brightCyan;
-}
-[data-color='brightBlue'] {
-  color: $colors-brightBlue;
-}
+@include color-attr-generator(
+  'data-color',
+  'color',
+  (
+    red: $colors-red,
+    yellow: $colors-yellow,
+    green: $colors-green,
+    purple: $colors-purple,
+    cyan: $colors-cyan,
+    blue: $colors-blue,
+    brightRed: $colors-brightRed,
+    brightYellow: $colors-brightYellow,
+    brightGreen: $colors-brightGreen,
+    brightPurple: $colors-brightPurple,
+    brightCyan: $colors-brightCyan,
+    brightBlue: $colors-brightBlue
+  )
+);
 
-[data-bgcolor='red'] {
-  color: $colors-red;
-}
-[data-bgcolor='yellow'] {
-  color: $colors-yellow;
-}
-[data-bgcolor='green'] {
-  color: $colors-green;
-}
-[data-bgcolor='purple'] {
-  color: $colors-purple;
-}
-[data-bgcolor='cyan'] {
-  color: $colors-cyan;
-}
-[data-bgcolor='blue'] {
-  color: $colors-blue;
-}
-[data-bgcolor='brightRed'] {
-  color: $colors-brightRed;
-}
-[data-bgcolor='brightYellow'] {
-  color: $colors-brightYellow;
-}
-[data-bgcolor='brightGreen'] {
-  color: $colors-brightGreen;
-}
-[data-bgcolor='brightPurple'] {
-  color: $colors-brightPurple;
-}
-[data-bgcolor='brightCyan'] {
-  color: $colors-brightCyan;
-}
-[data-bgcolor='brightBlue'] {
-  color: $colors-brightBlue;
-}
+@include color-attr-generator(
+  'data-bgcolor',
+  'background-color',
+  (
+    red: $colors-red,
+    yellow: $colors-yellow,
+    green: $colors-green,
+    purple: $colors-purple,
+    cyan: $colors-cyan,
+    blue: $colors-blue,
+    brightRed: $colors-brightRed,
+    brightYellow: $colors-brightYellow,
+    brightGreen: $colors-brightGreen,
+    brightPurple: $colors-brightPurple,
+    brightCyan: $colors-brightCyan,
+    brightBlue: $colors-brightBlue
+  )
+);

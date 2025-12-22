@@ -7,8 +7,9 @@ import useStorage from '@src/hooks/useStorage'
 import { commandStatuses } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
+import { verticalScroller } from '@styles/global.module.scss'
 import { getCaretOffset, getTokenAt, selectToken } from './CommandsViewer.helpers'
-import * as S from './CommandsViewer.styles'
+import { commandItem, line, viewWrapper } from './CommandsViewer.module.scss'
 
 export const CommandsViewer = ({ commands }) => {
   const wrapper = useRef(null)
@@ -63,62 +64,66 @@ export const CommandsViewer = ({ commands }) => {
   }
 
   return (
-    <S.ViewWrapper className="vertical-scroller">
+    <div className={`${viewWrapper} ${verticalScroller}`}>
       <div ref={wrapper}>
         {commands.map(command => {
           const hasErrorMessage = command.status === commandStatuses.ERROR
           const contextLines = command.context.split(/(?<!\\)\n/).filter(Boolean)
 
           return (
-            <S.Command
+            <div
               key={command.id}
-              aria-status={command.status}
-              aria-origin={hasStatusBar ? command.origin : null}
-              aria-indicator={statusIndicator}
-              aria-light={hasStatusLight}
-              aria-truncated={isTruncated}
+              className={commandItem}
+              data-status={command.status}
+              data-origin={hasStatusBar ? command.origin : null}
+              data-indicator={statusIndicator}
+              data-light={hasStatusLight}
+              data-truncated={isTruncated}
             >
               {contextLines.map((context, index) => (
-                <S.Line
+                <p
+                  className={line}
                   key={`${context}-${index}`}
                   onMouseUp={handleLineMouseUp}
-                  aria-truncate-skip="false"
+                  data-truncate-skip="false"
                 >
                   <ColoredText value={context} />
-                </S.Line>
+                </p>
               ))}
 
-              <S.Line aria-truncate-skip="false" onMouseUp={handleLineMouseUp}>
+              <p className={line} data-truncate-skip="false" onMouseUp={handleLineMouseUp}>
                 <ColoredText value={command.title} />
-              </S.Line>
+              </p>
 
               {command.updates.map(update => {
                 return (
-                  <S.Line
+                  <p
+                    className={line}
                     key={update}
                     onMouseUp={handleLineMouseUp}
-                    aria-truncate-skip={hasErrorMessage}
+                    data-truncate-skip={hasErrorMessage}
                   >
                     <ColoredText value={update} />
-                  </S.Line>
+                  </p>
                 )
               })}
 
               {command.warning && (
-                <S.Line
+                <p
+                  className={line}
                   key={command.warning}
-                  aria-truncate-skip="true"
-                  aria-warning="true"
+                  data-truncate-skip="true"
+                  data-warning="true"
                   onMouseUp={handleLineMouseUp}
                 >
                   <ColoredText value={command.warning} />
-                </S.Line>
+                </p>
               )}
-            </S.Command>
+            </div>
           )
         })}
       </div>
-    </S.ViewWrapper>
+    </div>
   )
 }
 

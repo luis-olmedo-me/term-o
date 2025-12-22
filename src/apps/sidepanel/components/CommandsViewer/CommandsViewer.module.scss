@@ -1,0 +1,113 @@
+.viewWrapper {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: $space-400;
+  background-color: transparent;
+  color: $colors-foreground;
+  margin-right: $space-500;
+  cursor: text;
+  word-break: break-all;
+  flex-grow: 1;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding-top: $space-700;
+}
+
+.line {
+  margin: 0;
+
+  &[data-warning='true'] {
+    opacity: 0.7;
+  }
+}
+
+.commandItem {
+  position: relative;
+  padding: 0 $space-600 0 $space-800;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0.5rem;
+    transition: background-color 0.1s ease-in-out;
+  }
+
+  &[data-truncated='true'] {
+    display: flex;
+    flex-direction: column;
+
+    & .line[data-truncate-skip='false'] {
+      min-width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &[data-origin='manual'],
+  &[data-origin='auto'] {
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0.5rem;
+      transition:
+        background-color 0.2s ease-in-out,
+        box-shadow 0.2s ease-in-out;
+      background-color: $colors-brightBlack;
+      border-radius: $radius-200;
+      left: $space-300;
+      width: $space-200;
+      height: calc(100% - 1rem);
+    }
+
+    &[data-indicator='half-dot']::before {
+      border-radius: 0 $radius-200 $radius-200 0;
+      left: 0;
+    }
+  }
+  &[data-origin='auto'] {
+    opacity: 0.8;
+  }
+  &[data-origin='auto']::before,
+  &[data-origin='auto']::after {
+    opacity: 0.6;
+  }
+
+  &[data-status='done']::after {
+    color: $colors-brightGreen;
+    background-color: $colors-brightGreen;
+  }
+  &[data-status='error']::after {
+    color: $colors-brightRed;
+    background-color: $colors-brightRed;
+  }
+  &[data-status='executing']::after {
+    color: $colors-brightWhite;
+    background-color: $colors-brightWhite;
+  }
+
+  &[data-indicator='none']::after {
+    display: none;
+  }
+  &[data-indicator='dot']::after {
+    border-radius: $radius-200;
+    left: $space-300;
+    height: $space-200;
+    width: $space-200;
+  }
+
+  &[data-indicator='half-dot'] {
+    padding: 0 $space-600;
+
+    &::after {
+      border-radius: 0 $radius-200 $radius-200 0;
+      left: 0;
+      width: $space-250;
+      height: $space-200;
+    }
+  }
+  &[data-indicator='half-dot'][data-light='true']::after,
+  &[data-indicator='dot'][data-light='true']::after {
+    box-shadow: 0 0 $space-200 $space-100 currentColor;
+  }
+}

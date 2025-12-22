@@ -95,18 +95,16 @@ export const CommandsViewer = ({ commands }) => {
                 <ColoredText value={command.title} />
               </p>
 
-              {command.updates.map(update => {
-                return (
-                  <p
-                    className={line}
-                    key={update}
-                    onMouseUp={handleLineMouseUp}
-                    data-truncate-skip={hasErrorMessage}
-                  >
-                    <ColoredText value={update} />
-                  </p>
-                )
-              })}
+              {command.updates.map(update => (
+                <p
+                  key={update}
+                  className={line}
+                  onMouseUp={handleLineMouseUp}
+                  data-truncate-skip={hasErrorMessage}
+                >
+                  <ColoredText value={update} />
+                </p>
+              ))}
 
               {command.warning && (
                 <p

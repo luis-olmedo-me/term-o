@@ -5,7 +5,13 @@ import DynamicInput from '@src/components/DynamicInput'
 
 import { getConfigDetailsByInputId } from '@src/helpers/config.helpers'
 import { validate } from '@src/helpers/validation-primitive.helpers'
-import * as S from './FieldRenderer.styles'
+import {
+  errorMessageWrapper,
+  fieldDescription,
+  fieldTitle,
+  fieldWrapper,
+  inputWrapper
+} from './FieldRenderer.module.scss'
 
 export const FieldRenderer = ({
   value,
@@ -39,12 +45,12 @@ export const FieldRenderer = ({
   }
 
   return (
-    <S.FieldWrapper>
-      <S.FieldTitle>{title}</S.FieldTitle>
+    <div className={fieldWrapper}>
+      <h4 className={fieldTitle}>{title}</h4>
 
-      <S.FieldDescription>{description}</S.FieldDescription>
+      <p className={fieldDescription}>{description}</p>
 
-      <S.InputWrapper aria-error={typeof errorMessage === 'string'} aria-type={type}>
+      <div className={inputWrapper} data-error={typeof errorMessage === 'string'} data-type={type}>
         <DynamicInput
           errorMessage={errorMessage}
           handleClickInButtons={id => handleClickInButtons(id, setErrorMessage)}
@@ -57,10 +63,10 @@ export const FieldRenderer = ({
           value={value}
           iconButton={iconButton}
         />
-      </S.InputWrapper>
+      </div>
 
-      {errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
-    </S.FieldWrapper>
+      {errorMessage && <span className={errorMessageWrapper}>{errorMessage}</span>}
+    </div>
   )
 }
 

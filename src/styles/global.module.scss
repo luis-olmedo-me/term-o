@@ -38,12 +38,12 @@ body {
 
     &:active,
     &:hover {
-      background-color: hex($colors-accent, 0.8);
+      background-color: $colors-accent-CC;
     }
   }
 }
 
-[aria-loading='true'] {
+[data-loading='true'] {
   position: relative;
 
   &::after {
@@ -67,40 +67,5 @@ select,
   border: none;
 }
 
-@include color-attr-generator(
-  'data-color',
-  'color',
-  (
-    red: $colors-red,
-    yellow: $colors-yellow,
-    green: $colors-green,
-    purple: $colors-purple,
-    cyan: $colors-cyan,
-    blue: $colors-blue,
-    brightRed: $colors-brightRed,
-    brightYellow: $colors-brightYellow,
-    brightGreen: $colors-brightGreen,
-    brightPurple: $colors-brightPurple,
-    brightCyan: $colors-brightCyan,
-    brightBlue: $colors-brightBlue
-  )
-);
-
-@include color-attr-generator(
-  'data-bgcolor',
-  'background-color',
-  (
-    red: $colors-red,
-    yellow: $colors-yellow,
-    green: $colors-green,
-    purple: $colors-purple,
-    cyan: $colors-cyan,
-    blue: $colors-blue,
-    brightRed: $colors-brightRed,
-    brightYellow: $colors-brightYellow,
-    brightGreen: $colors-brightGreen,
-    brightPurple: $colors-brightPurple,
-    brightCyan: $colors-brightCyan,
-    brightBlue: $colors-brightBlue
-  )
-);
+@include color-attr-generator('data-color', 'color', $colors);
+@include color-attr-generator('data-bgcolor', 'background-color', $colors);

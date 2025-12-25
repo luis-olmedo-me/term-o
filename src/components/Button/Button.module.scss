@@ -1,0 +1,109 @@
+@use 'sass:map';
+
+.buttonWrapper {
+  width: fit-content;
+  height: fit-content;
+  color: $colors-foreground;
+  background-color: transparent;
+  border: none;
+  font-weight: bold;
+  font-size: $fontSize-100;
+  line-height: $lineHeight-300;
+  font-family: $font;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-300 $space-300;
+  justify-content: start;
+  transition:
+    background-color 0.1s ease-in-out,
+    color 0.1s ease-in-out;
+
+  &:active,
+  &:focus,
+  &:focus-visible {
+    outline: none;
+  }
+
+  &:hover {
+    background-color: $colors-black;
+    color: $colors-brightAccent;
+  }
+  &[data-selected='true']:hover {
+    background-color: $colors-accent-CC;
+    color: $colors-brightWhite;
+  }
+
+  &[data-full-width='true'] {
+    width: 100%;
+  }
+
+  &[data-selected='true'] {
+    color: $colors-accent;
+  }
+
+  &[data-variant='outlined'] {
+    border: $space-50 solid $colors-brightBlack;
+    border-radius: $radius-200;
+    padding: $space-200 $space-300;
+    background-color: $colors-white-40;
+
+    &:focus {
+      border: $space-50 solid $colors-accent;
+    }
+
+    &:hover {
+      background-color: $colors-accent-CC;
+      color: $colors-brightWhite;
+    }
+    &[data-selected='true']:hover {
+      color: $colors-brightAccent;
+    }
+  }
+  &[data-variant='outlined-danger'] {
+    border: $space-50 solid $colors-brightBlack;
+    background-color: $colors-red-40;
+    border-radius: $radius-200;
+    padding: $space-200 $space-300;
+
+    &:focus {
+      border: $space-50 solid $colors-red;
+    }
+
+    &:hover {
+      background-color: $colors-red;
+      color: $colors-brightWhite;
+    }
+    &[data-selected='true']:hover {
+      color: $colors-brightRed;
+    }
+  }
+  &[data-variant='outlined-warn'] {
+    border: $space-50 solid $colors-brightBlack;
+    background-color: $colors-yellow-40;
+    border-radius: $radius-200;
+    padding: $space-200 $space-300;
+
+    &:focus {
+      border: $space-50 solid $colors-yellow;
+    }
+
+    &:hover {
+      background-color: $colors-yellow;
+      color: $colors-brightWhite;
+    }
+    &[data-selected='true']:hover {
+      color: $colors-brightYellow;
+    }
+  }
+}
+
+.buttonIconWrapper {
+  margin-right: $space-200;
+  height: map.get($icon-sizes, small);
+
+  &:only-child {
+    margin: 0;
+  }
+}

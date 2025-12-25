@@ -56,11 +56,17 @@ const createVariablesFromTheme = (theme, pre = null) => {
       return
     }
 
-    const isPrimitive =
-      validValue.startsWith('#') || validValue.endsWith('px') || validValue.endsWith('rem')
-    const value = isPrimitive ? validValue : getQuotedString(validValue)
+    const isHexColor = validValue.startsWith('#')
+    const isMeasure = validValue.endsWith('px') || validValue.endsWith('rem')
+    const value = isMeasure || isHexColor ? validValue : getQuotedString(validValue)
 
     variables += `--${name}: ${value}; `
+
+    if (pre === 'colors' && isHexColor) {
+      variables += `--${name}-30: ${value}30; `
+      variables += `--${name}-40: ${value}40; `
+      variables += `--${name}-CC: ${value}CC; `
+    }
   })
 
   return variables

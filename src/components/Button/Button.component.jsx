@@ -2,7 +2,7 @@ import * as React from 'preact'
 
 import { iconSizes } from '@src/constants/icon.constants'
 
-import * as S from './Button.styles'
+import { buttonIconWrapper, buttonWrapper } from './Button.module.scss'
 
 export const Button = ({
   value,
@@ -13,20 +13,21 @@ export const Button = ({
   selected = false
 }) => {
   return (
-    <S.ButtonWrapper
+    <button
+      className={buttonWrapper}
       onClick={onClick}
-      aria-full-width={fullWidth}
-      aria-selected={selected}
-      aria-variant={variant}
+      data-full-width={fullWidth}
+      data-selected={selected}
+      data-variant={variant}
     >
       {Icon && (
-        <S.ButtonIconWrapper>
+        <span className={buttonIconWrapper}>
           <Icon size={iconSizes.SMALL} />
-        </S.ButtonIconWrapper>
+        </span>
       )}
 
       {value && <span>{value}</span>}
-    </S.ButtonWrapper>
+    </button>
   )
 }
 

@@ -34,33 +34,105 @@ $lineHeight-300: var(--lineHeight-300);
 
 $colors-name: var(--colors-name);
 $colors-black: var(--colors-black);
+$colors-black-30: var(--colors-black-30);
+$colors-black-40: var(--colors-black-40);
+$colors-black-CC: var(--colors-black-CC);
 $colors-red: var(--colors-red);
+$colors-red-30: var(--colors-red-30);
+$colors-red-40: var(--colors-red-40);
+$colors-red-CC: var(--colors-red-CC);
 $colors-green: var(--colors-green);
+$colors-green-30: var(--colors-green-30);
+$colors-green-40: var(--colors-green-40);
+$colors-green-CC: var(--colors-green-CC);
 $colors-yellow: var(--colors-yellow);
+$colors-yellow-30: var(--colors-yellow-30);
+$colors-yellow-40: var(--colors-yellow-40);
+$colors-yellow-CC: var(--colors-yellow-CC);
 $colors-blue: var(--colors-blue);
+$colors-blue-30: var(--colors-blue-30);
+$colors-blue-40: var(--colors-blue-40);
+$colors-blue-CC: var(--colors-blue-CC);
 $colors-purple: var(--colors-purple);
+$colors-purple-30: var(--colors-purple-30);
+$colors-purple-40: var(--colors-purple-40);
+$colors-purple-CC: var(--colors-purple-CC);
 $colors-cyan: var(--colors-cyan);
+$colors-cyan-30: var(--colors-cyan-30);
+$colors-cyan-40: var(--colors-cyan-40);
+$colors-cyan-CC: var(--colors-cyan-CC);
 $colors-white: var(--colors-white);
+$colors-white-30: var(--colors-white-30);
+$colors-white-40: var(--colors-white-40);
+$colors-white-CC: var(--colors-white-CC);
 $colors-brightBlack: var(--colors-brightBlack);
+$colors-brightBlack-30: var(--colors-brightBlack-30);
+$colors-brightBlack-40: var(--colors-brightBlack-40);
+$colors-brightBlack-CC: var(--colors-brightBlack-CC);
 $colors-brightRed: var(--colors-brightRed);
+$colors-brightRed-30: var(--colors-brightRed-30);
+$colors-brightRed-40: var(--colors-brightRed-40);
+$colors-brightRed-CC: var(--colors-brightRed-CC);
 $colors-brightGreen: var(--colors-brightGreen);
+$colors-brightGreen-30: var(--colors-brightGreen-30);
+$colors-brightGreen-40: var(--colors-brightGreen-40);
+$colors-brightGreen-CC: var(--colors-brightGreen-CC);
 $colors-brightYellow: var(--colors-brightYellow);
+$colors-brightYellow-30: var(--colors-brightYellow-30);
+$colors-brightYellow-40: var(--colors-brightYellow-40);
+$colors-brightYellow-CC: var(--colors-brightYellow-CC);
 $colors-brightBlue: var(--colors-brightBlue);
+$colors-brightBlue-30: var(--colors-brightBlue-30);
+$colors-brightBlue-40: var(--colors-brightBlue-40);
+$colors-brightBlue-CC: var(--colors-brightBlue-CC);
 $colors-brightPurple: var(--colors-brightPurple);
+$colors-brightPurple-30: var(--colors-brightPurple-30);
+$colors-brightPurple-40: var(--colors-brightPurple-40);
+$colors-brightPurple-CC: var(--colors-brightPurple-CC);
 $colors-brightCyan: var(--colors-brightCyan);
+$colors-brightCyan-30: var(--colors-brightCyan-30);
+$colors-brightCyan-40: var(--colors-brightCyan-40);
+$colors-brightCyan-CC: var(--colors-brightCyan-CC);
 $colors-brightWhite: var(--colors-brightWhite);
+$colors-brightWhite-30: var(--colors-brightWhite-30);
+$colors-brightWhite-40: var(--colors-brightWhite-40);
+$colors-brightWhite-CC: var(--colors-brightWhite-CC);
 $colors-background: var(--colors-background);
+$colors-background-30: var(--colors-background-30);
+$colors-background-40: var(--colors-background-40);
+$colors-background-CC: var(--colors-background-CC);
 $colors-foreground: var(--colors-foreground);
+$colors-foreground-30: var(--colors-foreground-30);
+$colors-foreground-40: var(--colors-foreground-40);
+$colors-foreground-CC: var(--colors-foreground-CC);
 $colors-selectionBackground: var(--colors-selectionBackground);
+$colors-selectionBackground-30: var(--colors-selectionBackground-30);
+$colors-selectionBackground-40: var(--colors-selectionBackground-40);
+$colors-selectionBackground-CC: var(--colors-selectionBackground-CC);
 $colors-cursorColor: var(--colors-cursorColor);
+$colors-cursorColor-30: var(--colors-cursorColor-30);
+$colors-cursorColor-40: var(--colors-cursorColor-40);
+$colors-cursorColor-CC: var(--colors-cursorColor-CC);
 $colors-accent: var(--colors-accent);
+$colors-accent-30: var(--colors-accent-30);
+$colors-accent-40: var(--colors-accent-40);
+$colors-accent-CC: var(--colors-accent-CC);
 $colors-brightAccent: var(--colors-brightAccent);
+$colors-brightAccent-30: var(--colors-brightAccent-30);
+$colors-brightAccent-40: var(--colors-brightAccent-40);
+$colors-brightAccent-CC: var(--colors-brightAccent-CC);
 
 $font: var(--font);
 
 $fontSizeSelected: var(--fontSizeSelected);
 
 $isDarkMode: var(--isDarkMode);
+
+$icon-sizes: (
+  small: 20px,
+  normal: 50px,
+  large: 100px
+);
 
 $base-colors: (
   red: $colors-red,
@@ -78,4 +150,19 @@ $bright-colors: (
   purple: $colors-brightPurple,
   cyan: $colors-brightCyan,
   blue: $colors-brightBlue
+);
+
+$colors: (
+  'red': $colors-red,
+  'yellow': $colors-yellow,
+  'green': $colors-green,
+  'purple': $colors-purple,
+  'cyan': $colors-cyan,
+  'blue': $colors-blue,
+  'brightRed': $colors-brightRed,
+  'brightYellow': $colors-brightYellow,
+  'brightGreen': $colors-brightGreen,
+  'brightPurple': $colors-brightPurple,
+  'brightCyan': $colors-brightCyan,
+  'brightBlue': $colors-brightBlue
 );

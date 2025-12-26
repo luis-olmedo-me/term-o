@@ -1,11 +1,9 @@
-@use 'sass:map';
-
 .inputWrapper {
   width: fit-content;
   max-width: 30rem;
 
-  &[data-type='#{map.get($availableInputTypes, TEXT_AREA)}'],
-  &[data-type='#{map.get($availableInputTypes, STRING)}'] {
+  &[data-type='text-area'],
+  &[data-type='string'] {
     width: 100%;
   }
 

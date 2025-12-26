@@ -1,5 +1,3 @@
-@use 'sass:map';
-
 .buttonWrapper {
   width: fit-content;
   height: fit-content;
@@ -43,7 +41,7 @@
     color: $colors-accent;
   }
 
-  &[data-variant='#{map.get($button-variants, OUTLINED)}'] {
+  &[data-variant='outlined'] {
     border: $space-50 solid $colors-brightBlack;
     border-radius: $radius-200;
     padding: $space-200 $space-300;
@@ -62,7 +60,7 @@
     }
   }
 
-  &[data-variant='#{map.get($button-variants, OUTLINED_DANGER)}'] {
+  &[data-variant='outlined-danger'] {
     border: $space-50 solid $colors-brightBlack;
     background-color: $colors-red-40;
     border-radius: $radius-200;
@@ -81,7 +79,7 @@
     }
   }
 
-  &[data-variant='#{map.get($button-variants, OUTLINED_WARN)}'] {
+  &[data-variant='outlined-warn'] {
     border: $space-50 solid $colors-brightBlack;
     background-color: $colors-yellow-40;
     border-radius: $radius-200;
@@ -103,7 +101,7 @@
 
 .buttonIconWrapper {
   margin-right: $space-200;
-  height: map.get($icon-sizes, small);
+  height: 20px;
 
   &:only-child {
     margin: 0;

@@ -128,12 +128,6 @@ $fontSizeSelected: var(--fontSizeSelected);
 
 $isDarkMode: var(--isDarkMode);
 
-$icon-sizes: (
-  small: 20px,
-  normal: 50px,
-  large: 100px
-);
-
 $base-colors: (
   red: $colors-red,
   yellow: $colors-yellow,
@@ -165,25 +159,4 @@ $colors: (
   'brightPurple': $colors-brightPurple,
   'brightCyan': $colors-brightCyan,
   'brightBlue': $colors-brightBlue
-);
-
-$availableInputTypes: (
-  STRING: 'string',
-  NUMBER: 'number',
-  BOOLEAN: 'boolean',
-  SELECT: 'select',
-  COLOR_SELECT: 'color-select',
-  THEME_SELECT: 'theme-select',
-  FONT_SELECT: 'font-select',
-  BUTTON: 'button',
-  BUTTON_DANGER: 'button-danger',
-  BUTTON_WARN: 'button-warn',
-  TEXT_AREA: 'text-area'
-);
-
-$button-variants: (
-  GHOST: 'ghost',
-  OUTLINED: 'outlined',
-  OUTLINED_DANGER: 'outlined_danger',
-  OUTLINED_WARN: 'outlined_warn'
 );

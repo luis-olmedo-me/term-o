@@ -43,7 +43,7 @@
     color: $colors-accent;
   }
 
-  &[data-variant='outlined'] {
+  &[data-variant='#{map.get($button-variants, OUTLINED)}'] {
     border: $space-50 solid $colors-brightBlack;
     border-radius: $radius-200;
     padding: $space-200 $space-300;
@@ -61,7 +61,8 @@
       color: $colors-brightAccent;
     }
   }
-  &[data-variant='outlined-danger'] {
+
+  &[data-variant='#{map.get($button-variants, OUTLINED_DANGER)}'] {
     border: $space-50 solid $colors-brightBlack;
     background-color: $colors-red-40;
     border-radius: $radius-200;
@@ -79,7 +80,8 @@
       color: $colors-brightRed;
     }
   }
-  &[data-variant='outlined-warn'] {
+
+  &[data-variant='#{map.get($button-variants, OUTLINED_WARN)}'] {
     border: $space-50 solid $colors-brightBlack;
     background-color: $colors-yellow-40;
     border-radius: $radius-200;

@@ -180,3 +180,10 @@ $availableInputTypes: (
   BUTTON_WARN: 'button-warn',
   TEXT_AREA: 'text-area'
 );
+
+$button-variants: (
+  GHOST: 'ghost',
+  OUTLINED: 'outlined',
+  OUTLINED_DANGER: 'outlined_danger',
+  OUTLINED_WARN: 'outlined_warn'
+);

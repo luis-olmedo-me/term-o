@@ -1,9 +1,10 @@
 import * as React from 'preact'
-import * as S from './TextArea.styles'
+import { textAreaInput } from './TextArea.module.scss'
 
 export const TextArea = ({ onChange, onBlur, value, name, maxLines, disabled = false }) => {
   return (
-    <S.TextAreaInput
+    <textarea
+      className={textAreaInput}
       name={name}
       disabled={disabled}
       onBlur={onBlur}
@@ -14,6 +15,7 @@ export const TextArea = ({ onChange, onBlur, value, name, maxLines, disabled = f
     />
   )
 }
+
 TextArea.propTypes = {
   onChange: Function,
   onBlur: Function,

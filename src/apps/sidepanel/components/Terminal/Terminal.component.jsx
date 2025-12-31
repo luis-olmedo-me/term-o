@@ -13,7 +13,7 @@ import { origins } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
-import * as S from './Terminal.styles'
+import { terminalHeader, terminalWrapper } from './Terminal.module.scss'
 
 export const Terminal = () => {
   const inputRef = useRef(null)
@@ -82,10 +82,10 @@ export const Terminal = () => {
   }
 
   return (
-    <S.TerminalWrapper onMouseUp={handleMouseUp}>
-      <S.TerminalHeader>
+    <div className={terminalWrapper} onMouseUp={handleMouseUp}>
+      <header className={terminalHeader}>
         <Button Icon={Gear} onClick={openConfiguration} variant={buttonVariants.GHOST} />
-      </S.TerminalHeader>
+      </header>
 
       <CommandsViewer commands={queue.value} />
 
@@ -98,6 +98,6 @@ export const Terminal = () => {
         context={context}
         name="terminal-prompt"
       />
-    </S.TerminalWrapper>
+    </div>
   )
 }

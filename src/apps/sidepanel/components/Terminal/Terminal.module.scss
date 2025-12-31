@@ -1,0 +1,17 @@
+.terminalWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: $colors-background;
+  transition: background-color 0.2s ease-in-out;
+  height: 100vh;
+}
+
+.terminalHeader {
+  padding: 0;
+  box-shadow: 0 -$space-400 $space-900 $space-900 $colors-background;
+  transition: box-shadow 0.2s ease-in-out;
+  z-index: 1;
+  display: flex;
+  justify-content: end;
+}

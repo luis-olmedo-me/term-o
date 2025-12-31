@@ -29,7 +29,7 @@
     color: $colors-brightAccent;
   }
   &[data-selected='true']:hover {
-    background-color: $colors-accent-CC;
+    background-color: with-opacity($colors-accent, 0.8);
     color: $colors-brightWhite;
   }
 
@@ -45,14 +45,14 @@
     border: $space-50 solid $colors-brightBlack;
     border-radius: $radius-200;
     padding: $space-200 $space-300;
-    background-color: $colors-white-40;
+    background-color: with-opacity($colors-white, 0.25);
 
     &:focus {
       border: $space-50 solid $colors-accent;
     }
 
     &:hover {
-      background-color: $colors-accent-CC;
+      background-color: with-opacity($colors-accent, 0.8);
       color: $colors-brightWhite;
     }
     &[data-selected='true']:hover {
@@ -62,7 +62,7 @@
 
   &[data-variant='outlined-danger'] {
     border: $space-50 solid $colors-brightBlack;
-    background-color: $colors-red-40;
+    background-color: with-opacity($colors-red, 0.25);
     border-radius: $radius-200;
     padding: $space-200 $space-300;
 
@@ -81,7 +81,7 @@
 
   &[data-variant='outlined-warn'] {
     border: $space-50 solid $colors-brightBlack;
-    background-color: $colors-yellow-40;
+    background-color: with-opacity($colors-yellow, 0.25);
     border-radius: $radius-200;
     padding: $space-200 $space-300;
 

@@ -7,7 +7,7 @@
   align-items: center;
   border: solid $colors-brightBlack;
   border-width: $space-50 $space-50 $space-50 0;
-  background-color: $colors-white-30;
+  background-color: with-opacity($colors-white, 0.2);
   color: $colors-foreground;
   border-radius: 0 $space-200 $space-200 0;
   pointer-events: unset;
@@ -46,7 +46,7 @@
 
   &[data-variant='outlined'] {
     border: $space-50 solid $colors-brightBlack;
-    background-color: $colors-white-40;
+    background-color: with-opacity($colors-white, 0.25);
     border-radius: $radius-200 0 0 $radius-200;
     padding-left: $space-300;
     transition: border-color 0.1s ease-in-out;
@@ -60,7 +60,7 @@
     }
 
     &:hover {
-      background-color: $colors-accent-CC;
+      background-color: with-opacity($colors-accent, 0.8);
       color: $colors-brightWhite;
     }
 

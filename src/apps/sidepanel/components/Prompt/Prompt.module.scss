@@ -13,7 +13,7 @@
 
   &[data-loading='true'] .promptInputWrapper,
   &[data-loading='true'] .realInput {
-    color: $colors-foreground-60;
+    color: with-opacity($colors-foreground, 0.4);
   }
 
   .promptInputWrapper {

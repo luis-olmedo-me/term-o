@@ -53,7 +53,7 @@
       transition:
         background-color 0.2s ease-in-out,
         box-shadow 0.2s ease-in-out;
-      background-color: $colors-brightBlack-30;
+      background-color: with-opacity($colors-brightBlack, 0.2);
 
       border-radius: $radius-200;
       left: $space-300;

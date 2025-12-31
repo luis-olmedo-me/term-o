@@ -38,7 +38,7 @@ body {
 
     &:active,
     &:hover {
-      background-color: $colors-accent-CC;
+      background-color: with-opacity($colors-accent, 0.8);
     }
   }
 }

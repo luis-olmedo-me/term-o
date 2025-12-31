@@ -3,6 +3,7 @@
     "baseUrl": "src",
     "paths": {
       "@src/*": ["*"],
+      "@styles/*": ["styles/*"],
       "@sidepanel/*": ["apps/sidepanel/*"],
       "@background/*": ["apps/background/*"],
       "@content/*": ["apps/content/*"],

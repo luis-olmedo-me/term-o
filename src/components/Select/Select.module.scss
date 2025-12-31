@@ -1,0 +1,121 @@
+.selecter {
+  width: 300px;
+  border: $space-50 solid $colors-brightBlack;
+  background-color: with-opacity($colors-white, 0.25);
+
+  color: $colors-foreground;
+  border-radius: $radius-200;
+  padding: $space-250 $space-300;
+  transition:
+    background-color 0.1s ease-in-out,
+    color 0.1s ease-in-out;
+  cursor: pointer;
+  outline: none;
+
+  & .selectedContent {
+    display: flex;
+    gap: $space-250;
+    align-items: center;
+  }
+
+  &:focus {
+    border: $space-50 solid $colors-accent;
+  }
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+
+  &:hover {
+    background-color: with-opacity($colors-accent, 0.8);
+    color: $colors-brightWhite;
+  }
+
+  &:disabled {
+    background-color: with-opacity($colors-white, 0.1);
+    border: $space-50 solid with-opacity($colors-accent, 0.1);
+    color: with-opacity($colors-white, 0.4);
+    cursor: no-drop;
+
+    &:focus {
+      border: $space-50 solid with-opacity($colors-white, 0.1);
+    }
+
+    &:hover {
+      background-color: with-opacity($colors-white, 0.1);
+      color: with-opacity($colors-white, 0.5);
+    }
+  }
+
+  &::picker-icon {
+    transition: 0.2s rotate;
+  }
+  &:open {
+    border-radius: 0;
+
+    &::picker-icon {
+      rotate: 180deg;
+    }
+  }
+}
+
+.selecterWrapper {
+  &[data-loading='true'] {
+    width: fit-content;
+
+    .selecter {
+      cursor: progress;
+    }
+  }
+}
+
+.optionsWrapper {
+  overflow: hidden scroll;
+  height: 8rem;
+  border: $space-50 solid $colors-brightBlack;
+  background-color: $colors-brightBlack;
+}
+
+.optionItem {
+  background-color: $colors-background;
+  border-top: $space-50 solid $colors-brightBlack;
+  border-right: $space-50 solid $colors-brightBlack;
+  color: $colors-foreground;
+  transition:
+    background-color 0.1s ease-in-out,
+    color 0.1s ease-in-out;
+  padding: $space-200 $space-300;
+  cursor: pointer;
+
+  &:first-of-type {
+    border-top: none;
+  }
+
+  &:hover,
+  &:focus {
+    color: $colors-accent;
+  }
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+
+  :is(selected) {
+    color: $colors-brightAccent;
+  }
+
+  &::checkmark {
+    order: 1;
+    margin-left: auto;
+    content: '◉';
+  }
+}
+
+.optionText {
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 250px;
+}

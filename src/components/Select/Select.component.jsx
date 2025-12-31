@@ -1,5 +1,14 @@
 import * as React from 'preact'
-import * as S from './Select.styles'
+
+import { verticalScroller } from '@styles/global.module.scss'
+import {
+  optionItem,
+  optionsWrapper,
+  optionText,
+  selectedContent,
+  selecter,
+  selecterWrapper
+} from './Select.module.scss'
 
 export const Select = ({
   options,
@@ -10,25 +19,25 @@ export const Select = ({
   OptionPrefixComponent = null
 }) => {
   return (
-    <S.SelecterWrapper aria-loading={loading}>
-      <S.Selecter value={value} onChange={onChange} disabled={loading} name={name}>
+    <div className={selecterWrapper} data-loading={loading}>
+      <select className={selecter} value={value} onChange={onChange} disabled={loading} name={name}>
         <button>
-          <selectedcontent className="selected-content"></selectedcontent>
+          <selectedcontent className={selectedContent}></selectedcontent>
         </button>
 
-        <S.OptionsWrapper className="vertical-scroller">
+        <div className={`${optionsWrapper} ${verticalScroller}`}>
           {options?.map(option => {
             return (
-              <S.Option key={option.id} value={option.id}>
+              <option key={option.id} className={optionItem} value={option.id}>
                 {OptionPrefixComponent && <OptionPrefixComponent option={option} />}
 
-                <S.OptionText className="select-option">{option.name}</S.OptionText>
-              </S.Option>
+                <span className={optionText}>{option.name}</span>
+              </option>
             )
           })}
-        </S.OptionsWrapper>
-      </S.Selecter>
-    </S.SelecterWrapper>
+        </div>
+      </select>
+    </div>
   )
 }
 

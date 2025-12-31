@@ -7,7 +7,7 @@ import useStorage from '@src/hooks/useStorage'
 
 import { configInputIds, PROMPT_MARK } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
-import * as S from './Prompt.styles'
+import { promptInputWrapper, promptLine, promptWrapper } from './Prompt.module.scss'
 
 export const Prompt = ({
   onEnter,
@@ -94,14 +94,19 @@ export const Prompt = ({
   const contextLines = context.split(/(?<!\\)\n/).filter(Boolean)
 
   return (
-    <S.PromptWrapper aria-loading={loading} aria-indicator={statusIndicator} className={className}>
+    <div
+      data-loading={loading}
+      data-indicator={statusIndicator}
+      className={`${promptWrapper} ${className}`}
+    >
       {contextLines.map((contextLine, index) => (
-        <S.PromptLine key={`${contextLine}-${index}`} aria-truncated={isTruncated}>
+        <p key={`${contextLine}-${index}`} className={promptLine} data-truncated={isTruncated}>
           <ColoredText value={contextLine} />
-        </S.PromptLine>
+        </p>
       ))}
 
       <Input
+        className={promptInputWrapper}
         inputRef={inputRef}
         value={historialIndex ? historial.at(historialIndex) : value}
         onChange={handleChange}
@@ -114,7 +119,7 @@ export const Prompt = ({
         type={inputTypes.TEXT}
         fullWidth
       />
-    </S.PromptWrapper>
+    </div>
   )
 }
 

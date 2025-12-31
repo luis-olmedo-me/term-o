@@ -1,0 +1,36 @@
+.promptWrapper {
+  cursor: text;
+  background-color: transparent;
+  color: $colors-foreground;
+  padding: 0 $space-600 0 $space-800;
+  box-shadow: 0 0 $space-200 $space-100 $colors-background;
+  transition: box-shadow 0.2s ease-in-out;
+  z-index: 1;
+
+  &[data-indicator='half-dot'] {
+    padding: 0 $space-600;
+  }
+
+  &[data-loading='true'] .promptInputWrapper,
+  &[data-loading='true'] .realInput {
+    color: $colors-foreground-60;
+  }
+
+  .promptInputWrapper {
+    padding: 0 0 $space-300;
+    gap: $space-200;
+  }
+}
+
+.promptLine {
+  margin: 0;
+  cursor: text;
+
+  &[data-truncated='true'] {
+    white-space: pre;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}

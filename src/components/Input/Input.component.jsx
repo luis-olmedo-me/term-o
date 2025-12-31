@@ -1,6 +1,6 @@
 import * as React from 'preact'
 
-import * as S from './Input.styles'
+import { inputWrapper, postfix, realInput } from './Input.module.scss'
 
 export const Input = ({
   onChange,
@@ -17,13 +17,19 @@ export const Input = ({
   postFix,
   name,
   variant,
-  fullWidth
+  fullWidth,
+  className
 }) => {
   return (
-    <S.InputWrapper aria-disabled={disabled} aria-fit-content={!fullWidth}>
+    <div
+      className={`${inputWrapper} ${className}`}
+      data-disabled={disabled}
+      data-fit-content={!fullWidth}
+    >
       {prefix && <span>{prefix}</span>}
 
-      <S.RealInput
+      <input
+        className={realInput}
         ref={inputRef}
         name={name}
         spellCheck="false"
@@ -36,11 +42,11 @@ export const Input = ({
         onBlur={onBlur}
         placeholder={placeholder}
         disabled={disabled}
-        className={variant}
+        data-variant={variant}
       />
 
-      {postFix && <S.Postfix>{postFix}</S.Postfix>}
-    </S.InputWrapper>
+      {postFix && <span className={postfix}>{postFix}</span>}
+    </div>
   )
 }
 
@@ -59,5 +65,6 @@ Input.propTypes = {
   type: String,
   name: String,
   variant: String,
-  fullWidth: Boolean
+  fullWidth: Boolean,
+  className: String
 }

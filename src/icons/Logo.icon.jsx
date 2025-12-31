@@ -1,10 +1,13 @@
 import * as React from 'preact'
-import { useTheme } from 'styled-components'
+
+import useStorage from '@src/hooks/useStorage'
 
 import { iconPropType } from '@src/constants/icon.constants'
+import { storageKeys } from '@src/constants/storage.constants'
 
 const Logo = ({ size }) => {
-  const theme = useTheme()
+  const [config] = useStorage({ key: storageKeys.CONFIG })
+  const theme = config.theme
 
   return (
     <svg

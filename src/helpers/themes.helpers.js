@@ -2,13 +2,6 @@ import { onlyColorKeys } from '@src/constants/themes.constants'
 import { toTitleCase } from './string.helpers'
 import { getQuotedString } from './utils.helpers'
 
-export const theme = (pathsString, appendedString) => props => {
-  const paths = pathsString.split('.')
-  const value = paths.reduce((theme, path) => theme[path], props.theme)
-
-  return appendedString ? `${value}${appendedString}` : value
-}
-
 export const getColor = color => {
   return `[termo.color.${color}]`
 }
@@ -32,13 +25,13 @@ export const getAccentColors = (colorThemes, accentName) => {
   }
 }
 
-export const createAriaColorThemer = ({ theme }) => {
+export const createDataColorThemer = ({ theme }) => {
   return onlyColorKeys
     .map(color => `[data-color="${color}"] { color: ${theme.colors[color]}; }`)
     .join('')
 }
 
-export const createAriaBgColorThemer = ({ theme }) => {
+export const createDataBgColorThemer = ({ theme }) => {
   return onlyColorKeys
     .map(color => `[data-bg-color="${color}"] { background-color: ${theme.colors[color]}; }`)
     .join('')
@@ -61,12 +54,6 @@ const createVariablesFromTheme = (theme, pre = null) => {
     const value = isMeasure || isHexColor ? validValue : getQuotedString(validValue)
 
     variables += `--${name}: ${value}; `
-
-    if (pre === 'colors' && isHexColor) {
-      variables += `--${name}-30: ${value}30; `
-      variables += `--${name}-40: ${value}40; `
-      variables += `--${name}-CC: ${value}CC; `
-    }
   })
 
   return variables

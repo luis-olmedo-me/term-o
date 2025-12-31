@@ -5,7 +5,6 @@ import storage from '@src/libs/storage'
 import Preferences from '@configuration/components/Preferences'
 import StorageProvider from '@src/providers/StorageProvider'
 import ThemeProvider from '@src/providers/ThemeProvider'
-import GlobalStyle from '@src/styles/Global.styles'
 import './index.scss'
 
 import { handleThemeChanges } from '@configuration/helpers/theme-changes.helpers'
@@ -23,8 +22,6 @@ storage.addEventListener(`${storageKeys.CONFIG}_${configInputIds.FONT_FAMILY}`, 
 React.render(
   <StorageProvider>
     <ThemeProvider>
-      <GlobalStyle />
-
       <Preferences />
     </ThemeProvider>
   </StorageProvider>,

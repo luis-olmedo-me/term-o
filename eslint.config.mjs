@@ -1,30 +1,27 @@
 import pluginJs from '@eslint/js'
-import pluginReactConfig from 'eslint-plugin-react/configs/recommended.js'
+import preact from 'eslint-plugin-preact'
 import globals from 'globals'
 
 export default [
   {
     files: ['**/*.{js,mjs,cjs,jsx}'],
-    settings: {
-      react: { version: '17.0' }
-    }
-  },
-  {
     languageOptions: {
       parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
         ecmaFeatures: { jsx: true }
-      }
-    }
-  },
-  {
-    languageOptions: {
+      },
       globals: {
-        ...globals.webextensions,
         ...globals.browser,
         ...globals.node
       }
+    },
+    plugins: {
+      preact
+    },
+    rules: {
+      ...preact.configs.recommended.rules
     }
   },
-  pluginJs.configs.recommended,
-  pluginReactConfig
+  pluginJs.configs.recommended
 ]

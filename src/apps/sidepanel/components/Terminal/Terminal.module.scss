@@ -9,7 +9,7 @@
 
 .terminalHeader {
   padding: 0;
-  box-shadow: 0 -$space-400 $space-900 $space-900 $colors-background;
+  box-shadow: 0 calc(-1 * $space-400) $space-900 $space-900 $colors-background;
   transition: box-shadow 0.2s ease-in-out;
   z-index: 1;
   display: flex;

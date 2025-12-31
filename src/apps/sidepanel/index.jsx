@@ -10,7 +10,6 @@ import { origins } from '@src/constants/command.constants'
 
 commandParser.setOrigin(origins.MANUAL)
 
-// eslint-disable-next-line react/no-deprecated
 React.render(
   <StorageProvider>
     <ThemeProvider>

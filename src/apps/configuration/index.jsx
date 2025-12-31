@@ -18,7 +18,6 @@ storage.addEventListener(`${storageKeys.CONFIG}_${configInputIds.COLOR_ACCENT}`,
 storage.addEventListener(`${storageKeys.CONFIG}_${configInputIds.THEME_NAME}`, handleThemeChanges)
 storage.addEventListener(`${storageKeys.CONFIG}_${configInputIds.FONT_FAMILY}`, handleThemeChanges)
 
-// eslint-disable-next-line react/no-deprecated
 React.render(
   <StorageProvider>
     <ThemeProvider>

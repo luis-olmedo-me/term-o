@@ -1,8 +1,8 @@
 import * as React from 'preact'
-import * as S from './ColorDot.styles'
+import { dot } from './ColorDot.module.scss'
 
 export const ColorDot = ({ option }) => {
-  return <S.Dot aria-bg-color={option.id}></S.Dot>
+  return <span className={dot} data-bg-color={option.id}></span>
 }
 
 ColorDot.propTypes = {

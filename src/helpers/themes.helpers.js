@@ -34,13 +34,13 @@ export const getAccentColors = (colorThemes, accentName) => {
 
 export const createAriaColorThemer = ({ theme }) => {
   return onlyColorKeys
-    .map(color => `[aria-color="${color}"] { color: ${theme.colors[color]}; }`)
+    .map(color => `[data-color="${color}"] { color: ${theme.colors[color]}; }`)
     .join('')
 }
 
 export const createAriaBgColorThemer = ({ theme }) => {
   return onlyColorKeys
-    .map(color => `[aria-bg-color="${color}"] { background-color: ${theme.colors[color]}; }`)
+    .map(color => `[data-bg-color="${color}"] { background-color: ${theme.colors[color]}; }`)
     .join('')
 }
 

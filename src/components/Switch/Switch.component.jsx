@@ -1,6 +1,6 @@
 import * as React from 'preact'
 
-import * as S from './Switch.styles'
+import { selected, simulatedSwitch, switchInput, switchWrapper } from './Switch.module.scss'
 
 export const Switch = ({
   onChange,
@@ -13,8 +13,9 @@ export const Switch = ({
   name
 }) => {
   return (
-    <S.SwitchWrapper aria-disabled={disabled}>
-      <S.SwitchInput
+    <div className={switchWrapper}>
+      <input
+        className={switchInput}
         name={name}
         ref={inputRef}
         checked={value}
@@ -26,8 +27,8 @@ export const Switch = ({
         type="checkbox"
       />
 
-      <S.SimulatedSwitch className={value ? 'selected' : null} />
-    </S.SwitchWrapper>
+      <div className={`${simulatedSwitch} ${value ? selected : null}`} />
+    </div>
   )
 }
 

@@ -27,9 +27,9 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     preact(),
     copyIcons(watch),
-    buildContentScript(mode, watch),
     copyManifest(watch),
-    flattenHtml(watch)
+    flattenHtml(watch),
+    buildContentScript(mode, watch)
   ],
   build: {
     outDir: 'build',

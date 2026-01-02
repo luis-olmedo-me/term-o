@@ -33,7 +33,7 @@
     "@preact/preset-vite": "2.10.2",
     "eslint": "8.57.1",
     "eslint-plugin-preact": "0.1.0",
-    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react": "7.37.5",
     "globals": "16.4.0",
     "prettier": "3.6.2",
     "sass": "1.97.0",
@@ -41,7 +41,7 @@
     "vite": "7.3.0"
   },
   "dependencies": {
-    "lz-string": "^1.5.0",
+    "lz-string": "1.5.0",
     "preact": "10.27.2"
   }
 }

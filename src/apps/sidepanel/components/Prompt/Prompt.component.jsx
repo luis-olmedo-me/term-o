@@ -36,8 +36,46 @@ export const Prompt = ({
     [defaultValue]
   )
 
-  const handleChange = event => {
+  const handleKeyDown = event => {
+    if (loading) return
+
+    const key = event.key
     const targetValue = event.target.value
+
+    if (key === 'Enter' && targetValue) {
+      onEnter(targetValue)
+      setHistorial(addHistoryValueConditionally(targetValue))
+      setHistorialIndex(0)
+      setValue('')
+
+      return
+    }
+
+    if (key === 'ArrowUp') {
+      event.preventDefault()
+
+      setHistorialIndex(index => {
+        const newIndex = index - 1
+        const canBeStored = newIndex * -1 <= historial.length
+
+        return canBeStored ? newIndex : index
+      })
+
+      return
+    }
+
+    if (key === 'ArrowDown') {
+      event.preventDefault()
+
+      setHistorialIndex(index => {
+        const newIndex = index + 1
+        const canBeStored = newIndex <= 0
+
+        return canBeStored ? newIndex : index
+      })
+
+      return
+    }
 
     setValue(targetValue)
     if (historialIndex) setHistorialIndex(0)
@@ -50,42 +88,6 @@ export const Prompt = ({
       const newHistory = isRepeatedAtEnd ? history : [...history, targetValue]
 
       return newHistory.slice(historialSize * -1)
-    }
-  }
-
-  const handleKeyDown = event => {
-    if (loading) return
-
-    const key = event.key
-    const targetValue = event.target.value
-
-    if (key === 'Enter' && targetValue) {
-      onEnter(targetValue)
-      setHistorial(addHistoryValueConditionally(targetValue))
-      setHistorialIndex(0)
-      setValue('')
-    }
-
-    if (key === 'ArrowUp') {
-      event.preventDefault()
-
-      setHistorialIndex(index => {
-        const newIndex = index - 1
-        const canBeStored = newIndex * -1 <= historial.length
-
-        return canBeStored ? newIndex : index
-      })
-    }
-
-    if (key === 'ArrowDown') {
-      event.preventDefault()
-
-      setHistorialIndex(index => {
-        const newIndex = index + 1
-        const canBeStored = newIndex <= 0
-
-        return canBeStored ? newIndex : index
-      })
     }
   }
 
@@ -108,7 +110,6 @@ export const Prompt = ({
         className={promptInputWrapper}
         inputRef={inputRef}
         value={historialIndex ? historial.at(historialIndex) : value}
-        onChange={handleChange}
         onKeyDown={handleKeyDown}
         onBlur={onBlur}
         onFocus={onFocus}

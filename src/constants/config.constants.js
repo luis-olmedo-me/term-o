@@ -11,7 +11,7 @@ import { basicColorKeys, colorThemeKeys, defaultColorTheme } from './themes.cons
 
 export const PROMPT_MARK = '$'
 export const DEFAULT_CONTEXT =
-  'On [termo.color.purple]{tab_id}[termo.color.brightBlack]/[termo.color.brightBlue]{title}'
+  '[termo.color.purple]{tab_id}[termo.color.brightBlack]/[termo.color.brightBlue]{title}'
 
 export const configIds = {
   FUNCTIONALITY: 'functionality',

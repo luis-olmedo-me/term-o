@@ -28,10 +28,6 @@
     background-color: $colors-black;
     color: $colors-brightAccent;
   }
-  &[data-selected='true']:hover {
-    background-color: with-opacity($colors-accent, 0.8);
-    color: $colors-brightWhite;
-  }
 
   &[data-full-width='true'] {
     width: 100%;
@@ -39,6 +35,11 @@
 
   &[data-selected='true'] {
     color: $colors-accent;
+
+    &:hover {
+      background-color: with-opacity($colors-accent, 0.8);
+      color: $colors-brightWhite;
+    }
   }
 
   &[data-variant='outlined'] {

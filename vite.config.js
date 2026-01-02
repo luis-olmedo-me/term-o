@@ -60,9 +60,7 @@ export default defineConfig(({ mode }) => ({
       '@background': resolve(__dirname, 'src/apps/background'),
       '@configuration': resolve(__dirname, 'src/apps/configuration'),
       '@web-components': resolve(__dirname, 'src/apps/web-components'),
-      '@src': resolve(__dirname, 'src'),
-      react: 'preact/compat',
-      'react-dom': 'preact/compat'
+      '@src': resolve(__dirname, 'src')
     }
   },
   css: {

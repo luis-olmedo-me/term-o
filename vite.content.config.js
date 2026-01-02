@@ -4,7 +4,7 @@ import { defineConfig } from 'vite'
 export default defineConfig(({ mode }) => ({
   plugins: [],
   build: {
-    outDir: 'build-content',
+    outDir: 'build/temp-content',
     sourcemap: mode !== 'production',
     rollupOptions: {
       input: 'src/apps/content/index.js',

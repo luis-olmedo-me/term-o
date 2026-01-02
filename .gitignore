@@ -3,6 +3,5 @@
 node_modules
 build
 build.pem
-build-content
 ext.nex
 ext.pem

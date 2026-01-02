@@ -5,7 +5,7 @@ import path from 'path'
 
 import { cyan, gray, green, reset, yellow } from '../constants/system.constants'
 
-const tempDir = path.resolve(__dirname, '../../build-content')
+const tempDir = path.resolve(__dirname, '../../build/temp-content')
 const contentJs = path.join(tempDir, 'content.js')
 const dest = path.resolve(__dirname, '../../build/assets/js/content.js')
 

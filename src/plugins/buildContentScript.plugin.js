@@ -16,7 +16,6 @@ export function buildContentScript(mode, watch) {
     name: 'build-content-script',
 
     closeBundle() {
-      const existContentJs = fs.existsSync(contentJs)
       const start = performance.now()
 
       console.log(`${cyan}content script build started...${reset}`)
@@ -25,9 +24,7 @@ export function buildContentScript(mode, watch) {
         stdio: 'inherit'
       })
 
-      if (existContentJs) {
-        fs.copyFileSync(contentJs, dest)
-      }
+      fs.copyFileSync(contentJs, dest)
 
       const existTempDir = fs.existsSync(tempDir)
 

@@ -22,7 +22,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "eslint": "npx eslint src",
+    "eslint": "eslint src",
     "update-logo": "node ./src/scripts/generate-icons.js",
     "start": "vite build --mode development --watch",
     "build-dev": "vite build --mode development",

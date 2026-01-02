@@ -1,0 +1,71 @@
+@use '@styles/variables.module' as *;
+@use '@styles/animations.module' as *;
+@use '@styles/mixins.module' as *;
+
+html {
+  font-size: $fontSizeSelected;
+}
+
+body {
+  background-color: $colors-red;
+  margin: 0;
+  padding: 0;
+  font-family: $font, Courier, monospace;
+  background-color: $colors-background;
+  font-size: $fontSize-50;
+  transition: background-color 0.2s ease-in-out;
+
+  &::selection {
+    color: $colors-foreground;
+    background-color: $colors-selectionBackground;
+  }
+}
+
+.verticalScroller {
+  &::-webkit-scrollbar {
+    height: $space-300;
+    width: $space-300;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: $colors-background;
+    cursor: pointer;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $colors-brightBlack;
+    cursor: pointer;
+
+    &:active,
+    &:hover {
+      background-color: with-opacity($colors-accent, 0.8);
+    }
+  }
+}
+
+[data-loading='true'] {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    animation: slide 1s linear infinite alternate;
+    animation-timing-function: ease-in-out;
+    width: 5%;
+    height: $space-100;
+    background: $colors-accent;
+    bottom: 0;
+    left: 0;
+    border-radius: $radius-100 $radius-100 0 0;
+    box-shadow: 0 -10px 25px 5px $colors-accent;
+  }
+}
+
+select,
+::picker(select) {
+  appearance: base-select;
+  border: none;
+}
+
+@include color-attr-generator('data-color', 'color', $colors);
+@include color-attr-generator('data-bgcolor', 'background-color', $colors);

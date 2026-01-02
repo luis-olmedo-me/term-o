@@ -1,0 +1,78 @@
+$radius-50: var(--radius-50);
+$radius-100: var(--radius-100);
+$radius-150: var(--radius-150);
+$radius-200: var(--radius-200);
+$radius-300: var(--radius-300);
+$radius-400: var(--radius-400);
+$radius-500: var(--radius-500);
+$radius-600: var(--radius-600);
+
+$space-50: var(--space-50);
+$space-100: var(--space-100);
+$space-150: var(--space-150);
+$space-200: var(--space-200);
+$space-250: var(--space-250);
+$space-300: var(--space-300);
+$space-400: var(--space-400);
+$space-450: var(--space-450);
+$space-500: var(--space-500);
+$space-600: var(--space-600);
+$space-700: var(--space-700);
+$space-800: var(--space-800);
+$space-900: var(--space-900);
+
+$fontSize-50: var(--fontSize-50);
+$fontSize-100: var(--fontSize-100);
+$fontSize-200: var(--fontSize-200);
+$fontSize-300: var(--fontSize-300);
+$fontSize-400: var(--fontSize-400);
+
+$lineHeight-50: var(--lineHeight-50);
+$lineHeight-100: var(--lineHeight-100);
+$lineHeight-200: var(--lineHeight-200);
+$lineHeight-300: var(--lineHeight-300);
+
+$colors-name: var(--colors-name);
+$colors-black: var(--colors-black);
+$colors-red: var(--colors-red);
+$colors-green: var(--colors-green);
+$colors-yellow: var(--colors-yellow);
+$colors-blue: var(--colors-blue);
+$colors-purple: var(--colors-purple);
+$colors-cyan: var(--colors-cyan);
+$colors-white: var(--colors-white);
+$colors-brightBlack: var(--colors-brightBlack);
+$colors-brightRed: var(--colors-brightRed);
+$colors-brightGreen: var(--colors-brightGreen);
+$colors-brightYellow: var(--colors-brightYellow);
+$colors-brightBlue: var(--colors-brightBlue);
+$colors-brightPurple: var(--colors-brightPurple);
+$colors-brightCyan: var(--colors-brightCyan);
+$colors-brightWhite: var(--colors-brightWhite);
+$colors-background: var(--colors-background);
+$colors-foreground: var(--colors-foreground);
+$colors-selectionBackground: var(--colors-selectionBackground);
+$colors-cursorColor: var(--colors-cursorColor);
+$colors-accent: var(--colors-accent);
+$colors-brightAccent: var(--colors-brightAccent);
+
+$font: var(--font);
+
+$fontSizeSelected: var(--fontSizeSelected);
+
+$isDarkMode: var(--isDarkMode);
+
+$colors: (
+  'red': $colors-red,
+  'yellow': $colors-yellow,
+  'green': $colors-green,
+  'purple': $colors-purple,
+  'cyan': $colors-cyan,
+  'blue': $colors-blue,
+  'brightRed': $colors-brightRed,
+  'brightYellow': $colors-brightYellow,
+  'brightGreen': $colors-brightGreen,
+  'brightPurple': $colors-brightPurple,
+  'brightCyan': $colors-brightCyan,
+  'brightBlue': $colors-brightBlue
+);

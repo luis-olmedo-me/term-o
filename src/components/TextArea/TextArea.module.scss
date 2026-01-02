@@ -1,0 +1,30 @@
+.textAreaInput {
+  border: $space-50 solid $colors-brightBlack;
+  background-color: with-opacity($colors-white, 0.25);
+  border-radius: $radius-200;
+  padding: $space-300;
+  color: $colors-foreground;
+  transition: border-color 0.1s ease-in-out;
+  resize: none;
+  width: 100%;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &:active,
+  &:focus,
+  &:focus-visible {
+    outline: none;
+  }
+
+  &:focus {
+    border: $space-50 solid $colors-accent;
+  }
+
+  &:hover {
+    background-color: with-opacity($colors-accent, 0.8);
+    color: $colors-brightWhite;
+    border-color: $colors-accent;
+  }
+}

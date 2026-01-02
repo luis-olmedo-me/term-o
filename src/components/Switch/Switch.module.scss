@@ -1,0 +1,84 @@
+.simulatedSwitch {
+  height: 1.5rem;
+  width: 2.5rem;
+  border: $space-50 solid $colors-brightBlack;
+  background-color: with-opacity($colors-white, 0.25);
+  border-radius: $radius-200;
+  box-sizing: border-box;
+  transition:
+    background-color 0.1s ease-in-out,
+    color 0.1s ease-in-out;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 30%;
+    height: calc(100% - $space-200 * 2);
+    background-color: transparent;
+    border: $space-50 solid with-opacity($colors-foreground, 0.5);
+    bottom: $space-200;
+    left: $space-200;
+    border-radius: $radius-200;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition:
+      background-color 0.1s ease-in-out,
+      color 0.1s ease-in-out,
+      left 0.1s ease-in-out;
+  }
+
+  &.selected {
+    &::after {
+      border-color: $colors-foreground;
+      background-color: $colors-brightAccent;
+      left: calc(70% - $space-200);
+    }
+  }
+}
+
+.switchInput {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 1;
+  margin: 0;
+
+  &:hover + .simulatedSwitch {
+    background-color: with-opacity($colors-accent, 0.25);
+
+    &::after {
+      border-color: with-opacity($colors-brightWhite, 0.5);
+      background-color: with-opacity($colors-brightAccent, 0.25);
+    }
+  }
+  &:hover + .simulatedSwitch.selected {
+    background-color: with-opacity($colors-accent, 0.8);
+
+    &::after {
+      border-color: $colors-brightWhite;
+      background-color: $colors-brightAccent;
+    }
+  }
+
+  &:active,
+  &:focus,
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.switchWrapper {
+  display: flex;
+  align-items: center;
+  gap: $space-400;
+  background-color: transparent;
+  color: $colors-foreground;
+  cursor: text;
+  position: relative;
+  width: fit-content;
+}

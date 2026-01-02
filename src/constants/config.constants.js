@@ -10,6 +10,8 @@ import { availableInputTypes } from './inputs.constants'
 import { basicColorKeys, colorThemeKeys, defaultColorTheme } from './themes.constants'
 
 export const PROMPT_MARK = '$'
+export const DEFAULT_CONTEXT =
+  '[termo.color.purple]{tab_id}[termo.color.brightBlack]/[termo.color.brightBlue]{title}'
 
 export const configIds = {
   FUNCTIONALITY: 'functionality',
@@ -58,7 +60,7 @@ export const configDefaultValues = {
   [configInputIds.ASSISTED_SELECTION]: true,
   [configInputIds.MAX_LINES_PER_COMMAND]: 50,
   [configInputIds.HISTORIAL_SIZE]: 40,
-  [configInputIds.CONTEXT]: 'On [termo.color.brightBlue]{origin}',
+  [configInputIds.CONTEXT]: DEFAULT_CONTEXT,
   [configInputIds.FONT_FAMILY]: 'Consolas',
   [configInputIds.FONT_SIZE]: fontSizes.NORMAL,
   [configInputIds.THEME_NAME]: defaultColorTheme.name,

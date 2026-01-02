@@ -15,22 +15,24 @@
   ],
   "host_permissions": ["http://*/", "https://*/"],
   "icons": {
-    "16": "assets/images/logo-16_x_16.png",
-    "32": "assets/images/logo-32_x_32.png",
-    "48": "assets/images/logo-48_x_48.png",
-    "512": "assets/images/logo-512_x_512.png"
+    "16": "assets/icons/logo-16_x_16.png",
+    "32": "assets/icons/logo-32_x_32.png",
+    "48": "assets/icons/logo-48_x_48.png",
+    "512": "assets/icons/logo-512_x_512.png"
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["./assets/js/content.js"]
+      "js": ["/assets/js/content.js"],
+      "type": "module"
     }
   ],
   "action": {
     "default_title": "Toggle Term-O"
   },
   "background": {
-    "service_worker": "./assets/js/background.js"
+    "service_worker": "/assets/js/background.js",
+    "type": "module"
   },
   "side_panel": {
     "default_path": "sidepanel.html"
@@ -49,8 +51,9 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["assets/js/web-components.js"],
-      "matches": ["<all_urls>"]
+      "resources": ["assets/js/web-components.js", "assets/js/shared/*.js"],
+      "matches": ["<all_urls>"],
+      "type": "module"
     }
   ]
 }

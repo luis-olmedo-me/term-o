@@ -1,12 +1,6 @@
 import { onlyColorKeys } from '@src/constants/themes.constants'
 import { toTitleCase } from './string.helpers'
-
-export const theme = (pathsString, appendedString) => props => {
-  const paths = pathsString.split('.')
-  const value = paths.reduce((theme, path) => theme[path], props.theme)
-
-  return appendedString ? `${value}${appendedString}` : value
-}
+import { getQuotedString } from './utils.helpers'
 
 export const getColor = color => {
   return `[termo.color.${color}]`
@@ -25,20 +19,43 @@ export const getAccentColors = (colorThemes, accentName) => {
   const accent = colorThemes[accentName]
   const brightAccent = colorThemes[brightAccentName]
 
-  return {
-    accent: accent,
-    brightAccent: brightAccent
-  }
+  return { accent, brightAccent }
 }
 
-export const createAriaColorThemer = ({ theme }) => {
+export const createDataColorThemer = ({ theme }) => {
   return onlyColorKeys
-    .map(color => `[aria-color="${color}"] { color: ${theme.colors[color]}; }`)
+    .map(color => `[data-color="${color}"] { color: ${theme.colors[color]}; }`)
     .join('')
 }
 
-export const createAriaBgColorThemer = ({ theme }) => {
+export const createDataBgColorThemer = ({ theme }) => {
   return onlyColorKeys
-    .map(color => `[aria-bg-color="${color}"] { background-color: ${theme.colors[color]}; }`)
+    .map(color => `[data-bg-color="${color}"] { background-color: ${theme.colors[color]}; }`)
     .join('')
+}
+
+const createVariablesFromTheme = (theme, pre = null) => {
+  let variables = ''
+
+  Object.entries(theme).forEach(([propName, propValue]) => {
+    const name = pre ? `${pre}-${propName}` : propName
+    const validValue = `${propValue}`
+
+    if (typeof propValue === 'object') {
+      variables += createVariablesFromTheme(propValue, name)
+      return
+    }
+
+    const isHexColor = validValue.startsWith('#')
+    const isMeasure = validValue.endsWith('px') || validValue.endsWith('rem')
+    const value = isMeasure || isHexColor ? validValue : getQuotedString(validValue)
+
+    variables += `--${name}: ${value}; `
+  })
+
+  return variables
+}
+
+export const createRootVariablesFromTheme = theme => {
+  return `:root { ${createVariablesFromTheme(theme)}}`
 }

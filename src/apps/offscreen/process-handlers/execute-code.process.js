@@ -13,7 +13,7 @@ export default async (resolve, reject, data) => {
 
   let updates = []
 
-  const handleCodeEval = async function (event) {
+  const handleCodeEval = async event => {
     const type = event.data?.type
     const data = event.data?.data
 

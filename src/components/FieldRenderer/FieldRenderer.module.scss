@@ -1,0 +1,43 @@
+.inputWrapper {
+  width: fit-content;
+  max-width: 30rem;
+
+  &[data-type='text-area'],
+  &[data-type='string'] {
+    width: 100%;
+  }
+
+  &[data-error='true'] {
+    outline: $space-150 dashed $colors-red;
+    border-radius: $space-200;
+  }
+}
+
+.errorMessageWrapper {
+  margin-top: $space-400;
+  display: block;
+  color: $colors-red;
+}
+
+.fieldWrapper {
+  margin: $space-900 0 0 $space-900;
+  padding-bottom: $space-900;
+  border-bottom: $space-50 solid $colors-brightBlack;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.fieldTitle {
+  margin: $space-400 0;
+  font-size: $fontSize-50;
+  font-weight: bold;
+}
+
+.fieldDescription {
+  margin: $space-400 0;
+  font-size: $fontSize-50;
+  font-style: italic;
+  white-space: pre-wrap;
+}

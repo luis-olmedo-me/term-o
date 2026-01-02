@@ -1,0 +1,88 @@
+@use '@styles/variables.module' as *;
+
+.postfix {
+  padding-inline: $space-400;
+  height: -webkit-fill-available;
+  display: flex;
+  align-items: center;
+  border: solid $colors-brightBlack;
+  border-width: $space-50 $space-50 $space-50 0;
+  background-color: with-opacity($colors-white, 0.2);
+  color: $colors-foreground;
+  border-radius: 0 $space-200 $space-200 0;
+  pointer-events: unset;
+  transition: border-color 0.1s ease-in-out;
+  cursor: help;
+}
+
+.realInput {
+  font-family: $font;
+  width: 100%;
+  box-sizing: border-box;
+  white-space: nowrap;
+  font-size: $fontSize-50;
+  border: none;
+  display: block;
+  caret-color: $colors-cursorColor;
+  line-height: $lineHeight-300;
+  background-color: transparent;
+  color: $colors-foreground;
+  letter-spacing: $space-50;
+  cursor: text;
+
+  &:active,
+  &:focus,
+  &:focus-visible {
+    outline: none;
+  }
+
+  &[type='number'] {
+    width: 100px;
+  }
+
+  &[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
+  &[data-variant='outlined'] {
+    border: $space-50 solid $colors-brightBlack;
+    background-color: with-opacity($colors-white, 0.25);
+    border-radius: $radius-200 0 0 $radius-200;
+    padding-left: $space-300;
+    transition: border-color 0.1s ease-in-out;
+
+    &:last-child {
+      border-radius: $radius-200;
+    }
+
+    &:focus {
+      border: $space-50 solid $colors-accent;
+    }
+
+    &:hover {
+      background-color: with-opacity($colors-accent, 0.8);
+      color: $colors-brightWhite;
+    }
+
+    &:hover,
+    &:hover + .postfix {
+      border-color: $colors-accent;
+    }
+  }
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  color: $colors-foreground;
+
+  &[data-fit-content='true'] {
+    width: fit-content;
+  }
+
+  &[data-disabled='true'],
+  &[data-disabled='true'] .realInput:disabled {
+    cursor: text;
+  }
+}

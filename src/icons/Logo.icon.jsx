@@ -1,0 +1,41 @@
+import useStorage from '@src/hooks/useStorage'
+
+import { iconPropType } from '@src/constants/icon.constants'
+import { storageKeys } from '@src/constants/storage.constants'
+
+const Logo = ({ size }) => {
+  const [config] = useStorage({ key: storageKeys.CONFIG })
+  const theme = config.theme
+
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 512 512"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M140.87 123.172L189.355 171.861L279.199 81.5806L230.745 32.9088C224.847 27.0005 216.377 24 209 24C203.841 24 194.786 25.4229 187.44 32.816L140.778 79.68C133.417 87.0576 132 96.152 132 101.333C132 108.742 134.988 117.249 140.87 123.172Z"
+        fill={theme.isDarkMode ? theme.colors.white : theme.colors.brightWhite}
+      />
+      <path
+        d="M187.425 479.184L140.778 432.32C133.417 424.942 132 415.848 132 410.667C132 403.258 134.988 394.751 140.87 388.828L149.502 380.16L239.351 470.445L230.745 479.091C224.847 484.999 216.377 488 209 488C203.841 488 194.786 486.577 187.425 479.184Z"
+        fill={theme.isDarkMode ? theme.colors.white : theme.colors.brightWhite}
+      />
+      <path
+        d="M239.351 470.445L149.502 380.16L273.141 256L189.355 171.861L279.199 81.5806L431.037 234.099C436.581 239.683 440 247.462 440 256C440 264.599 436.381 272.487 431.006 277.901L239.351 470.445Z"
+        fill={theme.isDarkMode ? theme.colors.accent : theme.colors.brightAccent}
+      />
+      <path
+        d="M189.355 169.861L140.87 121.172C134.988 115.249 132 106.742 132 99.3333C132 94.152 133.417 85.0576 140.778 77.68L187.44 30.816C194.786 23.4229 203.841 22 209 22C216.377 22 224.847 25.0005 230.745 30.9088L279.199 79.5806M189.355 169.861L279.199 79.5806M189.355 169.861L273.141 254L149.502 378.16M279.199 79.5806L431.037 232.099C436.581 237.683 440 245.462 440 254C440 262.599 436.381 270.487 431.006 275.901L239.351 468.445M149.502 378.16L140.87 386.828C134.988 392.751 132 401.258 132 408.667C132 413.848 133.417 422.942 140.778 430.32L187.425 477.184C194.786 484.577 203.841 486 209 486C216.377 486 224.847 482.999 230.745 477.091L239.351 468.445M149.502 378.16L239.351 468.445"
+        stroke={theme.isDarkMode ? theme.colors.brightBlack : theme.colors.black}
+        strokeWidth="5px"
+      />
+    </svg>
+  )
+}
+
+Logo.propTypes = iconPropType
+
+export default Logo

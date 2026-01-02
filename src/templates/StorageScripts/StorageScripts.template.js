@@ -3,10 +3,6 @@ import { storageKeys } from '@src/constants/storage.constants'
 import StorageSimple from '../StorageSimple'
 
 export class StorageScripts extends StorageSimple {
-  constructor(storageService, props) {
-    super(storageService, props)
-  }
-
   get $value() {
     return {
       values: this.$latest().value,

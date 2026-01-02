@@ -31,8 +31,8 @@ export const createContext = (value, tab) => {
       return isConditionMatch
         ? trueValue.replace(/"/g, '').trim()
         : falseValue.replace(/"/g, '').trim()
-    } else {
-      return replacements[expression] || match
     }
+
+    return replacements[expression] || match
   })
 }

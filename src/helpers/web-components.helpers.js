@@ -3,6 +3,7 @@ import { webElements } from '@src/constants/web-elements.constants'
 export const importWebComponents = () => {
   const script = document.createElement('script')
   script.src = chrome.runtime.getURL('assets/js/web-components.js')
+  script.type = 'module'
 
   document.documentElement.appendChild(script)
   script.remove()
@@ -25,7 +26,7 @@ export const createHighlight = ({ element, theme }) => {
   const radius = window.getComputedStyle(element).borderRadius
 
   return createWebElement(webElements.HIGHLIGHT, {
-    radius: radius,
+    radius,
     color: theme.colors.accent,
     left: `${rect.left}px`,
     top: `${rect.top}px`,

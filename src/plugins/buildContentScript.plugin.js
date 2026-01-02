@@ -38,12 +38,12 @@ export function buildContentScript(mode, watch) {
         console.log(`${gray}build/${cyan}assets/js/content.js${reset}`)
         console.log(`${approvalLabel}Content script copied in ${time}ms.${reset}`)
       }
+    },
+
+    buildEnd() {
+      const existTempDir = fs.existsSync(tempDir)
+
+      if (existTempDir) fs.rmSync(tempDir, { recursive: true, force: true })
     }
   }
 }
-
-process.on('exit', () => {
-  const existTempDir = fs.existsSync(tempDir)
-
-  if (existTempDir) fs.rmSync(tempDir, { recursive: true, force: true })
-})

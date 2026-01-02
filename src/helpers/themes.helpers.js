@@ -19,10 +19,7 @@ export const getAccentColors = (colorThemes, accentName) => {
   const accent = colorThemes[accentName]
   const brightAccent = colorThemes[brightAccentName]
 
-  return {
-    accent: accent,
-    brightAccent: brightAccent
-  }
+  return { accent, brightAccent }
 }
 
 export const createDataColorThemer = ({ theme }) => {

@@ -1,4 +1,3 @@
-import * as React from 'preact'
 import { useMemo } from 'preact/hooks'
 
 import { convertStringToObjects } from './ColoredText.helpers'

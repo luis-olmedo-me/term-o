@@ -1,4 +1,4 @@
-import * as React from 'preact'
+import { render } from 'preact'
 
 import storage from '@src/libs/storage'
 
@@ -18,7 +18,7 @@ storage.addEventListener(`${storageKeys.CONFIG}_${configInputIds.COLOR_ACCENT}`,
 storage.addEventListener(`${storageKeys.CONFIG}_${configInputIds.THEME_NAME}`, handleThemeChanges)
 storage.addEventListener(`${storageKeys.CONFIG}_${configInputIds.FONT_FAMILY}`, handleThemeChanges)
 
-React.render(
+render(
   <StorageProvider>
     <ThemeProvider>
       <Preferences />

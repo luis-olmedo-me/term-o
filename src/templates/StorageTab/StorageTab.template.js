@@ -3,10 +3,6 @@ import StorageSimple from '@src/templates/StorageSimple'
 import { createInternalTab } from '@src/helpers/tabs.helpers'
 
 export class StorageTab extends StorageSimple {
-  constructor(storageService, props) {
-    super(storageService, props)
-  }
-
   $update(storageValue) {
     if (storageValue.version === this.$storageValue.version) return
 

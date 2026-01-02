@@ -1,4 +1,4 @@
-import * as React from 'preact'
+import { render } from 'preact'
 
 import Terminal from '@sidepanel/components/Terminal'
 import commandParser from '@src/libs/command-parser'
@@ -10,7 +10,7 @@ import { origins } from '@src/constants/command.constants'
 
 commandParser.setOrigin(origins.MANUAL)
 
-React.render(
+render(
   <StorageProvider>
     <ThemeProvider>
       <Terminal />

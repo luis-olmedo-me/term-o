@@ -1,5 +1,3 @@
-import * as React from 'preact'
-
 import Button, { buttonVariants } from '@src/components/Button'
 import { sidePanelWrapper } from './SidePanel.module.scss'
 

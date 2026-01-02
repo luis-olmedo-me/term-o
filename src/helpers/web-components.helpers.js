@@ -26,7 +26,7 @@ export const createHighlight = ({ element, theme }) => {
   const radius = window.getComputedStyle(element).borderRadius
 
   return createWebElement(webElements.HIGHLIGHT, {
-    radius: radius,
+    radius,
     color: theme.colors.accent,
     left: `${rect.left}px`,
     top: `${rect.top}px`,

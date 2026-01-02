@@ -1,4 +1,3 @@
-import * as React from 'preact'
 import { useEffect, useRef } from 'preact/hooks'
 
 import ColoredText from '@sidepanel/components/ColoredText'

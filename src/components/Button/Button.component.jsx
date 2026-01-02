@@ -1,5 +1,3 @@
-import * as React from 'preact'
-
 import { iconSizes } from '@src/constants/icon.constants'
 
 import { buttonIconWrapper, buttonWrapper } from './Button.module.scss'

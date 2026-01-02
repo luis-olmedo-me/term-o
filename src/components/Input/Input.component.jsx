@@ -1,5 +1,3 @@
-import * as React from 'preact'
-
 import { inputWrapper, postfix, realInput } from './Input.module.scss'
 
 export const Input = ({

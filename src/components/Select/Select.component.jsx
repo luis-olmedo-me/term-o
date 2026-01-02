@@ -1,5 +1,3 @@
-import * as React from 'preact'
-
 import { verticalScroller } from '@styles/global.module.scss'
 import {
   optionItem,
@@ -22,7 +20,7 @@ export const Select = ({
     <div className={selecterWrapper} data-loading={loading}>
       <select className={selecter} value={value} onChange={onChange} disabled={loading} name={name}>
         <button>
-          <selectedcontent className={selectedContent}></selectedcontent>
+          <selectedcontent className={selectedContent} />
         </button>
 
         <div className={`${optionsWrapper} ${verticalScroller}`}>

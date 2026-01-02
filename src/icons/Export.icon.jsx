@@ -1,5 +1,3 @@
-import * as React from 'preact'
-
 import { iconPropType } from '@src/constants/icon.constants'
 
 const Export = ({ size }) => {

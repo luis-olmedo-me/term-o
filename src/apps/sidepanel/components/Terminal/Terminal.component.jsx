@@ -1,4 +1,3 @@
-import * as React from 'preact'
 import { useCallback, useEffect, useRef } from 'preact/hooks'
 
 import CommandsViewer from '@sidepanel/components/CommandsViewer'

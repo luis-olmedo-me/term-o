@@ -1,4 +1,3 @@
-import * as React from 'preact'
 import { useState } from 'preact/hooks'
 
 import DynamicInput from '@src/components/DynamicInput'

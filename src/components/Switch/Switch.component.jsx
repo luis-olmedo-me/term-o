@@ -1,5 +1,3 @@
-import * as React from 'preact'
-
 import { selected, simulatedSwitch, switchInput, switchWrapper } from './Switch.module.scss'
 
 export const Switch = ({

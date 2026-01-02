@@ -1,4 +1,3 @@
-import * as React from 'preact'
 import { textAreaInput } from './TextArea.module.scss'
 
 export const TextArea = ({ onChange, onBlur, value, name, maxLines, disabled = false }) => {

@@ -1,5 +1,3 @@
-import * as React from 'preact'
-
 import useStorage from '@src/hooks/useStorage'
 
 import { iconPropType } from '@src/constants/icon.constants'

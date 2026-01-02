@@ -64,6 +64,9 @@ export default defineConfig(({ mode }) => ({
     }
   },
   css: {
+    modules: {
+      generateScopedName: mode === 'production' ? '[hash:base64:6]' : '[name]__[local]'
+    },
     preprocessorOptions: {
       scss: {
         additionalData: `@use "@styles/variables.module" as *; @use '@styles/functions.module' as *;`

@@ -16,8 +16,7 @@ export const Prompt = ({
   defaultValue,
   context,
   name,
-  loading = false,
-  className = null
+  loading = false
 }) => {
   const [value, setValue] = useState(defaultValue || '')
   const [historialIndex, setHistorialIndex] = useState(0)
@@ -95,11 +94,7 @@ export const Prompt = ({
   const contextLines = context.split(/(?<!\\)\n/).filter(Boolean)
 
   return (
-    <div
-      data-loading={loading}
-      data-indicator={statusIndicator}
-      className={`${promptWrapper} ${className}`}
-    >
+    <div data-loading={loading} data-indicator={statusIndicator} className={promptWrapper}>
       {contextLines.map((contextLine, index) => (
         <p key={`${contextLine}-${index}`} className={promptLine} data-truncated={isTruncated}>
           <ColoredText value={contextLine} />
@@ -131,6 +126,5 @@ Prompt.propTypes = {
   context: String,
   loading: Boolean,
   defaultValue: String,
-  className: String,
   name: String
 }

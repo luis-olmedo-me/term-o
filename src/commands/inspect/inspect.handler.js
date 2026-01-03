@@ -1,10 +1,18 @@
+import processManager from '@src/libs/process-manager'
+import storage from '@src/libs/storage'
+
+import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
+import { cleanTabId } from '@src/helpers/tabs.helpers'
 
 export const inspectHandler = async command => {
   const P = name => command.props[name]
+  const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : storage.get(storageKeys.TAB).id
 
   if (P`path`) {
-    command.update(P`path`)
+    const value = await processManager.readPath(tabId, { path: P`path` })
+
+    command.update(value)
   }
 
   if (P`help`) createHelpView(command)

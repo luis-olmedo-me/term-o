@@ -1,7 +1,8 @@
 export default async (resolve, reject, data) => {
-  window.addEventListener('message', event => {
+  const handleMessage = event => {
     if (event.source !== window) return
     if (event.data?.source !== 'MY_EXTENSION') return
+    window.removeEventListener('message', handleMessage)
 
     if (event.data.type === 'GLOBAL_VALUE') {
       console.log('Valor obtenido:', event.data.value)
@@ -14,7 +15,9 @@ export default async (resolve, reject, data) => {
     if (event.data.type === 'GLOBAL_ERROR') {
       reject(event.data.value)
     }
-  })
+  }
+
+  window.addEventListener('message', handleMessage)
 
   const script = document.createElement('script')
   const path = data.path

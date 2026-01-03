@@ -1,9 +1,9 @@
+import processManager from '@src/libs/process-manager'
 import storage from '@src/libs/storage'
 
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatFile as formatMetadata } from '@src/helpers/format.helpers'
-import { executeCode, uploadFile } from '@src/processes'
 
 export const scriptsHandler = async command => {
   const P = name => command.props[name]
@@ -21,7 +21,7 @@ export const scriptsHandler = async command => {
     const scripts = storage.get(storageKeys.SCRIPTS)
 
     command.update('Click the notification on the page to start uploading a file.')
-    const file = await uploadFile(tabId, { theme: config.theme })
+    const file = await processManager.uploadFile(tabId, { theme: config.theme })
 
     const alreadyExists = scripts.has(file.name)
 
@@ -57,7 +57,7 @@ export const scriptsHandler = async command => {
     if (!script) throw `The script "${name}" does not exist.`
 
     command.update('Executing.')
-    const updates = await executeCode({ script })
+    const updates = await processManager.executeCode({ script })
 
     command.setUpdates(...updates)
   }

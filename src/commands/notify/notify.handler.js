@@ -1,10 +1,10 @@
+import processManager from '@src/libs/process-manager'
 import storage from '@src/libs/storage'
 
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatNotification } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
-import { createNotification } from '@src/processes'
 
 export const notifyHandler = async command => {
   const P = name => command.props[name]
@@ -15,7 +15,7 @@ export const notifyHandler = async command => {
     const title = P`title`
     const message = P`message`
 
-    const notification = await createNotification(tabId, {
+    const notification = await processManager.createNotification(tabId, {
       title,
       message,
       theme: config.theme

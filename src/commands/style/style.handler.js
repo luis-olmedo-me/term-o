@@ -1,9 +1,9 @@
+import processManager from '@src/libs/process-manager'
 import storage from '@src/libs/storage'
 
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatStyle, formatText } from '@src/helpers/format.helpers'
-import { applyElementStyles, getElementStyles, pickColor } from '@src/processes'
 
 export const styleHandler = async command => {
   const tabId = storage.get(storageKeys.TAB).id
@@ -13,7 +13,7 @@ export const styleHandler = async command => {
     const config = storage.get(storageKeys.CONFIG)
 
     command.update('Searching element styles.')
-    const styles = await getElementStyles(tabId, {
+    const styles = await processManager.getElementStyles(tabId, {
       searchByXpath: P`on`,
       searchByProperty: P`property`,
       theme: config.theme
@@ -27,7 +27,7 @@ export const styleHandler = async command => {
   if (P`apply`) {
     const config = storage.get(storageKeys.CONFIG)
 
-    const rules = await applyElementStyles(tabId, {
+    const rules = await processManager.applyElementStyles(tabId, {
       searchByXpath: P`on`,
       newInlineStyles: P`apply`,
       theme: config.theme
@@ -42,7 +42,7 @@ export const styleHandler = async command => {
     const config = storage.get(storageKeys.CONFIG)
 
     command.update('Click the notification on the page to start picking a color.')
-    const color = await pickColor(tabId, { theme: config.theme })
+    const color = await processManager.pickColor(tabId, { theme: config.theme })
 
     command.reset()
     command.update(formatText({ text: color }))

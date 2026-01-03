@@ -1,3 +1,4 @@
+import processManager from '@src/libs/process-manager'
 import storage from '@src/libs/storage'
 
 import { domEventsSupported } from '@src/constants/options.constants'
@@ -6,7 +7,6 @@ import { createHelpView } from '@src/helpers/command.helpers'
 import { formatEvent, formatRegisteredEvent } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
-import { triggerEvent } from '@src/processes'
 
 export const eventsHandler = async command => {
   const P = name => command.props[name]
@@ -56,7 +56,7 @@ export const eventsHandler = async command => {
 
     if (isDomEvent && !xpath) throw `${event} must be triggered on an existing DOM element.`
 
-    await triggerEvent(tabId, { xpath, event, theme: config.theme })
+    await processManager.triggerEvent(tabId, { xpath, event, theme: config.theme })
     const update = formatEvent({ event, xpath })
 
     command.update(update)

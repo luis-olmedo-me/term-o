@@ -1,3 +1,4 @@
+import processManager from '@src/libs/process-manager'
 import storage from '@src/libs/storage'
 
 import { storageKeys } from '@src/constants/storage.constants'
@@ -5,7 +6,6 @@ import { createHelpView } from '@src/helpers/command.helpers'
 import { formatElement } from '@src/helpers/format.helpers'
 import { preAppendCounters } from '@src/helpers/messages.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
-import { findDOMElement, getDOMElements } from '@src/processes'
 
 export const domHandler = async command => {
   const P = name => command.props[name]
@@ -13,7 +13,7 @@ export const domHandler = async command => {
   const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : storage.get(storageKeys.TAB).id
 
   if (P`search-xpath`) {
-    const element = await findDOMElement(tabId, {
+    const element = await processManager.findDOMElement(tabId, {
       searchByXpath: P`search-xpath`,
       searchBelow: P`below`,
       siblingIndex: P`sibling`,
@@ -31,7 +31,7 @@ export const domHandler = async command => {
 
   if (P`search`) {
     command.update('Getting elements.')
-    const elements = await getDOMElements(tabId, {
+    const elements = await processManager.getDOMElements(tabId, {
       searchBelow: P`below`,
       searchByTag: P`tag`,
       searchByAttribute: P`attr`,

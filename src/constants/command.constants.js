@@ -11,7 +11,8 @@ export const commandNames = {
   HISTORY: 'history',
   REQUEST: 'request',
   SCRIPTS: 'scripts',
-  NOTIFY: 'notify'
+  NOTIFY: 'notify',
+  INSPECT: 'inspect'
 }
 
 export const origins = {

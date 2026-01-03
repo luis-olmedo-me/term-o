@@ -98,6 +98,15 @@ class ProcessManager {
     })
   }
 
+  readPath(tabId, { path }) {
+    return createWorkerProcessRequest({
+      type: processNames.READ_VARIABLE,
+      defaultResponse: null,
+      tabId,
+      data: { path }
+    })
+  }
+
   executeCode({ script }) {
     return createWorkerProcessRequest({
       type: processNames.EXECUTE_CODE,

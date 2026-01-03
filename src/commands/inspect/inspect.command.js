@@ -14,7 +14,7 @@ export default new CommandBase({
     abbreviation: 'p',
     type: commandTypes.STRING,
     helpSection: inspectHelpSections.SEARCH,
-    description: 'Throw an error with a custom message',
+    description: 'Read a variable path in the current tab',
     worksWith: []
   })
   .expect({

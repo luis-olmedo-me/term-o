@@ -1,4 +1,4 @@
-import { TERMO_SOURCE } from '@src/constants/injectales.constants'
+import { injectableTypes, TERMO_SOURCE } from '@src/constants/injectales.constants'
 
 export default async (resolve, reject, data) => {
   const handleMessage = event => {
@@ -15,7 +15,7 @@ export default async (resolve, reject, data) => {
   window.postMessage(
     {
       source: TERMO_SOURCE,
-      type: 'READ_VARIABLE',
+      type: injectableTypes.READ_VARIABLE,
       data: { path: data.path }
     },
     '*'

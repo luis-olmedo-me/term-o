@@ -1,6 +1,8 @@
+import { TERMO_SOURCE } from '@src/constants/injectales.constants'
+
 export default async (resolve, reject, data) => {
   const handleMessage = event => {
-    if (event.data?.source !== 'MY_EXTENSION') return
+    if (event.data?.source !== TERMO_SOURCE) return
     if (!event.data?.type.endsWith('_RESPONSE')) return
     window.removeEventListener('message', handleMessage)
 
@@ -12,7 +14,7 @@ export default async (resolve, reject, data) => {
 
   window.postMessage(
     {
-      source: 'MY_EXTENSION',
+      source: TERMO_SOURCE,
       type: 'READ_VARIABLE',
       data: { path: data.path }
     },

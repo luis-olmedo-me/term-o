@@ -1,10 +1,12 @@
+import { TERMO_SOURCE } from '@src/constants/injectales.constants'
+
 export default function readVariableHandler(event) {
   return new Promise(resolve => {
     const script = document.createElement('script')
     const path = event.data.data.path
     const receive = async event => {
       if (event.source !== window) return
-      if (event.data?.source !== 'MY_EXTENSION') return
+      if (event.data?.source !== TERMO_SOURCE) return
       window.removeEventListener('message', receive)
 
       const error = event.data.error

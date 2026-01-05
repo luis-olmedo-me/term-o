@@ -1,7 +1,8 @@
+import { TERMO_SOURCE } from '@src/constants/injectales.constants'
 import readVariableHandler from './handlers/read-variable.handler'
 
 window.addEventListener('message', async event => {
-  if (event.data?.source !== 'MY_EXTENSION') return
+  if (event.data?.source !== TERMO_SOURCE) return
   if (event.data?.type !== 'READ_VARIABLE') return
   let response
 

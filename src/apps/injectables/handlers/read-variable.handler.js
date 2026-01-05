@@ -49,7 +49,7 @@ export default function readVariableHandler(event) {
           window.postMessage({
             source: "MY_EXTENSION",
             type: "response",
-            value: value ?? null,
+            value: value ?? "null",
             error: null
           }, "*");
         } catch (e) {

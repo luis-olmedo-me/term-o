@@ -101,7 +101,7 @@ class ProcessManager {
   readPath(tabId, { path }) {
     return createWorkerProcessRequest({
       type: processNames.READ_VARIABLE,
-      defaultResponse: null,
+      defaultResponse: '',
       tabId,
       data: { path }
     })

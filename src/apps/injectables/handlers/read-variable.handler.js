@@ -1,18 +1,20 @@
-import { TERMO_SOURCE } from '@src/constants/injectales.constants'
+import { injectableStates, TERMO_SOURCE } from '@src/constants/injectales.constants'
 
 export default function readVariableHandler(event) {
   return new Promise(resolve => {
     const script = document.createElement('script')
     const path = event.data.data.path
-    const receive = async event => {
-      if (event.source !== window) return
-      if (event.data?.source !== TERMO_SOURCE) return
+
+    const receive = async receivedEvent => {
+      if (receivedEvent.data?.source !== TERMO_SOURCE) return
+      if (receivedEvent.data?.type !== event.data.type) return
+      if (receivedEvent.data?.state !== injectableStates.SOLVING) return
       window.removeEventListener('message', receive)
 
-      const error = event.data.error
-      const value = event.data.value
-
-      if (event.data.type === 'response') resolve({ value, error })
+      resolve({
+        value: receivedEvent.data.value,
+        error: receivedEvent.data.error
+      })
     }
 
     window.addEventListener('message', receive)
@@ -50,14 +52,16 @@ export default function readVariableHandler(event) {
 
           window.postMessage({
             source: "${TERMO_SOURCE}",
-            type: "response",
+            state: "${injectableStates.SOLVING}",
+            type: "${event.data.type}",
             value: value ?? "null",
             error: null
           }, "*");
         } catch (e) {
           window.postMessage({
             source: "${TERMO_SOURCE}",
-            type: "response",
+            state: "${injectableStates.SOLVING}",
+            type: "${event.data.type}",
             value: null,
             error: e.message
           }, "*");

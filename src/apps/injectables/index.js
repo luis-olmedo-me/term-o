@@ -6,11 +6,11 @@ import {
 import readVariableHandler from './handlers/read-variable.handler'
 
 window.addEventListener('message', async event => {
-  if (event.data?.source !== TERMO_SOURCE) return
-  if (event.data?.state !== injectableStates.REGISTERED) return
   const type = event.data?.type
   const isExpectedType = Object.values(injectableTypes).includes(type)
 
+  if (event.data?.source !== TERMO_SOURCE) return
+  if (event.data?.state !== injectableStates.REGISTERED) return
   if (!isExpectedType) return
   let response
 
@@ -20,6 +20,7 @@ window.addEventListener('message', async event => {
     {
       source: TERMO_SOURCE,
       state: injectableStates.SOLVED,
+      id: event.data.id,
       type,
       response
     },

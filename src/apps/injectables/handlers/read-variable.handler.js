@@ -8,6 +8,7 @@ export default function readVariableHandler(event) {
     const receive = async receivedEvent => {
       if (receivedEvent.data?.source !== TERMO_SOURCE) return
       if (receivedEvent.data?.type !== event.data.type) return
+      if (receivedEvent.data?.id !== event.data.id) return
       if (receivedEvent.data?.state !== injectableStates.SOLVING) return
       window.removeEventListener('message', receive)
 
@@ -54,6 +55,7 @@ export default function readVariableHandler(event) {
             source: "${TERMO_SOURCE}",
             state: "${injectableStates.SOLVING}",
             type: "${event.data.type}",
+            id: "${event.data.id}",
             value: value ?? "null",
             error: null
           }, "*");
@@ -62,6 +64,7 @@ export default function readVariableHandler(event) {
             source: "${TERMO_SOURCE}",
             state: "${injectableStates.SOLVING}",
             type: "${event.data.type}",
+            id: "${event.data.id}",
             value: null,
             error: e.message
           }, "*");

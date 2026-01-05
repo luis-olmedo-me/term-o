@@ -49,14 +49,14 @@ export default function readVariableHandler(event) {
           const value = rawValue !== null ? JSON.stringify(stringify(rawValue)) : null
 
           window.postMessage({
-            source: "MY_EXTENSION",
+            source: "${TERMO_SOURCE}",
             type: "response",
             value: value ?? "null",
             error: null
           }, "*");
         } catch (e) {
           window.postMessage({
-            source: "MY_EXTENSION",
+            source: "${TERMO_SOURCE}",
             type: "response",
             value: null,
             error: e.message

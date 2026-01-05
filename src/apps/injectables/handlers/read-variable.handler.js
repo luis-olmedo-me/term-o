@@ -30,7 +30,7 @@ export default function readVariableHandler(event) {
             rawValue = rawValue?.[key];
           }
 
-          const stringify = val => {
+          const stringify = (val, forbiddenKeys = [], forbiddenValues = []) => {
             if (typeof val === 'function') {
               const functionName = val.name || 'anonymous'
 
@@ -40,7 +40,16 @@ export default function readVariableHandler(event) {
               let tempObject = {}
 
               for (const key in val) {
-                tempObject[key] = stringify(val[key])
+                let value = val[key]
+
+                if(forbiddenValues.includes(value)) {
+                  const tracePaths = forbiddenKeys.join('.')
+                  const trace = tracePaths ? tracePaths + '.' + key : key
+
+                  throw new Error('The "' + trace + '" reference is being called within an infinite loop.')
+                }
+
+                tempObject[key] = stringify(val[key], [...forbiddenKeys, key], [...forbiddenValues, val])
               }
 
               return tempObject

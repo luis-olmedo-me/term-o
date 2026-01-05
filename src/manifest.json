@@ -51,7 +51,11 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["assets/js/web-components.js", "assets/js/shared/*.js"],
+      "resources": [
+        "assets/js/web-components.js",
+        "assets/js/injectables.js",
+        "assets/js/shared/*.js"
+      ],
       "matches": ["<all_urls>"],
       "type": "module"
     }

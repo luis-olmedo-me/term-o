@@ -4,6 +4,7 @@ const createWorkerRequest = ({ tabId, type, data, defaultResponse }) => {
   return new Promise((resolve, reject) => {
     const callback = response => {
       const lastError = chrome.runtime.lastError
+      const hasData = typeof response?.data !== 'undefined'
 
       if (lastError) {
         const error = overwriteMessage(lastError.message)
@@ -13,7 +14,7 @@ const createWorkerRequest = ({ tabId, type, data, defaultResponse }) => {
 
       if (response.status !== 'ok') return reject(response.error)
 
-      resolve(response.data || defaultResponse)
+      resolve(hasData ? response.data : defaultResponse)
     }
 
     if (tabId) chrome.tabs.sendMessage(tabId, { type, data }, callback)

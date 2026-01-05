@@ -3,25 +3,16 @@ import storage from '@src/libs/storage'
 
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
-import { formatNotification } from '@src/helpers/format.helpers'
+import { formatText } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
 
-export const notifyHandler = async command => {
+export const inspectHandler = async command => {
   const P = name => command.props[name]
   const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : storage.get(storageKeys.TAB).id
 
-  if (P`create`) {
-    const config = storage.get(storageKeys.CONFIG)
-    const title = P`title`
-    const message = P`message`
-
-    const notification = await processManager.createNotification(tabId, {
-      title,
-      message,
-      theme: config.theme
-    })
-
-    const update = formatNotification(notification)
+  if (P`path`) {
+    const text = await processManager.readPath(tabId, { path: P`path` })
+    const update = formatText({ text })
 
     command.update(update)
   }

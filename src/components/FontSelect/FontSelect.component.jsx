@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'preact/hooks'
 
 import Select from '@src/components/Select'
-import { getFontsAvailable } from '@src/processes'
+import processManager from '@src/libs/process-manager'
 
 export const FontSelect = ({ value, onChange, name }) => {
   const [options, setOptions] = useState([])
@@ -9,7 +9,7 @@ export const FontSelect = ({ value, onChange, name }) => {
 
   useEffect(function getColorThemes() {
     const updateOptions = async () => {
-      const fonts = await getFontsAvailable()
+      const fonts = await processManager.getFontsAvailable()
       const newOptions = fonts.map(font => ({ id: font.fontId, name: font.displayName }))
 
       setOptions(newOptions)

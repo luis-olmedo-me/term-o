@@ -4,6 +4,7 @@ import domBase from './dom/dom.command'
 import errorBase from './error/error.command'
 import eventsBase from './events/events.command'
 import historyBase from './history/history.command'
+import inspectBase from './inspect/inspect.command'
 import notifyBase from './notify/notify.command'
 import requestBase from './request/request.command'
 import scriptsBase from './scripts/scripts.command'
@@ -19,6 +20,7 @@ export default [
   errorBase,
   eventsBase,
   historyBase,
+  inspectBase,
   notifyBase,
   requestBase,
   scriptsBase,
@@ -35,6 +37,7 @@ export {
   errorBase,
   eventsBase,
   historyBase,
+  inspectBase,
   notifyBase,
   requestBase,
   scriptsBase,

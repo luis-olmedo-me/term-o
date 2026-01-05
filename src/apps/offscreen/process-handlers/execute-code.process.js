@@ -1,7 +1,8 @@
+import processManager from '@src/libs/process-manager'
+
 import { commandStatuses, origins } from '@src/constants/command.constants'
 import { buildArgsFromProps, getRawArgs } from '@src/helpers/arguments.helpers'
 import { cleanColors } from '@src/helpers/themes.helpers'
-import { executeCommand } from '@src/processes'
 
 export default async (resolve, reject, data) => {
   const { script } = data
@@ -19,7 +20,7 @@ export default async (resolve, reject, data) => {
 
     switch (type) {
       case 'sandbox-command': {
-        const { updates, status } = await executeCommand({
+        const { updates, status } = await processManager.executeCommand({
           line: buildArgsFromProps(data.props, data.name).join(' '),
           origin: origins.FORCED
         })

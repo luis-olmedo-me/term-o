@@ -14,7 +14,7 @@ export default new CommandBase({
     abbreviation: 'l',
     type: commandTypes.BOOLEAN,
     helpSection: addonsHelpSections.MANAGEMENT,
-    description: 'List all scripts',
+    description: 'List all addons',
     worksWith: []
   })
   .expect({
@@ -22,7 +22,7 @@ export default new CommandBase({
     abbreviation: 'u',
     type: commandTypes.BOOLEAN,
     helpSection: addonsHelpSections.MANAGEMENT,
-    description: 'Upload a file to add as a script',
+    description: 'Upload a file to add as a addon',
     worksWith: []
   })
   .expect({
@@ -30,7 +30,7 @@ export default new CommandBase({
     abbreviation: 'd',
     type: 'string',
     helpSection: addonsHelpSections.MANAGEMENT,
-    description: 'Delete a script by name',
+    description: 'Delete a addon by name',
     worksWith: []
   })
   .expect({

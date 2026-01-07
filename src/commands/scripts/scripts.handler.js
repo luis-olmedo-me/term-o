@@ -21,7 +21,10 @@ export const scriptsHandler = async command => {
     const scripts = storage.get(storageKeys.SCRIPTS)
 
     command.update('Click the notification on the page to start uploading a file.')
-    const file = await processManager.uploadFile(tabId, { theme: config.theme })
+    const file = await processManager.uploadFile(tabId, {
+      theme: config.theme,
+      extensions: ['js']
+    })
 
     const alreadyExists = scripts.has(file.name)
 

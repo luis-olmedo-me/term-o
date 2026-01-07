@@ -84,6 +84,13 @@ export const formatFile = ({ name, lastVisitTime, size }) => {
   return `${C`green`}${quotedDateTime} ${C`purple`}${quotedName} ${C`cyan`}${quotedSize}`
 }
 
+export const formatAddon = ({ name, version }) => {
+  const quotedName = getQuotedString(name)
+  const quotedDateTime = getQuotedString(version)
+
+  return `${C`green`}${quotedName} ${C`cyan`}${quotedDateTime}`
+}
+
 export const formatRegisteredEvent = ({ url, line, id }) => {
   const quotedId = getQuotedString(id)
   const quotedURL = getQuotedString(url)

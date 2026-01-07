@@ -27,10 +27,12 @@ export const download = (filename, text) => {
   document.body.removeChild(element)
 }
 
-export const uploader = ({ extension, onUpload, onError }) => {
+export const uploader = ({ extensions, onUpload, onError }) => {
   const fileInput = document.createElement('input')
+  const extensionsAllowed = extensions.map(extension => `.${extension}`).join(',')
+
   fileInput.setAttribute('type', 'file')
-  fileInput.setAttribute('accept', `.termo.${extension}`)
+  fileInput.setAttribute('accept', extensionsAllowed)
 
   const handleCancel = () => {
     fileInput.removeEventListener('change', handleUpload)
@@ -41,11 +43,12 @@ export const uploader = ({ extension, onUpload, onError }) => {
   }
   const handleUpload = event => {
     const [file] = Array.from(event.currentTarget.files)
+    const matchAnyExtension = extensions.some(extension => file.name.endsWith(extension))
 
     if (!file) return handleCancel()
-    if (!file.name.endsWith(`.termo.${extension}`))
+    if (!matchAnyExtension)
       return onError(
-        `The uploaded file does not match the required extension (*.termo.${extension}).`
+        `The uploaded file does not match any of the required extensions (${extensionsAllowed}).`
       )
 
     onUpload(file)

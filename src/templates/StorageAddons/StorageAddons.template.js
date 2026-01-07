@@ -26,16 +26,21 @@ export class StorageAddons extends StorageSimple {
     const newAddons = this.$latest().value.filter(addon => addon.name !== name)
 
     this.$storageService.set(storageKeys.ADDONS, newAddons)
-    deleteStorageValue(this.$namespace, `addon_${name}_handler`)
-    deleteStorageValue(this.$namespace, `addon_${name}_options`)
+    deleteStorageValue(this.$namespace, `addon_${name}_handler`, false)
+    deleteStorageValue(this.$namespace, `addon_${name}_options`, true)
   }
 
   async get(name) {
-    const isValid = this.$latest().value.some(addon => addon.name === name)
+    const foundAddon = this.$latest().value.find(addon => addon.name === name)
 
-    if (!isValid) return null
+    if (!foundAddon) return null
 
-    return getStorageValue(this.$namespace, `addon_${name}`, null, false)
+    return {
+      name: foundAddon.name,
+      version: foundAddon.version,
+      handler: await getStorageValue(this.$namespace, `addon_${name}_handler`),
+      options: await getStorageValue(this.$namespace, `addon_${name}_options`)
+    }
   }
 
   getMetadata(name) {

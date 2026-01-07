@@ -11,6 +11,7 @@ export const commandNames = {
   HISTORY: 'history',
   REQUEST: 'request',
   SCRIPTS: 'scripts',
+  ADDONS: 'addons',
   NOTIFY: 'notify',
   INSPECT: 'inspect'
 }

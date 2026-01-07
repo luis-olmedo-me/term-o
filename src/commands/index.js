@@ -1,3 +1,4 @@
+import addonsBase from './addons/addons.command'
 import aliasBase from './alias/alias.command'
 import clearBase from './clear/clear.command'
 import domBase from './dom/dom.command'
@@ -14,6 +15,7 @@ import tabsBase from './tabs/tabs.command'
 import themeBase from './theme/theme.command'
 
 export default [
+  addonsBase,
   aliasBase,
   clearBase,
   domBase,
@@ -31,6 +33,7 @@ export default [
 ]
 
 export {
+  addonsBase,
   aliasBase,
   clearBase,
   domBase,

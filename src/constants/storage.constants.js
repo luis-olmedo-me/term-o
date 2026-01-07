@@ -12,6 +12,7 @@ export const storageKeys = {
   CONFIG: 'config',
   EVENTS: 'events',
   SCRIPTS: 'scripts',
+  ADDONS: 'addons',
   PROMPT_HISTORY: 'prompt-history',
   THEMES: 'themes',
   TAB: 'tab',
@@ -31,7 +32,8 @@ export const storageKeysNonExportables = [
   storageKeys.TAB,
   storageKeys.PROMPT_HISTORY,
   storageKeys.COMMAND_QUEUE,
-  storageKeys.SCRIPTS
+  storageKeys.SCRIPTS,
+  storageKeys.ADDONS
 ]
 
 export const storageValues = [
@@ -65,6 +67,13 @@ export const storageValues = [
   },
   {
     key: storageKeys.SCRIPTS,
+    namespace: storageNamespaces.SYNC,
+    defaultValue: [],
+    Template: StorageScripts,
+    json: true
+  },
+  {
+    key: storageKeys.ADDONS,
     namespace: storageNamespaces.SYNC,
     defaultValue: [],
     Template: StorageScripts,

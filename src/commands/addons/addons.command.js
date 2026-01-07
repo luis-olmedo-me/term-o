@@ -28,7 +28,7 @@ export default new CommandBase({
   .expect({
     name: 'delete',
     abbreviation: 'd',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: addonsHelpSections.MANAGEMENT,
     description: 'Delete a addon by name',
     worksWith: []

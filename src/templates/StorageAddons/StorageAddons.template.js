@@ -64,11 +64,11 @@ export class StorageAddons extends StorageSimple {
           name: option.name,
           abbreviation: option.abbreviation,
           type: option.type,
-          helpSection: option.helpSection,
           description: option.description,
           worksWith: option.worksWith,
           mustHave: option.mustHave,
           defaultValue: option.defaultValue,
+          helpSection: null,
           validate: null
         })
       })

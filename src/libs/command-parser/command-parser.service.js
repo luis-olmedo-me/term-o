@@ -11,8 +11,6 @@ class CommandParser extends EventListener {
     super()
 
     this.bases = bases
-    this.defaultBases = bases
-    this.deafultBaseNames = this.bases.map(base => base.name)
     this.aliases = []
     this.origin = null
     this.highestTitleCount = getHighestTitleCountInBases(bases)

@@ -12,7 +12,7 @@ import processHandlers from './process-handlers'
 
 const backgroundHandler = setUpHandlers(processHandlers)
 
-const handleCommandQueueChange = async storageRef => {
+const handleCommandQueueChange = async (storageRef, commandParserRef) => {
   const queue = storageRef.get(storageKeys.COMMAND_QUEUE)
   const executable = queue.executable
 
@@ -27,15 +27,15 @@ const handleCommandQueueChange = async storageRef => {
 
   const externalBases = await addons.asCommands()
 
-  commandParser.setOrigin(executable.origin)
-  commandParser.setAliases(aliases)
-  commandParser.setExternalBases(externalBases)
+  commandParserRef.setOrigin(executable.origin)
+  commandParserRef.setAliases(aliases)
+  commandParserRef.setExternalBases(externalBases)
   if (executable.tab) storageRef.set(storageKeys.TAB, executable.tab)
 
   const contextInputValue = config.getValueById(configInputIds.CONTEXT)
 
   const context = createContext(contextInputValue, tab)
-  const command = commandParser.read(executable.line).applyContext(context).applyQueue(queue)
+  const command = commandParserRef.read(executable.line).applyContext(context).applyQueue(queue)
 
   if (!command.finished) {
     command.startExecuting()
@@ -52,12 +52,12 @@ const handleCommandQueueChange = async storageRef => {
   if (executable.tabId) storageRef.set(storageKeys.TAB, originalTab)
 }
 
-const handleStorageChange = storageRef => {
+const handleStorageChange = (storageRef, commandParserRef) => {
   return changes => {
     const hasQueueChanges = storageKeys.COMMAND_QUEUE in changes
     storageRef.handleStorageChanges(changes)
 
-    if (hasQueueChanges) handleCommandQueueChange(storageRef)
+    if (hasQueueChanges) handleCommandQueueChange(storageRef, commandParserRef)
   }
 }
 const ensureOffscreenIsActive = async () => {
@@ -105,6 +105,6 @@ chrome.tabs.onUpdated.addListener(handleTabsUpdated(storage))
 
 chrome.runtime.onInstalled.addListener(handleInstalled(storage))
 
-chrome.storage.onChanged.addListener(handleStorageChange(storage))
+chrome.storage.onChanged.addListener(handleStorageChange(storage, commandParser))
 
 chrome.runtime.onMessage.addListener(backgroundHandler)

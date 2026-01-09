@@ -11,9 +11,18 @@ class CommandParser extends EventListener {
     super()
 
     this.bases = bases
+    this.defaultBases = bases
+    this.deafultBaseNames = this.bases.map(base => base.name)
     this.aliases = []
     this.origin = null
     this.highestTitleCount = getHighestTitleCountInBases(bases)
+  }
+
+  setExternalBases(externalBases) {
+    const deafultBaseNames = this.bases.map(base => base.name)
+    const newBases = externalBases.filter(base => !deafultBaseNames.includes(base.name))
+
+    if (newBases.length) this.bases = this.bases.concat(newBases)
   }
 
   setAliases(aliases) {

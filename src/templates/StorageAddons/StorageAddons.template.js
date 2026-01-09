@@ -1,6 +1,8 @@
 import { deleteStorageValue, getStorageValue, setStorageValue } from '@src/browser-api/storage.api'
 import { storageKeys } from '@src/constants/storage.constants'
-import StorageSimple from '../StorageSimple'
+import processManager from '@src/libs/process-manager'
+import CommandBase from '@src/templates/CommandBase'
+import StorageSimple from '@src/templates/StorageSimple'
 
 export class StorageAddons extends StorageSimple {
   get $value() {
@@ -8,6 +10,7 @@ export class StorageAddons extends StorageSimple {
       values: this.$latest().value,
       delete: this.delete.bind(this),
       getMetadata: this.getMetadata.bind(this),
+      asCommands: this.asCommands.bind(this),
       add: this.add.bind(this),
       get: this.get.bind(this),
       has: this.has.bind(this)
@@ -15,11 +18,10 @@ export class StorageAddons extends StorageSimple {
   }
 
   add({ name, version, handler, options }) {
-    const newAddons = this.$latest().value.concat({ name, version })
+    const newAddons = this.$latest().value.concat({ name, version, options })
 
     this.$storageService.set(storageKeys.ADDONS, newAddons)
     setStorageValue(this.$namespace, `addon_${name}_handler`, handler, false)
-    setStorageValue(this.$namespace, `addon_${name}_options`, options, false)
   }
 
   delete(name) {
@@ -27,7 +29,6 @@ export class StorageAddons extends StorageSimple {
 
     this.$storageService.set(storageKeys.ADDONS, newAddons)
     deleteStorageValue(this.$namespace, `addon_${name}_handler`, false)
-    deleteStorageValue(this.$namespace, `addon_${name}_options`, true)
   }
 
   async get(name) {
@@ -38,9 +39,44 @@ export class StorageAddons extends StorageSimple {
     return {
       name: foundAddon.name,
       version: foundAddon.version,
-      handler: await getStorageValue(this.$namespace, `addon_${name}_handler`),
-      options: await getStorageValue(this.$namespace, `addon_${name}_options`)
+      options: foundAddon.options,
+      handler: await getStorageValue(this.$namespace, `addon_${name}_handler`)
     }
+  }
+
+  async asCommands() {
+    const commands = []
+
+    for (const addon of this.$latest().value) {
+      const handler = await getStorageValue(this.$namespace, `addon_${addon.name}_handler`)
+      const commandBase = new CommandBase({
+        name: addon.name,
+        helpSectionTitles: [],
+        handler: async command => {
+          const updates = await processManager.executeCode({ script: handler })
+
+          command.setUpdates(...updates)
+        }
+      })
+
+      addon.options.forEach(option => {
+        commandBase.expect({
+          name: option.name,
+          abbreviation: option.abbreviation,
+          type: option.type,
+          helpSection: option.helpSection,
+          description: option.description,
+          worksWith: option.worksWith,
+          mustHave: option.mustHave,
+          defaultValue: option.defaultValue,
+          validate: null
+        })
+      })
+
+      commands.push(commandBase)
+    }
+
+    return commands
   }
 
   getMetadata(name) {

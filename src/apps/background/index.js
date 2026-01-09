@@ -22,10 +22,14 @@ const handleCommandQueueChange = async storageRef => {
   const originalTab = storageRef.get(storageKeys.TAB)
   const aliases = storageRef.get(storageKeys.ALIASES)
   const config = storageRef.get(storageKeys.CONFIG)
+  const addons = storageRef.get(storageKeys.ADDONS)
   const tab = executable.tab || originalTab
+
+  const externalBases = await addons.asCommands()
 
   commandParser.setOrigin(executable.origin)
   commandParser.setAliases(aliases)
+  commandParser.setExternalBases(externalBases)
   if (executable.tab) storageRef.set(storageKeys.TAB, executable.tab)
 
   const contextInputValue = config.getValueById(configInputIds.CONTEXT)

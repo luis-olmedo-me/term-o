@@ -60,7 +60,7 @@ export const scriptsHandler = async command => {
     if (!script) throw `The script "${name}" does not exist.`
 
     command.update('Executing.')
-    const updates = await processManager.executeCode({ script })
+    const updates = await processManager.executeCode({ code: script, props: {} })
 
     command.setUpdates(...updates)
   }

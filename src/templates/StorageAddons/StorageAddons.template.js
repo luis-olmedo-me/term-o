@@ -48,12 +48,12 @@ export class StorageAddons extends StorageSimple {
     const commands = []
 
     for (const addon of this.$latest().value) {
-      const handler = await getStorageValue(this.$namespace, `addon_${addon.name}_handler`)
+      const code = await getStorageValue(this.$namespace, `addon_${addon.name}_handler`)
       const commandBase = new CommandBase({
         name: addon.name,
         helpSectionTitles: [],
         handler: async command => {
-          const updates = await processManager.executeCode({ script: handler })
+          const updates = await processManager.executeCode({ code, props: command.props })
 
           command.setUpdates(...updates)
         }

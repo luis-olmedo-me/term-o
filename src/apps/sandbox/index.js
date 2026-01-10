@@ -3,8 +3,9 @@ import { sandboxEvents } from '@src/constants/sandbox.constants'
 
 async function safeEval(event) {
   const code = event.data.data.code
+  const props = event.data.data.props
 
-  const createHandlerFor = name => props => {
+  const createHandlerFor = name => commandProps => {
     return new Promise((resolve, reject) => {
       const handleSandboxCommand = event => {
         if (event.data?.type !== sandboxEvents.COMMAND_RETURN) return
@@ -19,7 +20,7 @@ async function safeEval(event) {
       window.addEventListener('message', handleSandboxCommand)
 
       event.source.window.postMessage(
-        { type: sandboxEvents.COMMAND, data: { props, name } },
+        { type: sandboxEvents.COMMAND, data: { props: commandProps, name } },
         event.origin
       )
     })
@@ -94,7 +95,10 @@ async function safeEval(event) {
     const matchesWithName = main?.name === 'main'
 
     if (!isFunction || !matchesWithName) throw 'Executed script must use a function called "main".'
-    await main([])
+    const result = main(props)
+    const isAsync = result instanceof Promise
+
+    if (isAsync) await result
 
     return ''
   } catch (error) {

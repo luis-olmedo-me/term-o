@@ -1,4 +1,5 @@
 import { commandNames } from '@src/constants/command.constants'
+import { sandboxEvents } from '@src/constants/sandbox.constants'
 
 async function safeEval(event) {
   const code = event.data.data.code
@@ -6,7 +7,7 @@ async function safeEval(event) {
   const createHandlerFor = name => props => {
     return new Promise((resolve, reject) => {
       const handleSandboxCommand = event => {
-        if (event.data?.type !== 'sandbox-command-return') return
+        if (event.data?.type !== sandboxEvents.SANDBOX_COMMAND_RETURN) return
         const data = event.data.data
         const errorMessage = data.updates.at(0)
 
@@ -18,7 +19,7 @@ async function safeEval(event) {
       window.addEventListener('message', handleSandboxCommand)
 
       event.source.window.postMessage(
-        { type: 'sandbox-command', data: { props, name } },
+        { type: sandboxEvents.SANDBOX_COMMAND, data: { props, name } },
         event.origin
       )
     })
@@ -27,7 +28,7 @@ async function safeEval(event) {
   const update = (...args) => {
     return new Promise((resolve, reject) => {
       const handleSandboxCommand = event => {
-        if (event.data?.type !== 'sandbox-command-update-return') return
+        if (event.data?.type !== sandboxEvents.SANDBOX_COMMAND_UPDATE_RETURN) return
         const data = event.data.data
         const errorMessage = data.updates.at(0)
 
@@ -39,7 +40,7 @@ async function safeEval(event) {
       window.addEventListener('message', handleSandboxCommand)
 
       event.source.window.postMessage(
-        { type: 'sandbox-command-update', data: { updates: args } },
+        { type: sandboxEvents.SANDBOX_COMMAND_UPDATE, data: { updates: args } },
         event.origin
       )
     })
@@ -48,7 +49,7 @@ async function safeEval(event) {
   const setUpdates = (...args) => {
     return new Promise((resolve, reject) => {
       const handleSandboxCommand = event => {
-        if (event.data?.type !== 'sandbox-command-set-updates-return') return
+        if (event.data?.type !== sandboxEvents.SANDBOX_COMMAND_SET_UPDATES_RETURN) return
         const data = event.data.data
         const errorMessage = data.updates.at(0)
 
@@ -60,7 +61,7 @@ async function safeEval(event) {
       window.addEventListener('message', handleSandboxCommand)
 
       event.source.window.postMessage(
-        { type: 'sandbox-command-set-updates', data: { updates: args } },
+        { type: sandboxEvents.SANDBOX_COMMAND_SET_UPDATES, data: { updates: args } },
         event.origin
       )
     })
@@ -102,9 +103,12 @@ async function safeEval(event) {
   }
 }
 
-window.addEventListener('message', async function (event) {
-  if (event.data?.type !== 'sandbox-code') return
-
+window.addEventListener('message', async event => {
+  if (event.data?.type !== sandboxEvents.SANDBOX_CODE) return
   const error = await safeEval(event)
-  event.source.window.postMessage({ type: 'sandbox-command-finish', data: { error } }, event.origin)
+
+  event.source.window.postMessage(
+    { type: sandboxEvents.SANDBOX_COMMAND_FINISH, data: { error } },
+    event.origin
+  )
 })

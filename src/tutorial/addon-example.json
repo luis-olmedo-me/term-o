@@ -1,0 +1,16 @@
+{
+  "name": "custom",
+  "version": "0.0.0",
+  "handler": "function main() { update('Creating an addon example.') }",
+  "options": [
+    {
+      "name": "test-option",
+      "abbreviation": "t",
+      "type": "string",
+      "description": "Testing option",
+      "worksWith": [],
+      "mustHave": [],
+      "defaultValue": ""
+    }
+  ]
+}

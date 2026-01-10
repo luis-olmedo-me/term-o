@@ -7,7 +7,7 @@ async function safeEval(event) {
   const createHandlerFor = name => props => {
     return new Promise((resolve, reject) => {
       const handleSandboxCommand = event => {
-        if (event.data?.type !== sandboxEvents.SANDBOX_COMMAND_RETURN) return
+        if (event.data?.type !== sandboxEvents.COMMAND_RETURN) return
         const data = event.data.data
         const errorMessage = data.updates.at(0)
 
@@ -19,7 +19,7 @@ async function safeEval(event) {
       window.addEventListener('message', handleSandboxCommand)
 
       event.source.window.postMessage(
-        { type: sandboxEvents.SANDBOX_COMMAND, data: { props, name } },
+        { type: sandboxEvents.COMMAND, data: { props, name } },
         event.origin
       )
     })
@@ -28,7 +28,7 @@ async function safeEval(event) {
   const update = (...args) => {
     return new Promise((resolve, reject) => {
       const handleSandboxCommand = event => {
-        if (event.data?.type !== sandboxEvents.SANDBOX_COMMAND_UPDATE_RETURN) return
+        if (event.data?.type !== sandboxEvents.COMMAND_UPDATE_RETURN) return
         const data = event.data.data
         const errorMessage = data.updates.at(0)
 

@@ -20,7 +20,7 @@ export default async (resolve, reject, data) => {
     const data = event.data?.data
 
     switch (type) {
-      case sandboxEvents.SANDBOX_COMMAND: {
+      case sandboxEvents.COMMAND: {
         const { updates, status } = await processManager.executeCommand({
           line: buildArgsFromProps(data.props, data.name).join(' '),
           origin: origins.FORCED
@@ -31,23 +31,17 @@ export default async (resolve, reject, data) => {
         const formattedUpdates = hasError ? updatesUncolored : updatesUncolored.map(getRawArgs)
 
         iframe.contentWindow.postMessage(
-          {
-            type: sandboxEvents.SANDBOX_COMMAND_RETURN,
-            data: { updates: formattedUpdates, hasError }
-          },
+          { type: sandboxEvents.COMMAND_RETURN, data: { updates: formattedUpdates, hasError } },
           '*'
         )
         break
       }
 
-      case sandboxEvents.SANDBOX_COMMAND_UPDATE: {
+      case sandboxEvents.COMMAND_UPDATE: {
         updates = [...updates, ...data.updates]
 
         iframe.contentWindow.postMessage(
-          {
-            type: sandboxEvents.SANDBOX_COMMAND_UPDATE_RETURN,
-            data: { updates, hasError: false }
-          },
+          { type: sandboxEvents.COMMAND_UPDATE_RETURN, data: { updates, hasError: false } },
           '*'
         )
         break
@@ -57,16 +51,13 @@ export default async (resolve, reject, data) => {
         updates = [...data.updates]
 
         iframe.contentWindow.postMessage(
-          {
-            type: sandboxEvents.SANDBOX_COMMAND_SET_UPDATES_RETURN,
-            data: { updates, hasError: false }
-          },
+          { type: sandboxEvents.COMMAND_SET_UPDATES_RETURN, data: { updates, hasError: false } },
           '*'
         )
         break
       }
 
-      case sandboxEvents.SANDBOX_COMMAND_FINISH: {
+      case sandboxEvents.COMMAND_FINISH: {
         document.body.removeChild(iframe)
         window.removeEventListener('message', handleCodeEval)
 
@@ -80,9 +71,6 @@ export default async (resolve, reject, data) => {
   iframe.onload = () => {
     window.addEventListener('message', handleCodeEval)
 
-    iframe.contentWindow.postMessage(
-      { type: sandboxEvents.SANDBOX_CODE, data: { code: script } },
-      '*'
-    )
+    iframe.contentWindow.postMessage({ type: sandboxEvents.CODE, data: { code: script } }, '*')
   }
 }

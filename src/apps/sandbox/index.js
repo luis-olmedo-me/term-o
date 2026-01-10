@@ -40,7 +40,7 @@ async function safeEval(event) {
       window.addEventListener('message', handleSandboxCommand)
 
       event.source.window.postMessage(
-        { type: sandboxEvents.SANDBOX_COMMAND_UPDATE, data: { updates: args } },
+        { type: sandboxEvents.COMMAND_UPDATE, data: { updates: args } },
         event.origin
       )
     })
@@ -49,7 +49,7 @@ async function safeEval(event) {
   const setUpdates = (...args) => {
     return new Promise((resolve, reject) => {
       const handleSandboxCommand = event => {
-        if (event.data?.type !== sandboxEvents.SANDBOX_COMMAND_SET_UPDATES_RETURN) return
+        if (event.data?.type !== sandboxEvents.COMMAND_SET_UPDATES_RETURN) return
         const data = event.data.data
         const errorMessage = data.updates.at(0)
 
@@ -61,7 +61,7 @@ async function safeEval(event) {
       window.addEventListener('message', handleSandboxCommand)
 
       event.source.window.postMessage(
-        { type: sandboxEvents.SANDBOX_COMMAND_SET_UPDATES, data: { updates: args } },
+        { type: sandboxEvents.COMMAND_SET_UPDATES, data: { updates: args } },
         event.origin
       )
     })
@@ -104,11 +104,11 @@ async function safeEval(event) {
 }
 
 window.addEventListener('message', async event => {
-  if (event.data?.type !== sandboxEvents.SANDBOX_CODE) return
+  if (event.data?.type !== sandboxEvents.CODE) return
   const error = await safeEval(event)
 
   event.source.window.postMessage(
-    { type: sandboxEvents.SANDBOX_COMMAND_FINISH, data: { error } },
+    { type: sandboxEvents.COMMAND_FINISH, data: { error } },
     event.origin
   )
 })

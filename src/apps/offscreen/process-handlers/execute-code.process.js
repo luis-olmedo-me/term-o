@@ -47,7 +47,7 @@ export default async (resolve, reject, data) => {
         break
       }
 
-      case sandboxEvents.SANDBOX_COMMAND_SET_UPDATE: {
+      case sandboxEvents.COMMAND_SET_UPDATE: {
         updates = [...data.updates]
 
         iframe.contentWindow.postMessage(

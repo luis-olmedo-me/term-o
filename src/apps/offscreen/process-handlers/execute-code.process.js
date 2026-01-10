@@ -1,6 +1,7 @@
 import processManager from '@src/libs/process-manager'
 
 import { commandStatuses, origins } from '@src/constants/command.constants'
+import { sandboxEvents } from '@src/constants/sandbox.constants'
 import { buildArgsFromProps, getRawArgs } from '@src/helpers/arguments.helpers'
 import { cleanColors } from '@src/helpers/themes.helpers'
 
@@ -19,7 +20,7 @@ export default async (resolve, reject, data) => {
     const data = event.data?.data
 
     switch (type) {
-      case 'sandbox-command': {
+      case sandboxEvents.SANDBOX_COMMAND: {
         const { updates, status } = await processManager.executeCommand({
           line: buildArgsFromProps(data.props, data.name).join(' '),
           origin: origins.FORCED
@@ -31,7 +32,7 @@ export default async (resolve, reject, data) => {
 
         iframe.contentWindow.postMessage(
           {
-            type: 'sandbox-command-return',
+            type: sandboxEvents.SANDBOX_COMMAND_RETURN,
             data: { updates: formattedUpdates, hasError }
           },
           '*'
@@ -39,12 +40,12 @@ export default async (resolve, reject, data) => {
         break
       }
 
-      case 'sandbox-command-update': {
+      case sandboxEvents.SANDBOX_COMMAND_UPDATE: {
         updates = [...updates, ...data.updates]
 
         iframe.contentWindow.postMessage(
           {
-            type: 'sandbox-command-update-return',
+            type: sandboxEvents.SANDBOX_COMMAND_UPDATE_RETURN,
             data: { updates, hasError: false }
           },
           '*'
@@ -52,12 +53,12 @@ export default async (resolve, reject, data) => {
         break
       }
 
-      case 'sandbox-command-set-updates': {
+      case sandboxEvents.SANDBOX_COMMAND_SET_UPDATE: {
         updates = [...data.updates]
 
         iframe.contentWindow.postMessage(
           {
-            type: 'sandbox-command-set-updates-return',
+            type: sandboxEvents.SANDBOX_COMMAND_SET_UPDATES_RETURN,
             data: { updates, hasError: false }
           },
           '*'
@@ -65,7 +66,7 @@ export default async (resolve, reject, data) => {
         break
       }
 
-      case 'sandbox-command-finish': {
+      case sandboxEvents.SANDBOX_COMMAND_FINISH: {
         document.body.removeChild(iframe)
         window.removeEventListener('message', handleCodeEval)
 
@@ -79,6 +80,9 @@ export default async (resolve, reject, data) => {
   iframe.onload = () => {
     window.addEventListener('message', handleCodeEval)
 
-    iframe.contentWindow.postMessage({ type: 'sandbox-code', data: { code: script } }, '*')
+    iframe.contentWindow.postMessage(
+      { type: sandboxEvents.SANDBOX_CODE, data: { code: script } },
+      '*'
+    )
   }
 }

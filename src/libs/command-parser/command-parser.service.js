@@ -10,6 +10,7 @@ class CommandParser extends EventListener {
   constructor(bases) {
     super()
 
+    this.defaultBases = bases
     this.bases = bases
     this.aliases = []
     this.origin = null
@@ -17,10 +18,7 @@ class CommandParser extends EventListener {
   }
 
   setExternalBases(externalBases) {
-    const deafultBaseNames = this.bases.map(base => base.name)
-    const newBases = externalBases.filter(base => !deafultBaseNames.includes(base.name))
-
-    if (newBases.length) this.bases = this.bases.concat(newBases)
+    if (externalBases.length) this.bases = this.defaultBases.concat(externalBases)
   }
 
   setAliases(aliases) {

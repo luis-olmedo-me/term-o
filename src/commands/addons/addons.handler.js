@@ -1,6 +1,7 @@
 import processManager from '@src/libs/process-manager'
 import storage from '@src/libs/storage'
 
+import { commandNames } from '@src/constants/command.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatAddon } from '@src/helpers/format.helpers'
@@ -28,7 +29,9 @@ export const addonsHandler = async command => {
     const newAddon = JSON.parse(file.content)
 
     const alreadyExists = addons.has(newAddon.name)
+    const isDefault = Object.values(commandNames).includes(newAddon.name)
 
+    if (isDefault) throw `The addon's name "${newAddon.name}" can not be taken.`
     if (alreadyExists) throw `The addon "${newAddon.name}" already exists.`
 
     addons.add(newAddon)

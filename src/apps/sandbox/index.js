@@ -69,41 +69,42 @@ async function safeEval(event) {
   }
 
   const handledCommandNames = Object.values(commandNames)
-  const handlers = handledCommandNames.map(createHandlerFor)
+  const handlersEntries = handledCommandNames.map(name => [name, createHandlerFor(name)])
+  const commands = Object.fromEntries(handlersEntries)
+  const get = propName => props[propName]
+
+  const term = {
+    get,
+    update,
+    setUpdates,
+    commands
+  }
 
   const restrictedEval = new Function(
-    ...handledCommandNames,
-    'update',
-    'setUpdates',
+    'term',
     `
-      "use strict";
-      return (function() {
-        try {
-          ${code}
-  
-          return main || null
-        } catch(error) {
-          setUpdates(error)
+      return (async () => {
+        ${code}
+        if (typeof main !== 'function') {
+          throw new Error('Script must define a function called "main"')
         }
-      })();
+        return main
+      })()
     `
   )
 
   try {
-    const main = await restrictedEval(...handlers, update, setUpdates)
-    const isFunction = typeof main === 'function'
-    const matchesWithName = main?.name === 'main'
+    const userMain = await restrictedEval(term)
 
-    if (!isFunction || !matchesWithName) throw 'Executed script must use a function called "main".'
-    const result = main(props)
-    const isAsync = result instanceof Promise
-
-    if (isAsync) await result
+    const result = userMain(term)
+    await Promise.resolve(result)
 
     return ''
   } catch (error) {
-    await setUpdates(`${error}`)
-    return `${error}`
+    const message = String(error?.message ?? error)
+
+    await setUpdates(message)
+    return message
   }
 }
 

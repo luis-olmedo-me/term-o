@@ -1,10 +1,10 @@
 {
   "name": "custom",
   "version": "0.0.0",
-  "handler": "function main() { update('Creating an addon example.') }",
+  "handler": "function main() { term.update(`[ADDON EXAMPLE]: My test name is ${term.get('test-name')}`) }",
   "options": [
     {
-      "name": "test-option",
+      "name": "test-name",
       "abbreviation": "t",
       "type": "string",
       "description": "Testing option",

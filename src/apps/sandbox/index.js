@@ -26,7 +26,7 @@ async function safeEval(event) {
     })
   }
 
-  const update = (...args) => {
+  const log = (...args) => {
     return new Promise((resolve, reject) => {
       const handleSandboxCommand = event => {
         if (event.data?.type !== sandboxEvents.COMMAND_UPDATE_RETURN) return
@@ -47,7 +47,7 @@ async function safeEval(event) {
     })
   }
 
-  const setUpdates = (...args) => {
+  const setLogs = (...args) => {
     return new Promise((resolve, reject) => {
       const handleSandboxCommand = event => {
         if (event.data?.type !== sandboxEvents.COMMAND_SET_UPDATES_RETURN) return
@@ -73,12 +73,12 @@ async function safeEval(event) {
   const commands = Object.fromEntries(handlersEntries)
   const get = propName => props[propName]
 
-  const term = {
+  const term = Object.freeze({
     get,
-    update,
-    setUpdates,
+    log,
+    setLogs,
     commands
-  }
+  })
 
   const restrictedEval = new Function(
     'term',
@@ -103,7 +103,7 @@ async function safeEval(event) {
   } catch (error) {
     const message = String(error?.message ?? error)
 
-    await setUpdates(message)
+    await setLogs(message)
     return message
   }
 }

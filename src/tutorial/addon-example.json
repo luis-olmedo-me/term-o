@@ -1,7 +1,7 @@
 {
   "name": "custom",
   "version": "0.0.0",
-  "handler": "function main() { term.update(`[ADDON EXAMPLE]: My test name is ${term.get('test-name')}`) }",
+  "handler": "function main() { term.log(`[ADDON EXAMPLE]: My test name is ${term.get('test-name')}`) }",
   "options": [
     {
       "name": "test-name",

@@ -75,7 +75,7 @@ export const storageValues = [
   },
   {
     key: storageKeys.ADDONS,
-    namespace: storageNamespaces.SYNC,
+    namespace: storageNamespaces.LOCAL,
     defaultValue: [],
     Template: StorageAddons,
     json: true

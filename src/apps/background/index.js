@@ -23,9 +23,11 @@ const handleCommandQueueChange = async (storageRef, commandParserRef) => {
   const aliases = storageRef.get(storageKeys.ALIASES)
   const config = storageRef.get(storageKeys.CONFIG)
   const addons = storageRef.get(storageKeys.ADDONS)
-  const tab = executable.tab || originalTab
 
-  const externalBases = await addons.asCommands()
+  const tab = executable.tab || originalTab
+  const addonNames = addons.values.map(addon => addon.name)
+
+  const externalBases = await addons.asCommands(addonNames)
 
   commandParserRef.setOrigin(executable.origin)
   commandParserRef.setAliases(aliases)

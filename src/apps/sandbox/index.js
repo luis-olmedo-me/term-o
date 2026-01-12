@@ -4,6 +4,7 @@ import { sandboxEvents } from '@src/constants/sandbox.constants'
 async function safeEval(event) {
   const code = event.data.data.code
   const props = event.data.data.props
+  const addonNames = event.data.data.addonNames
 
   const createHandlerFor = name => commandProps => {
     return new Promise((resolve, reject) => {
@@ -69,15 +70,21 @@ async function safeEval(event) {
   }
 
   const handledCommandNames = Object.values(commandNames)
-  const handlersEntries = handledCommandNames.map(name => [name, createHandlerFor(name)])
-  const commands = Object.fromEntries(handlersEntries)
+  const commandHandlersEntries = handledCommandNames.map(name => [name, createHandlerFor(name)])
+  const commands = Object.fromEntries(commandHandlersEntries)
+
+  const handledAddonNames = Object.values(addonNames)
+  const addonHandlersEntries = handledAddonNames.map(name => [name, createHandlerFor(name)])
+  const addons = Object.fromEntries(addonHandlersEntries)
+
   const get = propName => props[propName]
 
   const term = Object.freeze({
     get,
     log,
     setLogs,
-    commands
+    commands,
+    addons
   })
 
   const restrictedEval = new Function(

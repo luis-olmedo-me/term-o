@@ -6,7 +6,7 @@ import { buildArgsFromProps, getRawArgs } from '@src/helpers/arguments.helpers'
 import { cleanColors } from '@src/helpers/themes.helpers'
 
 export default async (resolve, reject, data) => {
-  const { code, props } = data
+  const { code, props, addonNames } = data
 
   const iframe = document.createElement('iframe')
   iframe.setAttribute('src', chrome.runtime.getURL('sandbox.html'))
@@ -71,6 +71,9 @@ export default async (resolve, reject, data) => {
   iframe.onload = () => {
     window.addEventListener('message', handleCodeEval)
 
-    iframe.contentWindow.postMessage({ type: sandboxEvents.CODE, data: { code, props } }, '*')
+    iframe.contentWindow.postMessage(
+      { type: sandboxEvents.CODE, data: { code, props, addonNames } },
+      '*'
+    )
   }
 }

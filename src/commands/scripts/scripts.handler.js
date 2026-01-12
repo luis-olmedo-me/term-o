@@ -55,12 +55,15 @@ export const scriptsHandler = async command => {
   if (P`run`) {
     const name = P`run`
     const scripts = storage.get(storageKeys.SCRIPTS)
+    const addons = storage.get(storageKeys.ADDONS)
+
+    const addonNames = addons.values.map(addon => addon.name)
     const script = await scripts.get(name)
 
     if (!script) throw `The script "${name}" does not exist.`
 
     command.update('Executing.')
-    const updates = await processManager.executeCode({ code: script, props: {} })
+    const updates = await processManager.executeCode({ code: script, props: {}, addonNames })
 
     command.setUpdates(...updates)
   }

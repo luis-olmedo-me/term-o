@@ -44,7 +44,7 @@ export class StorageAddons extends StorageSimple {
     }
   }
 
-  async asCommands() {
+  async asCommands(addonNames) {
     const commands = []
 
     for (const addon of this.$latest().value) {
@@ -53,7 +53,8 @@ export class StorageAddons extends StorageSimple {
         name: addon.name,
         helpSectionTitles: [],
         handler: async command => {
-          const updates = await processManager.executeCode({ code, props: command.props })
+          const props = command.props
+          const updates = await processManager.executeCode({ code, props, addonNames })
 
           command.setUpdates(...updates)
         }

@@ -107,11 +107,11 @@ class ProcessManager {
     })
   }
 
-  executeCode({ code, props }) {
+  executeCode({ code, props, addonNames }) {
     return createWorkerProcessRequest({
       type: processNames.EXECUTE_CODE,
       defaultResponse: {},
-      data: { code, props }
+      data: { code, props, addonNames }
     })
   }
 

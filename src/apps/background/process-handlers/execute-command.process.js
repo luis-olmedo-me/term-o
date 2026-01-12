@@ -14,8 +14,7 @@ export default async (resolve, _reject, data) => {
   const addons = storage.get(storageKeys.ADDONS)
 
   const addonNames = addons.values.map(addon => addon.name)
-
-  const externalBases = await addons.asCommands(addonNames)
+  const externalBases = addons.asCommands(addonNames)
 
   commandParser.setAliases(aliases)
   commandParser.setOrigin(origin)

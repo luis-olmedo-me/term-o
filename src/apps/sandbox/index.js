@@ -87,22 +87,21 @@ async function safeEval(event) {
     addons
   })
 
-  const restrictedEval = new Function(
-    'term',
-    `
-      return (async () => {
-        ${code}
-        if (typeof main !== 'function') {
-          throw new Error('Script must define a function called "main"')
-        }
-        return main
-      })()
-    `
-  )
-
   try {
-    const userMain = await restrictedEval(term)
+    const restrictedEval = new Function(
+      'term',
+      `
+        return (async () => {
+          ${code}
+          if (typeof main !== 'function') {
+            throw new Error('Script must define a function called "main"')
+          }
+          return main
+        })()
+      `
+    )
 
+    const userMain = await restrictedEval(term)
     const result = userMain(term)
     await Promise.resolve(result)
 

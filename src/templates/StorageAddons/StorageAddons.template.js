@@ -45,15 +45,15 @@ export class StorageAddons extends StorageSimple {
   }
 
   asCommands(addonNames) {
-    const commands = []
+    const namespace = this.$namespace
 
-    for (const addon of this.$latest().value) {
+    return this.$latest().value.map(addon => {
       const commandBase = new CommandBase({
         name: addon.name,
         helpSectionTitles: [],
         handler: async command => {
           const props = command.props
-          const code = await getStorageValue(this.$namespace, `addon_${addon.name}_handler`)
+          const code = await getStorageValue(namespace, `addon_${addon.name}_handler`)
           const updates = await processManager.executeCode({ code, props, addonNames })
 
           command.setUpdates(...updates)
@@ -74,10 +74,8 @@ export class StorageAddons extends StorageSimple {
         })
       })
 
-      commands.push(commandBase)
-    }
-
-    return commands
+      return commandBase
+    })
   }
 
   getMetadata(name) {

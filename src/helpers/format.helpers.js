@@ -76,13 +76,6 @@ export const formatAlias = ({ key, value }) => {
 
   return `${C`purple`}${quotedKey} ${C`yellow`}${quotedValue}`
 }
-export const formatFile = ({ name, lastVisitTime, size }) => {
-  const quotedDateTime = getQuotedString(lastVisitTime)
-  const quotedSize = getQuotedString(size)
-  const quotedName = getQuotedString(name)
-
-  return `${C`green`}${quotedDateTime} ${C`purple`}${quotedName} ${C`cyan`}${quotedSize}`
-}
 
 export const formatAddon = ({ name, version }) => {
   const quotedName = getQuotedString(name)

@@ -1,4 +1,4 @@
-import { validateSchema } from '@src/helpers/validation-schema'
+import { validateSchema } from '@src/helpers/validation-schema.helpers'
 
 export const isRegExp = (option, value) => {
   try {

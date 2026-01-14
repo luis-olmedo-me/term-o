@@ -48,10 +48,20 @@ export default async (resolve, reject, data) => {
       }
 
       case sandboxEvents.COMMAND_SET_UPDATES: {
-        updates = [...data.updates]
+        updates = data.updates.map(update => String(update))
 
         iframe.contentWindow.postMessage(
           { type: sandboxEvents.COMMAND_SET_UPDATES_RETURN, data: { updates, hasError: false } },
+          '*'
+        )
+        break
+      }
+
+      case sandboxEvents.COMMAND_CLEAR_UPDATES: {
+        updates = []
+
+        iframe.contentWindow.postMessage(
+          { type: sandboxEvents.COMMAND_CLEAR_UPDATES_RETURN, data: { updates, hasError: false } },
           '*'
         )
         break

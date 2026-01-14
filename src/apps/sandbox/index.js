@@ -69,6 +69,24 @@ async function safeEval(event) {
     })
   }
 
+  const clear = () => {
+    return new Promise((resolve, reject) => {
+      const handleSandboxCommand = event => {
+        if (event.data?.type !== sandboxEvents.COMMAND_CLEAR_UPDATES_RETURN) return
+        const data = event.data.data
+        const errorMessage = data.updates.at(0)
+
+        window.removeEventListener('message', handleSandboxCommand)
+        if (!data.hasError) resolve(data.updates)
+        else reject(errorMessage)
+      }
+
+      window.addEventListener('message', handleSandboxCommand)
+
+      event.source.window.postMessage({ type: sandboxEvents.COMMAND_CLEAR_UPDATES }, event.origin)
+    })
+  }
+
   const handledCommandNames = Object.values(commandNames)
   const commandHandlersEntries = handledCommandNames.map(name => [name, createHandlerFor(name)])
   const commands = Object.fromEntries(commandHandlersEntries)
@@ -82,7 +100,7 @@ async function safeEval(event) {
   const term = Object.freeze({
     get,
     log,
-    setLogs,
+    clear,
     commands,
     addons
   })

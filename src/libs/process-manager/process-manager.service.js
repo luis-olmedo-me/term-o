@@ -62,12 +62,12 @@ class ProcessManager {
     })
   }
 
-  uploadFile(tabId, { theme }) {
+  uploadFile(tabId, { theme, extensions }) {
     return createWorkerProcessRequest({
       type: processNames.UPLOAD_FILE,
       defaultResponse: {},
       tabId,
-      data: { theme }
+      data: { theme, extensions }
     })
   }
 
@@ -107,11 +107,11 @@ class ProcessManager {
     })
   }
 
-  executeCode({ script }) {
+  executeCode({ code, props, addonNames }) {
     return createWorkerProcessRequest({
       type: processNames.EXECUTE_CODE,
       defaultResponse: {},
-      data: { script }
+      data: { code, props, addonNames }
     })
   }
 

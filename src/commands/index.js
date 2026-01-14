@@ -1,3 +1,4 @@
+import addonsBase from './addons/addons.command'
 import aliasBase from './alias/alias.command'
 import clearBase from './clear/clear.command'
 import domBase from './dom/dom.command'
@@ -7,13 +8,13 @@ import historyBase from './history/history.command'
 import inspectBase from './inspect/inspect.command'
 import notifyBase from './notify/notify.command'
 import requestBase from './request/request.command'
-import scriptsBase from './scripts/scripts.command'
 import storageBase from './storage/storage.command'
 import styleBase from './style/style.command'
 import tabsBase from './tabs/tabs.command'
 import themeBase from './theme/theme.command'
 
 export default [
+  addonsBase,
   aliasBase,
   clearBase,
   domBase,
@@ -23,7 +24,6 @@ export default [
   inspectBase,
   notifyBase,
   requestBase,
-  scriptsBase,
   storageBase,
   styleBase,
   tabsBase,
@@ -31,6 +31,7 @@ export default [
 ]
 
 export {
+  addonsBase,
   aliasBase,
   clearBase,
   domBase,
@@ -40,7 +41,6 @@ export {
   inspectBase,
   notifyBase,
   requestBase,
-  scriptsBase,
   storageBase,
   styleBase,
   tabsBase,

@@ -1,11 +1,12 @@
 import processManager from '@src/libs/process-manager'
 
 import { commandStatuses, origins } from '@src/constants/command.constants'
+import { sandboxEvents } from '@src/constants/sandbox.constants'
 import { buildArgsFromProps, getRawArgs } from '@src/helpers/arguments.helpers'
 import { cleanColors } from '@src/helpers/themes.helpers'
 
 export default async (resolve, reject, data) => {
-  const { script } = data
+  const { code, props, addonNames } = data
 
   const iframe = document.createElement('iframe')
   iframe.setAttribute('src', chrome.runtime.getURL('sandbox.html'))
@@ -19,7 +20,7 @@ export default async (resolve, reject, data) => {
     const data = event.data?.data
 
     switch (type) {
-      case 'sandbox-command': {
+      case sandboxEvents.COMMAND: {
         const { updates, status } = await processManager.executeCommand({
           line: buildArgsFromProps(data.props, data.name).join(' '),
           origin: origins.FORCED
@@ -30,42 +31,43 @@ export default async (resolve, reject, data) => {
         const formattedUpdates = hasError ? updatesUncolored : updatesUncolored.map(getRawArgs)
 
         iframe.contentWindow.postMessage(
-          {
-            type: 'sandbox-command-return',
-            data: { updates: formattedUpdates, hasError }
-          },
+          { type: sandboxEvents.COMMAND_RETURN, data: { updates: formattedUpdates, hasError } },
           '*'
         )
         break
       }
 
-      case 'sandbox-command-update': {
+      case sandboxEvents.COMMAND_UPDATE: {
         updates = [...updates, ...data.updates]
 
         iframe.contentWindow.postMessage(
-          {
-            type: 'sandbox-command-update-return',
-            data: { updates, hasError: false }
-          },
+          { type: sandboxEvents.COMMAND_UPDATE_RETURN, data: { updates, hasError: false } },
           '*'
         )
         break
       }
 
-      case 'sandbox-command-set-updates': {
-        updates = [...data.updates]
+      case sandboxEvents.COMMAND_SET_UPDATES: {
+        updates = data.updates.map(update => String(update))
 
         iframe.contentWindow.postMessage(
-          {
-            type: 'sandbox-command-set-updates-return',
-            data: { updates, hasError: false }
-          },
+          { type: sandboxEvents.COMMAND_SET_UPDATES_RETURN, data: { updates, hasError: false } },
           '*'
         )
         break
       }
 
-      case 'sandbox-command-finish': {
+      case sandboxEvents.COMMAND_CLEAR_UPDATES: {
+        updates = []
+
+        iframe.contentWindow.postMessage(
+          { type: sandboxEvents.COMMAND_CLEAR_UPDATES_RETURN, data: { updates, hasError: false } },
+          '*'
+        )
+        break
+      }
+
+      case sandboxEvents.COMMAND_FINISH: {
         document.body.removeChild(iframe)
         window.removeEventListener('message', handleCodeEval)
 
@@ -79,6 +81,9 @@ export default async (resolve, reject, data) => {
   iframe.onload = () => {
     window.addEventListener('message', handleCodeEval)
 
-    iframe.contentWindow.postMessage({ type: 'sandbox-code', data: { code: script } }, '*')
+    iframe.contentWindow.postMessage(
+      { type: sandboxEvents.CODE, data: { code, props, addonNames } },
+      '*'
+    )
   }
 }

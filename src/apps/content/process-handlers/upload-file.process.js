@@ -11,7 +11,7 @@ export default async (resolve, reject, data) => {
   })
 
   const input = uploader({
-    extension: 'js',
+    extensions: data.extensions,
     onError: reject,
     onUpload: async file =>
       resolve({

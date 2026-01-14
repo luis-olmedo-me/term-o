@@ -11,7 +11,7 @@ export const handleImportConfig = ({ onError }) => {
     }
 
     const input = uploader({
-      extension: 'txt',
+      extensions: ['txt'],
       onError: handleError,
       onUpload: file => storage.import(file).catch(handleError).then(resolve)
     })

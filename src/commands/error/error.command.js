@@ -12,7 +12,7 @@ export default new CommandBase({
   .expect({
     name: 'title',
     abbreviation: 't',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: errorHelpSections.ACTIONS,
     description: 'Throw an error with a custom message',
     worksWith: []

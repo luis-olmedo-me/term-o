@@ -1,12 +1,15 @@
 import { commandNames } from '@src/constants/command.constants'
+import { sandboxEvents } from '@src/constants/sandbox.constants'
 
 async function safeEval(event) {
   const code = event.data.data.code
+  const props = event.data.data.props
+  const addonNames = event.data.data.addonNames
 
-  const createHandlerFor = name => props => {
+  const createHandlerFor = name => commandProps => {
     return new Promise((resolve, reject) => {
       const handleSandboxCommand = event => {
-        if (event.data?.type !== 'sandbox-command-return') return
+        if (event.data?.type !== sandboxEvents.COMMAND_RETURN) return
         const data = event.data.data
         const errorMessage = data.updates.at(0)
 
@@ -18,16 +21,16 @@ async function safeEval(event) {
       window.addEventListener('message', handleSandboxCommand)
 
       event.source.window.postMessage(
-        { type: 'sandbox-command', data: { props, name } },
+        { type: sandboxEvents.COMMAND, data: { props: commandProps, name } },
         event.origin
       )
     })
   }
 
-  const update = (...args) => {
+  const log = (...args) => {
     return new Promise((resolve, reject) => {
       const handleSandboxCommand = event => {
-        if (event.data?.type !== 'sandbox-command-update-return') return
+        if (event.data?.type !== sandboxEvents.COMMAND_UPDATE_RETURN) return
         const data = event.data.data
         const errorMessage = data.updates.at(0)
 
@@ -39,16 +42,16 @@ async function safeEval(event) {
       window.addEventListener('message', handleSandboxCommand)
 
       event.source.window.postMessage(
-        { type: 'sandbox-command-update', data: { updates: args } },
+        { type: sandboxEvents.COMMAND_UPDATE, data: { updates: args } },
         event.origin
       )
     })
   }
 
-  const setUpdates = (...args) => {
+  const setLogs = (...args) => {
     return new Promise((resolve, reject) => {
       const handleSandboxCommand = event => {
-        if (event.data?.type !== 'sandbox-command-set-updates-return') return
+        if (event.data?.type !== sandboxEvents.COMMAND_SET_UPDATES_RETURN) return
         const data = event.data.data
         const errorMessage = data.updates.at(0)
 
@@ -60,51 +63,81 @@ async function safeEval(event) {
       window.addEventListener('message', handleSandboxCommand)
 
       event.source.window.postMessage(
-        { type: 'sandbox-command-set-updates', data: { updates: args } },
+        { type: sandboxEvents.COMMAND_SET_UPDATES, data: { updates: args } },
         event.origin
       )
+    })
+  }
+
+  const clear = () => {
+    return new Promise((resolve, reject) => {
+      const handleSandboxCommand = event => {
+        if (event.data?.type !== sandboxEvents.COMMAND_CLEAR_UPDATES_RETURN) return
+        const data = event.data.data
+        const errorMessage = data.updates.at(0)
+
+        window.removeEventListener('message', handleSandboxCommand)
+        if (!data.hasError) resolve(data.updates)
+        else reject(errorMessage)
+      }
+
+      window.addEventListener('message', handleSandboxCommand)
+
+      event.source.window.postMessage({ type: sandboxEvents.COMMAND_CLEAR_UPDATES }, event.origin)
     })
   }
 
   const handledCommandNames = Object.values(commandNames)
-  const handlers = handledCommandNames.map(createHandlerFor)
+  const commandHandlersEntries = handledCommandNames.map(name => [name, createHandlerFor(name)])
+  const commands = Object.fromEntries(commandHandlersEntries)
 
-  const restrictedEval = new Function(
-    ...handledCommandNames,
-    'update',
-    'setUpdates',
-    `
-      "use strict";
-      return (function() {
-        try {
-          ${code}
-  
-          return main || null
-        } catch(error) {
-          setUpdates(error)
-        }
-      })();
-    `
-  )
+  const handledAddonNames = Object.values(addonNames)
+  const addonHandlersEntries = handledAddonNames.map(name => [name, createHandlerFor(name)])
+  const addons = Object.fromEntries(addonHandlersEntries)
+
+  const get = propName => props[propName]
+
+  const term = Object.freeze({
+    get,
+    log,
+    clear,
+    commands,
+    addons
+  })
 
   try {
-    const main = await restrictedEval(...handlers, update, setUpdates)
-    const isFunction = typeof main === 'function'
-    const matchesWithName = main?.name === 'main'
+    const restrictedEval = new Function(
+      'term',
+      `
+        return (async () => {
+          ${code}
+          if (typeof main !== 'function') {
+            throw new Error('Script must define a function called "main"')
+          }
+          return main
+        })()
+      `
+    )
 
-    if (!isFunction || !matchesWithName) throw 'Executed script must use a function called "main".'
-    await main([])
+    const userMain = await restrictedEval(term)
+    const result = userMain(term)
+    await Promise.resolve(result)
 
     return ''
   } catch (error) {
-    await setUpdates(`${error}`)
-    return `${error}`
+    const message = String(error?.message ?? error)
+
+    await setLogs(message)
+    return message
   }
 }
 
-window.addEventListener('message', async function (event) {
-  if (event.data?.type !== 'sandbox-code') return
-
+window.addEventListener('message', async event => {
+  if (event.data?.type !== sandboxEvents.CODE) return
   const error = await safeEval(event)
-  event.source.window.postMessage({ type: 'sandbox-command-finish', data: { error } }, event.origin)
+
+  event.source.window.postMessage(
+    { type: sandboxEvents.COMMAND_FINISH, data: { error } },
+    event.origin
+  )
 })

@@ -52,10 +52,11 @@ export const formatStorageProp = ({ key, value, tabId }) => {
 }
 
 export const formatResponse = ({ response, responseBody, method }) => {
+  const shouldStringify = typeof responseBody !== 'string' && responseBody !== null
   const quotedURL = getQuotedString(response.url)
   const status = response.status
 
-  const responseBodyString = JSON.stringify(responseBody)
+  const responseBodyString = shouldStringify ? JSON.stringify(responseBody) : responseBody
   const quotedResponseBody = getQuotedString(responseBodyString)
   const quotedMethod = getQuotedString(method)
 
@@ -76,12 +77,12 @@ export const formatAlias = ({ key, value }) => {
 
   return `${C`purple`}${quotedKey} ${C`yellow`}${quotedValue}`
 }
-export const formatFile = ({ name, lastVisitTime, size }) => {
-  const quotedDateTime = getQuotedString(lastVisitTime)
-  const quotedSize = getQuotedString(size)
-  const quotedName = getQuotedString(name)
 
-  return `${C`green`}${quotedDateTime} ${C`purple`}${quotedName} ${C`cyan`}${quotedSize}`
+export const formatAddon = ({ name, version }) => {
+  const quotedName = getQuotedString(name)
+  const quotedDateTime = getQuotedString(version)
+
+  return `${C`green`}${quotedName} ${C`cyan`}${quotedDateTime}`
 }
 
 export const formatRegisteredEvent = ({ url, line, id }) => {

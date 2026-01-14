@@ -10,10 +10,15 @@ class CommandParser extends EventListener {
   constructor(bases) {
     super()
 
+    this.defaultBases = bases
     this.bases = bases
     this.aliases = []
     this.origin = null
     this.highestTitleCount = getHighestTitleCountInBases(bases)
+  }
+
+  setExternalBases(externalBases) {
+    if (externalBases.length) this.bases = this.defaultBases.concat(externalBases)
   }
 
   setAliases(aliases) {

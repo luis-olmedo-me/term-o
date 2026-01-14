@@ -11,9 +11,14 @@ export default async (resolve, _reject, data) => {
   const tab = storage.get(storageKeys.TAB)
   const aliases = storage.get(storageKeys.ALIASES)
   const config = storage.get(storageKeys.CONFIG)
+  const addons = storage.get(storageKeys.ADDONS)
+
+  const addonNames = addons.values.map(addon => addon.name)
+  const externalBases = addons.asCommands(addonNames)
 
   commandParser.setAliases(aliases)
   commandParser.setOrigin(origin)
+  commandParser.setExternalBases(externalBases)
 
   const contextInputValue = config.getValueById(configInputIds.CONTEXT)
 

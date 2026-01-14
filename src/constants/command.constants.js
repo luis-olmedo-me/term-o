@@ -10,7 +10,7 @@ export const commandNames = {
   EVENTS: 'events',
   HISTORY: 'history',
   REQUEST: 'request',
-  SCRIPTS: 'scripts',
+  ADDONS: 'addons',
   NOTIFY: 'notify',
   INSPECT: 'inspect'
 }

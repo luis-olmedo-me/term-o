@@ -1,9 +1,9 @@
+import StorageAddons from '@src/templates/StorageAddons'
 import StorageCommandQueue from '@src/templates/StorageCommandQueue'
 import StorageConfig from '@src/templates/StorageConfig'
 import StorageSimple from '@src/templates/StorageSimple'
 import StorageTab from '@src/templates/StorageTab'
 
-import StorageScripts from '@src/templates/StorageScripts'
 import { configDefaultValues } from './config.constants'
 import { defaultColorTheme } from './themes.constants'
 
@@ -11,7 +11,7 @@ export const storageKeys = {
   ALIASES: 'aliases',
   CONFIG: 'config',
   EVENTS: 'events',
-  SCRIPTS: 'scripts',
+  ADDONS: 'addons',
   PROMPT_HISTORY: 'prompt-history',
   THEMES: 'themes',
   TAB: 'tab',
@@ -31,7 +31,7 @@ export const storageKeysNonExportables = [
   storageKeys.TAB,
   storageKeys.PROMPT_HISTORY,
   storageKeys.COMMAND_QUEUE,
-  storageKeys.SCRIPTS
+  storageKeys.ADDONS
 ]
 
 export const storageValues = [
@@ -64,10 +64,10 @@ export const storageValues = [
     json: true
   },
   {
-    key: storageKeys.SCRIPTS,
-    namespace: storageNamespaces.SYNC,
+    key: storageKeys.ADDONS,
+    namespace: storageNamespaces.LOCAL,
     defaultValue: [],
-    Template: StorageScripts,
+    Template: StorageAddons,
     json: true
   },
   {

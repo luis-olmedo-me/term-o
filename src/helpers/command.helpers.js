@@ -13,9 +13,10 @@ export const executePerUpdates = async (nextCommand, updates) => {
   for (let update of updates) {
     const cleanedUpdate = update.replace(colorPattern, '')
     const availableArgs = getArgs(cleanedUpdate)
+    const maxIndexesCount = availableArgs.length
 
     argsHoldingUp.forEach(arg => {
-      const indexes = arg.getIndexes()
+      const indexes = arg.getIndexes(maxIndexesCount)
       const newValue = getParamValue(indexes, availableArgs)
 
       arg.setValue(newValue)

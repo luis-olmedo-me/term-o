@@ -14,8 +14,9 @@ export const isParam = (option, arg) => {
 
   const paramPattern = /^\$\d+(,\d+)?(-\d+)?$/
   const argValue = arg?.value
+  const isParamValue = paramPattern.test(argValue) || argValue === '$.'
 
-  return !isBoolean && Boolean(argValue) && paramPattern.test(argValue)
+  return !isBoolean && Boolean(argValue) && isParamValue
 }
 
 export const getParamValue = (indexes, values) => {

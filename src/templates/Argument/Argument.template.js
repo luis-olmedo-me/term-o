@@ -14,9 +14,19 @@ export class Argument {
     this.isHoldingUp = true
   }
 
-  getIndexes() {
+  getIndexes(maxCountOfIndexes) {
     const value = this.backup
     const paramPattern = /^\$\d+(,\d+)?(-\d+)?$/
+
+    if (value === '$.') {
+      var indexes = []
+
+      for (let index = 0; index < maxCountOfIndexes; index++) {
+        indexes = indexes.concat(index)
+      }
+
+      return indexes
+    }
 
     if (paramPattern.test(value)) {
       const indexesAsString = value.replace('$', '')

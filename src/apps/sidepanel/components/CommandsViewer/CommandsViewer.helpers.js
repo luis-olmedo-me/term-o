@@ -48,7 +48,7 @@ export const getCaretOffset = (element, event) => {
 }
 
 export const getTokenAt = (text, offset) => {
-  const regex = /"[^"]+"|'[^']+'|\{[^}]+\}|[\w-]+:\/\/[\w\-./]+|[\w.-]+/g
+  const regex = /"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\{[^}]+\}|[\w-]+:\/\/[\w\-./]+|[\w.-]+/g
   let match
 
   while ((match = regex.exec(text)) !== null) {

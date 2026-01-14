@@ -1,4 +1,5 @@
 import { createHelpView } from '@src/helpers/command.helpers'
+import { formatStringSearch } from '@src/helpers/format.helpers'
 
 export const searchHandler = async command => {
   const P = name => command.props[name]
@@ -8,7 +9,11 @@ export const searchHandler = async command => {
     const input = P`input`
     const queryRegex = new RegExp(query)
 
-    if (queryRegex.test(input)) command.update(input)
+    if (queryRegex.test(input)) {
+      const update = formatStringSearch({ query, input })
+
+      command.update(update)
+    }
   }
 
   if (P`help`) createHelpView(command)

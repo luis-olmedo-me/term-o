@@ -6,6 +6,10 @@ export const getColor = color => {
   return `[termo.color.${color}]`
 }
 
+export const getBgColor = color => {
+  return `[termo.bgcolor.${color}]`
+}
+
 export const cleanColors = value => {
   const colorPattern = /\[termo\.color\.[A-Za-z]+\]|\[termo\.bgcolor\.[A-Za-z]+\]/g
 

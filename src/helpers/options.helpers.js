@@ -19,21 +19,6 @@ export const isParam = (option, arg) => {
   return !isBoolean && Boolean(argValue) && isParamValue
 }
 
-export const getParamValue = (indexes, values) => {
-  if (indexes.length === 1) {
-    const [index] = indexes
-
-    return values[index] || ''
-  }
-
-  const parsedValues = indexes.map(index => values[index]).filter(Boolean)
-  const valuesInLine = parsedValues.join(' ')
-
-  if (!parsedValues.length) return ''
-
-  return `[ ${valuesInLine} ]`
-}
-
 export const parseOptions = (index, arg, argsBySpace, type) => {
   const typeLabel = getOptionTypeLabel(type)
 

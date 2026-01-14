@@ -155,3 +155,18 @@ export const getRawArgs = value => {
     return [...rawArgs, arg]
   }, [])
 }
+
+export const getParamValue = (indexes, values) => {
+  if (indexes.length === 1) {
+    const [index] = indexes
+
+    return values[index] || ''
+  }
+
+  const parsedValues = indexes.map(index => values[index]).filter(Boolean)
+  const valuesInLine = parsedValues.join(' ')
+
+  if (!parsedValues.length) return ''
+
+  return `[ ${valuesInLine} ]`
+}

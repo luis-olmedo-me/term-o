@@ -1,4 +1,4 @@
-import { getParamValue } from '@src/helpers/options.helpers'
+import { getParamValue } from '@src/helpers/arguments.helpers'
 
 export class Argument {
   constructor(value) {

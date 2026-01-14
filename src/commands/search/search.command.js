@@ -1,6 +1,7 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
+import { isRegExp } from '@src/helpers/validation-command.helpers'
 import { searchHelpSections, searchHelpSectionTitles } from './search.constants'
 import { inspectHandler } from './search.handler'
 
@@ -14,9 +15,10 @@ export default new CommandBase({
     abbreviation: 'q',
     type: commandTypes.STRING,
     helpSection: searchHelpSections.SEARCH,
-    description: 'Text query to be searched in input',
+    description: 'Text query to be searched in input (regex)',
     worksWith: ['input'],
-    validate: []
+    validate: [isRegExp],
+    defaultValue: ''
   })
   .expect({
     name: 'input',

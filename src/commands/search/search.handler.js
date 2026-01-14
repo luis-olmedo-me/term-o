@@ -6,8 +6,9 @@ export const inspectHandler = async command => {
   if (P`query`) {
     const query = P`query`
     const input = P`input`
+    const queryRegex = new RegExp(query)
 
-    if (input.contains(query)) command.update(input)
+    if (queryRegex.test(input)) command.update(input)
   }
 
   if (P`help`) createHelpView(command)

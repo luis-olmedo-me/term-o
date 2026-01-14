@@ -1,3 +1,5 @@
+import { getParamValue } from '@src/helpers/options.helpers'
+
 export class Argument {
   constructor(value) {
     this.backup = value
@@ -14,7 +16,14 @@ export class Argument {
     this.isHoldingUp = true
   }
 
-  getIndexes(maxCountOfIndexes) {
+  getValueFromArgs(stringArgs, args) {
+    const indexes = this._getIndexes(args.length)
+    const useString = this.backup === '$-'
+
+    return useString ? stringArgs : getParamValue(indexes, args)
+  }
+
+  _getIndexes(maxCountOfIndexes) {
     const value = this.backup
     const paramPattern = /^\$\d+(,\d+)?(-\d+)?$/
 

@@ -16,6 +16,7 @@ export class Command extends EventListener {
 
     this.id = createUUIDv4()
     this.name = name
+    this.params = []
     this.origin = origin
     this.context = ''
     this.title = ''
@@ -178,6 +179,10 @@ export class Command extends EventListener {
 
     if (hasArgsHoldingUp) await executePerUpdates(nextCommand, staticUpdates)
     else await nextCommand.execute()
+  }
+
+  setParams(newParams) {
+    this.params = newParams
   }
 
   setTitle(newTitle) {

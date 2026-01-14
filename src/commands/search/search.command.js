@@ -3,12 +3,12 @@ import CommandBase from '@src/templates/CommandBase'
 import { commandNames, commandTypes } from '@src/constants/command.constants'
 import { isRegExp } from '@src/helpers/validation-command.helpers'
 import { searchHelpSections, searchHelpSectionTitles } from './search.constants'
-import { inspectHandler } from './search.handler'
+import { searchHandler } from './search.handler'
 
 export default new CommandBase({
   name: commandNames.SEARCH,
   helpSectionTitles: searchHelpSectionTitles,
-  handler: inspectHandler
+  handler: searchHandler
 })
   .expect({
     name: 'query',

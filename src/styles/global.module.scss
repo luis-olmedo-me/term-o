@@ -67,5 +67,5 @@ select,
   border: none;
 }
 
-@include color-attr-generator('data-color', 'color', $colors);
-@include color-attr-generator('data-bgcolor', 'background-color', $colors);
+@include color-attr-generator('data-color', 'color', $letter-colors);
+@include color-attr-generator('data-bgcolor', 'background-color', $background-colors);

@@ -76,3 +76,16 @@ $colors: (
   'brightCyan': $colors-brightCyan,
   'brightBlue': $colors-brightBlue
 );
+
+$letter-colors: map-merge(
+  $colors,
+  (
+    reset: $colors-foreground
+  )
+);
+$background-colors: map-merge(
+  $colors,
+  (
+    reset: transparent
+  )
+);

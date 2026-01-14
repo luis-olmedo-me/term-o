@@ -52,10 +52,11 @@ export const formatStorageProp = ({ key, value, tabId }) => {
 }
 
 export const formatResponse = ({ response, responseBody, method }) => {
+  const shouldStringify = typeof responseBody !== 'string' && responseBody !== null
   const quotedURL = getQuotedString(response.url)
   const status = response.status
 
-  const responseBodyString = JSON.stringify(responseBody)
+  const responseBodyString = shouldStringify ? JSON.stringify(responseBody) : responseBody
   const quotedResponseBody = getQuotedString(responseBodyString)
   const quotedMethod = getQuotedString(method)
 

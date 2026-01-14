@@ -9,7 +9,6 @@ export class StorageAddons extends StorageSimple {
     return {
       values: this.$latest().value,
       delete: this.delete.bind(this),
-      getMetadata: this.getMetadata.bind(this),
       asCommands: this.asCommands.bind(this),
       add: this.add.bind(this),
       get: this.get.bind(this),
@@ -76,10 +75,6 @@ export class StorageAddons extends StorageSimple {
 
       return commandBase
     })
-  }
-
-  getMetadata(name) {
-    return this.$latest().value.find(addon => addon.name === name)
   }
 
   has(name) {

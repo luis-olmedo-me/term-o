@@ -21,7 +21,6 @@ export const executePerUpdates = async (nextCommand, updates) => {
       arg.setValue(newValue)
     })
 
-    nextCommand.setParams(availableArgs)
     nextCommand.prepare()
 
     if (nextCommand.status === commandStatuses.ERROR) break
@@ -29,8 +28,6 @@ export const executePerUpdates = async (nextCommand, updates) => {
     nextCommand.saveUpdates()
     if (nextCommand.status === commandStatuses.ERROR) break
   }
-
-  nextCommand.setParams([])
 
   if (nextCommand.nextCommand && !nextCommand.failed) {
     await nextCommand.executeNext()

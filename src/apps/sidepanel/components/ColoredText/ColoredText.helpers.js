@@ -4,15 +4,11 @@ const colorPattern = /\[termo\.color\.[A-Za-z]+\]/g
 const bgColorPattern = /\[termo\.bgcolor\.[A-Za-z]+\]/g
 
 export const getColoredSections = (input, carriedColorName) => {
-  const startsWithColor = input.startsWith('[termo.color.')
-  const hasColors = colorPattern.test(input)
-
-  if (!hasColors) return [carriedColorName, [{ color: carriedColorName, content: input }]]
   let lastCarriedColorName = carriedColorName
 
   const lastColor = C(carriedColorName)
-  const safeInput = startsWithColor ? input : `${lastColor}${input}`
-  const contentFragments = safeInput.split(colorPattern).filter(Boolean)
+  const safeInput = `${lastColor}${input}`
+  const [, ...contentFragments] = safeInput.split(colorPattern)
   const colorFragments = safeInput.match(colorPattern) || []
 
   const sections = contentFragments.reduce((fragments, content, index) => {
@@ -37,7 +33,7 @@ export const getBackgroundedSections = input => {
 
   const reset = BG`reset`
   const safeInput = `${reset}${input}`
-  const contentFragments = safeInput.split(bgColorPattern).filter(Boolean)
+  const [, ...contentFragments] = safeInput.split(bgColorPattern)
   const bgColorFragments = safeInput.match(bgColorPattern) || []
 
   return contentFragments.reduce((fragments, content, index) => {

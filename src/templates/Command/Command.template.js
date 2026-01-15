@@ -3,11 +3,10 @@ import EventListener from '@src/templates/EventListener'
 
 import { commandStatuses } from '@src/constants/command.constants'
 
-import { buildArgsFromProps, getArgs, getArray } from '@src/helpers/arguments.helpers'
+import { buildArgsFromProps } from '@src/helpers/arguments.helpers'
 import { executePerUpdates } from '@src/helpers/command.helpers'
 import { formatError } from '@src/helpers/format.helpers'
 import { getPropsFromString } from '@src/helpers/options.helpers'
-import { cleanColors } from '@src/helpers/themes.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 
 export class Command extends EventListener {
@@ -38,26 +37,6 @@ export class Command extends EventListener {
   }
   get failed() {
     return [commandStatuses.ERROR].includes(this.status)
-  }
-  get cleanUpdates() {
-    return this.updates.map(update => {
-      const cleanedUpdate = cleanColors(update)
-      const updateByArgs = getArgs(cleanedUpdate)
-
-      if (this.failed) return cleanedUpdate
-
-      return updateByArgs.map(arg => {
-        const isArray = /^\[/g.test(arg) && /\]$/g.test(arg)
-        const isString = /^"|^'/.test(arg) && /"$|'$/.test(arg)
-
-        if (isArray) return getArray(arg)
-        else if (isString) return arg.slice(1).slice(0, -1)
-
-        const argAsNumber = Number(arg)
-
-        return Number.isNaN(argAsNumber) ? null : argAsNumber
-      })
-    })
   }
   get allCommands() {
     let tempCommand = this

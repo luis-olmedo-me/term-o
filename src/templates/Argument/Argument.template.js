@@ -1,4 +1,5 @@
 import { getParamValue } from '@src/helpers/arguments.helpers'
+import { getQuotedString } from '@src/helpers/utils.helpers'
 
 export class Argument {
   constructor(value) {
@@ -20,7 +21,7 @@ export class Argument {
     const indexes = this._getIndexes(args.length)
     const useString = this.backup === '$-'
 
-    return useString ? stringArgs : getParamValue(indexes, args)
+    return useString ? getQuotedString(stringArgs) : getParamValue(indexes, args)
   }
 
   _getIndexes(maxCountOfIndexes) {

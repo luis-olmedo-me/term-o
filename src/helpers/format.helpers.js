@@ -133,5 +133,5 @@ export const formatStyle = ({ prop, value }) => {
 }
 
 export const formatStringSearch = ({ query, input }) => {
-  return input.replaceAll(query, value => `${BG`purple`}${value}${BG`reset`}`)
+  return input.replaceAll(query, value => `${BG`red`}${value}${BG`reset`}`)
 }

@@ -7,10 +7,10 @@ export const searchHandler = async command => {
   if (P`query`) {
     const query = P`query`
     const input = P`input`
-    const queryRegex = new RegExp(query)
+    const queryRegex = new RegExp(query, 'gi')
 
     if (queryRegex.test(input)) {
-      const update = formatStringSearch({ query, input })
+      const update = formatStringSearch({ query: queryRegex, input })
 
       command.update(update)
     }

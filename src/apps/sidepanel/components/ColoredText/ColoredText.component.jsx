@@ -1,19 +1,7 @@
 import { useMemo } from 'preact/hooks'
 
-import { getBackgroundedSections } from './ColoredText.helpers'
-import { nextColored, previousColored, text, uniqueColored } from './ColoredText.module.scss'
-
-const getBgBorderMod = (sections, sectionIndex) => {
-  const nextSection = sections[sectionIndex + 1]
-  const previousSection = sections[sectionIndex - 1]
-
-  const isNextColored = !!nextSection && nextSection?.bgcolor !== 'reset'
-  const isPreviousColored = !!previousSection && previousSection?.bgcolor !== 'reset'
-
-  if (isNextColored && !isPreviousColored) return nextColored
-  if (isPreviousColored && !isNextColored) return previousColored
-  return uniqueColored
-}
+import { getBackgroundedSections, getBgBorderMod } from './ColoredText.helpers'
+import { text } from './ColoredText.module.scss'
 
 export const ColoredText = ({ value }) => {
   const sections = useMemo(() => getBackgroundedSections(value), [value])

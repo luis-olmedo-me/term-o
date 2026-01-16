@@ -1,9 +1,10 @@
 import { getBgColor as BG, getColor as C } from '@src/helpers/themes.helpers'
+import { nextColored, previousColored, uniqueColored } from './ColoredText.module.scss'
 
 const colorPattern = /\[termo\.color\.[A-Za-z]+\]/g
 const bgColorPattern = /\[termo\.bgcolor\.[A-Za-z]+\]/g
 
-export const getColoredSections = (input, carriedColorName) => {
+const getColoredSections = (input, carriedColorName) => {
   let lastCarriedColorName = carriedColorName
 
   const lastColor = C(carriedColorName)
@@ -45,4 +46,16 @@ export const getBackgroundedSections = input => {
 
     return [...fragments, { content: coloredSections, bgcolor, key }]
   }, [])
+}
+
+export const getBgBorderMod = (sections, sectionIndex) => {
+  const nextSection = sections[sectionIndex + 1]
+  const previousSection = sections[sectionIndex - 1]
+
+  const isNextColored = !!nextSection && nextSection?.bgcolor !== 'reset'
+  const isPreviousColored = !!previousSection && previousSection?.bgcolor !== 'reset'
+
+  if (isNextColored && !isPreviousColored) return nextColored
+  if (isPreviousColored && !isNextColored) return previousColored
+  return uniqueColored
 }

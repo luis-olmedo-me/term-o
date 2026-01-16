@@ -1,4 +1,4 @@
-import { getColor as C } from '@src/helpers/themes.helpers'
+import { getBgColor as BG, getColor as C } from '@src/helpers/themes.helpers'
 import { getQuotedString } from '@src/helpers/utils.helpers'
 
 export const formatElement = ({ tagName, attributes, xpath, textContent, tabId }) => {
@@ -133,5 +133,5 @@ export const formatStyle = ({ prop, value }) => {
 }
 
 export const formatStringSearch = ({ query, input }) => {
-  return input.replace(query, value => `${C`red`}${value}${C`reset`}`)
+  return input.replace(query, value => `${BG`red`}${C`brightWhite`}${value}${C`reset`}${BG`reset`}`)
 }

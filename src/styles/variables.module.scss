@@ -65,6 +65,8 @@ $fontSizeSelected: var(--fontSizeSelected);
 $isDarkMode: var(--isDarkMode);
 
 $colors: (
+  'white': $colors-white,
+  'black': $colors-black,
   'red': $colors-red,
   'yellow': $colors-yellow,
   'green': $colors-green,
@@ -76,7 +78,9 @@ $colors: (
   'brightGreen': $colors-brightGreen,
   'brightPurple': $colors-brightPurple,
   'brightCyan': $colors-brightCyan,
-  'brightBlue': $colors-brightBlue
+  'brightBlue': $colors-brightBlue,
+  'brightWhite': $colors-brightWhite,
+  'brightBlack': $colors-brightBlack
 );
 
 $letter-colors: map.merge(

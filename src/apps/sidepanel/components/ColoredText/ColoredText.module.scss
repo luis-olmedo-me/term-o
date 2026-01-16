@@ -3,6 +3,13 @@
   transition: color 1s ease-in-out;
 }
 
+.bothColored,
+.uniqueColored,
+.nextColored,
+.previousColored {
+  padding-inline: 2px;
+}
+
 .bothColored {
   border-radius: unset;
 }

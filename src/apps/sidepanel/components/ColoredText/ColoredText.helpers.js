@@ -1,5 +1,5 @@
 import { getBgColor as BG, getColor as C } from '@src/helpers/themes.helpers'
-import { nextColored, previousColored, uniqueColored } from './ColoredText.module.scss'
+import { bothColored, nextColored, previousColored, uniqueColored } from './ColoredText.module.scss'
 
 const colorPattern = /\[termo\.color\.[A-Za-z]+\]/g
 const bgColorPattern = /\[termo\.bgcolor\.[A-Za-z]+\]/g
@@ -57,5 +57,6 @@ export const getBgBorderMod = (sections, sectionIndex) => {
 
   if (isNextColored && !isPreviousColored) return nextColored
   if (isPreviousColored && !isNextColored) return previousColored
+  if (isNextColored && isPreviousColored) return bothColored
   return uniqueColored
 }

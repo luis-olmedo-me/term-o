@@ -3,6 +3,9 @@
   transition: color 1s ease-in-out;
 }
 
+.bothColored {
+  border-radius: unset;
+}
 .uniqueColored {
   border-radius: $radius-150;
 }

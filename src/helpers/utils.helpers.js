@@ -36,7 +36,9 @@ export const getQuotedString = value => {
 }
 
 export const spreadIf = (condition, value) => {
-  return condition ? value : {}
+  const defaultValue = Array.isArray(value) ? [] : {}
+
+  return condition ? value : defaultValue
 }
 
 export const rgbToHex = value => {

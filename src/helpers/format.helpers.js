@@ -1,54 +1,75 @@
 import { getBgColor as BG, getColor as C } from '@src/helpers/themes.helpers'
-import { getQuotedString } from '@src/helpers/utils.helpers'
+import { getQuotedString, spreadIf } from '@src/helpers/utils.helpers'
 
 export const formatElement = ({ tagName, attributes, xpath, textContent, tabId }) => {
-  const quotedTabId = tabId ? `${C`blue`}${getQuotedString(tabId)} ` : ''
-  if (xpath !== null) return `${quotedTabId}${C`yellow`}${getQuotedString(xpath)}`
-  if (textContent !== null) return `${quotedTabId}${C`yellow`}${getQuotedString(textContent)}`
+  const hasTabId = Boolean(tabId)
+  const hasXpath = xpath !== null
+  const hasTextContent = textContent !== null
 
-  const attrs = Object.entries(attributes)
-    .map(([name, value]) => {
-      const attrName = `${C`green`}${getQuotedString(name)}`
-      const attrValue = value ? ` ${C`yellow`}${getQuotedString(value)}` : ''
+  const quotedTabId = hasTabId && getQuotedString(tabId)
+  const quotedXpath = hasXpath && getQuotedString(xpath)
+  const quotedTextContent = hasTextContent && getQuotedString(textContent)
 
-      return `${C`purple`}[${attrName}${attrValue}${C`purple`}]`
-    })
-    .join(' ')
+  if (hasXpath || hasTextContent) {
+    return [
+      ...spreadIf(hasXpath, [`${C`yellow`}${quotedXpath}`]),
+      ...spreadIf(hasTextContent, [`${C`yellow`}${quotedTextContent}`])
+    ]
+  }
+
+  const attrs = Object.entries(attributes).map(([name, value]) => {
+    const hasValue = Boolean(value)
+    const quotedAttrName = getQuotedString(name)
+    const quotedAttrValue = hasValue && getQuotedString(value)
+
+    return [
+      `${C`green`}${quotedAttrName}`,
+      ...spreadIf(hasValue, [`${C`yellow`}${quotedAttrValue}`])
+    ]
+  })
 
   const quotedTagName = getQuotedString(tagName)
 
-  return attrs
-    ? `${quotedTabId}${C`red`}${quotedTagName} ${attrs}`
-    : `${quotedTabId}${C`red`}${quotedTagName}`
+  return [
+    ...spreadIf(hasTabId, [`${C`blue`}${quotedTabId}`]),
+    `${C`red`}${quotedTagName}`,
+    ...attrs
+  ]
 }
 
 export const formatText = ({ text }) => {
   const quotedText = getQuotedString(text)
 
-  return `${C`yellow`}${quotedText}`
+  return [`${C`yellow`}${quotedText}`]
 }
 
 export const formatNotification = ({ title, message }) => {
   const quotedTitle = getQuotedString(title)
   const quotedMessage = getQuotedString(message)
 
-  return `${C`brightYellow`}${quotedTitle} ${C`yellow`}${quotedMessage}`
+  return [`${C`brightYellow`}${quotedTitle}`, `${C`yellow`}${quotedMessage}`]
 }
 
 export const formatError = ({ title }) => {
-  return `${C`red`}${title}`
+  return [`${C`red`}${title}`]
 }
 
 export const formatWarning = ({ title }) => {
-  return `${C`yellow`}${title}`
+  return [`${C`yellow`}${title}`]
 }
 
 export const formatStorageProp = ({ key, value, tabId }) => {
-  const quotedTabId = tabId ? `${C`blue`}${getQuotedString(tabId)} ` : ''
+  const hasTabId = Boolean(tabId)
+
+  const quotedTabId = hasTabId && getQuotedString(tabId)
   const quotedKey = getQuotedString(key)
   const quotedValue = getQuotedString(value)
 
-  return `${quotedTabId}${C`purple`}${quotedKey} ${C`yellow`}${quotedValue}`
+  return [
+    ...spreadIf(hasTabId, [`${C`blue`}${quotedTabId}`]),
+    `${C`purple`}${quotedKey}`,
+    `${C`yellow`}${quotedValue}`
+  ]
 }
 
 export const formatResponse = ({ response, responseBody, method }) => {
@@ -60,29 +81,36 @@ export const formatResponse = ({ response, responseBody, method }) => {
   const quotedResponseBody = getQuotedString(responseBodyString)
   const quotedMethod = getQuotedString(method)
 
-  return `${C`cyan`}${status} ${C`green`}${quotedMethod} ${C`brightYellow`}${quotedURL} ${C`yellow`}${quotedResponseBody}`
+  return [
+    `${C`cyan`}${status}`,
+    `${C`green`}${quotedMethod}`,
+    `${C`brightYellow`}${quotedURL}`,
+    `${C`yellow`}${quotedResponseBody}`
+  ]
 }
 
 export const formatStorageAsString = ({ storage, tabId }) => {
-  const quotedTabId = tabId ? `${C`blue`}${getQuotedString(tabId)} ` : ''
   const stringStorage = JSON.stringify(storage)
+  const hasTabId = Boolean(tabId)
+
+  const quotedTabId = hasTabId && getQuotedString(tabId)
   const quotedStorage = getQuotedString(stringStorage)
 
-  return `${quotedTabId}${C`yellow`}${quotedStorage}`
+  return [...spreadIf(hasTabId, [`${C`blue`}${quotedTabId}`]), `${C`yellow`}${quotedStorage}`]
 }
 
 export const formatAlias = ({ key, value }) => {
   const quotedKey = getQuotedString(key)
   const quotedValue = getQuotedString(value)
 
-  return `${C`purple`}${quotedKey} ${C`yellow`}${quotedValue}`
+  return [`${C`purple`}${quotedKey}`, `${C`yellow`}${quotedValue}`]
 }
 
 export const formatAddon = ({ name, version }) => {
   const quotedName = getQuotedString(name)
   const quotedDateTime = getQuotedString(version)
 
-  return `${C`green`}${quotedName} ${C`cyan`}${quotedDateTime}`
+  return [`${C`green`}${quotedName}`, `${C`cyan`}${quotedDateTime}`]
 }
 
 export const formatRegisteredEvent = ({ url, line, id }) => {
@@ -90,14 +118,14 @@ export const formatRegisteredEvent = ({ url, line, id }) => {
   const quotedURL = getQuotedString(url)
   const quotedLine = getQuotedString(line)
 
-  return `${C`purple`}${quotedId} ${C`yellow`}${quotedURL} ${quotedLine}`
+  return [`${C`purple`}${quotedId}`, `${C`yellow`}${quotedURL}`, `${C`yellow`}${quotedLine}`]
 }
 
 export const formatEvent = ({ event, xpath }) => {
   const quotedEvent = getQuotedString(event)
   const quotedXPath = getQuotedString(xpath)
 
-  return `${C`purple`}${quotedEvent} ${C`yellow`}${quotedXPath}`
+  return [`${C`purple`}${quotedEvent}`, `${C`yellow`}${quotedXPath}`]
 }
 
 export const formatTab = ({ windowId, id, title, url }, staticUrl) => {
@@ -106,7 +134,12 @@ export const formatTab = ({ windowId, id, title, url }, staticUrl) => {
   const quotedTitle = getQuotedString(title)
   const quotedURL = getQuotedString(url || staticUrl)
 
-  return `${C`purple`}${quotedWindowId} ${C`blue`}${quotedId} ${C`brightYellow`}${quotedTitle} ${C`yellow`}${quotedURL}`
+  return [
+    `${C`purple`}${quotedWindowId}`,
+    `${C`blue`}${quotedId}`,
+    `${C`brightYellow`}${quotedTitle}`,
+    `${C`yellow`}${quotedURL}`
+  ]
 }
 
 export const formatHistoryItem = ({ url, title, lastVisitTime }) => {
@@ -116,20 +149,24 @@ export const formatHistoryItem = ({ url, title, lastVisitTime }) => {
   const quotedTitle = getQuotedString(title)
   const quotedURL = getQuotedString(url)
 
-  return `${C`green`}${quotedDateTime} ${C`brightYellow`}${quotedTitle} ${C`yellow`}${quotedURL}`
+  return [
+    `${C`green`}${quotedDateTime}`,
+    `${C`brightYellow`}${quotedTitle}`,
+    `${C`yellow`}${quotedURL}`
+  ]
 }
 
 export const formatTheme = ({ name }) => {
   const quotedName = getQuotedString(name)
 
-  return `${C`purple`}${quotedName}`
+  return [`${C`purple`}${quotedName}`]
 }
 
 export const formatStyle = ({ prop, value }) => {
   const quotedProp = getQuotedString(prop)
   const quotedValue = getQuotedString(value)
 
-  return `${C`cyan`}${quotedProp} ${C`yellow`}${quotedValue}`
+  return [`${C`cyan`}${quotedProp}`, `${C`yellow`}${quotedValue}`]
 }
 
 export const formatStringSearch = ({ query, input }) => {

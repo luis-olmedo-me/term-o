@@ -30,6 +30,7 @@ export const FieldRenderer = ({
   const [errorMessage, setErrorMessage] = useState(null)
 
   const tryApplyChange = (inputId, newValue) => {
+    if (value === newValue) return
     const inputDetails = getConfigDetailsByInputId(inputId)
 
     try {

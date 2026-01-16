@@ -1,3 +1,5 @@
+@use 'sass:map';
+
 $radius-50: var(--radius-50);
 $radius-100: var(--radius-100);
 $radius-150: var(--radius-150);
@@ -63,6 +65,8 @@ $fontSizeSelected: var(--fontSizeSelected);
 $isDarkMode: var(--isDarkMode);
 
 $colors: (
+  'white': $colors-white,
+  'black': $colors-black,
   'red': $colors-red,
   'yellow': $colors-yellow,
   'green': $colors-green,
@@ -74,5 +78,20 @@ $colors: (
   'brightGreen': $colors-brightGreen,
   'brightPurple': $colors-brightPurple,
   'brightCyan': $colors-brightCyan,
-  'brightBlue': $colors-brightBlue
+  'brightBlue': $colors-brightBlue,
+  'brightWhite': $colors-brightWhite,
+  'brightBlack': $colors-brightBlack
+);
+
+$letter-colors: map.merge(
+  $colors,
+  (
+    reset: $colors-foreground
+  )
+);
+$background-colors: map.merge(
+  $colors,
+  (
+    reset: transparent
+  )
 );

@@ -1,18 +1,19 @@
 export const commandNames = {
-  CLEAR: 'clear',
-  ERROR: 'error',
-  DOM: 'dom',
-  STORAGE: 'storage',
-  TABS: 'tabs',
+  ADDONS: 'addons',
   ALIAS: 'alias',
-  THEME: 'theme',
-  STYLE: 'style',
+  CLEAR: 'clear',
+  DOM: 'dom',
+  ERROR: 'error',
   EVENTS: 'events',
   HISTORY: 'history',
-  REQUEST: 'request',
-  ADDONS: 'addons',
+  INSPECT: 'inspect',
   NOTIFY: 'notify',
-  INSPECT: 'inspect'
+  REQUEST: 'request',
+  SEARCH: 'search',
+  STORAGE: 'storage',
+  STYLE: 'style',
+  TABS: 'tabs',
+  THEME: 'theme'
 }
 
 export const origins = {

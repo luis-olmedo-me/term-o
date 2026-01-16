@@ -2,7 +2,7 @@ import { commandStatuses } from '@src/constants/command.constants'
 
 import { getColor as C } from '@src/helpers/themes.helpers'
 import { getArgs } from './arguments.helpers'
-import { getOptionTypeLabel, getParamValue } from './options.helpers'
+import { getOptionTypeLabel } from './options.helpers'
 
 export const executePerUpdates = async (nextCommand, updates) => {
   const argsHoldingUp = nextCommand.args.filter(arg => arg.isHoldingUp)
@@ -15,8 +15,7 @@ export const executePerUpdates = async (nextCommand, updates) => {
     const availableArgs = getArgs(cleanedUpdate)
 
     argsHoldingUp.forEach(arg => {
-      const indexes = arg.getIndexes()
-      const newValue = getParamValue(indexes, availableArgs)
+      const newValue = arg.getValueFromArgs(cleanedUpdate, availableArgs)
 
       arg.setValue(newValue)
     })

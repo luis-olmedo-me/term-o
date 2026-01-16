@@ -14,23 +14,9 @@ export const isParam = (option, arg) => {
 
   const paramPattern = /^\$\d+(,\d+)?(-\d+)?$/
   const argValue = arg?.value
+  const isParamValue = paramPattern.test(argValue) || argValue === '$.' || argValue === '$-'
 
-  return !isBoolean && Boolean(argValue) && paramPattern.test(argValue)
-}
-
-export const getParamValue = (indexes, values) => {
-  if (indexes.length === 1) {
-    const [index] = indexes
-
-    return values[index] || ''
-  }
-
-  const parsedValues = indexes.map(index => values[index]).filter(Boolean)
-  const valuesInLine = parsedValues.join(' ')
-
-  if (!parsedValues.length) return ''
-
-  return `[ ${valuesInLine} ]`
+  return !isBoolean && Boolean(argValue) && isParamValue
 }
 
 export const parseOptions = (index, arg, argsBySpace, type) => {

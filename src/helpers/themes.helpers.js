@@ -1,9 +1,12 @@
-import { onlyColorKeys } from '@src/constants/themes.constants'
 import { toTitleCase } from './string.helpers'
 import { getQuotedString } from './utils.helpers'
 
 export const getColor = color => {
   return `[termo.color.${color}]`
+}
+
+export const getBgColor = color => {
+  return `[termo.bgcolor.${color}]`
 }
 
 export const cleanColors = value => {
@@ -20,18 +23,6 @@ export const getAccentColors = (colorThemes, accentName) => {
   const brightAccent = colorThemes[brightAccentName]
 
   return { accent, brightAccent }
-}
-
-export const createDataColorThemer = ({ theme }) => {
-  return onlyColorKeys
-    .map(color => `[data-color="${color}"] { color: ${theme.colors[color]}; }`)
-    .join('')
-}
-
-export const createDataBgColorThemer = ({ theme }) => {
-  return onlyColorKeys
-    .map(color => `[data-bg-color="${color}"] { background-color: ${theme.colors[color]}; }`)
-    .join('')
 }
 
 const createVariablesFromTheme = (theme, pre = null) => {

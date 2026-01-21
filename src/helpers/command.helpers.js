@@ -105,3 +105,15 @@ export const createHelpView = command => {
 
   command.update(...helps)
 }
+
+export const stringifyUpdates = fragmentsRaw => {
+  return fragmentsRaw.reduce((lines, fragments) => {
+    const line = fragments
+      .flatMap(fragment =>
+        typeof fragment !== 'string' ? `[${stringifyUpdates([fragment])}]` : fragment
+      )
+      .join(' ')
+
+    return lines.concat(line)
+  }, [])
+}

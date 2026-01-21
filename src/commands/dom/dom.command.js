@@ -56,7 +56,7 @@ export default new CommandBase({
     abbreviation: 's',
     type: commandTypes.BOOLEAN,
     description: 'Find elements by criteria',
-    worksWith: ['attr', 'style', 'tag', 'group', 'text', 'content', 'xpath', 'tab-id', 'below'],
+    worksWith: ['attr', 'style', 'tag', 'text', 'content', 'xpath', 'tab-id', 'below'],
     helpSection: domHelpSections.SEARCH
   })
   .expect({
@@ -65,13 +65,6 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
     description: 'Show XPath(s) of matched element(s)'
-  })
-  .expect({
-    name: 'group',
-    abbreviation: 'g',
-    type: commandTypes.BOOLEAN,
-    helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
-    description: 'Count elements by attributes and tag names'
   })
   .expect({
     name: 'attr',

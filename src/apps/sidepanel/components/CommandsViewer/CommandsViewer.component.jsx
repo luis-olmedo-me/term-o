@@ -65,7 +65,7 @@ export const CommandsViewer = ({ commands }) => {
   return (
     <div className={`${viewWrapper} ${verticalScroller}`}>
       <div ref={wrapper}>
-        {commands.map(command => {
+        {commands.map((command, commandIndex) => {
           const hasErrorMessage = command.status === commandStatuses.ERROR
           const contextLines = command.context.split(/(?<!\\)\n/).filter(Boolean)
 
@@ -94,16 +94,18 @@ export const CommandsViewer = ({ commands }) => {
                 <ColoredText value={command.title} />
               </p>
 
-              {command.updates.map(update => (
-                <p
-                  key={update}
-                  className={line}
-                  onMouseUp={handleLineMouseUp}
-                  data-truncate-skip={hasErrorMessage}
-                >
-                  <ColoredText value={update} />
-                </p>
-              ))}
+              {command.updates.map((update, index) => {
+                return (
+                  <p
+                    key={`${commandIndex}-${index}`}
+                    className={line}
+                    onMouseUp={handleLineMouseUp}
+                    data-truncate-skip={hasErrorMessage}
+                  >
+                    <ColoredText value={update} />
+                  </p>
+                )
+              })}
 
               {command.warning && (
                 <p

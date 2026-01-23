@@ -52,7 +52,9 @@ export const formatNotification = ({ title, message }) => {
 }
 
 export const formatError = ({ title }) => {
-  return [`${C`red`}${title}${C`reset`}`]
+  const quotedTitle = getQuotedString(title)
+
+  return [`${C`red`}${quotedTitle}${C`reset`}`]
 }
 
 export const formatWarning = ({ title }) => {

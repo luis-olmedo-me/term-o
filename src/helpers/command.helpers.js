@@ -1,21 +1,24 @@
 import { commandStatuses } from '@src/constants/command.constants'
 
-import { getColor as C } from '@src/helpers/themes.helpers'
-import { getArgs } from './arguments.helpers'
+import { getColor as C, cleanColors } from '@src/helpers/themes.helpers'
 import { getOptionTypeLabel } from './options.helpers'
 
 export const executePerUpdates = async (nextCommand, updates) => {
   const argsHoldingUp = nextCommand.args.filter(arg => arg.isHoldingUp)
-  const colorPattern = /\[termo\.color\.[A-Za-z]+\]|\[termo\.bgcolor\.[A-Za-z]+\]/g
 
   nextCommand.allowToExecuteNext(false)
 
-  for (let update of updates) {
-    const cleanedUpdate = update.replace(colorPattern, '')
-    const availableArgs = getArgs(cleanedUpdate)
+  for (let args of updates) {
+    const update = stringifyFragments(args)
+    const cleanedUpdate = cleanColors(update)
 
     argsHoldingUp.forEach(arg => {
-      const newValue = arg.getValueFromArgs(cleanedUpdate, availableArgs)
+      let newValue = arg.getValueFromArgs(cleanedUpdate, args)
+      const isArray = Array.isArray(newValue)
+      const isString = typeof newValue === 'string'
+
+      if (isArray) newValue = newValue.map(cleanColors)
+      if (isString) newValue = cleanColors(newValue)
 
       arg.setValue(newValue)
     })
@@ -106,13 +109,19 @@ export const createHelpView = command => {
   command.update(...helps)
 }
 
+export const stringifyFragments = fragments => {
+  return fragments
+    .flatMap(fragment => {
+      const isString = typeof fragment === 'string'
+
+      return !isString ? `[${stringifyUpdates([fragment])}]` : fragment
+    })
+    .join(' ')
+}
+
 export const stringifyUpdates = fragmentsRaw => {
   return fragmentsRaw.reduce((lines, fragments) => {
-    const line = fragments
-      .flatMap(fragment =>
-        typeof fragment !== 'string' ? `[${stringifyUpdates([fragment])}]` : fragment
-      )
-      .join(' ')
+    const line = stringifyFragments(fragments)
 
     return lines.concat(line)
   }, [])

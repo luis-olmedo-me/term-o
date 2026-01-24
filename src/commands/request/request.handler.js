@@ -5,7 +5,7 @@ export const requestHandler = async command => {
   const P = name => command.props[name]
 
   if (P`fetch`) {
-    command.update('API request in progress.')
+    command.update(['API request in progress.'])
     const headers = new Headers()
 
     P`headers`.forEach(header => {

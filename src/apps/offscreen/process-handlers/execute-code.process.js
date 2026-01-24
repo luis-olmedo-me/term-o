@@ -2,8 +2,8 @@ import processManager from '@src/libs/process-manager'
 
 import { commandStatuses, origins } from '@src/constants/command.constants'
 import { sandboxEvents } from '@src/constants/sandbox.constants'
-import { buildArgsFromProps, getRawArgs } from '@src/helpers/arguments.helpers'
-import { cleanColors } from '@src/helpers/themes.helpers'
+import { buildArgsFromProps } from '@src/helpers/arguments.helpers'
+import { makeLogSafe } from '@src/helpers/command.helpers'
 
 export default async (resolve, reject, data) => {
   const { code, props, addonNames } = data
@@ -27,11 +27,10 @@ export default async (resolve, reject, data) => {
         })
         const hasError = status === commandStatuses.ERROR
 
-        const updatesUncolored = updates.map(cleanColors)
-        const formattedUpdates = hasError ? updatesUncolored : updatesUncolored.map(getRawArgs)
+        const updatesUncolored = makeLogSafe(updates, true)
 
         iframe.contentWindow.postMessage(
-          { type: sandboxEvents.COMMAND_RETURN, data: { updates: formattedUpdates, hasError } },
+          { type: sandboxEvents.COMMAND_RETURN, data: { updates: updatesUncolored, hasError } },
           '*'
         )
         break
@@ -48,7 +47,7 @@ export default async (resolve, reject, data) => {
       }
 
       case sandboxEvents.COMMAND_SET_UPDATES: {
-        updates = data.updates.map(update => String(update))
+        updates = data.updates
 
         iframe.contentWindow.postMessage(
           { type: sandboxEvents.COMMAND_SET_UPDATES_RETURN, data: { updates, hasError: false } },

@@ -208,12 +208,23 @@ export class Command extends EventListener {
       : allCommands.reverse().find(command => command.visible)
   }
 
-  simplify() {
+  jsonUI() {
     return {
       id: this.id,
       title: this.title,
       status: this.status,
       updates: stringifyUpdates(this.updates),
+      context: this.context,
+      origin: this.origin
+    }
+  }
+
+  json() {
+    return {
+      id: this.id,
+      title: this.title,
+      status: this.status,
+      updates: this.updates,
       context: this.context,
       origin: this.origin
     }

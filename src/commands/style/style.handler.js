@@ -12,7 +12,7 @@ export const styleHandler = async command => {
   if (P`list`) {
     const config = storage.get(storageKeys.CONFIG)
 
-    command.update('Searching element styles.')
+    command.update(['Searching element styles.'])
     const styles = await processManager.getElementStyles(tabId, {
       searchByXpath: P`on`,
       searchByProperty: P`property`,
@@ -41,11 +41,12 @@ export const styleHandler = async command => {
   if (P`color-pick`) {
     const config = storage.get(storageKeys.CONFIG)
 
-    command.update('Click the notification on the page to start picking a color.')
+    command.update(['Click the notification on the page to start picking a color.'])
     const color = await processManager.pickColor(tabId, { theme: config.theme })
+    const update = formatText({ text: color })
 
     command.reset()
-    command.update(formatText({ text: color }))
+    command.update(update)
   }
 
   if (P`help`) createHelpView(command)

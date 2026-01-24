@@ -2,6 +2,7 @@ import { commandStatuses } from '@src/constants/command.constants'
 
 import { getColor as C, cleanColors } from '@src/helpers/themes.helpers'
 import { getOptionTypeLabel } from './options.helpers'
+import { getQuotedString } from './utils.helpers'
 
 export const executePerUpdates = async (nextCommand, updates) => {
   const argsHoldingUp = nextCommand.args.filter(arg => arg.isHoldingUp)
@@ -47,7 +48,7 @@ export const updateSimplifiedCommandsWith = (simplifiedCommands, command, comman
           ? { ...oldCommand, updates: command.updates, status: command.status }
           : oldCommand
       )
-    : [...simplifiedCommands, command.simplify()]
+    : [...simplifiedCommands, command.jsonUI()]
 }
 
 const getHighestTitleCountInSection = (sectionNames, options) => {
@@ -82,13 +83,13 @@ export const createHelpView = command => {
   const highestTitleCount = command.data.highestTitleCount
   const helpSectionsNames = Object.keys(command.helpSectionTitles)
 
-  helps.push(`${C`foreground`}Usage: ${command.name} [options]\n`)
-
   helpSectionsNames.forEach(sectionName => {
     const optionsBySection = options.getByHelpSection(sectionName)
     const sectionTitle = command.helpSectionTitles[sectionName]
 
-    helps.push(`${C`foreground`}${sectionTitle}:\n`)
+    const quotedTitle = getQuotedString(sectionTitle)
+
+    helps.push([`${C`brightPurple`}${quotedTitle}${C`reset`}`])
 
     optionsBySection.forEach(option => {
       const displayName = option.displayName
@@ -98,12 +99,11 @@ export const createHelpView = command => {
       const titleCount = `${displayName} ${type}`.length
       const tab = `.`.repeat(highestTitleCount + 1 - titleCount)
 
-      helps.push(
-        `${C`green`}${displayName} ${C`yellow`}${type} ${C`brightBlack`}${tab} ${description}`
-      )
-    })
+      const completeDescription = `${C`reset`}${displayName}${C`reset`} ${C`reset`}${type}${C`reset`} ${C`brightBlack`}${tab} ${C`reset`}${description}${C`reset`}`
+      const quotedCompleteDescription = getQuotedString(completeDescription)
 
-    helps.push('')
+      helps.push([quotedCompleteDescription])
+    })
   })
 
   command.update(...helps)
@@ -125,4 +125,23 @@ export const stringifyUpdates = fragmentsRaw => {
 
     return lines.concat(line)
   }, [])
+}
+
+export const makeLogSafe = (log, shouldRemoveColors) => {
+  const isArray = log instanceof Array
+
+  if (!isArray) return []
+
+  return log.map(fragment => {
+    const isArray = fragment instanceof Array
+    const isString = typeof fragment === 'string'
+
+    if (isArray) return makeLogSafe(fragment)
+    if (!isString) return String(fragment)
+    const hasDoubleQuotes = /^"|"$/g.test(fragment)
+    const hasSingleQuotes = /^'|'$/g.test(fragment)
+    const fragmentString = shouldRemoveColors ? cleanColors(fragment) : fragment
+
+    return hasDoubleQuotes || hasSingleQuotes ? fragmentString : getQuotedString(fragmentString)
+  })
 }

@@ -55,7 +55,8 @@ export class StorageAddons extends StorageSimple {
           const code = await getStorageValue(namespace, `addon_${addon.name}_handler`)
           const updates = await processManager.executeCode({ code, props, addonNames })
 
-          command.setUpdates(...updates)
+          command.reset()
+          command.update(...updates)
         }
       })
 

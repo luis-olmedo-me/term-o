@@ -4,7 +4,7 @@ import EventListener from '@src/templates/EventListener'
 import { commandStatuses } from '@src/constants/command.constants'
 
 import { buildArgsFromProps } from '@src/helpers/arguments.helpers'
-import { executePerUpdates } from '@src/helpers/command.helpers'
+import { executePerUpdates, stringifyUpdates } from '@src/helpers/command.helpers'
 import { formatError } from '@src/helpers/format.helpers'
 import { getPropsFromString } from '@src/helpers/options.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
@@ -208,7 +208,18 @@ export class Command extends EventListener {
       : allCommands.reverse().find(command => command.visible)
   }
 
-  simplify() {
+  jsonUI() {
+    return {
+      id: this.id,
+      title: this.title,
+      status: this.status,
+      updates: stringifyUpdates(this.updates),
+      context: this.context,
+      origin: this.origin
+    }
+  }
+
+  json() {
     return {
       id: this.id,
       title: this.title,

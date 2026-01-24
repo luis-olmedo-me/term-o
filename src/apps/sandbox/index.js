@@ -1,5 +1,6 @@
 import { commandNames } from '@src/constants/command.constants'
 import { sandboxEvents } from '@src/constants/sandbox.constants'
+import { makeLogSafe } from '@src/helpers/command.helpers'
 
 async function safeEval(event) {
   const code = event.data.data.code
@@ -42,7 +43,7 @@ async function safeEval(event) {
       window.addEventListener('message', handleSandboxCommand)
 
       event.source.window.postMessage(
-        { type: sandboxEvents.COMMAND_UPDATE, data: { updates: args } },
+        { type: sandboxEvents.COMMAND_UPDATE, data: { updates: [makeLogSafe(args, false)] } },
         event.origin
       )
     })
@@ -63,7 +64,10 @@ async function safeEval(event) {
       window.addEventListener('message', handleSandboxCommand)
 
       event.source.window.postMessage(
-        { type: sandboxEvents.COMMAND_SET_UPDATES, data: { updates: args } },
+        {
+          type: sandboxEvents.COMMAND_SET_UPDATES,
+          data: { updates: [makeLogSafe(args, false)] }
+        },
         event.origin
       )
     })

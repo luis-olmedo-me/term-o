@@ -1,3 +1,4 @@
+import { isElementVisible } from '@src/apps/content/helpers/style-utils.helpers'
 import { webElements } from '@src/constants/web-elements.constants'
 
 export const importWebComponents = () => {
@@ -24,9 +25,11 @@ const createWebElement = (name, props) => {
 export const createHighlight = ({ element, theme }) => {
   const rect = element.getBoundingClientRect()
   const radius = window.getComputedStyle(element).borderRadius
+  const isVisible = isElementVisible(element)
 
   return createWebElement(webElements.HIGHLIGHT, {
     radius,
+    isVisible,
     color: theme.colors.accent,
     left: `${rect.left}px`,
     top: `${rect.top}px`,

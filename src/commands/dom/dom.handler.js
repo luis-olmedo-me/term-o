@@ -4,7 +4,6 @@ import storage from '@src/libs/storage'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatElement } from '@src/helpers/format.helpers'
-import { preAppendCounters } from '@src/helpers/messages.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
 
 export const domHandler = async command => {
@@ -25,12 +24,13 @@ export const domHandler = async command => {
     command.reset()
     if (!element) return
 
-    const textElement = formatElement({ ...element, tabId: P`tab-id` })
-    command.update(textElement)
+    const update = formatElement({ ...element, tabId: P`tab-id` })
+
+    command.update(update)
   }
 
   if (P`search`) {
-    command.update('Getting elements.')
+    command.update(['Getting elements.'])
     const elements = await processManager.getDOMElements(tabId, {
       searchBelow: P`below`,
       searchByTag: P`tag`,
@@ -40,12 +40,10 @@ export const domHandler = async command => {
       appendTextContent: P`content`,
       appendXpath: P`xpath`
     })
-
-    let textElements = elements.map(element => formatElement({ ...element, tabId: P`tab-id` }))
-    if (P`group`) textElements = preAppendCounters(textElements)
+    const updates = elements.map(element => formatElement({ ...element, tabId: P`tab-id` }))
 
     command.reset()
-    command.update(...textElements)
+    command.update(...updates)
   }
 
   if (P`help`) createHelpView(command)

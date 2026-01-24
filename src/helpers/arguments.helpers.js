@@ -1,3 +1,4 @@
+import { stringifyFragments } from './command.helpers'
 import { getQuotedString } from './utils.helpers'
 
 export const getArgs = value => {
@@ -159,14 +160,15 @@ export const getRawArgs = value => {
 export const getParamValue = (indexes, values) => {
   if (indexes.length === 1) {
     const [index] = indexes
+    const value = values[index]
+    const isArrayValue = Array.isArray(value)
 
-    return values[index] || ''
+    if (isArrayValue) return `[${stringifyFragments(value)}]`
+
+    return typeof value !== 'undefined' ? value : null
   }
 
-  const parsedValues = indexes.map(index => values[index]).filter(Boolean)
-  const valuesInLine = parsedValues.join(' ')
+  const params = indexes.map(index => values[index]).filter(value => typeof value !== 'undefined')
 
-  if (!parsedValues.length) return ''
-
-  return `[ ${valuesInLine} ]`
+  return `[${stringifyFragments(params)}]`
 }

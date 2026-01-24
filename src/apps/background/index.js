@@ -40,14 +40,14 @@ const handleCommandQueueChange = async (storageRef, commandParserRef) => {
 
   if (!command.finished) {
     command.startExecuting()
-    command.addEventListener('update', () => queue.change(executable.id, command.simplify()))
-    queue.change(executable.id, command.simplify())
+    command.addEventListener('update', () => queue.change(executable.id, command.jsonUI()))
+    queue.change(executable.id, command.jsonUI())
     await command.execute()
   }
 
   const commandVisible = command.getCommandVisibleInChain()
 
-  if (commandVisible) queue.change(executable.id, commandVisible.simplify())
+  if (commandVisible) queue.change(executable.id, commandVisible.jsonUI())
   else queue.delete(executable.id)
 
   if (executable.tabId) storageRef.set(storageKeys.TAB, originalTab)

@@ -33,3 +33,22 @@ export const getNonDefaultComputedStyles = element => {
 
   return differences
 }
+
+const isVisibleInViewport = element => {
+  const rect = element.getBoundingClientRect()
+  return (
+    rect.top >= 0 &&
+    rect.left >= 0 &&
+    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+  )
+}
+
+const isGenerallyVisible = element => {
+  const style = window.getComputedStyle(element)
+  return style.display !== 'none' && style.visibility !== 'hidden' && style.opacity !== '0'
+}
+
+export const isElementVisible = element => {
+  return isGenerallyVisible(element) && isVisibleInViewport(element) && element.checkVisibility()
+}

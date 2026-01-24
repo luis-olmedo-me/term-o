@@ -29,5 +29,5 @@ export default async (resolve, _reject, data) => {
 
   const commandVisible = command.getCommandVisibleInChain()
 
-  resolve(commandVisible ? commandVisible.simplify() : null)
+  resolve(commandVisible ? commandVisible.json() : null)
 }

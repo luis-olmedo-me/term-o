@@ -21,7 +21,7 @@ export const addonsHandler = async command => {
     const config = storage.get(storageKeys.CONFIG)
     const addons = storage.get(storageKeys.ADDONS)
 
-    command.update('Click the notification on the page to start uploading a file.')
+    command.update(['Click the notification on the page to start uploading a file.'])
     const file = await processManager.uploadFile(tabId, {
       theme: config.theme,
       extensions: ['json']

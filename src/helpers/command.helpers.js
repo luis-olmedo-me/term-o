@@ -1,21 +1,25 @@
 import { commandStatuses } from '@src/constants/command.constants'
 
-import { getColor as C } from '@src/helpers/themes.helpers'
-import { getArgs } from './arguments.helpers'
+import { getColor as C, cleanColors } from '@src/helpers/themes.helpers'
 import { getOptionTypeLabel } from './options.helpers'
+import { getQuotedString } from './utils.helpers'
 
 export const executePerUpdates = async (nextCommand, updates) => {
   const argsHoldingUp = nextCommand.args.filter(arg => arg.isHoldingUp)
-  const colorPattern = /\[termo\.color\.[A-Za-z]+\]|\[termo\.bgcolor\.[A-Za-z]+\]/g
 
   nextCommand.allowToExecuteNext(false)
 
-  for (let update of updates) {
-    const cleanedUpdate = update.replace(colorPattern, '')
-    const availableArgs = getArgs(cleanedUpdate)
+  for (let args of updates) {
+    const update = stringifyFragments(args)
+    const cleanedUpdate = cleanColors(update)
 
     argsHoldingUp.forEach(arg => {
-      const newValue = arg.getValueFromArgs(cleanedUpdate, availableArgs)
+      let newValue = arg.getValueFromArgs(cleanedUpdate, args)
+      const isArray = Array.isArray(newValue)
+      const isString = typeof newValue === 'string'
+
+      if (isArray) newValue = newValue.map(cleanColors)
+      if (isString) newValue = cleanColors(newValue)
 
       arg.setValue(newValue)
     })
@@ -44,7 +48,7 @@ export const updateSimplifiedCommandsWith = (simplifiedCommands, command, comman
           ? { ...oldCommand, updates: command.updates, status: command.status }
           : oldCommand
       )
-    : [...simplifiedCommands, command.simplify()]
+    : [...simplifiedCommands, command.jsonUI()]
 }
 
 const getHighestTitleCountInSection = (sectionNames, options) => {
@@ -79,13 +83,13 @@ export const createHelpView = command => {
   const highestTitleCount = command.data.highestTitleCount
   const helpSectionsNames = Object.keys(command.helpSectionTitles)
 
-  helps.push(`${C`foreground`}Usage: ${command.name} [options]\n`)
-
   helpSectionsNames.forEach(sectionName => {
     const optionsBySection = options.getByHelpSection(sectionName)
     const sectionTitle = command.helpSectionTitles[sectionName]
 
-    helps.push(`${C`foreground`}${sectionTitle}:\n`)
+    const quotedTitle = getQuotedString(sectionTitle)
+
+    helps.push([`${C`brightPurple`}${quotedTitle}${C`reset`}`])
 
     optionsBySection.forEach(option => {
       const displayName = option.displayName
@@ -95,13 +99,49 @@ export const createHelpView = command => {
       const titleCount = `${displayName} ${type}`.length
       const tab = `.`.repeat(highestTitleCount + 1 - titleCount)
 
-      helps.push(
-        `${C`green`}${displayName} ${C`yellow`}${type} ${C`brightBlack`}${tab} ${description}`
-      )
-    })
+      const completeDescription = `${C`reset`}${displayName}${C`reset`} ${C`reset`}${type}${C`reset`} ${C`brightBlack`}${tab} ${C`reset`}${description}${C`reset`}`
+      const quotedCompleteDescription = getQuotedString(completeDescription)
 
-    helps.push('')
+      helps.push([quotedCompleteDescription])
+    })
   })
 
   command.update(...helps)
+}
+
+export const stringifyFragments = fragments => {
+  return fragments
+    .flatMap(fragment => {
+      const isString = typeof fragment === 'string'
+
+      return !isString ? `[${stringifyUpdates([fragment])}]` : fragment
+    })
+    .join(' ')
+}
+
+export const stringifyUpdates = fragmentsRaw => {
+  return fragmentsRaw.reduce((lines, fragments) => {
+    const line = stringifyFragments(fragments)
+
+    return lines.concat(line)
+  }, [])
+}
+
+export const makeLogSafe = (log, shouldRemoveColors) => {
+  const isArray = log instanceof Array
+
+  if (!isArray) return []
+
+  return log.map(fragment => {
+    const isArray = fragment instanceof Array
+    const isString = typeof fragment === 'string'
+
+    if (isArray) return makeLogSafe(fragment)
+    if (!isString) return String(fragment)
+    const hasDoubleQuotes = /^"|"$/g.test(fragment)
+    const hasSingleQuotes = /^'|'$/g.test(fragment)
+    const fragmentString = shouldRemoveColors ? cleanColors(fragment) : fragment
+
+    return hasDoubleQuotes || hasSingleQuotes ? fragmentString : getQuotedString(fragmentString)
+  })
 }

@@ -25,7 +25,8 @@ class Highlight extends HTMLElement {
       height: this._props.height
     })
 
-    this._runAnimation()
+    if (this._props.isVisible === 'true') this._runAnimation()
+    else this._runWithoutAnimation()
   }
 
   get _elements() {
@@ -42,9 +43,24 @@ class Highlight extends HTMLElement {
     await delay(400)
     this._elements.overlay.classList.remove('active')
     this._elements.overlay.classList.add('fade-out')
+    this._dispatch('fadingstart')
 
     await delay(700)
     this.remove()
+  }
+
+  async _runWithoutAnimation() {
+    await delay(20)
+    this._dispatch('fadingstart')
+
+    await delay(100)
+    this.remove()
+  }
+
+  _dispatch(name, detail = null) {
+    const appearEvent = new CustomEvent(name, { detail })
+
+    this.dispatchEvent(appearEvent)
   }
 }
 

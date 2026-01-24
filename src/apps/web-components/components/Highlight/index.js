@@ -25,7 +25,8 @@ class Highlight extends HTMLElement {
       height: this._props.height
     })
 
-    this._runAnimation()
+    if (this._props.isVisible === 'true') this._runAnimation()
+    else this._runWithoutAnimation()
   }
 
   get _elements() {
@@ -45,6 +46,14 @@ class Highlight extends HTMLElement {
     this._dispatch('fadingstart')
 
     await delay(700)
+    this.remove()
+  }
+
+  async _runWithoutAnimation() {
+    await delay(20)
+    this._dispatch('fadingstart')
+
+    await delay(100)
     this.remove()
   }
 

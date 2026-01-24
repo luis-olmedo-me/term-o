@@ -58,7 +58,9 @@ export const formatError = ({ title }) => {
 }
 
 export const formatWarning = ({ title }) => {
-  return [`${C`yellow`}${title}${C`reset`}`]
+  const quotedTitle = getQuotedString(title)
+
+  return [`${C`yellow`}${quotedTitle}${C`reset`}`]
 }
 
 export const formatStorageProp = ({ key, value, tabId }) => {

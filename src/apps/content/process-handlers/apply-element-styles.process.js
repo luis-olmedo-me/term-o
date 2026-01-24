@@ -1,6 +1,5 @@
 import { getElementByXPath } from '@content/helpers/dom-locator.helpers'
 import { styleStringToArray } from '@content/helpers/style-utils.helpers'
-import { delay } from '@src/helpers/utils.helpers'
 import { createHighlight } from '@src/helpers/web-components.helpers'
 
 export default async (resolve, reject, data) => {
@@ -11,11 +10,12 @@ export default async (resolve, reject, data) => {
   if (!element) return reject('XPath did not match any element.')
   const styles = styleStringToArray(newInlineStyles)
 
-  createHighlight({ element, theme: data.theme })
-  await delay(600)
+  const highlight = createHighlight({ element, theme: data.theme })
 
-  styles.forEach(({ prop, value }) => {
-    element.style.setProperty(prop, value)
+  highlight.addEventListener('fadingstart', () => {
+    styles.forEach(({ prop, value }) => {
+      element.style.setProperty(prop, value)
+    })
   })
 
   resolve(styles)

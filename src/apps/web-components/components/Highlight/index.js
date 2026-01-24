@@ -42,9 +42,16 @@ class Highlight extends HTMLElement {
     await delay(400)
     this._elements.overlay.classList.remove('active')
     this._elements.overlay.classList.add('fade-out')
+    this._dispatch('fadingstart')
 
     await delay(700)
     this.remove()
+  }
+
+  _dispatch(name, detail = null) {
+    const appearEvent = new CustomEvent(name, { detail })
+
+    this.dispatchEvent(appearEvent)
   }
 }
 

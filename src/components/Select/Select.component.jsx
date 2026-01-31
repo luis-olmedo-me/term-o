@@ -1,4 +1,4 @@
-import { verticalScroller } from '@styles/global.module.scss'
+import { transparentTrack, verticalScroller } from '@styles/global.module.scss'
 import {
   optionItem,
   optionsWrapper,
@@ -23,7 +23,7 @@ export const Select = ({
           <selectedcontent className={selectedContent} />
         </button>
 
-        <div className={`${optionsWrapper} ${verticalScroller}`}>
+        <div className={`${optionsWrapper} ${verticalScroller} ${transparentTrack}`}>
           {options?.map(option => {
             return (
               <option key={option.id} className={optionItem} value={option.id}>

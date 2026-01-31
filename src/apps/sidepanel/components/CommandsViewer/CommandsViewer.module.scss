@@ -23,7 +23,7 @@
 
 .commandItem {
   position: relative;
-  padding: 0 $space-600 0 $space-800;
+  padding: 0 $space-400 0 $space-800;
 
   &::after {
     content: '';
@@ -98,7 +98,7 @@
   }
 
   &[data-indicator='half-dot'] {
-    padding: 0 $space-600;
+    padding: 0 $space-400 0 $space-500;
 
     &::after {
       border-radius: 0 $radius-200 $radius-200 0;

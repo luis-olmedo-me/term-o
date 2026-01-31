@@ -36,19 +36,8 @@ export const Prompt = ({
   )
 
   const handleKeyDown = event => {
-    if (loading) return
-
     const key = event.key
     const targetValue = event.target.value
-
-    if (key === 'Enter' && targetValue) {
-      onEnter(targetValue)
-      setHistorial(addHistoryValueConditionally(targetValue))
-      setHistorialIndex(0)
-      setValue('')
-
-      return
-    }
 
     if (key === 'ArrowUp') {
       event.preventDefault()
@@ -72,6 +61,17 @@ export const Prompt = ({
 
         return canBeStored ? newIndex : index
       })
+
+      return
+    }
+
+    if (loading) return
+
+    if (key === 'Enter' && targetValue) {
+      onEnter(targetValue)
+      setHistorial(addHistoryValueConditionally(targetValue))
+      setHistorialIndex(0)
+      setValue('')
 
       return
     }

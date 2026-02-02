@@ -3,8 +3,6 @@
   background-color: transparent;
   color: $colors-foreground;
   padding: 0 $space-600 0 $space-800;
-  box-shadow: 0 0 $space-200 $space-100 $colors-background;
-  transition: box-shadow 0.2s ease-in-out;
   z-index: 1;
 
   &[data-indicator='half-dot'] {

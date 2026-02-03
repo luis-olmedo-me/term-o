@@ -73,6 +73,7 @@ export const defaultStyleMeasures = {
     400: '10px',
     450: '12px',
     500: '14px',
+    550: '15px',
     600: '16px',
     700: '18px',
     800: '20px',

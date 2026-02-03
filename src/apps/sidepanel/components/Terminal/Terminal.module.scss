@@ -12,4 +12,6 @@
   z-index: 1;
   display: flex;
   justify-content: end;
+  box-shadow: 0 $space-550 $space-400 calc($space-400 * -1) $colors-background;
+  transition: box-shadow 0.2s ease-in-out;
 }

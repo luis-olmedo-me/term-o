@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'preact/hooks'
+import { useState } from 'preact/hooks'
 
 import ColoredText from '@sidepanel/components/ColoredText'
 import Input, { inputTypes, inputVariants } from '@src/components/Input'
@@ -8,17 +8,8 @@ import { configInputIds, PROMPT_MARK } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { promptInputWrapper, promptLine, promptWrapper } from './Prompt.module.scss'
 
-export const Prompt = ({
-  onEnter,
-  onFocus,
-  onBlur,
-  inputRef,
-  defaultValue,
-  context,
-  name,
-  loading = false
-}) => {
-  const [value, setValue] = useState(defaultValue || '')
+export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, loading = false }) => {
+  const [value, setValue] = useState('')
   const [historialIndex, setHistorialIndex] = useState(0)
 
   const [historial, setHistorial] = useStorage({ key: storageKeys.PROMPT_HISTORY })
@@ -27,13 +18,6 @@ export const Prompt = ({
   const historialSize = config.getValueById(configInputIds.HISTORIAL_SIZE)
   const statusIndicator = config.getValueById(configInputIds.STATUS_INDICATOR)
   const isTruncated = config.getValueById(configInputIds.LINE_TRUNCATION)
-
-  useEffect(
-    function expectForDefaultValueChanges() {
-      setValue(defaultValue)
-    },
-    [defaultValue]
-  )
 
   const handleKeyDown = event => {
     const key = event.key
@@ -125,6 +109,5 @@ Prompt.propTypes = {
   inputRef: Object,
   context: String,
   loading: Boolean,
-  defaultValue: String,
   name: String
 }

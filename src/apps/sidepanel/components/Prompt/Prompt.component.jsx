@@ -1,10 +1,11 @@
-import { useState } from 'preact/hooks'
+import { useCallback, useEffect, useState } from 'preact/hooks'
 
 import ColoredText from '@sidepanel/components/ColoredText'
 import useStorage from '@src/hooks/useStorage'
 
 import { configInputIds, PROMPT_MARK } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
+import { debounce } from '@src/helpers/utils.helpers'
 import {
   promptInput,
   promptInputWrapper,
@@ -13,6 +14,12 @@ import {
   promptSuggestion,
   promptWrapper
 } from './Prompt.module.scss'
+
+const createSuggestion = value => {
+  if (value === 'd') return 'om'
+  if (value === 'do') return 'm'
+  return ''
+}
 
 export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, loading = false }) => {
   const [value, setValue] = useState('')
@@ -26,6 +33,24 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
   const historialSize = config.getValueById(configInputIds.HISTORIAL_SIZE)
   const statusIndicator = config.getValueById(configInputIds.STATUS_INDICATOR)
   const isTruncated = config.getValueById(configInputIds.LINE_TRUNCATION)
+
+  const calculateSuggestion = useCallback(value => {
+    const newSuggestion = createSuggestion(value)
+
+    setSuggestion(newSuggestion)
+  }, [])
+  const debouncedCalculateSuggestion = useCallback(debounce(calculateSuggestion, 200), [
+    calculateSuggestion
+  ])
+
+  useEffect(
+    function changeSuggestion() {
+      debouncedCalculateSuggestion(value)
+
+      return () => setSuggestion('')
+    },
+    [caret, value]
+  )
 
   const handleKeyDown = event => {
     const key = event.key
@@ -69,7 +94,6 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
     }
 
     if (historialIndex) setHistorialIndex(0)
-    setSuggestion('test')
   }
 
   const handleChange = event => {

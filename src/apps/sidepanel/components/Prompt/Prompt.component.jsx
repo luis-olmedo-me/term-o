@@ -14,22 +14,11 @@ import {
   promptWrapper
 } from './Prompt.module.scss'
 
-const createValue = (value, caret, suggestion) => {
-  const start = caret !== null ? value.slice(0, caret) : ''
-  const end = caret !== null ? value.slice(caret) : ''
-
-  return {
-    start,
-    suggestion,
-    end,
-    input: `${start}${end}`
-  }
-}
-
 export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, loading = false }) => {
-  const [value, setValueState] = useState(null)
+  const [value, setValue] = useState('')
   const [suggestion, setSuggestion] = useState('')
   const [historialIndex, setHistorialIndex] = useState(0)
+  const [caret, setCaret] = useState(0)
 
   const [historial, setHistorial] = useStorage({ key: storageKeys.PROMPT_HISTORY })
   const [config] = useStorage({ key: storageKeys.CONFIG })
@@ -37,12 +26,6 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
   const historialSize = config.getValueById(configInputIds.HISTORIAL_SIZE)
   const statusIndicator = config.getValueById(configInputIds.STATUS_INDICATOR)
   const isTruncated = config.getValueById(configInputIds.LINE_TRUNCATION)
-
-  const setValue = value => {
-    const formattedValue = createValue(value, inputRef.current.selectionStart, suggestion)
-
-    setValueState(formattedValue)
-  }
 
   const handleKeyDown = event => {
     const key = event.key
@@ -93,6 +76,10 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
     setValue(event.target.value)
   }
 
+  const handleKeyUp = event => {
+    setCaret(event.target.selectionStart)
+  }
+
   const addHistoryValueConditionally = targetValue => {
     return history => {
       const lastHistoryValue = history.at(-1)
@@ -106,6 +93,9 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
   const prefix = historialIndex || PROMPT_MARK
   const contextLines = context.split(/(?<!\\)\n/).filter(Boolean)
 
+  const start = caret !== null ? value.slice(0, caret) : ''
+  const end = caret !== null ? value.slice(caret) : ''
+
   return (
     <div data-loading={loading} data-indicator={statusIndicator} className={promptWrapper}>
       {contextLines.map((contextLine, index) => (
@@ -117,9 +107,9 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
       <span>{prefix}</span>
       <div className={promptInputWrapper}>
         <div className={promptOverlay}>
-          {value?.start}
-          <span className={promptSuggestion}>{value?.suggestion}</span>
-          {value?.end}
+          {start}
+          <span className={promptSuggestion}>{suggestion}</span>
+          {end}
         </div>
 
         <input
@@ -128,9 +118,10 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
           className={promptInput}
           name={name}
           type="text"
-          value={value?.input ?? ''}
+          value={value}
           onInput={handleChange}
           onKeyDown={handleKeyDown}
+          onKeyUp={handleKeyUp}
           onFocus={onFocus}
           onBlur={onBlur}
         />

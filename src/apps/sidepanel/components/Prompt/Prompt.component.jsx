@@ -93,7 +93,7 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
 
     if (key === 'Enter' && targetValue) {
       onEnter(targetValue)
-      setHistorial(addHistoryValueConditionally(targetValue))
+      addHistoryValueConditionally(targetValue)
       setHistorialIndex(0)
       setValue('')
 
@@ -114,13 +114,13 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
   }
 
   const addHistoryValueConditionally = targetValue => {
-    return history => {
+    setHistorial(history => {
       const lastHistoryValue = history.at(-1)
       const isRepeatedAtEnd = lastHistoryValue === targetValue
       const newHistory = isRepeatedAtEnd ? history : [...history, targetValue]
 
       return newHistory.slice(historialSize * -1)
-    }
+    })
   }
 
   const syncScroll = () => {

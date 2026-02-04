@@ -52,7 +52,6 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
 
       return () => {
         clearTimeout(debounceTimeoutId)
-        setSuggestion('')
       }
     },
     [caret, value]
@@ -61,6 +60,8 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
   const handleKeyDown = event => {
     const key = event.key
     const targetValue = event.target.value
+
+    setSuggestion('')
 
     if (key === 'ArrowUp') {
       event.preventDefault()

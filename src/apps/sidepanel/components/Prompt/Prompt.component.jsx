@@ -45,9 +45,12 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
 
   useEffect(
     function changeSuggestion() {
-      debouncedCalculateSuggestion(value)
+      const debounceTimeoutId = debouncedCalculateSuggestion(value)
 
-      return () => setSuggestion('')
+      return () => {
+        clearTimeout(debounceTimeoutId)
+        setSuggestion('')
+      }
     },
     [caret, value]
   )

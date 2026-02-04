@@ -7,7 +7,12 @@ export const debounce = (callback, wait) => {
   return (...args) => {
     clearTimeout(timerId)
 
-    timerId = setTimeout(() => callback(...args), wait)
+    timerId = setTimeout(() => {
+      timerId = null
+      callback(...args)
+    }, wait)
+
+    return timerId
   }
 }
 

@@ -29,11 +29,14 @@
   }
 }
 
+.prompWithPrefix {
+  display: flex;
+  gap: $space-200;
+}
+
 .promptInputWrapper {
   padding: 0 0 $space-300;
-  gap: $space-200;
   position: relative;
-  display: flex;
 }
 
 .promptOverlay {

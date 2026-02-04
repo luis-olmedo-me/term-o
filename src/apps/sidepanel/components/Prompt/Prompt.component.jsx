@@ -12,7 +12,8 @@ import {
   promptLine,
   promptOverlay,
   promptSuggestion,
-  promptWrapper
+  promptWrapper,
+  prompWithPrefix
 } from './Prompt.module.scss'
 
 const createSuggestion = value => {
@@ -139,28 +140,31 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
         </p>
       ))}
 
-      <span>{prefix}</span>
-      <div className={promptInputWrapper}>
-        <div ref={overlayRef} className={promptOverlay}>
-          {start}
-          <span className={promptSuggestion}>{suggestion}</span>
-          {end}
-        </div>
+      <div className={prompWithPrefix}>
+        <span>{prefix}</span>
 
-        <input
-          spellCheck={false}
-          ref={inputRef}
-          className={promptInput}
-          name={name}
-          type="text"
-          value={value}
-          onInput={handleChange}
-          onKeyDown={handleKeyDown}
-          onKeyUp={handleKeyUp}
-          onFocus={onFocus}
-          onBlur={onBlur}
-          onScroll={syncScroll}
-        />
+        <div className={promptInputWrapper}>
+          <div ref={overlayRef} className={promptOverlay}>
+            {start}
+            <span className={promptSuggestion}>{suggestion}</span>
+            {end}
+          </div>
+
+          <input
+            spellCheck={false}
+            ref={inputRef}
+            className={promptInput}
+            name={name}
+            type="text"
+            value={value}
+            onInput={handleChange}
+            onKeyDown={handleKeyDown}
+            onKeyUp={handleKeyUp}
+            onFocus={onFocus}
+            onBlur={onBlur}
+            onScroll={syncScroll}
+          />
+        </div>
       </div>
     </div>
   )

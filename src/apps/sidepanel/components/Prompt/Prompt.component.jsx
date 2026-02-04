@@ -6,6 +6,7 @@ import useStorage from '@src/hooks/useStorage'
 import { configInputIds, PROMPT_MARK } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { debounce } from '@src/helpers/utils.helpers'
+import { createSuggestion } from './Prompt.helpers'
 import {
   promptInput,
   promptInputWrapper,
@@ -15,12 +16,6 @@ import {
   promptWrapper,
   prompWithPrefix
 } from './Prompt.module.scss'
-
-const createSuggestion = value => {
-  if (value === 'd') return 'om'
-  if (value === 'do') return 'm'
-  return ''
-}
 
 export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, loading = false }) => {
   const [value, setValue] = useState('')

@@ -32,8 +32,8 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
   const statusIndicator = config.getValueById(configInputIds.STATUS_INDICATOR)
   const isTruncated = config.getValueById(configInputIds.LINE_TRUNCATION)
 
-  const calculateSuggestion = useCallback(value => {
-    const newSuggestion = createSuggestion(value)
+  const calculateSuggestion = useCallback((value, caret) => {
+    const newSuggestion = createSuggestion(value, caret)
 
     setSuggestion(newSuggestion)
   }, [])
@@ -46,7 +46,7 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
       let debounceTimeoutId = null
 
       const calculate = async () => {
-        debounceTimeoutId = debouncedCalculateSuggestion(value)
+        debounceTimeoutId = debouncedCalculateSuggestion(value, caret)
       }
 
       calculate()

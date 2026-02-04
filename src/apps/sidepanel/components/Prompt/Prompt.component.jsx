@@ -14,8 +14,20 @@ import {
   promptWrapper
 } from './Prompt.module.scss'
 
+const createValue = (value, caret, suggestion) => {
+  const start = caret !== null ? value.slice(0, caret) : ''
+  const end = caret !== null ? value.slice(caret) : ''
+
+  return {
+    start,
+    suggestion,
+    end,
+    input: `${start}${end}`
+  }
+}
+
 export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, loading = false }) => {
-  const [value, setValue] = useState('')
+  const [value, setValueState] = useState(null)
   const [suggestion, setSuggestion] = useState('')
   const [historialIndex, setHistorialIndex] = useState(0)
 
@@ -25,6 +37,12 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
   const historialSize = config.getValueById(configInputIds.HISTORIAL_SIZE)
   const statusIndicator = config.getValueById(configInputIds.STATUS_INDICATOR)
   const isTruncated = config.getValueById(configInputIds.LINE_TRUNCATION)
+
+  const setValue = value => {
+    const formattedValue = createValue(value, inputRef.current.selectionStart, suggestion)
+
+    setValueState(formattedValue)
+  }
 
   const handleKeyDown = event => {
     const key = event.key
@@ -99,8 +117,9 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
       <span>{prefix}</span>
       <div className={promptInputWrapper}>
         <div className={promptOverlay}>
-          {value}
-          <span className={promptSuggestion}>{suggestion}</span>
+          {value?.start}
+          <span className={promptSuggestion}>{value?.suggestion}</span>
+          {value?.end}
         </div>
 
         <input
@@ -109,7 +128,7 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
           className={promptInput}
           name={name}
           type="text"
-          value={value}
+          value={value?.input ?? ''}
           onInput={handleChange}
           onKeyDown={handleKeyDown}
           onFocus={onFocus}

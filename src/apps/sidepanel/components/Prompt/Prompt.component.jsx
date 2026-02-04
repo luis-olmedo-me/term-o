@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'preact/hooks'
+import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 
 import ColoredText from '@sidepanel/components/ColoredText'
 import useStorage from '@src/hooks/useStorage'
@@ -26,6 +26,8 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
   const [suggestion, setSuggestion] = useState('')
   const [historialIndex, setHistorialIndex] = useState(0)
   const [caret, setCaret] = useState(0)
+
+  const overlayRef = useRef(null)
 
   const [historial, setHistorial] = useStorage({ key: storageKeys.PROMPT_HISTORY })
   const [config] = useStorage({ key: storageKeys.CONFIG })
@@ -100,10 +102,12 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
   }
 
   const handleChange = event => {
+    syncScroll()
     setValue(event.target.value)
   }
 
   const handleKeyUp = event => {
+    syncScroll()
     setCaret(event.target.selectionStart)
   }
 
@@ -115,6 +119,10 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
 
       return newHistory.slice(historialSize * -1)
     }
+  }
+
+  const syncScroll = () => {
+    overlayRef.current.scrollLeft = inputRef.current.scrollLeft
   }
 
   const prefix = historialIndex || PROMPT_MARK
@@ -133,7 +141,7 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
 
       <span>{prefix}</span>
       <div className={promptInputWrapper}>
-        <div className={promptOverlay}>
+        <div ref={overlayRef} className={promptOverlay}>
           {start}
           <span className={promptSuggestion}>{suggestion}</span>
           {end}
@@ -151,6 +159,7 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
           onKeyUp={handleKeyUp}
           onFocus={onFocus}
           onBlur={onBlur}
+          onScroll={syncScroll}
         />
       </div>
     </div>

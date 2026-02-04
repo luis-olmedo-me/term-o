@@ -11,14 +11,8 @@
     padding: 0 $space-600;
   }
 
-  &[data-loading='true'] .promptInputWrapper,
-  &[data-loading='true'] .realInput {
+  &[data-loading='true'] .promptInput {
     color: with-opacity($colors-foreground, 0.4);
-  }
-
-  .promptInputWrapper {
-    padding: 0 0 $space-300;
-    gap: $space-200;
   }
 }
 
@@ -32,5 +26,43 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+  }
+}
+
+.promptInputWrapper {
+  padding: 0 0 $space-300;
+  gap: $space-200;
+  position: relative;
+  display: flex;
+}
+
+.promptOverlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  white-space: pre;
+  font-size: $fontSize-50;
+  font-family: $font;
+}
+
+.promptSuggestion {
+  color: $colors-brightBlack;
+}
+
+.promptInput {
+  background-color: transparent;
+  color: transparent;
+  caret-color: $colors-cursorColor;
+  border: none;
+  width: 100%;
+  flex-grow: 1;
+  padding: 0;
+  font-family: $font;
+  font-size: $fontSize-50;
+
+  &:active,
+  &:focus,
+  &:focus-visible {
+    outline: none;
   }
 }

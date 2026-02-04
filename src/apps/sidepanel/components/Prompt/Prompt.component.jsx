@@ -1,15 +1,22 @@
 import { useState } from 'preact/hooks'
 
 import ColoredText from '@sidepanel/components/ColoredText'
-import Input, { inputTypes, inputVariants } from '@src/components/Input'
 import useStorage from '@src/hooks/useStorage'
 
 import { configInputIds, PROMPT_MARK } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
-import { promptInputWrapper, promptLine, promptWrapper } from './Prompt.module.scss'
+import {
+  promptInput,
+  promptInputWrapper,
+  promptLine,
+  promptOverlay,
+  promptSuggestion,
+  promptWrapper
+} from './Prompt.module.scss'
 
 export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, loading = false }) => {
   const [value, setValue] = useState('')
+  const [suggestion, setSuggestion] = useState('')
   const [historialIndex, setHistorialIndex] = useState(0)
 
   const [historial, setHistorial] = useStorage({ key: storageKeys.PROMPT_HISTORY })
@@ -60,8 +67,12 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
       return
     }
 
-    setValue(targetValue)
     if (historialIndex) setHistorialIndex(0)
+    setSuggestion('test')
+  }
+
+  const handleChange = event => {
+    setValue(event.target.value)
   }
 
   const addHistoryValueConditionally = targetValue => {
@@ -85,19 +96,26 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
         </p>
       ))}
 
-      <Input
-        className={promptInputWrapper}
-        inputRef={inputRef}
-        value={historialIndex ? historial.at(historialIndex) : value}
-        onKeyDown={handleKeyDown}
-        onBlur={onBlur}
-        onFocus={onFocus}
-        prefix={prefix}
-        name={name}
-        variant={inputVariants.GHOST}
-        type={inputTypes.TEXT}
-        fullWidth
-      />
+      <span>{prefix}</span>
+      <div className={promptInputWrapper}>
+        <div className={promptOverlay}>
+          {value}
+          <span className={promptSuggestion}>{suggestion}</span>
+        </div>
+
+        <input
+          spellCheck={false}
+          ref={inputRef}
+          className={promptInput}
+          name={name}
+          type="text"
+          value={value}
+          onInput={handleChange}
+          onKeyDown={handleKeyDown}
+          onFocus={onFocus}
+          onBlur={onBlur}
+        />
+      </div>
     </div>
   )
 }

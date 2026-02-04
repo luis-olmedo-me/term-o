@@ -57,6 +57,20 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
     [caret, value]
   )
 
+  const syncScroll = () => {
+    overlayRef.current.scrollLeft = inputRef.current.scrollLeft
+  }
+
+  const addHistoryValueConditionally = targetValue => {
+    setHistorial(history => {
+      const lastHistoryValue = history.at(-1)
+      const isRepeatedAtEnd = lastHistoryValue === targetValue
+      const newHistory = isRepeatedAtEnd ? history : [...history, targetValue]
+
+      return newHistory.slice(historialSize * -1)
+    })
+  }
+
   const handleKeyDown = event => {
     const key = event.key
     const targetValue = event.target.value
@@ -111,20 +125,6 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
   const handleKeyUp = event => {
     syncScroll()
     setCaret(event.target.selectionStart)
-  }
-
-  const addHistoryValueConditionally = targetValue => {
-    setHistorial(history => {
-      const lastHistoryValue = history.at(-1)
-      const isRepeatedAtEnd = lastHistoryValue === targetValue
-      const newHistory = isRepeatedAtEnd ? history : [...history, targetValue]
-
-      return newHistory.slice(historialSize * -1)
-    })
-  }
-
-  const syncScroll = () => {
-    overlayRef.current.scrollLeft = inputRef.current.scrollLeft
   }
 
   const prefix = historialIndex || PROMPT_MARK

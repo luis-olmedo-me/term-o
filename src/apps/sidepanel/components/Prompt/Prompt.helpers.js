@@ -9,6 +9,19 @@ const getArgsFromFragmentEnd = fragment => {
   return fragment.startsWith(' ') ? ['', ...getArgs(fragment)] : getArgs(fragment)
 }
 
+const getSuggestionByName = (names, start, end) => {
+  const match = names.find(name => {
+    if (!name.startsWith(start)) return false
+    if (!end) return true
+    const nameEnd = name.slice(start.length)
+
+    return nameEnd.endsWith(end)
+  })
+
+  if (!match) return ''
+  return end ? match.slice(start.length, end.length * -1) : match.slice(start.length)
+}
+
 export const createSuggestion = (value, caret, aliases) => {
   const aliasNames = aliases.map(alias => alias.key)
   const commandValueNames = Object.values(commandNames)
@@ -27,20 +40,7 @@ export const createSuggestion = (value, caret, aliases) => {
   const lastArgStart = argsStart.at(-1) ?? ''
   const firstArgEnd = argsEnd.at(0) ?? ''
 
-  if (argsStart.length <= 1) {
-    const match = names.find(name => {
-      if (!name.startsWith(lastArgStart)) return false
-      if (!firstArgEnd) return true
-      const nameEnd = name.slice(lastArgStart.length)
-
-      return nameEnd.endsWith(firstArgEnd)
-    })
-
-    if (!match) return ''
-    return firstArgEnd
-      ? match.slice(lastArgStart.length, firstArgEnd.length * -1)
-      : match.slice(lastArgStart.length)
-  }
+  if (argsStart.length <= 1) return getSuggestionByName(names, lastArgStart, firstArgEnd)
   const restArgsStart = argsStart.slice(1, -1)
   const restArgsEnd = argsEnd.slice(1)
   const firstArgStart = argsStart.at(0) ?? ''

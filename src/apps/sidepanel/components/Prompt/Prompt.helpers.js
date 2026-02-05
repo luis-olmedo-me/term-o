@@ -33,15 +33,25 @@ export const createSuggestion = (value, caret, aliases) => {
       ? match.slice(lastArgStart.length, firstArgEnd.length * -1)
       : match.slice(lastArgStart.length)
   }
+  const restArgsStart = argsStart.slice(1, -1)
+  const restArgsEnd = argsEnd.slice(1)
   const firstArgStart = argsStart.at(0) ?? ''
   const isCommand = commandValueNames.some(name => name === firstArgStart)
 
   if (!isCommand) return ''
   const command = commandParser.bases.find(base => base.name === firstArgStart)
 
-  const options = command.options.values.map(option => `--${option.name}`)
-  const abbreviations = command.options.values.map(option => `-${option.abbreviation}`)
-  const optionNames = [...abbreviations, ...options]
+  const optionNames = command.options.values.reduce((names, option) => {
+    const optionName = `--${option.name}`
+    const abbreviation = `-${option.abbreviation}`
+
+    const isOptionDuplicated =
+      restArgsStart.includes(optionName) || restArgsEnd.includes(optionName)
+    const isAbbrDuplicated =
+      restArgsStart.includes(abbreviation) || restArgsEnd.includes(abbreviation)
+
+    return isOptionDuplicated || isAbbrDuplicated ? names : names.concat(abbreviation, optionName)
+  }, [])
 
   const match = optionNames.find(option => {
     if (!option.startsWith(lastArgStart)) return false

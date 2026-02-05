@@ -89,6 +89,12 @@ export const Prompt = ({
 
     setSuggestion('')
 
+    if (key === 'Tab' && !suggestion) {
+      event.preventDefault()
+
+      return
+    }
+
     if (key === 'Tab' && suggestion) {
       event.preventDefault()
       const newValue = insert(targetValue, caret, suggestion)

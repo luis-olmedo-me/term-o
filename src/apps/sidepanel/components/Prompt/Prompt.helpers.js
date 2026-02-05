@@ -2,6 +2,13 @@ import { commandNames } from '@src/constants/command.constants'
 import { getArgs } from '@src/helpers/arguments.helpers'
 import commandParser from '@src/libs/command-parser'
 
+const getArgsFromFragmentStart = fragment => {
+  return fragment.endsWith(' ') ? [...getArgs(fragment), ''] : getArgs(fragment)
+}
+const getArgsFromFragmentEnd = fragment => {
+  return fragment.startsWith(' ') ? ['', ...getArgs(fragment)] : getArgs(fragment)
+}
+
 export const createSuggestion = (value, caret, aliases) => {
   const aliasNames = aliases.map(alias => alias.key)
   const commandValueNames = Object.values(commandNames)
@@ -14,8 +21,9 @@ export const createSuggestion = (value, caret, aliases) => {
   const lastFragmentEnd = end.split('&&').at(0) ?? ''
 
   if (!lastFragmentStart && !lastFragmentEnd) return ''
-  const argsStart = getArgs(lastFragmentStart)
-  const argsEnd = getArgs(lastFragmentEnd)
+  const argsStart = getArgsFromFragmentStart(lastFragmentStart)
+  const argsEnd = getArgsFromFragmentEnd(lastFragmentEnd)
+
   const lastArgStart = argsStart.at(-1) ?? ''
   const firstArgEnd = argsEnd.at(0) ?? ''
 

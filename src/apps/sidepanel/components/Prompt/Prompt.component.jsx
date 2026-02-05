@@ -5,6 +5,7 @@ import useStorage from '@src/hooks/useStorage'
 
 import { configInputIds, PROMPT_MARK } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
+import { insert } from '@src/helpers/string.helpers'
 import { debounce } from '@src/helpers/utils.helpers'
 import { createSuggestion } from './Prompt.helpers'
 import {
@@ -78,6 +79,17 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
     const targetValue = event.target.value
 
     setSuggestion('')
+
+    if (key === 'Tab' && suggestion) {
+      event.preventDefault()
+      const newValue = insert(targetValue, caret, suggestion)
+      const newCaret = caret + suggestion.length
+
+      setValue(newValue)
+      requestAnimationFrame(() => inputRef.current.setSelectionRange(newCaret, newCaret))
+
+      return
+    }
 
     if (key === 'ArrowUp') {
       event.preventDefault()

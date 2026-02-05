@@ -161,7 +161,7 @@ export const Prompt = ({
   const prefix = historialIndex || PROMPT_MARK
   const contextLines = context.split(/(?<!\\)\n/).filter(Boolean)
 
-  const start = caret !== null ? value.slice(0, caret) : ''
+  const start = caret !== null ? value.slice(0, caret) : value
   const end = caret !== null ? value.slice(caret) : ''
 
   return (

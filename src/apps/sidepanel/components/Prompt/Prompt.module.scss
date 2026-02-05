@@ -33,11 +33,13 @@
   display: flex;
   gap: $space-200;
   margin-top: $space-100;
+  color: $colors-foreground;
 }
 
 .promptInputWrapper {
   padding: 0 0 $space-300;
   position: relative;
+  flex-grow: 1;
 }
 
 .promptOverlay {
@@ -64,6 +66,11 @@
   padding: 0;
   font-family: $font;
   font-size: $fontSize-50;
+
+  &::selection {
+    color: transparent;
+    background-color: $colors-selectionBackground;
+  }
 
   &:active,
   &:focus,

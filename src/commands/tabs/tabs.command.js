@@ -19,6 +19,24 @@ export default new CommandBase({
     worksWith: ['incognito', 'muted', 'unmuted', 'title', 'url', 'window-id']
   })
   .expect({
+    name: 'open',
+    abbreviation: 'o',
+    type: 'string',
+    helpSection: tabsHelpSections.TAB_ACTIONS,
+    description: 'Open a new tab with the given URL',
+    worksWith: ['wait', 'active'],
+    validate: [isURL]
+  })
+  .expect({
+    name: 'reload',
+    abbreviation: 'r',
+    type: 'string',
+    helpSection: tabsHelpSections.TAB_ACTIONS,
+    description: 'Reload a specific tab by ID (T[number])',
+    validate: [isTabId],
+    worksWith: ['wait']
+  })
+  .expect({
     name: 'incognito',
     abbreviation: 'i',
     type: commandTypes.BOOLEAN,
@@ -82,15 +100,6 @@ export default new CommandBase({
     worksWith: []
   })
   .expect({
-    name: 'reload',
-    abbreviation: 'r',
-    type: 'string',
-    helpSection: tabsHelpSections.TAB_ACTIONS,
-    description: 'Reload a specific tab by ID (T[number])',
-    validate: [isTabId],
-    worksWith: ['wait']
-  })
-  .expect({
     name: 'close',
     abbreviation: 'c',
     type: 'string',
@@ -98,15 +107,6 @@ export default new CommandBase({
     description: 'Close a specific tab by ID (T[number])',
     validate: [isTabId],
     worksWith: []
-  })
-  .expect({
-    name: 'open',
-    abbreviation: 'o',
-    type: 'string',
-    helpSection: tabsHelpSections.TAB_ACTIONS,
-    description: 'Open a new tab with the given URL',
-    worksWith: ['wait', 'active'],
-    validate: [isURL]
   })
   .expect({
     name: 'wait',

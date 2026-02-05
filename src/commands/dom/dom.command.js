@@ -19,6 +19,14 @@ export default new CommandBase({
   handler: domHandler
 })
   .expect({
+    name: 'search',
+    abbreviation: 's',
+    type: commandTypes.BOOLEAN,
+    description: 'Find elements by criteria',
+    worksWith: ['attr', 'style', 'tag', 'text', 'content', 'xpath', 'tab-id', 'below'],
+    helpSection: domHelpSections.SEARCH
+  })
+  .expect({
     name: 'search-xpath',
     abbreviation: 'X',
     type: 'string',
@@ -50,14 +58,6 @@ export default new CommandBase({
     helpSection: domHelpSections.DOM_NAVIGATION,
     description: 'Select child element by index (positive)',
     validate: [isInteger, isPositive]
-  })
-  .expect({
-    name: 'search',
-    abbreviation: 's',
-    type: commandTypes.BOOLEAN,
-    description: 'Find elements by criteria',
-    worksWith: ['attr', 'style', 'tag', 'text', 'content', 'xpath', 'tab-id', 'below'],
-    helpSection: domHelpSections.SEARCH
   })
   .expect({
     name: 'xpath',

@@ -10,15 +10,22 @@ export const createSuggestion = (value, caret) => {
   const argsStart = getArgs(lastFragmentStart)
   const argsEnd = getArgs(lastFragmentEnd)
 
-  console.log('💬 ~ argsStart:', argsStart)
-  console.log('💬 ~ argsEnd:', argsEnd)
-
   if (argsStart.length === 0) return ''
   if (argsStart.length === 1) {
-    const matches = Object.values(commandNames).filter(name => name.startsWith(start))
+    const firstArgEnd = argsEnd.at(0) ?? ''
+    const match = Object.values(commandNames).find(name => {
+      if (!name.startsWith(start)) return false
+      if (!firstArgEnd) return true
 
-    if (matches.length === 0) return ''
-    return matches.at(0).slice(start.length)
+      const nameEnd = name.slice(start.length)
+
+      return nameEnd.endsWith(firstArgEnd)
+    })
+
+    if (!match) return ''
+    return firstArgEnd
+      ? match.slice(start.length, firstArgEnd.length * -1)
+      : match.slice(start.length)
   }
 
   return ''

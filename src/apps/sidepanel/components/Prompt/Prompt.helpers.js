@@ -3,18 +3,19 @@ import { getArgs } from '@src/helpers/arguments.helpers'
 
 export const createSuggestion = (value, caret, aliases) => {
   const aliasNames = aliases.map(alias => alias.key)
-  const names = [...Object.values(commandNames), ...aliasNames]
+  const names = [...aliasNames, ...Object.values(commandNames)]
 
   const start = caret !== null ? value.slice(0, caret) : ''
   const end = caret !== null ? value.slice(caret) : ''
 
   const lastFragmentStart = (start.split('&&').at(-1) ?? '').trimLeft()
   const lastFragmentEnd = end.split('&&').at(0) ?? ''
+
+  if (!lastFragmentStart && !lastFragmentEnd) return ''
   const argsStart = getArgs(lastFragmentStart)
   const argsEnd = getArgs(lastFragmentEnd)
 
-  if (argsStart.length === 0) return ''
-  if (argsStart.length === 1) {
+  if (argsStart.length <= 1) {
     const lastArgStart = argsStart.at(-1) ?? ''
     const firstArgEnd = argsEnd.at(0) ?? ''
 

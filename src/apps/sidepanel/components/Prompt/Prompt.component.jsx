@@ -43,6 +43,7 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
 
   useEffect(
     function changeSuggestion() {
+      if (caret === null) return
       let debounceTimeoutId = null
 
       const calculate = async () => {
@@ -124,8 +125,10 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
   }
 
   const handleKeyUp = event => {
+    const isSelecting = event.target.selectionEnd !== event.target.selectionStart
+
     syncScroll()
-    setCaret(event.target.selectionStart)
+    setCaret(isSelecting ? null : event.target.selectionStart)
   }
 
   const prefix = historialIndex || PROMPT_MARK

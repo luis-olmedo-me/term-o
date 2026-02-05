@@ -18,7 +18,7 @@ export const createSuggestion = (value, caret, aliases) => {
     const lastArgStart = argsStart.at(-1) ?? ''
     const firstArgEnd = argsEnd.at(0) ?? ''
 
-    const match = Object.values(names).find(name => {
+    const match = names.find(name => {
       if (!name.startsWith(lastArgStart)) return false
       if (!firstArgEnd) return true
       const nameEnd = name.slice(lastArgStart.length)

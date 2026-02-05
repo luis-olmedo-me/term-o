@@ -95,6 +95,7 @@ export const Terminal = () => {
         onFocus={removePromptFocusEvent}
         loading={queue.isExecuting}
         context={context}
+        aliases={aliases}
         name="terminal-prompt"
       />
     </div>

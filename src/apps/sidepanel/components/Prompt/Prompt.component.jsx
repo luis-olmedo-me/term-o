@@ -18,7 +18,16 @@ import {
   prompWithPrefix
 } from './Prompt.module.scss'
 
-export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, loading = false }) => {
+export const Prompt = ({
+  onEnter,
+  onFocus,
+  onBlur,
+  inputRef,
+  context,
+  name,
+  aliases,
+  loading = false
+}) => {
   const [value, setValue] = useState('')
   const [suggestion, setSuggestion] = useState('')
   const [historialIndex, setHistorialIndex] = useState(0)
@@ -33,8 +42,8 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
   const statusIndicator = config.getValueById(configInputIds.STATUS_INDICATOR)
   const isTruncated = config.getValueById(configInputIds.LINE_TRUNCATION)
 
-  const calculateSuggestion = useCallback((value, caret) => {
-    const newSuggestion = createSuggestion(value, caret)
+  const calculateSuggestion = useCallback((value, caret, aliases) => {
+    const newSuggestion = createSuggestion(value, caret, aliases)
 
     setSuggestion(newSuggestion)
   }, [])
@@ -48,7 +57,7 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
       let debounceTimeoutId = null
 
       const calculate = async () => {
-        debounceTimeoutId = debouncedCalculateSuggestion(value, caret)
+        debounceTimeoutId = debouncedCalculateSuggestion(value, caret, aliases)
       }
 
       calculate()
@@ -57,7 +66,7 @@ export const Prompt = ({ onEnter, onFocus, onBlur, inputRef, context, name, load
         clearTimeout(debounceTimeoutId)
       }
     },
-    [caret, value]
+    [caret, value, aliases]
   )
 
   const syncScroll = () => {
@@ -194,5 +203,6 @@ Prompt.propTypes = {
   inputRef: Object,
   context: String,
   loading: Boolean,
-  name: String
+  name: String,
+  aliases: Array
 }

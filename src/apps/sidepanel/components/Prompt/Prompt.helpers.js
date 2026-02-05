@@ -1,7 +1,10 @@
 import { commandNames } from '@src/constants/command.constants'
 import { getArgs } from '@src/helpers/arguments.helpers'
 
-export const createSuggestion = (value, caret) => {
+export const createSuggestion = (value, caret, aliases) => {
+  const aliasNames = aliases.map(alias => alias.key)
+  const names = [...Object.values(commandNames), ...aliasNames]
+
   const start = caret !== null ? value.slice(0, caret) : ''
   const end = caret !== null ? value.slice(caret) : ''
 
@@ -15,7 +18,7 @@ export const createSuggestion = (value, caret) => {
     const lastArgStart = argsStart.at(-1) ?? ''
     const firstArgEnd = argsEnd.at(0) ?? ''
 
-    const match = Object.values(commandNames).find(name => {
+    const match = Object.values(names).find(name => {
       if (!name.startsWith(lastArgStart)) return false
       if (!firstArgEnd) return true
       const nameEnd = name.slice(lastArgStart.length)

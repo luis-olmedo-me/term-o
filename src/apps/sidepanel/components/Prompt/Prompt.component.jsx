@@ -63,9 +63,7 @@ export const Prompt = ({
 
       calculate()
 
-      return () => {
-        clearTimeout(debounceTimeoutId)
-      }
+      return () => clearTimeout(debounceTimeoutId)
     },
     [caret, value, aliases, addons]
   )

@@ -44,10 +44,10 @@ export class OptionsManager {
     })
   }
 
-  getByName(name) {
+  getByName(name, canFail = true) {
     const foundValue = this.values.find(value => value.name === name)
 
-    if (!foundValue) throw `--${name} is not a valid command option.`
+    if (canFail && !foundValue) throw `"--${name}" is not a valid command option.`
 
     return foundValue
   }
@@ -55,13 +55,21 @@ export class OptionsManager {
   getByAbbreviation(abbreviation) {
     const foundValue = this.values.find(value => value.abbreviation === abbreviation)
 
-    if (!foundValue) throw `-${abbreviation} is not a valid command option.`
+    if (!foundValue) throw `"-${abbreviation}" is not a valid command option.`
 
     return foundValue
   }
 
   getByHelpSection(helpSectionName) {
     return this.values.filter(value => value.helpSection === helpSectionName)
+  }
+
+  getHelpSectionsAvailable() {
+    return this.values.reduce(
+      (sections, { helpSection }) =>
+        !sections.includes(helpSection) ? sections.concat(helpSection) : sections,
+      []
+    )
   }
 
   copy() {

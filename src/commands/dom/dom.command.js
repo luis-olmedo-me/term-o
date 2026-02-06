@@ -10,14 +10,21 @@ import {
   isTabId,
   isXpath
 } from '@src/helpers/validation-command.helpers'
-import { domHelpSectionTitles, domHelpSections } from './dom.constants'
+import { domHelpSections } from './dom.constants'
 import { domHandler } from './dom.handler'
 
 export default new CommandBase({
   name: commandNames.DOM,
-  helpSectionTitles: domHelpSectionTitles,
   handler: domHandler
 })
+  .expect({
+    name: 'search',
+    abbreviation: 's',
+    type: commandTypes.BOOLEAN,
+    description: 'Find elements by criteria',
+    worksWith: ['attr', 'style', 'tag', 'text', 'content', 'xpath', 'tab-id', 'below'],
+    helpSection: domHelpSections.SEARCH
+  })
   .expect({
     name: 'search-xpath',
     abbreviation: 'X',
@@ -50,14 +57,6 @@ export default new CommandBase({
     helpSection: domHelpSections.DOM_NAVIGATION,
     description: 'Select child element by index (positive)',
     validate: [isInteger, isPositive]
-  })
-  .expect({
-    name: 'search',
-    abbreviation: 's',
-    type: commandTypes.BOOLEAN,
-    description: 'Find elements by criteria',
-    worksWith: ['attr', 'style', 'tag', 'text', 'content', 'xpath', 'tab-id', 'below'],
-    helpSection: domHelpSections.SEARCH
   })
   .expect({
     name: 'xpath',
@@ -120,12 +119,4 @@ export default new CommandBase({
     validate: [isXpath],
     helpSection: domHelpSections.SEARCH,
     description: 'Limit search scope under a specific element'
-  })
-  .expect({
-    name: 'help',
-    type: commandTypes.BOOLEAN,
-    abbreviation: 'h',
-    helpSection: domHelpSections.GENERAL,
-    description: 'Show this help message',
-    worksWith: []
   })

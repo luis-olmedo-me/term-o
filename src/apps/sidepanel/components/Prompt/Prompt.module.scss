@@ -2,23 +2,17 @@
   cursor: text;
   background-color: transparent;
   color: $colors-foreground;
-  padding: 0 $space-600 0 $space-800;
-  box-shadow: 0 0 $space-200 $space-100 $colors-background;
-  transition: box-shadow 0.2s ease-in-out;
+  padding: 0 $space-600 $space-200 $space-800;
   z-index: 1;
+  box-shadow: 0 calc($space-550 * -1) $space-400 calc($space-400 * -1) $colors-background;
+  transition: box-shadow 0.2s ease-in-out;
 
   &[data-indicator='half-dot'] {
     padding: 0 $space-600;
   }
 
-  &[data-loading='true'] .promptInputWrapper,
-  &[data-loading='true'] .realInput {
+  &[data-loading='true'] .promptInput {
     color: with-opacity($colors-foreground, 0.4);
-  }
-
-  .promptInputWrapper {
-    padding: 0 0 $space-300;
-    gap: $space-200;
   }
 }
 
@@ -32,5 +26,55 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+  }
+}
+
+.prompWithPrefix {
+  display: flex;
+  gap: $space-200;
+  margin-top: $space-100;
+  color: $colors-foreground;
+}
+
+.promptInputWrapper {
+  padding: 0 0 $space-300;
+  position: relative;
+  flex-grow: 1;
+}
+
+.promptOverlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  white-space: pre;
+  font-size: $fontSize-50;
+  font-family: $font;
+  overflow: hidden;
+}
+
+.promptSuggestion {
+  color: $colors-brightBlack;
+}
+
+.promptInput {
+  background-color: transparent;
+  color: transparent;
+  caret-color: $colors-cursorColor;
+  border: none;
+  width: 100%;
+  flex-grow: 1;
+  padding: 0;
+  font-family: $font;
+  font-size: $fontSize-50;
+
+  &::selection {
+    color: transparent;
+    background-color: $colors-selectionBackground;
+  }
+
+  &:active,
+  &:focus,
+  &:focus-visible {
+    outline: none;
   }
 }

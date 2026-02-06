@@ -5,6 +5,5 @@ import { clearHandler } from './clear.handler'
 
 export default new CommandBase({
   name: commandNames.CLEAR,
-  helpSectionTitles: [],
   handler: clearHandler
 })

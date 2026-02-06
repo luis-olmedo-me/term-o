@@ -4,13 +4,24 @@
   gap: $space-400;
   background-color: transparent;
   color: $colors-foreground;
-  margin-right: $space-500;
+  margin-right: $space-400;
   cursor: text;
   word-break: break-all;
   flex-grow: 1;
   overflow-y: scroll;
   overflow-x: hidden;
   padding-top: $space-700;
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+    background-image: linear-gradient(
+      180deg,
+      $colors-background 0%,
+      with-opacity($colors-brightBlack, 0.2) 10%,
+      with-opacity($colors-brightBlack, 0.2) 90%,
+      $colors-background 100%
+    );
+  }
 }
 
 .line {
@@ -23,7 +34,7 @@
 
 .commandItem {
   position: relative;
-  padding: 0 $space-600 0 $space-800;
+  padding: 0 $space-400 0 $space-800;
 
   &::after {
     content: '';
@@ -98,7 +109,7 @@
   }
 
   &[data-indicator='half-dot'] {
-    padding: 0 $space-600;
+    padding: 0 $space-400 0 $space-500;
 
     &::after {
       border-radius: 0 $radius-200 $radius-200 0;

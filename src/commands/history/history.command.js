@@ -2,12 +2,11 @@ import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
 import { isDate, isInteger, isPositive, isRegExp } from '@src/helpers/validation-command.helpers'
-import { historyHelpSections, historyHelpSectionTitles } from './history.constants'
+import { historyHelpSections } from './history.constants'
 import { historyHandler } from './history.handler'
 
 export default new CommandBase({
   name: commandNames.HISTORY,
-  helpSectionTitles: historyHelpSectionTitles,
   handler: historyHandler
 })
   .expect({
@@ -67,12 +66,4 @@ export default new CommandBase({
     helpSection: historyHelpSections.FILTERS,
     description: 'End date for deletion or filtering',
     validate: [isDate]
-  })
-  .expect({
-    name: 'help',
-    abbreviation: 'h',
-    type: commandTypes.BOOLEAN,
-    helpSection: historyHelpSections.GENERAL,
-    description: 'Show help for this command',
-    worksWith: []
   })

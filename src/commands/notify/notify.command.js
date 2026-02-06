@@ -2,12 +2,11 @@ import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
 import { isTabId } from '@src/helpers/validation-command.helpers'
-import { notifyHelpSectionTitles, notifyHelpSections } from './notify.constants'
+import { notifyHelpSections } from './notify.constants'
 import { notifyHandler } from './notify.handler'
 
 export default new CommandBase({
   name: commandNames.NOTIFY,
-  helpSectionTitles: notifyHelpSectionTitles,
   handler: notifyHandler
 })
   .expect({
@@ -39,12 +38,4 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: notifyHelpSections.ACTIONS,
     description: 'Describe the notification message'
-  })
-  .expect({
-    name: 'help',
-    abbreviation: 'h',
-    type: commandTypes.BOOLEAN,
-    helpSection: notifyHelpSections.GENERAL,
-    description: 'Show help for this command',
-    worksWith: []
   })

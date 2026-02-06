@@ -8,12 +8,11 @@ import {
   isRegExp,
   isXpath
 } from '@src/helpers/validation-command.helpers'
-import { styleHelpSections, styleHelpSectionTitles } from './style.constants'
+import { styleHelpSections } from './style.constants'
 import { styleHandler } from './style.handler'
 
 export default new CommandBase({
   name: commandNames.STYLE,
-  helpSectionTitles: styleHelpSectionTitles,
   handler: styleHandler
 })
   .expect({
@@ -26,15 +25,6 @@ export default new CommandBase({
     mustHave: ['on']
   })
   .expect({
-    name: 'color-pick',
-    abbreviation: 'c',
-    type: commandTypes.BOOLEAN,
-    helpSection: styleHelpSections.TOOLS,
-    description: 'Pick a color by clicking on the web page',
-    worksWith: [],
-    mustHave: []
-  })
-  .expect({
     name: 'apply',
     abbreviation: 'a',
     type: 'string',
@@ -43,6 +33,15 @@ export default new CommandBase({
     validate: [isInlineStyles],
     worksWith: ['on'],
     mustHave: ['on']
+  })
+  .expect({
+    name: 'color-pick',
+    abbreviation: 'c',
+    type: commandTypes.BOOLEAN,
+    helpSection: styleHelpSections.TOOLS,
+    description: 'Pick a color by clicking on the web page',
+    worksWith: [],
+    mustHave: []
   })
   .expect({
     name: 'on',
@@ -67,12 +66,4 @@ export default new CommandBase({
     helpSection: styleHelpSections.FILTERS,
     description: 'Filter elements by CSS selector (regex[])',
     validate: [hasAllItemsAs(isRegExp)]
-  })
-  .expect({
-    name: 'help',
-    abbreviation: 'h',
-    type: commandTypes.BOOLEAN,
-    helpSection: styleHelpSections.GENERAL,
-    description: 'Show help for this command',
-    worksWith: []
   })

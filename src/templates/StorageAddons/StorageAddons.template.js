@@ -1,8 +1,10 @@
-import { deleteStorageValue, getStorageValue, setStorageValue } from '@src/browser-api/storage.api'
-import { storageKeys } from '@src/constants/storage.constants'
 import processManager from '@src/libs/process-manager'
 import CommandBase from '@src/templates/CommandBase'
 import StorageSimple from '@src/templates/StorageSimple'
+
+import { deleteStorageValue, getStorageValue, setStorageValue } from '@src/browser-api/storage.api'
+import { storageKeys } from '@src/constants/storage.constants'
+import { createHelpView } from '@src/helpers/command.helpers'
 
 export class StorageAddons extends StorageSimple {
   get $value() {
@@ -49,9 +51,11 @@ export class StorageAddons extends StorageSimple {
     return this.$latest().value.map(addon => {
       const commandBase = new CommandBase({
         name: addon.name,
-        helpSectionTitles: [],
         handler: async command => {
           const props = command.props
+
+          if (props.help) return createHelpView(command)
+
           const code = await getStorageValue(namespace, `addon_${addon.name}_handler`)
           const updates = await processManager.executeCode({ code, props, addonNames })
 
@@ -69,7 +73,7 @@ export class StorageAddons extends StorageSimple {
           worksWith: option.worksWith,
           mustHave: option.mustHave,
           defaultValue: option.defaultValue,
-          helpSection: null,
+          helpSection: option.helpSection,
           validate: null
         })
       })

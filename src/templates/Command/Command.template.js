@@ -10,7 +10,7 @@ import { getPropsFromString } from '@src/helpers/options.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 
 export class Command extends EventListener {
-  constructor({ name, options, helpSectionTitles, origin }) {
+  constructor({ name, options, origin }) {
     super()
 
     this.id = createUUIDv4()
@@ -22,7 +22,6 @@ export class Command extends EventListener {
     this.updates = []
     this.staticUpdates = []
     this.status = commandStatuses.IDLE
-    this.helpSectionTitles = helpSectionTitles
     this.nextCommand = null
     this.queue = null
     this.options = options

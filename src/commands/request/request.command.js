@@ -3,12 +3,11 @@ import CommandBase from '@src/templates/CommandBase'
 import { commandNames, commandTypes } from '@src/constants/command.constants'
 import { responseFormatSupported } from '@src/constants/options.constants'
 import { hasInlineHeaders, isAnyOf, isJSON, isURL } from '@src/helpers/validation-command.helpers'
-import { requestHelpSections, requestHelpSectionTitles } from './request.constants'
+import { requestHelpSections } from './request.constants'
 import { requestHandler } from './request.handler'
 
 export default new CommandBase({
   name: commandNames.REQUEST,
-  helpSectionTitles: requestHelpSectionTitles,
   handler: requestHandler
 })
   .expect({
@@ -60,12 +59,4 @@ export default new CommandBase({
     description: 'Format to read the response: blob, text, or json',
     validate: [isAnyOf(responseFormatSupported)],
     defaultValue: 'json'
-  })
-  .expect({
-    name: 'help',
-    abbreviation: 'h',
-    type: commandTypes.BOOLEAN,
-    helpSection: requestHelpSections.GENERAL,
-    description: 'Show help for this command',
-    worksWith: []
   })

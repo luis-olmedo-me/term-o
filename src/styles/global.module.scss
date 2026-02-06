@@ -23,13 +23,16 @@ body {
 
 .verticalScroller {
   &::-webkit-scrollbar {
-    height: $space-300;
-    width: $space-300;
+    height: $space-200;
+    width: $space-200;
   }
 
   &::-webkit-scrollbar-track {
-    background-color: $colors-background;
+    background-color: with-opacity($colors-brightBlack, 0.2);
     cursor: pointer;
+  }
+  &.transparentTrack::-webkit-scrollbar-track {
+    background-color: $colors-background;
   }
 
   &::-webkit-scrollbar-thumb {

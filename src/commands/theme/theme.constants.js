@@ -26,13 +26,6 @@ export const colorScheme = {
 }
 
 export const themeHelpSections = {
-  GENERAL: 'general',
-  MANAGEMENT: 'management',
-  APPLICATION: 'application'
-}
-
-export const themeHelpSectionTitles = {
-  [themeHelpSections.GENERAL]: 'General',
-  [themeHelpSections.MANAGEMENT]: 'Management',
-  [themeHelpSections.APPLICATION]: 'Application'
+  MANAGEMENT: 'Management',
+  APPLICATION: 'Application'
 }

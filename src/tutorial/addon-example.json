@@ -8,6 +8,7 @@
       "abbreviation": "t",
       "type": "string",
       "description": "Testing option",
+      "helpSection": "Testing Purposes",
       "worksWith": [],
       "mustHave": [],
       "defaultValue": ""

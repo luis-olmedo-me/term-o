@@ -21,6 +21,7 @@ export const Terminal = () => {
   const [aliases] = useStorage({ key: storageKeys.ALIASES })
   const [config] = useStorage({ key: storageKeys.CONFIG })
   const [queue] = useStorage({ key: storageKeys.COMMAND_QUEUE })
+  const [addons] = useStorage({ key: storageKeys.ADDONS })
 
   const switchTabAutomatically = config.getValueById(configInputIds.SWITCH_TAB_AUTOMATICALLY)
   const rawContext = config.getValueById(configInputIds.CONTEXT)
@@ -95,6 +96,8 @@ export const Terminal = () => {
         onFocus={removePromptFocusEvent}
         loading={queue.isExecuting}
         context={context}
+        aliases={aliases}
+        addons={addons.values}
         name="terminal-prompt"
       />
     </div>

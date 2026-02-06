@@ -2,12 +2,11 @@ import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
 import { isTabId } from '@src/helpers/validation-command.helpers'
-import { inspectHelpSectionTitles, inspectHelpSections } from './inspect.constants'
+import { inspectHelpSections } from './inspect.constants'
 import { inspectHandler } from './inspect.handler'
 
 export default new CommandBase({
   name: commandNames.INSPECT,
-  helpSectionTitles: inspectHelpSectionTitles,
   handler: inspectHandler
 })
   .expect({
@@ -25,12 +24,4 @@ export default new CommandBase({
     helpSection: inspectHelpSections.SEARCH,
     description: 'Search variable in a specific tab (T[number])',
     validate: [isTabId]
-  })
-  .expect({
-    name: 'help',
-    abbreviation: 'h',
-    type: commandTypes.BOOLEAN,
-    helpSection: inspectHelpSections.GENERAL,
-    description: 'Show help for this command',
-    worksWith: []
   })

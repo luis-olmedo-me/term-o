@@ -182,7 +182,7 @@ export const Prompt = ({
           </div>
 
           <input
-            spellCheck={false}
+            spellCheck="false"
             ref={inputRef}
             className={promptInput}
             name={name}

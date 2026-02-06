@@ -26,6 +26,7 @@ export const Prompt = ({
   context,
   name,
   aliases,
+  addons,
   loading = false
 }) => {
   const [value, setValue] = useState('')
@@ -42,8 +43,8 @@ export const Prompt = ({
   const statusIndicator = config.getValueById(configInputIds.STATUS_INDICATOR)
   const isTruncated = config.getValueById(configInputIds.LINE_TRUNCATION)
 
-  const calculateSuggestion = useCallback((value, caret, aliases) => {
-    const newSuggestion = createSuggestion(value, caret, aliases)
+  const calculateSuggestion = useCallback((value, caret, aliases, addons) => {
+    const newSuggestion = createSuggestion(value, caret, aliases, addons)
 
     setSuggestion(newSuggestion)
   }, [])
@@ -57,7 +58,7 @@ export const Prompt = ({
       let debounceTimeoutId = null
 
       const calculate = async () => {
-        debounceTimeoutId = debouncedCalculateSuggestion(value, caret, aliases)
+        debounceTimeoutId = debouncedCalculateSuggestion(value, caret, aliases, addons)
       }
 
       calculate()
@@ -66,7 +67,7 @@ export const Prompt = ({
         clearTimeout(debounceTimeoutId)
       }
     },
-    [caret, value, aliases]
+    [caret, value, aliases, addons]
   )
 
   const syncScroll = () => {
@@ -210,5 +211,6 @@ Prompt.propTypes = {
   context: String,
   loading: Boolean,
   name: String,
-  aliases: Array
+  aliases: Array,
+  addons: Array
 }

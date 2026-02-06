@@ -45,10 +45,11 @@ const getSuggestionByOptions = (command, argsStart, argsEnd, start, end) => {
   return end ? match.slice(start.length, end.length * -1) : match.slice(start.length)
 }
 
-export const createSuggestion = (value, caret, aliases) => {
+export const createSuggestion = (value, caret, aliases, addons) => {
   const aliasNames = aliases.map(alias => alias.key)
+  const addonNames = addons.map(addon => addon.name)
   const commandValueNames = Object.values(commandNames)
-  const names = [...aliasNames, ...commandValueNames]
+  const names = [...aliasNames, ...addonNames, ...commandValueNames]
 
   const start = caret !== null ? value.slice(0, caret) : ''
   const end = caret !== null ? value.slice(caret) : ''

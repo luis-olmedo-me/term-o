@@ -47,7 +47,7 @@ export class OptionsManager {
   getByName(name, canFail = true) {
     const foundValue = this.values.find(value => value.name === name)
 
-    if (canFail && !foundValue) throw `--${name} is not a valid command option.`
+    if (canFail && !foundValue) throw `"--${name}" is not a valid command option.`
 
     return foundValue
   }
@@ -55,7 +55,7 @@ export class OptionsManager {
   getByAbbreviation(abbreviation) {
     const foundValue = this.values.find(value => value.abbreviation === abbreviation)
 
-    if (!foundValue) throw `-${abbreviation} is not a valid command option.`
+    if (!foundValue) throw `"-${abbreviation}" is not a valid command option.`
 
     return foundValue
   }

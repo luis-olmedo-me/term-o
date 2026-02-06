@@ -2,12 +2,11 @@ import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
 import { isRegExp, isTabId, isURL } from '@src/helpers/validation-command.helpers'
-import { tabsHelpSections, tabsHelpSectionTitles } from './tabs.constants'
+import { tabsHelpSections } from './tabs.constants'
 import { tabsHandler } from './tabs.handler'
 
 export default new CommandBase({
   name: commandNames.TABS,
-  helpSectionTitles: tabsHelpSectionTitles,
   handler: tabsHandler
 })
   .expect({
@@ -136,13 +135,5 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: tabsHelpSections.GENERAL,
     description: 'Show the tab currently targeted by the terminal',
-    worksWith: []
-  })
-  .expect({
-    name: 'help',
-    abbreviation: 'h',
-    type: commandTypes.BOOLEAN,
-    helpSection: tabsHelpSections.GENERAL,
-    description: 'Show help for this command',
     worksWith: []
   })

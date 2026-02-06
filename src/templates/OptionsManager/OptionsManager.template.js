@@ -64,6 +64,14 @@ export class OptionsManager {
     return this.values.filter(value => value.helpSection === helpSectionName)
   }
 
+  getHelpSectionsAvailable() {
+    return this.values.reduce(
+      (sections, { helpSection }) =>
+        !sections.includes(helpSection) ? sections.concat(helpSection) : sections,
+      []
+    )
+  }
+
   copy() {
     const optionsCopy = new OptionsManager()
 

@@ -3,12 +3,11 @@ import CommandBase from '@src/templates/CommandBase'
 import { commandNames, commandTypes } from '@src/constants/command.constants'
 import { eventsSupported } from '@src/constants/options.constants'
 import { isAnyOf, isRegExp, isTabId, isXpath } from '@src/helpers/validation-command.helpers'
-import { eventsHelpSections, eventsHelpSectionTitles } from './events.constants'
+import { eventsHelpSections } from './events.constants'
 import { eventsHandler } from './events.handler'
 
 export default new CommandBase({
   name: commandNames.EVENTS,
-  helpSectionTitles: eventsHelpSectionTitles,
   handler: eventsHandler
 })
   .expect({
@@ -76,13 +75,5 @@ export default new CommandBase({
     type: 'string',
     helpSection: eventsHelpSections.MANAGEMENT,
     description: 'Delete a registered event by its id',
-    worksWith: []
-  })
-  .expect({
-    name: 'help',
-    abbreviation: 'h',
-    type: commandTypes.BOOLEAN,
-    helpSection: eventsHelpSections.GENERAL,
-    description: 'Show help for this command',
     worksWith: []
   })

@@ -10,12 +10,11 @@ import {
   isTabId,
   isXpath
 } from '@src/helpers/validation-command.helpers'
-import { domHelpSectionTitles, domHelpSections } from './dom.constants'
+import { domHelpSections } from './dom.constants'
 import { domHandler } from './dom.handler'
 
 export default new CommandBase({
   name: commandNames.DOM,
-  helpSectionTitles: domHelpSectionTitles,
   handler: domHandler
 })
   .expect({
@@ -120,12 +119,4 @@ export default new CommandBase({
     validate: [isXpath],
     helpSection: domHelpSections.SEARCH,
     description: 'Limit search scope under a specific element'
-  })
-  .expect({
-    name: 'help',
-    type: commandTypes.BOOLEAN,
-    abbreviation: 'h',
-    helpSection: domHelpSections.GENERAL,
-    description: 'Show this help message',
-    worksWith: []
   })

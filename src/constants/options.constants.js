@@ -16,3 +16,13 @@ export const responseFormatSupported = ['blob', 'text', 'json']
 
 export const eventsSupported = [eventsAvailable.CLICK]
 export const domEventsSupported = [eventsAvailable.CLICK]
+
+export const helpOptionConfig = {
+  name: 'help',
+  abbreviation: 'h',
+  type: commandTypes.BOOLEAN,
+  helpSection: 'General',
+  description: 'Show help for this command',
+  worksWith: [],
+  defaultValue: false
+}

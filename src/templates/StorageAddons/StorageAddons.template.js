@@ -49,7 +49,6 @@ export class StorageAddons extends StorageSimple {
     return this.$latest().value.map(addon => {
       const commandBase = new CommandBase({
         name: addon.name,
-        helpSectionTitles: [],
         handler: async command => {
           const props = command.props
           const code = await getStorageValue(namespace, `addon_${addon.name}_handler`)

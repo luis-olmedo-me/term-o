@@ -2,12 +2,11 @@ import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
 import { hasLength, isTabId } from '@src/helpers/validation-command.helpers'
-import { storageHelpSections, storageHelpSectionTitles } from './storage.constants'
+import { storageHelpSections } from './storage.constants'
 import { storageHandler } from './storage.handler'
 
 export default new CommandBase({
   name: commandNames.STORAGE,
-  helpSectionTitles: storageHelpSectionTitles,
   handler: storageHandler
 })
   .expect({
@@ -63,13 +62,5 @@ export default new CommandBase({
     type: 'string',
     helpSection: storageHelpSections.MODIFICATION,
     description: 'Copy a value to the clipboard',
-    worksWith: []
-  })
-  .expect({
-    name: 'help',
-    abbreviation: 'h',
-    type: commandTypes.BOOLEAN,
-    helpSection: storageHelpSections.GENERAL,
-    description: 'Show help for this command',
     worksWith: []
   })

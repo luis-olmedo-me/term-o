@@ -3,9 +3,8 @@ import Command from '@src/templates/Command'
 import OptionsManager from '@src/templates/OptionsManager'
 
 export class CommandBase {
-  constructor({ name, helpSectionTitles, handler }) {
+  constructor({ name, handler }) {
     this.name = name
-    this.helpSectionTitles = helpSectionTitles
     this.options = new OptionsManager()
     this.handler = handler
   }
@@ -42,7 +41,6 @@ export class CommandBase {
     const newCommand = new Command({
       name: this.name,
       options: this.options.copy(),
-      helpSectionTitles: this.helpSectionTitles,
       origin
     })
 

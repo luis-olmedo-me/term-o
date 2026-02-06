@@ -1,4 +1,5 @@
 import { commandTypes } from '@src/constants/command.constants'
+import { helpOptionConfig } from '@src/constants/options.constants'
 import { getArray } from './arguments.helpers'
 
 export const getOptionTypeLabel = type => {
@@ -153,3 +154,5 @@ export const getPropsFromString = command => {
 
   return props
 }
+
+export const appendHelpOption = base => base.expect(helpOptionConfig)

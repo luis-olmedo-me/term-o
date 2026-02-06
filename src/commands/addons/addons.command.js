@@ -1,12 +1,11 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
-import { addonsHelpSectionTitles, addonsHelpSections } from './addons.constants'
+import { addonsHelpSections } from './addons.constants'
 import { addonsHandler } from './addons.handler'
 
 export default new CommandBase({
   name: commandNames.ADDONS,
-  helpSectionTitles: addonsHelpSectionTitles,
   handler: addonsHandler
 })
   .expect({
@@ -31,13 +30,5 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: addonsHelpSections.MANAGEMENT,
     description: 'Delete a addon by name',
-    worksWith: []
-  })
-  .expect({
-    name: 'help',
-    abbreviation: 'h',
-    type: commandTypes.BOOLEAN,
-    helpSection: addonsHelpSections.GENERAL,
-    description: 'Show help for this command',
     worksWith: []
   })

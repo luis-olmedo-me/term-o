@@ -2,12 +2,11 @@ import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
 import { isJSONScheme } from '@src/helpers/validation-command.helpers'
-import { colorScheme, themeHelpSections, themeHelpSectionTitles } from './theme.constants'
+import { colorScheme, themeHelpSections } from './theme.constants'
 import { themeHandler } from './theme.handler'
 
 export default new CommandBase({
   name: commandNames.THEME,
-  helpSectionTitles: themeHelpSectionTitles,
   handler: themeHandler
 })
   .expect({
@@ -49,13 +48,5 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: themeHelpSections.APPLICATION,
     description: 'Show the currently applied theme',
-    worksWith: []
-  })
-  .expect({
-    name: 'help',
-    abbreviation: 'h',
-    type: commandTypes.BOOLEAN,
-    helpSection: themeHelpSections.GENERAL,
-    description: 'Show help for this command',
     worksWith: []
   })

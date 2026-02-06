@@ -14,6 +14,8 @@ import styleBase from './style/style.command'
 import tabsBase from './tabs/tabs.command'
 import themeBase from './theme/theme.command'
 
+import { appendHelpOption } from '@src/helpers/options.helpers'
+
 export default [
   addonsBase,
   aliasBase,
@@ -30,7 +32,7 @@ export default [
   styleBase,
   tabsBase,
   themeBase
-]
+].map(appendHelpOption)
 
 export {
   addonsBase,

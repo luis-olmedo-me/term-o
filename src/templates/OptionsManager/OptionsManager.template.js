@@ -44,10 +44,10 @@ export class OptionsManager {
     })
   }
 
-  getByName(name) {
+  getByName(name, canFail = true) {
     const foundValue = this.values.find(value => value.name === name)
 
-    if (!foundValue) throw `--${name} is not a valid command option.`
+    if (canFail && !foundValue) throw `--${name} is not a valid command option.`
 
     return foundValue
   }

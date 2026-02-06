@@ -1,4 +1,4 @@
-import { optionDefaultValues } from '@src/constants/options.constants'
+import { helpOptionConfig, optionDefaultValues } from '@src/constants/options.constants'
 import Command from '@src/templates/Command'
 import OptionsManager from '@src/templates/OptionsManager'
 
@@ -38,6 +38,11 @@ export class CommandBase {
   }
 
   create(origin) {
+    const hasOptions = this.options.length > 0
+    const hasHelpOption = !!this.options.getByName('help', false)
+
+    if (hasOptions && !hasHelpOption) this.expect(helpOptionConfig)
+
     const newCommand = new Command({
       name: this.name,
       options: this.options.copy(),

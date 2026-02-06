@@ -22,6 +22,29 @@ const getSuggestionByName = (names, start, end) => {
   return end ? match.slice(start.length, end.length * -1) : match.slice(start.length)
 }
 
+const getSuggestionByOptions = (command, argsStart, argsEnd, start, end) => {
+  const optionNames = command.options.values.reduce((names, option) => {
+    const optionName = `--${option.name}`
+    const abbreviation = `-${option.abbreviation}`
+
+    const isOptionDuplicated = argsStart.includes(optionName) || argsEnd.includes(optionName)
+    const isAbbrDuplicated = argsStart.includes(abbreviation) || argsEnd.includes(abbreviation)
+
+    return isOptionDuplicated || isAbbrDuplicated ? names : names.concat(abbreviation, optionName)
+  }, [])
+
+  const match = optionNames.find(option => {
+    if (!option.startsWith(start)) return false
+    if (!end) return true
+    const optionEnd = option.slice(start.length)
+
+    return optionEnd.endsWith(end)
+  })
+
+  if (!match) return ''
+  return end ? match.slice(start.length, end.length * -1) : match.slice(start.length)
+}
+
 export const createSuggestion = (value, caret, aliases) => {
   const aliasNames = aliases.map(alias => alias.key)
   const commandValueNames = Object.values(commandNames)
@@ -44,33 +67,9 @@ export const createSuggestion = (value, caret, aliases) => {
   const restArgsStart = argsStart.slice(1, -1)
   const restArgsEnd = argsEnd.slice(1)
   const firstArgStart = argsStart.at(0) ?? ''
-  const isCommand = commandValueNames.some(name => name === firstArgStart)
-
-  if (!isCommand) return ''
   const command = commandParser.bases.find(base => base.name === firstArgStart)
 
-  const optionNames = command.options.values.reduce((names, option) => {
-    const optionName = `--${option.name}`
-    const abbreviation = `-${option.abbreviation}`
-
-    const isOptionDuplicated =
-      restArgsStart.includes(optionName) || restArgsEnd.includes(optionName)
-    const isAbbrDuplicated =
-      restArgsStart.includes(abbreviation) || restArgsEnd.includes(abbreviation)
-
-    return isOptionDuplicated || isAbbrDuplicated ? names : names.concat(abbreviation, optionName)
-  }, [])
-
-  const match = optionNames.find(option => {
-    if (!option.startsWith(lastArgStart)) return false
-    if (!firstArgEnd) return true
-    const optionEnd = option.slice(lastArgStart.length)
-
-    return optionEnd.endsWith(firstArgEnd)
-  })
-
-  if (!match) return ''
-  return firstArgEnd
-    ? match.slice(lastArgStart.length, firstArgEnd.length * -1)
-    : match.slice(lastArgStart.length)
+  return command
+    ? getSuggestionByOptions(command, restArgsStart, restArgsEnd, lastArgStart, firstArgEnd)
+    : ''
 }

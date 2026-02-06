@@ -108,26 +108,26 @@ export const Prompt = ({
 
     if (key === 'ArrowUp') {
       event.preventDefault()
+      const newIndex = historialIndex - 1
+      const canBeStored = newIndex * -1 <= historial.length
 
-      setHistorialIndex(index => {
-        const newIndex = index - 1
-        const canBeStored = newIndex * -1 <= historial.length
-
-        return canBeStored ? newIndex : index
-      })
+      if (canBeStored) {
+        setHistorialIndex(newIndex)
+        setValue(newIndex === 0 ? '' : historial.at(newIndex))
+      }
 
       return
     }
 
     if (key === 'ArrowDown') {
       event.preventDefault()
+      const newIndex = historialIndex + 1
+      const canBeStored = newIndex <= 0
 
-      setHistorialIndex(index => {
-        const newIndex = index + 1
-        const canBeStored = newIndex <= 0
-
-        return canBeStored ? newIndex : index
-      })
+      if (canBeStored) {
+        setHistorialIndex(newIndex)
+        setValue(newIndex === 0 ? '' : historial.at(newIndex))
+      }
 
       return
     }

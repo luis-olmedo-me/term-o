@@ -22,8 +22,8 @@ const getSuggestionByName = (names, start, end) => {
   return end ? match.slice(start.length, end.length * -1) : match.slice(start.length)
 }
 
-const getSuggestionByOptions = (command, argsStart, argsEnd, start, end) => {
-  const optionNames = command.options.values.reduce((names, option) => {
+const getSuggestionByOptions = (options, argsStart, argsEnd, start, end) => {
+  const optionNames = options.reduce((names, option) => {
     const optionName = `--${option.name}`
     const abbreviation = `-${option.abbreviation}`
 
@@ -69,8 +69,25 @@ export const createSuggestion = (value, caret, aliases, addons) => {
   const restArgsEnd = argsEnd.slice(1)
   const firstArgStart = argsStart.at(0) ?? ''
   const command = commandParser.bases.find(base => base.name === firstArgStart)
+  const addon = addons.find(addon => addon.name === firstArgStart)
 
-  return command
-    ? getSuggestionByOptions(command, restArgsStart, restArgsEnd, lastArgStart, firstArgEnd)
-    : ''
+  if (addon)
+    return getSuggestionByOptions(
+      addon.options,
+      restArgsStart,
+      restArgsEnd,
+      lastArgStart,
+      firstArgEnd
+    )
+
+  if (command)
+    return getSuggestionByOptions(
+      command.options.values,
+      restArgsStart,
+      restArgsEnd,
+      lastArgStart,
+      firstArgEnd
+    )
+
+  return ''
 }

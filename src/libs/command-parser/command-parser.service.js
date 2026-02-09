@@ -1,4 +1,4 @@
-import commandBases, { errorBase } from '@src/commands'
+import { errorBase } from '@src/commands'
 
 import EventListener from '@src/templates/EventListener'
 
@@ -6,7 +6,7 @@ import { getArgs, splitBy } from '@src/helpers/arguments.helpers'
 import { getHighestTitleCountInBases } from '@src/helpers/command.helpers'
 import { truncate } from '@src/helpers/utils.helpers'
 
-class CommandParser extends EventListener {
+export class CommandParser extends EventListener {
   constructor(bases) {
     super()
 
@@ -82,5 +82,3 @@ class CommandParser extends EventListener {
     return fragmentsWithAliases.join(' && ')
   }
 }
-
-export const commandParser = new CommandParser(commandBases)

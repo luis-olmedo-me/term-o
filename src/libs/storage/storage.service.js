@@ -11,7 +11,7 @@ import { createUUIDv4, safeJsonParse } from '@src/helpers/utils.helpers'
 import { safeDecompress } from '@src/helpers/zip.helpers'
 import { compressToUTF16, decompressFromUTF16 } from 'lz-string'
 
-class Storage extends EventListener {
+export class Storage extends EventListener {
   constructor() {
     super()
 
@@ -30,8 +30,6 @@ class Storage extends EventListener {
       },
       {}
     )
-
-    this.init()
   }
 
   async init() {
@@ -149,7 +147,7 @@ class Storage extends EventListener {
   handleStorageChangesManually() {
     chrome.storage.onChanged.removeListener(this.handleStorageChangesRef)
     this.manualMode = true
+
+    return this
   }
 }
-
-export const storage = new Storage()

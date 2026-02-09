@@ -1,5 +1,6 @@
-import commandParser from '@src/libs/command-parser'
-import storage from '@src/libs/storage'
+import commandBases from '@src/commands'
+import CommandParser from '@src/libs/command-parser/manual'
+import Storage from '@src/libs/storage/manual'
 
 import { getCurrentTab } from '@src/browser-api/tabs.api'
 import { origins } from '@src/constants/command.constants'
@@ -12,31 +13,49 @@ import processHandlers from './process-handlers'
 
 const backgroundHandler = setUpHandlers(processHandlers)
 
-const handleCommandQueueChange = async (storageRef, commandParserRef) => {
-  const queue = storageRef.get(storageKeys.COMMAND_QUEUE)
-  const executable = queue.executable
+let storageInstance
+let commandParserInstance
 
-  if (queue.isExecuting || !executable) return
-  await storageRef.restart()
+const getStorage = async () => {
+  if (!storageInstance) storageInstance = new Storage().handleStorageChangesManually()
+  if (!storageInstance.initiated) await storageInstance.init()
 
-  const originalTab = storageRef.get(storageKeys.TAB)
-  const aliases = storageRef.get(storageKeys.ALIASES)
-  const config = storageRef.get(storageKeys.CONFIG)
-  const addons = storageRef.get(storageKeys.ADDONS)
+  return storageInstance
+}
 
-  const tab = executable.tab || originalTab
+const getCommandParser = storage => {
+  if (!commandParserInstance) commandParserInstance = new CommandParser(commandBases)
+
+  const aliases = storage.get(storageKeys.ALIASES)
+  const addons = storage.get(storageKeys.ADDONS)
+
   const addonNames = addons.values.map(addon => addon.name)
   const externalBases = addons.asCommands(addonNames)
 
-  commandParserRef.setOrigin(executable.origin)
-  commandParserRef.setAliases(aliases)
-  commandParserRef.setExternalBases(externalBases)
-  if (executable.tab) storageRef.set(storageKeys.TAB, executable.tab)
+  commandParserInstance.setAliases(aliases)
+  commandParserInstance.setExternalBases(externalBases)
+
+  return commandParserInstance
+}
+
+const handleCommandQueueChange = async (storage, commandParser) => {
+  const queue = storage.get(storageKeys.COMMAND_QUEUE)
+  const executable = queue.executable
+
+  if (queue.isExecuting || !executable) return
+
+  const originalTab = storage.get(storageKeys.TAB)
+  const config = storage.get(storageKeys.CONFIG)
+
+  const tab = executable.tab || originalTab
+
+  commandParser.setOrigin(executable.origin)
+  if (executable.tab) storage.set(storageKeys.TAB, executable.tab)
 
   const contextInputValue = config.getValueById(configInputIds.CONTEXT)
 
   const context = createContext(contextInputValue, tab)
-  const command = commandParserRef.read(executable.line).applyContext(context).applyQueue(queue)
+  const command = commandParser.read(executable.line).applyContext(context).applyQueue(queue)
 
   if (!command.finished) {
     command.startExecuting()
@@ -50,17 +69,9 @@ const handleCommandQueueChange = async (storageRef, commandParserRef) => {
   if (commandVisible) queue.change(executable.id, commandVisible.jsonUI())
   else queue.delete(executable.id)
 
-  if (executable.tabId) storageRef.set(storageKeys.TAB, originalTab)
+  if (executable.tabId) storage.set(storageKeys.TAB, originalTab)
 }
 
-const handleStorageChange = (storageRef, commandParserRef) => {
-  return changes => {
-    const hasQueueChanges = storageKeys.COMMAND_QUEUE in changes
-    storageRef.handleStorageChanges(changes)
-
-    if (hasQueueChanges) handleCommandQueueChange(storageRef, commandParserRef)
-  }
-}
 const ensureOffscreenIsActive = async () => {
   const exists = await chrome.offscreen.hasDocument()
 
@@ -73,39 +84,38 @@ const ensureOffscreenIsActive = async () => {
   }
 }
 
-const handleTabsUpdated = storageRef => {
-  return (_tabId, changeInfo, updatedTab) => {
-    if (changeInfo.status !== 'complete') return
-
-    const queue = storageRef.get(storageKeys.COMMAND_QUEUE)
-    const events = storageRef.get(storageKeys.EVENTS)
-
-    const pendingEvents = events.filter(event => new RegExp(event.url).test(updatedTab.url))
-
-    if (pendingEvents.length === 0) return
-    const tab = createInternalTab(updatedTab)
-
-    pendingEvents.forEach(event => queue.add(event.line, origins.AUTO, tab))
-  }
-}
-
-const handleInstalled = storageRef => {
-  return async () => {
-    storageRef.handleStorageChangesManually()
-
-    const tab = await getCurrentTab()
-    await ensureOffscreenIsActive()
-
-    storageRef.set(storageKeys.TAB, tab)
-  }
-}
-
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
 
-chrome.tabs.onUpdated.addListener(handleTabsUpdated(storage))
+chrome.tabs.onUpdated.addListener(async (_tabId, changeInfo, updatedTab) => {
+  if (changeInfo.status !== 'complete') return
+  const storage = await getStorage()
 
-chrome.runtime.onInstalled.addListener(handleInstalled(storage))
+  const queue = storage.get(storageKeys.COMMAND_QUEUE)
+  const events = storage.get(storageKeys.EVENTS)
 
-chrome.storage.onChanged.addListener(handleStorageChange(storage, commandParser))
+  const pendingEvents = events.filter(event => new RegExp(event.url).test(updatedTab.url))
+
+  if (pendingEvents.length === 0) return
+  const tab = createInternalTab(updatedTab)
+
+  pendingEvents.forEach(event => queue.add(event.line, origins.AUTO, tab))
+})
+
+chrome.runtime.onInstalled.addListener(async () => {
+  const storage = await getStorage()
+  const tab = await getCurrentTab()
+
+  storage.set(storageKeys.TAB, tab)
+  await ensureOffscreenIsActive()
+})
+
+chrome.storage.onChanged.addListener(async changes => {
+  const hasQueueChanges = storageKeys.COMMAND_QUEUE in changes
+  const storage = await getStorage()
+  const commandParser = getCommandParser(storage)
+
+  storageInstance.handleStorageChanges(changes)
+  if (hasQueueChanges) await handleCommandQueueChange(storage, commandParser)
+})
 
 chrome.runtime.onMessage.addListener(backgroundHandler)

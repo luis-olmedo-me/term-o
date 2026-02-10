@@ -55,7 +55,7 @@ const handleCommandQueueChange = async (storage, commandParser) => {
   const contextInputValue = config.getValueById(configInputIds.CONTEXT)
 
   const context = createContext(contextInputValue, tab)
-  const command = commandParser.read(executable.line).applyContext(context).share({ queue })
+  const command = commandParser.read(executable.line).applyContext(context).share({ storage })
 
   if (!command.finished) {
     command.startExecuting()

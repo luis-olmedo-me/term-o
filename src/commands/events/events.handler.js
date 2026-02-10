@@ -1,5 +1,4 @@
 import processManager from '@src/libs/process-manager'
-import storage from '@src/libs/storage'
 
 import { domEventsSupported } from '@src/constants/options.constants'
 import { storageKeys } from '@src/constants/storage.constants'
@@ -9,6 +8,7 @@ import { cleanTabId } from '@src/helpers/tabs.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 
 export const eventsHandler = async command => {
+  const storage = command.get('storage')
   const P = name => command.props[name]
 
   if (P`list`) {

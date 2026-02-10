@@ -1,11 +1,11 @@
 import processManager from '@src/libs/process-manager'
-import storage from '@src/libs/storage'
 
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatStyle, formatText } from '@src/helpers/format.helpers'
 
 export const styleHandler = async command => {
+  const storage = command.get('storage')
   const tabId = storage.get(storageKeys.TAB).id
   const P = name => command.props[name]
 

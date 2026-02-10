@@ -1,10 +1,9 @@
-import storage from '@src/libs/storage'
-
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatAlias } from '@src/helpers/format.helpers'
 
 export const aliasHandler = async command => {
+  const storage = command.get('storage')
   const P = name => command.props[name]
 
   if (P`list`) {

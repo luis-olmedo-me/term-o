@@ -1,5 +1,3 @@
-import storage from '@src/libs/storage'
-
 import {
   closeTab,
   createTab,
@@ -16,6 +14,7 @@ import { formatTab } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
 
 export const tabsHandler = async command => {
+  const storage = command.get('storage')
   const tabId = storage.get(storageKeys.TAB).id
   const P = name => command.props[name]
 

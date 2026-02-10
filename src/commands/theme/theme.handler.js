@@ -1,5 +1,3 @@
-import storage from '@src/libs/storage'
-
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { defaultColorTheme } from '@src/constants/themes.constants'
@@ -7,6 +5,7 @@ import { createHelpView } from '@src/helpers/command.helpers'
 import { formatTheme } from '@src/helpers/format.helpers'
 
 export const themeHandler = async command => {
+  const storage = command.get('storage')
   const P = name => command.props[name]
 
   if (P`list`) {

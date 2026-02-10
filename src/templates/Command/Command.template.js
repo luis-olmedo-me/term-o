@@ -27,7 +27,6 @@ export class Command extends EventListener {
     this.args = []
     this.canExecuteNext = true
     this.visible = true
-    this.data = null
     this._shared = {}
   }
 

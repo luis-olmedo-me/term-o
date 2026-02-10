@@ -7,11 +7,8 @@ import { origins } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
-import { setUpHandlers } from '@src/helpers/process.helpers'
 import { createInternalTab } from '@src/helpers/tabs.helpers'
 import processHandlers from './process-handlers'
-
-const backgroundHandler = setUpHandlers(processHandlers)
 
 let storageInstance
 let commandParserInstance
@@ -118,4 +115,25 @@ chrome.storage.onChanged.addListener(async changes => {
   if (hasQueueChanges) await handleCommandQueueChange(storage, commandParser)
 })
 
-chrome.runtime.onMessage.addListener(backgroundHandler)
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  const { data } = request.data || {}
+  const handler = processHandlers[request.type]
+
+  if (!handler) return
+  const prepareHandler = async () => {
+    const storage = await getStorage()
+    const commandParser = getCommandParser(storage)
+
+    handler(
+      data => sendResponse({ status: 'ok', data }),
+      error => sendResponse({ status: 'error', error }),
+      data,
+      storage,
+      commandParser
+    )
+  }
+
+  prepareHandler()
+
+  return true
+})

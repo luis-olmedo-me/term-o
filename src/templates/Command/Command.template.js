@@ -23,7 +23,6 @@ export class Command extends EventListener {
     this.staticUpdates = []
     this.status = commandStatuses.IDLE
     this.nextCommand = null
-    this.queue = null
     this.options = options
     this.args = []
     this.canExecuteNext = true
@@ -161,12 +160,6 @@ export class Command extends EventListener {
 
   setTitle(newTitle) {
     this.title = newTitle
-
-    return this
-  }
-
-  applyQueue(newQueue) {
-    this.queue = newQueue
 
     return this
   }

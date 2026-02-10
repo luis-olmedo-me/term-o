@@ -14,7 +14,6 @@ export class CommandParser extends EventListener {
     this.bases = bases
     this.aliases = []
     this.origin = null
-    this.highestTitleCount = getHighestTitleCountInBases(bases)
   }
 
   setExternalBases(externalBases) {
@@ -29,15 +28,14 @@ export class CommandParser extends EventListener {
   }
 
   read(rawScript) {
-    const data = { highestTitleCount: this.highestTitleCount }
     const scriptFormatted = this.getWithAliasesResolved(rawScript)
     let [firstFragment, ...nextFragments] = splitBy(scriptFormatted, '&&')
 
-    const command = this.parse(firstFragment).setTitle(rawScript).applyData(data)
+    const command = this.parse(firstFragment).setTitle(rawScript)
     let carriedCommand = command
 
     for (let fragment of nextFragments) {
-      const nextCommand = this.parse(fragment).setTitle(rawScript).applyData(data)
+      const nextCommand = this.parse(fragment).setTitle(rawScript)
       carriedCommand.nextCommand = nextCommand
 
       if (nextCommand.finished) break
@@ -45,7 +43,9 @@ export class CommandParser extends EventListener {
       carriedCommand = nextCommand
     }
 
-    return command
+    return command.share({
+      highestTitleCount: getHighestTitleCountInBases(this.bases)
+    })
   }
 
   parse(fragment) {

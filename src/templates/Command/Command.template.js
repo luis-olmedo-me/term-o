@@ -29,6 +29,7 @@ export class Command extends EventListener {
     this.canExecuteNext = true
     this.visible = true
     this.data = null
+    this._shared = {}
   }
 
   get finished() {
@@ -170,10 +171,15 @@ export class Command extends EventListener {
     return this
   }
 
-  applyData(newData) {
-    this.data = newData
+  share(newSharedData) {
+    this._shared = { ...this._shared, ...newSharedData }
+
+    if (this.nextCommand) this.nextCommand.share(this._shared)
 
     return this
+  }
+  get(key) {
+    return this._shared[key] ?? null
   }
 
   applyContext(newContext) {

@@ -1,6 +1,6 @@
 import processManager from '@src/libs/process-manager'
 
-import { commandNames } from '@src/constants/command.constants'
+import { commandNames, origins } from '@src/constants/command.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatAddon } from '@src/helpers/format.helpers'
@@ -18,8 +18,14 @@ export const addonsHandler = async command => {
 
   if (P`upload`) {
     const addons = storage.get(storageKeys.ADDONS)
+    const isTermOpen = command.get('isTermOpen')
 
-    command.update(['Click the notification on the page to start uploading a file.'])
+    if (!isTermOpen)
+      throw 'Please make sure the terminal is open before attempting to upload a file.'
+    if (command.origin !== origins.MANUAL)
+      throw 'Uploading a file is only allowed through direct user interaction.'
+
+    command.update(['Select a file to upload.'])
     const file = await processManager.uploadFile({ extensions: ['json'] })
     const newAddon = JSON.parse(file.content)
 

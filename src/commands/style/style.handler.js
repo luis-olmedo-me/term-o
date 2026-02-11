@@ -47,7 +47,7 @@ export const styleHandler = async command => {
     if (command.origin !== origins.MANUAL)
       throw 'Picking up a color is only allowed through direct user interaction.'
 
-    command.update(['Click the notification on the page to start picking a color.'])
+    command.update(['Pick a color.'])
     const color = await processManager.pickColor()
     const update = formatText({ text: color })
 

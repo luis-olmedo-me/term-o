@@ -7,8 +7,6 @@ export default async (resolve, reject) => {
 
     resolve(sRGBHex)
   } catch {
-    reject(
-      'An unexpected error occurred while trying to pick a color. Please make sure the terminal is open before attempting to pick a color.'
-    )
+    reject('Unexpected error when trying to pick-up color.')
   }
 }

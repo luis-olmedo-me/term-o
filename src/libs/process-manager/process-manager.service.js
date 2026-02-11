@@ -71,11 +71,12 @@ class ProcessManager {
     })
   }
 
-  pickColor({ theme }) {
+  pickColor() {
     return createWorkerProcessRequest({
       type: processNames.PICK_COLOR,
       defaultResponse: null,
-      data: { theme }
+      tabId: null,
+      data: null
     })
   }
 

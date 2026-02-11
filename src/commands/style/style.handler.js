@@ -42,7 +42,7 @@ export const styleHandler = async command => {
     const config = storage.get(storageKeys.CONFIG)
 
     command.update(['Click the notification on the page to start picking a color.'])
-    const color = await processManager.pickColor(tabId, { theme: config.theme })
+    const color = await processManager.pickColor({ theme: config.theme })
     const update = formatText({ text: color })
 
     command.reset()

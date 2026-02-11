@@ -13,6 +13,7 @@ import processHandlers from './process-handlers'
 const sidepanelHandler = setUpHandlers(processHandlers)
 
 commandParser.setOrigin(origins.MANUAL)
+chrome.runtime.connect({ name: 'sidepanel' })
 chrome.runtime.onMessage.addListener(sidepanelHandler)
 
 render(

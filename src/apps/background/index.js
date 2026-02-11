@@ -12,6 +12,7 @@ import processHandlers from './process-handlers'
 
 let storageInstance
 let commandParserInstance
+let sidePanelPort = null
 
 const getStorage = async () => {
   if (!storageInstance) storageInstance = new Storage().handleStorageChangesManually()
@@ -136,4 +137,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   prepareHandler()
 
   return true
+})
+
+chrome.runtime.onConnect.addListener(port => {
+  if (port.name !== 'sidepanel') return
+  sidePanelPort = port
+
+  port.onDisconnect.addListener(() => {
+    sidePanelPort = null
+  })
 })

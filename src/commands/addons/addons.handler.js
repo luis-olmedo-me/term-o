@@ -17,15 +17,10 @@ export const addonsHandler = async command => {
   }
 
   if (P`upload`) {
-    const tabId = storage.get(storageKeys.TAB).id
-    const config = storage.get(storageKeys.CONFIG)
     const addons = storage.get(storageKeys.ADDONS)
 
     command.update(['Click the notification on the page to start uploading a file.'])
-    const file = await processManager.uploadFile(tabId, {
-      theme: config.theme,
-      extensions: ['json']
-    })
+    const file = await processManager.uploadFile({ extensions: ['json'] })
     const newAddon = JSON.parse(file.content)
 
     const alreadyExists = addons.has(newAddon.name)

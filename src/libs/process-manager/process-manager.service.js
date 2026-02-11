@@ -62,12 +62,12 @@ class ProcessManager {
     })
   }
 
-  uploadFile(tabId, { theme, extensions }) {
+  uploadFile({ extensions }) {
     return createWorkerProcessRequest({
       type: processNames.UPLOAD_FILE,
       defaultResponse: {},
-      tabId,
-      data: { theme, extensions }
+      tabId: null,
+      data: { extensions }
     })
   }
 

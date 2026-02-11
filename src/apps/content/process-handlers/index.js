@@ -4,7 +4,6 @@ import findDOMElement from './find-dom-element.process'
 import getDOMElements from './get-dom-elements.process'
 import getElementStyles from './get-element-styles.process'
 import getStorage from './get-storage.process'
-import pickColor from './pick-color.process'
 import readVariable from './read-variable.process'
 import setStorage from './set-storage.process'
 import triggerEvent from './trigger-event.process'
@@ -20,7 +19,6 @@ export default {
   [processNames.GET_ELEMENT_STYLES]: getElementStyles,
   [processNames.APPLY_ELEMENT_STYLES]: applyElementStyles,
   [processNames.UPLOAD_FILE]: uploadFile,
-  [processNames.PICK_COLOR]: pickColor,
   [processNames.TRIGGER_EVENT]: triggerEvent,
   [processNames.CREATE_NOTIFICATION]: createNotification,
   [processNames.READ_VARIABLE]: readVariable

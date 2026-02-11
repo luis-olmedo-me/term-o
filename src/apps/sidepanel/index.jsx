@@ -7,8 +7,13 @@ import ThemeProvider from '@src/providers/ThemeProvider'
 import './index.scss'
 
 import { origins } from '@src/constants/command.constants'
+import { setUpHandlers } from '@src/helpers/process.helpers'
+import processHandlers from './process-handlers'
+
+const sidepanelHandler = setUpHandlers(processHandlers)
 
 commandParser.setOrigin(origins.MANUAL)
+chrome.runtime.onMessage.addListener(sidepanelHandler)
 
 render(
   <StorageProvider>

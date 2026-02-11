@@ -51,9 +51,13 @@ const handleCommandQueueChange = async (storage, commandParser) => {
   if (executable.tab) storage.set(storageKeys.TAB, executable.tab)
 
   const contextInputValue = config.getValueById(configInputIds.CONTEXT)
+  const isTermOpen = !!sidePanelPort
 
   const context = createContext(contextInputValue, tab)
-  const command = commandParser.read(executable.line).applyContext(context).share({ storage })
+  const command = commandParser
+    .read(executable.line)
+    .applyContext(context)
+    .share({ storage, isTermOpen })
 
   if (!command.finished) {
     command.startExecuting()
@@ -124,13 +128,15 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   const prepareHandler = async () => {
     const storage = await getStorage()
     const commandParser = getCommandParser(storage)
+    const isTermOpen = !!sidePanelPort
 
     handler(
       data => sendResponse({ status: 'ok', data }),
       error => sendResponse({ status: 'error', error }),
       data,
       storage,
-      commandParser
+      commandParser,
+      isTermOpen
     )
   }
 

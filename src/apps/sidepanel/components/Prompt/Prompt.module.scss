@@ -2,10 +2,11 @@
   cursor: text;
   background-color: transparent;
   color: $colors-foreground;
-  padding: 0 $space-600 $space-200 $space-800;
+  padding: $space-400 $space-600 $space-200 $space-800;
   z-index: 1;
   box-shadow: 0 calc($space-550 * -1) $space-400 calc($space-400 * -1) $colors-background;
   transition: box-shadow 0.2s ease-in-out;
+  border-top: 1px solid $colors-white;
 
   &[data-indicator='half-dot'] {
     padding: 0 $space-600;

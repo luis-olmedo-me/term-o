@@ -95,6 +95,7 @@ export const Terminal = () => {
         onBlur={WaitForKeyPressToFocusOnPrompt}
         onFocus={removePromptFocusEvent}
         loading={queue.isExecuting}
+        request={queue.latestRequest}
         context={context}
         aliases={aliases}
         addons={addons.values}

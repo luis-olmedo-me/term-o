@@ -51,8 +51,14 @@ export const styleHandler = async command => {
     const color = await processManager.pickColor()
     const update = formatText({ text: color })
 
+    const input = await processManager.requestInput({
+      title: 'test',
+      type: 'boolean'
+    })
+
     command.reset()
     command.update(update)
+    command.update([String(input)])
   }
 
   if (P`help`) createHelpView(command)

@@ -80,6 +80,15 @@ class ProcessManager {
     })
   }
 
+  requestInput({ title, type }) {
+    return createWorkerProcessRequest({
+      type: processNames.REQUEST_INPUT,
+      defaultResponse: '',
+      tabId: null,
+      data: { title, type }
+    })
+  }
+
   triggerEvent(tabId, { xpath, event, theme }) {
     return createWorkerProcessRequest({
       type: processNames.TRIGGER_EVENT,

@@ -33,6 +33,7 @@ export const Prompt = ({
   const [suggestion, setSuggestion] = useState('')
   const [historialIndex, setHistorialIndex] = useState(0)
   const [caret, setCaret] = useState(0)
+  const [request, setRequest] = useState(null)
 
   const overlayRef = useRef(null)
 
@@ -51,6 +52,17 @@ export const Prompt = ({
   const debouncedCalculateSuggestion = useCallback(debounce(calculateSuggestion, 200), [
     calculateSuggestion
   ])
+
+  useEffect(function expectForRequests() {
+    const handleRequestSend = event => setRequest(event.detail)
+
+    window.addEventListener('term-o-request-send', handleRequestSend)
+
+    return () => {
+      setRequest(null)
+      window.removeEventListener('term-o-request-send', handleRequestSend)
+    }
+  }, [])
 
   useEffect(
     function changeSuggestion() {
@@ -87,6 +99,17 @@ export const Prompt = ({
     const targetValue = event.target.value
 
     setSuggestion('')
+
+    if (key === 'Enter' && targetValue && request) {
+      const requestEvent = new CustomEvent('term-o-request-solved', { detail: targetValue })
+
+      window.dispatchEvent(requestEvent)
+      setHistorialIndex(0)
+      setRequest(null)
+      setValue('')
+
+      return
+    }
 
     if (key === 'Tab' && !suggestion) {
       event.preventDefault()
@@ -170,6 +193,12 @@ export const Prompt = ({
           <ColoredText value={contextLine} />
         </p>
       ))}
+
+      {request && (
+        <p className={promptLine} data-truncated="false">
+          {request.title}
+        </p>
+      )}
 
       <div className={prompWithPrefix}>
         <span>{prefix}</span>

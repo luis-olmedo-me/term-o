@@ -27,7 +27,8 @@ export const Prompt = ({
   name,
   aliases,
   addons,
-  queue
+  request,
+  loading = false
 }) => {
   const [value, setValue] = useState('')
   const [suggestion, setSuggestion] = useState('')
@@ -42,8 +43,6 @@ export const Prompt = ({
   const historialSize = config.getValueById(configInputIds.HISTORIAL_SIZE)
   const statusIndicator = config.getValueById(configInputIds.STATUS_INDICATOR)
   const isTruncated = config.getValueById(configInputIds.LINE_TRUNCATION)
-  const request = queue.latestRequest
-  const loading = queue.isExecuting
 
   const calculateSuggestion = useCallback((value, caret, aliases, addons) => {
     const newSuggestion = createSuggestion(value, caret, aliases, addons)
@@ -88,16 +87,6 @@ export const Prompt = ({
   const handleKeyDown = event => {
     const key = event.key
     const targetValue = event.target.value
-
-    if (request && key === 'Enter') {
-      console.log('💬 ~ request:', request)
-      console.log('💬 ~ queue:', queue)
-      queue.solveRequest(request.id, targetValue)
-      setHistorialIndex(0)
-      setValue('')
-
-      return
-    }
 
     setSuggestion('')
 
@@ -231,5 +220,5 @@ Prompt.propTypes = {
   name: String,
   aliases: Array,
   addons: Array,
-  queue: Array
+  request: Object
 }

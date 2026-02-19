@@ -123,7 +123,7 @@ export class StorageCommandQueue extends StorageSimple {
 
   solveRequest(id, response) {
     const newQueue = this.$latest().value.map(queueItem =>
-      queueItem.request?.id === id
+      queueItem.id === id
         ? { ...queueItem, request: { ...queueItem.request, finished: true, response } }
         : queueItem
     )

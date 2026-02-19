@@ -1,5 +1,6 @@
 import processManager from '@src/libs/process-manager'
 
+import { origins } from '@src/constants/command.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatStyle, formatText } from '@src/helpers/format.helpers'
@@ -40,19 +41,11 @@ export const styleHandler = async command => {
 
   if (P`color-pick`) {
     const isTermOpen = command.get('isTermOpen')
-    const storage = command.get('storage')
-
-    const queue = storage.get(storageKeys.COMMAND_QUEUE)
 
     if (!isTermOpen)
       throw 'Please make sure the terminal is open before attempting to pick a color.'
-
-    // if (command.origin !== origins.MANUAL)
-    await queue.request({
-      id: command.id,
-      title: 'To proceed, you need to upload a file. Do you want to upload it now? (y/n)',
-      type: 'boolean'
-    })
+    if (command.origin !== origins.MANUAL)
+      throw 'Picking up a color is only allowed through direct user interaction.'
 
     command.update(['Pick a color.'])
     const color = await processManager.pickColor()

@@ -18,15 +18,12 @@ export class StorageCommandQueue extends StorageSimple {
     return {
       managed: this.$latest().value,
       value: this.getUIValues(),
-      latestRequest: this.getLatestRequest(),
       isExecuting: this.getIsExecuting(),
       executable: this.getExecutable(),
       clearCompleted: this.clearCompleted.bind(this),
       delete: this.delete.bind(this),
       change: this.change.bind(this),
-      add: this.add.bind(this),
-      request: this.request.bind(this),
-      solveRequest: this.solveRequest.bind(this)
+      add: this.add.bind(this)
     }
   }
 
@@ -66,33 +63,10 @@ export class StorageCommandQueue extends StorageSimple {
   add(line, origin, tab) {
     const newValue = [
       ...this.$latest().value,
-      { id: createUUIDv4(), line, origin, tab, command: null, request: null }
+      { id: createUUIDv4(), line, origin, tab, command: null }
     ]
 
     this.$storageService.set(storageKeys.COMMAND_QUEUE, newValue)
-  }
-
-  async request({ title, type, id }) {
-    const request = { title, type, id, finished: false, response: null }
-    const newQueue = this.$latest().value.map(queueItem =>
-      queueItem.command?.id === id ? { ...queueItem, request } : queueItem
-    )
-
-    return new Promise(resolve => {
-      const handleChange = updatedStorage => {
-        const queue = updatedStorage.get(storageKeys.COMMAND_QUEUE)
-        const foundRequest = queue.managed.find(queueItem => queueItem.command?.id === request.id)
-
-        if (!foundRequest?.finished) return
-        this.$storageService.removeEventListener(storageKeys.COMMAND_QUEUE, handleChange)
-        this.clearRequest()
-
-        resolve(foundRequest.response)
-      }
-
-      this.$storageService.set(storageKeys.COMMAND_QUEUE, newQueue)
-      this.$storageService.addEventListener(storageKeys.COMMAND_QUEUE, handleChange)
-    })
   }
 
   getUIValues() {
@@ -103,32 +77,6 @@ export class StorageCommandQueue extends StorageSimple {
 
   getIsExecuting() {
     return this.$latest().value.some(({ command }) => command?.status === commandStatuses.EXECUTING)
-  }
-
-  getLatestRequest() {
-    const queueItem = this.$latest().value.find(
-      ({ request }) => request !== null && !request.finished
-    )
-
-    return queueItem?.request ?? null
-  }
-
-  clearRequest(id) {
-    const newQueue = this.$latest().value.map(queueItem =>
-      queueItem.id === id ? { ...queueItem, request: null } : queueItem
-    )
-
-    this.$storageService.set(storageKeys.COMMAND_QUEUE, newQueue)
-  }
-
-  solveRequest(id, response) {
-    const newQueue = this.$latest().value.map(queueItem =>
-      queueItem.id === id
-        ? { ...queueItem, request: { ...queueItem.request, finished: true, response } }
-        : queueItem
-    )
-
-    this.$storageService.set(storageKeys.COMMAND_QUEUE, newQueue)
   }
 
   getExecutable() {

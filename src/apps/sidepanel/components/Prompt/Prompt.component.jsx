@@ -27,7 +27,6 @@ export const Prompt = ({
   name,
   aliases,
   addons,
-  request,
   loading = false
 }) => {
   const [value, setValue] = useState('')
@@ -166,8 +165,6 @@ export const Prompt = ({
 
   return (
     <div data-loading={loading} data-indicator={statusIndicator} className={promptWrapper}>
-      {request && <span>{request.title}</span>}
-
       {contextLines.map((contextLine, index) => (
         <p key={`${contextLine}-${index}`} className={promptLine} data-truncated={isTruncated}>
           <ColoredText value={contextLine} />
@@ -213,6 +210,5 @@ Prompt.propTypes = {
   loading: Boolean,
   name: String,
   aliases: Array,
-  addons: Array,
-  request: Object
+  addons: Array
 }

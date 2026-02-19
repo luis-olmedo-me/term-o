@@ -10,6 +10,11 @@
   &[data-loading='true'] .promptInput {
     color: with-opacity($colors-foreground, 0.4);
   }
+
+  &[data-requesting='true'] .prompWithPrefix,
+  &[data-requesting='true'] .promptInput {
+    color: $colors-accent;
+  }
 }
 
 .promptLine {

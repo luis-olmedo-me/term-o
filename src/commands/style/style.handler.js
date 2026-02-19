@@ -4,7 +4,6 @@ import { origins } from '@src/constants/command.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatStyle, formatText } from '@src/helpers/format.helpers'
-import { getQuotedString } from '@src/helpers/utils.helpers'
 
 export const styleHandler = async command => {
   const storage = command.get('storage')
@@ -50,9 +49,9 @@ export const styleHandler = async command => {
     if (command.origin !== origins.MANUAL) {
       command.update(['"To proceed, you need to pick a color. Do you want to pick it now? (y/n)"'])
       const input = await processManager.requestInput()
-      const quotedInput = getQuotedString(input)
-      command.update([quotedInput])
+      const formattedInput = formatText({ text: input })
 
+      command.update(formattedInput)
       if (input === 'n') throw 'Operation canceled by user.'
       if (input !== 'y') throw 'Invalid input. Defaulting to cancellation.'
     }

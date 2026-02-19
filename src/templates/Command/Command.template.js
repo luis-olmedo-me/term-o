@@ -129,9 +129,7 @@ export class Command extends EventListener {
   throw(message) {
     const errorUpdate = formatError({ title: message })
 
-    this.reset()
     this.update(errorUpdate)
-
     this.changeStatus(commandStatuses.ERROR)
   }
 

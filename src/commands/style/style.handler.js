@@ -48,11 +48,12 @@ export const styleHandler = async command => {
       throw 'Please make sure the terminal is open before attempting to pick a color.'
 
     // if (command.origin !== origins.MANUAL)
-    await queue.request({
+    const response = await queue.request({
       id: command.id,
       title: 'To proceed, you need to upload a file. Do you want to upload it now? (y/n)',
       type: 'boolean'
     })
+    console.log('💬 ~ response:', response)
 
     command.update(['Pick a color.'])
     const color = await processManager.pickColor()

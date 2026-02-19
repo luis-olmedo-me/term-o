@@ -96,6 +96,7 @@ export const Terminal = () => {
         onFocus={removePromptFocusEvent}
         loading={queue.isExecuting}
         request={queue.latestRequest}
+        queue={queue}
         context={context}
         aliases={aliases}
         addons={addons.values}

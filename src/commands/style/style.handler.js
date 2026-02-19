@@ -4,6 +4,7 @@ import { origins } from '@src/constants/command.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatStyle, formatText } from '@src/helpers/format.helpers'
+import { getQuotedString } from '@src/helpers/utils.helpers'
 
 export const styleHandler = async command => {
   const storage = command.get('storage')
@@ -13,7 +14,7 @@ export const styleHandler = async command => {
   if (P`list`) {
     const config = storage.get(storageKeys.CONFIG)
 
-    command.update(['Searching element styles.'])
+    command.update(['"Searching element styles."'])
     const styles = await processManager.getElementStyles(tabId, {
       searchByXpath: P`on`,
       searchByProperty: P`property`,
@@ -47,15 +48,16 @@ export const styleHandler = async command => {
     }
 
     if (command.origin !== origins.MANUAL) {
-      command.update(['To proceed, you need to pick a color. Do you want to pick it now? (y/n)'])
+      command.update(['"To proceed, you need to pick a color. Do you want to pick it now? (y/n)"'])
       const input = await processManager.requestInput()
-      command.update([input])
+      const quotedInput = getQuotedString(input)
+      command.update([quotedInput])
 
       if (input === 'n') throw 'Operation canceled by user.'
       if (input !== 'y') throw 'Invalid input. Defaulting to cancellation.'
     }
 
-    command.update(['Pick a color.'])
+    command.update(['"Pick a color."'])
     const color = await processManager.pickColor()
     const update = formatText({ text: color })
 

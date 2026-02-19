@@ -19,7 +19,7 @@ export const tabsHandler = async command => {
   const P = name => command.props[name]
 
   if (P`reload`) {
-    if (P`wait`) command.update(['Please wait while the page is loading.'])
+    if (P`wait`) command.update(['"Please wait while the page is loading."'])
     const tab = await reloadTab({ tabId: cleanTabId(P`reload`), wait: P`wait` })
     const update = formatTab(tab)
 
@@ -58,7 +58,7 @@ export const tabsHandler = async command => {
   }
 
   if (P`open`) {
-    if (P`wait`) command.update(['Please wait while the page is loading.'])
+    if (P`wait`) command.update(['"Please wait while the page is loading."'])
     const tab = await createTab({
       url: P`open`,
       active: P`active`,

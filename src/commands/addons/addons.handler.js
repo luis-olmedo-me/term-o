@@ -25,7 +25,7 @@ export const addonsHandler = async command => {
     if (command.origin !== origins.MANUAL)
       throw 'Uploading a file is only allowed through direct user interaction.'
 
-    command.update(['Select a file to upload.'])
+    command.update(['"Select a file to upload."'])
     const file = await processManager.uploadFile({ extensions: ['json'] })
     const newAddon = JSON.parse(file.content)
 

@@ -15,10 +15,6 @@
   &[data-loading='true'] .promptInput {
     color: with-opacity($colors-foreground, 0.4);
   }
-
-  &[data-requested='true'] .promptLine {
-    display: none;
-  }
 }
 
 .promptLine {

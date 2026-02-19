@@ -15,6 +15,10 @@
   &[data-requesting='true'] .promptInput {
     color: $colors-accent;
   }
+
+  &[data-requesting='true'] .promptSuggestion {
+    color: with-opacity($colors-accent, 0.4);
+  }
 }
 
 .promptLine {

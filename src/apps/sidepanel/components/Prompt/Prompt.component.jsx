@@ -168,8 +168,10 @@ export const Prompt = ({
   }
 
   const handleChange = event => {
+    const targetValue = event.target.value
+
     syncScroll()
-    setValue(event.target.value)
+    setValue(targetValue)
   }
 
   const handleKeyUp = event => {
@@ -203,7 +205,9 @@ export const Prompt = ({
         <div className={promptInputWrapper}>
           <div ref={overlayRef} className={promptOverlay}>
             {start}
-            <span className={promptSuggestion}>{suggestion}</span>
+            <span className={promptSuggestion}>
+              {isRequesting && !value ? 'Input required to proceed…' : suggestion}
+            </span>
             {end}
           </div>
 

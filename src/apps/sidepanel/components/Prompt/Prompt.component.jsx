@@ -166,7 +166,12 @@ export const Prompt = ({
   const end = caret !== null ? value.slice(caret) : ''
 
   return (
-    <div data-loading={loading} data-indicator={statusIndicator} className={promptWrapper}>
+    <div
+      className={promptWrapper}
+      data-loading={loading}
+      data-indicator={statusIndicator}
+      data-requested={!!request}
+    >
       {request && <span>{request.title}</span>}
 
       {contextLines.map((contextLine, index) => (

@@ -66,6 +66,7 @@ export const Prompt = ({
   useEffect(
     function changeSuggestion() {
       if (caret === null) return
+      if (isRequesting) return
       let debounceTimeoutId = null
 
       const calculate = async () => {
@@ -76,7 +77,7 @@ export const Prompt = ({
 
       return () => clearTimeout(debounceTimeoutId)
     },
-    [caret, value, aliases, addons]
+    [caret, value, isRequesting, aliases, addons]
   )
 
   const syncScroll = () => {

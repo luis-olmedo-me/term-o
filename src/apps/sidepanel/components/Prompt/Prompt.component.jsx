@@ -187,7 +187,11 @@ export const Prompt = ({
   const end = caret !== null ? value.slice(caret) : ''
 
   return (
-    <div data-loading={loading} data-indicator={statusIndicator} className={promptWrapper}>
+    <div
+      data-loading={loading && !isRequesting}
+      data-indicator={statusIndicator}
+      className={promptWrapper}
+    >
       {contextLines.map((contextLine, index) => (
         <p key={`${contextLine}-${index}`} className={promptLine} data-truncated={isTruncated}>
           <ColoredText value={contextLine} />

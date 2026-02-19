@@ -42,23 +42,25 @@ export const styleHandler = async command => {
   if (P`color-pick`) {
     const isTermOpen = command.get('isTermOpen')
 
-    if (!isTermOpen)
+    if (!isTermOpen) {
       throw 'Please make sure the terminal is open before attempting to pick a color.'
-    if (command.origin !== origins.MANUAL)
-      throw 'Picking up a color is only allowed through direct user interaction.'
+    }
+
+    if (command.origin !== origins.MANUAL) {
+      command.update(['To proceed, you need to pick a color. Do you want to pick it now? (y/n)'])
+      const input = await processManager.requestInput()
+      command.update([input])
+
+      if (input === 'n') throw 'Operation canceled by user.'
+      if (input !== 'y') throw 'Invalid input. Defaulting to cancellation.'
+    }
 
     command.update(['Pick a color.'])
     const color = await processManager.pickColor()
     const update = formatText({ text: color })
 
-    const input = await processManager.requestInput({
-      title: 'test',
-      type: 'boolean'
-    })
-
     command.reset()
     command.update(update)
-    command.update([String(input)])
   }
 
   if (P`help`) createHelpView(command)

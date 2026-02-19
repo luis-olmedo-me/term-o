@@ -1,6 +1,6 @@
-export default async (resolve, reject, data) => {
+export default async (resolve, reject) => {
   try {
-    const requestEvent = new CustomEvent('term-o-request-send', { detail: data })
+    const requestEvent = new CustomEvent('term-o-request-send')
     const handleRequestSolved = event => {
       window.removeEventListener('term-o-request-solved', handleRequestSolved)
       resolve(event.detail)

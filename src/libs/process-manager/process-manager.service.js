@@ -80,12 +80,12 @@ class ProcessManager {
     })
   }
 
-  requestInput({ title, type }) {
+  requestInput() {
     return createWorkerProcessRequest({
       type: processNames.REQUEST_INPUT,
       defaultResponse: '',
       tabId: null,
-      data: { title, type }
+      data: null
     })
   }
 

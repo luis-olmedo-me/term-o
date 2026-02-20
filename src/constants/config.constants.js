@@ -70,7 +70,7 @@ export const configDefaultValues = {
   [configInputIds.CONTEXT]: DEFAULT_CONTEXT,
   [configInputIds.FONT_FAMILY]: 'Consolas',
   [configInputIds.FONT_SIZE]: fontSizes.NORMAL,
-  [configInputIds.CARET_SHAPE]: caretShapes.UNDERSCORE,
+  [configInputIds.CARET_SHAPE]: caretShapes.BAR,
   [configInputIds.THEME_NAME]: defaultColorTheme.name,
   [configInputIds.COLOR_ACCENT]: colorThemeKeys.GREEN,
   [configInputIds.EXPORT_CONFIGURATION]: 'Export',
@@ -233,9 +233,9 @@ export const defaultConfigSections = [
         postFix: null,
         iconButton: null,
         options: [
-          { id: caretShapes.UNDERSCORE, name: 'Underscore' },
+          { id: caretShapes.BAR, name: 'Bar' },
           { id: caretShapes.BLOCK, name: 'Block' },
-          { id: caretShapes.BAR, name: 'Bar' }
+          { id: caretShapes.UNDERSCORE, name: 'Underscore' }
         ],
         validations: [],
         value: configDefaultValues[configInputIds.CARET_SHAPE]

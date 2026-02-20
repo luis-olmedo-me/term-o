@@ -7,7 +7,7 @@ export const TextArea = ({ onChange, onBlur, value, name, maxLines, disabled = f
       name={name}
       disabled={disabled}
       onBlur={onBlur}
-      onChange={onChange}
+      onInput={onChange}
       rows={maxLines}
       value={value}
       spellCheck="false"

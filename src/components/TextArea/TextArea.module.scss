@@ -1,5 +1,4 @@
 .textAreaWrapper {
-  padding: 0 0 $space-300;
   position: relative;
 }
 
@@ -7,21 +6,35 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  white-space: pre;
+  word-wrap: break-word;
   font-size: $fontSize-50;
   font-family: $font;
-  overflow: hidden;
+  padding: $space-300;
+  border: $space-50 solid transparent;
+  line-height: $lineHeight-300;
+  word-break: break-all;
 }
 
 .textAreaInput {
   border: $space-50 solid $colors-brightBlack;
-  background-color: with-opacity($colors-white, 0.25);
+  background-color: with-opacity($colors-white, 0.05);
   border-radius: $radius-200;
   padding: $space-300;
   color: $colors-foreground;
   transition: border-color 0.1s ease-in-out;
   resize: none;
-  width: 100%;
+  width: -webkit-fill-available;
+  font-family: $font;
+  font-size: $fontSize-50;
+  line-height: $lineHeight-300;
+  color: transparent;
+  caret-color: $colors-cursorColor;
+  word-break: break-all;
+
+  &::selection {
+    color: transparent;
+    background-color: $colors-selectionBackground;
+  }
 
   &::-webkit-scrollbar {
     display: none;
@@ -38,9 +51,12 @@
   }
 
   &:hover {
-    background-color: with-opacity($colors-accent, 0.8);
-    color: $colors-brightWhite;
     border-color: $colors-accent;
+    background-color: with-opacity($colors-accent, 0.8);
+
+    & + .textAreaOverlay {
+      color: $colors-brightWhite;
+    }
   }
 }
 

@@ -1,3 +1,18 @@
+.textAreaWrapper {
+  padding: 0 0 $space-300;
+  position: relative;
+}
+
+.textAreaOverlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  white-space: pre;
+  font-size: $fontSize-50;
+  font-family: $font;
+  overflow: hidden;
+}
+
 .textAreaInput {
   border: $space-50 solid $colors-brightBlack;
   background-color: with-opacity($colors-white, 0.25);

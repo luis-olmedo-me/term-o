@@ -67,7 +67,6 @@ export const DynamicInput = ({
           maxLines={6}
           name={name}
           onBlur={({ target }) => onChange(inputId, target.value)}
-          onChange={({ target }) => setLocalValue(target.value)}
           value={localValue}
         />
       )

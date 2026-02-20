@@ -1,41 +1,41 @@
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 
+import {
+  getBackgroundedSections,
+  getBgBorderMod
+} from '@src/apps/sidepanel/components/ColoredText/ColoredText.helpers'
 import { debounce } from '@src/helpers/utils.helpers'
-import { textAreaInput, textAreaOverlay, textAreaWrapper } from './TextArea.module.scss'
+import { text, textAreaInput, textAreaOverlay, textAreaWrapper } from './TextArea.module.scss'
 
-const createColorPositions = value => {
-  console.log('💬 ~ value:', value)
-  return []
-}
-
-export const TextArea = ({ onChange, onBlur, value, name, maxLines }) => {
+export const TextArea = ({ onBlur, value, name, maxLines }) => {
   const overlayRef = useRef(null)
   const textAreaRef = useRef(null)
 
-  const [colorPositions, setColorPositions] = useState([])
+  const [sections, setSections] = useState([])
+  const [localValue, setLocalValue] = useState(value)
 
-  const calculateColorPositions = useCallback(value => {
-    const newSuggestion = createColorPositions(value)
+  const calculateSections = useCallback(value => {
+    const newSections = getBackgroundedSections(value)
 
-    setColorPositions(newSuggestion)
+    setSections(newSections)
   }, [])
-  const debouncedcalculateColorPositions = useCallback(debounce(calculateColorPositions, 200), [
-    calculateColorPositions
+  const debouncedcalculateSections = useCallback(debounce(calculateSections, 200), [
+    calculateSections
   ])
 
   useEffect(
-    function changeColorPositions() {
+    function changeSections() {
       let debounceTimeoutId = null
 
       const calculate = async () => {
-        debounceTimeoutId = debouncedcalculateColorPositions(value)
+        debounceTimeoutId = debouncedcalculateSections(localValue)
       }
 
       calculate()
 
       return () => clearTimeout(debounceTimeoutId)
     },
-    [value]
+    [localValue]
   )
 
   const syncScroll = () => {
@@ -43,14 +43,29 @@ export const TextArea = ({ onChange, onBlur, value, name, maxLines }) => {
   }
 
   const handleBlur = event => {
-    console.log('💬 ~ colorPositions:', colorPositions)
     onBlur(event)
+  }
+
+  const handleChange = event => {
+    setLocalValue(event.target.value)
   }
 
   return (
     <div className={textAreaWrapper}>
       <div ref={overlayRef} className={textAreaOverlay}>
-        <span>{value}</span>
+        {sections.map(({ bgcolor, content }, sectionIndex) => {
+          const sectionMod = getBgBorderMod(sections, sectionIndex)
+
+          return (
+            <span className={sectionMod} key={sectionIndex} data-bgcolor={bgcolor}>
+              {content.map(({ color, content }, index) => (
+                <span className={text} key={`${sectionIndex}-${index}`} data-color={color}>
+                  {content}
+                </span>
+              ))}
+            </span>
+          )
+        })}
       </div>
 
       <textarea
@@ -58,9 +73,9 @@ export const TextArea = ({ onChange, onBlur, value, name, maxLines }) => {
         className={textAreaInput}
         rows={maxLines}
         name={name}
-        value={value}
+        value={localValue}
         onBlur={handleBlur}
-        onInput={onChange}
+        onInput={handleChange}
         onKeyUp={syncScroll}
         onScroll={syncScroll}
         spellCheck="false"

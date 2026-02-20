@@ -43,3 +43,8 @@
     border-color: $colors-accent;
   }
 }
+
+.text {
+  line-height: $lineHeight-300;
+  transition: color 1s ease-in-out;
+}

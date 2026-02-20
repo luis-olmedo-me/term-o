@@ -1,12 +1,14 @@
+import { eventNames } from '@sidepanel/constants/events.constants'
+
 export default async (resolve, reject) => {
   try {
-    const requestEvent = new CustomEvent('term-o-request-send')
+    const requestEvent = new CustomEvent(eventNames.REQUEST_SEND)
     const handleRequestSolved = event => {
-      window.removeEventListener('term-o-request-solved', handleRequestSolved)
+      window.removeEventListener(eventNames.REQUEST_SOLVED, handleRequestSolved)
       resolve(event.detail)
     }
 
-    window.addEventListener('term-o-request-solved', handleRequestSolved)
+    window.addEventListener(eventNames.REQUEST_SOLVED, handleRequestSolved)
 
     window.dispatchEvent(requestEvent)
   } catch (error) {

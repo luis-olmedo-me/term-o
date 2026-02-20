@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 import ColoredText from '@sidepanel/components/ColoredText'
 import useStorage from '@src/hooks/useStorage'
 
+import { eventNames } from '@sidepanel/constants/events.constants'
 import { configInputIds, PROMPT_MARK } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { insert } from '@src/helpers/string.helpers'
@@ -55,11 +56,11 @@ export const Prompt = ({
   useEffect(function expectForRequests() {
     const handleRequestSend = () => setIsRequesting(true)
 
-    window.addEventListener('term-o-request-send', handleRequestSend)
+    window.addEventListener(eventNames.REQUEST_SEND, handleRequestSend)
 
     return () => {
       setIsRequesting(false)
-      window.removeEventListener('term-o-request-send', handleRequestSend)
+      window.removeEventListener(eventNames.REQUEST_SEND, handleRequestSend)
     }
   }, [])
 
@@ -101,7 +102,7 @@ export const Prompt = ({
     setSuggestion('')
 
     if (key === 'Enter' && isRequesting && targetValue) {
-      const requestEvent = new CustomEvent('term-o-request-solved', { detail: targetValue })
+      const requestEvent = new CustomEvent(eventNames.REQUEST_SOLVED, { detail: targetValue })
 
       window.dispatchEvent(requestEvent)
       setHistorialIndex(0)

@@ -16,7 +16,6 @@ export class Command extends EventListener {
     this.id = createUUIDv4()
     this.name = name
     this.origin = origin
-    this.context = ''
     this.title = ''
     this.props = {}
     this.updates = []
@@ -172,14 +171,6 @@ export class Command extends EventListener {
     return this._shared[key] ?? null
   }
 
-  applyContext(newContext) {
-    this.context = newContext
-
-    if (this.nextCommand) this.nextCommand.applyContext(newContext)
-
-    return this
-  }
-
   startExecuting() {
     this.changeStatus(commandStatuses.EXECUTING)
     this.reset()
@@ -209,7 +200,7 @@ export class Command extends EventListener {
       title: this.title,
       status: this.status,
       updates: stringifyUpdates(this.updates),
-      context: this.context,
+      context: this.get('context'),
       origin: this.origin
     }
   }
@@ -220,7 +211,7 @@ export class Command extends EventListener {
       title: this.title,
       status: this.status,
       updates: this.updates,
-      context: this.context,
+      context: this.get('context'),
       origin: this.origin
     }
   }

@@ -54,10 +54,7 @@ const handleCommandQueueChange = async (storage, commandParser) => {
   const isTermOpen = !!sidePanelPort
 
   const context = createContext(contextInputValue, tab)
-  const command = commandParser
-    .read(executable.line)
-    .applyContext(context)
-    .share({ storage, isTermOpen })
+  const command = commandParser.read(executable.line).share({ storage, isTermOpen, context })
 
   if (!command.finished) {
     command.startExecuting()

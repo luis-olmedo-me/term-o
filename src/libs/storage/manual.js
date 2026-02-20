@@ -1,3 +1,3 @@
 import { Storage } from './storage.service'
 
-export default new Storage()
+export default Storage

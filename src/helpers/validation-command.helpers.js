@@ -104,7 +104,7 @@ export const isSpaceForbidden = (option, value) => {
 }
 
 export const isInlineStyles = (option, value) => {
-  const validPropertyName = /^-?\w+$/
+  const validPropertyName = /^[-\w]+$/
   const validPropertyValue = /^[\w\s.%#()-]+$/
 
   const stylesArray = value.split(';')

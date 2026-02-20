@@ -37,7 +37,7 @@ export class CommandBase {
     return this
   }
 
-  create(origin) {
+  create() {
     const hasOptions = this.options.length > 0
     const hasHelpOption = !!this.options.getByName('help', false)
 
@@ -45,8 +45,7 @@ export class CommandBase {
 
     const newCommand = new Command({
       name: this.name,
-      options: this.options.copy(),
-      origin
+      options: this.options.copy()
     })
 
     return this.handler ? newCommand.addEventListener('execute', this.handler) : newCommand

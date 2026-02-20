@@ -80,7 +80,7 @@ export const getHighestTitleCountInBases = bases => {
 export const createHelpView = command => {
   let helps = []
   const options = command.options
-  const highestTitleCount = command.data.highestTitleCount
+  const highestTitleCount = command.get('highestTitleCount')
   const helpSectionsNames = command.options.getHelpSectionsAvailable()
 
   helpSectionsNames.forEach(sectionName => {

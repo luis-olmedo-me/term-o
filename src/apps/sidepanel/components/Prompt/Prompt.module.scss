@@ -2,17 +2,30 @@
   cursor: text;
   background-color: transparent;
   color: $colors-foreground;
-  padding: 0 $space-600 $space-200 $space-800;
+  padding: 0 $space-400 $space-200 $space-400;
   z-index: 1;
   box-shadow: 0 calc($space-550 * -1) $space-400 calc($space-400 * -1) $colors-background;
   transition: box-shadow 0.2s ease-in-out;
 
-  &[data-indicator='half-dot'] {
-    padding: 0 $space-600;
+  &[data-loading='true'] {
+    & .promptInput {
+      caret-color: with-opacity($colors-cursorColor, 0.4);
+    }
+
+    & .prompWithPrefix {
+      color: with-opacity($colors-foreground, 0.4);
+    }
   }
 
-  &[data-loading='true'] .promptInput {
-    color: with-opacity($colors-foreground, 0.4);
+  &[data-requesting='true'] {
+    & .prompWithPrefix,
+    & .promptInput {
+      color: $colors-accent;
+    }
+
+    & .promptSuggestion {
+      color: with-opacity($colors-accent, 0.4);
+    }
   }
 }
 

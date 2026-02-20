@@ -52,15 +52,13 @@ body {
   &::after {
     content: '';
     position: absolute;
-    animation: slide 1s linear infinite alternate;
+    animation: slide 3s linear infinite alternate;
     animation-timing-function: ease-in-out;
-    width: 5%;
-    height: $space-100;
+    height: $space-150;
     background: $colors-accent;
     bottom: 0;
     left: 0;
     border-radius: $radius-100 $radius-100 0 0;
-    box-shadow: 0 -10px 25px 5px $colors-accent;
   }
 }
 

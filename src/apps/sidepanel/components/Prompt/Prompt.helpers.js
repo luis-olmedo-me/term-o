@@ -1,6 +1,7 @@
+import commands from '@src/commands'
+
 import { commandNames } from '@src/constants/command.constants'
 import { getArgs } from '@src/helpers/arguments.helpers'
-import commandParser from '@src/libs/command-parser'
 
 const getArgsFromFragmentStart = fragment => {
   return fragment.endsWith(' ') ? [...getArgs(fragment), ''] : getArgs(fragment)
@@ -68,7 +69,7 @@ export const createSuggestion = (value, caret, aliases, addons) => {
   const restArgsStart = argsStart.slice(1, -1)
   const restArgsEnd = argsEnd.slice(1)
   const firstArgStart = argsStart.at(0) ?? ''
-  const command = commandParser.bases.find(base => base.name === firstArgStart)
+  const command = commands.find(base => base.name === firstArgStart)
   const addon = addons.find(addon => addon.name === firstArgStart)
 
   if (addon)

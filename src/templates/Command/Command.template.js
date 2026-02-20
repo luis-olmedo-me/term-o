@@ -10,25 +10,21 @@ import { getPropsFromString } from '@src/helpers/options.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 
 export class Command extends EventListener {
-  constructor({ name, options, origin }) {
+  constructor({ name, options }) {
     super()
 
     this.id = createUUIDv4()
     this.name = name
-    this.origin = origin
-    this.context = ''
-    this.title = ''
     this.props = {}
     this.updates = []
     this.staticUpdates = []
     this.status = commandStatuses.IDLE
     this.nextCommand = null
-    this.queue = null
     this.options = options
     this.args = []
     this.canExecuteNext = true
     this.visible = true
-    this.data = null
+    this._shared = {}
   }
 
   get finished() {
@@ -130,9 +126,7 @@ export class Command extends EventListener {
   throw(message) {
     const errorUpdate = formatError({ title: message })
 
-    this.reset()
     this.update(errorUpdate)
-
     this.changeStatus(commandStatuses.ERROR)
   }
 
@@ -158,30 +152,15 @@ export class Command extends EventListener {
     else await nextCommand.execute()
   }
 
-  setTitle(newTitle) {
-    this.title = newTitle
+  share(newSharedData) {
+    this._shared = { ...this._shared, ...newSharedData }
+
+    if (this.nextCommand) this.nextCommand.share(this._shared)
 
     return this
   }
-
-  applyQueue(newQueue) {
-    this.queue = newQueue
-
-    return this
-  }
-
-  applyData(newData) {
-    this.data = newData
-
-    return this
-  }
-
-  applyContext(newContext) {
-    this.context = newContext
-
-    if (this.nextCommand) this.nextCommand.applyContext(newContext)
-
-    return this
+  get(key) {
+    return this._shared[key] ?? null
   }
 
   startExecuting() {
@@ -210,22 +189,22 @@ export class Command extends EventListener {
   jsonUI() {
     return {
       id: this.id,
-      title: this.title,
       status: this.status,
       updates: stringifyUpdates(this.updates),
-      context: this.context,
-      origin: this.origin
+      context: this.get('context'),
+      origin: this.get('origin'),
+      title: this.get('title')
     }
   }
 
   json() {
     return {
       id: this.id,
-      title: this.title,
       status: this.status,
       updates: this.updates,
-      context: this.context,
-      origin: this.origin
+      context: this.get('context'),
+      origin: this.get('origin'),
+      title: this.get('title')
     }
   }
 }

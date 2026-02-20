@@ -1,12 +1,13 @@
 import processManager from '@src/libs/process-manager'
-import storage from '@src/libs/storage'
 
-import { commandNames } from '@src/constants/command.constants'
+import { commandNames, origins } from '@src/constants/command.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
-import { formatAddon } from '@src/helpers/format.helpers'
+import { formatAddon, formatText } from '@src/helpers/format.helpers'
+import { getQuotedString, truncate } from '@src/helpers/utils.helpers'
 
 export const addonsHandler = async command => {
+  const storage = command.get('storage')
   const P = name => command.props[name]
 
   if (P`list`) {
@@ -17,15 +18,30 @@ export const addonsHandler = async command => {
   }
 
   if (P`upload`) {
-    const tabId = storage.get(storageKeys.TAB).id
-    const config = storage.get(storageKeys.CONFIG)
     const addons = storage.get(storageKeys.ADDONS)
+    const isTermOpen = command.get('isTermOpen')
+    const origin = command.get('origin')
 
-    command.update(['Click the notification on the page to start uploading a file.'])
-    const file = await processManager.uploadFile(tabId, {
-      theme: config.theme,
-      extensions: ['json']
-    })
+    if (!isTermOpen) {
+      throw 'Please make sure the terminal is open before attempting to upload a file.'
+    }
+
+    if (origin !== origins.MANUAL) {
+      command.update([
+        '"To proceed, you need to upload a file. Do you want to upload it now? (y/n)"'
+      ])
+      const input = await processManager.requestInput()
+      const formattedInput = formatText({ text: input })
+      const truncatedInput = truncate(input, 30)
+      const quotedInput = getQuotedString(truncatedInput)
+
+      command.update(formattedInput)
+      if (input === 'n') throw 'Operation canceled by user.'
+      if (input !== 'y') throw `Invalid input ${quotedInput}. Defaulting to cancellation.`
+    }
+
+    command.update(['"Select a file to upload."'])
+    const file = await processManager.uploadFile({ extensions: ['json'] })
     const newAddon = JSON.parse(file.content)
 
     const alreadyExists = addons.has(newAddon.name)

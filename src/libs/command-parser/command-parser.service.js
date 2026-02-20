@@ -1,4 +1,4 @@
-import commandBases, { errorBase } from '@src/commands'
+import { errorBase } from '@src/commands'
 
 import EventListener from '@src/templates/EventListener'
 
@@ -6,15 +6,13 @@ import { getArgs, splitBy } from '@src/helpers/arguments.helpers'
 import { getHighestTitleCountInBases } from '@src/helpers/command.helpers'
 import { truncate } from '@src/helpers/utils.helpers'
 
-class CommandParser extends EventListener {
+export class CommandParser extends EventListener {
   constructor(bases) {
     super()
 
     this.defaultBases = bases
     this.bases = bases
     this.aliases = []
-    this.origin = null
-    this.highestTitleCount = getHighestTitleCountInBases(bases)
   }
 
   setExternalBases(externalBases) {
@@ -24,20 +22,16 @@ class CommandParser extends EventListener {
   setAliases(aliases) {
     this.aliases = aliases
   }
-  setOrigin(origin) {
-    this.origin = origin
-  }
 
   read(rawScript) {
-    const data = { highestTitleCount: this.highestTitleCount }
     const scriptFormatted = this.getWithAliasesResolved(rawScript)
     let [firstFragment, ...nextFragments] = splitBy(scriptFormatted, '&&')
 
-    const command = this.parse(firstFragment).setTitle(rawScript).applyData(data)
+    const command = this.parse(firstFragment)
     let carriedCommand = command
 
     for (let fragment of nextFragments) {
-      const nextCommand = this.parse(fragment).setTitle(rawScript).applyData(data)
+      const nextCommand = this.parse(fragment)
       carriedCommand.nextCommand = nextCommand
 
       if (nextCommand.finished) break
@@ -45,7 +39,10 @@ class CommandParser extends EventListener {
       carriedCommand = nextCommand
     }
 
-    return command
+    return command.share({
+      highestTitleCount: getHighestTitleCountInBases(this.bases),
+      title: rawScript
+    })
   }
 
   parse(fragment) {
@@ -55,7 +52,7 @@ class CommandParser extends EventListener {
     const cleanedName = name.replace('"', '\\"')
 
     if (!base) {
-      const error = errorBase.create(this.origin)
+      const error = errorBase.create()
       const truncatedName = truncate(cleanedName, 30)
 
       error.mock({ title: `The command "${truncatedName}" is unrecognized.` })
@@ -64,7 +61,7 @@ class CommandParser extends EventListener {
       return error
     }
 
-    const command = base.create(this.origin).prepare(scriptArgs)
+    const command = base.create().prepare(scriptArgs)
 
     return command
   }
@@ -82,5 +79,3 @@ class CommandParser extends EventListener {
     return fragmentsWithAliases.join(' && ')
   }
 }
-
-export const commandParser = new CommandParser(commandBases)

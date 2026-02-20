@@ -12,5 +12,6 @@ export const processNames = {
   PICK_COLOR: 'pick-color',
   TRIGGER_EVENT: 'trigger-event',
   CREATE_NOTIFICATION: 'create-notification',
-  READ_VARIABLE: 'read-variable'
+  READ_VARIABLE: 'read-variable',
+  REQUEST_INPUT: 'request-input'
 }

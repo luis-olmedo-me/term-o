@@ -1,3 +1,5 @@
-import { commandParser } from './command-parser.service'
+import commandBases from '@src/commands'
 
-export default commandParser
+import { CommandParser } from './command-parser.service'
+
+export default new CommandParser(commandBases)

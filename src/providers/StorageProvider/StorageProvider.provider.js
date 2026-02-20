@@ -2,6 +2,8 @@ import { useEffect, useState } from 'preact/hooks'
 
 import storage from '@src/libs/storage'
 
+if (!storage.initiated) storage.init()
+
 export const StorageProvider = ({ children }) => {
   const [isReady, setIsReady] = useState(storage.initiated)
 

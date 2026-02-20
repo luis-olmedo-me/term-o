@@ -1,5 +1,3 @@
-import storage from '@src/libs/storage'
-
 import {
   closeTab,
   createTab,
@@ -16,11 +14,12 @@ import { formatTab } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
 
 export const tabsHandler = async command => {
+  const storage = command.get('storage')
   const tabId = storage.get(storageKeys.TAB).id
   const P = name => command.props[name]
 
   if (P`reload`) {
-    if (P`wait`) command.update(['Please wait while the page is loading.'])
+    if (P`wait`) command.update(['"Please wait while the page is loading."'])
     const tab = await reloadTab({ tabId: cleanTabId(P`reload`), wait: P`wait` })
     const update = formatTab(tab)
 
@@ -59,7 +58,7 @@ export const tabsHandler = async command => {
   }
 
   if (P`open`) {
-    if (P`wait`) command.update(['Please wait while the page is loading.'])
+    if (P`wait`) command.update(['"Please wait while the page is loading."'])
     const tab = await createTab({
       url: P`open`,
       active: P`active`,

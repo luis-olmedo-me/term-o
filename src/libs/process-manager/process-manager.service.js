@@ -62,21 +62,30 @@ class ProcessManager {
     })
   }
 
-  uploadFile(tabId, { theme, extensions }) {
+  uploadFile({ extensions }) {
     return createWorkerProcessRequest({
       type: processNames.UPLOAD_FILE,
       defaultResponse: {},
-      tabId,
-      data: { theme, extensions }
+      tabId: null,
+      data: { extensions }
     })
   }
 
-  pickColor(tabId, { theme }) {
+  pickColor() {
     return createWorkerProcessRequest({
       type: processNames.PICK_COLOR,
       defaultResponse: null,
-      tabId,
-      data: { theme }
+      tabId: null,
+      data: null
+    })
+  }
+
+  requestInput() {
+    return createWorkerProcessRequest({
+      type: processNames.REQUEST_INPUT,
+      defaultResponse: '',
+      tabId: null,
+      data: null
     })
   }
 

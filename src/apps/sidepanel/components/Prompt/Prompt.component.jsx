@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 import ColoredText from '@sidepanel/components/ColoredText'
 import useStorage from '@src/hooks/useStorage'
 
+import { eventNames } from '@sidepanel/constants/events.constants'
 import { configInputIds, PROMPT_MARK } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { insert } from '@src/helpers/string.helpers'
@@ -33,6 +34,7 @@ export const Prompt = ({
   const [suggestion, setSuggestion] = useState('')
   const [historialIndex, setHistorialIndex] = useState(0)
   const [caret, setCaret] = useState(0)
+  const [isRequesting, setIsRequesting] = useState(false)
 
   const overlayRef = useRef(null)
 
@@ -40,7 +42,6 @@ export const Prompt = ({
   const [config] = useStorage({ key: storageKeys.CONFIG })
 
   const historialSize = config.getValueById(configInputIds.HISTORIAL_SIZE)
-  const statusIndicator = config.getValueById(configInputIds.STATUS_INDICATOR)
   const isTruncated = config.getValueById(configInputIds.LINE_TRUNCATION)
 
   const calculateSuggestion = useCallback((value, caret, aliases, addons) => {
@@ -52,9 +53,21 @@ export const Prompt = ({
     calculateSuggestion
   ])
 
+  useEffect(function expectForRequests() {
+    const handleRequestSend = () => setIsRequesting(true)
+
+    window.addEventListener(eventNames.REQUEST_SEND, handleRequestSend)
+
+    return () => {
+      setIsRequesting(false)
+      window.removeEventListener(eventNames.REQUEST_SEND, handleRequestSend)
+    }
+  }, [])
+
   useEffect(
     function changeSuggestion() {
       if (caret === null) return
+      if (isRequesting) return
       let debounceTimeoutId = null
 
       const calculate = async () => {
@@ -65,7 +78,7 @@ export const Prompt = ({
 
       return () => clearTimeout(debounceTimeoutId)
     },
-    [caret, value, aliases, addons]
+    [caret, value, isRequesting, aliases, addons]
   )
 
   const syncScroll = () => {
@@ -87,6 +100,17 @@ export const Prompt = ({
     const targetValue = event.target.value
 
     setSuggestion('')
+
+    if (key === 'Enter' && isRequesting && targetValue) {
+      const requestEvent = new CustomEvent(eventNames.REQUEST_SOLVED, { detail: targetValue })
+
+      window.dispatchEvent(requestEvent)
+      setHistorialIndex(0)
+      setIsRequesting(false)
+      setValue('')
+
+      return
+    }
 
     if (key === 'Tab' && !suggestion) {
       event.preventDefault()
@@ -164,7 +188,11 @@ export const Prompt = ({
   const end = caret !== null ? value.slice(caret) : ''
 
   return (
-    <div data-loading={loading} data-indicator={statusIndicator} className={promptWrapper}>
+    <div
+      className={promptWrapper}
+      data-loading={loading && !isRequesting}
+      data-requesting={isRequesting}
+    >
       {contextLines.map((contextLine, index) => (
         <p key={`${contextLine}-${index}`} className={promptLine} data-truncated={isTruncated}>
           <ColoredText value={contextLine} />
@@ -177,12 +205,14 @@ export const Prompt = ({
         <div className={promptInputWrapper}>
           <div ref={overlayRef} className={promptOverlay}>
             {start}
-            <span className={promptSuggestion}>{suggestion}</span>
+            <span className={promptSuggestion}>
+              {isRequesting && !value ? 'Input required to proceed…' : suggestion}
+            </span>
             {end}
           </div>
 
           <input
-            spellCheck={false}
+            spellCheck="false"
             ref={inputRef}
             className={promptInput}
             name={name}

@@ -1,5 +1,4 @@
 import processManager from '@src/libs/process-manager'
-import storage from '@src/libs/storage'
 
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
@@ -7,6 +6,7 @@ import { formatElement } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
 
 export const domHandler = async command => {
+  const storage = command.get('storage')
   const P = name => command.props[name]
 
   const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : storage.get(storageKeys.TAB).id
@@ -30,7 +30,7 @@ export const domHandler = async command => {
   }
 
   if (P`search`) {
-    command.update(['Getting elements.'])
+    command.update(['"Connecting to the tab."'])
     const elements = await processManager.getDOMElements(tabId, {
       searchBelow: P`below`,
       searchByTag: P`tag`,

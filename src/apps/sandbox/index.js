@@ -12,7 +12,7 @@ async function safeEval(event) {
       const handleSandboxCommand = event => {
         if (event.data?.type !== sandboxEvents.COMMAND_RETURN) return
         const data = event.data.data
-        const errorMessage = data.updates.at(0)
+        const errorMessage = data.updates.at(-1)
 
         window.removeEventListener('message', handleSandboxCommand)
         if (!data.hasError) resolve(data.updates)
@@ -33,7 +33,7 @@ async function safeEval(event) {
       const handleSandboxCommand = event => {
         if (event.data?.type !== sandboxEvents.COMMAND_UPDATE_RETURN) return
         const data = event.data.data
-        const errorMessage = data.updates.at(0)
+        const errorMessage = data.updates.at(-1)
 
         window.removeEventListener('message', handleSandboxCommand)
         if (!data.hasError) resolve(data.updates)
@@ -54,7 +54,7 @@ async function safeEval(event) {
       const handleSandboxCommand = event => {
         if (event.data?.type !== sandboxEvents.COMMAND_SET_UPDATES_RETURN) return
         const data = event.data.data
-        const errorMessage = data.updates.at(0)
+        const errorMessage = data.updates.at(-1)
 
         window.removeEventListener('message', handleSandboxCommand)
         if (!data.hasError) resolve(data.updates)
@@ -78,7 +78,7 @@ async function safeEval(event) {
       const handleSandboxCommand = event => {
         if (event.data?.type !== sandboxEvents.COMMAND_CLEAR_UPDATES_RETURN) return
         const data = event.data.data
-        const errorMessage = data.updates.at(0)
+        const errorMessage = data.updates.at(-1)
 
         window.removeEventListener('message', handleSandboxCommand)
         if (!data.hasError) resolve(data.updates)

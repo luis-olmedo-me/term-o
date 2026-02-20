@@ -1,18 +1,16 @@
 @keyframes slide {
   0% {
-    left: 0;
-    opacity: 0;
+    right: 95%;
+    left: 0%;
   }
 
-  40% {
-    opacity: 1;
-  }
-  60% {
-    opacity: 1;
+  50% {
+    right: 0%;
+    left: 0%;
   }
 
   100% {
+    right: 0%;
     left: 95%;
-    opacity: 0;
   }
 }

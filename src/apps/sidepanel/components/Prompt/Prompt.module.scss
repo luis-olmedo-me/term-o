@@ -7,17 +7,25 @@
   box-shadow: 0 calc($space-550 * -1) $space-400 calc($space-400 * -1) $colors-background;
   transition: box-shadow 0.2s ease-in-out;
 
-  &[data-loading='true'] .promptInput {
-    color: with-opacity($colors-foreground, 0.4);
+  &[data-loading='true'] {
+    & .promptInput {
+      caret-color: with-opacity($colors-cursorColor, 0.4);
+    }
+
+    & .prompWithPrefix {
+      color: with-opacity($colors-foreground, 0.4);
+    }
   }
 
-  &[data-requesting='true'] .prompWithPrefix,
-  &[data-requesting='true'] .promptInput {
-    color: $colors-accent;
-  }
+  &[data-requesting='true'] {
+    & .prompWithPrefix,
+    & .promptInput {
+      color: $colors-accent;
+    }
 
-  &[data-requesting='true'] .promptSuggestion {
-    color: with-opacity($colors-accent, 0.4);
+    & .promptSuggestion {
+      color: with-opacity($colors-accent, 0.4);
+    }
   }
 }
 

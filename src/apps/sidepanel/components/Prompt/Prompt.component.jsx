@@ -170,10 +170,8 @@ export const Prompt = ({
   }
 
   const handleChange = event => {
-    const targetValue = event.target.value
-
     syncScroll()
-    setValue(targetValue)
+    setValue(event.target.value)
   }
 
   const handleKeyUp = event => {

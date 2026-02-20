@@ -30,7 +30,7 @@ export const domHandler = async command => {
   }
 
   if (P`search`) {
-    command.update(['"Getting elements."'])
+    command.update(['"Connecting to the tab."'])
     const elements = await processManager.getDOMElements(tabId, {
       searchBelow: P`below`,
       searchByTag: P`tag`,

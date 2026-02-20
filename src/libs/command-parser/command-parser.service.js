@@ -13,7 +13,6 @@ export class CommandParser extends EventListener {
     this.defaultBases = bases
     this.bases = bases
     this.aliases = []
-    this.origin = null
   }
 
   setExternalBases(externalBases) {
@@ -22,9 +21,6 @@ export class CommandParser extends EventListener {
 
   setAliases(aliases) {
     this.aliases = aliases
-  }
-  setOrigin(origin) {
-    this.origin = origin
   }
 
   read(rawScript) {
@@ -56,7 +52,7 @@ export class CommandParser extends EventListener {
     const cleanedName = name.replace('"', '\\"')
 
     if (!base) {
-      const error = errorBase.create(this.origin)
+      const error = errorBase.create()
       const truncatedName = truncate(cleanedName, 30)
 
       error.mock({ title: `The command "${truncatedName}" is unrecognized.` })
@@ -65,7 +61,7 @@ export class CommandParser extends EventListener {
       return error
     }
 
-    const command = base.create(this.origin).prepare(scriptArgs)
+    const command = base.create().prepare(scriptArgs)
 
     return command
   }

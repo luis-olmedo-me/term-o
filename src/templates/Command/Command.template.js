@@ -10,13 +10,11 @@ import { getPropsFromString } from '@src/helpers/options.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 
 export class Command extends EventListener {
-  constructor({ name, options, origin }) {
+  constructor({ name, options }) {
     super()
 
     this.id = createUUIDv4()
     this.name = name
-    this.origin = origin
-    this.title = ''
     this.props = {}
     this.updates = []
     this.staticUpdates = []
@@ -194,7 +192,7 @@ export class Command extends EventListener {
       status: this.status,
       updates: stringifyUpdates(this.updates),
       context: this.get('context'),
-      origin: this.origin,
+      origin: this.get('origin'),
       title: this.get('title')
     }
   }
@@ -205,7 +203,7 @@ export class Command extends EventListener {
       status: this.status,
       updates: this.updates,
       context: this.get('context'),
-      origin: this.origin,
+      origin: this.get('origin'),
       title: this.get('title')
     }
   }

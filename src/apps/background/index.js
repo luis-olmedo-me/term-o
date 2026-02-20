@@ -46,15 +46,17 @@ const handleCommandQueueChange = async (storage, commandParser) => {
   const config = storage.get(storageKeys.CONFIG)
 
   const tab = executable.tab || originalTab
+  const origin = executable.origin
 
-  commandParser.setOrigin(executable.origin)
   if (executable.tab) storage.set(storageKeys.TAB, executable.tab)
 
   const contextInputValue = config.getValueById(configInputIds.CONTEXT)
   const isTermOpen = !!sidePanelPort
 
   const context = createContext(contextInputValue, tab)
-  const command = commandParser.read(executable.line).share({ storage, isTermOpen, context })
+  const command = commandParser
+    .read(executable.line)
+    .share({ storage, isTermOpen, context, origin })
 
   if (!command.finished) {
     command.startExecuting()

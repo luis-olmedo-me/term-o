@@ -20,12 +20,13 @@ export const addonsHandler = async command => {
   if (P`upload`) {
     const addons = storage.get(storageKeys.ADDONS)
     const isTermOpen = command.get('isTermOpen')
+    const origin = command.get('origin')
 
     if (!isTermOpen) {
       throw 'Please make sure the terminal is open before attempting to upload a file.'
     }
 
-    if (command.origin !== origins.MANUAL) {
+    if (origin !== origins.MANUAL) {
       command.update([
         '"To proceed, you need to upload a file. Do you want to upload it now? (y/n)"'
       ])

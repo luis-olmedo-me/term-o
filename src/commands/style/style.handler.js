@@ -42,12 +42,13 @@ export const styleHandler = async command => {
 
   if (P`color-pick`) {
     const isTermOpen = command.get('isTermOpen')
+    const origin = command.get('origin')
 
     if (!isTermOpen) {
       throw 'Please make sure the terminal is open before attempting to pick a color.'
     }
 
-    if (command.origin !== origins.MANUAL) {
+    if (origin !== origins.MANUAL) {
       command.update(['"To proceed, you need to pick a color. Do you want to pick it now? (y/n)"'])
       const input = await processManager.requestInput()
       const formattedInput = formatText({ text: input })

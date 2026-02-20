@@ -5,7 +5,6 @@ import Prompt from '@sidepanel/components/Prompt'
 import Button, { buttonVariants } from '@src/components/Button'
 import useStorage from '@src/hooks/useStorage'
 import Gear from '@src/icons/Gear.icon'
-import commandParser from '@src/libs/command-parser'
 
 import { createTab, getCurrentTab } from '@src/browser-api/tabs.api'
 import { origins } from '@src/constants/command.constants'
@@ -42,13 +41,6 @@ export const Terminal = () => {
       return () => window.removeEventListener('focus', updateTab)
     },
     [switchTabAutomatically]
-  )
-
-  useEffect(
-    function expectAliasChanges() {
-      commandParser.setAliases(aliases)
-    },
-    [aliases]
   )
 
   const removePromptFocusEvent = () => {

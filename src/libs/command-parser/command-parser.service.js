@@ -31,11 +31,11 @@ export class CommandParser extends EventListener {
     const scriptFormatted = this.getWithAliasesResolved(rawScript)
     let [firstFragment, ...nextFragments] = splitBy(scriptFormatted, '&&')
 
-    const command = this.parse(firstFragment).setTitle(rawScript)
+    const command = this.parse(firstFragment)
     let carriedCommand = command
 
     for (let fragment of nextFragments) {
-      const nextCommand = this.parse(fragment).setTitle(rawScript)
+      const nextCommand = this.parse(fragment)
       carriedCommand.nextCommand = nextCommand
 
       if (nextCommand.finished) break
@@ -44,7 +44,8 @@ export class CommandParser extends EventListener {
     }
 
     return command.share({
-      highestTitleCount: getHighestTitleCountInBases(this.bases)
+      highestTitleCount: getHighestTitleCountInBases(this.bases),
+      title: rawScript
     })
   }
 

@@ -154,12 +154,6 @@ export class Command extends EventListener {
     else await nextCommand.execute()
   }
 
-  setTitle(newTitle) {
-    this.title = newTitle
-
-    return this
-  }
-
   share(newSharedData) {
     this._shared = { ...this._shared, ...newSharedData }
 
@@ -197,22 +191,22 @@ export class Command extends EventListener {
   jsonUI() {
     return {
       id: this.id,
-      title: this.title,
       status: this.status,
       updates: stringifyUpdates(this.updates),
       context: this.get('context'),
-      origin: this.origin
+      origin: this.origin,
+      title: this.get('title')
     }
   }
 
   json() {
     return {
       id: this.id,
-      title: this.title,
       status: this.status,
       updates: this.updates,
       context: this.get('context'),
-      origin: this.origin
+      origin: this.origin,
+      title: this.get('title')
     }
   }
 }

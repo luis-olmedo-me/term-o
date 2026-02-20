@@ -90,4 +90,14 @@
   &:focus-visible {
     outline: none;
   }
+
+  &[data-caret='bar'] {
+    caret-shape: bar;
+  }
+  &[data-caret='block'] {
+    caret-shape: block;
+  }
+  &[data-caret='underscore'] {
+    caret-shape: underscore;
+  }
 }

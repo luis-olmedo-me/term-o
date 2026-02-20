@@ -6,6 +6,7 @@ export const commandNames = {
   ERROR: 'error',
   EVENTS: 'events',
   HISTORY: 'history',
+  INPUT: 'input',
   INSPECT: 'inspect',
   NOTIFY: 'notify',
   REQUEST: 'request',

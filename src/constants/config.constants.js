@@ -26,7 +26,6 @@ export const configInputIds = {
   HISTORIAL_SIZE: 'historial-size',
   CONTEXT: 'status',
   FONT_FAMILY: 'font-family',
-  FONT_SIZE: 'font-size',
   THEME_NAME: 'theme-name',
   COLOR_ACCENT: 'color-accent',
   CLEAR_USER_DATA: 'clear-user-data',
@@ -39,13 +38,6 @@ export const configInputIds = {
   LINE_TRUNCATION: 'line-truncation',
   ASSISTED_SELECTION: 'assisted-selection',
   CARET_SHAPE: 'caret-shape'
-}
-
-export const fontSizes = {
-  EXTRA_SMALL: '12',
-  SMALL: '14',
-  NORMAL: '16',
-  LARGE: '18'
 }
 
 export const statusIndicators = {
@@ -69,7 +61,6 @@ export const configDefaultValues = {
   [configInputIds.HISTORIAL_SIZE]: 40,
   [configInputIds.CONTEXT]: DEFAULT_CONTEXT,
   [configInputIds.FONT_FAMILY]: 'Consolas',
-  [configInputIds.FONT_SIZE]: fontSizes.NORMAL,
   [configInputIds.CARET_SHAPE]: caretShapes.BAR,
   [configInputIds.THEME_NAME]: defaultColorTheme.name,
   [configInputIds.COLOR_ACCENT]: colorThemeKeys.GREEN,
@@ -239,22 +230,6 @@ export const defaultConfigSections = [
         ],
         validations: [],
         value: configDefaultValues[configInputIds.CARET_SHAPE]
-      },
-      {
-        id: configInputIds.FONT_SIZE,
-        name: 'Font Size',
-        description: 'Defines the size of the font used in the terminal.',
-        type: availableInputTypes.SELECT,
-        postFix: null,
-        iconButton: null,
-        options: [
-          { id: fontSizes.EXTRA_SMALL, name: 'Extra-Small' },
-          { id: fontSizes.SMALL, name: 'Small' },
-          { id: fontSizes.NORMAL, name: 'Normal' },
-          { id: fontSizes.LARGE, name: 'Large' }
-        ],
-        validations: [],
-        value: configDefaultValues[configInputIds.FONT_SIZE]
       },
       {
         id: configInputIds.STATUS_BAR,

@@ -37,7 +37,8 @@ export const configInputIds = {
   STATUS_BAR: 'status-bar',
   STATUS_LIGHT: 'status-light',
   LINE_TRUNCATION: 'line-truncation',
-  ASSISTED_SELECTION: 'assisted-selection'
+  ASSISTED_SELECTION: 'assisted-selection',
+  CARET_SHAPE: 'caret-shape'
 }
 
 export const fontSizes = {
@@ -53,6 +54,12 @@ export const statusIndicators = {
   NONE: 'none'
 }
 
+export const caretShapes = {
+  BAR: 'bar',
+  BLOCK: 'block',
+  UNDERSCORE: 'underscore'
+}
+
 export const configDefaultValues = {
   [configInputIds.COPY_ON_SELECTION]: true,
   [configInputIds.SWITCH_TAB_AUTOMATICALLY]: true,
@@ -63,6 +70,7 @@ export const configDefaultValues = {
   [configInputIds.CONTEXT]: DEFAULT_CONTEXT,
   [configInputIds.FONT_FAMILY]: 'Consolas',
   [configInputIds.FONT_SIZE]: fontSizes.NORMAL,
+  [configInputIds.CARET_SHAPE]: caretShapes.BAR,
   [configInputIds.THEME_NAME]: defaultColorTheme.name,
   [configInputIds.COLOR_ACCENT]: colorThemeKeys.GREEN,
   [configInputIds.EXPORT_CONFIGURATION]: 'Export',
@@ -216,6 +224,21 @@ export const defaultConfigSections = [
         options: [],
         validations: [],
         value: configDefaultValues[configInputIds.FONT_FAMILY]
+      },
+      {
+        id: configInputIds.CARET_SHAPE,
+        name: 'Caret Shape',
+        description: 'Choose the visual style of the text cursor displayed while typing.',
+        type: availableInputTypes.SELECT,
+        postFix: null,
+        iconButton: null,
+        options: [
+          { id: caretShapes.BAR, name: 'Bar' },
+          { id: caretShapes.BLOCK, name: 'Block' },
+          { id: caretShapes.UNDERSCORE, name: 'Underscore' }
+        ],
+        validations: [],
+        value: configDefaultValues[configInputIds.CARET_SHAPE]
       },
       {
         id: configInputIds.FONT_SIZE,

@@ -39,13 +39,15 @@ const getPaintedFragments = value => {
     results.push({
       value: matchValue,
       color: colorThemeKeys.BRIGHT_BLACK,
-      bgcolor: colorThemeKeys.RESET
+      bgcolor: colorThemeKeys.RESET,
+      isKeyword: true
     })
 
     results.push({
       value: extraction,
       color: lastColor,
-      bgcolor: lastBGColor
+      bgcolor: lastBGColor,
+      isKeyword: false
     })
   }
 
@@ -103,6 +105,7 @@ export const TextArea = ({ onBlur, value, name, maxLines, onChange }) => {
               key={`${index}-${fragment.value}`}
               data-bgcolor={fragment.bgcolor}
               data-color={fragment.color}
+              data-is-keyword={fragment.isKeyword}
               className={`${text} ${className}`}
             >
               {fragment.value}

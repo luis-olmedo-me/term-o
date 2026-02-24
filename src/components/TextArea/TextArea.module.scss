@@ -72,6 +72,10 @@
   }
 }
 
+.text[data-is-keyword='true'] {
+  color: with-opacity($colors-foreground, 0.1);
+}
+
 .bothColored {
   border-radius: unset;
 }

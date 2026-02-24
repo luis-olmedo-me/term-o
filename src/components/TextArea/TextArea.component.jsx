@@ -1,29 +1,19 @@
-import { useRef, useState } from 'preact/hooks'
+import { useRef } from 'preact/hooks'
 
 import { textAreaInput, textAreaOverlay, textAreaWrapper } from './TextArea.module.scss'
 
-export const TextArea = ({ onBlur, value, name, maxLines }) => {
+export const TextArea = ({ onBlur, value, name, maxLines, onChange }) => {
   const overlayRef = useRef(null)
   const textAreaRef = useRef(null)
-
-  const [localValue, setLocalValue] = useState(value)
 
   const syncScroll = () => {
     overlayRef.current.scrollLeft = textAreaRef.current.scrollLeft
   }
 
-  const handleBlur = event => {
-    onBlur(event)
-  }
-
-  const handleChange = event => {
-    setLocalValue(event.target.value)
-  }
-
   return (
     <div className={textAreaWrapper}>
       <div ref={overlayRef} className={textAreaOverlay}>
-        <span>{localValue}</span>
+        <span>{value}</span>
       </div>
 
       <textarea
@@ -31,9 +21,9 @@ export const TextArea = ({ onBlur, value, name, maxLines }) => {
         className={textAreaInput}
         rows={maxLines}
         name={name}
-        value={localValue}
-        onBlur={handleBlur}
-        onInput={handleChange}
+        value={value}
+        onBlur={onBlur}
+        onInput={onChange}
         onKeyUp={syncScroll}
         onScroll={syncScroll}
         spellCheck="false"

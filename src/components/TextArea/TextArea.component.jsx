@@ -10,7 +10,8 @@ const parser = value => {
   let lastColor = 'reset'
   let lastBGColor = 'reset'
 
-  for (const match of matches) {
+  for (let index = 0; index < matches.length; index++) {
+    const match = matches[index]
     const matchValue = match.at(0)
     const category = match.at(1)
     const color = match.at(2)

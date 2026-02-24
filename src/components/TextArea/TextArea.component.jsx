@@ -16,6 +16,11 @@ const parser = value => {
     const category = match.at(1)
     const color = match.at(2)
 
+    const nextMatch = matches[index + 1]
+
+    const start = match.index + matchValue.length
+    const extraction = nextMatch ? value.slice(start, nextMatch.index) : value.slice(start)
+
     const isColorKey = category === 'color'
 
     if (isColorKey) lastColor = color
@@ -28,7 +33,7 @@ const parser = value => {
     })
 
     results.push({
-      value: 'testing the content',
+      value: extraction,
       color: lastColor,
       bgcolor: lastBGColor
     })

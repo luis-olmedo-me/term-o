@@ -63,13 +63,13 @@
 
     & + .textAreaOverlay {
       color: $colors-brightWhite;
+
+      .text {
+        background-color: transparent;
+        color: inherit;
+      }
     }
   }
-}
-
-.text {
-  line-height: $lineHeight-300;
-  transition: color 1s ease-in-out;
 }
 
 .bothColored {

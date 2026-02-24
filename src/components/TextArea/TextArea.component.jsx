@@ -5,6 +5,7 @@ import {
   bothColored,
   nextColored,
   previousColored,
+  text,
   textAreaInput,
   textAreaOverlay,
   textAreaWrapper,
@@ -37,7 +38,7 @@ const getPaintedFragments = value => {
 
     results.push({
       value: matchValue,
-      color: colorThemeKeys.PURPLE,
+      color: colorThemeKeys.BRIGHT_BLACK,
       bgcolor: colorThemeKeys.RESET
     })
 
@@ -80,23 +81,6 @@ export const TextArea = ({ onBlur, value, name, maxLines, onChange }) => {
 
   return (
     <div className={textAreaWrapper}>
-      <div ref={overlayRef} className={textAreaOverlay}>
-        {paintedFragments.map((fragment, index) => {
-          const className = getBorderClass(paintedFragments, index)
-
-          return (
-            <span
-              key={`${index}-${fragment.value}`}
-              data-bgcolor={fragment.bgcolor}
-              data-color={fragment.color}
-              className={className}
-            >
-              {fragment.value}
-            </span>
-          )
-        })}
-      </div>
-
       <textarea
         ref={textAreaRef}
         className={textAreaInput}
@@ -109,6 +93,23 @@ export const TextArea = ({ onBlur, value, name, maxLines, onChange }) => {
         onScroll={syncScroll}
         spellCheck="false"
       />
+
+      <div ref={overlayRef} className={textAreaOverlay}>
+        {paintedFragments.map((fragment, index) => {
+          const className = getBorderClass(paintedFragments, index)
+
+          return (
+            <span
+              key={`${index}-${fragment.value}`}
+              data-bgcolor={fragment.bgcolor}
+              data-color={fragment.color}
+              className={`${text} ${className}`}
+            >
+              {fragment.value}
+            </span>
+          )
+        })}
+      </div>
     </div>
   )
 }

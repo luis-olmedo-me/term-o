@@ -1,5 +1,6 @@
 import { useMemo, useRef } from 'preact/hooks'
 
+import { colorThemeKeys } from '@src/constants/themes.constants'
 import { textAreaInput, textAreaOverlay, textAreaWrapper } from './TextArea.module.scss'
 
 const colorPattern = /\[termo\.(color|bgcolor)\.([A-Za-z]+)\]/g
@@ -7,8 +8,8 @@ const colorPattern = /\[termo\.(color|bgcolor)\.([A-Za-z]+)\]/g
 const getPaintedFragments = value => {
   const matches = value.matchAll(colorPattern)?.toArray() || []
   let results = []
-  let lastColor = 'reset'
-  let lastBGColor = 'reset'
+  let lastColor = colorThemeKeys.RESET
+  let lastBGColor = colorThemeKeys.RESET
 
   for (let index = 0; index < matches.length; index++) {
     const match = matches[index]
@@ -28,7 +29,7 @@ const getPaintedFragments = value => {
 
     results.push({
       value: matchValue,
-      color: 'brightBlack',
+      color: colorThemeKeys.BRIGHT_BLACK,
       bgcolor: null
     })
 

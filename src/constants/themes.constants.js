@@ -19,7 +19,8 @@ export const colorThemeKeys = {
   PURPLE: 'purple',
   RED: 'red',
   WHITE: 'white',
-  YELLOW: 'yellow'
+  YELLOW: 'yellow',
+  RESET: 'reset'
 }
 
 export const customColorThemeKeys = {

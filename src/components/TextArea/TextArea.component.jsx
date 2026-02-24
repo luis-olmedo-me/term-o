@@ -8,6 +8,7 @@ export const TextArea = ({ onBlur, value, name, maxLines, onChange }) => {
 
   const syncScroll = () => {
     overlayRef.current.scrollLeft = textAreaRef.current.scrollLeft
+    overlayRef.current.scrollTop = textAreaRef.current.scrollTop
   }
 
   return (
@@ -24,7 +25,7 @@ export const TextArea = ({ onBlur, value, name, maxLines, onChange }) => {
         value={value}
         onBlur={onBlur}
         onInput={onChange}
-        onKeyUp={syncScroll}
+        onKeyDown={syncScroll}
         onScroll={syncScroll}
         spellCheck="false"
       />

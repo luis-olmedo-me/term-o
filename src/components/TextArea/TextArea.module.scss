@@ -1,5 +1,6 @@
 .textAreaWrapper {
   position: relative;
+  overflow: hidden;
 }
 
 .textAreaOverlay {
@@ -13,6 +14,12 @@
   border: $space-50 solid transparent;
   line-height: $lineHeight-300;
   word-break: break-all;
+  white-space: pre-line;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .textAreaInput {

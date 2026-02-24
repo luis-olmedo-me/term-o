@@ -1,7 +1,15 @@
 import { useMemo, useRef } from 'preact/hooks'
 
 import { colorThemeKeys } from '@src/constants/themes.constants'
-import { textAreaInput, textAreaOverlay, textAreaWrapper } from './TextArea.module.scss'
+import {
+  bothColored,
+  nextColored,
+  previousColored,
+  textAreaInput,
+  textAreaOverlay,
+  textAreaWrapper,
+  uniqueColored
+} from './TextArea.module.scss'
 
 const colorPattern = /\[termo\.(color|bgcolor)\.([A-Za-z]+)\]/g
 
@@ -29,8 +37,8 @@ const getPaintedFragments = value => {
 
     results.push({
       value: matchValue,
-      color: colorThemeKeys.BRIGHT_BLACK,
-      bgcolor: null
+      color: colorThemeKeys.PURPLE,
+      bgcolor: colorThemeKeys.RESET
     })
 
     results.push({
@@ -41,6 +49,22 @@ const getPaintedFragments = value => {
   }
 
   return results
+}
+
+export const getBorderClass = (fragments, index) => {
+  const nextFragment = fragments[index + 1]
+  const previousFragment = fragments[index - 1]
+  const currentFragment = fragments[index]
+
+  const isNextColored = nextFragment && nextFragment.bgcolor !== colorThemeKeys.RESET
+  const isPreviousColored = previousFragment && previousFragment.bgcolor !== colorThemeKeys.RESET
+  const isCurrentColored = currentFragment && currentFragment.bgcolor !== colorThemeKeys.RESET
+
+  if (isNextColored && !isPreviousColored) return nextColored
+  if (isPreviousColored && !isNextColored) return previousColored
+  if (isNextColored && isPreviousColored) return bothColored
+  if (!isNextColored && !isPreviousColored && isCurrentColored) return uniqueColored
+  return undefined
 }
 
 export const TextArea = ({ onBlur, value, name, maxLines, onChange }) => {
@@ -57,9 +81,16 @@ export const TextArea = ({ onBlur, value, name, maxLines, onChange }) => {
   return (
     <div className={textAreaWrapper}>
       <div ref={overlayRef} className={textAreaOverlay}>
-        {paintedFragments.map(fragment => {
+        {paintedFragments.map((fragment, index) => {
+          const className = getBorderClass(paintedFragments, index)
+
           return (
-            <span data-bgcolor={fragment.bgcolor} data-color={fragment.color}>
+            <span
+              key={`${index}-${fragment.value}`}
+              data-bgcolor={fragment.bgcolor}
+              data-color={fragment.color}
+              className={className}
+            >
               {fragment.value}
             </span>
           )

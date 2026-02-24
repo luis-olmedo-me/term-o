@@ -71,3 +71,16 @@
   line-height: $lineHeight-300;
   transition: color 1s ease-in-out;
 }
+
+.bothColored {
+  border-radius: unset;
+}
+.uniqueColored {
+  border-radius: $radius-150;
+}
+.nextColored {
+  border-radius: $radius-150 0 0 $radius-150;
+}
+.previousColored {
+  border-radius: 0 $radius-150 $radius-150 0;
+}

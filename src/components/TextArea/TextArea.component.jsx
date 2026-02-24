@@ -1,10 +1,10 @@
-import { useRef } from 'preact/hooks'
+import { useMemo, useRef } from 'preact/hooks'
 
 import { textAreaInput, textAreaOverlay, textAreaWrapper } from './TextArea.module.scss'
 
 const colorPattern = /\[termo\.(color|bgcolor)\.([A-Za-z]+)\]/g
 
-const parser = value => {
+const getPaintedFragments = value => {
   const matches = value.matchAll(colorPattern)?.toArray() || []
   let results = []
   let lastColor = 'reset'
@@ -29,7 +29,7 @@ const parser = value => {
     results.push({
       value: matchValue,
       color: 'brightBlack',
-      bgcolor: 'white'
+      bgcolor: null
     })
 
     results.push({
@@ -39,16 +39,14 @@ const parser = value => {
     })
   }
 
-  console.log('💬 ~ results:', results)
-
-  return 'test'
+  return results
 }
 
 export const TextArea = ({ onBlur, value, name, maxLines, onChange }) => {
   const overlayRef = useRef(null)
   const textAreaRef = useRef(null)
 
-  parser(value)
+  const paintedFragments = useMemo(() => getPaintedFragments(value), [value])
 
   const syncScroll = () => {
     overlayRef.current.scrollLeft = textAreaRef.current.scrollLeft
@@ -58,7 +56,13 @@ export const TextArea = ({ onBlur, value, name, maxLines, onChange }) => {
   return (
     <div className={textAreaWrapper}>
       <div ref={overlayRef} className={textAreaOverlay}>
-        <span>{value}</span>
+        {paintedFragments.map(fragment => {
+          return (
+            <span data-bgcolor={fragment.bgcolor} data-color={fragment.color}>
+              {fragment.value}
+            </span>
+          )
+        })}
       </div>
 
       <textarea

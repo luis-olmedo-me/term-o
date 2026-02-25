@@ -1,3 +1,5 @@
+@use '@styles/mixins.module' as *;
+
 .viewWrapper {
   display: flex;
   flex-direction: column-reverse;
@@ -41,6 +43,10 @@
     position: absolute;
     top: 0.5rem;
     transition: background-color 0.1s ease-in-out;
+
+    @include theme(light) {
+      outline: $space-50 solid $colors-brightBlack;
+    }
   }
 
   &[data-truncated='true'] {
@@ -70,6 +76,10 @@
       left: $space-300;
       width: $space-200;
       height: calc(100% - 1rem);
+
+      @include theme(light) {
+        outline: $space-50 solid $colors-white;
+      }
     }
 
     &[data-indicator='half-dot']::before {

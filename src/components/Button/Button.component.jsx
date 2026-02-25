@@ -8,12 +8,11 @@ export const Button = ({
   variant,
   Icon = null,
   fullWidth = false,
-  selected = false,
-  className = ''
+  selected = false
 }) => {
   return (
     <button
-      className={`${buttonWrapper} ${className}`}
+      className={buttonWrapper}
       onClick={onClick}
       data-full-width={fullWidth}
       data-selected={selected}
@@ -36,6 +35,5 @@ Button.propTypes = {
   fullWidth: Boolean,
   selected: Boolean,
   Icon: Object,
-  variant: String,
-  className: String
+  variant: String
 }

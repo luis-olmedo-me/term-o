@@ -1,8 +1,5 @@
 import { useMemo, useRef } from 'preact/hooks'
 
-import Button, { buttonVariants } from '@src/components/Button'
-import Eye from '@src/icons/Eye.icon'
-
 import { colorThemeKeys } from '@src/constants/themes.constants'
 import {
   bothColored,
@@ -85,40 +82,36 @@ export const TextArea = ({ onBlur, value, name, maxLines, onChange }) => {
   }
 
   return (
-    <div className="">
-      <Button Icon={Eye} onClick={() => {}} variant={buttonVariants.OUTLINED} />
+    <div className={textAreaWrapper}>
+      <textarea
+        ref={textAreaRef}
+        className={textAreaInput}
+        rows={maxLines}
+        name={name}
+        value={value}
+        onBlur={onBlur}
+        onInput={onChange}
+        onKeyDown={syncScroll}
+        onScroll={syncScroll}
+        spellCheck="false"
+      />
 
-      <div className={textAreaWrapper}>
-        <textarea
-          ref={textAreaRef}
-          className={textAreaInput}
-          rows={maxLines}
-          name={name}
-          value={value}
-          onBlur={onBlur}
-          onInput={onChange}
-          onKeyDown={syncScroll}
-          onScroll={syncScroll}
-          spellCheck="false"
-        />
+      <div ref={overlayRef} className={textAreaOverlay}>
+        {paintedFragments.map((fragment, index) => {
+          const className = getBorderClass(paintedFragments, index)
 
-        <div ref={overlayRef} className={textAreaOverlay}>
-          {paintedFragments.map((fragment, index) => {
-            const className = getBorderClass(paintedFragments, index)
-
-            return (
-              <span
-                key={`${index}-${fragment.value}`}
-                data-bgcolor={fragment.bgcolor}
-                data-color={fragment.color}
-                data-is-keyword={fragment.isKeyword}
-                className={`${text} ${className}`}
-              >
-                {fragment.value}
-              </span>
-            )
-          })}
-        </div>
+          return (
+            <span
+              key={`${index}-${fragment.value}`}
+              data-bgcolor={fragment.bgcolor}
+              data-color={fragment.color}
+              data-is-keyword={fragment.isKeyword}
+              className={`${text} ${className}`}
+            >
+              {fragment.value}
+            </span>
+          )
+        })}
       </div>
     </div>
   )

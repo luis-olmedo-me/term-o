@@ -56,7 +56,7 @@
 
   &:hover + .textAreaOverlay {
     color: $colors-brightWhite;
-    border-color: $colors-accent;
+    border-color: colors-scale-1-by-theme-type();
     background-color: with-opacity($colors-accent, 0.8);
 
     .coloredFragment {

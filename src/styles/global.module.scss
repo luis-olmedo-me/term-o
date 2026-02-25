@@ -67,5 +67,26 @@ select,
   border: none;
 }
 
+#theme-provider {
+  &[data-inputs-caret='bar'] {
+    input,
+    textarea {
+      caret-shape: bar;
+    }
+  }
+  &[data-inputs-caret='block'] {
+    input,
+    textarea {
+      caret-shape: block;
+    }
+  }
+  &[data-inputs-caret='underscore'] {
+    input,
+    textarea {
+      caret-shape: underscore;
+    }
+  }
+}
+
 @include color-attr-generator('data-color', 'color', $letter-colors);
 @include color-attr-generator('data-bgcolor', 'background-color', $background-colors);

@@ -43,7 +43,6 @@ export const Prompt = ({
 
   const historialSize = config.getValueById(configInputIds.HISTORIAL_SIZE)
   const isTruncated = config.getValueById(configInputIds.LINE_TRUNCATION)
-  const caretShape = config.getValueById(configInputIds.CARET_SHAPE)
 
   const calculateSuggestion = useCallback((value, caret, aliases, addons) => {
     const newSuggestion = createSuggestion(value, caret, aliases, addons)
@@ -225,7 +224,6 @@ export const Prompt = ({
             onFocus={onFocus}
             onBlur={onBlur}
             onScroll={syncScroll}
-            data-caret={caretShape}
           />
         </div>
       </div>

@@ -1,3 +1,9 @@
+@use '@styles/variables.module' as *;
+
 @function with-opacity($color-var, $opacity) {
   @return rgb(from #{$color-var} r g b / #{$opacity});
+}
+
+@function colors-scale-1-by-theme-type() {
+  @return var(--colors-foreground-by-theme);
 }

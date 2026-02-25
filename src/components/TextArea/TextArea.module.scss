@@ -55,7 +55,7 @@
   }
 
   &:hover + .textAreaOverlay {
-    color: $colors-brightWhite;
+    color: colors-scale-1-by-theme-type();
     border-color: $colors-accent;
     background-color: with-opacity($colors-accent, 0.8);
 

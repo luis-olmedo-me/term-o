@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'preact/hooks'
+import { useMemo, useRef, useState } from 'preact/hooks'
 
 import Button, { buttonVariants } from '@src/components/Button'
 import Eye from '@src/icons/Eye.icon'
@@ -79,6 +79,8 @@ export const TextArea = ({ onBlur, value, name, maxLines, onChange }) => {
   const overlayRef = useRef(null)
   const textAreaRef = useRef(null)
 
+  const [areKeywordsVisible, setAreKeywordsVisible] = useState(true)
+
   const paintedFragments = useMemo(() => getPaintedFragments(value), [value])
 
   const syncScroll = () => {
@@ -92,8 +94,9 @@ export const TextArea = ({ onBlur, value, name, maxLines, onChange }) => {
         <Button
           className={actionButton}
           Icon={Eye}
-          onClick={() => {}}
+          onClick={() => setAreKeywordsVisible(!areKeywordsVisible)}
           variant={buttonVariants.OUTLINED}
+          selected={areKeywordsVisible}
         />
       </div>
 

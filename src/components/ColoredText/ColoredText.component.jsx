@@ -1,6 +1,6 @@
 import { useMemo } from 'preact/hooks'
 
-import { getBorderClass, getPaintedFragments } from './ColoredText.helpers'
+import { getPaintedFragments } from './ColoredText.helpers'
 import { text } from './ColoredText.module.scss'
 
 export const ColoredText = ({
@@ -17,8 +17,6 @@ export const ColoredText = ({
   return (
     <>
       {fragments.map((fragment, index) => {
-        const className = getBorderClass(fragments, index)
-
         return (
           fragment.value && (
             <span
@@ -27,7 +25,7 @@ export const ColoredText = ({
               data-color={fragment.color}
               data-is-keyword={fragment.isKeyword}
               data-hide-aritificial-spaces={hideArtificialSpaces}
-              className={`${text} ${fragmentClassName} ${className}`}
+              className={`${text} ${fragmentClassName} ${fragment.borderClassName}`}
             >
               {fragment.value}
             </span>

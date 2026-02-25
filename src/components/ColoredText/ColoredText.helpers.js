@@ -3,6 +3,48 @@ import { bothColored, nextColored, previousColored, uniqueColored } from './Colo
 
 const colorPattern = /\[termo\.(color|bgcolor)\.([A-Za-z]+)\]/g
 
+const isColoredFragment = fragment => {
+  return (
+    !!fragment &&
+    !!fragment.value &&
+    !!fragment.bgcolor &&
+    fragment.bgcolor !== colorThemeKeys.RESET
+  )
+}
+
+const findNextFragment = (fragments, currentIndex) => {
+  const currentFragment = fragments[currentIndex]
+  const nextFragmentPossibleIndex = currentIndex + 1
+
+  if (!currentFragment.isKeyword) return fragments[nextFragmentPossibleIndex]
+
+  for (let index = nextFragmentPossibleIndex; index < fragments.length; index++) {
+    const fragment = fragments[index]
+
+    if (!fragment) return null
+    if (fragment.isKeyword) continue
+    return fragment
+  }
+
+  return null
+}
+
+const getBorderClass = (fragments, index) => {
+  const fragment = fragments[index]
+  const previousFragment = fragments[index - 1]
+  const nextFragment = findNextFragment(fragments, index)
+
+  const isNextColored = isColoredFragment(nextFragment)
+  const isPreviousColored = isColoredFragment(previousFragment)
+  const isCurrentColored = isColoredFragment(fragment)
+
+  if (isNextColored && !isPreviousColored) return nextColored
+  if (isPreviousColored && !isNextColored) return previousColored
+  if (isNextColored && isPreviousColored) return bothColored
+  if (!isNextColored && !isPreviousColored && isCurrentColored) return uniqueColored
+  return undefined
+}
+
 export const getPaintedFragments = (value, keywordsEnabled) => {
   const matches = value.matchAll(colorPattern)?.toArray() || []
   let results = []
@@ -30,7 +72,8 @@ export const getPaintedFragments = (value, keywordsEnabled) => {
         value: matchValue,
         color: null,
         bgcolor: null,
-        isKeyword: true
+        isKeyword: true,
+        borderClassName: null
       })
     }
 
@@ -39,30 +82,14 @@ export const getPaintedFragments = (value, keywordsEnabled) => {
         value: extraction,
         color: lastColor,
         bgcolor: lastBGColor,
-        isKeyword: false
+        isKeyword: false,
+        borderClassName: null
       })
     }
   }
 
-  return results
-}
-
-const isColoredFragment = fragment => {
-  return !!fragment && !!fragment.value && fragment.bgcolor !== colorThemeKeys.RESET
-}
-
-export const getBorderClass = (fragments, index) => {
-  const nextFragment = fragments[index + 1]
-  const previousFragment = fragments[index - 1]
-  const currentFragment = fragments[index]
-
-  const isNextColored = isColoredFragment(nextFragment)
-  const isPreviousColored = isColoredFragment(previousFragment)
-  const isCurrentColored = isColoredFragment(currentFragment)
-
-  if (isNextColored && !isPreviousColored) return nextColored
-  if (isPreviousColored && !isNextColored) return previousColored
-  if (isNextColored && isPreviousColored) return bothColored
-  if (!isNextColored && !isPreviousColored && isCurrentColored) return uniqueColored
-  return undefined
+  return results.map((result, index) => ({
+    ...result,
+    borderClassName: getBorderClass(results, index)
+  }))
 }

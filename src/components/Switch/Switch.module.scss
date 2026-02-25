@@ -50,6 +50,7 @@
 
   &:hover + .simulatedSwitch {
     background-color: with-opacity($colors-accent, 0.25);
+    border-color: colors-scale-1-by-theme-type();
 
     &::after {
       border-color: with-opacity($colors-brightWhite, 0.5);

@@ -38,7 +38,7 @@
 
     &:hover {
       background-color: with-opacity($colors-accent, 0.8);
-      color: colors-scale-1-by-theme-type();
+      color: $colors-brightWhite;
     }
   }
 
@@ -54,7 +54,7 @@
 
     &:hover {
       background-color: with-opacity($colors-accent, 0.8);
-      color: colors-scale-1-by-theme-type();
+      color: $colors-brightWhite;
     }
     &[data-selected='true']:hover {
       color: $colors-brightAccent;
@@ -73,7 +73,7 @@
 
     &:hover {
       background-color: $colors-red;
-      color: colors-scale-1-by-theme-type();
+      color: $colors-brightWhite;
     }
     &[data-selected='true']:hover {
       color: $colors-brightRed;
@@ -92,7 +92,7 @@
 
     &:hover {
       background-color: $colors-yellow;
-      color: colors-scale-1-by-theme-type();
+      color: $colors-brightWhite;
     }
     &[data-selected='true']:hover {
       color: $colors-brightYellow;

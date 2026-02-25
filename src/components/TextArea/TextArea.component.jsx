@@ -1,80 +1,17 @@
-import { useMemo, useRef } from 'preact/hooks'
+import { useRef } from 'preact/hooks'
 
-import { colorThemeKeys } from '@src/constants/themes.constants'
+import ColoredText from '@src/components/ColoredText'
+
 import {
-  bothColored,
-  nextColored,
-  previousColored,
-  text,
+  coloredFragment,
   textAreaInput,
   textAreaOverlay,
-  textAreaWrapper,
-  uniqueColored
+  textAreaWrapper
 } from './TextArea.module.scss'
-
-const colorPattern = /\[termo\.(color|bgcolor)\.([A-Za-z]+)\]/g
-
-const getPaintedFragments = value => {
-  const matches = value.matchAll(colorPattern)?.toArray() || []
-  let results = []
-  let lastColor = colorThemeKeys.RESET
-  let lastBGColor = colorThemeKeys.RESET
-
-  for (let index = 0; index < matches.length; index++) {
-    const match = matches[index]
-    const matchValue = match.at(0)
-    const category = match.at(1)
-    const color = match.at(2)
-
-    const nextMatch = matches[index + 1]
-
-    const start = match.index + matchValue.length
-    const extraction = nextMatch ? value.slice(start, nextMatch.index) : value.slice(start)
-
-    const isColorKey = category === 'color'
-
-    if (isColorKey) lastColor = color
-    else lastBGColor = color
-
-    results.push({
-      value: matchValue,
-      color: colorThemeKeys.BRIGHT_BLACK,
-      bgcolor: colorThemeKeys.RESET,
-      isKeyword: true
-    })
-
-    results.push({
-      value: extraction,
-      color: lastColor,
-      bgcolor: lastBGColor,
-      isKeyword: false
-    })
-  }
-
-  return results
-}
-
-export const getBorderClass = (fragments, index) => {
-  const nextFragment = fragments[index + 1]
-  const previousFragment = fragments[index - 1]
-  const currentFragment = fragments[index]
-
-  const isNextColored = nextFragment && nextFragment.bgcolor !== colorThemeKeys.RESET
-  const isPreviousColored = previousFragment && previousFragment.bgcolor !== colorThemeKeys.RESET
-  const isCurrentColored = currentFragment && currentFragment.bgcolor !== colorThemeKeys.RESET
-
-  if (isNextColored && !isPreviousColored) return nextColored
-  if (isPreviousColored && !isNextColored) return previousColored
-  if (isNextColored && isPreviousColored) return bothColored
-  if (!isNextColored && !isPreviousColored && isCurrentColored) return uniqueColored
-  return undefined
-}
 
 export const TextArea = ({ onBlur, value, name, maxLines, onChange }) => {
   const overlayRef = useRef(null)
   const textAreaRef = useRef(null)
-
-  const paintedFragments = useMemo(() => getPaintedFragments(value), [value])
 
   const syncScroll = () => {
     overlayRef.current.scrollLeft = textAreaRef.current.scrollLeft
@@ -97,21 +34,7 @@ export const TextArea = ({ onBlur, value, name, maxLines, onChange }) => {
       />
 
       <div ref={overlayRef} className={textAreaOverlay}>
-        {paintedFragments.map((fragment, index) => {
-          const className = getBorderClass(paintedFragments, index)
-
-          return (
-            <span
-              key={`${index}-${fragment.value}`}
-              data-bgcolor={fragment.bgcolor}
-              data-color={fragment.color}
-              data-is-keyword={fragment.isKeyword}
-              className={`${text} ${className}`}
-            >
-              {fragment.value}
-            </span>
-          )
-        })}
+        <ColoredText fragmentClassName={coloredFragment} value={value} keywordsEnabled />
       </div>
     </div>
   )

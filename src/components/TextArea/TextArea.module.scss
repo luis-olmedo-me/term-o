@@ -59,18 +59,19 @@
     border-color: $colors-accent;
     background-color: with-opacity($colors-accent, 0.8);
 
-    .text {
+    .coloredFragment {
       background-color: transparent;
       color: inherit;
     }
   }
 
-  &::selection + .textAreaOverlay .text[data-color] {
+  &::selection + .textAreaOverlay .coloredFragment[data-color] {
     background-color: $colors-background;
     color: $colors-foreground;
   }
 }
-.text {
+
+.coloredFragment {
   transition:
     color 0.1s ease-in-out,
     background-color 0.1s ease-in-out;
@@ -78,17 +79,4 @@
   &[data-is-keyword='true'] {
     color: with-opacity($colors-foreground, 0.2);
   }
-}
-
-.bothColored {
-  border-radius: unset;
-}
-.uniqueColored {
-  border-radius: $radius-150;
-}
-.nextColored {
-  border-radius: $radius-150 0 0 $radius-150;
-}
-.previousColored {
-  border-radius: 0 $radius-150 $radius-150 0;
 }

@@ -27,7 +27,7 @@
 }
 
 .textAreaInput {
-  border: none;
+  border: $space-50 solid transparent;
   background-color: transparent;
   border-radius: $radius-200;
   padding: $space-300;
@@ -65,8 +65,8 @@
     }
   }
 
-  &::selection + .textAreaOverlay .coloredFragment[data-color] {
-    background-color: $colors-background;
+  &::selection {
+    background-color: $colors-selectionBackground;
     color: $colors-foreground;
   }
 }

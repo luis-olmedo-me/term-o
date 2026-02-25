@@ -3,7 +3,12 @@ import { useMemo } from 'preact/hooks'
 import { getBorderClass, getPaintedFragments } from './ColoredText.helpers'
 import { text } from './ColoredText.module.scss'
 
-export const ColoredText = ({ value, keywordsEnabled = false, fragmentClassName = '' }) => {
+export const ColoredText = ({
+  value,
+  keywordsEnabled = false,
+  hideArtificialSpaces = false,
+  fragmentClassName = ''
+}) => {
   const fragments = useMemo(
     () => getPaintedFragments(value, keywordsEnabled),
     [value, keywordsEnabled]
@@ -21,6 +26,7 @@ export const ColoredText = ({ value, keywordsEnabled = false, fragmentClassName 
               data-bgcolor={fragment.bgcolor}
               data-color={fragment.color}
               data-is-keyword={fragment.isKeyword}
+              data-hide-aritificial-spaces={hideArtificialSpaces}
               className={`${text} ${fragmentClassName} ${className}`}
             >
               {fragment.value}
@@ -34,5 +40,7 @@ export const ColoredText = ({ value, keywordsEnabled = false, fragmentClassName 
 
 ColoredText.propTypes = {
   value: Object,
-  keywordsEnabled: Boolean
+  keywordsEnabled: Boolean,
+  hideArtificialSpaces: Boolean,
+  fragmentClassName: String
 }

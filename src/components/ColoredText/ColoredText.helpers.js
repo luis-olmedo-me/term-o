@@ -28,8 +28,8 @@ export const getPaintedFragments = (value, keywordsEnabled) => {
     if (keywordsEnabled) {
       results.push({
         value: matchValue,
-        color: colorThemeKeys.BRIGHT_BLACK,
-        bgcolor: colorThemeKeys.RESET,
+        color: null,
+        bgcolor: null,
         isKeyword: true
       })
     }

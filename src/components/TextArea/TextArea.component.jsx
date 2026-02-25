@@ -34,7 +34,12 @@ export const TextArea = ({ onBlur, value, name, maxLines, onChange }) => {
       />
 
       <div ref={overlayRef} className={textAreaOverlay}>
-        <ColoredText fragmentClassName={coloredFragment} value={value} keywordsEnabled />
+        <ColoredText
+          fragmentClassName={coloredFragment}
+          value={value}
+          keywordsEnabled
+          hideArtificialSpaces
+        />
       </div>
     </div>
   )

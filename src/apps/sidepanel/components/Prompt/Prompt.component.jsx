@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 
-import ColoredText from '@sidepanel/components/ColoredText'
+import ColoredText from '@src/components/ColoredText'
 import useStorage from '@src/hooks/useStorage'
 
 import { eventNames } from '@sidepanel/constants/events.constants'

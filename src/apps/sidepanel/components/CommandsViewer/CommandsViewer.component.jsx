@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'preact/hooks'
 
-import ColoredText from '@sidepanel/components/ColoredText'
+import ColoredText from '@src/components/ColoredText'
 import useStorage from '@src/hooks/useStorage'
 
 import { commandStatuses } from '@src/constants/command.constants'

@@ -5,6 +5,8 @@ import Eye from '@src/icons/Eye.icon'
 
 import { colorThemeKeys } from '@src/constants/themes.constants'
 import {
+  actionButton,
+  actionsWrapper,
   bothColored,
   nextColored,
   previousColored,
@@ -86,7 +88,14 @@ export const TextArea = ({ onBlur, value, name, maxLines, onChange }) => {
 
   return (
     <div className="">
-      <Button Icon={Eye} onClick={() => {}} variant={buttonVariants.OUTLINED} />
+      <div className={actionsWrapper}>
+        <Button
+          className={actionButton}
+          Icon={Eye}
+          onClick={() => {}}
+          variant={buttonVariants.OUTLINED}
+        />
+      </div>
 
       <div className={textAreaWrapper}>
         <textarea

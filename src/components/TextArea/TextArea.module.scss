@@ -25,7 +25,7 @@
 .textAreaInput {
   border: $space-50 solid $colors-brightBlack;
   background-color: with-opacity($colors-white, 0.05);
-  border-radius: $radius-200;
+  border-radius: 0 0 $radius-200 $radius-200;
   padding: $space-300;
   color: $colors-foreground;
   transition: border-color 0.1s ease-in-out;
@@ -87,4 +87,24 @@
 }
 .previousColored {
   border-radius: 0 $radius-150 $radius-150 0;
+}
+
+.actionsWrapper {
+  background-color: with-opacity($colors-white, 0.15);
+  border-radius: $radius-200 $radius-200 0 0;
+  border: solid $colors-brightBlack;
+  border-width: $space-50 $space-50 0;
+
+  .actionButton[data-variant='outlined'] {
+    border-radius: 0;
+    border: none;
+    background-color: transparent;
+
+    &:first-child {
+      border-radius: $radius-200 0 0 0;
+    }
+    &:last-child {
+      border-radius: 0 $radius-200 0 0;
+    }
+  }
 }

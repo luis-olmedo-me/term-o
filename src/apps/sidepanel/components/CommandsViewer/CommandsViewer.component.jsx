@@ -91,7 +91,7 @@ export const CommandsViewer = ({ commands }) => {
               ))}
 
               <p className={line} data-truncate-skip="false" onMouseUp={handleLineMouseUp}>
-                <ColoredText value={command.title} keywordsEnabled />
+                {command.title}
               </p>
 
               {command.updates.map((update, index) => {

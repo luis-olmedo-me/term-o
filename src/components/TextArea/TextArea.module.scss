@@ -77,6 +77,7 @@
     background-color 0.1s ease-in-out;
 
   &[data-is-keyword='true'] {
-    color: with-opacity($colors-foreground, 0.2);
+    color: with-opacity($colors-foreground, 0.3);
+    font-style: italic;
   }
 }

@@ -1,62 +1,68 @@
-import { getBgColor as BG, getColor as C } from '@src/helpers/themes.helpers'
+import { colorThemeKeys } from '@src/constants/themes.constants'
 import { bothColored, nextColored, previousColored, uniqueColored } from './ColoredText.module.scss'
 
-const colorPattern = /\[termo\.color\.[A-Za-z]+\]/g
-const bgColorPattern = /\[termo\.bgcolor\.[A-Za-z]+\]/g
+const colorPattern = /\[termo\.(color|bgcolor)\.([A-Za-z]+)\]/g
 
-const getColoredSections = (input, carriedColorName) => {
-  let lastCarriedColorName = carriedColorName
+export const getPaintedFragments = (value, keywordsEnabled) => {
+  const matches = value.matchAll(colorPattern)?.toArray() || []
+  let results = []
+  let lastColor = colorThemeKeys.RESET
+  let lastBGColor = colorThemeKeys.RESET
 
-  const lastColor = C(carriedColorName)
-  const safeInput = `${lastColor}${input}`
-  const [, ...contentFragments] = safeInput.split(colorPattern)
-  const colorFragments = safeInput.match(colorPattern) || []
+  for (let index = 0; index < matches.length; index++) {
+    const match = matches[index]
+    const matchValue = match.at(0)
+    const category = match.at(1)
+    const color = match.at(2)
 
-  const sections = contentFragments.reduce((fragments, content, index) => {
-    const chosenColor = colorFragments[index]
-    const [, key, color] = chosenColor.match(/\[termo\.(\w+)\.([A-Za-z]+)\]/)
+    const nextMatch = matches[index + 1]
 
-    lastCarriedColorName = color
+    const start = match.index + matchValue.length
+    const extraction = nextMatch ? value.slice(start, nextMatch.index) : value.slice(start)
 
-    return [...fragments, { content, color, key }]
-  }, [])
+    const isColorKey = category === 'color'
 
-  return [lastCarriedColorName, sections]
+    if (isColorKey) lastColor = color
+    else lastBGColor = color
+
+    if (keywordsEnabled) {
+      results.push({
+        value: matchValue,
+        color: colorThemeKeys.BRIGHT_BLACK,
+        bgcolor: colorThemeKeys.RESET,
+        isKeyword: true
+      })
+    }
+
+    if (extraction) {
+      results.push({
+        value: extraction,
+        color: lastColor,
+        bgcolor: lastBGColor,
+        isKeyword: false
+      })
+    }
+  }
+
+  return results
 }
 
-export const getBackgroundedSections = input => {
-  let carriedColorName = 'reset'
-  const hasBgColors = bgColorPattern.test(input)
-  const hasColors = colorPattern.test(input)
-
-  if (!hasBgColors && !hasColors)
-    return [{ bgcolor: 'reset', content: [{ content: input, color: 'reset' }] }]
-
-  const reset = BG`reset`
-  const safeInput = `${reset}${input}`
-  const [, ...contentFragments] = safeInput.split(bgColorPattern)
-  const bgColorFragments = safeInput.match(bgColorPattern) || []
-
-  return contentFragments.reduce((fragments, content, index) => {
-    const chosenColor = bgColorFragments[index]
-    const [, key, bgcolor] = chosenColor.match(/\[termo\.(\w+)\.([A-Za-z]+)\]/)
-    const [lastColorName, coloredSections] = getColoredSections(content, carriedColorName)
-
-    carriedColorName = lastColorName
-
-    return [...fragments, { content: coloredSections, bgcolor, key }]
-  }, [])
+const isColoredFragment = fragment => {
+  return !!fragment && !!fragment.value && fragment.bgcolor !== colorThemeKeys.RESET
 }
 
-export const getBgBorderMod = (sections, sectionIndex) => {
-  const nextSection = sections[sectionIndex + 1]
-  const previousSection = sections[sectionIndex - 1]
+export const getBorderClass = (fragments, index) => {
+  const nextFragment = fragments[index + 1]
+  const previousFragment = fragments[index - 1]
+  const currentFragment = fragments[index]
 
-  const isNextColored = !!nextSection && nextSection?.bgcolor !== 'reset'
-  const isPreviousColored = !!previousSection && previousSection?.bgcolor !== 'reset'
+  const isNextColored = isColoredFragment(nextFragment)
+  const isPreviousColored = isColoredFragment(previousFragment)
+  const isCurrentColored = isColoredFragment(currentFragment)
 
   if (isNextColored && !isPreviousColored) return nextColored
   if (isPreviousColored && !isNextColored) return previousColored
   if (isNextColored && isPreviousColored) return bothColored
-  return uniqueColored
+  if (!isNextColored && !isPreviousColored && isCurrentColored) return uniqueColored
+  return undefined
 }

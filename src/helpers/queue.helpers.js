@@ -24,10 +24,11 @@ export const limitQueueByConfig = (queue, maxCount) => {
     if (count > maxCount) {
       const cutUpdates = updates.slice((maxCount - count) * -1)
       const overflowCount = updates.length - cutUpdates.length
-      warning = formatWarning({
+      const [newWarning] = formatWarning({
         title: `Command line limit exceeded. Discarded ${overflowCount} lines.`
       })
 
+      warning = newWarning
       newQueue.unshift({ ...queueItem, command: { ...command, warning, updates: cutUpdates } })
       break
     }

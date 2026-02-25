@@ -5,5 +5,5 @@
 }
 
 @function colors-scale-1-by-theme-type() {
-  @return var(--colors-foreground-by-theme);
+  @return var(--colors-scale-1-by-theme-type);
 }

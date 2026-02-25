@@ -63,13 +63,6 @@ $font: var(--font);
 
 $isDarkMode: var(--isDarkMode);
 
-#theme-provider[data-theme='light'] {
-  --colors-scale-1-by-theme-type: var(--colors-brightBlack);
-}
-#theme-provider[data-theme='dark'] {
-  --colors-scale-1-by-theme-type: var(--colors-accent);
-}
-
 $colors: (
   'white': $colors-white,
   'black': $colors-black,

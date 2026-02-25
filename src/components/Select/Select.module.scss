@@ -1,3 +1,5 @@
+@use '@styles/mixins.module' as *;
+
 .selecter {
   width: 300px;
   border: $space-50 solid $colors-brightBlack;
@@ -32,7 +34,13 @@
   &:hover {
     background-color: with-opacity($colors-accent, 0.8);
     color: $colors-brightWhite;
-    border-color: colors-scale-1-by-theme-type();
+
+    @include theme(light) {
+      border-color: $colors-brightBlack;
+    }
+    @include theme(dark) {
+      border-color: $colors-accent;
+    }
   }
 
   &:disabled {

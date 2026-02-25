@@ -1,3 +1,5 @@
+@use '@styles/mixins.module' as *;
+
 .simulatedSwitch {
   height: 1.5rem;
   width: 2.5rem;
@@ -50,7 +52,13 @@
 
   &:hover + .simulatedSwitch {
     background-color: with-opacity($colors-accent, 0.25);
-    border-color: colors-scale-1-by-theme-type();
+
+    @include theme(light) {
+      border-color: $colors-brightBlack;
+    }
+    @include theme(dark) {
+      border-color: $colors-accent;
+    }
 
     &::after {
       border-color: with-opacity($colors-brightWhite, 0.5);

@@ -1,3 +1,5 @@
+@use '@styles/mixins.module' as *;
+
 .textAreaWrapper {
   position: relative;
   overflow: hidden;
@@ -56,8 +58,14 @@
 
   &:hover + .textAreaOverlay {
     color: $colors-brightWhite;
-    border-color: colors-scale-1-by-theme-type();
     background-color: with-opacity($colors-accent, 0.8);
+
+    @include theme(light) {
+      border-color: $colors-brightBlack;
+    }
+    @include theme(dark) {
+      border-color: $colors-accent;
+    }
 
     .coloredFragment {
       background-color: transparent;

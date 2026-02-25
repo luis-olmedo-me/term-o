@@ -65,11 +65,9 @@ $isDarkMode: var(--isDarkMode);
 
 #theme-provider[data-theme='light'] {
   --colors-scale-1-by-theme-type: var(--colors-brightBlack);
-  --colors-scale-1-opacity-by-theme-type: 1;
 }
 #theme-provider[data-theme='dark'] {
   --colors-scale-1-by-theme-type: var(--colors-accent);
-  --colors-scale-1-opacity-by-theme-type: 1;
 }
 
 $colors: (

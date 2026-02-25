@@ -1,4 +1,4 @@
-import { getBgColor as BG, getColor as C } from '@src/helpers/themes.helpers'
+import { getBgColor as BG, getColor as C, escapeColors } from '@src/helpers/themes.helpers'
 import { getQuotedString, spreadIf } from '@src/helpers/utils.helpers'
 
 export const formatElement = ({ tagName, attributes, xpath, textContent, tabId }) => {
@@ -52,7 +52,8 @@ export const formatNotification = ({ title, message }) => {
 }
 
 export const formatError = ({ title }) => {
-  const quotedTitle = getQuotedString(title)
+  const cleanedTitle = escapeColors(title)
+  const quotedTitle = getQuotedString(cleanedTitle)
 
   return [`${C`red`}${quotedTitle}${C`reset`}`]
 }

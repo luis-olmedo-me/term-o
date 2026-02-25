@@ -5,5 +5,8 @@
 }
 
 @function colors-scale-1-by-theme-type() {
-  @return var(--colors-scale-1-by-theme-type);
+  @return with-opacity(
+    var(--colors-scale-1-by-theme-type),
+    var(--colors-scale-1-opacity-by-theme-type)
+  );
 }

@@ -10,7 +10,7 @@
 - [Overview](#overview)
 - [Commands](#commands)
 - [Options](#options)
-- [Option Types](#option-types)
+- [Types](#types)
 - [Commands](#commands)
   - [dom](#dom)
   - [tab](#tab)
@@ -33,6 +33,7 @@ Each command:
 
 - Has a unique name.
 - Accepts typed options.
+- Exists to build an answer with the given options.
 - Supports short flags (`command -a` -> `-a` does not require explicit value).
 - Supports short flags series (`command -abc` = `command -a -b -c`).
 - May define dependencies between options.
@@ -57,3 +58,23 @@ Options are data supplied to the command handler and are defined within the user
 It is important to understand that options are hard typed in Term-O. That means that if an option expects for a explicit value (i.e. "string"), the input must have quotes.
 
 A command with existing options will always require options described within the input otherwise you will get an error at execution.
+
+# Types
+
+In Term-O, almost everything is a validated value. We have defined all the possible types that can be used as an option value and also command answer:
+
+## String
+
+String types are defined as chain a characters. In simple words, it is just text. It must be declared within quotes otherwise it will fail.
+
+Double Quotes Accepted:
+
+```bash
+command --title "testing"
+```
+
+Single Quotes Accepted:
+
+```bash
+command --title 'testing'
+```

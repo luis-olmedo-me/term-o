@@ -10,6 +10,7 @@
 - [Overview](#overview)
 - [Commands](#commands)
   - [DOM](#dom)
+  - [TABS](#tabs)
 
 ---
 

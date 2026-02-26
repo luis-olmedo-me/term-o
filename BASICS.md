@@ -61,20 +61,84 @@ A command with existing options will always require options described within the
 
 # Types
 
-In Term-O, almost everything is a validated value. We have defined all the possible types that can be used as an option value and also command answer:
+In Term-O, almost everything is a validated value. We have defined all the possible types that can be used as an option value and also command answer.
+
+This is an expamle of all the possibilities that can be expected as input and answers:
+
+```bash
+command --a-test --b-test "value" --c-test ["value" "value"]
+"answer-1" false ["answer-1" "answer-1"]
+"answer-2" true ["answer-2" "answer-2"]
+```
+
+The above command execution example is internally interpretated as:
+
+```json
+{
+  "commands": [
+    {
+      "name": "command",
+      "input": "command --option",
+      "state": "finished",
+      "options": {
+        "a-test": true,
+        "b-test": "value",
+        "c-test": ["value", "value"]
+      },
+      "answer": [
+        ["answer-1", false, ["answer-1", "answer-1"]],
+        ["answer-2", true, ["answer-2", "answer-2"]]
+      ]
+    }
+  ]
+}
+```
+
+Options have a shortcut that can be used. Most of the times, they start with the first letter to be easy to remember but there commands with so many options that shortcuts must take another letter.
+
+> That's why all commands have an option by default called "--help" where all command options are displayed with a short description and their shortcut.
+
+The above example can be replicated using them this way:
+
+```bash
+command -ab "value" -c ["value" "value"]
+"answer-1" false ["answer-1" "answer-1"]
+"answer-2" true ["answer-2" "answer-2"]
+```
 
 ## String
 
 String types are defined as chain a characters. In simple words, it is just text. It must be declared within quotes otherwise it will fail.
 
-Double Quotes Accepted:
+Double Quotes Accepted (user input):
 
 ```bash
 command --title "testing"
+"test-answer-1"
+"test-answer-2"
+"test-answer-3"
 ```
 
-Single Quotes Accepted:
+Single Quotes Accepted (user input):
 
 ```bash
 command --title 'testing'
+'test-answer-1'
+'test-answer-2'
+'test-answer-3'
 ```
+
+## Boolean (flag)
+
+Boolean types are defined as a binary value. In simple words, it is a `true` or `false` value. Its value is not needed to be explicit when it comes to options. So, in those cases, we just need to mention it in the user input.
+
+```bash
+command --enable
+'test-answer-1' false
+'test-answer-2' true
+'test-answer-3' false
+```
+
+## Array
+
+Array types are defined as chain of values.

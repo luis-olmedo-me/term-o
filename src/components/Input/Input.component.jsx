@@ -7,7 +7,6 @@ export const Input = ({
   onBlur,
   placeholder,
   value,
-  checked,
   prefix,
   inputRef,
   disabled,
@@ -33,8 +32,7 @@ export const Input = ({
         spellCheck="false"
         type={type}
         value={value}
-        checked={checked}
-        onChange={onChange}
+        onInput={onChange}
         onKeyDown={onKeyDown}
         onFocus={onFocus}
         onBlur={onBlur}
@@ -55,7 +53,6 @@ Input.propTypes = {
   onBlur: Function,
   placeholder: String,
   value: String,
-  checked: Boolean,
   prefix: String,
   postFix: String,
   inputRef: Object,

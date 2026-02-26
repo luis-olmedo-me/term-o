@@ -5,3 +5,9 @@
     }
   }
 }
+
+@mixin theme($mode) {
+  :global([data-theme='#{$mode}']) & {
+    @content;
+  }
+}

@@ -1,3 +1,5 @@
+@use '@styles/variables.module' as *;
+
 @function with-opacity($color-var, $opacity) {
   @return rgb(from #{$color-var} r g b / #{$opacity});
 }

@@ -1,17 +1,47 @@
-import { textAreaInput } from './TextArea.module.scss'
+import { useRef } from 'preact/hooks'
 
-export const TextArea = ({ onChange, onBlur, value, name, maxLines, disabled = false }) => {
+import ColoredText from '@src/components/ColoredText'
+
+import {
+  coloredFragment,
+  textAreaInput,
+  textAreaOverlay,
+  textAreaWrapper
+} from './TextArea.module.scss'
+
+export const TextArea = ({ onBlur, value, name, maxLines, onChange }) => {
+  const overlayRef = useRef(null)
+  const textAreaRef = useRef(null)
+
+  const syncScroll = () => {
+    overlayRef.current.scrollLeft = textAreaRef.current.scrollLeft
+    overlayRef.current.scrollTop = textAreaRef.current.scrollTop
+  }
+
   return (
-    <textarea
-      className={textAreaInput}
-      name={name}
-      disabled={disabled}
-      onBlur={onBlur}
-      onChange={onChange}
-      rows={maxLines}
-      value={value}
-      spellCheck="false"
-    />
+    <div className={textAreaWrapper}>
+      <textarea
+        ref={textAreaRef}
+        className={textAreaInput}
+        rows={maxLines}
+        name={name}
+        value={value}
+        onBlur={onBlur}
+        onInput={onChange}
+        onKeyDown={syncScroll}
+        onScroll={syncScroll}
+        spellCheck="false"
+      />
+
+      <div ref={overlayRef} className={textAreaOverlay}>
+        <ColoredText
+          fragmentClassName={coloredFragment}
+          value={value}
+          keywordsEnabled
+          hideArtificialSpaces
+        />
+      </div>
+    </div>
   )
 }
 
@@ -19,7 +49,6 @@ TextArea.propTypes = {
   onChange: Function,
   onBlur: Function,
   value: Boolean,
-  disabled: Boolean,
   maxLines: Number,
   name: String
 }

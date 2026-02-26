@@ -15,6 +15,12 @@ export const cleanColors = value => {
   return value.replace(colorPattern, '')
 }
 
+export const escapeColors = (value = '') => {
+  const colorPattern = /\[termo\.color\.[A-Za-z]+\]|\[termo\.bgcolor\.[A-Za-z]+\]/g
+
+  return value.replace(colorPattern, character => RegExp.escape(character))
+}
+
 export const getAccentColors = (colorThemes, accentName) => {
   const accentNameTitleCase = toTitleCase(accentName)
   const brightAccentName = `bright${accentNameTitleCase}`

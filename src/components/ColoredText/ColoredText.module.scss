@@ -1,0 +1,26 @@
+.text {
+  line-height: $lineHeight-300;
+  transition: color 1s ease-in-out;
+
+  &[data-hide-aritificial-spaces='false'] {
+    &.bothColored:not([data-bgcolor='reset']),
+    &.uniqueColored:not([data-bgcolor='reset']),
+    &.nextColored:not([data-bgcolor='reset']),
+    &.previousColored:not([data-bgcolor='reset']) {
+      padding-inline: 2px;
+    }
+  }
+
+  &.bothColored {
+    border-radius: unset;
+  }
+  &.uniqueColored {
+    border-radius: $radius-150;
+  }
+  &.nextColored {
+    border-radius: $radius-150 0 0 $radius-150;
+  }
+  &.previousColored {
+    border-radius: 0 $radius-150 $radius-150 0;
+  }
+}

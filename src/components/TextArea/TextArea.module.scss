@@ -1,12 +1,46 @@
-.textAreaInput {
+@use '@styles/mixins.module' as *;
+
+.textAreaWrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.textAreaOverlay {
+  position: absolute;
+  inset: 0;
+  background-color: with-opacity($colors-white, 0.05);
+  pointer-events: none;
+  word-wrap: break-word;
+  font-size: $fontSize-50;
+  font-family: $font;
+  padding: $space-300;
   border: $space-50 solid $colors-brightBlack;
-  background-color: with-opacity($colors-white, 0.25);
+  line-height: $lineHeight-300;
+  word-break: break-all;
+  white-space: pre-line;
+  overflow-y: scroll;
+  transition: border-color 0.1s ease-in-out;
+  border-radius: $radius-200;
+  z-index: -1;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.textAreaInput {
+  border: $space-50 solid transparent;
+  background-color: transparent;
   border-radius: $radius-200;
   padding: $space-300;
-  color: $colors-foreground;
-  transition: border-color 0.1s ease-in-out;
+  color: transparent;
   resize: none;
-  width: 100%;
+  width: -webkit-fill-available;
+  font-family: $font;
+  font-size: $fontSize-50;
+  line-height: $lineHeight-300;
+  caret-color: $colors-cursorColor;
+  word-break: break-all;
 
   &::-webkit-scrollbar {
     display: none;
@@ -18,13 +52,40 @@
     outline: none;
   }
 
-  &:focus {
-    border: $space-50 solid $colors-accent;
+  &:focus + .textAreaOverlay {
+    border-color: $colors-accent;
   }
 
-  &:hover {
-    background-color: with-opacity($colors-accent, 0.8);
+  &:hover + .textAreaOverlay {
     color: $colors-brightWhite;
-    border-color: $colors-accent;
+    background-color: with-opacity($colors-accent, 0.8);
+
+    @include theme(light) {
+      border-color: $colors-brightBlack;
+    }
+    @include theme(dark) {
+      border-color: $colors-accent;
+    }
+
+    .coloredFragment {
+      background-color: transparent;
+      color: inherit;
+    }
+  }
+
+  &::selection {
+    background-color: $colors-selectionBackground;
+    color: $colors-foreground;
+  }
+}
+
+.coloredFragment {
+  transition:
+    color 0.1s ease-in-out,
+    background-color 0.1s ease-in-out;
+
+  &[data-is-keyword='true'] {
+    color: with-opacity($colors-foreground, 0.3);
+    font-style: italic;
   }
 }

@@ -1,4 +1,5 @@
 @use '@styles/variables.module' as *;
+@use '@styles/mixins.module' as *;
 
 .postfix {
   padding-inline: $space-400;
@@ -46,7 +47,7 @@
 
   &[data-variant='outlined'] {
     border: $space-50 solid $colors-brightBlack;
-    background-color: with-opacity($colors-white, 0.25);
+    background-color: with-opacity($colors-white, 0.05);
     border-radius: $radius-200 0 0 $radius-200;
     padding-left: $space-300;
     transition: border-color 0.1s ease-in-out;
@@ -56,7 +57,12 @@
     }
 
     &:focus {
-      border: $space-50 solid $colors-accent;
+      @include theme(light) {
+        border: $space-50 solid $colors-brightBlack;
+      }
+      @include theme(dark) {
+        border: $space-50 solid $colors-accent;
+      }
     }
 
     &:hover {
@@ -66,7 +72,12 @@
 
     &:hover,
     &:hover + .postfix {
-      border-color: $colors-accent;
+      @include theme(light) {
+        border-color: $colors-brightBlack;
+      }
+      @include theme(dark) {
+        border-color: $colors-accent;
+      }
     }
   }
 }

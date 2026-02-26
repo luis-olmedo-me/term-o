@@ -10,6 +10,8 @@
 
 Term-O is a Browser Extension developer tool for interacting with browser APIs using terminal-style UI.
 
+This documentation only explains how to test Term-O locally. Please review [Term-O Basics](BASICS.ms) for more details.
+
 ## Installation
 
 Clone the repo:
@@ -49,21 +51,20 @@ Both commands will create a `build/` directory, it will contain the built files 
 Then, type `alt + t`:
 
 ![Developer Mode Checkbox](src/tutorial/usage.png)
+Please review [Term-O Basics](BASICS.ms) for more details.
 
 ## Load into Chrome
 
 To load the built files into Chrome, open [chrome://extensions/](chrome://extensions/).
 
-Enable "Developer mode" if it's not enabled yet:
+1. Enable "Developer mode" if it's not enabled yet:
 
 ![Developer Mode Checkbox](src/tutorial/install-step-1.png)
 
-Click on "Load unpacked":
+2. Click on "Load unpacked":
 
 ![Load Unpacked Button](src/tutorial/install-step-2.png)
 
-Find the `build/` directory on your system and open it.
-
-The extension should be now at the top of the page:
+3. Find the `build/` directory on your system and open it. A notification should appear with the label of "Extension Loaded":
 
 ![Extension Loaded](src/tutorial/install-step-3.png)

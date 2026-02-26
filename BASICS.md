@@ -212,7 +212,7 @@ command-a --count 50 && command-b --titles $0,1
    'test-answer-1' "test-title" ["answer-1" "answer-1"] 12
    'test-answer-2' "test-title" ["answer-2" "answer-2"] 12
    ```
-2. The execution of `command-b --titles $0,1` starts, but the `title` option is described using a `$0,1` keyword.
+2. The execution of `command-b --titles $0,1` starts, but the `titles` option is described using a `$0,1` keyword.
 3. The value `$0,1` is replaced with an array of the first and second parameters in the answers from the previous command, this is represented with `['test-answer-1' "test-title"]`. The previous command answers are two lines so `command-b --titles $0,1` will be executed two times with each of the values.
 
 In brief, the above example is equal to the following command chain:
@@ -235,11 +235,34 @@ command-a --count 50 && command-b --titles $.
    'test-answer-1' "test-title" "another-title"
    'test-answer-2' "test-title" "another-title"
    ```
-2. The execution of `command-b --titles $.` starts, but the `title` option is described using a `$.` keyword.
+2. The execution of `command-b --titles $.` starts, but the `titles` option is described using a `$.` keyword.
 3. The value `$.` is replaced with an array all the parameters avaialble in the answers from the previous command, this is represented with `['test-answer-1' "test-title" "another-title"]`. The previous command answers are two lines so `command-b --titles $.` will be executed two times with each of the values.
 
 In brief, the above example is equal to the following command chain:
 
 ```bash
-command-a --count 50 && command-b --titles ['test-answer-1' "test-title" "another-title"] && command-b  --titles ['test-answer-1' "test-title" "another-title"]
+command-a --count 50 && command-b --titles ['test-answer-1' "test-title" "another-title"] && command-b  --titles ['test-answer-2' "test-title" "another-title"]
+```
+
+## Pick All As A String
+
+Take a look a the following example:
+
+```bash
+command-a --count 50 && command-b --title $-
+```
+
+1. The execution of `command-a --count 50` leave us with an answer of:
+   ```bash
+   command --count 50
+   "test-answer-1" "test-title" "another-title"
+   "test-answer-2" "test-title" "another-title"
+   ```
+2. The execution of `command-b --title $-` starts, but the `title` option is described using a `$-` keyword.
+3. The value `$-` is replaced with all the parameters avaialble in the answers from the previous command in string format, this is represented with `'"test-answer-1" "test-title" "another-title"'`. The previous command answers are two lines so `command-b --title $-` will be executed two times with each of the values.
+
+In brief, the above example is equal to the following command chain:
+
+```bash
+command-a --count 50 && command-b --title '"test-answer-1" "test-title" "another-title"' && command-b  --title '"test-answer-2" "test-title" "another-title"'
 ```

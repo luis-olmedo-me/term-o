@@ -11,11 +11,10 @@
 - [Commands](#commands)
 - [Options](#options)
 - [Types](#types)
-- [Commands](#commands)
-  - [dom](#dom)
-  - [tab](#tab)
-- [Dependency Rules](#dependency-rules)
-- [Examples](#examples)
+  - [String](#string)
+  - [Boolean (Flag)](#boolean-flag)
+  - [Array](#array)
+  - [Number](#number)
 
 ---
 
@@ -51,6 +50,8 @@ if arguments are valid, then a handler starts running in the background building
 command [options]
 ```
 
+---
+
 # Options
 
 Options are data supplied to the command handler and are defined within the user input.
@@ -58,6 +59,8 @@ Options are data supplied to the command handler and are defined within the user
 It is important to understand that options are hard typed in Term-O. That means that if an option expects for a explicit value (i.e. "string"), the input must have quotes.
 
 A command with existing options will always require options described within the input otherwise you will get an error at execution.
+
+---
 
 # Types
 

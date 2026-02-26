@@ -1,8 +1,14 @@
-# <img src="src/images/icons/logo-48_x_48.png" style="box-shadow: 0 0 15px #11111122;" width="20"/> TERM-O
+# TERM-O
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="src/tutorial/illustration.png">
+  <source media="(prefers-color-scheme: light)" srcset="src/tutorial/illustration.png">
+  <img src="src/tutorial/illustration.png" alt="Project illustration">
+</picture>
 
 ## Introduction
 
-TERM-O is a powerful and user-friendly browser extension that provides a terminal-like interface directly in your Chrome browser. Manage your browsing experience efficiently with command line commands.
+Term-O is a Browser Extension developer tool for interacting with browser APIs using terminal-style UI.
 
 ## Installation
 

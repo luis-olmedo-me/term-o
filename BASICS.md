@@ -66,9 +66,9 @@ In Term-O, almost everything is a validated value. We have defined all the possi
 This is an expamle of all the possibilities that can be expected as input and answers:
 
 ```bash
-command --a-test --b-test "value" --c-test ["value" "value"]
-"answer-1" false ["answer-1" "answer-1"]
-"answer-2" true ["answer-2" "answer-2"]
+command --a-test --b-test "value" --c-test ["value" "value"] --d-test 30
+"answer-1" false ["answer-1" "answer-1"] 45
+"answer-2" true ["answer-2" "answer-2"] 90
 ```
 
 The above command execution example is internally interpretated as:
@@ -83,7 +83,8 @@ The above command execution example is internally interpretated as:
       "options": {
         "a-test": true,
         "b-test": "value",
-        "c-test": ["value", "value"]
+        "c-test": ["value", "value"],
+        "d-test": 30
       },
       "answer": [
         ["answer-1", false, ["answer-1", "answer-1"]],
@@ -151,3 +152,14 @@ command --titles ["title-1" "title-2"]
 ```
 
 > Currently, arrays can only contain String values but this is schedule to be updated in future Term-O versions.
+
+## Number
+
+Number types are defined as they are. In simple words, it is just a number.
+
+```bash
+command --count 50
+'test-answer-1' false ["answer-1" "answer-1"] 12
+'test-answer-2' true ["answer-2" "answer-2"] 12
+'test-answer-3' false ["answer-3" "answer-3"] 12
+```

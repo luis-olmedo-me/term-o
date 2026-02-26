@@ -175,7 +175,7 @@ A parameter is a piece of the answer that a command can share with another comma
 
 Comunication between commands can happen just in a unidirectional way and can be described in a few ways.
 
-## Single
+## Pick Single
 
 Take a look a the following example:
 
@@ -198,7 +198,7 @@ In brief, the above example is equal to the following command chain:
 command-a --count 50 && command-b --title 'test-answer-1' && command-b  --title 'test-answer-2'
 ```
 
-## Many
+## Pick Many
 
 Take a look a the following example:
 
@@ -221,7 +221,7 @@ In brief, the above example is equal to the following command chain:
 command-a --count 50 && command-b --titles ['test-answer-1' "test-title"] && command-b  --titles ['test-answer-2' "test-title"]
 ```
 
-## All
+## Pick All
 
 Take a look a the following example:
 

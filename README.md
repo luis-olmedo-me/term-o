@@ -1,8 +1,6 @@
 # TERM-O
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="src/tutorial/illustration.png">
-  <source media="(prefers-color-scheme: light)" srcset="src/tutorial/illustration.png">
   <img src="src/tutorial/illustration.png" alt="Project illustration">
 </picture>
 

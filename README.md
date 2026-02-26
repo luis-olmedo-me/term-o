@@ -8,7 +8,7 @@
 
 Term-O is a Browser Extension developer tool for interacting with browser APIs using terminal-style UI.
 
-This documentation only explains how to test Term-O locally. Please review [Term-O Basics](BASICS.ms) for more details.
+This documentation only explains how to test Term-O locally. Please review [Term-O Basics](BASICS.md) for more details.
 
 ## Installation
 
@@ -49,7 +49,7 @@ Both commands will create a `build/` directory, it will contain the built files 
 Then, type `alt + t`:
 
 ![Developer Mode Checkbox](src/tutorial/usage.png)
-Please review [Term-O Basics](BASICS.ms) for more details.
+Please review [Term-O Basics](BASICS.md) for more details.
 
 ## Load into Chrome
 

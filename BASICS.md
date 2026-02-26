@@ -141,4 +141,13 @@ command --enable
 
 ## Array
 
-Array types are defined as chain of values.
+Array types are defined as a chain of values. This means they can contain many values inside and are described almost the same as arrays are in javascript/JSON but without commas.
+
+```bash
+command --titles ["title-1" "title-2"]
+'test-answer-1' false ["answer-1" "answer-1"]
+'test-answer-2' true ["answer-2" "answer-2"]
+'test-answer-3' false ["answer-3" "answer-3"]
+```
+
+> Currently, arrays can only contain String values but this is schedule to be updated in future Term-O versions.

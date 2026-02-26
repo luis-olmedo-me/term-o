@@ -173,7 +173,11 @@ command --count 50
 
 A parameter is a piece of the answer that a command can share with another command. To do that, both commands must be next to each other.
 
-Comunication between commands can happen just in a unidirectional way. Take a look a the following example:
+Comunication between commands can happen just in a unidirectional way and can be described in a few ways.
+
+## Single
+
+Take a look a the following example:
 
 ```bash
 command-a --count 50 && command-b --title $0
@@ -185,11 +189,34 @@ command-a --count 50 && command-b --title $0
    'test-answer-1' false ["answer-1" "answer-1"] 12
    'test-answer-2' true ["answer-2" "answer-2"] 12
    ```
-2. The execution of `command-b --title $1` starts, but the `title` option is described using a `$0` keyword.
-3. The value `$0` is replaced with the first parameter in the answers from the previous command, this is represented with `'test-answer-1'`. The previous command answers are two lines so `command-b --title $1` will be executed two times with each of the values.
+2. The execution of `command-b --title $0` starts, but the `title` option is described using a `$0` keyword.
+3. The value `$0` is replaced with the first parameter in the answers from the previous command, this is represented with `'test-answer-1'`. The previous command answers are two lines so `command-b --title $0` will be executed two times with each of the values.
 
 In brief, the above example is equal to the following command chain:
 
 ```bash
 command-a --count 50 && command-b --title 'test-answer-1' && command-b  --title 'test-answer-2'
+```
+
+## Many
+
+Take a look a the following example:
+
+```bash
+command-a --count 50 && command-b --titles $0,1
+```
+
+1. The execution of `command-a --count 50` leave us with an answer of:
+   ```bash
+   command --count 50
+   'test-answer-1' "test-title" ["answer-1" "answer-1"] 12
+   'test-answer-2' "test-title" ["answer-2" "answer-2"] 12
+   ```
+2. The execution of `command-b --titles $0,1` starts, but the `title` option is described using a `$0,1` keyword.
+3. The value `$0,1` is replaced with an array of the first and second parameters in the answers from the previous command, this is represented with `['test-answer-1' "test-title"]`. The previous command answers are two lines so `command-b --titles $0,1` will be executed two times with each of the values.
+
+In brief, the above example is equal to the following command chain:
+
+```bash
+command-a --count 50 && command-b --titles ['test-answer-1' "test-title"] && command-b  --titles ['test-answer-2' "test-title"]
 ```

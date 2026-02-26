@@ -93,16 +93,16 @@ The `tab` command displays all data related to the current tabs active browser.
 | Option                          | Short | Description                                      |
 | ------------------------------- | ----- | ------------------------------------------------ |
 | `--list`                        | `-l`  | List all currently open tabs.                    |
-| `--active`                      | `-a`  | Focus the tab open.                              |
-| `--close <tabid>`               | `-c`  | Close a specific tab by ID.                      |
-| `--current`                     | `-C`  | Show the currently active tab.                   |
-| `--incognito`                   | `-i`  | Show only tabs in incognito mode.                |
-| `--muted`                       | `-m`  | Show only muted tabs.                            |
 | `--open <url>`                  | `-o`  | Open a new tab with the given URL.               |
-| `--point <tabid>`               | `-p`  | Point the terminal to a specific tab by ID.      |
-| `--pointing`                    | `-P`  | Show the tab currently targeted by the terminal. |
 | `--reload <tabid>`              | `-r`  | Reload a specific tab by ID.                     |
 | `--switch <tabid>`              | `-s`  | Switch focus to a specific tab by ID.            |
+| `--point <tabid>`               | `-p`  | Point the terminal to a specific tab by ID.      |
+| `--close <tabid>`               | `-c`  | Close a specific tab by ID.                      |
+| `--current`                     | `-C`  | Show the currently active tab.                   |
+| `--pointing`                    | `-P`  | Show the tab currently targeted by the terminal. |
+| `--active`                      | `-a`  | Focus the tab open.                              |
+| `--incognito`                   | `-i`  | Show only tabs in incognito mode.                |
+| `--muted`                       | `-m`  | Show only muted tabs.                            |
 | `--title <regex>`               | `-t`  | Filter tabs by title.                            |
 | `--unmuted`                     | `-M`  | Show only unmuted tabs.                          |
 | `--url <regex>`                 | `-u`  | Filter tabs by URL.                              |
@@ -112,9 +112,9 @@ The `tab` command displays all data related to the current tabs active browser.
 
 ### Dependency Rules
 
-When using `dtabm` command the options can express **8** possible actions:
+When using `tabs` command the options can express **8** possible actions:
 
-1. Create a tabs summary (using `--search`)
+1. Create a tabs summary (using `--list`)
 
    Just using `--list` will trigger a search for all tabs available but it is possible to filter combining other options. Here is an example of how specific a search can be:
 
@@ -175,4 +175,22 @@ When using `dtabm` command the options can express **8** possible actions:
    ```bash
    tabs
        --close 'T0000000'
+   ```
+
+7. Get the current tab (using `--current`)
+
+   The option `--current` will get the current tab (in view).
+
+   ```bash
+   tabs
+       --current
+   ```
+
+8. Get the tab pointed by the terminal (using `--pointing`)
+
+   The option `--pointing` will get data from the pointing tab (selected in the terminal).
+
+   ```bash
+   tabs
+       --pointing
    ```

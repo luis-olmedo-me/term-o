@@ -50,7 +50,7 @@ The `dom` command enables element selection, filtering, and contextual queries i
 
 ### Dependency Rules
 
-When using `dom` command the options can express two possible actions:
+When using `dom` command the options can express **2** possible actions:
 
 1. An element search (using `--search`)
 
@@ -81,4 +81,97 @@ When using `dom` command the options can express two possible actions:
        --parent 2 # Once the elements are found, the elements taken will look for two parents above.
        --tab-id "T00000000" # It will look for elements at a specific tab.
        --xpath # It will force the command to display the xpath expression of the elements.
+   ```
+
+## TABS
+
+Interact with the tabs of the browser.
+
+The `tab` command displays all data related to the current tabs active browser.
+
+| Option                          | Short | Description                                      |
+| ------------------------------- | ----- | ------------------------------------------------ |
+| `--list`                        | `-l`  | List all currently open tabs.                    |
+| `--active`                      | `-a`  | Focus the tab open.                              |
+| `--close <tabid>`               | `-c`  | Close a specific tab by ID.                      |
+| `--current`                     | `-C`  | Show the currently active tab.                   |
+| `--incognito`                   | `-i`  | Show only tabs in incognito mode.                |
+| `--muted`                       | `-m`  | Show only muted tabs.                            |
+| `--open <url>`                  | `-o`  | Open a new tab with the given URL.               |
+| `--point <tabid>`               | `-p`  | Point the terminal to a specific tab by ID.      |
+| `--pointing`                    | `-P`  | Show the tab currently targeted by the terminal. |
+| `--reload <tabid>`              | `-r`  | Reload a specific tab by ID.                     |
+| `--switch <tabid>`              | `-s`  | Switch focus to a specific tab by ID.            |
+| `--title <regex>`               | `-t`  | Filter tabs by title.                            |
+| `--unmuted`                     | `-M`  | Show only unmuted tabs.                          |
+| `--url <regex>`                 | `-u`  | Filter tabs by URL.                              |
+| `--wait`                        | `-W`  | Wait until the tab finishes loading.             |
+| `--window-id <windowid<regex>>` | `-w`  | Filter tabs by window ID.                        |
+| `--help`                        | `-h`  | Show help for this command.                      |
+
+### Dependency Rules
+
+When using `dtabm` command the options can express **8** possible actions:
+
+1. Create a tabs summary (using `--search`)
+
+   Just using `--list` will trigger a search for all tabs available but it is possible to filter combining other options. Here is an example of how specific a search can be:
+
+   ```bash
+   tabs
+       --list
+       --incognito # Filter tabs on icognito mode. Manage browser extension permissions in the browser configuration.
+       --muted # Filter by muted state.
+       --unmuted # Filter by unmuted state. If combined with --muted, no tabs will be found.
+       --title "Goo.+" # Filter tabs by their title. Value must be a valid a regular expression.
+       --url "Goo.+le\.com" # Filter tabs by their url. Value must be a valid a regular expression.
+       --window-id "W00000000" # It will look for elements at a specific window.
+   ```
+
+2. Open a new tab (using `--open`)
+
+   The option `--open` will open a tab with a given string value. We can choose how we want to open this tab.
+
+   ```bash
+   tabs
+       --open 'https://test.com'
+       --wait # Term-O will wait until page is properly loaded before continuing with any other task.
+       --active # Term-O will use the current tab to open the URL.
+   ```
+
+3. Reload a tab (using `--reload`)
+
+   The option `--reload` will reload a tab with a given string value.
+
+   ```bash
+   tabs
+       --reload 'T0000000'
+       --wait # Term-O will wait until page is properly loaded before continuing with any other task.
+   ```
+
+4. Select a tab for the terminal (using `--switch`)
+
+   The option `--switch` will make a tab get in view with a given string value.
+
+   ```bash
+   tabs
+       --switch 'T0000000'
+   ```
+
+5. Select a tab for the terminal (using `--point`)
+
+   The option `--point` will change the selected tab in the terminal with a given string value.
+
+   ```bash
+   tabs
+       --point 'T0000000'
+   ```
+
+6. Select a tab for the terminal (using `--close`)
+
+   The option `--close` will close a tab with a given string value.
+
+   ```bash
+   tabs
+       --close 'T0000000'
    ```

@@ -15,6 +15,11 @@
   - [Boolean (Flag)](#boolean-flag)
   - [Array](#array)
   - [Number](#number)
+- [Parameters](#parameters)
+  - [Pick Single](#pick-single)
+  - [Pick Many](#pick-many)
+  - [Pick All](#pick-all)
+  - [Pick All As A String](#pick-all-as-a-string)
 
 ---
 

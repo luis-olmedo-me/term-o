@@ -142,7 +142,7 @@ command --title 'testing'
 Boolean types are defined as a binary value. In simple words, it is a `true` or `false` value. Its value is not needed to be explicit when it comes to options. So, in those cases, we just need to mention it in the user input.
 
 ```bash
-command --enable
+command --enabled
 'test-answer-1' false
 'test-answer-2' true
 'test-answer-3' false

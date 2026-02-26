@@ -220,3 +220,26 @@ In brief, the above example is equal to the following command chain:
 ```bash
 command-a --count 50 && command-b --titles ['test-answer-1' "test-title"] && command-b  --titles ['test-answer-2' "test-title"]
 ```
+
+## All
+
+Take a look a the following example:
+
+```bash
+command-a --count 50 && command-b --titles $.
+```
+
+1. The execution of `command-a --count 50` leave us with an answer of:
+   ```bash
+   command --count 50
+   'test-answer-1' "test-title" "another-title"
+   'test-answer-2' "test-title" "another-title"
+   ```
+2. The execution of `command-b --titles $.` starts, but the `title` option is described using a `$.` keyword.
+3. The value `$.` is replaced with an array all the parameters avaialble in the answers from the previous command, this is represented with `['test-answer-1' "test-title" "another-title"]`. The previous command answers are two lines so `command-b --titles $.` will be executed two times with each of the values.
+
+In brief, the above example is equal to the following command chain:
+
+```bash
+command-a --count 50 && command-b --titles ['test-answer-1' "test-title" "another-title"] && command-b  --titles ['test-answer-1' "test-title" "another-title"]
+```

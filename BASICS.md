@@ -41,6 +41,8 @@ A command is just an instruction to be completed with an input from the user and
 
 if arguments are valid, then a handler starts running in the background building an answer tha we call "Logs". A command can have temporal logs while we wait for it to be completed but, at the end, it always returns a consistent anwser.
 
+-
+
 ```bash
 command [args]
 ```

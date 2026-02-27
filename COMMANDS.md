@@ -68,15 +68,15 @@ When using `dom` command the options can express **2** possible actions:
 
    ```bash
    dom
-       --search
-       --attr ["class" "test-class-.+"] # Both values supplied expect for a regular expression.
-       --below 'id("cards-container")' # The search will take place below this element.
-       --content # It will force the command to display the textual content of the elements.
-       --style ["color" "#00000\d"] # Both values supplied expect for a regular expression.
-       --tab-id "T00000000" # It will look for elements at a specific tab.
-       --tag "button" # Value expect a regular expression.
-       --text "Buscar con Go.+" # Value expect a regular expression.
-       --xpath # It will force the command to display the xpath expression of the elements.
+       --search                                                     # REQUIRED
+       --attr ["class" "test-class-.+"]                             # OPTIONAL
+       --below 'id("cards-container")'                              # OPTIONAL
+       --content                                                    # OPTIONAL
+       --style ["color" "#00000\d"]                                 # OPTIONAL
+       --tab-id "T00000000"                                         # OPTIONAL
+       --tag "button"                                               # OPTIONAL
+       --text "Buscar con Go.+"                                     # OPTIONAL
+       --xpath                                                      # OPTIONAL
    ```
 
 2. An element search from an xpath (using `--search-xpath`)
@@ -85,12 +85,12 @@ When using `dom` command the options can express **2** possible actions:
 
    ```bash
    dom
-       --search-xpath 'id("main-container")'
-       --below 'id("cards-container")' # The search will take place below this element.
-       --child 3 # Once the elements are found, the elements taken will look for the third child below. It happens after parent filtering.
-       --parent 2 # Once the elements are found, the elements taken will look for two parents above.
-       --tab-id "T00000000" # It will look for elements at a specific tab.
-       --xpath # It will force the command to display the xpath expression of the elements.
+       --search-xpath 'id("main-container")'                        # REQUIRED
+       --below 'id("cards-container")'                              # OPTIONAL
+       --child 3                                                    # OPTIONAL
+       --parent 2                                                   # OPTIONAL
+       --tab-id "T00000000"                                         # OPTIONAL
+       --xpath                                                      # OPTIONAL
    ```
 
 ## TABS
@@ -129,13 +129,13 @@ When using `tabs` command the options can express **8** possible actions:
 
    ```bash
    tabs
-       --list
-       --incognito # Filter tabs on icognito mode. Manage browser extension permissions in the browser configuration.
-       --muted # Filter by muted state.
-       --unmuted # Filter by unmuted state. If combined with --muted, no tabs will be found.
-       --title "Goo.+" # Filter tabs by their title. Value must be a valid a regular expression.
-       --url "Goo.+le\.com" # Filter tabs by their url. Value must be a valid a regular expression.
-       --window-id "W00000000" # It will look for elements at a specific window.
+       --list                                                       # REQUIRED
+       --incognito                                                  # OPTIONAL
+       --muted                                                      # OPTIONAL
+       --unmuted                                                    # OPTIONAL
+       --title "Goo.+"                                              # OPTIONAL
+       --url "Goo.+le\.com"                                         # OPTIONAL
+       --window-id "W00000000"                                      # OPTIONAL
    ```
 
 2. Open a new tab (using `--open`)
@@ -144,9 +144,9 @@ When using `tabs` command the options can express **8** possible actions:
 
    ```bash
    tabs
-       --open 'https://test.com'
-       --wait # Term-O will wait until page is properly loaded before continuing with any other task.
-       --active # Term-O will use the current tab to open the URL.
+       --open 'https://test.com'                                    # REQUIRED
+       --wait                                                       # OPTIONAL
+       --active                                                     # OPTIONAL
    ```
 
 3. Reload a tab (using `--reload`)
@@ -155,8 +155,8 @@ When using `tabs` command the options can express **8** possible actions:
 
    ```bash
    tabs
-       --reload 'T0000000'
-       --wait # Term-O will wait until page is properly loaded before continuing with any other task.
+       --reload 'T0000000'                                          # REQUIRED
+       --wait                                                       # OPTIONAL
    ```
 
 4. Select a tab for the terminal (using `--switch`)
@@ -165,7 +165,7 @@ When using `tabs` command the options can express **8** possible actions:
 
    ```bash
    tabs
-       --switch 'T0000000'
+       --switch 'T0000000'                                          # REQUIRED
    ```
 
 5. Select a tab for the terminal (using `--point`)
@@ -174,7 +174,7 @@ When using `tabs` command the options can express **8** possible actions:
 
    ```bash
    tabs
-       --point 'T0000000'
+       --point 'T0000000'                                           # REQUIRED
    ```
 
 6. Select a tab for the terminal (using `--close`)
@@ -183,7 +183,7 @@ When using `tabs` command the options can express **8** possible actions:
 
    ```bash
    tabs
-       --close 'T0000000'
+       --close 'T0000000'                                           # REQUIRED
    ```
 
 7. Get the current tab (using `--current`)
@@ -192,7 +192,7 @@ When using `tabs` command the options can express **8** possible actions:
 
    ```bash
    tabs
-       --current
+       --current                                                    # REQUIRED
    ```
 
 8. Get the tab pointed by the terminal (using `--pointing`)
@@ -201,7 +201,7 @@ When using `tabs` command the options can express **8** possible actions:
 
    ```bash
    tabs
-       --pointing
+       --pointing                                                   # REQUIRED
    ```
 
 ## HISTORY
@@ -231,12 +231,12 @@ When using `history` command the options can express **2** possible actions:
 
    ```bash
    history
-       --list
-       --title "Goo.+" # Filter tabs by their title. Value must be a valid a regular expression.
-       --url "Goo.+le\.com" # Filter tabs by their url. Value must be a valid a regular expression.
-       --max-results 5 # Limit to the last 5 tabs in history.
-       --from "2026-02-26T19:47:16.836Z" # Filter old tabs to be open after "2026-02-26T19:47:16.836Z".
-       --to "2026-02-27T05:03:22.965Z" # Filter old tabs to be open before "2026-02-27T05:03:22.965Z".
+       --list                                                       # REQUIRED
+       --title "Goo.+"                                              # OPTIONAL
+       --url "Goo.+le\.com"                                         # OPTIONAL
+       --max-results 5                                              # OPTIONAL
+       --from "2026-02-26T19:47:16.836Z"                            # OPTIONAL
+       --to "2026-02-27T05:03:22.965Z"                              # OPTIONAL
    ```
 
 2. Delete old tabs from history by range (using `--delete`)
@@ -245,9 +245,9 @@ When using `history` command the options can express **2** possible actions:
 
    ```bash
    history
-       --delete
-       --from "2026-02-26T19:47:16.836Z" # Delete any old tabs from history after "2026-02-26T19:47:16.836Z".
-       --to "2026-02-27T05:03:22.965Z" # Delete any old tabs from history before "2026-02-27T05:03:22.965Z".
+       --delete                                                     # REQUIRED
+       --from "2026-02-26T19:47:16.836Z"                            # REQUIRED
+       --to "2026-02-27T05:03:22.965Z"                              # REQUIRED
    ```
 
 ## REQUEST
@@ -276,12 +276,12 @@ When using `request` command the options can express **1** possible action:
 
    ```bash
    request
-       --fetch
-       --headers ["Authorization: test large id", "header: test"] # Define header values.
-       --payload '{ "test": "test-value" }' # Define a payload JSON.
-       --method "GET" # Define the method the call should use.
-       --url "https://test.com/api/v2/test" # Define the URL the call should use. This is a must have.
-       --read-as "json" # Define how the response will be read as. It can be json|blob|text.
+       --fetch                                                      # REQUIRED
+       --url "https://test.com/api/v2/test"                         # REQUIRED
+       --headers ["Authorization: test large id", "header: test"]   # OPTIONAL
+       --payload '{ "test": "test-value" }'                         # OPTIONAL
+       --method "GET"                                               # OPTIONAL
+       --read-as "json"                                             # OPTIONAL
    ```
 
 ## ALIAS
@@ -307,7 +307,7 @@ When using `alias` command the options can express **3** possible actions:
 
    ```bash
    alias
-       --list
+       --list                                                       # REQUIRED
    ```
 
 2. Add a new alias (using `--add`)
@@ -316,7 +316,7 @@ When using `alias` command the options can express **3** possible actions:
 
    ```bash
    alias
-       --add ["gotest", 'tabs --open "https://test.com" --wait']
+       --add ["gotest", 'tabs --open "https://test.com" --wait']    # REQUIRED
    ```
 
    After that command is executed, you can just type `gotest` to open "https://test.com" in a new tab.
@@ -327,7 +327,7 @@ When using `alias` command the options can express **3** possible actions:
 
    ```bash
    alias
-       --delete "gotest"
+       --delete "gotest"                                            # REQUIRED
    ```
 
 ## STYLE
@@ -356,9 +356,9 @@ When using `style` command the options can express **3** possible actions:
 
    ```bash
    style
-       --list
-       --on 'id("cards-container")' # The search will take this element as a reference.
-       --property [".+color" "000.+"] # Filter styles by their names and values using regular expressions.
+       --list                                                       # REQUIRED
+       --on 'id("cards-container")'                                 # REQUIRED
+       --property [".+color" "000.+"]                               # OPTIONAL
    ```
 
 2. Apply styles to a DOM element (using `--apply`)
@@ -367,8 +367,8 @@ When using `style` command the options can express **3** possible actions:
 
    ```bash
    style
-       --apply "display: none; color: red;"
-       --on 'id("cards-container")' # The search will take this element as a reference.
+       --apply "display: none; color: red;"                         # REQUIRED
+       --on 'id("cards-container")'                                 # REQUIRED
    ```
 
 3. Pick a color (using `--color-pick`)
@@ -377,7 +377,7 @@ When using `style` command the options can express **3** possible actions:
 
    ```bash
    style
-       --color-pick
+       --color-pick                                                 # REQUIRED
    ```
 
 ## INSPECT
@@ -402,8 +402,8 @@ When using `inspect` command the options can express **1** possible action:
 
    ```bash
    inspect
-       --path "window.screen"
-       --tab-id "T00000000" # It will look for elements at a specific tab.
+       --path "window.screen"                                       # REQUIRED
+       --tab-id "T00000000"                                         # OPTIONAL
    ```
 
 ## NOTIFY
@@ -430,10 +430,10 @@ When using `notify` command the options can express **1** possible action:
 
    ```bash
    notify
-       --create
-       --title "Testing Title" # It defines the title of the notification.
-       --message "Message to be aware of." # It defines the message of the notification.
-       --tab-id "T00000000" # It will look for elements at a specific tab.
+       --create                                                     # REQUIRED
+       --title "Testing Title"                                      # REQUIRED
+       --message "Message to be aware of."                          # REQUIRED
+       --tab-id "T00000000"                                         # OPTIONAL
    ```
 
 ## SEARCH
@@ -458,8 +458,8 @@ When using `search` command the options can express **1** possible action:
 
    ```bash
    search
-       --query "test\.testing"
-       --input "template test.testing" # It defines under what text the search will take place.
+       --query "test\.testing"                                      # REQUIRED
+       --input "template test.testing"                              # REQUIRED
    ```
 
 ## STORAGE
@@ -489,8 +489,8 @@ When using `storage` command the options can express **4** possible action:
 
    ```bash
    search
-       --local                              # REQUIRED
-       --tab-id "T00000000"                 # OPTIONAL
+       --local                                                      # REQUIRED
+       --tab-id "T00000000"                                         # OPTIONAL
    ```
 
 2. Get a summary of session storage in a tab (using `--session`)
@@ -499,8 +499,8 @@ When using `storage` command the options can express **4** possible action:
 
    ```bash
    search
-       --session                            # REQUIRED
-       --tab-id "T00000000"                 # OPTIONAL
+       --session                                                    # REQUIRED
+       --tab-id "T00000000"                                         # OPTIONAL
    ```
 
 3. Get a summary of cookies storage in a tab (using `--cookie`)
@@ -509,8 +509,8 @@ When using `storage` command the options can express **4** possible action:
 
    ```bash
    search
-       --cookie                             # REQUIRED
-       --tab-id "T00000000"                 # OPTIONAL
+       --cookie                                                     # REQUIRED
+       --tab-id "T00000000"                                         # OPTIONAL
    ```
 
 4. Set a value in a certain storage at a certain tab (using `--set`)
@@ -519,11 +519,11 @@ When using `storage` command the options can express **4** possible action:
 
    ```bash
    search
-       --set ["test-name" "test-value"]     # REQUIRED
-       --tab-id "T00000000"                 # OPTIONAL
-       --session                            # OPTIONAL
-       --cookie                             # OPTIONAL
-       --local                              # OPTIONAL
+       --set ["test-name" "test-value"]                             # REQUIRED
+       --tab-id "T00000000"                                         # OPTIONAL
+       --session                                                    # OPTIONAL
+       --cookie                                                     # OPTIONAL
+       --local                                                      # OPTIONAL
    ```
 
 ## CLEAR

@@ -1,8 +1,14 @@
-# <img src="src/images/icons/logo-48_x_48.png" style="box-shadow: 0 0 15px #11111122;" width="20"/> TERM-O
+# TERM-O
+
+<picture>
+  <img src="src/tutorial/illustration.png" alt="Project illustration">
+</picture>
 
 ## Introduction
 
-TERM-O is a powerful and user-friendly browser extension that provides a terminal-like interface directly in your Chrome browser. Manage your browsing experience efficiently with command line commands.
+Term-O is a Browser Extension developer tool for interacting with browser APIs using terminal-style UI.
+
+This documentation only explains how to test Term-O locally. Please review [Term-O Basics](BASICS.md) for more details.
 
 ## Installation
 
@@ -43,21 +49,20 @@ Both commands will create a `build/` directory, it will contain the built files 
 Then, type `alt + t`:
 
 ![Developer Mode Checkbox](src/tutorial/usage.png)
+Please review [Term-O Basics](BASICS.md) for more details.
 
 ## Load into Chrome
 
 To load the built files into Chrome, open [chrome://extensions/](chrome://extensions/).
 
-Enable "Developer mode" if it's not enabled yet:
+1. Enable "Developer mode" if it's not enabled yet:
 
 ![Developer Mode Checkbox](src/tutorial/install-step-1.png)
 
-Click on "Load unpacked":
+2. Click on "Load unpacked":
 
 ![Load Unpacked Button](src/tutorial/install-step-2.png)
 
-Find the `build/` directory on your system and open it.
-
-The extension should be now at the top of the page:
+3. Find the `build/` directory on your system and open it. A notification should appear with the label of "Extension Loaded":
 
 ![Extension Loaded](src/tutorial/install-step-3.png)

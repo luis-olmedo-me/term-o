@@ -194,3 +194,49 @@ When using `tabs` command the options can express **8** possible actions:
    tabs
        --pointing
    ```
+
+## HISTORY
+
+Interact with the tabs of the browser.
+
+The `history` command displays all data related to the old tabs open in the browser.
+
+| Option                 | Short | Description                             |
+| ---------------------- | ----- | --------------------------------------- |
+| --list                 | `-l`  | Show a list of previously opened pages. |
+| --title <regex>        | `-t`  | Filter pages by title.                  |
+| --url <regex>          | `-u`  | Filter pages by URL.                    |
+| --max-results <number> | `-r`  | Limit the number of items displayed.    |
+| --from <datetime>      | `-F`  | Start date for deletion or filtering.   |
+| --to <datetime>        | `-T`  | End date for deletion or filtering.     |
+| --delete               | `-d`  | Delete pages in a specific date range.  |
+| --help                 | `-h`  | Show help for this command.             |
+
+### Dependency Rules
+
+When using `history` command the options can express **2** possible actions:
+
+1. Create an old tabs summary (using `--list`)
+
+   Just using `--list` will trigger a search for all old tabs open and it is possible to filter combining other options. Here is an example of how specific a search can be:
+
+   ```bash
+   history
+       --list
+       --title "Goo.+" # Filter tabs by their title. Value must be a valid a regular expression.
+       --url "Goo.+le\.com" # Filter tabs by their url. Value must be a valid a regular expression.
+       --max-results 5 # Limit to the last 5 tabs in history.
+       --from "2026-02-26T19:47:16.836Z" # Filter old tabs to be open after "2026-02-26T19:47:16.836Z".
+       --to "2026-02-27T05:03:22.965Z" # Filter old tabs to be open before "2026-02-27T05:03:22.965Z".
+   ```
+
+2. Delete old tabs from history by range (using `--delete`)
+
+   The option `--delete` will delete old tabs from history after specifing a datetime range.
+
+   ```bash
+   history
+       --delete
+       --from "2026-02-26T19:47:16.836Z" # Delete any old tabs from history after "2026-02-26T19:47:16.836Z".
+       --to "2026-02-27T05:03:22.965Z" # Delete any old tabs from history before "2026-02-27T05:03:22.965Z".
+   ```

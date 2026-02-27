@@ -284,12 +284,12 @@ Interact with the aliases/shortcut of commands on Term-O.
 
 The `alias` command is a bridge to manage aliases of commands in the terminal.
 
-| Option                            | Short | Description                 |
-| --------------------------------- | ----- | --------------------------- |
-| `--list`                          | `-l`  | List all defined aliases.   |
-| `--add <[aliasname, equivalent]>` | `-a`  | Add a new alias.            |
-| `--delete <aliasname>`            | `-d`  | Remove an alias by name.    |
-| `--help`                          | `-h`  | Show help for this command. |
+| Option                                | Short | Description                 |
+| ------------------------------------- | ----- | --------------------------- |
+| `--list`                              | `-l`  | List all defined aliases.   |
+| `--add <[aliasname, executableline]>` | `-a`  | Add a new alias.            |
+| `--delete <aliasname>`                | `-d`  | Remove an alias by name.    |
+| `--help`                              | `-h`  | Show help for this command. |
 
 ### Dependency Rules
 

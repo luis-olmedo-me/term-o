@@ -18,6 +18,7 @@
   - [INSPECT](#inspect)
   - [NOTIFY](#notify)
   - [SEARCH](#search)
+  - [CLEAR](#clear)
 
 ---
 
@@ -459,3 +460,9 @@ When using `search` command the options can express **1** possible action:
        --query "test\.testing"
        --input "template test.testing" # It defines under what text the search will take place.
    ```
+
+## CLEAR
+
+Interact with the clean up of the UI terminal.
+
+This command does not expect for any option, its only porpuse is to clean the terminal when called.

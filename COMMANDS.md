@@ -16,6 +16,7 @@
   - [ALIAS](#alias)
   - [STYLE](#style)
   - [INSPECT](#inspect)
+  - [NOTIFY](#notify)
 
 ---
 
@@ -378,9 +379,9 @@ When using `style` command the options can express **3** possible actions:
 
 ## INSPECT
 
-Interact with styles of elements and color references.
+Interact with the global object of a specific tab.
 
-The `inspect` command is a bridge to manage aliases of commands in the terminal.
+The `inspect` command is a bridge to review global variables in the global object of the tab.
 
 | Option               | Short | Description                              |
 | -------------------- | ----- | ---------------------------------------- |
@@ -399,5 +400,35 @@ When using `inspect` command the options can express **1** possible action:
    ```bash
    inspect
        --path "window.screen"
+       --tab-id "T00000000" # It will look for elements at a specific tab.
+   ```
+
+## NOTIFY
+
+Interact with visual notifications inside a tab.
+
+The `notify` command is a bridge to manage visual notifications on a tab.
+
+| Option               | Short | Description                            |
+| -------------------- | ----- | -------------------------------------- |
+| `--create`           | `-c`  | Create a notification.                 |
+| `--tab-id <tabid>`   | `-i`  | Display notification in a specific tab |
+| `--title <string>`   | `-t`  | Describe the notification title.       |
+| `--message <string>` | `-m`  | Describe the notification message.     |
+| `--help`             | `-h`  | Show help for this command.            |
+
+### Dependency Rules
+
+When using `notify` command the options can express **1** possible action:
+
+1. Create a notification (using `--create`)
+
+   Just using `--create` will trigger a creation of a notification but it will require other options/arguments to define the content. Here is an example of how specific a notification can be:
+
+   ```bash
+   notify
+       --create
+       --title "Testing Title" # It defines the title of the notification.
+       --message "Message to be aware of." # It defines the message of the notification.
        --tab-id "T00000000" # It will look for elements at a specific tab.
    ```

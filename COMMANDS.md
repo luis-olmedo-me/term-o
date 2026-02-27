@@ -11,6 +11,7 @@
 - [Commands](#commands)
   - [DOM](#dom)
   - [TABS](#tabs)
+  - [HISTORY](#history)
 
 ---
 
@@ -201,16 +202,16 @@ Interact with the tabs of the browser.
 
 The `history` command displays all data related to the old tabs open in the browser.
 
-| Option                 | Short | Description                             |
-| ---------------------- | ----- | --------------------------------------- |
-| --list                 | `-l`  | Show a list of previously opened pages. |
-| --title <regex>        | `-t`  | Filter pages by title.                  |
-| --url <regex>          | `-u`  | Filter pages by URL.                    |
-| --max-results <number> | `-r`  | Limit the number of items displayed.    |
-| --from <datetime>      | `-F`  | Start date for deletion or filtering.   |
-| --to <datetime>        | `-T`  | End date for deletion or filtering.     |
-| --delete               | `-d`  | Delete pages in a specific date range.  |
-| --help                 | `-h`  | Show help for this command.             |
+| Option                   | Short | Description                             |
+| ------------------------ | ----- | --------------------------------------- |
+| `--list`                 | `-l`  | Show a list of previously opened pages. |
+| `--title <regex>`        | `-t`  | Filter pages by title.                  |
+| `--url <regex>`          | `-u`  | Filter pages by URL.                    |
+| `--max-results <number>` | `-r`  | Limit the number of items displayed.    |
+| `--from <datetime>`      | `-F`  | Start date for deletion or filtering.   |
+| `--to <datetime>`        | `-T`  | End date for deletion or filtering.     |
+| `--delete`               | `-d`  | Delete pages in a specific date range.  |
+| `--help`                 | `-h`  | Show help for this command.             |
 
 ### Dependency Rules
 

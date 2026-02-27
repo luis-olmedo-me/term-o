@@ -12,6 +12,7 @@
   - [DOM](#dom)
   - [TABS](#tabs)
   - [HISTORY](#history)
+  - [REQUEST](#request)
 
 ---
 
@@ -240,4 +241,38 @@ When using `history` command the options can express **2** possible actions:
        --delete
        --from "2026-02-26T19:47:16.836Z" # Delete any old tabs from history after "2026-02-26T19:47:16.836Z".
        --to "2026-02-27T05:03:22.965Z" # Delete any old tabs from history before "2026-02-27T05:03:22.965Z".
+   ```
+
+## REQUEST
+
+Interact with the Fetch API of the browser.
+
+The `request` command is a bridge to the Fetch API of the browser.
+
+| Option                    | Short | Description                                       |
+| ------------------------- | ----- | ------------------------------------------------- |
+| `--fetch`                 | `-l`  | Start an API request.                             |
+| `--headers <[header ..]>` | `-u`  | Include request headers.                          |
+| `--method <method>`       | `-F`  | HTTP method to use.                               |
+| `--payload <json>`        | `-r`  | Add a payload to the request.                     |
+| `--read-as <string>`      | `-T`  | Format to read the response: blob, text, or json. |
+| `--url <url>`             | `-t`  | URL for the API request.                          |
+| `--help`                  | `-h`  | Show help for this command.                       |
+
+### Dependency Rules
+
+When using `request` command the options can express **1** possible action:
+
+1. Build an API call (using `--fetch`)
+
+   Just using `--fetch` will trigger an API call but it must be combined with other options to define the details. Here is an example of how specific a fetch can be:
+
+   ```bash
+   request
+       --fetch
+       --headers ["Authorization: test large id", "header: test"] # Define header values.
+       --payload '{ "test": "test-value" }' # Define a payload JSON.
+       --method "GET" # Define the method the call should use.
+       --url "https://test.com/api/v2/test" # Define the URL the call should use. This is a must have.
+       --read-as "json" # Define how the response will be read as. It can be json|blob|text.
    ```

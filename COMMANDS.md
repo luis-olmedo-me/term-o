@@ -15,6 +15,7 @@
   - [REQUEST](#request)
   - [ALIAS](#alias)
   - [STYLE](#style)
+  - [INSPECT](#inspect)
 
 ---
 
@@ -373,4 +374,34 @@ When using `style` command the options can express **3** possible actions:
    ```bash
    style
        --color-pick
+   ```
+
+## INSPECT
+
+Interact with styles of elements and color references.
+
+The `inspect` command is a bridge to manage aliases of commands in the terminal.
+
+| Option               | Short | Description                                                  |
+| -------------------- | ----- | ------------------------------------------------------------ |
+| `--path <valuepath>` | `-l`  | List CSS inspects applied to elements matching the criteria. |
+| `--tab-id <tabid>`   | `-l`  | List CSS inspects applied to elements matching the criteria. |
+| `--help`             | `-h`  | Show help for this command.                                  |
+
+-p, --path <string> ......... Read a variable path in the current tab"
+-i, --tab-id <string> ....... Search variable in a specific tab (T[number])"
+-h, --help <boolean> ........ Show help for this command"
+
+### Dependency Rules
+
+When using `inspect` command the options can express **1** possible action:
+
+1. Inspect a value from the global object ("window.\*") (using `--path`)
+
+   Just using `--path` will trigger a search for a value in the global object. Here is an example of how specific a search can be:
+
+   ```bash
+   inspect
+       --path "window.screen"
+       --tab-id "T00000000" # It will look for elements at a specific tab.
    ```

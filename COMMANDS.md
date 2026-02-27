@@ -18,6 +18,7 @@
   - [INSPECT](#inspect)
   - [NOTIFY](#notify)
   - [SEARCH](#search)
+  - [STORAGE](#storage)
   - [CLEAR](#clear)
 
 ---
@@ -459,6 +460,70 @@ When using `search` command the options can express **1** possible action:
    search
        --query "test\.testing"
        --input "template test.testing" # It defines under what text the search will take place.
+   ```
+
+## STORAGE
+
+Interact with the storage API and clipboard API at any tab.
+
+The `storage` command is a bridge to the storage API and clipboard API at any tab.
+
+| Option             | Short | Description                                   |
+| ------------------ | ----- | --------------------------------------------- |
+| `--local`          | `-l`  | Get local storage from the selected tab.      |
+| `--session`        | `-s`  | Get session storage from the selected tab.    |
+| `--cookie`         | `-c`  | Get cookies from the selected tab.            |
+| `--json`           | `-j`  | Return storage as JSON.                       |
+| `--tab-id <tabid>` | `-i`  | Specify a tab ID to get storage from.         |
+| `--set <array>`    | `-S`  | Set a key-value pair in the selected storage. |
+| `--copy <string>`  | `-C`  | Copy a value to the clipboard.                |
+| `--help`           | `-h`  | Show help for this command.                   |
+
+### Dependency Rules
+
+When using `storage` command the options can express **4** possible action:
+
+1. Get a summary of local storage in a tab (using `--local`)
+
+   Just using `--local` will trigger the review of local storage at a certain tab. Here is an example of how specific a notification can be:
+
+   ```bash
+   search
+       --local                              # REQUIRED
+       --tab-id "T00000000"                 # OPTIONAL
+   ```
+
+2. Get a summary of session storage in a tab (using `--session`)
+
+   Just using `--session` will trigger the review of session storage at a certain tab. Here is an example of how specific a notification can be:
+
+   ```bash
+   search
+       --session                            # REQUIRED
+       --tab-id "T00000000"                 # OPTIONAL
+   ```
+
+3. Get a summary of cookies storage in a tab (using `--cookie`)
+
+   Just using `--cookie` will trigger the review of cookies storage at a certain tab. Here is an example of how specific a notification can be:
+
+   ```bash
+   search
+       --cookie                             # REQUIRED
+       --tab-id "T00000000"                 # OPTIONAL
+   ```
+
+4. Set a value in a certain storage at a certain tab (using `--set`)
+
+   Just using `--set` will assigned a value in a ceratin tab at a certain tab. Here is an example of how specific a notification can be:
+
+   ```bash
+   search
+       --set ["test-name" "test-value"]     # REQUIRED
+       --tab-id "T00000000"                 # OPTIONAL
+       --session                            # OPTIONAL
+       --cookie                             # OPTIONAL
+       --local                              # OPTIONAL
    ```
 
 ## CLEAR

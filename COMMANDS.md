@@ -14,6 +14,7 @@
   - [HISTORY](#history)
   - [REQUEST](#request)
   - [ALIAS](#alias)
+  - [STYLE](#style)
 
 ---
 
@@ -322,4 +323,54 @@ When using `alias` command the options can express **3** possible actions:
    ```bash
    alias
        --delete "gotest"
+   ```
+
+## STYLE
+
+Interact with styles of elements and color references.
+
+The `style` command is a bridge to manage aliases of commands in the terminal.
+
+| Option                                              | Short | Description                                                |
+| --------------------------------------------------- | ----- | ---------------------------------------------------------- |
+| `--list`                                            | `-l`  | List CSS styles applied to elements matching the criteria. |
+| `--on <xpath>`                                      | `-o`  | XPath expression to select elements.                       |
+| `--apply <inlinestyles>`                            | `-a`  | Apply inline styles to elements matching the criteria.     |
+| `--color-pick`                                      | `-c`  | Pick a color by clicking on the web page.                  |
+| `--property <[stylename<regex> stylevalue<regex>]>` | `-p`  | Filter styles by property names.                           |
+| `--selector <selector<regex>>`                      | `-s`  | Filter elements by CSS selector.                           |
+| `--help`                                            | `-h`  | Show help for this command.                                |
+
+### Dependency Rules
+
+When using `style` command the options can express **3** possible actions:
+
+1. Create a summary of styles applied to a DOM element (using `--list`)
+
+   Just using `--list` will trigger a search for styles in a DOM element and that's why, the xpath must be specified. Here is an example of how specific a search can be:
+
+   ```bash
+   style
+       --list
+       --on 'id("cards-container")' # The search will take this element as a reference.
+       --property [".+color" "000.+"] # Filter styles by their names and values using regular expressions.
+   ```
+
+2. Apply styles to a DOM element (using `--apply`)
+
+   The option `--apply` will apply inline styles taken as a value. Here is an example of how specific a fetch can be:
+
+   ```bash
+   style
+       --apply "display: none; color: red;"
+       --on 'id("cards-container")' # The search will take this element as a reference.
+   ```
+
+3. Pick a color (using `--color-pick`)
+
+   Just using `--color-pick` will convert the cursor into a color picker. When user clicks anywhere, it will find the color used at that position. Here is an example of how specific a fetch can be:
+
+   ```bash
+   style
+       --color-pick
    ```

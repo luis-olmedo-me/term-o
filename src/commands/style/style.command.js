@@ -27,7 +27,7 @@ export default new CommandBase({
   .expect({
     name: 'apply',
     abbreviation: 'a',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: styleHelpSections.MODIFICATION,
     description: 'Apply inline styles to elements matching the criteria',
     validate: [isInlineStyles],
@@ -46,7 +46,7 @@ export default new CommandBase({
   .expect({
     name: 'on',
     abbreviation: 'o',
-    type: 'string',
+    type: commandTypes.STRING,
     description: 'XPath expression to select elements',
     helpSection: styleHelpSections.RETRIEVAL,
     validate: [isXpath]

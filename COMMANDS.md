@@ -17,6 +17,7 @@
   - [STYLE](#style)
   - [INSPECT](#inspect)
   - [NOTIFY](#notify)
+  - [SEARCH](#search)
 
 ---
 
@@ -431,4 +432,30 @@ When using `notify` command the options can express **1** possible action:
        --title "Testing Title" # It defines the title of the notification.
        --message "Message to be aware of." # It defines the message of the notification.
        --tab-id "T00000000" # It will look for elements at a specific tab.
+   ```
+
+## SEARCH
+
+Interact with a string search.
+
+The `search` command is a bridge to search for a text inside another text.
+
+| Option             | Short | Description                         |
+| ------------------ | ----- | ----------------------------------- |
+| `--query <regex>`  | `-q`  | Text query to be searched in input. |
+| `--input <string>` | `-i`  | Text taken as input.                |
+| `--help`           | `-h`  | Show help for this command.         |
+
+### Dependency Rules
+
+When using `search` command the options can express **1** possible action:
+
+1. Search for text (using `--query`)
+
+   The `--query` describes what the query used to match the input. Only if the input matches you will get an answer. Here is an example of how specific a notification can be:
+
+   ```bash
+   search
+       --query "test\.testing"
+       --input "template test.testing" # It defines under what text the search will take place.
    ```

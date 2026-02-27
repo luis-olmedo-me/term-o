@@ -286,9 +286,9 @@ The `alias` command is a bridge to manage aliases of commands in the terminal.
 
 | Option                            | Short | Description                 |
 | --------------------------------- | ----- | --------------------------- |
-| `--add <[aliasname, equivalent]>` | `-a`  | Add a new alias.            |
 | `--list`                          | `-l`  | List all defined aliases.   |
-| `--delete <string>`               | `-d`  | Remove an alias by name.    |
+| `--add <[aliasname, equivalent]>` | `-a`  | Add a new alias.            |
+| `--delete <aliasname>`            | `-d`  | Remove an alias by name.    |
 | `--help`                          | `-h`  | Show help for this command. |
 
 ### Dependency Rules

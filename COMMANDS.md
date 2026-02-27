@@ -382,15 +382,11 @@ Interact with styles of elements and color references.
 
 The `inspect` command is a bridge to manage aliases of commands in the terminal.
 
-| Option               | Short | Description                                                  |
-| -------------------- | ----- | ------------------------------------------------------------ |
-| `--path <valuepath>` | `-l`  | List CSS inspects applied to elements matching the criteria. |
-| `--tab-id <tabid>`   | `-l`  | List CSS inspects applied to elements matching the criteria. |
-| `--help`             | `-h`  | Show help for this command.                                  |
-
--p, --path <string> ......... Read a variable path in the current tab"
--i, --tab-id <string> ....... Search variable in a specific tab (T[number])"
--h, --help <boolean> ........ Show help for this command"
+| Option               | Short | Description                              |
+| -------------------- | ----- | ---------------------------------------- |
+| `--path <valuepath>` | `-p`  | Read a variable path from global object. |
+| `--tab-id <tabid>`   | `-i`  | Search variable in a specific tab.       |
+| `--help`             | `-h`  | Show help for this command.              |
 
 ### Dependency Rules
 

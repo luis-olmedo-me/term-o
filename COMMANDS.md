@@ -13,6 +13,7 @@
   - [TABS](#tabs)
   - [HISTORY](#history)
   - [REQUEST](#request)
+  - [ALIAS](#alias)
 
 ---
 
@@ -275,4 +276,50 @@ When using `request` command the options can express **1** possible action:
        --method "GET" # Define the method the call should use.
        --url "https://test.com/api/v2/test" # Define the URL the call should use. This is a must have.
        --read-as "json" # Define how the response will be read as. It can be json|blob|text.
+   ```
+
+## ALIAS
+
+Interact with the aliases/shortcut of commands on Term-O.
+
+The `alias` command is a bridge to manage aliases of commands in the terminal.
+
+| Option                            | Short | Description                 |
+| --------------------------------- | ----- | --------------------------- |
+| `--add <[aliasname, equivalent]>` | `-a`  | Add a new alias.            |
+| `--list`                          | `-l`  | List all defined aliases.   |
+| `--delete <string>`               | `-d`  | Remove an alias by name.    |
+| `--help`                          | `-h`  | Show help for this command. |
+
+### Dependency Rules
+
+When using `alias` command the options can express **3** possible actions:
+
+1. Create a summary of all the aliases created (using `--list`)
+
+   Just using `--list` will trigger a search for all the aliases created. Here is an example of how specific a search can be:
+
+   ```bash
+   alias
+       --list
+   ```
+
+2. Add a new alias (using `--add`)
+
+   Just using `--add` with a given array with values will save the new array if the format is correct. Here is an example of how specific a fetch can be:
+
+   ```bash
+   alias
+       --add ["gotest", 'tabs --open "https://test.com" --wait']
+   ```
+
+   After that command is executed, you can just type `gotest` to open "https://test.com" in a new tab.
+
+3. Delete an alias (using `--delete`)
+
+   Just using `--delete` with a given alias name will search for it and delete it. Here is an example of how specific a fetch can be:
+
+   ```bash
+   alias
+       --delete "gotest"
    ```

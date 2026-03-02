@@ -17,6 +17,7 @@ export default new CommandBase({
     helpSection: eventsHelpSections.CREATION,
     description: 'Trigger a new event in page',
     worksWith: ['xpath', 'tab-id'],
+    mustHave: ['xpath'],
     validate: [isAnyOf(eventsSupported)]
   })
   .expect({

@@ -20,6 +20,7 @@
   - [SEARCH](#search)
   - [STORAGE](#storage)
   - [ERROR](#error)
+  - [EVENTS](#events)
   - [CLEAR](#clear)
 
 ---
@@ -531,22 +532,82 @@ When using `storage` command the options can express **4** possible action:
 
 The `error` command is a bridge to the error API.
 
-| Option    | Short | Description                           |
-| --------- | ----- | ------------------------------------- |
-| `--title` | `-t`  | Throw an error with a custom message. |
-| `--help`  | `-h`  | Show help for this command.           |
+| Option             | Short | Description                           |
+| ------------------ | ----- | ------------------------------------- |
+| `--title <string>` | `-t`  | Throw an error with a custom message. |
+| `--help`           | `-h`  | Show help for this command.           |
 
 ### Dependency Rules
 
-When using `storage` command the options can express **4** possible action:
+When using `error` command the options can express **1** possible action:
 
 1. Throw an error (using `--title`)
 
-   Just using `--titlel` will throw an error. Here is an example of how specific a notification can be:
+   Just using `--title` will throw an error with the given title. Here is an example of how specific a notification can be:
 
    ```bash
    search
        --title "test title"                                         # REQUIRED
+   ```
+
+## EVENTS
+
+The `events` command is a bridge to the page events API and DOM element events.
+
+| Option                       | Short | Description                                       |
+| ---------------------------- | ----- | ------------------------------------------------- |
+| `--register`                 | `-t`  | Register a new command for future execution.      |
+| `--trigger <eventname>`      | `-t`  | Trigger a new event in page. It can be: click.    |
+| `--xpath <xpath>`            | `-t`  | XPath selector for the target element.            |
+| `--tab-id <tabid>`           | `-t`  | Trigger events in a specific tab.                 |
+| `--url <regex>`              | `-t`  | URL pattern where the event will trigger (regex). |
+| `--command <executableline>` | `-t`  | Command line to execute.                          |
+| `--list`                     | `-t`  | List all registered events.                       |
+| `--delete <eventid>`         | `-t`  | Delete a registered event by its id.              |
+| `--help`                     | `-h`  | Show help for this command.                       |
+
+### Dependency Rules
+
+When using `evennts` command the options can express **4** possible action:
+
+1. Trigger an event on a element (using `--trigger`)
+
+   Just using `--trigger` will define the event thrown on a specific element. Here is an example of how specific a notification can be:
+
+   ```bash
+   search
+       --trigger "click"                                            # REQUIRED
+       --xpath 'id("main-container")'                               # REQUIRED
+       --tab-id "T00000000"                                         # OPTIONAL
+   ```
+
+2. Create a summary of all the page events created (using `--list`)
+
+   Just using `--list` will trigger a search for all the page events created. Here is an example of how specific a search can be:
+
+   ```bash
+   events
+       --list                                                       # REQUIRED
+   ```
+
+3. Create a page events (using `--register`)
+
+   Just using `--register` will trigger the creation of a page event but it will require other options/arguments how it will work. Here is an example of how specific a notification can be:
+
+   ```bash
+   events
+       --register                                                   # REQUIRED
+       --url 'https://test.com'                                     # REQUIRED
+       --command 'tabs --open "https://test.com" --wait'            # REQUIRED
+   ```
+
+4. Delete a page events (using `--delete`)
+
+   The option `--delete` will delete a specific page event.
+
+   ```bash
+   events
+       --delete "9edb327b-b67f-4a3e-9e10-90b35ad1f3e5"              # REQUIRED
    ```
 
 ## CLEAR

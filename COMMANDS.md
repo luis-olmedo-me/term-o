@@ -19,6 +19,7 @@
   - [NOTIFY](#notify)
   - [SEARCH](#search)
   - [STORAGE](#storage)
+  - [ERROR](#error)
   - [CLEAR](#clear)
 
 ---
@@ -524,6 +525,28 @@ When using `storage` command the options can express **4** possible action:
        --session                                                    # OPTIONAL
        --cookie                                                     # OPTIONAL
        --local                                                      # OPTIONAL
+   ```
+
+## ERROR
+
+The `error` command is a bridge to the error API.
+
+| Option    | Short | Description                           |
+| --------- | ----- | ------------------------------------- |
+| `--title` | `-t`  | Throw an error with a custom message. |
+| `--help`  | `-h`  | Show help for this command.           |
+
+### Dependency Rules
+
+When using `storage` command the options can express **4** possible action:
+
+1. Throw an error (using `--title`)
+
+   Just using `--titlel` will throw an error. Here is an example of how specific a notification can be:
+
+   ```bash
+   search
+       --title "test title"                                         # REQUIRED
    ```
 
 ## CLEAR

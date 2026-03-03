@@ -52,8 +52,9 @@ export const getPaintedFragments = (value, keywordsEnabled) => {
   let lastColor = colorThemeKeys.RESET
   let lastBGColor = colorThemeKeys.RESET
 
-  if (firstMatch?.index > 0) {
-    const extraction = value.slice(0, firstMatch.index)
+  if (!firstMatch || firstMatch.index > 0) {
+    const start = firstMatch?.index
+    const extraction = start ? value.slice(0, start) : value.slice(0)
 
     results.push({
       value: extraction,

@@ -44,10 +44,10 @@ To just build the files without the development server:
 yarn build-prod
 ```
 
-> [!IMPORTANT]
-> Load the build into Chrome if you have not done it before. Please see [Load into Chrome](#load-into-chrome).
-
 Both commands will create a `build/` directory, it will contain the built files that should be loaded into the browser or packed.
+
+> [!IMPORTANT]
+> If you do not know how to load a Chrome Extension. Please see [Load into Chrome](#load-into-chrome).
 
 Then, type `alt + t`:
 
@@ -60,12 +60,12 @@ To load the built files into Chrome, open [chrome://extensions/](chrome://extens
 
 1. Enable "Developer mode" if it's not enabled yet:
 
-![Developer Mode Checkbox](docs/assets/install-step-1.png)
+   ![Developer Mode Checkbox](docs/assets/install-step-1.png)
 
 2. Click on "Load unpacked":
 
-![Load Unpacked Button](docs/assets/install-step-2.png)
+   ![Load Unpacked Button](docs/assets/install-step-2.png)
 
 3. Find the `build/` directory on your system and open it. A notification should appear with the label of "Extension Loaded":
 
-![Extension Loaded](docs/assets/install-step-3.png)
+   ![Extension Loaded](docs/assets/install-step-3.png)

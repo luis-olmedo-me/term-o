@@ -688,7 +688,7 @@ When using `theme` command the options can express **5** possible actions:
        --import '{ "name": "an-already-imported-theme-name", ... }'  # REQUIRED
    ```
 
-   Please, see [theme-example.json](src/tutorial/theme-example.json) to find a more detailed example of a valid theme.
+   Please, see [theme-example.json](assets/theme-example.json) to find a more detailed example of a valid theme.
 
 5. Get the current theme name (using `--current`)
 
@@ -743,7 +743,7 @@ When using `theme` command the options can express **3** possible actions:
        --upload                                                     # REQUIRED
    ```
 
-   Please, see [addon-example.json](src/tutorial/addon-example.json) to find a more detailed example of a valid addon.
+   Please, see [addon-example.json](assets/addon-example.json) to find a more detailed example of a valid addon.
 
 ## CLEAR
 

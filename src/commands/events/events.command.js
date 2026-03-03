@@ -17,6 +17,7 @@ export default new CommandBase({
     helpSection: eventsHelpSections.CREATION,
     description: 'Trigger a new event in page',
     worksWith: ['xpath', 'tab-id'],
+    mustHave: ['xpath'],
     validate: [isAnyOf(eventsSupported)]
   })
   .expect({
@@ -25,7 +26,6 @@ export default new CommandBase({
     type: 'string',
     helpSection: eventsHelpSections.CREATION,
     description: 'XPath selector for the target element',
-    worksWith: ['trigger'],
     validate: [isXpath]
   })
   .expect({
@@ -34,7 +34,6 @@ export default new CommandBase({
     type: 'string',
     helpSection: eventsHelpSections.CREATION,
     description: 'Trigger events in a specific tab (T[number])',
-    worksWith: ['trigger'],
     validate: [isTabId]
   })
   .expect({

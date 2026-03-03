@@ -47,9 +47,23 @@ const getBorderClass = (fragments, index) => {
 
 export const getPaintedFragments = (value, keywordsEnabled) => {
   const matches = value.matchAll(colorPattern)?.toArray() || []
+  const firstMatch = matches.at(0)
   let results = []
   let lastColor = colorThemeKeys.RESET
   let lastBGColor = colorThemeKeys.RESET
+
+  if (!firstMatch || firstMatch.index > 0) {
+    const start = firstMatch?.index
+    const extraction = start ? value.slice(0, start) : value.slice(0)
+
+    results.push({
+      value: extraction,
+      color: lastColor,
+      bgcolor: lastBGColor,
+      isKeyword: false,
+      borderClassName: null
+    })
+  }
 
   for (let index = 0; index < matches.length; index++) {
     const match = matches[index]

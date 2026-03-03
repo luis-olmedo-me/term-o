@@ -30,7 +30,7 @@ export default new CommandBase({
   .expect({
     name: 'payload',
     abbreviation: 'p',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: requestHelpSections.OPTIONS,
     description: 'Add a payload to the request',
     validate: [isJSON]
@@ -38,7 +38,7 @@ export default new CommandBase({
   .expect({
     name: 'method',
     abbreviation: 'm',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: requestHelpSections.OPTIONS,
     description: 'HTTP method to use',
     defaultValue: 'GET'
@@ -46,7 +46,7 @@ export default new CommandBase({
   .expect({
     name: 'url',
     abbreviation: 'u',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: requestHelpSections.API_CALL,
     description: 'URL for the API request',
     validate: [isURL]
@@ -54,7 +54,7 @@ export default new CommandBase({
   .expect({
     name: 'read-as',
     abbreviation: 'r',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: requestHelpSections.OPTIONS,
     description: 'Format to read the response: blob, text, or json',
     validate: [isAnyOf(responseFormatSupported)],

@@ -21,13 +21,13 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: styleHelpSections.RETRIEVAL,
     description: 'List CSS styles applied to elements matching the criteria',
-    worksWith: ['on', 'property', 'selector'],
+    worksWith: ['on', 'property'],
     mustHave: ['on']
   })
   .expect({
     name: 'apply',
     abbreviation: 'a',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: styleHelpSections.MODIFICATION,
     description: 'Apply inline styles to elements matching the criteria',
     validate: [isInlineStyles],
@@ -46,7 +46,7 @@ export default new CommandBase({
   .expect({
     name: 'on',
     abbreviation: 'o',
-    type: 'string',
+    type: commandTypes.STRING,
     description: 'XPath expression to select elements',
     helpSection: styleHelpSections.RETRIEVAL,
     validate: [isXpath]
@@ -58,12 +58,4 @@ export default new CommandBase({
     helpSection: styleHelpSections.FILTERS,
     description: 'Filter styles by property names (regex[])',
     validate: [hasAllItemsAs(isRegExp), hasLengthBetween(0, 2)]
-  })
-  .expect({
-    name: 'selector',
-    abbreviation: 's',
-    type: 'string',
-    helpSection: styleHelpSections.FILTERS,
-    description: 'Filter elements by CSS selector (regex[])',
-    validate: [hasAllItemsAs(isRegExp)]
   })

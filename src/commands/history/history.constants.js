@@ -1,4 +1,5 @@
 export const historyHelpSections = {
   FILTERS: 'Filters',
-  MANAGEMENT: 'Management'
+  MANAGEMENT: 'Management',
+  GENERAL: 'General'
 }

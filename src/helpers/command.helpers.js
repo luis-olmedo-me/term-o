@@ -97,7 +97,7 @@ export const createHelpView = command => {
       const titleCount = `${displayName} ${type}`.length
       const tab = `.`.repeat(highestTitleCount + 1 - titleCount)
 
-      const completeDescription = `${C`reset`}${displayName}${C`reset`} ${C`reset`}${type}${C`reset`} ${C`brightBlack`}${tab} ${C`reset`}${description}${C`reset`}`
+      const completeDescription = `${displayName} ${type} ${C`brightBlack`}${tab} ${C`reset`}${description}${C`reset`}`
       const quotedCompleteDescription = getQuotedString(completeDescription)
 
       helps.push([quotedCompleteDescription])

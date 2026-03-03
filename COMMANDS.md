@@ -626,7 +626,7 @@ When using `input` command the options can express **1** possible action:
 
 1. Request a user input in the terminal (using `--request`)
 
-   Just using `--requesth` will trigger a request that can be seen and completed in the UI terminal. Here is an example of how specific a search can be:
+   Just using `--request` will trigger a request that can be seen and completed in the UI terminal. Here is an example of how specific a search can be:
 
    ```bash
    input

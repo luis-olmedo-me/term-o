@@ -13,7 +13,7 @@ export const createContext = (value, tab) => {
     status: tab.status || '',
     title: tab.title || '',
     tab_id: `T${tab.id || ''}`,
-    window_id: `T${tab.windowId || ''}`,
+    window_id: `W${tab.windowId || ''}`,
     is_incognito: `${tab.incognito}`
   }
 

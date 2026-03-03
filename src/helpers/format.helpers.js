@@ -183,5 +183,7 @@ export const formatStyle = ({ prop, value }) => {
 }
 
 export const formatStringSearch = ({ query, input }) => {
-  return input.replace(query, value => `${BG`red`}${C`brightWhite`}${value}${C`reset`}${BG`reset`}`)
+  return [
+    input.replace(query, value => `${BG`red`}${C`brightWhite`}${value}${C`reset`}${BG`reset`}`)
+  ]
 }

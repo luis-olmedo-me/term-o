@@ -1,6 +1,7 @@
 export const webElements = {
   HIGHLIGHT: 'term-o-highlight',
-  NOTIFICATION: 'term-o-notification'
+  NOTIFICATION: 'term-o-notification',
+  NOTIFICATION_MANAGER: 'term-o-notification-manager'
 }
 
 export const durations = {

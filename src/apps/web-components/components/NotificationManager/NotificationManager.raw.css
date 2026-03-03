@@ -1,0 +1,13 @@
+.wrapper {
+  position: fixed;
+  inset: 80% 0 0 80%;
+  z-index: 999999;
+  display: flex;
+  font-size: 12px;
+  cursor: pointer;
+  user-select: none;
+  pointer-events: all;
+  font-family: var(--font);
+  opacity: 0;
+  background-color: red;
+}

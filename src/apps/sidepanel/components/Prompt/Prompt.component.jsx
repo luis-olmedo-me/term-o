@@ -42,7 +42,6 @@ export const Prompt = ({
   const [config] = useStorage({ key: storageKeys.CONFIG })
 
   const historialSize = config.getValueById(configInputIds.HISTORIAL_SIZE)
-  const isTruncated = config.getValueById(configInputIds.LINE_TRUNCATION)
 
   const calculateSuggestion = useCallback((value, caret, aliases, addons) => {
     const newSuggestion = createSuggestion(value, caret, aliases, addons)
@@ -182,7 +181,6 @@ export const Prompt = ({
   }
 
   const prefix = historialIndex || PROMPT_MARK
-  const contextLines = context.split(/(?<!\\)\n/).filter(Boolean)
 
   const start = caret !== null ? value.slice(0, caret) : value
   const end = caret !== null ? value.slice(caret) : ''
@@ -193,11 +191,9 @@ export const Prompt = ({
       data-loading={loading && !isRequesting}
       data-requesting={isRequesting}
     >
-      {contextLines.map((contextLine, index) => (
-        <p key={`${contextLine}-${index}`} className={promptLine} data-truncated={isTruncated}>
-          <ColoredText value={contextLine} />
-        </p>
-      ))}
+      <p className={promptLine}>
+        <ColoredText value={context} />
+      </p>
 
       <div className={prompWithPrefix}>
         <span>{prefix}</span>

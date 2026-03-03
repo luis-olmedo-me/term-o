@@ -67,7 +67,6 @@ export const CommandsViewer = ({ commands }) => {
       <div ref={wrapper}>
         {commands.map((command, commandIndex) => {
           const hasErrorMessage = command.status === commandStatuses.ERROR
-          const contextLines = command.context.split(/(?<!\\)\n/).filter(Boolean)
 
           return (
             <div
@@ -79,28 +78,23 @@ export const CommandsViewer = ({ commands }) => {
               data-light={hasStatusLight}
               data-truncated={isTruncated}
             >
-              {contextLines.map((context, index) => (
-                <p
-                  className={line}
-                  key={`${context}-${index}`}
-                  onMouseUp={handleLineMouseUp}
-                  data-truncate-skip="false"
-                >
-                  <ColoredText value={context} />
-                </p>
-              ))}
+              <p className={line} onMouseUp={handleLineMouseUp} data-truncate-skip="true">
+                <ColoredText value={command.context} />
+              </p>
 
-              <p className={line} data-truncate-skip="false" onMouseUp={handleLineMouseUp}>
+              <p className={line} onMouseUp={handleLineMouseUp} data-truncate-skip="false">
                 {command.title}
               </p>
 
               {command.updates.map((update, index) => {
+                const isLastItem = index === command.updates.length - 1
+
                 return (
                   <p
                     key={`${commandIndex}-${index}`}
                     className={line}
                     onMouseUp={handleLineMouseUp}
-                    data-truncate-skip={hasErrorMessage}
+                    data-truncate-skip={hasErrorMessage && isLastItem}
                   >
                     <ColoredText value={update} />
                   </p>

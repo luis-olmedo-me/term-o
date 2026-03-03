@@ -32,14 +32,7 @@
 .promptLine {
   margin: 0;
   cursor: text;
-
-  &[data-truncated='true'] {
-    white-space: pre;
-    min-width: 0;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
+  white-space: pre-line;
 }
 
 .prompWithPrefix {

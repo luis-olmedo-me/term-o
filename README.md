@@ -44,7 +44,8 @@ To just build the files without the development server:
 yarn build-prod
 ```
 
-Load the build into Chrome if you have not done it before. Please see [Load into Chrome](#load-into-chrome).
+> [!NOTE]
+> Load the build into Chrome if you have not done it before. Please see [Load into Chrome](#load-into-chrome).
 
 Both commands will create a `build/` directory, it will contain the built files that should be loaded into the browser or packed.
 

@@ -23,6 +23,7 @@
   - [EVENTS](#events)
   - [INPUT](#input)
   - [THEME](#theme)
+  - [ADDONS](#addons)
   - [CLEAR](#clear)
 
 ---
@@ -678,7 +679,7 @@ When using `theme` command the options can express **5** possible actions:
        --apply "an-already-imported-theme-name"                     # REQUIRED
    ```
 
-4. Import a theme in use (using `--import`)
+4. Import a theme (using `--import`)
 
    The option `--import` will import the specified theme in JSON format. Here is an example of how specific it can be:
 
@@ -697,6 +698,52 @@ When using `theme` command the options can express **5** possible actions:
    theme
        --current                                                    # REQUIRED
    ```
+
+## ADDONS
+
+The `theme` command is a bridge to manage the addons in Term-O.
+
+An addon is a new command added to Term-O.
+
+| Option              | Short | Description                      |
+| ------------------- | ----- | -------------------------------- |
+| `--list`            | `-l`  | List all addons.                 |
+| `--upload`          | `-u`  | Upload a file to add as a addon. |
+| `--delete <string>` | `-d`  | Delete a addon by name.          |
+| `--help`            | `-h`  | Show help for this command.      |
+
+### Dependency Rules
+
+When using `theme` command the options can express **3** possible actions:
+
+1. Create a summary of all addons available (using `--list`)
+
+   Just using `--list` will trigger a search for all addons available. Here is an example of how specific a search can be:
+
+   ```bash
+   addons
+       --list                                                       # REQUIRED
+   ```
+
+2. Delete a addon by its name (using `--delete`)
+
+   The option `--delete` will delete a specific addon by its name.
+
+   ```bash
+   addons
+       --delete "an-already-imported-addon-name"                    # REQUIRED
+   ```
+
+3. Upload an addon (using `--upload`)
+
+   The option `--upload` will trigger a file picker to show up asking for an addon in JSON format. Here is an example of how specific it can be:
+
+   ```bash
+   theme
+       --upload                                                     # REQUIRED
+   ```
+
+   Please, see [addon-example.json](src/tutorial/addon-example.json) to find a more detailed example of a valid addon.
 
 ## CLEAR
 

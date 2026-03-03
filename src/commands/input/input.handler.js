@@ -7,7 +7,6 @@ export const inputHandler = async command => {
   const P = name => command.props[name]
 
   if (P`request`) {
-    command.update([P`title`])
     const input = await processManager.requestInput()
     const formattedInput = formatText({ text: input })
 

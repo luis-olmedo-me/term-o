@@ -10,7 +10,7 @@ export const importWebComponents = () => {
   script.remove()
 }
 
-const createWebElement = (name, props) => {
+const createWebElement = (name, props = {}) => {
   const host = document.createElement(name)
 
   Object.entries(props).forEach(([propName, propValue]) => {

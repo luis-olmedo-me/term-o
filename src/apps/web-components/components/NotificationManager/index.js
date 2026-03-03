@@ -26,6 +26,6 @@ class NotificationManager extends HTMLElement {
   }
 }
 
-if (!customElements.get(webElements.NOTIFICATION)) {
-  customElements.define(webElements.NOTIFICATION, NotificationManager)
+if (!customElements.get(webElements.NOTIFICATION_MANAGER)) {
+  customElements.define(webElements.NOTIFICATION_MANAGER, NotificationManager)
 }

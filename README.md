@@ -1,7 +1,7 @@
 # TERM-O
 
 <picture>
-  <img src="src/docs/assets/illustration.png" alt="Project illustration">
+  <img src="docs/assets/illustration.png" alt="Project illustration">
 </picture>
 
 ## Introduction

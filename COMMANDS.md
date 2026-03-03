@@ -21,6 +21,7 @@
   - [STORAGE](#storage)
   - [ERROR](#error)
   - [EVENTS](#events)
+  - [INPUT](#input)
   - [CLEAR](#clear)
 
 ---
@@ -556,14 +557,14 @@ The `events` command is a bridge to the page events API and DOM element events.
 
 | Option                       | Short | Description                                       |
 | ---------------------------- | ----- | ------------------------------------------------- |
-| `--register`                 | `-t`  | Register a new command for future execution.      |
+| `--register`                 | `-r`  | Register a new command for future execution.      |
 | `--trigger <eventname>`      | `-t`  | Trigger a new event in page. It can be: click.    |
-| `--xpath <xpath>`            | `-t`  | XPath selector for the target element.            |
-| `--tab-id <tabid>`           | `-t`  | Trigger events in a specific tab.                 |
-| `--url <regex>`              | `-t`  | URL pattern where the event will trigger (regex). |
-| `--command <executableline>` | `-t`  | Command line to execute.                          |
-| `--list`                     | `-t`  | List all registered events.                       |
-| `--delete <eventid>`         | `-t`  | Delete a registered event by its id.              |
+| `--xpath <xpath>`            | `-x`  | XPath selector for the target element.            |
+| `--tab-id <tabid>`           | `-i`  | Trigger events in a specific tab.                 |
+| `--url <regex>`              | `-u`  | URL pattern where the event will trigger (regex). |
+| `--command <executableline>` | `-c`  | Command line to execute.                          |
+| `--list`                     | `-l`  | List all registered events.                       |
+| `--delete <eventid>`         | `-d`  | Delete a registered event by its id.              |
 | `--help`                     | `-h`  | Show help for this command.                       |
 
 ### Dependency Rules
@@ -608,6 +609,28 @@ When using `evennts` command the options can express **4** possible action:
    ```bash
    events
        --delete "9edb327b-b67f-4a3e-9e10-90b35ad1f3e5"              # REQUIRED
+   ```
+
+## INPUT
+
+The `input` command is a bridge to UI terminal requests.
+
+| Option      | Short | Description                     |
+| ----------- | ----- | ------------------------------- |
+| `--request` | `-r`  | Request user input in terminal. |
+| `--help`    | `-h`  | Show help for this command.     |
+
+### Dependency Rules
+
+When using `input` command the options can express **1** possible action:
+
+1. Request a user input in the terminal (using `--request`)
+
+   Just using `--requesth` will trigger a request that can be seen and completed in the UI terminal. Here is an example of how specific a search can be:
+
+   ```bash
+   input
+       --request                                                    # REQUIRED
    ```
 
 ## CLEAR

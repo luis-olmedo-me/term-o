@@ -633,6 +633,70 @@ When using `input` command the options can express **1** possible action:
        --request                                                    # REQUIRED
    ```
 
+## THEME
+
+The `theme` command is a bridge to manage the theme in Term-O.
+
+| Option              | Short | Description                           |
+| ------------------- | ----- | ------------------------------------- |
+| `--import <string>` | `-i`  | Import a color scheme in JSON format. |
+| `--list`            | `-l`  | List all available themes.            |
+| `--delete <string>` | `-d`  | Delete a theme by name.               |
+| `--apply <string>`  | `-a`  | Apply a theme by name.                |
+| `--current`         | `-C`  | Show the currently applied theme.     |
+| `--help`            | `-h`  | Show help for this command.           |
+
+### Dependency Rules
+
+When using `theme` command the options can express **5** possible actions:
+
+1. Create a summary of all themes available (using `--list`)
+
+   Just using `--list` will trigger a search for all themes available. Here is an example of how specific a search can be:
+
+   ```bash
+   theme
+       --list                                                       # REQUIRED
+   ```
+
+2. Delete a theme by its name (using `--delete`)
+
+   The option `--delete` will delete a specific theme by its name.
+
+   ```bash
+   theme
+       --delete "an-already-imported-theme-name"                    # REQUIRED
+   ```
+
+3. Change the current theme in use (using `--apply`)
+
+   The option `--apply` will apply the specified theme name. Here is an example of how specific it can be:
+
+   ```bash
+   theme
+       --apply "an-already-imported-theme-name"                     # REQUIRED
+   ```
+
+4. Import a theme in use (using `--import`)
+
+   The option `--import` will import the specified theme in JSON format. Here is an example of how specific it can be:
+
+   ```bash
+   theme
+       --import '{ "name": "an-already-imported-theme-name", ... }'  # REQUIRED
+   ```
+
+   Please, see [theme-example.json](src/tutorial/theme-example.json) to find a more detailed example of a valid theme.
+
+5. Get the current theme name (using `--current`)
+
+   The option `--current` will search for the name of the current theme. Here is an example of how specific it can be:
+
+   ```bash
+   theme
+       --current                                                    # REQUIRED
+   ```
+
 ## CLEAR
 
 Interact with the clean up of the UI terminal.

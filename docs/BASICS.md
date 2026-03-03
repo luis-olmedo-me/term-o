@@ -43,6 +43,8 @@ Each command:
 - May define dependencies between options.
 - Can enforce strict option combinations.
 
+Once you finish this document, it is recommendable for you to take a look at [Term-O Commands](COMMANDS.md).
+
 ---
 
 # Commands

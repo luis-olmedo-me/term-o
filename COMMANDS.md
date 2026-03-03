@@ -22,6 +22,7 @@
   - [ERROR](#error)
   - [EVENTS](#events)
   - [INPUT](#input)
+  - [THEME](#theme)
   - [CLEAR](#clear)
 
 ---

@@ -3,6 +3,7 @@ import NotificationManagerCss from './NotificationManager.raw.css?raw'
 import NotificationManagerHtml from './NotificationManager.raw.html?raw'
 
 import { webElements } from '@src/constants/web-elements.constants'
+import { createWebElement } from '@src/helpers/web-components.helpers'
 
 class NotificationManager extends HTMLElement {
   constructor() {
@@ -18,8 +19,6 @@ class NotificationManager extends HTMLElement {
 
   connectedCallback() {
     this.setAttribute('id', 'notifier')
-
-    console.log('💬 ~ notification manager created!')
   }
 
   get _elements() {
@@ -31,7 +30,14 @@ class NotificationManager extends HTMLElement {
   }
 
   _handleAdd(event) {
-    console.log('💬 ~ notification added!', event)
+    const initEvent = new CustomEvent('init', { detail: event.detail })
+    const notificationItem = createWebElement(
+      webElements.NOTIFICATION_ITEM,
+      {},
+      this._elements.wrapper
+    )
+
+    notificationItem.dispatchEvent(initEvent)
   }
 
   _handleTheme(event) {

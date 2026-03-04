@@ -10,14 +10,14 @@ export const importWebComponents = () => {
   script.remove()
 }
 
-const createWebElement = (name, props = {}) => {
+export const createWebElement = (name, props = {}, below = document.body) => {
   const host = document.createElement(name)
 
   Object.entries(props).forEach(([propName, propValue]) => {
     host.setAttribute(propName, propValue)
   })
 
-  document.body.appendChild(host)
+  below.appendChild(host)
 
   return host
 }

@@ -6,13 +6,11 @@ class NotificationItem extends HTMLElement {
   constructor() {
     super()
 
-    this.innerHTML = NotificationItemHtml
-
-    this.addEventListener('create', this._handleCreate)
+    this.addEventListener('init', this.init)
   }
 
   connectedCallback() {
-    console.log('💬 ~ notification item created!')
+    this.innerHTML = NotificationItemHtml
   }
 
   get _elements() {
@@ -24,7 +22,7 @@ class NotificationItem extends HTMLElement {
     }
   }
 
-  _handleCreate(event) {
+  init(event) {
     const { title, message } = event.detail
 
     this.querySelector('#title').innerHTML = title

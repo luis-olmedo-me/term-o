@@ -43,7 +43,7 @@ class NotificationManager extends HTMLElement {
   _handleTheme(event) {
     const { theme } = event.detail
 
-    this._elements.theme.innerHTML = createCssVariablesFromTheme(theme, '#wrapper')
+    this._elements.theme.innerHTML = createCssVariablesFromTheme(theme, '#web-theme-provider')
   }
 }
 

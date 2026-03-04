@@ -1,4 +1,5 @@
-import { createRootVariablesFromTheme } from '@src/helpers/themes.helpers'
+import { createCssVariablesFromTheme } from '@src/helpers/themes.helpers'
+import NotificationManagerCss from './NotificationManager.raw.css?raw'
 import NotificationManagerHtml from './NotificationManager.raw.html?raw'
 
 import { webElements } from '@src/constants/web-elements.constants'
@@ -9,6 +10,7 @@ class NotificationManager extends HTMLElement {
 
     this._shadow = this.attachShadow({ mode: 'closed' })
     this._shadow.innerHTML = NotificationManagerHtml
+    this._elements.styles.innerHTML = NotificationManagerCss
 
     this.addEventListener('add', this._handleAdd)
     this.addEventListener('theme', this._handleTheme)
@@ -23,7 +25,8 @@ class NotificationManager extends HTMLElement {
   get _elements() {
     return {
       wrapper: this._shadow.querySelector('#wrapper'),
-      styles: this._shadow.querySelector('#styles')
+      styles: this._shadow.querySelector('#styles'),
+      theme: this._shadow.querySelector('#theme')
     }
   }
 
@@ -34,7 +37,7 @@ class NotificationManager extends HTMLElement {
   _handleTheme(event) {
     const newTheme = event.detail.theme
 
-    this._elements.styles.innerHTML = createRootVariablesFromTheme(newTheme)
+    this._elements.theme.innerHTML = createCssVariablesFromTheme(newTheme, '#wrapper')
   }
 }
 

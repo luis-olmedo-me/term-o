@@ -2,7 +2,7 @@ import useStorage from '@src/hooks/useStorage'
 
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
-import { createRootVariablesFromTheme } from '@src/helpers/themes.helpers'
+import { createCssVariablesFromTheme } from '@src/helpers/themes.helpers'
 
 export const ThemeProvider = ({ children }) => {
   const [config] = useStorage({ key: storageKeys.CONFIG })
@@ -15,7 +15,7 @@ export const ThemeProvider = ({ children }) => {
       data-theme={config.theme.isDarkMode ? 'dark' : 'light'}
       data-inputs-caret={caretShape}
     >
-      <style>{createRootVariablesFromTheme(config.theme)}</style>
+      <style>{createCssVariablesFromTheme(config.theme)}</style>
 
       {children}
     </div>

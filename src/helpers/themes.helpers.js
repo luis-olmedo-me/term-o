@@ -53,6 +53,6 @@ const createVariablesFromTheme = (theme, pre = null) => {
   return variables
 }
 
-export const createRootVariablesFromTheme = theme => {
-  return `:root { ${createVariablesFromTheme(theme)}}`
+export const createCssVariablesFromTheme = (theme, selector = ':root') => {
+  return `${selector} { ${createVariablesFromTheme(theme)}}`
 }

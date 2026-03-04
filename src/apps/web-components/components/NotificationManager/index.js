@@ -69,9 +69,11 @@ class NotificationManager extends HTMLElement {
 
   _updateCounter() {
     const count = this._notifications.length
+    const label = count > 9 ? '+9' : String(count)
 
-    this._elements.count.setAttribute('data-count', count)
-    this._elements.count.innerHTML = String(count)
+    this._elements.count.setAttribute('data-count', label)
+    this._elements.count.setAttribute('data-visible', count > 1)
+    this._elements.count.innerHTML = String(label)
   }
 }
 

@@ -11,7 +11,7 @@ import { iconSizes } from '@src/constants/icon.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { durations } from '@src/constants/web-elements.constants'
 import { getConfigDetailsByInputId } from '@src/helpers/config.helpers'
-import { createNotificationManager } from '@src/helpers/web-components.helpers'
+import { createNotification } from '@src/helpers/web-components.helpers'
 import { verticalScroller } from '@styles/global.module.scss'
 import { sidePanelOptions } from './Preferences.constants'
 import { getInputMessageByType, handleImportConfig } from './Preferences.helpers'
@@ -34,7 +34,7 @@ export const Preferences = () => {
   const sectionSelected = config.details.find(({ id }) => id === selectedSectionId)
 
   const sendNotification = (inputName, message) => {
-    createNotificationManager({
+    createNotification({
       title: `Term-O | ${inputName}`,
       message,
       theme: config.theme,

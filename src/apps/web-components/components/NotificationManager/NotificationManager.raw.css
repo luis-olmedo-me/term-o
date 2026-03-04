@@ -28,6 +28,7 @@
   width: 2ch;
   font-family: var(--font);
   z-index: 999999;
+  color: var(--colors-foreground);
 }
 .count[data-visible='true'] {
   opacity: 1;
@@ -64,6 +65,7 @@ term-o-notification-item.visible {
   padding: var(--space-300) var(--space-300) var(--space-300) 14px;
   cursor: pointer;
   position: relative;
+  color: var(--colors-foreground);
 }
 .notification::after {
   content: '';

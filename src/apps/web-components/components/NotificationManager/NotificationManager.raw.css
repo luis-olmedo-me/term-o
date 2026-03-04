@@ -11,11 +11,13 @@
 term-o-notification-item {
   opacity: 0;
   display: none;
+  pointer-events: none;
 }
 
 term-o-notification-item.visible {
   opacity: 1;
   display: block;
+  pointer-events: all;
 }
 
 .notification {

@@ -11,7 +11,6 @@ class NotificationItem extends HTMLElement {
 
   connectedCallback() {
     this.innerHTML = NotificationItemHtml
-    this.classList.add('visible')
   }
 
   get _elements() {

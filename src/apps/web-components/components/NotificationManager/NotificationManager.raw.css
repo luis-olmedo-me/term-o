@@ -9,15 +9,20 @@
 }
 
 term-o-notification-item {
+  transition: transform 0.5s ease-in-out;
+}
+term-o-notification-item.hidden {
   opacity: 0;
   display: none;
   pointer-events: none;
+  transform: translateX(100%);
 }
 
 term-o-notification-item.visible {
   opacity: 1;
   display: block;
   pointer-events: all;
+  transform: translateX(0);
 }
 
 .notification {

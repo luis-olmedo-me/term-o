@@ -42,7 +42,6 @@
 term-o-notification-item {
   position: absolute;
   transition:
-    right 0.3s ease,
     opacity 0.3s ease,
     transform 0.3s ease;
   top: 0;

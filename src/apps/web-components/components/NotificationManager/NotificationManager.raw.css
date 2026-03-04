@@ -1,11 +1,11 @@
 .wrapper {
   position: fixed;
-  inset: 80% 0 0 80%;
+  bottom: var(--space-450);
+  right: var(--space-450);
   z-index: 999999;
   font-size: 16px;
   user-select: none;
   font-family: var(--font);
-  background-color: var(--colors-red);
 }
 
 term-o-notification-item {
@@ -16,4 +16,22 @@ term-o-notification-item {
 term-o-notification-item.visible {
   opacity: 1;
   display: block;
+}
+
+.notification {
+  min-width: 300px;
+  max-width: 400px;
+  border-radius: var(--radius-200);
+  background-color: var(--colors-background);
+  border: var(--space-50) solid var(--colors-brightBlack);
+  padding: var(--space-300) var(--space-300);
+}
+.title {
+  margin: 0;
+  font-weight: bold;
+  font-size: 14px;
+}
+.message {
+  margin: 0;
+  font-size: 11px;
 }

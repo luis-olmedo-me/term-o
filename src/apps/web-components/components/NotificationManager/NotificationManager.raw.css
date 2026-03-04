@@ -8,6 +8,21 @@
   font-family: var(--font);
 }
 
+.count {
+  position: absolute;
+  transition:
+    transform 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
+  bottom: 0;
+  right: 0;
+  transform: translateX(0) scale(1);
+  border-radius: var(--radius-200) 0 0 var(--radius-200);
+  background-color: var(--colors-background);
+  border: solid var(--colors-brightBlack);
+  border-width: var(--space-50) 0 var(--space-50) var(--space-50);
+  padding: var(--space-200);
+}
+
 term-o-notification-item {
   position: absolute;
   transition:

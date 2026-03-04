@@ -38,19 +38,6 @@ export const createHighlight = ({ element, theme }) => {
   })
 }
 
-export const createNotification = ({ title, message, theme, duration }) => {
-  const themeEvent = new CustomEvent('theme', { detail: theme })
-  const element = createWebElement(webElements.NOTIFICATION, {
-    title,
-    message,
-    duration
-  })
-
-  element.dispatchEvent(themeEvent)
-
-  return element
-}
-
 export const createNotificationManager = ({ title, message, theme, duration }) => {
   const additionEvent = new CustomEvent('add', { detail: { title, message, duration } })
   let manager = window.document.querySelector(`${webElements.NOTIFICATION_MANAGER}#notifier`)

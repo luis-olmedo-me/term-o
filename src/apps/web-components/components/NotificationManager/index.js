@@ -26,7 +26,8 @@ class NotificationManager extends HTMLElement {
     return {
       wrapper: this._shadow.querySelector('#wrapper'),
       styles: this._shadow.querySelector('#styles'),
-      theme: this._shadow.querySelector('#theme')
+      theme: this._shadow.querySelector('#theme'),
+      count: this._shadow.querySelector('#count')
     }
   }
 
@@ -43,6 +44,7 @@ class NotificationManager extends HTMLElement {
     this._notifications = this._notifications.concat(notificationItem)
 
     requestAnimationFrame(() => notificationItem.classList.add('visible'))
+    this._updateCounter()
 
     notificationItem.addEventListener('click', () => this._removeNotification(notificationItem))
   }
@@ -61,6 +63,15 @@ class NotificationManager extends HTMLElement {
 
     const lastNotificationItem = this._notifications.at(-1)
     if (lastNotificationItem) lastNotificationItem.classList.add('visible')
+
+    this._updateCounter()
+  }
+
+  _updateCounter() {
+    const count = this._notifications.length
+
+    this._elements.count.setAttribute('data-count', count)
+    this._elements.count.innerHTML = String(count)
   }
 }
 

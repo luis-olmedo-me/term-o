@@ -1,6 +1,6 @@
 .wrapper {
   position: fixed;
-  bottom: var(--space-450);
+  top: var(--space-450);
   right: var(--space-450);
   z-index: 999998;
   font-size: 16px;
@@ -13,7 +13,7 @@
   transition:
     transform 0.3s ease-in-out,
     opacity 0.3s ease-in-out;
-  bottom: var(--space-450);
+  top: var(--space-450);
   right: 0;
   transform: translateX(0) scale(1);
   border-radius: var(--radius-200) 0 0 var(--radius-200);
@@ -44,7 +44,7 @@ term-o-notification-item {
     right 0.3s ease,
     opacity 0.3s ease,
     transform 0.3s ease;
-  bottom: 0;
+  top: 0;
   right: 0;
   opacity: 0;
   pointer-events: none;

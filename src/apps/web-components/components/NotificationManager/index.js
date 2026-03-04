@@ -18,9 +18,7 @@ class NotificationManager extends HTMLElement {
     this.addEventListener('theme', this._handleTheme)
   }
 
-  connectedCallback() {
-    this.setAttribute('id', 'notifier')
-  }
+  connectedCallback() {}
 
   get _elements() {
     return {

@@ -1,3 +1,4 @@
+import { buildHtmlTextContent } from './NotificationItem.helpers'
 import NotificationItemHtml from './NotificationItem.raw.html?raw'
 
 import { webElements } from '@src/constants/web-elements.constants'
@@ -25,8 +26,8 @@ class NotificationItem extends HTMLElement {
   init(event) {
     const { title, message } = event.detail
 
-    this.querySelector('#title').innerHTML = title
-    this.querySelector('#message').innerHTML = message
+    this.querySelector('#title').innerHTML = buildHtmlTextContent(title)
+    this.querySelector('#message').innerHTML = buildHtmlTextContent(message)
   }
 }
 

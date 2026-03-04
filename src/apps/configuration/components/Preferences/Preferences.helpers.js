@@ -1,7 +1,9 @@
 import storage from '@src/libs/storage'
 
 import { availableInputTypes } from '@src/constants/inputs.constants'
+import { colorThemeKeys } from '@src/constants/themes.constants'
 import { uploader } from '@src/helpers/file.helpers'
+import { getBgColor, getColor } from '@src/helpers/themes.helpers'
 
 export const handleImportConfig = ({ onError }) => {
   return new Promise((resolve, reject) => {
@@ -21,6 +23,10 @@ export const handleImportConfig = ({ onError }) => {
 }
 
 export const getInputMessageByType = (input, oldValue, newValue) => {
+  const colorReset = getColor(colorThemeKeys.RESET)
+  const bgColorReset = getBgColor(colorThemeKeys.RESET)
+  const reset = `${colorReset}${bgColorReset}`
+
   if (input.type === availableInputTypes.BOOLEAN) {
     const oldUIValue = oldValue ? 'On' : 'Off'
     const newUIValue = newValue ? 'On' : 'Off'
@@ -39,5 +45,5 @@ export const getInputMessageByType = (input, oldValue, newValue) => {
     return `"${oldUIValue}" -> "${newUIValue}"`
   }
 
-  return `"${oldValue}" -> "${newValue}"`
+  return `"${oldValue}${reset}" -> "${newValue}${reset}"`
 }

@@ -40,13 +40,23 @@ class NotificationManager extends HTMLElement {
 
     notificationItem.dispatchEvent(initEvent)
     this._notifications.forEach(item => item.classList.remove('visible'))
-    this._notifications.push(notificationItem)
+    this._notifications = this._notifications.concat(notificationItem)
+
+    notificationItem.addEventListener('click', () => this._removeNotification(notificationItem))
   }
 
   _handleTheme(event) {
     const { theme } = event.detail
 
     this._elements.theme.innerHTML = createCssVariablesFromTheme(theme, '#web-theme-provider')
+  }
+
+  _removeNotification(notificationItem) {
+    notificationItem.classList.remove('visible')
+    this._notifications = this._notifications.filter(item => item !== notificationItem)
+
+    const lastNotificationItem = this._notifications.at(-1)
+    if (lastNotificationItem) lastNotificationItem.classList.add('visible')
   }
 }
 

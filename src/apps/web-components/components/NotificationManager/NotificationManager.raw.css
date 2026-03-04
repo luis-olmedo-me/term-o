@@ -25,6 +25,7 @@ term-o-notification-item.visible {
   background-color: var(--colors-background);
   border: var(--space-50) solid var(--colors-brightBlack);
   padding: var(--space-300) var(--space-300);
+  cursor: pointer;
 }
 .title {
   margin: 0;

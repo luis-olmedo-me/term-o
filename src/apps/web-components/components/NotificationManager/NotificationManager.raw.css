@@ -9,7 +9,7 @@
 }
 
 .count {
-  position: absolute;
+  position: fixed;
   transition:
     transform 0.3s ease-in-out,
     opacity 0.3s ease-in-out;
@@ -57,8 +57,7 @@ term-o-notification-item.visible {
 }
 
 .notification {
-  min-width: 300px;
-  max-width: 400px;
+  width: 350px;
   border-radius: var(--radius-200);
   background-color: var(--colors-background);
   border: var(--space-50) solid var(--colors-brightBlack);
@@ -77,12 +76,22 @@ term-o-notification-item.visible {
   border-radius: var(--radius-100);
 }
 
-.title {
+.title,
+.message {
+  display: -webkit-box;
+  box-orient: vertical;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin: 0;
+}
+
+.title {
   font-weight: bold;
   font-size: 14px;
 }
 .message {
-  margin: 0;
   font-size: 11px;
 }

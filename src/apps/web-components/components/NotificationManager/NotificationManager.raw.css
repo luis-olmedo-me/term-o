@@ -13,7 +13,7 @@
   transition:
     transform 0.3s ease-in-out,
     opacity 0.3s ease-in-out;
-  bottom: 0;
+  bottom: var(--space-450);
   right: 0;
   transform: translateX(0) scale(1);
   border-radius: var(--radius-200) 0 0 var(--radius-200);
@@ -21,6 +21,8 @@
   border: solid var(--colors-brightBlack);
   border-width: var(--space-50) 0 var(--space-50) var(--space-50);
   padding: var(--space-200);
+  font-size: 10px;
+  pointer-events: none;
 }
 
 term-o-notification-item {

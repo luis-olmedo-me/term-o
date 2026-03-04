@@ -11,11 +11,14 @@ class NotificationManager extends HTMLElement {
     this._shadow = this.attachShadow({ mode: 'closed' })
     this._shadow.innerHTML = NotificationManagerHtml
 
+    this.addEventListener('add', this._handleAdd)
     this.addEventListener('theme', this._handleTheme)
     this.addEventListener('new-theme', this._handleNewTheme)
   }
 
   connectedCallback() {
+    this.setAttribute('id', 'notifier')
+
     console.log('💬 ~ notification manager created!')
   }
 
@@ -24,6 +27,10 @@ class NotificationManager extends HTMLElement {
       wrapper: this._shadow.querySelector('#wrapper'),
       styles: this._shadow.querySelector('#styles')
     }
+  }
+
+  _handleAdd(event) {
+    console.log('💬 ~ notification added!', event)
   }
 
   _handleTheme(event) {

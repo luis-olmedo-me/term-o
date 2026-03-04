@@ -50,3 +50,19 @@ export const createNotification = ({ title, message, theme, duration }) => {
 
   return element
 }
+
+export const createNotificationManager = ({ title, message, theme, duration }) => {
+  const additionEvent = new CustomEvent('add', { detail: { title, message, duration } })
+  let manager = window.document.querySelector(`${webElements.NOTIFICATION_MANAGER}#notifier`)
+
+  if (!manager) {
+    const themeEvent = new CustomEvent('theme', { detail: { theme } })
+    manager = createWebElement(webElements.NOTIFICATION_MANAGER)
+
+    manager.dispatchEvent(themeEvent)
+  }
+
+  manager.dispatchEvent(additionEvent)
+
+  return manager
+}

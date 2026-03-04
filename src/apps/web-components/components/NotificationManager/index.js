@@ -2,7 +2,7 @@ import { createCssVariablesFromTheme } from '@src/helpers/themes.helpers'
 import NotificationManagerCss from './NotificationManager.raw.css?raw'
 import NotificationManagerHtml from './NotificationManager.raw.html?raw'
 
-import { webElements } from '@src/constants/web-elements.constants'
+import { embedWebElements, webElements } from '@src/constants/web-elements.constants'
 import { createWebElement } from '@src/helpers/web-components.helpers'
 
 class NotificationManager extends HTMLElement {
@@ -32,7 +32,7 @@ class NotificationManager extends HTMLElement {
   _handleAdd(event) {
     const initEvent = new CustomEvent('init', { detail: event.detail })
     const notificationItem = createWebElement(
-      webElements.NOTIFICATION_ITEM,
+      embedWebElements.NOTIFICATION_ITEM,
       {},
       this._elements.wrapper
     )

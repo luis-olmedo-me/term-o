@@ -1,7 +1,7 @@
 import { buildHtmlTextContent } from './NotificationItem.helpers'
 import NotificationItemHtml from './NotificationItem.raw.html?raw'
 
-import { webElements } from '@src/constants/web-elements.constants'
+import { embedWebElements } from '@src/constants/web-elements.constants'
 
 class NotificationItem extends HTMLElement {
   constructor() {
@@ -31,6 +31,6 @@ class NotificationItem extends HTMLElement {
   }
 }
 
-if (!customElements.get(webElements.NOTIFICATION_ITEM)) {
-  customElements.define(webElements.NOTIFICATION_ITEM, NotificationItem)
+if (!customElements.get(embedWebElements.NOTIFICATION_ITEM)) {
+  customElements.define(embedWebElements.NOTIFICATION_ITEM, NotificationItem)
 }

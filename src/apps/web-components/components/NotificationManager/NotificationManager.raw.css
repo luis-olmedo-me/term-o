@@ -33,9 +33,21 @@ term-o-notification-item.visible {
   border-radius: var(--radius-200);
   background-color: var(--colors-background);
   border: var(--space-50) solid var(--colors-brightBlack);
-  padding: var(--space-300) var(--space-300);
+  padding: var(--space-300) var(--space-300) var(--space-300) 14px;
   cursor: pointer;
+  position: relative;
 }
+.notification::after {
+  content: '';
+  position: absolute;
+  top: var(--space-200);
+  left: var(--space-200);
+  width: var(--space-250);
+  height: calc(100% - var(--space-300));
+  background-color: var(--colors-accent);
+  border-radius: var(--radius-100);
+}
+
 .title {
   margin: 0;
   font-weight: bold;

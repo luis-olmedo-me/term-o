@@ -1,8 +1,7 @@
-import NotificationManagerCss from './NotificationManager.raw.css?raw'
+import { createRootVariablesFromTheme } from '@src/helpers/themes.helpers'
 import NotificationManagerHtml from './NotificationManager.raw.html?raw'
 
 import { webElements } from '@src/constants/web-elements.constants'
-import { applyCssVariablesFromTheme } from '@web-components/helpers/props.helpers'
 
 class NotificationManager extends HTMLElement {
   constructor() {
@@ -13,7 +12,6 @@ class NotificationManager extends HTMLElement {
 
     this.addEventListener('add', this._handleAdd)
     this.addEventListener('theme', this._handleTheme)
-    this.addEventListener('new-theme', this._handleNewTheme)
   }
 
   connectedCallback() {
@@ -34,13 +32,9 @@ class NotificationManager extends HTMLElement {
   }
 
   _handleTheme(event) {
-    const newTheme = event.detail
+    const newTheme = event.detail.theme
 
-    this._elements.styles.innerHTML = applyCssVariablesFromTheme(NotificationManagerCss, newTheme)
-  }
-
-  async _handleNewTheme(event) {
-    console.log('💬 ~ New theme supplied:', event)
+    this._elements.styles.innerHTML = createRootVariablesFromTheme(newTheme)
   }
 }
 

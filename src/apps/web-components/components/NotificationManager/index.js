@@ -13,12 +13,15 @@ class NotificationManager extends HTMLElement {
     this._shadow.innerHTML = NotificationManagerHtml
     this._elements.styles.innerHTML = NotificationManagerCss
     this._notifications = []
+    this._isOpen = false
 
     this.addEventListener('add', this._handleAdd)
     this.addEventListener('theme', this._handleTheme)
   }
 
-  connectedCallback() {}
+  connectedCallback() {
+    this._elements.count.addEventListener('click', this._handleCounterClick.bind(this))
+  }
 
   get _elements() {
     return {
@@ -51,6 +54,41 @@ class NotificationManager extends HTMLElement {
     const { theme } = event.detail
 
     this._elements.theme.innerHTML = createCssVariablesFromTheme(theme, '#web-theme-provider')
+  }
+
+  _handleCounterClick() {
+    this._isOpen = !this._isOpen
+
+    if (this._isOpen) this._showAll()
+    else this._showLastOne()
+
+    this._elements.wrapper.setAttribute('data-is-open', this._isOpen)
+  }
+
+  _showLastOne() {
+    this._notifications.forEach((item, index) => {
+      const isLastItem = index === this._notifications.length - 1
+      const isVisible = item.classList.contains('visible')
+
+      if (isLastItem && !isVisible) item.classList.add('visible')
+      if (!isLastItem && isVisible) item.classList.remove('visible')
+    })
+  }
+
+  _showAll() {
+    this._notifications.forEach(item => {
+      const isVisible = item.classList.contains('visible')
+
+      if (!isVisible) item.classList.add('visible')
+    })
+  }
+
+  _hideAll() {
+    this._notifications.forEach(item => {
+      const isVisible = item.classList.contains('visible')
+
+      if (isVisible) item.classList.remove('visible')
+    })
   }
 
   _removeNotification(notificationItem) {

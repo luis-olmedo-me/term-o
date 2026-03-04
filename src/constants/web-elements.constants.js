@@ -6,9 +6,3 @@ export const webElements = {
 export const embedWebElements = {
   NOTIFICATION_ITEM: 'term-o-notification-item'
 }
-
-export const durations = {
-  QUICK: 4_000,
-  MEDIUM: 6_000,
-  EXTENDED: 8_000
-}

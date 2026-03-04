@@ -37,8 +37,7 @@ export const Preferences = () => {
     createNotification({
       title: `Term-O | ${inputName}`,
       message,
-      theme: config.theme,
-      duration: durations.QUICK
+      theme: config.theme
     })
   }
 

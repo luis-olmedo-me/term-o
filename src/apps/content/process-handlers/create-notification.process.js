@@ -1,4 +1,3 @@
-import { durations } from '@src/constants/web-elements.constants'
 import { delay } from '@src/helpers/utils.helpers'
 import { createNotification } from '@src/helpers/web-components.helpers'
 
@@ -8,7 +7,7 @@ export default async (resolve, _reject, data) => {
     message: data.message
   }
 
-  createNotification({ ...notification, theme: data.theme, duration: durations.EXTENDED })
+  createNotification({ ...notification, theme: data.theme })
 
   await delay(500)
 

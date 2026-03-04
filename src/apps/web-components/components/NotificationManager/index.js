@@ -12,6 +12,7 @@ class NotificationManager extends HTMLElement {
     this._shadow = this.attachShadow({ mode: 'closed' })
     this._shadow.innerHTML = NotificationManagerHtml
     this._elements.styles.innerHTML = NotificationManagerCss
+    this._notifications = []
 
     this.addEventListener('add', this._handleAdd)
     this.addEventListener('theme', this._handleTheme)
@@ -38,6 +39,8 @@ class NotificationManager extends HTMLElement {
     )
 
     notificationItem.dispatchEvent(initEvent)
+    this._notifications.forEach(item => item.classList.remove('visible'))
+    this._notifications.push(notificationItem)
   }
 
   _handleTheme(event) {

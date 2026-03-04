@@ -7,3 +7,13 @@
   font-family: var(--font);
   background-color: var(--colors-red);
 }
+
+term-o-notification-item {
+  opacity: 0;
+  display: none;
+}
+
+term-o-notification-item.visible {
+  opacity: 1;
+  display: block;
+}

@@ -88,11 +88,14 @@ export const Preferences = () => {
   }
 
   const handleSearch = event => {
-    const searchedValue = event.target.value
+    const searchedValue = event.target.value.toLowerCase()
     const newSections = config.details.reduce((sections, section) => {
-      const matchedInputs = section.inputs.filter(
-        input => input.description.includes(searchedValue) || input.name.includes(searchedValue)
-      )
+      const matchedInputs = section.inputs.filter(input => {
+        const description = input.description.toLowerCase()
+        const name = input.name.toLowerCase()
+
+        return description.includes(searchedValue) || name.includes(searchedValue)
+      })
 
       return matchedInputs.length ? [...sections, { ...section, inputs: matchedInputs }] : sections
     }, [])

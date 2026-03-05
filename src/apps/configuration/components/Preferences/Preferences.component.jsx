@@ -1,4 +1,4 @@
-import { useState } from 'preact/hooks'
+import { useRef, useState } from 'preact/hooks'
 
 import SidePanel from '@configuration/components/SidePanel'
 import FieldRenderer from '@src/components/FieldRenderer'
@@ -13,7 +13,11 @@ import { getConfigDetailsByInputId } from '@src/helpers/config.helpers'
 import { createNotification } from '@src/helpers/web-components.helpers'
 import { verticalScroller } from '@styles/global.module.scss'
 import { sidePanelOptions } from './Preferences.constants'
-import { getInputMessageByType, handleImportConfig } from './Preferences.helpers'
+import {
+  getInputMessageByType,
+  getLatestSectionId,
+  handleImportConfig
+} from './Preferences.helpers'
 import {
   contentWrapper,
   headerTitle,
@@ -28,9 +32,9 @@ import {
 export const Preferences = () => {
   const [selectedSectionId, setSelectedSectionId] = useState(configIds.FUNCTIONALITY)
 
-  const [config] = useStorage({ key: storageKeys.CONFIG })
+  const contentRef = useRef(null)
 
-  const sectionSelected = config.details.find(({ id }) => id === selectedSectionId)
+  const [config] = useStorage({ key: storageKeys.CONFIG })
 
   const sendNotification = (inputName, message) => {
     createNotification({
@@ -66,6 +70,12 @@ export const Preferences = () => {
     config.change(inputId, newValue)
   }
 
+  const handleScrollEnd = () => {
+    const id = getLatestSectionId(contentRef.current)
+
+    setSelectedSectionId(id)
+  }
+
   return (
     <div className={preferencesWrapper}>
       <header className={headerWrapper}>
@@ -81,10 +91,14 @@ export const Preferences = () => {
           onChange={setSelectedSectionId}
         />
 
-        <div className={`${mainContentWrapper} ${verticalScroller}`}>
+        <div
+          ref={contentRef}
+          className={`${mainContentWrapper} ${verticalScroller}`}
+          onScrollEnd={handleScrollEnd}
+        >
           {config.details.map(section => {
             return (
-              <div key={section.id} className={sectionWrapper}>
+              <div key={section.id} className={sectionWrapper} id={section.id}>
                 <h3 className={sectionTitle}>{section.name}</h3>
                 <p className={sectionDescription}>{section.description}</p>
 

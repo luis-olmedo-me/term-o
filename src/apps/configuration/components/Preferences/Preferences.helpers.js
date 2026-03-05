@@ -1,5 +1,6 @@
 import storage from '@src/libs/storage'
 
+import { configIds } from '@src/constants/config.constants'
 import { availableInputTypes } from '@src/constants/inputs.constants'
 import { colorThemeKeys } from '@src/constants/themes.constants'
 import { uploader } from '@src/helpers/file.helpers'
@@ -46,4 +47,25 @@ export const getInputMessageByType = (input, oldValue, newValue) => {
   }
 
   return `"${oldValue}${reset}" -> "${newValue}${reset}"`
+}
+
+export const getLatestSectionId = sectionElementContainer => {
+  const children = Array.from(sectionElementContainer.children)
+  const offsetTop = sectionElementContainer.offsetTop
+  const scrollTop = sectionElementContainer.scrollTop + window.innerHeight * 0.6
+
+  children.reverse()
+
+  let id = configIds.FUNCTIONALITY
+
+  for (const child of children) {
+    const childTop = child.offsetTop - offsetTop
+
+    if (childTop <= scrollTop) {
+      id = child.getAttribute('id')
+      break
+    }
+  }
+
+  return id
 }

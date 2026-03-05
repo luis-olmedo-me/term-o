@@ -1,7 +1,8 @@
-import { useCallback, useRef, useState } from 'preact/hooks'
+import { useRef, useState } from 'preact/hooks'
 
 import SidePanel from '@configuration/components/SidePanel'
 import FieldRenderer from '@src/components/FieldRenderer'
+import useDebouncedCallback from '@src/hooks/useDebouncedCallback'
 import useStorage from '@src/hooks/useStorage'
 import Logo from '@src/icons/Logo.icon'
 import storage from '@src/libs/storage'
@@ -10,7 +11,6 @@ import { configIds, configInputIds } from '@src/constants/config.constants'
 import { iconSizes } from '@src/constants/icon.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { getConfigDetailsByInputId } from '@src/helpers/config.helpers'
-import { debounce } from '@src/helpers/utils.helpers'
 import { createNotification } from '@src/helpers/web-components.helpers'
 import { verticalScroller } from '@styles/global.module.scss'
 import { sidePanelOptions } from './Preferences.constants'
@@ -37,12 +37,15 @@ export const Preferences = () => {
 
   const [config] = useStorage({ key: storageKeys.CONFIG })
 
-  const handleScrollEnd = useCallback(() => {
-    const id = getLatestSectionId(contentRef.current)
+  const handleScroll = useDebouncedCallback(
+    () => {
+      const id = getLatestSectionId(contentRef.current)
 
-    setSelectedSectionId(id)
-  }, [])
-  const handleScrollEndDebounced = useCallback(debounce(handleScrollEnd, 100), [handleScrollEnd])
+      setSelectedSectionId(id)
+    },
+    [],
+    100
+  )
 
   const sendNotification = (inputName, message) => {
     createNotification({
@@ -104,7 +107,7 @@ export const Preferences = () => {
         <div
           ref={contentRef}
           className={`${mainContentWrapper} ${verticalScroller}`}
-          onScroll={handleScrollEndDebounced}
+          onScroll={handleScroll}
         >
           {config.details.map(section => {
             return (

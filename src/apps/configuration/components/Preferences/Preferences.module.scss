@@ -20,8 +20,7 @@
 }
 
 .sectionWrapper {
-  margin-top: $space-600;
-  margin-right: $space-500;
+  margin: $space-600 $space-500 0 0;
   background-color: with-opacity($colors-white, 0.05);
   border-radius: $radius-200;
   border: $space-50 solid with-opacity($colors-brightBlack, 0.5);
@@ -52,4 +51,11 @@
   display: inline;
   font-size: $fontSize-300;
   margin: 0;
+}
+
+@media only screen and (min-width: 1350px) {
+  .sectionWrapper {
+    margin: $space-600 auto 0;
+    max-width: 1000px;
+  }
 }

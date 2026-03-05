@@ -1,6 +1,5 @@
 .inputWrapper {
   width: fit-content;
-  max-width: 30rem;
 
   &[data-type='text-area'],
   &[data-type='string'] {
@@ -20,14 +19,25 @@
 }
 
 .fieldWrapper {
-  padding: $space-500 0 $space-900 $space-900;
+  padding: $space-500 $space-900 $space-900;
   border-top: $space-50 solid $colors-brightBlack;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &[data-type='text-area'] {
+    flex-direction: column;
+  }
 }
 
 .fieldTitle {
   margin: 0 0 $space-450;
   font-size: $fontSize-50;
   font-weight: bold;
+}
+
+.fieldLeyends {
+  width: 100%;
 }
 
 .fieldDescription {

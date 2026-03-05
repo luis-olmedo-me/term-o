@@ -7,6 +7,7 @@ import { validate } from '@src/helpers/validation-primitive.helpers'
 import {
   errorMessageWrapper,
   fieldDescription,
+  fieldLeyends,
   fieldTitle,
   fieldWrapper,
   inputWrapper
@@ -45,10 +46,12 @@ export const FieldRenderer = ({
   }
 
   return (
-    <div className={fieldWrapper}>
-      <h4 className={fieldTitle}>{title}</h4>
+    <div className={fieldWrapper} data-type={type}>
+      <div className={fieldLeyends}>
+        <h4 className={fieldTitle}>{title}</h4>
 
-      <p className={fieldDescription}>{description}</p>
+        <p className={fieldDescription}>{description}</p>
+      </div>
 
       <div className={inputWrapper} data-error={typeof errorMessage === 'string'} data-type={type}>
         <DynamicInput

@@ -78,12 +78,14 @@ class NotificationManager extends HTMLElement {
     this._notifications.forEach(item => {
       const isVisible = item.classList.contains('visible')
 
+      item.style.removeProperty('top')
       if (!isVisible) item.classList.add('visible')
     })
   }
 
   _showLastThree() {
     const areLessThanThree = this._notifications.length <= 3
+    let carriedTop = 0
 
     this._notifications.forEach((item, index) => {
       const shouldDisplay = areLessThanThree || index >= this._notifications.length - 3
@@ -91,12 +93,19 @@ class NotificationManager extends HTMLElement {
 
       if (shouldDisplay && !isVisible) item.classList.add('visible')
       if (!shouldDisplay && isVisible) item.classList.remove('visible')
+
+      if (!shouldDisplay) return
+      item.style.setProperty('top', `${carriedTop}px`)
+      carriedTop = item.clientHeight + carriedTop + 12
     })
   }
 
   _removeNotification(notificationItem) {
     notificationItem.classList.remove('visible')
     this._notifications = this._notifications.filter(item => item !== notificationItem)
+
+    if (this._displayThree) this._showLastThree()
+    else this._showLastOne()
 
     setTimeout(() => notificationItem.remove(), 500)
 

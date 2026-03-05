@@ -41,12 +41,12 @@ class NotificationManager extends HTMLElement {
     )
 
     notificationItem.dispatchEvent(initEvent)
-    this._notifications = this._notifications.concat(notificationItem)
+    this._notifications = [notificationItem, ...this._notifications]
     this._displayThree = false
 
     setTimeout(() => notificationItem.classList.add('visible'), 20)
     this._updateCounter()
-    this._showLastOne()
+    this._showFirstOne()
 
     notificationItem.addEventListener('click', () => this._removeNotification(notificationItem))
   }
@@ -61,25 +61,17 @@ class NotificationManager extends HTMLElement {
     this._displayThree = !this._displayThree
 
     if (this._displayThree) this._showLastThree()
-    else this._showLastOne()
+    else this._showFirstOne()
   }
 
-  _showLastOne() {
+  _showFirstOne() {
     this._notifications.forEach((item, index) => {
-      const isLastItem = index === this._notifications.length - 1
-      const isVisible = item.classList.contains('visible')
-
-      if (isLastItem && !isVisible) item.classList.add('visible')
-      if (!isLastItem && isVisible) item.classList.remove('visible')
-    })
-  }
-
-  _showAll() {
-    this._notifications.forEach(item => {
+      const isFirstItem = index === 0
       const isVisible = item.classList.contains('visible')
 
       item.style.removeProperty('top')
-      if (!isVisible) item.classList.add('visible')
+      if (isFirstItem && !isVisible) item.classList.add('visible')
+      if (!isFirstItem && isVisible) item.classList.remove('visible')
     })
   }
 
@@ -105,7 +97,7 @@ class NotificationManager extends HTMLElement {
     this._notifications = this._notifications.filter(item => item !== notificationItem)
 
     if (this._displayThree) this._showLastThree()
-    else this._showLastOne()
+    else this._showFirstOne()
 
     setTimeout(() => notificationItem.remove(), 500)
 

@@ -82,31 +82,35 @@ export const Preferences = () => {
         />
 
         <div className={`${mainContentWrapper} ${verticalScroller}`}>
-          <div key={sectionSelected.id} className={sectionWrapper}>
-            <h3 className={sectionTitle}>{sectionSelected.name}</h3>
-            <p className={sectionDescription}>{sectionSelected.description}</p>
+          {config.details.map(section => {
+            return (
+              <div key={section.id} className={sectionWrapper}>
+                <h3 className={sectionTitle}>{section.name}</h3>
+                <p className={sectionDescription}>{section.description}</p>
 
-            {sectionSelected.inputs.map(input => {
-              return (
-                <FieldRenderer
-                  key={input.id}
-                  description={input.description}
-                  value={input.value}
-                  inputId={input.id}
-                  type={input.type}
-                  options={input.options}
-                  validations={input.validations}
-                  postFix={input.postFix}
-                  iconButton={input.iconButton}
-                  name={`${sectionSelected.id}-${input.id}`}
-                  title={input.name}
-                  changeConfig={handleConfigChange}
-                  handleClickInButtons={handleClicksInButtonFields}
-                  sendNotification={sendNotification}
-                />
-              )
-            })}
-          </div>
+                {section.inputs.map(input => {
+                  return (
+                    <FieldRenderer
+                      key={input.id}
+                      description={input.description}
+                      value={input.value}
+                      inputId={input.id}
+                      type={input.type}
+                      options={input.options}
+                      validations={input.validations}
+                      postFix={input.postFix}
+                      iconButton={input.iconButton}
+                      name={`${section.id}-${input.id}`}
+                      title={input.name}
+                      changeConfig={handleConfigChange}
+                      handleClickInButtons={handleClicksInButtonFields}
+                      sendNotification={sendNotification}
+                    />
+                  )
+                })}
+              </div>
+            )
+          })}
         </div>
       </div>
     </div>

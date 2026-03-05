@@ -9,6 +9,7 @@
   display: flex;
   box-sizing: content-box;
   min-height: 0;
+  flex: 1;
 }
 
 .mainContentWrapper {
@@ -20,6 +21,14 @@
 
 .sectionWrapper {
   margin-top: $space-600;
+  margin-right: $space-500;
+  padding: $space-450;
+  background-color: with-opacity($colors-white, 0.05);
+  border-radius: $radius-200;
+  border: $space-50 solid with-opacity($colors-brightBlack, 0.5);
+}
+.sectionWrapper:first-child {
+  margin-top: 0;
 }
 
 .sectionTitle {
@@ -28,6 +37,7 @@
 }
 .sectionDescription {
   font-size: $fontSize-50;
+  margin: 0;
 }
 
 .headerWrapper {

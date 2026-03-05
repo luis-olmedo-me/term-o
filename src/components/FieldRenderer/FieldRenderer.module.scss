@@ -20,8 +20,7 @@
 }
 
 .fieldWrapper {
-  margin: $space-900 0 0 $space-900;
-  padding-bottom: $space-900;
+  padding: $space-500 0 $space-900 $space-900;
   border-bottom: $space-50 solid $colors-brightBlack;
 
   &:last-child {

@@ -21,10 +21,7 @@
 }
 
 .sectionWrapper {
-  margin: $space-900 $space-500 0 0;
-  background-color: with-opacity($colors-white, 0.05);
-  border-radius: $radius-200;
-  border: $space-50 solid with-opacity($colors-brightBlack, 0.5);
+  margin: 40px $space-500 0 0;
 }
 .sectionWrapper:first-child {
   margin-top: 0;
@@ -36,7 +33,7 @@
 }
 .sectionDescription {
   font-size: $fontSize-50;
-  margin: 0 $space-450 $space-400;
+  margin: 0 $space-450 $space-600;
 }
 
 .headerWrapper {

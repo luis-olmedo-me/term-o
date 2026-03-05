@@ -13,7 +13,7 @@ class NotificationManager extends HTMLElement {
     this._shadow.innerHTML = NotificationManagerHtml
     this._elements.styles.innerHTML = NotificationManagerCss
     this._notifications = []
-    this._isOpen = false
+    this._displayThree = false
 
     this.addEventListener('add', this._handleAdd)
     this.addEventListener('theme', this._handleTheme)
@@ -41,11 +41,12 @@ class NotificationManager extends HTMLElement {
     )
 
     notificationItem.dispatchEvent(initEvent)
-    this._notifications.forEach(item => item.classList.remove('visible'))
     this._notifications = this._notifications.concat(notificationItem)
+    this._displayThree = false
 
     setTimeout(() => notificationItem.classList.add('visible'), 20)
     this._updateCounter()
+    this._showLastOne()
 
     notificationItem.addEventListener('click', () => this._removeNotification(notificationItem))
   }
@@ -57,12 +58,10 @@ class NotificationManager extends HTMLElement {
   }
 
   _handleCounterClick() {
-    this._isOpen = !this._isOpen
+    this._displayThree = !this._displayThree
 
-    if (this._isOpen) this._showAll()
+    if (this._displayThree) this._showLastThree()
     else this._showLastOne()
-
-    this._elements.wrapper.setAttribute('data-is-open', this._isOpen)
   }
 
   _showLastOne() {
@@ -83,11 +82,15 @@ class NotificationManager extends HTMLElement {
     })
   }
 
-  _hideAll() {
-    this._notifications.forEach(item => {
+  _showLastThree() {
+    const areLessThanThree = this._notifications.length <= 3
+
+    this._notifications.forEach((item, index) => {
+      const shouldDisplay = areLessThanThree || index >= this._notifications.length - 3
       const isVisible = item.classList.contains('visible')
 
-      if (isVisible) item.classList.remove('visible')
+      if (shouldDisplay && !isVisible) item.classList.add('visible')
+      if (!shouldDisplay && isVisible) item.classList.remove('visible')
     })
   }
 

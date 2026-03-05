@@ -6,6 +6,7 @@
   font-size: 16px;
   user-select: none;
   font-family: var(--font);
+  transition: right 0.3s ease-in-out;
 }
 
 .count {

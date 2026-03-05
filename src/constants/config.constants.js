@@ -132,7 +132,7 @@ export const defaultConfigSections = [
           'Define how many lines are displayed in the terminal before older ones are trimmed.',
         type: availableInputTypes.NUMBER,
         iconButton: null,
-        postFix: 'px',
+        postFix: 'Lines',
         options: [],
         validations: [['is-between', 0, 1000]],
         value: configDefaultValues[configInputIds.MAX_LINES_PER_COMMAND]
@@ -142,7 +142,7 @@ export const defaultConfigSections = [
         name: 'Max command history size',
         description: 'Define how many commands will be remembered.',
         type: availableInputTypes.NUMBER,
-        postFix: 'px',
+        postFix: 'Commands',
         iconButton: null,
         options: [],
         validations: [['is-between', 0, 1000]],

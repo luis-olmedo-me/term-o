@@ -1,16 +1,18 @@
 .preferencesWrapper {
   color: $colors-foreground;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .contentWrapper {
   display: flex;
   box-sizing: content-box;
+  min-height: 0;
 }
 
 .mainContentWrapper {
   width: 100%;
-  height: calc(100vh - 115px);
   overflow: hidden scroll;
   margin: $space-600;
   box-sizing: content-box;

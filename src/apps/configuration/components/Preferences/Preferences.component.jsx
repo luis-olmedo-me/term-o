@@ -1,4 +1,4 @@
-import { useRef, useState } from 'preact/hooks'
+import { useCallback, useRef, useState } from 'preact/hooks'
 
 import SidePanel from '@configuration/components/SidePanel'
 import FieldRenderer from '@src/components/FieldRenderer'
@@ -10,6 +10,7 @@ import { configIds, configInputIds } from '@src/constants/config.constants'
 import { iconSizes } from '@src/constants/icon.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { getConfigDetailsByInputId } from '@src/helpers/config.helpers'
+import { debounce } from '@src/helpers/utils.helpers'
 import { createNotification } from '@src/helpers/web-components.helpers'
 import { verticalScroller } from '@styles/global.module.scss'
 import { sidePanelOptions } from './Preferences.constants'
@@ -35,6 +36,13 @@ export const Preferences = () => {
   const contentRef = useRef(null)
 
   const [config] = useStorage({ key: storageKeys.CONFIG })
+
+  const handleScrollEnd = useCallback(() => {
+    const id = getLatestSectionId(contentRef.current)
+
+    setSelectedSectionId(id)
+  }, [])
+  const handleScrollEndDebounced = useCallback(debounce(handleScrollEnd, 100), [handleScrollEnd])
 
   const sendNotification = (inputName, message) => {
     createNotification({
@@ -70,12 +78,6 @@ export const Preferences = () => {
     config.change(inputId, newValue)
   }
 
-  const handleScrollEnd = () => {
-    const id = getLatestSectionId(contentRef.current)
-
-    setSelectedSectionId(id)
-  }
-
   const handleSidebarItemClick = newId => {
     const children = Array.from(contentRef.current.children)
     const foundChild = children.find(child => child.getAttribute('id') === newId)
@@ -102,7 +104,7 @@ export const Preferences = () => {
         <div
           ref={contentRef}
           className={`${mainContentWrapper} ${verticalScroller}`}
-          onScrollEnd={handleScrollEnd}
+          onScroll={handleScrollEndDebounced}
         >
           {config.details.map(section => {
             return (

@@ -27,6 +27,10 @@
 
   &[data-type='text-area'] {
     flex-direction: column;
+
+    .fieldLeyends {
+      width: 100%;
+    }
   }
 }
 
@@ -34,10 +38,6 @@
   margin: 0 0 $space-450;
   font-size: $fontSize-50;
   font-weight: bold;
-}
-
-.fieldLeyends {
-  width: 100%;
 }
 
 .fieldDescription {

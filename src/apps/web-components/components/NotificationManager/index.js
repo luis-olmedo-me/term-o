@@ -12,7 +12,8 @@ class NotificationManager extends HTMLElement {
     this._shadow = this.attachShadow({ mode: 'closed' })
     this._shadow.innerHTML = NotificationManagerHtml
     this._elements.styles.innerHTML = NotificationManagerCss
-    this._notifications = []
+    this._individuals = []
+    this._grouped = []
     this._isOpen = false
 
     this.addEventListener('add', this._handleAdd)
@@ -25,7 +26,8 @@ class NotificationManager extends HTMLElement {
 
   get _elements() {
     return {
-      wrapper: this._shadow.querySelector('#wrapper'),
+      inidividuals: this._shadow.querySelector('#inidividuals'),
+      grouped: this._shadow.querySelector('#grouped'),
       styles: this._shadow.querySelector('#styles'),
       theme: this._shadow.querySelector('#theme'),
       count: this._shadow.querySelector('#count')
@@ -34,20 +36,30 @@ class NotificationManager extends HTMLElement {
 
   _handleAdd(event) {
     const initEvent = new CustomEvent('init', { detail: event.detail })
-    const notificationItem = createWebElement(
+    const individualItem = createWebElement(
       embedWebElements.NOTIFICATION_ITEM,
       {},
-      this._elements.wrapper
+      this._elements.inidividuals
     )
+    const groupItem = createWebElement(
+      embedWebElements.NOTIFICATION_ITEM,
+      {},
+      this._elements.grouped
+    )
+    const remove = () => this._removeNotification(individualItem, groupItem)
 
-    notificationItem.dispatchEvent(initEvent)
-    this._notifications.forEach(item => item.classList.remove('visible'))
-    this._notifications = this._notifications.concat(notificationItem)
+    individualItem.dispatchEvent(initEvent)
+    groupItem.dispatchEvent(initEvent)
 
-    setTimeout(() => notificationItem.classList.add('visible'), 20)
+    this._hideAll()
+    this._individuals = this._individuals.concat(individualItem)
+    this._grouped = this._grouped.concat(groupItem)
+
+    if (!this._isOpen) setTimeout(() => individualItem.classList.add('visible'), 20)
     this._updateCounter()
 
-    notificationItem.addEventListener('click', () => this._removeNotification(notificationItem))
+    individualItem.addEventListener('click', remove)
+    groupItem.addEventListener('click', remove)
   }
 
   _handleTheme(event) {
@@ -59,15 +71,15 @@ class NotificationManager extends HTMLElement {
   _handleCounterClick() {
     this._isOpen = !this._isOpen
 
-    if (this._isOpen) this._showAll()
+    if (this._isOpen) this._hideAll()
     else this._showLastOne()
 
-    this._elements.wrapper.setAttribute('data-is-open', this._isOpen)
+    this._elements.grouped.setAttribute('data-visible', this._isOpen)
   }
 
   _showLastOne() {
-    this._notifications.forEach((item, index) => {
-      const isLastItem = index === this._notifications.length - 1
+    this._individuals.forEach((item, index) => {
+      const isLastItem = index === this._individuals.length - 1
       const isVisible = item.classList.contains('visible')
 
       if (isLastItem && !isVisible) item.classList.add('visible')
@@ -75,41 +87,35 @@ class NotificationManager extends HTMLElement {
     })
   }
 
-  _showAll() {
-    this._notifications.forEach(item => {
-      const isVisible = item.classList.contains('visible')
-
-      if (!isVisible) item.classList.add('visible')
-    })
-  }
-
   _hideAll() {
-    this._notifications.forEach(item => {
+    this._individuals.forEach(item => {
       const isVisible = item.classList.contains('visible')
 
       if (isVisible) item.classList.remove('visible')
     })
   }
 
-  _removeNotification(notificationItem) {
-    notificationItem.classList.remove('visible')
-    this._notifications = this._notifications.filter(item => item !== notificationItem)
+  _removeNotification(individualItem, groupItem) {
+    individualItem.classList.remove('visible')
+    this._individuals = this._individuals.filter(item => item !== individualItem)
+    this._grouped = this._grouped.filter(item => item !== groupItem)
 
-    setTimeout(() => notificationItem.remove(), 500)
+    setTimeout(() => individualItem.remove(), 500)
+    setTimeout(() => groupItem.remove(), 500)
 
-    const lastNotificationItem = this._notifications.at(-1)
-    if (lastNotificationItem) lastNotificationItem.classList.add('visible')
+    const lastNotificationItem = this._individuals.at(-1)
+    if (!this._isOpen && lastNotificationItem) lastNotificationItem.classList.add('visible')
 
     this._updateCounter()
   }
 
   _updateCounter() {
-    const count = this._notifications.length
+    const count = this._individuals.length
     const label = count > 9 ? '+9' : String(count)
 
     this._elements.count.setAttribute('data-count', label)
     this._elements.count.setAttribute('data-visible', count > 1)
-    this._elements.count.innerHTML = String(label)
+    this._elements.count.innerHTML = label
   }
 }
 

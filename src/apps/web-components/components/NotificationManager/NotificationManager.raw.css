@@ -1,4 +1,4 @@
-.wrapper {
+.inidividuals {
   position: fixed;
   top: var(--space-450);
   right: var(--space-450);
@@ -6,6 +6,30 @@
   font-size: 16px;
   user-select: none;
   font-family: var(--font);
+}
+
+.grouped {
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+  position: fixed;
+  top: var(--space-450);
+  right: var(--space-450);
+  z-index: 999998;
+  font-size: 16px;
+  user-select: none;
+  font-family: var(--font);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-450);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(100%) scale(0.5);
+}
+.grouped[data-visible='true'] {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(0%) scale(1);
 }
 
 .count {
@@ -35,11 +59,12 @@
   opacity: 1;
   transform: scale(1);
 }
-.count[data-visible='true'] + .wrapper {
+.count[data-visible='true'] + .inidividuals,
+.count[data-visible='true'] + .inidividuals + .grouped {
   right: calc(var(--space-600) + 2ch);
 }
 
-term-o-notification-item {
+.inidividuals term-o-notification-item {
   position: absolute;
   transition:
     opacity 0.3s ease,
@@ -51,7 +76,7 @@ term-o-notification-item {
   transform: translateX(100%) scale(0.5);
 }
 
-term-o-notification-item.visible {
+.inidividuals term-o-notification-item.visible {
   opacity: 1;
   pointer-events: all;
   transform: translateX(0%) scale(1);

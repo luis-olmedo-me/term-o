@@ -52,11 +52,13 @@ term-o-notification-item {
   opacity: 0;
   pointer-events: none;
   transform: translateX(100%) scale(0.5);
+  z-index: 0;
 }
 term-o-notification-item.visible {
   opacity: 1;
   pointer-events: all;
   transform: translateX(0%) scale(1);
+  z-index: 1;
 }
 term-o-notification-item.visible:hover {
   right: var(--space-200);
@@ -92,15 +94,16 @@ term-o-notification-item.visible:hover {
   -webkit-line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0;
 }
 
 .title {
   font-weight: bold;
   font-size: 14px;
+  margin: 0 0 var(--space-200) 0;
 }
 .message {
   font-size: 11px;
+  margin: 0;
 }
 
 [data-color='white'] {

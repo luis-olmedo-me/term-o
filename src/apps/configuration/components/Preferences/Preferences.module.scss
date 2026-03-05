@@ -1,19 +1,18 @@
 .preferencesWrapper {
   color: $colors-foreground;
+  height: 100vh;
 }
 
 .contentWrapper {
   display: flex;
-  gap: $space-600;
-  padding: $space-600 $space-600 $space-600 0;
   box-sizing: content-box;
 }
 
 .mainContentWrapper {
   width: 100%;
-  height: calc(100vh - $space-600 * 6 - $fontSize-300);
+  height: calc(100vh - 115px);
   overflow: hidden scroll;
-  padding-right: $space-600;
+  margin: $space-600;
   box-sizing: content-box;
 }
 
@@ -35,6 +34,7 @@
   align-items: center;
   gap: $space-400;
   border-bottom: $space-50 solid $colors-brightBlack;
+  grid-area: 1 / 1 / 2 / 2;
 }
 
 .headerTitle {

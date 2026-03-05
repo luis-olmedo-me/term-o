@@ -21,15 +21,11 @@
 
 .fieldWrapper {
   padding: $space-500 0 $space-900 $space-900;
-  border-bottom: $space-50 solid $colors-brightBlack;
-
-  &:last-child {
-    border-bottom: none;
-  }
+  border-top: $space-50 solid $colors-brightBlack;
 }
 
 .fieldTitle {
-  margin: $space-400 0;
+  margin: 0 0 $space-450;
   font-size: $fontSize-50;
   font-weight: bold;
 }

@@ -10,14 +10,14 @@ export const importWebComponents = () => {
   script.remove()
 }
 
-const createWebElement = (name, props) => {
+export const createWebElement = (name, props = {}, below = document.body) => {
   const host = document.createElement(name)
 
   Object.entries(props).forEach(([propName, propValue]) => {
     host.setAttribute(propName, propValue)
   })
 
-  document.body.appendChild(host)
+  below.appendChild(host)
 
   return host
 }
@@ -39,14 +39,14 @@ export const createHighlight = ({ element, theme }) => {
 }
 
 export const createNotification = ({ title, message, theme, duration }) => {
-  const themeEvent = new CustomEvent('theme', { detail: theme })
-  const element = createWebElement(webElements.NOTIFICATION, {
-    title,
-    message,
-    duration
-  })
+  const additionEvent = new CustomEvent('add', { detail: { title, message, duration } })
+  const themeEvent = new CustomEvent('theme', { detail: { theme } })
+  let manager =
+    window.document.querySelector(webElements.NOTIFICATION_MANAGER) ??
+    createWebElement(webElements.NOTIFICATION_MANAGER)
 
-  element.dispatchEvent(themeEvent)
+  manager.dispatchEvent(themeEvent)
+  manager.dispatchEvent(additionEvent)
 
-  return element
+  return manager
 }

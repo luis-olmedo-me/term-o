@@ -9,7 +9,6 @@ import storage from '@src/libs/storage'
 import { configIds, configInputIds } from '@src/constants/config.constants'
 import { iconSizes } from '@src/constants/icon.constants'
 import { storageKeys } from '@src/constants/storage.constants'
-import { durations } from '@src/constants/web-elements.constants'
 import { getConfigDetailsByInputId } from '@src/helpers/config.helpers'
 import { createNotification } from '@src/helpers/web-components.helpers'
 import { verticalScroller } from '@styles/global.module.scss'
@@ -37,8 +36,7 @@ export const Preferences = () => {
     createNotification({
       title: `Term-O | ${inputName}`,
       message,
-      theme: config.theme,
-      duration: durations.QUICK
+      theme: config.theme
     })
   }
 

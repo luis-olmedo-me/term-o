@@ -28,11 +28,12 @@ import {
 } from './Preferences.module.scss'
 
 export const Preferences = () => {
+  const [config] = useStorage({ key: storageKeys.CONFIG })
+
   const [selectedSectionId, setSelectedSectionId] = useState(configIds.FUNCTIONALITY)
+  const [configSections, setConfigSections] = useState(config.details)
 
   const contentRef = useRef(null)
-
-  const [config] = useStorage({ key: storageKeys.CONFIG })
 
   const handleScroll = useDebouncedCallback(
     () => {
@@ -86,9 +87,22 @@ export const Preferences = () => {
     setSelectedSectionId(newId)
   }
 
+  const handleSearch = event => {
+    const searchedValue = event.target.value
+    const newSections = config.details.reduce((sections, section) => {
+      const matchedInputs = section.inputs.filter(
+        input => input.description.includes(searchedValue) || input.name.includes(searchedValue)
+      )
+
+      return matchedInputs.length ? [...sections, { ...section, inputs: matchedInputs }] : sections
+    }, [])
+
+    setConfigSections(newSections)
+  }
+
   return (
     <div className={preferencesWrapper}>
-      <Header />
+      <Header onSearch={handleSearch} />
 
       <div className={contentWrapper}>
         <SidePanel
@@ -102,7 +116,7 @@ export const Preferences = () => {
           className={`${mainContentWrapper} ${verticalScroller}`}
           onScroll={handleScroll}
         >
-          {config.details.map(section => {
+          {configSections.map(section => {
             return (
               <div key={section.id} className={sectionWrapper} id={section.id}>
                 <h3 className={sectionTitle}>{section.name}</h3>

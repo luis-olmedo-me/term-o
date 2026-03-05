@@ -101,10 +101,23 @@
 }
 
 .buttonIconWrapper {
-  margin-right: $space-200;
   height: 20px;
 
   &:only-child {
     margin: 0;
+  }
+}
+
+.buttonLabel {
+  display: none;
+}
+
+@media only screen and (min-width: 1000px) {
+  .buttonLabel {
+    display: inline;
+  }
+
+  .buttonIconWrapper {
+    margin-right: $space-200;
   }
 }

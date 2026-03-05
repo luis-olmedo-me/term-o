@@ -25,6 +25,7 @@ import {
   headerWrapper,
   mainContentWrapper,
   preferencesWrapper,
+  searchInput,
   sectionDescription,
   sectionTitle,
   sectionWrapper
@@ -101,6 +102,7 @@ export const Preferences = () => {
           type={inputTypes.TEXT}
           variant={inputVariants.OUTLINED}
           placeholder="Search settings..."
+          className={searchInput}
         />
       </header>
 

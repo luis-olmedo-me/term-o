@@ -7,6 +7,7 @@ import useStorage from '@src/hooks/useStorage'
 import Logo from '@src/icons/Logo.icon'
 import storage from '@src/libs/storage'
 
+import Input, { inputTypes, inputVariants } from '@src/components/Input'
 import { configIds, configInputIds } from '@src/constants/config.constants'
 import { iconSizes } from '@src/constants/icon.constants'
 import { storageKeys } from '@src/constants/storage.constants'
@@ -21,7 +22,6 @@ import {
 } from './Preferences.helpers'
 import {
   contentWrapper,
-  headerTitle,
   headerWrapper,
   mainContentWrapper,
   preferencesWrapper,
@@ -94,7 +94,14 @@ export const Preferences = () => {
       <header className={headerWrapper}>
         <Logo size={iconSizes.NORMAL} />
 
-        <h1 className={headerTitle}>Configuration</h1>
+        <Input
+          fullWidth
+          name="config-search"
+          onChange={({ target }) => console.log(target.value)}
+          type={inputTypes.TEXT}
+          variant={inputVariants.OUTLINED}
+          placeholder="Search settings..."
+        />
       </header>
 
       <div className={contentWrapper}>

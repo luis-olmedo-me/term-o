@@ -45,12 +45,6 @@
   grid-area: 1 / 1 / 2 / 2;
 }
 
-.headerTitle {
-  display: inline;
-  font-size: $fontSize-300;
-  margin: 0;
-}
-
 @media only screen and (min-width: 1650px) {
   .sectionWrapper {
     margin: $space-600 auto 0;

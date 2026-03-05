@@ -31,6 +31,13 @@
   letter-spacing: $space-50;
   cursor: text;
 
+  &::placeholder {
+    color: with-opacity($colors-brightBlack, 0.8);
+  }
+  &:hover::placeholder {
+    color: with-opacity(currentColor, 0.5);
+  }
+
   &:active,
   &:focus,
   &:focus-visible {

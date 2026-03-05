@@ -76,6 +76,14 @@ export const Preferences = () => {
     setSelectedSectionId(id)
   }
 
+  const handleSidebarItemClick = newId => {
+    const children = Array.from(contentRef.current.children)
+    const foundChild = children.find(child => child.getAttribute('id') === newId)
+
+    foundChild.scrollIntoView({ block: 'start', behavior: 'smooth' })
+    setSelectedSectionId(newId)
+  }
+
   return (
     <div className={preferencesWrapper}>
       <header className={headerWrapper}>
@@ -88,7 +96,7 @@ export const Preferences = () => {
         <SidePanel
           options={sidePanelOptions}
           selectedOptionId={selectedSectionId}
-          onChange={setSelectedSectionId}
+          onChange={handleSidebarItemClick}
         />
 
         <div

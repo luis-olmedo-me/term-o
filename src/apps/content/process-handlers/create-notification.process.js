@@ -9,7 +9,7 @@ export default async (resolve, _reject, data) => {
 
   createNotification({ ...notification, theme: data.theme })
 
-  await delay(500)
+  await delay(100)
 
   resolve(notification)
 }

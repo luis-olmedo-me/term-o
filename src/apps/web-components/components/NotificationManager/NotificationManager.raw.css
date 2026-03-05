@@ -43,6 +43,7 @@ term-o-notification-item {
   position: absolute;
   transition:
     top 0.3s ease,
+    right 0.1s ease,
     opacity 0.3s ease,
     transform 0.3s ease;
   top: 0;
@@ -51,11 +52,13 @@ term-o-notification-item {
   pointer-events: none;
   transform: translateX(100%) scale(0.5);
 }
-
 term-o-notification-item.visible {
   opacity: 1;
   pointer-events: all;
   transform: translateX(0%) scale(1);
+}
+term-o-notification-item.visible:hover {
+  right: var(--space-200);
 }
 
 .notification {

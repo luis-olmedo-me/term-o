@@ -52,7 +52,7 @@ export const getInputMessageByType = (input, oldValue, newValue) => {
 export const getLatestSectionId = sectionElementContainer => {
   const children = Array.from(sectionElementContainer.children)
   const offsetTop = sectionElementContainer.offsetTop
-  const scrollTop = sectionElementContainer.scrollTop + window.innerHeight * 0.6
+  const scrollTop = sectionElementContainer.scrollTop + window.innerHeight * 0.5
 
   children.reverse()
 

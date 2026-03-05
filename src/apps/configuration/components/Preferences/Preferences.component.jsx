@@ -14,6 +14,7 @@ import { createNotification } from '@src/helpers/web-components.helpers'
 import { verticalScroller } from '@styles/global.module.scss'
 import { sidePanelOptions } from './Preferences.constants'
 import {
+  filterSectionsBy,
   getInputMessageByType,
   getLatestSectionId,
   handleImportConfig
@@ -89,16 +90,7 @@ export const Preferences = () => {
 
   const handleSearch = event => {
     const searchedValue = event.target.value.toLowerCase()
-    const newSections = config.details.reduce((sections, section) => {
-      const matchedInputs = section.inputs.filter(input => {
-        const description = input.description.toLowerCase()
-        const name = input.name.toLowerCase()
-
-        return description.includes(searchedValue) || name.includes(searchedValue)
-      })
-
-      return matchedInputs.length ? [...sections, { ...section, inputs: matchedInputs }] : sections
-    }, [])
+    const newSections = filterSectionsBy(config.details, searchedValue)
 
     setConfigSections(newSections)
   }

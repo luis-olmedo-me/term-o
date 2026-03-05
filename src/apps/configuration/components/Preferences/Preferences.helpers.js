@@ -69,3 +69,16 @@ export const getLatestSectionId = sectionElementContainer => {
 
   return id
 }
+
+export const filterSectionsBy = (currentSections, search) => {
+  return currentSections.reduce((sections, section) => {
+    const matchedInputs = section.inputs.filter(input => {
+      const description = input.description.toLowerCase()
+      const name = input.name.toLowerCase()
+
+      return description.includes(search) || name.includes(search)
+    })
+
+    return matchedInputs.length ? [...sections, { ...section, inputs: matchedInputs }] : sections
+  }, [])
+}

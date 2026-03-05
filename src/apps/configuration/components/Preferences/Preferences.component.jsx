@@ -1,15 +1,13 @@
 import { useRef, useState } from 'preact/hooks'
 
+import Header from '@configuration/components/Header'
 import SidePanel from '@configuration/components/SidePanel'
 import FieldRenderer from '@src/components/FieldRenderer'
 import useDebouncedCallback from '@src/hooks/useDebouncedCallback'
 import useStorage from '@src/hooks/useStorage'
-import Logo from '@src/icons/Logo.icon'
 import storage from '@src/libs/storage'
 
-import Input, { inputTypes, inputVariants } from '@src/components/Input'
 import { configIds, configInputIds } from '@src/constants/config.constants'
-import { iconSizes } from '@src/constants/icon.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { getConfigDetailsByInputId } from '@src/helpers/config.helpers'
 import { createNotification } from '@src/helpers/web-components.helpers'
@@ -22,10 +20,8 @@ import {
 } from './Preferences.helpers'
 import {
   contentWrapper,
-  headerWrapper,
   mainContentWrapper,
   preferencesWrapper,
-  searchInput,
   sectionDescription,
   sectionTitle,
   sectionWrapper
@@ -92,19 +88,7 @@ export const Preferences = () => {
 
   return (
     <div className={preferencesWrapper}>
-      <header className={headerWrapper}>
-        <Logo size={iconSizes.NORMAL} />
-
-        <Input
-          fullWidth
-          name="config-search"
-          onChange={({ target }) => console.log(target.value)}
-          type={inputTypes.TEXT}
-          variant={inputVariants.OUTLINED}
-          placeholder="Search settings..."
-          className={searchInput}
-        />
-      </header>
+      <Header />
 
       <div className={contentWrapper}>
         <SidePanel

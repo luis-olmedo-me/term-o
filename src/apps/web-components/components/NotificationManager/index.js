@@ -60,7 +60,7 @@ class NotificationManager extends HTMLElement {
   _handleCounterClick() {
     this._displayThree = !this._displayThree
 
-    if (this._displayThree) this._showLastThree()
+    if (this._displayThree) this._showFirstThree()
     else this._showFirstOne()
   }
 
@@ -75,12 +75,12 @@ class NotificationManager extends HTMLElement {
     })
   }
 
-  _showLastThree() {
+  _showFirstThree() {
     const areLessThanThree = this._notifications.length <= 3
     let carriedTop = 0
 
     this._notifications.forEach((item, index) => {
-      const shouldDisplay = areLessThanThree || index >= this._notifications.length - 3
+      const shouldDisplay = areLessThanThree || index < 3
       const isVisible = item.classList.contains('visible')
 
       if (shouldDisplay && !isVisible) item.classList.add('visible')
@@ -96,7 +96,7 @@ class NotificationManager extends HTMLElement {
     notificationItem.classList.remove('visible')
     this._notifications = this._notifications.filter(item => item !== notificationItem)
 
-    if (this._displayThree) this._showLastThree()
+    if (this._displayThree) this._showFirstThree()
     else this._showFirstOne()
 
     setTimeout(() => notificationItem.remove(), 500)

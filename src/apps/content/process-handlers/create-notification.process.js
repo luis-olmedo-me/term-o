@@ -4,7 +4,8 @@ import { createNotification } from '@src/helpers/web-components.helpers'
 export default async (resolve, _reject, data) => {
   const notification = {
     title: data.title,
-    message: data.message
+    message: data.message,
+    color: data.color
   }
 
   createNotification({ ...notification, theme: data.theme })

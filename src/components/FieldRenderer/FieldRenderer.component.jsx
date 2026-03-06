@@ -2,6 +2,7 @@ import { useState } from 'preact/hooks'
 
 import DynamicInput from '@src/components/DynamicInput'
 
+import { colorThemeKeys } from '@src/constants/themes.constants'
 import { getConfigDetailsByInputId } from '@src/helpers/config.helpers'
 import { validate } from '@src/helpers/validation-primitive.helpers'
 import {
@@ -41,7 +42,7 @@ export const FieldRenderer = ({
       setErrorMessage(null)
     } catch (error) {
       setErrorMessage(error)
-      sendNotification(inputDetails.name, error)
+      sendNotification(inputDetails.name, error, colorThemeKeys.RED)
     }
   }
 

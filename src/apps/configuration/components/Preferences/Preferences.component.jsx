@@ -9,6 +9,7 @@ import storage from '@src/libs/storage'
 
 import { configIds, configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
+import { colorThemeKeys } from '@src/constants/themes.constants'
 import { getConfigDetailsByInputId } from '@src/helpers/config.helpers'
 import { createNotification } from '@src/helpers/web-components.helpers'
 import { verticalScroller } from '@styles/global.module.scss'
@@ -56,10 +57,11 @@ export const Preferences = () => {
     [config.details, search]
   )
 
-  const sendNotification = (inputName, message) => {
+  const sendNotification = (inputName, message, color) => {
     createNotification({
       title: `Term-O | ${inputName}`,
       message,
+      color,
       theme: config.theme
     })
   }
@@ -75,9 +77,9 @@ export const Preferences = () => {
       if (inputId === configInputIds.EXPORT_CONFIGURATION) storage.export()
       if (inputId === configInputIds.IMPORT_CONFIGURATION) await handleImportConfig({ onError })
 
-      sendNotification(inputDetails.name, 'Task completed successfully!')
+      sendNotification(inputDetails.name, 'Task completed successfully!', colorThemeKeys.GREEN)
     } catch (message) {
-      sendNotification(inputDetails.name, message)
+      sendNotification(inputDetails.name, message, colorThemeKeys.RED)
     }
   }
 
@@ -86,7 +88,7 @@ export const Preferences = () => {
     const oldValue = config.getValueById(inputId)
     const message = getInputMessageByType(inputDetails, oldValue, newValue)
 
-    sendNotification(inputDetails.name, message)
+    sendNotification(inputDetails.name, message, colorThemeKeys.GREEN)
     config.change(inputId, newValue)
   }
 

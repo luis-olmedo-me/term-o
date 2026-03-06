@@ -13,6 +13,11 @@
 
 .headerLink {
   color: $colors-foreground;
+  transition: color 0.1s ease-in-out;
+
+  &:hover {
+    color: $colors-accent;
+  }
 }
 
 .searchInput {

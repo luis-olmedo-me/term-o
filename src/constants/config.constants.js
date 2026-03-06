@@ -134,7 +134,7 @@ export const defaultConfigSections = [
         iconButton: null,
         postFix: 'Lines',
         options: [],
-        validations: [['is-between', 0, 1000]],
+        validations: [['is-between', 10, 1000]],
         value: configDefaultValues[configInputIds.MAX_LINES_PER_COMMAND]
       },
       {
@@ -145,7 +145,7 @@ export const defaultConfigSections = [
         postFix: 'Commands',
         iconButton: null,
         options: [],
-        validations: [['is-between', 0, 1000]],
+        validations: [['is-between', 10, 1000]],
         value: configDefaultValues[configInputIds.HISTORIAL_SIZE]
       },
       {

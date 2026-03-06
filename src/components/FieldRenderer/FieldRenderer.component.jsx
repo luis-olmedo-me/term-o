@@ -51,6 +51,8 @@ export const FieldRenderer = ({
         <h4 className={fieldTitle}>{title}</h4>
 
         <p className={fieldDescription}>{description}</p>
+
+        {errorMessage && <span className={errorMessageWrapper}>{errorMessage}</span>}
       </div>
 
       <div className={inputWrapper} data-error={typeof errorMessage === 'string'} data-type={type}>
@@ -67,8 +69,6 @@ export const FieldRenderer = ({
           iconButton={iconButton}
         />
       </div>
-
-      {errorMessage && <span className={errorMessageWrapper}>{errorMessage}</span>}
     </div>
   )
 }

@@ -1,5 +1,6 @@
 .inputWrapper {
   width: fit-content;
+  outline: $space-150 dashed transparent;
 
   &[data-type='text-area'],
   &[data-type='string'] {
@@ -7,7 +8,7 @@
   }
 
   &[data-error='true'] {
-    outline: $space-150 dashed $colors-red;
+    outline-color: $colors-red;
     border-radius: $space-200;
   }
 }

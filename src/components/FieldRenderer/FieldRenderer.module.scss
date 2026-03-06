@@ -9,7 +9,8 @@
 
   &[data-error='true'] {
     outline-color: $colors-red;
-    border-radius: $space-200;
+    border-radius: $radius-100;
+    outline-offset: $space-200;
   }
 }
 

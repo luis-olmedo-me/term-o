@@ -1,4 +1,4 @@
-import { useRef, useState } from 'preact/hooks'
+import { useEffect, useRef, useState } from 'preact/hooks'
 
 import Header from '@configuration/components/Header'
 import SidePanel from '@configuration/components/SidePanel'
@@ -31,6 +31,7 @@ import {
 export const Preferences = () => {
   const [config] = useStorage({ key: storageKeys.CONFIG })
 
+  const [search, setSearch] = useState('')
   const [selectedSectionId, setSelectedSectionId] = useState(configIds.FUNCTIONALITY)
   const [configSections, setConfigSections] = useState(config.details)
 
@@ -44,6 +45,15 @@ export const Preferences = () => {
     },
     [],
     100
+  )
+
+  useEffect(
+    function expectForSectionsChanges() {
+      const newSections = filterSectionsBy(config.details, search)
+
+      setConfigSections(newSections)
+    },
+    [config.details, search]
   )
 
   const sendNotification = (inputName, message) => {
@@ -90,9 +100,8 @@ export const Preferences = () => {
 
   const handleSearch = event => {
     const searchedValue = event.target.value.toLowerCase()
-    const newSections = filterSectionsBy(config.details, searchedValue)
 
-    setConfigSections(newSections)
+    setSearch(searchedValue)
   }
 
   return (

@@ -1,23 +1,27 @@
-import { useState } from 'preact/hooks'
+import { useEffect, useRef, useState } from 'preact/hooks'
 
+import Header from '@configuration/components/Header'
 import SidePanel from '@configuration/components/SidePanel'
 import FieldRenderer from '@src/components/FieldRenderer'
+import useDebouncedCallback from '@src/hooks/useDebouncedCallback'
 import useStorage from '@src/hooks/useStorage'
-import Logo from '@src/icons/Logo.icon'
 import storage from '@src/libs/storage'
 
 import { configIds, configInputIds } from '@src/constants/config.constants'
-import { iconSizes } from '@src/constants/icon.constants'
 import { storageKeys } from '@src/constants/storage.constants'
+import { colorThemeKeys } from '@src/constants/themes.constants'
 import { getConfigDetailsByInputId } from '@src/helpers/config.helpers'
 import { createNotification } from '@src/helpers/web-components.helpers'
 import { verticalScroller } from '@styles/global.module.scss'
 import { sidePanelOptions } from './Preferences.constants'
-import { getInputMessageByType, handleImportConfig } from './Preferences.helpers'
+import {
+  filterSectionsBy,
+  getInputMessageByType,
+  getLatestSectionId,
+  handleImportConfig
+} from './Preferences.helpers'
 import {
   contentWrapper,
-  headerTitle,
-  headerWrapper,
   mainContentWrapper,
   preferencesWrapper,
   sectionDescription,
@@ -26,16 +30,38 @@ import {
 } from './Preferences.module.scss'
 
 export const Preferences = () => {
-  const [selectedSectionId, setSelectedSectionId] = useState(configIds.FUNCTIONALITY)
-
   const [config] = useStorage({ key: storageKeys.CONFIG })
 
-  const sectionSelected = config.details.find(({ id }) => id === selectedSectionId)
+  const [search, setSearch] = useState('')
+  const [selectedSectionId, setSelectedSectionId] = useState(configIds.FUNCTIONALITY)
+  const [configSections, setConfigSections] = useState(config.details)
 
-  const sendNotification = (inputName, message) => {
+  const contentRef = useRef(null)
+
+  const handleScroll = useDebouncedCallback(
+    () => {
+      const id = getLatestSectionId(contentRef.current)
+
+      setSelectedSectionId(id)
+    },
+    [],
+    100
+  )
+
+  useEffect(
+    function expectForSectionsChanges() {
+      const newSections = filterSectionsBy(config.details, search)
+
+      setConfigSections(newSections)
+    },
+    [config.details, search]
+  )
+
+  const sendNotification = (inputName, message, color) => {
     createNotification({
       title: `Term-O | ${inputName}`,
       message,
+      color,
       theme: config.theme
     })
   }
@@ -51,9 +77,9 @@ export const Preferences = () => {
       if (inputId === configInputIds.EXPORT_CONFIGURATION) storage.export()
       if (inputId === configInputIds.IMPORT_CONFIGURATION) await handleImportConfig({ onError })
 
-      sendNotification(inputDetails.name, 'Task completed successfully!')
+      sendNotification(inputDetails.name, 'Task completed successfully!', colorThemeKeys.GREEN)
     } catch (message) {
-      sendNotification(inputDetails.name, message)
+      sendNotification(inputDetails.name, message, colorThemeKeys.RED)
     }
   }
 
@@ -62,51 +88,69 @@ export const Preferences = () => {
     const oldValue = config.getValueById(inputId)
     const message = getInputMessageByType(inputDetails, oldValue, newValue)
 
-    sendNotification(inputDetails.name, message)
+    sendNotification(inputDetails.name, message, colorThemeKeys.GREEN)
     config.change(inputId, newValue)
+  }
+
+  const handleSidebarItemClick = newId => {
+    const children = Array.from(contentRef.current.children)
+    const foundChild = children.find(child => child.getAttribute('id') === newId)
+
+    foundChild.scrollIntoView({ block: 'start', behavior: 'smooth' })
+    setSelectedSectionId(newId)
+  }
+
+  const handleSearch = event => {
+    const searchedValue = event.target.value.toLowerCase()
+
+    setSearch(searchedValue)
   }
 
   return (
     <div className={preferencesWrapper}>
-      <header className={headerWrapper}>
-        <Logo size={iconSizes.NORMAL} />
-
-        <h1 className={headerTitle}>Configuration</h1>
-      </header>
+      <Header onSearch={handleSearch} />
 
       <div className={contentWrapper}>
         <SidePanel
           options={sidePanelOptions}
           selectedOptionId={selectedSectionId}
-          onChange={setSelectedSectionId}
+          onChange={handleSidebarItemClick}
         />
 
-        <div className={`${mainContentWrapper} ${verticalScroller}`}>
-          <div key={sectionSelected.id} className={sectionWrapper}>
-            <h3 className={sectionTitle}>{sectionSelected.name}</h3>
-            <p className={sectionDescription}>{sectionSelected.description}</p>
+        <div
+          ref={contentRef}
+          className={`${mainContentWrapper} ${verticalScroller}`}
+          onScroll={handleScroll}
+        >
+          {configSections.map(section => {
+            return (
+              <div key={section.id} className={sectionWrapper} id={section.id}>
+                <h3 className={sectionTitle}>{section.name}</h3>
+                <p className={sectionDescription}>{section.description}</p>
 
-            {sectionSelected.inputs.map(input => {
-              return (
-                <FieldRenderer
-                  key={input.id}
-                  description={input.description}
-                  value={input.value}
-                  inputId={input.id}
-                  type={input.type}
-                  options={input.options}
-                  validations={input.validations}
-                  postFix={input.postFix}
-                  iconButton={input.iconButton}
-                  name={`${sectionSelected.id}-${input.id}`}
-                  title={input.name}
-                  changeConfig={handleConfigChange}
-                  handleClickInButtons={handleClicksInButtonFields}
-                  sendNotification={sendNotification}
-                />
-              )
-            })}
-          </div>
+                {section.inputs.map(input => {
+                  return (
+                    <FieldRenderer
+                      key={input.id}
+                      description={input.description}
+                      value={input.value}
+                      inputId={input.id}
+                      type={input.type}
+                      options={input.options}
+                      validations={input.validations}
+                      postFix={input.postFix}
+                      iconButton={input.iconButton}
+                      name={`${section.id}-${input.id}`}
+                      title={input.name}
+                      changeConfig={handleConfigChange}
+                      handleClickInButtons={handleClicksInButtonFields}
+                      sendNotification={sendNotification}
+                    />
+                  )
+                })}
+              </div>
+            )
+          })}
         </div>
       </div>
     </div>

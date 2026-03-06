@@ -2,11 +2,13 @@ import { useState } from 'preact/hooks'
 
 import DynamicInput from '@src/components/DynamicInput'
 
+import { colorThemeKeys } from '@src/constants/themes.constants'
 import { getConfigDetailsByInputId } from '@src/helpers/config.helpers'
 import { validate } from '@src/helpers/validation-primitive.helpers'
 import {
   errorMessageWrapper,
   fieldDescription,
+  fieldLeyends,
   fieldTitle,
   fieldWrapper,
   inputWrapper
@@ -40,17 +42,23 @@ export const FieldRenderer = ({
       setErrorMessage(null)
     } catch (error) {
       setErrorMessage(error)
-      sendNotification(inputDetails.name, error)
+      sendNotification(inputDetails.name, error, colorThemeKeys.RED)
     }
   }
 
+  const hasErrorMessage = typeof errorMessage === 'string'
+
   return (
-    <div className={fieldWrapper}>
-      <h4 className={fieldTitle}>{title}</h4>
+    <div className={fieldWrapper} data-type={type} data-error={hasErrorMessage}>
+      <div className={fieldLeyends}>
+        <h4 className={fieldTitle}>{title}</h4>
 
-      <p className={fieldDescription}>{description}</p>
+        <p className={fieldDescription}>{description}</p>
 
-      <div className={inputWrapper} data-error={typeof errorMessage === 'string'} data-type={type}>
+        {errorMessage && <span className={errorMessageWrapper}>{errorMessage}</span>}
+      </div>
+
+      <div className={inputWrapper} data-error={hasErrorMessage} data-type={type}>
         <DynamicInput
           errorMessage={errorMessage}
           handleClickInButtons={id => handleClickInButtons(id, setErrorMessage)}
@@ -64,8 +72,6 @@ export const FieldRenderer = ({
           iconButton={iconButton}
         />
       </div>
-
-      {errorMessage && <span className={errorMessageWrapper}>{errorMessage}</span>}
     </div>
   )
 }

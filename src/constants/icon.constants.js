@@ -1,6 +1,7 @@
 export const iconSizes = {
   SMALL: 20,
-  NORMAL: 50,
+  MEDIUM: 30,
+  NORMAL: 40,
   LARGE: 100
 }
 

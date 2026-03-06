@@ -44,9 +44,8 @@ class NotificationManager extends HTMLElement {
     this._notifications = [notificationItem, ...this._notifications]
     this._displayThree = false
 
-    setTimeout(() => notificationItem.classList.add('visible'), 20)
+    requestAnimationFrame(() => this._showFirstOne())
     this._updateCounter()
-    this._showFirstOne()
 
     notificationItem.addEventListener('click', () => this._removeNotification(notificationItem))
   }

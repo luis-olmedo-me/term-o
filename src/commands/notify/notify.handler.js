@@ -1,6 +1,7 @@
 import processManager from '@src/libs/process-manager'
 
 import { storageKeys } from '@src/constants/storage.constants'
+import { customColorThemeKeys } from '@src/constants/themes.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatNotification } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
@@ -18,7 +19,8 @@ export const notifyHandler = async command => {
     const notification = await processManager.createNotification(tabId, {
       title,
       message,
-      theme: config.theme
+      theme: config.theme,
+      color: customColorThemeKeys.ACCENT
     })
 
     const update = formatNotification(notification)

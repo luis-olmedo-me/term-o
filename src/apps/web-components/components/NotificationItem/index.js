@@ -19,15 +19,17 @@ class NotificationItem extends HTMLElement {
       styles: this.querySelector('#styles'),
       wrapper: this.querySelector('#wrapper'),
       title: this.querySelector('#title'),
-      message: this.querySelector('#message')
+      message: this.querySelector('#message'),
+      notification: this.querySelector('#notification')
     }
   }
 
   init(event) {
-    const { title, message } = event.detail
+    const { title, message, color } = event.detail
 
     this.querySelector('#title').innerHTML = buildHtmlTextContent(title)
     this.querySelector('#message').innerHTML = buildHtmlTextContent(message)
+    this._elements.notification.setAttribute('data-intent', color)
   }
 }
 

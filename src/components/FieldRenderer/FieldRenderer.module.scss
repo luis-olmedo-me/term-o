@@ -1,6 +1,6 @@
 .inputWrapper {
   width: fit-content;
-  max-width: 30rem;
+  outline: $space-150 dashed transparent;
 
   &[data-type='text-area'],
   &[data-type='string'] {
@@ -8,8 +8,9 @@
   }
 
   &[data-error='true'] {
-    outline: $space-150 dashed $colors-red;
-    border-radius: $space-200;
+    outline-color: $colors-red;
+    border-radius: $radius-100;
+    outline-offset: $space-200;
   }
 }
 
@@ -20,17 +21,38 @@
 }
 
 .fieldWrapper {
-  margin: $space-900 0 0 $space-900;
-  padding-bottom: $space-900;
-  border-bottom: $space-50 solid $colors-brightBlack;
+  padding: $space-500 $space-900;
+  border-top: $space-50 solid $colors-brightBlack;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: with-opacity($colors-white, 0.05);
+  border: $space-50 solid with-opacity($colors-brightBlack, 0.5);
+  border-width: $space-50 $space-50 0 $space-50;
 
-  &:last-child {
-    border-bottom: none;
+  &:first-of-type {
+    border-radius: $radius-200 $radius-200 0 0;
+  }
+  &:last-of-type {
+    border-radius: 0 0 $radius-200 $radius-200;
+    border-width: $space-50;
+  }
+
+  &[data-type='text-area'] {
+    flex-direction: column;
+
+    .fieldLeyends {
+      width: 100%;
+    }
+  }
+
+  &[data-error='true'] {
+    background-color: with-opacity($colors-red, 0.05);
   }
 }
 
 .fieldTitle {
-  margin: $space-400 0;
+  margin: 0 0 $space-450;
   font-size: $fontSize-50;
   font-weight: bold;
 }

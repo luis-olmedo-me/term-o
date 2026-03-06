@@ -1,13 +1,13 @@
-import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
+import { useEffect, useRef, useState } from 'preact/hooks'
 
 import ColoredText from '@src/components/ColoredText'
+import useDebouncedCallback from '@src/hooks/useDebouncedCallback'
 import useStorage from '@src/hooks/useStorage'
 
 import { eventNames } from '@sidepanel/constants/events.constants'
 import { configInputIds, PROMPT_MARK } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { insert } from '@src/helpers/string.helpers'
-import { debounce } from '@src/helpers/utils.helpers'
 import { createSuggestion } from './Prompt.helpers'
 import {
   promptInput,
@@ -43,14 +43,15 @@ export const Prompt = ({
 
   const historialSize = config.getValueById(configInputIds.HISTORIAL_SIZE)
 
-  const calculateSuggestion = useCallback((value, caret, aliases, addons) => {
-    const newSuggestion = createSuggestion(value, caret, aliases, addons)
+  const calculateSuggestion = useDebouncedCallback(
+    (value, caret, aliases, addons) => {
+      const newSuggestion = createSuggestion(value, caret, aliases, addons)
 
-    setSuggestion(newSuggestion)
-  }, [])
-  const debouncedCalculateSuggestion = useCallback(debounce(calculateSuggestion, 200), [
-    calculateSuggestion
-  ])
+      setSuggestion(newSuggestion)
+    },
+    [],
+    200
+  )
 
   useEffect(function expectForRequests() {
     const handleRequestSend = () => setIsRequesting(true)
@@ -70,7 +71,7 @@ export const Prompt = ({
       let debounceTimeoutId = null
 
       const calculate = async () => {
-        debounceTimeoutId = debouncedCalculateSuggestion(value, caret, aliases, addons)
+        debounceTimeoutId = calculateSuggestion(value, caret, aliases, addons)
       }
 
       calculate()

@@ -106,57 +106,34 @@ term-o-notification-item.visible:hover {
   margin: 0;
 }
 
-[data-color='white'] {
-  color: var(--colors-white);
+.notification[data-intent='white']::after {
+  background-color: var(--colors-white);
 }
-[data-color='black'] {
-  color: var(--colors-black);
+.notification[data-intent='black']::after {
+  background-color: var(--colors-black);
 }
-[data-color='red'] {
-  color: var(--colors-red);
+.notification[data-intent='red']::after {
+  background-color: var(--colors-red);
 }
-[data-color='yellow'] {
-  color: var(--colors-yellow);
+.notification[data-intent='yellow']::after {
+  background-color: var(--colors-yellow);
 }
-[data-color='green'] {
-  color: var(--colors-green);
+.notification[data-intent='green']::after {
+  background-color: var(--colors-green);
 }
-[data-color='purple'] {
-  color: var(--colors-purple);
+.notification[data-intent='purple']::after {
+  background-color: var(--colors-purple);
 }
-[data-color='cyan'] {
-  color: var(--colors-cyan);
+.notification[data-intent='cyan']::after {
+  background-color: var(--colors-cyan);
 }
-[data-color='blue'] {
-  color: var(--colors-blue);
+.notification[data-intent='blue']::after {
+  background-color: var(--colors-blue);
 }
-[data-color='brightRed'] {
-  color: var(--colors-brightRed);
+.notification[data-intent='accent']::after {
+  background-color: var(--colors-accent);
 }
-[data-color='brightYellow'] {
-  color: var(--colors-brightYellow);
-}
-[data-color='brightGreen'] {
-  color: var(--colors-brightGreen);
-}
-[data-color='brightPurple'] {
-  color: var(--colors-brightPurple);
-}
-[data-color='brightCyan'] {
-  color: var(--colors-brightCyan);
-}
-[data-color='brightBlue'] {
-  color: var(--colors-brightBlue);
-}
-[data-color='brightWhite'] {
-  color: var(--colors-brightWhite);
-}
-[data-color='brightBlack'] {
-  color: var(--colors-brightBlack);
-}
-[data-color='reset'] {
-  color: var(--colors-foreground);
-}
+
 [data-bgcolor='white'] {
   background-color: var(--colors-white);
 }
@@ -207,4 +184,56 @@ term-o-notification-item.visible:hover {
 }
 [data-bgcolor='reset'] {
   background-color: transparent;
+}
+
+[data-color='white'] {
+  color: var(--colors-white);
+}
+[data-color='black'] {
+  color: var(--colors-black);
+}
+[data-color='red'] {
+  color: var(--colors-red);
+}
+[data-color='yellow'] {
+  color: var(--colors-yellow);
+}
+[data-color='green'] {
+  color: var(--colors-green);
+}
+[data-color='purple'] {
+  color: var(--colors-purple);
+}
+[data-color='cyan'] {
+  color: var(--colors-cyan);
+}
+[data-color='blue'] {
+  color: var(--colors-blue);
+}
+[data-color='brightRed'] {
+  color: var(--colors-brightRed);
+}
+[data-color='brightYellow'] {
+  color: var(--colors-brightYellow);
+}
+[data-color='brightGreen'] {
+  color: var(--colors-brightGreen);
+}
+[data-color='brightPurple'] {
+  color: var(--colors-brightPurple);
+}
+[data-color='brightCyan'] {
+  color: var(--colors-brightCyan);
+}
+[data-color='brightBlue'] {
+  color: var(--colors-brightBlue);
+}
+[data-color='brightWhite'] {
+  color: var(--colors-brightWhite);
+}
+[data-color='brightBlack'] {
+  color: var(--colors-brightBlack);
+}
+[data-color='reset'] {
+  color: var(--colors-foreground);
 }

@@ -1,0 +1,25 @@
+.headerWrapper {
+  padding: $space-600 $space-400;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: $space-50 solid $colors-brightBlack;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  gap: $space-400;
+}
+
+.headerLink {
+  color: $colors-foreground;
+  transition: color 0.1s ease-in-out;
+
+  &:hover {
+    color: $colors-accent;
+  }
+}
+
+.searchInput {
+  width: 350px;
+}

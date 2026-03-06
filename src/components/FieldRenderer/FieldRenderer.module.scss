@@ -44,6 +44,10 @@
       width: 100%;
     }
   }
+
+  &[data-error='true'] {
+    background-color: with-opacity($colors-red, 0.05);
+  }
 }
 
 .fieldTitle {

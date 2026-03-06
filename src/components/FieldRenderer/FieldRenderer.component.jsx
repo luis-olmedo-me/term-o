@@ -45,8 +45,10 @@ export const FieldRenderer = ({
     }
   }
 
+  const hasErrorMessage = typeof errorMessage === 'string'
+
   return (
-    <div className={fieldWrapper} data-type={type}>
+    <div className={fieldWrapper} data-type={type} data-error={hasErrorMessage}>
       <div className={fieldLeyends}>
         <h4 className={fieldTitle}>{title}</h4>
 
@@ -55,7 +57,7 @@ export const FieldRenderer = ({
         {errorMessage && <span className={errorMessageWrapper}>{errorMessage}</span>}
       </div>
 
-      <div className={inputWrapper} data-error={typeof errorMessage === 'string'} data-type={type}>
+      <div className={inputWrapper} data-error={hasErrorMessage} data-type={type}>
         <DynamicInput
           errorMessage={errorMessage}
           handleClickInButtons={id => handleClickInButtons(id, setErrorMessage)}

@@ -6,6 +6,7 @@ import {
   hasLengthBetween,
   isInlineStyles,
   isRegExp,
+  isString,
   isXpath
 } from '@src/helpers/validation-command.helpers'
 import { styleHelpSections } from './style.constants'
@@ -57,5 +58,5 @@ export default new CommandBase({
     type: commandTypes.ARRAY,
     helpSection: styleHelpSections.FILTERS,
     description: 'Filter styles by property names (regex[])',
-    validate: [hasAllItemsAs(isRegExp), hasLengthBetween(0, 2)]
+    validate: [hasLengthBetween(0, 2), hasAllItemsAs(isRegExp, isString)]
   })

@@ -72,7 +72,7 @@ export default new CommandBase({
     type: commandTypes.ARRAY,
     helpSection: domHelpSections.FILTERS,
     description: 'Filter by attributes (regex[])',
-    validate: [hasAllItemsAs(isString, isRegExp), hasLengthBetween(0, 2)]
+    validate: [hasLengthBetween(0, 2), hasAllItemsAs(isString, isRegExp)]
   })
   .expect({
     name: 'style',
@@ -80,7 +80,7 @@ export default new CommandBase({
     type: commandTypes.ARRAY,
     helpSection: domHelpSections.FILTERS,
     description: 'Filter by CSS styles (regex[])',
-    validate: [hasAllItemsAs(isString, isRegExp), hasLengthBetween(0, 2)]
+    validate: [hasLengthBetween(0, 2), hasAllItemsAs(isString, isRegExp)]
   })
   .expect({
     name: 'tag',

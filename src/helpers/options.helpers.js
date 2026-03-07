@@ -2,7 +2,7 @@ import { commandTypes } from '@src/constants/command.constants'
 import { getArray } from './arguments.helpers'
 
 export const getOptionTypeLabel = type => {
-  if (type === commandTypes.ARRAY) return '<string[]>'
+  if (type === commandTypes.ARRAY) return '<array>'
   if (type === commandTypes.STRING) return '<string>'
   if (type === commandTypes.NUMBER) return '<number>'
   if (type === commandTypes.BOOLEAN) return '<boolean>'

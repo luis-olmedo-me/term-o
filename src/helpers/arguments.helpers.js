@@ -116,14 +116,16 @@ export const getArray = value => {
   const itemsAsArgs = getArgs(items)
 
   return itemsAsArgs.map(item => {
-    const isQuoted = item.startsWith("'") && item.startsWith("'")
-    const isDoubleQuoted = item.startsWith('"') && item.startsWith('"')
+    const isQuoted = item.startsWith("'") && item.endsWith("'")
+    const isDoubleQuoted = item.startsWith('"') && item.endsWith('"')
+    const isBracketed = item.startsWith('[') && item.endsWith(']')
     const isTrue = item === 'true'
     const isFalse = item === 'false'
     const isNumber = !Number.isNaN(Number(item))
 
     if (isDoubleQuoted || isQuoted) return item.slice(1).slice(0, -1)
     if (isTrue || isFalse) return item === 'true'
+    if (isBracketed) return getArray(item)
     if (isNumber) return Number(item)
     return ''
   })

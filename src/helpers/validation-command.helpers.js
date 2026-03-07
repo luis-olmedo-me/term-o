@@ -1,4 +1,5 @@
 import { validateSchema } from '@src/helpers/validation-schema.helpers'
+import { getArrayAsLine } from './arguments.helpers'
 
 export const isRegExp = (option, value) => {
   try {
@@ -92,6 +93,15 @@ export const isInteger = (option, value) => {
     const name = option.displayName
 
     throw `${name} expects an integer value. Instead, it received "${value}".`
+  }
+}
+
+export const isString = (option, value) => {
+  if (typeof value !== 'string') {
+    const valueValidated = Array.isArray(value) ? getArrayAsLine(value) : value
+    const name = option.displayName
+
+    throw `${name} expects an string value. Instead, it received "${valueValidated}".`
   }
 }
 

@@ -124,11 +124,22 @@ export const getArray = value => {
     const isNumber = !Number.isNaN(Number(item))
 
     if (isDoubleQuoted || isQuoted) return item.slice(1).slice(0, -1)
-    if (isTrue || isFalse) return item === 'true'
+    if (isTrue || isFalse) return isTrue
     if (isBracketed) return getArray(item)
     if (isNumber) return Number(item)
     return ''
   })
+}
+
+export const getArrayAsLine = value => {
+  const arrayValuesAsLine = value.reduce((line, arg, index) => {
+    const isArray = Array.isArray(arg)
+    const space = index === 0 ? '' : ' '
+
+    return isArray ? `${line}${space}${getArrayAsLine(arg)}` : `${line}${space}${arg}`
+  }, '')
+
+  return `[${arrayValuesAsLine}]`
 }
 
 export const buildArgsFromProps = (props, name = null) => {

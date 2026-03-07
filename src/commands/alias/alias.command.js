@@ -1,7 +1,13 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
-import { hasItemAs, hasLength, isSpaceForbidden } from '@src/helpers/validation-command.helpers'
+import {
+  hasAllItemsAs,
+  hasItemAs,
+  hasLength,
+  isSpaceForbidden,
+  isString
+} from '@src/helpers/validation-command.helpers'
 import { aliasHelpSections } from './alias.constants'
 import { aliasHandler } from './alias.handler'
 
@@ -15,7 +21,7 @@ export default new CommandBase({
     type: commandTypes.ARRAY,
     helpSection: aliasHelpSections.MANAGEMENT,
     description: 'Add a new alias. Format: ["name" "command"]',
-    validate: [hasLength(2), hasItemAs(0, isSpaceForbidden)],
+    validate: [hasLength(2), hasItemAs(0, isSpaceForbidden), hasAllItemsAs(isString)],
     worksWith: []
   })
   .expect({

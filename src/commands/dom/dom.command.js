@@ -7,6 +7,7 @@ import {
   isInteger,
   isPositive,
   isRegExp,
+  isString,
   isTabId,
   isXpath
 } from '@src/helpers/validation-command.helpers'
@@ -71,7 +72,7 @@ export default new CommandBase({
     type: commandTypes.ARRAY,
     helpSection: domHelpSections.FILTERS,
     description: 'Filter by attributes (regex[])',
-    validate: [hasAllItemsAs(isRegExp), hasLengthBetween(0, 2)]
+    validate: [hasAllItemsAs(isString, isRegExp), hasLengthBetween(0, 2)]
   })
   .expect({
     name: 'style',
@@ -79,7 +80,7 @@ export default new CommandBase({
     type: commandTypes.ARRAY,
     helpSection: domHelpSections.FILTERS,
     description: 'Filter by CSS styles (regex[])',
-    validate: [hasAllItemsAs(isRegExp), hasLengthBetween(0, 2)]
+    validate: [hasAllItemsAs(isString, isRegExp), hasLengthBetween(0, 2)]
   })
   .expect({
     name: 'tag',

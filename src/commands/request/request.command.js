@@ -22,7 +22,7 @@ export default new CommandBase({
   .expect({
     name: 'headers',
     abbreviation: 'H',
-    type: commandTypes.STRING_ARRAY,
+    type: commandTypes.ARRAY,
     helpSection: requestHelpSections.OPTIONS,
     description: 'Include request headers',
     validate: [hasInlineHeaders]

@@ -43,7 +43,7 @@ export default new CommandBase({
   .expect({
     name: 'set',
     abbreviation: 'S',
-    type: commandTypes.STRING_ARRAY,
+    type: commandTypes.ARRAY,
     helpSection: storageHelpSections.MODIFICATION,
     description: 'Set a key-value pair in the selected storage',
     validate: [hasLength(2)]

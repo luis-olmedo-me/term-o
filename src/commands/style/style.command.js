@@ -54,7 +54,7 @@ export default new CommandBase({
   .expect({
     name: 'property',
     abbreviation: 'p',
-    type: commandTypes.STRING_ARRAY,
+    type: commandTypes.ARRAY,
     helpSection: styleHelpSections.FILTERS,
     description: 'Filter styles by property names (regex[])',
     validate: [hasAllItemsAs(isRegExp), hasLengthBetween(0, 2)]

@@ -32,7 +32,7 @@ export const commandStatuses = {
 
 export const commandTypes = {
   STRING: 'string',
-  STRING_ARRAY: 'string-array',
+  ARRAY: 'array',
   NUMBER: 'number',
   BOOLEAN: 'boolean'
 }

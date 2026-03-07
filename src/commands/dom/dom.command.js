@@ -68,7 +68,7 @@ export default new CommandBase({
   .expect({
     name: 'attr',
     abbreviation: 'a',
-    type: commandTypes.STRING_ARRAY,
+    type: commandTypes.ARRAY,
     helpSection: domHelpSections.FILTERS,
     description: 'Filter by attributes (regex[])',
     validate: [hasAllItemsAs(isRegExp), hasLengthBetween(0, 2)]
@@ -76,7 +76,7 @@ export default new CommandBase({
   .expect({
     name: 'style',
     abbreviation: 'S',
-    type: commandTypes.STRING_ARRAY,
+    type: commandTypes.ARRAY,
     helpSection: domHelpSections.FILTERS,
     description: 'Filter by CSS styles (regex[])',
     validate: [hasAllItemsAs(isRegExp), hasLengthBetween(0, 2)]

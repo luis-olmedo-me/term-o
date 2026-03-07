@@ -12,7 +12,7 @@ export default new CommandBase({
   .expect({
     name: 'add',
     abbreviation: 'a',
-    type: commandTypes.STRING_ARRAY,
+    type: commandTypes.ARRAY,
     helpSection: aliasHelpSections.MANAGEMENT,
     description: 'Add a new alias. Format: ["name" "command"]',
     validate: [hasLength(2), hasItemAs(0, isSpaceForbidden)],

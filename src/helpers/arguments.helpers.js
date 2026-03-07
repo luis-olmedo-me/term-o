@@ -116,7 +116,16 @@ export const getArray = value => {
   const itemsAsArgs = getArgs(items)
 
   return itemsAsArgs.map(item => {
-    return /^"|^'/.test(item) ? item.slice(1).slice(0, -1) : ''
+    const isQuoted = item.startsWith("'") && item.startsWith("'")
+    const isDoubleQuoted = item.startsWith('"') && item.startsWith('"')
+    const isTrue = item === 'true'
+    const isFalse = item === 'false'
+    const isNumber = !Number.isNaN(Number(item))
+
+    if (isDoubleQuoted || isQuoted) return item.slice(1).slice(0, -1)
+    if (isTrue || isFalse) return item === 'true'
+    if (isNumber) return Number(item)
+    return ''
   })
 }
 

@@ -75,16 +75,6 @@ export const parseOptions = (index, arg, argsBySpace, type) => {
         throw `${arg} expects for ${typeLabel} value. Instead, it received ${argValue}.`
 
       const arrayValue = getArray(argValue)
-      const isValidValue = arrayValue.every(value => {
-        const isString = typeof value === 'string'
-        const hasContent = Boolean(value)
-
-        return isString && hasContent
-      })
-      const hasItems = arrayValue.length > 0
-
-      if (!isValidValue || !hasItems)
-        throw `${arg} expects for valid content in ${typeLabel} value(s). Instead, it received ${argValue}.`
 
       return { value: arrayValue, newIndex: index }
     }

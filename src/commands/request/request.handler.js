@@ -8,11 +8,7 @@ export const requestHandler = async command => {
     command.update(['"API request in progress."'])
     const headers = new Headers()
 
-    P`headers`.forEach(header => {
-      const [name, value] = header.split(':').map(part => part?.trim())
-
-      headers.append(name, value)
-    })
+    P`headers`.forEach(([name, value]) => headers.append(name, value))
 
     try {
       const response = await fetch(P`url`, {

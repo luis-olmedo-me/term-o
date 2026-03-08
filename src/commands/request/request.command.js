@@ -4,9 +4,12 @@ import { commandNames, commandTypes } from '@src/constants/command.constants'
 import { responseFormatSupported } from '@src/constants/options.constants'
 import {
   hasAllItemsAs,
-  hasInlineHeaders,
+  hasItemAs,
+  hasLength,
   isAnyOf,
+  isArray,
   isJSON,
+  isSpaceForbidden,
   isString,
   isURL
 } from '@src/helpers/validation-command.helpers'
@@ -32,7 +35,9 @@ export default new CommandBase({
     type: commandTypes.ARRAY,
     helpSection: requestHelpSections.OPTIONS,
     description: 'Include request headers',
-    validate: [hasAllItemsAs(isString), hasInlineHeaders]
+    validate: [
+      hasAllItemsAs(isArray, hasLength(2), hasAllItemsAs(isString), hasItemAs(0, isSpaceForbidden))
+    ]
   })
   .expect({
     name: 'payload',

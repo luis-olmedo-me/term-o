@@ -105,6 +105,14 @@ export const isString = (option, value) => {
   }
 }
 
+export const isArray = (option, value) => {
+  if (!Array.isArray(value)) {
+    const name = option.displayName
+
+    throw `${name} expects an array value. Instead, it received "${value}".`
+  }
+}
+
 export const isSpaceForbidden = (option, value) => {
   if (value.includes(' ')) {
     const name = option.displayName
@@ -164,7 +172,7 @@ export const hasLength = staticLength => {
       const name = option.displayName
       const count = value.length
 
-      throw `${name}expects ${staticLength} value(s). Instead, it received ${count}.`
+      throw `${name} expects ${staticLength} value(s). Instead, it received ${count}.`
     }
   }
 }
@@ -177,7 +185,7 @@ export const hasLengthBetween = (min, max) => {
       const name = option.displayName
       const count = value.length
 
-      throw `${name}expects between ${min} and ${max} value(s). Instead, it received ${count}.`
+      throw `${name} expects between ${min} and ${max} value(s). Instead, it received ${count}.`
     }
   }
 }

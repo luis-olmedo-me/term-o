@@ -27,18 +27,16 @@ export const getArgs = value => {
 
       openBracketCount -= closedBracketCount
 
-      if (openBracketCount > 0) {
-        for (const nextFragment of nextFragments) {
-          const nextOpenBracketCount = Array.from(nextFragment.matchAll(/\[/g)).length
-          const nextClosedBracketCount = Array.from(nextFragment.matchAll(/\]/g)).length
-          fragmentValue += ` ${nextFragment}`
+      for (const nextFragment of nextFragments) {
+        const nextOpenBracketCount = Array.from(nextFragment.matchAll(/\[/g)).length
+        const nextClosedBracketCount = Array.from(nextFragment.matchAll(/\]/g)).length
+        fragmentValue += ` ${nextFragment}`
 
-          openBracketCount += nextOpenBracketCount - nextClosedBracketCount
+        openBracketCount += nextOpenBracketCount - nextClosedBracketCount
 
-          if (openBracketCount <= 0) break
+        if (openBracketCount <= 0) break
 
-          index++
-        }
+        index++
       }
 
       addFragment(fragmentValue)

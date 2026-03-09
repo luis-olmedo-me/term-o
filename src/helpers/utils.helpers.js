@@ -112,3 +112,13 @@ export const safeJsonParse = value => {
     return null
   }
 }
+
+export const findMatches = (value, regexp) => {
+  const matches = value.matchAll(regexp)
+
+  return Array.from(matches)
+}
+
+export const countMatches = (value, regexp) => {
+  return findMatches(value, regexp).length
+}

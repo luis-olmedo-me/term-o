@@ -1,5 +1,5 @@
 import { stringifyFragments } from './command.helpers'
-import { getQuotedString } from './utils.helpers'
+import { countMatches, getQuotedString } from './utils.helpers'
 
 export const getArgs = value => {
   const fragments = value.split(' ')
@@ -21,16 +21,16 @@ export const getArgs = value => {
     if (startsWithBracket) {
       const nextFragments = fragments.slice(++index)
 
-      const closedBracketCount = Array.from(fragment.matchAll(/\]/g)).length
-      let openBracketCount = Array.from(fragment.matchAll(/\[/g)).length
+      const closedBracketCount = countMatches(fragment, /\]/g)
+      let openBracketCount = countMatches(fragment, /\[/g)
       let fragmentValue = fragment
 
       openBracketCount -= closedBracketCount
 
       for (const nextFragment of nextFragments) {
         if (openBracketCount <= 0) break
-        const nextOpenBracketCount = Array.from(nextFragment.matchAll(/\[/g)).length
-        const nextClosedBracketCount = Array.from(nextFragment.matchAll(/\]/g)).length
+        const nextOpenBracketCount = countMatches(nextFragment, /\[/g)
+        const nextClosedBracketCount = countMatches(nextFragment, /\]/g)
 
         openBracketCount += nextOpenBracketCount - nextClosedBracketCount
         fragmentValue += ` ${nextFragment}`

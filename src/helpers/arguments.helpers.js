@@ -19,27 +19,26 @@ export const getArgs = value => {
     const isFlag = /^-([a-zA-Z]+)$/g.test(fragment)
 
     if (startsWithBracket) {
-      const startBrancket = '['
-      const endBrancket = ']'
-      const endsWithQuote = fragment.endsWith(endBrancket)
-
-      if (endsWithQuote && fragment.length > 1) {
-        addFragment(fragment)
-        continue
-      }
-
       const nextFragments = fragments.slice(++index)
+
+      const closedBracketCount = Array.from(fragment.matchAll(/\]/g)).length
+      let openBracketCount = Array.from(fragment.matchAll(/\[/g)).length
       let fragmentValue = fragment
-      let ignoredEndBrackets = 0
 
-      for (const nextFragment of nextFragments) {
-        fragmentValue += ` ${nextFragment}`
+      openBracketCount -= closedBracketCount
 
-        if (nextFragment.startsWith(startBrancket)) ++ignoredEndBrackets
-        if (nextFragment.endsWith(endBrancket) && !ignoredEndBrackets) break
-        if (nextFragment.endsWith(endBrancket) && ignoredEndBrackets) --ignoredEndBrackets
+      if (openBracketCount > 0) {
+        for (const nextFragment of nextFragments) {
+          const nextOpenBracketCount = Array.from(nextFragment.matchAll(/\[/g)).length
+          const nextClosedBracketCount = Array.from(nextFragment.matchAll(/\]/g)).length
+          fragmentValue += ` ${nextFragment}`
 
-        index++
+          openBracketCount += nextOpenBracketCount - nextClosedBracketCount
+
+          if (openBracketCount <= 0) break
+
+          index++
+        }
       }
 
       addFragment(fragmentValue)

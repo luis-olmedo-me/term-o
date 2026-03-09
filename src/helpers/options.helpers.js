@@ -97,8 +97,12 @@ export const getPropsFromString = command => {
       const propName = argValue.slice(2)
       const option = command.options.getByName(propName)
       const nextArg = args[index + 1]
+      const alreadySetValue = props[option.name]
 
-      if (typeof props[option.name] !== 'undefined') throw `${argValue} is a repeated argument.`
+      const overwritesOptionValue = typeof alreadySetValue !== 'undefined'
+      const isArrayOption = option.type === commandTypes.ARRAY
+
+      if (overwritesOptionValue && !isArrayOption) throw `${argValue} is a repeated argument.`
 
       if (isParam(option, nextArg)) {
         index++
@@ -109,18 +113,23 @@ export const getPropsFromString = command => {
 
       const argName = option.displayName
       const { value, newIndex } = parseOptions(index, argName, argValues, option.type)
-      option.validate(value)
+      const completeValue = isArrayOption ? [...(alreadySetValue || []), value] : value
+      option.validate(completeValue)
       index = newIndex
 
-      props = { ...props, [option.name]: value }
+      props = { ...props, [option.name]: completeValue }
       continue
     }
     if (argValue.startsWith('-')) {
       const propAbbreviation = argValue.slice(1)
       const option = command.options.getByAbbreviation(propAbbreviation)
       const nextArg = args[index + 1]
+      const alreadySetValue = props[option.name]
 
-      if (typeof props[option.name] !== 'undefined') throw `${argValue} is a repeated argument.`
+      const overwritesOptionValue = typeof alreadySetValue !== 'undefined'
+      const isArrayOption = option.type === commandTypes.ARRAY
+
+      if (overwritesOptionValue && !isArrayOption) throw `${argValue} is a repeated argument.`
 
       if (isParam(option, nextArg)) {
         index++
@@ -131,10 +140,11 @@ export const getPropsFromString = command => {
 
       const argName = option.displayName
       const { value, newIndex } = parseOptions(index, argName, argValues, option.type)
-      option.validate(value)
+      const completeValue = isArrayOption ? [...(alreadySetValue || []), value] : value
+      option.validate(completeValue)
       index = newIndex
 
-      props = { ...props, [option.name]: value }
+      props = { ...props, [option.name]: completeValue }
       continue
     }
 

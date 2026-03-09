@@ -149,9 +149,8 @@ export const buildArgsFromProps = (props, name = null) => {
     switch (typeof value) {
       case 'object': {
         const isArray = Array.isArray(value)
-        const formattedValues = isArray ? value.map(item => `"${item}"`) : []
 
-        return isArray ? [...args, `--${name}`, `[${formattedValues.join(' ')}]`] : args
+        return isArray ? [...args, `--${name}`, getArrayAsLine(value)] : args
       }
 
       case 'boolean': {

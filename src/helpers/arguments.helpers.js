@@ -28,14 +28,12 @@ export const getArgs = value => {
       openBracketCount -= closedBracketCount
 
       for (const nextFragment of nextFragments) {
+        if (openBracketCount <= 0) break
         const nextOpenBracketCount = Array.from(nextFragment.matchAll(/\[/g)).length
         const nextClosedBracketCount = Array.from(nextFragment.matchAll(/\]/g)).length
-        fragmentValue += ` ${nextFragment}`
 
         openBracketCount += nextOpenBracketCount - nextClosedBracketCount
-
-        if (openBracketCount <= 0) break
-
+        fragmentValue += ` ${nextFragment}`
         index++
       }
 

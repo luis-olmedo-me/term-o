@@ -11,7 +11,8 @@
       "helpSection": "Testing Purposes",
       "worksWith": [],
       "mustHave": [],
-      "defaultValue": ""
+      "defaultValue": "",
+      "repeatable": false
     }
   ]
 }

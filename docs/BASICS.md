@@ -1,7 +1,7 @@
 # Term-O Basics
 
 > Version 0.9.0  
-> Updated: 2026-03-7
+> Updated: 2026-03-10
 
 ---
 
@@ -66,6 +66,8 @@ Options are data supplied to the command handler and are defined within the user
 It is important to understand that options are hard typed in Term-O. That means that if an option expects for a explicit value (i.e. "string"), the input must have quotes.
 
 A command with existing options will always require options described within the input otherwise you will get an error at execution.
+
+Some options can be repeated in one command line sentence. This means it can describe one or more values. Internally they are handled as an array.
 
 ---
 

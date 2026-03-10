@@ -74,13 +74,13 @@ When using `dom` command the options can express **2** possible actions:
    ```bash
    dom
        --search                                                             # REQUIRED
-       --attr ["class" "test-class-.+"]                                     # OPTIONAL
+       --attr ["class" "test-class-.+"]                                     # OPTIONAL/REPEATABLE
+       --style ["color" "#00000\d"]                                         # OPTIONAL/REPEATABLE
        --below 'id("cards-container")'                                      # OPTIONAL
-       --content                                                            # OPTIONAL
-       --style ["color" "#00000\d"]                                         # OPTIONAL
        --tab-id "T00000000"                                                 # OPTIONAL
-       --tag "button"                                                       # OPTIONAL
        --text "Buscar con Go.+"                                             # OPTIONAL
+       --tag "button"                                                       # OPTIONAL
+       --content                                                            # OPTIONAL
        --xpath                                                              # OPTIONAL
    ```
 
@@ -283,7 +283,7 @@ When using `request` command the options can express **1** possible action:
    request
        --fetch                                                              # REQUIRED
        --url "https://test.com/api/v2/test"                                 # REQUIRED
-       --headers [["Authorization" "test large id"] ["header" "test"]]      # OPTIONAL
+       --headers ["Authorization" "test large id"]                          # OPTIONAL/REPEATABLE
        --payload '{ "test": "test-value" }'                                 # OPTIONAL
        --method "GET"                                                       # OPTIONAL
        --read-as "json"                                                     # OPTIONAL
@@ -321,8 +321,7 @@ When using `alias` command the options can express **3** possible actions:
 
    ```bash
    alias
-       --add ["gotest", 'tabs --open "https://test.com" --wait']            # REQUIRED
-       --add ["another", 'tabs --open "https://test1.com" --wait']          # OPTIONAL
+       --add ["gotest", 'tabs --open "https://test.com" --wait']            # REQUIRED/REPEATABLE
    ```
 
    After that command is executed, you can just type `gotest` to open "https://test.com" in a new tab.
@@ -526,8 +525,7 @@ When using `storage` command the options can express **4** possible action:
 
    ```bash
    search
-       --set ["test-name" "test-value"]                                     # REQUIRED
-       --set ["test-1" "another-test-value"]                                # OPTIONAL
+       --set ["test-name" "test-value"]                                     # REQUIRED/REPEATABLE
        --tab-id "T00000000"                                                 # OPTIONAL
        --session                                                            # OPTIONAL
        --cookie                                                             # OPTIONAL

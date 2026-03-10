@@ -83,6 +83,9 @@ export const parseOptions = (index, arg, argsBySpace, type) => {
 
       const arrayValue = getArray(argValue)
 
+      if (arrayValue === null)
+        throw `${arg} expects for ${typeLabel} value. Instead, it received ${argValue}.`
+
       return { value: arrayValue, newIndex: index }
     }
 

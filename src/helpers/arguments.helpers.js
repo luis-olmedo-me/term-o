@@ -1,4 +1,5 @@
 import { stringifyFragments } from './command.helpers'
+import { isArray, isQuoted } from './string.helpers'
 import { countMatches, getQuotedString } from './utils.helpers'
 
 export const getArgs = value => {
@@ -107,23 +108,20 @@ export const splitBy = (value, key) => {
 }
 
 export const getArray = value => {
-  const items = value.slice(1).slice(0, -1)
-  const itemsAsArgs = getArgs(items)
+  const inner = value.slice(1, -1)
+  const args = getArgs(inner)
 
-  return itemsAsArgs.map(item => {
-    const isQuoted = item.startsWith("'") && item.endsWith("'")
-    const isDoubleQuoted = item.startsWith('"') && item.endsWith('"')
-    const isBracketed = item.startsWith('[') && item.endsWith(']')
-    const isTrue = item === 'true'
-    const isFalse = item === 'false'
-    const isNumber = !Number.isNaN(Number(item))
+  const result = []
 
-    if (isDoubleQuoted || isQuoted) return item.slice(1).slice(0, -1)
-    if (isTrue || isFalse) return isTrue
-    if (isBracketed) return getArray(item)
-    if (isNumber) return Number(item)
-    return ''
-  })
+  for (const arg of args) {
+    const parsed = parseArrayItem(arg)
+
+    if (parsed === null) return null
+
+    result.push(parsed)
+  }
+
+  return result
 }
 
 export const getArrayAsLine = value => {
@@ -187,4 +185,20 @@ export const getParamValue = (indexes, values) => {
   const params = indexes.map(index => values[index]).filter(value => typeof value !== 'undefined')
 
   return `[${stringifyFragments(params)}]`
+}
+
+const parseArrayItem = value => {
+  if (isQuoted(value)) {
+    return value.slice(1, -1)
+  }
+
+  if (value === 'true') return true
+  if (value === 'false') return false
+
+  if (isArray(value)) return getArray(value)
+
+  const num = Number(value)
+  if (!Number.isNaN(num)) return num
+
+  return null
 }

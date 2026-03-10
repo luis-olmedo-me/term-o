@@ -54,10 +54,15 @@ export default async (resolve, _reject, data) => {
 
     if (hasAttributesValidations) {
       conditions.push(() => {
-        return attrNames.some(name => {
-          const value = element.getAttribute(name)
+        return attributeValidations.every(validate => {
+          for (const name of attrNames) {
+            const value = element.getAttribute(name)
+            const isValid = validate(name, value)
 
-          return attributeValidations.every(validate => validate(name, value))
+            if (isValid) return true
+          }
+
+          return false
         })
       })
     }
@@ -66,15 +71,17 @@ export default async (resolve, _reject, data) => {
       conditions.push(() => {
         const computedStyles = getComputedStyle(element)
 
-        for (let index = 0; index < computedStyles.length; index++) {
-          const propName = computedStyles[index]
-          const propValue = computedStyles.getPropertyValue(propName)
-          const isValid = styleValidations.every(validate => validate(propName, propValue))
+        return styleValidations.every(validate => {
+          for (let index = 0; index < computedStyles.length; index++) {
+            const propName = computedStyles[index]
+            const propValue = computedStyles.getPropertyValue(propName)
+            const isValid = validate(propName, propValue)
 
-          if (isValid) return true
-        }
+            if (isValid) return true
+          }
 
-        return false
+          return false
+        })
       })
     }
 

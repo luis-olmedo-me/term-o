@@ -4,6 +4,7 @@ import { commandNames, commandTypes } from '@src/constants/command.constants'
 import {
   hasAllItemsAs,
   hasLength,
+  isArray,
   isString,
   isTabId
 } from '@src/helpers/validation-command.helpers'
@@ -51,7 +52,8 @@ export default new CommandBase({
     type: commandTypes.ARRAY,
     helpSection: storageHelpSections.MODIFICATION,
     description: 'Set a key-value pair in the selected storage',
-    validate: [hasLength(2), hasAllItemsAs(isString)]
+    validate: [hasAllItemsAs(isArray, hasLength(2), hasAllItemsAs(isString)), hasLength(1)],
+    defaultValue: [['', '']]
   })
   .expect({
     name: 'tab-id',

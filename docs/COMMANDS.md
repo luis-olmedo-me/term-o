@@ -1,7 +1,7 @@
 # Term-O Commands
 
 > Version 0.9.0  
-> Updated: 2026-03-8
+> Updated: 2026-03-10
 
 ---
 
@@ -322,6 +322,7 @@ When using `alias` command the options can express **3** possible actions:
    ```bash
    alias
        --add ["gotest", 'tabs --open "https://test.com" --wait']            # REQUIRED
+       --add ["another", 'tabs --open "https://test1.com" --wait']          # OPTIONAL
    ```
 
    After that command is executed, you can just type `gotest` to open "https://test.com" in a new tab.

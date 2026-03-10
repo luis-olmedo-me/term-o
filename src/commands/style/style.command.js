@@ -59,5 +59,6 @@ export default new CommandBase({
     type: commandTypes.ARRAY,
     helpSection: styleHelpSections.FILTERS,
     description: 'Filter styles by property names (regex[])',
-    validate: [hasAllItemsAs(isArray, hasLengthBetween(1, 2), hasAllItemsAs(isRegExp, isString))]
+    validate: [hasAllItemsAs(isArray, hasLengthBetween(1, 2), hasAllItemsAs(isRegExp, isString))],
+    repeatable: true
   })

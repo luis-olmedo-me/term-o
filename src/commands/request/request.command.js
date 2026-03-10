@@ -37,7 +37,8 @@ export default new CommandBase({
     description: 'Include request headers',
     validate: [
       hasAllItemsAs(isArray, hasLength(2), hasAllItemsAs(isString), hasItemAs(0, isSpaceForbidden))
-    ]
+    ],
+    repeatable: true
   })
   .expect({
     name: 'payload',

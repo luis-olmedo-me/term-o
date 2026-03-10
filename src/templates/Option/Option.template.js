@@ -6,6 +6,7 @@ export class Option {
     abbreviation,
     helpSection,
     description,
+    repeatable,
     validations,
     dependencies,
     strictDependencies
@@ -16,6 +17,7 @@ export class Option {
     this.abbreviation = abbreviation
     this.helpSection = helpSection
     this.description = description
+    this.repeatable = repeatable
     this.validations = validations
     this.dependencies = dependencies
     this.strictDependencies = strictDependencies

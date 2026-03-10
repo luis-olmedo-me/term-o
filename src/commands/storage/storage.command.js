@@ -53,7 +53,8 @@ export default new CommandBase({
     helpSection: storageHelpSections.MODIFICATION,
     description: 'Set a key-value pair in the selected storage',
     validate: [hasAllItemsAs(isArray, hasLength(2), hasAllItemsAs(isString))],
-    defaultValue: [['', '']]
+    defaultValue: [['', '']],
+    repeatable: true
   })
   .expect({
     name: 'tab-id',

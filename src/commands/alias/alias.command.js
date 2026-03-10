@@ -25,7 +25,8 @@ export default new CommandBase({
     validate: [
       hasAllItemsAs(isArray, hasLength(2), hasAllItemsAs(isString), hasItemAs(0, isSpaceForbidden))
     ],
-    worksWith: []
+    worksWith: [],
+    repeatable: true
   })
   .expect({
     name: 'list',

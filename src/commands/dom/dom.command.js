@@ -30,7 +30,7 @@ export default new CommandBase({
   .expect({
     name: 'search-xpath',
     abbreviation: 'X',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: domHelpSections.SEARCH,
     description: 'Find elements with an XPath query',
     worksWith: ['tab-id', 'sibling', 'parent', 'child', 'xpath', 'below'],
@@ -39,14 +39,14 @@ export default new CommandBase({
   .expect({
     name: 'sibling',
     abbreviation: 'b',
-    type: 'number',
+    type: commandTypes.NUMBER,
     helpSection: domHelpSections.DOM_NAVIGATION,
     description: 'Select sibling by index (integer)',
     validate: [isInteger]
   })
   .expect({
     name: 'parent',
-    type: 'number',
+    type: commandTypes.NUMBER,
     abbreviation: 'p',
     helpSection: domHelpSections.DOM_NAVIGATION,
     description: 'Select parent element by index (positive)',
@@ -55,7 +55,7 @@ export default new CommandBase({
   .expect({
     name: 'child',
     abbreviation: 'd',
-    type: 'number',
+    type: commandTypes.NUMBER,
     helpSection: domHelpSections.DOM_NAVIGATION,
     description: 'Select child element by index (positive)',
     validate: [isInteger, isPositive]
@@ -90,7 +90,7 @@ export default new CommandBase({
   .expect({
     name: 'tag',
     abbreviation: 't',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: domHelpSections.FILTERS,
     description: 'Filter by tag name (regex)',
     validate: [isRegExp]
@@ -98,7 +98,7 @@ export default new CommandBase({
   .expect({
     name: 'text',
     abbreviation: 'T',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: domHelpSections.FILTERS,
     description: 'Filter by text content (regex)',
     validate: [isRegExp]
@@ -113,14 +113,14 @@ export default new CommandBase({
   .expect({
     name: 'tab-id',
     abbreviation: 'i',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: domHelpSections.SEARCH,
     description: 'Search elements in a specific tab (T[number])',
     validate: [isTabId]
   })
   .expect({
     name: 'below',
-    type: 'string',
+    type: commandTypes.STRING,
     abbreviation: 'B',
     validate: [isXpath],
     helpSection: domHelpSections.SEARCH,

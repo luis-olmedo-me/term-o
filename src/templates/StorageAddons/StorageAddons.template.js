@@ -74,6 +74,7 @@ export class StorageAddons extends StorageSimple {
           mustHave: option.mustHave,
           defaultValue: option.defaultValue,
           helpSection: option.helpSection,
+          repeatable: option.repeatable,
           validate: null
         })
       })

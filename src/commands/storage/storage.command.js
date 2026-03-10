@@ -52,7 +52,7 @@ export default new CommandBase({
     type: commandTypes.ARRAY,
     helpSection: storageHelpSections.MODIFICATION,
     description: 'Set a key-value pair in the selected storage',
-    validate: [hasAllItemsAs(isArray, hasLength(2), hasAllItemsAs(isString)), hasLength(1)],
+    validate: [hasAllItemsAs(isArray, hasLength(2), hasAllItemsAs(isString))],
     defaultValue: [['', '']]
   })
   .expect({

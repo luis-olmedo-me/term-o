@@ -5,18 +5,21 @@ import { createHighlight } from '@src/helpers/web-components.helpers'
 
 export default async (resolve, reject, data) => {
   const { searchByXpath, searchByProperty } = data
-  const [searchByPropName, searchByPropValue] = searchByProperty
 
-  const propNamePattern = searchByPropName ? new RegExp(searchByPropName) : /./g
-  const propValuePattern = searchByPropValue ? new RegExp(searchByPropValue) : /./g
+  const propValidations = searchByProperty.map(([propName, propValue]) => {
+    const propNamePattern = new RegExp(propName)
+    const propValuePattern = propValue ? new RegExp(propValue) : /./g
+
+    return (name, value) => propNamePattern.test(name) && propValuePattern.test(value)
+  })
 
   const element = getElementByXPath(searchByXpath)
 
   if (!element) return reject('XPath did not match any element.')
   createHighlight({ element, theme: data.theme })
 
-  const styles = getNonDefaultComputedStyles(element).filter(
-    ({ prop, value }) => propNamePattern.test(prop) && propValuePattern.test(value)
+  const styles = getNonDefaultComputedStyles(element).filter(({ prop, value }) =>
+    propValidations.some(validate => validate(prop, value))
   )
 
   const stylesWithHexValues = styles.map(style => {

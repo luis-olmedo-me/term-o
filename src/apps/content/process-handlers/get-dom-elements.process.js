@@ -10,15 +10,26 @@ export default async (resolve, _reject, data) => {
     appendXpath,
     appendTextContent
   } = data
-  const [searchByAttributeName, searchByAttributeValue] = searchByAttribute
-  const [searchByStyleName, searchByStyleValue] = searchByStyle
 
   const tagPattern = searchByTag && new RegExp(searchByTag)
   const textPattern = searchByText && new RegExp(searchByText)
-  const attrNamePattern = searchByAttributeName && new RegExp(searchByAttributeName)
-  const attrValuePattern = searchByAttributeValue && new RegExp(searchByAttributeValue)
-  const styleNamePattern = searchByStyleName && new RegExp(searchByStyleName)
-  const styleValuePattern = searchByStyleValue && new RegExp(searchByStyleValue)
+
+  const attributeValidations = searchByAttribute.map(([attrName, attrValue]) => {
+    const attrNamePattern = new RegExp(attrName)
+    const attrValuePattern = attrValue ? new RegExp(attrValue) : /./g
+
+    return (name, value) => attrNamePattern.test(name) && attrValuePattern.test(value)
+  })
+
+  const styleValidations = searchByStyle.map(([styleName, styleValue]) => {
+    const styleNamePattern = new RegExp(styleName)
+    const styleValuePattern = styleValue ? new RegExp(styleValue) : /./g
+
+    return (name, value) => styleNamePattern.test(name) && styleValuePattern.test(value)
+  })
+
+  const hasAttributesValidations = attributeValidations.length > 0
+  const hasStyleValidations = styleValidations.length > 0
 
   const below = searchBelow && getElementByXPath(searchBelow)
   const allElements = (below || window.document).querySelectorAll('*') || []
@@ -41,30 +52,26 @@ export default async (resolve, _reject, data) => {
       })
     }
 
-    if (attrNamePattern || attrValuePattern) {
+    if (hasAttributesValidations) {
       conditions.push(() => {
         return attrNames.some(name => {
           const value = element.getAttribute(name)
-          const isNameMatch = !attrNamePattern || attrNamePattern.test(name)
-          const isValueMatch = !attrValuePattern || attrValuePattern.test(value)
 
-          return isNameMatch && isValueMatch
+          return attributeValidations.every(validate => validate(name, value))
         })
       })
     }
 
-    if (styleNamePattern || styleValuePattern) {
+    if (hasStyleValidations) {
       conditions.push(() => {
         const computedStyles = getComputedStyle(element)
 
-        for (let i = 0; i < computedStyles.length; i++) {
-          const propName = computedStyles[i]
+        for (let index = 0; index < computedStyles.length; index++) {
+          const propName = computedStyles[index]
           const propValue = computedStyles.getPropertyValue(propName)
+          const isValid = styleValidations.every(validate => validate(propName, propValue))
 
-          const isNameMatch = !styleNamePattern || styleNamePattern.test(propName)
-          const isValueMatch = !styleValuePattern || styleValuePattern.test(propValue)
-
-          if (isNameMatch && isValueMatch) return true
+          if (isValid) return true
         }
 
         return false

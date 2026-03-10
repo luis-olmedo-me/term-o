@@ -19,15 +19,13 @@ export const getArgs = value => {
     const isFlag = /^-([a-zA-Z]+)$/g.test(fragment)
 
     if (startsWithBracket) {
-      const nextFragments = fragments.slice(++index)
+      const nextFragments = fragments.slice(index + 1)
 
       const closedBracketCount = countMatches(fragment, /\]/g)
       let openBracketCount = countMatches(fragment, /\[/g)
       let fragmentValue = fragment
 
       openBracketCount -= closedBracketCount
-
-      if (openBracketCount > 0) index--
 
       for (const nextFragment of nextFragments) {
         if (openBracketCount <= 0) break

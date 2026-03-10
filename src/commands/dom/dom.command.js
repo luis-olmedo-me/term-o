@@ -4,6 +4,7 @@ import { commandNames, commandTypes } from '@src/constants/command.constants'
 import {
   hasAllItemsAs,
   hasLengthBetween,
+  isArray,
   isInteger,
   isPositive,
   isRegExp,
@@ -72,7 +73,8 @@ export default new CommandBase({
     type: commandTypes.ARRAY,
     helpSection: domHelpSections.FILTERS,
     description: 'Filter by attributes (regex[])',
-    validate: [hasLengthBetween(0, 2), hasAllItemsAs(isString, isRegExp)]
+    validate: [hasAllItemsAs(isArray, hasLengthBetween(1, 2), hasAllItemsAs(isString, isRegExp))],
+    defaultValue: []
   })
   .expect({
     name: 'style',
@@ -80,7 +82,8 @@ export default new CommandBase({
     type: commandTypes.ARRAY,
     helpSection: domHelpSections.FILTERS,
     description: 'Filter by CSS styles (regex[])',
-    validate: [hasLengthBetween(0, 2), hasAllItemsAs(isString, isRegExp)]
+    validate: [hasAllItemsAs(isArray, hasLengthBetween(1, 2), hasAllItemsAs(isString, isRegExp))],
+    defaultValue: []
   })
   .expect({
     name: 'tag',

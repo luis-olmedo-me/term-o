@@ -526,6 +526,7 @@ When using `storage` command the options can express **4** possible action:
    ```bash
    search
        --set ["test-name" "test-value"]                                     # REQUIRED
+       --set ["test-1" "another-test-value"]                                # OPTIONAL
        --tab-id "T00000000"                                                 # OPTIONAL
        --session                                                            # OPTIONAL
        --cookie                                                             # OPTIONAL

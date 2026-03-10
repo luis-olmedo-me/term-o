@@ -5,6 +5,7 @@ import {
   hasAllItemsAs,
   hasItemAs,
   hasLength,
+  isArray,
   isSpaceForbidden,
   isString
 } from '@src/helpers/validation-command.helpers'
@@ -21,7 +22,9 @@ export default new CommandBase({
     type: commandTypes.ARRAY,
     helpSection: aliasHelpSections.MANAGEMENT,
     description: 'Add a new alias. Format: ["name" "command"]',
-    validate: [hasLength(2), hasItemAs(0, isSpaceForbidden), hasAllItemsAs(isString)],
+    validate: [
+      hasAllItemsAs(isArray, hasLength(2), hasAllItemsAs(isString), hasItemAs(0, isSpaceForbidden))
+    ],
     worksWith: []
   })
   .expect({

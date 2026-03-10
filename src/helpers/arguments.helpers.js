@@ -27,6 +27,8 @@ export const getArgs = value => {
 
       openBracketCount -= closedBracketCount
 
+      if (openBracketCount > 0) index--
+
       for (const nextFragment of nextFragments) {
         if (openBracketCount <= 0) break
         const nextOpenBracketCount = countMatches(nextFragment, /\[/g)

@@ -14,19 +14,20 @@ export const aliasHandler = async command => {
   }
 
   if (P`add`.length) {
-    const [key, value] = P`add`
-    const newAlias = { key, value }
+    P`add`.forEach(([key, value]) => {
+      const newAlias = { key, value }
 
-    const aliases = storage.get(storageKeys.ALIASES)
-    const alreadyExists = aliases.some(alias => alias.key === key)
+      const aliases = storage.get(storageKeys.ALIASES)
+      const alreadyExists = aliases.some(alias => alias.key === key)
 
-    if (alreadyExists) throw `The alias "${key}" already exists.`
+      if (alreadyExists) throw `The alias "${key}" already exists.`
 
-    const newAliases = aliases.concat(newAlias)
-    const update = formatAlias(newAlias)
+      const newAliases = aliases.concat(newAlias)
+      const update = formatAlias(newAlias)
 
-    storage.set(storageKeys.ALIASES, newAliases)
-    command.update(update)
+      storage.set(storageKeys.ALIASES, newAliases)
+      command.update(update)
+    })
   }
 
   if (P`delete`) {

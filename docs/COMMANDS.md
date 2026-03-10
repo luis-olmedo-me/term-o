@@ -365,6 +365,7 @@ When using `style` command the options can express **3** possible actions:
        --list                                                               # REQUIRED
        --on 'id("cards-container")'                                         # REQUIRED
        --property [".+color" "000.+"]                                       # OPTIONAL
+       --property ["display"]                                               # OPTIONAL
    ```
 
 2. Apply styles to a DOM element (using `--apply`)

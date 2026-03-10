@@ -1,5 +1,6 @@
 import { commandTypes } from '@src/constants/command.constants'
 import { getArray } from './arguments.helpers'
+import { countMatches } from './utils.helpers'
 
 export const getOptionTypeLabel = type => {
   if (type === commandTypes.ARRAY) return '<array>'
@@ -42,6 +43,12 @@ export const parseOptions = (index, arg, argsBySpace, type) => {
 
       if (!value)
         throw `${arg} expects for content inside of quoted ${typeLabel} value. Instead, it received ${argValue}.`
+
+      const quotePattern = new RegExp(`(?<!\\\\)${quote}`, 'g')
+      const quotesCount = countMatches(argValue, quotePattern)
+
+      if (quotesCount !== 2)
+        throw `${arg} expects for a properly quoted ${typeLabel} value. Instead, it received ${argValue}.`
 
       return { value, newIndex: index }
     }

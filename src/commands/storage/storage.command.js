@@ -59,7 +59,7 @@ export default new CommandBase({
   .expect({
     name: 'tab-id',
     abbreviation: 'i',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: storageHelpSections.RETRIEVAL,
     description: 'Specify a tab ID (T[number]) to get storage from',
     validate: [isTabId]
@@ -67,7 +67,7 @@ export default new CommandBase({
   .expect({
     name: 'copy',
     abbreviation: 'C',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: storageHelpSections.MODIFICATION,
     description: 'Copy a value to the clipboard',
     worksWith: []

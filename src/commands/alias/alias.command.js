@@ -39,7 +39,7 @@ export default new CommandBase({
   .expect({
     name: 'delete',
     abbreviation: 'd',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: aliasHelpSections.MANAGEMENT,
     description: 'Remove an alias by name',
     worksWith: []

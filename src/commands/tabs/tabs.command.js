@@ -20,7 +20,7 @@ export default new CommandBase({
   .expect({
     name: 'open',
     abbreviation: 'o',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: tabsHelpSections.TAB_ACTIONS,
     description: 'Open a new tab with the given URL',
     worksWith: ['wait', 'active'],
@@ -29,7 +29,7 @@ export default new CommandBase({
   .expect({
     name: 'reload',
     abbreviation: 'r',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: tabsHelpSections.TAB_ACTIONS,
     description: 'Reload a specific tab by ID (T[number])',
     validate: [isTabId],
@@ -45,7 +45,7 @@ export default new CommandBase({
   .expect({
     name: 'title',
     abbreviation: 't',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: tabsHelpSections.FILTERS,
     description: 'Filter tabs by title (regex)',
     validate: [isRegExp]
@@ -53,7 +53,7 @@ export default new CommandBase({
   .expect({
     name: 'url',
     abbreviation: 'u',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: tabsHelpSections.FILTERS,
     description: 'Filter tabs by URL (regex)',
     validate: [isRegExp]
@@ -75,7 +75,7 @@ export default new CommandBase({
   .expect({
     name: 'window-id',
     abbreviation: 'w',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: tabsHelpSections.FILTERS,
     description: 'Filter tabs by window ID (regex)',
     validate: [isRegExp]
@@ -83,7 +83,7 @@ export default new CommandBase({
   .expect({
     name: 'switch',
     abbreviation: 's',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: tabsHelpSections.TAB_ACTIONS,
     description: 'Switch focus to a specific tab by ID (T[number])',
     validate: [isTabId],
@@ -92,7 +92,7 @@ export default new CommandBase({
   .expect({
     name: 'point',
     abbreviation: 'p',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: tabsHelpSections.TAB_ACTIONS,
     description: 'Point the terminal to a specific tab by ID (T[number])',
     validate: [isTabId],
@@ -101,7 +101,7 @@ export default new CommandBase({
   .expect({
     name: 'close',
     abbreviation: 'c',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: tabsHelpSections.TAB_ACTIONS,
     description: 'Close a specific tab by ID (T[number])',
     validate: [isTabId],

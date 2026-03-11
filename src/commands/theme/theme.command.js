@@ -12,7 +12,7 @@ export default new CommandBase({
   .expect({
     name: 'import',
     abbreviation: 'i',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: themeHelpSections.MANAGEMENT,
     description: 'Import a color scheme in JSON format',
     worksWith: [],
@@ -29,7 +29,7 @@ export default new CommandBase({
   .expect({
     name: 'delete',
     abbreviation: 'd',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: themeHelpSections.MANAGEMENT,
     description: 'Delete a theme by name',
     worksWith: []
@@ -37,7 +37,7 @@ export default new CommandBase({
   .expect({
     name: 'apply',
     abbreviation: 'a',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: themeHelpSections.APPLICATION,
     description: 'Apply a theme by name',
     worksWith: []

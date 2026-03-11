@@ -1,7 +1,7 @@
 # Term-O Commands
 
 > Version 0.9.0  
-> Updated: 2026-03-2
+> Updated: 2026-03-11
 
 ---
 
@@ -73,15 +73,15 @@ When using `dom` command the options can express **2** possible actions:
 
    ```bash
    dom
-       --search                                                     # REQUIRED
-       --attr ["class" "test-class-.+"]                             # OPTIONAL
-       --below 'id("cards-container")'                              # OPTIONAL
-       --content                                                    # OPTIONAL
-       --style ["color" "#00000\d"]                                 # OPTIONAL
-       --tab-id "T00000000"                                         # OPTIONAL
-       --tag "button"                                               # OPTIONAL
-       --text "Buscar con Go.+"                                     # OPTIONAL
-       --xpath                                                      # OPTIONAL
+       --search                                                             # REQUIRED
+       --attr ["class" "test-class-.+"]                                     # OPTIONAL/REPEATABLE
+       --style ["color" "#00000\d"]                                         # OPTIONAL/REPEATABLE
+       --below 'id("cards-container")'                                      # OPTIONAL
+       --tab-id "T00000000"                                                 # OPTIONAL
+       --text "Buscar con Go.+"                                             # OPTIONAL
+       --tag "button"                                                       # OPTIONAL
+       --content                                                            # OPTIONAL
+       --xpath                                                              # OPTIONAL
    ```
 
 2. An element search from an xpath (using `--search-xpath`)
@@ -90,12 +90,12 @@ When using `dom` command the options can express **2** possible actions:
 
    ```bash
    dom
-       --search-xpath 'id("main-container")'                        # REQUIRED
-       --below 'id("cards-container")'                              # OPTIONAL
-       --child 3                                                    # OPTIONAL
-       --parent 2                                                   # OPTIONAL
-       --tab-id "T00000000"                                         # OPTIONAL
-       --xpath                                                      # OPTIONAL
+       --search-xpath 'id("main-container")'                                # REQUIRED
+       --below 'id("cards-container")'                                      # OPTIONAL
+       --child 3                                                            # OPTIONAL
+       --parent 2                                                           # OPTIONAL
+       --tab-id "T00000000"                                                 # OPTIONAL
+       --xpath                                                              # OPTIONAL
    ```
 
 ## TABS
@@ -134,13 +134,13 @@ When using `tabs` command the options can express **8** possible actions:
 
    ```bash
    tabs
-       --list                                                       # REQUIRED
-       --incognito                                                  # OPTIONAL
-       --muted                                                      # OPTIONAL
-       --unmuted                                                    # OPTIONAL
-       --title "Goo.+"                                              # OPTIONAL
-       --url "Goo.+le\.com"                                         # OPTIONAL
-       --window-id "W00000000"                                      # OPTIONAL
+       --list                                                               # REQUIRED
+       --incognito                                                          # OPTIONAL
+       --muted                                                              # OPTIONAL
+       --unmuted                                                            # OPTIONAL
+       --title "Goo.+"                                                      # OPTIONAL
+       --url "Goo.+le\.com"                                                 # OPTIONAL
+       --window-id "W00000000"                                              # OPTIONAL
    ```
 
 2. Open a new tab (using `--open`)
@@ -149,9 +149,9 @@ When using `tabs` command the options can express **8** possible actions:
 
    ```bash
    tabs
-       --open 'https://test.com'                                    # REQUIRED
-       --wait                                                       # OPTIONAL
-       --active                                                     # OPTIONAL
+       --open 'https://test.com'                                            # REQUIRED
+       --wait                                                               # OPTIONAL
+       --active                                                             # OPTIONAL
    ```
 
 3. Reload a tab (using `--reload`)
@@ -160,8 +160,8 @@ When using `tabs` command the options can express **8** possible actions:
 
    ```bash
    tabs
-       --reload 'T0000000'                                          # REQUIRED
-       --wait                                                       # OPTIONAL
+       --reload 'T0000000'                                                  # REQUIRED
+       --wait                                                               # OPTIONAL
    ```
 
 4. Select a tab for the terminal (using `--switch`)
@@ -170,7 +170,7 @@ When using `tabs` command the options can express **8** possible actions:
 
    ```bash
    tabs
-       --switch 'T0000000'                                          # REQUIRED
+       --switch 'T0000000'                                                  # REQUIRED
    ```
 
 5. Select a tab for the terminal (using `--point`)
@@ -179,7 +179,7 @@ When using `tabs` command the options can express **8** possible actions:
 
    ```bash
    tabs
-       --point 'T0000000'                                           # REQUIRED
+       --point 'T0000000'                                                   # REQUIRED
    ```
 
 6. Select a tab for the terminal (using `--close`)
@@ -188,7 +188,7 @@ When using `tabs` command the options can express **8** possible actions:
 
    ```bash
    tabs
-       --close 'T0000000'                                           # REQUIRED
+       --close 'T0000000'                                                   # REQUIRED
    ```
 
 7. Get the current tab (using `--current`)
@@ -197,7 +197,7 @@ When using `tabs` command the options can express **8** possible actions:
 
    ```bash
    tabs
-       --current                                                    # REQUIRED
+       --current                                                            # REQUIRED
    ```
 
 8. Get the tab pointed by the terminal (using `--pointing`)
@@ -206,7 +206,7 @@ When using `tabs` command the options can express **8** possible actions:
 
    ```bash
    tabs
-       --pointing                                                   # REQUIRED
+       --pointing                                                           # REQUIRED
    ```
 
 ## HISTORY
@@ -236,12 +236,12 @@ When using `history` command the options can express **2** possible actions:
 
    ```bash
    history
-       --list                                                       # REQUIRED
-       --title "Goo.+"                                              # OPTIONAL
-       --url "Goo.+le\.com"                                         # OPTIONAL
-       --max-results 5                                              # OPTIONAL
-       --from "2026-02-26T19:47:16.836Z"                            # OPTIONAL
-       --to "2026-02-27T05:03:22.965Z"                              # OPTIONAL
+       --list                                                               # REQUIRED
+       --title "Goo.+"                                                      # OPTIONAL
+       --url "Goo.+le\.com"                                                 # OPTIONAL
+       --max-results 5                                                      # OPTIONAL
+       --from "2026-02-26T19:47:16.836Z"                                    # OPTIONAL
+       --to "2026-02-27T05:03:22.965Z"                                      # OPTIONAL
    ```
 
 2. Delete old tabs from history by range (using `--delete`)
@@ -250,9 +250,9 @@ When using `history` command the options can express **2** possible actions:
 
    ```bash
    history
-       --delete                                                     # REQUIRED
-       --from "2026-02-26T19:47:16.836Z"                            # REQUIRED
-       --to "2026-02-27T05:03:22.965Z"                              # REQUIRED
+       --delete                                                             # REQUIRED
+       --from "2026-02-26T19:47:16.836Z"                                    # REQUIRED
+       --to "2026-02-27T05:03:22.965Z"                                      # REQUIRED
    ```
 
 ## REQUEST
@@ -281,12 +281,12 @@ When using `request` command the options can express **1** possible action:
 
    ```bash
    request
-       --fetch                                                      # REQUIRED
-       --url "https://test.com/api/v2/test"                         # REQUIRED
-       --headers ["Authorization: test large id", "header: test"]   # OPTIONAL
-       --payload '{ "test": "test-value" }'                         # OPTIONAL
-       --method "GET"                                               # OPTIONAL
-       --read-as "json"                                             # OPTIONAL
+       --fetch                                                              # REQUIRED
+       --url "https://test.com/api/v2/test"                                 # REQUIRED
+       --headers ["Authorization" "test large id"]                          # OPTIONAL/REPEATABLE
+       --payload '{ "test": "test-value" }'                                 # OPTIONAL
+       --method "GET"                                                       # OPTIONAL
+       --read-as "json"                                                     # OPTIONAL
    ```
 
 ## ALIAS
@@ -312,7 +312,7 @@ When using `alias` command the options can express **3** possible actions:
 
    ```bash
    alias
-       --list                                                       # REQUIRED
+       --list                                                               # REQUIRED
    ```
 
 2. Add a new alias (using `--add`)
@@ -321,7 +321,7 @@ When using `alias` command the options can express **3** possible actions:
 
    ```bash
    alias
-       --add ["gotest", 'tabs --open "https://test.com" --wait']    # REQUIRED
+       --add ["gotest", 'tabs --open "https://test.com" --wait']            # REQUIRED/REPEATABLE
    ```
 
    After that command is executed, you can just type `gotest` to open "https://test.com" in a new tab.
@@ -332,7 +332,7 @@ When using `alias` command the options can express **3** possible actions:
 
    ```bash
    alias
-       --delete "gotest"                                            # REQUIRED
+       --delete "gotest"                                                    # REQUIRED
    ```
 
 ## STYLE
@@ -345,7 +345,7 @@ The `style` command is a bridge to manage aliases of commands in the terminal.
 | --------------------------------------------------- | ----- | ---------------------------------------------------------- |
 | `--list`                                            | `-l`  | List CSS styles applied to elements matching the criteria. |
 | `--on <xpath>`                                      | `-o`  | XPath expression to select elements.                       |
-| `--apply <inlinestyles>`                            | `-a`  | Apply inline styles to elements matching the criteria.     |
+| `--apply <inlinestyles>`                            | `-a`  | Apply styles to elements matching the criteria.            |
 | `--color-pick`                                      | `-c`  | Pick a color by clicking on the web page.                  |
 | `--property <[stylename<regex> stylevalue<regex>]>` | `-p`  | Filter styles by property names.                           |
 | `--selector <selector<regex>>`                      | `-s`  | Filter elements by CSS selector.                           |
@@ -361,9 +361,9 @@ When using `style` command the options can express **3** possible actions:
 
    ```bash
    style
-       --list                                                       # REQUIRED
-       --on 'id("cards-container")'                                 # REQUIRED
-       --property [".+color" "000.+"]                               # OPTIONAL
+       --list                                                               # REQUIRED
+       --on 'id("cards-container")'                                         # REQUIRED
+       --property [".+color" "000.+"]                                       # OPTIONAL/REPEATABLE
    ```
 
 2. Apply styles to a DOM element (using `--apply`)
@@ -372,8 +372,8 @@ When using `style` command the options can express **3** possible actions:
 
    ```bash
    style
-       --apply "display: none; color: red;"                         # REQUIRED
-       --on 'id("cards-container")'                                 # REQUIRED
+       --apply ["display" "none"]                                           # REQUIRED/REPEATABLE
+       --on 'id("cards-container")'                                         # REQUIRED
    ```
 
 3. Pick a color (using `--color-pick`)
@@ -382,7 +382,7 @@ When using `style` command the options can express **3** possible actions:
 
    ```bash
    style
-       --color-pick                                                 # REQUIRED
+       --color-pick                                                         # REQUIRED
    ```
 
 ## INSPECT
@@ -407,8 +407,8 @@ When using `inspect` command the options can express **1** possible action:
 
    ```bash
    inspect
-       --path "window.screen"                                       # REQUIRED
-       --tab-id "T00000000"                                         # OPTIONAL
+       --path "window.screen"                                               # REQUIRED
+       --tab-id "T00000000"                                                 # OPTIONAL
    ```
 
 ## NOTIFY
@@ -435,10 +435,10 @@ When using `notify` command the options can express **1** possible action:
 
    ```bash
    notify
-       --create                                                     # REQUIRED
-       --title "Testing Title"                                      # REQUIRED
-       --message "Message to be aware of."                          # REQUIRED
-       --tab-id "T00000000"                                         # OPTIONAL
+       --create                                                             # REQUIRED
+       --title "Testing Title"                                              # REQUIRED
+       --message "Message to be aware of."                                  # REQUIRED
+       --tab-id "T00000000"                                                 # OPTIONAL
    ```
 
 ## SEARCH
@@ -463,8 +463,8 @@ When using `search` command the options can express **1** possible action:
 
    ```bash
    search
-       --query "test\.testing"                                      # REQUIRED
-       --input "template test.testing"                              # REQUIRED
+       --query "test\.testing"                                              # REQUIRED
+       --input "template test.testing"                                      # REQUIRED
    ```
 
 ## STORAGE
@@ -494,8 +494,8 @@ When using `storage` command the options can express **4** possible action:
 
    ```bash
    search
-       --local                                                      # REQUIRED
-       --tab-id "T00000000"                                         # OPTIONAL
+       --local                                                              # REQUIRED
+       --tab-id "T00000000"                                                 # OPTIONAL
    ```
 
 2. Get a summary of session storage in a tab (using `--session`)
@@ -504,8 +504,8 @@ When using `storage` command the options can express **4** possible action:
 
    ```bash
    search
-       --session                                                    # REQUIRED
-       --tab-id "T00000000"                                         # OPTIONAL
+       --session                                                            # REQUIRED
+       --tab-id "T00000000"                                                 # OPTIONAL
    ```
 
 3. Get a summary of cookies storage in a tab (using `--cookie`)
@@ -514,8 +514,8 @@ When using `storage` command the options can express **4** possible action:
 
    ```bash
    search
-       --cookie                                                     # REQUIRED
-       --tab-id "T00000000"                                         # OPTIONAL
+       --cookie                                                             # REQUIRED
+       --tab-id "T00000000"                                                 # OPTIONAL
    ```
 
 4. Set a value in a certain storage at a certain tab (using `--set`)
@@ -524,11 +524,11 @@ When using `storage` command the options can express **4** possible action:
 
    ```bash
    search
-       --set ["test-name" "test-value"]                             # REQUIRED
-       --tab-id "T00000000"                                         # OPTIONAL
-       --session                                                    # OPTIONAL
-       --cookie                                                     # OPTIONAL
-       --local                                                      # OPTIONAL
+       --set ["test-name" "test-value"]                                     # REQUIRED/REPEATABLE
+       --tab-id "T00000000"                                                 # OPTIONAL
+       --session                                                            # OPTIONAL
+       --cookie                                                             # OPTIONAL
+       --local                                                              # OPTIONAL
    ```
 
 ## ERROR
@@ -550,7 +550,7 @@ When using `error` command the options can express **1** possible action:
 
    ```bash
    search
-       --title "test title"                                         # REQUIRED
+       --title "test title"                                                 # REQUIRED
    ```
 
 ## EVENTS
@@ -579,9 +579,9 @@ When using `evennts` command the options can express **4** possible action:
 
    ```bash
    search
-       --trigger "click"                                            # REQUIRED
-       --xpath 'id("main-container")'                               # REQUIRED
-       --tab-id "T00000000"                                         # OPTIONAL
+       --trigger "click"                                                    # REQUIRED
+       --xpath 'id("main-container")'                                       # REQUIRED
+       --tab-id "T00000000"                                                 # OPTIONAL
    ```
 
 2. Create a summary of all the page events created (using `--list`)
@@ -590,7 +590,7 @@ When using `evennts` command the options can express **4** possible action:
 
    ```bash
    events
-       --list                                                       # REQUIRED
+       --list                                                               # REQUIRED
    ```
 
 3. Create a page events (using `--register`)
@@ -599,9 +599,9 @@ When using `evennts` command the options can express **4** possible action:
 
    ```bash
    events
-       --register                                                   # REQUIRED
-       --url 'https://test.com'                                     # REQUIRED
-       --command 'tabs --open "https://test.com" --wait'            # REQUIRED
+       --register                                                           # REQUIRED
+       --url 'https://test.com'                                             # REQUIRED
+       --command 'tabs --open "https://test.com" --wait'                    # REQUIRED
    ```
 
 4. Delete a page events (using `--delete`)
@@ -610,7 +610,7 @@ When using `evennts` command the options can express **4** possible action:
 
    ```bash
    events
-       --delete "9edb327b-b67f-4a3e-9e10-90b35ad1f3e5"              # REQUIRED
+       --delete "9edb327b-b67f-4a3e-9e10-90b35ad1f3e5"                      # REQUIRED
    ```
 
 ## INPUT
@@ -632,7 +632,7 @@ When using `input` command the options can express **1** possible action:
 
    ```bash
    input
-       --request                                                    # REQUIRED
+       --request                                                            # REQUIRED
    ```
 
 ## THEME
@@ -658,7 +658,7 @@ When using `theme` command the options can express **5** possible actions:
 
    ```bash
    theme
-       --list                                                       # REQUIRED
+       --list                                                               # REQUIRED
    ```
 
 2. Delete a theme by its name (using `--delete`)
@@ -667,7 +667,7 @@ When using `theme` command the options can express **5** possible actions:
 
    ```bash
    theme
-       --delete "an-already-imported-theme-name"                    # REQUIRED
+       --delete "an-already-imported-theme-name"                            # REQUIRED
    ```
 
 3. Change the current theme in use (using `--apply`)
@@ -676,7 +676,7 @@ When using `theme` command the options can express **5** possible actions:
 
    ```bash
    theme
-       --apply "an-already-imported-theme-name"                     # REQUIRED
+       --apply "an-already-imported-theme-name"                             # REQUIRED
    ```
 
 4. Import a theme (using `--import`)
@@ -685,7 +685,7 @@ When using `theme` command the options can express **5** possible actions:
 
    ```bash
    theme
-       --import '{ "name": "an-already-imported-theme-name", ... }'  # REQUIRED
+       --import '{ "name": "an-already-imported-theme-name", ... }'         # REQUIRED
    ```
 
    Please, see [theme-example.json](assets/theme-example.json) to find a more detailed example of a valid theme.
@@ -696,7 +696,7 @@ When using `theme` command the options can express **5** possible actions:
 
    ```bash
    theme
-       --current                                                    # REQUIRED
+       --current                                                            # REQUIRED
    ```
 
 ## ADDONS
@@ -722,7 +722,7 @@ When using `theme` command the options can express **3** possible actions:
 
    ```bash
    addons
-       --list                                                       # REQUIRED
+       --list                                                               # REQUIRED
    ```
 
 2. Delete a addon by its name (using `--delete`)
@@ -731,7 +731,7 @@ When using `theme` command the options can express **3** possible actions:
 
    ```bash
    addons
-       --delete "an-already-imported-addon-name"                    # REQUIRED
+       --delete "an-already-imported-addon-name"                            # REQUIRED
    ```
 
 3. Upload an addon (using `--upload`)
@@ -740,7 +740,7 @@ When using `theme` command the options can express **3** possible actions:
 
    ```bash
    theme
-       --upload                                                     # REQUIRED
+       --upload                                                             # REQUIRED
    ```
 
    Please, see [addon-example.json](assets/addon-example.json) to find a more detailed example of a valid addon.

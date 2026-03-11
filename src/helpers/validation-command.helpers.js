@@ -1,4 +1,5 @@
 import { validateSchema } from '@src/helpers/validation-schema.helpers'
+import { getArrayAsLine } from './arguments.helpers'
 
 export const isRegExp = (option, value) => {
   try {
@@ -95,55 +96,29 @@ export const isInteger = (option, value) => {
   }
 }
 
+export const isString = (option, value) => {
+  if (typeof value !== 'string') {
+    const valueValidated = Array.isArray(value) ? getArrayAsLine(value) : value
+    const name = option.displayName
+
+    throw `${name} expects an string value. Instead, it received "${valueValidated}".`
+  }
+}
+
+export const isArray = (option, value) => {
+  if (!Array.isArray(value)) {
+    const name = option.displayName
+
+    throw `${name} expects an array value. Instead, it received "${value}".`
+  }
+}
+
 export const isSpaceForbidden = (option, value) => {
   if (value.includes(' ')) {
     const name = option.displayName
 
     throw `${name} expects a value without space characters. Instead, it received "${value}".`
   }
-}
-
-export const isInlineStyles = (option, value) => {
-  const validPropertyName = /^[-\w]+$/
-  const validPropertyValue = /^[\w\s.%#()-]+$/
-
-  const stylesArray = value.split(';')
-
-  for (const style of stylesArray) {
-    const trimmedStyle = style.trim()
-
-    if (trimmedStyle === '') continue
-
-    const [propName, propValue] = trimmedStyle.split(':').map(part => part?.trim())
-    const isMissingContent = propName === '' || propValue === ''
-    const isInvalidPropName = !validPropertyName.test(propName)
-    const isInvalidPropValue = !validPropertyValue.test(propValue)
-
-    if (isMissingContent || isInvalidPropName || isInvalidPropValue) {
-      const name = option.displayName
-
-      throw `${name} expects valid inline styles. Instead, it received "${value}".`
-    }
-  }
-}
-
-export const hasInlineHeaders = (option, values) => {
-  values.forEach(value => {
-    const name = option.displayName
-
-    const trimmedHeader = value.trim()
-
-    if (trimmedHeader === '' || !value.includes(':'))
-      throw `${name} must follow this pattern "name: value". Instead, it received "${value}".`
-
-    const [propName, propValue] = trimmedHeader.split(':').map(part => part?.trim())
-    const isMissingContent = propName === '' || propValue === ''
-    const isInvalidPropName = propName.includes(' ')
-
-    if (isMissingContent || isInvalidPropName) {
-      throw `${name} expects valid inline header. Instead, it received "${value}".`
-    }
-  })
 }
 
 export const hasLength = staticLength => {
@@ -154,7 +129,7 @@ export const hasLength = staticLength => {
       const name = option.displayName
       const count = value.length
 
-      throw `${name}expects ${staticLength} value(s). Instead, it received ${count}.`
+      throw `${name} expects ${staticLength} value(s). Instead, it received ${count}.`
     }
   }
 }
@@ -167,7 +142,7 @@ export const hasLengthBetween = (min, max) => {
       const name = option.displayName
       const count = value.length
 
-      throw `${name}expects between ${min} and ${max} value(s). Instead, it received ${count}.`
+      throw `${name} expects between ${min} and ${max} value(s). Instead, it received ${count}.`
     }
   }
 }

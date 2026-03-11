@@ -1,5 +1,6 @@
 import { stringifyFragments } from './command.helpers'
-import { getQuotedString } from './utils.helpers'
+import { isArray, isQuoted } from './string.helpers'
+import { countMatches, getQuotedString } from './utils.helpers'
 
 export const getArgs = value => {
   const fragments = value.split(' ')
@@ -19,26 +20,21 @@ export const getArgs = value => {
     const isFlag = /^-([a-zA-Z]+)$/g.test(fragment)
 
     if (startsWithBracket) {
-      const startBrancket = '['
-      const endBrancket = ']'
-      const endsWithQuote = fragment.endsWith(endBrancket)
+      const nextFragments = fragments.slice(index + 1)
 
-      if (endsWithQuote && fragment.length > 1) {
-        addFragment(fragment)
-        continue
-      }
-
-      const nextFragments = fragments.slice(++index)
+      const closedBracketCount = countMatches(fragment, /\]/g)
+      let openBracketCount = countMatches(fragment, /\[/g)
       let fragmentValue = fragment
-      let ignoredEndBrackets = 0
+
+      openBracketCount -= closedBracketCount
 
       for (const nextFragment of nextFragments) {
+        if (openBracketCount <= 0) break
+        const nextOpenBracketCount = countMatches(nextFragment, /\[/g)
+        const nextClosedBracketCount = countMatches(nextFragment, /\]/g)
+
+        openBracketCount += nextOpenBracketCount - nextClosedBracketCount
         fragmentValue += ` ${nextFragment}`
-
-        if (nextFragment.startsWith(startBrancket)) ++ignoredEndBrackets
-        if (nextFragment.endsWith(endBrancket) && !ignoredEndBrackets) break
-        if (nextFragment.endsWith(endBrancket) && ignoredEndBrackets) --ignoredEndBrackets
-
         index++
       }
 
@@ -112,12 +108,31 @@ export const splitBy = (value, key) => {
 }
 
 export const getArray = value => {
-  const items = value.slice(1).slice(0, -1)
-  const itemsAsArgs = getArgs(items)
+  const inner = value.slice(1, -1)
+  const args = getArgs(inner)
 
-  return itemsAsArgs.map(item => {
-    return /^"|^'/.test(item) ? item.slice(1).slice(0, -1) : ''
-  })
+  const result = []
+
+  for (const arg of args) {
+    const parsed = parseArrayItem(arg)
+
+    if (parsed === null) return null
+
+    result.push(parsed)
+  }
+
+  return result
+}
+
+export const getArrayAsLine = value => {
+  const arrayValuesAsLine = value.reduce((line, arg, index) => {
+    const isArray = Array.isArray(arg)
+    const space = index === 0 ? '' : ' '
+
+    return isArray ? `${line}${space}${getArrayAsLine(arg)}` : `${line}${space}${arg}`
+  }, '')
+
+  return `[${arrayValuesAsLine}]`
 }
 
 export const buildArgsFromProps = (props, name = null) => {
@@ -127,9 +142,8 @@ export const buildArgsFromProps = (props, name = null) => {
     switch (typeof value) {
       case 'object': {
         const isArray = Array.isArray(value)
-        const formattedValues = isArray ? value.map(item => `"${item}"`) : []
 
-        return isArray ? [...args, `--${name}`, `[${formattedValues.join(' ')}]`] : args
+        return isArray ? [...args, `--${name}`, getArrayAsLine(value)] : args
       }
 
       case 'boolean': {
@@ -171,4 +185,20 @@ export const getParamValue = (indexes, values) => {
   const params = indexes.map(index => values[index]).filter(value => typeof value !== 'undefined')
 
   return `[${stringifyFragments(params)}]`
+}
+
+const parseArrayItem = value => {
+  if (isQuoted(value)) {
+    return value.slice(1, -1)
+  }
+
+  if (value === 'true') return true
+  if (value === 'false') return false
+
+  if (isArray(value)) return getArray(value)
+
+  const num = Number(value)
+  if (!Number.isNaN(num)) return num
+
+  return null
 }

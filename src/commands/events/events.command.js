@@ -23,7 +23,7 @@ export default new CommandBase({
   .expect({
     name: 'xpath',
     abbreviation: 'x',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: eventsHelpSections.CREATION,
     description: 'XPath selector for the target element',
     validate: [isXpath]
@@ -31,7 +31,7 @@ export default new CommandBase({
   .expect({
     name: 'tab-id',
     abbreviation: 'i',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: eventsHelpSections.CREATION,
     description: 'Trigger events in a specific tab (T[number])',
     validate: [isTabId]
@@ -48,7 +48,7 @@ export default new CommandBase({
   .expect({
     name: 'url',
     abbreviation: 'u',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: eventsHelpSections.CREATION,
     description: 'URL pattern where the event will trigger (regex)',
     validate: [isRegExp]
@@ -56,7 +56,7 @@ export default new CommandBase({
   .expect({
     name: 'command',
     abbreviation: 'c',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: eventsHelpSections.CREATION,
     description: 'Command line to execute'
   })
@@ -71,7 +71,7 @@ export default new CommandBase({
   .expect({
     name: 'delete',
     abbreviation: 'd',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: eventsHelpSections.MANAGEMENT,
     description: 'Delete a registered event by its id',
     worksWith: []

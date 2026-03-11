@@ -14,16 +14,20 @@ export const storageHandler = async command => {
 
   if (P`local` || P`session` || P`cookie`) {
     const isSetting = P`set`.length > 0
-    const [key, value] = P`set`
-    const namespace = getStorageNamespace(P`local`, P`session`, P`cookie`)
     let storage = null
 
     if (isSetting) {
-      storage = await processManager.setStorage(tabId, {
-        namespace,
-        key,
-        value
-      })
+      const namespace = getStorageNamespace(P`local`, P`session`, P`cookie`)
+
+      for (const [key, value] of P`set`) {
+        await processManager.setStorage(tabId, {
+          namespace,
+          key,
+          value
+        })
+
+        storage = { ...storage, [key]: value }
+      }
     } else {
       storage = await processManager.getStorage(tabId, {
         includeLocal: P`local`,

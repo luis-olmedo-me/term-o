@@ -1,11 +1,12 @@
 import { commandTypes } from './command.constants'
 
 export const optionDefaultValues = {
-  [commandTypes.STRING_ARRAY]: [],
+  [commandTypes.ARRAY]: [],
   [commandTypes.STRING]: '',
   [commandTypes.BOOLEAN]: false,
   [commandTypes.NUMBER]: 0,
-  [commandTypes.NONE]: null
+  none: null,
+  repeated: []
 }
 
 export const eventsAvailable = {

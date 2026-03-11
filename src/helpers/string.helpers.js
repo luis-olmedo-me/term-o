@@ -8,3 +8,14 @@ export const toTitleCase = value => {
 export const insert = (value, index, insertion) => {
   return `${value.slice(0, index)}${insertion}${value.slice(index)}`
 }
+
+export const isQuoted = value => {
+  const isDoubleQuoted = value.startsWith('"') && value.endsWith('"')
+  const isSingleQuoted = value.startsWith("'") && value.endsWith("'")
+
+  return isDoubleQuoted || isSingleQuoted
+}
+
+export const isArray = value => {
+  return value.startsWith('[') && value.endsWith(']')
+}

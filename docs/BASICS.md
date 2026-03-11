@@ -1,7 +1,7 @@
 # Term-O Basics
 
 > Version 0.9.0  
-> Updated: 2026-03-2
+> Updated: 2026-03-10
 
 ---
 
@@ -66,6 +66,8 @@ Options are data supplied to the command handler and are defined within the user
 It is important to understand that options are hard typed in Term-O. That means that if an option expects for a explicit value (i.e. "string"), the input must have quotes.
 
 A command with existing options will always require options described within the input otherwise you will get an error at execution.
+
+Some options can be repeated in one command line sentence. This means it can describe one or more values. Internally they are handled as an array.
 
 ---
 
@@ -155,13 +157,11 @@ command --enabled
 Array types are defined as a chain of values. This means they can contain many values inside and are described almost the same as arrays are in javascript/JSON but without commas.
 
 ```bash
-command --titles ["title-1" "title-2"]
+command --titles ["title-1" 23 false ["embed-value" 2]]
 'test-answer-1' false ["answer-1" "answer-1"]
 'test-answer-2' true ["answer-2" "answer-2"]
 'test-answer-3' false ["answer-3" "answer-3"]
 ```
-
-> Currently, arrays can only contain String values but this is schedule to be updated in future Term-O versions.
 
 ## Number
 

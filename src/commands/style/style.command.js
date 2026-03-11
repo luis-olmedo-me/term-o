@@ -3,9 +3,13 @@ import CommandBase from '@src/templates/CommandBase'
 import { commandNames, commandTypes } from '@src/constants/command.constants'
 import {
   hasAllItemsAs,
+  hasItemAs,
+  hasLength,
   hasLengthBetween,
-  isInlineStyles,
+  isArray,
   isRegExp,
+  isSpaceForbidden,
+  isString,
   isXpath
 } from '@src/helpers/validation-command.helpers'
 import { styleHelpSections } from './style.constants'
@@ -27,12 +31,16 @@ export default new CommandBase({
   .expect({
     name: 'apply',
     abbreviation: 'a',
-    type: commandTypes.STRING,
+    type: commandTypes.ARRAY,
     helpSection: styleHelpSections.MODIFICATION,
-    description: 'Apply inline styles to elements matching the criteria',
-    validate: [isInlineStyles],
+    description: 'Apply styles to elements matching the criteria',
+    validate: [
+      hasAllItemsAs(isArray, hasLength(2), hasAllItemsAs(isString), hasItemAs(0, isSpaceForbidden))
+    ],
     worksWith: ['on'],
-    mustHave: ['on']
+    mustHave: ['on'],
+    defaultValue: [],
+    repeatable: true
   })
   .expect({
     name: 'color-pick',
@@ -54,8 +62,9 @@ export default new CommandBase({
   .expect({
     name: 'property',
     abbreviation: 'p',
-    type: commandTypes.STRING_ARRAY,
+    type: commandTypes.ARRAY,
     helpSection: styleHelpSections.FILTERS,
     description: 'Filter styles by property names (regex[])',
-    validate: [hasAllItemsAs(isRegExp), hasLengthBetween(0, 2)]
+    validate: [hasAllItemsAs(isArray, hasLengthBetween(1, 2), hasAllItemsAs(isRegExp, isString))],
+    repeatable: true
   })

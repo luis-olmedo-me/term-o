@@ -18,9 +18,15 @@ export class CommandBase {
     worksWith,
     mustHave,
     description,
-    helpSection
+    helpSection,
+    repeatable = false
   }) {
-    const value = (defaultValue || optionDefaultValues[type]) ?? optionDefaultValues.none
+    const defaultValueByRepeatanceness = repeatable ? optionDefaultValues.repeated : null
+    const value =
+      defaultValue ??
+      defaultValueByRepeatanceness ??
+      optionDefaultValues[type] ??
+      optionDefaultValues.none
 
     this.options.add({
       name,
@@ -29,6 +35,7 @@ export class CommandBase {
       abbreviation,
       helpSection,
       description,
+      repeatable,
       validations: validate,
       dependencies: worksWith,
       strictDependencies: mustHave

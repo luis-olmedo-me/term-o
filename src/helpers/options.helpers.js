@@ -1,8 +1,9 @@
 import { commandTypes } from '@src/constants/command.constants'
 import { getArray } from './arguments.helpers'
+import { countMatches } from './utils.helpers'
 
 export const getOptionTypeLabel = type => {
-  if (type === commandTypes.STRING_ARRAY) return '<string[]>'
+  if (type === commandTypes.ARRAY) return '<array>'
   if (type === commandTypes.STRING) return '<string>'
   if (type === commandTypes.NUMBER) return '<number>'
   if (type === commandTypes.BOOLEAN) return '<boolean>'
@@ -43,6 +44,12 @@ export const parseOptions = (index, arg, argsBySpace, type) => {
       if (!value)
         throw `${arg} expects for content inside of quoted ${typeLabel} value. Instead, it received ${argValue}.`
 
+      const quotePattern = new RegExp(`(?<!\\\\)${quote}`, 'g')
+      const quotesCount = countMatches(argValue, quotePattern)
+
+      if (quotesCount !== 2)
+        throw `${arg} expects for a properly quoted ${typeLabel} value. Instead, it received ${argValue}.`
+
       return { value, newIndex: index }
     }
 
@@ -61,7 +68,7 @@ export const parseOptions = (index, arg, argsBySpace, type) => {
       return { value, newIndex: index }
     }
 
-    case commandTypes.STRING_ARRAY: {
+    case commandTypes.ARRAY: {
       index++
       const argValue = argsBySpace.at(index) || ''
 
@@ -75,16 +82,9 @@ export const parseOptions = (index, arg, argsBySpace, type) => {
         throw `${arg} expects for ${typeLabel} value. Instead, it received ${argValue}.`
 
       const arrayValue = getArray(argValue)
-      const isValidValue = arrayValue.every(value => {
-        const isString = typeof value === 'string'
-        const hasContent = Boolean(value)
 
-        return isString && hasContent
-      })
-      const hasItems = arrayValue.length > 0
-
-      if (!isValidValue || !hasItems)
-        throw `${arg} expects for valid content in ${typeLabel} value(s). Instead, it received ${argValue}.`
+      if (arrayValue === null)
+        throw `${arg} expects for ${typeLabel} value. Instead, it received ${argValue}.`
 
       return { value: arrayValue, newIndex: index }
     }
@@ -107,8 +107,12 @@ export const getPropsFromString = command => {
       const propName = argValue.slice(2)
       const option = command.options.getByName(propName)
       const nextArg = args[index + 1]
+      const alreadySetValue = props[option.name]
 
-      if (typeof props[option.name] !== 'undefined') throw `${argValue} is a repeated argument.`
+      const overwritesOptionValue = typeof alreadySetValue !== 'undefined'
+      const isArrayOption = option.type === commandTypes.ARRAY
+
+      if (overwritesOptionValue && !isArrayOption) throw `${argValue} is a repeated argument.`
 
       if (isParam(option, nextArg)) {
         index++
@@ -119,18 +123,23 @@ export const getPropsFromString = command => {
 
       const argName = option.displayName
       const { value, newIndex } = parseOptions(index, argName, argValues, option.type)
-      option.validate(value)
+      const completeValue = isArrayOption ? [...(alreadySetValue || []), value] : value
+      option.validate(completeValue)
       index = newIndex
 
-      props = { ...props, [option.name]: value }
+      props = { ...props, [option.name]: completeValue }
       continue
     }
     if (argValue.startsWith('-')) {
       const propAbbreviation = argValue.slice(1)
       const option = command.options.getByAbbreviation(propAbbreviation)
       const nextArg = args[index + 1]
+      const alreadySetValue = props[option.name]
 
-      if (typeof props[option.name] !== 'undefined') throw `${argValue} is a repeated argument.`
+      const overwritesOptionValue = typeof alreadySetValue !== 'undefined'
+      const isRepeatable = option.repeatable
+
+      if (overwritesOptionValue && !isRepeatable) throw `${argValue} is a repeated argument.`
 
       if (isParam(option, nextArg)) {
         index++
@@ -141,10 +150,11 @@ export const getPropsFromString = command => {
 
       const argName = option.displayName
       const { value, newIndex } = parseOptions(index, argName, argValues, option.type)
-      option.validate(value)
+      const completeValue = isRepeatable ? [...(alreadySetValue || []), value] : value
+      option.validate(completeValue)
       index = newIndex
 
-      props = { ...props, [option.name]: value }
+      props = { ...props, [option.name]: completeValue }
       continue
     }
 

@@ -37,20 +37,6 @@ export const executePerUpdates = async (nextCommand, updates) => {
   }
 }
 
-export const updateSimplifiedCommandsWith = (simplifiedCommands, command, commandId) => {
-  if (!command) return simplifiedCommands
-
-  const isAlreadyAdded = simplifiedCommands.some(oldCommand => oldCommand.id === commandId)
-
-  return isAlreadyAdded
-    ? simplifiedCommands.map(oldCommand =>
-        oldCommand.id === commandId
-          ? { ...oldCommand, updates: command.updates, status: command.status }
-          : oldCommand
-      )
-    : [...simplifiedCommands, command.jsonUI()]
-}
-
 const getHighestTitleCountInSection = (sectionNames, options) => {
   return sectionNames.reduce((max, sectionName) => {
     const optionsBySection = options.getByHelpSection(sectionName)

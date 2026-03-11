@@ -1,7 +1,14 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
-import { hasItemAs, hasLength, isSpaceForbidden } from '@src/helpers/validation-command.helpers'
+import {
+  hasAllItemsAs,
+  hasItemAs,
+  hasLength,
+  isArray,
+  isSpaceForbidden,
+  isString
+} from '@src/helpers/validation-command.helpers'
 import { aliasHelpSections } from './alias.constants'
 import { aliasHandler } from './alias.handler'
 
@@ -12,11 +19,14 @@ export default new CommandBase({
   .expect({
     name: 'add',
     abbreviation: 'a',
-    type: commandTypes.STRING_ARRAY,
+    type: commandTypes.ARRAY,
     helpSection: aliasHelpSections.MANAGEMENT,
     description: 'Add a new alias. Format: ["name" "command"]',
-    validate: [hasLength(2), hasItemAs(0, isSpaceForbidden)],
-    worksWith: []
+    validate: [
+      hasAllItemsAs(isArray, hasLength(2), hasAllItemsAs(isString), hasItemAs(0, isSpaceForbidden))
+    ],
+    worksWith: [],
+    repeatable: true
   })
   .expect({
     name: 'list',
@@ -29,7 +39,7 @@ export default new CommandBase({
   .expect({
     name: 'delete',
     abbreviation: 'd',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: aliasHelpSections.MANAGEMENT,
     description: 'Remove an alias by name',
     worksWith: []

@@ -20,7 +20,7 @@ export default new CommandBase({
   .expect({
     name: 'title',
     abbreviation: 't',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: historyHelpSections.FILTERS,
     description: 'Filter pages by title (regex)',
     validate: [isRegExp]
@@ -28,7 +28,7 @@ export default new CommandBase({
   .expect({
     name: 'url',
     abbreviation: 'u',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: historyHelpSections.FILTERS,
     description: 'Filter pages by URL (regex)',
     validate: [isRegExp]
@@ -36,7 +36,7 @@ export default new CommandBase({
   .expect({
     name: 'max-results',
     abbreviation: 'r',
-    type: 'number',
+    type: commandTypes.NUMBER,
     helpSection: historyHelpSections.FILTERS,
     description: 'Limit the number of items displayed',
     validate: [isPositive, isInteger],
@@ -54,7 +54,7 @@ export default new CommandBase({
   .expect({
     name: 'from',
     abbreviation: 'F',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: historyHelpSections.FILTERS,
     description: 'Start date for deletion or filtering',
     validate: [isDate]
@@ -62,7 +62,7 @@ export default new CommandBase({
   .expect({
     name: 'to',
     abbreviation: 'T',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: historyHelpSections.FILTERS,
     description: 'End date for deletion or filtering',
     validate: [isDate]

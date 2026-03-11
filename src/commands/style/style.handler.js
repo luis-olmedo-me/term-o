@@ -15,29 +15,30 @@ export const styleHandler = async command => {
     const config = storage.get(storageKeys.CONFIG)
 
     command.update(['"Searching element styles."'])
-    const styles = await processManager.getElementStyles(tabId, {
+    const styledElement = await processManager.getElementStyles(tabId, {
       searchByXpath: P`on`,
       searchByProperty: P`property`,
       theme: config.theme
     })
-    const formattedStyles = styles.map(formatStyle)
+
+    const formattedStyles = formatStyle(styledElement)
 
     command.reset()
-    command.update(...formattedStyles)
+    if (styledElement.styles.length) command.update(formattedStyles)
   }
 
-  if (P`apply`) {
+  if (P`apply`.length) {
     const config = storage.get(storageKeys.CONFIG)
 
-    const rules = await processManager.applyElementStyles(tabId, {
+    const styledElement = await processManager.applyElementStyles(tabId, {
       searchByXpath: P`on`,
-      newInlineStyles: P`apply`,
+      styles: P`apply`,
       theme: config.theme
     })
 
-    const formattedStyles = rules.map(formatStyle)
+    const formattedStyles = formatStyle(styledElement)
 
-    if (rules.length) command.update(...formattedStyles)
+    command.update(formattedStyles)
   }
 
   if (P`color-pick`) {

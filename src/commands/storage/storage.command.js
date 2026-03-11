@@ -1,7 +1,13 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
-import { hasLength, isTabId } from '@src/helpers/validation-command.helpers'
+import {
+  hasAllItemsAs,
+  hasLength,
+  isArray,
+  isString,
+  isTabId
+} from '@src/helpers/validation-command.helpers'
 import { storageHelpSections } from './storage.constants'
 import { storageHandler } from './storage.handler'
 
@@ -43,15 +49,17 @@ export default new CommandBase({
   .expect({
     name: 'set',
     abbreviation: 'S',
-    type: commandTypes.STRING_ARRAY,
+    type: commandTypes.ARRAY,
     helpSection: storageHelpSections.MODIFICATION,
     description: 'Set a key-value pair in the selected storage',
-    validate: [hasLength(2)]
+    validate: [hasAllItemsAs(isArray, hasLength(2), hasAllItemsAs(isString))],
+    defaultValue: [],
+    repeatable: true
   })
   .expect({
     name: 'tab-id',
     abbreviation: 'i',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: storageHelpSections.RETRIEVAL,
     description: 'Specify a tab ID (T[number]) to get storage from',
     validate: [isTabId]
@@ -59,7 +67,7 @@ export default new CommandBase({
   .expect({
     name: 'copy',
     abbreviation: 'C',
-    type: 'string',
+    type: commandTypes.STRING,
     helpSection: storageHelpSections.MODIFICATION,
     description: 'Copy a value to the clipboard',
     worksWith: []

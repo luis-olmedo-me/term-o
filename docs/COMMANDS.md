@@ -1,7 +1,7 @@
 # Term-O Commands
 
 > Version 0.9.0  
-> Updated: 2026-03-10
+> Updated: 2026-03-11
 
 ---
 
@@ -345,7 +345,7 @@ The `style` command is a bridge to manage aliases of commands in the terminal.
 | --------------------------------------------------- | ----- | ---------------------------------------------------------- |
 | `--list`                                            | `-l`  | List CSS styles applied to elements matching the criteria. |
 | `--on <xpath>`                                      | `-o`  | XPath expression to select elements.                       |
-| `--apply <inlinestyles>`                            | `-a`  | Apply inline styles to elements matching the criteria.     |
+| `--apply <inlinestyles>`                            | `-a`  | Apply styles to elements matching the criteria.            |
 | `--color-pick`                                      | `-c`  | Pick a color by clicking on the web page.                  |
 | `--property <[stylename<regex> stylevalue<regex>]>` | `-p`  | Filter styles by property names.                           |
 | `--selector <selector<regex>>`                      | `-s`  | Filter elements by CSS selector.                           |
@@ -363,8 +363,7 @@ When using `style` command the options can express **3** possible actions:
    style
        --list                                                               # REQUIRED
        --on 'id("cards-container")'                                         # REQUIRED
-       --property [".+color" "000.+"]                                       # OPTIONAL
-       --property ["display"]                                               # OPTIONAL
+       --property [".+color" "000.+"]                                       # OPTIONAL/REPEATABLE
    ```
 
 2. Apply styles to a DOM element (using `--apply`)
@@ -373,7 +372,7 @@ When using `style` command the options can express **3** possible actions:
 
    ```bash
    style
-       --apply "display: none; color: red;"                                 # REQUIRED
+       --apply ["display" "none"]                                           # REQUIRED/REPEATABLE
        --on 'id("cards-container")'                                         # REQUIRED
    ```
 

@@ -26,12 +26,12 @@ export const styleHandler = async command => {
     command.update(...formattedStyles)
   }
 
-  if (P`apply`) {
+  if (P`apply`.length) {
     const config = storage.get(storageKeys.CONFIG)
 
     const rules = await processManager.applyElementStyles(tabId, {
       searchByXpath: P`on`,
-      newInlineStyles: P`apply`,
+      styles: P`apply`,
       theme: config.theme
     })
 

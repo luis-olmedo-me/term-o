@@ -3,10 +3,12 @@ import CommandBase from '@src/templates/CommandBase'
 import { commandNames, commandTypes } from '@src/constants/command.constants'
 import {
   hasAllItemsAs,
+  hasItemAs,
+  hasLength,
   hasLengthBetween,
   isArray,
-  isInlineStyles,
   isRegExp,
+  isSpaceForbidden,
   isString,
   isXpath
 } from '@src/helpers/validation-command.helpers'
@@ -29,12 +31,16 @@ export default new CommandBase({
   .expect({
     name: 'apply',
     abbreviation: 'a',
-    type: commandTypes.STRING,
+    type: commandTypes.ARRAY,
     helpSection: styleHelpSections.MODIFICATION,
-    description: 'Apply inline styles to elements matching the criteria',
-    validate: [isInlineStyles],
+    description: 'Apply styles to elements matching the criteria',
+    validate: [
+      hasAllItemsAs(isArray, hasLength(2), hasAllItemsAs(isString), hasItemAs(0, isSpaceForbidden))
+    ],
     worksWith: ['on'],
-    mustHave: ['on']
+    mustHave: ['on'],
+    defaultValue: [],
+    repeatable: true
   })
   .expect({
     name: 'color-pick',

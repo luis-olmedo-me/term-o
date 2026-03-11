@@ -53,12 +53,12 @@ class ProcessManager {
     })
   }
 
-  applyElementStyles(tabId, { searchByXpath, newInlineStyles, theme }) {
+  applyElementStyles(tabId, { searchByXpath, styles, theme }) {
     return createWorkerProcessRequest({
       type: processNames.APPLY_ELEMENT_STYLES,
       defaultResponse: [],
       tabId,
-      data: { searchByXpath, newInlineStyles, theme }
+      data: { searchByXpath, styles, theme }
     })
   }
 

@@ -121,30 +121,6 @@ export const isSpaceForbidden = (option, value) => {
   }
 }
 
-export const isInlineStyles = (option, value) => {
-  const validPropertyName = /^[-\w]+$/
-  const validPropertyValue = /^[\w\s.%#()-]+$/
-
-  const stylesArray = value.split(';')
-
-  for (const style of stylesArray) {
-    const trimmedStyle = style.trim()
-
-    if (trimmedStyle === '') continue
-
-    const [propName, propValue] = trimmedStyle.split(':').map(part => part?.trim())
-    const isMissingContent = propName === '' || propValue === ''
-    const isInvalidPropName = !validPropertyName.test(propName)
-    const isInvalidPropValue = !validPropertyValue.test(propValue)
-
-    if (isMissingContent || isInvalidPropName || isInvalidPropValue) {
-      const name = option.displayName
-
-      throw `${name} expects valid inline styles. Instead, it received "${value}".`
-    }
-  }
-}
-
 export const hasLength = staticLength => {
   return (option, value) => {
     const isValid = value.length === staticLength

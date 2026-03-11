@@ -15,5 +15,5 @@ export default async (resolve, reject, data) => {
     stylesToApply.forEach(({ prop, value }) => element.style.setProperty(prop, value))
   })
 
-  resolve(stylesToApply)
+  resolve({ tagName: element.tagName.toLowerCase(), styles: stylesToApply })
 }

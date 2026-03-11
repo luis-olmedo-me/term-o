@@ -12,15 +12,18 @@ export default async (resolve, reject, data) => {
 
     return (name, value) => propNamePattern.test(name) && propValuePattern.test(value)
   })
+  const hasPropValidations = propValidations.length > 0
 
   const element = getElementByXPath(searchByXpath)
 
   if (!element) return reject('XPath did not match any element.')
   createHighlight({ element, theme: data.theme })
 
-  const styles = getNonDefaultComputedStyles(element).filter(({ prop, value }) =>
-    propValidations.some(validate => validate(prop, value))
-  )
+  const styles = getNonDefaultComputedStyles(element).filter(({ prop, value }) => {
+    if (hasPropValidations) return propValidations.some(validate => validate(prop, value))
+
+    return true
+  })
 
   const stylesWithHexValues = styles.map(style => {
     const isRgbValue = isRgb(style.value)
@@ -28,5 +31,5 @@ export default async (resolve, reject, data) => {
     return isRgbValue ? { ...style, value: rgbToHex(style.value) } : style
   })
 
-  resolve(stylesWithHexValues)
+  resolve({ tagName: element.tagName.toLowerCase(), styles: stylesWithHexValues })
 }

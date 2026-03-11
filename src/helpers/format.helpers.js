@@ -175,11 +175,19 @@ export const formatTheme = ({ name }) => {
   return [`${C`purple`}${quotedName}${C`reset`}`]
 }
 
-export const formatStyle = ({ prop, value }) => {
-  const quotedProp = getQuotedString(prop)
-  const quotedValue = getQuotedString(value)
+export const formatStyle = ({ tagName, styles }) => {
+  const quotedTagName = getQuotedString(tagName)
+  const quotedStyles = styles.reduce((styled, { prop, value }) => {
+    const quotedProp = getQuotedString(prop)
+    const quotedValue = getQuotedString(value)
 
-  return [`${C`cyan`}${quotedProp}${C`reset`}`, `${C`yellow`}${quotedValue}${C`reset`}`]
+    return [
+      ...styled,
+      [`${C`cyan`}${quotedProp}${C`reset`}`, `${C`yellow`}${quotedValue}${C`reset`}`]
+    ]
+  }, [])
+
+  return [`${C`red`}${quotedTagName}${C`reset`}`, ...quotedStyles]
 }
 
 export const formatStringSearch = ({ query, input }) => {

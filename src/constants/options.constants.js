@@ -5,7 +5,8 @@ export const optionDefaultValues = {
   [commandTypes.STRING]: '',
   [commandTypes.BOOLEAN]: false,
   [commandTypes.NUMBER]: 0,
-  [commandTypes.NONE]: null
+  none: null,
+  repeated: []
 }
 
 export const eventsAvailable = {

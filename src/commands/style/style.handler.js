@@ -24,7 +24,7 @@ export const styleHandler = async command => {
     const formattedStyles = formatStyle(styledElement)
 
     command.reset()
-    command.update(formattedStyles)
+    if (styledElement.styles.length) command.update(formattedStyles)
   }
 
   if (P`apply`.length) {

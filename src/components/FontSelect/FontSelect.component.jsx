@@ -20,13 +20,7 @@ export const FontSelect = ({ value, onChange, name }) => {
   }, [])
 
   return (
-    <Select
-      aria-loading={isLoading}
-      options={options}
-      value={value}
-      onChange={onChange}
-      name={name}
-    />
+    <Select loading={isLoading} options={options} value={value} onChange={onChange} name={name} />
   )
 }
 

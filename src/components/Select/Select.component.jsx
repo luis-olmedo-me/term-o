@@ -1,7 +1,13 @@
 import { useState } from 'preact/hooks'
 
 import { verticalScroller } from '@styles/global.module.scss'
-import { optionItem, optionsWrapper, selectButton, selecterWrapper } from './Select.module.scss'
+import {
+  optionItem,
+  optionsWrapper,
+  selectButton,
+  selectButtonLoading,
+  selecterWrapperLoading
+} from './Select.module.scss'
 
 export const Select = ({
   options,
@@ -16,7 +22,7 @@ export const Select = ({
   const selected = options.find(option => option.id === value)
 
   return (
-    <div className={selecterWrapper} data-loading={loading}>
+    <div className={loading ? selecterWrapperLoading : ''} data-loading={loading}>
       <input type="hidden" name={name} value={value} />
 
       <button
@@ -24,12 +30,15 @@ export const Select = ({
         aria-haspopup="listbox"
         aria-expanded={open}
         onClick={() => setOpen(isOpen => !isOpen)}
-        className={selectButton}
         disabled={loading}
+        className={`
+          ${selectButton}
+          ${loading ? selectButtonLoading : ''}
+        `}
       >
         {OptionPrefixComponent && <OptionPrefixComponent option={selected} />}
 
-        {selected?.name}
+        {loading ? 'Loading' : selected?.name}
       </button>
 
       {open && (

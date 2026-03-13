@@ -1,4 +1,4 @@
-import { useState } from 'preact/hooks'
+import { useEffect, useRef, useState } from 'preact/hooks'
 
 import { global__scrollable } from '@styles/global.module.scss'
 import {
@@ -24,6 +24,24 @@ export const Select = ({
 }) => {
   const [open, setOpen] = useState(false)
 
+  const selecterRef = useRef(null)
+
+  useEffect(
+    function handleClickOutside() {
+      if (!open) return
+      const handleGlobalClick = event => {
+        const isOutside = !selecterRef.current.contains(event.target)
+
+        if (isOutside) setOpen(false)
+      }
+
+      window.addEventListener('click', handleGlobalClick)
+
+      return () => window.removeEventListener('click', handleGlobalClick)
+    },
+    [open]
+  )
+
   const handleOptionClick = selectedIdItem => {
     onChange({ value: selectedIdItem })
     setOpen(false)
@@ -34,6 +52,7 @@ export const Select = ({
 
   return (
     <div
+      ref={selecterRef}
       data-loading={loading}
       className={`
         ${selecter}

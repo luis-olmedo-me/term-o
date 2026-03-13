@@ -82,7 +82,7 @@
   position: absolute;
   top: 100%;
   left: 0;
-  transform-origin: bottom;
+  transform-origin: top;
   scale: 1 0;
   opacity: 0;
   z-index: 1;
@@ -100,7 +100,6 @@
   pointer-events: none;
 
   &___open {
-    transform-origin: top;
     scale: 1 1;
     opacity: 1;
     pointer-events: all;

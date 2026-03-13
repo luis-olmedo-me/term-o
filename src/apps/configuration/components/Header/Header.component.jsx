@@ -36,7 +36,7 @@ export const Header = ({ onSearch }) => {
         </form>
       </div>
 
-      <div className={header__content}>
+      <nav className={header__content}>
         <a
           className={header__link}
           href="https://github.com/luis-olmedo-me/term-o"
@@ -44,7 +44,7 @@ export const Header = ({ onSearch }) => {
         >
           <Repo size={iconSizes.MEDIUM} />
         </a>
-      </div>
+      </nav>
     </header>
   )
 }

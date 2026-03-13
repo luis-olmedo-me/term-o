@@ -1,23 +1,23 @@
-.sidePanelWrapper {
-  border-right: $space-50 solid $colors-brightBlack;
-  min-width: fit-content;
-  padding: var(--space-600) 0;
+.sidepanel {
   flex-shrink: 0;
+  border-right: $space-50 solid $colors-brightBlack;
+  padding: var(--space-600) 0;
+  min-width: fit-content;
 }
 
-.headerTitle {
+.sidepanel__title {
   display: none;
-  font-size: $fontSize-300;
   margin: 0 auto $space-800;
   width: fit-content;
+  font-size: $fontSize-300;
 }
 
 @media only screen and (min-width: 1000px) {
-  .sidePanelWrapper {
+  .sidepanel {
     min-width: 250px;
   }
 
-  .headerTitle {
+  .sidepanel__title {
     display: block;
   }
 }

@@ -12,7 +12,7 @@ import { storageKeys } from '@src/constants/storage.constants'
 import { colorThemeKeys } from '@src/constants/themes.constants'
 import { getConfigDetailsByInputId } from '@src/helpers/config.helpers'
 import { createNotification } from '@src/helpers/web-components.helpers'
-import { verticalScroller } from '@styles/global.module.scss'
+import { global__scrollable } from '@styles/global.module.scss'
 import { sidePanelOptions } from './Preferences.constants'
 import {
   filterSectionsBy,
@@ -119,7 +119,7 @@ export const Preferences = () => {
 
         <div
           ref={contentRef}
-          className={`${mainContentWrapper} ${verticalScroller}`}
+          className={`${mainContentWrapper} ${global__scrollable}`}
           onScroll={handleScroll}
         >
           {configSections.map(section => {

@@ -20,7 +20,7 @@ body {
   }
 }
 
-.verticalScroller {
+.global__scrollable {
   &::-webkit-scrollbar {
     height: $space-200;
     width: $space-200;

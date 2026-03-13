@@ -1,6 +1,6 @@
 import { useState } from 'preact/hooks'
 
-import { verticalScroller } from '@styles/global.module.scss'
+import { global__scrollable } from '@styles/global.module.scss'
 import {
   selecter___state_loading,
   selecter__button,
@@ -56,8 +56,8 @@ export const Select = ({
         <ul
           role="listbox"
           className={`
+            ${global__scrollable}
             ${selecter__options}
-            ${verticalScroller}
           `}
         >
           {options.map(option => {

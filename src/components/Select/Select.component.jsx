@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from 'preact/hooks'
 
+import Chevron from '@src/icons/Chevron.icon'
+
+import { iconSizes } from '@src/constants/icon.constants'
 import { global__scrollable } from '@styles/global.module.scss'
 import {
   selecter,
@@ -7,6 +10,7 @@ import {
   selecter__button,
   selecter__button___state_loading,
   selecter__button___state_open,
+  selecter__label,
   selecter__option,
   selecter__option___state_selected,
   selecter__options,
@@ -74,9 +78,13 @@ export const Select = ({
           ${loading ? selecter__button___state_loading : ''}
         `}
       >
-        {OptionPrefixComponent && <OptionPrefixComponent option={selectedOption} />}
+        <span className={selecter__label}>
+          {OptionPrefixComponent && <OptionPrefixComponent option={selectedOption} />}
 
-        {loading ? 'Loading' : selectedOption?.name}
+          {loading ? 'Loading' : selectedOption?.name}
+        </span>
+
+        <Chevron size={iconSizes.EXTRA_SMALL} />
       </button>
 
       <div

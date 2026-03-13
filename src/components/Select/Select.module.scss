@@ -10,8 +10,9 @@
 
 .selecter__button {
   display: flex;
+  column-gap: $space-250;
+  justify-content: space-between;
   align-items: center;
-  gap: $space-250;
   transition:
     background-color 0.1s ease-in-out,
     border-radius 0.1s ease-in-out,
@@ -76,6 +77,12 @@
       }
     }
   }
+}
+
+.selecter__label {
+  display: flex;
+  align-items: center;
+  gap: $space-250;
 }
 
 .selecter__options_container {

@@ -27,23 +27,6 @@
 
   color: $colors-foreground;
 
-  &___state_loading {
-    cursor: progress;
-  }
-
-  &___state_open {
-    border-radius: $radius-200 $radius-200 0 0;
-
-    &:hover + .selecter__options_container {
-      @include theme(light) {
-        border-color: $colors-brightBlack;
-      }
-      @include theme(dark) {
-        border-color: $colors-accent;
-      }
-    }
-  }
-
   &:focus,
   &:active {
     outline: none;
@@ -76,13 +59,30 @@
       color: with-opacity($colors-white, 0.5);
     }
   }
+
+  &___state_loading {
+    cursor: progress;
+  }
+
+  &___state_open {
+    border-radius: $radius-200 $radius-200 0 0;
+
+    &:hover + .selecter__options_container {
+      @include theme(light) {
+        border-color: $colors-brightBlack;
+      }
+      @include theme(dark) {
+        border-color: $colors-accent;
+      }
+    }
+  }
 }
 
 .selecter__options_container {
   position: absolute;
   top: 100%;
   left: 0;
-  transform-origin: top;
+  transform-origin: bottom;
   scale: 1 0;
   opacity: 0;
   z-index: 1;
@@ -100,6 +100,7 @@
   pointer-events: none;
 
   &___open {
+    transform-origin: top;
     scale: 1 1;
     opacity: 1;
     pointer-events: all;
@@ -128,10 +129,6 @@
   padding: $space-200 $space-300;
   color: $colors-foreground;
 
-  &___state_selected {
-    color: $colors-brightAccent;
-  }
-
   &:last-child {
     border-width: 0 $space-50 0 0;
   }
@@ -144,5 +141,9 @@
   &:focus,
   &:active {
     outline: none;
+  }
+
+  &___state_selected {
+    color: $colors-brightAccent;
   }
 }

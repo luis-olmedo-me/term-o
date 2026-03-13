@@ -5,13 +5,9 @@
 }
 
 .selecter__button {
-  width: 250px;
-  border: $space-50 solid $colors-brightBlack;
-  background-color: with-opacity($colors-white, 0.25);
-
-  color: $colors-foreground;
-  border-radius: $radius-200;
-  padding: $space-250 $space-300;
+  display: flex;
+  align-items: center;
+  gap: $space-250;
   transition:
     background-color 0.1s ease-in-out,
     border-radius 0.1s ease-in-out,
@@ -19,12 +15,20 @@
     color 0.1s ease-in-out;
   cursor: pointer;
   outline: none;
-  display: flex;
-  gap: $space-250;
-  align-items: center;
+  border: $space-50 solid $colors-brightBlack;
+  border-radius: $radius-200;
+  background-color: with-opacity($colors-white, 0.25);
+  padding: $space-250 $space-300;
+  width: 250px;
+
+  color: $colors-foreground;
 
   &___state_loading {
     cursor: progress;
+  }
+
+  &___state_open {
+    border-radius: $radius-200 $radius-200 0 0;
   }
 
   &:focus {
@@ -49,10 +53,10 @@
   }
 
   &:disabled {
-    background-color: with-opacity($colors-white, 0.1);
-    border: $space-50 solid with-opacity($colors-accent, 0.1);
-    color: with-opacity($colors-white, 0.4);
     cursor: no-drop;
+    border: $space-50 solid with-opacity($colors-accent, 0.1);
+    background-color: with-opacity($colors-white, 0.1);
+    color: with-opacity($colors-white, 0.4);
 
     &:focus {
       border: $space-50 solid with-opacity($colors-white, 0.1);
@@ -66,28 +70,28 @@
 }
 
 .selecter__options {
-  overflow: hidden scroll;
-  max-height: 8rem;
+  margin: 0;
   border: $space-50 solid $colors-brightBlack;
   background-color: $colors-background;
   padding: 0;
-  margin: 0;
+  max-height: 8rem;
+  overflow: hidden scroll;
 }
 
 .selecter__option {
-  background-color: $colors-background;
-  border: solid with-opacity($colors-brightBlack, 0.5);
-  border-width: 0 $space-50 $space-50 0;
-  color: $colors-foreground;
+  display: flex;
+  align-items: center;
+  gap: $space-250;
   transition:
     background-color 0.1s ease-in-out,
     color 0.1s ease-in-out;
-  padding: $space-200 $space-300;
   cursor: pointer;
-  display: flex;
-  gap: $space-250;
-  align-items: center;
   margin-right: 10px;
+  border: solid with-opacity($colors-brightBlack, 0.5);
+  border-width: 0 $space-50 $space-50 0;
+  background-color: $colors-background;
+  padding: $space-200 $space-300;
+  color: $colors-foreground;
 
   &___state_selected {
     color: $colors-brightAccent;

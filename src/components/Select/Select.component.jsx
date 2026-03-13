@@ -5,6 +5,7 @@ import {
   selecter___state_loading,
   selecter__button,
   selecter__button___state_loading,
+  selecter__button___state_open,
   selecter__option,
   selecter__option___state_selected,
   selecter__options
@@ -44,6 +45,7 @@ export const Select = ({
         disabled={loading}
         className={`
           ${selecter__button}
+          ${open ? selecter__button___state_open : ''}
           ${loading ? selecter__button___state_loading : ''}
         `}
       >

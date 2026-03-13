@@ -20,7 +20,7 @@ body {
   }
 }
 
-.verticalScroller {
+.global__scrollable {
   &::-webkit-scrollbar {
     height: $space-200;
     width: $space-200;
@@ -29,9 +29,6 @@ body {
   &::-webkit-scrollbar-track {
     background-color: with-opacity($colors-brightBlack, 0.2);
     cursor: pointer;
-  }
-  &.transparentTrack::-webkit-scrollbar-track {
-    background-color: $colors-background;
   }
 
   &::-webkit-scrollbar-thumb {

@@ -1,30 +1,32 @@
 @use '@styles/mixins.module' as *;
 
 .selecter {
-  width: 250px;
-  border: $space-50 solid $colors-brightBlack;
-  background-color: with-opacity($colors-white, 0.25);
+  position: relative;
 
-  color: $colors-foreground;
-  border-radius: $radius-200;
-  padding: $space-250 $space-300;
+  &___state_loading {
+    width: fit-content;
+  }
+}
+
+.selecter__button {
+  display: flex;
+  column-gap: $space-250;
+  justify-content: space-between;
+  align-items: center;
   transition:
     background-color 0.1s ease-in-out,
-    border-radius 0.1s ease-in-out,
+    border-radius 0.1s ease-in-out 0.3s,
     border-color 0.1s ease-in-out,
     color 0.1s ease-in-out;
   cursor: pointer;
   outline: none;
+  border: $space-50 solid $colors-brightBlack;
+  border-radius: $radius-200;
+  background-color: with-opacity($colors-white, 0.25);
+  padding: $space-250 $space-300;
+  width: 250px;
 
-  & .selectedContent {
-    display: flex;
-    gap: $space-250;
-    align-items: center;
-  }
-
-  &:focus {
-    border: $space-50 solid $colors-accent;
-  }
+  color: $colors-foreground;
 
   &:focus,
   &:active {
@@ -43,11 +45,15 @@
     }
   }
 
+  &:active {
+    background-color: with-opacity($colors-accent, 0.5);
+  }
+
   &:disabled {
-    background-color: with-opacity($colors-white, 0.1);
-    border: $space-50 solid with-opacity($colors-accent, 0.1);
-    color: with-opacity($colors-white, 0.4);
     cursor: no-drop;
+    border: $space-50 solid with-opacity($colors-accent, 0.1);
+    background-color: with-opacity($colors-white, 0.1);
+    color: with-opacity($colors-white, 0.4);
 
     &:focus {
       border: $space-50 solid with-opacity($colors-white, 0.1);
@@ -59,49 +65,90 @@
     }
   }
 
-  &::picker-icon {
-    transition: 0.2s rotate;
+  &___state_loading {
+    cursor: progress;
   }
-  &:open {
-    border-radius: 0;
 
-    &::picker-icon {
-      rotate: 180deg;
+  &___state_open {
+    border-radius: $radius-200 $radius-200 0 0;
+
+    &:hover + .selecter__options_container {
+      @include theme(light) {
+        border-color: $colors-brightBlack;
+      }
+      @include theme(dark) {
+        border-color: $colors-accent;
+      }
     }
   }
 }
 
-.selecterWrapper {
-  &[data-loading='true'] {
-    width: fit-content;
+.selecter__label {
+  display: flex;
+  align-items: center;
+  gap: $space-250;
+}
 
-    .selecter {
-      cursor: progress;
-    }
+.selecter__mark {
+  rotate: 90deg;
+  transition: rotate 0.2s ease-in-out;
+
+  &___state_open {
+    rotate: -90deg;
   }
 }
 
-.optionsWrapper {
-  overflow: hidden scroll;
-  height: 8rem;
+.selecter__options_container {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  transform-origin: top;
+  scale: 1 0;
+  opacity: 0;
+  z-index: 1;
+  transition:
+    border-radius 0.3s ease-in-out,
+    border-color 0.1s ease-in-out,
+    scale 0.2s ease-in-out 0.3s,
+    opacity 0.2s ease-in-out 0.3s;
+  box-sizing: border-box;
   border: $space-50 solid $colors-brightBlack;
-  background-color: $colors-brightBlack;
+  border-width: 0 $space-50 $space-50;
+  border-radius: 0 0 $radius-200 $radius-200;
+  background-color: $colors-background;
+  padding-right: $space-250;
+  width: 100%;
+  pointer-events: none;
+
+  &___open {
+    scale: 1 1;
+    opacity: 1;
+    pointer-events: all;
+  }
 }
 
-.optionItem {
-  background-color: $colors-background;
-  border-top: $space-50 solid $colors-brightBlack;
-  border-right: $space-50 solid $colors-brightBlack;
-  color: $colors-foreground;
+.selecter__options {
+  margin: 0;
+  border-width: 0 $space-50 $space-50;
+  padding: 0;
+  max-height: 8rem;
+  overflow: hidden scroll;
+}
+
+.selecter__option {
+  display: flex;
+  align-items: center;
+  gap: $space-250;
   transition:
     background-color 0.1s ease-in-out,
+    padding 0.1s ease-in-out,
     color 0.1s ease-in-out;
-  padding: $space-200 $space-300;
   cursor: pointer;
-
-  &:first-of-type {
-    border-top: none;
-  }
+  margin-right: $space-250;
+  border: solid with-opacity($colors-brightBlack, 0.5);
+  border-width: 0 $space-50 $space-50 0;
+  padding: $space-200 $space-300;
+  color: $colors-foreground;
 
   &:hover,
   &:focus {
@@ -113,20 +160,17 @@
     outline: none;
   }
 
-  :is(selected) {
+  &:last-child {
+    border-width: 0 $space-50 0 0;
+  }
+
+  &___state_selected {
+    background-color: with-opacity($colors-accent, 0.05);
+    padding: $space-200 $space-300 $space-200 $space-500;
     color: $colors-brightAccent;
-  }
 
-  &::checkmark {
-    order: 1;
-    margin-left: auto;
-    content: '◉';
+    &:last-child {
+      border-radius: 0 0 0 $radius-200;
+    }
   }
-}
-
-.optionText {
-  overflow-x: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 250px;
 }

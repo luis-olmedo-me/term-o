@@ -6,7 +6,7 @@ import useStorage from '@src/hooks/useStorage'
 import { commandStatuses } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
-import { verticalScroller } from '@styles/global.module.scss'
+import { global__scrollable } from '@styles/global.module.scss'
 import { getCaretOffset, getTokenAt, selectToken } from './CommandsViewer.helpers'
 import { commandItem, line, viewWrapper } from './CommandsViewer.module.scss'
 
@@ -63,7 +63,7 @@ export const CommandsViewer = ({ commands }) => {
   }
 
   return (
-    <div className={`${viewWrapper} ${verticalScroller}`}>
+    <div className={`${viewWrapper} ${global__scrollable}`}>
       <div ref={wrapper}>
         {commands.map((command, commandIndex) => {
           const hasErrorMessage = command.status === commandStatuses.ERROR

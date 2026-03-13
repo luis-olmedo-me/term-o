@@ -1,11 +1,11 @@
 .promptWrapper {
-  cursor: text;
-  background-color: transparent;
-  color: $colors-foreground;
-  padding: $space-200 $space-400 $space-200 $space-400;
   z-index: 1;
-  box-shadow: 0 calc($space-550 * -1) $space-400 calc($space-400 * -1) $colors-background;
   transition: box-shadow 0.2s ease-in-out;
+  cursor: text;
+  box-shadow: 0 calc($space-550 * -1) $space-400 calc($space-400 * -1) $colors-background;
+  background-color: transparent;
+  padding: $space-200 $space-400 $space-200 $space-400;
+  color: $colors-foreground;
 
   &[data-loading='true'] {
     & .promptInput {
@@ -30,8 +30,8 @@
 }
 
 .promptLine {
-  margin: 0;
   cursor: text;
+  margin: 0;
   white-space: pre-line;
 }
 
@@ -43,19 +43,19 @@
 }
 
 .promptInputWrapper {
-  padding: 0 0 $space-300;
   position: relative;
   flex-grow: 1;
+  padding: 0 0 $space-300;
 }
 
 .promptOverlay {
   position: absolute;
   inset: 0;
+  overflow: hidden;
   pointer-events: none;
-  white-space: pre;
   font-size: $fontSize-50;
   font-family: $font;
-  overflow: hidden;
+  white-space: pre;
 }
 
 .promptSuggestion {
@@ -63,19 +63,19 @@
 }
 
 .promptInput {
+  flex-grow: 1;
+  border: none;
   background-color: transparent;
+  padding: 0;
+  width: 100%;
   color: transparent;
   caret-color: $colors-cursorColor;
-  border: none;
-  width: 100%;
-  flex-grow: 1;
-  padding: 0;
-  font-family: $font;
   font-size: $fontSize-50;
+  font-family: $font;
 
   &::selection {
-    color: transparent;
     background-color: $colors-selectionBackground;
+    color: transparent;
   }
 
   &:active,

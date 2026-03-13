@@ -25,10 +25,10 @@ class NotificationManager extends HTMLElement {
 
   get _elements() {
     return {
-      wrapper: this._shadow.querySelector('#wrapper'),
-      styles: this._shadow.querySelector('#styles'),
-      theme: this._shadow.querySelector('#theme'),
-      count: this._shadow.querySelector('#count')
+      wrapper: this._shadow.querySelector('.wrapper'),
+      styles: this._shadow.querySelector('.styles'),
+      theme: this._shadow.querySelector('.theme'),
+      count: this._shadow.querySelector('.count')
     }
   }
 
@@ -53,7 +53,7 @@ class NotificationManager extends HTMLElement {
   _handleTheme(event) {
     const { theme } = event.detail
 
-    this._elements.theme.innerHTML = createCssVariablesFromTheme(theme, '#web-theme-provider')
+    this._elements.theme.innerHTML = createCssVariablesFromTheme(theme, '.web-theme-provider')
   }
 
   _handleCounterClick() {

@@ -86,7 +86,7 @@ export const DynamicInput = ({
       return (
         <Select
           name={name}
-          onChange={({ target }) => onChange(inputId, target.value)}
+          onChange={({ value }) => onChange(inputId, value)}
           options={options}
           value={value}
         />
@@ -96,7 +96,7 @@ export const DynamicInput = ({
       return (
         <Select
           name={name}
-          onChange={({ target }) => onChange(inputId, target.value)}
+          onChange={({ value }) => onChange(inputId, value)}
           OptionPrefixComponent={ColorDot}
           options={options}
           value={value}
@@ -105,20 +105,12 @@ export const DynamicInput = ({
 
     case availableInputTypes.THEME_SELECT:
       return (
-        <ThemeSelect
-          name={name}
-          onChange={({ target }) => onChange(inputId, target.value)}
-          value={value}
-        />
+        <ThemeSelect name={name} onChange={({ value }) => onChange(inputId, value)} value={value} />
       )
 
     case availableInputTypes.FONT_SELECT:
       return (
-        <FontSelect
-          name={name}
-          onChange={({ target }) => onChange(inputId, target.value)}
-          value={value}
-        />
+        <FontSelect name={name} onChange={({ value }) => onChange(inputId, value)} value={value} />
       )
 
     case availableInputTypes.BUTTON:

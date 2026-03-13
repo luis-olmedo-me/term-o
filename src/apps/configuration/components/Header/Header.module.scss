@@ -1,25 +1,25 @@
-.headerWrapper {
-  padding: $space-600 $space-400;
+.header {
   display: flex;
   justify-content: space-between;
   border-bottom: $space-50 solid $colors-brightBlack;
+  padding: $space-600 $space-400;
 }
 
-.content {
+.header__content {
   display: flex;
   align-items: center;
   gap: $space-400;
 }
 
-.headerLink {
-  color: $colors-foreground;
+.header__link {
   transition: color 0.1s ease-in-out;
+  color: $colors-foreground;
 
   &:hover {
     color: $colors-accent;
   }
 }
 
-.searchInput {
+.header__search {
   width: 350px;
 }

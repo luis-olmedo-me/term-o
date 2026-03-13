@@ -11,6 +11,7 @@ import { getCaretOffset, getTokenAt, selectToken } from './CommandsViewer.helper
 import {
   viewer,
   viewer__command,
+  viewer__command___mod_lighted,
   viewer__command___mod_truncated,
   viewer__line,
   viewer__line___mod_truncated,
@@ -81,10 +82,10 @@ export const CommandsViewer = ({ commands }) => {
               data-status={command.status}
               data-origin={hasStatusBar ? command.origin : null}
               data-indicator={statusIndicator}
-              data-light={hasStatusLight}
               className={`
                 ${viewer__command}
                 ${isTruncated ? viewer__command___mod_truncated : ''}
+                ${hasStatusLight ? viewer__command___mod_lighted : ''}
               `}
             >
               <p onMouseUp={handleLineMouseUp} className={viewer__line}>

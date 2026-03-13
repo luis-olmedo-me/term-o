@@ -1,32 +1,21 @@
 @use '@styles/mixins.module' as *;
 
-.viewWrapper {
+.viewer {
   display: flex;
+  flex-grow: 1;
   flex-direction: column-reverse;
   gap: $space-400;
-  background-color: transparent;
-  color: $colors-foreground;
-  margin-right: $space-400;
   cursor: text;
-  word-break: break-all;
-  flex-grow: 1;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  margin-right: $space-400;
+  background-color: transparent;
   padding-top: $space-700;
-
-  &::-webkit-scrollbar-track {
-    background-color: transparent;
-    background-image: linear-gradient(
-      180deg,
-      $colors-background 0%,
-      with-opacity($colors-brightBlack, 0.2) 10%,
-      with-opacity($colors-brightBlack, 0.2) 90%,
-      $colors-background 100%
-    );
-  }
+  overflow-x: hidden;
+  overflow-y: scroll;
+  color: $colors-foreground;
+  word-break: break-all;
 }
 
-.line {
+.viewer__line {
   margin: 0;
   white-space: pre-line;
 
@@ -35,15 +24,15 @@
   }
 }
 
-.commandItem {
+.viewer__command {
   position: relative;
   padding: 0 $space-400 0 $space-800;
 
   &::after {
-    content: '';
     position: absolute;
     top: 0.5rem;
     transition: background-color 0.1s ease-in-out;
+    content: '';
 
     @include theme(light) {
       outline: $space-50 solid $colors-brightBlack;
@@ -54,29 +43,29 @@
     display: flex;
     flex-direction: column;
 
-    & .line[data-truncate-skip='false'] {
+    & .viewer__line[data-truncate-skip='false'] {
       min-width: 0;
       overflow: hidden;
-      white-space: nowrap;
       text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 
   &[data-origin='manual'],
   &[data-origin='auto'] {
     &::before {
-      content: '';
       position: absolute;
       top: 0.5rem;
+      left: $space-300;
       transition:
         background-color 0.2s ease-in-out,
         box-shadow 0.2s ease-in-out;
-      background-color: with-opacity($colors-brightBlack, 0.2);
 
       border-radius: $radius-200;
-      left: $space-300;
+      background-color: with-opacity($colors-brightBlack, 0.2);
       width: $space-200;
       height: calc(100% - 1rem);
+      content: '';
 
       @include theme(light) {
         outline: $space-50 solid $colors-white;
@@ -84,8 +73,8 @@
     }
 
     &[data-indicator='half-dot']::before {
-      border-radius: 0 $radius-200 $radius-200 0;
       left: 0;
+      border-radius: 0 $radius-200 $radius-200 0;
     }
   }
   &[data-origin='auto'] {
@@ -97,34 +86,34 @@
   }
 
   &[data-status='done']::after {
-    color: $colors-brightGreen;
     background-color: $colors-brightGreen;
+    color: $colors-brightGreen;
   }
   &[data-status='error']::after {
-    color: $colors-brightRed;
     background-color: $colors-brightRed;
+    color: $colors-brightRed;
   }
   &[data-status='executing']::after {
-    color: $colors-brightWhite;
     background-color: $colors-brightWhite;
+    color: $colors-brightWhite;
   }
 
   &[data-indicator='none']::after {
     display: none;
   }
   &[data-indicator='dot']::after {
-    border-radius: $radius-200;
     left: $space-300;
-    height: $space-200;
+    border-radius: $radius-200;
     width: $space-200;
+    height: $space-200;
   }
 
   &[data-indicator='half-dot'] {
     padding: 0 $space-400 0 $space-500;
 
     &::after {
-      border-radius: 0 $radius-200 $radius-200 0;
       left: 0;
+      border-radius: 0 $radius-200 $radius-200 0;
       width: $space-250;
       height: $space-200;
     }

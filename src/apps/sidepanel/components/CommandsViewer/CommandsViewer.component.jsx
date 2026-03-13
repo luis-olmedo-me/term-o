@@ -8,7 +8,7 @@ import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { global__scrollable } from '@styles/global.module.scss'
 import { getCaretOffset, getTokenAt, selectToken } from './CommandsViewer.helpers'
-import { commandItem, line, viewWrapper } from './CommandsViewer.module.scss'
+import { viewer, viewer__command, viewer__line } from './CommandsViewer.module.scss'
 
 export const CommandsViewer = ({ commands }) => {
   const wrapper = useRef(null)
@@ -63,7 +63,7 @@ export const CommandsViewer = ({ commands }) => {
   }
 
   return (
-    <div className={`${viewWrapper} ${global__scrollable}`}>
+    <div className={`${viewer} ${global__scrollable}`}>
       <div ref={wrapper}>
         {commands.map((command, commandIndex) => {
           const hasErrorMessage = command.status === commandStatuses.ERROR
@@ -71,18 +71,18 @@ export const CommandsViewer = ({ commands }) => {
           return (
             <div
               key={command.id}
-              className={commandItem}
+              className={viewer__command}
               data-status={command.status}
               data-origin={hasStatusBar ? command.origin : null}
               data-indicator={statusIndicator}
               data-light={hasStatusLight}
               data-truncated={isTruncated}
             >
-              <p className={line} onMouseUp={handleLineMouseUp} data-truncate-skip="true">
+              <p className={viewer__line} onMouseUp={handleLineMouseUp} data-truncate-skip="true">
                 <ColoredText value={command.context} />
               </p>
 
-              <p className={line} onMouseUp={handleLineMouseUp} data-truncate-skip="false">
+              <p className={viewer__line} onMouseUp={handleLineMouseUp} data-truncate-skip="false">
                 {command.title}
               </p>
 
@@ -92,7 +92,7 @@ export const CommandsViewer = ({ commands }) => {
                 return (
                   <p
                     key={`${commandIndex}-${index}`}
-                    className={line}
+                    className={viewer__line}
                     onMouseUp={handleLineMouseUp}
                     data-truncate-skip={hasErrorMessage && isLastItem}
                   >
@@ -103,7 +103,7 @@ export const CommandsViewer = ({ commands }) => {
 
               {command.warning && (
                 <p
-                  className={line}
+                  className={viewer__line}
                   key={command.warning}
                   data-truncate-skip="true"
                   data-warning="true"

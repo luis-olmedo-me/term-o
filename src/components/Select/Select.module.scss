@@ -30,7 +30,7 @@
   &___state_open {
     border-radius: $radius-200 $radius-200 0 0;
 
-    &:hover + .selecter__options {
+    &:hover + .selecter__options_container {
       @include theme(light) {
         border-color: $colors-brightBlack;
       }
@@ -74,13 +74,18 @@
   }
 }
 
-.selecter__options {
+.selecter__options_container {
   transition: border-color 0.1s ease-in-out;
-  margin: 0;
   border: $space-50 solid $colors-brightBlack;
   border-width: 0 $space-50 $space-50;
   border-radius: 0 0 $radius-200 $radius-200;
   background-color: $colors-background;
+  padding-right: $space-250;
+}
+
+.selecter__options {
+  margin: 0;
+  border-width: 0 $space-50 $space-50;
   padding: 0;
   max-height: 8rem;
   overflow: hidden scroll;
@@ -94,10 +99,9 @@
     background-color 0.1s ease-in-out,
     color 0.1s ease-in-out;
   cursor: pointer;
-  margin-right: 10px;
+  margin-right: $space-250;
   border: solid with-opacity($colors-brightBlack, 0.5);
   border-width: 0 $space-50 $space-50 0;
-  background-color: $colors-background;
   padding: $space-200 $space-300;
   color: $colors-foreground;
 

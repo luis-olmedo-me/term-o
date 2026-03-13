@@ -8,7 +8,8 @@ import {
   selecter__button___state_open,
   selecter__option,
   selecter__option___state_selected,
-  selecter__options
+  selecter__options,
+  selecter__options_container
 } from './Select.module.scss'
 
 export const Select = ({
@@ -55,34 +56,36 @@ export const Select = ({
       </button>
 
       {open && (
-        <ul
-          role="listbox"
-          className={`
-            ${global__scrollable}
-            ${selecter__options}
-          `}
-        >
-          {options.map(option => {
-            const isSelected = option.id === value
+        <div className={selecter__options_container}>
+          <ul
+            role="listbox"
+            className={`
+              ${global__scrollable}
+              ${selecter__options}
+            `}
+          >
+            {options.map(option => {
+              const isSelected = option.id === value
 
-            return (
-              <li
-                key={option.id}
-                role="option"
-                aria-selected={option.id === value}
-                onClick={() => handleOptionClick(option.id)}
-                className={`
-                  ${selecter__option}
-                  ${isSelected ? selecter__option___state_selected : ''}
-                `}
-              >
-                {OptionPrefixComponent && <OptionPrefixComponent option={option} />}
+              return (
+                <li
+                  key={option.id}
+                  role="option"
+                  aria-selected={option.id === value}
+                  onClick={() => handleOptionClick(option.id)}
+                  className={`
+                    ${selecter__option}
+                    ${isSelected ? selecter__option___state_selected : ''}
+                  `}
+                >
+                  {OptionPrefixComponent && <OptionPrefixComponent option={option} />}
 
-                {option.name}
-              </li>
-            )
-          })}
-        </ul>
+                  {option.name}
+                </li>
+              )
+            })}
+          </ul>
+        </div>
       )}
     </div>
   )

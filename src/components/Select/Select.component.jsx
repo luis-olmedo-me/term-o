@@ -24,7 +24,7 @@ export const Select = ({
   const selected = options.find(option => option.id === value)
 
   const handleOptionClick = selectedIdItem => {
-    onChange(selectedIdItem)
+    onChange({ value: selectedIdItem })
     setOpen(false)
   }
 

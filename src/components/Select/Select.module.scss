@@ -29,10 +29,15 @@
 
   &___state_open {
     border-radius: $radius-200 $radius-200 0 0;
-  }
 
-  &:focus {
-    border: $space-50 solid $colors-accent;
+    &:hover + .selecter__options {
+      @include theme(light) {
+        border-color: $colors-brightBlack;
+      }
+      @include theme(dark) {
+        border-color: $colors-accent;
+      }
+    }
   }
 
   &:focus,
@@ -70,8 +75,11 @@
 }
 
 .selecter__options {
+  transition: border-color 0.1s ease-in-out;
   margin: 0;
   border: $space-50 solid $colors-brightBlack;
+  border-width: 0 $space-50 $space-50;
+  border-radius: 0 0 $radius-200 $radius-200;
   background-color: $colors-background;
   padding: 0;
   max-height: 8rem;
@@ -95,6 +103,10 @@
 
   &___state_selected {
     color: $colors-brightAccent;
+  }
+
+  &:last-child {
+    border-width: 0 $space-50 0 0;
   }
 
   &:hover,

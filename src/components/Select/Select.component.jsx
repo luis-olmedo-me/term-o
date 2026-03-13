@@ -1,12 +1,7 @@
-import { transparentTrack, verticalScroller } from '@styles/global.module.scss'
-import {
-  optionItem,
-  optionsWrapper,
-  optionText,
-  selectedContent,
-  selecter,
-  selecterWrapper
-} from './Select.module.scss'
+import { useState } from 'preact/hooks'
+
+import { verticalScroller } from '@styles/global.module.scss'
+import { optionItem, optionsWrapper, selectButton, selecterWrapper } from './Select.module.scss'
 
 export const Select = ({
   options,
@@ -16,25 +11,47 @@ export const Select = ({
   loading = false,
   OptionPrefixComponent = null
 }) => {
+  const [open, setOpen] = useState(false)
+
+  const selected = options.find(option => option.id === value)
+
   return (
     <div className={selecterWrapper} data-loading={loading}>
-      <select className={selecter} value={value} onChange={onChange} disabled={loading} name={name}>
-        <button>
-          <selectedcontent className={selectedContent} />
-        </button>
+      <input type="hidden" name={name} value={value} />
 
-        <div className={`${optionsWrapper} ${verticalScroller} ${transparentTrack}`}>
-          {options?.map(option => {
-            return (
-              <option key={option.id} className={optionItem} value={option.id}>
-                {OptionPrefixComponent && <OptionPrefixComponent option={option} />}
+      <button
+        type="button"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        onClick={() => setOpen(isOpen => !isOpen)}
+        className={selectButton}
+        disabled={loading}
+      >
+        {OptionPrefixComponent && <OptionPrefixComponent option={selected} />}
 
-                <span className={optionText}>{option.name}</span>
-              </option>
-            )
-          })}
-        </div>
-      </select>
+        {selected?.name}
+      </button>
+
+      {open && (
+        <ul role="listbox" className={`${optionsWrapper} ${verticalScroller}`}>
+          {options.map(option => (
+            <li
+              key={option.id}
+              role="option"
+              aria-selected={option.id === value}
+              className={optionItem}
+              onClick={() => {
+                onChange(option.value)
+                setOpen(false)
+              }}
+            >
+              {OptionPrefixComponent && <OptionPrefixComponent option={option} />}
+
+              {option.name}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }

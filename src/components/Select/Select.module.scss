@@ -1,6 +1,16 @@
 @use '@styles/mixins.module' as *;
 
-.selecter {
+.selecterWrapper {
+  &[data-loading='true'] {
+    width: fit-content;
+
+    .selectButton {
+      cursor: progress;
+    }
+  }
+}
+
+.selectButton {
   width: 250px;
   border: $space-50 solid $colors-brightBlack;
   background-color: with-opacity($colors-white, 0.25);
@@ -15,12 +25,9 @@
     color 0.1s ease-in-out;
   cursor: pointer;
   outline: none;
-
-  & .selectedContent {
-    display: flex;
-    gap: $space-250;
-    align-items: center;
-  }
+  display: flex;
+  gap: $space-250;
+  align-items: center;
 
   &:focus {
     border: $space-50 solid $colors-accent;
@@ -58,50 +65,31 @@
       color: with-opacity($colors-white, 0.5);
     }
   }
-
-  &::picker-icon {
-    transition: 0.2s rotate;
-  }
-  &:open {
-    border-radius: 0;
-
-    &::picker-icon {
-      rotate: 180deg;
-    }
-  }
-}
-
-.selecterWrapper {
-  &[data-loading='true'] {
-    width: fit-content;
-
-    .selecter {
-      cursor: progress;
-    }
-  }
 }
 
 .optionsWrapper {
   overflow: hidden scroll;
-  height: 8rem;
+  max-height: 8rem;
   border: $space-50 solid $colors-brightBlack;
-  background-color: $colors-brightBlack;
+  background-color: $colors-background;
+  padding: 0;
+  margin: 0;
 }
 
 .optionItem {
   background-color: $colors-background;
-  border-top: $space-50 solid $colors-brightBlack;
-  border-right: $space-50 solid $colors-brightBlack;
+  border: solid with-opacity($colors-brightBlack, 0.5);
+  border-width: 0 $space-50 $space-50 0;
   color: $colors-foreground;
   transition:
     background-color 0.1s ease-in-out,
     color 0.1s ease-in-out;
   padding: $space-200 $space-300;
   cursor: pointer;
-
-  &:first-of-type {
-    border-top: none;
-  }
+  display: flex;
+  gap: $space-250;
+  align-items: center;
+  margin-right: 10px;
 
   &:hover,
   &:focus {
@@ -113,14 +101,8 @@
     outline: none;
   }
 
-  :is(selected) {
+  &[aria-selected='true'] {
     color: $colors-brightAccent;
-  }
-
-  &::checkmark {
-    order: 1;
-    margin-left: auto;
-    content: '◉';
   }
 }
 

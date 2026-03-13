@@ -85,6 +85,15 @@
   gap: $space-250;
 }
 
+.selecter__mark {
+  rotate: 90deg;
+  transition: rotate 0.2s ease-in-out;
+
+  &___state_open {
+    rotate: -90deg;
+  }
+}
+
 .selecter__options_container {
   position: absolute;
   top: 100%;

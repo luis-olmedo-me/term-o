@@ -11,6 +11,8 @@ import {
   selecter__button___state_loading,
   selecter__button___state_open,
   selecter__label,
+  selecter__mark,
+  selecter__mark___state_open,
   selecter__option,
   selecter__option___state_selected,
   selecter__options,
@@ -84,7 +86,13 @@ export const Select = ({
           {loading ? 'Loading' : selectedOption?.name}
         </span>
 
-        <Chevron size={iconSizes.EXTRA_SMALL} />
+        <Chevron
+          size={iconSizes.EXTRA_SMALL}
+          className={`
+            ${selecter__mark}
+            ${open ? selecter__mark___state_open : ''}
+          `}
+        />
       </button>
 
       <div

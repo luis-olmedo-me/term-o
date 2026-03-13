@@ -2,11 +2,12 @@ import { useState } from 'preact/hooks'
 
 import { verticalScroller } from '@styles/global.module.scss'
 import {
-  optionItem,
-  optionsWrapper,
-  selectButton,
-  selectButtonLoading,
-  selecterWrapperLoading
+  selecter___state_loading,
+  selecter__button,
+  selecter__button___state_loading,
+  selecter__option,
+  selecter__option___state_selected,
+  selecter__options
 } from './Select.module.scss'
 
 export const Select = ({
@@ -21,8 +22,18 @@ export const Select = ({
 
   const selected = options.find(option => option.id === value)
 
+  const handleOptionClick = selectedIdItem => {
+    onChange(selectedIdItem)
+    setOpen(false)
+  }
+
   return (
-    <div className={loading ? selecterWrapperLoading : ''} data-loading={loading}>
+    <div
+      data-loading={loading}
+      className={`
+        ${loading ? selecter___state_loading : ''}
+      `}
+    >
       <input type="hidden" name={name} value={value} />
 
       <button
@@ -32,8 +43,8 @@ export const Select = ({
         onClick={() => setOpen(isOpen => !isOpen)}
         disabled={loading}
         className={`
-          ${selectButton}
-          ${loading ? selectButtonLoading : ''}
+          ${selecter__button}
+          ${loading ? selecter__button___state_loading : ''}
         `}
       >
         {OptionPrefixComponent && <OptionPrefixComponent option={selected} />}
@@ -42,23 +53,33 @@ export const Select = ({
       </button>
 
       {open && (
-        <ul role="listbox" className={`${optionsWrapper} ${verticalScroller}`}>
-          {options.map(option => (
-            <li
-              key={option.id}
-              role="option"
-              aria-selected={option.id === value}
-              className={optionItem}
-              onClick={() => {
-                onChange(option.value)
-                setOpen(false)
-              }}
-            >
-              {OptionPrefixComponent && <OptionPrefixComponent option={option} />}
+        <ul
+          role="listbox"
+          className={`
+            ${selecter__options}
+            ${verticalScroller}
+          `}
+        >
+          {options.map(option => {
+            const isSelected = option.id === value
 
-              {option.name}
-            </li>
-          ))}
+            return (
+              <li
+                key={option.id}
+                role="option"
+                aria-selected={option.id === value}
+                onClick={() => handleOptionClick(option.id)}
+                className={`
+                  ${selecter__option}
+                  ${isSelected ? selecter__option___state_selected : ''}
+                `}
+              >
+                {OptionPrefixComponent && <OptionPrefixComponent option={option} />}
+
+                {option.name}
+              </li>
+            )
+          })}
         </ul>
       )}
     </div>

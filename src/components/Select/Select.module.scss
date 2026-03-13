@@ -1,10 +1,10 @@
 @use '@styles/mixins.module' as *;
 
-.selecterWrapperLoading {
+.selecter___state_loading {
   width: fit-content;
 }
 
-.selectButton {
+.selecter__button {
   width: 250px;
   border: $space-50 solid $colors-brightBlack;
   background-color: with-opacity($colors-white, 0.25);
@@ -22,6 +22,10 @@
   display: flex;
   gap: $space-250;
   align-items: center;
+
+  &___state_loading {
+    cursor: progress;
+  }
 
   &:focus {
     border: $space-50 solid $colors-accent;
@@ -60,11 +64,8 @@
     }
   }
 }
-.selectButtonLoading {
-  cursor: progress;
-}
 
-.optionsWrapper {
+.selecter__options {
   overflow: hidden scroll;
   max-height: 8rem;
   border: $space-50 solid $colors-brightBlack;
@@ -73,7 +74,7 @@
   margin: 0;
 }
 
-.optionItem {
+.selecter__option {
   background-color: $colors-background;
   border: solid with-opacity($colors-brightBlack, 0.5);
   border-width: 0 $space-50 $space-50 0;
@@ -88,6 +89,10 @@
   align-items: center;
   margin-right: 10px;
 
+  &___state_selected {
+    color: $colors-brightAccent;
+  }
+
   &:hover,
   &:focus {
     color: $colors-accent;
@@ -97,15 +102,4 @@
   &:active {
     outline: none;
   }
-
-  &[aria-selected='true'] {
-    color: $colors-brightAccent;
-  }
-}
-
-.optionText {
-  overflow-x: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 250px;
 }

@@ -8,7 +8,12 @@ import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { global__scrollable } from '@styles/global.module.scss'
 import { getCaretOffset, getTokenAt, selectToken } from './CommandsViewer.helpers'
-import { viewer, viewer__command, viewer__line } from './CommandsViewer.module.scss'
+import {
+  viewer,
+  viewer__command,
+  viewer__line,
+  viewer__line___variant_warning
+} from './CommandsViewer.module.scss'
 
 export const CommandsViewer = ({ commands }) => {
   const wrapper = useRef(null)
@@ -63,7 +68,7 @@ export const CommandsViewer = ({ commands }) => {
   }
 
   return (
-    <div className={`${viewer} ${global__scrollable}`}>
+    <div className={`${global__scrollable} ${viewer}`}>
       <section ref={wrapper}>
         {commands.map((command, commandIndex) => {
           const hasErrorMessage = command.status === commandStatuses.ERROR
@@ -103,10 +108,9 @@ export const CommandsViewer = ({ commands }) => {
 
               {command.warning && (
                 <p
-                  className={viewer__line}
+                  className={`${viewer__line} ${viewer__line___variant_warning}`}
                   key={command.warning}
                   data-truncate-skip="true"
-                  data-warning="true"
                   onMouseUp={handleLineMouseUp}
                 >
                   <ColoredText value={command.warning} />

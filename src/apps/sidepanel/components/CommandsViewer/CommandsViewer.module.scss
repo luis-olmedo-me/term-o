@@ -19,7 +19,7 @@
   margin: 0;
   white-space: pre-line;
 
-  &[data-warning='true'] {
+  &___variant_warning {
     opacity: 0.7;
   }
 }

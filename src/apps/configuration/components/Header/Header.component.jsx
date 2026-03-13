@@ -40,7 +40,9 @@ export const Header = ({ onSearch }) => {
         <a
           className={header__link}
           href="https://github.com/luis-olmedo-me/term-o"
-          aria-label="Go to homepage"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="View repository on GitHub"
         >
           <Repo size={iconSizes.MEDIUM} />
         </a>

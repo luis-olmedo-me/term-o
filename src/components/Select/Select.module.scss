@@ -1,7 +1,11 @@
 @use '@styles/mixins.module' as *;
 
-.selecter___state_loading {
-  width: fit-content;
+.selecter {
+  position: relative;
+
+  &___state_loading {
+    width: fit-content;
+  }
 }
 
 .selecter__button {
@@ -75,12 +79,31 @@
 }
 
 .selecter__options_container {
-  transition: border-color 0.1s ease-in-out;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  transform-origin: top;
+  scale: 1 0;
+  opacity: 0;
+  z-index: 1;
+  transition:
+    border-color 0.1s ease-in-out,
+    scale 0.2s ease-in-out,
+    opacity 0.2s ease-in-out;
+  box-sizing: border-box;
   border: $space-50 solid $colors-brightBlack;
   border-width: 0 $space-50 $space-50;
   border-radius: 0 0 $radius-200 $radius-200;
   background-color: $colors-background;
   padding-right: $space-250;
+  width: 100%;
+  pointer-events: none;
+
+  &___open {
+    scale: 1 1;
+    opacity: 1;
+    pointer-events: all;
+  }
 }
 
 .selecter__options {

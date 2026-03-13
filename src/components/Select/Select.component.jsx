@@ -2,6 +2,7 @@ import { useState } from 'preact/hooks'
 
 import { global__scrollable } from '@styles/global.module.scss'
 import {
+  selecter,
   selecter___state_loading,
   selecter__button,
   selecter__button___state_loading,
@@ -9,7 +10,8 @@ import {
   selecter__option,
   selecter__option___state_selected,
   selecter__options,
-  selecter__options_container
+  selecter__options_container,
+  selecter__options_container___open
 } from './Select.module.scss'
 
 export const Select = ({
@@ -34,6 +36,7 @@ export const Select = ({
     <div
       data-loading={loading}
       className={`
+        ${selecter}
         ${loading ? selecter___state_loading : ''}
       `}
     >
@@ -57,41 +60,45 @@ export const Select = ({
         {loading ? 'Loading' : selectedOption?.name}
       </button>
 
-      {open && (
-        <div className={selecter__options_container}>
-          <ul
-            role="listbox"
-            id={listboxId}
-            aria-activedescendant={selectedOption ? `option-${selectedOption.id}` : null}
-            className={`
+      <div
+        className={`
+          ${selecter__options_container}
+          ${open ? selecter__options_container___open : ''}
+        `}
+      >
+        <ul
+          role="listbox"
+          id={listboxId}
+          aria-activedescendant={selectedOption ? `option-${selectedOption.id}` : null}
+          className={`
               ${global__scrollable}
               ${selecter__options}
             `}
-          >
-            {options.map(option => {
-              const isSelected = option.id === value
+          tabIndex={-1}
+        >
+          {options.map(option => {
+            const isSelected = option.id === value
 
-              return (
-                <li
-                  key={option.id}
-                  id={`option-${option.id}`}
-                  role="option"
-                  aria-selected={option.id === value}
-                  onClick={() => handleOptionClick(option.id)}
-                  className={`
+            return (
+              <li
+                key={option.id}
+                id={`option-${option.id}`}
+                role="option"
+                aria-selected={option.id === value}
+                onClick={() => handleOptionClick(option.id)}
+                className={`
                     ${selecter__option}
                     ${isSelected ? selecter__option___state_selected : ''}
                   `}
-                >
-                  {OptionPrefixComponent && <OptionPrefixComponent option={option} />}
+              >
+                {OptionPrefixComponent && <OptionPrefixComponent option={option} />}
 
-                  {option.name}
-                </li>
-              )
-            })}
-          </ul>
-        </div>
-      )}
+                {option.name}
+              </li>
+            )
+          })}
+        </ul>
+      </div>
     </div>
   )
 }

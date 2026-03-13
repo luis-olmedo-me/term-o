@@ -12,6 +12,7 @@ import {
   viewer,
   viewer__command,
   viewer__line,
+  viewer__line___mod_truncated,
   viewer__line___variant_warning
 } from './CommandsViewer.module.scss'
 
@@ -83,23 +84,32 @@ export const CommandsViewer = ({ commands }) => {
               data-light={hasStatusLight}
               data-truncated={isTruncated}
             >
-              <p className={viewer__line} onMouseUp={handleLineMouseUp} data-truncate-skip="true">
+              <p onMouseUp={handleLineMouseUp} className={viewer__line}>
                 <ColoredText value={command.context} />
               </p>
 
-              <p className={viewer__line} onMouseUp={handleLineMouseUp} data-truncate-skip="false">
+              <p
+                onMouseUp={handleLineMouseUp}
+                className={`
+                  ${viewer__line}
+                  ${isTruncated ? viewer__line___mod_truncated : ''}
+                `}
+              >
                 {command.title}
               </p>
 
               {command.updates.map((update, index) => {
                 const isLastItem = index === command.updates.length - 1
+                const isTruncatedMessage = isTruncated && !isLastItem && !hasErrorMessage
 
                 return (
                   <p
                     key={`${commandIndex}-${index}`}
-                    className={viewer__line}
                     onMouseUp={handleLineMouseUp}
-                    data-truncate-skip={hasErrorMessage && isLastItem}
+                    className={`
+                      ${viewer__line}
+                      ${isTruncatedMessage ? viewer__line___mod_truncated : ''}
+                    `}
                   >
                     <ColoredText value={update} />
                   </p>
@@ -110,7 +120,6 @@ export const CommandsViewer = ({ commands }) => {
                 <p
                   className={`${viewer__line} ${viewer__line___variant_warning}`}
                   key={command.warning}
-                  data-truncate-skip="true"
                   onMouseUp={handleLineMouseUp}
                 >
                   <ColoredText value={command.warning} />

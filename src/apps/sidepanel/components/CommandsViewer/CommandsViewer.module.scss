@@ -22,6 +22,13 @@
   &___variant_warning {
     opacity: 0.7;
   }
+
+  &___mod_truncated {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 
 .viewer__command {
@@ -42,13 +49,6 @@
   &[data-truncated='true'] {
     display: flex;
     flex-direction: column;
-
-    & .viewer__line[data-truncate-skip='false'] {
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
   }
 
   &[data-origin='manual'],

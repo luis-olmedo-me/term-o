@@ -51,7 +51,7 @@ export const FieldRenderer = ({
   return (
     <div className={fieldWrapper} data-type={type} data-error={hasErrorMessage}>
       <div className={fieldLeyends}>
-        <h4 className={fieldTitle}>{title}</h4>
+        <h3 className={fieldTitle}>{title}</h3>
 
         <p className={fieldDescription}>{description}</p>
 

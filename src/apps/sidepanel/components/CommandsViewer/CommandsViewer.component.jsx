@@ -64,12 +64,12 @@ export const CommandsViewer = ({ commands }) => {
 
   return (
     <div className={`${viewer} ${global__scrollable}`}>
-      <div ref={wrapper}>
+      <section ref={wrapper}>
         {commands.map((command, commandIndex) => {
           const hasErrorMessage = command.status === commandStatuses.ERROR
 
           return (
-            <div
+            <article
               key={command.id}
               className={viewer__command}
               data-status={command.status}
@@ -112,10 +112,10 @@ export const CommandsViewer = ({ commands }) => {
                   <ColoredText value={command.warning} />
                 </p>
               )}
-            </div>
+            </article>
           )
         })}
-      </div>
+      </section>
     </div>
   )
 }

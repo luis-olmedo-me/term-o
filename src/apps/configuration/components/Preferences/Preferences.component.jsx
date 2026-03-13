@@ -120,10 +120,7 @@ export const Preferences = () => {
         <main
           ref={contentRef}
           onScroll={handleScroll}
-          className={`
-            ${global__scrollable}
-            ${preferences__main}
-          `}
+          className={`${global__scrollable} ${preferences__main}`}
         >
           {configSections.map(section => {
             return (

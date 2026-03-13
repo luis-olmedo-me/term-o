@@ -22,12 +22,13 @@ export const Select = ({
 }) => {
   const [open, setOpen] = useState(false)
 
-  const selected = options.find(option => option.id === value)
-
   const handleOptionClick = selectedIdItem => {
     onChange({ value: selectedIdItem })
     setOpen(false)
   }
+
+  const selectedOption = options.find(option => option.id === value)
+  const listboxId = `select-options-${name}`
 
   return (
     <div
@@ -42,6 +43,7 @@ export const Select = ({
         type="button"
         aria-haspopup="listbox"
         aria-expanded={open}
+        aria-controls={listboxId}
         onClick={() => setOpen(isOpen => !isOpen)}
         disabled={loading}
         className={`
@@ -50,15 +52,17 @@ export const Select = ({
           ${loading ? selecter__button___state_loading : ''}
         `}
       >
-        {OptionPrefixComponent && <OptionPrefixComponent option={selected} />}
+        {OptionPrefixComponent && <OptionPrefixComponent option={selectedOption} />}
 
-        {loading ? 'Loading' : selected?.name}
+        {loading ? 'Loading' : selectedOption?.name}
       </button>
 
       {open && (
         <div className={selecter__options_container}>
           <ul
             role="listbox"
+            id={listboxId}
+            aria-activedescendant={selectedOption ? `option-${selectedOption.id}` : null}
             className={`
               ${global__scrollable}
               ${selecter__options}
@@ -70,6 +74,7 @@ export const Select = ({
               return (
                 <li
                   key={option.id}
+                  id={`option-${option.id}`}
                   role="option"
                   aria-selected={option.id === value}
                   onClick={() => handleOptionClick(option.id)}

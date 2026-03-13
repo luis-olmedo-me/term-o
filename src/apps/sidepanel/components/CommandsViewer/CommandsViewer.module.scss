@@ -46,7 +46,7 @@
     }
   }
 
-  &[data-truncated='true'] {
+  &___mod_truncated {
     display: flex;
     flex-direction: column;
   }

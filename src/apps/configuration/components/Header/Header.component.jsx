@@ -23,20 +23,25 @@ export const Header = ({ onSearch }) => {
       <div className={header__content}>
         <Logo size={iconSizes.NORMAL} />
 
-        <Input
-          fullWidth
-          name="config-search"
-          onChange={handleOnChange}
-          type={inputTypes.TEXT}
-          variant={inputVariants.OUTLINED}
-          placeholder="Search settings..."
-          className={header__search}
-          value={value}
-        />
+        <form role="search" className={header__search}>
+          <Input
+            fullWidth
+            name="config-search"
+            onChange={handleOnChange}
+            type={inputTypes.TEXT}
+            variant={inputVariants.OUTLINED}
+            placeholder="Search settings"
+            value={value}
+          />
+        </form>
       </div>
 
       <div className={header__content}>
-        <a className={header__link} href="https://github.com/luis-olmedo-me/term-o">
+        <a
+          className={header__link}
+          href="https://github.com/luis-olmedo-me/term-o"
+          aria-label="Go to homepage"
+        >
           <Repo size={iconSizes.MEDIUM} />
         </a>
       </div>

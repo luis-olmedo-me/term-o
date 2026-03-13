@@ -31,8 +31,8 @@ class Highlight extends HTMLElement {
 
   get _elements() {
     return {
-      overlay: this._shadow.querySelector('#overlay'),
-      styles: this._shadow.querySelector('#styles')
+      overlay: this._shadow.querySelector('.overlay'),
+      styles: this._shadow.querySelector('.styles')
     }
   }
 

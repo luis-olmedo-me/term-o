@@ -86,7 +86,6 @@ export const CommandsViewer = ({ commands }) => {
           return (
             <article
               key={command.id}
-              data-indicator={statusIndicator}
               className={`
                 ${viewer__command}
                 ${getClassNameByStatus(command.status)}

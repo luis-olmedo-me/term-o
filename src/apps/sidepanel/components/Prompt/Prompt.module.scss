@@ -8,18 +8,13 @@
   color: $colors-foreground;
 
   &[data-loading='true'] {
-    & .prompt__real_input {
-      caret-color: with-opacity($colors-cursorColor, 0.4);
-    }
-
     & .prompt__input_line {
       color: with-opacity($colors-foreground, 0.4);
     }
   }
 
   &[data-requesting='true'] {
-    & .prompt__input_line,
-    & .prompt__real_input {
+    & .prompt__input_line {
       color: $colors-accent;
     }
 
@@ -82,5 +77,13 @@
   &:focus,
   &:focus-visible {
     outline: none;
+  }
+
+  &___state_loading {
+    caret-color: with-opacity($colors-cursorColor, 0.4);
+  }
+
+  &___state_requesting {
+    color: $colors-accent;
   }
 }

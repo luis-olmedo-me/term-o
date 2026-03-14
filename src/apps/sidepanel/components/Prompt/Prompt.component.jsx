@@ -16,6 +16,8 @@ import {
   prompt__line,
   prompt__overlay,
   prompt__real_input,
+  prompt__real_input___state_loading,
+  prompt__real_input___state_requesting,
   prompt__suggestion
 } from './Prompt.module.scss'
 
@@ -185,9 +187,10 @@ export const Prompt = ({
 
   const start = caret !== null ? value.slice(0, caret) : value
   const end = caret !== null ? value.slice(caret) : ''
+  const isLoading = loading && !isRequesting
 
   return (
-    <div className={prompt} data-loading={loading && !isRequesting} data-requesting={isRequesting}>
+    <div className={prompt} data-loading={isLoading} data-requesting={isRequesting}>
       <p className={prompt__line}>
         <ColoredText value={context} />
       </p>
@@ -207,7 +210,6 @@ export const Prompt = ({
           <input
             spellCheck="false"
             ref={inputRef}
-            className={prompt__real_input}
             name={name}
             type="text"
             value={value}
@@ -217,6 +219,11 @@ export const Prompt = ({
             onFocus={onFocus}
             onBlur={onBlur}
             onScroll={syncScroll}
+            className={`
+              ${prompt__real_input}
+              ${isLoading ? prompt__real_input___state_loading : ''}
+              ${isRequesting ? prompt__real_input___state_requesting : ''}
+            `}
           />
         </div>
       </div>

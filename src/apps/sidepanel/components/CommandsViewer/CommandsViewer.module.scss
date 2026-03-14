@@ -118,8 +118,9 @@
       height: $space-200;
     }
   }
-  &[data-indicator='half-dot']&___mod_lighted::after,
-  &[data-indicator='dot']&___mod_lighted::after {
+
+  &___mod_lighted[data-indicator='half-dot']::after,
+  &___mod_lighted[data-indicator='dot']::after {
     box-shadow: 0 0 $space-200 $space-100 currentColor;
   }
 }

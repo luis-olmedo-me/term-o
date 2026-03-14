@@ -197,7 +197,7 @@ export const Prompt = ({
     <div
       className={`
         ${prompt}
-        ${isLoading ? global__loader : ''}
+        ${loading ? global__loader : ''}
       `}
     >
       <p

@@ -72,7 +72,7 @@
       }
     }
 
-    &[data-indicator='half-dot']::before {
+    &.viewer__command___indicator_half_dot::before {
       left: 0;
       border-radius: 0 $radius-200 $radius-200 0;
     }
@@ -120,8 +120,8 @@
     }
   }
 
-  &___mod_lighted[data-indicator='half-dot']::after,
-  &___mod_lighted[data-indicator='dot']::after {
+  &___mod_lighted.viewer__command___indicator_half_dot::after,
+  &___mod_lighted.viewer__command___indicator_dot::after {
     box-shadow: 0 0 $space-200 $space-100 currentColor;
   }
 }

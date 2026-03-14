@@ -1,7 +1,7 @@
 import { origins } from '@src/constants/command.constants'
 import {
-  viewer__command__origin_auto,
-  viewer__command__origin_manual
+  viewer__command___origin_auto,
+  viewer__command___origin_manual
 } from './CommandsViewer.module.scss'
 
 const getTextNodeAtOffset = (root, offset) => {
@@ -86,7 +86,7 @@ export const selectToken = (element, startIndex, endIndex) => {
 }
 
 export const getClassNameByOrigin = origin => {
-  if (origin === origins.AUTO) return viewer__command__origin_auto
-  if (origin === origins.MANUAL) return viewer__command__origin_manual
+  if (origin === origins.AUTO) return viewer__command___origin_auto
+  if (origin === origins.MANUAL) return viewer__command___origin_manual
   return ''
 }

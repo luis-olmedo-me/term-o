@@ -51,8 +51,8 @@
     flex-direction: column;
   }
 
-  &__origin_manual,
-  &__origin_auto {
+  &___origin_manual,
+  &___origin_auto {
     &::before {
       position: absolute;
       top: 0.5rem;
@@ -78,7 +78,7 @@
     }
   }
 
-  &__origin_auto {
+  &___origin_auto {
     opacity: 0.8;
 
     &::before,

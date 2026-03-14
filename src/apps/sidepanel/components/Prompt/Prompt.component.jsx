@@ -10,13 +10,13 @@ import { storageKeys } from '@src/constants/storage.constants'
 import { insert } from '@src/helpers/string.helpers'
 import { createSuggestion } from './Prompt.helpers'
 import {
-  promptInput,
-  promptInputWrapper,
-  promptLine,
-  promptOverlay,
-  promptSuggestion,
-  promptWrapper,
-  prompWithPrefix
+  prompt,
+  prompt__input,
+  prompt__input_line,
+  prompt__line,
+  prompt__overlay,
+  prompt__real_input,
+  prompt__suggestion
 } from './Prompt.module.scss'
 
 export const Prompt = ({
@@ -187,22 +187,18 @@ export const Prompt = ({
   const end = caret !== null ? value.slice(caret) : ''
 
   return (
-    <div
-      className={promptWrapper}
-      data-loading={loading && !isRequesting}
-      data-requesting={isRequesting}
-    >
-      <p className={promptLine}>
+    <div className={prompt} data-loading={loading && !isRequesting} data-requesting={isRequesting}>
+      <p className={prompt__line}>
         <ColoredText value={context} />
       </p>
 
-      <div className={prompWithPrefix}>
+      <div className={prompt__input_line}>
         <span>{prefix}</span>
 
-        <div className={promptInputWrapper}>
-          <div ref={overlayRef} className={promptOverlay}>
+        <div className={prompt__input}>
+          <div ref={overlayRef} className={prompt__overlay}>
             {start}
-            <span className={promptSuggestion}>
+            <span className={prompt__suggestion}>
               {isRequesting && !value ? 'Input required to proceed…' : suggestion}
             </span>
             {end}
@@ -211,7 +207,7 @@ export const Prompt = ({
           <input
             spellCheck="false"
             ref={inputRef}
-            className={promptInput}
+            className={prompt__real_input}
             name={name}
             type="text"
             value={value}

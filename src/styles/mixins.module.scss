@@ -7,7 +7,7 @@
 }
 
 @mixin theme($mode) {
-  :global([data-theme='#{$mode}']) & {
+  :global(.theme-provider-#{$mode}) & {
     @content;
   }
 }

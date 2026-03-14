@@ -12,7 +12,7 @@ export const ThemeProvider = ({ children }) => {
   return (
     <div
       id="theme-provider"
-      data-theme={config.theme.isDarkMode ? 'dark' : 'light'}
+      className={`theme-provider-${config.theme.isDarkMode ? 'dark' : 'light'}`}
       data-inputs-caret={caretShape}
     >
       <style>{createCssVariablesFromTheme(config.theme)}</style>

@@ -8,6 +8,7 @@ import { eventNames } from '@sidepanel/constants/events.constants'
 import { configInputIds, PROMPT_MARK } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { insert } from '@src/helpers/string.helpers'
+import { global__loader } from '@styles/global.module.scss'
 import { createSuggestion } from './Prompt.helpers'
 import {
   prompt,
@@ -193,7 +194,12 @@ export const Prompt = ({
   const isLoading = loading && !isRequesting
 
   return (
-    <div className={prompt} data-loading={isLoading}>
+    <div
+      className={`
+        ${prompt}
+        ${isLoading ? global__loader : ''}
+      `}
+    >
       <p
         className={`
           ${prompt__line}

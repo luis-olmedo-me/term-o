@@ -20,7 +20,8 @@ import {
   prompt__real_input,
   prompt__real_input___state_loading,
   prompt__real_input___state_requesting,
-  prompt__suggestion
+  prompt__suggestion,
+  prompt__suggestion___state_requesting
 } from './Prompt.module.scss'
 
 export const Prompt = ({
@@ -192,7 +193,7 @@ export const Prompt = ({
   const isLoading = loading && !isRequesting
 
   return (
-    <div className={prompt} data-loading={isLoading} data-requesting={isRequesting}>
+    <div className={prompt} data-loading={isLoading}>
       <p
         className={`
           ${prompt__line}
@@ -209,7 +210,12 @@ export const Prompt = ({
         <div className={prompt__input}>
           <div ref={overlayRef} className={prompt__overlay}>
             {start}
-            <span className={prompt__suggestion}>
+            <span
+              className={`
+                ${prompt__suggestion}
+                ${isRequesting ? prompt__suggestion___state_requesting : ''}
+              `}
+            >
               {isRequesting && !value ? 'Input required to proceed…' : suggestion}
             </span>
             {end}

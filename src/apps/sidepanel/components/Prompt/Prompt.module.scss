@@ -6,12 +6,6 @@
   background-color: transparent;
   padding: $space-200 $space-400 $space-200 $space-400;
   color: $colors-foreground;
-
-  &[data-requesting='true'] {
-    & .prompt__suggestion {
-      color: with-opacity($colors-accent, 0.4);
-    }
-  }
 }
 
 .prompt__line {
@@ -53,6 +47,10 @@
 
 .prompt__suggestion {
   color: $colors-brightBlack;
+
+  &___state_requesting {
+    color: with-opacity($colors-accent, 0.4);
+  }
 }
 
 .prompt__real_input {

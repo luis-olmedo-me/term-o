@@ -14,6 +14,8 @@ import {
   prompt__input,
   prompt__input_line,
   prompt__line,
+  prompt__line___state_loading,
+  prompt__line___state_requesting,
   prompt__overlay,
   prompt__real_input,
   prompt__real_input___state_loading,
@@ -191,7 +193,13 @@ export const Prompt = ({
 
   return (
     <div className={prompt} data-loading={isLoading} data-requesting={isRequesting}>
-      <p className={prompt__line}>
+      <p
+        className={`
+          ${prompt__line}
+          ${isLoading ? prompt__line___state_loading : ''}
+          ${isRequesting ? prompt__line___state_requesting : ''}
+        `}
+      >
         <ColoredText value={context} />
       </p>
 

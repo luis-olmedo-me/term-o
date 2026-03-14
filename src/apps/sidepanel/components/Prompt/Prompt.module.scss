@@ -7,17 +7,7 @@
   padding: $space-200 $space-400 $space-200 $space-400;
   color: $colors-foreground;
 
-  &[data-loading='true'] {
-    & .prompt__input_line {
-      color: with-opacity($colors-foreground, 0.4);
-    }
-  }
-
   &[data-requesting='true'] {
-    & .prompt__input_line {
-      color: $colors-accent;
-    }
-
     & .prompt__suggestion {
       color: with-opacity($colors-accent, 0.4);
     }
@@ -28,6 +18,14 @@
   cursor: text;
   margin: 0;
   white-space: pre-line;
+
+  &___state_loading {
+    color: with-opacity($colors-foreground, 0.4);
+  }
+
+  &___state_requesting {
+    color: $colors-accent;
+  }
 }
 
 .prompt__input_line {

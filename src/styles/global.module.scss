@@ -48,8 +48,7 @@ body {
   }
 }
 
-.global__loader,
-[data-loading='true'] {
+.global__loader {
   position: relative;
 
   &::after {

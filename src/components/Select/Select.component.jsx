@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'preact/hooks'
 import Chevron from '@src/icons/Chevron.icon'
 
 import { iconSizes } from '@src/constants/icon.constants'
-import { global__scrollable } from '@styles/global.module.scss'
+import { global__loader, global__scrollable } from '@styles/global.module.scss'
 import {
   selecter,
   selecter___state_loading,
@@ -59,10 +59,10 @@ export const Select = ({
   return (
     <div
       ref={selecterRef}
-      data-loading={loading}
       className={`
         ${selecter}
         ${loading ? selecter___state_loading : ''}
+        ${loading ? global__loader : ''}
       `}
     >
       <input type="hidden" name={name} value={value} />

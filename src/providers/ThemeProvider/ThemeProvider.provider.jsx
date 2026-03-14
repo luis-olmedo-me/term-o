@@ -3,6 +3,8 @@ import useStorage from '@src/hooks/useStorage'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createCssVariablesFromTheme } from '@src/helpers/themes.helpers'
+import { getClassNameByInputsCaret } from './ThemeProvider.helpers'
+import { provider } from './ThemeProvider.module.scss'
 
 export const ThemeProvider = ({ children }) => {
   const [config] = useStorage({ key: storageKeys.CONFIG })
@@ -12,8 +14,12 @@ export const ThemeProvider = ({ children }) => {
   return (
     <div
       id="theme-provider"
-      className={`theme-provider-${config.theme.isDarkMode ? 'dark' : 'light'}`}
       data-inputs-caret={caretShape}
+      className={`
+        ${provider}
+        ${getClassNameByInputsCaret(caretShape)}
+        theme-provider-${config.theme.isDarkMode ? 'dark' : 'light'}
+      `}
     >
       <style>{createCssVariablesFromTheme(config.theme)}</style>
 

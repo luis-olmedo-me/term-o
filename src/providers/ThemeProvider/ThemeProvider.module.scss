@@ -1,0 +1,22 @@
+.provider {
+  margin: 0;
+
+  &__inputs_caret_bar {
+    input,
+    textarea {
+      caret-shape: bar;
+    }
+  }
+  &__inputs_caret_block {
+    input,
+    textarea {
+      caret-shape: block;
+    }
+  }
+  &__inputs_caret_underscore {
+    input,
+    textarea {
+      caret-shape: underscore;
+    }
+  }
+}

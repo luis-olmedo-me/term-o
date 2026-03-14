@@ -87,15 +87,15 @@
     }
   }
 
-  &[data-status='done']::after {
+  &___status_done::after {
     background-color: $colors-brightGreen;
     color: $colors-brightGreen;
   }
-  &[data-status='error']::after {
+  &___status_error::after {
     background-color: $colors-brightRed;
     color: $colors-brightRed;
   }
-  &[data-status='executing']::after {
+  &___status_executing::after {
     background-color: $colors-brightWhite;
     color: $colors-brightWhite;
   }

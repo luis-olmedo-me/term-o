@@ -10,6 +10,7 @@ import { global__scrollable } from '@styles/global.module.scss'
 import {
   getCaretOffset,
   getClassNameByOrigin,
+  getClassNameByStatus,
   getTokenAt,
   selectToken
 } from './CommandsViewer.helpers'
@@ -84,13 +85,13 @@ export const CommandsViewer = ({ commands }) => {
           return (
             <article
               key={command.id}
-              data-status={command.status}
               data-indicator={statusIndicator}
               className={`
                 ${viewer__command}
+                ${getClassNameByStatus(command.status)}
                 ${hasStatusBar ? getClassNameByOrigin(command.origin) : ''}
-                ${isTruncated ? viewer__command___mod_truncated : ''}
                 ${hasStatusLight ? viewer__command___mod_lighted : ''}
+                ${isTruncated ? viewer__command___mod_truncated : ''}
               `}
             >
               <p onMouseUp={handleLineMouseUp} className={viewer__line}>

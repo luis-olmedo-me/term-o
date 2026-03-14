@@ -15,7 +15,7 @@ import {
   viewer__command___mod_truncated,
   viewer__line,
   viewer__line___mod_truncated,
-  viewer__line___variant_warning
+  viewer__line___mod_warn
 } from './CommandsViewer.module.scss'
 
 export const CommandsViewer = ({ commands }) => {
@@ -122,7 +122,7 @@ export const CommandsViewer = ({ commands }) => {
 
               {command.warning && (
                 <p
-                  className={`${viewer__line} ${viewer__line___variant_warning}`}
+                  className={`${viewer__line} ${viewer__line___mod_warn}`}
                   key={command.warning}
                   onMouseUp={handleLineMouseUp}
                 >

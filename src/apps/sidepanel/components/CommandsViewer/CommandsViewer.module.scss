@@ -100,17 +100,16 @@
     color: $colors-brightWhite;
   }
 
-  &[data-indicator='none']::after {
+  &___indicator_none::after {
     display: none;
   }
-  &[data-indicator='dot']::after {
+  &___indicator_dot::after {
     left: $space-300;
     border-radius: $radius-200;
     width: $space-200;
     height: $space-200;
   }
-
-  &[data-indicator='half-dot'] {
+  &___indicator_half_dot {
     padding: 0 $space-400 0 $space-500;
 
     &::after {

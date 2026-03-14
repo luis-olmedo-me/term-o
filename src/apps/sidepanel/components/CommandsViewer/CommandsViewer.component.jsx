@@ -9,6 +9,7 @@ import { storageKeys } from '@src/constants/storage.constants'
 import { global__scrollable } from '@styles/global.module.scss'
 import {
   getCaretOffset,
+  getClassNameByIndicator,
   getClassNameByOrigin,
   getClassNameByStatus,
   getTokenAt,
@@ -89,6 +90,7 @@ export const CommandsViewer = ({ commands }) => {
               className={`
                 ${viewer__command}
                 ${getClassNameByStatus(command.status)}
+                ${getClassNameByIndicator(statusIndicator)}
                 ${hasStatusBar ? getClassNameByOrigin(command.origin) : ''}
                 ${hasStatusLight ? viewer__command___mod_lighted : ''}
                 ${isTruncated ? viewer__command___mod_truncated : ''}

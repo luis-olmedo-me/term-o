@@ -1,5 +1,9 @@
 import { commandStatuses, origins } from '@src/constants/command.constants'
+import { statusIndicators } from '@src/constants/config.constants'
 import {
+  viewer__command___indicator_dot,
+  viewer__command___indicator_half_dot,
+  viewer__command___indicator_none,
   viewer__command___origin_auto,
   viewer__command___origin_manual,
   viewer__command___status_done,
@@ -98,5 +102,12 @@ export const getClassNameByStatus = status => {
   if (status === commandStatuses.DONE) return viewer__command___status_done
   if (status === commandStatuses.ERROR) return viewer__command___status_error
   if (status === commandStatuses.EXECUTING) return viewer__command___status_executing
+  return ''
+}
+
+export const getClassNameByIndicator = indicator => {
+  if (indicator === statusIndicators.DOT) return viewer__command___indicator_dot
+  if (indicator === statusIndicators.HALF_DOT) return viewer__command___indicator_half_dot
+  if (indicator === statusIndicators.NONE) return viewer__command___indicator_none
   return ''
 }

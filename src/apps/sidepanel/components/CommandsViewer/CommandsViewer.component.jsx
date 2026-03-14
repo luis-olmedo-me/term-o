@@ -7,7 +7,12 @@ import { commandStatuses } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { global__scrollable } from '@styles/global.module.scss'
-import { getCaretOffset, getTokenAt, selectToken } from './CommandsViewer.helpers'
+import {
+  getCaretOffset,
+  getClassNameByOrigin,
+  getTokenAt,
+  selectToken
+} from './CommandsViewer.helpers'
 import {
   viewer,
   viewer__command,
@@ -80,10 +85,10 @@ export const CommandsViewer = ({ commands }) => {
             <article
               key={command.id}
               data-status={command.status}
-              data-origin={hasStatusBar ? command.origin : null}
               data-indicator={statusIndicator}
               className={`
                 ${viewer__command}
+                ${hasStatusBar ? getClassNameByOrigin(command.origin) : ''}
                 ${isTruncated ? viewer__command___mod_truncated : ''}
                 ${hasStatusLight ? viewer__command___mod_lighted : ''}
               `}

@@ -51,8 +51,8 @@
     flex-direction: column;
   }
 
-  &[data-origin='manual'],
-  &[data-origin='auto'] {
+  &__origin_manual,
+  &__origin_auto {
     &::before {
       position: absolute;
       top: 0.5rem;
@@ -77,12 +77,14 @@
       border-radius: 0 $radius-200 $radius-200 0;
     }
   }
-  &[data-origin='auto'] {
+
+  &__origin_auto {
     opacity: 0.8;
-  }
-  &[data-origin='auto']::before,
-  &[data-origin='auto']::after {
-    opacity: 0.6;
+
+    &::before,
+    &::after {
+      opacity: 0.6;
+    }
   }
 
   &[data-status='done']::after {

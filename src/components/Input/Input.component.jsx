@@ -1,4 +1,5 @@
 import { inputTypes } from './Input.constants'
+import { getClassNameByVariant } from './Input.helpers'
 import {
   input,
   input___mod_disabled,
@@ -46,9 +47,9 @@ export const Input = ({
         onBlur={onBlur}
         placeholder={placeholder}
         disabled={disabled}
-        data-variant={variant}
         className={`
           ${input__real_input}
+          ${getClassNameByVariant(variant)}
           ${isNumberInput ? input__real_input___type_number : ''}
         `}
       />

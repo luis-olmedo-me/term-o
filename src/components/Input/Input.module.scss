@@ -7,10 +7,6 @@
   background-color: transparent;
   color: $colors-foreground;
 
-  &[data-fit-content='true'] {
-    width: fit-content;
-  }
-
   &[data-disabled='true'],
   &[data-disabled='true'] .realInput:disabled {
     cursor: text;

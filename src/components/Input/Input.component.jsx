@@ -14,11 +14,10 @@ export const Input = ({
   postFix,
   name,
   variant,
-  fullWidth,
   className
 }) => {
   return (
-    <div className={`${input} ${className}`} data-disabled={disabled} data-fit-content={!fullWidth}>
+    <div className={`${input} ${className}`} data-disabled={disabled}>
       {prefix && <span>{prefix}</span>}
 
       <input
@@ -56,6 +55,5 @@ Input.propTypes = {
   type: String,
   name: String,
   variant: String,
-  fullWidth: Boolean,
   className: String
 }

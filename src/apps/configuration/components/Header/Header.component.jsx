@@ -25,7 +25,6 @@ export const Header = ({ onSearch }) => {
 
         <form role="search" className={header__search}>
           <Input
-            fullWidth
             name="config-search"
             onChange={handleOnChange}
             type={inputTypes.TEXT}

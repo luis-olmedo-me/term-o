@@ -2,11 +2,13 @@ import { useState } from 'preact/hooks'
 
 import DynamicInput from '@src/components/DynamicInput'
 
+import { availableInputTypes } from '@src/constants/inputs.constants'
 import { colorThemeKeys } from '@src/constants/themes.constants'
 import { getConfigDetailsByInputId } from '@src/helpers/config.helpers'
 import { validate } from '@src/helpers/validation-primitive.helpers'
 import {
   field,
+  field___column,
   field__description,
   field__error,
   field__input,
@@ -47,9 +49,16 @@ export const FieldRenderer = ({
   }
 
   const hasErrorMessage = typeof errorMessage === 'string'
+  const isTextArea = type === availableInputTypes.TEXT_AREA
 
   return (
-    <div className={field} data-type={type} data-error={hasErrorMessage}>
+    <div
+      data-error={hasErrorMessage}
+      className={`
+        ${field}
+        ${isTextArea ? field___column : ''}
+      `}
+    >
       <div className={field__leyends}>
         <h3 className={field__title}>{title}</h3>
 

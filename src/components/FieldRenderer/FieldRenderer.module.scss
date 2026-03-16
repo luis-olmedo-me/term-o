@@ -16,7 +16,7 @@
     border-radius: 0 0 $radius-200 $radius-200;
   }
 
-  &[data-type='text-area'] {
+  &___column {
     flex-direction: column;
 
     .field__leyends {

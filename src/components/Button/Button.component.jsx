@@ -1,6 +1,6 @@
 import { iconSizes } from '@src/constants/icon.constants'
 import { getClassNameByVariant } from './Button.helpers'
-import { button, button__label } from './Button.module.scss'
+import { button, button___state_selected, button__label } from './Button.module.scss'
 
 export const Button = ({
   value,
@@ -13,9 +13,9 @@ export const Button = ({
   return (
     <button
       onClick={onClick}
-      data-selected={selected}
       className={`
         ${button}
+        ${selected ? button___state_selected : ''}
         ${getClassNameByVariant(variant)}
         ${className}
       `}

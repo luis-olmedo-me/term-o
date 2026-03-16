@@ -34,7 +34,7 @@
     background-color: with-opacity($colors-accent, 0.5);
   }
 
-  &[data-selected='true'] {
+  &___state_selected {
     color: $colors-accent;
 
     &:hover {
@@ -65,7 +65,7 @@
       background-color: with-opacity($colors-accent, 0.5);
     }
 
-    &[data-selected='true'] {
+    &.button___state_selected {
       &:hover {
         color: $colors-brightAccent;
       }
@@ -95,7 +95,7 @@
       background-color: with-opacity($colors-red, 0.5);
     }
 
-    &[data-selected='true'] {
+    &.button___state_selected {
       &:hover {
         color: $colors-brightRed;
       }
@@ -125,7 +125,7 @@
       background-color: with-opacity($colors-yellow, 0.5);
     }
 
-    &[data-selected='true'] {
+    &.button___state_selected {
       &:hover {
         color: $colors-brightYellow;
       }

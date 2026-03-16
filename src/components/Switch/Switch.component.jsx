@@ -1,4 +1,9 @@
-import { selected, simulatedSwitch, switchInput, switchWrapper } from './Switch.module.scss'
+import {
+  switcher,
+  switcher__fake_input,
+  switcher__fake_input___mod_selected,
+  switcher__input
+} from './Switch.module.scss'
 
 export const Switch = ({
   onChange,
@@ -11,9 +16,9 @@ export const Switch = ({
   name
 }) => {
   return (
-    <div className={switchWrapper}>
+    <div className={switcher}>
       <input
-        className={switchInput}
+        className={switcher__input}
         name={name}
         ref={inputRef}
         checked={value}
@@ -25,7 +30,12 @@ export const Switch = ({
         type="checkbox"
       />
 
-      <div className={`${simulatedSwitch} ${value ? selected : null}`} />
+      <div
+        className={`
+          ${switcher__fake_input}
+          ${value ? switcher__fake_input___mod_selected : ''}
+        `}
+      />
     </div>
   )
 }

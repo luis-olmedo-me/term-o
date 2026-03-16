@@ -1,6 +1,17 @@
 @use '@styles/mixins.module' as *;
 
-.simulatedSwitch {
+.switcher {
+  display: flex;
+  position: relative;
+  align-items: center;
+  gap: $space-400;
+  cursor: text;
+  background-color: transparent;
+  width: fit-content;
+  color: $colors-foreground;
+}
+
+.switcher__fake_input {
   transition:
     background-color 0.1s ease-in-out,
     color 0.1s ease-in-out;
@@ -29,7 +40,7 @@
     content: '';
   }
 
-  &.selected {
+  &___mod_selected {
     &::after {
       left: calc(70% - $space-200);
       border-color: $colors-foreground;
@@ -38,7 +49,7 @@
   }
 }
 
-.switchInput {
+.switcher__input {
   display: block;
   position: absolute;
   bottom: 0;
@@ -50,7 +61,7 @@
   width: 100%;
   height: 100%;
 
-  &:hover + .simulatedSwitch {
+  &:hover + .switcher__fake_input {
     background-color: with-opacity($colors-accent, 0.25);
 
     @include theme(light) {
@@ -65,7 +76,7 @@
       background-color: with-opacity($colors-brightAccent, 0.25);
     }
   }
-  &:hover + .simulatedSwitch.selected {
+  &:hover + .switcher__fake_input___mod_selected {
     background-color: with-opacity($colors-accent, 0.8);
 
     &::after {
@@ -79,15 +90,4 @@
   &:focus-visible {
     outline: none;
   }
-}
-
-.switchWrapper {
-  display: flex;
-  position: relative;
-  align-items: center;
-  gap: $space-400;
-  cursor: text;
-  background-color: transparent;
-  width: fit-content;
-  color: $colors-foreground;
 }

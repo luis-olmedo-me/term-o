@@ -7,8 +7,23 @@ import { commandStatuses } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { global__scrollable } from '@styles/global.module.scss'
-import { getCaretOffset, getTokenAt, selectToken } from './CommandsViewer.helpers'
-import { commandItem, line, viewWrapper } from './CommandsViewer.module.scss'
+import {
+  getCaretOffset,
+  getClassNameByIndicator,
+  getClassNameByOrigin,
+  getClassNameByStatus,
+  getTokenAt,
+  selectToken
+} from './CommandsViewer.helpers'
+import {
+  viewer,
+  viewer__command,
+  viewer__command___mod_lighted,
+  viewer__command___mod_truncated,
+  viewer__line,
+  viewer__line___mod_truncated,
+  viewer__line___mod_warn
+} from './CommandsViewer.module.scss'
 
 export const CommandsViewer = ({ commands }) => {
   const wrapper = useRef(null)
@@ -63,38 +78,49 @@ export const CommandsViewer = ({ commands }) => {
   }
 
   return (
-    <div className={`${viewWrapper} ${global__scrollable}`}>
-      <div ref={wrapper}>
+    <div className={`${global__scrollable} ${viewer}`}>
+      <section ref={wrapper}>
         {commands.map((command, commandIndex) => {
           const hasErrorMessage = command.status === commandStatuses.ERROR
 
           return (
-            <div
+            <article
               key={command.id}
-              className={commandItem}
-              data-status={command.status}
-              data-origin={hasStatusBar ? command.origin : null}
-              data-indicator={statusIndicator}
-              data-light={hasStatusLight}
-              data-truncated={isTruncated}
+              className={`
+                ${viewer__command}
+                ${getClassNameByStatus(command.status)}
+                ${getClassNameByIndicator(statusIndicator)}
+                ${hasStatusBar ? getClassNameByOrigin(command.origin) : ''}
+                ${hasStatusLight ? viewer__command___mod_lighted : ''}
+                ${isTruncated ? viewer__command___mod_truncated : ''}
+              `}
             >
-              <p className={line} onMouseUp={handleLineMouseUp} data-truncate-skip="true">
+              <p onMouseUp={handleLineMouseUp} className={viewer__line}>
                 <ColoredText value={command.context} />
               </p>
 
-              <p className={line} onMouseUp={handleLineMouseUp} data-truncate-skip="false">
+              <p
+                onMouseUp={handleLineMouseUp}
+                className={`
+                  ${viewer__line}
+                  ${isTruncated ? viewer__line___mod_truncated : ''}
+                `}
+              >
                 {command.title}
               </p>
 
               {command.updates.map((update, index) => {
                 const isLastItem = index === command.updates.length - 1
+                const isTruncatedMessage = isTruncated && !isLastItem && !hasErrorMessage
 
                 return (
                   <p
                     key={`${commandIndex}-${index}`}
-                    className={line}
                     onMouseUp={handleLineMouseUp}
-                    data-truncate-skip={hasErrorMessage && isLastItem}
+                    className={`
+                      ${viewer__line}
+                      ${isTruncatedMessage ? viewer__line___mod_truncated : ''}
+                    `}
                   >
                     <ColoredText value={update} />
                   </p>
@@ -103,19 +129,17 @@ export const CommandsViewer = ({ commands }) => {
 
               {command.warning && (
                 <p
-                  className={line}
+                  className={`${viewer__line} ${viewer__line___mod_warn}`}
                   key={command.warning}
-                  data-truncate-skip="true"
-                  data-warning="true"
                   onMouseUp={handleLineMouseUp}
                 >
                   <ColoredText value={command.warning} />
                 </p>
               )}
-            </div>
+            </article>
           )
         })}
-      </div>
+      </section>
     </div>
   )
 }

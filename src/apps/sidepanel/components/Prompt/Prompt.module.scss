@@ -1,4 +1,4 @@
-.promptWrapper {
+.prompt {
   z-index: 1;
   transition: box-shadow 0.2s ease-in-out;
   cursor: text;
@@ -6,49 +6,36 @@
   background-color: transparent;
   padding: $space-200 $space-400 $space-200 $space-400;
   color: $colors-foreground;
-
-  &[data-loading='true'] {
-    & .promptInput {
-      caret-color: with-opacity($colors-cursorColor, 0.4);
-    }
-
-    & .prompWithPrefix {
-      color: with-opacity($colors-foreground, 0.4);
-    }
-  }
-
-  &[data-requesting='true'] {
-    & .prompWithPrefix,
-    & .promptInput {
-      color: $colors-accent;
-    }
-
-    & .promptSuggestion {
-      color: with-opacity($colors-accent, 0.4);
-    }
-  }
 }
 
-.promptLine {
+.prompt__line {
   cursor: text;
   margin: 0;
   white-space: pre-line;
+
+  &___state_loading {
+    color: with-opacity($colors-foreground, 0.4);
+  }
+
+  &___state_requesting {
+    color: $colors-accent;
+  }
 }
 
-.prompWithPrefix {
+.prompt__input_line {
   display: flex;
   gap: $space-200;
   margin-top: $space-100;
   color: $colors-foreground;
 }
 
-.promptInputWrapper {
+.prompt__input {
   position: relative;
   flex-grow: 1;
   padding: 0 0 $space-300;
 }
 
-.promptOverlay {
+.prompt__overlay {
   position: absolute;
   inset: 0;
   overflow: hidden;
@@ -58,11 +45,15 @@
   white-space: pre;
 }
 
-.promptSuggestion {
+.prompt__suggestion {
   color: $colors-brightBlack;
+
+  &___state_requesting {
+    color: with-opacity($colors-accent, 0.4);
+  }
 }
 
-.promptInput {
+.prompt__real_input {
   flex-grow: 1;
   border: none;
   background-color: transparent;
@@ -82,5 +73,13 @@
   &:focus,
   &:focus-visible {
     outline: none;
+  }
+
+  &___state_loading {
+    caret-color: with-opacity($colors-cursorColor, 0.4);
+  }
+
+  &___state_requesting {
+    color: $colors-accent;
   }
 }

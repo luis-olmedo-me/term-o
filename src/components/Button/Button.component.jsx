@@ -1,30 +1,28 @@
 import { iconSizes } from '@src/constants/icon.constants'
-
-import { buttonIconWrapper, buttonLabel, buttonWrapper } from './Button.module.scss'
+import { getClassNameByVariant } from './Button.helpers'
+import { button, button___state_selected, button__label } from './Button.module.scss'
 
 export const Button = ({
   value,
   onClick,
   variant,
   Icon = null,
-  fullWidth = false,
-  selected = false
+  selected = false,
+  className = ''
 }) => {
   return (
     <button
-      className={buttonWrapper}
       onClick={onClick}
-      data-full-width={fullWidth}
-      data-selected={selected}
-      data-variant={variant}
+      className={`
+        ${button}
+        ${selected ? button___state_selected : ''}
+        ${getClassNameByVariant(variant)}
+        ${className}
+      `}
     >
-      {Icon && (
-        <span className={buttonIconWrapper}>
-          <Icon size={iconSizes.SMALL} />
-        </span>
-      )}
+      {Icon && <Icon size={iconSizes.SMALL} />}
 
-      {value && <span className={buttonLabel}>{value}</span>}
+      {value && <span className={button__label}>{value}</span>}
     </button>
   )
 }
@@ -32,8 +30,8 @@ export const Button = ({
 Button.propTypes = {
   value: String,
   onClick: Function,
-  fullWidth: Boolean,
   selected: Boolean,
   Icon: Object,
-  variant: String
+  variant: String,
+  className: String
 }

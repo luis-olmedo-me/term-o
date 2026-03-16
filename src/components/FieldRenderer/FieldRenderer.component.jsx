@@ -2,16 +2,21 @@ import { useState } from 'preact/hooks'
 
 import DynamicInput from '@src/components/DynamicInput'
 
+import { availableInputTypes } from '@src/constants/inputs.constants'
 import { colorThemeKeys } from '@src/constants/themes.constants'
 import { getConfigDetailsByInputId } from '@src/helpers/config.helpers'
 import { validate } from '@src/helpers/validation-primitive.helpers'
 import {
-  errorMessageWrapper,
-  fieldDescription,
-  fieldLeyends,
-  fieldTitle,
-  fieldWrapper,
-  inputWrapper
+  field,
+  field___mod_column,
+  field___mod_error,
+  field__description,
+  field__error,
+  field__input,
+  field__input___mod_error,
+  field__input___mod_full_width,
+  field__leyends,
+  field__title
 } from './FieldRenderer.module.scss'
 
 export const FieldRenderer = ({
@@ -32,7 +37,7 @@ export const FieldRenderer = ({
   const [errorMessage, setErrorMessage] = useState(null)
 
   const tryApplyChange = (inputId, newValue) => {
-    if (value === newValue) return
+    if (value === newValue) return setErrorMessage(null)
     const inputDetails = getConfigDetailsByInputId(inputId)
 
     try {
@@ -47,18 +52,32 @@ export const FieldRenderer = ({
   }
 
   const hasErrorMessage = typeof errorMessage === 'string'
+  const isTextAreaInput = type === availableInputTypes.TEXT_AREA
+  const isTextInput = isTextAreaInput || type === availableInputTypes.STRING
 
   return (
-    <div className={fieldWrapper} data-type={type} data-error={hasErrorMessage}>
-      <div className={fieldLeyends}>
-        <h4 className={fieldTitle}>{title}</h4>
+    <div
+      className={`
+        ${field}
+        ${isTextAreaInput ? field___mod_column : ''}
+        ${hasErrorMessage ? field___mod_error : ''}
+      `}
+    >
+      <div className={field__leyends}>
+        <h3 className={field__title}>{title}</h3>
 
-        <p className={fieldDescription}>{description}</p>
+        <p className={field__description}>{description}</p>
 
-        {errorMessage && <span className={errorMessageWrapper}>{errorMessage}</span>}
+        {errorMessage && <span className={field__error}>{errorMessage}</span>}
       </div>
 
-      <div className={inputWrapper} data-error={hasErrorMessage} data-type={type}>
+      <div
+        className={`
+          ${field__input}
+          ${isTextInput ? field__input___mod_full_width : ''}
+          ${hasErrorMessage ? field__input___mod_error : ''}
+        `}
+      >
         <DynamicInput
           errorMessage={errorMessage}
           handleClickInButtons={id => handleClickInButtons(id, setErrorMessage)}

@@ -1,26 +1,33 @@
 .text {
+  transition:
+    color 1s ease-in-out,
+    background-color 0.1s ease-in-out;
   line-height: $lineHeight-300;
-  transition: color 1s ease-in-out;
 
-  &[data-hide-aritificial-spaces='false'] {
-    &.bothColored:not([data-bgcolor='reset']),
-    &.uniqueColored:not([data-bgcolor='reset']),
-    &.nextColored:not([data-bgcolor='reset']),
-    &.previousColored:not([data-bgcolor='reset']) {
+  &__keyword {
+    color: with-opacity($colors-foreground, 0.3);
+    font-style: italic;
+  }
+
+  &__bg_spaced {
+    &.text___both_colored:not([data-bgcolor='reset']),
+    &.text___unique_colored:not([data-bgcolor='reset']),
+    &.text___next_colored:not([data-bgcolor='reset']),
+    &.text___previous_colored:not([data-bgcolor='reset']) {
       padding-inline: 2px;
     }
   }
 
-  &.bothColored {
+  &___both_colored {
     border-radius: unset;
   }
-  &.uniqueColored {
+  &___unique_colored {
     border-radius: $radius-150;
   }
-  &.nextColored {
+  &___next_colored {
     border-radius: $radius-150 0 0 $radius-150;
   }
-  &.previousColored {
+  &___previous_colored {
     border-radius: 0 $radius-150 $radius-150 0;
   }
 }

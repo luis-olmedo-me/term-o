@@ -36,7 +36,6 @@ export const DynamicInput = ({
       return (
         <Input
           errorMessage={errorMessage}
-          fullWidth
           name={name}
           onBlur={({ target }) => onChange(inputId, target.value)}
           onChange={({ target }) => setLocalValue(target.value)}
@@ -122,7 +121,6 @@ export const DynamicInput = ({
           variant={getButtonVariantFromType(type)}
           Icon={iconButton}
           value={value}
-          fullWidth
         />
       )
 

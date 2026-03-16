@@ -1,41 +1,45 @@
 @use '@styles/variables.module' as *;
 @use '@styles/mixins.module' as *;
 
-.postfix {
-  padding-inline: $space-400;
-  height: -webkit-fill-available;
+.input {
   display: flex;
   align-items: center;
-  border: solid $colors-brightBlack;
-  border-width: $space-50 $space-50 $space-50 0;
-  background-color: with-opacity($colors-white, 0.2);
-  color: $colors-foreground;
-  border-radius: 0 $space-200 $space-200 0;
-  pointer-events: unset;
-  transition: border-color 0.1s ease-in-out;
-  cursor: help;
-}
-
-.realInput {
-  font-family: $font;
-  width: 100%;
-  box-sizing: border-box;
-  white-space: nowrap;
-  font-size: $fontSize-50;
-  border: none;
-  display: block;
-  caret-color: $colors-cursorColor;
-  line-height: $lineHeight-300;
   background-color: transparent;
   color: $colors-foreground;
-  letter-spacing: $space-50;
+
+  &___mod_disabled {
+    cursor: text;
+  }
+
+  &___type_number {
+    max-width: 200px;
+  }
+}
+
+.input__real_input {
+  display: block;
   cursor: text;
+  box-sizing: border-box;
+  border: none;
+  background-color: transparent;
+  width: 100%;
+  color: $colors-foreground;
+  caret-color: $colors-cursorColor;
+  font-size: $fontSize-50;
+  line-height: $lineHeight-300;
+  font-family: $font;
+  white-space: nowrap;
 
   &::placeholder {
     color: with-opacity($colors-brightBlack, 0.8);
   }
+
   &:hover::placeholder {
     color: with-opacity(currentColor, 0.5);
+  }
+
+  &:disabled {
+    cursor: text;
   }
 
   &:active,
@@ -44,20 +48,16 @@
     outline: none;
   }
 
-  &[type='number'] {
-    width: 100px;
-  }
-
-  &[type='number']::-webkit-inner-spin-button {
+  &___type_number::-webkit-inner-spin-button {
     -webkit-appearance: none;
   }
 
-  &[data-variant='outlined'] {
-    border: $space-50 solid $colors-brightBlack;
-    background-color: with-opacity($colors-white, 0.05);
-    border-radius: $radius-200 0 0 $radius-200;
-    padding-left: $space-300;
+  &___variant_outlined {
     transition: border-color 0.1s ease-in-out;
+    border: $space-50 solid $colors-brightBlack;
+    border-radius: $radius-200 0 0 $radius-200;
+    background-color: with-opacity($colors-white, 0.05);
+    padding-left: $space-300;
 
     &:last-child {
       border-radius: $radius-200;
@@ -78,7 +78,7 @@
     }
 
     &:hover,
-    &:hover + .postfix {
+    &:hover + .input__postfix {
       @include theme(light) {
         border-color: $colors-brightBlack;
       }
@@ -89,18 +89,17 @@
   }
 }
 
-.inputWrapper {
+.input__postfix {
   display: flex;
   align-items: center;
-  background-color: transparent;
+  transition: border-color 0.1s ease-in-out;
+  cursor: help;
+  border: solid $colors-brightBlack;
+  border-width: $space-50 $space-50 $space-50 0;
+  border-radius: 0 $space-200 $space-200 0;
+  background-color: with-opacity($colors-white, 0.2);
+  padding-inline: $space-400;
+  height: -webkit-fill-available;
+  pointer-events: unset;
   color: $colors-foreground;
-
-  &[data-fit-content='true'] {
-    width: fit-content;
-  }
-
-  &[data-disabled='true'],
-  &[data-disabled='true'] .realInput:disabled {
-    cursor: text;
-  }
 }

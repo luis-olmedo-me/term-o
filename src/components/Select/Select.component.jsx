@@ -3,21 +3,21 @@ import { useEffect, useRef, useState } from 'preact/hooks'
 import Chevron from '@src/icons/Chevron.icon'
 
 import { iconSizes } from '@src/constants/icon.constants'
-import { global__scrollable } from '@styles/global.module.scss'
+import { global__loader, global__scrollable } from '@styles/global.module.scss'
 import {
-  selecter,
-  selecter___state_loading,
-  selecter__button,
-  selecter__button___state_loading,
-  selecter__button___state_open,
-  selecter__label,
-  selecter__mark,
-  selecter__mark___state_open,
-  selecter__option,
-  selecter__option___state_selected,
-  selecter__options,
-  selecter__options_container,
-  selecter__options_container___open
+  select,
+  select___state_loading,
+  select__button,
+  select__button___state_loading,
+  select__button___state_open,
+  select__label,
+  select__mark,
+  select__mark___state_open,
+  select__option,
+  select__option___state_selected,
+  select__options,
+  select__options_container,
+  select__options_container___open
 } from './Select.module.scss'
 
 export const Select = ({
@@ -59,10 +59,10 @@ export const Select = ({
   return (
     <div
       ref={selecterRef}
-      data-loading={loading}
       className={`
-        ${selecter}
-        ${loading ? selecter___state_loading : ''}
+        ${select}
+        ${loading ? select___state_loading : ''}
+        ${loading ? global__loader : ''}
       `}
     >
       <input type="hidden" name={name} value={value} />
@@ -75,12 +75,12 @@ export const Select = ({
         onClick={() => setOpen(isOpen => !isOpen)}
         disabled={loading}
         className={`
-          ${selecter__button}
-          ${open ? selecter__button___state_open : ''}
-          ${loading ? selecter__button___state_loading : ''}
+          ${select__button}
+          ${open ? select__button___state_open : ''}
+          ${loading ? select__button___state_loading : ''}
         `}
       >
-        <span className={selecter__label}>
+        <span className={select__label}>
           {OptionPrefixComponent && <OptionPrefixComponent option={selectedOption} />}
 
           {loading ? 'Loading' : selectedOption?.name}
@@ -89,16 +89,16 @@ export const Select = ({
         <Chevron
           size={iconSizes.EXTRA_SMALL}
           className={`
-            ${selecter__mark}
-            ${open ? selecter__mark___state_open : ''}
+            ${select__mark}
+            ${open ? select__mark___state_open : ''}
           `}
         />
       </button>
 
       <div
         className={`
-          ${selecter__options_container}
-          ${open ? selecter__options_container___open : ''}
+          ${select__options_container}
+          ${open ? select__options_container___open : ''}
         `}
       >
         <ul
@@ -107,7 +107,7 @@ export const Select = ({
           aria-activedescendant={selectedOption ? `option-${selectedOption.id}` : null}
           className={`
               ${global__scrollable}
-              ${selecter__options}
+              ${select__options}
             `}
           tabIndex={-1}
         >
@@ -122,8 +122,8 @@ export const Select = ({
                 aria-selected={option.id === value}
                 onClick={() => handleOptionClick(option.id)}
                 className={`
-                    ${selecter__option}
-                    ${isSelected ? selecter__option___state_selected : ''}
+                    ${select__option}
+                    ${isSelected ? select__option___state_selected : ''}
                   `}
               >
                 {OptionPrefixComponent && <OptionPrefixComponent option={option} />}

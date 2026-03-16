@@ -1,13 +1,14 @@
 import { iconPropType } from '@src/constants/icon.constants'
 
-const Thunder = ({ size }) => {
+const Thunder = ({ size, className }) => {
   return (
     <svg
       width={size}
       height={size}
+      className={className}
       viewBox="0 0 512 512"
-      fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      fill="none"
     >
       <path
         fillRule="evenodd"

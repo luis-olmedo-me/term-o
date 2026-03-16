@@ -6,7 +6,7 @@ import Logo from '@src/icons/Logo.icon'
 import Repo from '@src/icons/Repo.icon'
 
 import { iconSizes } from '@src/constants/icon.constants'
-import { content, headerLink, headerWrapper, searchInput } from './Header.module.scss'
+import { header, header__content, header__link, header__search } from './Header.module.scss'
 
 export const Header = ({ onSearch }) => {
   const [value, setValue] = useState('')
@@ -19,27 +19,33 @@ export const Header = ({ onSearch }) => {
   }
 
   return (
-    <header className={headerWrapper}>
-      <div className={content}>
+    <header className={header}>
+      <div className={header__content}>
         <Logo size={iconSizes.NORMAL} />
 
-        <Input
-          fullWidth
-          name="config-search"
-          onChange={handleOnChange}
-          type={inputTypes.TEXT}
-          variant={inputVariants.OUTLINED}
-          placeholder="Search settings..."
-          className={searchInput}
-          value={value}
-        />
+        <form role="search" className={header__search}>
+          <Input
+            name="config-search"
+            onChange={handleOnChange}
+            type={inputTypes.TEXT}
+            variant={inputVariants.OUTLINED}
+            placeholder="Search settings"
+            value={value}
+          />
+        </form>
       </div>
 
-      <div className={content}>
-        <a className={headerLink} href="https://github.com/luis-olmedo-me/term-o">
+      <nav className={header__content}>
+        <a
+          className={header__link}
+          href="https://github.com/luis-olmedo-me/term-o"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="View repository on GitHub"
+        >
           <Repo size={iconSizes.MEDIUM} />
         </a>
-      </div>
+      </nav>
     </header>
   )
 }

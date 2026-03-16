@@ -1,45 +1,45 @@
 @use '@styles/mixins.module' as *;
 
-.textAreaWrapper {
+.textarea {
   position: relative;
   overflow: hidden;
 }
 
-.textAreaOverlay {
+.textarea__overlay {
   position: absolute;
   inset: 0;
   background-color: with-opacity($colors-white, 0.05);
   pointer-events: none;
   word-wrap: break-word;
-  font-size: $fontSize-50;
-  font-family: $font;
-  padding: $space-300;
-  border: $space-50 solid $colors-brightBlack;
-  line-height: $lineHeight-300;
-  word-break: break-all;
-  white-space: pre-line;
-  overflow-y: scroll;
-  transition: border-color 0.1s ease-in-out;
-  border-radius: $radius-200;
   z-index: -1;
+  transition: border-color 0.1s ease-in-out;
+  border: $space-50 solid $colors-brightBlack;
+  border-radius: $radius-200;
+  padding: $space-300;
+  overflow-y: scroll;
+  font-size: $fontSize-50;
+  line-height: $lineHeight-300;
+  font-family: $font;
+  white-space: pre-line;
+  word-break: break-all;
 
   &::-webkit-scrollbar {
     display: none;
   }
 }
 
-.textAreaInput {
+.textarea__input {
   border: $space-50 solid transparent;
-  background-color: transparent;
   border-radius: $radius-200;
+  background-color: transparent;
   padding: $space-300;
-  color: transparent;
-  resize: none;
   width: -webkit-fill-available;
-  font-family: $font;
+  resize: none;
+  color: transparent;
+  caret-color: $colors-cursorColor;
   font-size: $fontSize-50;
   line-height: $lineHeight-300;
-  caret-color: $colors-cursorColor;
+  font-family: $font;
   word-break: break-all;
 
   &::-webkit-scrollbar {
@@ -52,13 +52,13 @@
     outline: none;
   }
 
-  &:focus + .textAreaOverlay {
+  &:focus + .textarea__overlay {
     border-color: $colors-accent;
   }
 
-  &:hover + .textAreaOverlay {
-    color: $colors-brightWhite;
+  &:hover + .textarea__overlay {
     background-color: with-opacity($colors-accent, 0.8);
+    color: $colors-brightWhite;
 
     @include theme(light) {
       border-color: $colors-brightBlack;
@@ -67,7 +67,7 @@
       border-color: $colors-accent;
     }
 
-    .coloredFragment {
+    .textarea__colored_fragment {
       background-color: transparent;
       color: inherit;
     }
@@ -79,13 +79,8 @@
   }
 }
 
-.coloredFragment {
+.textarea__colored_fragment {
   transition:
     color 0.1s ease-in-out,
     background-color 0.1s ease-in-out;
-
-  &[data-is-keyword='true'] {
-    color: with-opacity($colors-foreground, 0.3);
-    font-style: italic;
-  }
 }

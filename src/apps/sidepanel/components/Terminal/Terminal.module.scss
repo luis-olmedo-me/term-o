@@ -1,17 +1,21 @@
-.terminalWrapper {
-  position: relative;
+.terminal {
   display: flex;
+  position: relative;
   flex-direction: column;
-  background-color: $colors-background;
   transition: background-color 0.2s ease-in-out;
+  background-color: $colors-background;
   height: 100vh;
 }
 
-.terminalHeader {
-  padding: 0;
-  z-index: 1;
+.terminal__header {
   display: flex;
   justify-content: end;
-  box-shadow: 0 $space-550 $space-400 calc($space-400 * -1) $colors-background;
+  z-index: 1;
   transition: box-shadow 0.2s ease-in-out;
+  box-shadow: 0 $space-550 $space-400 calc($space-400 * -1) $colors-background;
+  padding: 0;
+}
+
+.terminal__header_button {
+  width: fit-content;
 }

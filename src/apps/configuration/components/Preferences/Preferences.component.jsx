@@ -21,12 +21,12 @@ import {
   handleImportConfig
 } from './Preferences.helpers'
 import {
-  contentWrapper,
-  mainContentWrapper,
-  preferencesWrapper,
-  sectionDescription,
-  sectionTitle,
-  sectionWrapper
+  preferences,
+  preferences__content,
+  preferences__main,
+  preferences__section,
+  preferences__section_description,
+  preferences__section_title
 } from './Preferences.module.scss'
 
 export const Preferences = () => {
@@ -107,26 +107,27 @@ export const Preferences = () => {
   }
 
   return (
-    <div className={preferencesWrapper}>
+    <div className={preferences}>
       <Header onSearch={handleSearch} />
 
-      <div className={contentWrapper}>
+      <div className={preferences__content}>
         <SidePanel
           options={sidePanelOptions}
           selectedOptionId={selectedSectionId}
           onChange={handleSidebarItemClick}
         />
 
-        <div
+        <main
           ref={contentRef}
-          className={`${mainContentWrapper} ${global__scrollable}`}
           onScroll={handleScroll}
+          className={`${global__scrollable} ${preferences__main}`}
         >
           {configSections.map(section => {
             return (
-              <div key={section.id} className={sectionWrapper} id={section.id}>
-                <h3 className={sectionTitle}>{section.name}</h3>
-                <p className={sectionDescription}>{section.description}</p>
+              <section key={section.id} className={preferences__section} id={section.id}>
+                <h2 className={preferences__section_title}>{section.name}</h2>
+
+                <p className={preferences__section_description}>{section.description}</p>
 
                 {section.inputs.map(input => {
                   return (
@@ -148,10 +149,10 @@ export const Preferences = () => {
                     />
                   )
                 })}
-              </div>
+              </section>
             )
           })}
-        </div>
+        </main>
       </div>
     </div>
   )

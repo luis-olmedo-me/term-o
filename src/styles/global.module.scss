@@ -7,33 +7,39 @@ html {
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  font-family: $font, Courier, monospace;
-  background-color: $colors-background;
-  font-size: $fontSize-50;
   transition: background-color 0.2s ease-in-out;
+  margin: 0;
+  background-color: $colors-background;
+  padding: 0;
+  font-size: $fontSize-50;
+  font-family: $font, Courier, monospace;
 
   &::selection {
-    color: $colors-foreground;
     background-color: $colors-selectionBackground;
+    color: $colors-foreground;
   }
 }
 
 .global__scrollable {
   &::-webkit-scrollbar {
-    height: $space-200;
     width: $space-200;
+    height: $space-200;
   }
 
   &::-webkit-scrollbar-track {
-    background-color: with-opacity($colors-brightBlack, 0.2);
     cursor: pointer;
+    background-image: linear-gradient(
+      180deg,
+      $colors-background 5%,
+      with-opacity($colors-brightBlack, 0.2) 10%,
+      with-opacity($colors-brightBlack, 0.2) 90%,
+      $colors-background 95%
+    );
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: $colors-brightBlack;
     cursor: pointer;
+    background-color: $colors-brightBlack;
 
     &:active,
     &:hover {
@@ -42,19 +48,19 @@ body {
   }
 }
 
-[data-loading='true'] {
+.global__loader {
   position: relative;
 
   &::after {
-    content: '';
     position: absolute;
-    animation: slide 3s linear infinite alternate;
-    animation-timing-function: ease-in-out;
-    height: $space-150;
-    background: $colors-accent;
     bottom: 0;
     left: 0;
+    animation: slide 3s linear infinite alternate;
+    animation-timing-function: ease-in-out;
     border-radius: $radius-100 $radius-100 0 0;
+    background: $colors-accent;
+    height: $space-150;
+    content: '';
   }
 }
 
@@ -62,27 +68,6 @@ select,
 ::picker(select) {
   appearance: base-select;
   border: none;
-}
-
-#theme-provider {
-  &[data-inputs-caret='bar'] {
-    input,
-    textarea {
-      caret-shape: bar;
-    }
-  }
-  &[data-inputs-caret='block'] {
-    input,
-    textarea {
-      caret-shape: block;
-    }
-  }
-  &[data-inputs-caret='underscore'] {
-    input,
-    textarea {
-      caret-shape: underscore;
-    }
-  }
 }
 
 @include color-attr-generator('data-color', 'color', $letter-colors);

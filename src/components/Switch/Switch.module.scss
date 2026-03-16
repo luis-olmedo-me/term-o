@@ -1,56 +1,67 @@
 @use '@styles/mixins.module' as *;
 
-.simulatedSwitch {
-  height: 1.5rem;
-  width: 2.5rem;
-  border: $space-50 solid $colors-brightBlack;
-  background-color: with-opacity($colors-white, 0.25);
-  border-radius: $radius-200;
-  box-sizing: border-box;
+.switcher {
+  display: flex;
+  position: relative;
+  align-items: center;
+  gap: $space-400;
+  cursor: text;
+  background-color: transparent;
+  width: fit-content;
+  color: $colors-foreground;
+}
+
+.switcher__fake_input {
   transition:
     background-color 0.1s ease-in-out,
     color 0.1s ease-in-out;
+  box-sizing: border-box;
+  border: $space-50 solid $colors-brightBlack;
+  border-radius: $radius-200;
+  background-color: with-opacity($colors-white, 0.25);
+  width: 2.5rem;
+  height: 1.5rem;
 
   &::after {
-    content: '';
     position: absolute;
-    width: 30%;
-    height: calc(100% - $space-200 * 2);
-    background-color: transparent;
-    border: $space-50 solid with-opacity($colors-foreground, 0.5);
     bottom: $space-200;
     left: $space-200;
-    border-radius: $radius-200;
-    box-sizing: border-box;
-    cursor: pointer;
     transition:
       background-color 0.1s ease-in-out,
       color 0.1s ease-in-out,
       left 0.1s ease-in-out;
+    cursor: pointer;
+    box-sizing: border-box;
+    border: $space-50 solid with-opacity($colors-foreground, 0.5);
+    border-radius: $radius-200;
+    background-color: transparent;
+    width: 30%;
+    height: calc(100% - $space-200 * 2);
+    content: '';
   }
 
-  &.selected {
+  &___mod_selected {
     &::after {
+      left: calc(70% - $space-200);
       border-color: $colors-foreground;
       background-color: $colors-brightAccent;
-      left: calc(70% - $space-200);
     }
   }
 }
 
-.switchInput {
+.switcher__input {
   display: block;
   position: absolute;
   bottom: 0;
   left: 0;
+  opacity: 0;
+  z-index: 1;
+  cursor: pointer;
+  margin: 0;
   width: 100%;
   height: 100%;
-  opacity: 0;
-  cursor: pointer;
-  z-index: 1;
-  margin: 0;
 
-  &:hover + .simulatedSwitch {
+  &:hover + .switcher__fake_input {
     background-color: with-opacity($colors-accent, 0.25);
 
     @include theme(light) {
@@ -65,7 +76,7 @@
       background-color: with-opacity($colors-brightAccent, 0.25);
     }
   }
-  &:hover + .simulatedSwitch.selected {
+  &:hover + .switcher__fake_input___mod_selected {
     background-color: with-opacity($colors-accent, 0.8);
 
     &::after {
@@ -79,15 +90,4 @@
   &:focus-visible {
     outline: none;
   }
-}
-
-.switchWrapper {
-  display: flex;
-  align-items: center;
-  gap: $space-400;
-  background-color: transparent;
-  color: $colors-foreground;
-  cursor: text;
-  position: relative;
-  width: fit-content;
 }

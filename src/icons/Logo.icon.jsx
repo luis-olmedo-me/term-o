@@ -3,7 +3,7 @@ import useStorage from '@src/hooks/useStorage'
 import { iconPropType } from '@src/constants/icon.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 
-const Logo = ({ size }) => {
+const Logo = ({ size, className }) => {
   const [config] = useStorage({ key: storageKeys.CONFIG })
   const theme = config.theme
 
@@ -11,6 +11,7 @@ const Logo = ({ size }) => {
     <svg
       width={size}
       height={size}
+      className={className}
       viewBox="0 0 512 512"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

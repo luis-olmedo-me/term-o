@@ -7,5 +7,6 @@ export const iconSizes = {
 }
 
 export const iconPropType = {
-  size: Number
+  size: Number,
+  className: String
 }

@@ -1,5 +1,6 @@
-.buttonWrapper {
+.button {
   display: flex;
+  column-gap: $space-200;
   justify-content: center;
   justify-content: start;
   align-items: center;
@@ -10,7 +11,7 @@
   border: none;
   background-color: transparent;
   padding: $space-300 $space-300;
-  width: fit-content;
+  width: 100%;
   height: fit-content;
   color: $colors-foreground;
   font-weight: bold;
@@ -33,11 +34,7 @@
     background-color: with-opacity($colors-accent, 0.5);
   }
 
-  &[data-full-width='true'] {
-    width: 100%;
-  }
-
-  &[data-selected='true'] {
+  &___state_selected {
     color: $colors-accent;
 
     &:hover {
@@ -49,7 +46,7 @@
     }
   }
 
-  &[data-variant='outlined'] {
+  &___variant_outlined {
     border: $space-50 solid $colors-brightBlack;
     border-radius: $radius-200;
     background-color: with-opacity($colors-white, 0.05);
@@ -68,7 +65,7 @@
       background-color: with-opacity($colors-accent, 0.5);
     }
 
-    &[data-selected='true'] {
+    &.button___state_selected {
       &:hover {
         color: $colors-brightAccent;
       }
@@ -79,7 +76,7 @@
     }
   }
 
-  &[data-variant='outlined-danger'] {
+  &___variant_outlined_danger {
     border: $space-50 solid $colors-brightBlack;
     border-radius: $radius-200;
     background-color: with-opacity($colors-red, 0.25);
@@ -98,7 +95,7 @@
       background-color: with-opacity($colors-red, 0.5);
     }
 
-    &[data-selected='true'] {
+    &.button___state_selected {
       &:hover {
         color: $colors-brightRed;
       }
@@ -109,7 +106,7 @@
     }
   }
 
-  &[data-variant='outlined-warn'] {
+  &___variant_outlined_warn {
     border: $space-50 solid $colors-brightBlack;
     border-radius: $radius-200;
     background-color: with-opacity($colors-yellow, 0.25);
@@ -128,7 +125,7 @@
       background-color: with-opacity($colors-yellow, 0.5);
     }
 
-    &[data-selected='true'] {
+    &.button___state_selected {
       &:hover {
         color: $colors-brightYellow;
       }
@@ -140,24 +137,12 @@
   }
 }
 
-.buttonIconWrapper {
-  height: 20px;
-
-  &:only-child {
-    margin: 0;
-  }
-}
-
-.buttonLabel {
+.button__label {
   display: none;
 }
 
 @media only screen and (min-width: 1000px) {
-  .buttonLabel {
+  .button__label {
     display: inline;
-  }
-
-  .buttonIconWrapper {
-    margin-right: $space-200;
   }
 }

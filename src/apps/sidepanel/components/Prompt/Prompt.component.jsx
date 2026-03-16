@@ -8,15 +8,21 @@ import { eventNames } from '@sidepanel/constants/events.constants'
 import { configInputIds, PROMPT_MARK } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { insert } from '@src/helpers/string.helpers'
+import { global__loader } from '@styles/global.module.scss'
 import { createSuggestion } from './Prompt.helpers'
 import {
-  promptInput,
-  promptInputWrapper,
-  promptLine,
-  promptOverlay,
-  promptSuggestion,
-  promptWrapper,
-  prompWithPrefix
+  prompt,
+  prompt__input,
+  prompt__input_line,
+  prompt__line,
+  prompt__line___state_loading,
+  prompt__line___state_requesting,
+  prompt__overlay,
+  prompt__real_input,
+  prompt__real_input___state_loading,
+  prompt__real_input___state_requesting,
+  prompt__suggestion,
+  prompt__suggestion___state_requesting
 } from './Prompt.module.scss'
 
 export const Prompt = ({
@@ -185,24 +191,37 @@ export const Prompt = ({
 
   const start = caret !== null ? value.slice(0, caret) : value
   const end = caret !== null ? value.slice(caret) : ''
+  const isLoading = loading && !isRequesting
 
   return (
     <div
-      className={promptWrapper}
-      data-loading={loading && !isRequesting}
-      data-requesting={isRequesting}
+      className={`
+        ${prompt}
+        ${loading ? global__loader : ''}
+      `}
     >
-      <p className={promptLine}>
+      <p
+        className={`
+          ${prompt__line}
+          ${isLoading ? prompt__line___state_loading : ''}
+          ${isRequesting ? prompt__line___state_requesting : ''}
+        `}
+      >
         <ColoredText value={context} />
       </p>
 
-      <div className={prompWithPrefix}>
+      <div className={prompt__input_line}>
         <span>{prefix}</span>
 
-        <div className={promptInputWrapper}>
-          <div ref={overlayRef} className={promptOverlay}>
+        <div className={prompt__input}>
+          <div ref={overlayRef} className={prompt__overlay}>
             {start}
-            <span className={promptSuggestion}>
+            <span
+              className={`
+                ${prompt__suggestion}
+                ${isRequesting ? prompt__suggestion___state_requesting : ''}
+              `}
+            >
               {isRequesting && !value ? 'Input required to proceed…' : suggestion}
             </span>
             {end}
@@ -211,7 +230,6 @@ export const Prompt = ({
           <input
             spellCheck="false"
             ref={inputRef}
-            className={promptInput}
             name={name}
             type="text"
             value={value}
@@ -221,6 +239,11 @@ export const Prompt = ({
             onFocus={onFocus}
             onBlur={onBlur}
             onScroll={syncScroll}
+            className={`
+              ${prompt__real_input}
+              ${isLoading ? prompt__real_input___state_loading : ''}
+              ${isRequesting ? prompt__real_input___state_requesting : ''}
+            `}
           />
         </div>
       </div>

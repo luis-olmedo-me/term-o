@@ -1,4 +1,13 @@
-import { inputWrapper, postfix, realInput } from './Input.module.scss'
+import { inputTypes } from './Input.constants'
+import { getClassNameByVariant } from './Input.helpers'
+import {
+  input,
+  input___mod_disabled,
+  input___type_number,
+  input__postfix,
+  input__real_input,
+  input__real_input___type_number
+} from './Input.module.scss'
 
 export const Input = ({
   onChange,
@@ -7,26 +16,26 @@ export const Input = ({
   onBlur,
   placeholder,
   value,
-  prefix,
   inputRef,
   disabled,
   type,
   postFix,
   name,
   variant,
-  fullWidth,
   className
 }) => {
+  const isNumberInput = type === inputTypes.NUMBER
+
   return (
     <div
-      className={`${inputWrapper} ${className}`}
-      data-disabled={disabled}
-      data-fit-content={!fullWidth}
+      className={`
+        ${input}
+        ${disabled ? input___mod_disabled : ''}
+        ${isNumberInput ? input___type_number : ''}
+        ${className}
+      `}
     >
-      {prefix && <span>{prefix}</span>}
-
       <input
-        className={realInput}
         ref={inputRef}
         name={name}
         spellCheck="false"
@@ -38,10 +47,14 @@ export const Input = ({
         onBlur={onBlur}
         placeholder={placeholder}
         disabled={disabled}
-        data-variant={variant}
+        className={`
+          ${input__real_input}
+          ${getClassNameByVariant(variant)}
+          ${isNumberInput ? input__real_input___type_number : ''}
+        `}
       />
 
-      {postFix && <span className={postfix}>{postFix}</span>}
+      {postFix && <span className={input__postfix}>{postFix}</span>}
     </div>
   )
 }
@@ -53,13 +66,11 @@ Input.propTypes = {
   onBlur: Function,
   placeholder: String,
   value: String,
-  prefix: String,
   postFix: String,
   inputRef: Object,
   disabled: Boolean,
   type: String,
   name: String,
   variant: String,
-  fullWidth: Boolean,
   className: String
 }

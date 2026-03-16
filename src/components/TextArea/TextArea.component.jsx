@@ -3,10 +3,10 @@ import { useRef } from 'preact/hooks'
 import ColoredText from '@src/components/ColoredText'
 
 import {
-  coloredFragment,
-  textAreaInput,
-  textAreaOverlay,
-  textAreaWrapper
+  textarea,
+  textarea__colored_fragment,
+  textarea__input,
+  textarea__overlay
 } from './TextArea.module.scss'
 
 export const TextArea = ({ onBlur, value, name, maxLines, onChange }) => {
@@ -19,10 +19,10 @@ export const TextArea = ({ onBlur, value, name, maxLines, onChange }) => {
   }
 
   return (
-    <div className={textAreaWrapper}>
+    <div className={textarea}>
       <textarea
         ref={textAreaRef}
-        className={textAreaInput}
+        className={textarea__input}
         rows={maxLines}
         name={name}
         value={value}
@@ -33,9 +33,9 @@ export const TextArea = ({ onBlur, value, name, maxLines, onChange }) => {
         spellCheck="false"
       />
 
-      <div ref={overlayRef} className={textAreaOverlay}>
+      <div ref={overlayRef} className={textarea__overlay}>
         <ColoredText
-          fragmentClassName={coloredFragment}
+          fragmentClassName={textarea__colored_fragment}
           value={value}
           keywordsEnabled
           hideArtificialSpaces

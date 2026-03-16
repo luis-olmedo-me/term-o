@@ -1,6 +1,13 @@
 .text {
-  transition: color 1s ease-in-out;
+  transition:
+    color 1s ease-in-out,
+    background-color 0.1s ease-in-out;
   line-height: $lineHeight-300;
+
+  &__keyword {
+    color: with-opacity($colors-foreground, 0.3);
+    font-style: italic;
+  }
 
   &__bg_spaced {
     &.text___both_colored:not([data-bgcolor='reset']),

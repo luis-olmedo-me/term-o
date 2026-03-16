@@ -10,6 +10,10 @@
   &___mod_disabled {
     cursor: text;
   }
+
+  &___type_number {
+    max-width: 200px;
+  }
 }
 
 .input__real_input {
@@ -44,11 +48,7 @@
     outline: none;
   }
 
-  &[type='number'] {
-    width: 100px;
-  }
-
-  &[type='number']::-webkit-inner-spin-button {
+  &___type_number::-webkit-inner-spin-button {
     -webkit-appearance: none;
   }
 

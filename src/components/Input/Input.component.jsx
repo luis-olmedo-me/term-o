@@ -1,4 +1,12 @@
-import { input, input___mod_disabled, input__postfix, input__real_input } from './Input.module.scss'
+import { inputTypes } from './Input.constants'
+import {
+  input,
+  input___mod_disabled,
+  input___type_number,
+  input__postfix,
+  input__real_input,
+  input__real_input___type_number
+} from './Input.module.scss'
 
 export const Input = ({
   onChange,
@@ -15,16 +23,18 @@ export const Input = ({
   variant,
   className
 }) => {
+  const isNumberInput = type === inputTypes.NUMBER
+
   return (
     <div
       className={`
         ${input}
         ${disabled ? input___mod_disabled : ''}
+        ${isNumberInput ? input___type_number : ''}
         ${className}
       `}
     >
       <input
-        className={input__real_input}
         ref={inputRef}
         name={name}
         spellCheck="false"
@@ -37,6 +47,10 @@ export const Input = ({
         placeholder={placeholder}
         disabled={disabled}
         data-variant={variant}
+        className={`
+          ${input__real_input}
+          ${isNumberInput ? input__real_input___type_number : ''}
+        `}
       />
 
       {postFix && <span className={input__postfix}>{postFix}</span>}

@@ -24,7 +24,7 @@
     }
   }
 
-  &[data-error='true'] {
+  &___mod_error {
     background-color: with-opacity($colors-red, 0.05);
   }
 }

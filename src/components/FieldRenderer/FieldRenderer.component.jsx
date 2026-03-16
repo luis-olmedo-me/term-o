@@ -9,6 +9,7 @@ import { validate } from '@src/helpers/validation-primitive.helpers'
 import {
   field,
   field___mod_column,
+  field___mod_error,
   field__description,
   field__error,
   field__input,
@@ -53,10 +54,10 @@ export const FieldRenderer = ({
 
   return (
     <div
-      data-error={hasErrorMessage}
       className={`
         ${field}
         ${isTextArea ? field___mod_column : ''}
+        ${hasErrorMessage ? field___mod_error : ''}
       `}
     >
       <div className={field__leyends}>

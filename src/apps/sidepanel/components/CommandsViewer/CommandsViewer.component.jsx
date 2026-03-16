@@ -111,7 +111,8 @@ export const CommandsViewer = ({ commands }) => {
 
               {command.updates.map((update, index) => {
                 const isLastItem = index === command.updates.length - 1
-                const isTruncatedMessage = isTruncated && !isLastItem && !hasErrorMessage
+                const isLastErrorMessage = isLastItem && hasErrorMessage
+                const isTruncatedMessage = isTruncated && !isLastErrorMessage
 
                 return (
                   <p

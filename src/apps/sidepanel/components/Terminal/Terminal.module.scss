@@ -15,3 +15,7 @@
   box-shadow: 0 $space-550 $space-400 calc($space-400 * -1) $colors-background;
   padding: 0;
 }
+
+.terminal__header_button {
+  width: fit-content;
+}

@@ -122,7 +122,6 @@ export const DynamicInput = ({
           variant={getButtonVariantFromType(type)}
           Icon={iconButton}
           value={value}
-          fullWidth
         />
       )
 

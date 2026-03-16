@@ -11,7 +11,7 @@ import { origins } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
-import { terminal, terminal__header } from './Terminal.module.scss'
+import { terminal, terminal__header, terminal__header_button } from './Terminal.module.scss'
 
 export const Terminal = () => {
   const inputRef = useRef(null)
@@ -76,7 +76,12 @@ export const Terminal = () => {
   return (
     <div className={terminal} onMouseUp={handleMouseUp}>
       <header className={terminal__header}>
-        <Button Icon={Gear} onClick={openConfiguration} variant={buttonVariants.GHOST} />
+        <Button
+          Icon={Gear}
+          onClick={openConfiguration}
+          variant={buttonVariants.GHOST}
+          className={terminal__header_button}
+        />
       </header>
 
       <CommandsViewer commands={queue.value} />

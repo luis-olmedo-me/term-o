@@ -6,14 +6,13 @@ export const Button = ({
   onClick,
   variant,
   Icon = null,
-  fullWidth = false,
-  selected = false
+  selected = false,
+  className = ''
 }) => {
   return (
     <button
-      className={button}
+      className={`${button} ${className}`}
       onClick={onClick}
-      data-full-width={fullWidth}
       data-selected={selected}
       data-variant={variant}
     >
@@ -27,8 +26,8 @@ export const Button = ({
 Button.propTypes = {
   value: String,
   onClick: Function,
-  fullWidth: Boolean,
   selected: Boolean,
   Icon: Object,
-  variant: String
+  variant: String,
+  className: String
 }

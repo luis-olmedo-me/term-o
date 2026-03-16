@@ -10,7 +10,6 @@ export const SidePanel = ({ options, selectedOptionId, onChange }) => {
       {options.map(option => {
         return (
           <Button
-            fullWidth
             Icon={option.Icon}
             key={option.id}
             onClick={() => onChange(option.id)}

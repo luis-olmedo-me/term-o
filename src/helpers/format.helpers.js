@@ -141,14 +141,16 @@ export const formatEvent = ({ event, xpath }) => {
   return [`${C`purple`}${quotedEvent}${C`reset`}`, `${C`yellow`}${quotedXPath}${C`reset`}`]
 }
 
-export const formatTab = ({ windowId, id, title, url }, staticUrl) => {
+export const formatTab = ({ windowId, id, title, url, groupId }, staticUrl) => {
   const quotedWindowId = getQuotedString(`W${windowId}`)
+  const quotedGroupId = getQuotedString(groupId !== -1 ? `G${groupId}` : '')
   const quotedId = getQuotedString(`T${id}`)
   const quotedTitle = getQuotedString(title)
   const quotedURL = getQuotedString(url || staticUrl)
 
   return [
     `${C`purple`}${quotedWindowId}${C`reset`}`,
+    `${C`green`}${quotedGroupId}${C`reset`}`,
     `${C`blue`}${quotedId}${C`reset`}`,
     `${C`brightYellow`}${quotedTitle}${C`reset`}`,
     `${C`yellow`}${quotedURL}${C`reset`}`

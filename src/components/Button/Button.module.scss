@@ -46,7 +46,7 @@
     }
   }
 
-  &[data-variant='outlined'] {
+  &___variant_outlined {
     border: $space-50 solid $colors-brightBlack;
     border-radius: $radius-200;
     background-color: with-opacity($colors-white, 0.05);
@@ -76,7 +76,7 @@
     }
   }
 
-  &[data-variant='outlined-danger'] {
+  &___variant_outlined_danger {
     border: $space-50 solid $colors-brightBlack;
     border-radius: $radius-200;
     background-color: with-opacity($colors-red, 0.25);
@@ -106,7 +106,7 @@
     }
   }
 
-  &[data-variant='outlined-warn'] {
+  &___variant_outlined_warn {
     border: $space-50 solid $colors-brightBlack;
     border-radius: $radius-200;
     background-color: with-opacity($colors-yellow, 0.25);

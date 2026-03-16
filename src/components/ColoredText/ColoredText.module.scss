@@ -2,7 +2,7 @@
   transition: color 1s ease-in-out;
   line-height: $lineHeight-300;
 
-  &[data-hide-aritificial-spaces='false'] {
+  &__bg_spaced {
     &.text___both_colored:not([data-bgcolor='reset']),
     &.text___unique_colored:not([data-bgcolor='reset']),
     &.text___next_colored:not([data-bgcolor='reset']),

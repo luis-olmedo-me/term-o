@@ -1,7 +1,7 @@
 import { useMemo } from 'preact/hooks'
 
 import { getPaintedFragments } from './ColoredText.helpers'
-import { text } from './ColoredText.module.scss'
+import { text, text__bg_spaced } from './ColoredText.module.scss'
 
 export const ColoredText = ({
   value,
@@ -24,8 +24,12 @@ export const ColoredText = ({
               data-bgcolor={fragment.bgcolor}
               data-color={fragment.color}
               data-is-keyword={fragment.isKeyword}
-              data-hide-aritificial-spaces={hideArtificialSpaces}
-              className={`${text} ${fragmentClassName} ${fragment.borderClassName}`}
+              className={`
+                ${text}
+                ${fragment.borderClassName}
+                ${hideArtificialSpaces ? '' : text__bg_spaced}
+                ${fragmentClassName}
+              `}
             >
               {fragment.value}
             </span>

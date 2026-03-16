@@ -7,7 +7,6 @@ export const Input = ({
   onBlur,
   placeholder,
   value,
-  prefix,
   inputRef,
   disabled,
   type,
@@ -18,8 +17,6 @@ export const Input = ({
 }) => {
   return (
     <div className={`${input} ${className}`} data-disabled={disabled}>
-      {prefix && <span>{prefix}</span>}
-
       <input
         className={input__real_input}
         ref={inputRef}
@@ -48,7 +45,6 @@ Input.propTypes = {
   onBlur: Function,
   placeholder: String,
   value: String,
-  prefix: String,
   postFix: String,
   inputRef: Object,
   disabled: Boolean,

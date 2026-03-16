@@ -1,4 +1,4 @@
-import { inputWrapper, postfix, realInput } from './Input.module.scss'
+import { input, input__postfix, input__real_input } from './Input.module.scss'
 
 export const Input = ({
   onChange,
@@ -18,15 +18,11 @@ export const Input = ({
   className
 }) => {
   return (
-    <div
-      className={`${inputWrapper} ${className}`}
-      data-disabled={disabled}
-      data-fit-content={!fullWidth}
-    >
+    <div className={`${input} ${className}`} data-disabled={disabled} data-fit-content={!fullWidth}>
       {prefix && <span>{prefix}</span>}
 
       <input
-        className={realInput}
+        className={input__real_input}
         ref={inputRef}
         name={name}
         spellCheck="false"
@@ -41,7 +37,7 @@ export const Input = ({
         data-variant={variant}
       />
 
-      {postFix && <span className={postfix}>{postFix}</span>}
+      {postFix && <span className={input__postfix}>{postFix}</span>}
     </div>
   )
 }

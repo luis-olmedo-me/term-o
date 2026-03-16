@@ -1,34 +1,35 @@
 @use '@styles/variables.module' as *;
 @use '@styles/mixins.module' as *;
 
-.postfix {
-  padding-inline: $space-400;
-  height: -webkit-fill-available;
+.input {
   display: flex;
   align-items: center;
-  border: solid $colors-brightBlack;
-  border-width: $space-50 $space-50 $space-50 0;
-  background-color: with-opacity($colors-white, 0.2);
-  color: $colors-foreground;
-  border-radius: 0 $space-200 $space-200 0;
-  pointer-events: unset;
-  transition: border-color 0.1s ease-in-out;
-  cursor: help;
-}
-
-.realInput {
-  font-family: $font;
-  width: 100%;
-  box-sizing: border-box;
-  white-space: nowrap;
-  font-size: $fontSize-50;
-  border: none;
-  display: block;
-  caret-color: $colors-cursorColor;
-  line-height: $lineHeight-300;
   background-color: transparent;
   color: $colors-foreground;
+
+  &[data-fit-content='true'] {
+    width: fit-content;
+  }
+
+  &[data-disabled='true'],
+  &[data-disabled='true'] .realInput:disabled {
+    cursor: text;
+  }
+}
+
+.input__real_input {
+  display: block;
   cursor: text;
+  box-sizing: border-box;
+  border: none;
+  background-color: transparent;
+  width: 100%;
+  color: $colors-foreground;
+  caret-color: $colors-cursorColor;
+  font-size: $fontSize-50;
+  line-height: $lineHeight-300;
+  font-family: $font;
+  white-space: nowrap;
 
   &::placeholder {
     color: with-opacity($colors-brightBlack, 0.8);
@@ -52,11 +53,11 @@
   }
 
   &[data-variant='outlined'] {
-    border: $space-50 solid $colors-brightBlack;
-    background-color: with-opacity($colors-white, 0.05);
-    border-radius: $radius-200 0 0 $radius-200;
-    padding-left: $space-300;
     transition: border-color 0.1s ease-in-out;
+    border: $space-50 solid $colors-brightBlack;
+    border-radius: $radius-200 0 0 $radius-200;
+    background-color: with-opacity($colors-white, 0.05);
+    padding-left: $space-300;
 
     &:last-child {
       border-radius: $radius-200;
@@ -88,18 +89,17 @@
   }
 }
 
-.inputWrapper {
+.input__postfix {
   display: flex;
   align-items: center;
-  background-color: transparent;
+  transition: border-color 0.1s ease-in-out;
+  cursor: help;
+  border: solid $colors-brightBlack;
+  border-width: $space-50 $space-50 $space-50 0;
+  border-radius: 0 $space-200 $space-200 0;
+  background-color: with-opacity($colors-white, 0.2);
+  padding-inline: $space-400;
+  height: -webkit-fill-available;
+  pointer-events: unset;
   color: $colors-foreground;
-
-  &[data-fit-content='true'] {
-    width: fit-content;
-  }
-
-  &[data-disabled='true'],
-  &[data-disabled='true'] .realInput:disabled {
-    cursor: text;
-  }
 }

@@ -7,8 +7,7 @@
   background-color: transparent;
   color: $colors-foreground;
 
-  &[data-disabled='true'],
-  &[data-disabled='true'] .realInput:disabled {
+  &___mod_disabled {
     cursor: text;
   }
 }
@@ -30,8 +29,13 @@
   &::placeholder {
     color: with-opacity($colors-brightBlack, 0.8);
   }
+
   &:hover::placeholder {
     color: with-opacity(currentColor, 0.5);
+  }
+
+  &:disabled {
+    cursor: text;
   }
 
   &:active,

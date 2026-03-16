@@ -1,4 +1,4 @@
-import { input, input__postfix, input__real_input } from './Input.module.scss'
+import { input, input___mod_disabled, input__postfix, input__real_input } from './Input.module.scss'
 
 export const Input = ({
   onChange,
@@ -16,7 +16,13 @@ export const Input = ({
   className
 }) => {
   return (
-    <div className={`${input} ${className}`} data-disabled={disabled}>
+    <div
+      className={`
+        ${input}
+        ${disabled ? input___mod_disabled : ''}
+        ${className}
+      `}
+    >
       <input
         className={input__real_input}
         ref={inputRef}

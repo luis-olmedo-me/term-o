@@ -46,12 +46,11 @@
   outline: $space-150 dashed transparent;
   width: fit-content;
 
-  &[data-type='text-area'],
-  &[data-type='string'] {
+  &___mod_full_width {
     width: 100%;
   }
 
-  &[data-error='true'] {
+  &___mod_error {
     outline-color: $colors-red;
     outline-offset: $space-200;
     border-radius: $radius-100;

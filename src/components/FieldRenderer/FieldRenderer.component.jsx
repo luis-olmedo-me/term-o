@@ -13,6 +13,8 @@ import {
   field__description,
   field__error,
   field__input,
+  field__input___mod_error,
+  field__input___mod_full_width,
   field__leyends,
   field__title
 } from './FieldRenderer.module.scss'
@@ -50,13 +52,14 @@ export const FieldRenderer = ({
   }
 
   const hasErrorMessage = typeof errorMessage === 'string'
-  const isTextArea = type === availableInputTypes.TEXT_AREA
+  const isTextAreaInput = type === availableInputTypes.TEXT_AREA
+  const isTextInput = isTextAreaInput || type === availableInputTypes.STRING
 
   return (
     <div
       className={`
         ${field}
-        ${isTextArea ? field___mod_column : ''}
+        ${isTextAreaInput ? field___mod_column : ''}
         ${hasErrorMessage ? field___mod_error : ''}
       `}
     >
@@ -68,7 +71,13 @@ export const FieldRenderer = ({
         {errorMessage && <span className={field__error}>{errorMessage}</span>}
       </div>
 
-      <div className={field__input} data-error={hasErrorMessage} data-type={type}>
+      <div
+        className={`
+          ${field__input}
+          ${isTextInput ? field__input___mod_full_width : ''}
+          ${hasErrorMessage ? field__input___mod_error : ''}
+        `}
+      >
         <DynamicInput
           errorMessage={errorMessage}
           handleClickInButtons={id => handleClickInButtons(id, setErrorMessage)}

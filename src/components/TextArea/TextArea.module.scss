@@ -1,11 +1,11 @@
 @use '@styles/mixins.module' as *;
 
-.textAreaWrapper {
+.textarea {
   position: relative;
   overflow: hidden;
 }
 
-.textAreaOverlay {
+.textarea__overlay {
   position: absolute;
   inset: 0;
   background-color: with-opacity($colors-white, 0.05);
@@ -28,7 +28,7 @@
   }
 }
 
-.textAreaInput {
+.textarea__input {
   border: $space-50 solid transparent;
   border-radius: $radius-200;
   background-color: transparent;
@@ -52,11 +52,11 @@
     outline: none;
   }
 
-  &:focus + .textAreaOverlay {
+  &:focus + .textarea__overlay {
     border-color: $colors-accent;
   }
 
-  &:hover + .textAreaOverlay {
+  &:hover + .textarea__overlay {
     background-color: with-opacity($colors-accent, 0.8);
     color: $colors-brightWhite;
 
@@ -67,7 +67,7 @@
       border-color: $colors-accent;
     }
 
-    .coloredFragment {
+    .textarea__colored_fragment {
       background-color: transparent;
       color: inherit;
     }
@@ -79,7 +79,7 @@
   }
 }
 
-.coloredFragment {
+.textarea__colored_fragment {
   transition:
     color 0.1s ease-in-out,
     background-color 0.1s ease-in-out;

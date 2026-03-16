@@ -1,5 +1,6 @@
 .button {
   display: flex;
+  column-gap: $space-200;
   justify-content: center;
   justify-content: start;
   align-items: center;
@@ -140,14 +141,6 @@
   }
 }
 
-.button__icon {
-  height: 20px;
-
-  &:only-child {
-    margin: 0;
-  }
-}
-
 .button__label {
   display: none;
 }
@@ -155,9 +148,5 @@
 @media only screen and (min-width: 1000px) {
   .button__label {
     display: inline;
-  }
-
-  .button__icon {
-    margin-right: $space-200;
   }
 }

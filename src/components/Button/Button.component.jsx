@@ -1,5 +1,5 @@
 import { iconSizes } from '@src/constants/icon.constants'
-import { button, button__icon, button__label } from './Button.module.scss'
+import { button, button__label } from './Button.module.scss'
 
 export const Button = ({
   value,
@@ -17,7 +17,7 @@ export const Button = ({
       data-selected={selected}
       data-variant={variant}
     >
-      {Icon && <Icon size={iconSizes.SMALL} className={button__icon} />}
+      {Icon && <Icon size={iconSizes.SMALL} />}
 
       {value && <span className={button__label}>{value}</span>}
     </button>

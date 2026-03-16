@@ -8,7 +8,7 @@ import { getConfigDetailsByInputId } from '@src/helpers/config.helpers'
 import { validate } from '@src/helpers/validation-primitive.helpers'
 import {
   field,
-  field___column,
+  field___mod_column,
   field__description,
   field__error,
   field__input,
@@ -56,7 +56,7 @@ export const FieldRenderer = ({
       data-error={hasErrorMessage}
       className={`
         ${field}
-        ${isTextArea ? field___column : ''}
+        ${isTextArea ? field___mod_column : ''}
       `}
     >
       <div className={field__leyends}>

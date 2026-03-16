@@ -1,5 +1,10 @@
 import { colorThemeKeys } from '@src/constants/themes.constants'
-import { bothColored, nextColored, previousColored, uniqueColored } from './ColoredText.module.scss'
+import {
+  text___both_colored,
+  text___next_colored,
+  text___previous_colored,
+  text___unique_colored
+} from './ColoredText.module.scss'
 
 const colorPattern = /\[termo\.(color|bgcolor)\.([A-Za-z]+)\]/g
 
@@ -38,11 +43,11 @@ const getBorderClass = (fragments, index) => {
   const isPreviousColored = isColoredFragment(previousFragment)
   const isCurrentColored = isColoredFragment(fragment)
 
-  if (isNextColored && !isPreviousColored) return nextColored
-  if (isPreviousColored && !isNextColored) return previousColored
-  if (isNextColored && isPreviousColored) return bothColored
-  if (!isNextColored && !isPreviousColored && isCurrentColored) return uniqueColored
-  return undefined
+  if (isNextColored && !isPreviousColored) return text___next_colored
+  if (isPreviousColored && !isNextColored) return text___previous_colored
+  if (isNextColored && isPreviousColored) return text___both_colored
+  if (!isNextColored && !isPreviousColored && isCurrentColored) return text___unique_colored
+  return ''
 }
 
 export const getPaintedFragments = (value, keywordsEnabled) => {

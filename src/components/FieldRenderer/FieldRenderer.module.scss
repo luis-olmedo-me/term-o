@@ -1,4 +1,4 @@
-.fieldWrapper {
+.field {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,7 +19,7 @@
   &[data-type='text-area'] {
     flex-direction: column;
 
-    .fieldLeyends {
+    .field__leyends {
       width: 100%;
     }
   }
@@ -29,20 +29,20 @@
   }
 }
 
-.fieldTitle {
+.field__title {
   margin: 0 0 $space-450;
   font-weight: bold;
   font-size: $fontSize-50;
 }
 
-.fieldDescription {
+.field__description {
   margin: $space-400 0;
   font-style: italic;
   font-size: $fontSize-50;
   white-space: pre-wrap;
 }
 
-.inputWrapper {
+.field__input {
   outline: $space-150 dashed transparent;
   width: fit-content;
 
@@ -58,7 +58,7 @@
   }
 }
 
-.errorMessageWrapper {
+.field__error {
   display: block;
   margin-top: $space-400;
   color: $colors-red;

@@ -1,4 +1,4 @@
-.buttonWrapper {
+.button {
   display: flex;
   justify-content: center;
   justify-content: start;
@@ -140,7 +140,7 @@
   }
 }
 
-.buttonIconWrapper {
+.button__icon {
   height: 20px;
 
   &:only-child {
@@ -148,16 +148,16 @@
   }
 }
 
-.buttonLabel {
+.button__label {
   display: none;
 }
 
 @media only screen and (min-width: 1000px) {
-  .buttonLabel {
+  .button__label {
     display: inline;
   }
 
-  .buttonIconWrapper {
+  .button__icon {
     margin-right: $space-200;
   }
 }

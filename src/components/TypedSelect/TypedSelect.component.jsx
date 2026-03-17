@@ -1,23 +1,15 @@
 import { useEffect, useRef, useState } from 'preact/hooks'
 
+import Input, { inputTypes, inputVariants } from '@src/components/Input'
 import useDebouncedCallback from '@src/hooks/useDebouncedCallback'
 import useObservedState from '@src/hooks/useObservedState'
-import Chevron from '@src/icons/Chevron.icon'
 
-import { iconSizes } from '@src/constants/icon.constants'
 import { global__loader, global__scrollable } from '@styles/global.module.scss'
-import Input, { inputTypes, inputVariants } from '../Input'
 import {
   typed_select,
   typed_select___state_loading,
-  typed_select__button,
-  typed_select__button___state_loading,
-  typed_select__button___state_open,
   typed_select__input___state_loading,
   typed_select__input___state_open,
-  typed_select__label,
-  typed_select__mark,
-  typed_select__mark___state_open,
   typed_select__option,
   typed_select__option___state_selected,
   typed_select__options,
@@ -110,34 +102,6 @@ export const TypedSelect = ({
         `}
       />
 
-      <button
-        type="button"
-        aria-haspopup="listbox"
-        aria-expanded={open}
-        aria-controls={listboxId}
-        onClick={() => setOpen(isOpen => !isOpen)}
-        disabled={loading}
-        className={`
-          ${typed_select__button}
-          ${open ? typed_select__button___state_open : ''}
-          ${loading ? typed_select__button___state_loading : ''}
-        `}
-      >
-        <span className={typed_select__label}>
-          {OptionPrefixComponent && <OptionPrefixComponent option={selectedOption} />}
-
-          {loading ? 'Loading' : selectedOption?.name}
-        </span>
-
-        <Chevron
-          size={iconSizes.EXTRA_SMALL}
-          className={`
-            ${typed_select__mark}
-            ${open ? typed_select__mark___state_open : ''}
-          `}
-        />
-      </button>
-
       <div
         className={`
           ${typed_select__options_container}
@@ -148,11 +112,11 @@ export const TypedSelect = ({
           role="listbox"
           id={listboxId}
           aria-activedescendant={selectedOption ? `option-${selectedOption.id}` : null}
-          className={`
-              ${global__scrollable}
-              ${typed_select__options}
-            `}
           tabIndex={-1}
+          className={`
+            ${global__scrollable}
+            ${typed_select__options}
+          `}
         >
           {optionsFiltered.map(option => {
             const isSelected = option.id === value

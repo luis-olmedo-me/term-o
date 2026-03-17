@@ -1,13 +1,7 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
-import {
-  isGroupId,
-  isRegExp,
-  isTabId,
-  isURL,
-  isWindowId
-} from '@src/helpers/validation-command.helpers'
+import { isRegExp, isTabId, isURL } from '@src/helpers/validation-command.helpers'
 import { tabsHelpSections } from './tabs.constants'
 import { tabsHandler } from './tabs.handler'
 

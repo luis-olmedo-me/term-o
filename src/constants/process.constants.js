@@ -13,5 +13,6 @@ export const processNames = {
   TRIGGER_EVENT: 'trigger-event',
   CREATE_NOTIFICATION: 'create-notification',
   READ_VARIABLE: 'read-variable',
-  REQUEST_INPUT: 'request-input'
+  REQUEST_INPUT: 'request-input',
+  INJECT_HTML: 'inject-html'
 }

@@ -24,6 +24,13 @@ export const domHandler = async command => {
     command.reset()
     if (!element) return
 
+    if (P`inject`) {
+      await processManager.injectHTML(tabId, {
+        below: P`on`,
+        html: P`inject`
+      })
+    }
+
     const update = formatElement({ ...element, tabId: P`tab-id` })
 
     command.update(update)

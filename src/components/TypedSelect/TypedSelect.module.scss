@@ -18,6 +18,10 @@
 }
 
 .typed_select__input {
+  transition:
+    border-color 0.1s ease-in-out,
+    border-radius 0.1s ease-in-out 0.3s;
+
   &___state_open,
   &___state_open:last-child {
     border-radius: $radius-200 $radius-200 0 0;

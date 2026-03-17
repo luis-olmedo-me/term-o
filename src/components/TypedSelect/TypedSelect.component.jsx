@@ -8,6 +8,7 @@ import { global__loader, global__scrollable } from '@styles/global.module.scss'
 import {
   typed_select,
   typed_select___state_loading,
+  typed_select__input,
   typed_select__input___state_loading,
   typed_select__input___state_open,
   typed_select__input_wrapper,
@@ -87,6 +88,7 @@ export const TypedSelect = ({
         onBlur={handleOnBlur}
         className={typed_select__input_wrapper}
         inputClassName={`
+          ${typed_select__input}
           ${open ? typed_select__input___state_open : ''}
           ${loading ? typed_select__input___state_loading : ''}
         `}

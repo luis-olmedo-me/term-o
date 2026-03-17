@@ -4,6 +4,7 @@ import Chevron from '@src/icons/Chevron.icon'
 
 import { iconSizes } from '@src/constants/icon.constants'
 import { global__loader, global__scrollable } from '@styles/global.module.scss'
+import Input, { inputTypes, inputVariants } from '../Input'
 import {
   typed_select,
   typed_select___state_loading,
@@ -29,6 +30,7 @@ export const TypedSelect = ({
   OptionPrefixComponent = null
 }) => {
   const [open, setOpen] = useState(false)
+  const [localValue, setLocalValue] = useState(value)
 
   const selecterRef = useRef(null)
 
@@ -65,7 +67,13 @@ export const TypedSelect = ({
         ${loading ? global__loader : ''}
       `}
     >
-      <input type="hidden" name={name} value={value} />
+      <Input
+        name={name}
+        value={localValue}
+        variant={inputVariants.OUTLINED}
+        onChange={({ target }) => setLocalValue(target.value)}
+        type={inputTypes.TEXT}
+      />
 
       <button
         type="button"

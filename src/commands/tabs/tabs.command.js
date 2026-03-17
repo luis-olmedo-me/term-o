@@ -84,7 +84,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: tabsHelpSections.FILTERS,
     description: 'Filter tabs by window ID (regex)',
-    validate: [isRegExp, isWindowId]
+    validate: [isRegExp]
   })
   .expect({
     name: 'group-id',
@@ -92,7 +92,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: tabsHelpSections.FILTERS,
     description: 'Filter tabs by group ID (regex)',
-    validate: [isRegExp, isGroupId]
+    validate: [isRegExp]
   })
   .expect({
     name: 'tab-id',
@@ -100,7 +100,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: tabsHelpSections.FILTERS,
     description: 'Filter tabs by tab ID (regex)',
-    validate: [isRegExp, isTabId]
+    validate: [isRegExp]
   })
   .expect({
     name: 'switch',

@@ -21,7 +21,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: tabsHelpSections.GENERAL,
     description: 'List all currently open tabs',
-    worksWith: ['incognito', 'muted', 'unmuted', 'title', 'url', 'window-id']
+    worksWith: ['incognito', 'muted', 'unmuted', 'title', 'url', 'window-id', 'group-id', 'tab-id']
   })
   .expect({
     name: 'open',

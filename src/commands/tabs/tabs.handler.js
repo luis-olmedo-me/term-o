@@ -92,7 +92,9 @@ export const tabsHandler = async command => {
       byIncognito: P`incognito`,
       byTitle: P`title`,
       byUrl: P`url`,
-      byWindowId: P`window-id`
+      byWindowId: P`window-id`,
+      byGroupId: P`group-id`,
+      byTabId: P`tab-id`
     })
     const updates = tabs.map(formatTab)
 

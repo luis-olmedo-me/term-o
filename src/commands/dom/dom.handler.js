@@ -11,7 +11,34 @@ export const domHandler = async command => {
 
   const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : storage.get(storageKeys.TAB).id
 
-  if (P`on`) {
+  if (P`on` && P`inject`) {
+    const element = await processManager.findDOMElement(tabId, {
+      searchByXpath: P`on`,
+      searchBelow: P`below`,
+      siblingIndex: P`sibling`,
+      parentIndex: P`parent`,
+      childIndex: P`child`,
+      appendXpath: true
+    })
+
+    command.reset()
+    if (!element) return
+
+    await processManager.injectHTML(tabId, {
+      below: element.xpath,
+      html: P`inject`
+    })
+
+    const update = formatElement({
+      ...element,
+      tabId: P`tab-id`,
+      xpath: P`xpath` ? element.xpath : null
+    })
+
+    command.update(update)
+  }
+
+  if (P`on` && !P`inject`) {
     const element = await processManager.findDOMElement(tabId, {
       searchByXpath: P`on`,
       searchBelow: P`below`,
@@ -23,13 +50,6 @@ export const domHandler = async command => {
 
     command.reset()
     if (!element) return
-
-    if (P`inject`) {
-      await processManager.injectHTML(tabId, {
-        below: P`on`,
-        html: P`inject`
-      })
-    }
 
     const update = formatElement({ ...element, tabId: P`tab-id` })
 

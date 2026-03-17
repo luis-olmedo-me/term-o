@@ -18,7 +18,7 @@ import {
   typed_select__options,
   typed_select__options_container,
   typed_select__options_container___open
-} from './Select.module.scss'
+} from './TypedSelect.module.scss'
 
 export const TypedSelect = ({
   options,

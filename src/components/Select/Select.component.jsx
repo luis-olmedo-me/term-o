@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'preact/hooks'
+import { useRef, useState } from 'preact/hooks'
 
 import Chevron from '@src/icons/Chevron.icon'
 
@@ -32,22 +32,6 @@ export const Select = ({
 
   const selecterRef = useRef(null)
 
-  useEffect(
-    function handleClickOutside() {
-      if (!open) return
-      const handleGlobalClick = event => {
-        const isOutside = !selecterRef.current.contains(event.target)
-
-        if (isOutside) setOpen(false)
-      }
-
-      window.addEventListener('click', handleGlobalClick)
-
-      return () => window.removeEventListener('click', handleGlobalClick)
-    },
-    [open]
-  )
-
   const handleOptionClick = selectedIdItem => {
     onChange({ value: selectedIdItem })
     setOpen(false)
@@ -73,6 +57,7 @@ export const Select = ({
         aria-expanded={open}
         aria-controls={listboxId}
         onClick={() => setOpen(isOpen => !isOpen)}
+        onBlur={() => setOpen(false)}
         disabled={loading}
         className={`
           ${select__button}

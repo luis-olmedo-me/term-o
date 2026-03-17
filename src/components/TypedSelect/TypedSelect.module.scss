@@ -48,12 +48,10 @@
   background-color: $colors-background;
   padding-right: $space-250;
   width: 100%;
-  pointer-events: none;
 
   &___open {
     scale: 1 1;
     opacity: 1;
-    pointer-events: all;
   }
 }
 

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'preact/hooks'
+import { useRef, useState } from 'preact/hooks'
 
 import Input, { inputTypes, inputVariants } from '@src/components/Input'
 import useDebouncedCallback from '@src/hooks/useDebouncedCallback'
@@ -31,24 +31,6 @@ export const TypedSelect = ({
 
   const selecterRef = useRef(null)
 
-  useEffect(
-    function handleClickOutside() {
-      if (!open) return
-      const handleGlobalClick = event => {
-        const isOutside = !selecterRef.current.contains(event.target)
-
-        if (!isOutside) return
-        setOpen(false)
-        resetLocalValue()
-      }
-
-      window.addEventListener('click', handleGlobalClick)
-
-      return () => window.removeEventListener('click', handleGlobalClick)
-    },
-    [open]
-  )
-
   const applyFilter = useDebouncedCallback(
     (value, options) => {
       const valueLowerCased = value.toLowerCase()
@@ -70,6 +52,11 @@ export const TypedSelect = ({
   const handleOnFocus = () => {
     applyFilter(localValue, options)
     setOpen(true)
+  }
+
+  const handleOnBlur = () => {
+    resetLocalValue()
+    setOpen(false)
   }
 
   const handleOptionClick = selectedIdItem => {
@@ -96,6 +83,7 @@ export const TypedSelect = ({
         type={inputTypes.TEXT}
         onChange={handleOnChange}
         onFocus={handleOnFocus}
+        onBlur={handleOnBlur}
         inputClassName={`
           ${open ? typed_select__input___state_open : ''}
           ${loading ? typed_select__input___state_loading : ''}

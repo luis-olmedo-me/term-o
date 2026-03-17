@@ -33,8 +33,16 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: domHelpSections.SEARCH,
     description: 'Find elements with an XPath query',
-    worksWith: ['tab-id', 'sibling', 'parent', 'child', 'xpath', 'below'],
+    worksWith: ['tab-id', 'sibling', 'parent', 'child', 'xpath', 'below', 'inject'],
     validate: [isXpath]
+  })
+  .expect({
+    name: 'inject',
+    abbreviation: 'I',
+    type: commandTypes.STRING,
+    helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
+    description: 'Inject HTML as text',
+    validate: []
   })
   .expect({
     name: 'sibling',

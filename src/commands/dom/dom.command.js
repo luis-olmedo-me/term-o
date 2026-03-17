@@ -28,8 +28,8 @@ export default new CommandBase({
     helpSection: domHelpSections.SEARCH
   })
   .expect({
-    name: 'search-xpath',
-    abbreviation: 'X',
+    name: 'on',
+    abbreviation: 'o',
     type: commandTypes.STRING,
     helpSection: domHelpSections.SEARCH,
     description: 'Find elements with an XPath query',

@@ -11,9 +11,9 @@ export const domHandler = async command => {
 
   const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : storage.get(storageKeys.TAB).id
 
-  if (P`search-xpath`) {
+  if (P`on`) {
     const element = await processManager.findDOMElement(tabId, {
-      searchByXpath: P`search-xpath`,
+      searchByXpath: P`on`,
       searchBelow: P`below`,
       siblingIndex: P`sibling`,
       parentIndex: P`parent`,

@@ -1,0 +1,109 @@
+@use '@styles/mixins.module' as *;
+
+.typed_select {
+  position: relative;
+
+  &___state_loading {
+    width: fit-content;
+  }
+}
+
+.typed_select__input_wrapper:hover + .typed_select__options_container {
+  @include theme(light) {
+    border-color: $colors-brightBlack;
+  }
+  @include theme(dark) {
+    border-color: $colors-accent;
+  }
+}
+
+.typed_select__input {
+  transition:
+    border-color 0.1s ease-in-out,
+    border-radius 0.1s ease-in-out 0.3s;
+
+  &___state_open,
+  &___state_open:last-child {
+    border-radius: $radius-200 $radius-200 0 0;
+  }
+
+  &___state_loading {
+    cursor: progress;
+  }
+}
+
+.typed_select__options_container {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  transform-origin: top;
+  scale: 1 0;
+  opacity: 0;
+  z-index: 1;
+  transition:
+    border-radius 0.3s ease-in-out,
+    border-color 0.1s ease-in-out,
+    scale 0.2s ease-in-out 0.3s,
+    opacity 0.2s ease-in-out 0.3s;
+  box-sizing: border-box;
+  border: $space-50 solid $colors-brightBlack;
+  border-width: 0 $space-50 $space-50;
+  border-radius: 0 0 $radius-200 $radius-200;
+  background-color: $colors-background;
+  padding-right: $space-250;
+  width: 100%;
+
+  &___open {
+    scale: 1 1;
+    opacity: 1;
+  }
+}
+
+.typed_select__options {
+  margin: 0;
+  border-width: 0 $space-50 $space-50;
+  padding: 0;
+  max-height: 8rem;
+  overflow: hidden scroll;
+}
+
+.typed_select__option {
+  display: flex;
+  align-items: center;
+  gap: $space-250;
+  transition:
+    background-color 0.1s ease-in-out,
+    padding 0.1s ease-in-out,
+    color 0.1s ease-in-out;
+  cursor: pointer;
+  margin-right: $space-250;
+  border: solid with-opacity($colors-brightBlack, 0.5);
+  border-width: 0 $space-50 $space-50 0;
+  padding: $space-200 $space-300;
+  color: $colors-foreground;
+  line-height: $lineHeight-200;
+
+  &:hover,
+  &:focus {
+    color: $colors-accent;
+  }
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+
+  &:last-child {
+    border-width: 0 $space-50 0 0;
+  }
+
+  &___state_selected {
+    background-color: with-opacity($colors-accent, 0.05);
+    padding: $space-200 $space-300 $space-200 $space-500;
+    color: $colors-brightAccent;
+
+    &:last-child {
+      border-radius: 0 0 0 $radius-200;
+    }
+  }
+}

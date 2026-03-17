@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'preact/hooks'
 
-import Select from '@src/components/Select'
+import TypedSelect from '@src/components/TypedSelect'
 import processManager from '@src/libs/process-manager'
 
 export const FontSelect = ({ value, onChange, name }) => {
@@ -20,7 +20,13 @@ export const FontSelect = ({ value, onChange, name }) => {
   }, [])
 
   return (
-    <Select loading={isLoading} options={options} value={value} onChange={onChange} name={name} />
+    <TypedSelect
+      loading={isLoading}
+      options={options}
+      value={value}
+      onChange={onChange}
+      name={name}
+    />
   )
 }
 

@@ -206,17 +206,6 @@ export const defaultConfigSections = [
         value: configDefaultValues[configInputIds.COLOR_ACCENT]
       },
       {
-        id: configInputIds.FONT_FAMILY,
-        name: 'Font Family',
-        description: 'Specifies the font family used for displaying text in the terminal.',
-        type: availableInputTypes.FONT_SELECT,
-        postFix: null,
-        iconButton: null,
-        options: [],
-        validations: [],
-        value: configDefaultValues[configInputIds.FONT_FAMILY]
-      },
-      {
         id: configInputIds.CARET_SHAPE,
         name: 'Caret Shape',
         description: 'Choose the visual style of the text cursor displayed while typing.',
@@ -230,6 +219,17 @@ export const defaultConfigSections = [
         ],
         validations: [],
         value: configDefaultValues[configInputIds.CARET_SHAPE]
+      },
+      {
+        id: configInputIds.FONT_FAMILY,
+        name: 'Font Family',
+        description: 'Specifies the font family used for displaying text in the terminal.',
+        type: availableInputTypes.FONT_SELECT,
+        postFix: null,
+        iconButton: null,
+        options: [],
+        validations: [],
+        value: configDefaultValues[configInputIds.FONT_FAMILY]
       },
       {
         id: configInputIds.STATUS_BAR,

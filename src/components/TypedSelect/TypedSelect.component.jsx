@@ -10,6 +10,7 @@ import {
   typed_select___state_loading,
   typed_select__input___state_loading,
   typed_select__input___state_open,
+  typed_select__input_wrapper,
   typed_select__option,
   typed_select__option___state_selected,
   typed_select__options,
@@ -84,6 +85,7 @@ export const TypedSelect = ({
         onChange={handleOnChange}
         onFocus={handleOnFocus}
         onBlur={handleOnBlur}
+        className={typed_select__input_wrapper}
         inputClassName={`
           ${open ? typed_select__input___state_open : ''}
           ${loading ? typed_select__input___state_loading : ''}

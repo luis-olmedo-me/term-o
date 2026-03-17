@@ -8,19 +8,19 @@
   }
 }
 
+.typed_select__input_wrapper:hover + .typed_select__options_container {
+  @include theme(light) {
+    border-color: $colors-brightBlack;
+  }
+  @include theme(dark) {
+    border-color: $colors-accent;
+  }
+}
+
 .typed_select__input {
   &___state_open,
   &___state_open:last-child {
     border-radius: $radius-200 $radius-200 0 0;
-
-    &:hover + .typed_select__options_container {
-      @include theme(light) {
-        border-color: $colors-brightBlack;
-      }
-      @include theme(dark) {
-        border-color: $colors-accent;
-      }
-    }
   }
 
   &___state_loading {

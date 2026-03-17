@@ -1,7 +1,13 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
-import { isRegExp, isTabId, isURL } from '@src/helpers/validation-command.helpers'
+import {
+  isGroupId,
+  isRegExp,
+  isTabId,
+  isURL,
+  isWindowId
+} from '@src/helpers/validation-command.helpers'
 import { tabsHelpSections } from './tabs.constants'
 import { tabsHandler } from './tabs.handler'
 
@@ -37,7 +43,7 @@ export default new CommandBase({
   })
   .expect({
     name: 'incognito',
-    abbreviation: 'i',
+    abbreviation: 'I',
     type: commandTypes.BOOLEAN,
     helpSection: tabsHelpSections.FILTERS,
     description: 'Show only tabs in incognito mode'
@@ -78,7 +84,23 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: tabsHelpSections.FILTERS,
     description: 'Filter tabs by window ID (regex)',
-    validate: [isRegExp]
+    validate: [isRegExp, isWindowId]
+  })
+  .expect({
+    name: 'group-id',
+    abbreviation: 'g',
+    type: commandTypes.STRING,
+    helpSection: tabsHelpSections.FILTERS,
+    description: 'Filter tabs by group ID (regex)',
+    validate: [isRegExp, isGroupId]
+  })
+  .expect({
+    name: 'tab-id',
+    abbreviation: 'i',
+    type: commandTypes.STRING,
+    helpSection: tabsHelpSections.FILTERS,
+    description: 'Filter tabs by tab ID (regex)',
+    validate: [isRegExp, isTabId]
   })
   .expect({
     name: 'switch',

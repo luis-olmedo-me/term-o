@@ -1,4 +1,4 @@
-import { useRef, useState } from 'preact/hooks'
+import { useEffect, useRef, useState } from 'preact/hooks'
 
 import useDebouncedCallback from '@src/hooks/useDebouncedCallback'
 import useObservedState from '@src/hooks/useObservedState'
@@ -34,10 +34,28 @@ export const TypedSelect = ({
   OptionPrefixComponent = null
 }) => {
   const [open, setOpen] = useState(false)
-  const [localValue, setLocalValue] = useObservedState(value, [value])
+  const [localValue, setLocalValue, resetLocalValue] = useObservedState(value, [value])
   const [optionsFiltered, setOptionsFiltered] = useObservedState(options, [options])
 
   const selecterRef = useRef(null)
+
+  useEffect(
+    function handleClickOutside() {
+      if (!open) return
+      const handleGlobalClick = event => {
+        const isOutside = !selecterRef.current.contains(event.target)
+
+        if (!isOutside) return
+        setOpen(false)
+        resetLocalValue()
+      }
+
+      window.addEventListener('click', handleGlobalClick)
+
+      return () => window.removeEventListener('click', handleGlobalClick)
+    },
+    [open]
+  )
 
   const applyFilter = useDebouncedCallback(
     (value, options) => {
@@ -60,13 +78,6 @@ export const TypedSelect = ({
   const handleOnFocus = () => {
     applyFilter(localValue, options)
     setOpen(true)
-  }
-
-  const handleOnBlur = event => {
-    const newValue = event.target.value
-
-    onChange({ value: newValue })
-    setOpen(false)
   }
 
   const handleOptionClick = selectedIdItem => {
@@ -93,7 +104,6 @@ export const TypedSelect = ({
         type={inputTypes.TEXT}
         onChange={handleOnChange}
         onFocus={handleOnFocus}
-        onBlur={handleOnBlur}
         inputClassName={`
           ${open ? typed_select__input___state_open : ''}
           ${loading ? typed_select__input___state_loading : ''}

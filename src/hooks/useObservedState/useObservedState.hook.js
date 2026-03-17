@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'preact/hooks'
+import { useCallback, useEffect, useState } from 'preact/hooks'
 
 export const useObservedState = (value, dependencies) => {
   const [localValue, setLocalValue] = useState(value)
@@ -7,5 +7,7 @@ export const useObservedState = (value, dependencies) => {
     setLocalValue(value)
   }, dependencies)
 
-  return [localValue, setLocalValue]
+  const resetLocalValue = useCallback(() => setLocalValue(value), dependencies)
+
+  return [localValue, setLocalValue, resetLocalValue]
 }

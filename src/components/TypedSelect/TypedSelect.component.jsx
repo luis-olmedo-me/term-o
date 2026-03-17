@@ -12,6 +12,8 @@ import {
   typed_select__button,
   typed_select__button___state_loading,
   typed_select__button___state_open,
+  typed_select__input___state_loading,
+  typed_select__input___state_open,
   typed_select__label,
   typed_select__mark,
   typed_select__mark___state_open,
@@ -100,6 +102,10 @@ export const TypedSelect = ({
         onChange={handleOnChange}
         onFocus={handleOnFocus}
         onBlur={() => setOpen(false)}
+        inputClassName={`
+          ${open ? typed_select__input___state_open : ''}
+          ${loading ? typed_select__input___state_loading : ''}
+        `}
       />
 
       <button

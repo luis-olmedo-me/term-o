@@ -22,7 +22,8 @@ export const Input = ({
   postFix,
   name,
   variant,
-  className
+  className,
+  inputClassName
 }) => {
   const isNumberInput = type === inputTypes.NUMBER
 
@@ -51,6 +52,7 @@ export const Input = ({
           ${input__real_input}
           ${getClassNameByVariant(variant)}
           ${isNumberInput ? input__real_input___type_number : ''}
+          ${inputClassName}
         `}
       />
 
@@ -72,5 +74,6 @@ Input.propTypes = {
   type: String,
   name: String,
   variant: String,
-  className: String
+  className: String,
+  inputClassName: String
 }

@@ -1,7 +1,7 @@
 # Term-O Commands
 
 > Version 0.9.0  
-> Updated: 2026-03-16
+> Updated: 2026-03-17
 
 ---
 
@@ -50,6 +50,7 @@ The `dom` command enables element selection, filtering, and contextual queries i
 | ------------------------------------------------ | ----- | -------------------------------------------- |
 | `--search`                                       | `-s`  | Find elements by criteria.                   |
 | `--on <xpath>`                                   | `-X`  | Find elements with an XPath query.           |
+| `--inject <string>`                              | `-I`  | Inject HTML as text.                         |
 | `--attr <[attrname<regex> attrvalue<regex>]>`    | `-a`  | Filter by attributes.                        |
 | `--below <xpath>`                                | `-B`  | Limit search scope under a specific element. |
 | `--child <number+>`                              | `-d`  | Select child element by index.               |
@@ -65,7 +66,7 @@ The `dom` command enables element selection, filtering, and contextual queries i
 
 ### Dependency Rules
 
-When using `dom` command the options can express **2** possible actions:
+When using `dom` command the options can express **3** possible actions:
 
 1. An element search (using `--search`)
 
@@ -90,6 +91,21 @@ When using `dom` command the options can express **2** possible actions:
 
    ```bash
    dom
+       --on 'id("main-container")'                                          # REQUIRED
+       --below 'id("cards-container")'                                      # OPTIONAL
+       --child 3                                                            # OPTIONAL
+       --parent 2                                                           # OPTIONAL
+       --tab-id "T00000000"                                                 # OPTIONAL
+       --xpath                                                              # OPTIONAL
+   ```
+
+3. Inject HTML code below an element (using `--inject`)
+
+   The option `--inject` will inject inline HTML code from a given string value. At the same time we can do the same search by xpath mentioned before.
+
+   ```bash
+   dom
+       --inject '<button>Test</button>'                                     # REQUIRED
        --on 'id("main-container")'                                          # REQUIRED
        --below 'id("cards-container")'                                      # OPTIONAL
        --child 3                                                            # OPTIONAL

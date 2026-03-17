@@ -55,9 +55,7 @@ export const TypedSelect = ({
   const applyFilter = useDebouncedCallback(
     (value, options) => {
       const valueLowerCased = value.toLowerCase()
-      const newOptions = options.filter(({ value }) =>
-        value.toLowerCase().includes(valueLowerCased)
-      )
+      const newOptions = options.filter(({ name }) => name.toLowerCase().includes(valueLowerCased))
 
       setOptionsFiltered(newOptions)
     },
@@ -77,6 +75,11 @@ export const TypedSelect = ({
     applyFilter(newValue, options)
   }
 
+  const handleOnFocus = () => {
+    applyFilter(localValue, options)
+    setOpen(true)
+  }
+
   const selectedOption = options.find(option => option.id === value)
   const listboxId = `select-options-${name}`
 
@@ -93,8 +96,10 @@ export const TypedSelect = ({
         name={name}
         value={localValue}
         variant={inputVariants.OUTLINED}
-        onChange={handleOnChange}
         type={inputTypes.TEXT}
+        onChange={handleOnChange}
+        onFocus={handleOnFocus}
+        onBlur={() => setOpen(false)}
       />
 
       <button

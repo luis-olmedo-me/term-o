@@ -5,6 +5,7 @@ export const availableInputTypes = {
   SELECT: 'select',
   COLOR_SELECT: 'color-select',
   THEME_SELECT: 'theme-select',
+  TYPED_SELECT: 'typed-select',
   FONT_SELECT: 'font-select',
   BUTTON: 'button',
   BUTTON_DANGER: 'button-danger',

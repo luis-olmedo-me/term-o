@@ -19,14 +19,7 @@ import {
   typed_select__options_container___open
 } from './TypedSelect.module.scss'
 
-export const TypedSelect = ({
-  options,
-  value,
-  onChange,
-  name,
-  loading = false,
-  OptionPrefixComponent = null
-}) => {
+export const TypedSelect = ({ options, value, onChange, name, loading = false }) => {
   const [open, setOpen] = useState(false)
   const [localValue, setLocalValue, resetLocalValue] = useObservedState(value, [value])
   const [optionsFiltered, setOptionsFiltered] = useObservedState(options, [options])
@@ -125,8 +118,6 @@ export const TypedSelect = ({
                     ${isSelected ? typed_select__option___state_selected : ''}
                   `}
               >
-                {OptionPrefixComponent && <OptionPrefixComponent option={option} />}
-
                 {option.name}
               </li>
             )
@@ -142,6 +133,5 @@ TypedSelect.propTypes = {
   value: String,
   name: String,
   onChange: Function,
-  loading: Boolean,
-  OptionPrefixComponent: Object
+  loading: Boolean
 }

@@ -22,8 +22,8 @@ export const Input = ({
   postFix,
   name,
   variant,
-  className,
-  inputClassName
+  className = '',
+  inputClassName = ''
 }) => {
   const isNumberInput = type === inputTypes.NUMBER
 

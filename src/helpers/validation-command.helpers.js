@@ -50,12 +50,30 @@ export const isXpath = (option, value) => {
   }
 }
 
+const windowIdPattern = /W(\d)+/
+export const isWindowId = (option, value) => {
+  if (!windowIdPattern.test(value)) {
+    const name = option.displayName
+
+    throw `${name} expects a valid window id. Instead, it received "${value}".`
+  }
+}
+
 const tabIdPattern = /T(\d)+/
 export const isTabId = (option, value) => {
   if (!tabIdPattern.test(value)) {
     const name = option.displayName
 
     throw `${name} expects a valid tab id. Instead, it received "${value}".`
+  }
+}
+
+const groupIdPattern = /G(\d)+/
+export const isGroupId = (option, value) => {
+  if (!groupIdPattern.test(value)) {
+    const name = option.displayName
+
+    throw `${name} expects a valid group id. Instead, it received "${value}".`
   }
 }
 

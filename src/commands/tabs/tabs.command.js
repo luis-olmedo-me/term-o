@@ -15,7 +15,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: tabsHelpSections.GENERAL,
     description: 'List all currently open tabs',
-    worksWith: ['incognito', 'muted', 'unmuted', 'title', 'url', 'window-id']
+    worksWith: ['incognito', 'muted', 'unmuted', 'title', 'url', 'window-id', 'group-id', 'tab-id']
   })
   .expect({
     name: 'open',
@@ -37,7 +37,7 @@ export default new CommandBase({
   })
   .expect({
     name: 'incognito',
-    abbreviation: 'i',
+    abbreviation: 'I',
     type: commandTypes.BOOLEAN,
     helpSection: tabsHelpSections.FILTERS,
     description: 'Show only tabs in incognito mode'
@@ -78,6 +78,22 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: tabsHelpSections.FILTERS,
     description: 'Filter tabs by window ID (regex)',
+    validate: [isRegExp]
+  })
+  .expect({
+    name: 'group-id',
+    abbreviation: 'g',
+    type: commandTypes.STRING,
+    helpSection: tabsHelpSections.FILTERS,
+    description: 'Filter tabs by group ID (regex)',
+    validate: [isRegExp]
+  })
+  .expect({
+    name: 'tab-id',
+    abbreviation: 'i',
+    type: commandTypes.STRING,
+    helpSection: tabsHelpSections.FILTERS,
+    description: 'Filter tabs by tab ID (regex)',
     validate: [isRegExp]
   })
   .expect({

@@ -1,7 +1,7 @@
 # Term-O Commands
 
 > Version 0.9.0  
-> Updated: 2026-03-11
+> Updated: 2026-03-16
 
 ---
 
@@ -115,13 +115,15 @@ The `tab` command displays all data related to the current tabs active browser.
 | `--current`                     | `-C`  | Show the currently active tab.                   |
 | `--pointing`                    | `-P`  | Show the tab currently targeted by the terminal. |
 | `--active`                      | `-a`  | Focus the tab open.                              |
-| `--incognito`                   | `-i`  | Show only tabs in incognito mode.                |
+| `--incognito`                   | `-I`  | Show only tabs in incognito mode.                |
 | `--muted`                       | `-m`  | Show only muted tabs.                            |
 | `--title <regex>`               | `-t`  | Filter tabs by title.                            |
 | `--unmuted`                     | `-M`  | Show only unmuted tabs.                          |
 | `--url <regex>`                 | `-u`  | Filter tabs by URL.                              |
 | `--wait`                        | `-W`  | Wait until the tab finishes loading.             |
 | `--window-id <windowid<regex>>` | `-w`  | Filter tabs by window ID.                        |
+| `--group-id <groupid<regex>>`   | `-g`  | Filter tabs by group ID.                         |
+| `--tab-id <tabid<regex>>`       | `-i`  | Filter tabs by tab ID.                           |
 | `--help`                        | `-h`  | Show help for this command.                      |
 
 ### Dependency Rules
@@ -141,6 +143,8 @@ When using `tabs` command the options can express **8** possible actions:
        --title "Goo.+"                                                      # OPTIONAL
        --url "Goo.+le\.com"                                                 # OPTIONAL
        --window-id "W00000000"                                              # OPTIONAL
+       --group-id "G00000000"                                               # OPTIONAL
+       --tab-id "T00000000"                                                 # OPTIONAL
    ```
 
 2. Open a new tab (using `--open`)

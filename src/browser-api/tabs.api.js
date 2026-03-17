@@ -9,11 +9,15 @@ export const getTabsSearch = async ({
   byIncognito,
   byTitle,
   byUrl,
-  byWindowId
+  byWindowId,
+  byGroupId,
+  byTabId
 }) => {
   const byTitleRegExp = byTitle && new RegExp(byTitle)
   const byUrlRegExp = byUrl && new RegExp(byUrl)
   const byWindowIdRegExp = byWindowId && new RegExp(byWindowId)
+  const byGroupIdRegExp = byGroupId && new RegExp(byGroupId)
+  const byTabIdRegExp = byTabId && new RegExp(byTabId)
 
   const tabs = await chrome.tabs
     .query({
@@ -24,11 +28,13 @@ export const getTabsSearch = async ({
     })
     .catch(overwriteError)
 
-  return Array.from(tabs).filter(({ windowId, title, url, incognito }) => {
+  return Array.from(tabs).filter(({ windowId, groupId, id, title, url, incognito }) => {
     if (byIncognito && !incognito) return false
     if (byTitleRegExp && !byTitleRegExp.test(title)) return false
     if (byUrlRegExp && !byUrlRegExp.test(url)) return false
     if (byWindowIdRegExp && !byWindowIdRegExp.test(`W${windowId}`)) return false
+    if (byGroupIdRegExp && !byGroupIdRegExp.test(`G${groupId}`)) return false
+    if (byTabIdRegExp && !byTabIdRegExp.test(`T${id}`)) return false
 
     return true
   })

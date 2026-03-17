@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'preact/hooks'
 
 import useDebouncedCallback from '@src/hooks/useDebouncedCallback'
+import useObservedState from '@src/hooks/useObservedState'
 import Chevron from '@src/icons/Chevron.icon'
 
 import { iconSizes } from '@src/constants/icon.constants'
@@ -33,8 +34,8 @@ export const TypedSelect = ({
   OptionPrefixComponent = null
 }) => {
   const [open, setOpen] = useState(false)
-  const [localValue, setLocalValue] = useState(value)
-  const [optionsFiltered, setOptionsFiltered] = useState(options)
+  const [localValue, setLocalValue] = useObservedState(value, [value])
+  const [optionsFiltered, setOptionsFiltered] = useObservedState(options, [options])
 
   const selecterRef = useRef(null)
 

@@ -4,6 +4,7 @@ import findDOMElement from './find-dom-element.process'
 import getDOMElements from './get-dom-elements.process'
 import getElementStyles from './get-element-styles.process'
 import getStorage from './get-storage.process'
+import injectHtml from './inject-html.process'
 import readVariable from './read-variable.process'
 import setStorage from './set-storage.process'
 import triggerEvent from './trigger-event.process'
@@ -13,6 +14,7 @@ import { processNames } from '@src/constants/process.constants'
 export default {
   [processNames.GET_DOM_ELEMENTS]: getDOMElements,
   [processNames.FIND_DOM_ELEMENT]: findDOMElement,
+  [processNames.INJECT_HTML]: injectHtml,
   [processNames.GET_STORAGE]: getStorage,
   [processNames.SET_STORAGE]: setStorage,
   [processNames.GET_ELEMENT_STYLES]: getElementStyles,

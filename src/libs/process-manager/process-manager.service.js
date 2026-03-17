@@ -26,6 +26,15 @@ class ProcessManager {
     })
   }
 
+  injectHTML(tabId, { below, html }) {
+    return createWorkerProcessRequest({
+      type: processNames.INJECT_HTML,
+      defaultResponse: null,
+      tabId,
+      data: { below, html }
+    })
+  }
+
   getStorage(tabId, { includeLocal, includeSession, includeCookies }) {
     return createWorkerProcessRequest({
       type: processNames.GET_STORAGE,

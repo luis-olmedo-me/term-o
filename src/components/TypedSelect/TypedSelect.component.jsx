@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'preact/hooks'
 
+import useDebouncedCallback from '@src/hooks/useDebouncedCallback'
 import Chevron from '@src/icons/Chevron.icon'
 
 import { iconSizes } from '@src/constants/icon.constants'
@@ -31,6 +32,7 @@ export const TypedSelect = ({
 }) => {
   const [open, setOpen] = useState(false)
   const [localValue, setLocalValue] = useState(value)
+  const [optionsFiltered, setOptionsFiltered] = useState(options)
 
   const selecterRef = useRef(null)
 
@@ -50,9 +52,29 @@ export const TypedSelect = ({
     [open]
   )
 
+  const applyFilter = useDebouncedCallback(
+    (value, options) => {
+      const valueLowerCased = value.toLowerCase()
+      const newOptions = options.filter(({ value }) =>
+        value.toLowerCase().includes(valueLowerCased)
+      )
+
+      setOptionsFiltered(newOptions)
+    },
+    [],
+    200
+  )
+
   const handleOptionClick = selectedIdItem => {
     onChange({ value: selectedIdItem })
     setOpen(false)
+  }
+
+  const handleOnChange = event => {
+    const newValue = event.target.value
+
+    setLocalValue(newValue)
+    applyFilter(newValue, options)
   }
 
   const selectedOption = options.find(option => option.id === value)
@@ -71,7 +93,7 @@ export const TypedSelect = ({
         name={name}
         value={localValue}
         variant={inputVariants.OUTLINED}
-        onChange={({ target }) => setLocalValue(target.value)}
+        onChange={handleOnChange}
         type={inputTypes.TEXT}
       />
 
@@ -119,7 +141,7 @@ export const TypedSelect = ({
             `}
           tabIndex={-1}
         >
-          {options.map(option => {
+          {optionsFiltered.map(option => {
             const isSelected = option.id === value
 
             return (

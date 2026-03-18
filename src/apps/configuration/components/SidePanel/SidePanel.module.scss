@@ -1,8 +1,18 @@
+@use '@styles/mixins.module' as *;
+
 .sidepanel {
   flex-shrink: 0;
   border-right: $space-50 solid $colors-brightBlack;
+  background-color: with-opacity($colors-white, 0.02);
   padding: var(--space-600) 0;
   min-width: fit-content;
+
+  @include theme(light) {
+    background-color: with-opacity($colors-black, 0.02);
+  }
+  @include theme(dark) {
+    background-color: with-opacity($colors-white, 0.02);
+  }
 }
 
 .sidepanel__title {
@@ -14,6 +24,8 @@
 
 @media only screen and (min-width: 1000px) {
   .sidepanel {
+    margin-left: $space-800;
+    border-left: $space-50 solid $colors-brightBlack;
     min-width: 250px;
   }
 

@@ -8,6 +8,7 @@ import {
   isInteger,
   isPositive,
   isRegExp,
+  isSnakeCase,
   isString,
   isTabId,
   isXpath
@@ -43,7 +44,7 @@ export default new CommandBase({
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
     description: 'Create a DOM element',
     worksWith: ['below'],
-    validate: []
+    validate: [isSnakeCase]
   })
   .expect({
     name: 'inject',

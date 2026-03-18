@@ -50,6 +50,15 @@ export const isXpath = (option, value) => {
   }
 }
 
+const snakeCasePattern = /^[a-z0-9]+(_[a-z0-9]+)*$/
+export const isSnakeCase = (option, value) => {
+  if (!snakeCasePattern.test(value)) {
+    const name = option.displayName
+
+    throw `${name} expects a valid snake cased string. Instead, it received "${value}".`
+  }
+}
+
 const windowIdPattern = /W(\d)+/
 export const isWindowId = (option, value) => {
   if (!windowIdPattern.test(value)) {

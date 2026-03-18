@@ -26,7 +26,7 @@ class ProcessManager {
     })
   }
 
-  create(tabId, { tagName, below }) {
+  createElement(tabId, { tagName, below }) {
     return createWorkerProcessRequest({
       type: processNames.CREATE_ELEMENT,
       defaultResponse: null,

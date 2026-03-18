@@ -37,6 +37,7 @@ export const domHandler = async command => {
       xpath: P`xpath` ? element.xpath : null
     })
 
+    command.reset()
     command.update(update)
   }
 
@@ -61,6 +62,15 @@ export const domHandler = async command => {
 
   if (P`create`) {
     command.update(['"Connecting to the tab."'])
+    const element = await processManager.createElement(tabId, {
+      tagName: P`create`,
+      below: P`below`
+    })
+
+    const update = formatElement({ ...element, tabId: P`tab-id` })
+
+    command.reset()
+    command.update(update)
   }
 
   if (P`search`) {

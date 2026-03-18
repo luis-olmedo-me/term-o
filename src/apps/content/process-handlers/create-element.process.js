@@ -10,5 +10,7 @@ export default async (resolve, reject, data) => {
 
   targetElement.appendChild(element)
 
-  resolve(null)
+  const tagNameTaken = element.tagName.toLowerCase()
+
+  resolve({ tagName: tagNameTaken, attributes: [], xpath: null, textContent: null })
 }

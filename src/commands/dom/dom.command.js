@@ -43,6 +43,7 @@ export default new CommandBase({
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
     description: 'Create a DOM element',
     worksWith: ['below'],
+    mustHave: ['below'],
     validate: []
   })
   .expect({

@@ -50,12 +50,12 @@ export const isXpath = (option, value) => {
   }
 }
 
-const snakeCasePattern = /^[a-z0-9]+(_[a-z0-9]+)*$/
-export const isSnakeCase = (option, value) => {
-  if (!snakeCasePattern.test(value)) {
+const kebabCasePattern = /^[a-z]+(-[a-z]+)*$/
+export const isKebabCase = (option, value) => {
+  if (!kebabCasePattern.test(value)) {
     const name = option.displayName
 
-    throw `${name} expects a valid snake cased string. Instead, it received "${value}".`
+    throw `${name} expects a valid kebab cased string. Instead, it received "${value}".`
   }
 }
 

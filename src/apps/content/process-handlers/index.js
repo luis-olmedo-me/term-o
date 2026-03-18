@@ -1,4 +1,5 @@
 import applyElementStyles from './apply-element-styles.process'
+import createElement from './create-element.process'
 import createNotification from './create-notification.process'
 import findDOMElement from './find-dom-element.process'
 import getDOMElements from './get-dom-elements.process'
@@ -13,7 +14,7 @@ import { processNames } from '@src/constants/process.constants'
 
 export default {
   [processNames.APPLY_ELEMENT_STYLES]: applyElementStyles,
-  [processNames.CREATE_ELEMENT]: findDOMElement,
+  [processNames.CREATE_ELEMENT]: createElement,
   [processNames.CREATE_NOTIFICATION]: createNotification,
   [processNames.FIND_DOM_ELEMENT]: findDOMElement,
   [processNames.GET_DOM_ELEMENTS]: getDOMElements,

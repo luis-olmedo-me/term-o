@@ -3,9 +3,9 @@ import { getElementByXPath } from '@content/helpers/dom-locator.helpers'
 export default async (resolve, reject, data) => {
   const { below, tagName } = data
 
-  const targetElement = below ? getElementByXPath(below) : window.document
+  const targetElement = below ? getElementByXPath(below) : window.document.body
 
-  if (!targetElement) return reject('XPath did not match any element.')
+  if (!targetElement) return reject('XPath did not match any element as a target.')
   const element = window.document.createElement(tagName)
 
   targetElement.appendChild(element)

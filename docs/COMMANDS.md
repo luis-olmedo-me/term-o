@@ -1,7 +1,7 @@
 # Term-O Commands
 
 > Version 0.9.0  
-> Updated: 2026-03-17
+> Updated: 2026-03-18
 
 ---
 
@@ -49,6 +49,7 @@ The `dom` command enables element selection, filtering, and contextual queries i
 | Option                                           | Short | Description                                  |
 | ------------------------------------------------ | ----- | -------------------------------------------- |
 | `--search`                                       | `-s`  | Find elements by criteria.                   |
+| `--create`                                       | `-c`  | Create a DOM element.                        |
 | `--on <xpath>`                                   | `-X`  | Find elements with an XPath query.           |
 | `--inject <string>`                              | `-I`  | Inject HTML as text.                         |
 | `--attr <[attrname<regex> attrvalue<regex>]>`    | `-a`  | Filter by attributes.                        |
@@ -66,7 +67,7 @@ The `dom` command enables element selection, filtering, and contextual queries i
 
 ### Dependency Rules
 
-When using `dom` command the options can express **3** possible actions:
+When using `dom` command the options can express **4** possible actions:
 
 1. An element search (using `--search`)
 
@@ -112,6 +113,16 @@ When using `dom` command the options can express **3** possible actions:
        --parent 2                                                           # OPTIONAL
        --tab-id "T00000000"                                                 # OPTIONAL
        --xpath                                                              # OPTIONAL
+   ```
+
+4. Create an element (using `--create`)
+
+   The option `--create` will create a DOM element taking the given string value as its tag name. Here is an example of how specific a search can be:
+
+   ```bash
+   dom
+       --create "button"                                                    # REQUIRED
+       --below 'id("cards-container")'                                      # OPTIONAL
    ```
 
 ## TABS

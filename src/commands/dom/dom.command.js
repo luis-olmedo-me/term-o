@@ -37,6 +37,15 @@ export default new CommandBase({
     validate: [isXpath]
   })
   .expect({
+    name: 'create',
+    abbreviation: 'c',
+    type: commandTypes.STRING,
+    helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
+    description: 'Create a DOM element',
+    worksWith: ['below'],
+    validate: []
+  })
+  .expect({
     name: 'inject',
     abbreviation: 'I',
     type: commandTypes.STRING,

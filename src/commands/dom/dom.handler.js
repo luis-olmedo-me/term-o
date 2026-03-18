@@ -56,6 +56,10 @@ export const domHandler = async command => {
     command.update(update)
   }
 
+  if (P`create`) {
+    command.update(['"Test."'])
+  }
+
   if (P`search`) {
     command.update(['"Connecting to the tab."'])
     const elements = await processManager.getDOMElements(tabId, {

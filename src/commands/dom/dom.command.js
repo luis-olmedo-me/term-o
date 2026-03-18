@@ -43,7 +43,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
     description: 'Create a DOM element',
-    worksWith: ['below'],
+    worksWith: ['below', 'attr'],
     validate: [isKebabCase]
   })
   .expect({

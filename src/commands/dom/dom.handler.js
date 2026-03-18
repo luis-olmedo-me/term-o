@@ -64,7 +64,8 @@ export const domHandler = async command => {
     command.update(['"Connecting to the tab."'])
     const element = await processManager.createElement(tabId, {
       tagName: P`create`,
-      below: P`below`
+      below: P`below`,
+      attributes: P`attr`
     })
 
     const update = formatElement({ ...element, tabId: P`tab-id` })

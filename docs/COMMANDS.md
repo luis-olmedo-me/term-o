@@ -59,7 +59,7 @@ The `dom` command enables element selection, filtering, and contextual queries i
 | `--parent <number+>`                             | `-p`  | Select parent element by index.              |
 | `--sibling <numberint>`                          | `-b`  | Select sibling by index.                     |
 | `--style <[stylename<regex> stylevalue<regex>]>` | `-S`  | Filter by CSS styles.                        |
-| `--tab-id <tabid>`                               | `-i`  | Search elements in a specific tab..          |
+| `--tab-id <tabid>`                               | `-i`  | Search elements in a specific tab.           |
 | `--tag <regex>`                                  | `-t`  | Filter by tag name.                          |
 | `--text <regex>`                                 | `-T`  | Filter by text content.                      |
 | `--xpath`                                        | `-x`  | Show XPath(s) of matched element(s).         |

@@ -52,7 +52,7 @@ The `dom` command enables element selection, filtering, and contextual queries i
 | `--create`                                       | `-c`  | Create a DOM element.                        |
 | `--on <xpath>`                                   | `-X`  | Find elements with an XPath query.           |
 | `--inject <string>`                              | `-I`  | Inject HTML as text.                         |
-| `--attr <[attrname<regex> attrvalue<regex>]>`    | `-a`  | Filter by attributes.                        |
+| `--attr <[attrname attrvalue]>`                  | `-a`  | Describe DOM element attributes.             |
 | `--below <xpath>`                                | `-B`  | Limit search scope under a specific element. |
 | `--child <number+>`                              | `-d`  | Select child element by index.               |
 | `--content`                                      | `-C`  | Show textual content of matched element(s).  |
@@ -76,7 +76,7 @@ When using `dom` command the options can express **4** possible actions:
    ```bash
    dom
        --search                                                             # REQUIRED
-       --attr ["class" "test-class-.+"]                                     # OPTIONAL/REPEATABLE
+       --attr ["class" "test-class"]                                        # OPTIONAL/REPEATABLE
        --style ["color" "#00000\d"]                                         # OPTIONAL/REPEATABLE
        --below 'id("cards-container")'                                      # OPTIONAL
        --tab-id "T00000000"                                                 # OPTIONAL
@@ -123,6 +123,7 @@ When using `dom` command the options can express **4** possible actions:
    dom
        --create "button"                                                    # REQUIRED
        --below 'id("cards-container")'                                      # OPTIONAL
+       --attr ["class" "test-class"]                                        # OPTIONAL/REPEATABLE
    ```
 
 ## TABS

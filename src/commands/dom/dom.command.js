@@ -90,7 +90,7 @@ export default new CommandBase({
     abbreviation: 'a',
     type: commandTypes.ARRAY,
     helpSection: domHelpSections.FILTERS,
-    description: 'Filter by attributes (regex[])',
+    description: 'Describe DOM element attributes',
     validate: [hasAllItemsAs(isArray, hasLengthBetween(1, 2), hasAllItemsAs(isString, isRegExp))],
     defaultValue: [],
     repeatable: true

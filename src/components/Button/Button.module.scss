@@ -35,6 +35,7 @@
   }
 
   &___state_selected {
+    background-color: with-opacity($colors-accent, 0.2);
     color: $colors-accent;
 
     &:hover {

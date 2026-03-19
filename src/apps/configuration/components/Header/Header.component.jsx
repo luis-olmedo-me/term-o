@@ -21,7 +21,7 @@ export const Header = ({ onSearch }) => {
   return (
     <header className={header}>
       <div className={header__content}>
-        <Logo size={iconSizes.NORMAL} />
+        <Logo size={iconSizes.SMALL} />
 
         <form role="search" className={header__search}>
           <Input

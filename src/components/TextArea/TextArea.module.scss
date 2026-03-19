@@ -8,13 +8,13 @@
 .textarea__overlay {
   position: absolute;
   inset: 0;
-  background-color: with-opacity($colors-white, 0.05);
   pointer-events: none;
   word-wrap: break-word;
   z-index: -1;
   transition: border-color 0.1s ease-in-out;
   border: $space-50 solid $colors-brightBlack;
   border-radius: $radius-200;
+  background-color: with-opacity($colors-white, 0.05);
   padding: $space-300;
   overflow-y: scroll;
   font-size: $fontSize-50;

@@ -50,6 +50,15 @@ export const isXpath = (option, value) => {
   }
 }
 
+const kebabCasePattern = /^[a-z]+(-[a-z]+)*$/
+export const isKebabCase = (option, value) => {
+  if (!kebabCasePattern.test(value)) {
+    const name = option.displayName
+
+    throw `${name} expects a valid kebab cased string. Instead, it received "${value}".`
+  }
+}
+
 const windowIdPattern = /W(\d)+/
 export const isWindowId = (option, value) => {
   if (!windowIdPattern.test(value)) {

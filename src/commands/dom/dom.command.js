@@ -6,6 +6,7 @@ import {
   hasLengthBetween,
   isArray,
   isInteger,
+  isKebabCase,
   isPositive,
   isRegExp,
   isString,
@@ -35,6 +36,15 @@ export default new CommandBase({
     description: 'Find elements with an XPath query',
     worksWith: ['tab-id', 'sibling', 'parent', 'child', 'xpath', 'below', 'inject'],
     validate: [isXpath]
+  })
+  .expect({
+    name: 'create',
+    abbreviation: 'c',
+    type: commandTypes.STRING,
+    helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
+    description: 'Create a DOM element',
+    worksWith: ['below', 'attr'],
+    validate: [isKebabCase]
   })
   .expect({
     name: 'inject',
@@ -80,7 +90,7 @@ export default new CommandBase({
     abbreviation: 'a',
     type: commandTypes.ARRAY,
     helpSection: domHelpSections.FILTERS,
-    description: 'Filter by attributes (regex[])',
+    description: 'Describe DOM element attributes',
     validate: [hasAllItemsAs(isArray, hasLengthBetween(1, 2), hasAllItemsAs(isString, isRegExp))],
     defaultValue: [],
     repeatable: true

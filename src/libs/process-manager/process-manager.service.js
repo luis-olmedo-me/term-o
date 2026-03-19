@@ -26,6 +26,15 @@ class ProcessManager {
     })
   }
 
+  createElement(tabId, { tagName, below, attributes }) {
+    return createWorkerProcessRequest({
+      type: processNames.CREATE_ELEMENT,
+      defaultResponse: null,
+      tabId,
+      data: { tagName, below, attributes }
+    })
+  }
+
   injectHTML(tabId, { below, html }) {
     return createWorkerProcessRequest({
       type: processNames.INJECT_HTML,

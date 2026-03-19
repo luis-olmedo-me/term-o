@@ -7,7 +7,14 @@
 }
 
 @mixin theme($mode) {
-  :global(.theme-provider-#{$mode}) & {
-    @content;
+  @if $mode == any {
+    :global(.theme-provider-dark) &,
+    :global(.theme-provider-light) & {
+      @content;
+    }
+  } @else {
+    :global(.theme-provider-#{$mode}) & {
+      @content;
+    }
   }
 }

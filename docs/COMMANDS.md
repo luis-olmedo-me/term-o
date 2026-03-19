@@ -1,7 +1,7 @@
 # Term-O Commands
 
 > Version 0.9.0  
-> Updated: 2026-03-17
+> Updated: 2026-03-18
 
 ---
 
@@ -49,16 +49,17 @@ The `dom` command enables element selection, filtering, and contextual queries i
 | Option                                           | Short | Description                                  |
 | ------------------------------------------------ | ----- | -------------------------------------------- |
 | `--search`                                       | `-s`  | Find elements by criteria.                   |
+| `--create`                                       | `-c`  | Create a DOM element.                        |
 | `--on <xpath>`                                   | `-X`  | Find elements with an XPath query.           |
 | `--inject <string>`                              | `-I`  | Inject HTML as text.                         |
-| `--attr <[attrname<regex> attrvalue<regex>]>`    | `-a`  | Filter by attributes.                        |
+| `--attr <[attrname attrvalue]>`                  | `-a`  | Describe DOM element attributes.             |
 | `--below <xpath>`                                | `-B`  | Limit search scope under a specific element. |
 | `--child <number+>`                              | `-d`  | Select child element by index.               |
 | `--content`                                      | `-C`  | Show textual content of matched element(s).  |
 | `--parent <number+>`                             | `-p`  | Select parent element by index.              |
 | `--sibling <numberint>`                          | `-b`  | Select sibling by index.                     |
 | `--style <[stylename<regex> stylevalue<regex>]>` | `-S`  | Filter by CSS styles.                        |
-| `--tab-id <tabid>`                               | `-i`  | Search elements in a specific tab..          |
+| `--tab-id <tabid>`                               | `-i`  | Search elements in a specific tab.           |
 | `--tag <regex>`                                  | `-t`  | Filter by tag name.                          |
 | `--text <regex>`                                 | `-T`  | Filter by text content.                      |
 | `--xpath`                                        | `-x`  | Show XPath(s) of matched element(s).         |
@@ -66,7 +67,7 @@ The `dom` command enables element selection, filtering, and contextual queries i
 
 ### Dependency Rules
 
-When using `dom` command the options can express **3** possible actions:
+When using `dom` command the options can express **4** possible actions:
 
 1. An element search (using `--search`)
 
@@ -75,7 +76,7 @@ When using `dom` command the options can express **3** possible actions:
    ```bash
    dom
        --search                                                             # REQUIRED
-       --attr ["class" "test-class-.+"]                                     # OPTIONAL/REPEATABLE
+       --attr ["class" "test-class"]                                        # OPTIONAL/REPEATABLE
        --style ["color" "#00000\d"]                                         # OPTIONAL/REPEATABLE
        --below 'id("cards-container")'                                      # OPTIONAL
        --tab-id "T00000000"                                                 # OPTIONAL
@@ -112,6 +113,17 @@ When using `dom` command the options can express **3** possible actions:
        --parent 2                                                           # OPTIONAL
        --tab-id "T00000000"                                                 # OPTIONAL
        --xpath                                                              # OPTIONAL
+   ```
+
+4. Create an element (using `--create`)
+
+   The option `--create` will create a DOM element taking the given string value as its tag name. Here is an example of how specific a search can be:
+
+   ```bash
+   dom
+       --create "button"                                                    # REQUIRED
+       --below 'id("cards-container")'                                      # OPTIONAL
+       --attr ["class" "test-class"]                                        # OPTIONAL/REPEATABLE
    ```
 
 ## TABS

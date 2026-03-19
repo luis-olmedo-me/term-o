@@ -1,3 +1,5 @@
+@use '@styles/mixins.module' as *;
+
 .field {
   display: flex;
   justify-content: space-between;
@@ -5,8 +7,14 @@
   border: $space-50 solid with-opacity($colors-brightBlack, 0.5);
   border-top: $space-50 solid $colors-brightBlack;
   border-width: $space-50 $space-50 0 $space-50;
-  background-color: with-opacity($colors-white, 0.05);
   padding: $space-500 $space-900;
+
+  @include theme(light) {
+    background-color: with-opacity($colors-black, 0.02);
+  }
+  @include theme(dark) {
+    background-color: with-opacity($colors-white, 0.02);
+  }
 
   &:first-of-type {
     border-radius: $radius-200 $radius-200 0 0;
@@ -25,7 +33,9 @@
   }
 
   &___mod_error {
-    background-color: with-opacity($colors-red, 0.05);
+    @include theme(any) {
+      background-color: with-opacity($colors-red, 0.04);
+    }
   }
 }
 

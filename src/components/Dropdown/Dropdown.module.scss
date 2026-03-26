@@ -1,0 +1,36 @@
+.dropdown {
+  display: flex;
+  column-gap: $space-200;
+  justify-content: center;
+  justify-content: start;
+  align-items: center;
+  transition:
+    background-color 0.1s ease-in-out,
+    color 0.1s ease-in-out;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  padding: $space-300 $space-300;
+  width: 100%;
+  height: fit-content;
+  color: $colors-foreground;
+  font-weight: bold;
+  font-size: $fontSize-100;
+  line-height: $lineHeight-300;
+  font-family: $font;
+
+  &:active,
+  &:focus,
+  &:focus-visible {
+    outline: none;
+  }
+
+  &:hover {
+    background-color: $colors-black;
+    color: $colors-brightAccent;
+  }
+
+  &:active {
+    background-color: with-opacity($colors-accent, 0.5);
+  }
+}

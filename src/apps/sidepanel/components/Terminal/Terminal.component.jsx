@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef } from 'preact/hooks'
 import CommandsViewer from '@sidepanel/components/CommandsViewer'
 import Prompt from '@sidepanel/components/Prompt'
 import Button, { buttonVariants } from '@src/components/Button'
+import Dropdown from '@src/components/Dropdown'
 import useStorage from '@src/hooks/useStorage'
 import Gear from '@src/icons/Gear.icon'
 
@@ -83,7 +84,7 @@ export const Terminal = () => {
           className={terminal__header_button}
         />
 
-        <Button
+        <Dropdown
           value="Kill"
           onClick={openConfiguration}
           variant={buttonVariants.GHOST}

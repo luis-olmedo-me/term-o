@@ -301,10 +301,17 @@ You can apply colors to specific lines by embedding color tokens directly into t
 These tokens reference your current theme colors and are parsed by the terminal at runtime.
 
 ```
-"[termo.bgcolor.red][term.color.black]Any text for testing purposes"
+"{tfg:blue}{tbg:white}Any text for testing purposes"
 ```
 
 This allows you to quickly highlight output, emphasize messages, or create more expressive command results.
+
+### Tokens
+
+tfg → sets the foreground color (text color)
+tbg → sets the background color
+
+Both tokens accept any color defined in the current theme (e.g. red, blue, brightBlack, etc.).
 
 ---
 

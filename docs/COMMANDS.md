@@ -1,7 +1,7 @@
 # Term-O Commands
 
-> Version 0.9.0  
-> Updated: 2026-03-18
+> Version 0.9.1  
+> Updated: 2026-03-26
 
 ---
 

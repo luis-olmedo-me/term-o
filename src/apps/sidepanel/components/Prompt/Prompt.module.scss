@@ -6,6 +6,7 @@
   background-color: transparent;
   padding: $space-200 $space-400 $space-200 $space-400;
   color: $colors-foreground;
+  word-break: break-all;
 }
 
 .prompt__line {

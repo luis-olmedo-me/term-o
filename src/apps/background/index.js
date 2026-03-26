@@ -4,8 +4,9 @@ import Storage from '@src/libs/storage/manual'
 
 import { getCurrentTab } from '@src/browser-api/tabs.api'
 import { origins } from '@src/constants/command.constants'
-import { configInputIds } from '@src/constants/config.constants'
+import { configInputIds, DEFAULT_CONTEXT } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
+import { oldColorPattern } from '@src/constants/themes.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
 import { createInternalTab } from '@src/helpers/tabs.helpers'
 import processHandlers from './process-handlers'
@@ -151,4 +152,15 @@ chrome.runtime.onConnect.addListener(port => {
   port.onDisconnect.addListener(() => {
     sidePanelPort = null
   })
+})
+
+chrome.runtime.onInstalled.addListener(async details => {
+  if (details.reason !== 'update') return
+  const storage = await getStorage()
+
+  const config = storage.get(storageKeys.CONFIG)
+  const contextInputValue = config.getValueById(configInputIds.CONTEXT)
+  const hasOldColorPattern = oldColorPattern.test(contextInputValue)
+
+  if (hasOldColorPattern) config.change(configInputIds.CONTEXT, DEFAULT_CONTEXT)
 })

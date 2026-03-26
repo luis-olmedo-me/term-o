@@ -2,21 +2,21 @@ import { toTitleCase } from './string.helpers'
 import { getQuotedString } from './utils.helpers'
 
 export const getColor = color => {
-  return `[termo.color.${color}]`
+  return `{tfg:${color}}`
 }
 
 export const getBgColor = color => {
-  return `[termo.bgcolor.${color}]`
+  return `{tbg:${color}}`
 }
 
 export const cleanColors = value => {
-  const colorPattern = /\[termo\.color\.[A-Za-z]+\]|\[termo\.bgcolor\.[A-Za-z]+\]/g
+  const colorPattern = /\{tfg:[A-Za-z]+\}|\{tbg:[A-Za-z]+\}/g
 
   return value.replace(colorPattern, '')
 }
 
 export const escapeColors = (value = '') => {
-  const colorPattern = /\[termo\.color\.[A-Za-z]+\]|\[termo\.bgcolor\.[A-Za-z]+\]/g
+  const colorPattern = /\{tfg:[A-Za-z]+\}|\{tbg:[A-Za-z]+\}/g
 
   return value.replace(colorPattern, character => RegExp.escape(character))
 }

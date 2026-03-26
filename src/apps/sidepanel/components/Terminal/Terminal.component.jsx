@@ -85,10 +85,12 @@ export const Terminal = () => {
         />
 
         <Dropdown
-          value="Kill"
-          onClick={openConfiguration}
+          value="It is:"
+          onSelect={() => console.log('test')}
           variant={buttonVariants.GHOST}
           className={terminal__header_button}
+          options={[{ id: 'kill', name: 'Kill' }]}
+          name="terminal-options"
         />
       </header>
 

@@ -82,6 +82,13 @@ export const Terminal = () => {
           variant={buttonVariants.GHOST}
           className={terminal__header_button}
         />
+
+        <Button
+          value="Kill"
+          onClick={openConfiguration}
+          variant={buttonVariants.GHOST}
+          className={terminal__header_button}
+        />
       </header>
 
       <CommandsViewer commands={queue.value} />

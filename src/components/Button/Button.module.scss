@@ -137,13 +137,3 @@
     }
   }
 }
-
-.button__label {
-  display: none;
-}
-
-@media only screen and (min-width: 1000px) {
-  .button__label {
-    display: inline;
-  }
-}

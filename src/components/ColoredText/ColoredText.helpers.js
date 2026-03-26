@@ -6,7 +6,7 @@ import {
   text___unique_colored
 } from './ColoredText.module.scss'
 
-const colorPattern = /\[termo\.(color|bgcolor)\.([A-Za-z]+)\]/g
+const colorPattern = /\{t(fg|bg):([A-Za-z]+)\}/g
 
 const isColoredFragment = fragment => {
   return (
@@ -81,7 +81,7 @@ export const getPaintedFragments = (value, keywordsEnabled) => {
     const start = match.index + matchValue.length
     const extraction = nextMatch ? value.slice(start, nextMatch.index) : value.slice(start)
 
-    const isColorKey = category === 'color'
+    const isColorKey = category === 'fg'
 
     if (isColorKey) lastColor = color
     else lastBGColor = color

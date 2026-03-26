@@ -1,7 +1,7 @@
 {
   "name": "term-o",
   "version": "0.9.0",
-  "description": "A terminal-style developer tool for interacting with browser APIs and page events.",
+  "description": "A terminal-style tool to interact with web pages, automate workflows, and boost productivity directly in your browser.",
   "private": true,
   "repository": {
     "type": "git",

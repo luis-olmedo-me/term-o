@@ -1,7 +1,7 @@
 # Term-O Basics
 
 > Version 0.9.0  
-> Updated: 2026-03-10
+> Updated: 2026-03-26
 
 ---
 
@@ -20,6 +20,10 @@
   - [Pick Many](#pick-many)
   - [Pick All](#pick-all)
   - [Pick All As A String](#pick-all-as-a-string)
+- [Themes](#themes)
+  - [Paint Lines](#paint-lines)
+- [Configuration](#configuration)
+  - [Prompt Context](#prompt-context)
 
 ---
 
@@ -273,3 +277,55 @@ In brief, the above example is equal to the following command chain:
 ```bash
 command-a --count 50 && command-b --title '"test-answer-1" "test-title" "another-title"' && command-b  --title '"test-answer-2" "test-title" "another-title"'
 ```
+
+---
+
+# Theme
+
+This project uses a terminal-style color scheme compatible with common formats.
+
+Themes are based on the Windows Terminal color scheme format, which follows a standard 16-color ANSI palette with additional UI properties.
+
+You can explore a large collection of themes at:
+https://windowsterminalthemes.dev/
+
+Note: Themes may require slight adjustments to match this project's structure.
+All credits for the original themes go to their respective authors.
+
+Please, see [theme-example.json](assets/theme-example.json) to find a more detailed example of a valid theme.
+
+## Paint lines
+
+You can apply colors to specific lines by embedding color tokens directly into the string.
+
+These tokens reference your current theme colors and are parsed by the terminal at runtime.
+
+```
+"[termo.bgcolor.red][term.color.black]Any text for testing purposes"
+```
+
+This allows you to quickly highlight output, emphasize messages, or create more expressive command results.
+
+---
+
+# Configuration
+
+You can access the configuration panel by clicking the gear icon in the top-right corner of the Term-O terminal.
+
+From there, you can customize different aspects of the app, including functionality, appearance, and data-related settings.
+
+## Prompt Context
+
+This section allows you to customize the information displayed above the command input.
+
+It is typically used to show contextual data — such as the current URL or page-related details — so you always know where you are while executing commands.
+
+These are all the possible key values:
+
+- `{origin}` -> "https://www.test.com"
+- `{pathname}` -> "/testing/item-1"
+- `{host}` -> "www.test.com"
+- `{title}` -> "Page Title"
+- `{tab_id}` -> "T00000000"
+- `{group_id}` -> "G00000000"
+- `{window_id}` -> "W00000000"

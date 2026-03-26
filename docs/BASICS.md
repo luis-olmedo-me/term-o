@@ -20,6 +20,8 @@
   - [Pick Many](#pick-many)
   - [Pick All](#pick-all)
   - [Pick All As A String](#pick-all-as-a-string)
+- [Themes](#themes)
+  - [Paint Lines](#paint-lines)
 - [Configuration](#configuration)
   - [Prompt Context](#prompt-context)
 

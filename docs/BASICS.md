@@ -278,6 +278,34 @@ command-a --count 50 && command-b --title '"test-answer-1" "test-title" "another
 
 ---
 
+# Theme
+
+This project uses a terminal-style color scheme compatible with common formats.
+
+Themes are based on the Windows Terminal color scheme format, which follows a standard 16-color ANSI palette with additional UI properties.
+
+You can explore a large collection of themes at:
+https://windowsterminalthemes.dev/
+
+Note: Themes may require slight adjustments to match this project's structure.
+All credits for the original themes go to their respective authors.
+
+Please, see [theme-example.json](assets/theme-example.json) to find a more detailed example of a valid theme.
+
+## Paint lines
+
+You can apply colors to specific lines by embedding color tokens directly into the string.
+
+These tokens reference your current theme colors and are parsed by the terminal at runtime.
+
+```
+"[termo.bgcolor.red][term.color.black]Any text for testing purposes"
+```
+
+This allows you to quickly highlight output, emphasize messages, or create more expressive command results.
+
+---
+
 # Configuration
 
 You can access the configuration panel by clicking the gear icon in the top-right corner of the Term-O terminal.

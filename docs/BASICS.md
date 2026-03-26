@@ -1,7 +1,7 @@
 # Term-O Basics
 
 > Version 0.9.0  
-> Updated: 2026-03-10
+> Updated: 2026-03-26
 
 ---
 
@@ -20,6 +20,8 @@
   - [Pick Many](#pick-many)
   - [Pick All](#pick-all)
   - [Pick All As A String](#pick-all-as-a-string)
+- [Configuration](#configuration)
+  - [Prompt Context](#prompt-context)
 
 ---
 
@@ -273,3 +275,29 @@ In brief, the above example is equal to the following command chain:
 ```bash
 command-a --count 50 && command-b --title '"test-answer-1" "test-title" "another-title"' && command-b  --title '"test-answer-2" "test-title" "another-title"'
 ```
+
+---
+
+# Configuration
+
+You can access the configuration panel by clicking the gear icon in the top-right corner of the Term-O terminal.
+
+From there, you can customize different aspects of the app, including functionality, appearance, and data-related settings.
+
+## Prompt Context
+
+This section allows you to customize the information displayed above the command input.
+
+It is typically used to show contextual data — such as the current URL or page-related details — so you always know where you are while executing commands.
+
+These are all the possible key values:
+
+- `{origin}` -> "https://www.test.com"
+- `{pathname}` -> "/testing/item-1"
+- `{host}` -> "www.test.com"
+- `{title}` -> "Page Title"
+- `{tab_id}` -> "T00000000"
+- `{group_id}` -> "G00000000"
+- `{window_id}` -> "W00000000"
+- `{is_incognito}` -> "true|false"
+- `{tbc:red}` -> "true|false"

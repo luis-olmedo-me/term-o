@@ -9,10 +9,9 @@ export const createContext = (value, tab) => {
     origin: url.origin || '',
     pathname: url.pathname || '',
     host: url.host || '',
-    hostname: url.hostname || '',
-    status: tab.status || '',
     title: tab.title || '',
     tab_id: `T${tab.id || ''}`,
+    group_id: `T${tab.groupId || ''}`,
     window_id: `W${tab.windowId || ''}`,
     is_incognito: `${tab.incognito}`
   }

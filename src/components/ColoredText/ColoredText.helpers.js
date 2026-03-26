@@ -1,12 +1,10 @@
-import { colorThemeKeys } from '@src/constants/themes.constants'
+import { colorPattern, colorThemeKeys } from '@src/constants/themes.constants'
 import {
   text___both_colored,
   text___next_colored,
   text___previous_colored,
   text___unique_colored
 } from './ColoredText.module.scss'
-
-const colorPattern = /\{t(fg|bg):([A-Za-z]+)\}/g
 
 const isColoredFragment = fragment => {
   return (

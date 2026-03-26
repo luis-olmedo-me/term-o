@@ -1,3 +1,5 @@
+export const colorPattern = /\{t(fg|bg):([A-Za-z]+)\}/g
+
 export const colorThemeKeys = {
   NAME: 'name',
   BACKGROUND: 'background',

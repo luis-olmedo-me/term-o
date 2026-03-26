@@ -29,8 +29,6 @@ export const Dropdown = ({ value, onSelect, name, options, Icon = null, classNam
         {Icon && <Icon size={iconSizes.SMALL} />}
 
         {value && <span>{value}</span>}
-
-        {value && <span>{open ? 'Open' : 'Closed'}</span>}
       </button>
 
       <div

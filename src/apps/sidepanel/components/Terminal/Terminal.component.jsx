@@ -6,6 +6,7 @@ import Button, { buttonVariants } from '@src/components/Button'
 import Dropdown from '@src/components/Dropdown'
 import useStorage from '@src/hooks/useStorage'
 import Gear from '@src/icons/Gear.icon'
+import ThreeDots from '@src/icons/ThreeDots.icon'
 
 import { createTab, getCurrentTab } from '@src/browser-api/tabs.api'
 import { origins } from '@src/constants/command.constants'
@@ -85,7 +86,7 @@ export const Terminal = () => {
         />
 
         <Dropdown
-          value="It is:"
+          Icon={ThreeDots}
           onSelect={() => console.log('test')}
           variant={buttonVariants.GHOST}
           className={terminal__header_button}

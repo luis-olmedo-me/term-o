@@ -1,6 +1,6 @@
 # Term-O Basics
 
-> Version 0.9.0  
+> Version 0.9.1  
 > Updated: 2026-03-26
 
 ---

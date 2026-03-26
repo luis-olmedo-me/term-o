@@ -299,5 +299,3 @@ These are all the possible key values:
 - `{tab_id}` -> "T00000000"
 - `{group_id}` -> "G00000000"
 - `{window_id}` -> "W00000000"
-- `{is_incognito}` -> "true|false"
-- `{tbc:red}` -> "true|false"

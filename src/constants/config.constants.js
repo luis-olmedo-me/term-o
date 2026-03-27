@@ -1,9 +1,10 @@
+import Clean from '@src/icons/Clean.icon'
 import Data from '@src/icons/Data.icon'
 import Export from '@src/icons/Export.icon'
 import Import from '@src/icons/Import.icon'
 import Palette from '@src/icons/Palette.icon'
 import Thunder from '@src/icons/Thunder.icon'
-import Undo from '@src/icons/Undo.icon'
+import Watch from '@src/icons/Watch.icon'
 
 import { toTitleCase } from '@src/helpers/string.helpers'
 import { availableInputTypes } from './inputs.constants'
@@ -290,7 +291,7 @@ export const defaultConfigSections = [
         description: `Restore all UI and behavior settings (theme, experimental features, click-to-copy, animations, selection helpers, etc.) back to their default values.\nPersonal preferences will be lost, but your saved commands and registered events will remain intact.`,
         type: availableInputTypes.BUTTON_WARN,
         postFix: null,
-        iconButton: Undo,
+        iconButton: Clean,
         options: [],
         validations: [],
         value: configDefaultValues[configInputIds.RESET_CONFIGURATION]
@@ -301,7 +302,7 @@ export const defaultConfigSections = [
         description: 'Reset all settings to their original factory values.',
         type: availableInputTypes.BUTTON_DANGER,
         postFix: null,
-        iconButton: Undo,
+        iconButton: Watch,
         options: [],
         validations: [],
         value: configDefaultValues[configInputIds.CLEAR_USER_DATA]

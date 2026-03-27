@@ -1,4 +1,7 @@
+import { createRuler } from '@src/helpers/web-components.helpers'
+
 export default async resolve => {
+  createRuler()
   resolve('testing')
 
   // try {

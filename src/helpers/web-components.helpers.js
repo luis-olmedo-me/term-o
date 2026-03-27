@@ -50,3 +50,7 @@ export const createNotification = ({ title, message, theme, color }) => {
 
   return manager
 }
+
+export const createRuler = () => {
+  return createWebElement(webElements.RULER)
+}

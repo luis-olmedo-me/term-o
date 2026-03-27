@@ -15,7 +15,7 @@
     color 0.1s ease-in-out;
   cursor: pointer;
   border: solid transparent;
-  border-width: 0 $space-50 0 $space-50;
+  border-width: 0 0 0 $space-50;
   background-color: transparent;
   padding: $space-300 $space-300;
   width: 100%;
@@ -107,15 +107,5 @@
 
   &:last-child {
     border-width: 0 $space-50 0 0;
-  }
-
-  &___state_selected {
-    background-color: with-opacity($colors-accent, 0.05);
-    padding: $space-200 $space-300 $space-200 $space-500;
-    color: $colors-brightAccent;
-
-    &:last-child {
-      border-radius: 0 0 0 $radius-200;
-    }
   }
 }

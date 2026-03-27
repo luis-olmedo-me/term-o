@@ -84,7 +84,7 @@ export const Terminal = () => {
   }
 
   const handleDropdownSelect = ({ value }) => {
-    if (value === threeDotsOptionIds.KILL) console.log('test new')
+    if (value === threeDotsOptionIds.KILL) chrome.runtime.reload()
   }
 
   return (

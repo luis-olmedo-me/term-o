@@ -1,3 +1,5 @@
+import Skull from '@src/icons/Skull.icon'
+
 export const threeDotsOptionIds = {
   KILL: 'kill'
 }
@@ -5,6 +7,7 @@ export const threeDotsOptionIds = {
 export const threeDotsOptions = [
   {
     id: threeDotsOptionIds.KILL,
-    name: 'Kill'
+    name: 'Kill',
+    Icon: Skull
   }
 ]

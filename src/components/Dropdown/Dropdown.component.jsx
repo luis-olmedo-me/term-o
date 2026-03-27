@@ -74,6 +74,8 @@ export const Dropdown = ({
                 onClick={() => handleOptionClick(option.id)}
                 className={select__option}
               >
+                {option.Icon && <option.Icon size={iconSizes.HALF_SMALL} />}
+
                 {option.name}
               </li>
             )

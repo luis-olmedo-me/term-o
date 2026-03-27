@@ -15,7 +15,11 @@ export const inputHandler = async command => {
   }
 
   if (P`measure`) {
-    command.update(["'testing'"])
+    const input = await processManager.requestMeasure()
+    const formattedInput = formatText({ text: input })
+
+    command.reset()
+    command.update(formattedInput)
   }
 
   if (P`help`) createHelpView(command)

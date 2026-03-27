@@ -77,7 +77,7 @@ export const Terminal = () => {
   }
 
   const handleDropdownSelect = ({ value }) => {
-    if (value === threeDotsOptionIds.KILL) chrome.runtime.reload()
+    if (value === threeDotsOptionIds.REFRESH) chrome.runtime.reload()
     if (value === threeDotsOptionIds.CONFIG)
       switchOrCreateTab({ url: chrome.runtime.getURL('configuration.html') })
   }

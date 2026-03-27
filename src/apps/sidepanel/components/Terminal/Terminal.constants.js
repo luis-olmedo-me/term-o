@@ -1,16 +1,16 @@
 import Gear from '@src/icons/Gear.icon'
-import Skull from '@src/icons/Skull.icon'
+import Reload from '@src/icons/Reload.icon'
 
 export const threeDotsOptionIds = {
-  KILL: 'kill',
+  REFRESH: 'refresh',
   CONFIG: 'config'
 }
 
 export const threeDotsOptions = [
   {
-    id: threeDotsOptionIds.KILL,
-    name: 'Kill',
-    Icon: Skull
+    id: threeDotsOptionIds.REFRESH,
+    name: 'Refresh',
+    Icon: Reload
   },
   {
     id: threeDotsOptionIds.CONFIG,

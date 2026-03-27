@@ -6,7 +6,7 @@ import { formatText } from '@src/helpers/format.helpers'
 export const inputHandler = async command => {
   const P = name => command.props[name]
 
-  if (P`request`) {
+  if (P`text`) {
     const input = await processManager.requestInput()
     const formattedInput = formatText({ text: input })
 

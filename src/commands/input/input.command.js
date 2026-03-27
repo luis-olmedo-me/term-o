@@ -8,8 +8,8 @@ export default new CommandBase({
   name: commandNames.INPUT,
   handler: inputHandler
 }).expect({
-  name: 'request',
-  abbreviation: 'r',
+  name: 'text',
+  abbreviation: 't',
   type: commandTypes.BOOLEAN,
   helpSection: inputHelpSections.ACTIONS,
   description: 'Request user input in terminal.',

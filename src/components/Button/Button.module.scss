@@ -39,7 +39,7 @@
     color: $colors-accent;
 
     &:hover {
-      background-color: with-opacity($colors-accent, 0.8);
+      background-color: with-opacity($colors-accent, 0.7);
       color: $colors-brightWhite;
     }
     &:active {
@@ -58,7 +58,7 @@
     }
 
     &:hover {
-      background-color: with-opacity($colors-accent, 0.8);
+      background-color: with-opacity($colors-accent, 0.7);
       color: $colors-brightWhite;
     }
 
@@ -88,7 +88,7 @@
     }
 
     &:hover {
-      background-color: $colors-red;
+      background-color: with-opacity($colors-red, 0.7);
       color: $colors-brightWhite;
     }
 
@@ -118,7 +118,7 @@
     }
 
     &:hover {
-      background-color: $colors-yellow;
+      background-color: with-opacity($colors-yellow, 0.7);
       color: $colors-brightWhite;
     }
 

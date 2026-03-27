@@ -107,11 +107,11 @@ class ProcessManager {
     })
   }
 
-  requestMeasure() {
+  requestMeasure(tabId) {
     return createWorkerProcessRequest({
       type: processNames.REQUEST_MEASURE,
       defaultResponse: '',
-      tabId: null,
+      tabId,
       data: null
     })
   }

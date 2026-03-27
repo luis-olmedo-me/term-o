@@ -1,6 +1,7 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
+import { isTabId } from '@src/helpers/validation-command.helpers'
 import { inputHelpSections } from './input.constants'
 import { inputHandler } from './input.handler'
 
@@ -23,4 +24,12 @@ export default new CommandBase({
     helpSection: inputHelpSections.ACTIONS,
     description: 'Request measure from terminal.',
     worksWith: []
+  })
+  .expect({
+    name: 'tab-id',
+    abbreviation: 'i',
+    type: commandTypes.STRING,
+    helpSection: inputHelpSections.ACTIONS,
+    description: 'Specify a tab ID to take action on',
+    validate: [isTabId]
   })

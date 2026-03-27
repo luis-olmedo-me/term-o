@@ -13,6 +13,7 @@ import { origins } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
+import { threeDotsOptionIds, threeDotsOptions } from './Terminal.constants'
 import {
   terminal,
   terminal__header,
@@ -82,6 +83,10 @@ export const Terminal = () => {
     createTab({ url: chrome.runtime.getURL('configuration.html') })
   }
 
+  const handleDropdownSelect = ({ value }) => {
+    if (value === threeDotsOptionIds.KILL) console.log('test new')
+  }
+
   return (
     <div className={terminal} onMouseUp={handleMouseUp}>
       <header className={terminal__header}>
@@ -94,12 +99,12 @@ export const Terminal = () => {
 
         <Dropdown
           Icon={ThreeDots}
-          onSelect={() => console.log('test')}
+          onSelect={handleDropdownSelect}
           variant={buttonVariants.GHOST}
           className={terminal__header_dropdown}
           buttonClassName={terminal__header_dropdown_button}
           optionsClassName={terminal__header_dropdown_options}
-          options={[{ id: 'kill', name: 'Kill' }]}
+          options={threeDotsOptions}
           name="terminal-options"
         />
       </header>

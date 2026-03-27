@@ -14,5 +14,9 @@ export const inputHandler = async command => {
     command.update(formattedInput)
   }
 
+  if (P`measure`) {
+    command.update(["'testing'"])
+  }
+
   if (P`help`) createHelpView(command)
 }

@@ -5,6 +5,7 @@ import { global__scrollable } from '@styles/global.module.scss'
 import {
   dropdown,
   dropdown__button,
+  dropdown__button___mod_open,
   dropdown__options_container,
   dropdown__options_container___open,
   select__option,
@@ -25,7 +26,13 @@ export const Dropdown = ({ value, onSelect, name, options, Icon = null, classNam
 
   return (
     <div className={`${dropdown} ${className}`}>
-      <button className={dropdown__button} onClick={() => setOpen(isOpen => !isOpen)}>
+      <button
+        onClick={() => setOpen(isOpen => !isOpen)}
+        className={`
+          ${dropdown__button}
+          ${open ? dropdown__button___mod_open : ''}
+        `}
+      >
         {Icon && <Icon size={iconSizes.SMALL} />}
 
         {value && <span>{value}</span>}
@@ -58,9 +65,9 @@ export const Dropdown = ({ value, onSelect, name, options, Icon = null, classNam
                 aria-selected={option.id === value}
                 onClick={() => handleOptionClick(option.id)}
                 className={`
-                    ${select__option}
-                    ${isSelected ? select__option___state_selected : ''}
-                  `}
+                  ${select__option}
+                  ${isSelected ? select__option___state_selected : ''}
+                `}
               >
                 {option.name}
               </li>

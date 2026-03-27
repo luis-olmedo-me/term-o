@@ -10,9 +10,12 @@
   align-items: center;
   transition:
     background-color 0.1s ease-in-out,
+    border-radius 0.1s ease-in-out 0.3s,
+    border-color 0.1s ease-in-out 0.3s,
     color 0.1s ease-in-out;
   cursor: pointer;
-  border: none;
+  border: solid transparent;
+  border-width: 0 $space-50 0 $space-50;
   background-color: transparent;
   padding: $space-300 $space-300;
   width: 100%;
@@ -37,12 +40,16 @@
   &:active {
     background-color: with-opacity($colors-accent, 0.5);
   }
+
+  &___mod_open {
+    border-color: $colors-brightBlack;
+  }
 }
 
 .dropdown__options_container {
   position: absolute;
   top: 100%;
-  left: 0;
+  right: 0;
   transform-origin: top;
   scale: 1 0;
   opacity: 0;
@@ -54,11 +61,10 @@
     opacity 0.2s ease-in-out 0.3s;
   box-sizing: border-box;
   border: $space-50 solid $colors-brightBlack;
-  border-width: 0 $space-50 $space-50;
-  border-radius: 0 0 $radius-200 $radius-200;
+  border-radius: $radius-200 0 $radius-200 $radius-200;
   background-color: $colors-background;
   padding-right: $space-250;
-  width: 100%;
+  min-width: 200px;
 
   &___open {
     scale: 1 1;
@@ -68,7 +74,6 @@
 
 .select__options {
   margin: 0;
-  border-width: 0 $space-50 $space-50;
   padding: 0;
   max-height: 8rem;
   overflow: hidden scroll;

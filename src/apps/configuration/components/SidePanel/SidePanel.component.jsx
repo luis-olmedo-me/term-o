@@ -1,6 +1,6 @@
 import Button, { buttonVariants } from '@src/components/Button'
 
-import { sidepanel, sidepanel__title } from './SidePanel.module.scss'
+import { sidepanel, sidepanel__button, sidepanel__title } from './SidePanel.module.scss'
 
 export const SidePanel = ({ options, selectedOptionId, onChange }) => {
   return (
@@ -16,6 +16,7 @@ export const SidePanel = ({ options, selectedOptionId, onChange }) => {
             selected={selectedOptionId == option.id}
             value={option.name}
             variant={buttonVariants.GHOST}
+            className={sidepanel__button}
           />
         )
       })}

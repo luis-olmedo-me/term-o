@@ -22,6 +22,10 @@
   font-size: $fontSize-300;
 }
 
+.sidepanel__button span {
+  display: none;
+}
+
 @media only screen and (min-width: 1000px) {
   .sidepanel {
     margin-left: $space-800;
@@ -31,5 +35,9 @@
 
   .sidepanel__title {
     display: block;
+  }
+
+  .sidepanel__button span {
+    display: inline;
   }
 }

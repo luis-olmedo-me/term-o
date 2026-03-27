@@ -2,16 +2,23 @@ import { useCallback, useEffect, useRef } from 'preact/hooks'
 
 import CommandsViewer from '@sidepanel/components/CommandsViewer'
 import Prompt from '@sidepanel/components/Prompt'
-import Button, { buttonVariants } from '@src/components/Button'
+import Dropdown from '@src/components/Dropdown'
 import useStorage from '@src/hooks/useStorage'
-import Gear from '@src/icons/Gear.icon'
+import ThreeDots from '@src/icons/ThreeDots.icon'
 
-import { createTab, getCurrentTab } from '@src/browser-api/tabs.api'
+import { getCurrentTab, switchOrCreateTab } from '@src/browser-api/tabs.api'
 import { origins } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
-import { terminal, terminal__header, terminal__header_button } from './Terminal.module.scss'
+import { threeDotsOptionIds, threeDotsOptions } from './Terminal.constants'
+import {
+  terminal,
+  terminal__header,
+  terminal__header_dropdown,
+  terminal__header_dropdown_button,
+  terminal__header_dropdown_options
+} from './Terminal.module.scss'
 
 export const Terminal = () => {
   const inputRef = useRef(null)
@@ -69,18 +76,23 @@ export const Terminal = () => {
     }
   }
 
-  const openConfiguration = () => {
-    createTab({ url: chrome.runtime.getURL('configuration.html') })
+  const handleDropdownSelect = ({ value }) => {
+    if (value === threeDotsOptionIds.REFRESH) chrome.runtime.reload()
+    if (value === threeDotsOptionIds.CONFIG)
+      switchOrCreateTab({ url: chrome.runtime.getURL('configuration.html') })
   }
 
   return (
     <div className={terminal} onMouseUp={handleMouseUp}>
       <header className={terminal__header}>
-        <Button
-          Icon={Gear}
-          onClick={openConfiguration}
-          variant={buttonVariants.GHOST}
-          className={terminal__header_button}
+        <Dropdown
+          Icon={ThreeDots}
+          onSelect={handleDropdownSelect}
+          className={terminal__header_dropdown}
+          buttonClassName={terminal__header_dropdown_button}
+          optionsClassName={terminal__header_dropdown_options}
+          options={threeDotsOptions}
+          name="terminal-options"
         />
       </header>
 

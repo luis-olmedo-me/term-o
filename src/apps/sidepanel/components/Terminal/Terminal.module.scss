@@ -16,6 +16,15 @@
   padding: 0;
 }
 
-.terminal__header_button {
+.terminal__header_dropdown {
   width: fit-content;
+
+  &_button {
+    border-width: 0 0 0 $space-50;
+  }
+
+  &_options {
+    border-width: $space-50 0 $space-50 $space-50;
+    border-radius: $radius-200 0 0 $radius-200;
+  }
 }

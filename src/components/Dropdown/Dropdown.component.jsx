@@ -12,7 +12,15 @@ import {
   select__options
 } from './Dropdown.module.scss'
 
-export const Dropdown = ({ value, onSelect, name, options, Icon = null, className = '' }) => {
+export const Dropdown = ({
+  value,
+  onSelect,
+  name,
+  options,
+  Icon = null,
+  className = '',
+  buttonClassName = ''
+}) => {
   const [open, setOpen] = useState(false)
 
   const handleOptionClick = selectedIdItem => {
@@ -30,6 +38,7 @@ export const Dropdown = ({ value, onSelect, name, options, Icon = null, classNam
         className={`
           ${dropdown__button}
           ${open ? dropdown__button___mod_open : ''}
+          ${buttonClassName}
         `}
       >
         {Icon && <Icon size={iconSizes.SMALL} />}
@@ -78,6 +87,7 @@ Dropdown.propTypes = {
   onSelect: Function,
   Icon: Object,
   className: String,
+  buttonClassName: String,
   name: String,
   options: Array
 }

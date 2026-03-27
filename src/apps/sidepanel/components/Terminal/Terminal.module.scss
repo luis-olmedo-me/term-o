@@ -19,3 +19,11 @@
 .terminal__header_button {
   width: fit-content;
 }
+
+.terminal__header_dropdown {
+  width: fit-content;
+
+  &_button {
+    border-width: 0 0 0 $space-50;
+  }
+}

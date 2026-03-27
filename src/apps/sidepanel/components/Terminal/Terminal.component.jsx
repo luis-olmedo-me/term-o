@@ -13,7 +13,13 @@ import { origins } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
-import { terminal, terminal__header, terminal__header_button } from './Terminal.module.scss'
+import {
+  terminal,
+  terminal__header,
+  terminal__header_button,
+  terminal__header_dropdown,
+  terminal__header_dropdown_button
+} from './Terminal.module.scss'
 
 export const Terminal = () => {
   const inputRef = useRef(null)
@@ -89,7 +95,8 @@ export const Terminal = () => {
           Icon={ThreeDots}
           onSelect={() => console.log('test')}
           variant={buttonVariants.GHOST}
-          className={terminal__header_button}
+          className={terminal__header_dropdown}
+          buttonClassName={terminal__header_dropdown_button}
           options={[{ id: 'kill', name: 'Kill' }]}
           name="terminal-options"
         />

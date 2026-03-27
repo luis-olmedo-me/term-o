@@ -67,7 +67,7 @@ export const configDefaultValues = {
   [configInputIds.EXPORT_CONFIGURATION]: 'Export',
   [configInputIds.IMPORT_CONFIGURATION]: 'Import',
   [configInputIds.RESET_CONFIGURATION]: 'Reset',
-  [configInputIds.CLEAR_USER_DATA]: 'Reset All',
+  [configInputIds.CLEAR_USER_DATA]: 'Factory Reset',
   [configInputIds.STATUS_INDICATOR]: statusIndicators.DOT,
   [configInputIds.STATUS_BAR]: true,
   [configInputIds.STATUS_LIGHT]: false
@@ -265,7 +265,7 @@ export const defaultConfigSections = [
         id: configInputIds.IMPORT_CONFIGURATION,
         name: 'Import Configuration',
         description:
-          'Load a previously exported configuration file to restore your settings and terminal behavior. Existing configuration values will be overwritten.',
+          'Load a previously exported configuration file to restore your settings and terminal behavior.',
         type: availableInputTypes.BUTTON,
         postFix: null,
         iconButton: Import,
@@ -277,7 +277,7 @@ export const defaultConfigSections = [
         id: configInputIds.EXPORT_CONFIGURATION,
         name: 'Export Configuration',
         description:
-          'Generate a backup file containing all your current settings, customizations, and terminal preferences. Use this file to restore your setup later or to replicate your configuration on another device.',
+          'Generate a backup file containing all your current settings, customizations, and terminal preferences.',
         type: availableInputTypes.BUTTON,
         postFix: null,
         iconButton: Export,
@@ -287,8 +287,8 @@ export const defaultConfigSections = [
       },
       {
         id: configInputIds.RESET_CONFIGURATION,
-        name: 'Reset Configuration preferences',
-        description: `Restore all UI and behavior settings (theme, experimental features, click-to-copy, animations, selection helpers, etc.) back to their default values.\nPersonal preferences will be lost, but your saved commands and registered events will remain intact.`,
+        name: 'Reset Preferences',
+        description: `Restore UI and behavior settings. Your commands and events will not be affected.`,
         type: availableInputTypes.BUTTON_WARN,
         postFix: null,
         iconButton: Clean,
@@ -298,8 +298,8 @@ export const defaultConfigSections = [
       },
       {
         id: configInputIds.CLEAR_USER_DATA,
-        name: 'Restore factory defaults',
-        description: 'Reset all settings to their original factory values.',
+        name: 'Factory Reset',
+        description: 'This will erase all data and restore the app to its original state.',
         type: availableInputTypes.BUTTON_DANGER,
         postFix: null,
         iconButton: Watch,

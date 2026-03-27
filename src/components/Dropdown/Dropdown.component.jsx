@@ -1,4 +1,4 @@
-import { useState } from 'preact/hooks'
+import { useEffect, useRef, useState } from 'preact/hooks'
 
 import { iconSizes } from '@src/constants/icon.constants'
 import { global__scrollable } from '@styles/global.module.scss'
@@ -24,6 +24,24 @@ export const Dropdown = ({
 }) => {
   const [open, setOpen] = useState(false)
 
+  const dropdownRef = useRef(null)
+
+  useEffect(
+    function handleClickOutside() {
+      if (!open) return
+      const handleGlobalClick = event => {
+        const isOutside = !dropdownRef.current.contains(event.target)
+
+        if (isOutside) setOpen(false)
+      }
+
+      window.addEventListener('click', handleGlobalClick)
+
+      return () => window.removeEventListener('click', handleGlobalClick)
+    },
+    [open]
+  )
+
   const handleOptionClick = selectedIdItem => {
     onSelect({ value: selectedIdItem })
     setOpen(false)
@@ -33,7 +51,7 @@ export const Dropdown = ({
   const listboxId = `dropdown-options-${name}`
 
   return (
-    <div className={`${dropdown} ${className}`}>
+    <div ref={dropdownRef} className={`${dropdown} ${className}`}>
       <button
         onClick={() => setOpen(isOpen => !isOpen)}
         className={`

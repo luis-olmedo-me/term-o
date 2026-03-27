@@ -19,7 +19,8 @@ export const Dropdown = ({
   options,
   Icon = null,
   className = '',
-  buttonClassName = ''
+  buttonClassName = '',
+  optionsClassName = ''
 }) => {
   const [open, setOpen] = useState(false)
 
@@ -50,6 +51,7 @@ export const Dropdown = ({
         className={`
           ${dropdown__options_container}
           ${open ? dropdown__options_container___open : ''}
+          ${optionsClassName}
         `}
       >
         <ul
@@ -88,6 +90,7 @@ Dropdown.propTypes = {
   Icon: Object,
   className: String,
   buttonClassName: String,
+  optionsClassName: String,
   name: String,
   options: Array
 }

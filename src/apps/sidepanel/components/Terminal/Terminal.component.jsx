@@ -18,7 +18,8 @@ import {
   terminal__header,
   terminal__header_button,
   terminal__header_dropdown,
-  terminal__header_dropdown_button
+  terminal__header_dropdown_button,
+  terminal__header_dropdown_options
 } from './Terminal.module.scss'
 
 export const Terminal = () => {
@@ -97,6 +98,7 @@ export const Terminal = () => {
           variant={buttonVariants.GHOST}
           className={terminal__header_dropdown}
           buttonClassName={terminal__header_dropdown_button}
+          optionsClassName={terminal__header_dropdown_options}
           options={[{ id: 'kill', name: 'Kill' }]}
           name="terminal-options"
         />

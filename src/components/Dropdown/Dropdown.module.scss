@@ -1,3 +1,5 @@
+@use '@styles/mixins.module' as *;
+
 .dropdown {
   position: relative;
 }
@@ -11,7 +13,7 @@
   transition:
     background-color 0.1s ease-in-out,
     border-radius 0.1s ease-in-out 0.3s,
-    border-color 0.1s ease-in-out 0.3s,
+    border-color 0.1s ease-in-out 0.2s,
     color 0.1s ease-in-out;
   cursor: pointer;
   border: solid transparent;
@@ -43,6 +45,24 @@
 
   &___mod_open {
     border-color: $colors-brightBlack;
+
+    &:hover {
+      @include theme(light) {
+        border-color: $colors-brightBlack;
+      }
+      @include theme(dark) {
+        border-color: $colors-accent;
+      }
+    }
+
+    &:hover + .dropdown__options_container {
+      @include theme(light) {
+        border-color: $colors-brightBlack;
+      }
+      @include theme(dark) {
+        border-color: $colors-accent;
+      }
+    }
   }
 }
 
@@ -56,7 +76,7 @@
   z-index: 1;
   transition:
     border-radius 0.3s ease-in-out,
-    border-color 0.1s ease-in-out,
+    border-color 0.1s ease-in-out 0.2s,
     scale 0.2s ease-in-out 0.3s,
     opacity 0.2s ease-in-out 0.3s;
   box-sizing: border-box;

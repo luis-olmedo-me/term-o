@@ -2,10 +2,8 @@ import { useCallback, useEffect, useRef } from 'preact/hooks'
 
 import CommandsViewer from '@sidepanel/components/CommandsViewer'
 import Prompt from '@sidepanel/components/Prompt'
-import Button, { buttonVariants } from '@src/components/Button'
 import Dropdown from '@src/components/Dropdown'
 import useStorage from '@src/hooks/useStorage'
-import Gear from '@src/icons/Gear.icon'
 import ThreeDots from '@src/icons/ThreeDots.icon'
 
 import { createTab, getCurrentTab } from '@src/browser-api/tabs.api'
@@ -17,7 +15,6 @@ import { threeDotsOptionIds, threeDotsOptions } from './Terminal.constants'
 import {
   terminal,
   terminal__header,
-  terminal__header_button,
   terminal__header_dropdown,
   terminal__header_dropdown_button,
   terminal__header_dropdown_options
@@ -79,28 +76,18 @@ export const Terminal = () => {
     }
   }
 
-  const openConfiguration = () => {
-    createTab({ url: chrome.runtime.getURL('configuration.html') })
-  }
-
   const handleDropdownSelect = ({ value }) => {
     if (value === threeDotsOptionIds.KILL) chrome.runtime.reload()
+    if (value === threeDotsOptionIds.CONFIG)
+      createTab({ url: chrome.runtime.getURL('configuration.html') })
   }
 
   return (
     <div className={terminal} onMouseUp={handleMouseUp}>
       <header className={terminal__header}>
-        <Button
-          Icon={Gear}
-          onClick={openConfiguration}
-          variant={buttonVariants.GHOST}
-          className={terminal__header_button}
-        />
-
         <Dropdown
           Icon={ThreeDots}
           onSelect={handleDropdownSelect}
-          variant={buttonVariants.GHOST}
           className={terminal__header_dropdown}
           buttonClassName={terminal__header_dropdown_button}
           optionsClassName={terminal__header_dropdown_options}

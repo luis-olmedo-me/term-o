@@ -1,3 +1,4 @@
+import { getWindow, updateWindow } from '@src/browser-api/windows.api'
 import { overwriteError } from '@src/helpers/messages.helpers'
 import { delay, spreadIf } from '@src/helpers/utils.helpers'
 
@@ -72,6 +73,9 @@ export const switchOrCreateTab = async ({ url, active, wait }) => {
   const [foundTab] = await chrome.tabs.query({ url })
 
   if (foundTab) {
+    const window = await getWindow({ windowId: foundTab.windowId })
+
+    if (!window.focused) await updateWindow({ windowId: foundTab.windowId, focused: true })
     return updateTab({ tabId: foundTab.id, selected: true })
   }
 

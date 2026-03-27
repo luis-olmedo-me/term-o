@@ -27,17 +27,22 @@ export const Dropdown = ({
   const dropdownRef = useRef(null)
 
   useEffect(
-    function handleClickOutside() {
+    function handleOutsideInteraction() {
       if (!open) return
       const handleGlobalClick = event => {
         const isOutside = !dropdownRef.current.contains(event.target)
 
         if (isOutside) setOpen(false)
       }
+      const handleGlobalBlur = () => setOpen(false)
 
       window.addEventListener('click', handleGlobalClick)
+      window.addEventListener('blur', handleGlobalBlur)
 
-      return () => window.removeEventListener('click', handleGlobalClick)
+      return () => {
+        window.removeEventListener('click', handleGlobalClick)
+        window.removeEventListener('blur', handleGlobalBlur)
+      }
     },
     [open]
   )

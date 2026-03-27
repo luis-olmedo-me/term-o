@@ -68,6 +68,16 @@ export const createTab = async ({ url, active, wait }) => {
   return tab
 }
 
+export const switchOrCreateTab = async ({ url, active, wait }) => {
+  const [foundTab] = await chrome.tabs.query({ url })
+
+  if (foundTab) {
+    return updateTab({ tabId: foundTab.id, selected: true })
+  }
+
+  return createTab({ url, active, wait })
+}
+
 export const reloadTab = async ({ tabId, wait }) => {
   let tab = await getTab({ tabId })
 

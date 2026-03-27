@@ -6,7 +6,7 @@ import Dropdown from '@src/components/Dropdown'
 import useStorage from '@src/hooks/useStorage'
 import ThreeDots from '@src/icons/ThreeDots.icon'
 
-import { createTab, getCurrentTab } from '@src/browser-api/tabs.api'
+import { getCurrentTab, switchOrCreateTab } from '@src/browser-api/tabs.api'
 import { origins } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
@@ -79,7 +79,7 @@ export const Terminal = () => {
   const handleDropdownSelect = ({ value }) => {
     if (value === threeDotsOptionIds.KILL) chrome.runtime.reload()
     if (value === threeDotsOptionIds.CONFIG)
-      createTab({ url: chrome.runtime.getURL('configuration.html') })
+      switchOrCreateTab({ url: chrome.runtime.getURL('configuration.html') })
   }
 
   return (

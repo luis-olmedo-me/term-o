@@ -67,7 +67,7 @@ export const configDefaultValues = {
   [configInputIds.EXPORT_CONFIGURATION]: 'Export',
   [configInputIds.IMPORT_CONFIGURATION]: 'Import',
   [configInputIds.RESET_CONFIGURATION]: 'Reset',
-  [configInputIds.CLEAR_USER_DATA]: 'Factory Reset',
+  [configInputIds.CLEAR_USER_DATA]: 'Restore',
   [configInputIds.STATUS_INDICATOR]: statusIndicators.DOT,
   [configInputIds.STATUS_BAR]: true,
   [configInputIds.STATUS_LIGHT]: false

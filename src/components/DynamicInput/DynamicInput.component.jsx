@@ -9,6 +9,7 @@ import TextArea from '@src/components/TextArea'
 import ThemeSelect from '@src/components/ThemeSelect'
 import { availableInputTypes } from '@src/constants/inputs.constants'
 import { getButtonVariantFromType } from './DynamicInput.helpers'
+import { dynamic__button } from './DynamicInput.module.scss'
 
 export const DynamicInput = ({
   value,
@@ -121,6 +122,7 @@ export const DynamicInput = ({
           variant={getButtonVariantFromType(type)}
           Icon={iconButton}
           value={value}
+          className={dynamic__button}
         />
       )
 

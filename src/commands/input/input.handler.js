@@ -21,17 +21,29 @@ export const inputHandler = async command => {
 
   if (P`measure`) {
     command.update(['"Please click over the page to pick up an element."'])
-    const element = await processManager.requestElement(tabId)
 
-    const update = formatElement({
-      ...element,
+    const elementStart = await processManager.requestElement(tabId)
+    const updateStart = formatElement({
+      ...elementStart,
+      tabId: P`tab-id`,
+      xpath: null,
+      textContent: null
+    })
+
+    command.update(updateStart)
+    command.update(['"Please click over the page to pick up an element."'])
+
+    const elementEnd = await processManager.requestElement(tabId)
+    const updateEnd = formatElement({
+      ...elementEnd,
       tabId: P`tab-id`,
       xpath: null,
       textContent: null
     })
 
     command.reset()
-    command.update(update)
+    command.update(updateStart)
+    command.update(updateEnd)
   }
 
   if (P`help`) createHelpView(command)

@@ -2,7 +2,14 @@ import { createRuler } from '@src/helpers/web-components.helpers'
 
 export default async resolve => {
   createRuler()
-  resolve('testing')
+
+  const handleMouseEnd = e => {
+    const allElements = document.elementsFromPoint(e.clientX, e.clientY)
+
+    resolve(`Found elements: ${allElements.length}`)
+  }
+
+  document.addEventListener('click', handleMouseEnd)
 
   // try {
   //   const requestEvent = new CustomEvent(eventNames.REQUEST_MEASURE_SEND)

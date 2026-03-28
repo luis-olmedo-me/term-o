@@ -52,7 +52,6 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
     description: 'Inject HTML as text',
-    worksWith: ['on'],
     validate: []
   })
   .expect({

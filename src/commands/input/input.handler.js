@@ -49,7 +49,7 @@ export const inputHandler = async command => {
       start: elementStart.xpath,
       end: elementEnd.xpath
     })
-    const updateMeasure = formatGap(measure)
+    const updateMeasure = formatGap(measure, elementStart, elementEnd)
 
     command.reset()
     command.update(updateMeasure)

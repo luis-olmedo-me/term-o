@@ -41,7 +41,8 @@ export const isJSONScheme = scheme => {
   }
 }
 
-const xpathPattern = /^\/?\/?(?:id\("[^"]+"\)|[a-zA-Z0-9_-]+)(?:\[[0-9]+\])?(?:\/(?:id\("[^"]+"\)|[a-zA-Z0-9_-]+)(?:\[[0-9]+\])?)*$/
+const xpathPattern =
+  /^\/?(?:\*?\[@id="[^"]+"\]|\*?\[local-name\(\)="[^"]+"\](?:\[[0-9]+\])?|[a-zA-Z0-9_-]+(?:\[[0-9]+\])?)(?:\/(?:\*?\[@id="[^"]+"\]|\*?\[local-name\(\)="[^"]+"\](?:\[[0-9]+\])?|[a-zA-Z0-9_-]+(?:\[[0-9]+\])?))*$/
 export const isXpath = (option, value) => {
   if (!xpathPattern.test(value)) {
     const name = option.displayName

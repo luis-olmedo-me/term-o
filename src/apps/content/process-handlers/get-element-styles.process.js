@@ -1,7 +1,7 @@
 import { getElementByXPath } from '@content/helpers/dom-locator.helpers'
 import { getNonDefaultComputedStyles } from '@content/helpers/style-utils.helpers'
-import { isRgb, rgbToHex } from '@src/helpers/utils.helpers'
 import { createHighlight } from '@src/helpers/web-components.helpers'
+import { convertElementStylesToJSON } from '../helpers/format.helpers'
 
 export default async (resolve, reject, data) => {
   const { searchByXpath, searchByProperty } = data
@@ -24,12 +24,7 @@ export default async (resolve, reject, data) => {
 
     return true
   })
+  const elementAsJSON = convertElementStylesToJSON(element, styles)
 
-  const stylesWithHexValues = styles.map(style => {
-    const isRgbValue = isRgb(style.value)
-
-    return isRgbValue ? { ...style, value: rgbToHex(style.value) } : style
-  })
-
-  resolve({ tagName: element.tagName.toLowerCase(), styles: stylesWithHexValues })
+  resolve(elementAsJSON)
 }

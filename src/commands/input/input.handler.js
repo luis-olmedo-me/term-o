@@ -2,7 +2,7 @@ import processManager from '@src/libs/process-manager'
 
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
-import { formatText } from '@src/helpers/format.helpers'
+import { formatElement, formatText } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
 
 export const inputHandler = async command => {
@@ -13,18 +13,25 @@ export const inputHandler = async command => {
 
   if (P`text`) {
     const input = await processManager.requestInput()
-    const formattedInput = formatText({ text: input })
+    const update = formatText({ text: input })
 
     command.reset()
-    command.update(formattedInput)
+    command.update(update)
   }
 
   if (P`measure`) {
-    const input = await processManager.requestElement(tabId)
-    const formattedInput = formatText({ text: input })
+    command.update(['"Please click over the page to pick up an element."'])
+    const element = await processManager.requestElement(tabId)
+
+    const update = formatElement({
+      ...element,
+      tabId: P`tab-id`,
+      xpath: null,
+      textContent: null
+    })
 
     command.reset()
-    command.update(formattedInput)
+    command.update(update)
   }
 
   if (P`help`) createHelpView(command)

@@ -116,6 +116,15 @@ class ProcessManager {
     })
   }
 
+  measure(tabId, { start, end }) {
+    return createWorkerProcessRequest({
+      type: processNames.MEASURE,
+      defaultResponse: '',
+      tabId,
+      data: { start, end }
+    })
+  }
+
   triggerEvent(tabId, { xpath, event, theme }) {
     return createWorkerProcessRequest({
       type: processNames.TRIGGER_EVENT,

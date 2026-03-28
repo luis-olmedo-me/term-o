@@ -44,6 +44,11 @@ export const inputHandler = async command => {
     command.reset()
     command.update(updateStart)
     command.update(updateEnd)
+
+    await processManager.measure(tabId, {
+      start: elementStart.xpath,
+      end: elementEnd.xpath
+    })
   }
 
   if (P`help`) createHelpView(command)

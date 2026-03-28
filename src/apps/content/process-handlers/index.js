@@ -6,6 +6,7 @@ import getDOMElements from './get-dom-elements.process'
 import getElementStyles from './get-element-styles.process'
 import getStorage from './get-storage.process'
 import injectHtml from './inject-html.process'
+import measure from './measure.process'
 import readVariable from './read-variable.process'
 import requestElement from './request-element.process'
 import setStorage from './set-storage.process'
@@ -22,6 +23,7 @@ export default {
   [processNames.GET_ELEMENT_STYLES]: getElementStyles,
   [processNames.GET_STORAGE]: getStorage,
   [processNames.INJECT_HTML]: injectHtml,
+  [processNames.MEASURE]: measure,
   [processNames.READ_VARIABLE]: readVariable,
   [processNames.REQUEST_ELEMENT]: requestElement,
   [processNames.SET_STORAGE]: setStorage,

@@ -10,10 +10,11 @@ export const processNames = {
   GET_FONTS_AVAILABLE: 'get-fonts-available',
   GET_STORAGE: 'get-storage',
   INJECT_HTML: 'inject-html',
+  MEASURE: 'measure',
   PICK_COLOR: 'pick-color',
   READ_VARIABLE: 'read-variable',
-  REQUEST_INPUT: 'request-input',
   REQUEST_ELEMENT: 'request-element',
+  REQUEST_INPUT: 'request-input',
   SET_STORAGE: 'set-storage',
   TRIGGER_EVENT: 'trigger-event',
   UPLOAD_FILE: 'upload-file'

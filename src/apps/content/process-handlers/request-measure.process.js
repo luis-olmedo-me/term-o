@@ -2,20 +2,18 @@ import { createElementPicker, createRuler } from '@src/helpers/web-components.he
 
 export default async resolve => {
   createRuler()
-  createElementPicker()
+  const elementPicker = createElementPicker()
 
   const handleMouseEnd = event => {
     event.stopPropagation()
-    const allElements = document.elementsFromPoint(event.clientX, event.clientY)
+    const [, element] = document.elementsFromPoint(event.clientX, event.clientY)
+    const attrs = element.getAttributeNames().map(name => [name, element.getAttribute(name)])
 
-    document.removeEventListener('click', stopPropagation)
-    document.removeEventListener('mousedown', handleMouseEnd)
-    resolve(`Found elements: ${allElements.length}`)
+    elementPicker.remove()
+    resolve(`Found elements: ${element.tagName} ${JSON.stringify(attrs)}`)
   }
-  const stopPropagation = event => event.stopPropagation()
 
-  document.addEventListener('click', stopPropagation)
-  document.addEventListener('mousedown', handleMouseEnd)
+  elementPicker.addEventListener('click', handleMouseEnd)
 
   // try {
   //   const requestEvent = new CustomEvent(eventNames.REQUEST_MEASURE_SEND)

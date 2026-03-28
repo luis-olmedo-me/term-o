@@ -81,11 +81,17 @@ export const domHandler = async command => {
       searchByTag: P`tag`,
       searchByAttribute: P`attr`,
       searchByStyle: P`style`,
-      searchByText: P`text`,
-      appendTextContent: P`content`,
-      appendXpath: P`xpath`
+      searchByText: P`text`
     })
-    const updates = elements.map(element => formatElement({ ...element, tabId: P`tab-id` }))
+
+    const updates = elements.map(element =>
+      formatElement({
+        ...element,
+        tabId: P`tab-id`,
+        xpath: P`xpath` ? element.xpath : null,
+        textContent: P`content` ? element.textContent : null
+      })
+    )
 
     command.reset()
     command.update(...updates)

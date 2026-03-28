@@ -1,15 +1,7 @@
 import { getElementByXPath, getElementXPath } from '@content/helpers/dom-locator.helpers'
 
 export default async (resolve, _reject, data) => {
-  const {
-    searchBelow,
-    searchByTag,
-    searchByAttribute,
-    searchByStyle,
-    searchByText,
-    appendXpath,
-    appendTextContent
-  } = data
+  const { searchBelow, searchByTag, searchByAttribute, searchByStyle, searchByText } = data
 
   const tagPattern = searchByTag && new RegExp(searchByTag)
   const textPattern = searchByText && new RegExp(searchByText)
@@ -91,9 +83,9 @@ export default async (resolve, _reject, data) => {
       (allAttrs, attrName) => ({ ...allAttrs, [attrName]: element.getAttribute(attrName) }),
       {}
     )
-    const xpath = appendXpath ? getElementXPath(element) : null
 
-    const textContent = appendTextContent ? element.textContent : null
+    const xpath = getElementXPath(element)
+    const textContent = element.textContent
 
     return [...formattedElements, { tagName, attributes: attrs, xpath, textContent }]
   }, [])

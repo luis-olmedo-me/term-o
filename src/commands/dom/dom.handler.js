@@ -11,7 +11,7 @@ export const domHandler = async command => {
 
   const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : storage.get(storageKeys.TAB).id
 
-  if (P`on` && P`inject`) {
+  if (P`on`) {
     command.update(['"Connecting to the tab."'])
     const element = await processManager.findDOMElement(tabId, {
       searchByXpath: P`on`,
@@ -24,35 +24,15 @@ export const domHandler = async command => {
     command.reset()
     if (!element) return
 
-    command.update(['"Connecting to the tab."'])
-    await processManager.injectHTML(tabId, {
-      below: element.xpath,
-      html: P`inject`
-    })
+    if (P`inject`) {
+      command.update(['"Connecting to the tab."'])
+      await processManager.injectHTML(tabId, {
+        below: element.xpath,
+        html: P`inject`
+      })
 
-    const update = formatElement({
-      ...element,
-      tabId: P`tab-id`,
-      xpath: P`xpath` ? element.xpath : null,
-      textContent: null
-    })
-
-    command.reset()
-    command.update(update)
-  }
-
-  if (P`on` && !P`inject`) {
-    command.update(['"Connecting to the tab."'])
-    const element = await processManager.findDOMElement(tabId, {
-      searchByXpath: P`on`,
-      searchBelow: P`below`,
-      siblingIndex: P`sibling`,
-      parentIndex: P`parent`,
-      childIndex: P`child`
-    })
-
-    command.reset()
-    if (!element) return
+      command.reset()
+    }
 
     const update = formatElement({
       ...element,

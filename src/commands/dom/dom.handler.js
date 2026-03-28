@@ -18,8 +18,7 @@ export const domHandler = async command => {
       searchBelow: P`below`,
       siblingIndex: P`sibling`,
       parentIndex: P`parent`,
-      childIndex: P`child`,
-      appendXpath: true
+      childIndex: P`child`
     })
 
     command.reset()
@@ -34,7 +33,8 @@ export const domHandler = async command => {
     const update = formatElement({
       ...element,
       tabId: P`tab-id`,
-      xpath: P`xpath` ? element.xpath : null
+      xpath: P`xpath` ? element.xpath : null,
+      textContent: null
     })
 
     command.reset()
@@ -48,14 +48,18 @@ export const domHandler = async command => {
       searchBelow: P`below`,
       siblingIndex: P`sibling`,
       parentIndex: P`parent`,
-      childIndex: P`child`,
-      appendXpath: P`xpath`
+      childIndex: P`child`
     })
 
     command.reset()
     if (!element) return
 
-    const update = formatElement({ ...element, tabId: P`tab-id` })
+    const update = formatElement({
+      ...element,
+      tabId: P`tab-id`,
+      xpath: P`xpath` ? element.xpath : null,
+      textContent: null
+    })
 
     command.update(update)
   }

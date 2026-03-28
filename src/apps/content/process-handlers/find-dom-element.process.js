@@ -2,12 +2,12 @@ import {
   getElementByXPath,
   getElementChild,
   getElementParent,
-  getElementSibling,
-  getElementXPath
+  getElementSibling
 } from '@content/helpers/dom-locator.helpers'
+import { convertElementToJSON } from '@content/helpers/format.helpers'
 
 export default async (resolve, reject, data) => {
-  const { searchByXpath, searchBelow, siblingIndex, parentIndex, childIndex, appendXpath } = data
+  const { searchByXpath, searchBelow, siblingIndex, parentIndex, childIndex } = data
 
   const elementBelow = searchBelow && getElementByXPath(searchBelow)
 
@@ -23,15 +23,6 @@ export default async (resolve, reject, data) => {
   const element = getElementChild(parentElement, childIndex)
   if (!element) return reject('Child index did not match any element.')
 
-  const tagName = element.tagName.toLowerCase()
-  const attrNames = element.getAttributeNames()
-
-  const attrs = attrNames.reduce(
-    (allAttrs, attrName) => ({ ...allAttrs, [attrName]: element.getAttribute(attrName) }),
-    {}
-  )
-
-  const xpath = appendXpath ? getElementXPath(element) : null
-
-  resolve({ tagName, attributes: attrs, xpath, textContent: null })
+  const elementAsJSON = convertElementToJSON(element)
+  resolve(elementAsJSON)
 }

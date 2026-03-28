@@ -13,7 +13,7 @@ export const processNames = {
   PICK_COLOR: 'pick-color',
   READ_VARIABLE: 'read-variable',
   REQUEST_INPUT: 'request-input',
-  REQUEST_MEASURE: 'request-measure',
+  REQUEST_ELEMENT: 'request-element',
   SET_STORAGE: 'set-storage',
   TRIGGER_EVENT: 'trigger-event',
   UPLOAD_FILE: 'upload-file'

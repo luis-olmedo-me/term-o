@@ -20,7 +20,7 @@ export const inputHandler = async command => {
   }
 
   if (P`measure`) {
-    const input = await processManager.requestMeasure(tabId)
+    const input = await processManager.requestElement(tabId)
     const formattedInput = formatText({ text: input })
 
     command.reset()

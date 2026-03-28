@@ -197,3 +197,10 @@ export const formatStringSearch = ({ query, input }) => {
     input.replace(query, value => `${BG`red`}${C`brightWhite`}${value}${C`reset`}${BG`reset`}`)
   ]
 }
+
+export const formatGap = ({ distanceX, distanceY }) => {
+  const quotedDistanceX = getQuotedString(`${distanceX}`)
+  const quotedDistanceY = getQuotedString(`${distanceY}`)
+
+  return [`${C`yellow`}${quotedDistanceX}${C`reset`}`, `${C`yellow`}${quotedDistanceY}${C`reset`}`]
+}

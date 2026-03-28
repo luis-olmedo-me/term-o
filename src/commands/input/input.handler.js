@@ -2,7 +2,7 @@ import processManager from '@src/libs/process-manager'
 
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
-import { formatElement, formatText } from '@src/helpers/format.helpers'
+import { formatElement, formatGap, formatText } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
 
 export const inputHandler = async command => {
@@ -45,10 +45,14 @@ export const inputHandler = async command => {
     command.update(updateStart)
     command.update(updateEnd)
 
-    await processManager.measure(tabId, {
+    const measure = await processManager.measure(tabId, {
       start: elementStart.xpath,
       end: elementEnd.xpath
     })
+    const updateMeasure = formatGap(measure)
+
+    command.reset()
+    command.update(updateMeasure)
   }
 
   if (P`help`) createHelpView(command)

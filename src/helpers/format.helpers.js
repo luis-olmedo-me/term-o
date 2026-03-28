@@ -18,7 +18,7 @@ export const formatElement = ({ tagName, attributes, xpath, textContent, tabId }
     ]
   }
 
-  const attrs = Object.entries(attributes).map(([name, value]) => {
+  const attrs = attributes.map(([name, value]) => {
     const hasValue = Boolean(value)
     const quotedAttrName = getQuotedString(name)
     const quotedAttrValue = hasValue && getQuotedString(value)

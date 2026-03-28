@@ -6,10 +6,7 @@ export const convertElementToJSON = element => {
   const xpath = getElementXPath(element)
   const textContent = element.textContent
 
-  const attrs = attrNames.reduce(
-    (allAttrs, attrName) => ({ ...allAttrs, [attrName]: element.getAttribute(attrName) }),
-    {}
-  )
+  const attrs = attrNames.map(attrName => [attrName, element.getAttribute(attrName)])
 
   return { tagName, attributes: attrs, xpath, textContent }
 }

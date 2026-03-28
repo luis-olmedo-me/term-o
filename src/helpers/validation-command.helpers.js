@@ -1,3 +1,10 @@
+import {
+  groupIdPattern,
+  kebabCasePattern,
+  tabIdPattern,
+  windowIdPattern,
+  xpathPattern
+} from '@src/constants/patterns.constants'
 import { validateSchema } from '@src/helpers/validation-schema.helpers'
 import { getArrayAsLine } from './arguments.helpers'
 
@@ -41,8 +48,6 @@ export const isJSONScheme = scheme => {
   }
 }
 
-const xpathPattern =
-  /^\/?(?:\*?\[@id="[^"]+"\]|\*?\[local-name\(\)="[^"]+"\](?:\[[0-9]+\])?|[a-zA-Z0-9_-]+(?:\[[0-9]+\])?)(?:\/(?:\*?\[@id="[^"]+"\]|\*?\[local-name\(\)="[^"]+"\](?:\[[0-9]+\])?|[a-zA-Z0-9_-]+(?:\[[0-9]+\])?))*$/
 export const isXpath = (option, value) => {
   if (!xpathPattern.test(value)) {
     const name = option.displayName
@@ -51,7 +56,6 @@ export const isXpath = (option, value) => {
   }
 }
 
-const kebabCasePattern = /^[a-z]+(-[a-z]+)*$/
 export const isKebabCase = (option, value) => {
   if (!kebabCasePattern.test(value)) {
     const name = option.displayName
@@ -60,7 +64,6 @@ export const isKebabCase = (option, value) => {
   }
 }
 
-const windowIdPattern = /W(\d)+/
 export const isWindowId = (option, value) => {
   if (!windowIdPattern.test(value)) {
     const name = option.displayName
@@ -69,7 +72,6 @@ export const isWindowId = (option, value) => {
   }
 }
 
-const tabIdPattern = /T(\d)+/
 export const isTabId = (option, value) => {
   if (!tabIdPattern.test(value)) {
     const name = option.displayName
@@ -78,7 +80,6 @@ export const isTabId = (option, value) => {
   }
 }
 
-const groupIdPattern = /G(\d)+/
 export const isGroupId = (option, value) => {
   if (!groupIdPattern.test(value)) {
     const name = option.displayName

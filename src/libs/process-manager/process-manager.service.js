@@ -107,12 +107,12 @@ class ProcessManager {
     })
   }
 
-  requestElement(tabId) {
+  requestElement(tabId, { theme }) {
     return createWorkerProcessRequest({
       type: processNames.REQUEST_ELEMENT,
       defaultResponse: '',
       tabId,
-      data: null
+      data: { theme }
     })
   }
 

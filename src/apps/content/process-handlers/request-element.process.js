@@ -1,7 +1,11 @@
-import { createElementPicker, createRuler } from '@src/helpers/web-components.helpers'
+import {
+  createElementPicker,
+  createHighlight,
+  createRuler
+} from '@src/helpers/web-components.helpers'
 import { convertElementToJSON } from '../helpers/format.helpers'
 
-export default async resolve => {
+export default async (resolve, _reject, data) => {
   createRuler()
   const elementPicker = createElementPicker()
 
@@ -9,6 +13,7 @@ export default async resolve => {
     event.stopPropagation()
     const [, element] = document.elementsFromPoint(event.clientX, event.clientY)
     const elementAsJSON = convertElementToJSON(element)
+    createHighlight({ element, theme: data.theme })
 
     elementPicker.remove()
     resolve(elementAsJSON)

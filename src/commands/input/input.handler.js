@@ -20,9 +20,11 @@ export const inputHandler = async command => {
   }
 
   if (P`measure`) {
+    const config = storage.get(storageKeys.CONFIG)
+
     command.update(['"Please click over the page to pick up an element."'])
 
-    const elementStart = await processManager.requestElement(tabId)
+    const elementStart = await processManager.requestElement(tabId, { theme: config.theme })
     const updateStart = formatElement({
       ...elementStart,
       tabId: P`tab-id`,
@@ -33,7 +35,7 @@ export const inputHandler = async command => {
     command.update(updateStart)
     command.update(['"Please click over the page to pick up an element."'])
 
-    const elementEnd = await processManager.requestElement(tabId)
+    const elementEnd = await processManager.requestElement(tabId, { theme: config.theme })
     const updateEnd = formatElement({
       ...elementEnd,
       tabId: P`tab-id`,

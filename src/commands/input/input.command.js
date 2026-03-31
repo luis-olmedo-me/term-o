@@ -30,6 +30,6 @@ export default new CommandBase({
     abbreviation: 'i',
     type: commandTypes.STRING,
     helpSection: inputHelpSections.ACTIONS,
-    description: 'Specify a tab ID to take action on',
+    description: 'Specify a tab ID to take action on.',
     validate: [isTabId]
   })

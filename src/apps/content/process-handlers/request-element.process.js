@@ -1,12 +1,7 @@
-import {
-  createElementPicker,
-  createHighlight,
-  createRuler
-} from '@src/helpers/web-components.helpers'
+import { createElementPicker, createHighlight } from '@src/helpers/web-components.helpers'
 import { convertElementToJSON } from '../helpers/format.helpers'
 
 export default async (resolve, _reject, data) => {
-  createRuler()
   const elementPicker = createElementPicker()
 
   const handleMouseEnd = event => {

@@ -1,4 +1,5 @@
 import { getElementByXPath } from '@content/helpers/dom-locator.helpers'
+import { convertElementToJSON } from '@content/helpers/format.helpers'
 
 export default async (resolve, reject, data) => {
   const { below, tagName, attributes } = data
@@ -14,13 +15,7 @@ export default async (resolve, reject, data) => {
 
   targetElement.appendChild(element)
 
-  const tagNameTaken = element.tagName.toLowerCase()
-  const attrNames = element.getAttributeNames()
+  const elementAsJSON = convertElementToJSON(element)
 
-  const attrs = attrNames.reduce(
-    (allAttrs, attrName) => ({ ...allAttrs, [attrName]: element.getAttribute(attrName) }),
-    {}
-  )
-
-  resolve({ tagName: tagNameTaken, attributes: attrs, xpath: null, textContent: null })
+  resolve(elementAsJSON)
 }

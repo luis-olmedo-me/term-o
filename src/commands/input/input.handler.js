@@ -1,17 +1,60 @@
 import processManager from '@src/libs/process-manager'
 
+import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
-import { formatText } from '@src/helpers/format.helpers'
+import { formatElement, formatGap, formatText } from '@src/helpers/format.helpers'
+import { cleanTabId } from '@src/helpers/tabs.helpers'
 
 export const inputHandler = async command => {
+  const storage = command.get('storage')
   const P = name => command.props[name]
 
-  if (P`request`) {
+  const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : storage.get(storageKeys.TAB).id
+
+  if (P`text`) {
     const input = await processManager.requestInput()
-    const formattedInput = formatText({ text: input })
+    const update = formatText({ text: input })
 
     command.reset()
-    command.update(formattedInput)
+    command.update(update)
+  }
+
+  if (P`measure`) {
+    const config = storage.get(storageKeys.CONFIG)
+
+    command.update(['"Please click over the page to pick up an element."'])
+
+    const elementStart = await processManager.requestElement(tabId, { theme: config.theme })
+    const updateStart = formatElement({
+      ...elementStart,
+      tabId: P`tab-id`,
+      xpath: null,
+      textContent: null
+    })
+
+    command.update(updateStart)
+    command.update(['"Please click over the page to pick up an element."'])
+
+    const elementEnd = await processManager.requestElement(tabId, { theme: config.theme })
+    const updateEnd = formatElement({
+      ...elementEnd,
+      tabId: P`tab-id`,
+      xpath: null,
+      textContent: null
+    })
+
+    command.reset()
+    command.update(updateStart)
+    command.update(updateEnd)
+
+    const measure = await processManager.measure(tabId, {
+      start: elementStart.xpath,
+      end: elementEnd.xpath
+    })
+    const updateMeasure = formatGap(measure, elementStart, elementEnd)
+
+    command.reset()
+    command.update(updateMeasure)
   }
 
   if (P`help`) createHelpView(command)

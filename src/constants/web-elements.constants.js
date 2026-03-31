@@ -1,5 +1,6 @@
 export const webElements = {
   HIGHLIGHT: 'term-o-highlight',
+  ELEMENT_PICKER: 'term-o-element-picker',
   NOTIFICATION_MANAGER: 'term-o-notification-manager'
 }
 

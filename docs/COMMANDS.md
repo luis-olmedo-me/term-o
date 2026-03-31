@@ -1,7 +1,7 @@
 # Term-O Commands
 
 > Version 0.9.1  
-> Updated: 2026-03-26
+> Updated: 2026-03-30
 
 ---
 
@@ -649,22 +649,34 @@ When using `evennts` command the options can express **4** possible action:
 
 The `input` command is a bridge to UI terminal requests.
 
-| Option      | Short | Description                     |
-| ----------- | ----- | ------------------------------- |
-| `--request` | `-r`  | Request user input in terminal. |
-| `--help`    | `-h`  | Show help for this command.     |
+| Option      | Short | Description                                         |
+| ----------- | ----- | --------------------------------------------------- |
+| `--text`    | `-t`  | Request user input in terminal.                     |
+| `--measure` | `-m`  | Pick two elements and measure the distance between. |
+| `--tab-id`  | `-i`  | Specify a tab ID to take action on.                 |
+| `--help`    | `-h`  | Show help for this command.                         |
 
 ### Dependency Rules
 
-When using `input` command the options can express **1** possible action:
+When using `input` command the options can express **2** possible action:
 
-1. Request a user input in the terminal (using `--request`)
+1. Request a user input in the terminal (using `--text`)
 
-   Just using `--request` will trigger a request that can be seen and completed in the UI terminal. Here is an example of how specific a search can be:
+   Just using `--text` will trigger a request that can be seen and completed in the UI terminal. Here is an example of how specific it can be:
 
    ```bash
    input
-       --request                                                            # REQUIRED
+       --text                                                               # REQUIRED
+   ```
+
+2. Pick two elements and calculate the distance between (using `--measure`)
+
+   Just using `--measure` will trigger a request for two elements in the poited tab. Here is an example of how specific it can be:
+
+   ```bash
+   input
+       --measure                                                            # REQUIRED
+       --tab-id "T00000000"                                                 # OPTIONAL
    ```
 
 ## THEME

@@ -1,5 +1,6 @@
 import { getElementByXPath } from '@content/helpers/dom-locator.helpers'
 import { createHighlight } from '@src/helpers/web-components.helpers'
+import { convertElementStylesToJSON } from '../helpers/format.helpers'
 
 export default async (resolve, reject, data) => {
   const { searchByXpath, styles } = data
@@ -15,5 +16,7 @@ export default async (resolve, reject, data) => {
     stylesToApply.forEach(({ prop, value }) => element.style.setProperty(prop, value))
   })
 
-  resolve({ tagName: element.tagName.toLowerCase(), styles: stylesToApply })
+  const elementAsJSON = convertElementStylesToJSON(element, stylesToApply)
+
+  resolve(elementAsJSON)
 }

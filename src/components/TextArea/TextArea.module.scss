@@ -57,14 +57,16 @@
   }
 
   &:hover + .textarea__overlay {
-    background-color: with-opacity($colors-accent, 0.8);
+    background-color: with-opacity($colors-accent, 0.3);
     color: $colors-brightWhite;
 
     @include theme(light) {
       border-color: $colors-brightBlack;
+      color: $colors-black;
     }
     @include theme(dark) {
       border-color: $colors-accent;
+      color: $colors-brightWhite;
     }
 
     .textarea__colored_fragment {

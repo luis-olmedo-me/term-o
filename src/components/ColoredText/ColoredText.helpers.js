@@ -1,4 +1,5 @@
-import { colorPattern, colorThemeKeys } from '@src/constants/themes.constants'
+import { colorPattern } from '@src/constants/patterns.constants'
+import { colorThemeKeys } from '@src/constants/themes.constants'
 import {
   text___both_colored,
   text___next_colored,

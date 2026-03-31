@@ -1,15 +1,8 @@
-import { getElementByXPath, getElementXPath } from '@content/helpers/dom-locator.helpers'
+import { getElementByXPath } from '@content/helpers/dom-locator.helpers'
+import { convertElementToJSON } from '@content/helpers/format.helpers'
 
 export default async (resolve, _reject, data) => {
-  const {
-    searchBelow,
-    searchByTag,
-    searchByAttribute,
-    searchByStyle,
-    searchByText,
-    appendXpath,
-    appendTextContent
-  } = data
+  const { searchBelow, searchByTag, searchByAttribute, searchByStyle, searchByText } = data
 
   const tagPattern = searchByTag && new RegExp(searchByTag)
   const textPattern = searchByText && new RegExp(searchByText)
@@ -85,17 +78,9 @@ export default async (resolve, _reject, data) => {
       })
     }
 
-    if (!conditions.every(condition => condition())) return formattedElements
+    const isMatch = conditions.every(condition => condition())
 
-    const attrs = attrNames.reduce(
-      (allAttrs, attrName) => ({ ...allAttrs, [attrName]: element.getAttribute(attrName) }),
-      {}
-    )
-    const xpath = appendXpath ? getElementXPath(element) : null
-
-    const textContent = appendTextContent ? element.textContent : null
-
-    return [...formattedElements, { tagName, attributes: attrs, xpath, textContent }]
+    return isMatch ? [...formattedElements, convertElementToJSON(element)] : formattedElements
   }, [])
 
   resolve(elements)

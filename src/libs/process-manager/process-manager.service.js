@@ -16,13 +16,13 @@ class ProcessManager {
 
   getDOMElements(
     tabId,
-    { searchBelow, searchByTag, searchByAttribute, searchByStyle, searchByText, appendTextContent, appendXpath }
+    { searchBelow, searchByTag, searchByAttribute, searchByStyle, searchByText }
   ) {
     return createWorkerProcessRequest({
       type: processNames.GET_DOM_ELEMENTS,
       defaultResponse: [],
       tabId,
-      data: { searchBelow, searchByTag, searchByAttribute, searchByStyle, searchByText, appendTextContent, appendXpath }
+      data: { searchBelow, searchByTag, searchByAttribute, searchByStyle, searchByText }
     })
   }
 
@@ -104,6 +104,24 @@ class ProcessManager {
       defaultResponse: '',
       tabId: null,
       data: null
+    })
+  }
+
+  requestElement(tabId, { theme }) {
+    return createWorkerProcessRequest({
+      type: processNames.REQUEST_ELEMENT,
+      defaultResponse: '',
+      tabId,
+      data: { theme }
+    })
+  }
+
+  measure(tabId, { start, end }) {
+    return createWorkerProcessRequest({
+      type: processNames.MEASURE,
+      defaultResponse: '',
+      tabId,
+      data: { start, end }
     })
   }
 

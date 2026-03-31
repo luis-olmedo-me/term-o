@@ -11,51 +11,35 @@ export const domHandler = async command => {
 
   const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : storage.get(storageKeys.TAB).id
 
-  if (P`on` && P`inject`) {
+  if (P`on`) {
     command.update(['"Connecting to the tab."'])
     const element = await processManager.findDOMElement(tabId, {
       searchByXpath: P`on`,
       searchBelow: P`below`,
       siblingIndex: P`sibling`,
       parentIndex: P`parent`,
-      childIndex: P`child`,
-      appendXpath: true
+      childIndex: P`child`
     })
 
     command.reset()
     if (!element) return
 
-    command.update(['"Connecting to the tab."'])
-    await processManager.injectHTML(tabId, {
-      below: element.xpath,
-      html: P`inject`
-    })
+    if (P`inject`) {
+      command.update(['"Connecting to the tab."'])
+      await processManager.injectHTML(tabId, {
+        below: element.xpath,
+        html: P`inject`
+      })
+
+      command.reset()
+    }
 
     const update = formatElement({
       ...element,
       tabId: P`tab-id`,
-      xpath: P`xpath` ? element.xpath : null
+      xpath: P`xpath` ? element.xpath : null,
+      textContent: null
     })
-
-    command.reset()
-    command.update(update)
-  }
-
-  if (P`on` && !P`inject`) {
-    command.update(['"Connecting to the tab."'])
-    const element = await processManager.findDOMElement(tabId, {
-      searchByXpath: P`on`,
-      searchBelow: P`below`,
-      siblingIndex: P`sibling`,
-      parentIndex: P`parent`,
-      childIndex: P`child`,
-      appendXpath: P`xpath`
-    })
-
-    command.reset()
-    if (!element) return
-
-    const update = formatElement({ ...element, tabId: P`tab-id` })
 
     command.update(update)
   }
@@ -68,7 +52,12 @@ export const domHandler = async command => {
       attributes: P`attr`
     })
 
-    const update = formatElement({ ...element, tabId: P`tab-id` })
+    const update = formatElement({
+      ...element,
+      tabId: P`tab-id`,
+      xpath: null,
+      textContent: null
+    })
 
     command.reset()
     command.update(update)
@@ -81,11 +70,17 @@ export const domHandler = async command => {
       searchByTag: P`tag`,
       searchByAttribute: P`attr`,
       searchByStyle: P`style`,
-      searchByText: P`text`,
-      appendTextContent: P`content`,
-      appendXpath: P`xpath`
+      searchByText: P`text`
     })
-    const updates = elements.map(element => formatElement({ ...element, tabId: P`tab-id` }))
+
+    const updates = elements.map(element =>
+      formatElement({
+        ...element,
+        tabId: P`tab-id`,
+        xpath: P`xpath` ? element.xpath : null,
+        textContent: P`content` ? element.textContent : null
+      })
+    )
 
     command.reset()
     command.update(...updates)

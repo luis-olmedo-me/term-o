@@ -1,29 +1,28 @@
 export const getElementXPath = element => {
-  if (element.id !== '') return 'id("' + element.id + '")'
-  if (element.parentElement === null) return element.tagName.toLowerCase()
+  if (element.id) return `//*[@id="${element.id}"]`
+  if (!element.parentElement) return element.tagName.toLowerCase()
 
-  let childCount = 0
-  let siblings = element.parentNode.childNodes
+  const siblings = element.parentNode.children
+  let index = 0
+  let count = 0
 
   for (let i = 0; i < siblings.length; i++) {
-    let sibling = siblings[i]
+    const sibling = siblings[i]
 
-    if (sibling === element)
-      return (
-        getElementXPath(element.parentNode) +
-        '/' +
-        element.tagName.toLowerCase() +
-        '[' +
-        (childCount + 1) +
-        ']'
-      )
-
-    if (sibling.nodeType === Node.ELEMENT_NODE && sibling.tagName === element.tagName) {
-      childCount++
+    if (sibling.tagName === element.tagName) {
+      count++
+      if (sibling === element) {
+        index = count
+      }
     }
   }
 
-  return ''
+  const tag = element.tagName.toLowerCase()
+
+  const isSVG = element.namespaceURI === 'http://www.w3.org/2000/svg'
+  const segment = isSVG ? `*[local-name()="${tag}"][${index}]` : `${tag}[${index}]`
+
+  return `${getElementXPath(element.parentElement)}/${segment}`
 }
 
 export const getElementByXPath = (xpath, below) => {

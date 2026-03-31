@@ -18,7 +18,7 @@ export const formatElement = ({ tagName, attributes, xpath, textContent, tabId }
     ]
   }
 
-  const attrs = Object.entries(attributes).map(([name, value]) => {
+  const attrs = attributes.map(([name, value]) => {
     const hasValue = Boolean(value)
     const quotedAttrName = getQuotedString(name)
     const quotedAttrValue = hasValue && getQuotedString(value)
@@ -195,5 +195,19 @@ export const formatStyle = ({ tagName, styles }) => {
 export const formatStringSearch = ({ query, input }) => {
   return [
     input.replace(query, value => `${BG`red`}${C`brightWhite`}${value}${C`reset`}${BG`reset`}`)
+  ]
+}
+
+export const formatGap = ({ distanceX, distanceY }, elementA, elementB) => {
+  const quotedDistanceX = getQuotedString(`${distanceX}px`)
+  const quotedDistanceY = getQuotedString(`${distanceY}px`)
+  const quotedXpathA = getQuotedString(elementA.xpath)
+  const quotedXpathB = getQuotedString(elementB.xpath)
+
+  return [
+    `${C`brightYellow`}${quotedDistanceX}${C`reset`}`,
+    `${C`brightYellow`}${quotedDistanceY}${C`reset`}`,
+    `${C`yellow`}${quotedXpathA}${C`reset`}`,
+    `${C`yellow`}${quotedXpathB}${C`reset`}`
   ]
 }

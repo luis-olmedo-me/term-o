@@ -22,7 +22,7 @@ export default new CommandBase({
     abbreviation: 'm',
     type: commandTypes.BOOLEAN,
     helpSection: inputHelpSections.ACTIONS,
-    description: 'Request measure from terminal.',
+    description: 'Pick two elements and measure the distance between.',
     worksWith: []
   })
   .expect({

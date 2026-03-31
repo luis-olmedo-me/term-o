@@ -1,8 +1,8 @@
 import elementPickerCss from './ElementPicker.raw.css?raw'
 import elementPickerHtml from './ElementPicker.raw.html?raw'
 
-import { convertElementToJSON } from '@src/apps/content/helpers/format.helpers'
 import { webElements } from '@src/constants/web-elements.constants'
+import { convertElementToJSON } from '@src/helpers/converter.helpers'
 import { applyCssVariables, getPropsFromAttrs } from '@web-components/helpers/props.helpers'
 import { elementPickerPropNames } from './ElementPicker.constants'
 

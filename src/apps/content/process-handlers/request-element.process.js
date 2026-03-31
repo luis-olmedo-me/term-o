@@ -1,5 +1,5 @@
+import { convertElementToJSON } from '@src/helpers/converter.helpers'
 import { createElementPicker, createHighlight } from '@src/helpers/web-components.helpers'
-import { convertElementToJSON } from '../helpers/format.helpers'
 
 export default async (resolve, _reject, data) => {
   const elementPicker = createElementPicker()

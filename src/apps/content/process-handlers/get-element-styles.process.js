@@ -1,7 +1,7 @@
 import { getElementByXPath } from '@content/helpers/dom-locator.helpers'
 import { getNonDefaultComputedStyles } from '@content/helpers/style-utils.helpers'
+import { convertElementStylesToJSON } from '@src/helpers/converter.helpers'
 import { createHighlight } from '@src/helpers/web-components.helpers'
-import { convertElementStylesToJSON } from '../helpers/format.helpers'
 
 export default async (resolve, reject, data) => {
   const { searchByXpath, searchByProperty } = data

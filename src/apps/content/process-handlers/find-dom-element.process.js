@@ -4,7 +4,7 @@ import {
   getElementParent,
   getElementSibling
 } from '@content/helpers/dom-locator.helpers'
-import { convertElementToJSON } from '@content/helpers/format.helpers'
+import { convertElementToJSON } from '@src/helpers/converter.helpers'
 
 export default async (resolve, reject, data) => {
   const { searchByXpath, searchBelow, siblingIndex, parentIndex, childIndex } = data

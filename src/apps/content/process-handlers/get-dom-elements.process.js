@@ -1,5 +1,5 @@
 import { getElementByXPath } from '@content/helpers/dom-locator.helpers'
-import { convertElementToJSON } from '@content/helpers/format.helpers'
+import { convertElementToJSON } from '@src/helpers/converter.helpers'
 
 export default async (resolve, _reject, data) => {
   const { searchBelow, searchByTag, searchByAttribute, searchByStyle, searchByText } = data

@@ -1,5 +1,5 @@
 import { isRgb, rgbToHex } from '@src/helpers/utils.helpers'
-import { getElementXPath } from './dom-locator.helpers'
+import { getElementXPath } from '../apps/content/helpers/dom-locator.helpers'
 
 export const convertElementToJSON = element => {
   const tagName = element.tagName.toLowerCase()

@@ -5,8 +5,7 @@ export default async (resolve, _reject, data) => {
   const elementPicker = createElementPicker()
 
   const handleMouseEnd = event => {
-    event.stopPropagation()
-    const [, element] = document.elementsFromPoint(event.clientX, event.clientY)
+    const element = event.detail
     const elementAsJSON = convertElementToJSON(element)
     createHighlight({ element, theme: data.theme })
 
@@ -14,5 +13,5 @@ export default async (resolve, _reject, data) => {
     resolve(elementAsJSON)
   }
 
-  elementPicker.addEventListener('click', handleMouseEnd)
+  elementPicker.addEventListener('pickedup', handleMouseEnd)
 }

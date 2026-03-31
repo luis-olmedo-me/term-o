@@ -18,7 +18,7 @@ class ElementPicker extends HTMLElement {
     this._props = getPropsFromAttrs(this, elementPickerPropNames)
     this._elements.styles.innerHTML = applyCssVariables(elementPickerCss, {})
 
-    this._elements.overlay.addEventListener('click', this._handleOverlayClick)
+    this._elements.overlay.addEventListener('click', this._handleOverlayClick.bind(this))
   }
 
   get _elements() {

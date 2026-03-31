@@ -1,5 +1,5 @@
-import { getElementByXPath } from '@content/helpers/dom-locator.helpers'
 import { convertElementStylesToJSON } from '@src/helpers/converter.helpers'
+import { getElementByXPath } from '@src/helpers/dom-locator.helpers'
 import { createHighlight } from '@src/helpers/web-components.helpers'
 
 export default async (resolve, reject, data) => {

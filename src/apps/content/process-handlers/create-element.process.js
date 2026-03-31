@@ -1,5 +1,5 @@
-import { getElementByXPath } from '@content/helpers/dom-locator.helpers'
 import { convertElementToJSON } from '@src/helpers/converter.helpers'
+import { getElementByXPath } from '@src/helpers/dom-locator.helpers'
 
 export default async (resolve, reject, data) => {
   const { below, tagName, attributes } = data

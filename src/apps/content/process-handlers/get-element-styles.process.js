@@ -1,6 +1,6 @@
-import { getElementByXPath } from '@content/helpers/dom-locator.helpers'
 import { getNonDefaultComputedStyles } from '@content/helpers/style-utils.helpers'
 import { convertElementStylesToJSON } from '@src/helpers/converter.helpers'
+import { getElementByXPath } from '@src/helpers/dom-locator.helpers'
 import { createHighlight } from '@src/helpers/web-components.helpers'
 
 export default async (resolve, reject, data) => {

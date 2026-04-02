@@ -3,7 +3,7 @@ import elementPickerCss from './ElementPicker.raw.css?raw'
 import elementPickerHtml from './ElementPicker.raw.html?raw'
 
 import { webElements } from '@src/constants/web-elements.constants'
-import { stringifyUpdates } from '@src/helpers/command.helpers'
+import { stringifyFragments } from '@src/helpers/command.helpers'
 import { convertElementToJSON } from '@src/helpers/converter.helpers'
 import { formatElement } from '@src/helpers/format.helpers'
 
@@ -19,29 +19,27 @@ class ElementPicker extends WebElement {
   }
 
   _handleOverlayClick(event) {
+    const thisRef = this
     const listElement = this.$get('list')
     const [, ...elements] = document.elementsFromPoint(event.clientX, event.clientY)
-
-    const elementsAsJSON = elements.map(convertElementToJSON)
-    const elementsAsLogs = elementsAsJSON.map(element =>
-      formatElement({ ...element, textContent: null, xpath: null })
-    )
-    const elementsAsTextLogs = stringifyUpdates(elementsAsLogs)
 
     listElement.replaceChildren()
     listElement.style.setProperty('top', `${event.clientY}px`)
     listElement.style.setProperty('left', `${event.clientX}px`)
 
-    elementsAsTextLogs.forEach(textLog => {
+    elements.forEach(element => {
+      const elementAsJSON = convertElementToJSON(element)
+      const elementAsLog = formatElement({ ...elementAsJSON, textContent: null, xpath: null })
+      const elementAsTextLog = stringifyFragments(elementAsLog)
+
       const textElement = document.createElement('li')
-      textElement.setAttribute('role', 'option')
+      textElement.addEventListener('click', () => thisRef.$dispatch('pickedup', elementAsJSON))
       textElement.setAttribute('class', 'list-option')
-      textElement.innerText = textLog
+      textElement.setAttribute('role', 'option')
+      textElement.innerText = elementAsTextLog
 
       listElement.append(textElement)
     })
-
-    this.$dispatch('pickedup', elements.at(0))
   }
 }
 

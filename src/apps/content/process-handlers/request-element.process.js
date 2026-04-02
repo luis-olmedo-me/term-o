@@ -1,12 +1,12 @@
-import { convertElementToJSON } from '@src/helpers/converter.helpers'
+import { getElementByXPath } from '@src/helpers/dom-locator.helpers'
 import { createElementPicker, createHighlight } from '@src/helpers/web-components.helpers'
 
 export default async (resolve, _reject, data) => {
   const elementPicker = createElementPicker({ theme: data.theme })
 
   const handleMouseEnd = event => {
-    const element = event.detail
-    const elementAsJSON = convertElementToJSON(element)
+    const elementAsJSON = event.detail
+    const element = getElementByXPath(elementAsJSON.xpath)
     createHighlight({ element, theme: data.theme })
 
     elementPicker.remove()

@@ -25,8 +25,8 @@ export class WebElement extends HTMLElement {
   }
 
   $dispatch(name, detail = null) {
-    const appearEvent = new CustomEvent(name, { detail })
+    const customEvent = new CustomEvent(name, { detail })
 
-    this.dispatchEvent(appearEvent)
+    this.dispatchEvent(customEvent)
   }
 }

@@ -6,23 +6,45 @@
 
 .overlay {
   position: fixed;
-  opacity: 1;
   cursor: crosshair;
   inset: 0;
 }
 
 .list {
+  position: fixed;
   border: var(--space-50) solid var(--colors-brightBlack);
   border-radius: var(--radius-200) 0 var(--radius-200) var(--radius-200);
   background-color: var(--colors-background);
-  padding: var(--space-200) var(--space-300);
+  padding: 0;
   max-width: 200px;
+  max-height: 8rem;
+  overflow-y: scroll;
 }
-.list:empty {
-  display: none;
+.list::-webkit-scrollbar {
+  width: var(--space-200);
+  height: var(--space-200);
+}
+.list::-webkit-scrollbar-track {
+  cursor: pointer;
+  background-image: linear-gradient(
+    180deg,
+    transparent 5%,
+    rgb(from var(--colors-brightBlack) r g b / 0.2) 10%,
+    rgb(from var(--colors-brightBlack) r g b / 0.2) 90%,
+    transparent 95%
+  );
+}
+.list::-webkit-scrollbar-thumb {
+  cursor: pointer;
+  background-color: var(--colors-brightBlack);
+}
+.list::-webkit-scrollbar-thumb:active,
+.list::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(from var(--colors-accent) r g b / 0.8);
 }
 
 .list-option {
+  padding: var(--space-200) var(--space-300);
   min-width: 0;
   overflow: hidden;
   list-style-type: none;

@@ -1,3 +1,7 @@
+.web-theme-provider {
+  font-family: var(--font);
+}
+
 .global-scroller::-webkit-scrollbar {
   width: var(--space-200);
   height: var(--space-200);
@@ -19,4 +23,108 @@
 .global-scroller::-webkit-scrollbar-thumb:active,
 .global-scroller::-webkit-scrollbar-thumb:hover {
   background-color: rgb(from var(--colors-accent) r g b / 0.8);
+}
+
+[data-bgcolor='white'] {
+  background-color: var(--colors-white);
+}
+[data-bgcolor='black'] {
+  background-color: var(--colors-black);
+}
+[data-bgcolor='red'] {
+  background-color: var(--colors-red);
+}
+[data-bgcolor='yellow'] {
+  background-color: var(--colors-yellow);
+}
+[data-bgcolor='green'] {
+  background-color: var(--colors-green);
+}
+[data-bgcolor='purple'] {
+  background-color: var(--colors-purple);
+}
+[data-bgcolor='cyan'] {
+  background-color: var(--colors-cyan);
+}
+[data-bgcolor='blue'] {
+  background-color: var(--colors-blue);
+}
+[data-bgcolor='brightRed'] {
+  background-color: var(--colors-brightRed);
+}
+[data-bgcolor='brightYellow'] {
+  background-color: var(--colors-brightYellow);
+}
+[data-bgcolor='brightGreen'] {
+  background-color: var(--colors-brightGreen);
+}
+[data-bgcolor='brightPurple'] {
+  background-color: var(--colors-brightPurple);
+}
+[data-bgcolor='brightCyan'] {
+  background-color: var(--colors-brightCyan);
+}
+[data-bgcolor='brightBlue'] {
+  background-color: var(--colors-brightBlue);
+}
+[data-bgcolor='brightWhite'] {
+  background-color: var(--colors-brightWhite);
+}
+[data-bgcolor='brightBlack'] {
+  background-color: var(--colors-brightBlack);
+}
+[data-bgcolor='reset'] {
+  background-color: transparent;
+}
+
+[data-color='white'] {
+  color: var(--colors-white);
+}
+[data-color='black'] {
+  color: var(--colors-black);
+}
+[data-color='red'] {
+  color: var(--colors-red);
+}
+[data-color='yellow'] {
+  color: var(--colors-yellow);
+}
+[data-color='green'] {
+  color: var(--colors-green);
+}
+[data-color='purple'] {
+  color: var(--colors-purple);
+}
+[data-color='cyan'] {
+  color: var(--colors-cyan);
+}
+[data-color='blue'] {
+  color: var(--colors-blue);
+}
+[data-color='brightRed'] {
+  color: var(--colors-brightRed);
+}
+[data-color='brightYellow'] {
+  color: var(--colors-brightYellow);
+}
+[data-color='brightGreen'] {
+  color: var(--colors-brightGreen);
+}
+[data-color='brightPurple'] {
+  color: var(--colors-brightPurple);
+}
+[data-color='brightCyan'] {
+  color: var(--colors-brightCyan);
+}
+[data-color='brightBlue'] {
+  color: var(--colors-brightBlue);
+}
+[data-color='brightWhite'] {
+  color: var(--colors-brightWhite);
+}
+[data-color='brightBlack'] {
+  color: var(--colors-brightBlack);
+}
+[data-color='reset'] {
+  color: var(--colors-foreground);
 }

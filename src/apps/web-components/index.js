@@ -1,3 +1,4 @@
+import './components/ColoredText'
 import './components/ElementPicker'
 import './components/Highlight'
 import './components/NotificationItem'

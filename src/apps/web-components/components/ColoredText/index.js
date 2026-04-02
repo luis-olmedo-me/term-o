@@ -11,9 +11,7 @@ class ColoredText extends WebElement {
       html: coloredTextHtml,
       css: coloredTextCss
     })
-  }
 
-  connectedCallback() {
     this.addEventListener('textchange', this._handleTextChange.bind(this))
   }
 
@@ -26,7 +24,7 @@ class ColoredText extends WebElement {
     for (const fragment of fragments) {
       const spanElement = document.createElement('span')
 
-      spanElement.textContent = fragment.value
+      spanElement.innerText = fragment.value
       lineElement.append(spanElement)
     }
 

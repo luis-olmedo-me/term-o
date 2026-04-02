@@ -2,10 +2,11 @@ import WebElement from '@web-components/templates/WebElement'
 import elementPickerCss from './ElementPicker.raw.css?raw'
 import elementPickerHtml from './ElementPicker.raw.html?raw'
 
-import { webElements } from '@src/constants/web-elements.constants'
+import { embedWebElements, webElements } from '@src/constants/web-elements.constants'
 import { stringifyFragments } from '@src/helpers/command.helpers'
 import { convertElementToJSON } from '@src/helpers/converter.helpers'
 import { formatElement } from '@src/helpers/format.helpers'
+import { createWebElement } from '@src/helpers/web-components.helpers'
 
 class ElementPicker extends WebElement {
   constructor() {
@@ -40,8 +41,11 @@ class ElementPicker extends WebElement {
       textElement.addEventListener('click', () => thisRef.$dispatch('pickedup', elementAsJSON))
       textElement.setAttribute('class', 'list-option')
       textElement.setAttribute('role', 'option')
-      textElement.innerText = elementAsTextLog
 
+      const coloredTextElement = createWebElement(embedWebElements.COLORED_TEXT, {}, textElement)
+      coloredTextElement.$dispatch('textchange', elementAsTextLog)
+
+      textElement.append(coloredTextElement)
       listElement.append(textElement)
     })
   }

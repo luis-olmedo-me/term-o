@@ -9,7 +9,10 @@ import { formatElement } from '@src/helpers/format.helpers'
 
 class ElementPicker extends WebElement {
   constructor() {
-    super({ html: elementPickerHtml, css: elementPickerCss })
+    super({
+      html: elementPickerHtml,
+      css: elementPickerCss
+    })
   }
 
   connectedCallback() {

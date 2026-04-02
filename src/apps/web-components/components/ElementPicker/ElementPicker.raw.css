@@ -28,28 +28,6 @@
   max-height: 8rem;
   overflow-y: scroll;
 }
-.list::-webkit-scrollbar {
-  width: var(--space-200);
-  height: var(--space-200);
-}
-.list::-webkit-scrollbar-track {
-  cursor: pointer;
-  background-image: linear-gradient(
-    180deg,
-    transparent 5%,
-    rgb(from var(--colors-brightBlack) r g b / 0.2) 10%,
-    rgb(from var(--colors-brightBlack) r g b / 0.2) 90%,
-    transparent 95%
-  );
-}
-.list::-webkit-scrollbar-thumb {
-  cursor: pointer;
-  background-color: var(--colors-brightBlack);
-}
-.list::-webkit-scrollbar-thumb:active,
-.list::-webkit-scrollbar-thumb:hover {
-  background-color: rgb(from var(--colors-accent) r g b / 0.8);
-}
 
 .list-option {
   transition:

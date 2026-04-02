@@ -8,13 +8,9 @@ export class WebElement extends HTMLElement {
 
     this._shadow = this.attachShadow({ mode: 'closed' })
     this._shadow.innerHTML = webElementHtml.replace('{content}', html)
-    this._css = css
+    this.$get('styles').innerHTML = css
 
     this.addEventListener('themechange', this.$handleThemeChange)
-  }
-
-  connectedCallback() {
-    this._elements.styles.innerHTML = this._css
   }
 
   $get(className) {
@@ -22,9 +18,10 @@ export class WebElement extends HTMLElement {
   }
 
   $handleThemeChange(event) {
+    const themeElement = this.$get('theme')
     const { theme } = event.detail
 
-    this._elements.theme.innerHTML = createCssVariablesFromTheme(theme, '.web-theme-provider')
+    themeElement.innerHTML = createCssVariablesFromTheme(theme, '.web-theme-provider')
   }
 
   $dispatch(name, detail = null) {

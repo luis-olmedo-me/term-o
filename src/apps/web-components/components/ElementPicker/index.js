@@ -1,3 +1,4 @@
+import WebElement from '@web-components/templates/WebElement'
 import elementPickerCss from './ElementPicker.raw.css?raw'
 import elementPickerHtml from './ElementPicker.raw.html?raw'
 
@@ -5,47 +6,31 @@ import { webElements } from '@src/constants/web-elements.constants'
 import { stringifyUpdates } from '@src/helpers/command.helpers'
 import { convertElementToJSON } from '@src/helpers/converter.helpers'
 import { formatElement } from '@src/helpers/format.helpers'
-import { createCssVariablesFromTheme } from '@src/helpers/themes.helpers'
-import { applyCssVariables, getPropsFromAttrs } from '@web-components/helpers/props.helpers'
-import { elementPickerPropNames } from './ElementPicker.constants'
 
-class ElementPicker extends HTMLElement {
+class ElementPicker extends WebElement {
   constructor() {
-    super()
-
-    this._shadow = this.attachShadow({ mode: 'closed' })
-    this._shadow.innerHTML = elementPickerHtml
-
-    this.addEventListener('theme', this._handleTheme)
+    super({ html: elementPickerHtml, css: elementPickerCss })
   }
 
   connectedCallback() {
-    this._props = getPropsFromAttrs(this, elementPickerPropNames)
-    this._elements.styles.innerHTML = applyCssVariables(elementPickerCss, {})
+    const overlayElement = this.$get('overlay')
 
-    this._elements.overlay.addEventListener('click', this._handleOverlayClick.bind(this))
-  }
-
-  get _elements() {
-    return {
-      overlay: this._shadow.querySelector('.overlay'),
-      list: this._shadow.querySelector('.list'),
-      theme: this._shadow.querySelector('.theme'),
-      styles: this._shadow.querySelector('.styles')
-    }
+    overlayElement.addEventListener('click', this._handleOverlayClick.bind(this))
   }
 
   _handleOverlayClick(event) {
+    const listElement = this.$get('list')
     const [, ...elements] = document.elementsFromPoint(event.clientX, event.clientY)
+
     const elementsAsJSON = elements.map(convertElementToJSON)
     const elementsAsLogs = elementsAsJSON.map(element =>
       formatElement({ ...element, textContent: null, xpath: null })
     )
     const elementsAsTextLogs = stringifyUpdates(elementsAsLogs)
 
-    this._elements.list.replaceChildren()
-    this._elements.list.style.setProperty('top', `${event.clientY}px`)
-    this._elements.list.style.setProperty('left', `${event.clientX}px`)
+    listElement.replaceChildren()
+    listElement.style.setProperty('top', `${event.clientY}px`)
+    listElement.style.setProperty('left', `${event.clientX}px`)
 
     elementsAsTextLogs.forEach(textLog => {
       const textElement = document.createElement('li')
@@ -53,22 +38,10 @@ class ElementPicker extends HTMLElement {
       textElement.setAttribute('class', 'list-option')
       textElement.innerText = textLog
 
-      this._elements.list.append(textElement)
+      listElement.append(textElement)
     })
 
-    this._dispatch('pickedup', elements.at(0))
-  }
-
-  _handleTheme(event) {
-    const { theme } = event.detail
-
-    this._elements.theme.innerHTML = createCssVariablesFromTheme(theme, '.web-theme-provider')
-  }
-
-  _dispatch(name, detail = null) {
-    const appearEvent = new CustomEvent(name, { detail })
-
-    this.dispatchEvent(appearEvent)
+    this.$dispatch('pickedup', elements.at(0))
   }
 }
 

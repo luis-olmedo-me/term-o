@@ -10,11 +10,19 @@
   inset: 0;
 }
 
-.list {
+.list-container {
   position: fixed;
+  transition:
+    top 0.2s ease-in-out,
+    left 0.2s ease-in-out;
   border: var(--space-50) solid var(--colors-brightBlack);
   border-radius: var(--radius-200) 0 var(--radius-200) var(--radius-200);
   background-color: var(--colors-background);
+  padding-right: var(--space-250);
+}
+
+.list {
+  margin: 0;
   padding: 0;
   max-width: 200px;
   max-height: 8rem;
@@ -50,7 +58,7 @@
     color 0.1s ease-in-out;
   cursor: pointer;
   margin-right: var(--space-250);
-  border-right: solid rgb(from var(--colors-brightBlack) r g b / 0.5);
+  border-right: var(--space-50) solid rgb(from var(--colors-brightBlack) r g b / 0.5);
   padding: var(--space-200) var(--space-300);
   min-width: 0;
   overflow: hidden;

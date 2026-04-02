@@ -24,11 +24,12 @@ class ElementPicker extends WebElement {
   _handleOverlayClick(event) {
     const thisRef = this
     const listElement = this.$get('list')
+    const listContainerElement = this.$get('list-container')
     const [, ...elements] = document.elementsFromPoint(event.clientX, event.clientY)
 
     listElement.replaceChildren()
-    listElement.style.setProperty('top', `${event.clientY}px`)
-    listElement.style.setProperty('left', `${event.clientX}px`)
+    listContainerElement.style.setProperty('top', `${event.clientY}px`)
+    listContainerElement.style.setProperty('left', `${event.clientX}px`)
 
     elements.forEach(element => {
       const elementAsJSON = convertElementToJSON(element)

@@ -5,5 +5,6 @@ export const webElements = {
 }
 
 export const embedWebElements = {
-  NOTIFICATION_ITEM: 'term-o-notification-item'
+  NOTIFICATION_ITEM: 'term-o-notification-item',
+  COLORED_TEXT: 'term-o-colored-text'
 }

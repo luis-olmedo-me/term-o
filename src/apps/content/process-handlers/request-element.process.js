@@ -2,7 +2,7 @@ import { convertElementToJSON } from '@src/helpers/converter.helpers'
 import { createElementPicker, createHighlight } from '@src/helpers/web-components.helpers'
 
 export default async (resolve, _reject, data) => {
-  const elementPicker = createElementPicker()
+  const elementPicker = createElementPicker({ theme: data.theme })
 
   const handleMouseEnd = event => {
     const element = event.detail

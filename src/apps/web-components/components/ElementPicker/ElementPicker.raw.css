@@ -11,6 +11,21 @@
   inset: 0;
 }
 
+.list {
+  border: var(--space-50) solid var(--colors-brightBlack);
+  border-radius: var(--radius-200) 0 var(--radius-200) var(--radius-200);
+  background-color: var(--colors-background);
+  padding: var(--space-200) var(--space-300);
+  max-width: 200px;
+}
 .list:empty {
   display: none;
+}
+
+.list-option {
+  min-width: 0;
+  overflow: hidden;
+  list-style-type: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

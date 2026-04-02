@@ -5,6 +5,7 @@ import { webElements } from '@src/constants/web-elements.constants'
 import { stringifyUpdates } from '@src/helpers/command.helpers'
 import { convertElementToJSON } from '@src/helpers/converter.helpers'
 import { formatElement } from '@src/helpers/format.helpers'
+import { createCssVariablesFromTheme } from '@src/helpers/themes.helpers'
 import { applyCssVariables, getPropsFromAttrs } from '@web-components/helpers/props.helpers'
 import { elementPickerPropNames } from './ElementPicker.constants'
 
@@ -14,6 +15,8 @@ class ElementPicker extends HTMLElement {
 
     this._shadow = this.attachShadow({ mode: 'closed' })
     this._shadow.innerHTML = elementPickerHtml
+
+    this.addEventListener('theme', this._handleTheme)
   }
 
   connectedCallback() {
@@ -27,6 +30,7 @@ class ElementPicker extends HTMLElement {
     return {
       overlay: this._shadow.querySelector('.overlay'),
       list: this._shadow.querySelector('.list'),
+      theme: this._shadow.querySelector('.theme'),
       styles: this._shadow.querySelector('.styles')
     }
   }
@@ -44,12 +48,19 @@ class ElementPicker extends HTMLElement {
     elementsAsTextLogs.forEach(textLog => {
       const textElement = document.createElement('li')
       textElement.setAttribute('role', 'option')
+      textElement.setAttribute('class', 'list-option')
       textElement.innerText = textLog
 
       this._elements.list.append(textElement)
     })
 
     this._dispatch('pickedup', elements.at(0))
+  }
+
+  _handleTheme(event) {
+    const { theme } = event.detail
+
+    this._elements.theme.innerHTML = createCssVariablesFromTheme(theme, '.web-theme-provider')
   }
 
   _dispatch(name, detail = null) {

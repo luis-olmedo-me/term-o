@@ -26,6 +26,7 @@ class ElementPicker extends HTMLElement {
   get _elements() {
     return {
       overlay: this._shadow.querySelector('.overlay'),
+      list: this._shadow.querySelector('.list'),
       styles: this._shadow.querySelector('.styles')
     }
   }
@@ -38,7 +39,14 @@ class ElementPicker extends HTMLElement {
     )
     const elementsAsTextLogs = stringifyUpdates(elementsAsLogs)
 
-    console.log('💬 ~ elementsAsTextLogs:', elementsAsTextLogs)
+    elementsAsTextLogs.forEach(textLog => {
+      const textElement = document.createElement('li')
+      textElement.setAttribute('role', 'option')
+      textElement.innerText = textLog
+
+      this._elements.list.append(textElement)
+    })
+
     this._dispatch('pickedup', elements.at(0))
   }
 

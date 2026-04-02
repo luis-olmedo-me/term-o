@@ -10,3 +10,7 @@
   cursor: crosshair;
   inset: 0;
 }
+
+.list:empty {
+  display: none;
+}

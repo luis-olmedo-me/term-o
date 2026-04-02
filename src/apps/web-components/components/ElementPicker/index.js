@@ -39,6 +39,8 @@ class ElementPicker extends HTMLElement {
     )
     const elementsAsTextLogs = stringifyUpdates(elementsAsLogs)
 
+    this._elements.list.replaceChildren()
+
     elementsAsTextLogs.forEach(textLog => {
       const textElement = document.createElement('li')
       textElement.setAttribute('role', 'option')

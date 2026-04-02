@@ -44,6 +44,8 @@ class ElementPicker extends HTMLElement {
     const elementsAsTextLogs = stringifyUpdates(elementsAsLogs)
 
     this._elements.list.replaceChildren()
+    this._elements.list.style.setProperty('top', `${event.clientY}px`)
+    this._elements.list.style.setProperty('left', `${event.clientX}px`)
 
     elementsAsTextLogs.forEach(textLog => {
       const textElement = document.createElement('li')

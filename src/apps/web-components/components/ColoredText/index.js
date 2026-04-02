@@ -25,12 +25,11 @@ class ColoredText extends WebElement {
       const spanElement = document.createElement('span')
       spanElement.setAttribute('data-bgcolor', fragment.bgcolor)
       spanElement.setAttribute('data-color', fragment.color)
+      spanElement.setAttribute('class', 'colored')
 
       spanElement.innerText = fragment.value
       lineElement.append(spanElement)
     }
-
-    console.log('💬 ~ fragments:', fragments)
   }
 }
 

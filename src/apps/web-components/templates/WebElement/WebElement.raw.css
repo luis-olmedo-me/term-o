@@ -1,4 +1,5 @@
 .web-theme-provider {
+  font-size: 16px;
   font-family: var(--font);
 }
 
@@ -25,106 +26,106 @@
   background-color: rgb(from var(--colors-accent) r g b / 0.8);
 }
 
-[data-bgcolor='white'] {
+.colored[data-bgcolor='white'] {
   background-color: var(--colors-white);
 }
-[data-bgcolor='black'] {
+.colored[data-bgcolor='black'] {
   background-color: var(--colors-black);
 }
-[data-bgcolor='red'] {
+.colored[data-bgcolor='red'] {
   background-color: var(--colors-red);
 }
-[data-bgcolor='yellow'] {
+.colored[data-bgcolor='yellow'] {
   background-color: var(--colors-yellow);
 }
-[data-bgcolor='green'] {
+.colored[data-bgcolor='green'] {
   background-color: var(--colors-green);
 }
-[data-bgcolor='purple'] {
+.colored[data-bgcolor='purple'] {
   background-color: var(--colors-purple);
 }
-[data-bgcolor='cyan'] {
+.colored[data-bgcolor='cyan'] {
   background-color: var(--colors-cyan);
 }
-[data-bgcolor='blue'] {
+.colored[data-bgcolor='blue'] {
   background-color: var(--colors-blue);
 }
-[data-bgcolor='brightRed'] {
+.colored[data-bgcolor='brightRed'] {
   background-color: var(--colors-brightRed);
 }
-[data-bgcolor='brightYellow'] {
+.colored[data-bgcolor='brightYellow'] {
   background-color: var(--colors-brightYellow);
 }
-[data-bgcolor='brightGreen'] {
+.colored[data-bgcolor='brightGreen'] {
   background-color: var(--colors-brightGreen);
 }
-[data-bgcolor='brightPurple'] {
+.colored[data-bgcolor='brightPurple'] {
   background-color: var(--colors-brightPurple);
 }
-[data-bgcolor='brightCyan'] {
+.colored[data-bgcolor='brightCyan'] {
   background-color: var(--colors-brightCyan);
 }
-[data-bgcolor='brightBlue'] {
+.colored[data-bgcolor='brightBlue'] {
   background-color: var(--colors-brightBlue);
 }
-[data-bgcolor='brightWhite'] {
+.colored[data-bgcolor='brightWhite'] {
   background-color: var(--colors-brightWhite);
 }
-[data-bgcolor='brightBlack'] {
+.colored[data-bgcolor='brightBlack'] {
   background-color: var(--colors-brightBlack);
 }
-[data-bgcolor='reset'] {
+.colored[data-bgcolor='reset'] {
   background-color: transparent;
 }
 
-[data-color='white'] {
+.colored[data-color='white'] {
   color: var(--colors-white);
 }
-[data-color='black'] {
+.colored[data-color='black'] {
   color: var(--colors-black);
 }
-[data-color='red'] {
+.colored[data-color='red'] {
   color: var(--colors-red);
 }
-[data-color='yellow'] {
+.colored[data-color='yellow'] {
   color: var(--colors-yellow);
 }
-[data-color='green'] {
+.colored[data-color='green'] {
   color: var(--colors-green);
 }
-[data-color='purple'] {
+.colored[data-color='purple'] {
   color: var(--colors-purple);
 }
-[data-color='cyan'] {
+.colored[data-color='cyan'] {
   color: var(--colors-cyan);
 }
-[data-color='blue'] {
+.colored[data-color='blue'] {
   color: var(--colors-blue);
 }
-[data-color='brightRed'] {
+.colored[data-color='brightRed'] {
   color: var(--colors-brightRed);
 }
-[data-color='brightYellow'] {
+.colored[data-color='brightYellow'] {
   color: var(--colors-brightYellow);
 }
-[data-color='brightGreen'] {
+.colored[data-color='brightGreen'] {
   color: var(--colors-brightGreen);
 }
-[data-color='brightPurple'] {
+.colored[data-color='brightPurple'] {
   color: var(--colors-brightPurple);
 }
-[data-color='brightCyan'] {
+.colored[data-color='brightCyan'] {
   color: var(--colors-brightCyan);
 }
-[data-color='brightBlue'] {
+.colored[data-color='brightBlue'] {
   color: var(--colors-brightBlue);
 }
-[data-color='brightWhite'] {
+.colored[data-color='brightWhite'] {
   color: var(--colors-brightWhite);
 }
-[data-color='brightBlack'] {
+.colored[data-color='brightBlack'] {
   color: var(--colors-brightBlack);
 }
-[data-color='reset'] {
+.colored[data-color='reset'] {
   color: var(--colors-foreground);
 }

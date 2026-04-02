@@ -2,6 +2,7 @@
   margin: 0;
   min-width: 0;
   overflow: hidden;
+  line-height: var(--lineHeight-200);
   text-overflow: ellipsis;
   white-space: pre-line;
   white-space: nowrap;

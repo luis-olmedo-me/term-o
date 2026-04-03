@@ -50,6 +50,7 @@
 }
 .list-option:hover,
 .list-option:focus {
+  background-color: rgb(from var(--colors-accent) r g b / 0.1);
   padding: var(--space-200) var(--space-300) var(--space-200) var(--space-500);
 }
 .list-option:hover .colored,
@@ -62,7 +63,8 @@
   margin: 0;
   min-width: 0;
   overflow: hidden;
-  line-height: var(--lineHeight-200);
+  font-size: var(--fontSize-50);
+  line-height: var(--lineHeight-50);
   text-overflow: ellipsis;
   white-space: pre-line;
   white-space: nowrap;

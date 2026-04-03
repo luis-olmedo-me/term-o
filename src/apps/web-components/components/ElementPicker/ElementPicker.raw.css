@@ -38,7 +38,6 @@
   margin-right: var(--space-250);
   border-right: var(--space-50) solid rgb(from var(--colors-brightBlack) r g b / 0.5);
   padding: var(--space-200) var(--space-300);
-  min-width: 0;
   overflow: hidden;
   color: var(--colors-foreground);
 }
@@ -46,4 +45,14 @@
 .list-option:focus {
   padding: var(--space-200) var(--space-300) var(--space-200) var(--space-400);
   color: var(--colors-accent);
+}
+
+.line {
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  line-height: var(--lineHeight-200);
+  text-overflow: ellipsis;
+  white-space: pre-line;
+  white-space: nowrap;
 }

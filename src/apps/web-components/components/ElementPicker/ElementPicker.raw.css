@@ -8,13 +8,17 @@
   position: fixed;
   cursor: crosshair;
   inset: 0;
+  background-color: rgb(from var(--colors-black) r g b / 0.1);
 }
 
 .list-container {
   position: fixed;
+  top: 0;
+  left: 0;
   transition:
     top 0.2s ease-in-out,
     left 0.2s ease-in-out;
+  box-shadow: 0 5px 10px rgb(from var(--colors-black) r g b / 0.8);
   border: var(--space-50) solid var(--colors-brightBlack);
   border-radius: var(--radius-200);
   background-color: var(--colors-background);
@@ -45,7 +49,6 @@
 .list-option:focus {
   padding: var(--space-200) var(--space-300) var(--space-200) var(--space-500);
 }
-
 .list-option:hover .colored,
 .list-option:focus .colored {
   color: var(--colors-accent);

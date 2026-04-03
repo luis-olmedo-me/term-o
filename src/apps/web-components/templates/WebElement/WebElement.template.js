@@ -7,15 +7,22 @@ export class WebElement extends HTMLElement {
   constructor({ html, css }) {
     super()
 
-    this._shadow = this.attachShadow({ mode: 'closed' })
-    this._shadow.innerHTML = webElementHtml.replace('{content}', html)
-    this.$get('styles').innerHTML = `${webElementCss}\n${css}`
+    this._root = this.attachShadow({ mode: 'closed' })
+    this._root.innerHTML = webElementHtml.replace('{content}', html)
+
+    const baseSheet = new CSSStyleSheet()
+    const dynamicSheet = new CSSStyleSheet()
+
+    baseSheet.replaceSync(webElementCss)
+    dynamicSheet.replaceSync(css)
+
+    this._root.adoptedStyleSheets = [baseSheet, dynamicSheet]
 
     this.addEventListener('themechange', this.$handleThemeChange)
   }
 
   $get(className) {
-    return this._shadow.querySelector(`.${className}`)
+    return this._root.querySelector(`.${className}`)
   }
 
   $handleThemeChange(event) {

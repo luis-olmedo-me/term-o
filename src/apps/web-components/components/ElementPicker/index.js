@@ -31,6 +31,7 @@ class ElementPicker extends WebElement {
     listElement.replaceChildren()
     listContainerElement.style.setProperty('top', `${event.clientY}px`)
     listContainerElement.style.setProperty('left', `${event.clientX}px`)
+    listContainerElement.style.setProperty('scale', `1`)
 
     elements.forEach(element => {
       const elementAsJSON = convertElementToJSON(element)

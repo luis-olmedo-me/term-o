@@ -43,11 +43,16 @@
 }
 .list-option:hover,
 .list-option:focus {
-  padding: var(--space-200) var(--space-300) var(--space-200) var(--space-400);
+  padding: var(--space-200) var(--space-300) var(--space-200) var(--space-500);
+}
+
+.list-option:hover .colored,
+.list-option:focus .colored {
   color: var(--colors-accent);
 }
 
 .line {
+  transition: background-color 0.2s ease-in-out;
   margin: 0;
   min-width: 0;
   overflow: hidden;

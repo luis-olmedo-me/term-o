@@ -47,6 +47,14 @@ export default new CommandBase({
     validate: [isKebabCase]
   })
   .expect({
+    name: 'pick',
+    abbreviation: 'P',
+    type: commandTypes.BOOLEAN,
+    description: 'Pick an element from the tab',
+    worksWith: ['xpath', 'tab-id', 'content'],
+    helpSection: domHelpSections.SEARCH
+  })
+  .expect({
     name: 'inject',
     abbreviation: 'I',
     type: commandTypes.STRING,

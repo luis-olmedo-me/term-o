@@ -86,5 +86,20 @@ export const domHandler = async command => {
     command.update(...updates)
   }
 
+  if (P`pick`) {
+    const config = storage.get(storageKeys.CONFIG)
+
+    command.update(['"Please click over the page to pick up an element."'])
+    const element = await processManager.requestElement(tabId, { theme: config.theme })
+    const update = formatElement({
+      ...element,
+      tabId: P`tab-id`,
+      xpath: P`xpath` ? element.xpath : null,
+      textContent: P`content` ? element.textContent : null
+    })
+
+    command.update(update)
+  }
+
   if (P`help`) createHelpView(command)
 }

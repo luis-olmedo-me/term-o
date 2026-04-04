@@ -1,34 +1,127 @@
+import WebElement from '@web-components/templates/WebElement'
 import elementPickerCss from './ElementPicker.raw.css?raw'
 import elementPickerHtml from './ElementPicker.raw.html?raw'
 
 import { webElements } from '@src/constants/web-elements.constants'
-import { applyCssVariables, getPropsFromAttrs } from '@web-components/helpers/props.helpers'
-import { elementPickerPropNames } from './ElementPicker.constants'
+import { stringifyFragments } from '@src/helpers/command.helpers'
+import { convertElementToJSON } from '@src/helpers/converter.helpers'
+import { formatElement } from '@src/helpers/format.helpers'
+import { calculatePosition, createPaintedElement } from './ElementPicker.helpers'
 
-class ElementPicker extends HTMLElement {
+class ElementPicker extends WebElement {
   constructor() {
-    super()
+    super({
+      html: elementPickerHtml,
+      css: elementPickerCss
+    })
 
-    this._shadow = this.attachShadow({ mode: 'closed' })
-    this._shadow.innerHTML = elementPickerHtml
+    this._isVisible = false
+    this._isCanceled = false
   }
 
   connectedCallback() {
-    this._props = getPropsFromAttrs(this, elementPickerPropNames)
-    this._elements.styles.innerHTML = applyCssVariables(elementPickerCss, {})
+    const overlayElement = this.$get('overlay')
+
+    overlayElement.addEventListener('click', this._handleOverlayClick.bind(this))
+    window.addEventListener('scroll', this._handleOverlayScroll.bind(this))
+    window.addEventListener('blur', this._handleCancelation.bind(this))
+    window.addEventListener('keydown', this._handleKeyDown.bind(this))
   }
 
-  get _elements() {
-    return {
-      overlay: this._shadow.querySelector('.overlay'),
-      styles: this._shadow.querySelector('.styles')
-    }
+  _handleOverlayClick(event) {
+    const thisRef = this
+    const listElement = this.$get('list')
+    const pointElement = this.$get('point')
+    const imitationElement = this.$get('imitation')
+    const listContainerElement = this.$get('list-container')
+    const [, ...elements] = document.elementsFromPoint(event.clientX, event.clientY)
+
+    listElement.scrollTop = 0
+    listElement.replaceChildren()
+    listContainerElement.style.setProperty('scale', `1`)
+
+    this.$addStyles(listContainerElement, {
+      scale: 1
+    })
+
+    elements.forEach((element, index) => {
+      const elementAsJSON = convertElementToJSON(element)
+      const elementAsLog = formatElement({ ...elementAsJSON, textContent: null, xpath: null })
+      const elementAsTextLog = stringifyFragments(elementAsLog)
+
+      const coloredTextElement = createPaintedElement(elementAsTextLog)
+
+      const textElement = document.createElement('li')
+      textElement.addEventListener('click', () => thisRef.$dispatch('pickedup', elementAsJSON))
+      textElement.addEventListener('mouseenter', () => thisRef._addImitationTo(element))
+      textElement.setAttribute('class', 'list-option')
+      textElement.setAttribute('role', 'option')
+      textElement.setAttribute('style', `--index: ${index}`)
+
+      textElement.append(coloredTextElement)
+      listElement.append(textElement)
+    })
+
+    const [posX, posY] = calculatePosition(listContainerElement, event.clientX, event.clientY)
+    const isPointAlreadyActive = pointElement.classList.contains('active')
+    const isImitationAlreadyActive = imitationElement.classList.contains('active')
+
+    this.$addStyles(listContainerElement, {
+      top: `${posY}px`,
+      left: `${posX}px`
+    })
+
+    this.$addStyles(pointElement, {
+      top: `${event.clientY}px`,
+      left: `${event.clientX}px`
+    })
+
+    if (!isPointAlreadyActive) pointElement.classList.add('active')
+    if (isImitationAlreadyActive) imitationElement.classList.remove('active')
+
+    this._isVisible = true
   }
 
-  _dispatch(name, detail = null) {
-    const appearEvent = new CustomEvent(name, { detail })
+  _handleOverlayScroll() {
+    if (!this._isVisible) return
 
-    this.dispatchEvent(appearEvent)
+    const pointElement = this.$get('point')
+    const imitationElement = this.$get('imitation')
+    const listContainerElement = this.$get('list-container')
+    const isImitationAlreadyActive = imitationElement.classList.contains('active')
+    const isPointAlreadyActive = pointElement.classList.contains('active')
+
+    if (isImitationAlreadyActive) imitationElement.classList.remove('active')
+    if (isPointAlreadyActive) pointElement.classList.remove('active')
+    this.$removeStyles(listContainerElement, ['scale', 'top', 'left'])
+    this._isVisible = false
+  }
+
+  _addImitationTo(element) {
+    const imitationElement = this.$get('imitation')
+    const isImitationAlreadyActive = imitationElement.classList.contains('active')
+    const rect = element.getBoundingClientRect()
+
+    if (!isImitationAlreadyActive) imitationElement.classList.add('active')
+    this.$addStyles(imitationElement, {
+      top: `${rect.top}px`,
+      left: `${rect.left}px`,
+      width: `${rect.width}px`,
+      height: `${rect.height}px`
+    })
+  }
+
+  _handleCancelation() {
+    if (this._isCanceled) return
+
+    this.$dispatch('cancel')
+    this.remove()
+
+    this._isCanceled = true
+  }
+
+  _handleKeyDown(event) {
+    if (event.key === 'Escape') this._handleCancelation()
   }
 }
 

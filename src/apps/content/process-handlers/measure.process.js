@@ -1,5 +1,5 @@
-import { getElementByXPath } from '@content/helpers/dom-locator.helpers'
-import { convertElementsGapToJSON } from '@content/helpers/format.helpers'
+import { convertElementsGapToJSON } from '@src/helpers/converter.helpers'
+import { getElementByXPath } from '@src/helpers/dom-locator.helpers'
 
 export default async (resolve, reject, data) => {
   const { start, end } = data

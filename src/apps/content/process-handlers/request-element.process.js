@@ -1,18 +1,22 @@
+import { getElementByXPath } from '@src/helpers/dom-locator.helpers'
 import { createElementPicker, createHighlight } from '@src/helpers/web-components.helpers'
-import { convertElementToJSON } from '../helpers/format.helpers'
 
-export default async (resolve, _reject, data) => {
-  const elementPicker = createElementPicker()
+export default async (resolve, reject, data) => {
+  const elementPicker = createElementPicker({ theme: data.theme })
 
-  const handleMouseEnd = event => {
-    event.stopPropagation()
-    const [, element] = document.elementsFromPoint(event.clientX, event.clientY)
-    const elementAsJSON = convertElementToJSON(element)
+  const handlePickUp = event => {
+    const elementAsJSON = event.detail
+    const element = getElementByXPath(elementAsJSON.xpath)
     createHighlight({ element, theme: data.theme })
 
     elementPicker.remove()
     resolve(elementAsJSON)
   }
 
-  elementPicker.addEventListener('click', handleMouseEnd)
+  const handleCancel = () => {
+    reject('Operation canceled by user')
+  }
+
+  elementPicker.addEventListener('pickedup', handlePickUp)
+  elementPicker.addEventListener('cancel', handleCancel)
 }

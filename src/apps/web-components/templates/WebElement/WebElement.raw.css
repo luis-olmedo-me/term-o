@@ -1,0 +1,131 @@
+.web-theme-provider {
+  font-size: 16px;
+  font-family: var(--font);
+}
+
+.global-scroller::-webkit-scrollbar {
+  width: var(--space-200);
+  height: var(--space-200);
+}
+.global-scroller::-webkit-scrollbar-track {
+  cursor: pointer;
+  background-image: linear-gradient(
+    180deg,
+    transparent 5%,
+    rgb(from var(--colors-brightBlack) r g b / 0.2) 10%,
+    rgb(from var(--colors-brightBlack) r g b / 0.2) 90%,
+    transparent 95%
+  );
+}
+.global-scroller::-webkit-scrollbar-thumb {
+  cursor: pointer;
+  background-color: var(--colors-brightBlack);
+}
+.global-scroller::-webkit-scrollbar-thumb:active,
+.global-scroller::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(from var(--colors-accent) r g b / 0.8);
+}
+
+.colored[data-bgcolor='white'] {
+  background-color: var(--colors-white);
+}
+.colored[data-bgcolor='black'] {
+  background-color: var(--colors-black);
+}
+.colored[data-bgcolor='red'] {
+  background-color: var(--colors-red);
+}
+.colored[data-bgcolor='yellow'] {
+  background-color: var(--colors-yellow);
+}
+.colored[data-bgcolor='green'] {
+  background-color: var(--colors-green);
+}
+.colored[data-bgcolor='purple'] {
+  background-color: var(--colors-purple);
+}
+.colored[data-bgcolor='cyan'] {
+  background-color: var(--colors-cyan);
+}
+.colored[data-bgcolor='blue'] {
+  background-color: var(--colors-blue);
+}
+.colored[data-bgcolor='brightRed'] {
+  background-color: var(--colors-brightRed);
+}
+.colored[data-bgcolor='brightYellow'] {
+  background-color: var(--colors-brightYellow);
+}
+.colored[data-bgcolor='brightGreen'] {
+  background-color: var(--colors-brightGreen);
+}
+.colored[data-bgcolor='brightPurple'] {
+  background-color: var(--colors-brightPurple);
+}
+.colored[data-bgcolor='brightCyan'] {
+  background-color: var(--colors-brightCyan);
+}
+.colored[data-bgcolor='brightBlue'] {
+  background-color: var(--colors-brightBlue);
+}
+.colored[data-bgcolor='brightWhite'] {
+  background-color: var(--colors-brightWhite);
+}
+.colored[data-bgcolor='brightBlack'] {
+  background-color: var(--colors-brightBlack);
+}
+.colored[data-bgcolor='reset'] {
+  background-color: transparent;
+}
+
+.colored[data-color='white'] {
+  color: var(--colors-white);
+}
+.colored[data-color='black'] {
+  color: var(--colors-black);
+}
+.colored[data-color='red'] {
+  color: var(--colors-red);
+}
+.colored[data-color='yellow'] {
+  color: var(--colors-yellow);
+}
+.colored[data-color='green'] {
+  color: var(--colors-green);
+}
+.colored[data-color='purple'] {
+  color: var(--colors-purple);
+}
+.colored[data-color='cyan'] {
+  color: var(--colors-cyan);
+}
+.colored[data-color='blue'] {
+  color: var(--colors-blue);
+}
+.colored[data-color='brightRed'] {
+  color: var(--colors-brightRed);
+}
+.colored[data-color='brightYellow'] {
+  color: var(--colors-brightYellow);
+}
+.colored[data-color='brightGreen'] {
+  color: var(--colors-brightGreen);
+}
+.colored[data-color='brightPurple'] {
+  color: var(--colors-brightPurple);
+}
+.colored[data-color='brightCyan'] {
+  color: var(--colors-brightCyan);
+}
+.colored[data-color='brightBlue'] {
+  color: var(--colors-brightBlue);
+}
+.colored[data-color='brightWhite'] {
+  color: var(--colors-brightWhite);
+}
+.colored[data-color='brightBlack'] {
+  color: var(--colors-brightBlack);
+}
+.colored[data-color='reset'] {
+  color: var(--colors-foreground);
+}

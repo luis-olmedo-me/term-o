@@ -6,7 +6,102 @@
 
 .overlay {
   position: fixed;
-  opacity: 1;
   cursor: crosshair;
   inset: 0;
+  border: var(--space-200) solid rgb(from var(--colors-accent) r g b / 0.5);
+  background-color: rgb(from var(--colors-black) r g b / 0.1);
+}
+
+.imitation {
+  display: none;
+  position: fixed;
+  outline: var(--space-100) dashed var(--colors-accent);
+  pointer-events: none;
+}
+.imitation.active {
+  display: block;
+}
+
+.list-container {
+  position: fixed;
+  top: 100%;
+  left: 100%;
+  transform-origin: top left;
+  scale: 0;
+  transition:
+    top 0.2s ease-in-out,
+    left 0.2s ease-in-out,
+    scale 0.2s 0.1s ease-in-out;
+  box-shadow: 0 5px 10px rgb(from var(--colors-black) r g b / 0.8);
+  border: var(--space-50) solid var(--colors-brightBlack);
+  border-radius: var(--radius-200);
+  background-color: var(--colors-background);
+  padding-right: var(--space-250);
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  max-width: 300px;
+  max-height: 10rem;
+  overflow-y: scroll;
+}
+
+.list-option {
+  transition:
+    background-color 0.1s ease-in-out,
+    padding 0.1s ease-in-out,
+    color 0.1s ease-in-out;
+  cursor: pointer;
+  margin-right: var(--space-250);
+  border-right: var(--space-50) solid rgb(from var(--colors-brightBlack) r g b / 0.5);
+  padding: var(--space-200) var(--space-300);
+  overflow: hidden;
+  color: var(--colors-foreground);
+}
+.list-option:hover,
+.list-option:focus {
+  background-color: rgb(from var(--colors-accent) r g b / 0.1);
+  padding: var(--space-200) var(--space-300) var(--space-200) var(--space-500);
+}
+.list-option:hover .colored,
+.list-option:focus .colored {
+  color: var(--colors-accent);
+}
+
+.line {
+  animation: rotate 0.6s calc(var(--index) * 0.1s) ease-in-out;
+  transition: background-color 0.2s ease-in-out;
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  font-size: var(--fontSize-50);
+  line-height: var(--lineHeight-50);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.point {
+  display: none;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 5px var(--colors-black);
+  border: var(--space-50) solid var(--colors-brightBlack);
+  border-radius: 100%;
+  background-color: var(--colors-accent);
+  width: var(--space-250);
+  height: var(--space-250);
+}
+.point.active {
+  display: block;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotateX(360deg);
+  }
+
+  100% {
+    transform: rotateX(0deg);
+  }
 }

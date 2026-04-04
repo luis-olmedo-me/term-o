@@ -37,4 +37,20 @@ export class WebElement extends HTMLElement {
 
     this.dispatchEvent(customEvent)
   }
+
+  $addStyles(element, styles) {
+    requestAnimationFrame(() => {
+      for (const styleName of styles) {
+        element.style.setProperty(styleName, styles[styleName])
+      }
+    })
+  }
+
+  $removeStyles(element, styles) {
+    requestAnimationFrame(() => {
+      for (const styleName of styles) {
+        element.style.removeProperty(styleName)
+      }
+    })
+  }
 }

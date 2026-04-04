@@ -12,6 +12,16 @@
   background-color: rgb(from var(--colors-black) r g b / 0.1);
 }
 
+.imitation {
+  display: none;
+  position: fixed;
+  outline: var(--space-100) dashed var(--colors-accent);
+  pointer-events: none;
+}
+.imitation.active {
+  display: block;
+}
+
 .list-container {
   position: fixed;
   top: 100%;

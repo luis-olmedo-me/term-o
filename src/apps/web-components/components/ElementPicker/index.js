@@ -48,6 +48,7 @@ class ElementPicker extends WebElement {
 
       const textElement = document.createElement('li')
       textElement.addEventListener('click', () => thisRef.$dispatch('pickedup', elementAsJSON))
+      textElement.addEventListener('mouseenter', () => thisRef._addImitationTo(element))
       textElement.setAttribute('class', 'list-option')
       textElement.setAttribute('role', 'option')
       textElement.setAttribute('style', `--index: ${index}`)
@@ -78,12 +79,29 @@ class ElementPicker extends WebElement {
     if (!this._isVisible) return
 
     const pointElement = this.$get('point')
+    const imitationElement = this.$get('imitation')
     const listContainerElement = this.$get('list-container')
+    const isImitationAlreadyActive = imitationElement.classList.contains('active')
     const isPointAlreadyActive = pointElement.classList.contains('active')
 
+    if (isImitationAlreadyActive) imitationElement.classList.remove('active')
     if (isPointAlreadyActive) pointElement.classList.remove('active')
     this.$removeStyles(listContainerElement, ['scale', 'top', 'left'])
     this._isVisible = false
+  }
+
+  _addImitationTo(element) {
+    const imitationElement = this.$get('imitation')
+    const isImitationAlreadyActive = imitationElement.classList.contains('active')
+    const rect = element.getBoundingClientRect()
+
+    if (!isImitationAlreadyActive) imitationElement.classList.add('active')
+    this.$addStyles(imitationElement, {
+      top: `${rect.top}px`,
+      left: `${rect.left}px`,
+      width: `${rect.width}px`,
+      height: `${rect.height}px`
+    })
   }
 
   _handleCancelation() {

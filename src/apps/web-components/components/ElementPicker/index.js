@@ -29,6 +29,7 @@ class ElementPicker extends WebElement {
   _handleOverlayClick(event) {
     const thisRef = this
     const listElement = this.$get('list')
+    const pointElement = this.$get('point')
     const listContainerElement = this.$get('list-container')
     const [, ...elements] = document.elementsFromPoint(event.clientX, event.clientY)
 
@@ -55,6 +56,9 @@ class ElementPicker extends WebElement {
 
     listContainerElement.style.setProperty('top', `${posY}px`)
     listContainerElement.style.setProperty('left', `${posX}px`)
+
+    pointElement.style.setProperty('top', `${event.clientY}px`)
+    pointElement.style.setProperty('left', `${event.clientX}px`)
 
     this._isVisible = true
   }

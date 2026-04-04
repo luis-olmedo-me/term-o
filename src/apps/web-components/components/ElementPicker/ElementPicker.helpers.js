@@ -1,5 +1,6 @@
 export const calculatePosition = (element, pointX, pointY) => {
   const errorGap = 15
+  const marginGap = 10
 
   const width = element.clientWidth
   const height = element.clientHeight
@@ -9,11 +10,11 @@ export const calculatePosition = (element, pointX, pointY) => {
   let sideX = null
   let sideY = null
 
-  if (pointX + width < limitX) sideX = pointX
-  else sideX = pointX - width
+  if (pointX + width < limitX) sideX = pointX + marginGap
+  else sideX = pointX - width - marginGap
 
-  if (pointY + height < limitY) sideY = pointY
-  else sideY = pointY - height
+  if (pointY + height < limitY) sideY = pointY + marginGap
+  else sideY = pointY - height - marginGap
 
   return [sideX, sideY]
 }

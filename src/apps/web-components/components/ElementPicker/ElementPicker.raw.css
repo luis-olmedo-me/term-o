@@ -71,6 +71,17 @@
   white-space: nowrap;
 }
 
+.point {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 5px 10px rgb(from var(--colors-black) r g b / 0.8);
+  border: var(--space-50) solid var(--colors-brightBlack);
+  border-radius: 100%;
+  background-color: var(--colors-accent);
+  width: var(--space-250);
+  height: var(--space-250);
+}
+
 @keyframes rotate {
   0% {
     transform: rotateX(180deg);

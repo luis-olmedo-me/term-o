@@ -33,10 +33,11 @@ class ElementPicker extends WebElement {
     const listContainerElement = this.$get('list-container')
     const [, ...elements] = document.elementsFromPoint(event.clientX, event.clientY)
 
+    listElement.scrollTop = 0
     listElement.replaceChildren()
     listContainerElement.style.setProperty('scale', `1`)
 
-    elements.forEach(element => {
+    elements.forEach((element, index) => {
       const elementAsJSON = convertElementToJSON(element)
       const elementAsLog = formatElement({ ...elementAsJSON, textContent: null, xpath: null })
       const elementAsTextLog = stringifyFragments(elementAsLog)
@@ -47,6 +48,7 @@ class ElementPicker extends WebElement {
       textElement.addEventListener('click', () => thisRef.$dispatch('pickedup', elementAsJSON))
       textElement.setAttribute('class', 'list-option')
       textElement.setAttribute('role', 'option')
+      textElement.setAttribute('style', `--index: ${index}`)
 
       textElement.append(coloredTextElement)
       listElement.append(textElement)

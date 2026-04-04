@@ -32,6 +32,7 @@ class ElementPicker extends WebElement {
     const thisRef = this
     const listElement = this.$get('list')
     const pointElement = this.$get('point')
+    const imitationElement = this.$get('imitation')
     const listContainerElement = this.$get('list-container')
     const [, ...elements] = document.elementsFromPoint(event.clientX, event.clientY)
 
@@ -63,6 +64,7 @@ class ElementPicker extends WebElement {
 
     const [posX, posY] = calculatePosition(listContainerElement, event.clientX, event.clientY)
     const isPointAlreadyActive = pointElement.classList.contains('active')
+    const isImitationAlreadyActive = imitationElement.classList.contains('active')
 
     this.$addStyles(listContainerElement, {
       top: `${posY}px`,
@@ -75,6 +77,7 @@ class ElementPicker extends WebElement {
     })
 
     if (!isPointAlreadyActive) pointElement.classList.add('active')
+    if (isImitationAlreadyActive) imitationElement.classList.remove('active')
 
     this._isVisible = true
   }

@@ -4,7 +4,7 @@ import { createElementPicker, createHighlight } from '@src/helpers/web-component
 export default async (resolve, _reject, data) => {
   const elementPicker = createElementPicker({ theme: data.theme })
 
-  const handleMouseEnd = event => {
+  const handlePickUp = event => {
     const elementAsJSON = event.detail
     const element = getElementByXPath(elementAsJSON.xpath)
     createHighlight({ element, theme: data.theme })
@@ -13,5 +13,5 @@ export default async (resolve, _reject, data) => {
     resolve(elementAsJSON)
   }
 
-  elementPicker.addEventListener('pickedup', handleMouseEnd)
+  elementPicker.addEventListener('pickedup', handlePickUp)
 }

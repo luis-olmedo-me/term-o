@@ -15,13 +15,15 @@ class ElementPicker extends WebElement {
       html: elementPickerHtml,
       css: elementPickerCss
     })
+
+    this._isVisible = false
   }
 
   connectedCallback() {
     const overlayElement = this.$get('overlay')
 
     overlayElement.addEventListener('click', this._handleOverlayClick.bind(this))
-    overlayElement.addEventListener('scroll', this._handleOverlayClick.bind(this))
+    window.addEventListener('scroll', this._handleOverlayScroll.bind(this))
   }
 
   _handleOverlayClick(event) {
@@ -53,11 +55,20 @@ class ElementPicker extends WebElement {
 
     listContainerElement.style.setProperty('top', `${posY}px`)
     listContainerElement.style.setProperty('left', `${posX}px`)
+
+    this._isVisible = true
   }
 
   _handleOverlayScroll() {
-    this.$dispatch('cancelbyscroll')
-    this.remove()
+    if (!this._isVisible) return
+
+    const listContainerElement = this.$get('list-container')
+
+    listContainerElement.style.removeProperty('scale')
+    listContainerElement.style.removeProperty('top')
+    listContainerElement.style.removeProperty('left')
+
+    this._isVisible = false
   }
 
   _createPaintedElement(text) {

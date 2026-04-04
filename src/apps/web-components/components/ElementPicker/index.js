@@ -29,8 +29,6 @@ class ElementPicker extends WebElement {
     const [, ...elements] = document.elementsFromPoint(event.clientX, event.clientY)
 
     listElement.replaceChildren()
-    listContainerElement.style.setProperty('top', `${event.clientY}px`)
-    listContainerElement.style.setProperty('left', `${event.clientX}px`)
     listContainerElement.style.setProperty('scale', `1`)
 
     elements.forEach(element => {
@@ -48,6 +46,35 @@ class ElementPicker extends WebElement {
       textElement.append(coloredTextElement)
       listElement.append(textElement)
     })
+
+    const [sideX, sideY] = this._calculatePosition(
+      listContainerElement,
+      event.clientX,
+      event.clientY
+    )
+
+    listContainerElement.style.setProperty('top', `${sideY}px`)
+    listContainerElement.style.setProperty('left', `${sideX}px`)
+  }
+
+  _calculatePosition(element, pointX, pointY) {
+    const errorGap = 15
+
+    const width = element.clientWidth
+    const height = element.clientHeight
+    const limitX = window.innerWidth - errorGap
+    const limitY = window.innerHeight - errorGap
+
+    let sideX = null
+    let sideY = null
+
+    if (pointX + width < limitX) sideX = pointX
+    else sideX = pointX - width
+
+    if (pointY + height < limitY) sideY = pointY
+    else sideY = pointY - height
+
+    return [sideX, sideY]
   }
 
   _createPaintedElement(text) {

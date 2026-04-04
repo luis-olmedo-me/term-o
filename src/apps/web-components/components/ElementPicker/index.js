@@ -21,6 +21,7 @@ class ElementPicker extends WebElement {
     const overlayElement = this.$get('overlay')
 
     overlayElement.addEventListener('click', this._handleOverlayClick.bind(this))
+    overlayElement.addEventListener('scroll', this._handleOverlayClick.bind(this))
   }
 
   _handleOverlayClick(event) {
@@ -52,6 +53,11 @@ class ElementPicker extends WebElement {
 
     listContainerElement.style.setProperty('top', `${posY}px`)
     listContainerElement.style.setProperty('left', `${posX}px`)
+  }
+
+  _handleOverlayScroll() {
+    this.$dispatch('cancelbyscroll')
+    this.remove()
   }
 
   _createPaintedElement(text) {

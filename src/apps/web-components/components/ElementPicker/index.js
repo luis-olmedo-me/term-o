@@ -54,6 +54,7 @@ class ElementPicker extends WebElement {
     })
 
     const [posX, posY] = calculatePosition(listContainerElement, event.clientX, event.clientY)
+    const isPointAlreadyActive = pointElement.classList.contains('active')
 
     this.$addStyles(listContainerElement, {
       top: `${posY}px`,
@@ -65,16 +66,20 @@ class ElementPicker extends WebElement {
       left: `${event.clientX}px`
     })
 
+    if (!isPointAlreadyActive) pointElement.classList.add('active')
+
     this._isVisible = true
   }
 
   _handleOverlayScroll() {
     if (!this._isVisible) return
 
+    const pointElement = this.$get('point')
     const listContainerElement = this.$get('list-container')
+    const isPointAlreadyActive = pointElement.classList.contains('active')
 
+    if (isPointAlreadyActive) pointElement.classList.remove('active')
     this.$removeStyles(listContainerElement, ['scale', 'top', 'left'])
-
     this._isVisible = false
   }
 }

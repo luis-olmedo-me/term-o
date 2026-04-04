@@ -71,6 +71,7 @@
 }
 
 .point {
+  display: none;
   position: fixed;
   transform: translate(-50%, -50%);
   box-shadow: 0 0 5px var(--colors-black);
@@ -79,6 +80,9 @@
   background-color: var(--colors-accent);
   width: var(--space-250);
   height: var(--space-250);
+}
+.point.active {
+  display: block;
 }
 
 @keyframes rotate {

@@ -40,7 +40,7 @@ export class WebElement extends HTMLElement {
 
   $addStyles(element, styles) {
     requestAnimationFrame(() => {
-      for (const styleName of styles) {
+      for (const styleName in styles) {
         element.style.setProperty(styleName, styles[styleName])
       }
     })

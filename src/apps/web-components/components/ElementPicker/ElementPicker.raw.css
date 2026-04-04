@@ -73,7 +73,7 @@
 .point {
   position: fixed;
   transform: translate(-50%, -50%);
-  box-shadow: 0 5px 10px rgb(from var(--colors-black) r g b / 0.8);
+  box-shadow: 0 0 5px var(--colors-black);
   border: var(--space-50) solid var(--colors-brightBlack);
   border-radius: 100%;
   background-color: var(--colors-accent);

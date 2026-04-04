@@ -8,6 +8,7 @@
   position: fixed;
   cursor: crosshair;
   inset: 0;
+  border: var(--space-200) solid rgb(from var(--colors-accent) r g b / 0.5);
   background-color: rgb(from var(--colors-black) r g b / 0.1);
 }
 

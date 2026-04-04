@@ -16,6 +16,7 @@ class ElementPicker extends WebElement {
     })
 
     this._isVisible = false
+    this._isCanceled = false
   }
 
   connectedCallback() {
@@ -23,6 +24,8 @@ class ElementPicker extends WebElement {
 
     overlayElement.addEventListener('click', this._handleOverlayClick.bind(this))
     window.addEventListener('scroll', this._handleOverlayScroll.bind(this))
+    window.addEventListener('blur', this._handleCancelation.bind(this))
+    window.addEventListener('keydown', this._handleKeyDown.bind(this))
   }
 
   _handleOverlayClick(event) {
@@ -81,6 +84,19 @@ class ElementPicker extends WebElement {
     if (isPointAlreadyActive) pointElement.classList.remove('active')
     this.$removeStyles(listContainerElement, ['scale', 'top', 'left'])
     this._isVisible = false
+  }
+
+  _handleCancelation() {
+    if (this._isCanceled) return
+
+    this.$dispatch('cancel')
+    this.remove()
+
+    this._isCanceled = true
+  }
+
+  _handleKeyDown(event) {
+    if (event.key === 'Escape') this._handleCancelation()
   }
 }
 

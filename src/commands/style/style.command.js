@@ -9,8 +9,7 @@ import {
   isArray,
   isRegExp,
   isSpaceForbidden,
-  isString,
-  isXpath
+  isString
 } from '@src/helpers/validation-command.helpers'
 import { styleHelpSections } from './style.constants'
 import { styleHandler } from './style.handler'
@@ -56,8 +55,7 @@ export default new CommandBase({
     abbreviation: 'o',
     type: commandTypes.STRING,
     description: 'XPath expression to select elements',
-    helpSection: styleHelpSections.RETRIEVAL,
-    validate: [isXpath]
+    helpSection: styleHelpSections.RETRIEVAL
   })
   .expect({
     name: 'property',

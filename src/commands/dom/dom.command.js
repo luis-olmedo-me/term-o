@@ -11,8 +11,7 @@ import {
   isPositive,
   isRegExp,
   isString,
-  isTabId,
-  isXpath
+  isTabId
 } from '@src/helpers/validation-command.helpers'
 import { domHelpSections } from './dom.constants'
 import { domHandler } from './dom.handler'
@@ -35,8 +34,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: domHelpSections.SEARCH,
     description: 'Find elements with an XPath query',
-    worksWith: ['tab-id', 'sibling', 'parent', 'child', 'xpath', 'below', 'inject'],
-    validate: [isXpath]
+    worksWith: ['tab-id', 'sibling', 'parent', 'child', 'xpath', 'below', 'inject']
   })
   .expect({
     name: 'create',
@@ -61,7 +59,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
     description: 'Define two element xpaths and measure the distance between.',
-    validate: [hasAllItemsAs(isString, isXpath), hasLength(2)],
+    validate: [hasAllItemsAs(isString), hasLength(2)],
     worksWith: ['tab-id'],
     repeatable: true
   })
@@ -70,8 +68,7 @@ export default new CommandBase({
     abbreviation: 'I',
     type: commandTypes.STRING,
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
-    description: 'Inject HTML as text',
-    validate: []
+    description: 'Inject HTML as text'
   })
   .expect({
     name: 'sibling',
@@ -159,7 +156,6 @@ export default new CommandBase({
     name: 'below',
     type: commandTypes.STRING,
     abbreviation: 'B',
-    validate: [isXpath],
     helpSection: domHelpSections.SEARCH,
     description: 'Limit search scope under a specific element'
   })

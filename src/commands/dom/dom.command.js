@@ -3,6 +3,7 @@ import CommandBase from '@src/templates/CommandBase'
 import { commandNames, commandTypes } from '@src/constants/command.constants'
 import {
   hasAllItemsAs,
+  hasLength,
   hasLengthBetween,
   isArray,
   isInteger,
@@ -53,6 +54,16 @@ export default new CommandBase({
     description: 'Pick an element from the tab',
     worksWith: ['xpath', 'tab-id', 'content', 'times'],
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES
+  })
+  .expect({
+    name: 'measure',
+    abbreviation: 'M',
+    type: commandTypes.STRING,
+    helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
+    description: 'Define two element xpaths and measure the distance between.',
+    validate: [hasAllItemsAs(isString, isXpath), hasLength(2)],
+    worksWith: ['tab-id'],
+    repeatable: true
   })
   .expect({
     name: 'inject',

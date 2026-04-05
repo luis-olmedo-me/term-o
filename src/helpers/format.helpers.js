@@ -198,11 +198,11 @@ export const formatStringSearch = ({ query, input }) => {
   ]
 }
 
-export const formatGap = ({ distanceX, distanceY }, elementA, elementB) => {
+export const formatGap = ({ distanceX, distanceY }, xpathA, xpathB) => {
   const quotedDistanceX = getQuotedString(`${distanceX}px`)
   const quotedDistanceY = getQuotedString(`${distanceY}px`)
-  const quotedXpathA = getQuotedString(elementA.xpath)
-  const quotedXpathB = getQuotedString(elementB.xpath)
+  const quotedXpathA = getQuotedString(xpathA)
+  const quotedXpathB = getQuotedString(xpathB)
 
   return [
     `${C`brightYellow`}${quotedDistanceX}${C`reset`}`,

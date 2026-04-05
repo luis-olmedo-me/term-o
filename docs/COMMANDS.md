@@ -1,7 +1,7 @@
 # Term-O Commands
 
 > Version 0.9.1  
-> Updated: 2026-03-30
+> Updated: 2026-04-05
 
 ---
 
@@ -50,6 +50,7 @@ The `dom` command enables element selection, filtering, and contextual queries i
 | ------------------------------------------------ | ----- | -------------------------------------------- |
 | `--search`                                       | `-s`  | Find elements by criteria.                   |
 | `--create`                                       | `-c`  | Create a DOM element.                        |
+| `--pick`                                         | `-p`  | Pick an element from the tab.                |
 | `--on <xpath>`                                   | `-X`  | Find elements with an XPath query.           |
 | `--inject <string>`                              | `-I`  | Inject HTML as text.                         |
 | `--attr <[attrname attrvalue]>`                  | `-a`  | Describe DOM element attributes.             |
@@ -67,7 +68,7 @@ The `dom` command enables element selection, filtering, and contextual queries i
 
 ### Dependency Rules
 
-When using `dom` command the options can express **4** possible actions:
+When using `dom` command the options can express **6** possible actions:
 
 1. An element search (using `--search`)
 
@@ -124,6 +125,30 @@ When using `dom` command the options can express **4** possible actions:
        --create "button"                                                    # REQUIRED
        --below 'id("cards-container")'                                      # OPTIONAL
        --attr ["class" "test-class"]                                        # OPTIONAL/REPEATABLE
+   ```
+
+5. Pick an element (using `--pick`)
+
+   The option `--pick` will prepare the tab to be clickable. Once, the user clicks anywhere a dropdown will show the elements as options. Here is an example of how specific a search can be:
+
+   ```bash
+   dom
+       --pick                                                               # REQUIRED
+       --content                                                            # OPTIONAL
+       --xpath                                                              # OPTIONAL
+       --times 3                                                            # OPTIONAL
+       --tab-id "T00000000"                                                 # OPTIONAL
+   ```
+
+6. Measure distance (pixels) from two elements (using `--measure`)
+
+   The option `--measure` will track two elements given as xpath queries and measure the distance between them. Here is an example of how specific a search can be:
+
+   ```bash
+   dom
+       --measure "html"                                                     # REQUIRED
+       --measure "html/body[1]"                                             # REQUIRED
+       --tab-id "T00000000"                                                 # OPTIONAL
    ```
 
 ## TABS
@@ -649,16 +674,15 @@ When using `evennts` command the options can express **4** possible action:
 
 The `input` command is a bridge to UI terminal requests.
 
-| Option      | Short | Description                                         |
-| ----------- | ----- | --------------------------------------------------- |
-| `--text`    | `-t`  | Request user input in terminal.                     |
-| `--measure` | `-m`  | Pick two elements and measure the distance between. |
-| `--tab-id`  | `-i`  | Specify a tab ID to take action on.                 |
-| `--help`    | `-h`  | Show help for this command.                         |
+| Option     | Short | Description                         |
+| ---------- | ----- | ----------------------------------- |
+| `--text`   | `-t`  | Request user input in terminal.     |
+| `--tab-id` | `-i`  | Specify a tab ID to take action on. |
+| `--help`   | `-h`  | Show help for this command.         |
 
 ### Dependency Rules
 
-When using `input` command the options can express **2** possible action:
+When using `input` command the options can express **1** possible action:
 
 1. Request a user input in the terminal (using `--text`)
 
@@ -667,16 +691,6 @@ When using `input` command the options can express **2** possible action:
    ```bash
    input
        --text                                                               # REQUIRED
-   ```
-
-2. Pick two elements and calculate the distance between (using `--measure`)
-
-   Just using `--measure` will trigger a request for two elements in the poited tab. Here is an example of how specific it can be:
-
-   ```bash
-   input
-       --measure                                                            # REQUIRED
-       --tab-id "T00000000"                                                 # OPTIONAL
    ```
 
 ## THEME

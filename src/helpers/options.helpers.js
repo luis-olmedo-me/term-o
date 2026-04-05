@@ -124,7 +124,6 @@ export const getPropsFromString = command => {
       const argName = option.displayName
       const { value, newIndex } = parseOptions(index, argName, argValues, option.type)
       const completeValue = isArrayOption ? [...(alreadySetValue || []), value] : value
-      option.validate(completeValue)
       index = newIndex
 
       props = { ...props, [option.name]: completeValue }
@@ -151,7 +150,6 @@ export const getPropsFromString = command => {
       const argName = option.displayName
       const { value, newIndex } = parseOptions(index, argName, argValues, option.type)
       const completeValue = isRepeatable ? [...(alreadySetValue || []), value] : value
-      option.validate(completeValue)
       index = newIndex
 
       props = { ...props, [option.name]: completeValue }
@@ -159,6 +157,13 @@ export const getPropsFromString = command => {
     }
 
     throw `${argValue} is an unexpected argument.`
+  }
+
+  for (const name in props) {
+    const value = props[name]
+    const option = command.options.getByName(name)
+
+    option.validate(value)
   }
 
   return props

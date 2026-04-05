@@ -51,8 +51,8 @@ export default new CommandBase({
     abbreviation: 'P',
     type: commandTypes.BOOLEAN,
     description: 'Pick an element from the tab',
-    worksWith: ['xpath', 'tab-id', 'content'],
-    helpSection: domHelpSections.SEARCH
+    worksWith: ['xpath', 'tab-id', 'content', 'times'],
+    helpSection: domHelpSections.ACTIONS_AND_UTILITIES
   })
   .expect({
     name: 'inject',
@@ -151,4 +151,12 @@ export default new CommandBase({
     validate: [isXpath],
     helpSection: domHelpSections.SEARCH,
     description: 'Limit search scope under a specific element'
+  })
+  .expect({
+    name: 'times',
+    type: commandTypes.NUMBER,
+    abbreviation: 'm',
+    helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
+    description: 'Specify how many times the task must be done',
+    defaultValue: 1
   })

@@ -26,13 +26,17 @@ export const getElementXPath = element => {
 }
 
 export const getElementByXPath = (xpath, below) => {
-  return (below || window.document).evaluate(
-    xpath,
-    document,
-    null,
-    XPathResult.FIRST_ORDERED_NODE_TYPE,
-    null
-  ).singleNodeValue
+  try {
+    return (below || window.document).evaluate(
+      xpath,
+      document,
+      null,
+      XPathResult.FIRST_ORDERED_NODE_TYPE,
+      null
+    ).singleNodeValue
+  } catch {
+    return null
+  }
 }
 
 export const getElementSibling = (element, siblingIndex) => {

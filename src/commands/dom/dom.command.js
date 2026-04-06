@@ -3,6 +3,7 @@ import CommandBase from '@src/templates/CommandBase'
 import { commandNames, commandTypes } from '@src/constants/command.constants'
 import {
   hasAllItemsAs,
+  hasLength,
   hasLengthBetween,
   isArray,
   isInteger,
@@ -10,8 +11,7 @@ import {
   isPositive,
   isRegExp,
   isString,
-  isTabId,
-  isXpath
+  isTabId
 } from '@src/helpers/validation-command.helpers'
 import { domHelpSections } from './dom.constants'
 import { domHandler } from './dom.handler'
@@ -34,8 +34,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: domHelpSections.SEARCH,
     description: 'Find elements with an XPath query',
-    worksWith: ['tab-id', 'sibling', 'parent', 'child', 'xpath', 'below', 'inject'],
-    validate: [isXpath]
+    worksWith: ['tab-id', 'sibling', 'parent', 'child', 'xpath', 'below', 'inject']
   })
   .expect({
     name: 'create',
@@ -47,12 +46,29 @@ export default new CommandBase({
     validate: [isKebabCase]
   })
   .expect({
+    name: 'pick',
+    abbreviation: 'P',
+    type: commandTypes.BOOLEAN,
+    description: 'Pick an element from the tab',
+    worksWith: ['xpath', 'tab-id', 'content', 'times'],
+    helpSection: domHelpSections.ACTIONS_AND_UTILITIES
+  })
+  .expect({
+    name: 'measure',
+    abbreviation: 'M',
+    type: commandTypes.STRING,
+    helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
+    description: 'Define two element xpaths and measure the distance between.',
+    validate: [hasAllItemsAs(isString), hasLength(2)],
+    worksWith: ['tab-id'],
+    repeatable: true
+  })
+  .expect({
     name: 'inject',
     abbreviation: 'I',
     type: commandTypes.STRING,
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
-    description: 'Inject HTML as text',
-    validate: []
+    description: 'Inject HTML as text'
   })
   .expect({
     name: 'sibling',
@@ -140,7 +156,14 @@ export default new CommandBase({
     name: 'below',
     type: commandTypes.STRING,
     abbreviation: 'B',
-    validate: [isXpath],
     helpSection: domHelpSections.SEARCH,
     description: 'Limit search scope under a specific element'
+  })
+  .expect({
+    name: 'times',
+    type: commandTypes.NUMBER,
+    abbreviation: 'm',
+    helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
+    description: 'Specify how many times the task must be done',
+    defaultValue: 1
   })

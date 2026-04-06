@@ -51,6 +51,11 @@ export const createNotification = ({ title, message, theme, color }) => {
   return manager
 }
 
-export const createElementPicker = () => {
-  return createWebElement(webElements.ELEMENT_PICKER)
+export const createElementPicker = ({ theme }) => {
+  const themeEvent = new CustomEvent('themechange', { detail: { theme } })
+  const elementPicker = createWebElement(webElements.ELEMENT_PICKER)
+
+  elementPicker.dispatchEvent(themeEvent)
+
+  return elementPicker
 }

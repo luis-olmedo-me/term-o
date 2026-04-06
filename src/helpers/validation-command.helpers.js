@@ -2,8 +2,7 @@ import {
   groupIdPattern,
   kebabCasePattern,
   tabIdPattern,
-  windowIdPattern,
-  xpathPattern
+  windowIdPattern
 } from '@src/constants/patterns.constants'
 import { validateSchema } from '@src/helpers/validation-schema.helpers'
 import { getArrayAsLine } from './arguments.helpers'
@@ -45,14 +44,6 @@ export const isJSONScheme = scheme => {
     const parsedValue = JSON.parse(value)
 
     validateSchema(option, scheme, parsedValue)
-  }
-}
-
-export const isXpath = (option, value) => {
-  if (!xpathPattern.test(value)) {
-    const name = option.displayName
-
-    throw `${name} expects a valid XPath. Instead, it received "${value}".`
   }
 }
 

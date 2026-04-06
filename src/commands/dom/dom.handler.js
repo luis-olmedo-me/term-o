@@ -2,7 +2,7 @@ import processManager from '@src/libs/process-manager'
 
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
-import { formatElement } from '@src/helpers/format.helpers'
+import { formatElement, formatGap } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
 
 export const domHandler = async command => {
@@ -84,6 +84,42 @@ export const domHandler = async command => {
 
     command.reset()
     command.update(...updates)
+  }
+
+  if (P`pick`) {
+    const config = storage.get(storageKeys.CONFIG)
+    let updates = []
+
+    for (let index = 0; index < P`times`; index++) {
+      command.update(['"Please click over the page to pick up an element."'])
+      const element = await processManager.requestElement(tabId, { theme: config.theme })
+      const update = formatElement({
+        ...element,
+        tabId: P`tab-id`,
+        xpath: P`xpath` ? element.xpath : null,
+        textContent: P`content` ? element.textContent : null
+      })
+
+      command.update(update)
+      updates = [...updates, update]
+    }
+
+    command.reset()
+    command.update(...updates)
+  }
+
+  if (P`measure`.length) {
+    const [xpathA, xpathB] = P`measure`
+
+    command.update(['"Connecting to the tab."'])
+    const measure = await processManager.measure(tabId, {
+      start: xpathA,
+      end: xpathB
+    })
+    const update = formatGap(measure, xpathA, xpathB)
+
+    command.reset()
+    command.update(update)
   }
 
   if (P`help`) createHelpView(command)

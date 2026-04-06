@@ -1,6 +1,3 @@
-export const xpathPattern =
-  /^\/?(?:\*?\[@id="[^"]+"\]|\*?\[local-name\(\)="[^"]+"\](?:\[[0-9]+\])?|[a-zA-Z0-9_-]+(?:\[[0-9]+\])?)(?:\/(?:\*?\[@id="[^"]+"\]|\*?\[local-name\(\)="[^"]+"\](?:\[[0-9]+\])?|[a-zA-Z0-9_-]+(?:\[[0-9]+\])?))*$/
-
 export const kebabCasePattern = /^[a-z]+(-[a-z]+)*$/
 
 export const windowIdPattern = /W(\d)+/

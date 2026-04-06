@@ -2,7 +2,7 @@ import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
 import { eventsSupported } from '@src/constants/options.constants'
-import { isAnyOf, isRegExp, isTabId, isXpath } from '@src/helpers/validation-command.helpers'
+import { isAnyOf, isRegExp, isTabId } from '@src/helpers/validation-command.helpers'
 import { eventsHelpSections } from './events.constants'
 import { eventsHandler } from './events.handler'
 
@@ -25,8 +25,7 @@ export default new CommandBase({
     abbreviation: 'x',
     type: commandTypes.STRING,
     helpSection: eventsHelpSections.CREATION,
-    description: 'XPath selector for the target element',
-    validate: [isXpath]
+    description: 'XPath selector for the target element'
   })
   .expect({
     name: 'tab-id',

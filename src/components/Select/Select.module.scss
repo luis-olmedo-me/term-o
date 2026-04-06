@@ -150,6 +150,10 @@
   color: $colors-foreground;
   line-height: $lineHeight-200;
 
+  &:hover {
+    background-color: with-opacity($colors-accent, 0.1);
+  }
+
   &:hover,
   &:focus {
     color: $colors-accent;
@@ -165,7 +169,7 @@
   }
 
   &___state_selected {
-    background-color: with-opacity($colors-accent, 0.05);
+    background-color: with-opacity($colors-accent, 0.2);
     padding: $space-200 $space-300 $space-200 $space-500;
     color: $colors-brightAccent;
 

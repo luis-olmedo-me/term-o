@@ -38,7 +38,6 @@ class ElementPicker extends WebElement {
 
     listElement.scrollTop = 0
     listElement.replaceChildren()
-    listContainerElement.style.setProperty('scale', `1`)
 
     this.$addStyles(listContainerElement, {
       scale: 1

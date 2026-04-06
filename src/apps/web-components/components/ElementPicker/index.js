@@ -17,15 +17,21 @@ class ElementPicker extends WebElement {
 
     this._isVisible = false
     this._isCanceled = false
+
+    this._handleOverlayClickRef = this._handleOverlayClick.bind(this)
+    this._handleOverlayScrollRef = this._handleOverlayScroll.bind(this)
+    this._handleCancelationRef = this._handleCancelation.bind(this)
+    this._handleKeyDownRef = this._handleKeyDown.bind(this)
   }
 
   connectedCallback() {
     const overlayElement = this.$get('overlay')
 
-    overlayElement.addEventListener('click', this._handleOverlayClick.bind(this))
-    window.addEventListener('scroll', this._handleOverlayScroll.bind(this))
-    window.addEventListener('blur', this._handleCancelation.bind(this))
-    window.addEventListener('keydown', this._handleKeyDown.bind(this))
+    overlayElement.addEventListener('click', this._handleOverlayClickRef)
+    window.addEventListener('scroll', this._handleOverlayScrollRef)
+    window.addEventListener('blur', this._handleCancelationRef)
+    window.addEventListener('resize', this._handleCancelationRef)
+    window.addEventListener('keydown', this._handleKeyDownRef)
   }
 
   _handleOverlayClick(event) {
@@ -112,6 +118,11 @@ class ElementPicker extends WebElement {
 
   _handleCancelation() {
     if (this._isCanceled) return
+
+    window.removeEventListener('scroll', this._handleOverlayScrollRef)
+    window.removeEventListener('blur', this._handleCancelationRef)
+    window.removeEventListener('resize', this._handleCancelationRef)
+    window.removeEventListener('keydown', this._handleKeyDownRef)
 
     this.$dispatch('cancel')
     this.remove()

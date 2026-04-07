@@ -1,3 +1,4 @@
+import { paintedBorderTypes } from '@src/constants/paint.constants'
 import { colorPattern } from '@src/constants/patterns.constants'
 import { colorThemeKeys } from '@src/constants/themes.constants'
 import {
@@ -33,7 +34,7 @@ const findNextFragment = (fragments, currentIndex) => {
   return null
 }
 
-const getBorderClass = (fragments, index) => {
+const getBorderType = (fragments, index) => {
   const fragment = fragments[index]
   const previousFragment = fragments[index - 1]
   const nextFragment = findNextFragment(fragments, index)
@@ -42,10 +43,11 @@ const getBorderClass = (fragments, index) => {
   const isPreviousColored = isColoredFragment(previousFragment)
   const isCurrentColored = isColoredFragment(fragment)
 
-  if (isNextColored && !isPreviousColored) return text___next_colored
-  if (isPreviousColored && !isNextColored) return text___previous_colored
-  if (isNextColored && isPreviousColored) return text___both_colored
-  if (!isNextColored && !isPreviousColored && isCurrentColored) return text___unique_colored
+  if (isNextColored && !isPreviousColored) return paintedBorderTypes.BOTH_COLORED
+  if (isPreviousColored && !isNextColored) return paintedBorderTypes.PREVIOUS_COLORED
+  if (isNextColored && isPreviousColored) return paintedBorderTypes.NEXT_COLORED
+  if (!isNextColored && !isPreviousColored && isCurrentColored)
+    return paintedBorderTypes.UNIQUE_COLORED
   return ''
 }
 
@@ -65,7 +67,7 @@ export const getPaintedFragments = (value, keywordsEnabled) => {
       color: lastColor,
       bgcolor: lastBGColor,
       isKeyword: false,
-      borderClassName: null
+      borderType: null
     })
   }
 
@@ -91,7 +93,7 @@ export const getPaintedFragments = (value, keywordsEnabled) => {
         color: null,
         bgcolor: null,
         isKeyword: true,
-        borderClassName: null
+        borderType: null
       })
     }
 
@@ -101,13 +103,21 @@ export const getPaintedFragments = (value, keywordsEnabled) => {
         color: lastColor,
         bgcolor: lastBGColor,
         isKeyword: false,
-        borderClassName: null
+        borderType: null
       })
     }
   }
 
   return results.map((result, index) => ({
     ...result,
-    borderClassName: getBorderClass(results, index)
+    borderType: getBorderType(results, index)
   }))
+}
+
+export const getClassByBorderType = borderType => {
+  if (borderType === paintedBorderTypes.BOTH_COLORED) return text___both_colored
+  if (borderType === paintedBorderTypes.PREVIOUS_COLORED) return text___previous_colored
+  if (borderType === paintedBorderTypes.NEXT_COLORED) return text___next_colored
+  if (borderType === paintedBorderTypes.UNIQUE_COLORED) return text___unique_colored
+  return ''
 }

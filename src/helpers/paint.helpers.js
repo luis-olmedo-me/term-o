@@ -37,9 +37,9 @@ const getBorderType = (fragments, index) => {
   const isPreviousColored = isColoredFragment(previousFragment)
   const isCurrentColored = isColoredFragment(fragment)
 
-  if (isNextColored && !isPreviousColored) return paintedBorderTypes.BOTH_COLORED
+  if (isNextColored && !isPreviousColored) return paintedBorderTypes.NEXT_COLORED
   if (isPreviousColored && !isNextColored) return paintedBorderTypes.PREVIOUS_COLORED
-  if (isNextColored && isPreviousColored) return paintedBorderTypes.NEXT_COLORED
+  if (isNextColored && isPreviousColored) return paintedBorderTypes.BOTH_COLORED
   if (!isNextColored && !isPreviousColored && isCurrentColored)
     return paintedBorderTypes.UNIQUE_COLORED
   return ''

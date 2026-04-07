@@ -1,6 +1,7 @@
 import { useMemo } from 'preact/hooks'
 
-import { getClassByBorderType, getPaintedFragments } from './ColoredText.helpers'
+import { getPaintedFragments } from '@src/helpers/paint.helpers'
+import { getClassByBorderType } from './ColoredText.helpers'
 import { text, text__bg_spaced, text__keyword } from './ColoredText.module.scss'
 
 export const ColoredText = ({

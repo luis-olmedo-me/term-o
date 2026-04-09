@@ -186,10 +186,9 @@ export const hasAllItemsAs = (...validations) => {
 
 export const worksWith = (...dependencies) => {
   return (option, _value, props) => {
-    const validDependencies = Object.keys(props).filter(name => dependencies.includes(name))
-    const uknownDependencies = Object.keys(props).filter(name => !dependencies.includes(name))
+    const possibles = dependencies.concat(option.name)
+    const uknownDependencies = Object.keys(props).filter(name => !possibles.includes(name))
     const hasUnknownDependencies = uknownDependencies.length > 0
-    const hasValidDependencies = validDependencies.length === 0
 
     if (hasUnknownDependencies) {
       const name = option.displayName
@@ -197,14 +196,6 @@ export const worksWith = (...dependencies) => {
       const quotedFirstUknownDependency = getQuotedString(firstUknownDependency)
 
       throw `${name} can not be executed with ${quotedFirstUknownDependency}.`
-    }
-
-    if (!hasValidDependencies) {
-      const name = option.displayName
-      const firstValidDependencies = validDependencies.at(0)
-      const quotedFirstValidDependencies = getQuotedString(firstValidDependencies)
-
-      throw `${name} requires to be executed with ${quotedFirstValidDependencies}.`
     }
   }
 }

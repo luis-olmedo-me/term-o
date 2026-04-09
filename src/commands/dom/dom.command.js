@@ -12,6 +12,7 @@ import {
   isRegExp,
   isString,
   isTabId,
+  mustHave,
   worksWith
 } from '@src/helpers/validation-command.helpers'
 import { domHelpSections } from './dom.constants'
@@ -68,7 +69,10 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
     description: 'Inject HTML as text',
-    validate: [worksWith('below', 'child', 'on', 'parent', 'sibling', 'tab-id', 'xpath')]
+    validate: [
+      worksWith('below', 'child', 'on', 'parent', 'sibling', 'tab-id', 'xpath'),
+      mustHave('on')
+    ]
   })
   .expect({
     name: 'sibling',

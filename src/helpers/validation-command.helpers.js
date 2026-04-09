@@ -199,3 +199,19 @@ export const worksWith = (...dependencies) => {
     }
   }
 }
+
+export const mustHave = (...dependencies) => {
+  return (option, _value, props) => {
+    const propNames = Object.keys(props)
+    const missingDependencies = dependencies.filter(dependency => !propNames.includes(dependency))
+    const hasMissingDependencies = missingDependencies.length > 0
+
+    if (!hasMissingDependencies) {
+      const name = option.displayName
+      const firstUknownDependency = missingDependencies.at(0)
+      const quotedFirstUknownDependency = getQuotedString(firstUknownDependency)
+
+      throw `${name} must be executed with ${quotedFirstUknownDependency}.`
+    }
+  }
+}

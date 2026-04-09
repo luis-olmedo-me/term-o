@@ -6,6 +6,7 @@ import {
 } from '@src/constants/patterns.constants'
 import { validateSchema } from '@src/helpers/validation-schema.helpers'
 import { getArrayAsLine } from './arguments.helpers'
+import { getQuotedString } from './utils.helpers'
 
 export const isRegExp = (option, value) => {
   try {
@@ -180,5 +181,30 @@ export const hasAllItemsAs = (...validations) => {
     value.forEach(item => {
       validations.forEach(validation => validation(option, item))
     })
+  }
+}
+
+export const worksWith = dependencies => {
+  return (option, _value, props) => {
+    const validDependencies = Object.keys(props).filter(name => dependencies.includes(name))
+    const uknownDependencies = Object.keys(props).filter(name => !dependencies.includes(name))
+    const hasUnknownDependencies = uknownDependencies.length > 0
+    const hasValidDependencies = validDependencies.length === 0
+
+    if (hasUnknownDependencies) {
+      const name = option.displayName
+      const firstUknownDependency = uknownDependencies.at(0)
+      const quotedFirstUknownDependency = getQuotedString(firstUknownDependency)
+
+      throw `${name} can not be executed with ${quotedFirstUknownDependency}.`
+    }
+
+    if (!hasValidDependencies) {
+      const name = option.displayName
+      const firstValidDependencies = validDependencies.at(0)
+      const quotedFirstValidDependencies = getQuotedString(firstValidDependencies)
+
+      throw `${name} requires to be executed with ${quotedFirstValidDependencies}.`
+    }
   }
 }

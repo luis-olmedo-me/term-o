@@ -163,7 +163,7 @@ export const getPropsFromString = command => {
     const value = props[name]
     const option = command.options.getByName(name)
 
-    option.validate(value)
+    option.validate(value, props)
   }
 
   return props

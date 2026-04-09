@@ -68,7 +68,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
     description: 'Inject HTML as text',
-    validate: [worksWith('below', 'child', 'parent', 'sibling', 'tab-id', 'xpath')]
+    validate: [worksWith('below', 'child', 'on', 'parent', 'sibling', 'tab-id', 'xpath')]
   })
   .expect({
     name: 'sibling',

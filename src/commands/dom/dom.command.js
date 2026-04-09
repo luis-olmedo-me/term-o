@@ -5,15 +5,15 @@ import {
   hasAllItemsAs,
   hasLength,
   hasLengthBetween,
+  hasOptional,
+  hasRequired,
   isArray,
   isInteger,
   isKebabCase,
   isPositive,
   isRegExp,
   isString,
-  isTabId,
-  mustHave,
-  worksWith
+  isTabId
 } from '@src/helpers/validation-command.helpers'
 import { domHelpSections } from './dom.constants'
 import { domHandler } from './dom.handler'
@@ -28,7 +28,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     description: 'Find elements by criteria',
     helpSection: domHelpSections.SEARCH,
-    validate: [worksWith('attr', 'below', 'content', 'style', 'tab-id', 'tag', 'text', 'xpath')]
+    validate: [hasOptional('attr', 'below', 'content', 'style', 'tab-id', 'tag', 'text', 'xpath')]
   })
   .expect({
     name: 'on',
@@ -36,7 +36,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: domHelpSections.SEARCH,
     description: 'Find elements with an XPath query',
-    validate: [worksWith('below', 'child', 'inject', 'parent', 'sibling', 'tab-id', 'xpath')]
+    validate: [hasOptional('below', 'child', 'inject', 'parent', 'sibling', 'tab-id', 'xpath')]
   })
   .expect({
     name: 'create',
@@ -44,7 +44,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
     description: 'Create a DOM element',
-    validate: [isKebabCase, worksWith('attr', 'below')]
+    validate: [isKebabCase, hasOptional('attr', 'below')]
   })
   .expect({
     name: 'pick',
@@ -52,7 +52,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     description: 'Pick an element from the tab',
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
-    validate: [worksWith('content', 'tab-id', 'times', 'xpath')]
+    validate: [hasOptional('content', 'tab-id', 'times', 'xpath')]
   })
   .expect({
     name: 'measure',
@@ -60,7 +60,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
     description: 'Define two element xpaths and measure the distance between.',
-    validate: [hasAllItemsAs(isString), hasLength(2), worksWith('tab-id')],
+    validate: [hasAllItemsAs(isString), hasLength(2), hasOptional('tab-id')],
     repeatable: true
   })
   .expect({
@@ -70,8 +70,8 @@ export default new CommandBase({
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
     description: 'Inject HTML as text',
     validate: [
-      worksWith('below', 'child', 'on', 'parent', 'sibling', 'tab-id', 'xpath'),
-      mustHave('on')
+      hasOptional('below', 'child', 'on', 'parent', 'sibling', 'tab-id', 'xpath'),
+      hasRequired('on')
     ]
   })
   .expect({
@@ -80,7 +80,7 @@ export default new CommandBase({
     type: commandTypes.NUMBER,
     helpSection: domHelpSections.DOM_NAVIGATION,
     description: 'Select sibling by index (integer)',
-    validate: [isInteger, worksWith('inject', 'on')]
+    validate: [isInteger, hasOptional('inject', 'on')]
   })
   .expect({
     name: 'parent',
@@ -88,7 +88,7 @@ export default new CommandBase({
     abbreviation: 'p',
     helpSection: domHelpSections.DOM_NAVIGATION,
     description: 'Select parent element by index (positive)',
-    validate: [isInteger, isPositive, worksWith('inject', 'on')]
+    validate: [isInteger, isPositive, hasOptional('inject', 'on')]
   })
   .expect({
     name: 'child',
@@ -96,7 +96,7 @@ export default new CommandBase({
     type: commandTypes.NUMBER,
     helpSection: domHelpSections.DOM_NAVIGATION,
     description: 'Select child element by index (positive)',
-    validate: [isInteger, isPositive, worksWith('inject', 'on')]
+    validate: [isInteger, isPositive, hasOptional('inject', 'on')]
   })
   .expect({
     name: 'xpath',
@@ -104,7 +104,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
     description: 'Show XPath(s) of matched element(s)',
-    validate: [worksWith('on', 'pick', 'search', 'xpath')]
+    validate: [hasOptional('on', 'pick', 'search', 'xpath')]
   })
   .expect({
     name: 'attr',
@@ -114,7 +114,7 @@ export default new CommandBase({
     description: 'Describe DOM element attributes',
     validate: [
       hasAllItemsAs(isArray, hasLengthBetween(1, 2), hasAllItemsAs(isString, isRegExp)),
-      worksWith('create', 'search')
+      hasOptional('create', 'search')
     ],
     defaultValue: [],
     repeatable: true
@@ -127,7 +127,7 @@ export default new CommandBase({
     description: 'Filter by CSS styles (regex[])',
     validate: [
       hasAllItemsAs(isArray, hasLengthBetween(1, 2), hasAllItemsAs(isString, isRegExp)),
-      worksWith('search')
+      hasOptional('search')
     ],
     repeatable: true
   })
@@ -137,7 +137,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: domHelpSections.FILTERS,
     description: 'Filter by tag name (regex)',
-    validate: [isRegExp, worksWith('search')]
+    validate: [isRegExp, hasOptional('search')]
   })
   .expect({
     name: 'text',
@@ -145,7 +145,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: domHelpSections.FILTERS,
     description: 'Filter by text content (regex)',
-    validate: [isRegExp, worksWith('search')]
+    validate: [isRegExp, hasOptional('search')]
   })
   .expect({
     name: 'content',
@@ -153,7 +153,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
     description: 'Show textual content of matched element(s)',
-    validate: [worksWith('search', 'pick')]
+    validate: [hasOptional('search', 'pick')]
   })
   .expect({
     name: 'tab-id',
@@ -161,7 +161,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: domHelpSections.SEARCH,
     description: 'Search elements in a specific tab (T[number])',
-    validate: [isTabId, worksWith('create', 'inject', 'measure', 'on', 'search')]
+    validate: [isTabId, hasOptional('create', 'inject', 'measure', 'on', 'search')]
   })
   .expect({
     name: 'below',
@@ -169,7 +169,7 @@ export default new CommandBase({
     abbreviation: 'B',
     helpSection: domHelpSections.SEARCH,
     description: 'Limit search scope under a specific element',
-    validate: [worksWith('create', 'inject', 'on', 'search')]
+    validate: [hasOptional('create', 'inject', 'on', 'search')]
   })
   .expect({
     name: 'times',
@@ -178,5 +178,5 @@ export default new CommandBase({
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
     description: 'Specify how many times the task must be done',
     defaultValue: 1,
-    validate: [worksWith('pick')]
+    validate: [hasOptional('pick')]
   })

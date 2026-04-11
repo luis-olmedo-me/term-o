@@ -219,10 +219,9 @@ export const requireAll = (...dependencies) => {
 export const requireAnyOf = (...dependencies) => {
   return (option, _value, props) => {
     const propNames = Object.keys(props)
-    const usedRequiredDependencies = dependencies.filter(dependency =>
-      propNames.includes(dependency)
-    )
-    const isUsingRequiredOnes = usedRequiredDependencies.length > 0
+    const possibles = dependencies.concat(option.name)
+    const usedRequiredDependencies = possibles.filter(dependency => propNames.includes(dependency))
+    const isUsingRequiredOnes = usedRequiredDependencies.length > 1
 
     if (!isUsingRequiredOnes) {
       const name = option.displayName
@@ -232,7 +231,21 @@ export const requireAnyOf = (...dependencies) => {
   }
 }
 
-export const requireNoOther = () => requireAnyOf()
+export const requireNoOther = () => {
+  return (option, _value, props) => {
+    const propNames = Object.keys(props)
+    const forbiddenDependencies = propNames.filter(name => name !== option.name)
+    const hasForbbidenDependencies = forbiddenDependencies.length > 0
+
+    if (hasForbbidenDependencies) {
+      const name = option.displayName
+      const firstForbiddenDependency = forbiddenDependencies.at(0)
+      const quotedFirstForbiddenDependency = getQuotedString(firstForbiddenDependency)
+
+      throw `${name} can not be executed with ${quotedFirstForbiddenDependency}.`
+    }
+  }
+}
 
 export const value = {
   isRegExp,

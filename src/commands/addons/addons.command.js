@@ -1,7 +1,7 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
-import { requireNoOtherOptions } from '@src/helpers/validation-command.helpers'
+import { options } from '@src/helpers/validation-command.helpers'
 import { addonsHelpSections } from './addons.constants'
 import { addonsHandler } from './addons.handler'
 
@@ -15,7 +15,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: addonsHelpSections.MANAGEMENT,
     description: 'List all addons',
-    validate: [requireNoOtherOptions()]
+    validate: [options.requireNoOther()]
   })
   .expect({
     name: 'upload',
@@ -23,7 +23,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: addonsHelpSections.MANAGEMENT,
     description: 'Upload a file to add as a addon',
-    validate: [requireNoOtherOptions()]
+    validate: [options.requireNoOther()]
   })
   .expect({
     name: 'delete',
@@ -31,5 +31,5 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: addonsHelpSections.MANAGEMENT,
     description: 'Delete a addon by name',
-    validate: [requireNoOtherOptions()]
+    validate: [options.requireNoOther()]
   })

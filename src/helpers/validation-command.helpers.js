@@ -231,3 +231,5 @@ export const requireOptionsAnyOf = (...dependencies) => {
     }
   }
 }
+
+export const requireNoOtherOptions = () => requireOptionsAnyOf()

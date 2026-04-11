@@ -124,6 +124,8 @@ export class Command extends EventListener {
   }
 
   throw(message) {
+    if (message === null) message = ''
+    else if (typeof message !== 'string') message = message.toString()
     const errorUpdate = formatError({ title: message })
 
     this.update(errorUpdate)

@@ -49,6 +49,8 @@ export const domHandler = async command => {
     })
 
     command.update(update)
+
+    return
   }
 
   if (P`create`) {
@@ -68,6 +70,8 @@ export const domHandler = async command => {
 
     command.reset()
     command.update(update)
+
+    return
   }
 
   if (P`search`) {
@@ -91,6 +95,8 @@ export const domHandler = async command => {
 
     command.reset()
     command.update(...updates)
+
+    return
   }
 
   if (P`pick`) {
@@ -127,6 +133,8 @@ export const domHandler = async command => {
 
     command.reset()
     command.update(update)
+
+    return
   }
 
   if (P`help`) createHelpView(command)

@@ -184,7 +184,7 @@ export const hasAllItemsAs = (...validations) => {
   }
 }
 
-export const allowOptions = (...dependencies) => {
+export const allow = (...dependencies) => {
   return (option, _value, props) => {
     const possibles = dependencies.concat(option.name)
     const uknownDependencies = Object.keys(props).filter(name => !possibles.includes(name))
@@ -200,7 +200,7 @@ export const allowOptions = (...dependencies) => {
   }
 }
 
-export const requireOptionsAll = (...dependencies) => {
+export const requireAll = (...dependencies) => {
   return (option, _value, props) => {
     const propNames = Object.keys(props)
     const missingDependencies = dependencies.filter(dependency => !propNames.includes(dependency))
@@ -216,7 +216,7 @@ export const requireOptionsAll = (...dependencies) => {
   }
 }
 
-export const requireOptionsAnyOf = (...dependencies) => {
+export const requireAnyOf = (...dependencies) => {
   return (option, _value, props) => {
     const propNames = Object.keys(props)
     const usedRequiredDependencies = dependencies.filter(dependency =>
@@ -232,4 +232,36 @@ export const requireOptionsAnyOf = (...dependencies) => {
   }
 }
 
-export const requireNoOtherOptions = () => requireOptionsAnyOf()
+export const requireNoOther = () => requireAnyOf()
+
+export const value = {
+  isRegExp,
+  isDate,
+  isJSON,
+  isJSONScheme,
+  isKebabCase,
+  isWindowId,
+  isTabId,
+  isGroupId,
+  isURL,
+  isAnyOf,
+  isPositive,
+  isInteger,
+  isString,
+  isArray,
+  isSpaceForbidden
+}
+
+export const array = {
+  hasLength,
+  hasLengthBetween,
+  hasItemAs,
+  hasAllItemsAs
+}
+
+export const options = {
+  allow,
+  requireAll,
+  requireAnyOf,
+  requireNoOther
+}

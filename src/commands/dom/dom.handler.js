@@ -1,5 +1,6 @@
 import processManager from '@src/libs/process-manager'
 
+import { getTab } from '@src/browser-api/tabs.api'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatElement, formatGap } from '@src/helpers/format.helpers'
@@ -9,7 +10,13 @@ export const domHandler = async command => {
   const storage = command.get('storage')
   const P = name => command.props[name]
 
-  const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : storage.get(storageKeys.TAB).id
+  let tabId = storage.get(storageKeys.TAB).id
+
+  if (P`tab-id`) {
+    const validTab = await getTab({ tabId: cleanTabId(P`tab-id`) })
+
+    tabId = validTab.id
+  }
 
   if (P`on`) {
     command.update(['"Connecting to the tab."'])

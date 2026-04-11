@@ -13,13 +13,14 @@ export const domHandler = async command => {
   let tabId = storage.get(storageKeys.TAB).id
 
   if (P`tab-id`) {
+    command.update(['"Connecting to the tab."'])
     const validTab = await getTab({ tabId: cleanTabId(P`tab-id`) })
 
     tabId = validTab.id
   }
 
-  if (P`on`) {
-    command.update(['"Connecting to the tab."'])
+  if (P`inject`) {
+    command.update(['"Searching for element xpath."'])
     const element = await processManager.findDOMElement(tabId, {
       searchByXpath: P`on`,
       searchBelow: P`below`,
@@ -31,15 +32,37 @@ export const domHandler = async command => {
     command.reset()
     if (!element) return
 
-    if (P`inject`) {
-      command.update(['"Connecting to the tab."'])
-      await processManager.injectHTML(tabId, {
-        below: element.xpath,
-        html: P`inject`
-      })
+    command.update(['"Injecting content."'])
+    await processManager.injectHTML(tabId, {
+      below: element.xpath,
+      html: P`inject`
+    })
 
-      command.reset()
-    }
+    const update = formatElement({
+      ...element,
+      tabId: P`tab-id`,
+      xpath: P`xpath` ? element.xpath : null,
+      textContent: null
+    })
+
+    command.reset()
+    command.update(update)
+
+    return
+  }
+
+  if (P`on`) {
+    command.update(['"Searching for element xpath."'])
+    const element = await processManager.findDOMElement(tabId, {
+      searchByXpath: P`on`,
+      searchBelow: P`below`,
+      siblingIndex: P`sibling`,
+      parentIndex: P`parent`,
+      childIndex: P`child`
+    })
+
+    command.reset()
+    if (!element) return
 
     const update = formatElement({
       ...element,
@@ -54,7 +77,7 @@ export const domHandler = async command => {
   }
 
   if (P`create`) {
-    command.update(['"Connecting to the tab."'])
+    command.update(['"Creating element."'])
     const element = await processManager.createElement(tabId, {
       tagName: P`create`,
       below: P`below`,
@@ -75,7 +98,7 @@ export const domHandler = async command => {
   }
 
   if (P`search`) {
-    command.update(['"Connecting to the tab."'])
+    command.update(['"Searching for element."'])
     const elements = await processManager.getDOMElements(tabId, {
       searchBelow: P`below`,
       searchByTag: P`tag`,
@@ -124,7 +147,7 @@ export const domHandler = async command => {
   if (P`measure`.length) {
     const [xpathA, xpathB] = P`measure`
 
-    command.update(['"Connecting to the tab."'])
+    command.update(['"Measuring distance between given elements."'])
     const measure = await processManager.measure(tabId, {
       start: xpathA,
       end: xpathB

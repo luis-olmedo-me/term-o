@@ -7,6 +7,7 @@ import {
   hasLengthBetween,
   hasOptional,
   hasRequired,
+  hasRequiredOneOf,
   isArray,
   isInteger,
   isKebabCase,
@@ -80,7 +81,7 @@ export default new CommandBase({
     type: commandTypes.NUMBER,
     helpSection: domHelpSections.DOM_NAVIGATION,
     description: 'Select sibling by index (integer)',
-    validate: [isInteger, hasOptional('inject', 'on')]
+    validate: [isInteger, hasRequiredOneOf('inject', 'on')]
   })
   .expect({
     name: 'parent',
@@ -88,7 +89,7 @@ export default new CommandBase({
     abbreviation: 'p',
     helpSection: domHelpSections.DOM_NAVIGATION,
     description: 'Select parent element by index (positive)',
-    validate: [isInteger, isPositive, hasOptional('inject', 'on')]
+    validate: [isInteger, isPositive, hasRequiredOneOf('inject', 'on')]
   })
   .expect({
     name: 'child',
@@ -96,7 +97,7 @@ export default new CommandBase({
     type: commandTypes.NUMBER,
     helpSection: domHelpSections.DOM_NAVIGATION,
     description: 'Select child element by index (positive)',
-    validate: [isInteger, isPositive, hasOptional('inject', 'on')]
+    validate: [isInteger, isPositive, hasRequiredOneOf('inject', 'on')]
   })
   .expect({
     name: 'xpath',
@@ -104,7 +105,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
     description: 'Show XPath(s) of matched element(s)',
-    validate: [hasOptional('on', 'pick', 'search', 'xpath')]
+    validate: [hasRequiredOneOf('on', 'pick', 'search', 'xpath')]
   })
   .expect({
     name: 'attr',
@@ -114,7 +115,7 @@ export default new CommandBase({
     description: 'Describe DOM element attributes',
     validate: [
       hasAllItemsAs(isArray, hasLengthBetween(1, 2), hasAllItemsAs(isString, isRegExp)),
-      hasOptional('create', 'search')
+      hasRequiredOneOf('create', 'search')
     ],
     defaultValue: [],
     repeatable: true
@@ -127,7 +128,7 @@ export default new CommandBase({
     description: 'Filter by CSS styles (regex[])',
     validate: [
       hasAllItemsAs(isArray, hasLengthBetween(1, 2), hasAllItemsAs(isString, isRegExp)),
-      hasOptional('search')
+      hasRequiredOneOf('search')
     ],
     repeatable: true
   })
@@ -137,7 +138,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: domHelpSections.FILTERS,
     description: 'Filter by tag name (regex)',
-    validate: [isRegExp, hasOptional('search')]
+    validate: [isRegExp, hasRequiredOneOf('search')]
   })
   .expect({
     name: 'text',
@@ -145,7 +146,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: domHelpSections.FILTERS,
     description: 'Filter by text content (regex)',
-    validate: [isRegExp, hasOptional('search')]
+    validate: [isRegExp, hasRequiredOneOf('search')]
   })
   .expect({
     name: 'content',
@@ -153,7 +154,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
     description: 'Show textual content of matched element(s)',
-    validate: [hasOptional('search', 'pick')]
+    validate: [hasRequiredOneOf('search', 'pick')]
   })
   .expect({
     name: 'tab-id',
@@ -161,7 +162,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: domHelpSections.SEARCH,
     description: 'Search elements in a specific tab (T[number])',
-    validate: [isTabId, hasOptional('create', 'inject', 'measure', 'on', 'search')]
+    validate: [isTabId, hasRequiredOneOf('create', 'inject', 'measure', 'on', 'search')]
   })
   .expect({
     name: 'below',
@@ -169,7 +170,7 @@ export default new CommandBase({
     abbreviation: 'B',
     helpSection: domHelpSections.SEARCH,
     description: 'Limit search scope under a specific element',
-    validate: [hasOptional('create', 'inject', 'on', 'search')]
+    validate: [hasRequiredOneOf('create', 'inject', 'on', 'search')]
   })
   .expect({
     name: 'times',
@@ -178,5 +179,5 @@ export default new CommandBase({
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
     description: 'Specify how many times the task must be done',
     defaultValue: 1,
-    validate: [hasOptional('pick')]
+    validate: [hasRequiredOneOf('pick')]
   })

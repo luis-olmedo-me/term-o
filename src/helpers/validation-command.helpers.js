@@ -215,3 +215,19 @@ export const hasRequired = (...dependencies) => {
     }
   }
 }
+
+export const hasRequiredOneOf = (...dependencies) => {
+  return (option, _value, props) => {
+    const propNames = Object.keys(props)
+    const usedRequiredDependencies = dependencies.filter(dependency =>
+      propNames.includes(dependency)
+    )
+    const isUsingRequiredOnes = usedRequiredDependencies.length > 0
+
+    if (!isUsingRequiredOnes) {
+      const name = option.displayName
+
+      throw `${name} is not using any required options.`
+    }
+  }
+}

@@ -184,7 +184,7 @@ export const hasAllItemsAs = (...validations) => {
   }
 }
 
-export const hasOptional = (...dependencies) => {
+export const allowOptions = (...dependencies) => {
   return (option, _value, props) => {
     const possibles = dependencies.concat(option.name)
     const uknownDependencies = Object.keys(props).filter(name => !possibles.includes(name))
@@ -200,7 +200,7 @@ export const hasOptional = (...dependencies) => {
   }
 }
 
-export const hasRequired = (...dependencies) => {
+export const requireOptionsAll = (...dependencies) => {
   return (option, _value, props) => {
     const propNames = Object.keys(props)
     const missingDependencies = dependencies.filter(dependency => !propNames.includes(dependency))
@@ -216,7 +216,7 @@ export const hasRequired = (...dependencies) => {
   }
 }
 
-export const hasRequiredOneOf = (...dependencies) => {
+export const requireOptionsAnyOf = (...dependencies) => {
   return (option, _value, props) => {
     const propNames = Object.keys(props)
     const usedRequiredDependencies = dependencies.filter(dependency =>

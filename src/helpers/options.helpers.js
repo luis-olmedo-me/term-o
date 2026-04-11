@@ -110,9 +110,9 @@ export const getPropsFromString = command => {
       const alreadySetValue = props[option.name]
 
       const overwritesOptionValue = typeof alreadySetValue !== 'undefined'
-      const isArrayOption = option.type === commandTypes.ARRAY
+      const isRepeatable = option.repeatable
 
-      if (overwritesOptionValue && !isArrayOption) throw `${argValue} is a repeated argument.`
+      if (overwritesOptionValue && !isRepeatable) throw `${argValue} is a repeated argument.`
 
       if (isParam(option, nextArg)) {
         index++
@@ -123,7 +123,7 @@ export const getPropsFromString = command => {
 
       const argName = option.displayName
       const { value, newIndex } = parseOptions(index, argName, argValues, option.type)
-      const completeValue = isArrayOption ? [...(alreadySetValue || []), value] : value
+      const completeValue = isRepeatable ? [...(alreadySetValue || []), value] : value
       index = newIndex
 
       props = { ...props, [option.name]: completeValue }

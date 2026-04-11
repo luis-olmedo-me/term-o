@@ -206,7 +206,7 @@ export const hasRequired = (...dependencies) => {
     const missingDependencies = dependencies.filter(dependency => !propNames.includes(dependency))
     const hasMissingDependencies = missingDependencies.length > 0
 
-    if (!hasMissingDependencies) {
+    if (hasMissingDependencies) {
       const name = option.displayName
       const firstUknownDependency = missingDependencies.at(0)
       const quotedFirstUknownDependency = getQuotedString(firstUknownDependency)
@@ -227,7 +227,7 @@ export const hasRequiredOneOf = (...dependencies) => {
     if (!isUsingRequiredOnes) {
       const name = option.displayName
 
-      throw `${name} is not using any required options.`
+      throw `${name} is not expected to be executed within this set of options.`
     }
   }
 }

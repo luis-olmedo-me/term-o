@@ -6,6 +6,7 @@ import {
 } from '@src/constants/patterns.constants'
 import { validateSchema } from '@src/helpers/validation-schema.helpers'
 import { getArrayAsLine } from './arguments.helpers'
+import { getQuotedString } from './utils.helpers'
 
 export const isRegExp = (option, value) => {
   try {
@@ -181,4 +182,99 @@ export const hasAllItemsAs = (...validations) => {
       validations.forEach(validation => validation(option, item))
     })
   }
+}
+
+export const allow = (...dependencies) => {
+  return (option, _value, props) => {
+    const possibles = dependencies.concat(option.name)
+    const uknownDependencies = Object.keys(props).filter(name => !possibles.includes(name))
+    const hasUnknownDependencies = uknownDependencies.length > 0
+
+    if (hasUnknownDependencies) {
+      const name = option.displayName
+      const firstUknownDependency = uknownDependencies.at(0)
+      const quotedFirstUknownDependency = getQuotedString(firstUknownDependency)
+
+      throw `${name} can not be executed with ${quotedFirstUknownDependency}.`
+    }
+  }
+}
+
+export const requireAll = (...dependencies) => {
+  return (option, _value, props) => {
+    const propNames = Object.keys(props)
+    const missingDependencies = dependencies.filter(dependency => !propNames.includes(dependency))
+    const hasMissingDependencies = missingDependencies.length > 0
+
+    if (hasMissingDependencies) {
+      const name = option.displayName
+      const firstUknownDependency = missingDependencies.at(0)
+      const quotedFirstUknownDependency = getQuotedString(firstUknownDependency)
+
+      throw `${name} must be executed with ${quotedFirstUknownDependency}.`
+    }
+  }
+}
+
+export const requireAnyOf = (...dependencies) => {
+  return (option, _value, props) => {
+    const propNames = Object.keys(props)
+    const possibles = dependencies.concat(option.name)
+    const usedRequiredDependencies = possibles.filter(dependency => propNames.includes(dependency))
+    const isUsingRequiredOnes = usedRequiredDependencies.length > 1
+
+    if (!isUsingRequiredOnes) {
+      const name = option.displayName
+
+      throw `${name} is not expected to be executed within this set of options.`
+    }
+  }
+}
+
+export const requireNoOther = () => {
+  return (option, _value, props) => {
+    const propNames = Object.keys(props)
+    const forbiddenDependencies = propNames.filter(name => name !== option.name)
+    const hasForbbidenDependencies = forbiddenDependencies.length > 0
+
+    if (hasForbbidenDependencies) {
+      const name = option.displayName
+      const firstForbiddenDependency = forbiddenDependencies.at(0)
+      const quotedFirstForbiddenDependency = getQuotedString(firstForbiddenDependency)
+
+      throw `${name} can not be executed with ${quotedFirstForbiddenDependency}.`
+    }
+  }
+}
+
+export const value = {
+  isRegExp,
+  isDate,
+  isJSON,
+  isJSONScheme,
+  isKebabCase,
+  isWindowId,
+  isTabId,
+  isGroupId,
+  isURL,
+  isAnyOf,
+  isPositive,
+  isInteger,
+  isString,
+  isArray,
+  isSpaceForbidden
+}
+
+export const array = {
+  hasLength,
+  hasLengthBetween,
+  hasItemAs,
+  hasAllItemsAs
+}
+
+export const options = {
+  allow,
+  requireAll,
+  requireAnyOf,
+  requireNoOther
 }

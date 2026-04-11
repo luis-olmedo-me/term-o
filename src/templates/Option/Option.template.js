@@ -31,7 +31,7 @@ export class Option {
     this.value = value
   }
 
-  validate(value) {
-    if (this.validations) this.validations.forEach(validation => validation(this, value))
+  validate(value, props) {
+    if (this.validations) this.validations.forEach(validation => validation(this, value, props))
   }
 }

@@ -1,6 +1,7 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
+import { options } from '@src/helpers/validation-command.helpers'
 import { errorHelpSections } from './error.constants'
 import { errorHandler } from './error.handler'
 
@@ -13,5 +14,5 @@ export default new CommandBase({
   type: commandTypes.STRING,
   helpSection: errorHelpSections.ACTIONS,
   description: 'Throw an error with a custom message',
-  worksWith: []
+  validate: [options.requireNoOther()]
 })

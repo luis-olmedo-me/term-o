@@ -45,7 +45,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
     description: 'Create a DOM element',
-    validate: [isKebabCase, hasOptional('attr', 'below')]
+    validate: [isKebabCase, hasOptional('attr', 'below', 'tab-id')]
   })
   .expect({
     name: 'pick',
@@ -162,7 +162,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: domHelpSections.SEARCH,
     description: 'Search elements in a specific tab (T[number])',
-    validate: [isTabId, hasRequiredOneOf('create', 'inject', 'measure', 'on', 'search')]
+    validate: [isTabId, hasRequiredOneOf('create', 'inject', 'measure', 'on', 'pick', 'search')]
   })
   .expect({
     name: 'below',

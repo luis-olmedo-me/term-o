@@ -89,7 +89,7 @@ export default new CommandBase({
     abbreviation: 'p',
     helpSection: domHelpSections.DOM_NAVIGATION,
     description: 'Select parent element by index (positive)',
-    validate: [isInteger, isPositive, hasRequiredOneOf('inject', 'on')]
+    validate: [isInteger, isPositive, requireOptionsAnyOf('inject', 'on')]
   })
   .expect({
     name: 'child',
@@ -97,7 +97,7 @@ export default new CommandBase({
     type: commandTypes.NUMBER,
     helpSection: domHelpSections.DOM_NAVIGATION,
     description: 'Select child element by index (positive)',
-    validate: [isInteger, isPositive, hasRequiredOneOf('inject', 'on')]
+    validate: [isInteger, isPositive, requireOptionsAnyOf('inject', 'on')]
   })
   .expect({
     name: 'xpath',
@@ -105,7 +105,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
     description: 'Show XPath(s) of matched element(s)',
-    validate: [hasRequiredOneOf('on', 'pick', 'search', 'xpath')]
+    validate: [requireOptionsAnyOf('on', 'pick', 'search', 'xpath')]
   })
   .expect({
     name: 'attr',
@@ -115,7 +115,7 @@ export default new CommandBase({
     description: 'Describe DOM element attributes',
     validate: [
       hasAllItemsAs(isArray, hasLengthBetween(1, 2), hasAllItemsAs(isString, isRegExp)),
-      hasRequiredOneOf('create', 'search')
+      requireOptionsAnyOf('create', 'search')
     ],
     defaultValue: [],
     repeatable: true
@@ -128,7 +128,7 @@ export default new CommandBase({
     description: 'Filter by CSS styles (regex[])',
     validate: [
       hasAllItemsAs(isArray, hasLengthBetween(1, 2), hasAllItemsAs(isString, isRegExp)),
-      hasRequiredOneOf('search')
+      requireOptionsAnyOf('search')
     ],
     repeatable: true
   })
@@ -138,7 +138,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: domHelpSections.FILTERS,
     description: 'Filter by tag name (regex)',
-    validate: [isRegExp, hasRequiredOneOf('search')]
+    validate: [isRegExp, requireOptionsAnyOf('search')]
   })
   .expect({
     name: 'text',
@@ -146,7 +146,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: domHelpSections.FILTERS,
     description: 'Filter by text content (regex)',
-    validate: [isRegExp, hasRequiredOneOf('search')]
+    validate: [isRegExp, requireOptionsAnyOf('search')]
   })
   .expect({
     name: 'content',
@@ -154,7 +154,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
     description: 'Show textual content of matched element(s)',
-    validate: [hasRequiredOneOf('search', 'pick')]
+    validate: [requireOptionsAnyOf('search', 'pick')]
   })
   .expect({
     name: 'tab-id',
@@ -162,7 +162,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: domHelpSections.SEARCH,
     description: 'Search elements in a specific tab (T[number])',
-    validate: [isTabId, hasRequiredOneOf('create', 'inject', 'measure', 'on', 'pick', 'search')]
+    validate: [isTabId, requireOptionsAnyOf('create', 'inject', 'measure', 'on', 'pick', 'search')]
   })
   .expect({
     name: 'below',
@@ -170,7 +170,7 @@ export default new CommandBase({
     abbreviation: 'B',
     helpSection: domHelpSections.SEARCH,
     description: 'Limit search scope under a specific element',
-    validate: [hasRequiredOneOf('create', 'inject', 'on', 'search')]
+    validate: [requireOptionsAnyOf('create', 'inject', 'on', 'search')]
   })
   .expect({
     name: 'times',
@@ -179,5 +179,5 @@ export default new CommandBase({
     helpSection: domHelpSections.ACTIONS_AND_UTILITIES,
     description: 'Specify how many times the task must be done',
     defaultValue: 1,
-    validate: [hasRequiredOneOf('pick')]
+    validate: [requireOptionsAnyOf('pick')]
   })

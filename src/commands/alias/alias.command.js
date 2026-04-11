@@ -1,14 +1,7 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
-import {
-  hasAllItemsAs,
-  hasItemAs,
-  hasLength,
-  isArray,
-  isSpaceForbidden,
-  isString
-} from '@src/helpers/validation-command.helpers'
+import { array, options, value } from '@src/helpers/validation-command.helpers'
 import { aliasHelpSections } from './alias.constants'
 import { aliasHandler } from './alias.handler'
 
@@ -23,9 +16,14 @@ export default new CommandBase({
     helpSection: aliasHelpSections.MANAGEMENT,
     description: 'Add a new alias. Format: ["name" "command"]',
     validate: [
-      hasAllItemsAs(isArray, hasLength(2), hasAllItemsAs(isString), hasItemAs(0, isSpaceForbidden))
+      array.hasAllItemsAs(
+        value.isArray,
+        array.hasLength(2),
+        array.hasAllItemsAs(value.isString),
+        array.hasItemAs(0, value.isSpaceForbidden)
+      ),
+      options.requireNoOther()
     ],
-    worksWith: [],
     repeatable: true
   })
   .expect({
@@ -34,7 +32,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: aliasHelpSections.MANAGEMENT,
     description: 'List all defined aliases',
-    worksWith: []
+    validate: [options.requireNoOther()]
   })
   .expect({
     name: 'delete',
@@ -42,5 +40,5 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: aliasHelpSections.MANAGEMENT,
     description: 'Remove an alias by name',
-    worksWith: []
+    validate: [options.requireNoOther()]
   })

@@ -636,7 +636,7 @@ When using `evennts` command the options can express **4** possible action:
    Just using `--trigger` will define the event thrown on a specific element. Here is an example of how specific a notification can be:
 
    ```bash
-   search
+   events
        --trigger "click"                                                    # REQUIRED
        --xpath 'id("main-container")'                                       # REQUIRED
        --tab-id "T00000000"                                                 # OPTIONAL

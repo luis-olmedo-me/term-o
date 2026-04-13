@@ -21,7 +21,10 @@ export class OptionsManager {
 
   setValues(values) {
     Object.entries(values).forEach(([name, value]) => {
-      this.getByName(name).setValue(value)
+      const option = this.getByName(name)
+
+      option.validate(value, values)
+      option.setValue(value)
     })
   }
 

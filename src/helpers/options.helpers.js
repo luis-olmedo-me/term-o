@@ -159,12 +159,5 @@ export const getPropsFromString = command => {
     throw `${argValue} is an unexpected argument.`
   }
 
-  for (const name in props) {
-    const value = props[name]
-    const option = command.options.getByName(name)
-
-    option.validate(value, props)
-  }
-
   return props
 }

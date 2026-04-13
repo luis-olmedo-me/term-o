@@ -110,7 +110,8 @@ export class Command extends EventListener {
       await this.dispatchEvent('execute', this)
 
       if (!this.finished) {
-        if (this.canExecuteNext) await this.executeNext()
+        if (this.canExecuteNext && this.nextCommand) await this.executeNext()
+        else throw 'Params were not finished'
 
         this.changeStatus(commandStatuses.DONE)
       } else {
@@ -134,9 +135,6 @@ export class Command extends EventListener {
 
   async executeNext() {
     const nextCommand = this.nextCommand
-
-    if (!nextCommand) return
-
     const staticUpdates = [...this.updates]
     const hasArgsHoldingUp = nextCommand.args.some(arg => arg.isHoldingUp)
 

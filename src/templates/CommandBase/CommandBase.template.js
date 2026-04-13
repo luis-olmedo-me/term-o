@@ -41,7 +41,7 @@ export class CommandBase {
   }
 
   create() {
-    const hasOptions = this.options.length > 0
+    const hasOptions = this.options.values.length > 0
     const hasHelpOption = !!this.options.getByName('help', false)
 
     if (hasOptions && !hasHelpOption) this.expect(helpOptionConfig)

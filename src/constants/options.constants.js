@@ -1,3 +1,4 @@
+import { options } from '@src/helpers/validation-command.helpers'
 import { commandTypes } from './command.constants'
 
 export const optionDefaultValues = {
@@ -24,6 +25,6 @@ export const helpOptionConfig = {
   type: commandTypes.BOOLEAN,
   helpSection: 'General',
   description: 'Show help for this command',
-  worksWith: [],
+  validate: [options.requireNoOther()],
   defaultValue: false
 }

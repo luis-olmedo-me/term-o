@@ -47,7 +47,8 @@ export default new CommandBase({
     abbreviation: 'o',
     type: commandTypes.STRING,
     description: 'XPath expression to select elements',
-    helpSection: styleHelpSections.RETRIEVAL
+    helpSection: styleHelpSections.RETRIEVAL,
+    validate: [options.requireAnyOf('apply', 'on')]
   })
   .expect({
     name: 'property',
@@ -61,6 +62,7 @@ export default new CommandBase({
         value.isArray,
         array.hasLengthBetween(1, 2),
         array.hasAllItemsAs(value.isRegExp, value.isString)
-      )
+      ),
+      options.requireAnyOf('on')
     ]
   })

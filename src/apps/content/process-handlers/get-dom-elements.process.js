@@ -4,21 +4,14 @@ import { getElementByXPath } from '@src/helpers/dom-locator.helpers'
 export default async (resolve, _reject, data) => {
   const { searchBelow, searchByTag, searchByAttribute, searchByStyle, searchByText } = data
 
-  const tagPattern = searchByTag && new RegExp(searchByTag)
   const textPattern = searchByText && new RegExp(searchByText)
 
   const attributeValidations = searchByAttribute.map(([attrName, attrValue]) => {
-    const attrNamePattern = new RegExp(attrName)
-    const attrValuePattern = attrValue ? new RegExp(attrValue) : /./g
-
-    return (name, value) => attrNamePattern.test(name) && attrValuePattern.test(value)
+    return (name, value) => name.includes(attrName) && value.includes(attrValue ?? '')
   })
 
   const styleValidations = searchByStyle.map(([styleName, styleValue]) => {
-    const styleNamePattern = new RegExp(styleName)
-    const styleValuePattern = styleValue ? new RegExp(styleValue) : /./g
-
-    return (name, value) => styleNamePattern.test(name) && styleValuePattern.test(value)
+    return (name, value) => name.includes(styleName) && value.includes(styleValue ?? '')
   })
 
   const hasAttributesValidations = attributeValidations.length > 0
@@ -33,9 +26,9 @@ export default async (resolve, _reject, data) => {
 
     const conditions = []
 
-    if (tagPattern) {
+    if (searchByTag) {
       conditions.push(() => {
-        return tagPattern.test(tagName)
+        return tagName.includes(searchByTag)
       })
     }
 

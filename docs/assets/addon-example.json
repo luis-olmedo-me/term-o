@@ -32,7 +32,7 @@
     },
     {
       "name": "test-number",
-      "abbreviation": "a",
+      "abbreviation": "n",
       "type": "number",
       "description": "Testing number option",
       "helpSection": "Testing Purposes",

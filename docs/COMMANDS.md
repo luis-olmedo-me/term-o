@@ -1,7 +1,7 @@
 # Term-O Commands
 
 > Version 0.9.1  
-> Updated: 2026-04-11
+> Updated: 2026-04-13
 
 ---
 
@@ -769,6 +769,7 @@ An addon is a new command added to Term-O.
 | `--list`            | `-l`  | List all addons.                 |
 | `--upload`          | `-u`  | Upload a file to add as a addon. |
 | `--delete <string>` | `-d`  | Delete a addon by name.          |
+| `--name`            | `-n`  | Define the name of the addon.    |
 | `--help`            | `-h`  | Show help for this command.      |
 
 ### Dependency Rules
@@ -790,7 +791,8 @@ When using `theme` command the options can express **3** possible actions:
 
    ```bash
    addons
-       --delete "an-already-imported-addon-name"                            # REQUIRED
+       --delete                                                             # REQUIRED
+       --name "an-already-uploaded-addon-name"                              # REQUIRED
    ```
 
 3. Upload an addon (using `--upload`)

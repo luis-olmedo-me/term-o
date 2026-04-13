@@ -103,14 +103,18 @@ export class Command extends EventListener {
   }
 
   async execute() {
+    const hasArgsPending = this.args.some(arg => arg.isHoldingUp)
+
     try {
+      if (hasArgsPending) throw 'Params were not finished'
+
       this.props = this.options.getValues()
       this.startExecuting()
 
       await this.dispatchEvent('execute', this)
 
       if (!this.finished) {
-        if (this.canExecuteNext) await this.executeNext()
+        if (this.canExecuteNext && this.nextCommand) await this.executeNext()
 
         this.changeStatus(commandStatuses.DONE)
       } else {
@@ -124,6 +128,8 @@ export class Command extends EventListener {
   }
 
   throw(message) {
+    if (message === null) message = ''
+    else if (typeof message !== 'string') message = message.toString()
     const errorUpdate = formatError({ title: message })
 
     this.update(errorUpdate)
@@ -132,9 +138,6 @@ export class Command extends EventListener {
 
   async executeNext() {
     const nextCommand = this.nextCommand
-
-    if (!nextCommand) return
-
     const staticUpdates = [...this.updates]
     const hasArgsHoldingUp = nextCommand.args.some(arg => arg.isHoldingUp)
 

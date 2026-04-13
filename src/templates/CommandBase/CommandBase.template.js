@@ -15,8 +15,6 @@ export class CommandBase {
     defaultValue,
     abbreviation,
     validate,
-    worksWith,
-    mustHave,
     description,
     helpSection,
     repeatable = false
@@ -36,16 +34,14 @@ export class CommandBase {
       helpSection,
       description,
       repeatable,
-      validations: validate,
-      dependencies: worksWith,
-      strictDependencies: mustHave
+      validations: validate
     })
 
     return this
   }
 
   create() {
-    const hasOptions = this.options.length > 0
+    const hasOptions = this.options.values.length > 0
     const hasHelpOption = !!this.options.getByName('help', false)
 
     if (hasOptions && !hasHelpOption) this.expect(helpOptionConfig)

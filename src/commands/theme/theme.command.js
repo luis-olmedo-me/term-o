@@ -1,7 +1,7 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
-import { isJSONScheme } from '@src/helpers/validation-command.helpers'
+import { options, value } from '@src/helpers/validation-command.helpers'
 import { colorScheme, themeHelpSections } from './theme.constants'
 import { themeHandler } from './theme.handler'
 
@@ -15,8 +15,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: themeHelpSections.MANAGEMENT,
     description: 'Import a color scheme in JSON format',
-    worksWith: [],
-    validate: [isJSONScheme(colorScheme)]
+    validate: [value.isJSONScheme(colorScheme), options.requireNoOther()]
   })
   .expect({
     name: 'list',
@@ -24,7 +23,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: themeHelpSections.MANAGEMENT,
     description: 'List all available themes',
-    worksWith: []
+    validate: [options.requireNoOther()]
   })
   .expect({
     name: 'delete',
@@ -32,7 +31,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: themeHelpSections.MANAGEMENT,
     description: 'Delete a theme by name',
-    worksWith: []
+    validate: [options.requireNoOther()]
   })
   .expect({
     name: 'apply',
@@ -40,7 +39,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: themeHelpSections.APPLICATION,
     description: 'Apply a theme by name',
-    worksWith: []
+    validate: [options.requireNoOther()]
   })
   .expect({
     name: 'current',
@@ -48,5 +47,5 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: themeHelpSections.APPLICATION,
     description: 'Show the currently applied theme',
-    worksWith: []
+    validate: [options.requireNoOther()]
   })

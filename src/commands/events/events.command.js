@@ -2,7 +2,7 @@ import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
 import { eventsSupported } from '@src/constants/options.constants'
-import { isAnyOf, isRegExp, isTabId } from '@src/helpers/validation-command.helpers'
+import { options, value } from '@src/helpers/validation-command.helpers'
 import { eventsHelpSections } from './events.constants'
 import { eventsHandler } from './events.handler'
 
@@ -11,53 +11,24 @@ export default new CommandBase({
   handler: eventsHandler
 })
   .expect({
-    name: 'trigger',
-    abbreviation: 't',
-    type: commandTypes.STRING,
-    helpSection: eventsHelpSections.CREATION,
-    description: 'Trigger a new event in page',
-    worksWith: ['xpath', 'tab-id'],
-    mustHave: ['xpath'],
-    validate: [isAnyOf(eventsSupported)]
-  })
-  .expect({
-    name: 'xpath',
-    abbreviation: 'x',
-    type: commandTypes.STRING,
-    helpSection: eventsHelpSections.CREATION,
-    description: 'XPath selector for the target element'
-  })
-  .expect({
-    name: 'tab-id',
-    abbreviation: 'i',
-    type: commandTypes.STRING,
-    helpSection: eventsHelpSections.CREATION,
-    description: 'Trigger events in a specific tab (T[number])',
-    validate: [isTabId]
-  })
-  .expect({
     name: 'register',
     abbreviation: 'r',
     type: commandTypes.BOOLEAN,
     helpSection: eventsHelpSections.CREATION,
     description: 'Register a new command for future execution',
-    worksWith: ['url', 'command'],
-    mustHave: ['url', 'command']
+    validate: [options.requireAll('url', 'command')]
   })
   .expect({
-    name: 'url',
-    abbreviation: 'u',
+    name: 'trigger',
+    abbreviation: 't',
     type: commandTypes.STRING,
     helpSection: eventsHelpSections.CREATION,
-    description: 'URL pattern where the event will trigger (regex)',
-    validate: [isRegExp]
-  })
-  .expect({
-    name: 'command',
-    abbreviation: 'c',
-    type: commandTypes.STRING,
-    helpSection: eventsHelpSections.CREATION,
-    description: 'Command line to execute'
+    description: 'Trigger a new event in page',
+    validate: [
+      value.isAnyOf(eventsSupported),
+      options.allow('xpath', 'tab-id'),
+      options.requireAll('xpath')
+    ]
   })
   .expect({
     name: 'list',
@@ -65,7 +36,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: eventsHelpSections.MANAGEMENT,
     description: 'List all registered events',
-    worksWith: []
+    validate: [options.requireNoOther()]
   })
   .expect({
     name: 'delete',
@@ -73,5 +44,37 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: eventsHelpSections.MANAGEMENT,
     description: 'Delete a registered event by its id',
-    worksWith: []
+    validate: [options.requireNoOther()]
+  })
+  .expect({
+    name: 'xpath',
+    abbreviation: 'x',
+    type: commandTypes.STRING,
+    helpSection: eventsHelpSections.CREATION,
+    description: 'XPath selector for the target element',
+    validate: [options.requireAnyOf('trigger')]
+  })
+  .expect({
+    name: 'tab-id',
+    abbreviation: 'i',
+    type: commandTypes.STRING,
+    helpSection: eventsHelpSections.CREATION,
+    description: 'Trigger events in a specific tab (T[number])',
+    validate: [value.isTabId, options.requireAnyOf('trigger')]
+  })
+  .expect({
+    name: 'url',
+    abbreviation: 'u',
+    type: commandTypes.STRING,
+    helpSection: eventsHelpSections.CREATION,
+    description: 'URL pattern where the event will trigger (regex)',
+    validate: [value.isRegExp, options.requireAnyOf('register')]
+  })
+  .expect({
+    name: 'command',
+    abbreviation: 'c',
+    type: commandTypes.STRING,
+    helpSection: eventsHelpSections.CREATION,
+    description: 'Command line to execute',
+    validate: [options.requireAnyOf('register')]
   })

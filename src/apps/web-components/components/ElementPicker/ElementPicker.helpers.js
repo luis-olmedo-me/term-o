@@ -1,4 +1,4 @@
-import { getPaintedFragments } from '@src/components/ColoredText/ColoredText.helpers'
+import { getPaintedFragments } from '@src/helpers/paint.helpers'
 
 export const calculatePosition = (element, pointX, pointY) => {
   const errorGap = 15

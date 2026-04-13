@@ -1,16 +1,41 @@
 {
   "name": "custom",
   "version": "0.0.0",
-  "handler": "function main() { term.log(`[ADDON EXAMPLE]: My test name is ${term.get('test-name')}`) }",
+  "handler": "function main() { term.log(`[ADDON EXAMPLE]: My test name is ${term.get('test-text')}`) }",
   "options": [
     {
-      "name": "test-name",
+      "name": "test-text",
       "abbreviation": "t",
       "type": "string",
-      "description": "Testing option",
+      "description": "Testing text option",
       "helpSection": "Testing Purposes",
-      "worksWith": [],
-      "mustHave": [],
+      "defaultValue": "",
+      "repeatable": false
+    },
+    {
+      "name": "test-check",
+      "abbreviation": "c",
+      "type": "boolean",
+      "description": "Testing boolean option",
+      "helpSection": "Testing Purposes",
+      "defaultValue": "",
+      "repeatable": false
+    },
+    {
+      "name": "test-array",
+      "abbreviation": "a",
+      "type": "array",
+      "description": "Testing array option",
+      "helpSection": "Testing Purposes",
+      "defaultValue": "",
+      "repeatable": false
+    },
+    {
+      "name": "test-number",
+      "abbreviation": "n",
+      "type": "number",
+      "description": "Testing number option",
+      "helpSection": "Testing Purposes",
       "defaultValue": "",
       "repeatable": false
     }

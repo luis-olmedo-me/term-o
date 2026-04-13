@@ -1,7 +1,7 @@
 # Term-O Commands
 
 > Version 0.9.1  
-> Updated: 2026-04-05
+> Updated: 2026-04-11
 
 ---
 
@@ -125,6 +125,7 @@ When using `dom` command the options can express **6** possible actions:
        --create "button"                                                    # REQUIRED
        --below 'id("cards-container")'                                      # OPTIONAL
        --attr ["class" "test-class"]                                        # OPTIONAL/REPEATABLE
+       --tab-id "T00000000"                                                 # OPTIONAL
    ```
 
 5. Pick an element (using `--pick`)
@@ -635,7 +636,7 @@ When using `evennts` command the options can express **4** possible action:
    Just using `--trigger` will define the event thrown on a specific element. Here is an example of how specific a notification can be:
 
    ```bash
-   search
+   events
        --trigger "click"                                                    # REQUIRED
        --xpath 'id("main-container")'                                       # REQUIRED
        --tab-id "T00000000"                                                 # OPTIONAL

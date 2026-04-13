@@ -1,7 +1,7 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
-import { isDate, isInteger, isPositive, isRegExp } from '@src/helpers/validation-command.helpers'
+import { options, value } from '@src/helpers/validation-command.helpers'
 import { historyHelpSections } from './history.constants'
 import { historyHandler } from './history.handler'
 
@@ -15,32 +15,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: historyHelpSections.GENERAL,
     description: 'Show a list of previously opened pages',
-    worksWith: ['title', 'url', 'max-results', 'from', 'to']
-  })
-  .expect({
-    name: 'title',
-    abbreviation: 't',
-    type: commandTypes.STRING,
-    helpSection: historyHelpSections.FILTERS,
-    description: 'Filter pages by title (regex)',
-    validate: [isRegExp]
-  })
-  .expect({
-    name: 'url',
-    abbreviation: 'u',
-    type: commandTypes.STRING,
-    helpSection: historyHelpSections.FILTERS,
-    description: 'Filter pages by URL (regex)',
-    validate: [isRegExp]
-  })
-  .expect({
-    name: 'max-results',
-    abbreviation: 'r',
-    type: commandTypes.NUMBER,
-    helpSection: historyHelpSections.FILTERS,
-    description: 'Limit the number of items displayed',
-    validate: [isPositive, isInteger],
-    defaultValue: 0
+    validate: [options.allow('title', 'url', 'max-results', 'from', 'to')]
   })
   .expect({
     name: 'delete',
@@ -48,8 +23,31 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: historyHelpSections.MANAGEMENT,
     description: 'Delete pages in a specific date range',
-    worksWith: ['from', 'to'],
-    mustHave: ['from', 'to']
+    validate: [options.requireAll('from', 'to')]
+  })
+  .expect({
+    name: 'title',
+    abbreviation: 't',
+    type: commandTypes.STRING,
+    helpSection: historyHelpSections.FILTERS,
+    description: 'Filter pages by title (regex)',
+    validate: [value.isRegExp, options.requireAnyOf('list')]
+  })
+  .expect({
+    name: 'url',
+    abbreviation: 'u',
+    type: commandTypes.STRING,
+    helpSection: historyHelpSections.FILTERS,
+    description: 'Filter pages by URL (regex)',
+    validate: [value.isRegExp, options.requireAnyOf('list')]
+  })
+  .expect({
+    name: 'max-results',
+    abbreviation: 'r',
+    type: commandTypes.NUMBER,
+    helpSection: historyHelpSections.FILTERS,
+    description: 'Limit the number of items displayed',
+    validate: [value.isPositive, value.isInteger, options.requireAnyOf('list')]
   })
   .expect({
     name: 'from',
@@ -57,7 +55,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: historyHelpSections.FILTERS,
     description: 'Start date for deletion or filtering',
-    validate: [isDate]
+    validate: [value.isDate, options.requireAnyOf('list', 'delete')]
   })
   .expect({
     name: 'to',
@@ -65,5 +63,5 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: historyHelpSections.FILTERS,
     description: 'End date for deletion or filtering',
-    validate: [isDate]
+    validate: [value.isDate, options.requireAnyOf('list', 'delete')]
   })

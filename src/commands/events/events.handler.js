@@ -1,5 +1,6 @@
 import processManager from '@src/libs/process-manager'
 
+import { getTab } from '@src/browser-api/tabs.api'
 import { domEventsSupported } from '@src/constants/options.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
@@ -10,6 +11,15 @@ import { createUUIDv4 } from '@src/helpers/utils.helpers'
 export const eventsHandler = async command => {
   const storage = command.get('storage')
   const P = name => command.props[name]
+
+  let tabId = storage.get(storageKeys.TAB).id
+
+  if (P`tab-id`) {
+    command.update(['"Connecting to the tab."'])
+    const validTab = await getTab({ tabId: cleanTabId(P`tab-id`) })
+
+    tabId = validTab.id
+  }
 
   if (P`list`) {
     const events = storage.get(storageKeys.EVENTS)
@@ -50,12 +60,12 @@ export const eventsHandler = async command => {
 
     const event = P`trigger`
     const xpath = P`xpath`
-    const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : storage.get(storageKeys.TAB).id
 
     const isDomEvent = domEventsSupported.includes(event)
 
     if (isDomEvent && !xpath) throw `${event} must be triggered on an existing DOM element.`
 
+    command.update(['"Triggering DOM event."'])
     await processManager.triggerEvent(tabId, { xpath, event, theme: config.theme })
     const update = formatEvent({ event, xpath })
 

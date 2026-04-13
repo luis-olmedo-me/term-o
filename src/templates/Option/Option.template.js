@@ -7,9 +7,7 @@ export class Option {
     helpSection,
     description,
     repeatable,
-    validations,
-    dependencies,
-    strictDependencies
+    validations
   }) {
     this.name = name
     this.value = value
@@ -19,8 +17,6 @@ export class Option {
     this.description = description
     this.repeatable = repeatable
     this.validations = validations
-    this.dependencies = dependencies
-    this.strictDependencies = strictDependencies
   }
 
   get displayName() {
@@ -31,7 +27,7 @@ export class Option {
     this.value = value
   }
 
-  validate(value) {
-    if (this.validations) this.validations.forEach(validation => validation(this, value))
+  validate(value, props) {
+    if (this.validations) this.validations.forEach(validation => validation(this, value, props))
   }
 }

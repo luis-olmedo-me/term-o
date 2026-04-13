@@ -1,7 +1,7 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
-import { isTabId } from '@src/helpers/validation-command.helpers'
+import { options, value } from '@src/helpers/validation-command.helpers'
 import { inspectHelpSections } from './inspect.constants'
 import { inspectHandler } from './inspect.handler'
 
@@ -15,7 +15,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: inspectHelpSections.SEARCH,
     description: 'Read a variable path in the current tab',
-    worksWith: ['tab-id']
+    validate: [options.allow('tab-id')]
   })
   .expect({
     name: 'tab-id',
@@ -23,5 +23,5 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: inspectHelpSections.SEARCH,
     description: 'Search variable in a specific tab (T[number])',
-    validate: [isTabId]
+    validate: [value.isTabId, options.requireAnyOf('path')]
   })

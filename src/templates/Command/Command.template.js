@@ -103,7 +103,11 @@ export class Command extends EventListener {
   }
 
   async execute() {
+    const hasArgsPending = this.args.some(arg => arg.isHoldingUp)
+
     try {
+      if (hasArgsPending) throw 'Params were not finished'
+
       this.props = this.options.getValues()
       this.startExecuting()
 
@@ -111,7 +115,6 @@ export class Command extends EventListener {
 
       if (!this.finished) {
         if (this.canExecuteNext && this.nextCommand) await this.executeNext()
-        else throw 'Params were not finished'
 
         this.changeStatus(commandStatuses.DONE)
       } else {

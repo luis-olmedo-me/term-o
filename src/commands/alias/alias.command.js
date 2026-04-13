@@ -1,8 +1,7 @@
 import CommandBase from '@src/templates/CommandBase'
 
-import { commandNames, commandTypes } from '@src/constants/command.constants'
-import { array, options, value } from '@src/helpers/validation-command.helpers'
-import { aliasHelpSections } from './alias.constants'
+import { commandNames, commandTypes, helpSections } from '@src/constants/command.constants'
+import { options, value } from '@src/helpers/validation-command.helpers'
 import { aliasHandler } from './alias.handler'
 
 export default new CommandBase({
@@ -12,33 +11,40 @@ export default new CommandBase({
   .expect({
     name: 'add',
     abbreviation: 'a',
-    type: commandTypes.ARRAY,
-    helpSection: aliasHelpSections.MANAGEMENT,
-    description: 'Add a new alias. Format: ["name" "command"]',
-    validate: [
-      array.hasAllItemsAs(
-        value.isArray,
-        array.hasLength(2),
-        array.hasAllItemsAs(value.isString),
-        array.hasItemAs(0, value.isSpaceForbidden)
-      ),
-      options.requireNoOther
-    ],
-    repeatable: true
+    type: commandTypes.BOOLEAN,
+    helpSection: helpSections.ACTIONS,
+    description: 'Add a new alias and the associated command',
+    validate: [options.requireAll('name', 'command')]
+  })
+  .expect({
+    name: 'delete',
+    abbreviation: 'd',
+    type: commandTypes.BOOLEAN,
+    helpSection: helpSections.ACTIONS,
+    description: 'Remove an alias by name',
+    validate: [options.requireAll('name')]
   })
   .expect({
     name: 'list',
     abbreviation: 'l',
     type: commandTypes.BOOLEAN,
-    helpSection: aliasHelpSections.MANAGEMENT,
+    helpSection: helpSections.ACTIONS,
     description: 'List all defined aliases',
     validate: [options.requireNoOther]
   })
   .expect({
-    name: 'delete',
-    abbreviation: 'd',
+    name: 'name',
+    abbreviation: 'n',
     type: commandTypes.STRING,
-    helpSection: aliasHelpSections.MANAGEMENT,
-    description: 'Remove an alias by name',
-    validate: [options.requireNoOther]
+    helpSection: helpSections.DETAILS,
+    description: 'Define the name of the alias',
+    validate: [value.isSpaceForbidden, options.requireAnyOf('add', 'delete')]
+  })
+  .expect({
+    name: 'command',
+    abbreviation: 'c',
+    type: commandTypes.STRING,
+    helpSection: helpSections.DETAILS,
+    description: 'Define the command associated with the alias',
+    validate: [options.requireAnyOf('add')]
   })

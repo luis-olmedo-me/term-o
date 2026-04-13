@@ -9,6 +9,14 @@ export default new CommandBase({
   handler: addonsHandler
 })
   .expect({
+    name: 'delete',
+    abbreviation: 'd',
+    type: commandTypes.BOOLEAN,
+    helpSection: helpSections.ACTIONS,
+    description: 'Delete a addon by name',
+    validate: [options.requireAll('name')]
+  })
+  .expect({
     name: 'list',
     abbreviation: 'l',
     type: commandTypes.BOOLEAN,
@@ -23,14 +31,6 @@ export default new CommandBase({
     helpSection: helpSections.ACTIONS,
     description: 'Upload a file to add as a addon',
     validate: [options.requireNoOther]
-  })
-  .expect({
-    name: 'delete',
-    abbreviation: 'd',
-    type: commandTypes.BOOLEAN,
-    helpSection: helpSections.ACTIONS,
-    description: 'Delete a addon by name',
-    validate: [options.requireAll('name')]
   })
   .expect({
     name: 'name',

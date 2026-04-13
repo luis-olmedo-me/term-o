@@ -1,7 +1,7 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
-import { isRegExp, isTabId, isURL } from '@src/helpers/validation-command.helpers'
+import { options, value } from '@src/helpers/validation-command.helpers'
 import { tabsHelpSections } from './tabs.constants'
 import { tabsHandler } from './tabs.handler'
 
@@ -15,7 +15,18 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: tabsHelpSections.GENERAL,
     description: 'List all currently open tabs',
-    worksWith: ['incognito', 'muted', 'unmuted', 'title', 'url', 'window-id', 'group-id', 'tab-id']
+    validate: [
+      options.allow(
+        'incognito',
+        'muted',
+        'unmuted',
+        'title',
+        'url',
+        'window-id',
+        'group-id',
+        'tab-id'
+      )
+    ]
   })
   .expect({
     name: 'open',
@@ -23,8 +34,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: tabsHelpSections.TAB_ACTIONS,
     description: 'Open a new tab with the given URL',
-    worksWith: ['wait', 'active'],
-    validate: [isURL]
+    validate: [value.isURL, options.allow('wait', 'active')]
   })
   .expect({
     name: 'reload',
@@ -32,69 +42,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: tabsHelpSections.TAB_ACTIONS,
     description: 'Reload a specific tab by ID (T[number])',
-    validate: [isTabId],
-    worksWith: ['wait']
-  })
-  .expect({
-    name: 'incognito',
-    abbreviation: 'I',
-    type: commandTypes.BOOLEAN,
-    helpSection: tabsHelpSections.FILTERS,
-    description: 'Show only tabs in incognito mode'
-  })
-  .expect({
-    name: 'title',
-    abbreviation: 't',
-    type: commandTypes.STRING,
-    helpSection: tabsHelpSections.FILTERS,
-    description: 'Filter tabs by title (regex)',
-    validate: [isRegExp]
-  })
-  .expect({
-    name: 'url',
-    abbreviation: 'u',
-    type: commandTypes.STRING,
-    helpSection: tabsHelpSections.FILTERS,
-    description: 'Filter tabs by URL (regex)',
-    validate: [isRegExp]
-  })
-  .expect({
-    name: 'muted',
-    abbreviation: 'm',
-    type: commandTypes.BOOLEAN,
-    helpSection: tabsHelpSections.FILTERS,
-    description: 'Show only muted tabs'
-  })
-  .expect({
-    name: 'unmuted',
-    abbreviation: 'M',
-    type: commandTypes.BOOLEAN,
-    helpSection: tabsHelpSections.FILTERS,
-    description: 'Show only unmuted tabs'
-  })
-  .expect({
-    name: 'window-id',
-    abbreviation: 'w',
-    type: commandTypes.STRING,
-    helpSection: tabsHelpSections.FILTERS,
-    description: 'Filter tabs by window ID (regex)',
-    validate: [isRegExp]
-  })
-  .expect({
-    name: 'group-id',
-    abbreviation: 'g',
-    type: commandTypes.STRING,
-    helpSection: tabsHelpSections.FILTERS,
-    description: 'Filter tabs by group ID (regex)',
-    validate: [isRegExp]
-  })
-  .expect({
-    name: 'tab-id',
-    abbreviation: 'i',
-    type: commandTypes.STRING,
-    helpSection: tabsHelpSections.FILTERS,
-    description: 'Filter tabs by tab ID (regex)',
-    validate: [isRegExp]
+    validate: [value.isTabId, options.allow('wait')]
   })
   .expect({
     name: 'switch',
@@ -102,8 +50,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: tabsHelpSections.TAB_ACTIONS,
     description: 'Switch focus to a specific tab by ID (T[number])',
-    validate: [isTabId],
-    worksWith: []
+    validate: [value.isTabId, options.requireNoOther()]
   })
   .expect({
     name: 'point',
@@ -111,8 +58,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: tabsHelpSections.TAB_ACTIONS,
     description: 'Point the terminal to a specific tab by ID (T[number])',
-    validate: [isTabId],
-    worksWith: []
+    validate: [value.isTabId, options.requireNoOther()]
   })
   .expect({
     name: 'close',
@@ -120,22 +66,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: tabsHelpSections.TAB_ACTIONS,
     description: 'Close a specific tab by ID (T[number])',
-    validate: [isTabId],
-    worksWith: []
-  })
-  .expect({
-    name: 'wait',
-    abbreviation: 'W',
-    type: commandTypes.BOOLEAN,
-    helpSection: tabsHelpSections.TAB_ACTIONS,
-    description: 'Wait until the tab finishes loading'
-  })
-  .expect({
-    name: 'active',
-    abbreviation: 'a',
-    type: commandTypes.BOOLEAN,
-    helpSection: tabsHelpSections.TAB_ACTIONS,
-    description: 'Focus the tab open'
+    validate: [value.isTabId, options.requireNoOther()]
   })
   .expect({
     name: 'current',
@@ -143,7 +74,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: tabsHelpSections.GENERAL,
     description: 'Show the currently active tab',
-    worksWith: []
+    validate: [options.requireNoOther()]
   })
   .expect({
     name: 'pointing',
@@ -151,5 +82,85 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: tabsHelpSections.GENERAL,
     description: 'Show the tab currently targeted by the terminal',
-    worksWith: []
+    validate: [options.requireNoOther()]
+  })
+  .expect({
+    name: 'incognito',
+    abbreviation: 'I',
+    type: commandTypes.BOOLEAN,
+    helpSection: tabsHelpSections.FILTERS,
+    description: 'Show only tabs in incognito mode',
+    validate: [options.requireAnyOf('list')]
+  })
+  .expect({
+    name: 'title',
+    abbreviation: 't',
+    type: commandTypes.STRING,
+    helpSection: tabsHelpSections.FILTERS,
+    description: 'Filter tabs by title (regex)',
+    validate: [value.isRegExp, options.requireAnyOf('list')]
+  })
+  .expect({
+    name: 'url',
+    abbreviation: 'u',
+    type: commandTypes.STRING,
+    helpSection: tabsHelpSections.FILTERS,
+    description: 'Filter tabs by URL (regex)',
+    validate: [value.isRegExp, options.requireAnyOf('list')]
+  })
+  .expect({
+    name: 'muted',
+    abbreviation: 'm',
+    type: commandTypes.BOOLEAN,
+    helpSection: tabsHelpSections.FILTERS,
+    description: 'Show only muted tabs',
+    validate: [options.requireAnyOf('list')]
+  })
+  .expect({
+    name: 'unmuted',
+    abbreviation: 'M',
+    type: commandTypes.BOOLEAN,
+    helpSection: tabsHelpSections.FILTERS,
+    description: 'Show only unmuted tabs',
+    validate: [options.requireAnyOf('list')]
+  })
+  .expect({
+    name: 'window-id',
+    abbreviation: 'w',
+    type: commandTypes.STRING,
+    helpSection: tabsHelpSections.FILTERS,
+    description: 'Filter tabs by window ID (regex)',
+    validate: [value.isRegExp, options.requireAnyOf('list')]
+  })
+  .expect({
+    name: 'group-id',
+    abbreviation: 'g',
+    type: commandTypes.STRING,
+    helpSection: tabsHelpSections.FILTERS,
+    description: 'Filter tabs by group ID (regex)',
+    validate: [value.isRegExp, options.requireAnyOf('list')]
+  })
+  .expect({
+    name: 'tab-id',
+    abbreviation: 'i',
+    type: commandTypes.STRING,
+    helpSection: tabsHelpSections.FILTERS,
+    description: 'Filter tabs by tab ID (regex)',
+    validate: [value.isRegExp, options.requireAnyOf('list')]
+  })
+  .expect({
+    name: 'wait',
+    abbreviation: 'W',
+    type: commandTypes.BOOLEAN,
+    helpSection: tabsHelpSections.TAB_ACTIONS,
+    description: 'Wait until the tab finishes loading',
+    validate: [options.requireAnyOf('open', 'reload')]
+  })
+  .expect({
+    name: 'active',
+    abbreviation: 'a',
+    type: commandTypes.BOOLEAN,
+    helpSection: tabsHelpSections.TAB_ACTIONS,
+    description: 'Focus the tab open',
+    validate: [options.requireAnyOf('open')]
   })

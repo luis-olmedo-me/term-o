@@ -15,8 +15,16 @@ import { cleanTabId } from '@src/helpers/tabs.helpers'
 
 export const tabsHandler = async command => {
   const storage = command.get('storage')
-  const tabId = storage.get(storageKeys.TAB).id
   const P = name => command.props[name]
+
+  let tabId = storage.get(storageKeys.TAB).id
+
+  if (P`tab-id`) {
+    command.update(['"Connecting to the tab."'])
+    const validTab = await getTab({ tabId: cleanTabId(P`tab-id`) })
+
+    tabId = validTab.id
+  }
 
   if (P`reload`) {
     if (P`wait`) command.update(['"Please wait while the page is loading."'])
@@ -33,6 +41,7 @@ export const tabsHandler = async command => {
 
     storage.set(storageKeys.TAB, tab)
 
+    command.reset()
     command.update(update)
   }
 
@@ -45,6 +54,7 @@ export const tabsHandler = async command => {
 
     const update = formatTab(tab)
 
+    command.reset()
     command.update(update)
   }
 
@@ -67,7 +77,6 @@ export const tabsHandler = async command => {
 
     const update = formatTab(tab, P`open`)
 
-    command.reset()
     command.update(update)
   }
 
@@ -98,6 +107,7 @@ export const tabsHandler = async command => {
     })
     const updates = tabs.map(formatTab)
 
+    command.reset()
     command.update(...updates)
   }
 

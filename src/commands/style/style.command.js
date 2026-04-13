@@ -1,16 +1,7 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
-import {
-  hasAllItemsAs,
-  hasItemAs,
-  hasLength,
-  hasLengthBetween,
-  isArray,
-  isRegExp,
-  isSpaceForbidden,
-  isString
-} from '@src/helpers/validation-command.helpers'
+import { array, options, value } from '@src/helpers/validation-command.helpers'
 import { styleHelpSections } from './style.constants'
 import { styleHandler } from './style.handler'
 
@@ -24,8 +15,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: styleHelpSections.RETRIEVAL,
     description: 'List CSS styles applied to elements matching the criteria',
-    worksWith: ['on', 'property'],
-    mustHave: ['on']
+    validate: [options.allow('property', 'on'), options.requireAll('on')]
   })
   .expect({
     name: 'apply',
@@ -33,13 +23,16 @@ export default new CommandBase({
     type: commandTypes.ARRAY,
     helpSection: styleHelpSections.MODIFICATION,
     description: 'Apply styles to elements matching the criteria',
+    repeatable: true,
     validate: [
-      hasAllItemsAs(isArray, hasLength(2), hasAllItemsAs(isString), hasItemAs(0, isSpaceForbidden))
-    ],
-    worksWith: ['on'],
-    mustHave: ['on'],
-    defaultValue: [],
-    repeatable: true
+      array.hasAllItemsAs(
+        value.isArray,
+        array.hasLength(2),
+        array.hasAllItemsAs(value.isString),
+        array.hasItemAs(0, value.isSpaceForbidden)
+      ),
+      options.requireAll('on')
+    ]
   })
   .expect({
     name: 'color-pick',
@@ -47,8 +40,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: styleHelpSections.TOOLS,
     description: 'Pick a color by clicking on the web page',
-    worksWith: [],
-    mustHave: []
+    validate: [options.requireNoOther()]
   })
   .expect({
     name: 'on',
@@ -63,6 +55,12 @@ export default new CommandBase({
     type: commandTypes.ARRAY,
     helpSection: styleHelpSections.FILTERS,
     description: 'Filter styles by property names (regex[])',
-    validate: [hasAllItemsAs(isArray, hasLengthBetween(1, 2), hasAllItemsAs(isRegExp, isString))],
-    repeatable: true
+    repeatable: true,
+    validate: [
+      array.hasAllItemsAs(
+        value.isArray,
+        array.hasLengthBetween(1, 2),
+        array.hasAllItemsAs(value.isRegExp, value.isString)
+      )
+    ]
   })

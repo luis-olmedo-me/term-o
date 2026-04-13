@@ -379,7 +379,9 @@ When using `alias` command the options can express **3** possible actions:
 
    ```bash
    alias
-       --add ["gotest", 'tabs --open "https://test.com" --wait']            # REQUIRED/REPEATABLE
+       --add                                                                # REQUIRED
+       --name "gotest"                                                      # REQUIRED
+       --command 'tabs --open "https://test.com" --wait'                    # REQUIRED
    ```
 
    After that command is executed, you can just type `gotest` to open "https://test.com" in a new tab.
@@ -390,7 +392,8 @@ When using `alias` command the options can express **3** possible actions:
 
    ```bash
    alias
-       --delete "gotest"                                                    # REQUIRED
+       --delete                                                             # REQUIRED
+       --name "gotest"                                                      # REQUIRED
    ```
 
 ## STYLE

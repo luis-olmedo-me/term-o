@@ -1,13 +1,7 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes } from '@src/constants/command.constants'
-import {
-  hasAllItemsAs,
-  hasLength,
-  isArray,
-  isString,
-  isTabId
-} from '@src/helpers/validation-command.helpers'
+import { array, options, value } from '@src/helpers/validation-command.helpers'
 import { storageHelpSections } from './storage.constants'
 import { storageHandler } from './storage.handler'
 
@@ -21,7 +15,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: storageHelpSections.RETRIEVAL,
     description: 'Get local storage from the selected tab',
-    worksWith: ['json', 'tab-id', 'set']
+    validate: [options.allow('json', 'tab-id', 'set')]
   })
   .expect({
     name: 'session',
@@ -29,7 +23,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: storageHelpSections.RETRIEVAL,
     description: 'Get session storage from the selected tab',
-    worksWith: ['json', 'tab-id', 'set']
+    validate: [options.allow('json', 'tab-id', 'set')]
   })
   .expect({
     name: 'cookie',
@@ -37,14 +31,15 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: storageHelpSections.RETRIEVAL,
     description: 'Get cookies from the selected tab',
-    worksWith: ['json', 'tab-id', 'set']
+    validate: [options.allow('json', 'tab-id', 'set')]
   })
   .expect({
     name: 'json',
     abbreviation: 'j',
     type: commandTypes.BOOLEAN,
     helpSection: storageHelpSections.RETRIEVAL,
-    description: 'Return storage as JSON'
+    description: 'Return storage as JSON',
+    validate: [options.requireAnyOf('local', 'session', 'cookie')]
   })
   .expect({
     name: 'set',
@@ -52,9 +47,11 @@ export default new CommandBase({
     type: commandTypes.ARRAY,
     helpSection: storageHelpSections.MODIFICATION,
     description: 'Set a key-value pair in the selected storage',
-    validate: [hasAllItemsAs(isArray, hasLength(2), hasAllItemsAs(isString))],
-    defaultValue: [],
-    repeatable: true
+    repeatable: true,
+    validate: [
+      array.hasAllItemsAs(value.isArray, array.hasLength(2), array.hasAllItemsAs(value.isString)),
+      options.requireAnyOf('local', 'session', 'cookie')
+    ]
   })
   .expect({
     name: 'tab-id',
@@ -62,7 +59,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: storageHelpSections.RETRIEVAL,
     description: 'Specify a tab ID (T[number]) to get storage from',
-    validate: [isTabId]
+    validate: [value.isTabId, options.requireAnyOf('local', 'session', 'cookie')]
   })
   .expect({
     name: 'copy',
@@ -70,5 +67,5 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: storageHelpSections.MODIFICATION,
     description: 'Copy a value to the clipboard',
-    worksWith: []
+    validate: [options.requireNoOther()]
   })

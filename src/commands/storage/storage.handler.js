@@ -1,5 +1,6 @@
 import processManager from '@src/libs/process-manager'
 
+import { getTab } from '@src/browser-api/tabs.api'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatStorageAsString, formatStorageProp, formatText } from '@src/helpers/format.helpers'
@@ -10,7 +11,14 @@ export const storageHandler = async command => {
   const storage = command.get('storage')
   const P = name => command.props[name]
 
-  const tabId = P`tab-id` ? cleanTabId(P`tab-id`) : storage.get(storageKeys.TAB).id
+  let tabId = storage.get(storageKeys.TAB).id
+
+  if (P`tab-id`) {
+    command.update(['"Connecting to the tab."'])
+    const validTab = await getTab({ tabId: cleanTabId(P`tab-id`) })
+
+    tabId = validTab.id
+  }
 
   if (P`local` || P`session` || P`cookie`) {
     const isSetting = P`set`.length > 0
@@ -19,6 +27,7 @@ export const storageHandler = async command => {
     if (isSetting) {
       const namespace = getStorageNamespace(P`local`, P`session`, P`cookie`)
 
+      command.update(['"Applying changes in storage."'])
       for (const [key, value] of P`set`) {
         await processManager.setStorage(tabId, {
           namespace,

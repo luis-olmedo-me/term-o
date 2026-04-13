@@ -70,8 +70,6 @@ export class StorageAddons extends StorageSimple {
           abbreviation: option.abbreviation,
           type: option.type,
           description: option.description,
-          worksWith: option.worksWith,
-          mustHave: option.mustHave,
           defaultValue: option.defaultValue,
           helpSection: option.helpSection,
           repeatable: option.repeatable,

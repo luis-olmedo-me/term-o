@@ -1,7 +1,5 @@
 import Option from '@src/templates/Option'
 
-import { validate } from '@src/helpers/validation-props.helpers'
-
 export class OptionsManager {
   constructor() {
     this.values = []
@@ -15,18 +13,6 @@ export class OptionsManager {
     this.values = this.values.concat(new Option(config))
   }
 
-  getDependencies() {
-    return this.values.reduce((deps, { name, dependencies }) => {
-      return dependencies ? { ...deps, [name]: dependencies } : deps
-    }, {})
-  }
-
-  getStrictDependencies() {
-    return this.values.reduce((deps, { name, strictDependencies }) => {
-      return strictDependencies ? { ...deps, [name]: strictDependencies } : deps
-    }, {})
-  }
-
   getValues() {
     return this.values.reduce((props, { name, value }) => {
       return { ...props, [name]: value }
@@ -34,11 +20,6 @@ export class OptionsManager {
   }
 
   setValues(values) {
-    const dependencies = this.getDependencies()
-    const strictDependencies = this.getStrictDependencies()
-
-    validate(dependencies, strictDependencies, values)
-
     Object.entries(values).forEach(([name, value]) => {
       this.getByName(name).setValue(value)
     })
@@ -75,9 +56,7 @@ export class OptionsManager {
   copy() {
     const optionsCopy = new OptionsManager()
 
-    this.values.forEach(option => {
-      optionsCopy.add(option)
-    })
+    this.values.forEach(option => optionsCopy.add(option))
 
     return optionsCopy
   }

@@ -40,7 +40,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: styleHelpSections.TOOLS,
     description: 'Pick a color by clicking on the web page',
-    validate: [options.requireNoOther()]
+    validate: [options.requireNoOther]
   })
   .expect({
     name: 'on',

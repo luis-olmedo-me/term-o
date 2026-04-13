@@ -25,6 +25,6 @@ export const helpOptionConfig = {
   type: commandTypes.BOOLEAN,
   helpSection: 'General',
   description: 'Show help for this command',
-  validate: [options.requireNoOther()],
+  validate: [options.requireNoOther],
   defaultValue: false
 }

@@ -67,5 +67,5 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: storageHelpSections.MODIFICATION,
     description: 'Copy a value to the clipboard',
-    validate: [options.requireNoOther()]
+    validate: [options.requireNoOther]
   })

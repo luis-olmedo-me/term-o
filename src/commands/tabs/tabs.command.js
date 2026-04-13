@@ -50,7 +50,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: tabsHelpSections.TAB_ACTIONS,
     description: 'Switch focus to a specific tab by ID (T[number])',
-    validate: [value.isTabId, options.requireNoOther()]
+    validate: [value.isTabId, options.requireNoOther]
   })
   .expect({
     name: 'point',
@@ -58,7 +58,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: tabsHelpSections.TAB_ACTIONS,
     description: 'Point the terminal to a specific tab by ID (T[number])',
-    validate: [value.isTabId, options.requireNoOther()]
+    validate: [value.isTabId, options.requireNoOther]
   })
   .expect({
     name: 'close',
@@ -66,7 +66,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: tabsHelpSections.TAB_ACTIONS,
     description: 'Close a specific tab by ID (T[number])',
-    validate: [value.isTabId, options.requireNoOther()]
+    validate: [value.isTabId, options.requireNoOther]
   })
   .expect({
     name: 'current',
@@ -74,7 +74,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: tabsHelpSections.GENERAL,
     description: 'Show the currently active tab',
-    validate: [options.requireNoOther()]
+    validate: [options.requireNoOther]
   })
   .expect({
     name: 'pointing',
@@ -82,7 +82,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: tabsHelpSections.GENERAL,
     description: 'Show the tab currently targeted by the terminal',
-    validate: [options.requireNoOther()]
+    validate: [options.requireNoOther]
   })
   .expect({
     name: 'incognito',

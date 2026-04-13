@@ -14,5 +14,5 @@ export default new CommandBase({
   type: commandTypes.STRING,
   helpSection: errorHelpSections.ACTIONS,
   description: 'Throw an error with a custom message',
-  validate: [options.requireNoOther()]
+  validate: [options.requireNoOther]
 })

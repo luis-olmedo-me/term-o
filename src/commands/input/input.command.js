@@ -14,5 +14,5 @@ export default new CommandBase({
   type: commandTypes.BOOLEAN,
   helpSection: inputHelpSections.ACTIONS,
   description: 'Request user input in terminal.',
-  validate: [options.requireNoOther()]
+  validate: [options.requireNoOther]
 })

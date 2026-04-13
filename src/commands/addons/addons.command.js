@@ -15,7 +15,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: addonsHelpSections.MANAGEMENT,
     description: 'List all addons',
-    validate: [options.requireNoOther()]
+    validate: [options.requireNoOther]
   })
   .expect({
     name: 'upload',
@@ -23,7 +23,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: addonsHelpSections.MANAGEMENT,
     description: 'Upload a file to add as a addon',
-    validate: [options.requireNoOther()]
+    validate: [options.requireNoOther]
   })
   .expect({
     name: 'delete',
@@ -31,5 +31,5 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: addonsHelpSections.MANAGEMENT,
     description: 'Delete a addon by name',
-    validate: [options.requireNoOther()]
+    validate: [options.requireNoOther]
   })

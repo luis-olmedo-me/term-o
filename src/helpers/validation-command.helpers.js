@@ -231,19 +231,17 @@ export const requireAnyOf = (...dependencies) => {
   }
 }
 
-export const requireNoOther = () => {
-  return (option, _value, props) => {
-    const propNames = Object.keys(props)
-    const forbiddenDependencies = propNames.filter(name => name !== option.name)
-    const hasForbbidenDependencies = forbiddenDependencies.length > 0
+export const requireNoOther = (option, _value, props) => {
+  const propNames = Object.keys(props)
+  const forbiddenDependencies = propNames.filter(name => name !== option.name)
+  const hasForbbidenDependencies = forbiddenDependencies.length > 0
 
-    if (hasForbbidenDependencies) {
-      const name = option.displayName
-      const firstForbiddenDependency = forbiddenDependencies.at(0)
-      const quotedFirstForbiddenDependency = getQuotedString(firstForbiddenDependency)
+  if (hasForbbidenDependencies) {
+    const name = option.displayName
+    const firstForbiddenDependency = forbiddenDependencies.at(0)
+    const quotedFirstForbiddenDependency = getQuotedString(firstForbiddenDependency)
 
-      throw `${name} can not be executed with ${quotedFirstForbiddenDependency}.`
-    }
+    throw `${name} can not be executed with ${quotedFirstForbiddenDependency}.`
   }
 }
 

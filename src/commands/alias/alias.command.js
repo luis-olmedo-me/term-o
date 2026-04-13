@@ -22,7 +22,7 @@ export default new CommandBase({
         array.hasAllItemsAs(value.isString),
         array.hasItemAs(0, value.isSpaceForbidden)
       ),
-      options.requireNoOther()
+      options.requireNoOther
     ],
     repeatable: true
   })
@@ -32,7 +32,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: aliasHelpSections.MANAGEMENT,
     description: 'List all defined aliases',
-    validate: [options.requireNoOther()]
+    validate: [options.requireNoOther]
   })
   .expect({
     name: 'delete',
@@ -40,5 +40,5 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: aliasHelpSections.MANAGEMENT,
     description: 'Remove an alias by name',
-    validate: [options.requireNoOther()]
+    validate: [options.requireNoOther]
   })

@@ -36,7 +36,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: eventsHelpSections.MANAGEMENT,
     description: 'List all registered events',
-    validate: [options.requireNoOther()]
+    validate: [options.requireNoOther]
   })
   .expect({
     name: 'delete',
@@ -44,7 +44,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: eventsHelpSections.MANAGEMENT,
     description: 'Delete a registered event by its id',
-    validate: [options.requireNoOther()]
+    validate: [options.requireNoOther]
   })
   .expect({
     name: 'xpath',

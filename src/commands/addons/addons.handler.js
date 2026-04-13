@@ -58,7 +58,7 @@ export const addonsHandler = async command => {
   }
 
   if (P`delete`) {
-    const name = P`delete`
+    const name = P`name`
 
     const addons = storage.get(storageKeys.ADDONS)
     const addon = await addons.get(name)

@@ -633,45 +633,47 @@ When using `error` command the options can express **1** possible action:
 
 The `events` command is a bridge to the page events API and DOM element events.
 
-| Option                       | Short | Description                                       |
-| ---------------------------- | ----- | ------------------------------------------------- |
-| `--register`                 | `-r`  | Register a new command for future execution.      |
-| `--trigger <eventname>`      | `-t`  | Trigger a new event in page. It can be: click.    |
-| `--xpath <xpath>`            | `-x`  | XPath selector for the target element.            |
-| `--tab-id <tabid>`           | `-i`  | Trigger events in a specific tab.                 |
-| `--url <regex>`              | `-u`  | URL pattern where the event will trigger (regex). |
-| `--command <executableline>` | `-c`  | Command line to execute.                          |
-| `--list`                     | `-l`  | List all registered events.                       |
-| `--delete <eventid>`         | `-d`  | Delete a registered event by its id.              |
-| `--help`                     | `-h`  | Show help for this command.                       |
+| Option                     | Short | Description                                      |
+| -------------------------- | ----- | ------------------------------------------------ |
+| `--register <boolean>`     | `-r`  | Register a new command for future execution.     |
+| `--dom-dispatch <boolean>` | `-d`  | Dispatch a new DOM event in page.                |
+| `--list <boolean>`         | `-l`  | List all registered events.                      |
+| `--delete <boolean>`       | `-d`  | Delete a registered event by its identifier.     |
+| `--xpath <string>`         | `-x`  | Define an XPath query.                           |
+| `--tab-id <string>`        | `-i`  | Define a Tab ID where apply an action.           |
+| `--url <string>`           | `-u`  | Define a valid URL.                              |
+| `--name <string>`          | `-n`  | Define the name of the event.                    |
+| `--command <string>`       | `-c`  | Define the command line associated to the event. |
+| `--command-id <string>`    | `-C`  | Define the command identifier of the event.      |
 
 ### Dependency Rules
 
 When using `evennts` command the options can express **4** possible action:
 
-1. Trigger an event on a element (using `--trigger`)
+1. Trigger an event on a element (using `--dom-dispatch`)
 
-   Just using `--trigger` will define the event thrown on a specific element. Here is an example of how specific a notification can be:
+   The `--dom-dispatch` will dispatch a DOM Event on an element.
 
    ```bash
    events
-       --trigger "click"                                                    # REQUIRED
+       --dom-dispatch                                                       # REQUIRED
+       --name "click"                                                       # REQUIRED
        --xpath 'id("main-container")'                                       # REQUIRED
        --tab-id "T00000000"                                                 # OPTIONAL
    ```
 
 2. Create a summary of all the page events created (using `--list`)
 
-   Just using `--list` will trigger a search for all the page events created. Here is an example of how specific a search can be:
+   The `--list` will trigger a search for all the page events created.
 
    ```bash
    events
        --list                                                               # REQUIRED
    ```
 
-3. Create a page events (using `--register`)
+3. Register page events (using `--register`)
 
-   Just using `--register` will trigger the creation of a page event but it will require other options/arguments how it will work. Here is an example of how specific a notification can be:
+   The `--register` will trigger the creation of a page event.
 
    ```bash
    events
@@ -686,7 +688,8 @@ When using `evennts` command the options can express **4** possible action:
 
    ```bash
    events
-       --delete "9edb327b-b67f-4a3e-9e10-90b35ad1f3e5"                      # REQUIRED
+       --delete                                                             # REQUIRED
+       --command-id "9edb327b-b67f-4a3e-9e10-90b35ad1f3e5"                  # REQUIRED
    ```
 
 ## INPUT

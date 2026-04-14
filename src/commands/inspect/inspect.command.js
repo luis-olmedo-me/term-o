@@ -11,7 +11,7 @@ export default new CommandBase({
   .expect({
     name: 'read',
     abbreviation: 'r',
-    type: commandTypes.STRING,
+    type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Read a variable from the global context of the Tab',
     validate: [options.allow('path', 'tab-id'), options.requireAll('path')]

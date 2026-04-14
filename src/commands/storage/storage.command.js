@@ -2,7 +2,6 @@ import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes, helpSections } from '@src/constants/command.constants'
 import { array, options, value } from '@src/helpers/validation-command.helpers'
-import { storageHelpSections } from './storage.constants'
 import { storageHandler } from './storage.handler'
 
 export default new CommandBase({
@@ -65,7 +64,7 @@ export default new CommandBase({
     name: 'tab-id',
     abbreviation: 'i',
     type: commandTypes.STRING,
-    helpSection: storageHelpSections.RETRIEVAL,
+    helpSection: helpSections.DETAILS,
     description: 'Define a Tab ID where apply an action',
     validate: [value.isTabId, options.requireAnyOf('local', 'session', 'cookie')]
   })

@@ -2,7 +2,6 @@ import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes, helpSections } from '@src/constants/command.constants'
 import { options, value } from '@src/helpers/validation-command.helpers'
-import { historyHelpSections } from './history.constants'
 import { historyHandler } from './history.handler'
 
 export default new CommandBase({

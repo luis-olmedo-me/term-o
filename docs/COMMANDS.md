@@ -286,13 +286,13 @@ The `history` command displays all data related to the old tabs open in the brow
 
 | Option                   | Short | Description                             |
 | ------------------------ | ----- | --------------------------------------- |
-| `--list`                 | `-l`  | Show a list of previously opened pages. |
-| `--title <regex>`        | `-t`  | Filter pages by title.                  |
-| `--url <regex>`          | `-u`  | Filter pages by URL.                    |
-| `--max-results <number>` | `-r`  | Limit the number of items displayed.    |
-| `--from <datetime>`      | `-F`  | Start date for deletion or filtering.   |
-| `--to <datetime>`        | `-T`  | End date for deletion or filtering.     |
-| `--delete`               | `-d`  | Delete pages in a specific date range.  |
+| `--list <boolean>`       | `-l`  | Show a list of previously opened pages. |
+| `--delete <boolean>`     | `-d`  | Delete pages in a specific date range.  |
+| `--title <string>`       | `-t`  | Define the title.                       |
+| `--url <string>`         | `-u`  | Define a valid URL.                     |
+| `--max-results <number>` | `-r`  | Define the limit of items displayed.    |
+| `--from <string>`        | `-F`  | Define the start date.                  |
+| `--to <string>`          | `-T`  | Define the end date.                    |
 | `--help`                 | `-h`  | Show help for this command.             |
 
 ### Dependency Rules
@@ -301,7 +301,7 @@ When using `history` command the options can express **2** possible actions:
 
 1. Create an old tabs summary (using `--list`)
 
-   Just using `--list` will trigger a search for all old tabs open and it is possible to filter combining other options. Here is an example of how specific a search can be:
+   The `--list` will trigger a search for all old tabs open and it is possible to filter combining other options.
 
    ```bash
    history

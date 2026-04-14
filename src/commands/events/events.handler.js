@@ -28,15 +28,17 @@ export const eventsHandler = async command => {
   }
 
   if (P`register`) {
-    const id = createUUIDv4()
-    const events = storage.get(storageKeys.EVENTS)
-    const newEvent = { url: P`url`, line: P`command`, id }
+    P`event`.forEach(([url, line]) => {
+      const id = createUUIDv4()
+      const newEvent = { url, line, id }
+      const events = storage.get(storageKeys.EVENTS)
 
-    const newEvents = events.concat(newEvent)
-    const update = formatRegisteredEvent(newEvent)
+      const newEvents = events.concat(newEvent)
+      const update = formatRegisteredEvent(newEvent)
 
-    storage.set(storageKeys.EVENTS, newEvents)
-    command.update(update)
+      storage.set(storageKeys.EVENTS, newEvents)
+      command.update(update)
+    })
   }
 
   if (P`delete`) {

@@ -2,7 +2,7 @@ import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes, helpSections } from '@src/constants/command.constants'
 import { domEventsSupported } from '@src/constants/options.constants'
-import { options, value } from '@src/helpers/validation-command.helpers'
+import { array, options, value } from '@src/helpers/validation-command.helpers'
 import { eventsHandler } from './events.handler'
 
 export default new CommandBase({
@@ -15,7 +15,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Register a new command for future execution',
-    validate: [options.requireAll('url', 'command')]
+    validate: [options.requireAll('event')]
   })
   .expect({
     name: 'dom-dispatch',
@@ -58,14 +58,6 @@ export default new CommandBase({
     validate: [value.isTabId, options.requireAnyOf('dom-dispatch')]
   })
   .expect({
-    name: 'url',
-    abbreviation: 'u',
-    type: commandTypes.STRING,
-    helpSection: helpSections.DETAILS,
-    description: 'Define a valid URL',
-    validate: [value.isURL, options.requireAnyOf('register')]
-  })
-  .expect({
     name: 'name',
     abbreviation: 'n',
     type: commandTypes.STRING,
@@ -74,18 +66,27 @@ export default new CommandBase({
     validate: [value.isAnyOf(domEventsSupported), options.requireAnyOf('dom-dispatch')]
   })
   .expect({
-    name: 'command',
-    abbreviation: 'c',
-    type: commandTypes.STRING,
-    helpSection: helpSections.DETAILS,
-    description: 'Define the command line associated to the event',
-    validate: [options.requireAnyOf('register')]
-  })
-  .expect({
     name: 'command-id',
     abbreviation: 'C',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define the command identifier of the event',
     validate: [options.requireAnyOf('delete')]
+  })
+  .expect({
+    name: 'event',
+    abbreviation: 'e',
+    type: commandTypes.ARRAY,
+    helpSection: helpSections.DETAILS,
+    description: 'Define a url-command pair',
+    repeatable: true,
+    validate: [
+      array.hasAllItemsAs(
+        value.isArray,
+        array.hasLength(2),
+        array.hasItemAs(0, value.isURL),
+        array.hasAllItemsAs(value.isString)
+      ),
+      options.requireAnyOf('register')
+    ]
   })

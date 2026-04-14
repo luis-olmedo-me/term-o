@@ -611,6 +611,7 @@ The `error` command is a bridge to the error API.
 
 | Option             | Short | Description                           |
 | ------------------ | ----- | ------------------------------------- |
+| `--create`         | `-c`  | Create an error.                      |
 | `--title <string>` | `-t`  | Throw an error with a custom message. |
 | `--help`           | `-h`  | Show help for this command.           |
 
@@ -618,12 +619,13 @@ The `error` command is a bridge to the error API.
 
 When using `error` command the options can express **1** possible action:
 
-1. Throw an error (using `--title`)
+1. Throw an error (using `--create`)
 
-   Just using `--title` will throw an error with the given title. Here is an example of how specific a notification can be:
+   `--create` will trigger the creation of an error.
 
    ```bash
    search
+       --create                                                             # REQUIRED
        --title "test title"                                                 # REQUIRED
    ```
 

@@ -64,6 +64,7 @@ export const tabsHandler = async command => {
 
     await closeTab({ tabId: tab.id })
 
+    command.reset()
     command.update(update)
   }
 
@@ -77,6 +78,7 @@ export const tabsHandler = async command => {
 
     const update = formatTab(tab, P`open`)
 
+    command.reset()
     command.update(update)
   }
 

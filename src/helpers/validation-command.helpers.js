@@ -231,6 +231,22 @@ export const requireAnyOf = (...dependencies) => {
   }
 }
 
+export const conflict = (...dependencies) => {
+  return (option, _value, props) => {
+    const names = Object.keys(props)
+    const conflictingDependencies = dependencies.filter(dependency => names.includes(dependency))
+    const hasConflicts = conflictingDependencies.length > 0
+
+    if (hasConflicts) {
+      const name = option.displayName
+      const firstConflict = conflictingDependencies.at(0)
+      const quotedFirstConflict = getQuotedString(firstConflict)
+
+      throw `${name} conflicts with ${quotedFirstConflict}.`
+    }
+  }
+}
+
 export const requireNoOther = (option, _value, props) => {
   const propNames = Object.keys(props)
   const forbiddenDependencies = propNames.filter(name => name !== option.name)
@@ -274,5 +290,6 @@ export const options = {
   allow,
   requireAll,
   requireAnyOf,
-  requireNoOther
+  requireNoOther,
+  conflict
 }

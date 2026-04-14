@@ -9,48 +9,56 @@ export default new CommandBase({
   handler: storageHandler
 })
   .expect({
-    name: 'local',
+    name: 'list',
     abbreviation: 'l',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
-    description: 'Get local storage from the selected tab',
-    validate: [options.allow('see-json', 'tab-id', 'set')]
-  })
-  .expect({
-    name: 'session',
-    abbreviation: 's',
-    type: commandTypes.BOOLEAN,
-    helpSection: helpSections.ACTIONS,
-    description: 'Get session storage from the selected tab',
-    validate: [options.allow('see-json', 'tab-id', 'set')]
-  })
-  .expect({
-    name: 'cookie',
-    abbreviation: 'c',
-    type: commandTypes.BOOLEAN,
-    helpSection: helpSections.ACTIONS,
-    description: 'Get cookies from the selected tab',
-    validate: [options.allow('see-json', 'tab-id', 'set')]
+    description: 'List all storage key-values',
+    validate: [options.allow('local', 'session', 'cookie', 'see-json', 'tab-id')]
   })
   .expect({
     name: 'set',
-    abbreviation: 'S',
-    type: commandTypes.ARRAY,
+    abbreviation: 's',
+    type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Set a key-value pair in the selected storage',
-    repeatable: true,
     validate: [
-      array.hasAllItemsAs(value.isArray, array.hasLength(2), array.hasAllItemsAs(value.isString)),
-      options.requireAnyOf('local', 'session', 'cookie')
+      options.allow('local', 'session', 'cookie', 'data', 'tab-id'),
+      options.requireAnyOf('local', 'session', 'cookie'),
+      options.requireAll('data')
     ]
   })
   .expect({
     name: 'copy',
-    abbreviation: 'C',
-    type: commandTypes.STRING,
+    abbreviation: 'c',
+    type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Copy a value to the clipboard',
-    validate: [options.requireNoOther]
+    validate: [options.requireAll('input')]
+  })
+  .expect({
+    name: 'local',
+    abbreviation: 'L',
+    type: commandTypes.BOOLEAN,
+    helpSection: helpSections.DETAILS,
+    description: 'Define whether the local storage should be displayed',
+    validate: [options.requireAnyOf('list', 'set'), options.conflict('session', 'cookie')]
+  })
+  .expect({
+    name: 'session',
+    abbreviation: 'S',
+    type: commandTypes.BOOLEAN,
+    helpSection: helpSections.DETAILS,
+    description: 'Define whether the session storage should be displayed',
+    validate: [options.requireAnyOf('list', 'set'), options.conflict('local', 'cookie')]
+  })
+  .expect({
+    name: 'cookie',
+    abbreviation: 'C',
+    type: commandTypes.BOOLEAN,
+    helpSection: helpSections.DETAILS,
+    description: 'Define whether the cookie storage should be displayed',
+    validate: [options.requireAnyOf('list', 'set'), options.conflict('local', 'session')]
   })
   .expect({
     name: 'see-json',
@@ -58,7 +66,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
     description: 'Define whether the JSON format should be displayed',
-    validate: [options.requireAnyOf('local', 'session', 'cookie')]
+    validate: [options.requireAnyOf('list')]
   })
   .expect({
     name: 'tab-id',
@@ -66,5 +74,25 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define a Tab ID where apply an action',
-    validate: [value.isTabId, options.requireAnyOf('local', 'session', 'cookie')]
+    validate: [value.isTabId, options.requireAnyOf('list')]
+  })
+  .expect({
+    name: 'input',
+    abbreviation: 'I',
+    type: commandTypes.STRING,
+    helpSection: helpSections.DETAILS,
+    description: 'Define a user input',
+    validate: [options.requireAnyOf('copy')]
+  })
+  .expect({
+    name: 'data',
+    abbreviation: 'd',
+    type: commandTypes.ARRAY,
+    helpSection: helpSections.DETAILS,
+    description: 'Define a key-value pair',
+    repeatable: true,
+    validate: [
+      array.hasAllItemsAs(value.isArray, array.hasLength(2), array.hasAllItemsAs(value.isString)),
+      options.requireAnyOf('set')
+    ]
   })

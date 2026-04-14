@@ -83,8 +83,8 @@ export const domHandler = async command => {
     const update = formatElement({
       ...element,
       tabId: P`tab-id`,
-      xpath: null,
-      textContent: null
+      xpath: P`see-xpath` ? element.xpath : null,
+      textContent: P`see-content` ? element.textContent : null
     })
 
     command.reset()

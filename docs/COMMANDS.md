@@ -46,25 +46,31 @@ Interact with the DOM elements using declarative filters and structured search r
 
 The `dom` command enables element selection, filtering, and contextual queries inside the active browser tab.
 
-| Option                                           | Short | Description                                  |
-| ------------------------------------------------ | ----- | -------------------------------------------- |
-| `--search`                                       | `-s`  | Find elements by criteria.                   |
-| `--create`                                       | `-c`  | Create a DOM element.                        |
-| `--pick`                                         | `-p`  | Pick an element from the tab.                |
-| `--on <xpath>`                                   | `-X`  | Find elements with an XPath query.           |
-| `--inject <string>`                              | `-I`  | Inject HTML as text.                         |
-| `--attr <[attrname attrvalue]>`                  | `-a`  | Describe DOM element attributes.             |
-| `--below <xpath>`                                | `-B`  | Limit search scope under a specific element. |
-| `--child <number+>`                              | `-d`  | Select child element by index.               |
-| `--content`                                      | `-C`  | Show textual content of matched element(s).  |
-| `--parent <number+>`                             | `-p`  | Select parent element by index.              |
-| `--sibling <numberint>`                          | `-b`  | Select sibling by index.                     |
-| `--style <[stylename<regex> stylevalue<regex>]>` | `-S`  | Filter by CSS styles.                        |
-| `--tab-id <tabid>`                               | `-i`  | Search elements in a specific tab.           |
-| `--tag <regex>`                                  | `-t`  | Filter by tag name.                          |
-| `--text <regex>`                                 | `-T`  | Filter by text content.                      |
-| `--xpath`                                        | `-x`  | Show XPath(s) of matched element(s).         |
-| `--help`                                         | `-h`  | Show help for this command.                  |
+| Option               | Short | Description                                          |
+| -------------------- | ----- | ---------------------------------------------------- |
+| `--search`           | `-s`  | Search for elements by criteria.                     |
+| `--find`             | `-f`  | Find one element by criteria.                        |
+| `--create`           | `-c`  | Create a DOM element.                                |
+| `--pick`             | `-P`  | Pick an element from the tab.                        |
+| `--measure`          | `-M`  | Calculate the distance between two elements..        |
+| `--inject`           | `-I`  | Inject HTML as within an element.                    |
+| `--sibling <number>` | `-b`  | Define the sibling index.                            |
+| `--parent <number>`  | `-p`  | Define the parent index.                             |
+| `--child <number>`   | `-d`  | Define the child index.                              |
+| `--attr <array>`     | `-a`  | Define the attribute(s) of element(s).               |
+| `--style <array>`    | `-S`  | Define the style(s) of element(s).                   |
+| `--tag <string>`     | `-g`  | Define the element tag name.                         |
+| `--content <string>` | `-t`  | Define the text content.                             |
+| `--html <string>`    | `-H`  | Define the HTML content.                             |
+| `--see-content`      | `-C`  | Define whether the text content should be displayed. |
+| `--see-xpath`        | `-X`  | Define whether XPath(s) should be displayed.         |
+| `--tab-id <string>`  | `-i`  | Define a Tab ID where apply an action.               |
+| `--below <string>`   | `-B`  | Define an Element XPath query where apply an action. |
+| `--xpath <string>`   | `-x`  | Define an XPath query.                               |
+| `--times <number>`   | `-m`  | Define how many times the action must be done.       |
+| `--from <string>`    | `-F`  | Define the origin element XPath.                     |
+| `--to <string>`      | `-T`  | Define the destination element XPath.                |
+| `--help`             | `-h`  | Show help for this command.                          |
 
 ### Dependency Rules
 
@@ -72,7 +78,7 @@ When using `dom` command the options can express **6** possible actions:
 
 1. An element search (using `--search`)
 
-   Just using `--search` will trigger a search for all elements available but it is possible to filter combining other options. Here is an example of how specific a search can be:
+   The `--search` will trigger a search for all elements available in a tab that matches a criteria.
 
    ```bash
    dom
@@ -81,74 +87,79 @@ When using `dom` command the options can express **6** possible actions:
        --style ["color" "#00000\d"]                                         # OPTIONAL/REPEATABLE
        --below 'id("cards-container")'                                      # OPTIONAL
        --tab-id "T00000000"                                                 # OPTIONAL
-       --text "Buscar con Go.+"                                             # OPTIONAL
        --tag "button"                                                       # OPTIONAL
-       --content                                                            # OPTIONAL
-       --xpath                                                              # OPTIONAL
+       --content "Buscar con Go"                                            # OPTIONAL
+       --see-content                                                        # OPTIONAL
+       --see-xpath                                                          # OPTIONAL
    ```
 
-2. An element search from an xpath (using `--on`)
+2. An element search from an xpath (using `--find`)
 
-   The option `--on` will trigger a element search with a given string value. This option is mainly used to make a concatenated search. An xpath can be passed as a parameter, then continue the search using combining it with more options.
+   The option `--find` will trigger an only element search. This option is commonly used to make a concatenated search. An xpath can be passed as a parameter, then continue the search using combining it with more options.
 
    ```bash
    dom
-       --on 'id("main-container")'                                          # REQUIRED
+       --find                                                               # REQUIRED
+       --xpath 'id("main-container")'                                       # REQUIRED
        --below 'id("cards-container")'                                      # OPTIONAL
        --child 3                                                            # OPTIONAL
        --parent 2                                                           # OPTIONAL
        --tab-id "T00000000"                                                 # OPTIONAL
-       --xpath                                                              # OPTIONAL
+       --see-content                                                        # OPTIONAL
+       --see-xpath                                                          # OPTIONAL
    ```
 
 3. Inject HTML code below an element (using `--inject`)
 
-   The option `--inject` will inject inline HTML code from a given string value. At the same time we can do the same search by xpath mentioned before.
+   The option `--inject` will trigger an injection of HTML code in a specified element.
 
    ```bash
    dom
        --inject '<button>Test</button>'                                     # REQUIRED
-       --on 'id("main-container")'                                          # REQUIRED
-       --below 'id("cards-container")'                                      # OPTIONAL
-       --child 3                                                            # OPTIONAL
-       --parent 2                                                           # OPTIONAL
+       --xpath 'id("main-container")'                                       # REQUIRED
+       --html "<button>test</button>"                                       # REQUIRED
        --tab-id "T00000000"                                                 # OPTIONAL
-       --xpath                                                              # OPTIONAL
+       --see-content                                                        # OPTIONAL
+       --see-xpath                                                          # OPTIONAL
    ```
 
 4. Create an element (using `--create`)
 
-   The option `--create` will create a DOM element taking the given string value as its tag name. Here is an example of how specific a search can be:
+   The option `--create` will trigger the creation of an element taking the given string value as its tag name.
 
    ```bash
    dom
-       --create "button"                                                    # REQUIRED
-       --below 'id("cards-container")'                                      # OPTIONAL
+       --create                                                             # REQUIRED
+       --tag "button"                                                       # REQUIRED
        --attr ["class" "test-class"]                                        # OPTIONAL/REPEATABLE
+       --below 'id("cards-container")'                                      # OPTIONAL
        --tab-id "T00000000"                                                 # OPTIONAL
+       --see-content                                                        # OPTIONAL
+       --see-xpath                                                          # OPTIONAL
    ```
 
 5. Pick an element (using `--pick`)
 
-   The option `--pick` will prepare the tab to be clickable. Once, the user clicks anywhere a dropdown will show the elements as options. Here is an example of how specific a search can be:
+   The option `--pick` will trigger a dialog on a tab to pick an element.
 
    ```bash
    dom
        --pick                                                               # REQUIRED
-       --content                                                            # OPTIONAL
-       --xpath                                                              # OPTIONAL
        --times 3                                                            # OPTIONAL
        --tab-id "T00000000"                                                 # OPTIONAL
+       --see-content                                                        # OPTIONAL
+       --see-xpath                                                          # OPTIONAL
    ```
 
 6. Measure distance (pixels) from two elements (using `--measure`)
 
-   The option `--measure` will track two elements given as xpath queries and measure the distance between them. Here is an example of how specific a search can be:
+   The option `--measure` will locate two elements and measure the distance between them.
 
    ```bash
    dom
-       --measure "html"                                                     # REQUIRED
-       --measure "html/body[1]"                                             # REQUIRED
+       --measure                                                            # REQUIRED
+       --from "html"                                                        # REQUIRED
+       --to "html/body[1]"                                                  # REQUIRED
        --tab-id "T00000000"                                                 # OPTIONAL
    ```
 

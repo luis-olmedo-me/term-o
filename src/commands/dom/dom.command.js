@@ -53,7 +53,10 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Create a DOM element',
-    validate: [options.allow('attr', 'below', 'tab-id', 'tag'), options.requireAll('tag')]
+    validate: [
+      options.allow('attr', 'below', 'see-content', 'see-xpath', 'tab-id', 'tag'),
+      options.requireAll('tag')
+    ]
   })
   .expect({
     name: 'pick',
@@ -168,7 +171,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
     description: 'Define whether the text content should be displayed',
-    validate: [options.requireAnyOf('inject', 'find', 'search', 'pick')]
+    validate: [options.requireAnyOf('create', 'inject', 'find', 'search', 'pick')]
   })
   .expect({
     name: 'see-xpath',
@@ -176,7 +179,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
     description: 'Define whether XPath(s) should be displayed',
-    validate: [options.requireAnyOf('inject', 'find', 'search', 'pick')]
+    validate: [options.requireAnyOf('create', 'inject', 'find', 'search', 'pick')]
   })
   .expect({
     name: 'tab-id',

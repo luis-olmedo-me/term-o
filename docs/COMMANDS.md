@@ -465,16 +465,19 @@ Interact with the global object of a specific tab.
 
 The `inspect` command is a bridge to review global variables in the global object of the tab.
 
-| Option               | Short | Description                                         |
-| -------------------- | ----- | --------------------------------------------------- |
-| `--read <valuepath>` | `-r`  | Read a variable from the global context of the Tab. |
-| `--path <string>`    | `-p`  | Define a variable path.                             |
-| `--tab-id <string>`  | `-i`  | Define a Tab ID where apply an action.              |
-| `--help`             | `-h`  | Show help for this command.                         |
+| Option              | Short | Description                                                |
+| ------------------- | ----- | ---------------------------------------------------------- |
+| `--read`            | `-r`  | Read a variable from the global context of the Tab.        |
+| `--match`           | `-m`  | Match a given query within an input value.                 |
+| `--path <string>`   | `-p`  | Define a variable path.                                    |
+| `--tab-id <string>` | `-i`  | Define a Tab ID where apply an action.                     |
+| `--query <string>`  | `-q`  | Define a regular expression used to match within an input. |
+| `--input <string>`  | `-i`  | Define a user input.                                       |
+| `--help`            | `-h`  | Show help for this command.                                |
 
 ### Dependency Rules
 
-When using `inspect` command the options can express **1** possible action:
+When using `inspect` command the options can express **2** possible action:
 
 1. Inspect a value from the global object ("window.\*") (using `--read`)
 
@@ -485,6 +488,17 @@ When using `inspect` command the options can express **1** possible action:
        --read                                                               # REQUIRED
        --path "window.screen"                                               # REQUIRED
        --tab-id "T00000000"                                                 # OPTIONAL
+   ```
+
+2. Search for text (using `--match`)
+
+   The `--match` describes what the query used to match the input.
+
+   ```bash
+   search
+       --match                                                              # REQUIRED
+       --query "test\.testing"                                              # REQUIRED
+       --input "template test.testing"                                      # REQUIRED
    ```
 
 ## NOTIFY
@@ -515,32 +529,6 @@ When using `notify` command the options can express **1** possible action:
        --title "Testing Title"                                              # REQUIRED
        --message "Message to be aware of."                                  # REQUIRED
        --tab-id "T00000000"                                                 # OPTIONAL
-   ```
-
-## SEARCH
-
-Interact with a string search.
-
-The `search` command is a bridge to search for a text inside another text.
-
-| Option             | Short | Description                         |
-| ------------------ | ----- | ----------------------------------- |
-| `--query <regex>`  | `-q`  | Text query to be searched in input. |
-| `--input <string>` | `-i`  | Text taken as input.                |
-| `--help`           | `-h`  | Show help for this command.         |
-
-### Dependency Rules
-
-When using `search` command the options can express **1** possible action:
-
-1. Search for text (using `--query`)
-
-   The `--query` describes what the query used to match the input. Only if the input matches you will get an answer. Here is an example of how specific a notification can be:
-
-   ```bash
-   search
-       --query "test\.testing"                                              # REQUIRED
-       --input "template test.testing"                                      # REQUIRED
    ```
 
 ## STORAGE

@@ -17,6 +17,14 @@ export default new CommandBase({
     validate: [options.allow('path', 'tab-id'), options.requireAll('path')]
   })
   .expect({
+    name: 'match',
+    abbreviation: 'm',
+    type: commandTypes.BOOLEAN,
+    helpSection: helpSections.ACTIONS,
+    description: 'Match a given query within an input value',
+    validate: [options.requireAll('input', 'query')]
+  })
+  .expect({
     name: 'path',
     abbreviation: 'p',
     type: commandTypes.STRING,
@@ -31,4 +39,20 @@ export default new CommandBase({
     helpSection: helpSections.DETAILS,
     description: 'Define a Tab ID where apply an action',
     validate: [value.isTabId, options.requireAnyOf('read')]
+  })
+  .expect({
+    name: 'query',
+    abbreviation: 'q',
+    type: commandTypes.STRING,
+    helpSection: helpSections.DETAILS,
+    description: 'Define a regular expression used to match within an input',
+    validate: [value.isRegExp, options.requireAnyOf('match')]
+  })
+  .expect({
+    name: 'input',
+    abbreviation: 'I',
+    type: commandTypes.STRING,
+    helpSection: helpSections.DETAILS,
+    description: 'Define a user input',
+    validate: [options.requireAnyOf('match')]
   })

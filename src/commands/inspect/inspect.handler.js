@@ -3,7 +3,7 @@ import processManager from '@src/libs/process-manager'
 import { getTab } from '@src/browser-api/tabs.api'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
-import { formatText } from '@src/helpers/format.helpers'
+import { formatStringSearch, formatText } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
 
 export const inspectHandler = async command => {
@@ -19,13 +19,25 @@ export const inspectHandler = async command => {
     tabId = validTab.id
   }
 
-  if (P`path`) {
+  if (P`read`) {
     command.update(['"Reading path from tab."'])
     const text = await processManager.readPath(tabId, { path: P`path` })
     const update = formatText({ text })
 
     command.reset()
     command.update(update)
+  }
+
+  if (P`match`) {
+    const match = P`query`
+    const input = P`input`
+    const matchRegex = new RegExp(match, 'gi')
+
+    if (matchRegex.test(input)) {
+      const update = formatStringSearch({ query: matchRegex, input })
+
+      command.update(update)
+    }
   }
 
   if (P`help`) createHelpView(command)

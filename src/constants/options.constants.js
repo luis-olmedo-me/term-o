@@ -10,14 +10,13 @@ export const optionDefaultValues = {
   repeated: []
 }
 
-export const eventsAvailable = {
+export const domEventsAvailable = {
   CLICK: 'click'
 }
 
 export const responseFormatSupported = ['blob', 'text', 'json']
 
-export const eventsSupported = [eventsAvailable.CLICK]
-export const domEventsSupported = [eventsAvailable.CLICK]
+export const domEventsSupported = Object.values(domEventsAvailable)
 
 export const helpOptionConfig = {
   name: 'help',

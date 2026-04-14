@@ -1,7 +1,6 @@
 import processManager from '@src/libs/process-manager'
 
 import { getTab } from '@src/browser-api/tabs.api'
-import { domEventsSupported } from '@src/constants/options.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatEvent, formatRegisteredEvent } from '@src/helpers/format.helpers'
@@ -41,7 +40,7 @@ export const eventsHandler = async command => {
   }
 
   if (P`delete`) {
-    const id = P`delete`
+    const id = P`command-id`
 
     const events = storage.get(storageKeys.EVENTS)
     const existingEvent = events.find(event => event.id === id)
@@ -55,20 +54,17 @@ export const eventsHandler = async command => {
     command.update(update)
   }
 
-  if (P`trigger`) {
+  if (P`dom-dispatch`) {
     const config = storage.get(storageKeys.CONFIG)
 
-    const event = P`trigger`
+    const event = P`name`
     const xpath = P`xpath`
-
-    const isDomEvent = domEventsSupported.includes(event)
-
-    if (isDomEvent && !xpath) throw `${event} must be triggered on an existing DOM element.`
 
     command.update(['"Triggering DOM event."'])
     await processManager.triggerEvent(tabId, { xpath, event, theme: config.theme })
     const update = formatEvent({ event, xpath })
 
+    command.reset()
     command.update(update)
   }
 

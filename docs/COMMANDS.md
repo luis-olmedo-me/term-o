@@ -496,9 +496,9 @@ The `notify` command is a bridge to manage visual notifications on a tab.
 | Option               | Short | Description                            |
 | -------------------- | ----- | -------------------------------------- |
 | `--create`           | `-c`  | Create a notification.                 |
-| `--tab-id <tabid>`   | `-i`  | Display notification in a specific tab |
-| `--title <string>`   | `-t`  | Describe the notification title.       |
-| `--message <string>` | `-m`  | Describe the notification message.     |
+| `--tab-id <tabid>`   | `-i`  | Define a Tab ID where apply an action. |
+| `--title <string>`   | `-t`  | Define the title.                      |
+| `--message <string>` | `-m`  | Define the message.                    |
 | `--help`             | `-h`  | Show help for this command.            |
 
 ### Dependency Rules
@@ -507,7 +507,7 @@ When using `notify` command the options can express **1** possible action:
 
 1. Create a notification (using `--create`)
 
-   Just using `--create` will trigger a creation of a notification but it will require other options/arguments to define the content. Here is an example of how specific a notification can be:
+   The `--create` will trigger a creation of a notification.
 
    ```bash
    notify

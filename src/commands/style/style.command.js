@@ -1,8 +1,7 @@
 import CommandBase from '@src/templates/CommandBase'
 
-import { commandNames, commandTypes } from '@src/constants/command.constants'
+import { commandNames, commandTypes, helpSections } from '@src/constants/command.constants'
 import { array, options, value } from '@src/helpers/validation-command.helpers'
-import { styleHelpSections } from './style.constants'
 import { styleHandler } from './style.handler'
 
 export default new CommandBase({
@@ -13,7 +12,7 @@ export default new CommandBase({
     name: 'list',
     abbreviation: 'l',
     type: commandTypes.BOOLEAN,
-    helpSection: styleHelpSections.RETRIEVAL,
+    helpSection: helpSections.ACTIONS,
     description: 'List CSS styles applied to elements matching the criteria',
     validate: [options.allow('property', 'on'), options.requireAll('on')]
   })
@@ -21,7 +20,7 @@ export default new CommandBase({
     name: 'apply',
     abbreviation: 'a',
     type: commandTypes.ARRAY,
-    helpSection: styleHelpSections.MODIFICATION,
+    helpSection: helpSections.ACTIONS,
     description: 'Apply styles to elements matching the criteria',
     repeatable: true,
     validate: [
@@ -38,7 +37,7 @@ export default new CommandBase({
     name: 'color-pick',
     abbreviation: 'c',
     type: commandTypes.BOOLEAN,
-    helpSection: styleHelpSections.TOOLS,
+    helpSection: helpSections.ACTIONS,
     description: 'Pick a color by clicking on the web page',
     validate: [options.requireNoOther]
   })
@@ -47,14 +46,14 @@ export default new CommandBase({
     abbreviation: 'o',
     type: commandTypes.STRING,
     description: 'XPath expression to select elements',
-    helpSection: styleHelpSections.RETRIEVAL,
+    helpSection: helpSections.DETAILS,
     validate: [options.requireAnyOf('apply', 'on')]
   })
   .expect({
     name: 'property',
     abbreviation: 'p',
     type: commandTypes.ARRAY,
-    helpSection: styleHelpSections.FILTERS,
+    helpSection: helpSections.DETAILS,
     description: 'Filter styles by property names (regex[])',
     repeatable: true,
     validate: [

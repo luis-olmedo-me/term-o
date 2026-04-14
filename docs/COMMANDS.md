@@ -330,15 +330,15 @@ Interact with the Fetch API of the browser.
 
 The `request` command is a bridge to the Fetch API of the browser.
 
-| Option                    | Short | Description                                       |
-| ------------------------- | ----- | ------------------------------------------------- |
-| `--fetch`                 | `-l`  | Start an API request.                             |
-| `--headers <[header ..]>` | `-u`  | Include request headers.                          |
-| `--method <method>`       | `-F`  | HTTP method to use.                               |
-| `--payload <json>`        | `-r`  | Add a payload to the request.                     |
-| `--read-as <string>`      | `-T`  | Format to read the response: blob, text, or json. |
-| `--url <url>`             | `-t`  | URL for the API request.                          |
-| `--help`                  | `-h`  | Show help for this command.                       |
+| Option                    | Short | Description                            |
+| ------------------------- | ----- | -------------------------------------- |
+| `--fetch`                 | `-l`  | Start an API request.                  |
+| `--headers <[header ..]>` | `-u`  | Define the request headers.            |
+| `--method <method>`       | `-F`  | Define a HTTP method.                  |
+| `--payload <json>`        | `-r`  | Define the payload.                    |
+| `--read-as <string>`      | `-T`  | Define how response should be read as. |
+| `--url <url>`             | `-t`  | Define a valid URL.                    |
+| `--help`                  | `-h`  | Show help for this command.            |
 
 ### Dependency Rules
 
@@ -346,7 +346,7 @@ When using `request` command the options can express **1** possible action:
 
 1. Build an API call (using `--fetch`)
 
-   Just using `--fetch` will trigger an API call but it must be combined with other options to define the details. Here is an example of how specific a fetch can be:
+   The `--fetch` will trigger an API call.
 
    ```bash
    request

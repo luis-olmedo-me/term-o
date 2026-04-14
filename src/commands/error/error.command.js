@@ -20,7 +20,7 @@ export default new CommandBase({
     name: 'title',
     abbreviation: 't',
     type: commandTypes.STRING,
-    helpSection: helpSections.ACTIONS,
+    helpSection: helpSections.DETAILS,
     description: 'Throw an error with a custom message',
     validate: [options.requireAnyOf('create')]
   })

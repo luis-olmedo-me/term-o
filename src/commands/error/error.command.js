@@ -21,6 +21,6 @@ export default new CommandBase({
     abbreviation: 't',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Throw an error with a custom message',
+    description: 'Define the title',
     validate: [options.requireAnyOf('create')]
   })

@@ -465,22 +465,24 @@ Interact with the global object of a specific tab.
 
 The `inspect` command is a bridge to review global variables in the global object of the tab.
 
-| Option               | Short | Description                              |
-| -------------------- | ----- | ---------------------------------------- |
-| `--path <valuepath>` | `-p`  | Read a variable path from global object. |
-| `--tab-id <tabid>`   | `-i`  | Search variable in a specific tab.       |
-| `--help`             | `-h`  | Show help for this command.              |
+| Option               | Short | Description                                         |
+| -------------------- | ----- | --------------------------------------------------- |
+| `--read <valuepath>` | `-r`  | Read a variable from the global context of the Tab. |
+| `--path <string>`    | `-p`  | Define a variable path.                             |
+| `--tab-id <string>`  | `-i`  | Define a Tab ID where apply an action.              |
+| `--help`             | `-h`  | Show help for this command.                         |
 
 ### Dependency Rules
 
 When using `inspect` command the options can express **1** possible action:
 
-1. Inspect a value from the global object ("window.\*") (using `--path`)
+1. Inspect a value from the global object ("window.\*") (using `--read`)
 
-   Just using `--path` will trigger a search for a value in the global object. Here is an example of how specific a search can be:
+   The `--read` will trigger a search for a value in the global object.
 
    ```bash
    inspect
+       --read                                                               # REQUIRED
        --path "window.screen"                                               # REQUIRED
        --tab-id "T00000000"                                                 # OPTIONAL
    ```

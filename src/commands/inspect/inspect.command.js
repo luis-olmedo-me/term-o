@@ -22,7 +22,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define a variable path',
-    validate: [options.allow('tab-id')]
+    validate: [options.requireAnyOf('read')]
   })
   .expect({
     name: 'tab-id',
@@ -30,5 +30,5 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define a Tab ID where apply an action',
-    validate: [value.isTabId, options.requireAnyOf('path')]
+    validate: [value.isTabId, options.requireAnyOf('read')]
   })

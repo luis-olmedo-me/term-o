@@ -48,7 +48,7 @@ export const storageHandler = async command => {
     const storageEntries = Object.entries(storage)
 
     command.reset()
-    const updates = P`json`
+    const updates = P`see-json`
       ? [formatStorageAsString({ storage, tabId: P`tab-id` })]
       : storageEntries.map(([key, value]) => formatStorageProp({ key, value, tabId: P`tab-id` }))
 

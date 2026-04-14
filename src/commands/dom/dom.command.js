@@ -114,7 +114,7 @@ export default new CommandBase({
     abbreviation: 'a',
     type: commandTypes.ARRAY,
     helpSection: helpSections.DETAILS,
-    description: 'Define the attribute(s) of element(s)',
+    description: 'Define a name-value attribute pair',
     repeatable: true,
     validate: [
       array.hasAllItemsAs(
@@ -130,7 +130,7 @@ export default new CommandBase({
     abbreviation: 'S',
     type: commandTypes.ARRAY,
     helpSection: helpSections.DETAILS,
-    description: 'Define the style(s) of element(s)',
+    description: 'Define a name-value style pair',
     repeatable: true,
     validate: [
       array.hasAllItemsAs(

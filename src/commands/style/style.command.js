@@ -14,24 +14,15 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'List CSS styles applied to elements matching the criteria',
-    validate: [options.allow('property', 'on'), options.requireAll('on')]
+    validate: [options.allow('style', 'xpath'), options.requireAll('xpath')]
   })
   .expect({
     name: 'apply',
     abbreviation: 'a',
-    type: commandTypes.ARRAY,
+    type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Apply styles to elements matching the criteria',
-    repeatable: true,
-    validate: [
-      array.hasAllItemsAs(
-        value.isArray,
-        array.hasLength(2),
-        array.hasAllItemsAs(value.isString),
-        array.hasItemAs(0, value.isSpaceForbidden)
-      ),
-      options.requireAll('on')
-    ]
+    validate: [options.requireAll('xpath', 'style')]
   })
   .expect({
     name: 'color-pick',
@@ -42,26 +33,27 @@ export default new CommandBase({
     validate: [options.requireNoOther]
   })
   .expect({
-    name: 'on',
-    abbreviation: 'o',
+    name: 'xpath',
     type: commandTypes.STRING,
-    description: 'XPath expression to select elements',
+    abbreviation: 'x',
     helpSection: helpSections.DETAILS,
-    validate: [options.requireAnyOf('apply', 'on')]
+    description: 'Define an XPath query',
+    validate: [options.requireAnyOf('apply', 'list')]
   })
   .expect({
-    name: 'property',
-    abbreviation: 'p',
+    name: 'style',
+    abbreviation: 'S',
     type: commandTypes.ARRAY,
     helpSection: helpSections.DETAILS,
-    description: 'Filter styles by property names (regex[])',
+    description: 'Define a name-value style pair',
     repeatable: true,
     validate: [
       array.hasAllItemsAs(
         value.isArray,
         array.hasLengthBetween(1, 2),
-        array.hasAllItemsAs(value.isRegExp, value.isString)
+        array.hasAllItemsAs(value.isString),
+        array.hasItemAs(0, value.isSpaceForbidden)
       ),
-      options.requireAnyOf('on')
+      options.requireAnyOf('xpath')
     ]
   })

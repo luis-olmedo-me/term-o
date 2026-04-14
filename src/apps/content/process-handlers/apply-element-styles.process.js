@@ -6,7 +6,7 @@ export default async (resolve, reject, data) => {
   const { searchByXpath, styles } = data
 
   const element = getElementByXPath(searchByXpath)
-  const stylesToApply = styles.map(([prop, value]) => ({ prop, value }))
+  const stylesToApply = styles.map(([prop, value]) => ({ prop, value: value ?? '' }))
 
   if (!element) return reject('XPath did not match any element.')
 

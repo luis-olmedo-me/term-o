@@ -57,8 +57,8 @@ The `dom` command enables element selection, filtering, and contextual queries i
 | `--sibling <number>` | `-b`  | Define the sibling index.                            |
 | `--parent <number>`  | `-p`  | Define the parent index.                             |
 | `--child <number>`   | `-d`  | Define the child index.                              |
-| `--attr <array>`     | `-a`  | Define the attribute(s) of element(s).               |
-| `--style <array>`    | `-S`  | Define the style(s) of element(s).                   |
+| `--attr <array>`     | `-a`  | Define a name-value attribute pair.                  |
+| `--style <array>`    | `-S`  | Define a name-value style pair.                      |
 | `--tag <string>`     | `-g`  | Define the element tag name.                         |
 | `--content <string>` | `-t`  | Define the text content.                             |
 | `--html <string>`    | `-H`  | Define the HTML content.                             |

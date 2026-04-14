@@ -16,8 +16,8 @@ export const styleHandler = async command => {
 
     command.update(['"Searching element styles."'])
     const styledElement = await processManager.getElementStyles(tabId, {
-      searchByXpath: P`on`,
-      searchByProperty: P`property`,
+      searchByXpath: P`xpath`,
+      searchByProperty: P`style`,
       theme: config.theme
     })
 
@@ -27,12 +27,12 @@ export const styleHandler = async command => {
     if (styledElement.styles.length) command.update(formattedStyles)
   }
 
-  if (P`apply`.length) {
+  if (P`apply`) {
     const config = storage.get(storageKeys.CONFIG)
 
     const styledElement = await processManager.applyElementStyles(tabId, {
-      searchByXpath: P`on`,
-      styles: P`apply`,
+      searchByXpath: P`xpath`,
+      styles: P`style`,
       theme: config.theme
     })
 

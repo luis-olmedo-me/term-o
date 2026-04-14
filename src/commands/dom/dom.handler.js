@@ -22,11 +22,11 @@ export const domHandler = async command => {
   if (P`inject`) {
     command.update(['"Searching for element xpath."'])
     const element = await processManager.findDOMElement(tabId, {
-      searchByXpath: P`on`,
-      searchBelow: P`below`,
-      siblingIndex: P`sibling`,
-      parentIndex: P`parent`,
-      childIndex: P`child`
+      searchByXpath: P`xpath`,
+      searchBelow: null,
+      siblingIndex: null,
+      parentIndex: null,
+      childIndex: null
     })
 
     command.reset()
@@ -35,26 +35,24 @@ export const domHandler = async command => {
     command.update(['"Injecting content."'])
     await processManager.injectHTML(tabId, {
       below: element.xpath,
-      html: P`inject`
+      html: P`html`
     })
 
     const update = formatElement({
       ...element,
       tabId: P`tab-id`,
-      xpath: P`xpath` ? element.xpath : null,
-      textContent: null
+      xpath: P`see-xpath` ? element.xpath : null,
+      textContent: P`see-content` ? element.textContent : null
     })
 
     command.reset()
     command.update(update)
-
-    return
   }
 
-  if (P`on`) {
+  if (P`find`) {
     command.update(['"Searching for element xpath."'])
     const element = await processManager.findDOMElement(tabId, {
-      searchByXpath: P`on`,
+      searchByXpath: P`xpath`,
       searchBelow: P`below`,
       siblingIndex: P`sibling`,
       parentIndex: P`parent`,
@@ -67,19 +65,17 @@ export const domHandler = async command => {
     const update = formatElement({
       ...element,
       tabId: P`tab-id`,
-      xpath: P`xpath` ? element.xpath : null,
-      textContent: null
+      xpath: P`see-xpath` ? element.xpath : null,
+      textContent: P`see-content` ? element.textContent : null
     })
 
     command.update(update)
-
-    return
   }
 
   if (P`create`) {
     command.update(['"Creating element."'])
     const element = await processManager.createElement(tabId, {
-      tagName: P`create`,
+      tagName: P`tag`,
       below: P`below`,
       attributes: P`attr`
     })
@@ -93,8 +89,6 @@ export const domHandler = async command => {
 
     command.reset()
     command.update(update)
-
-    return
   }
 
   if (P`search`) {
@@ -104,22 +98,20 @@ export const domHandler = async command => {
       searchByTag: P`tag`,
       searchByAttribute: P`attr`,
       searchByStyle: P`style`,
-      searchByText: P`text`
+      searchByText: P`content`
     })
 
     const updates = elements.map(element =>
       formatElement({
         ...element,
         tabId: P`tab-id`,
-        xpath: P`xpath` ? element.xpath : null,
-        textContent: P`content` ? element.textContent : null
+        xpath: P`see-xpath` ? element.xpath : null,
+        textContent: P`see-content` ? element.textContent : null
       })
     )
 
     command.reset()
     command.update(...updates)
-
-    return
   }
 
   if (P`pick`) {
@@ -132,8 +124,8 @@ export const domHandler = async command => {
       const update = formatElement({
         ...element,
         tabId: P`tab-id`,
-        xpath: P`xpath` ? element.xpath : null,
-        textContent: P`content` ? element.textContent : null
+        xpath: P`see-xpath` ? element.xpath : null,
+        textContent: P`see-content` ? element.textContent : null
       })
 
       command.update(update)
@@ -144,8 +136,9 @@ export const domHandler = async command => {
     command.update(...updates)
   }
 
-  if (P`measure`.length) {
-    const [xpathA, xpathB] = P`measure`
+  if (P`measure`) {
+    const xpathA = P`from`
+    const xpathB = P`to`
 
     command.update(['"Measuring distance between given elements."'])
     const measure = await processManager.measure(tabId, {
@@ -156,8 +149,6 @@ export const domHandler = async command => {
 
     command.reset()
     command.update(update)
-
-    return
   }
 
   if (P`help`) createHelpView(command)

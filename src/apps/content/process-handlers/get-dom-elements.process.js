@@ -4,8 +4,6 @@ import { getElementByXPath } from '@src/helpers/dom-locator.helpers'
 export default async (resolve, _reject, data) => {
   const { searchBelow, searchByTag, searchByAttribute, searchByStyle, searchByText } = data
 
-  const textPattern = searchByText && new RegExp(searchByText)
-
   const attributeValidations = searchByAttribute.map(([attrName, attrValue]) => {
     return (name, value) => name.includes(attrName) && value.includes(attrValue ?? '')
   })
@@ -23,6 +21,7 @@ export default async (resolve, _reject, data) => {
   const elements = Array.from(allElements).reduce((formattedElements, element) => {
     const tagName = element.tagName.toLowerCase()
     const attrNames = element.getAttributeNames()
+    const textContent = element.textContent
 
     const conditions = []
 
@@ -32,9 +31,9 @@ export default async (resolve, _reject, data) => {
       })
     }
 
-    if (textPattern) {
+    if (searchByText) {
       conditions.push(() => {
-        return textPattern.test(element.textContent)
+        return !!textContent && textContent.includes(searchByText)
       })
     }
 

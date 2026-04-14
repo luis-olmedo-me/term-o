@@ -107,14 +107,6 @@ export default new CommandBase({
     validate: [value.isInteger, value.isPositive, options.requireAnyOf('find')]
   })
   .expect({
-    name: 'see-xpath',
-    abbreviation: 'X',
-    type: commandTypes.BOOLEAN,
-    helpSection: helpSections.DETAILS,
-    description: 'Define whether XPath(s) should be displayed',
-    validate: [options.requireAnyOf('inject', 'find', 'search', 'pick')]
-  })
-  .expect({
     name: 'attr',
     abbreviation: 'a',
     type: commandTypes.ARRAY,
@@ -176,6 +168,14 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
     description: 'Define whether the text content should be displayed',
+    validate: [options.requireAnyOf('inject', 'find', 'search', 'pick')]
+  })
+  .expect({
+    name: 'see-xpath',
+    abbreviation: 'X',
+    type: commandTypes.BOOLEAN,
+    helpSection: helpSections.DETAILS,
+    description: 'Define whether XPath(s) should be displayed',
     validate: [options.requireAnyOf('inject', 'find', 'search', 'pick')]
   })
   .expect({

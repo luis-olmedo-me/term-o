@@ -14,7 +14,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'List CSS styles applied to elements matching the criteria',
-    validate: [options.allow('style', 'xpath'), options.requireAll('xpath')]
+    validate: [options.requireAll('style', 'xpath')]
   })
   .expect({
     name: 'apply',
@@ -22,7 +22,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Apply styles to elements matching the criteria',
-    validate: [options.requireAll('xpath', 'style')]
+    validate: [options.requireAll('style', 'xpath')]
   })
   .expect({
     name: 'color-pick',

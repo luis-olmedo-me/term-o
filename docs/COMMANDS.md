@@ -286,8 +286,8 @@ The `history` command displays all data related to the old tabs open in the brow
 
 | Option                   | Short | Description                             |
 | ------------------------ | ----- | --------------------------------------- |
-| `--list <boolean>`       | `-l`  | Show a list of previously opened pages. |
-| `--delete <boolean>`     | `-d`  | Delete pages in a specific date range.  |
+| `--list`                 | `-l`  | Show a list of previously opened pages. |
+| `--delete`               | `-d`  | Delete pages in a specific date range.  |
 | `--title <string>`       | `-t`  | Define the title.                       |
 | `--url <string>`         | `-u`  | Define a valid URL.                     |
 | `--max-results <number>` | `-r`  | Define the limit of items displayed.    |
@@ -413,17 +413,16 @@ When using `alias` command the options can express **3** possible actions:
 
 Interact with styles of elements and color references.
 
-The `style` command is a bridge to manage aliases of commands in the terminal.
+The `style` command is a bridge elements styles or just styles API related.
 
-| Option                                              | Short | Description                                                |
-| --------------------------------------------------- | ----- | ---------------------------------------------------------- |
-| `--list`                                            | `-l`  | List CSS styles applied to elements matching the criteria. |
-| `--on <xpath>`                                      | `-o`  | XPath expression to select elements.                       |
-| `--apply <inlinestyles>`                            | `-a`  | Apply styles to elements matching the criteria.            |
-| `--color-pick`                                      | `-c`  | Pick a color by clicking on the web page.                  |
-| `--property <[stylename<regex> stylevalue<regex>]>` | `-p`  | Filter styles by property names.                           |
-| `--selector <selector<regex>>`                      | `-s`  | Filter elements by CSS selector.                           |
-| `--help`                                            | `-h`  | Show help for this command.                                |
+| Option             | Short | Description                                                |
+| ------------------ | ----- | ---------------------------------------------------------- |
+| `--list`           | `-l`  | List CSS styles applied to elements matching the criteria. |
+| `--apply`          | `-a`  | Apply styles to elements matching the criteria.            |
+| `--color-pick`     | `-c`  | Pick a color by clicking on the web page.                  |
+| `--xpath <string>` | `-x`  | Define an XPath query.                                     |
+| `--style <array>`  | `-S`  | Define a name-value style pair.                            |
+| `--help`           | `-h`  | Show help for this command.                                |
 
 ### Dependency Rules
 
@@ -431,28 +430,29 @@ When using `style` command the options can express **3** possible actions:
 
 1. Create a summary of styles applied to a DOM element (using `--list`)
 
-   Just using `--list` will trigger a search for styles in a DOM element and that's why, the xpath must be specified. Here is an example of how specific a search can be:
+   The `--list` will trigger a search for styles in a DOM element.
 
    ```bash
    style
        --list                                                               # REQUIRED
-       --on 'id("cards-container")'                                         # REQUIRED
-       --property [".+color" "000.+"]                                       # OPTIONAL/REPEATABLE
+       --style ["color" "red"]                                              # OPTIONAL/REPEATABLE
+       --xpath 'id("cards-container")'                                      # REQUIRED
    ```
 
 2. Apply styles to a DOM element (using `--apply`)
 
-   The option `--apply` will apply inline styles taken as a value. Here is an example of how specific a fetch can be:
+   The `--apply` will apply inline styles taken as a value.
 
    ```bash
    style
-       --apply ["display" "none"]                                           # REQUIRED/REPEATABLE
-       --on 'id("cards-container")'                                         # REQUIRED
+       --apply                                                              # REQUIRED
+       --style ["display" "none"]                                           # REQUIRED/REPEATABLE
+       --xpath 'id("cards-container")'                                      # REQUIRED
    ```
 
 3. Pick a color (using `--color-pick`)
 
-   Just using `--color-pick` will convert the cursor into a color picker. When user clicks anywhere, it will find the color used at that position. Here is an example of how specific a fetch can be:
+   The `--color-pick` will trigger a dialog to pick a color.
 
    ```bash
    style
@@ -621,18 +621,18 @@ When using `error` command the options can express **1** possible action:
 
 The `events` command is a bridge to the page events API and DOM element events.
 
-| Option                     | Short | Description                                      |
-| -------------------------- | ----- | ------------------------------------------------ |
-| `--register <boolean>`     | `-r`  | Register a new command for future execution.     |
-| `--dom-dispatch <boolean>` | `-d`  | Dispatch a new DOM event in page.                |
-| `--list <boolean>`         | `-l`  | List all registered events.                      |
-| `--delete <boolean>`       | `-d`  | Delete a registered event by its identifier.     |
-| `--xpath <string>`         | `-x`  | Define an XPath query.                           |
-| `--tab-id <string>`        | `-i`  | Define a Tab ID where apply an action.           |
-| `--url <string>`           | `-u`  | Define a valid URL.                              |
-| `--name <string>`          | `-n`  | Define the name of the event.                    |
-| `--command <string>`       | `-c`  | Define the command line associated to the event. |
-| `--command-id <string>`    | `-C`  | Define the command identifier of the event.      |
+| Option                  | Short | Description                                      |
+| ----------------------- | ----- | ------------------------------------------------ |
+| `--register`            | `-r`  | Register a new command for future execution.     |
+| `--dom-dispatch`        | `-d`  | Dispatch a new DOM event in page.                |
+| `--list`                | `-l`  | List all registered events.                      |
+| `--delete`              | `-d`  | Delete a registered event by its identifier.     |
+| `--xpath <string>`      | `-x`  | Define an XPath query.                           |
+| `--tab-id <string>`     | `-i`  | Define a Tab ID where apply an action.           |
+| `--url <string>`        | `-u`  | Define a valid URL.                              |
+| `--name <string>`       | `-n`  | Define the name of the event.                    |
+| `--command <string>`    | `-c`  | Define the command line associated to the event. |
+| `--command-id <string>` | `-C`  | Define the command identifier of the event.      |
 
 ### Dependency Rules
 

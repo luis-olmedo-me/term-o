@@ -537,73 +537,71 @@ Interact with the storage API and clipboard API at any tab.
 
 The `storage` command is a bridge to the storage API and clipboard API at any tab.
 
-| Option             | Short | Description                                   |
-| ------------------ | ----- | --------------------------------------------- |
-| `--local`          | `-l`  | Get local storage from the selected tab.      |
-| `--session`        | `-s`  | Get session storage from the selected tab.    |
-| `--cookie`         | `-c`  | Get cookies from the selected tab.            |
-| `--json`           | `-j`  | Return storage as JSON.                       |
-| `--tab-id <tabid>` | `-i`  | Specify a tab ID to get storage from.         |
-| `--set <array>`    | `-S`  | Set a key-value pair in the selected storage. |
-| `--copy <string>`  | `-C`  | Copy a value to the clipboard.                |
-| `--help`           | `-h`  | Show help for this command.                   |
+| Option              | Short | Description                                             |
+| ------------------- | ----- | ------------------------------------------------------- |
+| `--list`            | `-l`  | List all storage key-values.                            |
+| `--set`             | `-s`  | Set a key-value pair in the selected storage.           |
+| `--copy`            | `-c`  | Copy a value to the clipboard.                          |
+| `--local`           | `-L`  | Define whether the local storage should be displayed.   |
+| `--session`         | `-S`  | Define whether the session storage should be displayed. |
+| `--cookie`          | `-C`  | Define whether the cookie storage should be displayed.  |
+| `--see-json`        | `-j`  | Define whether the JSON format should be displayed.     |
+| `--tab-id <string>` | `-i`  | Define a Tab ID where apply an action.                  |
+| `--input <string>`  | `-I`  | Define a user input.                                    |
+| `--data <array>`    | `-d`  | Define a key-value pair.                                |
+| `--help`            | `-h`  | Show help for this command.                             |
 
 ### Dependency Rules
 
-When using `storage` command the options can express **4** possible action:
+When using `storage` command the options can express **3** possible action:
 
-1. Get a summary of local storage in a tab (using `--local`)
+1. Get a summary of local storage in a tab (using `--list`)
 
-   Just using `--local` will trigger the review of local storage at a certain tab. Here is an example of how specific a notification can be:
+   The `--list` will trigger a search for all the storage key-values in a certain tab.
 
    ```bash
    search
-       --local                                                              # REQUIRED
+       --list                                                               # REQUIRED
+       --local                                                              # |
+       --session                                                            # | ONE REQUIRED
+       --cookie                                                             # |
+       --tab-id "T00000000"                                                 # OPTIONAL
+       --see-json                                                           # OPTIONAL
+   ```
+
+2. Set a value in a certain storage in a certain tab (using `--set`)
+
+   The `--set` will assigned a value in a ceratin tab at a certain tab.
+
+   ```bash
+   search
+       --set                                                                # REQUIRED
+       --local                                                              # |
+       --session                                                            # | ONE REQUIRED
+       --cookie                                                             # |
+       --data ["test-name" "test-value"]                                    # REQUIRED/REPEATABLE
        --tab-id "T00000000"                                                 # OPTIONAL
    ```
 
-2. Get a summary of session storage in a tab (using `--session`)
+3. Copy value into the clipboard (using `--copy`)
 
-   Just using `--session` will trigger the review of session storage at a certain tab. Here is an example of how specific a notification can be:
-
-   ```bash
-   search
-       --session                                                            # REQUIRED
-       --tab-id "T00000000"                                                 # OPTIONAL
-   ```
-
-3. Get a summary of cookies storage in a tab (using `--cookie`)
-
-   Just using `--cookie` will trigger the review of cookies storage at a certain tab. Here is an example of how specific a notification can be:
+   The `--copy` will trigger the clipboard edition.
 
    ```bash
    search
-       --cookie                                                             # REQUIRED
-       --tab-id "T00000000"                                                 # OPTIONAL
-   ```
-
-4. Set a value in a certain storage at a certain tab (using `--set`)
-
-   Just using `--set` will assigned a value in a ceratin tab at a certain tab. Here is an example of how specific a notification can be:
-
-   ```bash
-   search
-       --set ["test-name" "test-value"]                                     # REQUIRED/REPEATABLE
-       --tab-id "T00000000"                                                 # OPTIONAL
-       --session                                                            # OPTIONAL
-       --cookie                                                             # OPTIONAL
-       --local                                                              # OPTIONAL
+       --copy                                                                # REQUIRED
+       --input "test-value"                                                  # REQUIRED
    ```
 
 ## ERROR
 
 The `error` command is a bridge to the error API.
 
-| Option             | Short | Description                           |
-| ------------------ | ----- | ------------------------------------- |
-| `--create`         | `-c`  | Create an error.                      |
-| `--title <string>` | `-t`  | Throw an error with a custom message. |
-| `--help`           | `-h`  | Show help for this command.           |
+| Option             | Short | Description                 |
+| ------------------ | ----- | --------------------------- |
+| `--create`         | `-c`  | Create an error.            |
+| `--title <string>` | `-t`  | Define the title.           |
+| `--help`           | `-h`  | Show help for this command. |
 
 ### Dependency Rules
 

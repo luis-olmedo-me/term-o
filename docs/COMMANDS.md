@@ -384,7 +384,7 @@ When using `alias` command the options can express **3** possible actions:
 
 1. Create a summary of all the aliases created (using `--list`)
 
-   Just using `--list` will trigger a search for all the aliases created. Here is an example of how specific a search can be:
+   The `--list` will trigger a search for all the aliases created. Here is an example of how specific a search can be:
 
    ```bash
    alias
@@ -393,7 +393,7 @@ When using `alias` command the options can express **3** possible actions:
 
 2. Add a new alias (using `--add`)
 
-   Just using `--add` with a given array with values will save the new array if the format is correct. Here is an example of how specific a fetch can be:
+   The `--add` with a given array with values will save the new array if the format is correct. Here is an example of how specific a fetch can be:
 
    ```bash
    alias
@@ -406,7 +406,7 @@ When using `alias` command the options can express **3** possible actions:
 
 3. Delete an alias (using `--delete`)
 
-   Just using `--delete` with a given alias name will search for it and delete it. Here is an example of how specific a fetch can be:
+   The `--delete` with a given alias name will search for it and delete it. Here is an example of how specific a fetch can be:
 
    ```bash
    alias
@@ -701,7 +701,7 @@ When using `input` command the options can express **1** possible action:
 
 1. Request a user input in the terminal (using `--text`)
 
-   Just using `--text` will trigger a request that can be seen and completed in the UI terminal. Here is an example of how specific it can be:
+   The `--text` will trigger a request that can be seen and completed in the UI terminal. Here is an example of how specific it can be:
 
    ```bash
    input
@@ -712,14 +712,16 @@ When using `input` command the options can express **1** possible action:
 
 The `theme` command is a bridge to manage the theme in Term-O.
 
-| Option              | Short | Description                           |
-| ------------------- | ----- | ------------------------------------- |
-| `--import <string>` | `-i`  | Import a color scheme in JSON format. |
-| `--list`            | `-l`  | List all available themes.            |
-| `--delete <string>` | `-d`  | Delete a theme by name.               |
-| `--apply <string>`  | `-a`  | Apply a theme by name.                |
-| `--current`         | `-C`  | Show the currently applied theme.     |
-| `--help`            | `-h`  | Show help for this command.           |
+| Option                  | Short | Description                           |
+| ----------------------- | ----- | ------------------------------------- |
+| `--import`              | `-i`  | Import a color scheme in JSON format. |
+| `--list`                | `-l`  | List all available themes.            |
+| `--delete`              | `-d`  | Delete a theme by its name.           |
+| `--apply`               | `-a`  | Apply a theme by name.                |
+| `--current`             | `-C`  | Show the currently applied theme.     |
+| `--theme-json <string>` | `-t`  | Define the Theme in JSON-String.      |
+| `--name <string>`       | `-n`  | Define the name of the theme.         |
+| `--help`                | `-h`  | Show help for this command.           |
 
 ### Dependency Rules
 
@@ -727,7 +729,7 @@ When using `theme` command the options can express **5** possible actions:
 
 1. Create a summary of all themes available (using `--list`)
 
-   Just using `--list` will trigger a search for all themes available. Here is an example of how specific a search can be:
+   The `--list` will trigger a search for all themes available.
 
    ```bash
    theme
@@ -740,32 +742,35 @@ When using `theme` command the options can express **5** possible actions:
 
    ```bash
    theme
-       --delete "an-already-imported-theme-name"                            # REQUIRED
+       --delete                                                             # REQUIRED
+       --name "an-already-imported-theme-name"                              # REQUIRED
    ```
 
 3. Change the current theme in use (using `--apply`)
 
-   The option `--apply` will apply the specified theme name. Here is an example of how specific it can be:
+   The option `--apply` will apply the specified theme name.
 
    ```bash
    theme
-       --apply "an-already-imported-theme-name"                             # REQUIRED
+       --apply                                                              # REQUIRED
+       --name "an-already-imported-theme-name"                              # REQUIRED
    ```
 
 4. Import a theme (using `--import`)
 
-   The option `--import` will import the specified theme in JSON format. Here is an example of how specific it can be:
+   The `--import` will import the specified theme in JSON format.
 
    ```bash
    theme
-       --import '{ "name": "an-already-imported-theme-name", ... }'         # REQUIRED
+       --import                                                             # REQUIRED
+       --theme-json '{ "name": "an-already-imported-theme-name", ... }'     # REQUIRED
    ```
 
    Please, see [theme-example.json](assets/theme-example.json) to find a more detailed example of a valid theme.
 
 5. Get the current theme name (using `--current`)
 
-   The option `--current` will search for the name of the current theme. Here is an example of how specific it can be:
+   The `--current` will search for the name of the current theme.
 
    ```bash
    theme
@@ -792,7 +797,7 @@ When using `theme` command the options can express **3** possible actions:
 
 1. Create a summary of all addons available (using `--list`)
 
-   Just using `--list` will trigger a search for all addons available. Here is an example of how specific a search can be:
+   The `--list` will trigger a search for all addons available. Here is an example of how specific a search can be:
 
    ```bash
    addons

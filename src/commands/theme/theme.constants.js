@@ -24,8 +24,3 @@ export const colorScheme = {
   [colorThemeKeys.SELECTION_BACKGROUND]: schemaTypes.STRING,
   [colorThemeKeys.CURSOR_COLOR]: schemaTypes.STRING
 }
-
-export const themeHelpSections = {
-  MANAGEMENT: 'Management',
-  APPLICATION: 'Application'
-}

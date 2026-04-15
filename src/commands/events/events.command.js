@@ -1,9 +1,8 @@
 import CommandBase from '@src/templates/CommandBase'
 
-import { commandNames, commandTypes } from '@src/constants/command.constants'
-import { eventsSupported } from '@src/constants/options.constants'
-import { options, value } from '@src/helpers/validation-command.helpers'
-import { eventsHelpSections } from './events.constants'
+import { commandNames, commandTypes, helpSections } from '@src/constants/command.constants'
+import { domEventsSupported } from '@src/constants/options.constants'
+import { array, options, value } from '@src/helpers/validation-command.helpers'
 import { eventsHandler } from './events.handler'
 
 export default new CommandBase({
@@ -14,67 +13,80 @@ export default new CommandBase({
     name: 'register',
     abbreviation: 'r',
     type: commandTypes.BOOLEAN,
-    helpSection: eventsHelpSections.CREATION,
+    helpSection: helpSections.ACTIONS,
     description: 'Register a new command for future execution',
-    validate: [options.requireAll('url', 'command')]
+    validate: [options.requireAll('event')]
   })
   .expect({
-    name: 'trigger',
-    abbreviation: 't',
-    type: commandTypes.STRING,
-    helpSection: eventsHelpSections.CREATION,
-    description: 'Trigger a new event in page',
-    validate: [
-      value.isAnyOf(eventsSupported),
-      options.allow('xpath', 'tab-id'),
-      options.requireAll('xpath')
-    ]
+    name: 'dom-dispatch',
+    abbreviation: 'd',
+    type: commandTypes.BOOLEAN,
+    helpSection: helpSections.ACTIONS,
+    description: 'Dispatch a new DOM event in page',
+    validate: [options.allow('name', 'tab-id', 'xpath'), options.requireAll('name', 'xpath')]
   })
   .expect({
     name: 'list',
     abbreviation: 'l',
     type: commandTypes.BOOLEAN,
-    helpSection: eventsHelpSections.MANAGEMENT,
+    helpSection: helpSections.ACTIONS,
     description: 'List all registered events',
-    validate: [options.requireNoOther()]
+    validate: [options.requireNoOther]
   })
   .expect({
     name: 'delete',
     abbreviation: 'd',
-    type: commandTypes.STRING,
-    helpSection: eventsHelpSections.MANAGEMENT,
-    description: 'Delete a registered event by its id',
-    validate: [options.requireNoOther()]
+    type: commandTypes.BOOLEAN,
+    helpSection: helpSections.ACTIONS,
+    description: 'Delete a registered event by its identifier',
+    validate: [options.requireAll('command-id')]
   })
   .expect({
     name: 'xpath',
     abbreviation: 'x',
     type: commandTypes.STRING,
-    helpSection: eventsHelpSections.CREATION,
-    description: 'XPath selector for the target element',
-    validate: [options.requireAnyOf('trigger')]
+    helpSection: helpSections.DETAILS,
+    description: 'Define an XPath query',
+    validate: [options.requireAnyOf('dom-dispatch')]
   })
   .expect({
     name: 'tab-id',
     abbreviation: 'i',
     type: commandTypes.STRING,
-    helpSection: eventsHelpSections.CREATION,
-    description: 'Trigger events in a specific tab (T[number])',
-    validate: [value.isTabId, options.requireAnyOf('trigger')]
+    helpSection: helpSections.DETAILS,
+    description: 'Define a Tab ID where apply an action',
+    validate: [value.isTabId, options.requireAnyOf('dom-dispatch')]
   })
   .expect({
-    name: 'url',
-    abbreviation: 'u',
+    name: 'name',
+    abbreviation: 'n',
     type: commandTypes.STRING,
-    helpSection: eventsHelpSections.CREATION,
-    description: 'URL pattern where the event will trigger (regex)',
-    validate: [value.isRegExp, options.requireAnyOf('register')]
+    helpSection: helpSections.DETAILS,
+    description: 'Define the name of the event',
+    validate: [value.isAnyOf(domEventsSupported), options.requireAnyOf('dom-dispatch')]
   })
   .expect({
-    name: 'command',
-    abbreviation: 'c',
+    name: 'command-id',
+    abbreviation: 'C',
     type: commandTypes.STRING,
-    helpSection: eventsHelpSections.CREATION,
-    description: 'Command line to execute',
-    validate: [options.requireAnyOf('register')]
+    helpSection: helpSections.DETAILS,
+    description: 'Define the command identifier of the event',
+    validate: [options.requireAnyOf('delete')]
+  })
+  .expect({
+    name: 'event',
+    abbreviation: 'e',
+    type: commandTypes.ARRAY,
+    helpSection: helpSections.DETAILS,
+    description: 'Define a url-command pair',
+    repeatable: true,
+    validate: [
+      array.hasAllItemsAs(
+        value.isArray,
+        array.hasLength(2),
+        array.hasItemAs(0, value.isURL),
+        array.hasAllItemsAs(value.isString)
+      ),
+      options.requireAnyOf('register')
+    ]
   })

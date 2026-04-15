@@ -1,18 +1,26 @@
 import CommandBase from '@src/templates/CommandBase'
 
-import { commandNames, commandTypes } from '@src/constants/command.constants'
+import { commandNames, commandTypes, helpSections } from '@src/constants/command.constants'
 import { options } from '@src/helpers/validation-command.helpers'
-import { errorHelpSections } from './error.constants'
 import { errorHandler } from './error.handler'
 
 export default new CommandBase({
   name: commandNames.ERROR,
   handler: errorHandler
-}).expect({
-  name: 'title',
-  abbreviation: 't',
-  type: commandTypes.STRING,
-  helpSection: errorHelpSections.ACTIONS,
-  description: 'Throw an error with a custom message',
-  validate: [options.requireNoOther()]
 })
+  .expect({
+    name: 'create',
+    abbreviation: 'c',
+    type: commandTypes.BOOLEAN,
+    helpSection: helpSections.ACTIONS,
+    description: 'Create an error',
+    validate: [options.requireAll('title')]
+  })
+  .expect({
+    name: 'title',
+    abbreviation: 't',
+    type: commandTypes.STRING,
+    helpSection: helpSections.DETAILS,
+    description: 'Define the title',
+    validate: [options.requireAnyOf('create')]
+  })

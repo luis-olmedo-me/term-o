@@ -1,8 +1,7 @@
 import CommandBase from '@src/templates/CommandBase'
 
-import { commandNames, commandTypes } from '@src/constants/command.constants'
+import { commandNames, commandTypes, helpSections } from '@src/constants/command.constants'
 import { options, value } from '@src/helpers/validation-command.helpers'
-import { notifyHelpSections } from './notify.constants'
 import { notifyHandler } from './notify.handler'
 
 export default new CommandBase({
@@ -13,7 +12,7 @@ export default new CommandBase({
     name: 'create',
     abbreviation: 'c',
     type: commandTypes.BOOLEAN,
-    helpSection: notifyHelpSections.ACTIONS,
+    helpSection: helpSections.ACTIONS,
     description: 'Create a notification',
     validate: [options.allow('tab-id', 'message', 'title'), options.requireAll('message', 'title')]
   })
@@ -21,23 +20,23 @@ export default new CommandBase({
     name: 'tab-id',
     abbreviation: 'i',
     type: commandTypes.STRING,
-    helpSection: notifyHelpSections.ACTIONS,
-    description: 'Display notification in a specific tab (T[number])',
+    helpSection: helpSections.DETAILS,
+    description: 'Define a Tab ID where apply an action',
     validate: [value.isTabId, options.requireAnyOf('create')]
   })
   .expect({
     name: 'title',
     abbreviation: 't',
     type: commandTypes.STRING,
-    helpSection: notifyHelpSections.ACTIONS,
-    description: 'Describe the notification title',
+    helpSection: helpSections.DETAILS,
+    description: 'Define the title',
     validate: [options.requireAnyOf('create')]
   })
   .expect({
     name: 'message',
     abbreviation: 'm',
     type: commandTypes.STRING,
-    helpSection: notifyHelpSections.ACTIONS,
-    description: 'Describe the notification message',
+    helpSection: helpSections.DETAILS,
+    description: 'Define the message',
     validate: [options.requireAnyOf('create')]
   })

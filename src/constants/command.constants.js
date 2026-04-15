@@ -36,3 +36,8 @@ export const commandTypes = {
   NUMBER: 'number',
   BOOLEAN: 'boolean'
 }
+
+export const helpSections = {
+  ACTIONS: 'Actions',
+  DETAILS: 'Details'
+}

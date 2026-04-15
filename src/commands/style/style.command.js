@@ -1,8 +1,7 @@
 import CommandBase from '@src/templates/CommandBase'
 
-import { commandNames, commandTypes } from '@src/constants/command.constants'
+import { commandNames, commandTypes, helpSections } from '@src/constants/command.constants'
 import { array, options, value } from '@src/helpers/validation-command.helpers'
-import { styleHelpSections } from './style.constants'
 import { styleHandler } from './style.handler'
 
 export default new CommandBase({
@@ -13,56 +12,48 @@ export default new CommandBase({
     name: 'list',
     abbreviation: 'l',
     type: commandTypes.BOOLEAN,
-    helpSection: styleHelpSections.RETRIEVAL,
+    helpSection: helpSections.ACTIONS,
     description: 'List CSS styles applied to elements matching the criteria',
-    validate: [options.allow('property', 'on'), options.requireAll('on')]
+    validate: [options.requireAll('style', 'xpath')]
   })
   .expect({
     name: 'apply',
     abbreviation: 'a',
-    type: commandTypes.ARRAY,
-    helpSection: styleHelpSections.MODIFICATION,
+    type: commandTypes.BOOLEAN,
+    helpSection: helpSections.ACTIONS,
     description: 'Apply styles to elements matching the criteria',
-    repeatable: true,
-    validate: [
-      array.hasAllItemsAs(
-        value.isArray,
-        array.hasLength(2),
-        array.hasAllItemsAs(value.isString),
-        array.hasItemAs(0, value.isSpaceForbidden)
-      ),
-      options.requireAll('on')
-    ]
+    validate: [options.requireAll('style', 'xpath')]
   })
   .expect({
     name: 'color-pick',
     abbreviation: 'c',
     type: commandTypes.BOOLEAN,
-    helpSection: styleHelpSections.TOOLS,
+    helpSection: helpSections.ACTIONS,
     description: 'Pick a color by clicking on the web page',
-    validate: [options.requireNoOther()]
+    validate: [options.requireNoOther]
   })
   .expect({
-    name: 'on',
-    abbreviation: 'o',
+    name: 'xpath',
     type: commandTypes.STRING,
-    description: 'XPath expression to select elements',
-    helpSection: styleHelpSections.RETRIEVAL,
-    validate: [options.requireAnyOf('apply', 'on')]
+    abbreviation: 'x',
+    helpSection: helpSections.DETAILS,
+    description: 'Define an XPath query',
+    validate: [options.requireAnyOf('apply', 'list')]
   })
   .expect({
-    name: 'property',
-    abbreviation: 'p',
+    name: 'style',
+    abbreviation: 'S',
     type: commandTypes.ARRAY,
-    helpSection: styleHelpSections.FILTERS,
-    description: 'Filter styles by property names (regex[])',
+    helpSection: helpSections.DETAILS,
+    description: 'Define a name-value style pair',
     repeatable: true,
     validate: [
       array.hasAllItemsAs(
         value.isArray,
         array.hasLengthBetween(1, 2),
-        array.hasAllItemsAs(value.isRegExp, value.isString)
+        array.hasAllItemsAs(value.isString),
+        array.hasItemAs(0, value.isSpaceForbidden)
       ),
-      options.requireAnyOf('on')
+      options.requireAnyOf('xpath')
     ]
   })

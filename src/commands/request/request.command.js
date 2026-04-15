@@ -1,9 +1,8 @@
 import CommandBase from '@src/templates/CommandBase'
 
-import { commandNames, commandTypes } from '@src/constants/command.constants'
+import { commandNames, commandTypes, helpSections } from '@src/constants/command.constants'
 import { responseFormatSupported } from '@src/constants/options.constants'
 import { array, options, value } from '@src/helpers/validation-command.helpers'
-import { requestHelpSections } from './request.constants'
 import { requestHandler } from './request.handler'
 
 export default new CommandBase({
@@ -14,7 +13,7 @@ export default new CommandBase({
     name: 'fetch',
     abbreviation: 'f',
     type: commandTypes.BOOLEAN,
-    helpSection: requestHelpSections.API_CALL,
+    helpSection: helpSections.ACTIONS,
     description: 'Start an API request',
     validate: [
       options.allow('headers', 'method', 'payload', 'read-as', 'url'),
@@ -25,8 +24,8 @@ export default new CommandBase({
     name: 'headers',
     abbreviation: 'H',
     type: commandTypes.ARRAY,
-    helpSection: requestHelpSections.OPTIONS,
-    description: 'Include request headers',
+    helpSection: helpSections.DETAILS,
+    description: 'Define the request headers',
     repeatable: true,
     validate: [
       array.hasAllItemsAs(
@@ -42,16 +41,16 @@ export default new CommandBase({
     name: 'payload',
     abbreviation: 'p',
     type: commandTypes.STRING,
-    helpSection: requestHelpSections.OPTIONS,
-    description: 'Add a payload to the request',
+    helpSection: helpSections.DETAILS,
+    description: 'Define the payload',
     validate: [value.isJSON, options.requireAnyOf('fetch')]
   })
   .expect({
     name: 'method',
     abbreviation: 'm',
     type: commandTypes.STRING,
-    helpSection: requestHelpSections.OPTIONS,
-    description: 'HTTP method to use',
+    helpSection: helpSections.DETAILS,
+    description: 'Define a HTTP method',
     defaultValue: 'GET',
     validate: [options.requireAnyOf('fetch')]
   })
@@ -59,16 +58,16 @@ export default new CommandBase({
     name: 'url',
     abbreviation: 'u',
     type: commandTypes.STRING,
-    helpSection: requestHelpSections.API_CALL,
-    description: 'URL for the API request',
+    helpSection: helpSections.DETAILS,
+    description: 'Define a valid URL',
     validate: [value.isURL, options.requireAnyOf('fetch')]
   })
   .expect({
     name: 'read-as',
     abbreviation: 'r',
     type: commandTypes.STRING,
-    helpSection: requestHelpSections.OPTIONS,
-    description: 'Format to read the response: blob, text, or json',
+    helpSection: helpSections.DETAILS,
+    description: 'Define how response should be read as',
     validate: [value.isAnyOf(responseFormatSupported), options.requireAnyOf('fetch')],
     defaultValue: 'json'
   })

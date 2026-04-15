@@ -24,7 +24,7 @@ export const themeHandler = async command => {
   }
 
   if (P`import`) {
-    const newTheme = JSON.parse(P`import`)
+    const newTheme = JSON.parse(P`theme-json`)
 
     const config = storage.get(storageKeys.CONFIG)
     const alreadyExists = config.themes.some(set => set.name === newTheme.name)
@@ -40,7 +40,7 @@ export const themeHandler = async command => {
   }
 
   if (P`delete`) {
-    const name = P`delete`
+    const name = P`name`
 
     const config = storage.get(storageKeys.CONFIG)
     const themeName = config.getValueById(configInputIds.THEME_NAME)
@@ -61,7 +61,7 @@ export const themeHandler = async command => {
   }
 
   if (P`apply`) {
-    const name = P`apply`
+    const name = P`name`
 
     const config = storage.get(storageKeys.CONFIG)
     const themeName = config.getValueById(configInputIds.THEME_NAME)

@@ -1,8 +1,7 @@
 import CommandBase from '@src/templates/CommandBase'
 
-import { commandNames, commandTypes } from '@src/constants/command.constants'
+import { commandNames, commandTypes, helpSections } from '@src/constants/command.constants'
 import { options, value } from '@src/helpers/validation-command.helpers'
-import { inspectHelpSections } from './inspect.constants'
 import { inspectHandler } from './inspect.handler'
 
 export default new CommandBase({
@@ -10,18 +9,50 @@ export default new CommandBase({
   handler: inspectHandler
 })
   .expect({
+    name: 'read',
+    abbreviation: 'r',
+    type: commandTypes.BOOLEAN,
+    helpSection: helpSections.ACTIONS,
+    description: 'Read a variable from the global context of the Tab',
+    validate: [options.allow('path', 'tab-id'), options.requireAll('path')]
+  })
+  .expect({
+    name: 'match',
+    abbreviation: 'm',
+    type: commandTypes.BOOLEAN,
+    helpSection: helpSections.ACTIONS,
+    description: 'Match a given query within an input value',
+    validate: [options.requireAll('input', 'query')]
+  })
+  .expect({
     name: 'path',
     abbreviation: 'p',
     type: commandTypes.STRING,
-    helpSection: inspectHelpSections.SEARCH,
-    description: 'Read a variable path in the current tab',
-    validate: [options.allow('tab-id')]
+    helpSection: helpSections.DETAILS,
+    description: 'Define a variable path',
+    validate: [options.requireAnyOf('read')]
   })
   .expect({
     name: 'tab-id',
     abbreviation: 'i',
     type: commandTypes.STRING,
-    helpSection: inspectHelpSections.SEARCH,
-    description: 'Search variable in a specific tab (T[number])',
-    validate: [value.isTabId, options.requireAnyOf('path')]
+    helpSection: helpSections.DETAILS,
+    description: 'Define a Tab ID where apply an action',
+    validate: [value.isTabId, options.requireAnyOf('read')]
+  })
+  .expect({
+    name: 'query',
+    abbreviation: 'q',
+    type: commandTypes.STRING,
+    helpSection: helpSections.DETAILS,
+    description: 'Define a regular expression used to match within an input',
+    validate: [value.isRegExp, options.requireAnyOf('match')]
+  })
+  .expect({
+    name: 'input',
+    abbreviation: 'I',
+    type: commandTypes.STRING,
+    helpSection: helpSections.DETAILS,
+    description: 'Define a user input',
+    validate: [options.requireAnyOf('match')]
   })

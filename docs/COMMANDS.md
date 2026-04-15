@@ -1,7 +1,7 @@
 # Term-O Commands
 
 > Version 0.9.1  
-> Updated: 2026-04-11
+> Updated: 2026-04-15
 
 ---
 
@@ -46,25 +46,31 @@ Interact with the DOM elements using declarative filters and structured search r
 
 The `dom` command enables element selection, filtering, and contextual queries inside the active browser tab.
 
-| Option                                           | Short | Description                                  |
-| ------------------------------------------------ | ----- | -------------------------------------------- |
-| `--search`                                       | `-s`  | Find elements by criteria.                   |
-| `--create`                                       | `-c`  | Create a DOM element.                        |
-| `--pick`                                         | `-p`  | Pick an element from the tab.                |
-| `--on <xpath>`                                   | `-X`  | Find elements with an XPath query.           |
-| `--inject <string>`                              | `-I`  | Inject HTML as text.                         |
-| `--attr <[attrname attrvalue]>`                  | `-a`  | Describe DOM element attributes.             |
-| `--below <xpath>`                                | `-B`  | Limit search scope under a specific element. |
-| `--child <number+>`                              | `-d`  | Select child element by index.               |
-| `--content`                                      | `-C`  | Show textual content of matched element(s).  |
-| `--parent <number+>`                             | `-p`  | Select parent element by index.              |
-| `--sibling <numberint>`                          | `-b`  | Select sibling by index.                     |
-| `--style <[stylename<regex> stylevalue<regex>]>` | `-S`  | Filter by CSS styles.                        |
-| `--tab-id <tabid>`                               | `-i`  | Search elements in a specific tab.           |
-| `--tag <regex>`                                  | `-t`  | Filter by tag name.                          |
-| `--text <regex>`                                 | `-T`  | Filter by text content.                      |
-| `--xpath`                                        | `-x`  | Show XPath(s) of matched element(s).         |
-| `--help`                                         | `-h`  | Show help for this command.                  |
+| Option               | Short | Description                                          |
+| -------------------- | ----- | ---------------------------------------------------- |
+| `--search`           | `-s`  | Search for elements by criteria.                     |
+| `--find`             | `-f`  | Find one element by criteria.                        |
+| `--create`           | `-c`  | Create a DOM element.                                |
+| `--pick`             | `-P`  | Pick an element from the tab.                        |
+| `--measure`          | `-M`  | Calculate the distance between two elements..        |
+| `--inject`           | `-I`  | Inject HTML as within an element.                    |
+| `--sibling <number>` | `-b`  | Define the sibling index.                            |
+| `--parent <number>`  | `-p`  | Define the parent index.                             |
+| `--child <number>`   | `-d`  | Define the child index.                              |
+| `--attr <array>`     | `-a`  | Define a name-value attribute pair.                  |
+| `--style <array>`    | `-S`  | Define a name-value style pair.                      |
+| `--tag <string>`     | `-g`  | Define the element tag name.                         |
+| `--content <string>` | `-t`  | Define the text content.                             |
+| `--html <string>`    | `-H`  | Define the HTML content.                             |
+| `--see-content`      | `-C`  | Define whether the text content should be displayed. |
+| `--see-xpath`        | `-X`  | Define whether XPath(s) should be displayed.         |
+| `--tab-id <string>`  | `-i`  | Define a Tab ID where apply an action.               |
+| `--below <string>`   | `-B`  | Define an Element XPath query where apply an action. |
+| `--xpath <string>`   | `-x`  | Define an XPath query.                               |
+| `--times <number>`   | `-m`  | Define how many times the action must be done.       |
+| `--from <string>`    | `-F`  | Define the origin element XPath.                     |
+| `--to <string>`      | `-T`  | Define the destination element XPath.                |
+| `--help`             | `-h`  | Show help for this command.                          |
 
 ### Dependency Rules
 
@@ -72,7 +78,7 @@ When using `dom` command the options can express **6** possible actions:
 
 1. An element search (using `--search`)
 
-   Just using `--search` will trigger a search for all elements available but it is possible to filter combining other options. Here is an example of how specific a search can be:
+   The `--search` will trigger a search for all elements available in a tab that matches a criteria.
 
    ```bash
    dom
@@ -81,74 +87,79 @@ When using `dom` command the options can express **6** possible actions:
        --style ["color" "#00000\d"]                                         # OPTIONAL/REPEATABLE
        --below 'id("cards-container")'                                      # OPTIONAL
        --tab-id "T00000000"                                                 # OPTIONAL
-       --text "Buscar con Go.+"                                             # OPTIONAL
        --tag "button"                                                       # OPTIONAL
-       --content                                                            # OPTIONAL
-       --xpath                                                              # OPTIONAL
+       --content "Buscar con Go"                                            # OPTIONAL
+       --see-content                                                        # OPTIONAL
+       --see-xpath                                                          # OPTIONAL
    ```
 
-2. An element search from an xpath (using `--on`)
+2. An element search from an xpath (using `--find`)
 
-   The option `--on` will trigger a element search with a given string value. This option is mainly used to make a concatenated search. An xpath can be passed as a parameter, then continue the search using combining it with more options.
+   The option `--find` will trigger an only element search. This option is commonly used to make a concatenated search. An xpath can be passed as a parameter, then continue the search using combining it with more options.
 
    ```bash
    dom
-       --on 'id("main-container")'                                          # REQUIRED
+       --find                                                               # REQUIRED
+       --xpath 'id("main-container")'                                       # REQUIRED
        --below 'id("cards-container")'                                      # OPTIONAL
        --child 3                                                            # OPTIONAL
        --parent 2                                                           # OPTIONAL
        --tab-id "T00000000"                                                 # OPTIONAL
-       --xpath                                                              # OPTIONAL
+       --see-content                                                        # OPTIONAL
+       --see-xpath                                                          # OPTIONAL
    ```
 
 3. Inject HTML code below an element (using `--inject`)
 
-   The option `--inject` will inject inline HTML code from a given string value. At the same time we can do the same search by xpath mentioned before.
+   The option `--inject` will trigger an injection of HTML code in a specified element.
 
    ```bash
    dom
        --inject '<button>Test</button>'                                     # REQUIRED
-       --on 'id("main-container")'                                          # REQUIRED
-       --below 'id("cards-container")'                                      # OPTIONAL
-       --child 3                                                            # OPTIONAL
-       --parent 2                                                           # OPTIONAL
+       --xpath 'id("main-container")'                                       # REQUIRED
+       --html "<button>test</button>"                                       # REQUIRED
        --tab-id "T00000000"                                                 # OPTIONAL
-       --xpath                                                              # OPTIONAL
+       --see-content                                                        # OPTIONAL
+       --see-xpath                                                          # OPTIONAL
    ```
 
 4. Create an element (using `--create`)
 
-   The option `--create` will create a DOM element taking the given string value as its tag name. Here is an example of how specific a search can be:
+   The option `--create` will trigger the creation of an element taking the given string value as its tag name.
 
    ```bash
    dom
-       --create "button"                                                    # REQUIRED
-       --below 'id("cards-container")'                                      # OPTIONAL
+       --create                                                             # REQUIRED
+       --tag "button"                                                       # REQUIRED
        --attr ["class" "test-class"]                                        # OPTIONAL/REPEATABLE
+       --below 'id("cards-container")'                                      # OPTIONAL
        --tab-id "T00000000"                                                 # OPTIONAL
+       --see-content                                                        # OPTIONAL
+       --see-xpath                                                          # OPTIONAL
    ```
 
 5. Pick an element (using `--pick`)
 
-   The option `--pick` will prepare the tab to be clickable. Once, the user clicks anywhere a dropdown will show the elements as options. Here is an example of how specific a search can be:
+   The option `--pick` will trigger a dialog on a tab to pick an element.
 
    ```bash
    dom
        --pick                                                               # REQUIRED
-       --content                                                            # OPTIONAL
-       --xpath                                                              # OPTIONAL
        --times 3                                                            # OPTIONAL
        --tab-id "T00000000"                                                 # OPTIONAL
+       --see-content                                                        # OPTIONAL
+       --see-xpath                                                          # OPTIONAL
    ```
 
 6. Measure distance (pixels) from two elements (using `--measure`)
 
-   The option `--measure` will track two elements given as xpath queries and measure the distance between them. Here is an example of how specific a search can be:
+   The option `--measure` will locate two elements and measure the distance between them.
 
    ```bash
    dom
-       --measure "html"                                                     # REQUIRED
-       --measure "html/body[1]"                                             # REQUIRED
+       --measure                                                            # REQUIRED
+       --from "html"                                                        # REQUIRED
+       --to "html/body[1]"                                                  # REQUIRED
        --tab-id "T00000000"                                                 # OPTIONAL
    ```
 
@@ -158,27 +169,27 @@ Interact with the tabs of the browser.
 
 The `tab` command displays all data related to the current tabs active browser.
 
-| Option                          | Short | Description                                      |
-| ------------------------------- | ----- | ------------------------------------------------ |
-| `--list`                        | `-l`  | List all currently open tabs.                    |
-| `--open <url>`                  | `-o`  | Open a new tab with the given URL.               |
-| `--reload <tabid>`              | `-r`  | Reload a specific tab by ID.                     |
-| `--switch <tabid>`              | `-s`  | Switch focus to a specific tab by ID.            |
-| `--point <tabid>`               | `-p`  | Point the terminal to a specific tab by ID.      |
-| `--close <tabid>`               | `-c`  | Close a specific tab by ID.                      |
-| `--current`                     | `-C`  | Show the currently active tab.                   |
-| `--pointing`                    | `-P`  | Show the tab currently targeted by the terminal. |
-| `--active`                      | `-a`  | Focus the tab open.                              |
-| `--incognito`                   | `-I`  | Show only tabs in incognito mode.                |
-| `--muted`                       | `-m`  | Show only muted tabs.                            |
-| `--title <regex>`               | `-t`  | Filter tabs by title.                            |
-| `--unmuted`                     | `-M`  | Show only unmuted tabs.                          |
-| `--url <regex>`                 | `-u`  | Filter tabs by URL.                              |
-| `--wait`                        | `-W`  | Wait until the tab finishes loading.             |
-| `--window-id <windowid<regex>>` | `-w`  | Filter tabs by window ID.                        |
-| `--group-id <groupid<regex>>`   | `-g`  | Filter tabs by group ID.                         |
-| `--tab-id <tabid<regex>>`       | `-i`  | Filter tabs by tab ID.                           |
-| `--help`                        | `-h`  | Show help for this command.                      |
+| Option                 | Short | Description                                                |
+| ---------------------- | ----- | ---------------------------------------------------------- |
+| `--list`               | `-l`  | List all currently open tabs.                              |
+| `--open`               | `-o`  | Open a new tab with the given URL.                         |
+| `--reload`             | `-r`  | Reload a specific tab by its identifier.                   |
+| `--switch`             | `-s`  | Switch focus to a specific tab by its identifier.          |
+| `--point`              | `-p`  | Point the terminal to a specific tab by its identifier.    |
+| `--current`            | `-C`  | Show the currently active tab.                             |
+| `--pointing`           | `-P`  | Show the tab currently targeted by the terminal.           |
+| `--close <string>`     | `-c`  | Close a specific tab by its identifier.                    |
+| `--incognito`          | `-I`  | Define whether incognito tabs should be focused.           |
+| `--muted`              | `-m`  | Define whether muted tabs should be focused.               |
+| `--unmuted`            | `-M`  | Define whether unmuted tabs should be focused.             |
+| `--wait`               | `-W`  | Define whether the action must complete before continuing. |
+| `--active`             | `-a`  | Define whether to use the current tab.                     |
+| `--title <string>`     | `-t`  | Define the title.                                          |
+| `--url <string>`       | `-u`  | Define a valid URL.                                        |
+| `--window-id <string>` | `-w`  | Define a Window ID where apply an action.                  |
+| `--group-id <string>`  | `-g`  | Define a Group ID where apply an action.                   |
+| `--tab-id <string>`    | `-i`  | Define a Tab ID where apply an action.                     |
+| `--help`               | `-h`  | Show help for this command.                                |
 
 ### Dependency Rules
 
@@ -186,7 +197,7 @@ When using `tabs` command the options can express **8** possible actions:
 
 1. Create a tabs summary (using `--list`)
 
-   Just using `--list` will trigger a search for all tabs available but it is possible to filter combining other options. Here is an example of how specific a search can be:
+   The `--list` will trigger a search for all tabs available.
 
    ```bash
    tabs
@@ -203,55 +214,60 @@ When using `tabs` command the options can express **8** possible actions:
 
 2. Open a new tab (using `--open`)
 
-   The option `--open` will open a tab with a given string value. We can choose how we want to open this tab.
+   The `--open` will open a tab with a given string value.
 
    ```bash
    tabs
-       --open 'https://test.com'                                            # REQUIRED
+       --open                                                               # REQUIRED
+       --url 'https://test.com'                                             # REQUIRED
        --wait                                                               # OPTIONAL
        --active                                                             # OPTIONAL
    ```
 
 3. Reload a tab (using `--reload`)
 
-   The option `--reload` will reload a tab with a given string value.
+   The `--reload` will reload a tab with a given string value.
 
    ```bash
    tabs
-       --reload 'T0000000'                                                  # REQUIRED
+       --reload                                                             # REQUIRED
+       --tab-id 'T0000000'                                                  # REQUIRED
        --wait                                                               # OPTIONAL
    ```
 
 4. Select a tab for the terminal (using `--switch`)
 
-   The option `--switch` will make a tab get in view with a given string value.
+   The `--switch` will make a tab get in view with a given string value.
 
    ```bash
    tabs
-       --switch 'T0000000'                                                  # REQUIRED
+       --switch                                                             # REQUIRED
+       --tab-id 'T0000000'                                                  # REQUIRED
    ```
 
 5. Select a tab for the terminal (using `--point`)
 
-   The option `--point` will change the selected tab in the terminal with a given string value.
+   The `--point` will change the selected tab in the terminal with a given string value.
 
    ```bash
    tabs
-       --point 'T0000000'                                                   # REQUIRED
+       --point                                                              # REQUIRED
+       --tab-id 'T0000000'                                                  # REQUIRED
    ```
 
 6. Select a tab for the terminal (using `--close`)
 
-   The option `--close` will close a tab with a given string value.
+   The `--close` will close a tab with a given string value.
 
    ```bash
    tabs
-       --close 'T0000000'                                                   # REQUIRED
+       --close                                                              # REQUIRED
+       --tab-id 'T0000000'                                                  # REQUIRED
    ```
 
 7. Get the current tab (using `--current`)
 
-   The option `--current` will get the current tab (in view).
+   The `--current` will get the current tab (in view).
 
    ```bash
    tabs
@@ -260,7 +276,7 @@ When using `tabs` command the options can express **8** possible actions:
 
 8. Get the tab pointed by the terminal (using `--pointing`)
 
-   The option `--pointing` will get data from the pointing tab (selected in the terminal).
+   The `--pointing` will get data from the pointing tab (selected in the terminal).
 
    ```bash
    tabs
@@ -276,12 +292,12 @@ The `history` command displays all data related to the old tabs open in the brow
 | Option                   | Short | Description                             |
 | ------------------------ | ----- | --------------------------------------- |
 | `--list`                 | `-l`  | Show a list of previously opened pages. |
-| `--title <regex>`        | `-t`  | Filter pages by title.                  |
-| `--url <regex>`          | `-u`  | Filter pages by URL.                    |
-| `--max-results <number>` | `-r`  | Limit the number of items displayed.    |
-| `--from <datetime>`      | `-F`  | Start date for deletion or filtering.   |
-| `--to <datetime>`        | `-T`  | End date for deletion or filtering.     |
 | `--delete`               | `-d`  | Delete pages in a specific date range.  |
+| `--title <string>`       | `-t`  | Define the title.                       |
+| `--url <string>`         | `-u`  | Define a valid URL.                     |
+| `--max-results <number>` | `-r`  | Define the limit of items displayed.    |
+| `--from <string>`        | `-F`  | Define the start date.                  |
+| `--to <string>`          | `-T`  | Define the end date.                    |
 | `--help`                 | `-h`  | Show help for this command.             |
 
 ### Dependency Rules
@@ -290,7 +306,7 @@ When using `history` command the options can express **2** possible actions:
 
 1. Create an old tabs summary (using `--list`)
 
-   Just using `--list` will trigger a search for all old tabs open and it is possible to filter combining other options. Here is an example of how specific a search can be:
+   The `--list` will trigger a search for all old tabs open and it is possible to filter combining other options.
 
    ```bash
    history
@@ -304,7 +320,7 @@ When using `history` command the options can express **2** possible actions:
 
 2. Delete old tabs from history by range (using `--delete`)
 
-   The option `--delete` will delete old tabs from history after specifing a datetime range.
+   The `--delete` will delete old tabs from history after specifing a datetime range.
 
    ```bash
    history
@@ -319,15 +335,15 @@ Interact with the Fetch API of the browser.
 
 The `request` command is a bridge to the Fetch API of the browser.
 
-| Option                    | Short | Description                                       |
-| ------------------------- | ----- | ------------------------------------------------- |
-| `--fetch`                 | `-l`  | Start an API request.                             |
-| `--headers <[header ..]>` | `-u`  | Include request headers.                          |
-| `--method <method>`       | `-F`  | HTTP method to use.                               |
-| `--payload <json>`        | `-r`  | Add a payload to the request.                     |
-| `--read-as <string>`      | `-T`  | Format to read the response: blob, text, or json. |
-| `--url <url>`             | `-t`  | URL for the API request.                          |
-| `--help`                  | `-h`  | Show help for this command.                       |
+| Option                    | Short | Description                            |
+| ------------------------- | ----- | -------------------------------------- |
+| `--fetch`                 | `-l`  | Start an API request.                  |
+| `--headers <[header ..]>` | `-u`  | Define the request headers.            |
+| `--method <method>`       | `-F`  | Define a HTTP method.                  |
+| `--payload <json>`        | `-r`  | Define the payload.                    |
+| `--read-as <string>`      | `-T`  | Define how response should be read as. |
+| `--url <url>`             | `-t`  | Define a valid URL.                    |
+| `--help`                  | `-h`  | Show help for this command.            |
 
 ### Dependency Rules
 
@@ -335,7 +351,7 @@ When using `request` command the options can express **1** possible action:
 
 1. Build an API call (using `--fetch`)
 
-   Just using `--fetch` will trigger an API call but it must be combined with other options to define the details. Here is an example of how specific a fetch can be:
+   The `--fetch` will trigger an API call.
 
    ```bash
    request
@@ -353,12 +369,14 @@ Interact with the aliases/shortcut of commands on Term-O.
 
 The `alias` command is a bridge to manage aliases of commands in the terminal.
 
-| Option                                | Short | Description                 |
-| ------------------------------------- | ----- | --------------------------- |
-| `--list`                              | `-l`  | List all defined aliases.   |
-| `--add <[aliasname, executableline]>` | `-a`  | Add a new alias.            |
-| `--delete <aliasname>`                | `-d`  | Remove an alias by name.    |
-| `--help`                              | `-h`  | Show help for this command. |
+| Option                       | Short | Description                                   |
+| ---------------------------- | ----- | --------------------------------------------- |
+| `--list`                     | `-l`  | List all defined aliases.                     |
+| `--add`                      | `-a`  | Add a new alias and the associated command.   |
+| `--delete`                   | `-d`  | Remove an alias by name.                      |
+| `--name <aliasname>`         | `-n`  | Define the name of the alias.                 |
+| `--command <executableline>` | `-c`  | Define the command associated with the alias. |
+| `--help`                     | `-h`  | Show help for this command.                   |
 
 ### Dependency Rules
 
@@ -366,7 +384,7 @@ When using `alias` command the options can express **3** possible actions:
 
 1. Create a summary of all the aliases created (using `--list`)
 
-   Just using `--list` will trigger a search for all the aliases created. Here is an example of how specific a search can be:
+   The `--list` will trigger a search for all the aliases created. Here is an example of how specific a search can be:
 
    ```bash
    alias
@@ -375,39 +393,41 @@ When using `alias` command the options can express **3** possible actions:
 
 2. Add a new alias (using `--add`)
 
-   Just using `--add` with a given array with values will save the new array if the format is correct. Here is an example of how specific a fetch can be:
+   The `--add` with a given array with values will save the new array if the format is correct. Here is an example of how specific a fetch can be:
 
    ```bash
    alias
-       --add ["gotest", 'tabs --open "https://test.com" --wait']            # REQUIRED/REPEATABLE
+       --add                                                                # REQUIRED
+       --name "gotest"                                                      # REQUIRED
+       --command 'tabs --open "https://test.com" --wait'                    # REQUIRED
    ```
 
    After that command is executed, you can just type `gotest` to open "https://test.com" in a new tab.
 
 3. Delete an alias (using `--delete`)
 
-   Just using `--delete` with a given alias name will search for it and delete it. Here is an example of how specific a fetch can be:
+   The `--delete` with a given alias name will search for it and delete it. Here is an example of how specific a fetch can be:
 
    ```bash
    alias
-       --delete "gotest"                                                    # REQUIRED
+       --delete                                                             # REQUIRED
+       --name "gotest"                                                      # REQUIRED
    ```
 
 ## STYLE
 
 Interact with styles of elements and color references.
 
-The `style` command is a bridge to manage aliases of commands in the terminal.
+The `style` command is a bridge elements styles or just styles API related.
 
-| Option                                              | Short | Description                                                |
-| --------------------------------------------------- | ----- | ---------------------------------------------------------- |
-| `--list`                                            | `-l`  | List CSS styles applied to elements matching the criteria. |
-| `--on <xpath>`                                      | `-o`  | XPath expression to select elements.                       |
-| `--apply <inlinestyles>`                            | `-a`  | Apply styles to elements matching the criteria.            |
-| `--color-pick`                                      | `-c`  | Pick a color by clicking on the web page.                  |
-| `--property <[stylename<regex> stylevalue<regex>]>` | `-p`  | Filter styles by property names.                           |
-| `--selector <selector<regex>>`                      | `-s`  | Filter elements by CSS selector.                           |
-| `--help`                                            | `-h`  | Show help for this command.                                |
+| Option             | Short | Description                                                |
+| ------------------ | ----- | ---------------------------------------------------------- |
+| `--list`           | `-l`  | List CSS styles applied to elements matching the criteria. |
+| `--apply`          | `-a`  | Apply styles to elements matching the criteria.            |
+| `--color-pick`     | `-c`  | Pick a color by clicking on the web page.                  |
+| `--xpath <string>` | `-x`  | Define an XPath query.                                     |
+| `--style <array>`  | `-S`  | Define a name-value style pair.                            |
+| `--help`           | `-h`  | Show help for this command.                                |
 
 ### Dependency Rules
 
@@ -415,28 +435,29 @@ When using `style` command the options can express **3** possible actions:
 
 1. Create a summary of styles applied to a DOM element (using `--list`)
 
-   Just using `--list` will trigger a search for styles in a DOM element and that's why, the xpath must be specified. Here is an example of how specific a search can be:
+   The `--list` will trigger a search for styles in a DOM element.
 
    ```bash
    style
        --list                                                               # REQUIRED
-       --on 'id("cards-container")'                                         # REQUIRED
-       --property [".+color" "000.+"]                                       # OPTIONAL/REPEATABLE
+       --style ["color" "red"]                                              # OPTIONAL/REPEATABLE
+       --xpath 'id("cards-container")'                                      # REQUIRED
    ```
 
 2. Apply styles to a DOM element (using `--apply`)
 
-   The option `--apply` will apply inline styles taken as a value. Here is an example of how specific a fetch can be:
+   The `--apply` will apply inline styles taken as a value.
 
    ```bash
    style
-       --apply ["display" "none"]                                           # REQUIRED/REPEATABLE
-       --on 'id("cards-container")'                                         # REQUIRED
+       --apply                                                              # REQUIRED
+       --style ["display" "none"]                                           # REQUIRED/REPEATABLE
+       --xpath 'id("cards-container")'                                      # REQUIRED
    ```
 
 3. Pick a color (using `--color-pick`)
 
-   Just using `--color-pick` will convert the cursor into a color picker. When user clicks anywhere, it will find the color used at that position. Here is an example of how specific a fetch can be:
+   The `--color-pick` will trigger a dialog to pick a color.
 
    ```bash
    style
@@ -449,24 +470,40 @@ Interact with the global object of a specific tab.
 
 The `inspect` command is a bridge to review global variables in the global object of the tab.
 
-| Option               | Short | Description                              |
-| -------------------- | ----- | ---------------------------------------- |
-| `--path <valuepath>` | `-p`  | Read a variable path from global object. |
-| `--tab-id <tabid>`   | `-i`  | Search variable in a specific tab.       |
-| `--help`             | `-h`  | Show help for this command.              |
+| Option              | Short | Description                                                |
+| ------------------- | ----- | ---------------------------------------------------------- |
+| `--read`            | `-r`  | Read a variable from the global context of the Tab.        |
+| `--match`           | `-m`  | Match a given query within an input value.                 |
+| `--path <string>`   | `-p`  | Define a variable path.                                    |
+| `--tab-id <string>` | `-i`  | Define a Tab ID where apply an action.                     |
+| `--query <string>`  | `-q`  | Define a regular expression used to match within an input. |
+| `--input <string>`  | `-i`  | Define a user input.                                       |
+| `--help`            | `-h`  | Show help for this command.                                |
 
 ### Dependency Rules
 
-When using `inspect` command the options can express **1** possible action:
+When using `inspect` command the options can express **2** possible action:
 
-1. Inspect a value from the global object ("window.\*") (using `--path`)
+1. Inspect a value from the global object ("window.\*") (using `--read`)
 
-   Just using `--path` will trigger a search for a value in the global object. Here is an example of how specific a search can be:
+   The `--read` will trigger a search for a value in the global object.
 
    ```bash
    inspect
+       --read                                                               # REQUIRED
        --path "window.screen"                                               # REQUIRED
        --tab-id "T00000000"                                                 # OPTIONAL
+   ```
+
+2. Search for text (using `--match`)
+
+   The `--match` describes what the query used to match the input.
+
+   ```bash
+   search
+       --match                                                              # REQUIRED
+       --query "test\.testing"                                              # REQUIRED
+       --input "template test.testing"                                      # REQUIRED
    ```
 
 ## NOTIFY
@@ -478,9 +515,9 @@ The `notify` command is a bridge to manage visual notifications on a tab.
 | Option               | Short | Description                            |
 | -------------------- | ----- | -------------------------------------- |
 | `--create`           | `-c`  | Create a notification.                 |
-| `--tab-id <tabid>`   | `-i`  | Display notification in a specific tab |
-| `--title <string>`   | `-t`  | Describe the notification title.       |
-| `--message <string>` | `-m`  | Describe the notification message.     |
+| `--tab-id <tabid>`   | `-i`  | Define a Tab ID where apply an action. |
+| `--title <string>`   | `-t`  | Define the title.                      |
+| `--message <string>` | `-m`  | Define the message.                    |
 | `--help`             | `-h`  | Show help for this command.            |
 
 ### Dependency Rules
@@ -489,7 +526,7 @@ When using `notify` command the options can express **1** possible action:
 
 1. Create a notification (using `--create`)
 
-   Just using `--create` will trigger a creation of a notification but it will require other options/arguments to define the content. Here is an example of how specific a notification can be:
+   The `--create` will trigger a creation of a notification.
 
    ```bash
    notify
@@ -499,115 +536,89 @@ When using `notify` command the options can express **1** possible action:
        --tab-id "T00000000"                                                 # OPTIONAL
    ```
 
-## SEARCH
-
-Interact with a string search.
-
-The `search` command is a bridge to search for a text inside another text.
-
-| Option             | Short | Description                         |
-| ------------------ | ----- | ----------------------------------- |
-| `--query <regex>`  | `-q`  | Text query to be searched in input. |
-| `--input <string>` | `-i`  | Text taken as input.                |
-| `--help`           | `-h`  | Show help for this command.         |
-
-### Dependency Rules
-
-When using `search` command the options can express **1** possible action:
-
-1. Search for text (using `--query`)
-
-   The `--query` describes what the query used to match the input. Only if the input matches you will get an answer. Here is an example of how specific a notification can be:
-
-   ```bash
-   search
-       --query "test\.testing"                                              # REQUIRED
-       --input "template test.testing"                                      # REQUIRED
-   ```
-
 ## STORAGE
 
 Interact with the storage API and clipboard API at any tab.
 
 The `storage` command is a bridge to the storage API and clipboard API at any tab.
 
-| Option             | Short | Description                                   |
-| ------------------ | ----- | --------------------------------------------- |
-| `--local`          | `-l`  | Get local storage from the selected tab.      |
-| `--session`        | `-s`  | Get session storage from the selected tab.    |
-| `--cookie`         | `-c`  | Get cookies from the selected tab.            |
-| `--json`           | `-j`  | Return storage as JSON.                       |
-| `--tab-id <tabid>` | `-i`  | Specify a tab ID to get storage from.         |
-| `--set <array>`    | `-S`  | Set a key-value pair in the selected storage. |
-| `--copy <string>`  | `-C`  | Copy a value to the clipboard.                |
-| `--help`           | `-h`  | Show help for this command.                   |
+| Option              | Short | Description                                             |
+| ------------------- | ----- | ------------------------------------------------------- |
+| `--list`            | `-l`  | List all storage key-values.                            |
+| `--set`             | `-s`  | Set a key-value pair in the selected storage.           |
+| `--copy`            | `-c`  | Copy a value to the clipboard.                          |
+| `--local`           | `-L`  | Define whether the local storage should be displayed.   |
+| `--session`         | `-S`  | Define whether the session storage should be displayed. |
+| `--cookie`          | `-C`  | Define whether the cookie storage should be displayed.  |
+| `--see-json`        | `-j`  | Define whether the JSON format should be displayed.     |
+| `--tab-id <string>` | `-i`  | Define a Tab ID where apply an action.                  |
+| `--input <string>`  | `-I`  | Define a user input.                                    |
+| `--data <array>`    | `-d`  | Define a key-value pair.                                |
+| `--help`            | `-h`  | Show help for this command.                             |
 
 ### Dependency Rules
 
-When using `storage` command the options can express **4** possible action:
+When using `storage` command the options can express **3** possible action:
 
-1. Get a summary of local storage in a tab (using `--local`)
+1. Get a summary of local storage in a tab (using `--list`)
 
-   Just using `--local` will trigger the review of local storage at a certain tab. Here is an example of how specific a notification can be:
+   The `--list` will trigger a search for all the storage key-values in a certain tab.
 
    ```bash
    search
-       --local                                                              # REQUIRED
+       --list                                                               # REQUIRED
+       --local                                                              # |
+       --session                                                            # | ONE REQUIRED
+       --cookie                                                             # |
+       --tab-id "T00000000"                                                 # OPTIONAL
+       --see-json                                                           # OPTIONAL
+   ```
+
+2. Set a value in a certain storage in a certain tab (using `--set`)
+
+   The `--set` will assigned a value in a ceratin tab at a certain tab.
+
+   ```bash
+   search
+       --set                                                                # REQUIRED
+       --local                                                              # |
+       --session                                                            # | ONE REQUIRED
+       --cookie                                                             # |
+       --data ["test-name" "test-value"]                                    # REQUIRED/REPEATABLE
        --tab-id "T00000000"                                                 # OPTIONAL
    ```
 
-2. Get a summary of session storage in a tab (using `--session`)
+3. Copy value into the clipboard (using `--copy`)
 
-   Just using `--session` will trigger the review of session storage at a certain tab. Here is an example of how specific a notification can be:
-
-   ```bash
-   search
-       --session                                                            # REQUIRED
-       --tab-id "T00000000"                                                 # OPTIONAL
-   ```
-
-3. Get a summary of cookies storage in a tab (using `--cookie`)
-
-   Just using `--cookie` will trigger the review of cookies storage at a certain tab. Here is an example of how specific a notification can be:
+   The `--copy` will trigger the clipboard edition.
 
    ```bash
    search
-       --cookie                                                             # REQUIRED
-       --tab-id "T00000000"                                                 # OPTIONAL
-   ```
-
-4. Set a value in a certain storage at a certain tab (using `--set`)
-
-   Just using `--set` will assigned a value in a ceratin tab at a certain tab. Here is an example of how specific a notification can be:
-
-   ```bash
-   search
-       --set ["test-name" "test-value"]                                     # REQUIRED/REPEATABLE
-       --tab-id "T00000000"                                                 # OPTIONAL
-       --session                                                            # OPTIONAL
-       --cookie                                                             # OPTIONAL
-       --local                                                              # OPTIONAL
+       --copy                                                                # REQUIRED
+       --input "test-value"                                                  # REQUIRED
    ```
 
 ## ERROR
 
 The `error` command is a bridge to the error API.
 
-| Option             | Short | Description                           |
-| ------------------ | ----- | ------------------------------------- |
-| `--title <string>` | `-t`  | Throw an error with a custom message. |
-| `--help`           | `-h`  | Show help for this command.           |
+| Option             | Short | Description                 |
+| ------------------ | ----- | --------------------------- |
+| `--create`         | `-c`  | Create an error.            |
+| `--title <string>` | `-t`  | Define the title.           |
+| `--help`           | `-h`  | Show help for this command. |
 
 ### Dependency Rules
 
 When using `error` command the options can express **1** possible action:
 
-1. Throw an error (using `--title`)
+1. Throw an error (using `--create`)
 
-   Just using `--title` will throw an error with the given title. Here is an example of how specific a notification can be:
+   `--create` will trigger the creation of an error.
 
    ```bash
    search
+       --create                                                             # REQUIRED
        --title "test title"                                                 # REQUIRED
    ```
 
@@ -615,45 +626,47 @@ When using `error` command the options can express **1** possible action:
 
 The `events` command is a bridge to the page events API and DOM element events.
 
-| Option                       | Short | Description                                       |
-| ---------------------------- | ----- | ------------------------------------------------- |
-| `--register`                 | `-r`  | Register a new command for future execution.      |
-| `--trigger <eventname>`      | `-t`  | Trigger a new event in page. It can be: click.    |
-| `--xpath <xpath>`            | `-x`  | XPath selector for the target element.            |
-| `--tab-id <tabid>`           | `-i`  | Trigger events in a specific tab.                 |
-| `--url <regex>`              | `-u`  | URL pattern where the event will trigger (regex). |
-| `--command <executableline>` | `-c`  | Command line to execute.                          |
-| `--list`                     | `-l`  | List all registered events.                       |
-| `--delete <eventid>`         | `-d`  | Delete a registered event by its id.              |
-| `--help`                     | `-h`  | Show help for this command.                       |
+| Option                  | Short | Description                                      |
+| ----------------------- | ----- | ------------------------------------------------ |
+| `--register`            | `-r`  | Register a new command for future execution.     |
+| `--dom-dispatch`        | `-d`  | Dispatch a new DOM event in page.                |
+| `--list`                | `-l`  | List all registered events.                      |
+| `--delete`              | `-d`  | Delete a registered event by its identifier.     |
+| `--xpath <string>`      | `-x`  | Define an XPath query.                           |
+| `--tab-id <string>`     | `-i`  | Define a Tab ID where apply an action.           |
+| `--url <string>`        | `-u`  | Define a valid URL.                              |
+| `--name <string>`       | `-n`  | Define the name of the event.                    |
+| `--command <string>`    | `-c`  | Define the command line associated to the event. |
+| `--command-id <string>` | `-C`  | Define the command identifier of the event.      |
 
 ### Dependency Rules
 
 When using `evennts` command the options can express **4** possible action:
 
-1. Trigger an event on a element (using `--trigger`)
+1. Trigger an event on a element (using `--dom-dispatch`)
 
-   Just using `--trigger` will define the event thrown on a specific element. Here is an example of how specific a notification can be:
+   The `--dom-dispatch` will dispatch a DOM Event on an element.
 
    ```bash
    events
-       --trigger "click"                                                    # REQUIRED
+       --dom-dispatch                                                       # REQUIRED
+       --name "click"                                                       # REQUIRED
        --xpath 'id("main-container")'                                       # REQUIRED
        --tab-id "T00000000"                                                 # OPTIONAL
    ```
 
 2. Create a summary of all the page events created (using `--list`)
 
-   Just using `--list` will trigger a search for all the page events created. Here is an example of how specific a search can be:
+   The `--list` will trigger a search for all the page events created.
 
    ```bash
    events
        --list                                                               # REQUIRED
    ```
 
-3. Create a page events (using `--register`)
+3. Register page events (using `--register`)
 
-   Just using `--register` will trigger the creation of a page event but it will require other options/arguments how it will work. Here is an example of how specific a notification can be:
+   The `--register` will trigger the creation of a page event.
 
    ```bash
    events
@@ -668,7 +681,8 @@ When using `evennts` command the options can express **4** possible action:
 
    ```bash
    events
-       --delete "9edb327b-b67f-4a3e-9e10-90b35ad1f3e5"                      # REQUIRED
+       --delete                                                             # REQUIRED
+       --command-id "9edb327b-b67f-4a3e-9e10-90b35ad1f3e5"                  # REQUIRED
    ```
 
 ## INPUT
@@ -687,7 +701,7 @@ When using `input` command the options can express **1** possible action:
 
 1. Request a user input in the terminal (using `--text`)
 
-   Just using `--text` will trigger a request that can be seen and completed in the UI terminal. Here is an example of how specific it can be:
+   The `--text` will trigger a request that can be seen and completed in the UI terminal. Here is an example of how specific it can be:
 
    ```bash
    input
@@ -698,14 +712,16 @@ When using `input` command the options can express **1** possible action:
 
 The `theme` command is a bridge to manage the theme in Term-O.
 
-| Option              | Short | Description                           |
-| ------------------- | ----- | ------------------------------------- |
-| `--import <string>` | `-i`  | Import a color scheme in JSON format. |
-| `--list`            | `-l`  | List all available themes.            |
-| `--delete <string>` | `-d`  | Delete a theme by name.               |
-| `--apply <string>`  | `-a`  | Apply a theme by name.                |
-| `--current`         | `-C`  | Show the currently applied theme.     |
-| `--help`            | `-h`  | Show help for this command.           |
+| Option                  | Short | Description                           |
+| ----------------------- | ----- | ------------------------------------- |
+| `--import`              | `-i`  | Import a color scheme in JSON format. |
+| `--list`                | `-l`  | List all available themes.            |
+| `--delete`              | `-d`  | Delete a theme by its name.           |
+| `--apply`               | `-a`  | Apply a theme by name.                |
+| `--current`             | `-C`  | Show the currently applied theme.     |
+| `--theme-json <string>` | `-t`  | Define the Theme in JSON-String.      |
+| `--name <string>`       | `-n`  | Define the name of the theme.         |
+| `--help`                | `-h`  | Show help for this command.           |
 
 ### Dependency Rules
 
@@ -713,7 +729,7 @@ When using `theme` command the options can express **5** possible actions:
 
 1. Create a summary of all themes available (using `--list`)
 
-   Just using `--list` will trigger a search for all themes available. Here is an example of how specific a search can be:
+   The `--list` will trigger a search for all themes available.
 
    ```bash
    theme
@@ -726,32 +742,35 @@ When using `theme` command the options can express **5** possible actions:
 
    ```bash
    theme
-       --delete "an-already-imported-theme-name"                            # REQUIRED
+       --delete                                                             # REQUIRED
+       --name "an-already-imported-theme-name"                              # REQUIRED
    ```
 
 3. Change the current theme in use (using `--apply`)
 
-   The option `--apply` will apply the specified theme name. Here is an example of how specific it can be:
+   The option `--apply` will apply the specified theme name.
 
    ```bash
    theme
-       --apply "an-already-imported-theme-name"                             # REQUIRED
+       --apply                                                              # REQUIRED
+       --name "an-already-imported-theme-name"                              # REQUIRED
    ```
 
 4. Import a theme (using `--import`)
 
-   The option `--import` will import the specified theme in JSON format. Here is an example of how specific it can be:
+   The `--import` will import the specified theme in JSON format.
 
    ```bash
    theme
-       --import '{ "name": "an-already-imported-theme-name", ... }'         # REQUIRED
+       --import                                                             # REQUIRED
+       --theme-json '{ "name": "an-already-imported-theme-name", ... }'     # REQUIRED
    ```
 
    Please, see [theme-example.json](assets/theme-example.json) to find a more detailed example of a valid theme.
 
 5. Get the current theme name (using `--current`)
 
-   The option `--current` will search for the name of the current theme. Here is an example of how specific it can be:
+   The `--current` will search for the name of the current theme.
 
    ```bash
    theme
@@ -769,6 +788,7 @@ An addon is a new command added to Term-O.
 | `--list`            | `-l`  | List all addons.                 |
 | `--upload`          | `-u`  | Upload a file to add as a addon. |
 | `--delete <string>` | `-d`  | Delete a addon by name.          |
+| `--name`            | `-n`  | Define the name of the addon.    |
 | `--help`            | `-h`  | Show help for this command.      |
 
 ### Dependency Rules
@@ -777,7 +797,7 @@ When using `theme` command the options can express **3** possible actions:
 
 1. Create a summary of all addons available (using `--list`)
 
-   Just using `--list` will trigger a search for all addons available. Here is an example of how specific a search can be:
+   The `--list` will trigger a search for all addons available. Here is an example of how specific a search can be:
 
    ```bash
    addons
@@ -790,7 +810,8 @@ When using `theme` command the options can express **3** possible actions:
 
    ```bash
    addons
-       --delete "an-already-imported-addon-name"                            # REQUIRED
+       --delete                                                             # REQUIRED
+       --name "an-already-uploaded-addon-name"                              # REQUIRED
    ```
 
 3. Upload an addon (using `--upload`)

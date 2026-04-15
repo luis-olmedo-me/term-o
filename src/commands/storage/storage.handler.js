@@ -20,35 +20,42 @@ export const storageHandler = async command => {
     tabId = validTab.id
   }
 
-  if (P`local` || P`session` || P`cookie`) {
-    const isSetting = P`set`.length > 0
+  if (P`list`) {
+    const storage = await processManager.getStorage(tabId, {
+      includeLocal: P`local`,
+      includeSession: P`session`,
+      includeCookies: P`cookie`
+    })
+
+    const storageEntries = Object.entries(storage)
+
+    command.reset()
+    const updates = P`see-json`
+      ? [formatStorageAsString({ storage, tabId: P`tab-id` })]
+      : storageEntries.map(([key, value]) => formatStorageProp({ key, value, tabId: P`tab-id` }))
+
+    command.update(...updates)
+  }
+
+  if (P`set`) {
     let storage = null
+    const namespace = getStorageNamespace(P`local`, P`session`, P`cookie`)
 
-    if (isSetting) {
-      const namespace = getStorageNamespace(P`local`, P`session`, P`cookie`)
-
-      command.update(['"Applying changes in storage."'])
-      for (const [key, value] of P`set`) {
-        await processManager.setStorage(tabId, {
-          namespace,
-          key,
-          value
-        })
-
-        storage = { ...storage, [key]: value }
-      }
-    } else {
-      storage = await processManager.getStorage(tabId, {
-        includeLocal: P`local`,
-        includeSession: P`session`,
-        includeCookies: P`cookie`
+    command.update(['"Applying changes in storage."'])
+    for (const [key, value] of P`data`) {
+      await processManager.setStorage(tabId, {
+        namespace,
+        key,
+        value
       })
+
+      storage = { ...storage, [key]: value }
     }
 
     const storageEntries = Object.entries(storage)
 
     command.reset()
-    const updates = P`json`
+    const updates = P`see-json`
       ? [formatStorageAsString({ storage, tabId: P`tab-id` })]
       : storageEntries.map(([key, value]) => formatStorageProp({ key, value, tabId: P`tab-id` }))
 

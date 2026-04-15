@@ -6,11 +6,8 @@ import { createHighlight } from '@src/helpers/web-components.helpers'
 export default async (resolve, reject, data) => {
   const { searchByXpath, searchByProperty } = data
 
-  const propValidations = searchByProperty.map(([propName, propValue]) => {
-    const propNamePattern = new RegExp(propName)
-    const propValuePattern = propValue ? new RegExp(propValue) : /./g
-
-    return (name, value) => propNamePattern.test(name) && propValuePattern.test(value)
+  const propValidations = searchByProperty.map(([styleName, styleValue]) => {
+    return (name, value) => name.includes(styleName) && value.includes(styleValue ?? '')
   })
   const hasPropValidations = propValidations.length > 0
 

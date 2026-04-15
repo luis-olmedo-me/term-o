@@ -13,8 +13,8 @@ export const aliasHandler = async command => {
     command.update(...updates)
   }
 
-  if (P`add`.length) {
-    P`add`.forEach(([key, value]) => {
+  if (P`add`) {
+    P`alias`.forEach(([key, value]) => {
       const newAlias = { key, value }
 
       const aliases = storage.get(storageKeys.ALIASES)
@@ -31,7 +31,7 @@ export const aliasHandler = async command => {
   }
 
   if (P`delete`) {
-    const key = P`delete`
+    const key = P`name`
 
     const aliases = storage.get(storageKeys.ALIASES)
     const existingAlias = aliases.find(alias => alias.key === key)

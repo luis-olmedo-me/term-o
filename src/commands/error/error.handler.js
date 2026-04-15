@@ -3,7 +3,7 @@ import { createHelpView } from '@src/helpers/command.helpers'
 export const errorHandler = async command => {
   const P = name => command.props[name]
 
-  if (P`title`) {
+  if (P`create`) {
     command.throw(P`title`)
   }
 

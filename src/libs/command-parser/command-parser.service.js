@@ -55,7 +55,7 @@ export class CommandParser extends EventListener {
       const error = errorBase.create()
       const truncatedName = truncate(cleanedName, 30)
 
-      error.mock({ title: `The command "${truncatedName}" is unrecognized.` })
+      error.mock({ create: true, title: `The command "${truncatedName}" is unrecognized.` })
       error.execute()
 
       return error

@@ -231,19 +231,43 @@ export const requireAnyOf = (...dependencies) => {
   }
 }
 
-export const requireNoOther = () => {
+export const conflict = (...dependencies) => {
   return (option, _value, props) => {
-    const propNames = Object.keys(props)
-    const forbiddenDependencies = propNames.filter(name => name !== option.name)
-    const hasForbbidenDependencies = forbiddenDependencies.length > 0
+    const names = Object.keys(props)
+    const conflictingDependencies = dependencies.filter(dependency => names.includes(dependency))
+    const hasConflicts = conflictingDependencies.length > 0
 
-    if (hasForbbidenDependencies) {
+    if (hasConflicts) {
       const name = option.displayName
-      const firstForbiddenDependency = forbiddenDependencies.at(0)
-      const quotedFirstForbiddenDependency = getQuotedString(firstForbiddenDependency)
+      const firstConflict = conflictingDependencies.at(0)
+      const quotedFirstConflict = getQuotedString(firstConflict)
 
-      throw `${name} can not be executed with ${quotedFirstForbiddenDependency}.`
+      throw `${name} conflicts with ${quotedFirstConflict}.`
     }
+  }
+}
+
+export const when = (trigger, validations) => {
+  return (option, value, props) => {
+    const isTriggered = Object.keys(props).includes(trigger)
+
+    if (isTriggered) {
+      validations.forEach(validation => validation(option, value, props))
+    }
+  }
+}
+
+export const requireNoOther = (option, _value, props) => {
+  const propNames = Object.keys(props)
+  const forbiddenDependencies = propNames.filter(name => name !== option.name)
+  const hasForbbidenDependencies = forbiddenDependencies.length > 0
+
+  if (hasForbbidenDependencies) {
+    const name = option.displayName
+    const firstForbiddenDependency = forbiddenDependencies.at(0)
+    const quotedFirstForbiddenDependency = getQuotedString(firstForbiddenDependency)
+
+    throw `${name} can not be executed with ${quotedFirstForbiddenDependency}.`
   }
 }
 
@@ -276,5 +300,7 @@ export const options = {
   allow,
   requireAll,
   requireAnyOf,
-  requireNoOther
+  requireNoOther,
+  conflict,
+  when
 }

@@ -247,6 +247,16 @@ export const conflict = (...dependencies) => {
   }
 }
 
+export const when = (trigger, validations) => {
+  return (option, value, props) => {
+    const isTriggered = Object.keys(props).includes(trigger)
+
+    if (isTriggered) {
+      validations.forEach(validation => validation(option, value, props))
+    }
+  }
+}
+
 export const requireNoOther = (option, _value, props) => {
   const propNames = Object.keys(props)
   const forbiddenDependencies = propNames.filter(name => name !== option.name)
@@ -291,5 +301,6 @@ export const options = {
   requireAll,
   requireAnyOf,
   requireNoOther,
-  conflict
+  conflict,
+  when
 }

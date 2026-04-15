@@ -57,7 +57,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Point the terminal to a specific tab by its identifier',
-    validate: [value.isTabId, options.requireAll('tab-id')]
+    validate: [options.requireAll('tab-id')]
   })
   .expect({
     name: 'close',
@@ -65,7 +65,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.ACTIONS,
     description: 'Close a specific tab by its identifier',
-    validate: [value.isTabId, options.requireAll('tab-id')]
+    validate: [options.requireAll('tab-id')]
   })
   .expect({
     name: 'current',

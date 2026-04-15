@@ -169,27 +169,27 @@ Interact with the tabs of the browser.
 
 The `tab` command displays all data related to the current tabs active browser.
 
-| Option                          | Short | Description                                      |
-| ------------------------------- | ----- | ------------------------------------------------ |
-| `--list`                        | `-l`  | List all currently open tabs.                    |
-| `--open <url>`                  | `-o`  | Open a new tab with the given URL.               |
-| `--reload <tabid>`              | `-r`  | Reload a specific tab by ID.                     |
-| `--switch <tabid>`              | `-s`  | Switch focus to a specific tab by ID.            |
-| `--point <tabid>`               | `-p`  | Point the terminal to a specific tab by ID.      |
-| `--close <tabid>`               | `-c`  | Close a specific tab by ID.                      |
-| `--current`                     | `-C`  | Show the currently active tab.                   |
-| `--pointing`                    | `-P`  | Show the tab currently targeted by the terminal. |
-| `--active`                      | `-a`  | Focus the tab open.                              |
-| `--incognito`                   | `-I`  | Show only tabs in incognito mode.                |
-| `--muted`                       | `-m`  | Show only muted tabs.                            |
-| `--title <regex>`               | `-t`  | Filter tabs by title.                            |
-| `--unmuted`                     | `-M`  | Show only unmuted tabs.                          |
-| `--url <regex>`                 | `-u`  | Filter tabs by URL.                              |
-| `--wait`                        | `-W`  | Wait until the tab finishes loading.             |
-| `--window-id <windowid<regex>>` | `-w`  | Filter tabs by window ID.                        |
-| `--group-id <groupid<regex>>`   | `-g`  | Filter tabs by group ID.                         |
-| `--tab-id <tabid<regex>>`       | `-i`  | Filter tabs by tab ID.                           |
-| `--help`                        | `-h`  | Show help for this command.                      |
+| Option                 | Short | Description                                                |
+| ---------------------- | ----- | ---------------------------------------------------------- |
+| `--list`               | `-l`  | List all currently open tabs.                              |
+| `--open`               | `-o`  | Open a new tab with the given URL.                         |
+| `--reload`             | `-r`  | Reload a specific tab by its identifier.                   |
+| `--switch`             | `-s`  | Switch focus to a specific tab by its identifier.          |
+| `--point`              | `-p`  | Point the terminal to a specific tab by its identifier.    |
+| `--current`            | `-C`  | Show the currently active tab.                             |
+| `--pointing`           | `-P`  | Show the tab currently targeted by the terminal.           |
+| `--close <string>`     | `-c`  | Close a specific tab by its identifier.                    |
+| `--incognito`          | `-I`  | Define whether incognito tabs should be focused.           |
+| `--muted`              | `-m`  | Define whether muted tabs should be focused.               |
+| `--unmuted`            | `-M`  | Define whether unmuted tabs should be focused.             |
+| `--wait`               | `-W`  | Define whether the action must complete before continuing. |
+| `--active`             | `-a`  | Define whether to use the current tab.                     |
+| `--title <string>`     | `-t`  | Define the title.                                          |
+| `--url <string>`       | `-u`  | Define a valid URL.                                        |
+| `--window-id <string>` | `-w`  | Define a Window ID where apply an action.                  |
+| `--group-id <string>`  | `-g`  | Define a Group ID where apply an action.                   |
+| `--tab-id <string>`    | `-i`  | Define a Tab ID where apply an action.                     |
+| `--help`               | `-h`  | Show help for this command.                                |
 
 ### Dependency Rules
 
@@ -197,7 +197,7 @@ When using `tabs` command the options can express **8** possible actions:
 
 1. Create a tabs summary (using `--list`)
 
-   Just using `--list` will trigger a search for all tabs available but it is possible to filter combining other options. Here is an example of how specific a search can be:
+   The `--list` will trigger a search for all tabs available.
 
    ```bash
    tabs
@@ -214,55 +214,60 @@ When using `tabs` command the options can express **8** possible actions:
 
 2. Open a new tab (using `--open`)
 
-   The option `--open` will open a tab with a given string value. We can choose how we want to open this tab.
+   The `--open` will open a tab with a given string value.
 
    ```bash
    tabs
-       --open 'https://test.com'                                            # REQUIRED
+       --open                                                               # REQUIRED
+       --url 'https://test.com'                                             # REQUIRED
        --wait                                                               # OPTIONAL
        --active                                                             # OPTIONAL
    ```
 
 3. Reload a tab (using `--reload`)
 
-   The option `--reload` will reload a tab with a given string value.
+   The `--reload` will reload a tab with a given string value.
 
    ```bash
    tabs
-       --reload 'T0000000'                                                  # REQUIRED
+       --reload                                                             # REQUIRED
+       --tab-id 'T0000000'                                                  # REQUIRED
        --wait                                                               # OPTIONAL
    ```
 
 4. Select a tab for the terminal (using `--switch`)
 
-   The option `--switch` will make a tab get in view with a given string value.
+   The `--switch` will make a tab get in view with a given string value.
 
    ```bash
    tabs
-       --switch 'T0000000'                                                  # REQUIRED
+       --switch                                                             # REQUIRED
+       --tab-id 'T0000000'                                                  # REQUIRED
    ```
 
 5. Select a tab for the terminal (using `--point`)
 
-   The option `--point` will change the selected tab in the terminal with a given string value.
+   The `--point` will change the selected tab in the terminal with a given string value.
 
    ```bash
    tabs
-       --point 'T0000000'                                                   # REQUIRED
+       --point                                                              # REQUIRED
+       --tab-id 'T0000000'                                                  # REQUIRED
    ```
 
 6. Select a tab for the terminal (using `--close`)
 
-   The option `--close` will close a tab with a given string value.
+   The `--close` will close a tab with a given string value.
 
    ```bash
    tabs
-       --close 'T0000000'                                                   # REQUIRED
+       --close                                                              # REQUIRED
+       --tab-id 'T0000000'                                                  # REQUIRED
    ```
 
 7. Get the current tab (using `--current`)
 
-   The option `--current` will get the current tab (in view).
+   The `--current` will get the current tab (in view).
 
    ```bash
    tabs
@@ -271,7 +276,7 @@ When using `tabs` command the options can express **8** possible actions:
 
 8. Get the tab pointed by the terminal (using `--pointing`)
 
-   The option `--pointing` will get data from the pointing tab (selected in the terminal).
+   The `--pointing` will get data from the pointing tab (selected in the terminal).
 
    ```bash
    tabs
@@ -315,7 +320,7 @@ When using `history` command the options can express **2** possible actions:
 
 2. Delete old tabs from history by range (using `--delete`)
 
-   The option `--delete` will delete old tabs from history after specifing a datetime range.
+   The `--delete` will delete old tabs from history after specifing a datetime range.
 
    ```bash
    history

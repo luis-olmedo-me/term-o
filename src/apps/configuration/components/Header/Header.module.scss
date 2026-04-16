@@ -17,7 +17,7 @@
 .header__content {
   display: flex;
   align-items: center;
-  gap: $space-400;
+  gap: $space-800;
 }
 
 .header__link {
@@ -34,4 +34,16 @@
 
 .header__search {
   width: 350px;
+}
+
+.header__title_container {
+  display: flex;
+  column-gap: $space-200;
+  align-items: center;
+}
+
+.header__title {
+  margin: 0;
+  font-size: $fontSize-300;
+  line-height: $lineHeight-300;
 }

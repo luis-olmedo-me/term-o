@@ -6,7 +6,14 @@ import Logo from '@src/icons/Logo.icon'
 import Repo from '@src/icons/Repo.icon'
 
 import { iconSizes } from '@src/constants/icon.constants'
-import { header, header__content, header__link, header__search } from './Header.module.scss'
+import {
+  header,
+  header__content,
+  header__link,
+  header__search,
+  header__title,
+  header__title_container
+} from './Header.module.scss'
 
 export const Header = ({ onSearch }) => {
   const [value, setValue] = useState('')
@@ -21,7 +28,11 @@ export const Header = ({ onSearch }) => {
   return (
     <header className={header}>
       <div className={header__content}>
-        <Logo size={iconSizes.SMALL} />
+        <div className={header__title_container}>
+          <Logo size={iconSizes.SMALL} />
+
+          <h1 className={header__title}>TERM-O</h1>
+        </div>
 
         <form role="search" className={header__search}>
           <Input

@@ -5,6 +5,7 @@
   line-height: $lineHeight-300;
 
   &__keyword {
+    opacity: 0.5;
     color: $colors-accent;
     text-shadow: 0px 0px 1px $colors-accent;
   }

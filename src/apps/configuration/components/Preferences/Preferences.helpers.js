@@ -92,7 +92,7 @@ export const createImageBackground = theme => {
       .replace('{brightAccent}', theme.colors.brightAccent)
       .replace('{brightBlack}', theme.colors.brightBlack)
       .replace('{rotation}', rotation)
-      .replace('{opacity}', theme.isDarkMode ? 0.02 : 0.04)
+      .replace('{opacity}', theme.isDarkMode ? 0.02 : 0.075)
   })
 
   const urls = components

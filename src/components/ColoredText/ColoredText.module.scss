@@ -5,8 +5,8 @@
   line-height: $lineHeight-300;
 
   &__keyword {
-    color: with-opacity($colors-foreground, 0.3);
-    font-style: italic;
+    color: $colors-accent;
+    text-shadow: 0px 0px 1px $colors-accent;
   }
 
   &__bg_spaced {

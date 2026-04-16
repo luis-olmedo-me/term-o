@@ -5,6 +5,7 @@ import { availableInputTypes } from '@src/constants/inputs.constants'
 import { colorThemeKeys } from '@src/constants/themes.constants'
 import { uploader } from '@src/helpers/file.helpers'
 import { getBgColor, getColor } from '@src/helpers/themes.helpers'
+import { backgroundLogo, rotationValues } from './Preferences.constants'
 
 export const handleImportConfig = ({ onError }) => {
   return new Promise((resolve, reject) => {
@@ -81,4 +82,22 @@ export const filterSectionsBy = (currentSections, search) => {
 
     return matchedInputs.length ? [...sections, { ...section, inputs: matchedInputs }] : sections
   }, [])
+}
+
+export const createImageBackground = theme => {
+  const components = rotationValues.map(rotation => {
+    return backgroundLogo
+      .replace('{brightWhite}', theme.colors.brightWhite)
+      .replace('{brightWhite}', theme.colors.brightWhite)
+      .replace('{brightAccent}', theme.colors.brightAccent)
+      .replace('{brightBlack}', theme.colors.brightBlack)
+      .replace('{rotation}', rotation)
+      .replace('{opacity}', theme.isDarkMode ? 0.02 : 0.04)
+  })
+
+  const urls = components
+    .map(component => `url("data:image/svg+xml,${encodeURIComponent(component)}")`)
+    .join(',')
+
+  return `background-image: ${urls};`
 }

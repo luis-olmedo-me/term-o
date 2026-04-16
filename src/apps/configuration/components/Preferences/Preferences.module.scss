@@ -1,6 +1,10 @@
 .preferences {
   display: flex;
   flex-direction: column;
+  background-position:
+    220px 0,
+    -60px 140px;
+  background-repeat: repeat;
   height: 100vh;
   color: $colors-foreground;
 }

@@ -15,7 +15,6 @@ import { createNotification } from '@src/helpers/web-components.helpers'
 import { global__scrollable } from '@styles/global.module.scss'
 import { sidePanelOptions } from './Preferences.constants'
 import {
-  createImageBackground,
   filterSectionsBy,
   getInputMessageByType,
   getLatestSectionId,
@@ -108,7 +107,7 @@ export const Preferences = () => {
   }
 
   return (
-    <div className={preferences} style={createImageBackground(config.theme)}>
+    <div className={preferences}>
       <Header onSearch={handleSearch} theme={config.theme} />
 
       <div className={preferences__content}>

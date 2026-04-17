@@ -2,7 +2,10 @@ import useStorage from '@src/hooks/useStorage'
 
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
-import { createCssVariablesFromTheme } from '@src/helpers/themes.helpers'
+import {
+  createCssVariablesFromTheme,
+  createImageVariablesFromTheme
+} from '@src/helpers/themes.helpers'
 import { getClassNameByInputsCaret } from './ThemeProvider.helpers'
 import { provider } from './ThemeProvider.module.scss'
 
@@ -21,7 +24,10 @@ export const ThemeProvider = ({ children }) => {
         theme-provider-${config.theme.isDarkMode ? 'dark' : 'light'}
       `}
     >
-      <style>{createCssVariablesFromTheme(config.theme)}</style>
+      <style>
+        {createCssVariablesFromTheme(config.theme)}
+        {createImageVariablesFromTheme(config.theme)}
+      </style>
 
       {children}
     </div>

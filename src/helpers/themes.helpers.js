@@ -1,3 +1,4 @@
+import { backgroundLogo, rotationValues } from '@src/constants/string-svg.constants'
 import { toTitleCase } from './string.helpers'
 import { getQuotedString } from './utils.helpers'
 
@@ -55,4 +56,22 @@ const createVariablesFromTheme = (theme, pre = null) => {
 
 export const createCssVariablesFromTheme = (theme, selector = ':root') => {
   return `${selector} { ${createVariablesFromTheme(theme)}}`
+}
+
+export const createImageVariablesFromTheme = theme => {
+  const components = rotationValues.map(rotation => {
+    return backgroundLogo
+      .replace('{brightWhite}', theme.colors.brightWhite)
+      .replace('{brightWhite}', theme.colors.brightWhite)
+      .replace('{brightAccent}', theme.colors.brightAccent)
+      .replace('{brightBlack}', theme.colors.brightBlack)
+      .replace('{rotation}', rotation)
+      .replace('{opacity}', theme.isDarkMode ? 0.02 : 0.075)
+  })
+
+  const urls = components.map(
+    component => `url("data:image/svg+xml,${encodeURIComponent(component)}")`
+  )
+
+  return `:root { ${urls.map((url, level) => `--url-${level}00: ${url};`).join('')} }`
 }

@@ -155,8 +155,8 @@
     box-shadow 0.2s ease-in-out;
   box-sizing: border-box;
   border-radius: 0 $radius-200 $radius-200 0;
-  background-color: rgb(from var(--colors-brightBlack) r g b / 0.4);
-  width: var(--space-400);
+  background-color: with-opacity($colors-brightBlack, 0.4);
+  width: $space-400;
   height: calc(100% - 0.5rem);
 
   @include theme(light) {

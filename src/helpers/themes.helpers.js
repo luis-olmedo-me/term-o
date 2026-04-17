@@ -61,10 +61,9 @@ export const createCssVariablesFromTheme = (theme, selector = ':root') => {
 export const createImageVariablesFromTheme = theme => {
   const components = rotationValues.map(rotation => {
     return backgroundLogo
-      .replace('{brightWhite}', theme.colors.brightWhite)
-      .replace('{brightWhite}', theme.colors.brightWhite)
-      .replace('{brightAccent}', theme.colors.brightAccent)
-      .replace('{brightBlack}', theme.colors.brightBlack)
+      .replace('{top}', theme.colors.white)
+      .replace('{bottom}', theme.colors.white)
+      .replace('{body}', theme.colors.accent)
       .replace('{rotation}', rotation)
       .replace('{opacity}', theme.isDarkMode ? 0.02 : 0.075)
   })

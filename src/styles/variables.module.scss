@@ -23,6 +23,7 @@ $space-600: var(--space-600);
 $space-700: var(--space-700);
 $space-800: var(--space-800);
 $space-900: var(--space-900);
+$space-1000: var(--space-1000);
 
 $fontSize-50: var(--fontSize-50);
 $fontSize-100: var(--fontSize-100);
@@ -72,6 +73,7 @@ $colors: (
   'purple': $colors-purple,
   'cyan': $colors-cyan,
   'blue': $colors-blue,
+  'accent': $colors-accent,
   'brightRed': $colors-brightRed,
   'brightYellow': $colors-brightYellow,
   'brightGreen': $colors-brightGreen,
@@ -79,7 +81,8 @@ $colors: (
   'brightCyan': $colors-brightCyan,
   'brightBlue': $colors-brightBlue,
   'brightWhite': $colors-brightWhite,
-  'brightBlack': $colors-brightBlack
+  'brightBlack': $colors-brightBlack,
+  'brightAccent': $colors-brightAccent
 );
 
 $letter-colors: map.merge(

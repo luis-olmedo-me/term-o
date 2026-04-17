@@ -68,7 +68,7 @@
       content: '';
 
       @include theme(light) {
-        outline: $space-50 solid $colors-white;
+        outline: $space-50 solid $colors-brightBlack;
       }
     }
 
@@ -78,18 +78,11 @@
     }
   }
 
-  &___origin_auto {
-    opacity: 0.8;
-
-    &::before,
+  &___status_done {
     &::after {
-      opacity: 0.6;
+      background-color: $colors-brightGreen;
+      color: $colors-brightGreen;
     }
-  }
-
-  &___status_done::after {
-    background-color: $colors-brightGreen;
-    color: $colors-brightGreen;
   }
   &___status_error::after {
     background-color: $colors-brightRed;
@@ -123,5 +116,51 @@
   &___mod_lighted.viewer__command___indicator_half_dot::after,
   &___mod_lighted.viewer__command___indicator_dot::after {
     box-shadow: 0 0 $space-200 $space-100 currentColor;
+
+    @include theme(light) {
+      outline-color: currentColor;
+    }
+  }
+
+  &___origin_auto {
+    opacity: 0.8;
+
+    &.viewer__command___indicator_half_dot {
+      padding: 0 $space-400 0 $space-900;
+
+      &::before,
+      &::after {
+        left: $space-400;
+      }
+    }
+
+    &.viewer__command___indicator_dot,
+    &.viewer__command___indicator_none {
+      padding: 0 $space-400 0 $space-1000;
+
+      &::before,
+      &::after {
+        left: $space-600;
+      }
+    }
+  }
+}
+
+.viewer__command_auto {
+  position: absolute;
+  top: 0.25rem;
+  left: 0;
+  transition:
+    background-color 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+  box-sizing: border-box;
+  border-radius: 0 $radius-200 $radius-200 0;
+  background-color: rgb(from var(--colors-brightBlack) r g b / 0.4);
+  width: var(--space-400);
+  height: calc(100% - 0.5rem);
+
+  @include theme(light) {
+    border: solid $colors-brightBlack;
+    border-width: $space-50 $space-50 $space-50 0;
   }
 }

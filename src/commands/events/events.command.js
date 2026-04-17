@@ -19,7 +19,7 @@ export default new CommandBase({
   })
   .expect({
     name: 'dom-dispatch',
-    abbreviation: 'd',
+    abbreviation: 'D',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Dispatch a new DOM event in page',

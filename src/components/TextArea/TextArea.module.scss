@@ -63,16 +63,17 @@
     @include theme(light) {
       border-color: $colors-brightBlack;
       color: $colors-black;
+      --keyword-color: $colors-black;
     }
     @include theme(dark) {
       border-color: $colors-accent;
       color: $colors-brightWhite;
+      --keyword-color: $colors-brightWhite;
     }
 
     .textarea__colored_fragment {
       background-color: transparent;
       color: inherit;
-      text-shadow: none;
     }
   }
 

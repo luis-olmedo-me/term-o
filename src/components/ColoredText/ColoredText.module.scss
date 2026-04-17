@@ -1,4 +1,8 @@
+@use '@styles/mixins.module' as *;
+
 .text {
+  --keyword-color: $colors-accent;
+
   transition:
     color 1s ease-in-out,
     background-color 0.1s ease-in-out;
@@ -6,8 +10,12 @@
 
   &__keyword {
     opacity: 0.5;
-    color: $colors-accent;
-    text-shadow: 0px 0px 1px $colors-accent;
+    color: var(--keyword-color);
+    text-shadow: 0px 0px 1px var(--keyword-color);
+
+    @include theme(light) {
+      opacity: 1;
+    }
   }
 
   &__bg_spaced {

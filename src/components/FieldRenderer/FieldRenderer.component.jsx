@@ -69,7 +69,7 @@ export const FieldRenderer = ({
       `}
     >
       <div className={field__leyends}>
-        <h3 className={field__title}>{title}</h3>
+        <h4 className={field__title}>{title}</h4>
 
         <p className={field__description}>{description}</p>
 

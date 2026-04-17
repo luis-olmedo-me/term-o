@@ -5,7 +5,7 @@ import { sidepanel, sidepanel__button, sidepanel__title } from './SidePanel.modu
 export const SidePanel = ({ options, selectedOptionId, onChange }) => {
   return (
     <aside className={sidepanel}>
-      <h1 className={sidepanel__title}>Configuration</h1>
+      <h2 className={sidepanel__title}>Configuration</h2>
 
       {options.map(option => {
         return (

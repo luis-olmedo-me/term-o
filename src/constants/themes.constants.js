@@ -78,7 +78,8 @@ export const defaultStyleMeasures = {
     600: '16px',
     700: '18px',
     800: '20px',
-    900: '25px'
+    900: '25px',
+    1000: '28px'
   },
 
   fontSize: {

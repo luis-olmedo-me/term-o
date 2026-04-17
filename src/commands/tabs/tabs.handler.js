@@ -76,7 +76,7 @@ export const tabsHandler = async command => {
       wait: P`wait`
     })
 
-    const update = formatTab(tab, P`open`)
+    const update = formatTab(tab, P`url`)
 
     command.reset()
     command.update(update)

@@ -4,7 +4,7 @@
   flex-shrink: 0;
   border-right: $space-50 solid $colors-brightBlack;
   background-color: with-opacity($colors-white, 0.02);
-  padding: var(--space-600) 0;
+  padding: $space-600 0;
   min-width: fit-content;
 
   @include theme(light) {

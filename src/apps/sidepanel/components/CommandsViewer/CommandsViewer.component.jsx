@@ -3,10 +3,11 @@ import { useEffect, useRef } from 'preact/hooks'
 import ColoredText from '@src/components/ColoredText'
 import useStorage from '@src/hooks/useStorage'
 
-import { commandStatuses } from '@src/constants/command.constants'
+import { commandStatuses, origins } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { global__scrollable } from '@styles/global.module.scss'
+import { AUTOMATED_COMMAND_LABEL } from './CommandsViewer.constants'
 import {
   getCaretOffset,
   getClassNameByIndicator,
@@ -20,6 +21,7 @@ import {
   viewer__command,
   viewer__command___mod_lighted,
   viewer__command___mod_truncated,
+  viewer__command_auto,
   viewer__line,
   viewer__line___mod_truncated,
   viewer__line___mod_warn
@@ -82,6 +84,7 @@ export const CommandsViewer = ({ commands }) => {
       <section ref={wrapper}>
         {commands.map((command, commandIndex) => {
           const hasErrorMessage = command.status === commandStatuses.ERROR
+          const isAuto = command.origin === origins.AUTO
 
           return (
             <article
@@ -95,6 +98,14 @@ export const CommandsViewer = ({ commands }) => {
                 ${isTruncated ? viewer__command___mod_truncated : ''}
               `}
             >
+              {isAuto && <span className={viewer__command_auto}></span>}
+
+              {isAuto && (
+                <p className={viewer__line}>
+                  <ColoredText value={AUTOMATED_COMMAND_LABEL} />
+                </p>
+              )}
+
               <p onMouseUp={handleLineMouseUp} className={viewer__line}>
                 <ColoredText value={command.context} />
               </p>

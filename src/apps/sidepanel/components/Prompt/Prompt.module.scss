@@ -23,6 +23,11 @@
   }
 }
 
+.prompt__mark {
+  font-size: $fontSize-50;
+  line-height: $lineHeight-100;
+}
+
 .prompt__input_line {
   display: flex;
   gap: $space-200;
@@ -33,7 +38,7 @@
 .prompt__input {
   position: relative;
   flex-grow: 1;
-  padding: 0 0 $space-300;
+  padding: 0 0 $space-100;
 }
 
 .prompt__overlay {

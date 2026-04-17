@@ -10,7 +10,7 @@ import { toTitleCase } from '@src/helpers/string.helpers'
 import { availableInputTypes } from './inputs.constants'
 import { basicColorKeys, colorThemeKeys, defaultColorTheme } from './themes.constants'
 
-export const PROMPT_MARK = '>'
+export const PROMPT_MARK = '❯'
 export const DEFAULT_CONTEXT = '{tfg:purple}{tab_id}{tfg:brightBlack}/{tfg:blue}{title}'
 
 export const configIds = {

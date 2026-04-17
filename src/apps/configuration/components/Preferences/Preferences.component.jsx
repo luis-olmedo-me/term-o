@@ -108,7 +108,7 @@ export const Preferences = () => {
 
   return (
     <div className={preferences}>
-      <Header onSearch={handleSearch} />
+      <Header onSearch={handleSearch} theme={config.theme} />
 
       <div className={preferences__content}>
         <SidePanel
@@ -125,7 +125,7 @@ export const Preferences = () => {
           {configSections.map(section => {
             return (
               <section key={section.id} className={preferences__section} id={section.id}>
-                <h2 className={preferences__section_title}>{section.name}</h2>
+                <h3 className={preferences__section_title}>{section.name}</h3>
 
                 <p className={preferences__section_description}>{section.description}</p>
 

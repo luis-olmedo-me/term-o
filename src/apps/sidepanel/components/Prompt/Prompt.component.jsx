@@ -17,6 +17,7 @@ import {
   prompt__line,
   prompt__line___state_loading,
   prompt__line___state_requesting,
+  prompt__mark,
   prompt__overlay,
   prompt__real_input,
   prompt__real_input___state_loading,
@@ -211,7 +212,7 @@ export const Prompt = ({
       </p>
 
       <div className={prompt__input_line}>
-        <span>{prefix}</span>
+        <span className={prompt__mark}>{prefix}</span>
 
         <div className={prompt__input}>
           <div ref={overlayRef} className={prompt__overlay}>

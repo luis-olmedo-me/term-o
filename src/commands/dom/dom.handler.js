@@ -167,7 +167,7 @@ export const domHandler = async command => {
 
   if (P`selection`) {
     command.update(['"Reading tab."'])
-    const selection = 'test'
+    const selection = await processManager.readSelection(tabId)
 
     const update = formatText({ text: selection })
 

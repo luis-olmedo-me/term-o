@@ -100,7 +100,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     description: 'Get selected text in the tab',
     helpSection: helpSections.ACTIONS,
-    validate: [options.requireNoOther]
+    validate: [options.allow('tab-id')]
   })
   .expect({
     name: 'sibling',
@@ -206,7 +206,16 @@ export default new CommandBase({
     description: 'Define a Tab ID where apply an action',
     validate: [
       value.isTabId,
-      options.requireAnyOf('dispatch', 'create', 'find', 'inject', 'measure', 'pick', 'search')
+      options.requireAnyOf(
+        'dispatch',
+        'create',
+        'find',
+        'inject',
+        'measure',
+        'pick',
+        'search',
+        'selection'
+      )
     ]
   })
   .expect({

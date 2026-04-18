@@ -76,7 +76,7 @@ The `dom` command enables element selection, filtering, and contextual queries i
 
 ### Dependency Rules
 
-When using `dom` command the options can express **6** possible actions:
+When using `dom` command the options can express **7** possible actions:
 
 1. An element search (using `--search`)
 

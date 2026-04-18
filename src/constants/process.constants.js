@@ -2,6 +2,7 @@ export const processNames = {
   APPLY_ELEMENT_STYLES: 'apply-element-styles',
   CREATE_ELEMENT: 'create-element',
   CREATE_NOTIFICATION: 'create-notification',
+  DISPATCH_TAB_EVENT: 'dispatch-tab-event',
   EXECUTE_CODE: 'execute-code',
   EXECUTE_COMMAND: 'execute-command',
   FIND_DOM_ELEMENT: 'find-dom-element',
@@ -12,11 +13,11 @@ export const processNames = {
   INJECT_HTML: 'inject-html',
   MEASURE: 'measure',
   PICK_COLOR: 'pick-color',
+  READ_SELECTION: 'read-selection',
   READ_VARIABLE: 'read-variable',
   REQUEST_ELEMENT: 'request-element',
   REQUEST_INPUT: 'request-input',
   SET_STORAGE: 'set-storage',
   TRIGGER_EVENT: 'trigger-event',
-  UPLOAD_FILE: 'upload-file',
-  DISPATCH_TAB_EVENT: 'dispatch-tab-event'
+  UPLOAD_FILE: 'upload-file'
 }

@@ -1,5 +1,3 @@
-import { formatWarning } from './format.helpers'
-
 export const updateQueueValueIn = (queue, queueId, command) => {
   return queue.map(value => (value.id === queueId ? { ...value, command } : value))
 }
@@ -7,6 +5,7 @@ export const updateQueueValueIn = (queue, queueId, command) => {
 export const limitQueueByConfig = (queue, maxCount) => {
   let count = 0
   let newQueue = []
+  let discardedCount = 0
 
   for (let index = -1; index >= -1 * queue.length; index--) {
     const queueItem = queue.at(index)
@@ -17,24 +16,20 @@ export const limitQueueByConfig = (queue, maxCount) => {
       continue
     }
     const updates = command.updates
-    let warning = null
 
     count += updates.length
 
     if (count > maxCount) {
       const cutUpdates = updates.slice((maxCount - count) * -1)
       const overflowCount = updates.length - cutUpdates.length
-      const [newWarning] = formatWarning({
-        title: `Command line limit exceeded. Discarded ${overflowCount} lines.`
-      })
 
-      warning = newWarning
-      newQueue.unshift({ ...queueItem, command: { ...command, warning, updates: cutUpdates } })
+      if (overflowCount) discardedCount = overflowCount
+      newQueue.unshift({ ...queueItem, command: { ...command, updates: cutUpdates } })
       break
     }
 
-    newQueue.unshift({ ...queueItem, command: { ...command, warning } })
+    newQueue.unshift({ ...queueItem, command: { ...command } })
   }
 
-  return newQueue
+  return [newQueue, discardedCount]
 }

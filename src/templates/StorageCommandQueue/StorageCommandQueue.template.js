@@ -12,10 +12,12 @@ export class StorageCommandQueue extends StorageSimple {
 
     this.handleInitRef = this.handleInit.bind(this)
     this.handleConfigChangesRef = this.handleConfigChanges.bind(this)
+    this._discardedCount = 0
   }
 
   get $value() {
     return {
+      discardedCount: this._discardedCount,
       managed: this.$latest().value,
       value: this.getUIValues(),
       isExecuting: this.getIsExecuting(),
@@ -33,8 +35,9 @@ export class StorageCommandQueue extends StorageSimple {
     const maxLinesPerCommand = config.getValueById(configInputIds.MAX_LINES_PER_COMMAND)
 
     const newQueue = updateQueueValueIn(this.$latest().value, queueId, command)
-    const limitNewQueue = limitQueueByConfig(newQueue, maxLinesPerCommand)
+    const [limitNewQueue, discardedCount] = limitQueueByConfig(newQueue, maxLinesPerCommand)
 
+    this._discardedCount = discardedCount
     this.$storageService.set(storageKeys.COMMAND_QUEUE, limitNewQueue)
   }
 

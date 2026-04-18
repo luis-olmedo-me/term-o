@@ -27,6 +27,12 @@ export const createUUIDv4 = () => {
   })
 }
 
+export const createShortID = () => {
+  const bytes = crypto.getRandomValues(new Uint8Array(6))
+
+  return btoa(String.fromCharCode(...bytes)).replace(/[/+=]/g, '')
+}
+
 export const delay = time => {
   return new Promise(resolve => setTimeout(resolve, time))
 }

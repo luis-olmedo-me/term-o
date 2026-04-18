@@ -5,7 +5,7 @@ import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatEvent, formatRegisteredEvent } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
-import { createUUIDv4 } from '@src/helpers/utils.helpers'
+import { createShortID } from '@src/helpers/utils.helpers'
 
 export const eventsHandler = async command => {
   const storage = command.get('storage')
@@ -29,7 +29,7 @@ export const eventsHandler = async command => {
 
   if (P`register`) {
     P`event`.forEach(([type, url, line]) => {
-      const id = createUUIDv4()
+      const id = createShortID()
       const newEvent = { url, line, id, type }
       const events = storage.get(storageKeys.EVENTS)
 

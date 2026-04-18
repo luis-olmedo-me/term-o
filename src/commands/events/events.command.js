@@ -40,7 +40,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Delete a registered event by its identifier',
-    validate: [options.requireAll('command-id')]
+    validate: [options.requireAll('event-id')]
   })
   .expect({
     name: 'xpath',
@@ -67,8 +67,8 @@ export default new CommandBase({
     validate: [value.isAnyOf(domEventsSupported), options.requireAnyOf('dom-dispatch')]
   })
   .expect({
-    name: 'command-id',
-    abbreviation: 'C',
+    name: 'event-id',
+    abbreviation: 'E',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define the command identifier of the event',

@@ -42,7 +42,7 @@ export const eventsHandler = async command => {
   }
 
   if (P`delete`) {
-    const id = P`command-id`
+    const id = P`event-id`
 
     const events = storage.get(storageKeys.EVENTS)
     const existingEvent = events.find(event => event.id === id)

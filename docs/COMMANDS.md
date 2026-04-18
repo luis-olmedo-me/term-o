@@ -167,7 +167,7 @@ When using `dom` command the options can express **6** possible actions:
 
 7. Dispatch an event over an element (using `--dipatch`)
 
-   The `--dipatch` will locate two elements and dipatch the distance between them.
+   The `--dipatch` will dispatch an event on a element from the DOM.
 
    ```bash
    dom

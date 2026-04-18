@@ -2,7 +2,7 @@ import commandBases from '@src/commands'
 import CommandParser from '@src/libs/command-parser/manual'
 import Storage from '@src/libs/storage/manual'
 
-import { getCurrentTab } from '@src/browser-api/tabs.api'
+import { getCurrentTab, getTab } from '@src/browser-api/tabs.api'
 import { origins } from '@src/constants/command.constants'
 import { configInputIds, DEFAULT_CONTEXT } from '@src/constants/config.constants'
 import { availableEvents } from '@src/constants/events.constants'
@@ -89,6 +89,18 @@ const ensureOffscreenIsActive = async () => {
 }
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
+
+chrome.tabs.onActivated.addListener(async activeInfo => {
+  const storage = await getStorage()
+  const config = storage.get(storageKeys.CONFIG)
+  const switchTabAutomatically = config.getValueById(configInputIds.SWITCH_TAB_AUTOMATICALLY)
+
+  if (!switchTabAutomatically) return
+  const tab = await getTab({ tabId: activeInfo.tabId })
+  const internalTab = createInternalTab(tab)
+
+  storage.set(storageKeys.TAB, internalTab)
+})
 
 chrome.tabs.onUpdated.addListener(async (_tabId, changeInfo, updatedTab) => {
   if (changeInfo.status !== 'complete') return

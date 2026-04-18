@@ -156,7 +156,6 @@ chrome.runtime.onConnect.addListener(port => {
 })
 
 chrome.runtime.onInstalled.addListener(async details => {
-  console.log('💬 ~ details:', details)
   if (details.reason !== 'update') return
   const was090 = details.previousVersion === '0.9.0'
   const was091 = details.previousVersion === '0.9.1'

@@ -102,7 +102,9 @@ export const CommandsViewer = ({ commands }) => {
 
               {isAuto && (
                 <p className={viewer__line}>
-                  <ColoredText value={AUTOMATED_COMMAND_LABEL} />
+                  <ColoredText
+                    value={AUTOMATED_COMMAND_LABEL.replace('{eventType}', command.event)}
+                  />
                 </p>
               )}
 

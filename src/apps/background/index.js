@@ -9,6 +9,7 @@ import { oldColorPattern } from '@src/constants/patterns.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
 import { createInternalTab } from '@src/helpers/tabs.helpers'
+import { createShortID } from '@src/helpers/utils.helpers'
 import processHandlers from './process-handlers'
 
 let storageInstance
@@ -172,9 +173,15 @@ chrome.runtime.onInstalled.addListener(async details => {
     const storage = await getStorage()
 
     const events = storage.get(storageKeys.EVENTS)
-    const newEvents = events.map(event =>
-      event.type ? event : { ...event, type: availableEvents.TAB_LOADED }
-    )
+    const newEvents = events.map(event => {
+      if (event.type) return event
+
+      return {
+        ...event,
+        type: availableEvents.TAB_LOADED,
+        id: event.id.length > 8 ? createShortID() : event.id
+      }
+    })
 
     storage.set(storageKeys.EVENTS, newEvents)
   }

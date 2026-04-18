@@ -28,9 +28,9 @@ export const eventsHandler = async command => {
   }
 
   if (P`register`) {
-    P`event`.forEach(([url, line]) => {
+    P`event`.forEach(([type, url, line]) => {
       const id = createUUIDv4()
-      const newEvent = { url, line, id }
+      const newEvent = { url, line, id, type }
       const events = storage.get(storageKeys.EVENTS)
 
       const newEvents = events.concat(newEvent)

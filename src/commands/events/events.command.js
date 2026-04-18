@@ -1,6 +1,7 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes, helpSections } from '@src/constants/command.constants'
+import { availableEventValues } from '@src/constants/events.constants'
 import { domEventsSupported } from '@src/constants/options.constants'
 import { array, options, value } from '@src/helpers/validation-command.helpers'
 import { eventsHandler } from './events.handler'
@@ -78,13 +79,14 @@ export default new CommandBase({
     abbreviation: 'e',
     type: commandTypes.ARRAY,
     helpSection: helpSections.DETAILS,
-    description: 'Define a url-command pair',
+    description: 'Define a type-url-command event tuple',
     repeatable: true,
     validate: [
       array.hasAllItemsAs(
         value.isArray,
-        array.hasLength(2),
-        array.hasItemAs(0, value.isURL),
+        array.hasLength(3),
+        array.hasItemAs(0, value.isAnyOf(availableEventValues)),
+        array.hasItemAs(1, value.isURL),
         array.hasAllItemsAs(value.isString)
       ),
       options.requireAnyOf('register')

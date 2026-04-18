@@ -122,12 +122,14 @@ export const formatAddon = ({ name, version }) => {
   return [`${C`green`}${quotedName}${C`reset`}`, `${C`cyan`}${quotedDateTime}${C`reset`}`]
 }
 
-export const formatRegisteredEvent = ({ url, line, id }) => {
+export const formatRegisteredEvent = ({ type, url, line, id }) => {
+  const quotedType = getQuotedString(type)
   const quotedId = getQuotedString(id)
   const quotedURL = getQuotedString(url)
   const quotedLine = getQuotedString(line)
 
   return [
+    `${C`green`}${quotedType}${C`reset`}`,
     `${C`purple`}${quotedId}${C`reset`}`,
     `${C`yellow`}${quotedURL}${C`reset`}`,
     `${C`yellow`}${quotedLine}${C`reset`}`

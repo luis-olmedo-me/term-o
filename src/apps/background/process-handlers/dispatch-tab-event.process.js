@@ -14,11 +14,6 @@ export default async (resolve, _reject, data, storage) => {
   })
 
   pendingEvents.forEach(event => queue.add(event.line, origins.AUTO, tab, event.type))
-  console.log('💬 ~ -------------------')
-  console.log('💬 ~ events:', events)
-  console.log('💬 ~ pendingEvents:', pendingEvents)
-  console.log('💬 ~ tab:', tab)
-  console.log('💬 ~ data:', data)
 
   resolve(null)
 }

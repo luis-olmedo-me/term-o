@@ -1,5 +1,5 @@
 import processHandlers from '@content/process-handlers'
-import { tabEvents } from '@src/constants/events.constants'
+import { tabEvents } from '@src/constants/options.constants'
 import { importInjectables } from '@src/helpers/injectables.helpers'
 import { setUpHandlers } from '@src/helpers/process.helpers'
 import { debounce } from '@src/helpers/utils.helpers'

@@ -13,10 +13,15 @@ export const optionDefaultValues = {
 export const domEventsAvailable = {
   CLICK: 'click'
 }
-
-export const responseFormatSupported = ['blob', 'text', 'json']
+export const tabEvents = {
+  LOADED: 'tab-loaded',
+  SELECTION_CONTENT: 'tab-selection-content'
+}
 
 export const domEventsSupported = Object.values(domEventsAvailable)
+export const availableTabEvents = Object.values(tabEvents)
+
+export const responseFormatSupported = ['blob', 'text', 'json']
 
 export const helpOptionConfig = {
   name: 'help',

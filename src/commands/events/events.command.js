@@ -1,7 +1,7 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes, helpSections } from '@src/constants/command.constants'
-import { availableTabEvents } from '@src/constants/events.constants'
+import { availableTabEvents } from '@src/constants/options.constants'
 import { array, options, value } from '@src/helpers/validation-command.helpers'
 import { eventsHandler } from './events.handler'
 

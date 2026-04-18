@@ -5,6 +5,7 @@ import Storage from '@src/libs/storage/manual'
 import { getCurrentTab } from '@src/browser-api/tabs.api'
 import { origins } from '@src/constants/command.constants'
 import { configInputIds, DEFAULT_CONTEXT } from '@src/constants/config.constants'
+import { availableEvents } from '@src/constants/events.constants'
 import { oldColorPattern } from '@src/constants/patterns.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
@@ -155,12 +156,30 @@ chrome.runtime.onConnect.addListener(port => {
 })
 
 chrome.runtime.onInstalled.addListener(async details => {
+  console.log('💬 ~ details:', details)
   if (details.reason !== 'update') return
-  const storage = await getStorage()
+  const was090 = details.previousVersion === '0.9.0'
+  const was091 = details.previousVersion === '0.9.1'
+  const was092 = details.previousVersion === '0.9.2'
 
-  const config = storage.get(storageKeys.CONFIG)
-  const contextInputValue = config.getValueById(configInputIds.CONTEXT)
-  const hasOldColorPattern = oldColorPattern.test(contextInputValue)
+  if (was090) {
+    const storage = await getStorage()
 
-  if (hasOldColorPattern) config.change(configInputIds.CONTEXT, DEFAULT_CONTEXT)
+    const config = storage.get(storageKeys.CONFIG)
+    const contextInputValue = config.getValueById(configInputIds.CONTEXT)
+    const hasOldColorPattern = oldColorPattern.test(contextInputValue)
+
+    if (hasOldColorPattern) config.change(configInputIds.CONTEXT, DEFAULT_CONTEXT)
+  }
+
+  if (was092 || was091 || was090) {
+    const storage = await getStorage()
+
+    const events = storage.get(storageKeys.EVENTS)
+    const newEvents = events.map(event =>
+      event.type ? event : { ...event, type: availableEvents.TAB_OPEN }
+    )
+
+    storage.set(storageKeys.EVENTS, newEvents)
+  }
 })

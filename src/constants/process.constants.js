@@ -17,5 +17,6 @@ export const processNames = {
   REQUEST_INPUT: 'request-input',
   SET_STORAGE: 'set-storage',
   TRIGGER_EVENT: 'trigger-event',
-  UPLOAD_FILE: 'upload-file'
+  UPLOAD_FILE: 'upload-file',
+  DISPATCH_TAB_EVENT: 'dispatch-tab-event'
 }

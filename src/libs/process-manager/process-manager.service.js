@@ -175,6 +175,14 @@ class ProcessManager {
       data: null
     })
   }
+
+  dispathTabEvent({ content, type }) {
+    return createWorkerProcessRequest({
+      type: processNames.DISPATCH_TAB_EVENT,
+      defaultResponse: null,
+      data: { content, type }
+    })
+  }
 }
 
 export const processManager = new ProcessManager()

@@ -63,5 +63,5 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define the name of the theme',
-    validate: [value.isSpaceForbidden, options.requireAnyOf('delete', 'apply')]
+    validate: [options.requireAnyOf('delete', 'apply')]
   })

@@ -13,7 +13,7 @@ export const formatElement = ({ tagName, attributes, xpath, textContent, tabId }
   if (hasXpath || hasTextContent) {
     return [
       ...spreadIf(hasTabId, [`${C`blue`}${quotedTabId}${C`reset`}`]),
-      ...spreadIf(hasXpath, [`${C`yellow`}${quotedXpath}${C`reset`}`]),
+      ...spreadIf(hasXpath, [`${C`blue`}${quotedXpath}${C`reset`}`]),
       ...spreadIf(hasTextContent, [`${C`yellow`}${quotedTextContent}${C`reset`}`])
     ]
   }
@@ -140,7 +140,7 @@ export const formatEvent = ({ event, xpath }) => {
   const quotedEvent = getQuotedString(event)
   const quotedXPath = getQuotedString(xpath)
 
-  return [`${C`purple`}${quotedEvent}${C`reset`}`, `${C`yellow`}${quotedXPath}${C`reset`}`]
+  return [`${C`purple`}${quotedEvent}${C`reset`}`, `${C`blue`}${quotedXPath}${C`reset`}`]
 }
 
 export const formatTab = ({ windowId, id, title, url, groupId }, staticUrl) => {
@@ -209,7 +209,7 @@ export const formatGap = ({ distanceX, distanceY }, xpathA, xpathB) => {
   return [
     `${C`brightYellow`}${quotedDistanceX}${C`reset`}`,
     `${C`brightYellow`}${quotedDistanceY}${C`reset`}`,
-    `${C`yellow`}${quotedXpathA}${C`reset`}`,
-    `${C`yellow`}${quotedXpathB}${C`reset`}`
+    `${C`blue`}${quotedXpathA}${C`reset`}`,
+    `${C`blue`}${quotedXpathB}${C`reset`}`
   ]
 }

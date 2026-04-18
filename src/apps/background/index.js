@@ -8,7 +8,6 @@ import { tabEvents } from '@src/constants/options.constants'
 import { oldColorPattern } from '@src/constants/patterns.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
-import { createInternalTab } from '@src/helpers/tabs.helpers'
 import { createShortID } from '@src/helpers/utils.helpers'
 import processHandlers from './process-handlers'
 

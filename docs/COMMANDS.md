@@ -55,6 +55,7 @@ The `dom` command enables element selection, filtering, and contextual queries i
 | `--measure`             | `-M`  | Calculate the distance between two elements..        |
 | `--inject`              | `-I`  | Inject HTML as within an element.                    |
 | `--dispatch`            | `-D`  | Dispatch an element over an element.                 |
+| `--selection`           | `-l`  | Get selected text in the tab.                        |
 | `--sibling <number>`    | `-b`  | Define the sibling index.                            |
 | `--parent <number>`     | `-p`  | Define the parent index.                             |
 | `--child <number>`      | `-d`  | Define the child index.                              |
@@ -76,7 +77,7 @@ The `dom` command enables element selection, filtering, and contextual queries i
 
 ### Dependency Rules
 
-When using `dom` command the options can express **7** possible actions:
+When using `dom` command the options can express **8** possible actions:
 
 1. An element search (using `--search`)
 
@@ -174,6 +175,16 @@ When using `dom` command the options can express **7** possible actions:
        --dipatch                                                            # REQUIRED
        --event-name 'click'                                                 # REQUIRED
        --xpath '//*[@id="main-container"]'                                  # REQUIRED
+       --tab-id "T00000000"                                                 # OPTIONAL
+   ```
+
+8. Get text selection (using `--selection`)
+
+   The `--selection` will trigger a search in the tab for selected text.
+
+   ```bash
+   dom
+       --selection                                                          # REQUIRED
        --tab-id "T00000000"                                                 # OPTIONAL
    ```
 

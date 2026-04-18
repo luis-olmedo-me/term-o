@@ -1,7 +1,7 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes, helpSections } from '@src/constants/command.constants'
-import { domEventsSupported } from '@src/constants/options.constants'
+import { avaialableDomEvents } from '@src/constants/options.constants'
 import { array, options, value } from '@src/helpers/validation-command.helpers'
 import { domHandler } from './dom.handler'
 
@@ -265,5 +265,5 @@ export default new CommandBase({
     abbreviation: 'e',
     helpSection: helpSections.DETAILS,
     description: 'Define the event name',
-    validate: [value.isAnyOf(domEventsSupported), options.requireAnyOf('dispatch')]
+    validate: [value.isAnyOf(avaialableDomEvents), options.requireAnyOf('dispatch')]
   })

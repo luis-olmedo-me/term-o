@@ -19,6 +19,6 @@ document.addEventListener('selectionchange', () => {
 })
 
 processManager.dispathTabEvent({
-  type: availableEvents.TAB_OPEN,
+  type: availableEvents.TAB_LOADED,
   content: null
 })

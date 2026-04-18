@@ -1,5 +1,5 @@
 export const availableEvents = {
-  TAB_OPEN: 'tab-open',
+  TAB_LOADED: 'tab-loaded',
   TAB_SELECTION_CONTENT: 'tab-selection-content'
 }
 

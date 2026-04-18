@@ -173,7 +173,7 @@ chrome.runtime.onInstalled.addListener(async details => {
 
     const events = storage.get(storageKeys.EVENTS)
     const newEvents = events.map(event =>
-      event.type ? event : { ...event, type: availableEvents.TAB_OPEN }
+      event.type ? event : { ...event, type: availableEvents.TAB_LOADED }
     )
 
     storage.set(storageKeys.EVENTS, newEvents)

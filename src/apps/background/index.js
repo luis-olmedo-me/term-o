@@ -97,9 +97,10 @@ chrome.tabs.onActivated.addListener(async activeInfo => {
 
   if (!switchTabAutomatically) return
   const tab = await getTab({ tabId: activeInfo.tabId })
-  const internalTab = createInternalTab(tab)
+  const url = tab.url || tab.pendingUrl
+  const formattedTab = tab.title ? tab : { ...tab, title: url.hostname }
 
-  storage.set(storageKeys.TAB, internalTab)
+  storage.set(storageKeys.TAB, formattedTab)
 })
 
 chrome.runtime.onInstalled.addListener(async () => {

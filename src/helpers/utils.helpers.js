@@ -28,9 +28,10 @@ export const createUUIDv4 = () => {
 }
 
 export const createShortID = () => {
-  const bytes = crypto.getRandomValues(new Uint8Array(6))
+  const bytes = crypto.getRandomValues(new Uint8Array(8))
+  const newId = btoa(String.fromCharCode(...bytes)).replace(/[/+=]/g, '')
 
-  return btoa(String.fromCharCode(...bytes)).replace(/[/+=]/g, '')
+  return newId.slice(0, 8)
 }
 
 export const delay = time => {

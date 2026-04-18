@@ -1,6 +1,7 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes, helpSections } from '@src/constants/command.constants'
+import { domEventsSupported } from '@src/constants/options.constants'
 import { array, options, value } from '@src/helpers/validation-command.helpers'
 import { domHandler } from './dom.handler'
 
@@ -84,6 +85,14 @@ export default new CommandBase({
       options.allow('html', 'see-content', 'see-xpath', 'tab-id', 'xpath'),
       options.requireAll('html', 'xpath')
     ]
+  })
+  .expect({
+    name: 'dispatch',
+    abbreviation: 'D',
+    type: commandTypes.BOOLEAN,
+    description: 'Dispatch an element over an element',
+    helpSection: helpSections.ACTIONS,
+    validate: [options.allow('event-name', 'tab-id', 'xpath')]
   })
   .expect({
     name: 'sibling',
@@ -206,7 +215,7 @@ export default new CommandBase({
     abbreviation: 'x',
     helpSection: helpSections.DETAILS,
     description: 'Define an XPath query',
-    validate: [options.requireAnyOf('find', 'inject')]
+    validate: [options.requireAnyOf('dispatch', 'find', 'inject')]
   })
   .expect({
     name: 'times',
@@ -232,4 +241,12 @@ export default new CommandBase({
     helpSection: helpSections.DETAILS,
     description: 'Define the destination element XPath',
     validate: [options.requireAnyOf('measure')]
+  })
+  .expect({
+    name: 'event-name',
+    type: commandTypes.STRING,
+    abbreviation: 'e',
+    helpSection: helpSections.DETAILS,
+    description: 'Define the event name',
+    validate: [value.isAnyOf(domEventsSupported), options.requireAnyOf('dispatch')]
   })

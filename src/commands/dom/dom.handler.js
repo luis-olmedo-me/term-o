@@ -3,7 +3,7 @@ import processManager from '@src/libs/process-manager'
 import { getTab } from '@src/browser-api/tabs.api'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
-import { formatElement, formatGap } from '@src/helpers/format.helpers'
+import { formatDomEvent, formatElement, formatGap } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
 
 export const domHandler = async command => {
@@ -146,6 +146,20 @@ export const domHandler = async command => {
       end: xpathB
     })
     const update = formatGap(measure, xpathA, xpathB)
+
+    command.reset()
+    command.update(update)
+  }
+
+  if (P`dispatch`) {
+    const config = storage.get(storageKeys.CONFIG)
+
+    const event = P`event-name`
+    const xpath = P`xpath`
+
+    command.update(['"Triggering DOM event."'])
+    await processManager.triggerEvent(tabId, { xpath, event, theme: config.theme })
+    const update = formatDomEvent({ event, xpath })
 
     command.reset()
     command.update(update)

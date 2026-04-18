@@ -3,7 +3,7 @@ import processManager from '@src/libs/process-manager'
 import { getTab } from '@src/browser-api/tabs.api'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
-import { formatEvent, formatRegisteredEvent } from '@src/helpers/format.helpers'
+import { formatDomEvent, formatRegisteredEvent } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
 import { createShortID } from '@src/helpers/utils.helpers'
 
@@ -64,7 +64,7 @@ export const eventsHandler = async command => {
 
     command.update(['"Triggering DOM event."'])
     await processManager.triggerEvent(tabId, { xpath, event, theme: config.theme })
-    const update = formatEvent({ event, xpath })
+    const update = formatDomEvent({ event, xpath })
 
     command.reset()
     command.update(update)

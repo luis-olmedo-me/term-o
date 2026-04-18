@@ -136,7 +136,7 @@ export const formatRegisteredEvent = ({ type, url, line, id }) => {
   ]
 }
 
-export const formatEvent = ({ event, xpath }) => {
+export const formatDomEvent = ({ event, xpath }) => {
   const quotedEvent = getQuotedString(event)
   const quotedXPath = getQuotedString(xpath)
 

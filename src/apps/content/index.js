@@ -19,16 +19,10 @@ document.addEventListener(
 
     if (!selection) return
 
-    processManager.dispathTabEvent({
-      type: availableEvents.TAB_SELECTION_CONTENT,
-      content: selection
-    })
+    processManager.dispathTabEvent({ type: availableEvents.TAB_SELECTION_CONTENT })
   }, 100)
 )
 
 window.addEventListener('load', () => {
-  processManager.dispathTabEvent({
-    type: availableEvents.TAB_LOADED,
-    content: null
-  })
+  processManager.dispathTabEvent({ type: availableEvents.TAB_LOADED })
 })

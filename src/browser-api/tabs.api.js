@@ -53,7 +53,10 @@ export const getTab = async ({ tabId }) => {
 export const getCurrentTab = async () => {
   const [tab] = await getTabsSearch({ active: true, lastFocusedWindow: true })
 
-  return tab
+  if (tab) return tab
+  const [defaultTab] = await getTabsSearch({})
+
+  return defaultTab
 }
 
 export const createTab = async ({ url, active, wait }) => {

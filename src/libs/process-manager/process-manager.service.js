@@ -134,6 +134,15 @@ class ProcessManager {
     })
   }
 
+  readSelection(tabId) {
+    return createWorkerProcessRequest({
+      type: processNames.READ_SELECTION,
+      defaultResponse: null,
+      tabId,
+      data: null
+    })
+  }
+
   createNotification(tabId, { title, message, theme, color }) {
     return createWorkerProcessRequest({
       type: processNames.CREATE_NOTIFICATION,
@@ -173,6 +182,14 @@ class ProcessManager {
       type: processNames.GET_FONTS_AVAILABLE,
       defaultResponse: [],
       data: null
+    })
+  }
+
+  dispathTabEvent({ type }) {
+    return createWorkerProcessRequest({
+      type: processNames.DISPATCH_TAB_EVENT,
+      defaultResponse: null,
+      data: { type }
     })
   }
 }

@@ -7,6 +7,7 @@ import getElementStyles from './get-element-styles.process'
 import getStorage from './get-storage.process'
 import injectHtml from './inject-html.process'
 import measure from './measure.process'
+import readSelection from './read-selection.process.js'
 import readVariable from './read-variable.process'
 import requestElement from './request-element.process'
 import setStorage from './set-storage.process'
@@ -27,5 +28,6 @@ export default {
   [processNames.READ_VARIABLE]: readVariable,
   [processNames.REQUEST_ELEMENT]: requestElement,
   [processNames.SET_STORAGE]: setStorage,
-  [processNames.TRIGGER_EVENT]: triggerEvent
+  [processNames.TRIGGER_EVENT]: triggerEvent,
+  [processNames.READ_SELECTION]: readSelection
 }

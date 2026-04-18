@@ -6,6 +6,7 @@ import useStorage from '@src/hooks/useStorage'
 import { commandStatuses, origins } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
+import { fillTemplate } from '@src/helpers/string.helpers'
 import { global__scrollable } from '@styles/global.module.scss'
 import { AUTOMATED_COMMAND_LABEL } from './CommandsViewer.constants'
 import {
@@ -85,6 +86,7 @@ export const CommandsViewer = ({ commands }) => {
         {commands.map((command, commandIndex) => {
           const hasErrorMessage = command.status === commandStatuses.ERROR
           const isAuto = command.origin === origins.AUTO
+          const eventType = fillTemplate(AUTOMATED_COMMAND_LABEL, { eventType: command.event })
 
           return (
             <article
@@ -102,7 +104,7 @@ export const CommandsViewer = ({ commands }) => {
 
               {isAuto && (
                 <p className={viewer__line}>
-                  <ColoredText value={AUTOMATED_COMMAND_LABEL} />
+                  <ColoredText value={eventType} />
                 </p>
               )}
 

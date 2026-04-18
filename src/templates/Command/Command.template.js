@@ -196,7 +196,8 @@ export class Command extends EventListener {
       updates: stringifyUpdates(this.updates),
       context: this.get('context'),
       origin: this.get('origin'),
-      title: this.get('title')
+      title: this.get('title'),
+      event: this.get('eventType')
     }
   }
 

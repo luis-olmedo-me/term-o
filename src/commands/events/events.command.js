@@ -1,7 +1,7 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes, helpSections } from '@src/constants/command.constants'
-import { domEventsSupported } from '@src/constants/options.constants'
+import { availableTabEvents } from '@src/constants/options.constants'
 import { array, options, value } from '@src/helpers/validation-command.helpers'
 import { eventsHandler } from './events.handler'
 
@@ -18,14 +18,6 @@ export default new CommandBase({
     validate: [options.requireAll('event')]
   })
   .expect({
-    name: 'dom-dispatch',
-    abbreviation: 'd',
-    type: commandTypes.BOOLEAN,
-    helpSection: helpSections.ACTIONS,
-    description: 'Dispatch a new DOM event in page',
-    validate: [options.allow('name', 'tab-id', 'xpath'), options.requireAll('name', 'xpath')]
-  })
-  .expect({
     name: 'list',
     abbreviation: 'l',
     type: commandTypes.BOOLEAN,
@@ -39,35 +31,11 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Delete a registered event by its identifier',
-    validate: [options.requireAll('command-id')]
+    validate: [options.requireAll('event-id')]
   })
   .expect({
-    name: 'xpath',
-    abbreviation: 'x',
-    type: commandTypes.STRING,
-    helpSection: helpSections.DETAILS,
-    description: 'Define an XPath query',
-    validate: [options.requireAnyOf('dom-dispatch')]
-  })
-  .expect({
-    name: 'tab-id',
-    abbreviation: 'i',
-    type: commandTypes.STRING,
-    helpSection: helpSections.DETAILS,
-    description: 'Define a Tab ID where apply an action',
-    validate: [value.isTabId, options.requireAnyOf('dom-dispatch')]
-  })
-  .expect({
-    name: 'name',
-    abbreviation: 'n',
-    type: commandTypes.STRING,
-    helpSection: helpSections.DETAILS,
-    description: 'Define the name of the event',
-    validate: [value.isAnyOf(domEventsSupported), options.requireAnyOf('dom-dispatch')]
-  })
-  .expect({
-    name: 'command-id',
-    abbreviation: 'C',
+    name: 'event-id',
+    abbreviation: 'E',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define the command identifier of the event',
@@ -78,13 +46,14 @@ export default new CommandBase({
     abbreviation: 'e',
     type: commandTypes.ARRAY,
     helpSection: helpSections.DETAILS,
-    description: 'Define a url-command pair',
+    description: 'Define a type-url-command event tuple',
     repeatable: true,
     validate: [
       array.hasAllItemsAs(
         value.isArray,
-        array.hasLength(2),
-        array.hasItemAs(0, value.isURL),
+        array.hasLength(3),
+        array.hasItemAs(0, value.isAnyOf(availableTabEvents)),
+        array.hasItemAs(1, value.isURL),
         array.hasAllItemsAs(value.isString)
       ),
       options.requireAnyOf('register')

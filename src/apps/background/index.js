@@ -2,13 +2,14 @@ import commandBases from '@src/commands'
 import CommandParser from '@src/libs/command-parser/manual'
 import Storage from '@src/libs/storage/manual'
 
-import { getCurrentTab } from '@src/browser-api/tabs.api'
-import { origins } from '@src/constants/command.constants'
+import { getCurrentTab, getTab } from '@src/browser-api/tabs.api'
 import { configInputIds, DEFAULT_CONTEXT } from '@src/constants/config.constants'
+import { tabEvents } from '@src/constants/options.constants'
 import { oldColorPattern } from '@src/constants/patterns.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
 import { createInternalTab } from '@src/helpers/tabs.helpers'
+import { createShortID } from '@src/helpers/utils.helpers'
 import processHandlers from './process-handlers'
 
 let storageInstance
@@ -48,6 +49,7 @@ const handleCommandQueueChange = async (storage, commandParser) => {
 
   const tab = executable.tab || originalTab
   const origin = executable.origin
+  const eventType = executable.eventType
 
   if (executable.tab) storage.set(storageKeys.TAB, executable.tab)
 
@@ -57,7 +59,7 @@ const handleCommandQueueChange = async (storage, commandParser) => {
   const context = createContext(contextInputValue, tab)
   const command = commandParser
     .read(executable.line)
-    .share({ storage, isTermOpen, context, origin })
+    .share({ storage, isTermOpen, context, origin, eventType })
 
   if (!command.finished) {
     command.startExecuting()
@@ -88,19 +90,16 @@ const ensureOffscreenIsActive = async () => {
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
 
-chrome.tabs.onUpdated.addListener(async (_tabId, changeInfo, updatedTab) => {
-  if (changeInfo.status !== 'complete') return
+chrome.tabs.onActivated.addListener(async activeInfo => {
   const storage = await getStorage()
+  const config = storage.get(storageKeys.CONFIG)
+  const switchTabAutomatically = config.getValueById(configInputIds.SWITCH_TAB_AUTOMATICALLY)
 
-  const queue = storage.get(storageKeys.COMMAND_QUEUE)
-  const events = storage.get(storageKeys.EVENTS)
+  if (!switchTabAutomatically) return
+  const tab = await getTab({ tabId: activeInfo.tabId })
+  const internalTab = createInternalTab(tab)
 
-  const pendingEvents = events.filter(event => new RegExp(event.url).test(updatedTab.url))
-
-  if (pendingEvents.length === 0) return
-  const tab = createInternalTab(updatedTab)
-
-  pendingEvents.forEach(event => queue.add(event.line, origins.AUTO, tab))
+  storage.set(storageKeys.TAB, internalTab)
 })
 
 chrome.runtime.onInstalled.addListener(async () => {
@@ -156,11 +155,34 @@ chrome.runtime.onConnect.addListener(port => {
 
 chrome.runtime.onInstalled.addListener(async details => {
   if (details.reason !== 'update') return
-  const storage = await getStorage()
+  const was090 = details.previousVersion === '0.9.0'
+  const was091 = details.previousVersion === '0.9.1'
+  const was092 = details.previousVersion === '0.9.2'
 
-  const config = storage.get(storageKeys.CONFIG)
-  const contextInputValue = config.getValueById(configInputIds.CONTEXT)
-  const hasOldColorPattern = oldColorPattern.test(contextInputValue)
+  if (was090) {
+    const storage = await getStorage()
 
-  if (hasOldColorPattern) config.change(configInputIds.CONTEXT, DEFAULT_CONTEXT)
+    const config = storage.get(storageKeys.CONFIG)
+    const contextInputValue = config.getValueById(configInputIds.CONTEXT)
+    const hasOldColorPattern = oldColorPattern.test(contextInputValue)
+
+    if (hasOldColorPattern) config.change(configInputIds.CONTEXT, DEFAULT_CONTEXT)
+  }
+
+  if (was092 || was091 || was090) {
+    const storage = await getStorage()
+
+    const events = storage.get(storageKeys.EVENTS)
+    const newEvents = events.map(event => {
+      if (event.type) return event
+
+      return {
+        ...event,
+        type: tabEvents.LOADED,
+        id: event.id.length > 8 ? createShortID() : event.id
+      }
+    })
+
+    storage.set(storageKeys.EVENTS, newEvents)
+  }
 })

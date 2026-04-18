@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'preact/hooks'
+import { useCallback, useRef } from 'preact/hooks'
 
 import CommandsViewer from '@sidepanel/components/CommandsViewer'
 import Prompt from '@sidepanel/components/Prompt'
@@ -6,7 +6,7 @@ import Dropdown from '@src/components/Dropdown'
 import useStorage from '@src/hooks/useStorage'
 import ThreeDots from '@src/icons/ThreeDots.icon'
 
-import { getCurrentTab, switchOrCreateTab } from '@src/browser-api/tabs.api'
+import { switchOrCreateTab } from '@src/browser-api/tabs.api'
 import { origins } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
@@ -23,32 +23,17 @@ import {
 export const Terminal = () => {
   const inputRef = useRef(null)
 
-  const [tab, setTab] = useStorage({ key: storageKeys.TAB })
+  const [tab] = useStorage({ key: storageKeys.TAB })
   const [aliases] = useStorage({ key: storageKeys.ALIASES })
   const [config] = useStorage({ key: storageKeys.CONFIG })
   const [queue] = useStorage({ key: storageKeys.COMMAND_QUEUE })
   const [addons] = useStorage({ key: storageKeys.ADDONS })
 
-  const switchTabAutomatically = config.getValueById(configInputIds.SWITCH_TAB_AUTOMATICALLY)
   const rawContext = config.getValueById(configInputIds.CONTEXT)
 
   const focusOnPrompt = useCallback(() => {
     inputRef.current?.focus()
   }, [])
-
-  useEffect(
-    function focusTabAutomatically() {
-      const updateTab = () => getCurrentTab().then(tab => setTab(tab))
-
-      updateTab()
-
-      if (!switchTabAutomatically) return
-      window.addEventListener('focus', updateTab)
-
-      return () => window.removeEventListener('focus', updateTab)
-    },
-    [switchTabAutomatically]
-  )
 
   const removePromptFocusEvent = () => {
     window.removeEventListener('keydown', focusOnPrompt)

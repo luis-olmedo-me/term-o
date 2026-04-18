@@ -10,6 +10,7 @@ import { getCurrentTab, switchOrCreateTab } from '@src/browser-api/tabs.api'
 import { origins } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
+import { DEFAULT_TAB } from '@src/constants/tabs.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
 import { threeDotsOptionIds, threeDotsOptions } from './Terminal.constants'
 import {
@@ -38,7 +39,7 @@ export const Terminal = () => {
 
   useEffect(
     function focusTabAutomatically() {
-      const updateTab = () => getCurrentTab().then(tab => setTab(tab))
+      const updateTab = () => getCurrentTab().then(tab => setTab(tab ?? DEFAULT_TAB))
 
       updateTab()
 

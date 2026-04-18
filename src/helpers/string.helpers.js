@@ -19,3 +19,9 @@ export const isQuoted = value => {
 export const isArray = value => {
   return value.startsWith('[') && value.endsWith(']')
 }
+
+export const fillTemplate = (template, variables) => {
+  return Object.entries(variables).reduce((output, [key, value]) => {
+    return output.replaceAll(`{${key}}`, value)
+  }, template)
+}

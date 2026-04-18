@@ -49,6 +49,7 @@ const handleCommandQueueChange = async (storage, commandParser) => {
 
   const tab = executable.tab || originalTab
   const origin = executable.origin
+  const eventType = executable.eventType
 
   if (executable.tab) storage.set(storageKeys.TAB, executable.tab)
 
@@ -58,7 +59,7 @@ const handleCommandQueueChange = async (storage, commandParser) => {
   const context = createContext(contextInputValue, tab)
   const command = commandParser
     .read(executable.line)
-    .share({ storage, isTermOpen, context, origin })
+    .share({ storage, isTermOpen, context, origin, eventType })
 
   if (!command.finished) {
     command.startExecuting()
@@ -101,7 +102,7 @@ chrome.tabs.onUpdated.addListener(async (_tabId, changeInfo, updatedTab) => {
   if (pendingEvents.length === 0) return
   const tab = createInternalTab(updatedTab)
 
-  pendingEvents.forEach(event => queue.add(event.line, origins.AUTO, tab))
+  pendingEvents.forEach(event => queue.add(event.line, origins.AUTO, tab, event.type))
 })
 
 chrome.runtime.onInstalled.addListener(async () => {

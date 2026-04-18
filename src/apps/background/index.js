@@ -4,7 +4,7 @@ import Storage from '@src/libs/storage/manual'
 
 import { getCurrentTab, getTab } from '@src/browser-api/tabs.api'
 import { configInputIds, DEFAULT_CONTEXT } from '@src/constants/config.constants'
-import { availableEvents } from '@src/constants/events.constants'
+import { tabEvents } from '@src/constants/events.constants'
 import { oldColorPattern } from '@src/constants/patterns.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
@@ -178,7 +178,7 @@ chrome.runtime.onInstalled.addListener(async details => {
 
       return {
         ...event,
-        type: availableEvents.TAB_LOADED,
+        type: tabEvents.LOADED,
         id: event.id.length > 8 ? createShortID() : event.id
       }
     })

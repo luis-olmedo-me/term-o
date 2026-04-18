@@ -1,5 +1,5 @@
 import processHandlers from '@content/process-handlers'
-import { availableEvents } from '@src/constants/events.constants'
+import { tabEvents } from '@src/constants/events.constants'
 import { importInjectables } from '@src/helpers/injectables.helpers'
 import { setUpHandlers } from '@src/helpers/process.helpers'
 import { debounce } from '@src/helpers/utils.helpers'
@@ -19,10 +19,10 @@ document.addEventListener(
 
     if (!selection) return
 
-    processManager.dispathTabEvent({ type: availableEvents.TAB_SELECTION_CONTENT })
+    processManager.dispathTabEvent({ type: tabEvents.SELECTION_CONTENT })
   }, 100)
 )
 
 window.addEventListener('load', () => {
-  processManager.dispathTabEvent({ type: availableEvents.TAB_LOADED })
+  processManager.dispathTabEvent({ type: tabEvents.LOADED })
 })

@@ -1,7 +1,7 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes, helpSections } from '@src/constants/command.constants'
-import { availableEventValues } from '@src/constants/events.constants'
+import { availableTabEvents } from '@src/constants/events.constants'
 import { array, options, value } from '@src/helpers/validation-command.helpers'
 import { eventsHandler } from './events.handler'
 
@@ -52,7 +52,7 @@ export default new CommandBase({
       array.hasAllItemsAs(
         value.isArray,
         array.hasLength(3),
-        array.hasItemAs(0, value.isAnyOf(availableEventValues)),
+        array.hasItemAs(0, value.isAnyOf(availableTabEvents)),
         array.hasItemAs(1, value.isURL),
         array.hasAllItemsAs(value.isString)
       ),

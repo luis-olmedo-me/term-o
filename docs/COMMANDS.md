@@ -1,7 +1,7 @@
 # Term-O Commands
 
 > Version 0.9.2  
-> Updated: 2026-04-17
+> Updated: 2026-04-18
 
 ---
 
@@ -46,31 +46,33 @@ Interact with the DOM elements using declarative filters and structured search r
 
 The `dom` command enables element selection, filtering, and contextual queries inside the active browser tab.
 
-| Option               | Short | Description                                          |
-| -------------------- | ----- | ---------------------------------------------------- |
-| `--search`           | `-s`  | Search for elements by criteria.                     |
-| `--find`             | `-f`  | Find one element by criteria.                        |
-| `--create`           | `-c`  | Create a DOM element.                                |
-| `--pick`             | `-P`  | Pick an element from the tab.                        |
-| `--measure`          | `-M`  | Calculate the distance between two elements..        |
-| `--inject`           | `-I`  | Inject HTML as within an element.                    |
-| `--sibling <number>` | `-b`  | Define the sibling index.                            |
-| `--parent <number>`  | `-p`  | Define the parent index.                             |
-| `--child <number>`   | `-d`  | Define the child index.                              |
-| `--attr <array>`     | `-a`  | Define a name-value attribute pair.                  |
-| `--style <array>`    | `-S`  | Define a name-value style pair.                      |
-| `--tag <string>`     | `-g`  | Define the element tag name.                         |
-| `--content <string>` | `-t`  | Define the text content.                             |
-| `--html <string>`    | `-H`  | Define the HTML content.                             |
-| `--see-content`      | `-C`  | Define whether the text content should be displayed. |
-| `--see-xpath`        | `-X`  | Define whether XPath(s) should be displayed.         |
-| `--tab-id <string>`  | `-i`  | Define a Tab ID where apply an action.               |
-| `--below <string>`   | `-B`  | Define an Element XPath query where apply an action. |
-| `--xpath <string>`   | `-x`  | Define an XPath query.                               |
-| `--times <number>`   | `-m`  | Define how many times the action must be done.       |
-| `--from <string>`    | `-F`  | Define the origin element XPath.                     |
-| `--to <string>`      | `-T`  | Define the destination element XPath.                |
-| `--help`             | `-h`  | Show help for this command.                          |
+| Option                  | Short | Description                                          |
+| ----------------------- | ----- | ---------------------------------------------------- |
+| `--search`              | `-s`  | Search for elements by criteria.                     |
+| `--find`                | `-f`  | Find one element by criteria.                        |
+| `--create`              | `-c`  | Create a DOM element.                                |
+| `--pick`                | `-P`  | Pick an element from the tab.                        |
+| `--measure`             | `-M`  | Calculate the distance between two elements..        |
+| `--inject`              | `-I`  | Inject HTML as within an element.                    |
+| `--dispatch`            | `-D`  | Dispatch an element over an element.                 |
+| `--sibling <number>`    | `-b`  | Define the sibling index.                            |
+| `--parent <number>`     | `-p`  | Define the parent index.                             |
+| `--child <number>`      | `-d`  | Define the child index.                              |
+| `--attr <array>`        | `-a`  | Define a name-value attribute pair.                  |
+| `--style <array>`       | `-S`  | Define a name-value style pair.                      |
+| `--tag <string>`        | `-g`  | Define the element tag name.                         |
+| `--content <string>`    | `-t`  | Define the text content.                             |
+| `--html <string>`       | `-H`  | Define the HTML content.                             |
+| `--see-content`         | `-C`  | Define whether the text content should be displayed. |
+| `--see-xpath`           | `-X`  | Define whether XPath(s) should be displayed.         |
+| `--tab-id <string>`     | `-i`  | Define a Tab ID where apply an action.               |
+| `--below <string>`      | `-B`  | Define an Element XPath query where apply an action. |
+| `--xpath <string>`      | `-x`  | Define an XPath query.                               |
+| `--times <number>`      | `-m`  | Define how many times the action must be done.       |
+| `--from <string>`       | `-F`  | Define the origin element XPath.                     |
+| `--to <string>`         | `-T`  | Define the destination element XPath.                |
+| `--event-name <string>` | `-e`  | Define the event name.                               |
+| `--help`                | `-h`  | Show help for this command.                          |
 
 ### Dependency Rules
 
@@ -85,7 +87,7 @@ When using `dom` command the options can express **6** possible actions:
        --search                                                             # REQUIRED
        --attr ["class" "test-class"]                                        # OPTIONAL/REPEATABLE
        --style ["color" "#00000\d"]                                         # OPTIONAL/REPEATABLE
-       --below 'id("cards-container")'                                      # OPTIONAL
+       --below '//*[@id="cards-container"]'                                 # OPTIONAL
        --tab-id "T00000000"                                                 # OPTIONAL
        --tag "button"                                                       # OPTIONAL
        --content "Buscar con Go"                                            # OPTIONAL
@@ -100,8 +102,8 @@ When using `dom` command the options can express **6** possible actions:
    ```bash
    dom
        --find                                                               # REQUIRED
-       --xpath 'id("main-container")'                                       # REQUIRED
-       --below 'id("cards-container")'                                      # OPTIONAL
+       --xpath '//*[@id="main-container"]'                                  # REQUIRED
+       --below '//*[@id="cards-container"]'                                 # OPTIONAL
        --child 3                                                            # OPTIONAL
        --parent 2                                                           # OPTIONAL
        --tab-id "T00000000"                                                 # OPTIONAL
@@ -116,7 +118,7 @@ When using `dom` command the options can express **6** possible actions:
    ```bash
    dom
        --inject '<button>Test</button>'                                     # REQUIRED
-       --xpath 'id("main-container")'                                       # REQUIRED
+       --xpath '//*[@id="main-container"]'                                  # REQUIRED
        --html "<button>test</button>"                                       # REQUIRED
        --tab-id "T00000000"                                                 # OPTIONAL
        --see-content                                                        # OPTIONAL
@@ -132,7 +134,7 @@ When using `dom` command the options can express **6** possible actions:
        --create                                                             # REQUIRED
        --tag "button"                                                       # REQUIRED
        --attr ["class" "test-class"]                                        # OPTIONAL/REPEATABLE
-       --below 'id("cards-container")'                                      # OPTIONAL
+       --below '//*[@id="cards-container"]'                                 # OPTIONAL
        --tab-id "T00000000"                                                 # OPTIONAL
        --see-content                                                        # OPTIONAL
        --see-xpath                                                          # OPTIONAL
@@ -153,13 +155,25 @@ When using `dom` command the options can express **6** possible actions:
 
 6. Measure distance (pixels) from two elements (using `--measure`)
 
-   The option `--measure` will locate two elements and measure the distance between them.
+   The `--measure` will locate two elements and measure the distance between them.
 
    ```bash
    dom
        --measure                                                            # REQUIRED
        --from "html"                                                        # REQUIRED
        --to "html/body[1]"                                                  # REQUIRED
+       --tab-id "T00000000"                                                 # OPTIONAL
+   ```
+
+7. Dispatch an event over an element (using `--dipatch`)
+
+   The `--dipatch` will locate two elements and dipatch the distance between them.
+
+   ```bash
+   dom
+       --dipatch                                                            # REQUIRED
+       --event-name 'click'                                                 # REQUIRED
+       --xpath '//*[@id="main-container"]'                                  # REQUIRED
        --tab-id "T00000000"                                                 # OPTIONAL
    ```
 
@@ -441,7 +455,7 @@ When using `style` command the options can express **3** possible actions:
    style
        --list                                                               # REQUIRED
        --style ["color" "red"]                                              # OPTIONAL/REPEATABLE
-       --xpath 'id("cards-container")'                                      # REQUIRED
+       --xpath '//*[@id="cards-container"]'                                 # REQUIRED
    ```
 
 2. Apply styles to a DOM element (using `--apply`)
@@ -452,7 +466,7 @@ When using `style` command the options can express **3** possible actions:
    style
        --apply                                                              # REQUIRED
        --style ["display" "none"]                                           # REQUIRED/REPEATABLE
-       --xpath 'id("cards-container")'                                      # REQUIRED
+       --xpath '//*[@id="cards-container"]'                                 # REQUIRED
    ```
 
 3. Pick a color (using `--color-pick`)
@@ -626,36 +640,19 @@ When using `error` command the options can express **1** possible action:
 
 The `events` command is a bridge to the page events API and DOM element events.
 
-| Option                  | Short | Description                                      |
-| ----------------------- | ----- | ------------------------------------------------ |
-| `--register`            | `-r`  | Register a new command for future execution.     |
-| `--dom-dispatch`        | `-d`  | Dispatch a new DOM event in page.                |
-| `--list`                | `-l`  | List all registered events.                      |
-| `--delete`              | `-d`  | Delete a registered event by its identifier.     |
-| `--xpath <string>`      | `-x`  | Define an XPath query.                           |
-| `--tab-id <string>`     | `-i`  | Define a Tab ID where apply an action.           |
-| `--url <string>`        | `-u`  | Define a valid URL.                              |
-| `--name <string>`       | `-n`  | Define the name of the event.                    |
-| `--command <string>`    | `-c`  | Define the command line associated to the event. |
-| `--command-id <string>` | `-C`  | Define the command identifier of the event.      |
+| Option                | Short | Description                                  |
+| --------------------- | ----- | -------------------------------------------- |
+| `--register`          | `-r`  | Register a new command for future execution. |
+| `--list`              | `-l`  | List all registered events.                  |
+| `--delete`            | `-d`  | Delete a registered event by its identifier. |
+| `--event <array>`     | `-e`  | Define a type-url-command event tuple.       |
+| `--event-id <string>` | `-E`  | Define the event identifier.                 |
 
 ### Dependency Rules
 
-When using `evennts` command the options can express **4** possible action:
+When using `events` command the options can express **3** possible action:
 
-1. Trigger an event on a element (using `--dom-dispatch`)
-
-   The `--dom-dispatch` will dispatch a DOM Event on an element.
-
-   ```bash
-   events
-       --dom-dispatch                                                       # REQUIRED
-       --name "click"                                                       # REQUIRED
-       --xpath 'id("main-container")'                                       # REQUIRED
-       --tab-id "T00000000"                                                 # OPTIONAL
-   ```
-
-2. Create a summary of all the page events created (using `--list`)
+1. Create a summary of all the page events created (using `--list`)
 
    The `--list` will trigger a search for all the page events created.
 
@@ -664,25 +661,24 @@ When using `evennts` command the options can express **4** possible action:
        --list                                                               # REQUIRED
    ```
 
-3. Register page events (using `--register`)
+2. Register page events (using `--register`)
 
    The `--register` will trigger the creation of a page event.
 
    ```bash
    events
        --register                                                           # REQUIRED
-       --url 'https://test.com'                                             # REQUIRED
-       --command 'tabs --open "https://test.com" --wait'                    # REQUIRED
+       --event ["tab-loaded" 'https://test.com' 'dom -s']                   # REQUIRED
    ```
 
-4. Delete a page events (using `--delete`)
+3. Delete a page events (using `--delete`)
 
-   The option `--delete` will delete a specific page event.
+   The `--delete` will delete a specific page event.
 
    ```bash
    events
        --delete                                                             # REQUIRED
-       --command-id "9edb327b-b67f-4a3e-9e10-90b35ad1f3e5"                  # REQUIRED
+       --event-id "35ad1f3e"                                                # REQUIRED
    ```
 
 ## INPUT

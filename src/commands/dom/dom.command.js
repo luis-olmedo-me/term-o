@@ -95,6 +95,14 @@ export default new CommandBase({
     validate: [options.allow('event-name', 'tab-id', 'xpath')]
   })
   .expect({
+    name: 'selection',
+    abbreviation: 'l',
+    type: commandTypes.BOOLEAN,
+    description: 'Get selected text in the tab',
+    helpSection: helpSections.ACTIONS,
+    validate: [options.requireNoOther]
+  })
+  .expect({
     name: 'sibling',
     abbreviation: 'b',
     type: commandTypes.NUMBER,

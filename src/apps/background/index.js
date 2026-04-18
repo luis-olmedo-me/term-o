@@ -3,7 +3,6 @@ import CommandParser from '@src/libs/command-parser/manual'
 import Storage from '@src/libs/storage/manual'
 
 import { getCurrentTab, getTab } from '@src/browser-api/tabs.api'
-import { origins } from '@src/constants/command.constants'
 import { configInputIds, DEFAULT_CONTEXT } from '@src/constants/config.constants'
 import { availableEvents } from '@src/constants/events.constants'
 import { oldColorPattern } from '@src/constants/patterns.constants'
@@ -100,21 +99,6 @@ chrome.tabs.onActivated.addListener(async activeInfo => {
   const internalTab = createInternalTab(tab)
 
   storage.set(storageKeys.TAB, internalTab)
-})
-
-chrome.tabs.onUpdated.addListener(async (_tabId, changeInfo, updatedTab) => {
-  if (changeInfo.status !== 'complete') return
-  const storage = await getStorage()
-
-  const queue = storage.get(storageKeys.COMMAND_QUEUE)
-  const events = storage.get(storageKeys.EVENTS)
-
-  const pendingEvents = events.filter(event => new RegExp(event.url).test(updatedTab.url))
-
-  if (pendingEvents.length === 0) return
-  const tab = createInternalTab(updatedTab)
-
-  pendingEvents.forEach(event => queue.add(event.line, origins.AUTO, tab, event.type))
 })
 
 chrome.runtime.onInstalled.addListener(async () => {

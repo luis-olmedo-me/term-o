@@ -1,5 +1,5 @@
 import { backgroundLogo, rotationValues } from '@src/constants/string-svg.constants'
-import { toTitleCase } from './string.helpers'
+import { fillTemplate, toTitleCase } from './string.helpers'
 import { getQuotedString } from './utils.helpers'
 
 export const getColor = color => {
@@ -60,12 +60,13 @@ export const createCssVariablesFromTheme = (theme, selector = ':root') => {
 
 export const createImageVariablesFromTheme = theme => {
   const components = rotationValues.map(rotation => {
-    return backgroundLogo
-      .replace('{top}', theme.colors.white)
-      .replace('{bottom}', theme.colors.white)
-      .replace('{body}', theme.colors.accent)
-      .replace('{rotation}', rotation)
-      .replace('{opacity}', theme.isDarkMode ? 0.02 : 0.075)
+    return fillTemplate(backgroundLogo, {
+      top: theme.colors.white,
+      bottom: theme.colors.white,
+      body: theme.colors.accent,
+      opacity: theme.isDarkMode ? 0.02 : 0.075,
+      rotation
+    })
   })
 
   const urls = components.map(

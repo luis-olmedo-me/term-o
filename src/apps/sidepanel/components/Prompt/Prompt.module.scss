@@ -24,12 +24,16 @@
 }
 
 .prompt__banner {
-  border: dashed $colors-yellow;
-  border-width: 0 0 $space-50 0;
   padding: $space-200 $space-300;
+  text-align: center;
+  text-wrap: balance;
+  word-break: break-word;
 
-  &:first-child {
-    border-width: $space-50 0;
+  &::before {
+    content: attr(data-symbol) ' ';
+  }
+  &::after {
+    content: ' ' attr(data-symbol);
   }
 
   &___mod_warning {

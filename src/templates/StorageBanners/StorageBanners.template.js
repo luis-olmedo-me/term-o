@@ -14,12 +14,17 @@ export class StorageBanners extends StorageSimple {
   addOrUpdate({ message, type, duration, id }) {
     const banners = this.$latest().value
     const bannerIDs = banners.map(banner => banner.id)
+
+    const isNewBanner = bannerIDs.includes(id)
     const newBanner = { message, type, duration, id: id || createUUIDv4() }
-    const newBanners = bannerIDs.includes(id)
+
+    const newBanners = isNewBanner
       ? banners.map(banner => (banner.id === id ? newBanner : banner))
       : banners.concat(newBanner)
 
-    this.$storageService.set(storageKeys.BANNERS, newBanners)
+    const newLimitedBanners = newBanners.slice(-3)
+
+    this.$storageService.set(storageKeys.BANNERS, newLimitedBanners)
   }
 
   getByID(id) {

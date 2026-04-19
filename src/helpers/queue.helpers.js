@@ -28,7 +28,7 @@ export const limitQueueByConfig = (queue, maxCount) => {
       break
     }
 
-    newQueue.unshift({ ...queueItem, command: { ...command } })
+    newQueue.unshift({ ...queueItem, command })
   }
 
   return [newQueue, discardedCount]

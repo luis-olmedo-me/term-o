@@ -223,8 +223,12 @@ export const Prompt = ({
           const classNameByType = getClassNameByBannerType(type)
 
           return (
-            <p key={id} className={`${prompt__line} ${prompt__banner} ${classNameByType}`}>
-              <span>{message}</span>
+            <p
+              key={id}
+              className={`${prompt__line} ${prompt__banner} ${classNameByType}`}
+              data-symbol="⚠"
+            >
+              {message}
             </p>
           )
         })}

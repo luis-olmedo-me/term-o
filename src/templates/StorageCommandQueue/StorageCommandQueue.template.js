@@ -40,7 +40,7 @@ export class StorageCommandQueue extends StorageSimple {
 
     if (discardedCount) {
       banners.addOrUpdate({
-        message: `Command line limit exceeded. Discarded ${discardedCount} lines.`,
+        message: `${discardedCount} lines were discarded.`,
         type: bannerTypes.WARNING,
         duration: 5_000,
         id: command.id

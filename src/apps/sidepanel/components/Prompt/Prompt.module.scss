@@ -23,6 +23,24 @@
   }
 }
 
+.prompt__banner {
+  padding: $space-200 $space-300;
+  text-align: center;
+  text-wrap: balance;
+  word-break: break-word;
+
+  &::before {
+    content: attr(data-symbol) ' ';
+  }
+  &::after {
+    content: ' ' attr(data-symbol);
+  }
+
+  &___mod_warning {
+    color: $colors-yellow;
+  }
+}
+
 .prompt__mark {
   font-size: $fontSize-50;
   line-height: $lineHeight-100;

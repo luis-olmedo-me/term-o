@@ -1,5 +1,6 @@
 import StorageSimple from '@src/templates/StorageSimple'
 
+import { bannerTypes } from '@src/constants/banners.constants'
 import { commandStatuses } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
@@ -18,6 +19,7 @@ export class StorageCommandQueue extends StorageSimple {
     return {
       managed: this.$latest().value,
       value: this.getUIValues(),
+      discardedCount: this.getDiscardedCount(),
       isExecuting: this.getIsExecuting(),
       executable: this.getExecutable(),
       clearCompleted: this.clearCompleted.bind(this),
@@ -29,11 +31,22 @@ export class StorageCommandQueue extends StorageSimple {
 
   change(queueId, command) {
     const config = this.$storageService.get(storageKeys.CONFIG)
+    const banners = this.$storageService.get(storageKeys.BANNERS)
 
     const maxLinesPerCommand = config.getValueById(configInputIds.MAX_LINES_PER_COMMAND)
+    const isCommandDone = command.status === commandStatuses.DONE
 
     const newQueue = updateQueueValueIn(this.$latest().value, queueId, command)
-    const limitNewQueue = limitQueueByConfig(newQueue, maxLinesPerCommand)
+    const [limitNewQueue, discardedCount] = limitQueueByConfig(newQueue, maxLinesPerCommand)
+
+    if (discardedCount && isCommandDone) {
+      banners.addOrUpdate({
+        message: `${discardedCount} lines were discarded.`,
+        type: bannerTypes.WARNING,
+        duration: 5_000,
+        id: command.id
+      })
+    }
 
     this.$storageService.set(storageKeys.COMMAND_QUEUE, limitNewQueue)
   }
@@ -73,6 +86,12 @@ export class StorageCommandQueue extends StorageSimple {
     return this.$latest()
       .value.map(item => item.command)
       .filter(Boolean)
+  }
+
+  getDiscardedCount() {
+    const foundCount = this.$latest().value.find(item => item.command?.discardedCount)
+
+    return foundCount ?? 0
   }
 
   getIsExecuting() {

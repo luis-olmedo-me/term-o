@@ -4,6 +4,7 @@ import StorageConfig from '@src/templates/StorageConfig'
 import StorageSimple from '@src/templates/StorageSimple'
 import StorageTab from '@src/templates/StorageTab'
 
+import { StorageBanners } from '@src/templates/StorageBanners/StorageBanners.template'
 import { configDefaultValues } from './config.constants'
 import { defaultColorTheme } from './themes.constants'
 
@@ -15,7 +16,8 @@ export const storageKeys = {
   PROMPT_HISTORY: 'prompt-history',
   THEMES: 'themes',
   TAB: 'tab',
-  COMMAND_QUEUE: 'commandQueue'
+  COMMAND_QUEUE: 'commandQueue',
+  BANNERS: 'banners'
 }
 
 export const storageNamespaces = {
@@ -89,6 +91,13 @@ export const storageValues = [
     namespace: storageNamespaces.SESSION,
     defaultValue: [],
     Template: StorageCommandQueue,
+    json: true
+  },
+  {
+    key: storageKeys.BANNERS,
+    namespace: storageNamespaces.SESSION,
+    defaultValue: [],
+    Template: StorageBanners,
     json: true
   }
 ]

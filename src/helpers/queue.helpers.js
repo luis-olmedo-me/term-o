@@ -4,8 +4,8 @@ export const updateQueueValueIn = (queue, queueId, command) => {
 
 export const limitQueueByConfig = (queue, maxCount) => {
   let count = 0
-  let newQueue = []
   let discardedCount = 0
+  let newQueue = []
 
   for (let index = -1; index >= -1 * queue.length; index--) {
     const queueItem = queue.at(index)
@@ -23,7 +23,7 @@ export const limitQueueByConfig = (queue, maxCount) => {
       const cutUpdates = updates.slice((maxCount - count) * -1)
       const overflowCount = updates.length - cutUpdates.length
 
-      if (overflowCount) discardedCount = overflowCount
+      if (overflowCount) discardedCount += overflowCount
       newQueue.unshift({ ...queueItem, command: { ...command, updates: cutUpdates } })
       break
     }

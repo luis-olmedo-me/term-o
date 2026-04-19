@@ -62,6 +62,20 @@ export const Prompt = ({
     200
   )
 
+  useEffect(
+    function cleanBanners() {
+      const bannersByTimer = Object.groupBy(banners.values, banner => banner.duration)
+      const timeoutIds = Object.entries(bannersByTimer).map(([duration, items]) => {
+        const durationMs = Number(duration)
+
+        return setTimeout(() => items.forEach(item => banners.remove(item.id)), durationMs)
+      })
+
+      return () => timeoutIds.forEach(clearTimeout)
+    },
+    [banners.values]
+  )
+
   useEffect(function expectForRequests() {
     const handleRequestSend = () => setIsRequesting(true)
 

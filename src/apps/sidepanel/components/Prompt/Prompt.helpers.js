@@ -99,3 +99,8 @@ export const getClassNameByBannerType = type => {
   if (type === bannerTypes.WARNING) return prompt__banner___mod_warning
   return ''
 }
+
+export const getSymbolByBannerType = type => {
+  if (type === bannerTypes.WARNING) return '⚠'
+  return ''
+}

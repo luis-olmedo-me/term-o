@@ -9,7 +9,7 @@ import { configInputIds, PROMPT_MARK } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { insert } from '@src/helpers/string.helpers'
 import { global__loader } from '@styles/global.module.scss'
-import { createSuggestion, getClassNameByBannerType } from './Prompt.helpers'
+import { createSuggestion, getClassNameByBannerType, getSymbolByBannerType } from './Prompt.helpers'
 import {
   prompt,
   prompt__banner,
@@ -221,12 +221,13 @@ export const Prompt = ({
       {hasBanners &&
         banners.values.map(({ id, message, type }) => {
           const classNameByType = getClassNameByBannerType(type)
+          const symbolByType = getSymbolByBannerType(type)
 
           return (
             <p
               key={id}
               className={`${prompt__line} ${prompt__banner} ${classNameByType}`}
-              data-symbol="⚠"
+              data-symbol={symbolByType}
             >
               {message}
             </p>

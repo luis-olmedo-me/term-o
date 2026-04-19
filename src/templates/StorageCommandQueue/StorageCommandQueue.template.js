@@ -34,11 +34,12 @@ export class StorageCommandQueue extends StorageSimple {
     const banners = this.$storageService.get(storageKeys.BANNERS)
 
     const maxLinesPerCommand = config.getValueById(configInputIds.MAX_LINES_PER_COMMAND)
+    const isCommandDone = command.status === commandStatuses.DONE
 
     const newQueue = updateQueueValueIn(this.$latest().value, queueId, command)
     const [limitNewQueue, discardedCount] = limitQueueByConfig(newQueue, maxLinesPerCommand)
 
-    if (discardedCount) {
+    if (discardedCount && isCommandDone) {
       banners.addOrUpdate({
         message: `${discardedCount} lines were discarded.`,
         type: bannerTypes.WARNING,

@@ -23,6 +23,15 @@
   }
 }
 
+.prompt__banner {
+  padding: $space-200 $space-300;
+
+  &___mod_warning {
+    border-block: 1px dashed $colors-yellow;
+    color: $colors-yellow;
+  }
+}
+
 .prompt__mark {
   font-size: $fontSize-50;
   line-height: $lineHeight-100;

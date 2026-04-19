@@ -28,9 +28,6 @@ export const Terminal = () => {
   const [config] = useStorage({ key: storageKeys.CONFIG })
   const [queue] = useStorage({ key: storageKeys.COMMAND_QUEUE })
   const [addons] = useStorage({ key: storageKeys.ADDONS })
-  const [banners] = useStorage({ key: storageKeys.BANNERS })
-
-  console.log('💬 ~ banners:', banners)
 
   const rawContext = config.getValueById(configInputIds.CONTEXT)
 

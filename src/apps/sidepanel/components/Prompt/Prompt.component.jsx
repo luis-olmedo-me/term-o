@@ -9,9 +9,10 @@ import { configInputIds, PROMPT_MARK } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { insert } from '@src/helpers/string.helpers'
 import { global__loader } from '@styles/global.module.scss'
-import { createSuggestion } from './Prompt.helpers'
+import { createSuggestion, getClassNameByBannerType } from './Prompt.helpers'
 import {
   prompt,
+  prompt__banner,
   prompt__input,
   prompt__input_line,
   prompt__line,
@@ -47,6 +48,7 @@ export const Prompt = ({
 
   const [historial, setHistorial] = useStorage({ key: storageKeys.PROMPT_HISTORY })
   const [config] = useStorage({ key: storageKeys.CONFIG })
+  const [banners] = useStorage({ key: storageKeys.BANNERS })
 
   const historialSize = config.getValueById(configInputIds.HISTORIAL_SIZE)
 
@@ -193,6 +195,7 @@ export const Prompt = ({
   const start = caret !== null ? value.slice(0, caret) : value
   const end = caret !== null ? value.slice(caret) : ''
   const isLoading = loading && !isRequesting
+  const hasBanners = banners.values.length > 0
 
   return (
     <div
@@ -201,6 +204,17 @@ export const Prompt = ({
         ${loading ? global__loader : ''}
       `}
     >
+      {hasBanners &&
+        banners.values.map(({ id, message, type }) => {
+          const classNameByType = getClassNameByBannerType(type)
+
+          return (
+            <p key={id} className={`${prompt__line} ${prompt__banner} ${classNameByType}`}>
+              <span>{message}</span>
+            </p>
+          )
+        })}
+
       <p
         className={`
           ${prompt__line}

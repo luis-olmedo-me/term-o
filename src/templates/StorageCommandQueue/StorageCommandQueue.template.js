@@ -1,5 +1,6 @@
 import StorageSimple from '@src/templates/StorageSimple'
 
+import { bannerTypes } from '@src/constants/banners.constants'
 import { commandStatuses } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
@@ -40,8 +41,8 @@ export class StorageCommandQueue extends StorageSimple {
     if (discardedCount) {
       banners.addOrUpdate({
         message: `Command line limit exceeded. Discarded ${discardedCount} lines.`,
-        type: 'warning',
-        duration: 10_000,
+        type: bannerTypes.WARNING,
+        duration: 5_000,
         id: command.id
       })
     }

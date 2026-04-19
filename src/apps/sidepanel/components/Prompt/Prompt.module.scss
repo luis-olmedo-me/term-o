@@ -24,10 +24,15 @@
 }
 
 .prompt__banner {
+  border: dashed $colors-yellow;
+  border-width: 0 0 $space-50 0;
   padding: $space-200 $space-300;
 
+  &:first-child {
+    border-width: $space-50 0;
+  }
+
   &___mod_warning {
-    border-block: 1px dashed $colors-yellow;
     color: $colors-yellow;
   }
 }

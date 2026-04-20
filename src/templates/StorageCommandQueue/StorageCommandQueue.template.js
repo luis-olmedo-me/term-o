@@ -13,6 +13,7 @@ export class StorageCommandQueue extends StorageSimple {
 
     this.handleInitRef = this.handleInit.bind(this)
     this.handleConfigChangesRef = this.handleConfigChanges.bind(this)
+    this._cache = []
   }
 
   get $value() {
@@ -34,11 +35,15 @@ export class StorageCommandQueue extends StorageSimple {
     const banners = this.$storageService.get(storageKeys.BANNERS)
 
     const maxLinesPerCommand = config.getValueById(configInputIds.MAX_LINES_PER_COMMAND)
+    const currentQueue = this.getFromCache(command.id) || this.$latest().value
+    const isFinished = [commandStatuses.ERROR, commandStatuses.DONE].includes(command.status)
 
-    const newQueue = updateQueueValueIn(this.$latest().value, queueId, command)
+    const newQueue = updateQueueValueIn(currentQueue, queueId, command)
     const [limitNewQueue, discardedCount] = limitQueueByConfig(newQueue, maxLinesPerCommand)
 
-    if (discardedCount) {
+    if (!isFinished) this.saveInCache(command.id, newQueue)
+    if (isFinished) this.deleteInCache(command.id)
+    if (isFinished && discardedCount) {
       banners.addOrUpdate({
         message: `${discardedCount} lines were discarded.`,
         type: bannerTypes.WARNING,
@@ -48,6 +53,24 @@ export class StorageCommandQueue extends StorageSimple {
     }
 
     this.$storageService.set(storageKeys.COMMAND_QUEUE, limitNewQueue)
+  }
+
+  saveInCache(id, queue) {
+    const alreadyExists = this._cache.some(item => item.id === id)
+
+    this._cache = alreadyExists
+      ? this._cache.filter(item => item.id === id)
+      : this._cache.concat({ id, queue })
+  }
+
+  deleteInCache(id) {
+    this._cache = this._cache.filter(item => item.id === id)
+  }
+
+  getFromCache(id) {
+    const found = this._cache.find(item => item.id === id)
+
+    return found?.queue ?? null
   }
 
   handleInit() {

@@ -100,6 +100,14 @@ chrome.tabs.onActivated.addListener(async activeInfo => {
   storage.set(storageKeys.TAB, tab)
 })
 
+chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, updatedTab) => {
+  if (changeInfo.status !== 'complete') return
+  const storage = await getStorage()
+  const tab = storage.get(storageKeys.TAB)
+
+  if (tab.id === tabId) storage.set(storageKeys.TAB, updatedTab)
+})
+
 chrome.runtime.onInstalled.addListener(async () => {
   const storage = await getStorage()
   const tab = await getCurrentTab()

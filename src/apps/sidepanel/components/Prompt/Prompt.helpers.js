@@ -1,7 +1,9 @@
 import commands from '@src/commands'
+import { bannerTypes } from '@src/constants/banners.constants'
 
 import { commandNames } from '@src/constants/command.constants'
 import { getArgs } from '@src/helpers/arguments.helpers'
+import { prompt__banner___mod_warning } from './Prompt.module.scss'
 
 const getArgsFromFragmentStart = fragment => {
   return fragment.endsWith(' ') ? [...getArgs(fragment), ''] : getArgs(fragment)
@@ -90,5 +92,15 @@ export const createSuggestion = (value, caret, aliases, addons) => {
       firstArgEnd
     )
 
+  return ''
+}
+
+export const getClassNameByBannerType = type => {
+  if (type === bannerTypes.WARNING) return prompt__banner___mod_warning
+  return ''
+}
+
+export const getSymbolByBannerType = type => {
+  if (type === bannerTypes.WARNING) return '⚠'
   return ''
 }

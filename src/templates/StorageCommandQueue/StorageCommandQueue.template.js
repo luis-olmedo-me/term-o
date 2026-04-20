@@ -1,5 +1,6 @@
 import StorageSimple from '@src/templates/StorageSimple'
 
+import { bannerTypes } from '@src/constants/banners.constants'
 import { commandStatuses } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
@@ -12,6 +13,7 @@ export class StorageCommandQueue extends StorageSimple {
 
     this.handleInitRef = this.handleInit.bind(this)
     this.handleConfigChangesRef = this.handleConfigChanges.bind(this)
+    this._cache = []
   }
 
   get $value() {
@@ -29,13 +31,45 @@ export class StorageCommandQueue extends StorageSimple {
 
   change(queueId, command) {
     const config = this.$storageService.get(storageKeys.CONFIG)
+    const banners = this.$storageService.get(storageKeys.BANNERS)
 
     const maxLinesPerCommand = config.getValueById(configInputIds.MAX_LINES_PER_COMMAND)
+    const currentQueue = this.getFromCache(command.id) || this.$latest().value
+    const isFinished = [commandStatuses.ERROR, commandStatuses.DONE].includes(command.status)
 
-    const newQueue = updateQueueValueIn(this.$latest().value, queueId, command)
-    const limitNewQueue = limitQueueByConfig(newQueue, maxLinesPerCommand)
+    const newQueue = updateQueueValueIn(currentQueue, queueId, command)
+    const [limitNewQueue, discardedCount] = limitQueueByConfig(newQueue, maxLinesPerCommand)
+
+    if (!isFinished) this.saveInCache(command.id, newQueue)
+    if (isFinished) this.deleteInCache(command.id)
+    if (isFinished && discardedCount) {
+      banners.addOrUpdate({
+        message: `${discardedCount} lines were discarded.`,
+        type: bannerTypes.WARNING,
+        duration: 5_000,
+        id: 'command-exceed-warning'
+      })
+    }
 
     this.$storageService.set(storageKeys.COMMAND_QUEUE, limitNewQueue)
+  }
+
+  saveInCache(id, queue) {
+    const alreadyExists = this._cache.some(item => item.id === id)
+
+    this._cache = alreadyExists
+      ? this._cache.filter(item => item.id === id)
+      : this._cache.concat({ id, queue })
+  }
+
+  deleteInCache(id) {
+    this._cache = this._cache.filter(item => item.id === id)
+  }
+
+  getFromCache(id) {
+    const found = this._cache.find(item => item.id === id)
+
+    return found?.queue ?? null
   }
 
   handleInit() {

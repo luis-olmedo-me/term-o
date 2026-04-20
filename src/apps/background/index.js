@@ -8,7 +8,6 @@ import { tabEvents } from '@src/constants/options.constants'
 import { oldColorPattern } from '@src/constants/patterns.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
-import { createInternalTab } from '@src/helpers/tabs.helpers'
 import { createShortID } from '@src/helpers/utils.helpers'
 import processHandlers from './process-handlers'
 
@@ -97,9 +96,16 @@ chrome.tabs.onActivated.addListener(async activeInfo => {
 
   if (!switchTabAutomatically) return
   const tab = await getTab({ tabId: activeInfo.tabId })
-  const internalTab = createInternalTab(tab)
 
-  storage.set(storageKeys.TAB, internalTab)
+  storage.set(storageKeys.TAB, tab)
+})
+
+chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, updatedTab) => {
+  if (changeInfo.status !== 'complete') return
+  const storage = await getStorage()
+  const tab = storage.get(storageKeys.TAB)
+
+  if (tab.id === tabId) storage.set(storageKeys.TAB, updatedTab)
 })
 
 chrome.runtime.onInstalled.addListener(async () => {

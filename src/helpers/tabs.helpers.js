@@ -7,8 +7,8 @@ export const cleanTabId = tabIdRaw => {
 export const createInternalTab = originalTab => {
   return {
     id: originalTab.id,
-    url: originalTab.url,
-    title: originalTab.title,
+    url: originalTab.url || originalTab.pendingUrl,
+    title: originalTab.title || originalTab.url || originalTab.pendingUrl,
     status: originalTab.status,
     windowId: originalTab.windowId,
     incognito: originalTab.incognito

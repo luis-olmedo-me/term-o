@@ -14,7 +14,10 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'List all storage key-values',
-    validate: [options.allow('local', 'session', 'cookie', 'see-json', 'tab-id')]
+    validate: [
+      options.allow('local', 'session', 'cookie', 'see-json', 'tab-id'),
+      options.requireAnyOf('local', 'session', 'cookie')
+    ]
   })
   .expect({
     name: 'set',

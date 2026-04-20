@@ -24,6 +24,7 @@
 }
 
 .prompt__banner {
+  border-bottom: $space-50 dashed;
   padding: $space-200 $space-300;
   text-align: center;
   text-wrap: balance;
@@ -37,6 +38,7 @@
   }
 
   &___mod_warning {
+    border-color: $colors-yellow;
     color: $colors-yellow;
   }
 }

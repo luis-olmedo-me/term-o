@@ -24,22 +24,16 @@
 }
 
 .prompt__banner {
+  margin-bottom: $space-200;
   border-bottom: $space-50 dashed;
-  padding: $space-200 $space-300;
-  text-align: center;
-  text-wrap: balance;
+  border-radius: $radius-200;
+  padding: $space-100 $space-300;
   word-break: break-word;
-
-  &::before {
-    content: attr(data-symbol) ' ';
-  }
-  &::after {
-    content: ' ' attr(data-symbol);
-  }
 
   &___mod_warning {
     border-color: $colors-yellow;
-    color: $colors-yellow;
+    background-color: $colors-yellow;
+    color: $colors-background;
   }
 }
 

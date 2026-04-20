@@ -20,7 +20,6 @@ export class StorageCommandQueue extends StorageSimple {
     return {
       managed: this.$latest().value,
       value: this.getUIValues(),
-      discardedCount: this.getDiscardedCount(),
       isExecuting: this.getIsExecuting(),
       executable: this.getExecutable(),
       clearCompleted: this.clearCompleted.bind(this),
@@ -108,12 +107,6 @@ export class StorageCommandQueue extends StorageSimple {
     return this.$latest()
       .value.map(item => item.command)
       .filter(Boolean)
-  }
-
-  getDiscardedCount() {
-    const foundCount = this.$latest().value.find(item => item.command?.discardedCount)
-
-    return foundCount ?? 0
   }
 
   getIsExecuting() {

@@ -5,7 +5,7 @@ import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatStorageAsString, formatStorageProp, formatText } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
-import { getStorageNamespace } from './storage.helpers'
+import { getStorageNamespace, isStorageMatch } from './storage.helpers'
 
 export const storageHandler = async command => {
   const storage = command.get('storage')
@@ -22,7 +22,6 @@ export const storageHandler = async command => {
 
   if (P`list`) {
     const filters = P`data`
-    const hasFilters = filters.length > 0
 
     const storage = await processManager.getStorage(tabId, {
       includeLocal: P`local`,
@@ -30,20 +29,12 @@ export const storageHandler = async command => {
       includeCookies: P`cookie`
     })
 
-    const storageEntries = Object.entries(storage).filter(([key, value]) => {
-      const isMatch = filters.some(([filterKey, filterValue]) => {
-        return filterValue
-          ? key.includes(filterKey) && value.includes(filterValue)
-          : key.includes(filterKey)
-      })
-
-      return hasFilters ? isMatch : true
-    })
+    const storageFiltered = Object.entries(storage).filter(entry => isStorageMatch(filters, entry))
 
     command.reset()
     const updates = P`see-json`
-      ? [formatStorageAsString({ storage, tabId: P`tab-id` })]
-      : storageEntries.map(([key, value]) => formatStorageProp({ key, value, tabId: P`tab-id` }))
+      ? [formatStorageAsString({ storage: Object.fromEntries(storageFiltered), tabId: P`tab-id` })]
+      : storageFiltered.map(([key, value]) => formatStorageProp({ key, value, tabId: P`tab-id` }))
 
     command.update(...updates)
   }

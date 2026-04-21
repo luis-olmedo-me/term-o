@@ -507,11 +507,11 @@ The `inspect` command is a bridge to review global variables in the global objec
 
 ### Dependency Rules
 
-When using `inspect` command the options can express **2** possible action:
+When using `inspect` command the options can express **3** possible action:
 
-1. Inspect a value from the global object ("window.\*") (using `--read`)
+1. Inspect a value from the global context (using `--read`)
 
-   The `--read` will trigger a search for a value in the global object.
+   The `--read` will trigger a search for a value in the global context.
 
    ```bash
    inspect
@@ -520,7 +520,19 @@ When using `inspect` command the options can express **2** possible action:
        --tab-id "T00000000"                                                 # OPTIONAL
    ```
 
-2. Search for text (using `--match`)
+2. Inspect a value from input (using `--read`)
+
+   The `--read` will trigger a search for a value within a given input JSON value.
+
+   ```bash
+   inspect
+       --read                                                               # REQUIRED
+       --input '{"test":3}'                                                 # REQUIRED
+       --path "test"                                                        # REQUIRED
+       --tab-id "T00000000"                                                 # OPTIONAL
+   ```
+
+3. Search for text (using `--match`)
 
    The `--match` describes what the query used to match the input.
 

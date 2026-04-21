@@ -103,8 +103,10 @@ export const formatStorageAsString = ({ storage, tabId }) => {
   const quotedStorage = getQuotedString(stringStorage)
 
   return [
-    ...spreadIf(hasTabId, [`${C`blue`}${quotedTabId}${C`reset`}`]),
-    `${C`yellow`}${quotedStorage}${C`reset`}`
+    [
+      ...spreadIf(hasTabId, [`${C`blue`}${quotedTabId}${C`reset`}`]),
+      `${C`yellow`}${quotedStorage}${C`reset`}`
+    ]
   ]
 }
 

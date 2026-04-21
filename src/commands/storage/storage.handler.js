@@ -23,6 +23,7 @@ export const storageHandler = async command => {
   if (P`list`) {
     const filters = P`data`
 
+    command.update(['"Reading storage."'])
     const storage = await processManager.getStorage(tabId, {
       includeLocal: P`local`,
       includeSession: P`session`,
@@ -31,11 +32,11 @@ export const storageHandler = async command => {
 
     const storageFiltered = Object.entries(storage).filter(entry => isStorageMatch(filters, entry))
 
-    command.reset()
     const updates = P`see-json`
-      ? [formatStorageAsString({ storage: Object.fromEntries(storageFiltered), tabId: P`tab-id` })]
+      ? formatStorageAsString({ storage: Object.fromEntries(storageFiltered), tabId: P`tab-id` })
       : storageFiltered.map(([key, value]) => formatStorageProp({ key, value, tabId: P`tab-id` }))
 
+    command.reset()
     command.update(...updates)
   }
 
@@ -58,7 +59,7 @@ export const storageHandler = async command => {
 
     command.reset()
     const updates = P`see-json`
-      ? [formatStorageAsString({ storage, tabId: P`tab-id` })]
+      ? formatStorageAsString({ storage, tabId: P`tab-id` })
       : storageEntries.map(([key, value]) => formatStorageProp({ key, value, tabId: P`tab-id` }))
 
     command.update(...updates)

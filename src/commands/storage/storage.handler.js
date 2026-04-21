@@ -5,7 +5,7 @@ import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatStorageAsString, formatStorageProp, formatText } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
-import { getStorageNamespace } from './storage.helpers'
+import { getStorageNamespace, isStorageMatch } from './storage.helpers'
 
 export const storageHandler = async command => {
   const storage = command.get('storage')
@@ -21,19 +21,22 @@ export const storageHandler = async command => {
   }
 
   if (P`list`) {
+    const filters = P`data`
+
+    command.update(['"Reading storage."'])
     const storage = await processManager.getStorage(tabId, {
       includeLocal: P`local`,
       includeSession: P`session`,
       includeCookies: P`cookie`
     })
 
-    const storageEntries = Object.entries(storage)
+    const storageFiltered = Object.entries(storage).filter(entry => isStorageMatch(filters, entry))
+
+    const updates = P`see-json`
+      ? formatStorageAsString({ storage: Object.fromEntries(storageFiltered), tabId: P`tab-id` })
+      : storageFiltered.map(([key, value]) => formatStorageProp({ key, value, tabId: P`tab-id` }))
 
     command.reset()
-    const updates = P`see-json`
-      ? [formatStorageAsString({ storage, tabId: P`tab-id` })]
-      : storageEntries.map(([key, value]) => formatStorageProp({ key, value, tabId: P`tab-id` }))
-
     command.update(...updates)
   }
 
@@ -56,14 +59,37 @@ export const storageHandler = async command => {
 
     command.reset()
     const updates = P`see-json`
-      ? [formatStorageAsString({ storage, tabId: P`tab-id` })]
+      ? formatStorageAsString({ storage, tabId: P`tab-id` })
       : storageEntries.map(([key, value]) => formatStorageProp({ key, value, tabId: P`tab-id` }))
 
     command.update(...updates)
   }
 
+  if (P`get`) {
+    const keySearh = P`key`
+
+    command.update(['"Reading storage."'])
+    const storage = await processManager.getStorage(tabId, {
+      includeLocal: P`local`,
+      includeSession: P`session`,
+      includeCookies: P`cookie`
+    })
+
+    const storageFiltered = Object.entries(storage).filter(([key]) => keySearh === key)
+    const hasFoundStorageValues = storageFiltered.length > 0
+
+    if (!hasFoundStorageValues) throw `Storage key did not match any other key.`
+
+    const updates = P`see-json`
+      ? formatStorageAsString({ storage: Object.fromEntries(storageFiltered), tabId: P`tab-id` })
+      : storageFiltered.map(([key, value]) => formatStorageProp({ key, value, tabId: P`tab-id` }))
+
+    command.reset()
+    command.update(...updates)
+  }
+
   if (P`copy`) {
-    const text = P`copy`
+    const text = P`input`
     const update = formatText({ text })
 
     await navigator.clipboard.writeText(text)

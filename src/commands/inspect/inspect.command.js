@@ -14,7 +14,11 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Read a variable from the global context of the Tab',
-    validate: [options.allow('path', 'tab-id'), options.requireAll('path')]
+    validate: [
+      options.allow('input', 'path', 'tab-id'),
+      options.when('input', [options.requireAll('path')]),
+      options.requireAnyOf('path', 'input')
+    ]
   })
   .expect({
     name: 'match',
@@ -54,5 +58,5 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define a user input',
-    validate: [options.requireAnyOf('match')]
+    validate: [options.requireAnyOf('match', 'read'), options.when('read', [value.isJSON])]
   })

@@ -103,8 +103,10 @@ export const formatStorageAsString = ({ storage, tabId }) => {
   const quotedStorage = getQuotedString(stringStorage)
 
   return [
-    ...spreadIf(hasTabId, [`${C`blue`}${quotedTabId}${C`reset`}`]),
-    `${C`yellow`}${quotedStorage}${C`reset`}`
+    [
+      ...spreadIf(hasTabId, [`${C`blue`}${quotedTabId}${C`reset`}`]),
+      `${C`yellow`}${quotedStorage}${C`reset`}`
+    ]
   ]
 }
 
@@ -195,9 +197,13 @@ export const formatStyle = ({ tagName, styles }) => {
 }
 
 export const formatStringSearch = ({ query, input }) => {
-  return [
-    input.replace(query, value => `${BG`red`}${C`brightWhite`}${value}${C`reset`}${BG`reset`}`)
-  ]
+  const match = input.replace(
+    query,
+    value => `${BG`red`}${C`brightWhite`}${value}${C`reset`}${BG`reset`}`
+  )
+  const quotedMatch = getQuotedString(match)
+
+  return [quotedMatch]
 }
 
 export const formatGap = ({ distanceX, distanceY }, xpathA, xpathB) => {

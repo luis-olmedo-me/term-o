@@ -1,7 +1,7 @@
 # Term-O Commands
 
 > Version 0.9.2  
-> Updated: 2026-04-18
+> Updated: 2026-04-21
 
 ---
 
@@ -507,11 +507,11 @@ The `inspect` command is a bridge to review global variables in the global objec
 
 ### Dependency Rules
 
-When using `inspect` command the options can express **2** possible action:
+When using `inspect` command the options can express **3** possible action:
 
-1. Inspect a value from the global object ("window.\*") (using `--read`)
+1. Inspect a value from the global context (using `--read`)
 
-   The `--read` will trigger a search for a value in the global object.
+   The `--read` will trigger a search for a value in the global context.
 
    ```bash
    inspect
@@ -520,7 +520,19 @@ When using `inspect` command the options can express **2** possible action:
        --tab-id "T00000000"                                                 # OPTIONAL
    ```
 
-2. Search for text (using `--match`)
+2. Inspect a value from input (using `--read`)
+
+   The `--read` will trigger a search for a value within a given input JSON value.
+
+   ```bash
+   inspect
+       --read                                                               # REQUIRED
+       --input '{"test":3}'                                                 # REQUIRED
+       --path "test"                                                        # REQUIRED
+       --tab-id "T00000000"                                                 # OPTIONAL
+   ```
+
+3. Search for text (using `--match`)
 
    The `--match` describes what the query used to match the input.
 
@@ -571,31 +583,34 @@ The `storage` command is a bridge to the storage API and clipboard API at any ta
 | ------------------- | ----- | ------------------------------------------------------- |
 | `--list`            | `-l`  | List all storage key-values.                            |
 | `--set`             | `-s`  | Set a key-value pair in the selected storage.           |
+| `--get`             | `-g`  | Get storage data.                                       |
 | `--copy`            | `-c`  | Copy a value to the clipboard.                          |
 | `--local`           | `-L`  | Define whether the local storage should be displayed.   |
 | `--session`         | `-S`  | Define whether the session storage should be displayed. |
 | `--cookie`          | `-C`  | Define whether the cookie storage should be displayed.  |
 | `--see-json`        | `-j`  | Define whether the JSON format should be displayed.     |
 | `--tab-id <string>` | `-i`  | Define a Tab ID where apply an action.                  |
+| `--key <string>`    | `-k`  | Define a storage key.                                   |
 | `--input <string>`  | `-I`  | Define a user input.                                    |
 | `--data <array>`    | `-d`  | Define a key-value pair.                                |
 | `--help`            | `-h`  | Show help for this command.                             |
 
 ### Dependency Rules
 
-When using `storage` command the options can express **3** possible action:
+When using `storage` command the options can express **4** possible action:
 
 1. Get a summary of local storage in a tab (using `--list`)
 
    The `--list` will trigger a search for all the storage key-values in a certain tab.
 
    ```bash
-   search
+   storage
        --list                                                               # REQUIRED
        --local                                                              # |
        --session                                                            # | ONE REQUIRED
        --cookie                                                             # |
        --tab-id "T00000000"                                                 # OPTIONAL
+       --data ["test-" "-value"]                                            # OPTIONAL
        --see-json                                                           # OPTIONAL
    ```
 
@@ -604,7 +619,7 @@ When using `storage` command the options can express **3** possible action:
    The `--set` will assigned a value in a ceratin tab at a certain tab.
 
    ```bash
-   search
+   storage
        --set                                                                # REQUIRED
        --local                                                              # |
        --session                                                            # | ONE REQUIRED
@@ -613,12 +628,26 @@ When using `storage` command the options can express **3** possible action:
        --tab-id "T00000000"                                                 # OPTIONAL
    ```
 
-3. Copy value into the clipboard (using `--copy`)
+3. Get data from a storage (using `--get`)
+
+   The `--get` will trigger a search for an unique storage value.
+
+   ```bash
+   storage
+       --get                                                                # REQUIRED
+       --key "test-value"                                                   # REQUIRED
+       --local                                                              # |
+       --session                                                            # | ONE REQUIRED
+       --cookie                                                             # |
+       --tab-id "T00000000"                                                 # OPTIONAL
+   ```
+
+4. Copy value into the clipboard (using `--copy`)
 
    The `--copy` will trigger the clipboard edition.
 
    ```bash
-   search
+   storage
        --copy                                                                # REQUIRED
        --input "test-value"                                                  # REQUIRED
    ```

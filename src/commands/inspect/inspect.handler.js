@@ -4,6 +4,7 @@ import { getTab } from '@src/browser-api/tabs.api'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatStringSearch, formatText } from '@src/helpers/format.helpers'
+import { getJSONPathValue } from '@src/helpers/json.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
 
 export const inspectHandler = async command => {
@@ -19,9 +20,18 @@ export const inspectHandler = async command => {
     tabId = validTab.id
   }
 
-  if (P`read`) {
+  if (P`read` && !P`input`) {
     command.update(['"Reading path from tab."'])
     const text = await processManager.readPath(tabId, { path: P`path` })
+    const update = formatText({ text })
+
+    command.reset()
+    command.update(update)
+  }
+
+  if (P`read` && P`input`) {
+    const json = P`input`
+    const text = getJSONPathValue(json, P`input`)
     const update = formatText({ text })
 
     command.reset()

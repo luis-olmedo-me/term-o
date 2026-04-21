@@ -65,6 +65,26 @@ export const storageHandler = async command => {
     command.update(...updates)
   }
 
+  if (P`get`) {
+    const keySearh = P`key`
+
+    command.update(['"Reading storage."'])
+    const storage = await processManager.getStorage(tabId, {
+      includeLocal: P`local`,
+      includeSession: P`session`,
+      includeCookies: P`cookie`
+    })
+
+    const storageFiltered = Object.entries(storage).filter(([key]) => keySearh === key)
+
+    const updates = P`see-json`
+      ? formatStorageAsString({ storage: Object.fromEntries(storageFiltered), tabId: P`tab-id` })
+      : storageFiltered.map(([key, value]) => formatStorageProp({ key, value, tabId: P`tab-id` }))
+
+    command.reset()
+    command.update(...updates)
+  }
+
   if (P`copy`) {
     const text = P`input`
     const update = formatText({ text })

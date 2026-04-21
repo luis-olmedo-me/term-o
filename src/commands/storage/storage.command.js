@@ -40,12 +40,23 @@ export default new CommandBase({
     validate: [options.requireAll('input')]
   })
   .expect({
+    name: 'get',
+    abbreviation: 'g',
+    type: commandTypes.BOOLEAN,
+    helpSection: helpSections.ACTIONS,
+    description: 'Get storage data',
+    validate: [
+      options.allow('local', 'session', 'cookie', 'see-json', 'tab-id', 'key'),
+      options.requireAnyOf('local', 'session', 'cookie')
+    ]
+  })
+  .expect({
     name: 'local',
     abbreviation: 'L',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
     description: 'Define whether the local storage should be displayed',
-    validate: [options.requireAnyOf('list', 'set'), options.conflict('session', 'cookie')]
+    validate: [options.requireAnyOf('list', 'set', 'get'), options.conflict('session', 'cookie')]
   })
   .expect({
     name: 'session',
@@ -53,7 +64,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
     description: 'Define whether the session storage should be displayed',
-    validate: [options.requireAnyOf('list', 'set'), options.conflict('local', 'cookie')]
+    validate: [options.requireAnyOf('list', 'set', 'get'), options.conflict('local', 'cookie')]
   })
   .expect({
     name: 'cookie',
@@ -61,7 +72,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
     description: 'Define whether the cookie storage should be displayed',
-    validate: [options.requireAnyOf('list', 'set'), options.conflict('local', 'session')]
+    validate: [options.requireAnyOf('list', 'set', 'get'), options.conflict('local', 'session')]
   })
   .expect({
     name: 'see-json',
@@ -86,6 +97,14 @@ export default new CommandBase({
     helpSection: helpSections.DETAILS,
     description: 'Define a user input',
     validate: [options.requireAnyOf('copy')]
+  })
+  .expect({
+    name: 'key',
+    abbreviation: 'k',
+    type: commandTypes.STRING,
+    helpSection: helpSections.DETAILS,
+    description: 'Define a storage key',
+    validate: [options.requireAnyOf('get')]
   })
   .expect({
     name: 'data',

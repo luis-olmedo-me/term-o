@@ -108,7 +108,7 @@ export default new CommandBase({
   })
   .expect({
     name: 'data',
-    abbreviation: 'd',
+    abbreviation: 'D',
     type: commandTypes.ARRAY,
     helpSection: helpSections.DETAILS,
     description: 'Define a key-value pair',

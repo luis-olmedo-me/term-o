@@ -76,6 +76,9 @@ export const storageHandler = async command => {
     })
 
     const storageFiltered = Object.entries(storage).filter(([key]) => keySearh === key)
+    const hasFoundStorageValues = storageFiltered.length > 0
+
+    if (!hasFoundStorageValues) throw `Storage key did not match any other key.`
 
     const updates = P`see-json`
       ? formatStorageAsString({ storage: Object.fromEntries(storageFiltered), tabId: P`tab-id` })

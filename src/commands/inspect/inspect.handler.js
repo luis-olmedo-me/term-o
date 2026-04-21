@@ -30,8 +30,8 @@ export const inspectHandler = async command => {
   }
 
   if (P`read` && P`input`) {
-    const json = P`input`
-    const text = getJSONPathValue(json, P`input`)
+    const json = JSON.parse(P`input`)
+    const text = getJSONPathValue(json, P`path`)
     const update = formatText({ text })
 
     command.reset()

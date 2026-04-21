@@ -41,9 +41,6 @@ export const parseOptions = (index, arg, argsBySpace, type) => {
       const quotesPattern = new RegExp(`^${quote}|${quote}$`, 'g')
       const value = argValue.replace(quotesPattern, '')
 
-      if (!value)
-        throw `${arg} expects for content inside of quoted ${typeLabel} value. Instead, it received ${argValue}.`
-
       const quotePattern = new RegExp(`(?<!\\\\)${quote}`, 'g')
       const quotesCount = countMatches(argValue, quotePattern)
 

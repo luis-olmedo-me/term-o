@@ -1,12 +1,9 @@
+import { getQuotedString } from './utils.helpers'
+
+const evalIsObject = value => typeof value === 'object' && value !== null && !Array.isArray(value)
+
 const stringify = (value, forbiddenKeys = [], forbiddenValues = []) => {
-  const isFunction = typeof value === 'function'
-  const isObject = typeof value === 'object' && value !== null && !Array.isArray(value)
-
-  if (isFunction) {
-    const functionName = value.name || 'anonymous'
-
-    return `[function.${functionName}]`
-  }
+  const isObject = evalIsObject(value)
 
   if (isObject) {
     let tempObject = {}
@@ -32,13 +29,23 @@ const stringify = (value, forbiddenKeys = [], forbiddenValues = []) => {
 
 export const getJSONPathValue = (json, pathExpression) => {
   const paths = pathExpression.split('.')
-  let rawValue = json
+  let result = json
+  let carriedKeys = []
 
   for (const key of paths) {
-    if (typeof rawValue !== 'object') throw 'Term-O can not inspect inside a non-object value.'
+    carriedKeys = carriedKeys.concat(key)
 
-    rawValue = rawValue[key]
+    try {
+      result = result[key]
+    } catch {
+      const errorPath = carriedKeys.join('.')
+      const errorResult = stringify(result)
+      const quotedErrorPath = getQuotedString(errorPath)
+      const quotedErrorResult = getQuotedString(errorResult)
+
+      throw `Term-O can not inspect ${quotedErrorPath} from ${quotedErrorResult} value.`
+    }
   }
 
-  return stringify(rawValue)
+  return stringify(result)
 }

@@ -596,6 +596,7 @@ When using `storage` command the options can express **3** possible action:
        --session                                                            # | ONE REQUIRED
        --cookie                                                             # |
        --tab-id "T00000000"                                                 # OPTIONAL
+       --data ["test-" "-value"]                                            # OPTIONAL
        --see-json                                                           # OPTIONAL
    ```
 

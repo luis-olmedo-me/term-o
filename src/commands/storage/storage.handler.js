@@ -65,7 +65,7 @@ export const storageHandler = async command => {
   }
 
   if (P`copy`) {
-    const text = P`copy`
+    const text = P`input`
     const update = formatText({ text })
 
     await navigator.clipboard.writeText(text)

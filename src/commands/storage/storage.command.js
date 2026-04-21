@@ -15,7 +15,7 @@ export default new CommandBase({
     helpSection: helpSections.ACTIONS,
     description: 'List all storage key-values',
     validate: [
-      options.allow('local', 'session', 'cookie', 'see-json', 'tab-id'),
+      options.allow('local', 'session', 'cookie', 'see-json', 'tab-id', 'data'),
       options.requireAnyOf('local', 'session', 'cookie')
     ]
   })
@@ -95,7 +95,9 @@ export default new CommandBase({
     description: 'Define a key-value pair',
     repeatable: true,
     validate: [
-      array.hasAllItemsAs(value.isArray, array.hasLength(2), array.hasAllItemsAs(value.isString)),
-      options.requireAnyOf('set')
+      array.hasAllItemsAs(value.isArray, array.hasAllItemsAs(value.isString)),
+      options.when('set', [array.hasAllItemsAs(array.hasLength(2))]),
+      options.when('list', [array.hasAllItemsAs(array.hasLengthBetween(1, 2))]),
+      options.requireAnyOf('set', 'list')
     ]
   })

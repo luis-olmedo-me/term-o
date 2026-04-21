@@ -21,13 +21,24 @@ export const storageHandler = async command => {
   }
 
   if (P`list`) {
+    const filters = P`data`
+    const hasFilters = filters.length > 0
+
     const storage = await processManager.getStorage(tabId, {
       includeLocal: P`local`,
       includeSession: P`session`,
       includeCookies: P`cookie`
     })
 
-    const storageEntries = Object.entries(storage)
+    const storageEntries = Object.entries(storage).filter(([key, value]) => {
+      const isMatch = filters.some(([filterKey, filterValue]) => {
+        return filterValue
+          ? key.includes(filterKey) && value.includes(filterValue)
+          : key.includes(filterKey)
+      })
+
+      return hasFilters ? isMatch : true
+    })
 
     command.reset()
     const updates = P`see-json`

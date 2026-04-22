@@ -100,9 +100,6 @@ class NotificationManager extends HTMLElement {
 
     setTimeout(() => notificationItem.remove(), 500)
 
-    const lastNotificationItem = this._notifications.at(-1)
-    if (lastNotificationItem) lastNotificationItem.classList.add('visible')
-
     this._updateCounter()
   }
 

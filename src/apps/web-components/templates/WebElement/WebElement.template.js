@@ -5,19 +5,30 @@ import webElementHtml from './WebElement.raw.html?raw'
 import { createCssVariablesFromTheme } from '@src/helpers/themes.helpers'
 
 export class WebElement extends HTMLElement {
-  constructor({ html, css }) {
+  constructor({ html, css, child = false }) {
     super()
 
-    this._root = this.attachShadow({ mode: 'closed' })
-    this._root.innerHTML = fillTemplate(webElementHtml, { content: html })
-
-    const dynamicSheet = new CSSStyleSheet()
-
-    dynamicSheet.replaceSync(css)
-
-    this._root.adoptedStyleSheets = [baseSheet, dynamicSheet]
+    this._root = child ? this : this.attachShadow({ mode: 'closed' })
+    this._html = html
+    this._css = css
+    this._child = child
 
     this.addEventListener('themechange', this.$handleThemeChange)
+  }
+
+  connectedCallback() {
+    this._root.innerHTML = this._child
+      ? this._html
+      : fillTemplate(webElementHtml, { content: this._html })
+
+    if (this._css) {
+      const dynamicSheet = new CSSStyleSheet()
+      dynamicSheet.replaceSync(this._css)
+
+      this._root.adoptedStyleSheets = [baseSheet, dynamicSheet]
+    }
+
+    this.$onConnectedCallback()
   }
 
   $get(className) {
@@ -52,4 +63,6 @@ export class WebElement extends HTMLElement {
       }
     })
   }
+
+  $onConnectedCallback() {}
 }

@@ -1,17 +1,17 @@
+import WebElement from '@web-components/templates/WebElement'
 import { buildHtmlTextContent } from './NotificationItem.helpers'
 import NotificationItemHtml from './NotificationItem.raw.html?raw'
 
 import { embedWebElements } from '@src/constants/web-elements.constants'
 
-class NotificationItem extends HTMLElement {
+class NotificationItem extends WebElement {
   constructor() {
-    super()
+    super({
+      html: NotificationItemHtml,
+      child: true
+    })
 
     this.addEventListener('init', this.init)
-  }
-
-  connectedCallback() {
-    this.innerHTML = NotificationItemHtml
   }
 
   get _elements() {
@@ -27,9 +27,13 @@ class NotificationItem extends HTMLElement {
   init(event) {
     const { title, message, color } = event.detail
 
-    this._elements.title.innerHTML = buildHtmlTextContent(title)
-    this._elements.message.innerHTML = buildHtmlTextContent(message)
-    this._elements.notification.setAttribute('data-intent', color)
+    const titleElement = this.$get('title')
+    const messageElement = this.$get('message')
+    const notificationElement = this.$get('notification')
+
+    titleElement.innerHTML = buildHtmlTextContent(title)
+    messageElement.innerHTML = buildHtmlTextContent(message)
+    notificationElement.setAttribute('data-intent', color)
   }
 }
 

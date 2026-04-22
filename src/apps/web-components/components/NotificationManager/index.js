@@ -18,7 +18,7 @@ class NotificationManager extends WebElement {
     this.addEventListener('add', this._handleAdd)
   }
 
-  connectedCallback() {
+  $onConnectedCallback() {
     const count = this.$get('count')
 
     count.addEventListener('click', this._handleCounterClick.bind(this))

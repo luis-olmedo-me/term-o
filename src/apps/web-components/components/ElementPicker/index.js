@@ -24,7 +24,7 @@ class ElementPicker extends WebElement {
     this._handleKeyDownRef = this._handleKeyDown.bind(this)
   }
 
-  connectedCallback() {
+  $onConnectedCallback() {
     const overlayElement = this.$get('overlay')
 
     overlayElement.addEventListener('click', this._handleOverlayClickRef)

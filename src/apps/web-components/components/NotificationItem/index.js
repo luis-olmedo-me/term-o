@@ -23,7 +23,7 @@ class NotificationItem extends WebElement {
 
     titleElement.innerHTML = buildHtmlTextContent(title)
     messageElement.innerHTML = buildHtmlTextContent(message)
-    notificationElement.setAttribute('data-intent', color)
+    notificationElement.setAttribute('data-bgcolor', color)
   }
 }
 

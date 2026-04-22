@@ -19,6 +19,7 @@
   z-index: 999999;
   transition:
     transform 0.3s ease-in-out,
+    padding 0.1s ease-in-out,
     opacity 0.3s ease-in-out;
   cursor: pointer;
   border: solid var(--colors-brightBlack);
@@ -31,6 +32,9 @@
   font-size: 10px;
   font-family: var(--font);
   user-select: none;
+}
+.count:hover {
+  padding: var(--space-200) var(--space-300) var(--space-200) var(--space-200);
 }
 .count[data-visible='true'] {
   transform: scale(1);

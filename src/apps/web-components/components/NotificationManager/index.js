@@ -9,7 +9,8 @@ class NotificationManager extends WebElement {
   constructor() {
     super({
       html: NotificationManagerHtml,
-      css: NotificationManagerCss
+      css: NotificationManagerCss,
+      isolated: true
     })
 
     this._notifications = []

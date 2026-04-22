@@ -8,20 +8,10 @@ class NotificationItem extends WebElement {
   constructor() {
     super({
       html: NotificationItemHtml,
-      child: true
+      isolated: false
     })
 
     this.addEventListener('init', this.init)
-  }
-
-  get _elements() {
-    return {
-      styles: this.querySelector('.styles'),
-      wrapper: this.querySelector('.wrapper'),
-      title: this.querySelector('.title'),
-      message: this.querySelector('.message'),
-      notification: this.querySelector('.notification')
-    }
   }
 
   init(event) {

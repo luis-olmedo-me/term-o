@@ -5,29 +5,32 @@ import webElementHtml from './WebElement.raw.html?raw'
 import { createCssVariablesFromTheme } from '@src/helpers/themes.helpers'
 
 export class WebElement extends HTMLElement {
-  constructor({ html, css, child = false }) {
+  constructor({ html, css, isolated }) {
     super()
 
-    this._root = child ? this : this.attachShadow({ mode: 'closed' })
+    this._root = isolated ? this.attachShadow({ mode: 'closed' }) : this
+    this._isolated = isolated
     this._html = html
     this._css = css
-    this._child = child
 
     this.addEventListener('themechange', this.$handleThemeChange)
   }
 
   connectedCallback() {
-    this._root.innerHTML = this._child
-      ? this._html
-      : fillTemplate(webElementHtml, { content: this._html })
+    let styleSheets = this._isolated ? [baseSheet] : []
+
+    this._root.innerHTML = this._isolated
+      ? fillTemplate(webElementHtml, { content: this._html })
+      : this._html
 
     if (this._css) {
       const dynamicSheet = new CSSStyleSheet()
       dynamicSheet.replaceSync(this._css)
 
-      this._root.adoptedStyleSheets = [baseSheet, dynamicSheet]
+      styleSheets = styleSheets.concat(dynamicSheet)
     }
 
+    if (styleSheets.length) this._root.adoptedStyleSheets = styleSheets
     this.$onConnectedCallback()
   }
 

@@ -1,3 +1,4 @@
+import { fillTemplate } from '@src/helpers/string.helpers'
 import { baseSheet } from './WebElement.constants'
 import webElementHtml from './WebElement.raw.html?raw'
 
@@ -8,7 +9,7 @@ export class WebElement extends HTMLElement {
     super()
 
     this._root = this.attachShadow({ mode: 'closed' })
-    this._root.innerHTML = webElementHtml.replace('{content}', html)
+    this._root.innerHTML = fillTemplate(webElementHtml, { content: html })
 
     const dynamicSheet = new CSSStyleSheet()
 

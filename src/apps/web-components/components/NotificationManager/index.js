@@ -1,44 +1,33 @@
-import { createCssVariablesFromTheme } from '@src/helpers/themes.helpers'
+import WebElement from '@web-components/templates/WebElement'
 import NotificationManagerCss from './NotificationManager.raw.css?raw'
 import NotificationManagerHtml from './NotificationManager.raw.html?raw'
 
 import { embedWebElements, webElements } from '@src/constants/web-elements.constants'
 import { createWebElement } from '@src/helpers/web-components.helpers'
 
-class NotificationManager extends HTMLElement {
+class NotificationManager extends WebElement {
   constructor() {
-    super()
+    super({
+      html: NotificationManagerHtml,
+      css: NotificationManagerCss
+    })
 
-    this._shadow = this.attachShadow({ mode: 'closed' })
-    this._shadow.innerHTML = NotificationManagerHtml
-    this._elements.styles.innerHTML = NotificationManagerCss
     this._notifications = []
     this._displayThree = false
 
     this.addEventListener('add', this._handleAdd)
-    this.addEventListener('theme', this._handleTheme)
   }
 
   connectedCallback() {
-    this._elements.count.addEventListener('click', this._handleCounterClick.bind(this))
-  }
+    const count = this.$get('count')
 
-  get _elements() {
-    return {
-      wrapper: this._shadow.querySelector('.wrapper'),
-      styles: this._shadow.querySelector('.styles'),
-      theme: this._shadow.querySelector('.theme'),
-      count: this._shadow.querySelector('.count')
-    }
+    count.addEventListener('click', this._handleCounterClick.bind(this))
   }
 
   _handleAdd(event) {
+    const wrapper = this.$get('wrapper')
     const initEvent = new CustomEvent('init', { detail: event.detail })
-    const notificationItem = createWebElement(
-      embedWebElements.NOTIFICATION_ITEM,
-      {},
-      this._elements.wrapper
-    )
+    const notificationItem = createWebElement(embedWebElements.NOTIFICATION_ITEM, {}, wrapper)
 
     notificationItem.dispatchEvent(initEvent)
     this._notifications = [notificationItem, ...this._notifications]
@@ -48,12 +37,6 @@ class NotificationManager extends HTMLElement {
     this._updateCounter()
 
     notificationItem.addEventListener('click', () => this._removeNotification(notificationItem))
-  }
-
-  _handleTheme(event) {
-    const { theme } = event.detail
-
-    this._elements.theme.innerHTML = createCssVariablesFromTheme(theme, '.web-theme-provider')
   }
 
   _handleCounterClick() {
@@ -104,12 +87,13 @@ class NotificationManager extends HTMLElement {
   }
 
   _updateCounter() {
-    const count = this._notifications.length
-    const label = count > 9 ? '+9' : String(count)
+    const count = this.$get('count')
+    const notificationsCount = this._notifications.length
+    const label = notificationsCount > 9 ? '+9' : String(notificationsCount)
 
-    this._elements.count.setAttribute('data-count', label)
-    this._elements.count.setAttribute('data-visible', count > 1)
-    this._elements.count.innerHTML = String(label)
+    count.setAttribute('data-count', label)
+    count.setAttribute('data-visible', notificationsCount > 1)
+    count.innerHTML = String(label)
   }
 }
 

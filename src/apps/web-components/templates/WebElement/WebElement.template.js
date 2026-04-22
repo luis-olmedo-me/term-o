@@ -1,4 +1,4 @@
-import webElementCss from './WebElement.raw.css?raw'
+import { baseSheet } from './WebElement.constants'
 import webElementHtml from './WebElement.raw.html?raw'
 
 import { createCssVariablesFromTheme } from '@src/helpers/themes.helpers'
@@ -10,10 +10,8 @@ export class WebElement extends HTMLElement {
     this._root = this.attachShadow({ mode: 'closed' })
     this._root.innerHTML = webElementHtml.replace('{content}', html)
 
-    const baseSheet = new CSSStyleSheet()
     const dynamicSheet = new CSSStyleSheet()
 
-    baseSheet.replaceSync(webElementCss)
     dynamicSheet.replaceSync(css)
 
     this._root.adoptedStyleSheets = [baseSheet, dynamicSheet]

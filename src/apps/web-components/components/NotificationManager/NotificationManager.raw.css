@@ -1,4 +1,4 @@
-.wrapper {
+.manager {
   position: fixed;
   top: var(--space-450);
   right: var(--space-450);
@@ -38,7 +38,7 @@
   transform: scale(1);
   opacity: 1;
 }
-.count[data-visible='true'] + .wrapper {
+.count[data-visible='true'] + .manager {
   right: calc(var(--space-600) + 2ch);
 }
 

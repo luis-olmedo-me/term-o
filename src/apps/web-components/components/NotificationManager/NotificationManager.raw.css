@@ -73,18 +73,18 @@ term-o-notification-item.visible:hover {
   border: var(--space-50) solid var(--colors-brightBlack);
   border-radius: var(--radius-200);
   background-color: var(--colors-background);
-  padding: var(--space-300) var(--space-300) var(--space-300) 14px;
+  padding: var(--space-400) var(--space-300) var(--space-400) var(--space-700);
   width: 350px;
   color: var(--colors-foreground);
 }
 .notification::after {
   position: absolute;
-  top: var(--space-200);
+  top: var(--space-250);
   left: var(--space-200);
   border-radius: var(--radius-100);
   background-color: var(--colors-accent);
   width: var(--space-250);
-  height: calc(100% - var(--space-300));
+  height: calc(100% - var(--space-450));
   content: '';
 }
 
@@ -107,5 +107,5 @@ term-o-notification-item.visible:hover {
 .message {
   opacity: 0.6;
   margin: 0;
-  font-size: 11px;
+  font-size: 10px;
 }

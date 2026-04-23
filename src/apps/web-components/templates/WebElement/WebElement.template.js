@@ -12,8 +12,10 @@ export class WebElement extends HTMLElement {
     this._isolated = isolated
     this._html = html
     this._css = css
+    this._props = {}
 
     this.addEventListener('themechange', this.$handleThemeChange)
+    this.addEventListener('propsloaded', this._handlePropsLoaded)
   }
 
   connectedCallback() {
@@ -36,6 +38,12 @@ export class WebElement extends HTMLElement {
 
   $get(className) {
     return this._root.querySelector(`.${className}`)
+  }
+
+  $prop(name) {
+    const value = this._props[name]
+
+    return typeof value !== 'undefined' ? value : null
   }
 
   $handleThemeChange(event) {
@@ -67,5 +75,13 @@ export class WebElement extends HTMLElement {
     })
   }
 
+  _handlePropsLoaded(event) {
+    const { props } = event.detail
+    this._props = props
+
+    this.$onPropsLoaded(props)
+  }
+
+  $onPropsLoaded() {}
   $onConnectedCallback() {}
 }

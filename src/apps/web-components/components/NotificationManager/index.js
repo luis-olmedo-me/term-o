@@ -28,7 +28,9 @@ class NotificationManager extends WebElement {
   _handleAdd(event) {
     const manager = this.$get('manager')
     const initEvent = new CustomEvent('init', { detail: event.detail })
-    const notificationItem = createWebElement(embedWebElements.NOTIFICATION_ITEM, {}, manager)
+    const notificationItem = createWebElement(embedWebElements.NOTIFICATION_ITEM, {
+      below: manager
+    })
 
     notificationItem.dispatchEvent(initEvent)
     this._notifications = [notificationItem, ...this._notifications]

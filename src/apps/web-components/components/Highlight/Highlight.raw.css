@@ -1,5 +1,5 @@
 .overlay {
-  position: absolute;
+  position: fixed;
   transform: scale(1.4);
   opacity: 0;
   z-index: 999999;

@@ -10,12 +10,17 @@ export const importWebComponents = () => {
   script.remove()
 }
 
-export const createWebElement = (name, { props = {}, theme = {}, below = document.body }) => {
+export const createWebElement = (
+  name,
+  { props = {}, theme = {}, root = null, below = document.body }
+) => {
   const host = document.createElement(name)
   const propsEvent = new CustomEvent('propsloaded', { detail: { props } })
   const themeEvent = new CustomEvent('themechange', { detail: { theme } })
+  const rootEvent = new CustomEvent('rootappend', { detail: { root } })
 
   below.appendChild(host)
+  if (root) host.dispatchEvent(rootEvent)
   host.dispatchEvent(propsEvent)
   host.dispatchEvent(themeEvent)
 
@@ -44,8 +49,8 @@ export const createNotification = ({ title, message, theme, color }) => {
   const additionEvent = new CustomEvent('add', { detail: { title, message, color } })
 
   let manager =
-    window.document.querySelector(webElements.NOTIFICATION_MANAGER, { theme }) ??
-    createWebElement(webElements.NOTIFICATION_MANAGER)
+    window.document.querySelector(webElements.NOTIFICATION_MANAGER) ??
+    createWebElement(webElements.NOTIFICATION_MANAGER, { theme })
 
   manager.dispatchEvent(additionEvent)
 

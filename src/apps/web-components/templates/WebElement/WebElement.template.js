@@ -13,9 +13,12 @@ export class WebElement extends HTMLElement {
     this._html = html
     this._css = css
     this._props = {}
+    this._theme = {}
+    this._router = [this._root]
 
-    this.addEventListener('themechange', this.$handleThemeChange)
+    this.addEventListener('themechange', this._handleThemeChange)
     this.addEventListener('propsloaded', this._handlePropsLoaded)
+    this.addEventListener('rootappend', this._handleRootAppend)
   }
 
   connectedCallback() {
@@ -37,7 +40,13 @@ export class WebElement extends HTMLElement {
   }
 
   $get(className) {
-    return this._root.querySelector(`.${className}`)
+    for (const root of this._router) {
+      const found = root.querySelector(`.${className}`)
+
+      if (found) return found
+    }
+
+    return null
   }
 
   $prop(name) {
@@ -46,11 +55,8 @@ export class WebElement extends HTMLElement {
     return typeof value !== 'undefined' ? value : null
   }
 
-  $handleThemeChange(event) {
-    const themeElement = this.$get('theme')
-    const { theme } = event.detail
-
-    themeElement.innerHTML = createCssVariablesFromTheme(theme, '.web-theme-provider')
+  $theme() {
+    return this._theme
   }
 
   $dispatch(name, detail = null) {
@@ -75,11 +81,25 @@ export class WebElement extends HTMLElement {
     })
   }
 
+  _handleThemeChange(event) {
+    const themeElement = this.$get('theme')
+    const { theme } = event.detail
+    this._theme = theme
+
+    themeElement.innerHTML = createCssVariablesFromTheme(theme, '.web-theme-provider')
+  }
+
   _handlePropsLoaded(event) {
     const { props } = event.detail
     this._props = props
 
     this.$onPropsLoaded(props)
+  }
+
+  _handleRootAppend(event) {
+    const { root } = event.detail
+
+    this._router = this._router.concat(root)
   }
 
   $onPropsLoaded() {}

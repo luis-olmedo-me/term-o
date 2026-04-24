@@ -18,7 +18,6 @@ class Highlight extends WebElement {
 
   $onPropsLoaded() {
     const overlay = this.$get('overlay')
-    console.log('💬 ~ overlay:', overlay)
 
     this.$addStyles(overlay, {
       top: this.$prop('top'),

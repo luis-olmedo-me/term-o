@@ -14,8 +14,10 @@ class NotificationItem extends WebElement {
     this.addEventListener('init', this.init)
   }
 
-  init(event) {
-    const { title, message, color } = event.detail
+  $onPropsLoaded() {
+    const title = this.$prop('title')
+    const message = this.$prop('message')
+    const color = this.$prop('color')
 
     const titleElement = this.$get('title')
     const messageElement = this.$get('message')

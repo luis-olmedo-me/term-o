@@ -1,4 +1,4 @@
-export const kebabCasePattern = /^[a-z]+(-[a-z]+)*$/
+export const kebabCasePattern = /^[a-z0-9]+(-[a-z0-9]+)*$/
 
 export const windowIdPattern = /W(\d)+/
 

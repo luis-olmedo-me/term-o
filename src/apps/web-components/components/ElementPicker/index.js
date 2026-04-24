@@ -12,7 +12,8 @@ class ElementPicker extends WebElement {
   constructor() {
     super({
       html: elementPickerHtml,
-      css: elementPickerCss
+      css: elementPickerCss,
+      isolated: true
     })
 
     this._isVisible = false
@@ -24,7 +25,7 @@ class ElementPicker extends WebElement {
     this._handleKeyDownRef = this._handleKeyDown.bind(this)
   }
 
-  connectedCallback() {
+  $onConnectedCallback() {
     const overlayElement = this.$get('overlay')
 
     overlayElement.addEventListener('click', this._handleOverlayClickRef)

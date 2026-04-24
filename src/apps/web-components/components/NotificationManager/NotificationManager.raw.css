@@ -1,88 +1,91 @@
-.wrapper {
+.manager {
   position: fixed;
   top: var(--space-450);
   right: var(--space-450);
   z-index: 999998;
-  font-size: 16px;
-  user-select: none;
-  font-family: var(--font);
   transition: right 0.3s ease-in-out;
+  font: 16px var(--font);
+  user-select: none;
 }
 
 .count {
   position: fixed;
-  transition:
-    transform 0.3s ease-in-out,
-    opacity 0.3s ease-in-out;
   top: var(--space-450);
   right: 0;
   transform: translateX(0) scale(1);
-  border-radius: var(--radius-200) 0 0 var(--radius-200);
-  background-color: var(--colors-background);
+  transform: scale(0.5);
+  opacity: 0;
+  z-index: 999999;
+  transition:
+    transform 0.3s ease-in-out,
+    padding 0.1s ease-in-out,
+    opacity 0.3s ease-in-out;
+  cursor: pointer;
   border: solid var(--colors-brightBlack);
   border-width: var(--space-50) 0 var(--space-50) var(--space-50);
+  border-radius: var(--radius-200) 0 0 var(--radius-200);
+  background-color: var(--colors-background);
   padding: var(--space-200);
-  font-size: 10px;
-  cursor: pointer;
-  user-select: none;
-  opacity: 0;
-  transform: scale(0.5);
   width: 2ch;
-  font-family: var(--font);
-  z-index: 999999;
   color: var(--colors-foreground);
+  font: 10px var(--font);
+  user-select: none;
+}
+.count:hover {
+  padding: var(--space-200) var(--space-300) var(--space-200) var(--space-200);
 }
 .count[data-visible='true'] {
-  opacity: 1;
   transform: scale(1);
+  opacity: 1;
 }
-.count[data-visible='true'] + .wrapper {
+.count[data-visible='true'] + .manager {
   right: calc(var(--space-600) + 2ch);
 }
 
 term-o-notification-item {
   position: absolute;
+  top: 0;
+  right: 0;
+  transform: translateX(100%) scale(0.5);
+  opacity: 0;
+  z-index: 0;
   transition:
     top 0.3s ease,
     right 0.1s ease,
     opacity 0.3s ease,
     transform 0.3s ease;
-  top: 0;
-  right: 0;
-  opacity: 0;
   pointer-events: none;
-  transform: translateX(100%) scale(0.5);
-  z-index: 0;
 }
 term-o-notification-item.visible {
-  opacity: 1;
-  pointer-events: all;
   transform: translateX(0%) scale(1);
+  opacity: 1;
   z-index: 1;
+  pointer-events: all;
 }
 term-o-notification-item.visible:hover {
   right: var(--space-200);
 }
 
 .notification {
-  width: 350px;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 5px 10px rgb(from black r g b / 0.4);
+  border: var(--space-50) solid var(--colors-brightBlack);
   border-radius: var(--radius-200);
   background-color: var(--colors-background);
-  border: var(--space-50) solid var(--colors-brightBlack);
-  padding: var(--space-300) var(--space-300) var(--space-300) 14px;
-  cursor: pointer;
-  position: relative;
+  padding: var(--space-400) var(--space-300) var(--space-400) var(--space-700);
+  width: 350px;
   color: var(--colors-foreground);
 }
 .notification::after {
-  content: '';
   position: absolute;
-  top: var(--space-200);
+  top: var(--space-250);
   left: var(--space-200);
-  width: var(--space-250);
-  height: calc(100% - var(--space-300));
-  background-color: var(--colors-accent);
   border-radius: var(--radius-100);
+  background-color: var(--colors-accent);
+  width: var(--space-250);
+  height: calc(100% - var(--space-450));
+  content: '';
 }
 
 .title,
@@ -97,143 +100,12 @@ term-o-notification-item.visible:hover {
 }
 
 .title {
+  margin: 0 0 var(--space-200) 0;
   font-weight: bold;
   font-size: 14px;
-  margin: 0 0 var(--space-200) 0;
 }
 .message {
-  font-size: 11px;
+  opacity: 0.6;
   margin: 0;
-}
-
-.notification[data-intent='white']::after {
-  background-color: var(--colors-white);
-}
-.notification[data-intent='black']::after {
-  background-color: var(--colors-black);
-}
-.notification[data-intent='red']::after {
-  background-color: var(--colors-red);
-}
-.notification[data-intent='yellow']::after {
-  background-color: var(--colors-yellow);
-}
-.notification[data-intent='green']::after {
-  background-color: var(--colors-green);
-}
-.notification[data-intent='purple']::after {
-  background-color: var(--colors-purple);
-}
-.notification[data-intent='cyan']::after {
-  background-color: var(--colors-cyan);
-}
-.notification[data-intent='blue']::after {
-  background-color: var(--colors-blue);
-}
-.notification[data-intent='accent']::after {
-  background-color: var(--colors-accent);
-}
-
-[data-bgcolor='white'] {
-  background-color: var(--colors-white);
-}
-[data-bgcolor='black'] {
-  background-color: var(--colors-black);
-}
-[data-bgcolor='red'] {
-  background-color: var(--colors-red);
-}
-[data-bgcolor='yellow'] {
-  background-color: var(--colors-yellow);
-}
-[data-bgcolor='green'] {
-  background-color: var(--colors-green);
-}
-[data-bgcolor='purple'] {
-  background-color: var(--colors-purple);
-}
-[data-bgcolor='cyan'] {
-  background-color: var(--colors-cyan);
-}
-[data-bgcolor='blue'] {
-  background-color: var(--colors-blue);
-}
-[data-bgcolor='brightRed'] {
-  background-color: var(--colors-brightRed);
-}
-[data-bgcolor='brightYellow'] {
-  background-color: var(--colors-brightYellow);
-}
-[data-bgcolor='brightGreen'] {
-  background-color: var(--colors-brightGreen);
-}
-[data-bgcolor='brightPurple'] {
-  background-color: var(--colors-brightPurple);
-}
-[data-bgcolor='brightCyan'] {
-  background-color: var(--colors-brightCyan);
-}
-[data-bgcolor='brightBlue'] {
-  background-color: var(--colors-brightBlue);
-}
-[data-bgcolor='brightWhite'] {
-  background-color: var(--colors-brightWhite);
-}
-[data-bgcolor='brightBlack'] {
-  background-color: var(--colors-brightBlack);
-}
-[data-bgcolor='reset'] {
-  background-color: transparent;
-}
-
-[data-color='white'] {
-  color: var(--colors-white);
-}
-[data-color='black'] {
-  color: var(--colors-black);
-}
-[data-color='red'] {
-  color: var(--colors-red);
-}
-[data-color='yellow'] {
-  color: var(--colors-yellow);
-}
-[data-color='green'] {
-  color: var(--colors-green);
-}
-[data-color='purple'] {
-  color: var(--colors-purple);
-}
-[data-color='cyan'] {
-  color: var(--colors-cyan);
-}
-[data-color='blue'] {
-  color: var(--colors-blue);
-}
-[data-color='brightRed'] {
-  color: var(--colors-brightRed);
-}
-[data-color='brightYellow'] {
-  color: var(--colors-brightYellow);
-}
-[data-color='brightGreen'] {
-  color: var(--colors-brightGreen);
-}
-[data-color='brightPurple'] {
-  color: var(--colors-brightPurple);
-}
-[data-color='brightCyan'] {
-  color: var(--colors-brightCyan);
-}
-[data-color='brightBlue'] {
-  color: var(--colors-brightBlue);
-}
-[data-color='brightWhite'] {
-  color: var(--colors-brightWhite);
-}
-[data-color='brightBlack'] {
-  color: var(--colors-brightBlack);
-}
-[data-color='reset'] {
-  color: var(--colors-foreground);
+  font-size: 10px;
 }

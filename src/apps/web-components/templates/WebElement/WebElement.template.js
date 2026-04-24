@@ -1,35 +1,62 @@
-import webElementCss from './WebElement.raw.css?raw'
+import { fillTemplate } from '@src/helpers/string.helpers'
+import { baseSheet } from './WebElement.constants'
 import webElementHtml from './WebElement.raw.html?raw'
 
 import { createCssVariablesFromTheme } from '@src/helpers/themes.helpers'
 
 export class WebElement extends HTMLElement {
-  constructor({ html, css }) {
+  constructor({ html, css, isolated }) {
     super()
 
-    this._root = this.attachShadow({ mode: 'closed' })
-    this._root.innerHTML = webElementHtml.replace('{content}', html)
+    this._root = isolated ? this.attachShadow({ mode: 'closed' }) : this
+    this._isolated = isolated
+    this._html = html
+    this._css = css
+    this._props = {}
+    this._theme = {}
+    this._router = [this._root]
 
-    const baseSheet = new CSSStyleSheet()
-    const dynamicSheet = new CSSStyleSheet()
+    this.addEventListener('themechange', this._handleThemeChange)
+    this.addEventListener('propsloaded', this._handlePropsLoaded)
+    this.addEventListener('rootappend', this._handleRootAppend)
+  }
 
-    baseSheet.replaceSync(webElementCss)
-    dynamicSheet.replaceSync(css)
+  connectedCallback() {
+    let styleSheets = this._isolated ? [baseSheet] : []
 
-    this._root.adoptedStyleSheets = [baseSheet, dynamicSheet]
+    this._root.innerHTML = this._isolated
+      ? fillTemplate(webElementHtml, { content: this._html })
+      : this._html
 
-    this.addEventListener('themechange', this.$handleThemeChange)
+    if (this._css) {
+      const dynamicSheet = new CSSStyleSheet()
+      dynamicSheet.replaceSync(this._css)
+
+      styleSheets = styleSheets.concat(dynamicSheet)
+    }
+
+    if (styleSheets.length) this._root.adoptedStyleSheets = styleSheets
+    this.$onConnectedCallback()
   }
 
   $get(className) {
-    return this._root.querySelector(`.${className}`)
+    for (const root of this._router) {
+      const found = root.querySelector(`.${className}`)
+
+      if (found) return found
+    }
+
+    return null
   }
 
-  $handleThemeChange(event) {
-    const themeElement = this.$get('theme')
-    const { theme } = event.detail
+  $prop(name) {
+    const value = this._props[name]
 
-    themeElement.innerHTML = createCssVariablesFromTheme(theme, '.web-theme-provider')
+    return typeof value !== 'undefined' ? value : null
+  }
+
+  $theme() {
+    return this._theme
   }
 
   $dispatch(name, detail = null) {
@@ -53,4 +80,28 @@ export class WebElement extends HTMLElement {
       }
     })
   }
+
+  _handleThemeChange(event) {
+    const themeElement = this.$get('theme')
+    const { theme } = event.detail
+    this._theme = theme
+
+    themeElement.innerHTML = createCssVariablesFromTheme(theme, '.web-theme-provider')
+  }
+
+  _handlePropsLoaded(event) {
+    const { props } = event.detail
+    this._props = props
+
+    this.$onPropsLoaded(props)
+  }
+
+  _handleRootAppend(event) {
+    const { root } = event.detail
+
+    this._router = this._router.concat(root)
+  }
+
+  $onPropsLoaded() {}
+  $onConnectedCallback() {}
 }

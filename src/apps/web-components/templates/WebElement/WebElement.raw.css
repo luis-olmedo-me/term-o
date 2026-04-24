@@ -50,6 +50,9 @@
 .colored[data-bgcolor='blue'] {
   background-color: var(--colors-blue);
 }
+.colored[data-bgcolor='accent'] {
+  background-color: var(--colors-accent);
+}
 .colored[data-bgcolor='brightRed'] {
   background-color: var(--colors-brightRed);
 }
@@ -73,6 +76,9 @@
 }
 .colored[data-bgcolor='brightBlack'] {
   background-color: var(--colors-brightBlack);
+}
+.colored[data-bgcolor='brightAccent'] {
+  background-color: var(--colors-brightAccent);
 }
 .colored[data-bgcolor='reset'] {
   background-color: transparent;

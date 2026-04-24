@@ -10,52 +10,53 @@ export const importWebComponents = () => {
   script.remove()
 }
 
-export const createWebElement = (name, props = {}, below = document.body) => {
+export const createWebElement = (
+  name,
+  { props = {}, theme = {}, root = null, below = document.body }
+) => {
   const host = document.createElement(name)
-
-  Object.entries(props).forEach(([propName, propValue]) => {
-    host.setAttribute(propName, propValue)
-  })
+  const propsEvent = new CustomEvent('propsloaded', { detail: { props } })
+  const themeEvent = new CustomEvent('themechange', { detail: { theme } })
+  const rootEvent = new CustomEvent('rootappend', { detail: { root } })
 
   below.appendChild(host)
+  if (root) host.dispatchEvent(rootEvent)
+  host.dispatchEvent(propsEvent)
+  host.dispatchEvent(themeEvent)
 
   return host
 }
 
 export const createHighlight = ({ element, theme }) => {
   const rect = element.getBoundingClientRect()
-  const radius = window.getComputedStyle(element).borderRadius
+  const borderRadius = window.getComputedStyle(element).borderRadius
   const isVisible = isElementVisible(element)
 
   return createWebElement(webElements.HIGHLIGHT, {
-    radius,
-    isVisible,
-    color: theme.colors.accent,
-    left: `${rect.left}px`,
-    top: `${rect.top}px`,
-    width: `${rect.width}px`,
-    height: `${rect.height}px`
+    theme,
+    props: {
+      borderRadius,
+      isVisible,
+      left: `${rect.left}px`,
+      top: `${rect.top}px`,
+      width: `${rect.width}px`,
+      height: `${rect.height}px`
+    }
   })
 }
 
 export const createNotification = ({ title, message, theme, color }) => {
   const additionEvent = new CustomEvent('add', { detail: { title, message, color } })
-  const themeEvent = new CustomEvent('theme', { detail: { theme } })
+
   let manager =
     window.document.querySelector(webElements.NOTIFICATION_MANAGER) ??
-    createWebElement(webElements.NOTIFICATION_MANAGER)
+    createWebElement(webElements.NOTIFICATION_MANAGER, { theme })
 
-  manager.dispatchEvent(themeEvent)
   manager.dispatchEvent(additionEvent)
 
   return manager
 }
 
 export const createElementPicker = ({ theme }) => {
-  const themeEvent = new CustomEvent('themechange', { detail: { theme } })
-  const elementPicker = createWebElement(webElements.ELEMENT_PICKER)
-
-  elementPicker.dispatchEvent(themeEvent)
-
-  return elementPicker
+  return createWebElement(webElements.ELEMENT_PICKER, { theme })
 }

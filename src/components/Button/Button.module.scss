@@ -10,13 +10,10 @@
   cursor: pointer;
   border: none;
   background-color: transparent;
-  padding: $space-300 $space-300;
   width: 100%;
   height: fit-content;
   color: $colors-foreground;
-  font-weight: bold;
-  font-size: $fontSize-100;
-  line-height: $lineHeight-100;
+  font-weight: normal;
   font-family: $font;
 
   &:active,
@@ -51,7 +48,6 @@
     border: $space-50 solid $colors-brightBlack;
     border-radius: $radius-200;
     background-color: with-opacity($colors-white, 0.05);
-    padding: $space-300 $space-400;
 
     &:focus {
       border: $space-50 solid $colors-accent;
@@ -81,7 +77,6 @@
     border: $space-50 solid $colors-brightBlack;
     border-radius: $radius-200;
     background-color: with-opacity($colors-red, 0.25);
-    padding: $space-300 $space-400;
 
     &:focus {
       border: $space-50 solid $colors-red;
@@ -111,7 +106,6 @@
     border: $space-50 solid $colors-brightBlack;
     border-radius: $radius-200;
     background-color: with-opacity($colors-yellow, 0.25);
-    padding: $space-300 $space-400;
 
     &:focus {
       border: $space-50 solid $colors-yellow;
@@ -135,5 +129,17 @@
         background-color: with-opacity($colors-yellow, 0.5);
       }
     }
+  }
+
+  &___size_normal {
+    padding: $space-300 $space-300;
+    font-size: $fontSize-50;
+    line-height: $lineHeight-50;
+  }
+
+  &___size_large {
+    padding: $space-500 $space-400;
+    font-size: $fontSize-100;
+    line-height: $lineHeight-100;
   }
 }

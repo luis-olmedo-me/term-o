@@ -9,3 +9,8 @@ export const buttonIconOrientations = {
   LEFT: 'left',
   RIGHT: 'right'
 }
+
+export const buttonSizes = {
+  NORMAL: 'normal',
+  LARGE: 'large'
+}

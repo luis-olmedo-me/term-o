@@ -33,3 +33,8 @@
     background-color 0.5s ease-in-out;
   box-shadow: 0 0 10px var(--colors-accent);
 }
+
+.overlay.canceled {
+  transform: scale(0);
+  opacity: 0;
+}

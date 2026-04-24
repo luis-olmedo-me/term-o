@@ -10,8 +10,6 @@ class NotificationItem extends WebElement {
       html: NotificationItemHtml,
       isolated: false
     })
-
-    this.addEventListener('init', this.init)
   }
 
   $onPropsLoaded() {

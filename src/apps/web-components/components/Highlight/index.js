@@ -14,6 +14,8 @@ class Highlight extends WebElement {
       css: HighlightCss,
       isolated: true
     })
+
+    this._handleOverlayScrollRef = this._handleOverlayScroll.bind(this)
   }
 
   $onPropsLoaded() {
@@ -26,6 +28,8 @@ class Highlight extends WebElement {
       height: this.$prop('height'),
       'border-radius': this.$prop('borderRadius')
     })
+
+    window.addEventListener('scroll', this._handleOverlayScrollRef)
 
     if (this.$prop('isVisible')) this._runAnimation()
     else this._runWithoutAnimation()
@@ -43,6 +47,7 @@ class Highlight extends WebElement {
     this.$dispatch('fadingstart')
 
     await delay(700)
+    window.removeEventListener('scroll', this._handleOverlayScrollRef)
     this.remove()
   }
 
@@ -51,7 +56,15 @@ class Highlight extends WebElement {
     this.$dispatch('fadingstart')
 
     await delay(100)
+    window.removeEventListener('scroll', this._handleOverlayScrollRef)
     this.remove()
+  }
+
+  _handleOverlayScroll() {
+    const overlay = this.$get('overlay')
+
+    window.removeEventListener('scroll', this._handleOverlayScrollRef)
+    overlay.classList.add('canceled')
   }
 }
 

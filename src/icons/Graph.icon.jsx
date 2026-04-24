@@ -1,6 +1,6 @@
 import { iconPropType } from '@src/constants/icon.constants'
 
-const Data = ({ size, className }) => {
+const Graph = ({ size, className }) => {
   return (
     <svg
       width={size}
@@ -21,6 +21,6 @@ const Data = ({ size, className }) => {
   )
 }
 
-Data.propTypes = iconPropType
+Graph.propTypes = iconPropType
 
-export default Data
+export default Graph

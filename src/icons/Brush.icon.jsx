@@ -1,6 +1,6 @@
 import { iconPropType } from '@src/constants/icon.constants'
 
-const Palette = ({ size, className }) => {
+const Brush = ({ size, className }) => {
   return (
     <svg
       width={size}
@@ -21,6 +21,6 @@ const Palette = ({ size, className }) => {
   )
 }
 
-Palette.propTypes = iconPropType
+Brush.propTypes = iconPropType
 
-export default Palette
+export default Brush

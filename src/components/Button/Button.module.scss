@@ -16,8 +16,7 @@
   color: $colors-foreground;
   font-weight: bold;
   font-size: $fontSize-100;
-  line-height: $lineHeight-300;
-  line-height: normal;
+  line-height: $lineHeight-100;
   font-family: $font;
 
   &:active,
@@ -52,7 +51,7 @@
     border: $space-50 solid $colors-brightBlack;
     border-radius: $radius-200;
     background-color: with-opacity($colors-white, 0.05);
-    padding: $space-200 $space-300;
+    padding: $space-300 $space-400;
 
     &:focus {
       border: $space-50 solid $colors-accent;
@@ -82,7 +81,7 @@
     border: $space-50 solid $colors-brightBlack;
     border-radius: $radius-200;
     background-color: with-opacity($colors-red, 0.25);
-    padding: $space-200 $space-300;
+    padding: $space-300 $space-400;
 
     &:focus {
       border: $space-50 solid $colors-red;
@@ -112,7 +111,7 @@
     border: $space-50 solid $colors-brightBlack;
     border-radius: $radius-200;
     background-color: with-opacity($colors-yellow, 0.25);
-    padding: $space-200 $space-300;
+    padding: $space-300 $space-400;
 
     &:focus {
       border: $space-50 solid $colors-yellow;

@@ -4,3 +4,8 @@ export const buttonVariants = {
   OUTLINED_DANGER: 'outlined-danger',
   OUTLINED_WARN: 'outlined-warn'
 }
+
+export const buttonIconOrientations = {
+  LEFT: 'left',
+  RIGHT: 'right'
+}

@@ -60,10 +60,6 @@
     width: 100%;
   }
 
-  &___mod_fixed_width {
-    min-width: 115px;
-  }
-
   &___mod_error {
     outline-color: $colors-red;
     outline-offset: $space-200;

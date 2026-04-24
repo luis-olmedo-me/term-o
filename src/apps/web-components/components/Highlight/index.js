@@ -4,8 +4,6 @@ import HighlightHtml from './Highlight.raw.html?raw'
 
 import { webElements } from '@src/constants/web-elements.constants'
 import { delay } from '@src/helpers/utils.helpers'
-// import { applyCssVariables, getPropsFromAttrs } from '@web-components/helpers/props.helpers'
-// import { highlightPropNames } from './Highlight.constants'
 
 class Highlight extends WebElement {
   constructor() {

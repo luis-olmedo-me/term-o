@@ -111,9 +111,10 @@
   margin-right: $space-250;
   border: solid with-opacity($colors-brightBlack, 0.5);
   border-width: 0 $space-50 $space-50 0;
-  padding: $space-200 $space-300;
+  padding: $space-250 $space-300;
   color: $colors-foreground;
-  line-height: $lineHeight-200;
+  font-size: $fontSize-50;
+  line-height: $lineHeight-50;
 
   &:hover {
     background-color: with-opacity($colors-accent, 0.1);

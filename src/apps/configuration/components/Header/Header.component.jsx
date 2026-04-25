@@ -29,7 +29,7 @@ export const Header = ({ onSearch }) => {
     <header className={header}>
       <div className={header__content}>
         <div className={header__title_container}>
-          <Logo size={iconSizes.SMALL} />
+          <Logo size={iconSizes.LG} />
 
           <h1 className={header__title}>TERM-O</h1>
         </div>
@@ -54,7 +54,7 @@ export const Header = ({ onSearch }) => {
           rel="noopener noreferrer"
           aria-label="View repository on GitHub"
         >
-          <Repo size={iconSizes.SMALL} />
+          <Repo size={iconSizes.LG} />
           0.9.2
         </a>
       </nav>

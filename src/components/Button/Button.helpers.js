@@ -22,7 +22,7 @@ export const getClassNameBySize = variant => {
 }
 
 export const getIconSizeBySize = variant => {
-  if (variant === buttonSizes.NORMAL) return iconSizes.BUTTON_NORMAL
-  if (variant === buttonSizes.LARGE) return iconSizes.BUTTON_LARGE
+  if (variant === buttonSizes.NORMAL) return iconSizes.XS
+  if (variant === buttonSizes.LARGE) return iconSizes.SM
   return ''
 }

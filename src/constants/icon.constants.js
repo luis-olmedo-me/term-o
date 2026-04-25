@@ -1,13 +1,8 @@
 export const iconSizes = {
-  EXTRA_SMALL: 10,
-  HALF_SMALL: 15,
-  SMALL: 20,
-  MEDIUM: 30,
-  NORMAL: 40,
-  LARGE: 100,
-  BUTTON_NORMAL: 14,
-  BUTTON_LARGE: 16,
-  BUTTON_EXTRA_LARGE: 18
+  XS: 14,
+  SM: 16,
+  MD: 18,
+  LG: 20
 }
 
 export const iconPropType = {

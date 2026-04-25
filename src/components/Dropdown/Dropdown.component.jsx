@@ -65,7 +65,7 @@ export const Dropdown = ({
           ${buttonClassName}
         `}
       >
-        {Icon && <Icon size={iconSizes.MD} />}
+        {Icon && <Icon size={iconSizes.SM} />}
 
         {value && <span>{value}</span>}
       </button>

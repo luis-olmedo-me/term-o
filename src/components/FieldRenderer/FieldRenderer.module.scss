@@ -54,7 +54,7 @@
 }
 
 .field__input {
-  outline: $space-150 dashed transparent;
+  outline: $space-50 dashed transparent;
   width: fit-content;
 
   &___mod_full_width {
@@ -63,8 +63,8 @@
 
   &___mod_error {
     outline-color: $colors-red;
-    outline-offset: $space-200;
-    border-radius: $radius-100;
+    outline-offset: $space-100;
+    border-radius: $radius-200;
   }
 }
 

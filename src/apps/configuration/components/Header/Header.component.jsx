@@ -54,8 +54,9 @@ export const Header = ({ onSearch }) => {
           rel="noopener noreferrer"
           aria-label="View repository on GitHub"
         >
-          <Repo size={iconSizes.LG} />
-          0.9.2
+          <Repo size={iconSizes.SM} />
+
+          <span>0.9.2</span>
         </a>
       </nav>
     </header>

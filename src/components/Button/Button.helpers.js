@@ -1,4 +1,3 @@
-import { iconSizes } from '@src/constants/icon.constants'
 import { buttonSizes, buttonVariants } from './Button.constants'
 import {
   button___size_large,
@@ -18,11 +17,5 @@ export const getClassNameByVariant = variant => {
 export const getClassNameBySize = variant => {
   if (variant === buttonSizes.NORMAL) return button___size_normal
   if (variant === buttonSizes.LARGE) return button___size_large
-  return ''
-}
-
-export const getIconSizeBySize = variant => {
-  if (variant === buttonSizes.NORMAL) return iconSizes.XS
-  if (variant === buttonSizes.LARGE) return iconSizes.SM
   return ''
 }

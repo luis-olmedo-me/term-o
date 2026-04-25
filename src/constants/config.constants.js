@@ -1,8 +1,8 @@
 import Brush from '@src/icons/Brush.icon'
-import Restart from '@src/icons/Clean.icon'
 import Export from '@src/icons/Export.icon'
 import Graph from '@src/icons/Graph.icon'
 import Import from '@src/icons/Import.icon'
+import Restart from '@src/icons/Restart.icon'
 import Thunder from '@src/icons/Thunder.icon'
 import Watch from '@src/icons/Watch.icon'
 

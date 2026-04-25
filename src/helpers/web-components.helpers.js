@@ -1,5 +1,5 @@
-import { isElementVisible } from '@src/apps/content/helpers/style-utils.helpers'
 import { webElements } from '@src/constants/web-elements.constants'
+import { isElementVisible } from '@src/helpers/style-utils.helpers'
 
 export const importWebComponents = () => {
   const script = document.createElement('script')

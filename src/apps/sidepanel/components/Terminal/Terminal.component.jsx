@@ -4,7 +4,7 @@ import CommandsViewer from '@sidepanel/components/CommandsViewer'
 import Prompt from '@sidepanel/components/Prompt'
 import Dropdown from '@src/components/Dropdown'
 import useStorage from '@src/hooks/useStorage'
-import ThreeDots from '@src/icons/ThreeDots.icon'
+import Adjust from '@src/icons/Adjust.icon'
 
 import { switchOrCreateTab } from '@src/browser-api/tabs.api'
 import { origins } from '@src/constants/command.constants'
@@ -71,7 +71,7 @@ export const Terminal = () => {
     <div className={terminal} onMouseUp={handleMouseUp}>
       <header className={terminal__header}>
         <Dropdown
-          Icon={ThreeDots}
+          Icon={Adjust}
           onSelect={handleDropdownSelect}
           className={terminal__header_dropdown}
           buttonClassName={terminal__header_dropdown_button}

@@ -72,7 +72,7 @@ export const Select = ({
         </span>
 
         <Chevron
-          size={iconSizes.EXTRA_SMALL}
+          size={iconSizes.XS}
           className={`
             ${select__mark}
             ${open ? select__mark___state_open : ''}

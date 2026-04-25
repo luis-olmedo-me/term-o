@@ -8,6 +8,7 @@ import Switch from '@src/components/Switch'
 import TextArea from '@src/components/TextArea'
 import ThemeSelect from '@src/components/ThemeSelect'
 import { availableInputTypes } from '@src/constants/inputs.constants'
+import { buttonIconOrientations } from '../Button/Button.constants'
 import { getButtonVariantFromType } from './DynamicInput.helpers'
 import { dynamic__button } from './DynamicInput.module.scss'
 
@@ -120,9 +121,10 @@ export const DynamicInput = ({
         <Button
           onClick={() => handleClickInButtons(inputId)}
           variant={getButtonVariantFromType(type)}
+          className={dynamic__button}
+          iconOrientation={buttonIconOrientations.RIGHT}
           Icon={iconButton}
           value={value}
-          className={dynamic__button}
         />
       )
 

@@ -1,8 +1,8 @@
-import Clean from '@src/icons/Clean.icon'
-import Data from '@src/icons/Data.icon'
+import Brush from '@src/icons/Brush.icon'
 import Export from '@src/icons/Export.icon'
+import Graph from '@src/icons/Graph.icon'
 import Import from '@src/icons/Import.icon'
-import Palette from '@src/icons/Palette.icon'
+import Restart from '@src/icons/Restart.icon'
 import Thunder from '@src/icons/Thunder.icon'
 import Watch from '@src/icons/Watch.icon'
 
@@ -181,7 +181,7 @@ export const defaultConfigSections = [
     id: configIds.APPEARENCE,
     name: 'Appearence',
     description: 'Customize the visual appearance of the terminal, including font settings.',
-    Icon: Palette,
+    Icon: Brush,
     inputs: [
       {
         id: configInputIds.THEME_NAME,
@@ -259,7 +259,7 @@ export const defaultConfigSections = [
     id: configIds.DATA,
     name: 'Data',
     description: 'Manage storage and configuration backups.',
-    Icon: Data,
+    Icon: Graph,
     inputs: [
       {
         id: configInputIds.IMPORT_CONFIGURATION,
@@ -291,7 +291,7 @@ export const defaultConfigSections = [
         description: `Restore UI and behavior settings. Your commands and events will not be affected.`,
         type: availableInputTypes.BUTTON_WARN,
         postFix: null,
-        iconButton: Clean,
+        iconButton: Restart,
         options: [],
         validations: [],
         value: configDefaultValues[configInputIds.RESET_CONFIGURATION]

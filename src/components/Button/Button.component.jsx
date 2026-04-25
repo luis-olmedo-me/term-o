@@ -1,15 +1,20 @@
 import { iconSizes } from '@src/constants/icon.constants'
-import { getClassNameByVariant } from './Button.helpers'
+import { buttonIconOrientations, buttonSizes } from './Button.constants'
+import { getClassNameBySize, getClassNameByVariant } from './Button.helpers'
 import { button, button___state_selected } from './Button.module.scss'
 
 export const Button = ({
   value,
   onClick,
   variant,
+  size = buttonSizes.NORMAL,
   Icon = null,
   selected = false,
-  className = ''
+  className = '',
+  iconOrientation = buttonIconOrientations.LEFT
 }) => {
+  const isIconOnLeft = iconOrientation === buttonIconOrientations.LEFT
+
   return (
     <button
       onClick={onClick}
@@ -17,12 +22,15 @@ export const Button = ({
         ${button}
         ${selected ? button___state_selected : ''}
         ${getClassNameByVariant(variant)}
+        ${getClassNameBySize(size)}
         ${className}
       `}
     >
-      {Icon && <Icon size={iconSizes.SMALL} />}
+      {isIconOnLeft && Icon && <Icon size={iconSizes.SM} />}
 
       {value && <span>{value}</span>}
+
+      {!isIconOnLeft && Icon && <Icon size={iconSizes.SM} />}
     </button>
   )
 }
@@ -33,5 +41,7 @@ Button.propTypes = {
   selected: Boolean,
   Icon: Object,
   variant: String,
-  className: String
+  className: String,
+  iconOrientation: String,
+  size: String
 }

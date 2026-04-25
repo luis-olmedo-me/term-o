@@ -14,7 +14,6 @@ import {
   field__error,
   field__input,
   field__input___mod_error,
-  field__input___mod_fixed_width,
   field__input___mod_full_width,
   field__leyends,
   field__title
@@ -55,10 +54,6 @@ export const FieldRenderer = ({
   const hasErrorMessage = typeof errorMessage === 'string'
   const isTextAreaInput = type === availableInputTypes.TEXT_AREA
   const isTextInput = isTextAreaInput || type === availableInputTypes.STRING
-  const isButtonInput =
-    type === availableInputTypes.BUTTON ||
-    type === availableInputTypes.BUTTON_DANGER ||
-    type === availableInputTypes.BUTTON_WARN
 
   return (
     <div
@@ -80,7 +75,6 @@ export const FieldRenderer = ({
         className={`
           ${field__input}
           ${isTextInput ? field__input___mod_full_width : ''}
-          ${isButtonInput ? field__input___mod_fixed_width : ''}
           ${hasErrorMessage ? field__input___mod_error : ''}
         `}
       >

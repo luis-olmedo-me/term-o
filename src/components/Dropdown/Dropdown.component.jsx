@@ -65,7 +65,7 @@ export const Dropdown = ({
           ${buttonClassName}
         `}
       >
-        {Icon && <Icon size={iconSizes.SMALL} />}
+        {Icon && <Icon size={iconSizes.SM} />}
 
         {value && <span>{value}</span>}
       </button>
@@ -97,7 +97,7 @@ export const Dropdown = ({
                 onClick={() => handleOptionClick(option.id)}
                 className={select__option}
               >
-                {option.Icon && <option.Icon size={iconSizes.HALF_SMALL} />}
+                {option.Icon && <option.Icon size={iconSizes.XS} />}
 
                 {option.name}
               </li>

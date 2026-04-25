@@ -1,6 +1,6 @@
 import { iconPropType } from '@src/constants/icon.constants'
 
-const Clean = ({ size, className }) => {
+const Restart = ({ size, className }) => {
   return (
     <svg
       width={size}
@@ -17,6 +17,6 @@ const Clean = ({ size, className }) => {
   )
 }
 
-Clean.propTypes = iconPropType
+Restart.propTypes = iconPropType
 
-export default Clean
+export default Restart

@@ -1,5 +1,5 @@
 import Brush from '@src/icons/Brush.icon'
-import Clean from '@src/icons/Clean.icon'
+import Restart from '@src/icons/Clean.icon'
 import Export from '@src/icons/Export.icon'
 import Graph from '@src/icons/Graph.icon'
 import Import from '@src/icons/Import.icon'
@@ -291,7 +291,7 @@ export const defaultConfigSections = [
         description: `Restore UI and behavior settings. Your commands and events will not be affected.`,
         type: availableInputTypes.BUTTON_WARN,
         postFix: null,
-        iconButton: Clean,
+        iconButton: Restart,
         options: [],
         validations: [],
         value: configDefaultValues[configInputIds.RESET_CONFIGURATION]

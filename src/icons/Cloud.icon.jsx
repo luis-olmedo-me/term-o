@@ -1,6 +1,6 @@
 import { iconPropType } from '@src/constants/icon.constants'
 
-const Repo = ({ size, className }) => {
+const Cloud = ({ size, className }) => {
   return (
     <svg
       width={size}
@@ -18,6 +18,6 @@ const Repo = ({ size, className }) => {
   )
 }
 
-Repo.propTypes = iconPropType
+Cloud.propTypes = iconPropType
 
-export default Repo
+export default Cloud

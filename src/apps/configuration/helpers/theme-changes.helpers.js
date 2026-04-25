@@ -8,7 +8,7 @@ export const handleThemeChanges = updatedStorage => {
     const elements = document.querySelectorAll(name)
 
     elements.forEach(element => {
-      const themeEvent = new CustomEvent('theme', { detail: { theme: config.theme } })
+      const themeEvent = new CustomEvent('themechange', { detail: { theme: config.theme } })
 
       element.dispatchEvent(themeEvent)
     })

@@ -13,7 +13,7 @@ export class CommandList extends EventListener {
   }
 
   get status() {
-    return getCommandListStatus()
+    return getCommandListStatus(this._nodes)
   }
 
   add(newItem) {

@@ -17,4 +17,14 @@ export class CommandChain extends EventListener {
 
     return this
   }
+
+  async execute() {
+    for (const command of this._chain) {
+      if (command.finished) return
+
+      await command.execute()
+
+      if (command.finished) return
+    }
+  }
 }

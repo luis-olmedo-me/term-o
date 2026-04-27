@@ -24,14 +24,14 @@ export class CommandParser extends EventListener {
   }
 
   read(rawScript) {
-    const scriptFormatted = this.getWithAliasesResolved(rawScript)
+    const scriptFormatted = this._solveAliases(rawScript)
     let [firstFragment, ...nextFragments] = splitBy(scriptFormatted, '&&')
 
-    const command = this.parse(firstFragment)
+    const command = this._build(firstFragment)
     let carriedCommand = command
 
     for (let fragment of nextFragments) {
-      const nextCommand = this.parse(fragment)
+      const nextCommand = this._build(fragment)
       carriedCommand.nextCommand = nextCommand
 
       if (nextCommand.finished) break
@@ -45,7 +45,7 @@ export class CommandParser extends EventListener {
     })
   }
 
-  parse(fragment) {
+  _build(fragment) {
     const [name, ...scriptArgs] = getArgs(fragment)
 
     const base = this.bases.find(base => base.name === name)
@@ -61,12 +61,10 @@ export class CommandParser extends EventListener {
       return error
     }
 
-    const command = base.create().prepare(scriptArgs)
-
-    return command
+    return base.create().prepare(scriptArgs)
   }
 
-  getWithAliasesResolved(script) {
+  _solveAliases(script) {
     const fragments = splitBy(script, '&&')
 
     const fragmentsWithAliases = fragments.map(fragment => {

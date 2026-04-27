@@ -1,5 +1,9 @@
-export class CommandChain {
+import EventListener from '@src/templates/EventListener'
+
+export class CommandChain extends EventListener {
   constructor(defaultShare) {
+    super()
+
     this._chain = []
     this._shared = defaultShare
   }

@@ -5,6 +5,7 @@ import EventListener from '@src/templates/EventListener'
 import { getArgs, splitBy } from '@src/helpers/arguments.helpers'
 import { getHighestTitleCountInBases } from '@src/helpers/command.helpers'
 import { truncate } from '@src/helpers/utils.helpers'
+import { CommandChain } from '@src/templates/CommandChain/CommandChain.template'
 
 export class CommandParser extends EventListener {
   constructor(bases) {
@@ -25,24 +26,20 @@ export class CommandParser extends EventListener {
 
   read(rawScript) {
     const scriptFormatted = this._solveAliases(rawScript)
-    let [firstFragment, ...nextFragments] = splitBy(scriptFormatted, '&&')
-
-    const command = this._build(firstFragment)
-    let carriedCommand = command
-
-    for (let fragment of nextFragments) {
-      const nextCommand = this._build(fragment)
-      carriedCommand.nextCommand = nextCommand
-
-      if (nextCommand.finished) break
-
-      carriedCommand = nextCommand
-    }
-
-    return command.share({
+    const fragments = splitBy(scriptFormatted, '&&')
+    const chain = new CommandChain({
       highestTitleCount: getHighestTitleCountInBases(this.bases),
       title: rawScript
     })
+
+    for (let fragment of fragments) {
+      const command = this._build(fragment)
+
+      chain.add(command)
+      if (command.finished) break
+    }
+
+    return chain
   }
 
   _build(fragment) {

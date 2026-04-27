@@ -23,13 +23,16 @@ export class CommandList extends EventListener {
     const debouncedOnUpdate = debounce(this.onUpdate.bind(this), 50)
 
     for (const command of this._chain) {
+      if (command.failed) break
       command.share(this._shared)
       command.addEventListener('update', debouncedOnUpdate)
+      command.addEventListener('statuschange', debouncedOnUpdate)
 
       await command.execute()
 
       command.removeEventListener('update', debouncedOnUpdate)
-      if (command.failed) return
+      command.removeEventListener('statuschange', debouncedOnUpdate)
+      if (command.failed) break
     }
   }
 

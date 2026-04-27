@@ -60,12 +60,14 @@ const handleCommandQueueChange = async (storage, commandParser) => {
     .read(executable.line)
     .share({ storage, isTermOpen, context, origin, eventType })
 
-  if (!command.finished) {
-    // command.startExecuting()
-    command.addEventListener('update', () => console.log('Updating', command))
-    // queue.change(executable.id, command.jsonUI())
-    await command.execute()
-  }
+  command.addEventListener('update', () =>
+    console.log(
+      'Updating',
+      command._chain.map(c => c.status)
+    )
+  )
+  // queue.change(executable.id, command.jsonUI())
+  await command.execute()
 
   if (command) {
     console.log('💬 ~ command:', command)

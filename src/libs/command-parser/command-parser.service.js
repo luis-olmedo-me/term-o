@@ -38,7 +38,7 @@ export class CommandParser extends EventListener {
       const command = this._build(segment)
 
       commandChain.add(command)
-      if (command.finished) break
+      if (command.failed) break
     }
 
     return commandChain

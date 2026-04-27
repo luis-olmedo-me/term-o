@@ -1,6 +1,6 @@
 import EventListener from '@src/templates/EventListener'
 
-export class CommandChain extends EventListener {
+export class CommandList extends EventListener {
   constructor(defaultShare) {
     super()
 

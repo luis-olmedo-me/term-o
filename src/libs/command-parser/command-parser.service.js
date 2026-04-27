@@ -5,7 +5,7 @@ import EventListener from '@src/templates/EventListener'
 import { getArgs, splitBy } from '@src/helpers/arguments.helpers'
 import { getHighestTitleCountInBases } from '@src/helpers/command.helpers'
 import { truncate } from '@src/helpers/utils.helpers'
-import { CommandChain } from '@src/templates/CommandChain/CommandChain.template'
+import { CommandList } from '@src/templates/CommandList'
 
 export class CommandParser extends EventListener {
   constructor(bases) {
@@ -27,7 +27,7 @@ export class CommandParser extends EventListener {
   read(rawCompleteLine) {
     const completeLine = this._solveAliases(rawCompleteLine)
     const segments = splitBy(completeLine, '&&')
-    const commandChain = new CommandChain({
+    const commandChain = new CommandList({
       highestTitleCount: getHighestTitleCountInBases(this.bases),
       title: rawCompleteLine
     })

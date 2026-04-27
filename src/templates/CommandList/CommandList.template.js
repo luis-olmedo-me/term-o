@@ -1,10 +1,11 @@
-import { debounce } from '@src/helpers/utils.helpers'
+import { createUUIDv4, debounce } from '@src/helpers/utils.helpers'
 import EventListener from '@src/templates/EventListener'
 
 export class CommandList extends EventListener {
   constructor({ metadata }) {
     super()
 
+    this._id = createUUIDv4()
     this._chain = []
     this._shared = metadata
   }
@@ -38,5 +39,11 @@ export class CommandList extends EventListener {
 
   onUpdate() {
     this.dispatchEvent('update', this)
+  }
+
+  toJSON() {
+    return {
+      id: this._id
+    }
   }
 }

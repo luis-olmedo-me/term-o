@@ -63,7 +63,7 @@ const handleCommandQueueChange = async (storage, commandParser) => {
   commandList.addEventListener('update', () =>
     console.log(
       'Updating',
-      commandList._chain.map(c => c.status)
+      commandList._nodes.map(c => c.status)
     )
   )
   // queue.change(executable.id, command.jsonUI())

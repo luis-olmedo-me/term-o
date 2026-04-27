@@ -6,12 +6,12 @@ export class CommandList extends EventListener {
     super()
 
     this._id = createUUIDv4()
-    this._chain = []
+    this._nodes = []
     this._shared = metadata
   }
 
   add(newItem) {
-    this._chain = this._chain.concat(newItem)
+    this._nodes = this._nodes.concat(newItem)
   }
 
   share(newSharedData) {
@@ -23,7 +23,7 @@ export class CommandList extends EventListener {
   async execute() {
     const debouncedOnUpdate = debounce(this.onUpdate.bind(this), 50)
 
-    for (const command of this._chain) {
+    for (const command of this._nodes) {
       if (command.failed) break
       command.share(this._shared)
       command.addEventListener('update', debouncedOnUpdate)

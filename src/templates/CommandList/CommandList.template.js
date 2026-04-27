@@ -1,3 +1,4 @@
+import { debounce } from '@src/helpers/utils.helpers'
 import EventListener from '@src/templates/EventListener'
 
 export class CommandList extends EventListener {
@@ -19,12 +20,19 @@ export class CommandList extends EventListener {
   }
 
   async execute() {
+    const debouncedOnUpdate = debounce(this.onUpdate.bind(this), 50)
+
     for (const command of this._chain) {
-      if (command.finished) return
+      command.share(this._shared)
+      command.addEventListener('update', debouncedOnUpdate)
 
       await command.execute()
 
-      if (command.finished) return
+      if (command.failed) return
     }
+  }
+
+  onUpdate() {
+    this.dispatchEvent('update', this)
   }
 }

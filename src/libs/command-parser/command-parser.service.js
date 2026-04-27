@@ -24,22 +24,22 @@ export class CommandParser extends EventListener {
     this.aliases = aliases
   }
 
-  read(rawScript) {
-    const scriptFormatted = this._solveAliases(rawScript)
-    const fragments = splitBy(scriptFormatted, '&&')
-    const chain = new CommandChain({
+  read(rawCompleteLine) {
+    const completeLine = this._solveAliases(rawCompleteLine)
+    const segments = splitBy(completeLine, '&&')
+    const commandChain = new CommandChain({
       highestTitleCount: getHighestTitleCountInBases(this.bases),
-      title: rawScript
+      title: rawCompleteLine
     })
 
-    for (let fragment of fragments) {
-      const command = this._build(fragment)
+    for (let segment of segments) {
+      const command = this._build(segment)
 
-      chain.add(command)
+      commandChain.add(command)
       if (command.finished) break
     }
 
-    return chain
+    return commandChain
   }
 
   _build(fragment) {

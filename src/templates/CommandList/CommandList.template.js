@@ -28,6 +28,7 @@ export class CommandList extends EventListener {
 
       await command.execute()
 
+      command.removeEventListener('update', debouncedOnUpdate)
       if (command.failed) return
     }
   }

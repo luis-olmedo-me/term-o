@@ -56,25 +56,25 @@ const handleCommandQueueChange = async (storage, commandParser) => {
   const isTermOpen = !!sidePanelPort
 
   const context = createContext(contextInputValue, tab)
-  const command = commandParser
+  const commandList = commandParser
     .read(executable.line)
     .share({ storage, isTermOpen, context, origin, eventType })
 
-  command.addEventListener('update', () =>
+  commandList.addEventListener('update', () =>
     console.log(
       'Updating',
-      command._chain.map(c => c.status)
+      commandList._chain.map(c => c.status)
     )
   )
   // queue.change(executable.id, command.jsonUI())
-  await command.execute()
+  await commandList.execute()
 
-  if (command) {
-    console.log('💬 ~ command:', command)
+  if (commandList) {
+    console.log('💬 ~ command:', commandList)
     return
   }
 
-  const commandVisible = command.getCommandVisibleInChain()
+  const commandVisible = commandList.getCommandVisibleInChain()
 
   if (commandVisible) queue.change(executable.id, commandVisible.jsonUI())
   else queue.delete(executable.id)

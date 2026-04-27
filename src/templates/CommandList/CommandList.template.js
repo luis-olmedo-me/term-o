@@ -1,11 +1,11 @@
 import EventListener from '@src/templates/EventListener'
 
 export class CommandList extends EventListener {
-  constructor(defaultShare) {
+  constructor({ metadata }) {
     super()
 
     this._chain = []
-    this._shared = defaultShare
+    this._shared = metadata
   }
 
   add(newItem) {

@@ -28,8 +28,10 @@ export class CommandParser extends EventListener {
     const completeLine = this._solveAliases(rawCompleteLine)
     const segments = splitBy(completeLine, '&&')
     const commandChain = new CommandList({
-      highestTitleCount: getHighestTitleCountInBases(this.bases),
-      title: rawCompleteLine
+      metadata: {
+        highestTitleCount: getHighestTitleCountInBases(this.bases),
+        title: rawCompleteLine
+      }
     })
 
     for (let segment of segments) {

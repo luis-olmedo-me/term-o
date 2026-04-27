@@ -1,5 +1,7 @@
-import { createUUIDv4, debounce } from '@src/helpers/utils.helpers'
 import EventListener from '@src/templates/EventListener'
+
+import { createUUIDv4, debounce } from '@src/helpers/utils.helpers'
+import { getCommandListStatus } from './CommandList.helpers'
 
 export class CommandList extends EventListener {
   constructor({ metadata }) {
@@ -8,6 +10,10 @@ export class CommandList extends EventListener {
     this._id = createUUIDv4()
     this._nodes = []
     this._shared = metadata
+  }
+
+  get status() {
+    return getCommandListStatus()
   }
 
   add(newItem) {
@@ -21,7 +27,7 @@ export class CommandList extends EventListener {
   }
 
   async execute() {
-    const debouncedOnUpdate = debounce(this.onUpdate.bind(this), 50)
+    const debouncedOnUpdate = debounce(this._onUpdate.bind(this), 50)
 
     for (const command of this._nodes) {
       if (command.failed) break
@@ -37,13 +43,14 @@ export class CommandList extends EventListener {
     }
   }
 
-  onUpdate() {
-    this.dispatchEvent('update', this)
-  }
-
   toJSON() {
     return {
-      id: this._id
+      id: this._id,
+      status: this.status
     }
+  }
+
+  _onUpdate() {
+    this.dispatchEvent('update', this)
   }
 }

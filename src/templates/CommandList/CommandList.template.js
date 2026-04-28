@@ -36,7 +36,10 @@ export class CommandList extends EventListener {
     const debouncedOnUpdate = debounce(this._onUpdate.bind(this), 50)
     const registerTimerId = () => (this._timerId = debouncedOnUpdate())
 
-    for (const command of this._nodes) {
+    for (let index = 0; index < this._nodes.length; index++) {
+      const command = this._nodes[index]
+      const previousCommand = this._nodes[index - 1]
+
       if (command.failed) break
       command.share(this._shared)
       command.addEventListener('update', registerTimerId)

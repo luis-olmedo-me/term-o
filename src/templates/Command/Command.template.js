@@ -27,6 +27,9 @@ export class Command extends EventListener {
     this._shared = {}
   }
 
+  get hasArgsPending() {
+    return this.args.some(arg => arg.isHoldingUp)
+  }
   get finished() {
     return [commandStatuses.ERROR, commandStatuses.DONE].includes(this.status)
   }
@@ -103,10 +106,8 @@ export class Command extends EventListener {
   }
 
   async execute() {
-    const hasArgsPending = this.args.some(arg => arg.isHoldingUp)
-
     try {
-      if (hasArgsPending) throw 'Params were not finished'
+      if (this.hasArgsPending) throw 'Params were not finished'
 
       this.props = this.options.getValues()
       this.startExecuting()

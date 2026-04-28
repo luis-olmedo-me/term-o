@@ -16,20 +16,20 @@ export const limitQueueByConfig = (queue, maxCount) => {
       newQueue.unshift(queueItem)
       continue
     }
-    const updates = command.updates
+    const logs = command.logs
 
-    count += updates.length
+    count += logs.length
 
     if (count > maxCount) {
-      const cutUpdates = updates.slice((maxCount - count) * -1)
-      const overflowCount = updates.length - cutUpdates.length
+      const cutLogs = logs.slice((maxCount - count) * -1)
+      const overflowCount = logs.length - cutLogs.length
 
       if (overflowCount) discardedCount += overflowCount
       if (alreadyExceed) {
-        discardedCount += updates.length
+        discardedCount += logs.length
         continue
       }
-      newQueue.unshift({ ...queueItem, command: { ...command, updates: cutUpdates } })
+      newQueue.unshift({ ...queueItem, command: { ...command, updates: cutLogs } })
       alreadyExceed = true
       continue
     }

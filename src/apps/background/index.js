@@ -46,6 +46,7 @@ const handleCommandQueueChange = async (storage, commandParser) => {
   const originalTab = storage.get(storageKeys.TAB)
   const config = storage.get(storageKeys.CONFIG)
 
+  const id = executable.id
   const tab = executable.tab || originalTab
   const origin = executable.origin
   const eventType = executable.eventType
@@ -60,17 +61,12 @@ const handleCommandQueueChange = async (storage, commandParser) => {
     .read(executable.line)
     .share({ storage, isTermOpen, context, origin, eventType })
 
-  commandList.addEventListener('update', () =>
-    console.log(
-      'Updating',
-      commandList._nodes.map(c => c.status)
-    )
-  )
-  // queue.change(executable.id, command.jsonUI())
+  commandList.addEventListener('update', () => queue.change(id, commandList.toJSON({ flat: true })))
+
   await commandList.execute()
 
   if (commandList) {
-    console.log('💬 ~ command:', commandList.toJSON())
+    console.log('💬 ~ command:', commandList.toJSON({ flat: true }))
     return
   }
 

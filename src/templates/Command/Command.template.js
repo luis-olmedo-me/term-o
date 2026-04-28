@@ -4,9 +4,14 @@ import EventListener from '@src/templates/EventListener'
 import { commandStatuses } from '@src/constants/command.constants'
 
 import { buildArgsFromProps } from '@src/helpers/arguments.helpers'
-import { executePerUpdates, stringifyUpdates } from '@src/helpers/command.helpers'
+import {
+  executePerUpdates,
+  stringifyFragments,
+  stringifyUpdates
+} from '@src/helpers/command.helpers'
 import { formatError } from '@src/helpers/format.helpers'
 import { getPropsFromString } from '@src/helpers/options.helpers'
+import { cleanColors } from '@src/helpers/themes.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 
 export class Command extends EventListener {
@@ -110,22 +115,45 @@ export class Command extends EventListener {
       if (this.hasArgsPending) throw 'Params were not finished'
 
       this.props = this.options.getValues()
-      this.startExecuting()
 
+      this.startExecuting()
       await this.dispatchEvent('execute', this)
 
-      if (!this.finished) {
-        if (this.canExecuteNext && this.nextCommand) await this.executeNext()
-
-        this.changeStatus(commandStatuses.DONE)
-      } else {
-        this.changeStatus(this.status)
-      }
+      this.changeStatus(commandStatuses.DONE)
     } catch (error) {
       this.throw(error)
     }
 
     return this
+  }
+
+  async executePerLogs(previousCommand) {
+    const argsHoldingUp = this.args.filter(arg => arg.isHoldingUp)
+
+    for (const args of previousCommand.updates) {
+      const update = stringifyFragments(args)
+      const cleanedUpdate = cleanColors(update)
+
+      argsHoldingUp.forEach(arg => {
+        let newValue = arg.getValueFromArgs(cleanedUpdate, args)
+        const isArray = Array.isArray(newValue)
+        const isString = typeof newValue === 'string'
+
+        if (isArray) newValue = newValue.map(cleanColors)
+        if (isString) newValue = cleanColors(newValue)
+
+        arg.setValue(newValue)
+      })
+
+      this.prepare()
+
+      if (this.failed) break
+
+      await this.execute()
+      this.saveUpdates()
+
+      if (this.failed) break
+    }
   }
 
   throw(message) {

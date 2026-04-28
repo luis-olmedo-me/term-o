@@ -45,7 +45,8 @@ export class CommandList extends EventListener {
       command.addEventListener('update', registerTimerId)
       command.addEventListener('statuschange', registerTimerId)
 
-      await command.execute()
+      if (previousCommand && command.hasArgsPending) await command.executePerLogs(previousCommand)
+      else await command.execute()
 
       command.removeEventListener('update', registerTimerId)
       command.removeEventListener('statuschange', registerTimerId)

@@ -9,7 +9,6 @@ export class Argument {
   }
 
   setValue(newValue) {
-    this.isHoldingUp = false
     this.value = newValue
   }
 

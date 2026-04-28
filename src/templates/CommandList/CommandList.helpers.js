@@ -1,4 +1,5 @@
 import { commandStatuses } from '@src/constants/command.constants'
+import { stringifyUpdates } from '@src/helpers/command.helpers'
 
 const commandIs = (command, status) => command.status === status
 const commandsHaveSome = (commands, status) => commands.some(command => commandIs(command, status))
@@ -10,4 +11,14 @@ export const getCommandListStatus = commands => {
   if (commandsHaveAll(commands, commandStatuses.DONE)) return commandStatuses.DONE
   if (commandsHaveSome(commands, commandStatuses.IDLE)) return commandStatuses.IDLE
   return commandStatuses.EXECUTING
+}
+
+export const getCommandListLogs = (commands, options) => {
+  const { flat } = options
+
+  return commands.reduce((result, command) => {
+    const logs = flat ? stringifyUpdates(command.updates) : command.updates
+
+    return [...result, ...logs]
+  }, [])
 }

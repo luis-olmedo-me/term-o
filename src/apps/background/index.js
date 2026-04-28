@@ -70,7 +70,7 @@ const handleCommandQueueChange = async (storage, commandParser) => {
   await commandList.execute()
 
   if (commandList) {
-    console.log('💬 ~ command:', commandList)
+    console.log('💬 ~ command:', commandList.toJSON())
     return
   }
 

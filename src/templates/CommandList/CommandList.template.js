@@ -1,7 +1,7 @@
 import EventListener from '@src/templates/EventListener'
 
 import { createUUIDv4, debounce } from '@src/helpers/utils.helpers'
-import { getCommandListStatus } from './CommandList.helpers'
+import { getCommandListLogs, getCommandListStatus } from './CommandList.helpers'
 
 export class CommandList extends EventListener {
   constructor({ metadata }) {
@@ -43,10 +43,13 @@ export class CommandList extends EventListener {
     }
   }
 
-  toJSON() {
+  toJSON(options) {
+    const { flat } = options || {}
+
     return {
       id: this._id,
-      status: this.status
+      status: this.status,
+      logs: getCommandListLogs(this._nodes, { flat })
     }
   }
 

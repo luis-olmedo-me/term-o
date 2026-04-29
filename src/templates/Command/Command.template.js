@@ -116,7 +116,8 @@ export class Command extends EventListener {
 
       this.props = this.options.getValues()
 
-      this.startExecuting()
+      this.reset()
+      this.changeStatus(commandStatuses.EXECUTING)
       await this.dispatchEvent('execute', this)
 
       this.changeStatus(commandStatuses.DONE)
@@ -193,11 +194,6 @@ export class Command extends EventListener {
   }
   get(key) {
     return this._shared[key] ?? null
-  }
-
-  startExecuting() {
-    this.changeStatus(commandStatuses.EXECUTING)
-    this.reset()
   }
 
   changeStatus(newStatus) {

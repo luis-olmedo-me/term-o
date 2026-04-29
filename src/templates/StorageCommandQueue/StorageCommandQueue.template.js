@@ -82,9 +82,15 @@ export class StorageCommandQueue extends StorageSimple {
 
   clearCompleted() {
     const newQueue = this.$latest().value.filter(
-      ({ command }) => !command || command.status === commandStatuses.EXECUTING
+      ({ command }) =>
+        !command ||
+        command.status === commandStatuses.EXECUTING ||
+        command.status === commandStatuses.IDLE
     )
+    const current = newQueue.map(item => item.id)
+    const newCache = this._cache.filter(item => current.includes(item.id))
 
+    this._cache = newCache
     this.$storageService.set(storageKeys.COMMAND_QUEUE, newQueue)
   }
 

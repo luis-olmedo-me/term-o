@@ -4,11 +4,7 @@ import EventListener from '@src/templates/EventListener'
 import { commandStatuses } from '@src/constants/command.constants'
 
 import { buildArgsFromProps } from '@src/helpers/arguments.helpers'
-import {
-  executePerUpdates,
-  stringifyFragments,
-  stringifyUpdates
-} from '@src/helpers/command.helpers'
+import { stringifyFragments, stringifyUpdates } from '@src/helpers/command.helpers'
 import { formatError } from '@src/helpers/format.helpers'
 import { getPropsFromString } from '@src/helpers/options.helpers'
 import { cleanColors } from '@src/helpers/themes.helpers'
@@ -164,25 +160,6 @@ export class Command extends EventListener {
 
     this.update(errorUpdate)
     this.changeStatus(commandStatuses.ERROR)
-  }
-
-  async executeNext() {
-    const nextCommand = this.nextCommand
-    const staticUpdates = [...this.updates]
-    const hasArgsHoldingUp = nextCommand.args.some(arg => arg.isHoldingUp)
-
-    if (nextCommand.finished) return this.update(...nextCommand.updates)
-
-    this.saveUpdates()
-    nextCommand.addEventListener('update', ({ updates }) => {
-      this.setUpdates(...this.staticUpdates, ...updates)
-    })
-    nextCommand.addEventListener('statuschange', command => {
-      if (command.finished) this.changeStatus(nextCommand.status)
-    })
-
-    if (hasArgsHoldingUp) await executePerUpdates(nextCommand, staticUpdates)
-    else await nextCommand.execute()
   }
 
   share(newSharedData) {

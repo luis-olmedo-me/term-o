@@ -1,41 +1,6 @@
-import { commandStatuses } from '@src/constants/command.constants'
-
 import { getColor as C, cleanColors } from '@src/helpers/themes.helpers'
 import { getOptionTypeLabel } from './options.helpers'
 import { getQuotedString } from './utils.helpers'
-
-export const executePerUpdates = async (nextCommand, updates) => {
-  const argsHoldingUp = nextCommand.args.filter(arg => arg.isHoldingUp)
-
-  nextCommand.allowToExecuteNext(false)
-
-  for (let args of updates) {
-    const update = stringifyFragments(args)
-    const cleanedUpdate = cleanColors(update)
-
-    argsHoldingUp.forEach(arg => {
-      let newValue = arg.getValueFromArgs(cleanedUpdate, args)
-      const isArray = Array.isArray(newValue)
-      const isString = typeof newValue === 'string'
-
-      if (isArray) newValue = newValue.map(cleanColors)
-      if (isString) newValue = cleanColors(newValue)
-
-      arg.setValue(newValue)
-    })
-
-    nextCommand.prepare()
-
-    if (nextCommand.status === commandStatuses.ERROR) break
-    await nextCommand.execute()
-    nextCommand.saveUpdates()
-    if (nextCommand.status === commandStatuses.ERROR) break
-  }
-
-  if (nextCommand.nextCommand && !nextCommand.failed) {
-    await nextCommand.executeNext()
-  }
-}
 
 const getHighestTitleCountInSection = (sectionNames, options) => {
   return sectionNames.reduce((max, sectionName) => {

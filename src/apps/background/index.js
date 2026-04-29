@@ -61,6 +61,7 @@ const handleCommandQueueChange = async (storage, commandParser) => {
     .read(executable.line)
     .share({ storage, isTermOpen, context, origin, eventType })
 
+  queue.change(id, commandList.toJSON({ flat: true }))
   commandList.addEventListener('update', () => queue.change(id, commandList.toJSON({ flat: true })))
 
   await commandList.execute()

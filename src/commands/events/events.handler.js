@@ -11,7 +11,7 @@ export const eventsHandler = async command => {
     const events = storage.get(storageKeys.EVENTS)
     const updates = events.map(formatRegisteredEvent)
 
-    command.update(...updates)
+    command.log(...updates)
   }
 
   if (P`register`) {
@@ -24,7 +24,7 @@ export const eventsHandler = async command => {
       const update = formatRegisteredEvent(newEvent)
 
       storage.set(storageKeys.EVENTS, newEvents)
-      command.update(update)
+      command.log(update)
     })
   }
 
@@ -40,7 +40,7 @@ export const eventsHandler = async command => {
     const update = formatRegisteredEvent(existingEvent)
 
     storage.set(storageKeys.EVENTS, newEvents)
-    command.update(update)
+    command.log(update)
   }
 
   if (P`help`) createHelpView(command)

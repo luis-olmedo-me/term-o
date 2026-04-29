@@ -10,7 +10,7 @@ export const aliasHandler = async command => {
     const aliases = storage.get(storageKeys.ALIASES)
     const updates = aliases.map(formatAlias)
 
-    command.update(...updates)
+    command.log(...updates)
   }
 
   if (P`add`) {
@@ -26,7 +26,7 @@ export const aliasHandler = async command => {
       const update = formatAlias(newAlias)
 
       storage.set(storageKeys.ALIASES, newAliases)
-      command.update(update)
+      command.log(update)
     })
   }
 
@@ -42,7 +42,7 @@ export const aliasHandler = async command => {
     const update = formatAlias(existingAlias)
 
     storage.set(storageKeys.ALIASES, newAliases)
-    command.update(update)
+    command.log(update)
   }
 
   if (P`help`) createHelpView(command)

@@ -14,7 +14,7 @@ export const addonsHandler = async command => {
     const addons = storage.get(storageKeys.ADDONS)
     const updates = addons.values.map(formatAddon)
 
-    command.update(...updates)
+    command.log(...updates)
   }
 
   if (P`upload`) {
@@ -27,20 +27,18 @@ export const addonsHandler = async command => {
     }
 
     if (origin !== origins.MANUAL) {
-      command.update([
-        '"To proceed, you need to upload a file. Do you want to upload it now? (y/n)"'
-      ])
+      command.log(['"To proceed, you need to upload a file. Do you want to upload it now? (y/n)"'])
       const input = await processManager.requestInput()
       const formattedInput = formatText({ text: input })
       const truncatedInput = truncate(input, 30)
       const quotedInput = getQuotedString(truncatedInput)
 
-      command.update(formattedInput)
+      command.log(formattedInput)
       if (input === 'n') throw 'Operation canceled by user.'
       if (input !== 'y') throw `Invalid input ${quotedInput}. Defaulting to cancellation.`
     }
 
-    command.update(['"Select a file to upload."'])
+    command.log(['"Select a file to upload."'])
     const file = await processManager.uploadFile({ extensions: ['json'] })
     const newAddon = JSON.parse(file.content)
 
@@ -53,8 +51,8 @@ export const addonsHandler = async command => {
     addons.add(newAddon)
     const update = formatAddon(newAddon)
 
-    command.reset()
-    command.update(update)
+    command.clearLogs()
+    command.log(update)
   }
 
   if (P`delete`) {
@@ -67,7 +65,7 @@ export const addonsHandler = async command => {
     const update = formatAddon(addon)
 
     addons.delete(name)
-    command.update(update)
+    command.log(update)
   }
 
   if (P`help`) createHelpView(command)

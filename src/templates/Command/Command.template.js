@@ -49,20 +49,14 @@ export class Command extends EventListener {
     return commands
   }
 
-  reset() {
+  clearLogs() {
     this.updates = this.staticUpdates
 
     this.dispatchEvent('update', this)
   }
 
-  update(...updates) {
+  log(...updates) {
     this.updates = [...this.updates, ...updates]
-
-    this.dispatchEvent('update', this)
-  }
-
-  setUpdates(...updates) {
-    this.updates = updates
 
     this.dispatchEvent('update', this)
   }
@@ -112,7 +106,7 @@ export class Command extends EventListener {
 
       this.props = this.options.getValues()
 
-      this.reset()
+      this.clearLogs()
       this.changeStatus(commandStatuses.EXECUTING)
       await this.dispatchEvent('execute', this)
 
@@ -158,7 +152,7 @@ export class Command extends EventListener {
     else if (typeof message !== 'string') message = message.toString()
     const errorUpdate = formatError({ title: message })
 
-    this.update(errorUpdate)
+    this.log(errorUpdate)
     this.changeStatus(commandStatuses.ERROR)
   }
 

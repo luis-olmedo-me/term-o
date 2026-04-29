@@ -55,7 +55,7 @@ export const createHelpView = command => {
     })
   })
 
-  command.update(...helps)
+  command.log(...helps)
 }
 
 export const stringifyFragments = fragments => {

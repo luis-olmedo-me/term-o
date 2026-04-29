@@ -13,14 +13,14 @@ export const domHandler = async command => {
   let tabId = storage.get(storageKeys.TAB).id
 
   if (P`tab-id`) {
-    command.update(['"Connecting to the tab."'])
+    command.log(['"Connecting to the tab."'])
     const validTab = await getTab({ tabId: cleanTabId(P`tab-id`) })
 
     tabId = validTab.id
   }
 
   if (P`inject`) {
-    command.update(['"Searching for element xpath."'])
+    command.log(['"Searching for element xpath."'])
     const element = await processManager.findDOMElement(tabId, {
       searchByXpath: P`xpath`,
       searchBelow: null,
@@ -29,10 +29,10 @@ export const domHandler = async command => {
       childIndex: null
     })
 
-    command.reset()
+    command.clearLogs()
     if (!element) return
 
-    command.update(['"Injecting content."'])
+    command.log(['"Injecting content."'])
     await processManager.injectHTML(tabId, {
       below: element.xpath,
       html: P`html`
@@ -45,12 +45,12 @@ export const domHandler = async command => {
       textContent: P`see-content` ? element.textContent : null
     })
 
-    command.reset()
-    command.update(update)
+    command.clearLogs()
+    command.log(update)
   }
 
   if (P`find`) {
-    command.update(['"Searching for element xpath."'])
+    command.log(['"Searching for element xpath."'])
     const element = await processManager.findDOMElement(tabId, {
       searchByXpath: P`xpath`,
       searchBelow: P`below`,
@@ -59,7 +59,7 @@ export const domHandler = async command => {
       childIndex: P`child`
     })
 
-    command.reset()
+    command.clearLogs()
     if (!element) return
 
     const update = formatElement({
@@ -69,11 +69,11 @@ export const domHandler = async command => {
       textContent: P`see-content` ? element.textContent : null
     })
 
-    command.update(update)
+    command.log(update)
   }
 
   if (P`create`) {
-    command.update(['"Creating element."'])
+    command.log(['"Creating element."'])
     const element = await processManager.createElement(tabId, {
       tagName: P`tag`,
       below: P`below`,
@@ -87,12 +87,12 @@ export const domHandler = async command => {
       textContent: P`see-content` ? element.textContent : null
     })
 
-    command.reset()
-    command.update(update)
+    command.clearLogs()
+    command.log(update)
   }
 
   if (P`search`) {
-    command.update(['"Searching for element."'])
+    command.log(['"Searching for element."'])
     const elements = await processManager.getDOMElements(tabId, {
       searchBelow: P`below`,
       searchByTag: P`tag`,
@@ -110,8 +110,8 @@ export const domHandler = async command => {
       })
     )
 
-    command.reset()
-    command.update(...updates)
+    command.clearLogs()
+    command.log(...updates)
   }
 
   if (P`pick`) {
@@ -119,7 +119,7 @@ export const domHandler = async command => {
     let updates = []
 
     for (let index = 0; index < P`times`; index++) {
-      command.update(['"Please click over the page to pick up an element."'])
+      command.log(['"Please click over the page to pick up an element."'])
       const element = await processManager.requestElement(tabId, { theme: config.theme })
       const update = formatElement({
         ...element,
@@ -128,27 +128,27 @@ export const domHandler = async command => {
         textContent: P`see-content` ? element.textContent : null
       })
 
-      command.update(update)
+      command.log(update)
       updates = [...updates, update]
     }
 
-    command.reset()
-    command.update(...updates)
+    command.clearLogs()
+    command.log(...updates)
   }
 
   if (P`measure`) {
     const xpathA = P`from`
     const xpathB = P`to`
 
-    command.update(['"Measuring distance between given elements."'])
+    command.log(['"Measuring distance between given elements."'])
     const measure = await processManager.measure(tabId, {
       start: xpathA,
       end: xpathB
     })
     const update = formatGap(measure, xpathA, xpathB)
 
-    command.reset()
-    command.update(update)
+    command.clearLogs()
+    command.log(update)
   }
 
   if (P`dispatch`) {
@@ -157,22 +157,22 @@ export const domHandler = async command => {
     const event = P`event-name`
     const xpath = P`xpath`
 
-    command.update(['"Triggering DOM event."'])
+    command.log(['"Triggering DOM event."'])
     await processManager.triggerEvent(tabId, { xpath, event, theme: config.theme })
     const update = formatDomEvent({ event, xpath })
 
-    command.reset()
-    command.update(update)
+    command.clearLogs()
+    command.log(update)
   }
 
   if (P`selection`) {
-    command.update(['"Reading tab."'])
+    command.log(['"Reading tab."'])
     const selection = await processManager.readSelection(tabId)
 
     const update = formatText({ text: selection })
 
-    command.reset()
-    command.update(update)
+    command.clearLogs()
+    command.log(update)
   }
 
   if (P`help`) createHelpView(command)

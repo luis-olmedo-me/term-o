@@ -14,19 +14,19 @@ export const inspectHandler = async command => {
   let tabId = storage.get(storageKeys.TAB).id
 
   if (P`tab-id`) {
-    command.update(['"Connecting to the tab."'])
+    command.log(['"Connecting to the tab."'])
     const validTab = await getTab({ tabId: cleanTabId(P`tab-id`) })
 
     tabId = validTab.id
   }
 
   if (P`read` && !P`input`) {
-    command.update(['"Reading path from tab."'])
+    command.log(['"Reading path from tab."'])
     const text = await processManager.readPath(tabId, { path: P`path` })
     const update = formatText({ text })
 
-    command.reset()
-    command.update(update)
+    command.clearLogs()
+    command.log(update)
   }
 
   if (P`read` && P`input`) {
@@ -34,8 +34,8 @@ export const inspectHandler = async command => {
     const text = getJSONPathValue(json, P`path`)
     const update = formatText({ text })
 
-    command.reset()
-    command.update(update)
+    command.clearLogs()
+    command.log(update)
   }
 
   if (P`match`) {
@@ -46,7 +46,7 @@ export const inspectHandler = async command => {
     if (matchRegex.test(input)) {
       const update = formatStringSearch({ query: matchRegex, input })
 
-      command.update(update)
+      command.log(update)
     }
   }
 

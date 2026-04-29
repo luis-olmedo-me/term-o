@@ -20,7 +20,7 @@ export const historyHandler = async command => {
 
     const updates = history.map(formatHistoryItem).reverse()
 
-    command.update(...updates)
+    command.log(...updates)
   }
 
   if (P`delete`) {
@@ -40,7 +40,7 @@ export const historyHandler = async command => {
 
     const updates = history.map(formatHistoryItem).reverse()
 
-    command.update(...updates)
+    command.log(...updates)
   }
 
   if (P`help`) createHelpView(command)

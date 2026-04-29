@@ -11,7 +11,7 @@ export const themeHandler = async command => {
   if (P`list`) {
     const updates = storage.get(storageKeys.THEMES).map(formatTheme)
 
-    command.update(...updates)
+    command.log(...updates)
   }
 
   if (P`current`) {
@@ -20,7 +20,7 @@ export const themeHandler = async command => {
 
     const update = formatTheme({ name: themeName })
 
-    command.update(update)
+    command.log(update)
   }
 
   if (P`import`) {
@@ -36,7 +36,7 @@ export const themeHandler = async command => {
 
     const update = formatTheme(newTheme)
 
-    command.update(update)
+    command.log(update)
   }
 
   if (P`delete`) {
@@ -57,7 +57,7 @@ export const themeHandler = async command => {
 
     const update = formatTheme({ name })
 
-    command.update(update)
+    command.log(update)
   }
 
   if (P`apply`) {
@@ -76,7 +76,7 @@ export const themeHandler = async command => {
 
     const update = formatTheme({ name })
 
-    command.update(update)
+    command.log(update)
   }
 
   if (P`help`) createHelpView(command)

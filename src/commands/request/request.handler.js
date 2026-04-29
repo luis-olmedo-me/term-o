@@ -5,7 +5,7 @@ export const requestHandler = async command => {
   const P = name => command.props[name]
 
   if (P`fetch`) {
-    command.update(['"API request in progress."'])
+    command.log(['"API request in progress."'])
     const headers = new Headers()
 
     P`headers`.forEach(([name, value]) => headers.append(name, value))
@@ -20,8 +20,8 @@ export const requestHandler = async command => {
 
       const update = formatResponse({ response, responseBody, method: P`method` })
 
-      command.reset()
-      command.update(update)
+      command.clearLogs()
+      command.log(update)
     } catch (error) {
       command.throw(`Error while reading response as "${P`read-as`}".`)
     }

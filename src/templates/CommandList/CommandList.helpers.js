@@ -20,6 +20,6 @@ export const getCommandListLogs = (commands, options) => {
     const updates = [...command.staticUpdates, ...command.updates]
     const logs = flat ? stringifyUpdates(updates) : updates
 
-    return [...result, ...logs]
+    return command.visible ? [...result, ...logs] : result
   }, [])
 }

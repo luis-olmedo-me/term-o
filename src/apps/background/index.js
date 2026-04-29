@@ -57,10 +57,9 @@ const handleCommandQueueChange = async (storage, commandParser) => {
   const isTermOpen = !!sidePanelPort
 
   const context = createContext(contextInputValue, tab)
-  const commandList = commandParser
-    .read(executable.line)
-    .share({ storage, isTermOpen, context, origin, eventType })
+  const commandList = commandParser.read(executable.line)
 
+  commandList.share({ storage, isTermOpen, context, origin, eventType, commandList })
   queue.change(id, commandList.toJSON({ flat: true }))
   commandList.addEventListener('update', () => queue.change(id, commandList.toJSON({ flat: true })))
 

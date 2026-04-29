@@ -58,6 +58,15 @@ export class CommandList extends EventListener {
     this._onUpdate()
   }
 
+  hideUntil(id) {
+    const indexCut = this._nodes.findIndex(node => node.id === id)
+
+    if (indexCut === -1) return
+    this._nodes.forEach((node, index) => {
+      if (index <= indexCut) node.hide()
+    })
+  }
+
   toJSON(options = {}) {
     const { flat } = options
 

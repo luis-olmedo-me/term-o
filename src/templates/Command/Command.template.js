@@ -4,7 +4,7 @@ import EventListener from '@src/templates/EventListener'
 import { commandStatuses } from '@src/constants/command.constants'
 
 import { buildArgsFromProps } from '@src/helpers/arguments.helpers'
-import { stringifyFragments, stringifyUpdates } from '@src/helpers/command.helpers'
+import { stringifyFragments } from '@src/helpers/command.helpers'
 import { formatError } from '@src/helpers/format.helpers'
 import { getPropsFromString } from '@src/helpers/options.helpers'
 import { cleanColors } from '@src/helpers/themes.helpers'
@@ -20,10 +20,8 @@ export class Command extends EventListener {
     this.updates = []
     this.staticUpdates = []
     this.status = commandStatuses.IDLE
-    this.nextCommand = null
     this.options = options
     this.args = []
-    this.canExecuteNext = true
     this.visible = true
     this._shared = {}
   }
@@ -36,17 +34,6 @@ export class Command extends EventListener {
   }
   get failed() {
     return [commandStatuses.ERROR].includes(this.status)
-  }
-  get allCommands() {
-    let tempCommand = this
-    let commands = []
-
-    while (tempCommand != null) {
-      commands.push(tempCommand)
-      tempCommand = tempCommand.nextCommand
-    }
-
-    return commands
   }
 
   clearLogs() {
@@ -63,12 +50,6 @@ export class Command extends EventListener {
 
   saveUpdates() {
     this.staticUpdates = this.updates
-  }
-
-  allowToExecuteNext(permission) {
-    this.canExecuteNext = permission
-
-    return this
   }
 
   prepare(args) {
@@ -159,8 +140,6 @@ export class Command extends EventListener {
   share(newSharedData) {
     this._shared = { ...this._shared, ...newSharedData }
 
-    if (this.nextCommand) this.nextCommand.share(this._shared)
-
     return this
   }
   get(key) {
@@ -174,37 +153,5 @@ export class Command extends EventListener {
 
   hide() {
     this.visible = false
-  }
-
-  getCommandVisibleInChain() {
-    const allCommands = this.allCommands
-    const hasAnyHidden = allCommands.some(command => !command.visible)
-
-    return this.failed || !hasAnyHidden
-      ? allCommands.find(command => command.visible)
-      : allCommands.reverse().find(command => command.visible)
-  }
-
-  jsonUI() {
-    return {
-      id: this.id,
-      status: this.status,
-      updates: stringifyUpdates(this.updates),
-      context: this.get('context'),
-      origin: this.get('origin'),
-      title: this.get('title'),
-      event: this.get('eventType')
-    }
-  }
-
-  json() {
-    return {
-      id: this.id,
-      status: this.status,
-      updates: this.updates,
-      context: this.get('context'),
-      origin: this.get('origin'),
-      title: this.get('title')
-    }
   }
 }

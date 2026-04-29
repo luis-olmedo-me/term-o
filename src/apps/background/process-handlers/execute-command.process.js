@@ -16,7 +16,6 @@ export default async (resolve, _reject, data, storage, commandParser, isTermOpen
   commandList.share({ storage, isTermOpen, context, origin, commandList })
 
   if (!commandList.finished) await commandList.execute()
-  const commandVisible = commandList.getCommandVisibleInChain()
 
-  resolve(commandVisible ? commandVisible.json() : null)
+  resolve(commandList.toJSON())
 }

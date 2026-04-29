@@ -65,16 +65,6 @@ const handleCommandQueueChange = async (storage, commandParser) => {
 
   await commandList.execute()
 
-  if (commandList) {
-    console.log('💬 ~ command:', commandList.toJSON({ flat: true }))
-    return
-  }
-
-  const commandVisible = commandList.getCommandVisibleInChain()
-
-  if (commandVisible) queue.change(executable.id, commandVisible.jsonUI())
-  else queue.delete(executable.id)
-
   if (executable.tabId) storage.set(storageKeys.TAB, originalTab)
 }
 

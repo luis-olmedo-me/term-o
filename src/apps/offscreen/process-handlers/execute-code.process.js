@@ -23,7 +23,7 @@ export default async (resolve, reject, data) => {
       case sandboxEvents.COMMAND: {
         const { logs, status } = await processManager.executeCommand({
           line: buildArgsFromProps(data.props, data.name).join(' '),
-          origin: origins.FORCED
+          origin: origins.ADDON
         })
         const hasError = status === commandStatuses.ERROR
         const plainLogs = flatLogs(logs, { keepColors: true })

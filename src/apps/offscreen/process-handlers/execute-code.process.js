@@ -3,7 +3,7 @@ import processManager from '@src/libs/process-manager'
 import { commandStatuses, origins } from '@src/constants/command.constants'
 import { sandboxEvents } from '@src/constants/sandbox.constants'
 import { buildArgsFromProps } from '@src/helpers/arguments.helpers'
-import { makeLogSafe } from '@src/helpers/command.helpers'
+import { flatLogs } from '@src/helpers/command.helpers'
 
 export default async (resolve, reject, data) => {
   const { code, props, addonNames } = data
@@ -21,16 +21,16 @@ export default async (resolve, reject, data) => {
 
     switch (type) {
       case sandboxEvents.COMMAND: {
-        const { updates, status } = await processManager.executeCommand({
+        const test = await processManager.executeCommand({
           line: buildArgsFromProps(data.props, data.name).join(' '),
           origin: origins.FORCED
         })
+        const { logs, status } = test
         const hasError = status === commandStatuses.ERROR
-
-        const updatesUncolored = makeLogSafe(updates, true)
+        const plainLogs = flatLogs(logs, { keepColors: true })
 
         iframe.contentWindow.postMessage(
-          { type: sandboxEvents.COMMAND_RETURN, data: { updates: updatesUncolored, hasError } },
+          { type: sandboxEvents.COMMAND_RETURN, data: { updates: plainLogs, hasError } },
           '*'
         )
         break

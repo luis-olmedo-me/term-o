@@ -76,21 +76,21 @@ export const stringifyUpdates = fragmentsRaw => {
   }, [])
 }
 
-export const makeLogSafe = (log, shouldRemoveColors) => {
-  const isArray = log instanceof Array
+export const flatLogs = (logs, options = {}) => {
+  const { keepColors = true } = options
+  const isArray = logs instanceof Array
 
   if (!isArray) return []
 
-  return log.map(fragment => {
-    const isArray = fragment instanceof Array
-    const isString = typeof fragment === 'string'
+  return logs.map(logValue => {
+    const isArray = logValue instanceof Array
+    const isString = typeof logValue === 'string'
 
-    if (isArray) return makeLogSafe(fragment)
-    if (!isString) return String(fragment)
-    const hasDoubleQuotes = /^"|"$/g.test(fragment)
-    const hasSingleQuotes = /^'|'$/g.test(fragment)
-    const fragmentString = shouldRemoveColors ? cleanColors(fragment) : fragment
+    if (isArray) return flatLogs(logValue, options)
+    if (!isString) return String(logValue)
+    const hasQuotes = /^"|"$/g.test(logValue) || /^'|'$/g.test(logValue)
+    const segment = keepColors ? logValue : cleanColors(logValue)
 
-    return hasDoubleQuotes || hasSingleQuotes ? fragmentString : getQuotedString(fragmentString)
+    return hasQuotes ? segment : getQuotedString(segment)
   })
 }

@@ -13,7 +13,7 @@ export default async (resolve, reject, data) => {
   iframe.setAttribute('style', 'display: none;')
   document.body.appendChild(iframe)
 
-  let updates = []
+  let logs = []
 
   const handleCodeEval = async event => {
     const type = event.data?.type
@@ -36,30 +36,33 @@ export default async (resolve, reject, data) => {
       }
 
       case sandboxEvents.COMMAND_UPDATE: {
-        updates = [...updates, ...data.updates]
+        logs = [...logs, ...data.logs]
 
         iframe.contentWindow.postMessage(
-          { type: sandboxEvents.COMMAND_UPDATE_RETURN, data: { updates, hasError: false } },
+          { type: sandboxEvents.COMMAND_UPDATE_RETURN, data: { logs, hasError: false } },
           '*'
         )
         break
       }
 
       case sandboxEvents.COMMAND_SET_UPDATES: {
-        updates = data.updates
+        logs = data.logs
 
         iframe.contentWindow.postMessage(
-          { type: sandboxEvents.COMMAND_SET_UPDATES_RETURN, data: { updates, hasError: false } },
+          { type: sandboxEvents.COMMAND_SET_UPDATES_RETURN, data: { logs, hasError: false } },
           '*'
         )
         break
       }
 
       case sandboxEvents.COMMAND_CLEAR_UPDATES: {
-        updates = []
+        logs = []
 
         iframe.contentWindow.postMessage(
-          { type: sandboxEvents.COMMAND_CLEAR_UPDATES_RETURN, data: { updates, hasError: false } },
+          {
+            type: sandboxEvents.COMMAND_CLEAR_UPDATES_RETURN,
+            data: { logs, hasError: false }
+          },
           '*'
         )
         break
@@ -70,7 +73,7 @@ export default async (resolve, reject, data) => {
         window.removeEventListener('message', handleCodeEval)
 
         if (data.error) reject(data.error)
-        else resolve(updates)
+        else resolve(logs)
         break
       }
     }

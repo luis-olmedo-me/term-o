@@ -33,17 +33,17 @@ async function safeEval(event) {
       const handleSandboxCommand = event => {
         if (event.data?.type !== sandboxEvents.COMMAND_UPDATE_RETURN) return
         const data = event.data.data
-        const errorMessage = data.updates.at(-1)
+        const errorMessage = data.logs.at(-1)
 
         window.removeEventListener('message', handleSandboxCommand)
-        if (!data.hasError) resolve(data.updates)
+        if (!data.hasError) resolve(data.logs)
         else reject(errorMessage)
       }
 
       window.addEventListener('message', handleSandboxCommand)
 
       event.source.window.postMessage(
-        { type: sandboxEvents.COMMAND_UPDATE, data: { updates: [flatLogs(args)] } },
+        { type: sandboxEvents.COMMAND_UPDATE, data: { logs: [flatLogs(args)] } },
         event.origin
       )
     })
@@ -54,10 +54,10 @@ async function safeEval(event) {
       const handleSandboxCommand = event => {
         if (event.data?.type !== sandboxEvents.COMMAND_SET_UPDATES_RETURN) return
         const data = event.data.data
-        const errorMessage = data.updates.at(-1)
+        const errorMessage = data.logs.at(-1)
 
         window.removeEventListener('message', handleSandboxCommand)
-        if (!data.hasError) resolve(data.updates)
+        if (!data.hasError) resolve(data.logs)
         else reject(errorMessage)
       }
 
@@ -66,7 +66,7 @@ async function safeEval(event) {
       event.source.window.postMessage(
         {
           type: sandboxEvents.COMMAND_SET_UPDATES,
-          data: { updates: [flatLogs(args)] }
+          data: { logs: [flatLogs(args)] }
         },
         event.origin
       )
@@ -78,10 +78,10 @@ async function safeEval(event) {
       const handleSandboxCommand = event => {
         if (event.data?.type !== sandboxEvents.COMMAND_CLEAR_UPDATES_RETURN) return
         const data = event.data.data
-        const errorMessage = data.updates.at(-1)
+        const errorMessage = data.logs.at(-1)
 
         window.removeEventListener('message', handleSandboxCommand)
-        if (!data.hasError) resolve(data.updates)
+        if (!data.hasError) resolve(data.logs)
         else reject(errorMessage)
       }
 

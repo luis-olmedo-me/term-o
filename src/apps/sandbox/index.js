@@ -12,10 +12,10 @@ async function safeEval(event) {
       const handleSandboxCommand = event => {
         if (event.data?.type !== sandboxEvents.COMMAND_RETURN) return
         const data = event.data.data
-        const errorMessage = data.updates.at(-1)
+        const errorMessage = data.logs.at(-1)
 
         window.removeEventListener('message', handleSandboxCommand)
-        if (!data.hasError) resolve(data.updates)
+        if (!data.hasError) resolve(data.logs)
         else reject(errorMessage)
       }
 

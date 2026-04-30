@@ -21,16 +21,15 @@ export default async (resolve, reject, data) => {
 
     switch (type) {
       case sandboxEvents.COMMAND: {
-        const test = await processManager.executeCommand({
+        const { logs, status } = await processManager.executeCommand({
           line: buildArgsFromProps(data.props, data.name).join(' '),
           origin: origins.FORCED
         })
-        const { logs, status } = test
         const hasError = status === commandStatuses.ERROR
         const plainLogs = flatLogs(logs, { keepColors: true })
 
         iframe.contentWindow.postMessage(
-          { type: sandboxEvents.COMMAND_RETURN, data: { updates: plainLogs, hasError } },
+          { type: sandboxEvents.COMMAND_RETURN, data: { logs: plainLogs, hasError } },
           '*'
         )
         break

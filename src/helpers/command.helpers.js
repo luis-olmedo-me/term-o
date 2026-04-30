@@ -1,3 +1,4 @@
+import { doubleQuotesPattern, singleQuotesPattern } from '@src/constants/patterns.constants'
 import { getColor as C, cleanColors } from '@src/helpers/themes.helpers'
 import { getOptionTypeLabel } from './options.helpers'
 import { getQuotedString } from './utils.helpers'
@@ -76,21 +77,56 @@ export const stringifyUpdates = fragmentsRaw => {
   }, [])
 }
 
-export const flatLogs = (logs, options = {}) => {
-  const { keepColors = true } = options
+export const flatLogs = logs => {
   const isArray = logs instanceof Array
 
   if (!isArray) return []
 
   return logs.map(logValue => {
     const isArray = logValue instanceof Array
+
+    if (isArray) return flatLogs(logValue)
+    const logValueNoColor = cleanColors(logValue)
+    const hasSingleQuotes = singleQuotesPattern.test(logValueNoColor)
+    const hasDoubleQuotes = doubleQuotesPattern.test(logValueNoColor)
+
+    if (hasSingleQuotes) return logValueNoColor.replace(singleQuotesPattern, '')
+    if (hasDoubleQuotes) return logValueNoColor.replace(doubleQuotesPattern, '')
+    return parseInt(logValueNoColor)
+  })
+}
+
+const sanitizeLogs = logs => {
+  return logs.reduce((result, logValue) => {
+    const isArray = logValue instanceof Array
+    const isString = typeof logValue === 'string'
+    const isNumber = typeof logValue === 'number'
+
+    if (isArray) {
+      const recalledValue = sanitizeLogs(logValue)
+
+      return result.concat(recalledValue)
+    }
+
+    return isString || isNumber ? result.concat(logValue) : result
+  }, [])
+}
+
+export const quoteStringLogSegments = logs => {
+  const sanitizedLogs = sanitizeLogs(logs)
+
+  return sanitizedLogs.map(logValue => {
+    const isArray = logValue instanceof Array
     const isString = typeof logValue === 'string'
 
-    if (isArray) return flatLogs(logValue, options)
-    if (!isString) return String(logValue)
-    const hasQuotes = /^"|"$/g.test(logValue) || /^'|'$/g.test(logValue)
-    const segment = keepColors ? logValue : cleanColors(logValue)
+    if (isArray) return quoteStringLogSegments(logValue)
+    if (isString) {
+      const logValueNoColor = cleanColors(logValue)
+      const hasSingleQuotes = singleQuotesPattern.test(logValueNoColor)
+      const hasDoubleQuotes = doubleQuotesPattern.test(logValueNoColor)
 
-    return hasQuotes ? segment : getQuotedString(segment)
+      return hasSingleQuotes || hasDoubleQuotes ? logValue : getQuotedString(logValue)
+    }
+    return logValue
   })
 }

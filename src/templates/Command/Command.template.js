@@ -52,7 +52,8 @@ export class Command extends EventListener {
   }
 
   saveLogs() {
-    this._staticLogs = this._logs
+    this._staticLogs = [...this._staticLogs, ...this._logs]
+    this._logs = []
   }
 
   prepare(args) {

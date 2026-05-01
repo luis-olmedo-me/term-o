@@ -37,7 +37,7 @@ export class Command extends EventListener {
   }
 
   clearLogs() {
-    this.logs = this.staticLogs
+    this.logs = []
 
     this.dispatchEvent('update', this)
   }
@@ -48,7 +48,7 @@ export class Command extends EventListener {
     this.dispatchEvent('update', this)
   }
 
-  saveUpdates() {
+  saveLogs() {
     this.staticLogs = this.logs
   }
 
@@ -122,7 +122,7 @@ export class Command extends EventListener {
       if (this.failed) break
 
       await this.execute()
-      this.saveUpdates()
+      this.saveLogs()
 
       if (this.failed) break
     }

@@ -29,20 +29,20 @@ export const tabsHandler = async command => {
   if (P`reload`) {
     if (P`wait`) command.log(['"Please wait while the page is loading."'])
     const tab = await reloadTab({ tabId, wait: P`wait` })
-    const update = formatTab(tab)
+    const log = formatTab(tab)
 
     command.clearLogs()
-    command.log(update)
+    command.log(log)
   }
 
   if (P`point`) {
     const tab = await getTab({ tabId })
-    const update = formatTab(tab)
+    const log = formatTab(tab)
 
     storage.set(storageKeys.TAB, tab)
 
     command.clearLogs()
-    command.log(update)
+    command.log(log)
   }
 
   if (P`switch`) {
@@ -52,20 +52,20 @@ export const tabsHandler = async command => {
     if (!window.focused) await updateWindow({ windowId: tab.windowId, focused: true })
     await updateTab({ tabId: tab.id, selected: true })
 
-    const update = formatTab(tab)
+    const log = formatTab(tab)
 
     command.clearLogs()
-    command.log(update)
+    command.log(log)
   }
 
   if (P`close`) {
     const tab = await getTab({ tabId })
-    const update = formatTab(tab)
+    const log = formatTab(tab)
 
     await closeTab({ tabId: tab.id })
 
     command.clearLogs()
-    command.log(update)
+    command.log(log)
   }
 
   if (P`open`) {
@@ -76,24 +76,24 @@ export const tabsHandler = async command => {
       wait: P`wait`
     })
 
-    const update = formatTab(tab, P`url`)
+    const log = formatTab(tab, P`url`)
 
     command.clearLogs()
-    command.log(update)
+    command.log(log)
   }
 
   if (P`current`) {
     const tab = await getCurrentTab()
-    const update = formatTab(tab)
+    const log = formatTab(tab)
 
-    command.log(update)
+    command.log(log)
   }
 
   if (P`pointing`) {
     const tab = await getTab({ tabId })
-    const update = formatTab(tab)
+    const log = formatTab(tab)
 
-    command.log(update)
+    command.log(log)
   }
 
   if (P`list`) {
@@ -107,10 +107,10 @@ export const tabsHandler = async command => {
       byGroupId: P`group-id`,
       byTabId: P`tab-id`
     })
-    const updates = tabs.map(formatTab)
+    const logs = tabs.map(formatTab)
 
     command.clearLogs()
-    command.log(...updates)
+    command.log(...logs)
   }
 
   if (P`help`) createHelpView(command)

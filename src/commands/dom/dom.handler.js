@@ -38,7 +38,7 @@ export const domHandler = async command => {
       html: P`html`
     })
 
-    const update = formatElement({
+    const log = formatElement({
       ...element,
       tabId: P`tab-id`,
       xpath: P`see-xpath` ? element.xpath : null,
@@ -46,7 +46,7 @@ export const domHandler = async command => {
     })
 
     command.clearLogs()
-    command.log(update)
+    command.log(log)
   }
 
   if (P`find`) {
@@ -62,14 +62,14 @@ export const domHandler = async command => {
     command.clearLogs()
     if (!element) return
 
-    const update = formatElement({
+    const log = formatElement({
       ...element,
       tabId: P`tab-id`,
       xpath: P`see-xpath` ? element.xpath : null,
       textContent: P`see-content` ? element.textContent : null
     })
 
-    command.log(update)
+    command.log(log)
   }
 
   if (P`create`) {
@@ -80,7 +80,7 @@ export const domHandler = async command => {
       attributes: P`attr`
     })
 
-    const update = formatElement({
+    const log = formatElement({
       ...element,
       tabId: P`tab-id`,
       xpath: P`see-xpath` ? element.xpath : null,
@@ -88,7 +88,7 @@ export const domHandler = async command => {
     })
 
     command.clearLogs()
-    command.log(update)
+    command.log(log)
   }
 
   if (P`search`) {
@@ -101,7 +101,7 @@ export const domHandler = async command => {
       searchByText: P`content`
     })
 
-    const updates = elements.map(element =>
+    const logs = elements.map(element =>
       formatElement({
         ...element,
         tabId: P`tab-id`,
@@ -111,29 +111,29 @@ export const domHandler = async command => {
     )
 
     command.clearLogs()
-    command.log(...updates)
+    command.log(...logs)
   }
 
   if (P`pick`) {
     const config = storage.get(storageKeys.CONFIG)
-    let updates = []
+    let logs = []
 
     for (let index = 0; index < P`times`; index++) {
       command.log(['"Please click over the page to pick up an element."'])
       const element = await processManager.requestElement(tabId, { theme: config.theme })
-      const update = formatElement({
+      const log = formatElement({
         ...element,
         tabId: P`tab-id`,
         xpath: P`see-xpath` ? element.xpath : null,
         textContent: P`see-content` ? element.textContent : null
       })
 
-      command.log(update)
-      updates = [...updates, update]
+      command.log(log)
+      logs = [...logs, log]
     }
 
     command.clearLogs()
-    command.log(...updates)
+    command.log(...logs)
   }
 
   if (P`measure`) {
@@ -145,10 +145,10 @@ export const domHandler = async command => {
       start: xpathA,
       end: xpathB
     })
-    const update = formatGap(measure, xpathA, xpathB)
+    const log = formatGap(measure, xpathA, xpathB)
 
     command.clearLogs()
-    command.log(update)
+    command.log(log)
   }
 
   if (P`dispatch`) {
@@ -159,20 +159,20 @@ export const domHandler = async command => {
 
     command.log(['"Triggering DOM event."'])
     await processManager.triggerEvent(tabId, { xpath, event, theme: config.theme })
-    const update = formatDomEvent({ event, xpath })
+    const log = formatDomEvent({ event, xpath })
 
     command.clearLogs()
-    command.log(update)
+    command.log(log)
   }
 
   if (P`selection`) {
     command.log(['"Reading tab."'])
     const selection = await processManager.readSelection(tabId)
 
-    const update = formatText({ text: selection })
+    const log = formatText({ text: selection })
 
     command.clearLogs()
-    command.log(update)
+    command.log(log)
   }
 
   if (P`help`) createHelpView(command)

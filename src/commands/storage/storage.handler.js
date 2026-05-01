@@ -32,12 +32,12 @@ export const storageHandler = async command => {
 
     const storageFiltered = Object.entries(storage).filter(entry => isStorageMatch(filters, entry))
 
-    const updates = P`see-json`
+    const logs = P`see-json`
       ? formatStorageAsString({ storage: Object.fromEntries(storageFiltered), tabId: P`tab-id` })
       : storageFiltered.map(([key, value]) => formatStorageProp({ key, value, tabId: P`tab-id` }))
 
     command.clearLogs()
-    command.log(...updates)
+    command.log(...logs)
   }
 
   if (P`set`) {
@@ -58,11 +58,11 @@ export const storageHandler = async command => {
     const storageEntries = Object.entries(storage)
 
     command.clearLogs()
-    const updates = P`see-json`
+    const logs = P`see-json`
       ? formatStorageAsString({ storage, tabId: P`tab-id` })
       : storageEntries.map(([key, value]) => formatStorageProp({ key, value, tabId: P`tab-id` }))
 
-    command.log(...updates)
+    command.log(...logs)
   }
 
   if (P`get`) {
@@ -80,21 +80,21 @@ export const storageHandler = async command => {
 
     if (!hasFoundStorageValues) throw `Storage key did not match any other key.`
 
-    const updates = P`see-json`
+    const logs = P`see-json`
       ? formatStorageAsString({ storage: Object.fromEntries(storageFiltered), tabId: P`tab-id` })
       : storageFiltered.map(([key, value]) => formatStorageProp({ key, value, tabId: P`tab-id` }))
 
     command.clearLogs()
-    command.log(...updates)
+    command.log(...logs)
   }
 
   if (P`copy`) {
     const text = P`input`
-    const update = formatText({ text })
+    const log = formatText({ text })
 
     await navigator.clipboard.writeText(text)
 
-    command.log(update)
+    command.log(log)
   }
 
   if (P`help`) createHelpView(command)

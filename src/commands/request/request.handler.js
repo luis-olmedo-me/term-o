@@ -18,10 +18,10 @@ export const requestHandler = async command => {
       })
       const responseBody = await response[P`read-as`]()
 
-      const update = formatResponse({ response, responseBody, method: P`method` })
+      const log = formatResponse({ response, responseBody, method: P`method` })
 
       command.clearLogs()
-      command.log(update)
+      command.log(log)
     } catch (error) {
       command.throw(`Error while reading response as "${P`read-as`}".`)
     }

@@ -18,9 +18,9 @@ export const historyHandler = async command => {
       ...spreadIf(P`to`, { endTime: dateTimeTo })
     })
 
-    const updates = history.map(formatHistoryItem).reverse()
+    const logs = history.map(formatHistoryItem).reverse()
 
-    command.log(...updates)
+    command.log(...logs)
   }
 
   if (P`delete`) {
@@ -38,9 +38,9 @@ export const historyHandler = async command => {
       endTime: dateTimeTo
     })
 
-    const updates = history.map(formatHistoryItem).reverse()
+    const logs = history.map(formatHistoryItem).reverse()
 
-    command.log(...updates)
+    command.log(...logs)
   }
 
   if (P`help`) createHelpView(command)

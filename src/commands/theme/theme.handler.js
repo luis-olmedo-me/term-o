@@ -9,18 +9,18 @@ export const themeHandler = async command => {
   const P = name => command.props[name]
 
   if (P`list`) {
-    const updates = storage.get(storageKeys.THEMES).map(formatTheme)
+    const logs = storage.get(storageKeys.THEMES).map(formatTheme)
 
-    command.log(...updates)
+    command.log(...logs)
   }
 
   if (P`current`) {
     const config = storage.get(storageKeys.CONFIG)
     const themeName = config.getValueById(configInputIds.THEME_NAME)
 
-    const update = formatTheme({ name: themeName })
+    const log = formatTheme({ name: themeName })
 
-    command.log(update)
+    command.log(log)
   }
 
   if (P`import`) {
@@ -34,9 +34,9 @@ export const themeHandler = async command => {
     config.addTheme(newTheme)
     config.change(configInputIds.THEME_NAME, newTheme.name)
 
-    const update = formatTheme(newTheme)
+    const log = formatTheme(newTheme)
 
-    command.log(update)
+    command.log(log)
   }
 
   if (P`delete`) {
@@ -55,9 +55,9 @@ export const themeHandler = async command => {
     if (isCurrentTheme) config.change(configInputIds.THEME_NAME, defaultColorTheme.name)
     config.removeTheme(name)
 
-    const update = formatTheme({ name })
+    const log = formatTheme({ name })
 
-    command.log(update)
+    command.log(log)
   }
 
   if (P`apply`) {
@@ -74,9 +74,9 @@ export const themeHandler = async command => {
 
     config.change(configInputIds.THEME_NAME, name)
 
-    const update = formatTheme({ name })
+    const log = formatTheme({ name })
 
-    command.log(update)
+    command.log(log)
   }
 
   if (P`help`) createHelpView(command)

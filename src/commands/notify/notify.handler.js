@@ -32,10 +32,10 @@ export const notifyHandler = async command => {
       color: customColorThemeKeys.ACCENT
     })
 
-    const update = formatNotification(notification)
+    const log = formatNotification(notification)
 
     command.clearLogs()
-    command.log(update)
+    command.log(log)
   }
 
   if (P`help`) createHelpView(command)

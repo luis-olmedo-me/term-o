@@ -63,10 +63,10 @@ export const styleHandler = async command => {
 
     command.log(['"Pick a color."'])
     const color = await processManager.pickColor()
-    const update = formatText({ text: color })
+    const log = formatText({ text: color })
 
     command.clearLogs()
-    command.log(update)
+    command.log(log)
   }
 
   if (P`help`) createHelpView(command)

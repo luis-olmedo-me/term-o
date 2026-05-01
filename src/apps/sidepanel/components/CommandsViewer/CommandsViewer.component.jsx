@@ -122,7 +122,7 @@ export const CommandsViewer = ({ commands }) => {
                 {command.title}
               </p>
 
-              {command.logs.map((update, index) => {
+              {command.logs.map((log, index) => {
                 const isLastItem = index === command.logs.length - 1
                 const isLastErrorMessage = isLastItem && hasErrorMessage
                 const isTruncatedMessage = isTruncated && !isLastErrorMessage
@@ -136,7 +136,7 @@ export const CommandsViewer = ({ commands }) => {
                       ${isTruncatedMessage ? viewer__line___mod_truncated : ''}
                     `}
                   >
-                    <ColoredText value={update} />
+                    <ColoredText value={log} />
                   </p>
                 )
               })}

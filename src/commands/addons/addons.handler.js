@@ -12,9 +12,9 @@ export const addonsHandler = async command => {
 
   if (P`list`) {
     const addons = storage.get(storageKeys.ADDONS)
-    const updates = addons.values.map(formatAddon)
+    const logs = addons.values.map(formatAddon)
 
-    command.log(...updates)
+    command.log(...logs)
   }
 
   if (P`upload`) {
@@ -49,10 +49,10 @@ export const addonsHandler = async command => {
     if (alreadyExists) throw `The addon "${newAddon.name}" already exists.`
 
     addons.add(newAddon)
-    const update = formatAddon(newAddon)
+    const log = formatAddon(newAddon)
 
     command.clearLogs()
-    command.log(update)
+    command.log(log)
   }
 
   if (P`delete`) {
@@ -62,10 +62,10 @@ export const addonsHandler = async command => {
     const addon = await addons.get(name)
 
     if (!addon) throw `The addon "${name}" does not exist.`
-    const update = formatAddon(addon)
+    const log = formatAddon(addon)
 
     addons.delete(name)
-    command.log(update)
+    command.log(log)
   }
 
   if (P`help`) createHelpView(command)

@@ -23,19 +23,19 @@ export const inspectHandler = async command => {
   if (P`read` && !P`input`) {
     command.log(['"Reading path from tab."'])
     const text = await processManager.readPath(tabId, { path: P`path` })
-    const update = formatText({ text })
+    const log = formatText({ text })
 
     command.clearLogs()
-    command.log(update)
+    command.log(log)
   }
 
   if (P`read` && P`input`) {
     const json = JSON.parse(P`input`)
     const text = getJSONPathValue(json, P`path`)
-    const update = formatText({ text })
+    const log = formatText({ text })
 
     command.clearLogs()
-    command.log(update)
+    command.log(log)
   }
 
   if (P`match`) {
@@ -44,9 +44,9 @@ export const inspectHandler = async command => {
     const matchRegex = new RegExp(match, 'gi')
 
     if (matchRegex.test(input)) {
-      const update = formatStringSearch({ query: matchRegex, input })
+      const log = formatStringSearch({ query: matchRegex, input })
 
-      command.log(update)
+      command.log(log)
     }
   }
 

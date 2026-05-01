@@ -57,10 +57,10 @@ export class StorageAddons extends StorageSimple {
           if (props.help) return createHelpView(command)
 
           const code = await getStorageValue(namespace, `addon_${addon.name}_handler`)
-          const updates = await processManager.executeCode({ code, props, addonNames })
+          const logs = await processManager.executeCode({ code, props, addonNames })
 
           command.clearLogs()
-          command.log(...updates)
+          command.log(...logs)
         }
       })
 

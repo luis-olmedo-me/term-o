@@ -17,7 +17,7 @@ export const getCommandListLogs = (commands, options) => {
   const { flat } = options
 
   return commands.reduce((result, command) => {
-    const originalLogs = [...command.staticLogs, ...command.logs]
+    const originalLogs = command.logs
     const logs = flat ? renderOutput(originalLogs) : originalLogs
 
     return command.visible ? [...result, ...logs] : result

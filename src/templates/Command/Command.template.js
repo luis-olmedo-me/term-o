@@ -16,16 +16,19 @@ export class Command extends EventListener {
 
     this.id = createUUIDv4()
     this.name = name
+    this.args = []
     this.props = {}
-    this.logs = []
-    this.staticLogs = []
     this.status = commandStatuses.IDLE
     this.options = options
-    this.args = []
     this.visible = true
+    this._logs = []
+    this._staticLogs = []
     this._shared = {}
   }
 
+  get logs() {
+    return [...this._staticLogs, ...this._logs]
+  }
   get hasArgsPending() {
     return this.args.some(arg => arg.isHoldingUp)
   }
@@ -37,19 +40,19 @@ export class Command extends EventListener {
   }
 
   clearLogs() {
-    this.logs = []
+    this._logs = []
 
     this.dispatchEvent('update', this)
   }
 
   log(...newLogs) {
-    this.logs = [...this.logs, ...newLogs]
+    this._logs = [...this._logs, ...newLogs]
 
     this.dispatchEvent('update', this)
   }
 
   saveLogs() {
-    this.staticLogs = this.logs
+    this._staticLogs = this._logs
   }
 
   prepare(args) {

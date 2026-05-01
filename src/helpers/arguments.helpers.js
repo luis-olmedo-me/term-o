@@ -1,4 +1,4 @@
-import { stringifyFragments } from './command.helpers'
+import { renderLine } from './command.helpers'
 import { isArray, isQuoted } from './string.helpers'
 import { countMatches, getQuotedString } from './utils.helpers'
 
@@ -177,14 +177,14 @@ export const getParamValue = (indexes, values) => {
     const value = values[index]
     const isArrayValue = Array.isArray(value)
 
-    if (isArrayValue) return `[${stringifyFragments(value)}]`
+    if (isArrayValue) return `[${renderLine(value)}]`
 
     return typeof value !== 'undefined' ? value : null
   }
 
   const params = indexes.map(index => values[index]).filter(value => typeof value !== 'undefined')
 
-  return `[${stringifyFragments(params)}]`
+  return `[${renderLine(params)}]`
 }
 
 const parseArrayItem = value => {

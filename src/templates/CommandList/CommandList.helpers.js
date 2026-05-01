@@ -1,5 +1,5 @@
 import { commandStatuses } from '@src/constants/command.constants'
-import { stringifyUpdates } from '@src/helpers/command.helpers'
+import { renderOutput } from '@src/helpers/command.helpers'
 
 const commandIs = (command, status) => command.status === status
 const commandsHaveSome = (commands, status) => commands.some(command => commandIs(command, status))
@@ -18,7 +18,7 @@ export const getCommandListLogs = (commands, options) => {
 
   return commands.reduce((result, command) => {
     const updates = [...command.staticUpdates, ...command.updates]
-    const logs = flat ? stringifyUpdates(updates) : updates
+    const logs = flat ? renderOutput(updates) : updates
 
     return command.visible ? [...result, ...logs] : result
   }, [])

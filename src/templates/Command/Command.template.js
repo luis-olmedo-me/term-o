@@ -4,7 +4,7 @@ import EventListener from '@src/templates/EventListener'
 import { commandStatuses } from '@src/constants/command.constants'
 
 import { buildArgsFromProps } from '@src/helpers/arguments.helpers'
-import { stringifyFragments } from '@src/helpers/command.helpers'
+import { renderLine } from '@src/helpers/command.helpers'
 import { formatError } from '@src/helpers/format.helpers'
 import { getPropsFromString } from '@src/helpers/options.helpers'
 import { cleanColors } from '@src/helpers/themes.helpers'
@@ -102,12 +102,12 @@ export class Command extends EventListener {
   async executePerLogs(previousCommand) {
     const argsHoldingUp = this.args.filter(arg => arg.isHoldingUp)
 
-    for (const args of previousCommand.updates) {
-      const update = stringifyFragments(args)
-      const cleanedUpdate = cleanColors(update)
+    for (const log of previousCommand.updates) {
+      const line = renderLine(log)
+      const cleanedLine = cleanColors(line)
 
       argsHoldingUp.forEach(arg => {
-        let newValue = arg.getValueFromArgs(cleanedUpdate, args)
+        let newValue = arg.getValueFromArgs(cleanedLine, log)
         const isArray = Array.isArray(newValue)
         const isString = typeof newValue === 'string'
 

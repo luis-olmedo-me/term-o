@@ -3,7 +3,7 @@ import elementPickerCss from './ElementPicker.raw.css?raw'
 import elementPickerHtml from './ElementPicker.raw.html?raw'
 
 import { webElements } from '@src/constants/web-elements.constants'
-import { stringifyFragments } from '@src/helpers/command.helpers'
+import { renderLine } from '@src/helpers/command.helpers'
 import { convertElementToJSON } from '@src/helpers/converter.helpers'
 import { formatElement } from '@src/helpers/format.helpers'
 import { calculatePosition, createPaintedElement } from './ElementPicker.helpers'
@@ -53,7 +53,7 @@ class ElementPicker extends WebElement {
     elements.forEach((element, index) => {
       const elementAsJSON = convertElementToJSON(element)
       const elementAsLog = formatElement({ ...elementAsJSON, textContent: null, xpath: null })
-      const elementAsTextLog = stringifyFragments(elementAsLog)
+      const elementAsTextLog = renderLine(elementAsLog)
 
       const coloredTextElement = createPaintedElement(elementAsTextLog)
 

@@ -59,19 +59,19 @@ export const createHelpView = command => {
   command.log(...helps)
 }
 
-export const stringifyFragments = fragments => {
-  return fragments
-    .flatMap(fragment => {
-      const isString = typeof fragment === 'string'
+export const renderLine = segments => {
+  return segments
+    .flatMap(segment => {
+      const isString = typeof segment === 'string'
 
-      return !isString ? `[${stringifyUpdates([fragment])}]` : fragment
+      return !isString ? `[${renderOutput([segment])}]` : segment
     })
     .join(' ')
 }
 
-export const stringifyUpdates = fragmentsRaw => {
-  return fragmentsRaw.reduce((lines, fragments) => {
-    const line = stringifyFragments(fragments)
+export const renderOutput = rawLines => {
+  return rawLines.reduce((lines, segments) => {
+    const line = renderLine(segments)
 
     return lines.concat(line)
   }, [])

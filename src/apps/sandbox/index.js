@@ -1,6 +1,6 @@
 import { commandNames } from '@src/constants/command.constants'
 import { sandboxEvents } from '@src/constants/sandbox.constants'
-import { flatLogs, quoteStringLogSegments } from '@src/helpers/command.helpers'
+import { sanitizeLogs } from '@src/helpers/command.helpers'
 
 async function safeEval(event) {
   const code = event.data.data.code
@@ -30,7 +30,7 @@ async function safeEval(event) {
 
   const log = (...args) => {
     return new Promise((resolve, reject) => {
-      const sanitizedArgs = quoteStringLogSegments(args)
+      const sanitizedArgs = sanitizeLogs(args)
       const handleSandboxCommand = event => {
         if (event.data?.type !== sandboxEvents.COMMAND_UPDATE_RETURN) return
         const data = event.data.data
@@ -44,7 +44,7 @@ async function safeEval(event) {
       window.addEventListener('message', handleSandboxCommand)
 
       event.source.window.postMessage(
-        { type: sandboxEvents.COMMAND_UPDATE, data: { logs: [flatLogs(sanitizedArgs)] } },
+        { type: sandboxEvents.COMMAND_UPDATE, data: { logs: [sanitizedArgs] } },
         event.origin
       )
     })

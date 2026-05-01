@@ -96,11 +96,9 @@ export const flatLogs = logs => {
   })
 }
 
-const sanitizeLogs = logs => {
+export const sanitizeLogs = logs => {
   return logs.reduce((result, logValue) => {
     const isArray = logValue instanceof Array
-    const isString = typeof logValue === 'string'
-    const isNumber = typeof logValue === 'number'
 
     if (isArray) {
       const recalledValue = sanitizeLogs(logValue)
@@ -108,25 +106,8 @@ const sanitizeLogs = logs => {
       return result.concat(recalledValue)
     }
 
-    return isString || isNumber ? result.concat(logValue) : result
+    const logValueAsString = String(logValue)
+
+    return result.concat(logValueAsString)
   }, [])
-}
-
-export const quoteStringLogSegments = logs => {
-  const sanitizedLogs = sanitizeLogs(logs)
-
-  return sanitizedLogs.map(logValue => {
-    const isArray = logValue instanceof Array
-    const isString = typeof logValue === 'string'
-
-    if (isArray) return quoteStringLogSegments(logValue)
-    if (isString) {
-      const logValueNoColor = cleanColors(logValue)
-      const hasSingleQuotes = singleQuotesPattern.test(logValueNoColor)
-      const hasDoubleQuotes = doubleQuotesPattern.test(logValueNoColor)
-
-      return hasSingleQuotes || hasDoubleQuotes ? logValue : getQuotedString(logValue)
-    }
-    return logValue
-  })
 }

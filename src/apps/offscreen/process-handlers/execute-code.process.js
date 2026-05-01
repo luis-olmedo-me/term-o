@@ -26,7 +26,7 @@ export default async (resolve, reject, data) => {
           origin: origins.ADDON
         })
         const hasError = status === commandStatuses.ERROR
-        const plainLogs = flatLogs(logs, { keepColors: false })
+        const plainLogs = flatLogs(logs)
 
         iframe.contentWindow.postMessage(
           { type: sandboxEvents.COMMAND_RETURN, data: { logs: plainLogs, hasError } },

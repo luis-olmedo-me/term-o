@@ -32,7 +32,7 @@ async function safeEval(event) {
     return new Promise((resolve, reject) => {
       const sanitizedArgs = sanitizeLogs(args)
       const handleSandboxCommand = event => {
-        if (event.data?.type !== sandboxEvents.COMMAND_UPDATE_RETURN) return
+        if (event.data?.type !== sandboxEvents.COMMAND_LOG_RETURN) return
         const data = event.data.data
         const errorMessage = data.logs.at(-1)
 
@@ -44,7 +44,7 @@ async function safeEval(event) {
       window.addEventListener('message', handleSandboxCommand)
 
       event.source.window.postMessage(
-        { type: sandboxEvents.COMMAND_UPDATE, data: { logs: [sanitizedArgs] } },
+        { type: sandboxEvents.COMMAND_LOG, data: { logs: [sanitizedArgs] } },
         event.origin
       )
     })
@@ -53,7 +53,7 @@ async function safeEval(event) {
   const clear = () => {
     return new Promise((resolve, reject) => {
       const handleSandboxCommand = event => {
-        if (event.data?.type !== sandboxEvents.COMMAND_CLEAR_UPDATES_RETURN) return
+        if (event.data?.type !== sandboxEvents.COMMAND_CLEAR_LOGS_RETURN) return
         const data = event.data.data
         const errorMessage = data.logs.at(-1)
 
@@ -64,7 +64,7 @@ async function safeEval(event) {
 
       window.addEventListener('message', handleSandboxCommand)
 
-      event.source.window.postMessage({ type: sandboxEvents.COMMAND_CLEAR_UPDATES }, event.origin)
+      event.source.window.postMessage({ type: sandboxEvents.COMMAND_CLEAR_LOGS }, event.origin)
     })
   }
 

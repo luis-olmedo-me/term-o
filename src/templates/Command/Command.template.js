@@ -17,8 +17,8 @@ export class Command extends EventListener {
     this.id = createUUIDv4()
     this.name = name
     this.props = {}
-    this.updates = []
-    this.staticUpdates = []
+    this.logs = []
+    this.staticLogs = []
     this.status = commandStatuses.IDLE
     this.options = options
     this.args = []
@@ -37,19 +37,19 @@ export class Command extends EventListener {
   }
 
   clearLogs() {
-    this.updates = this.staticUpdates
+    this.logs = this.staticLogs
 
     this.dispatchEvent('update', this)
   }
 
-  log(...updates) {
-    this.updates = [...this.updates, ...updates]
+  log(...newLogs) {
+    this.logs = [...this.logs, ...newLogs]
 
     this.dispatchEvent('update', this)
   }
 
   saveUpdates() {
-    this.staticUpdates = this.updates
+    this.staticLogs = this.logs
   }
 
   prepare(args) {
@@ -102,7 +102,7 @@ export class Command extends EventListener {
   async executePerLogs(previousCommand) {
     const argsHoldingUp = this.args.filter(arg => arg.isHoldingUp)
 
-    for (const log of previousCommand.updates) {
+    for (const log of previousCommand.logs) {
       const line = renderLine(log)
       const cleanedLine = cleanColors(line)
 

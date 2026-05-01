@@ -4,7 +4,7 @@ import EventListener from '@src/templates/EventListener'
 
 import { getArgs, splitBy } from '@src/helpers/arguments.helpers'
 import { getHighestTitleCountInBases } from '@src/helpers/command.helpers'
-import { truncate } from '@src/helpers/utils.helpers'
+import { truncate } from '@src/helpers/string.helpers'
 import { CommandList } from '@src/templates/CommandList'
 
 export class CommandParser extends EventListener {

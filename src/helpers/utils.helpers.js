@@ -99,10 +99,6 @@ export const isDarkTheme = hex => {
 
 export const isRgb = value => rgbStartPattern.test(value)
 
-export const truncate = (value, maxCount) => {
-  return value.length > maxCount ? `${value.slice(0, maxCount)}...` : value
-}
-
 export const safeJsonParse = value => {
   try {
     return JSON.parse(value)

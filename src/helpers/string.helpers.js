@@ -57,3 +57,7 @@ export const getQuotedString = value => {
   else if (isStrictSingleQuoted(value)) return value
   return `"${value.replaceAll('"', '\\"')}"`
 }
+
+export const truncate = (value, maxCount) => {
+  return value.length > maxCount ? `${value.slice(0, maxCount)}...` : value
+}

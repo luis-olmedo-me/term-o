@@ -4,7 +4,7 @@ import { origins } from '@src/constants/command.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatStyle, formatText } from '@src/helpers/format.helpers'
-import { getQuotedString, truncate } from '@src/helpers/string.helpers'
+import { quotify, truncate } from '@src/helpers/string.helpers'
 
 export const styleHandler = async command => {
   const storage = command.get('storage')
@@ -54,7 +54,7 @@ export const styleHandler = async command => {
       const input = await processManager.requestInput()
       const formattedInput = formatText({ text: input })
       const truncatedInput = truncate(input, 30)
-      const quotedInput = getQuotedString(truncatedInput)
+      const quotedInput = quotify(truncatedInput)
 
       command.log(formattedInput)
       if (input === 'n') throw 'Operation canceled by user.'

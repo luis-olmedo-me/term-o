@@ -1,5 +1,5 @@
 import { renderLine } from './command.helpers'
-import { getQuotedString, isArray, isQuoted } from './string.helpers'
+import { isArray, isQuoted, quotify } from './string.helpers'
 import { countMatches } from './utils.helpers'
 
 export const getArgs = value => {
@@ -151,7 +151,7 @@ export const buildArgsFromProps = (props, name = null) => {
       }
 
       case 'string': {
-        return [...args, `--${name}`, getQuotedString(value)]
+        return [...args, `--${name}`, quotify(value)]
       }
 
       default: {

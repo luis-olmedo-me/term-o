@@ -1,4 +1,4 @@
-import { getQuotedString } from './string.helpers'
+import { quotify } from './string.helpers'
 
 const evalIsObject = value => typeof value === 'object' && value !== null && !Array.isArray(value)
 
@@ -40,8 +40,8 @@ export const getJSONPathValue = (json, pathExpression) => {
     } catch {
       const errorPath = carriedKeys.join('.')
       const errorResult = stringify(result)
-      const quotedErrorPath = getQuotedString(errorPath)
-      const quotedErrorResult = getQuotedString(errorResult)
+      const quotedErrorPath = quotify(errorPath)
+      const quotedErrorResult = quotify(errorResult)
 
       throw `Term-O can not inspect ${quotedErrorPath} from ${quotedErrorResult} value.`
     }

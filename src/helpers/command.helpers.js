@@ -1,6 +1,6 @@
 import { doubleQuotesPattern, singleQuotesPattern } from '@src/constants/patterns.constants'
 import { getOptionTypeLabel } from '@src/helpers/options.helpers'
-import { getQuotedString } from '@src/helpers/string.helpers'
+import { quotify } from '@src/helpers/string.helpers'
 import { getColor as C, cleanColors } from '@src/helpers/themes.helpers'
 
 const getHighestTitleCountInSection = (sectionNames, options) => {
@@ -37,7 +37,7 @@ export const createHelpView = command => {
 
   helpSectionsNames.forEach(sectionName => {
     const optionsBySection = options.getByHelpSection(sectionName)
-    const quotedTitle = getQuotedString(sectionName)
+    const quotedTitle = quotify(sectionName)
 
     helps.push([`${C`brightPurple`}${quotedTitle}${C`reset`}`])
 
@@ -50,7 +50,7 @@ export const createHelpView = command => {
       const tab = `.`.repeat(highestTitleCount + 1 - titleCount)
 
       const completeDescription = `${displayName} ${type} ${C`brightBlack`}${tab} ${C`reset`}${description}${C`reset`}`
-      const quotedCompleteDescription = getQuotedString(completeDescription)
+      const quotedCompleteDescription = quotify(completeDescription)
 
       helps.push([quotedCompleteDescription])
     })

@@ -1,15 +1,15 @@
 import { getBgColor as BG, getColor as C, escapeColors } from '@src/helpers/themes.helpers'
 import { spreadIf } from '@src/helpers/utils.helpers'
-import { getQuotedString, isStrictDoubleQuoted, isStrictSingleQuoted } from './string.helpers'
+import { isStrictDoubleQuoted, isStrictSingleQuoted, quotify } from './string.helpers'
 
 export const formatElement = ({ tagName, attributes, xpath, textContent, tabId }) => {
   const hasTabId = Boolean(tabId)
   const hasXpath = xpath !== null
   const hasTextContent = textContent !== null
 
-  const quotedTabId = hasTabId && getQuotedString(tabId)
-  const quotedXpath = hasXpath && getQuotedString(xpath)
-  const quotedTextContent = hasTextContent && getQuotedString(textContent)
+  const quotedTabId = hasTabId && quotify(tabId)
+  const quotedXpath = hasXpath && quotify(xpath)
+  const quotedTextContent = hasTextContent && quotify(textContent)
 
   if (hasXpath || hasTextContent) {
     return [
@@ -21,8 +21,8 @@ export const formatElement = ({ tagName, attributes, xpath, textContent, tabId }
 
   const attrs = attributes.map(([name, value]) => {
     const hasValue = Boolean(value)
-    const quotedAttrName = getQuotedString(name)
-    const quotedAttrValue = hasValue && getQuotedString(value)
+    const quotedAttrName = quotify(name)
+    const quotedAttrValue = hasValue && quotify(value)
 
     return [
       `${C`green`}${quotedAttrName}${C`reset`}`,
@@ -30,7 +30,7 @@ export const formatElement = ({ tagName, attributes, xpath, textContent, tabId }
     ]
   })
 
-  const quotedTagName = getQuotedString(tagName)
+  const quotedTagName = quotify(tagName)
 
   return [
     ...spreadIf(hasTabId, [`${C`blue`}${quotedTabId}${C`reset`}`]),
@@ -40,27 +40,27 @@ export const formatElement = ({ tagName, attributes, xpath, textContent, tabId }
 }
 
 export const formatText = ({ text }) => {
-  const quotedText = getQuotedString(text)
+  const quotedText = quotify(text)
 
   return [`${C`yellow`}${quotedText}${C`reset`}`]
 }
 
 export const formatNotification = ({ title, message }) => {
-  const quotedTitle = getQuotedString(title)
-  const quotedMessage = getQuotedString(message)
+  const quotedTitle = quotify(title)
+  const quotedMessage = quotify(message)
 
   return [`${C`brightYellow`}${quotedTitle}${C`reset`}`, `${C`yellow`}${quotedMessage}${C`reset`}`]
 }
 
 export const formatError = ({ title }) => {
   const cleanedTitle = escapeColors(title)
-  const quotedTitle = getQuotedString(cleanedTitle)
+  const quotedTitle = quotify(cleanedTitle)
 
   return [`${C`red`}${quotedTitle}${C`reset`}`]
 }
 
 export const formatWarning = ({ title }) => {
-  const quotedTitle = getQuotedString(title)
+  const quotedTitle = quotify(title)
 
   return [`${C`yellow`}${quotedTitle}${C`reset`}`]
 }
@@ -68,9 +68,9 @@ export const formatWarning = ({ title }) => {
 export const formatStorageProp = ({ key, value, tabId }) => {
   const hasTabId = Boolean(tabId)
 
-  const quotedTabId = hasTabId && getQuotedString(tabId)
-  const quotedKey = getQuotedString(key)
-  const quotedValue = getQuotedString(value)
+  const quotedTabId = hasTabId && quotify(tabId)
+  const quotedKey = quotify(key)
+  const quotedValue = quotify(value)
 
   return [
     ...spreadIf(hasTabId, [`${C`blue`}${quotedTabId}${C`reset`}`]),
@@ -81,12 +81,12 @@ export const formatStorageProp = ({ key, value, tabId }) => {
 
 export const formatResponse = ({ response, responseBody, method }) => {
   const shouldStringify = typeof responseBody !== 'string' && responseBody !== null
-  const quotedURL = getQuotedString(response.url)
+  const quotedURL = quotify(response.url)
   const status = response.status
 
   const responseBodyString = shouldStringify ? JSON.stringify(responseBody) : responseBody
-  const quotedResponseBody = getQuotedString(responseBodyString)
-  const quotedMethod = getQuotedString(method)
+  const quotedResponseBody = quotify(responseBodyString)
+  const quotedMethod = quotify(method)
 
   return [
     `${C`cyan`}${status}${C`reset`}`,
@@ -100,8 +100,8 @@ export const formatStorageAsString = ({ storage, tabId }) => {
   const stringStorage = JSON.stringify(storage)
   const hasTabId = Boolean(tabId)
 
-  const quotedTabId = hasTabId && getQuotedString(tabId)
-  const quotedStorage = getQuotedString(stringStorage)
+  const quotedTabId = hasTabId && quotify(tabId)
+  const quotedStorage = quotify(stringStorage)
 
   return [
     [
@@ -112,24 +112,24 @@ export const formatStorageAsString = ({ storage, tabId }) => {
 }
 
 export const formatAlias = ({ key, value }) => {
-  const quotedKey = getQuotedString(key)
-  const quotedValue = getQuotedString(value)
+  const quotedKey = quotify(key)
+  const quotedValue = quotify(value)
 
   return [`${C`purple`}${quotedKey}${C`reset`}`, `${C`yellow`}${quotedValue}${C`reset`}`]
 }
 
 export const formatAddon = ({ name, version }) => {
-  const quotedName = getQuotedString(name)
-  const quotedDateTime = getQuotedString(version)
+  const quotedName = quotify(name)
+  const quotedDateTime = quotify(version)
 
   return [`${C`green`}${quotedName}${C`reset`}`, `${C`cyan`}${quotedDateTime}${C`reset`}`]
 }
 
 export const formatRegisteredEvent = ({ type, url, line, id }) => {
-  const quotedId = getQuotedString(id)
-  const quotedType = getQuotedString(type)
-  const quotedURL = getQuotedString(url)
-  const quotedLine = getQuotedString(line)
+  const quotedId = quotify(id)
+  const quotedType = quotify(type)
+  const quotedURL = quotify(url)
+  const quotedLine = quotify(line)
 
   return [
     `${C`purple`}${quotedId}${C`reset`}`,
@@ -140,18 +140,18 @@ export const formatRegisteredEvent = ({ type, url, line, id }) => {
 }
 
 export const formatDomEvent = ({ event, xpath }) => {
-  const quotedEvent = getQuotedString(event)
-  const quotedXPath = getQuotedString(xpath)
+  const quotedEvent = quotify(event)
+  const quotedXPath = quotify(xpath)
 
   return [`${C`purple`}${quotedEvent}${C`reset`}`, `${C`blue`}${quotedXPath}${C`reset`}`]
 }
 
 export const formatTab = ({ windowId, id, title, url, groupId }, staticUrl) => {
-  const quotedWindowId = getQuotedString(`W${windowId}`)
-  const quotedGroupId = getQuotedString(groupId !== -1 ? `G${groupId}` : '')
-  const quotedId = getQuotedString(`T${id}`)
-  const quotedTitle = getQuotedString(title)
-  const quotedURL = getQuotedString(url || staticUrl)
+  const quotedWindowId = quotify(`W${windowId}`)
+  const quotedGroupId = quotify(groupId !== -1 ? `G${groupId}` : '')
+  const quotedId = quotify(`T${id}`)
+  const quotedTitle = quotify(title)
+  const quotedURL = quotify(url || staticUrl)
 
   return [
     `${C`purple`}${quotedWindowId}${C`reset`}`,
@@ -165,9 +165,9 @@ export const formatTab = ({ windowId, id, title, url, groupId }, staticUrl) => {
 export const formatHistoryItem = ({ url, title, lastVisitTime }) => {
   const dateTime = new Date(lastVisitTime).toISOString()
 
-  const quotedDateTime = getQuotedString(dateTime)
-  const quotedTitle = getQuotedString(title)
-  const quotedURL = getQuotedString(url)
+  const quotedDateTime = quotify(dateTime)
+  const quotedTitle = quotify(title)
+  const quotedURL = quotify(url)
 
   return [
     `${C`green`}${quotedDateTime}${C`reset`}`,
@@ -177,16 +177,16 @@ export const formatHistoryItem = ({ url, title, lastVisitTime }) => {
 }
 
 export const formatTheme = ({ name }) => {
-  const quotedName = getQuotedString(name)
+  const quotedName = quotify(name)
 
   return [`${C`purple`}${quotedName}${C`reset`}`]
 }
 
 export const formatStyle = ({ tagName, styles }) => {
-  const quotedTagName = getQuotedString(tagName)
+  const quotedTagName = quotify(tagName)
   const quotedStyles = styles.reduce((styled, { prop, value }) => {
-    const quotedProp = getQuotedString(prop)
-    const quotedValue = getQuotedString(value)
+    const quotedProp = quotify(prop)
+    const quotedValue = quotify(value)
 
     return [
       ...styled,
@@ -204,16 +204,16 @@ export const formatStringSearch = ({ query, input }) => {
   )
   const hasSingleQuotes = isStrictSingleQuoted(match)
   const hasDoubleQuotes = isStrictDoubleQuoted(match)
-  const quotedMatch = hasSingleQuotes || hasDoubleQuotes ? match : getQuotedString(match)
+  const quotedMatch = hasSingleQuotes || hasDoubleQuotes ? match : quotify(match)
 
   return [quotedMatch]
 }
 
 export const formatGap = ({ distanceX, distanceY }, xpathA, xpathB) => {
-  const quotedDistanceX = getQuotedString(`${distanceX}px`)
-  const quotedDistanceY = getQuotedString(`${distanceY}px`)
-  const quotedXpathA = getQuotedString(xpathA)
-  const quotedXpathB = getQuotedString(xpathB)
+  const quotedDistanceX = quotify(`${distanceX}px`)
+  const quotedDistanceY = quotify(`${distanceY}px`)
+  const quotedXpathA = quotify(xpathA)
+  const quotedXpathB = quotify(xpathB)
 
   return [
     `${C`brightYellow`}${quotedDistanceX}${C`reset`}`,

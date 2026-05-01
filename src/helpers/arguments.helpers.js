@@ -161,16 +161,6 @@ export const buildArgsFromProps = (props, name = null) => {
   }, defaultValue)
 }
 
-export const getRawArgs = value => {
-  const args = getArgs(value)
-
-  return args.reduce((rawArgs, arg) => {
-    if (arg.startsWith('"') && arg.endsWith('"')) return [...rawArgs, arg.slice(1, -1)]
-    if (arg.startsWith("'") && arg.endsWith("'")) return [...rawArgs, arg.slice(1, -1)]
-    return [...rawArgs, arg]
-  }, [])
-}
-
 export const getParamValue = (indexes, values) => {
   if (indexes.length === 1) {
     const [index] = indexes

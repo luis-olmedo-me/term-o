@@ -50,30 +50,6 @@ async function safeEval(event) {
     })
   }
 
-  const setLogs = (...args) => {
-    return new Promise((resolve, reject) => {
-      const handleSandboxCommand = event => {
-        if (event.data?.type !== sandboxEvents.COMMAND_SET_UPDATES_RETURN) return
-        const data = event.data.data
-        const errorMessage = data.logs.at(-1)
-
-        window.removeEventListener('message', handleSandboxCommand)
-        if (!data.hasError) resolve(data.logs)
-        else reject(errorMessage)
-      }
-
-      window.addEventListener('message', handleSandboxCommand)
-
-      event.source.window.postMessage(
-        {
-          type: sandboxEvents.COMMAND_SET_UPDATES,
-          data: { logs: [flatLogs(args)] }
-        },
-        event.origin
-      )
-    })
-  }
-
   const clear = () => {
     return new Promise((resolve, reject) => {
       const handleSandboxCommand = event => {
@@ -132,7 +108,7 @@ async function safeEval(event) {
   } catch (error) {
     const message = String(error?.message ?? error)
 
-    await setLogs(message)
+    await log(message)
     return message
   }
 }

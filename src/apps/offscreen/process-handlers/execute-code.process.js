@@ -45,16 +45,6 @@ export default async (resolve, reject, data) => {
         break
       }
 
-      case sandboxEvents.COMMAND_SET_UPDATES: {
-        logs = data.logs
-
-        iframe.contentWindow.postMessage(
-          { type: sandboxEvents.COMMAND_SET_UPDATES_RETURN, data: { logs, hasError: false } },
-          '*'
-        )
-        break
-      }
-
       case sandboxEvents.COMMAND_CLEAR_UPDATES: {
         logs = []
 

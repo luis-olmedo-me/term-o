@@ -1,5 +1,6 @@
 import { getBgColor as BG, getColor as C, escapeColors } from '@src/helpers/themes.helpers'
 import { getQuotedString, spreadIf } from '@src/helpers/utils.helpers'
+import { isStrictDoubleQuoted, isStrictSingleQuoted } from './string.helpers'
 
 export const formatElement = ({ tagName, attributes, xpath, textContent, tabId }) => {
   const hasTabId = Boolean(tabId)
@@ -201,7 +202,9 @@ export const formatStringSearch = ({ query, input }) => {
     query,
     value => `${BG`red`}${C`brightWhite`}${value}${C`reset`}${BG`reset`}`
   )
-  const quotedMatch = getQuotedString(match)
+  const hasSingleQuotes = isStrictSingleQuoted(match)
+  const hasDoubleQuotes = isStrictDoubleQuoted(match)
+  const quotedMatch = hasSingleQuotes || hasDoubleQuotes ? match : getQuotedString(match)
 
   return [quotedMatch]
 }

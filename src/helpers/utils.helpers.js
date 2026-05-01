@@ -1,3 +1,5 @@
+import { isStrictDoubleQuoted, isStrictSingleQuoted } from './string.helpers'
+
 const rgbStartPattern = /\brgba?\(/
 const rgbPattern = /rgba?\([^)]+\)/g
 
@@ -44,6 +46,8 @@ export const getQuotedString = value => {
 
   if (hasDoubleQuote && !hasSingleQuote) return `'${value}'`
   else if (!hasDoubleQuote && hasSingleQuote) return `"${value}"`
+  else if (isStrictDoubleQuoted(value)) return value
+  else if (isStrictSingleQuoted(value)) return value
   return `"${value.replaceAll('"', '\\"')}"`
 }
 

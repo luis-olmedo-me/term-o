@@ -1,6 +1,6 @@
 import StorageSimple from '@src/templates/StorageSimple'
 
-import { bannerTypes } from '@src/constants/banners.constants'
+import { bannerIds, bannerTypes } from '@src/constants/banners.constants'
 import { commandStatuses } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
@@ -47,7 +47,7 @@ export class StorageCommandQueue extends StorageSimple {
         message: `${discardedCount} lines were discarded.`,
         type: bannerTypes.WARNING,
         duration: 5_000,
-        id: 'command-exceed-warning'
+        id: bannerIds.COMMAND_LOG_OVERFLOW
       })
     }
 

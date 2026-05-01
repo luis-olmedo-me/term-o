@@ -58,7 +58,7 @@ export class StorageCommandQueue extends StorageSimple {
     const alreadyExists = this._cache.some(item => item.id === id)
 
     this._cache = alreadyExists
-      ? this._cache.filter(item => item.id === id)
+      ? this._cache.map(item => (item.id === id ? { ...item, queue } : item))
       : this._cache.concat({ id, queue })
   }
 

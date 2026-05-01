@@ -29,7 +29,7 @@ export const limitQueueByConfig = (queue, maxCount) => {
         discardedCount += logs.length
         continue
       }
-      newQueue.unshift({ ...queueItem, command: { ...command, updates: cutLogs } })
+      newQueue.unshift({ ...queueItem, command: { ...command, logs: cutLogs } })
       alreadyExceed = true
       continue
     }

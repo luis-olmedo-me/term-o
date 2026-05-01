@@ -81,6 +81,8 @@ export class StorageCommandQueue extends StorageSimple {
   }
 
   clearCompleted() {
+    const banners = this.$storageService.get(storageKeys.BANNERS)
+
     const newQueue = this.$latest().value.filter(
       ({ command }) =>
         !command ||
@@ -92,6 +94,7 @@ export class StorageCommandQueue extends StorageSimple {
 
     this._cache = newCache
     this.$storageService.set(storageKeys.COMMAND_QUEUE, newQueue)
+    banners.remove(bannerIds.COMMAND_LOG_OVERFLOW)
   }
 
   delete(queueId) {

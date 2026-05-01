@@ -1,5 +1,5 @@
 import { getParamValue } from '@src/helpers/arguments.helpers'
-import { getQuotedString } from '@src/helpers/utils.helpers'
+import { getQuotedString } from '@src/helpers/string.helpers'
 
 export class Argument {
   constructor(value) {

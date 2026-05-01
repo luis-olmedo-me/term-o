@@ -1,7 +1,7 @@
 import { doubleQuotesPattern, singleQuotesPattern } from '@src/constants/patterns.constants'
+import { getOptionTypeLabel } from '@src/helpers/options.helpers'
+import { getQuotedString } from '@src/helpers/string.helpers'
 import { getColor as C, cleanColors } from '@src/helpers/themes.helpers'
-import { getOptionTypeLabel } from './options.helpers'
-import { getQuotedString } from './utils.helpers'
 
 const getHighestTitleCountInSection = (sectionNames, options) => {
   return sectionNames.reduce((max, sectionName) => {

@@ -1,6 +1,6 @@
 import { getBgColor as BG, getColor as C, escapeColors } from '@src/helpers/themes.helpers'
-import { getQuotedString, spreadIf } from '@src/helpers/utils.helpers'
-import { isStrictDoubleQuoted, isStrictSingleQuoted } from './string.helpers'
+import { spreadIf } from '@src/helpers/utils.helpers'
+import { getQuotedString, isStrictDoubleQuoted, isStrictSingleQuoted } from './string.helpers'
 
 export const formatElement = ({ tagName, attributes, xpath, textContent, tabId }) => {
   const hasTabId = Boolean(tabId)

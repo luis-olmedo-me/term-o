@@ -4,7 +4,8 @@ import { origins } from '@src/constants/command.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatStyle, formatText } from '@src/helpers/format.helpers'
-import { getQuotedString, truncate } from '@src/helpers/utils.helpers'
+import { getQuotedString } from '@src/helpers/string.helpers'
+import { truncate } from '@src/helpers/utils.helpers'
 
 export const styleHandler = async command => {
   const storage = command.get('storage')

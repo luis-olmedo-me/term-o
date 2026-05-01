@@ -1,6 +1,5 @@
 import { backgroundLogo, rotationValues } from '@src/constants/string-svg.constants'
-import { fillTemplate, toTitleCase } from './string.helpers'
-import { getQuotedString } from './utils.helpers'
+import { fillTemplate, getQuotedString, toTitleCase } from './string.helpers'
 
 export const getColor = color => {
   return `{tfg:${color}}`

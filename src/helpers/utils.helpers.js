@@ -1,5 +1,3 @@
-import { isStrictDoubleQuoted, isStrictSingleQuoted } from './string.helpers'
-
 const rgbStartPattern = /\brgba?\(/
 const rgbPattern = /rgba?\([^)]+\)/g
 
@@ -38,17 +36,6 @@ export const createShortID = () => {
 
 export const delay = time => {
   return new Promise(resolve => setTimeout(resolve, time))
-}
-
-export const getQuotedString = value => {
-  const hasDoubleQuote = value.includes('"')
-  const hasSingleQuote = value.includes("'")
-
-  if (hasDoubleQuote && !hasSingleQuote) return `'${value}'`
-  else if (!hasDoubleQuote && hasSingleQuote) return `"${value}"`
-  else if (isStrictDoubleQuoted(value)) return value
-  else if (isStrictSingleQuoted(value)) return value
-  return `"${value.replaceAll('"', '\\"')}"`
 }
 
 export const spreadIf = (condition, value) => {

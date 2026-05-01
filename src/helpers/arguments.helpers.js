@@ -1,6 +1,6 @@
 import { renderLine } from './command.helpers'
-import { isArray, isQuoted } from './string.helpers'
-import { countMatches, getQuotedString } from './utils.helpers'
+import { getQuotedString, isArray, isQuoted } from './string.helpers'
+import { countMatches } from './utils.helpers'
 
 export const getArgs = value => {
   const fragments = value.split(' ')

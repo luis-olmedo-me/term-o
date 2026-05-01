@@ -46,3 +46,14 @@ export const isStrictDoubleQuoted = value => {
 
   return isDoubleQuoted(value) && quotesCount === 2
 }
+
+export const getQuotedString = value => {
+  const hasDoubleQuote = value.includes('"')
+  const hasSingleQuote = value.includes("'")
+
+  if (hasDoubleQuote && !hasSingleQuote) return `'${value}'`
+  else if (!hasDoubleQuote && hasSingleQuote) return `"${value}"`
+  else if (isStrictDoubleQuoted(value)) return value
+  else if (isStrictSingleQuoted(value)) return value
+  return `"${value.replaceAll('"', '\\"')}"`
+}

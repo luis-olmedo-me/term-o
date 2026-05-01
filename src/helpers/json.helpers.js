@@ -1,4 +1,4 @@
-import { getQuotedString } from './utils.helpers'
+import { getQuotedString } from './string.helpers'
 
 const evalIsObject = value => typeof value === 'object' && value !== null && !Array.isArray(value)
 

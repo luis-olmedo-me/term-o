@@ -4,9 +4,9 @@ import {
   tabIdPattern,
   windowIdPattern
 } from '@src/constants/patterns.constants'
+import { getArrayAsLine } from '@src/helpers/arguments.helpers'
+import { getQuotedString } from '@src/helpers/string.helpers'
 import { validateSchema } from '@src/helpers/validation-schema.helpers'
-import { getArrayAsLine } from './arguments.helpers'
-import { getQuotedString } from './utils.helpers'
 
 export const isRegExp = (option, value) => {
   try {

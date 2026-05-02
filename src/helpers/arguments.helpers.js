@@ -107,23 +107,6 @@ export const splitBy = (value, key) => {
   return output
 }
 
-export const getArray = value => {
-  const inner = value.slice(1, -1)
-  const args = getArgs(inner)
-
-  const result = []
-
-  for (const arg of args) {
-    const parsed = parseArrayItem(arg)
-
-    if (parsed === null) return null
-
-    result.push(parsed)
-  }
-
-  return result
-}
-
 export const getArrayAsLine = value => {
   const arrayValuesAsLine = value.reduce((line, arg, index) => {
     const isArray = Array.isArray(arg)
@@ -191,4 +174,21 @@ const parseArrayItem = value => {
   if (!Number.isNaN(num)) return num
 
   return null
+}
+
+export const getArray = value => {
+  const inner = value.slice(1, -1)
+  const args = getArgs(inner)
+
+  const result = []
+
+  for (const arg of args) {
+    const parsed = parseArrayItem(arg)
+
+    if (parsed === null) return null
+
+    result.push(parsed)
+  }
+
+  return result
 }

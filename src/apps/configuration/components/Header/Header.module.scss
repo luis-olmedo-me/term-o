@@ -3,7 +3,9 @@
 .header {
   display: flex;
   justify-content: space-between;
+  z-index: 1;
   backdrop-filter: blur(var(--space-400));
+  box-shadow: 0 $space-250 $space-400 $space-100 #00000010;
   padding: $space-600 $space-500 $space-600 $space-400;
 
   @include theme-mode(light) {

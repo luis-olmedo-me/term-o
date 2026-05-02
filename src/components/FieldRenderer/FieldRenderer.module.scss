@@ -61,6 +61,8 @@
 
 .field__input {
   outline: $space-50 dashed transparent;
+  box-shadow: 0 $space-100 $space-400 $space-100 #00000015;
+  border-radius: $radius-200;
 
   &___width_fit {
     width: fit-content;

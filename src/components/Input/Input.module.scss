@@ -54,13 +54,13 @@
 
   &___variant_outlined {
     transition: border-color 0.1s ease-in-out;
-    border: $space-50 solid $colors-brightBlack;
+    border: $space-50 solid transparent;
     border-radius: $radius-200 0 0 $radius-200;
     background-color: with-opacity($colors-white, 0.05);
     padding-left: $space-300;
 
-    @include theme-variant(flat) {
-      border-color: transparent;
+    @include theme-variant(outlined) {
+      border-color: $colors-brightBlack;
     }
 
     &:last-child {
@@ -77,7 +77,7 @@
     }
 
     &:hover {
-      background-color: with-opacity($colors-accent, 0.8);
+      background-color: with-opacity($colors-accent, 0.3);
       color: $colors-brightWhite;
     }
 
@@ -98,7 +98,7 @@
   align-items: center;
   transition: border-color 0.1s ease-in-out;
   cursor: help;
-  border: solid $colors-brightBlack;
+  border: solid transparent;
   border-width: $space-50 $space-50 $space-50 0;
   border-radius: 0 $space-200 $space-200 0;
   background-color: with-opacity($colors-white, 0.2);
@@ -106,4 +106,8 @@
   height: -webkit-fill-available;
   pointer-events: unset;
   color: $colors-foreground;
+
+  @include theme-variant(outlined) {
+    border-color: $colors-brightBlack;
+  }
 }

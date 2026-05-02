@@ -3,7 +3,6 @@
 .header {
   display: flex;
   justify-content: space-between;
-  border-bottom: $space-50 solid $colors-brightBlack;
   padding: $space-600 $space-500 $space-600 $space-400;
 
   @include theme-mode(light) {
@@ -11,6 +10,9 @@
   }
   @include theme-mode(dark) {
     background-color: with-opacity($colors-white, 0.02);
+  }
+  @include theme-variant(outlined) {
+    border-bottom: $space-50 solid $colors-brightBlack;
   }
 }
 

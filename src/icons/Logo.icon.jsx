@@ -2,13 +2,14 @@ import useStorage from '@src/hooks/useStorage'
 
 import { iconPropType } from '@src/constants/icon.constants'
 import { storageKeys } from '@src/constants/storage.constants'
+import { themeModes, themeVariants } from '@src/constants/themes.constants'
 
 const Logo = ({ size, className }) => {
   const [config] = useStorage({ key: storageKeys.CONFIG })
 
   const theme = config.theme
-  const isDarkMode = theme.mode === 'dark'
-  const isFlatVariant = theme.variant === 'flat'
+  const isDarkMode = theme.mode === themeModes.DARK
+  const isFlatVariant = theme.variant === themeVariants.FLAT
 
   return (
     <svg

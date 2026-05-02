@@ -2,7 +2,7 @@ import StorageSimple from '@src/templates/StorageSimple'
 
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
-import { defaultStyleMeasures } from '@src/constants/themes.constants'
+import { defaultStyleMeasures, themeModes, themeVariants } from '@src/constants/themes.constants'
 import {
   buildDetailedConfig,
   getConfigValueByInputId,
@@ -82,8 +82,8 @@ export class StorageConfig extends StorageSimple {
       ...defaultStyleMeasures,
       colors: { ...selectedTheme, ...accentColors },
       font: fontFamily,
-      mode: isDarkTheme(selectedTheme.background) ? 'dark' : 'light',
-      variant: isDarkTheme(selectedTheme.background) ? 'flat' : 'outlined'
+      mode: isDarkTheme(selectedTheme.background) ? themeModes.DARK : themeModes.LIGHT,
+      variant: isDarkTheme(selectedTheme.background) ? themeVariants.FLAT : themeVariants.OUTLINED
     }
   }
 

@@ -1,3 +1,5 @@
+@use '@styles/mixins.module' as *;
+
 .button {
   display: flex;
   column-gap: $space-200;
@@ -6,6 +8,7 @@
   align-items: center;
   transition:
     background-color 0.1s ease-in-out,
+    border-color 0.2s ease-in-out,
     color 0.1s ease-in-out;
   cursor: pointer;
   border: none;
@@ -60,15 +63,20 @@
   &___variant_outlined,
   &___variant_outlined_danger,
   &___variant_outlined_warn {
-    border: $space-50 solid $colors-brightBlack;
+    border: $space-50 solid transparent;
     border-radius: $radius-200;
     background-color: with-opacity(var(--default-color), 0.15);
+
+    @include theme-variant(outlined) {
+      border-color: $colors-brightBlack;
+    }
 
     &:focus {
       border-color: $colors-accent;
     }
 
     &:hover {
+      border-color: var(--active-color);
       background-color: with-opacity(var(--active-color), 0.7);
       color: $colors-brightWhite;
     }

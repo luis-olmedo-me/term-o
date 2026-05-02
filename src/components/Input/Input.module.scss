@@ -59,6 +59,10 @@
     background-color: with-opacity($colors-white, 0.05);
     padding-left: $space-300;
 
+    @include theme-variant(flat) {
+      border-color: transparent;
+    }
+
     &:last-child {
       border-radius: $radius-200;
     }

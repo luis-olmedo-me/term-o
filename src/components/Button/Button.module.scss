@@ -50,7 +50,7 @@
     background-color: with-opacity($colors-white, 0.05);
 
     &:focus {
-      border: $space-50 solid $colors-accent;
+      border-color: $colors-accent;
     }
 
     &:hover {
@@ -79,7 +79,7 @@
     background-color: with-opacity($colors-red, 0.25);
 
     &:focus {
-      border: $space-50 solid $colors-red;
+      border-color: $colors-red;
     }
 
     &:hover {
@@ -108,7 +108,7 @@
     background-color: with-opacity($colors-yellow, 0.25);
 
     &:focus {
-      border: $space-50 solid $colors-yellow;
+      border-color: $colors-yellow;
     }
 
     &:hover {

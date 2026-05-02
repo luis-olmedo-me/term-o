@@ -99,7 +99,7 @@
       }
       @include theme-mode(dark) {
         border-color: $colors-accent;
-        background-color: with-opacity($colors-accent, 0.2);
+        background-color: with-opacity($colors-accent, 0.15);
         color: $colors-accent;
       }
     }

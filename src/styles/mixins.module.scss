@@ -8,12 +8,12 @@
 
 @mixin theme-mode($mode) {
   @if $mode == any {
-    :global(.theme-provider-dark) &,
-    :global(.theme-provider-light) & {
+    :global(.theme-provider-mode-dark) &,
+    :global(.theme-provider-mode-light) & {
       @content;
     }
   } @else {
-    :global(.theme-provider-#{$mode}) & {
+    :global(.theme-provider-mode-#{$mode}) & {
       @content;
     }
   }
@@ -21,12 +21,12 @@
 
 @mixin theme-variant($mode) {
   @if $mode == any {
-    :global(.theme-provider-flat) &,
-    :global(.theme-provider-outlined) & {
+    :global(.theme-provider-variant-flat) &,
+    :global(.theme-provider-variant-outlined) & {
       @content;
     }
   } @else {
-    :global(.theme-provider-#{$mode}) & {
+    :global(.theme-provider-variant-#{$mode}) & {
       @content;
     }
   }

@@ -21,8 +21,8 @@ export const ThemeProvider = ({ children }) => {
       className={`
         ${provider}
         ${getClassNameByInputsCaret(caretShape)}
-        theme-provider-${config.theme.isDarkMode ? 'dark' : 'light'}
-        theme-provider-${config.theme.isDarkMode ? 'flat' : 'outlined'}
+        theme-provider-mode-${config.theme.isDarkMode ? 'dark' : 'light'}
+        theme-provider-variant-${config.theme.isDarkMode ? 'flat' : 'outlined'}
       `}
     >
       <style>

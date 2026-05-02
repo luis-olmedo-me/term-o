@@ -53,7 +53,9 @@
   }
 
   &___variant_outlined {
-    transition: border-color 0.1s ease-in-out;
+    transition:
+      border-color 0.2s ease-in-out,
+      background-color 0.1s ease-in-out;
     border: $space-50 solid transparent;
     border-radius: $radius-200 0 0 $radius-200;
     background-color: with-opacity($colors-white, 0.05);
@@ -81,13 +83,23 @@
       color: $colors-brightWhite;
     }
 
-    &:hover,
+    &:hover {
+      @include theme-mode(light) {
+        border-color: $colors-brightBlack;
+      }
+      @include theme-mode(dark) {
+        border-color: $colors-accent;
+      }
+    }
+
+    &:focus + .input__postfix,
     &:hover + .input__postfix {
       @include theme-mode(light) {
         border-color: $colors-brightBlack;
       }
       @include theme-mode(dark) {
         border-color: $colors-accent;
+        background-color: with-opacity($colors-accent, 0.2);
         color: $colors-accent;
       }
     }
@@ -98,7 +110,7 @@
   display: flex;
   align-items: center;
   transition:
-    border-color 0.1s ease-in-out,
+    border-color 0.2s ease-in-out,
     color 0.1s ease-in-out;
   cursor: help;
   border: solid transparent;

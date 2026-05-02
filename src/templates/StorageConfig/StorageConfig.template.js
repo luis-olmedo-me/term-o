@@ -73,17 +73,19 @@ export class StorageConfig extends StorageSimple {
   theme() {
     const themeName = this.getValueById(configInputIds.THEME_NAME)
     const fontFamily = this.getValueById(configInputIds.FONT_FAMILY)
+    const fontVariant = this.getValueById(configInputIds.THEME_VARIANT)
     const colorAccent = this.getValueById(configInputIds.COLOR_ACCENT)
 
     const selectedTheme = this.themes().find(theme => theme.name === themeName)
     const accentColors = getAccentColors(selectedTheme, colorAccent)
+    const isFlatVariant = fontVariant === themeVariants.FLAT
 
     return {
       ...defaultStyleMeasures,
       colors: { ...selectedTheme, ...accentColors },
       font: fontFamily,
       mode: isDarkTheme(selectedTheme.background) ? themeModes.DARK : themeModes.LIGHT,
-      variant: isDarkTheme(selectedTheme.background) ? themeVariants.FLAT : themeVariants.OUTLINED
+      variant: isFlatVariant ? themeVariants.FLAT : themeVariants.OUTLINED
     }
   }
 

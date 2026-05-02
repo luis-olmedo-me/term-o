@@ -4,7 +4,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-width: $space-50 $space-50 0 $space-50;
   padding: $space-500 $space-900;
 
   @include theme-mode(light) {
@@ -15,7 +14,7 @@
   }
   @include theme-variant(outlined) {
     border: $space-50 solid with-opacity($colors-brightBlack, 0.5);
-    border-top: $space-50 solid $colors-brightBlack;
+    border-width: $space-50 $space-50 0 $space-50;
   }
 
   &:first-of-type {

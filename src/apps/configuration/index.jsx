@@ -17,6 +17,10 @@ importWebComponents()
 storage.addEventListener(`${storageKeys.CONFIG}_${configInputIds.COLOR_ACCENT}`, handleThemeChanges)
 storage.addEventListener(`${storageKeys.CONFIG}_${configInputIds.THEME_NAME}`, handleThemeChanges)
 storage.addEventListener(`${storageKeys.CONFIG}_${configInputIds.FONT_FAMILY}`, handleThemeChanges)
+storage.addEventListener(
+  `${storageKeys.CONFIG}_${configInputIds.THEME_VARIANT}`,
+  handleThemeChanges
+)
 
 render(
   <StorageProvider>

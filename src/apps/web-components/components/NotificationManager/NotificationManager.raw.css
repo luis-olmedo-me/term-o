@@ -21,8 +21,7 @@
     padding 0.1s ease-in-out,
     opacity 0.3s ease-in-out;
   cursor: pointer;
-  border: solid var(--colors-brightBlack);
-  border-width: var(--space-50) 0 var(--space-50) var(--space-50);
+  box-shadow: 0px 6px 10px 2px rgb(from black r g b / 0.35);
   border-radius: var(--radius-200) 0 0 var(--radius-200);
   background-color: var(--colors-background);
   padding: var(--space-200);
@@ -30,6 +29,10 @@
   color: var(--colors-foreground);
   font: 10px var(--font);
   user-select: none;
+}
+.web-theme-provider[data-variant='outlined'] .count {
+  border: solid var(--colors-brightBlack);
+  border-width: var(--space-50) 0 var(--space-50) var(--space-50);
 }
 .count:hover {
   padding: var(--space-200) var(--space-300) var(--space-200) var(--space-200);

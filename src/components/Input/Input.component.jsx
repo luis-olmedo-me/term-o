@@ -5,6 +5,7 @@ import {
   input___mod_disabled,
   input___type_number,
   input__postfix,
+  input__postfix_label,
   input__real_input,
   input__real_input___type_number
 } from './Input.module.scss'
@@ -56,7 +57,11 @@ export const Input = ({
         `}
       />
 
-      {postFix && <span className={input__postfix}>{postFix}</span>}
+      {postFix && (
+        <span className={input__postfix}>
+          <span className={input__postfix_label}>{postFix}</span>
+        </span>
+      )}
     </div>
   )
 }

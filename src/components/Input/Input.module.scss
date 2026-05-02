@@ -126,4 +126,9 @@
   @include theme-variant(outlined) {
     border-color: $colors-brightBlack;
   }
+
+  &_label {
+    width: 70px;
+    @include truncate();
+  }
 }

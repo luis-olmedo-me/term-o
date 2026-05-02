@@ -31,3 +31,17 @@
     }
   }
 }
+
+@mixin truncate($lines: 1) {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @if $lines == 1 {
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $lines;
+  }
+}

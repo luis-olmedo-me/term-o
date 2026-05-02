@@ -20,7 +20,7 @@
     color 0.1s ease-in-out;
   cursor: pointer;
   outline: none;
-  border: $space-50 solid $colors-brightBlack;
+  border: $space-50 solid transparent;
   border-radius: $radius-200;
   background-color: with-opacity($colors-white, 0.25);
   padding: $space-250 $space-300;
@@ -28,6 +28,10 @@
   color: $colors-foreground;
   font-size: $fontSize-50;
   font-family: $font;
+
+  @include theme-variant(outlined) {
+    border-color: $colors-brightBlack;
+  }
 
   &:focus,
   &:active {
@@ -113,12 +117,15 @@
     scale 0.2s ease-in-out 0.3s,
     opacity 0.2s ease-in-out 0.3s;
   box-sizing: border-box;
-  border: $space-50 solid $colors-brightBlack;
   border-width: 0 $space-50 $space-50;
   border-radius: 0 0 $radius-200 $radius-200;
   background-color: $colors-background;
   padding-right: $space-250;
   width: 100%;
+
+  @include theme-variant(outlined) {
+    border: $space-50 solid $colors-brightBlack;
+  }
 
   &___open {
     scale: 1 1;
@@ -144,11 +151,14 @@
     color 0.1s ease-in-out;
   cursor: pointer;
   margin-right: $space-250;
-  border: solid with-opacity($colors-brightBlack, 0.5);
-  border-width: 0 $space-50 $space-50 0;
   padding: $space-200 $space-300;
   color: $colors-foreground;
   line-height: $lineHeight-200;
+
+  @include theme-variant(outlined) {
+    border: solid with-opacity($colors-brightBlack, 0.5);
+    border-width: 0 $space-50 $space-50 0;
+  }
 
   &:hover {
     background-color: with-opacity($colors-accent, 0.1);

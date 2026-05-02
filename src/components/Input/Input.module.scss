@@ -88,6 +88,7 @@
       }
       @include theme-mode(dark) {
         border-color: $colors-accent;
+        color: $colors-accent;
       }
     }
   }
@@ -96,7 +97,9 @@
 .input__postfix {
   display: flex;
   align-items: center;
-  transition: border-color 0.1s ease-in-out;
+  transition:
+    border-color 0.1s ease-in-out,
+    color 0.1s ease-in-out;
   cursor: help;
   border: solid transparent;
   border-width: $space-50 $space-50 $space-50 0;

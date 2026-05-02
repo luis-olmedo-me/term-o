@@ -6,6 +6,7 @@ import { availableInputTypes } from '@src/constants/inputs.constants'
 import { colorThemeKeys } from '@src/constants/themes.constants'
 import { getConfigDetailsByInputId } from '@src/helpers/config.helpers'
 import { validate } from '@src/helpers/validation-primitive.helpers'
+import { getClassNameByType } from './FieldRenderer.helpers'
 import {
   field,
   field___mod_column,
@@ -14,7 +15,6 @@ import {
   field__error,
   field__input,
   field__input___mod_error,
-  field__input___mod_full_width,
   field__leyends,
   field__title
 } from './FieldRenderer.module.scss'
@@ -53,7 +53,7 @@ export const FieldRenderer = ({
 
   const hasErrorMessage = typeof errorMessage === 'string'
   const isTextAreaInput = type === availableInputTypes.TEXT_AREA
-  const isTextInput = isTextAreaInput || type === availableInputTypes.STRING
+  const classNameByType = getClassNameByType(type)
 
   return (
     <div
@@ -74,7 +74,7 @@ export const FieldRenderer = ({
       <div
         className={`
           ${field__input}
-          ${isTextInput ? field__input___mod_full_width : ''}
+          ${classNameByType}
           ${hasErrorMessage ? field__input___mod_error : ''}
         `}
       >

@@ -2,6 +2,7 @@
 
 .field {
   display: flex;
+  column-gap: $space-800;
   justify-content: space-between;
   align-items: center;
   padding: $space-500 $space-900;
@@ -40,6 +41,10 @@
   }
 }
 
+.field__leyends {
+  flex: 1;
+}
+
 .field__title {
   margin: 0 0 $space-450;
   font-weight: bold;
@@ -56,9 +61,16 @@
 
 .field__input {
   outline: $space-50 dashed transparent;
-  width: fit-content;
 
-  &___mod_full_width {
+  &___width_fit {
+    width: fit-content;
+  }
+
+  &___width_static {
+    width: 250px;
+  }
+
+  &___width_full {
     width: 100%;
   }
 

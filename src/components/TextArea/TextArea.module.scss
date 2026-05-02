@@ -59,11 +59,11 @@
   &:hover + .textarea__overlay {
     background-color: with-opacity($colors-accent, 0.3);
 
-    @include theme(light) {
+    @include theme-mode(light) {
       border-color: $colors-brightBlack;
       --keyword-color: $colors-black;
     }
-    @include theme(dark) {
+    @include theme-mode(dark) {
       border-color: $colors-accent;
       --keyword-color: $colors-brightWhite;
     }

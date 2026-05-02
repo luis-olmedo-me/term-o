@@ -64,10 +64,10 @@
     }
 
     &:focus {
-      @include theme(light) {
+      @include theme-mode(light) {
         border: $space-50 solid $colors-brightBlack;
       }
-      @include theme(dark) {
+      @include theme-mode(dark) {
         border: $space-50 solid $colors-accent;
       }
     }
@@ -79,10 +79,10 @@
 
     &:hover,
     &:hover + .input__postfix {
-      @include theme(light) {
+      @include theme-mode(light) {
         border-color: $colors-brightBlack;
       }
-      @include theme(dark) {
+      @include theme-mode(dark) {
         border-color: $colors-accent;
       }
     }

@@ -6,7 +6,7 @@
   }
 }
 
-@mixin theme($mode) {
+@mixin theme-mode($mode) {
   @if $mode == any {
     :global(.theme-provider-dark) &,
     :global(.theme-provider-light) & {

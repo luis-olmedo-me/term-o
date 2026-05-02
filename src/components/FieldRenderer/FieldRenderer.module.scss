@@ -9,10 +9,10 @@
   border-width: $space-50 $space-50 0 $space-50;
   padding: $space-500 $space-900;
 
-  @include theme(light) {
+  @include theme-mode(light) {
     background-color: with-opacity($colors-black, 0.02);
   }
-  @include theme(dark) {
+  @include theme-mode(dark) {
     background-color: with-opacity($colors-white, 0.02);
   }
 
@@ -33,7 +33,7 @@
   }
 
   &___mod_error {
-    @include theme(any) {
+    @include theme-mode(any) {
       background-color: with-opacity($colors-red, 0.04);
     }
   }

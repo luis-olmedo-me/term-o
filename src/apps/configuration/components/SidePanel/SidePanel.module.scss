@@ -7,10 +7,10 @@
   padding: $space-600 0;
   min-width: fit-content;
 
-  @include theme(light) {
+  @include theme-mode(light) {
     background-color: with-opacity($colors-black, 0.02);
   }
-  @include theme(dark) {
+  @include theme-mode(dark) {
     background-color: with-opacity($colors-white, 0.02);
   }
 }

@@ -6,10 +6,10 @@
   border-bottom: $space-50 solid $colors-brightBlack;
   padding: $space-600 $space-500 $space-600 $space-400;
 
-  @include theme(light) {
+  @include theme-mode(light) {
     background-color: with-opacity($colors-black, 0.02);
   }
-  @include theme(dark) {
+  @include theme-mode(dark) {
     background-color: with-opacity($colors-white, 0.02);
   }
 }

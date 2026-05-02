@@ -47,19 +47,19 @@
     border-color: $colors-brightBlack;
 
     &:hover {
-      @include theme(light) {
+      @include theme-mode(light) {
         border-color: $colors-brightBlack;
       }
-      @include theme(dark) {
+      @include theme-mode(dark) {
         border-color: $colors-accent;
       }
     }
 
     &:hover + .dropdown__options_container {
-      @include theme(light) {
+      @include theme-mode(light) {
         border-color: $colors-brightBlack;
       }
-      @include theme(dark) {
+      @include theme-mode(dark) {
         border-color: $colors-accent;
       }
     }

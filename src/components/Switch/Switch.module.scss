@@ -64,10 +64,10 @@
   &:hover + .switcher__fake_input {
     background-color: with-opacity($colors-accent, 0.25);
 
-    @include theme(light) {
+    @include theme-mode(light) {
       border-color: $colors-brightBlack;
     }
-    @include theme(dark) {
+    @include theme-mode(dark) {
       border-color: $colors-accent;
     }
 

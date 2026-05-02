@@ -9,10 +9,10 @@
 }
 
 .typed_select__input_wrapper:hover + .typed_select__options_container {
-  @include theme(light) {
+  @include theme-mode(light) {
     border-color: $colors-brightBlack;
   }
-  @include theme(dark) {
+  @include theme-mode(dark) {
     border-color: $colors-accent;
   }
 }

@@ -38,10 +38,10 @@
     background-color: with-opacity($colors-accent, 0.8);
     color: $colors-brightWhite;
 
-    @include theme(light) {
+    @include theme-mode(light) {
       border-color: $colors-brightBlack;
     }
-    @include theme(dark) {
+    @include theme-mode(dark) {
       border-color: $colors-accent;
     }
   }
@@ -74,10 +74,10 @@
     border-radius: $radius-200 $radius-200 0 0;
 
     &:hover + .select__options_container {
-      @include theme(light) {
+      @include theme-mode(light) {
         border-color: $colors-brightBlack;
       }
-      @include theme(dark) {
+      @include theme-mode(dark) {
         border-color: $colors-accent;
       }
     }

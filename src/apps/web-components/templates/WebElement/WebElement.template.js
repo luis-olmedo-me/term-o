@@ -83,10 +83,13 @@ export class WebElement extends HTMLElement {
 
   _handleThemeChange(event) {
     const themeElement = this.$get('theme')
+    const webThemeProviderElement = this.$get('web-theme-provider')
     const { theme } = event.detail
     this._theme = theme
 
     themeElement.innerHTML = createCssVariablesFromTheme(theme, '.web-theme-provider')
+    webThemeProviderElement.setAttribute('data-mode', theme.mode)
+    webThemeProviderElement.setAttribute('data-variant', theme.variant)
   }
 
   _handlePropsLoaded(event) {

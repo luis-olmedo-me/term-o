@@ -72,12 +72,14 @@ term-o-notification-item.visible:hover {
   position: relative;
   cursor: pointer;
   box-shadow: 0 5px 10px rgb(from black r g b / 0.4);
-  border: var(--space-50) solid var(--colors-brightBlack);
   border-radius: var(--radius-200);
   background-color: var(--colors-background);
   padding: var(--space-400) var(--space-300) var(--space-400) var(--space-700);
   width: 350px;
   color: var(--colors-foreground);
+}
+.web-theme-provider[data-variant='outlined'] .notification {
+  border: var(--space-50) solid var(--colors-brightBlack);
 }
 .notification::after {
   position: absolute;

@@ -24,6 +24,7 @@ class NotificationItem extends WebElement {
     titleElement.innerHTML = buildHtmlTextContent(title)
     messageElement.innerHTML = buildHtmlTextContent(message)
     notificationElement.setAttribute('data-bgcolor', color)
+    notificationElement.style.setProperty('--color', `var(--colors-${color})`)
   }
 }
 

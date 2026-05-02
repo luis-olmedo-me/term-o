@@ -67,6 +67,8 @@ term-o-notification-item.visible:hover {
 }
 
 .notification {
+  --color: var(--colors-accent);
+
   position: relative;
   cursor: pointer;
   box-shadow: 0 5px 10px rgb(from black r g b / 0.4);
@@ -82,7 +84,7 @@ term-o-notification-item.visible:hover {
   top: var(--space-250);
   left: var(--space-200);
   border-radius: var(--radius-100);
-  background-color: var(--colors-accent);
+  background-color: var(--color);
   width: var(--space-250);
   height: calc(100% - var(--space-450));
   content: '';

@@ -117,14 +117,15 @@
     scale 0.2s ease-in-out 0.3s,
     opacity 0.2s ease-in-out 0.3s;
   box-sizing: border-box;
-  border-width: 0 $space-50 $space-50;
+  box-shadow: 0px 6px 10px 2px #00000060;
   border-radius: 0 0 $radius-200 $radius-200;
   background-color: $colors-background;
   padding-right: $space-250;
   width: 100%;
 
   @include theme-variant(outlined) {
-    border: $space-50 solid $colors-brightBlack;
+    border: solid $colors-brightBlack;
+    border-width: 0 $space-50 $space-50;
   }
 
   &___open {

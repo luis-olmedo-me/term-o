@@ -3,7 +3,7 @@ import processManager from '@src/libs/process-manager'
 import { commandStatuses, origins } from '@src/constants/command.constants'
 import { sandboxEvents } from '@src/constants/sandbox.constants'
 import { buildArgsFromProps } from '@src/helpers/arguments.helpers'
-import { makeLogSafe } from '@src/helpers/command.helpers'
+import { flatLogs } from '@src/helpers/command.helpers'
 
 export default async (resolve, reject, data) => {
   const { code, props, addonNames } = data
@@ -13,7 +13,7 @@ export default async (resolve, reject, data) => {
   iframe.setAttribute('style', 'display: none;')
   document.body.appendChild(iframe)
 
-  let updates = []
+  let logs = []
 
   const handleCodeEval = async event => {
     const type = event.data?.type
@@ -21,46 +21,38 @@ export default async (resolve, reject, data) => {
 
     switch (type) {
       case sandboxEvents.COMMAND: {
-        const { updates, status } = await processManager.executeCommand({
+        const { logs, status } = await processManager.executeCommand({
           line: buildArgsFromProps(data.props, data.name).join(' '),
-          origin: origins.FORCED
+          origin: origins.ADDON
         })
         const hasError = status === commandStatuses.ERROR
-
-        const updatesUncolored = makeLogSafe(updates, true)
+        const plainLogs = flatLogs(logs)
 
         iframe.contentWindow.postMessage(
-          { type: sandboxEvents.COMMAND_RETURN, data: { updates: updatesUncolored, hasError } },
+          { type: sandboxEvents.COMMAND_RETURN, data: { logs: plainLogs, hasError } },
           '*'
         )
         break
       }
 
-      case sandboxEvents.COMMAND_UPDATE: {
-        updates = [...updates, ...data.updates]
+      case sandboxEvents.COMMAND_LOG: {
+        logs = [...logs, ...data.logs]
 
         iframe.contentWindow.postMessage(
-          { type: sandboxEvents.COMMAND_UPDATE_RETURN, data: { updates, hasError: false } },
+          { type: sandboxEvents.COMMAND_LOG_RETURN, data: { logs, hasError: false } },
           '*'
         )
         break
       }
 
-      case sandboxEvents.COMMAND_SET_UPDATES: {
-        updates = data.updates
+      case sandboxEvents.COMMAND_CLEAR_LOGS: {
+        logs = []
 
         iframe.contentWindow.postMessage(
-          { type: sandboxEvents.COMMAND_SET_UPDATES_RETURN, data: { updates, hasError: false } },
-          '*'
-        )
-        break
-      }
-
-      case sandboxEvents.COMMAND_CLEAR_UPDATES: {
-        updates = []
-
-        iframe.contentWindow.postMessage(
-          { type: sandboxEvents.COMMAND_CLEAR_UPDATES_RETURN, data: { updates, hasError: false } },
+          {
+            type: sandboxEvents.COMMAND_CLEAR_LOGS_RETURN,
+            data: { logs, hasError: false }
+          },
           '*'
         )
         break
@@ -71,7 +63,7 @@ export default async (resolve, reject, data) => {
         window.removeEventListener('message', handleCodeEval)
 
         if (data.error) reject(data.error)
-        else resolve(updates)
+        else resolve(logs)
         break
       }
     }

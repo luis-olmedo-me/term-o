@@ -46,6 +46,7 @@ const handleCommandQueueChange = async (storage, commandParser) => {
   const originalTab = storage.get(storageKeys.TAB)
   const config = storage.get(storageKeys.CONFIG)
 
+  const id = executable.id
   const tab = executable.tab || originalTab
   const origin = executable.origin
   const eventType = executable.eventType
@@ -56,21 +57,13 @@ const handleCommandQueueChange = async (storage, commandParser) => {
   const isTermOpen = !!sidePanelPort
 
   const context = createContext(contextInputValue, tab)
-  const command = commandParser
-    .read(executable.line)
-    .share({ storage, isTermOpen, context, origin, eventType })
+  const commandList = commandParser.read(executable.line)
 
-  if (!command.finished) {
-    command.startExecuting()
-    command.addEventListener('update', () => queue.change(executable.id, command.jsonUI()))
-    queue.change(executable.id, command.jsonUI())
-    await command.execute()
-  }
+  commandList.share({ storage, isTermOpen, context, origin, eventType, commandList })
+  queue.change(id, commandList.toJSON({ flat: true }))
+  commandList.addEventListener('update', () => queue.change(id, commandList.toJSON({ flat: true })))
 
-  const commandVisible = command.getCommandVisibleInChain()
-
-  if (commandVisible) queue.change(executable.id, commandVisible.jsonUI())
-  else queue.delete(executable.id)
+  await commandList.execute()
 
   if (executable.tabId) storage.set(storageKeys.TAB, originalTab)
 }

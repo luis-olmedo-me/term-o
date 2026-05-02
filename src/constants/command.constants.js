@@ -20,7 +20,7 @@ export const commandNames = {
 export const origins = {
   AUTO: 'auto',
   MANUAL: 'manual',
-  FORCED: 'forced'
+  ADDON: 'addon'
 }
 
 export const commandStatuses = {

@@ -1,41 +1,7 @@
-import { commandStatuses } from '@src/constants/command.constants'
-
+import { doubleQuotesPattern, singleQuotesPattern } from '@src/constants/patterns.constants'
+import { getOptionTypeLabel } from '@src/helpers/options.helpers'
+import { quotify } from '@src/helpers/string.helpers'
 import { getColor as C, cleanColors } from '@src/helpers/themes.helpers'
-import { getOptionTypeLabel } from './options.helpers'
-import { getQuotedString } from './utils.helpers'
-
-export const executePerUpdates = async (nextCommand, updates) => {
-  const argsHoldingUp = nextCommand.args.filter(arg => arg.isHoldingUp)
-
-  nextCommand.allowToExecuteNext(false)
-
-  for (let args of updates) {
-    const update = stringifyFragments(args)
-    const cleanedUpdate = cleanColors(update)
-
-    argsHoldingUp.forEach(arg => {
-      let newValue = arg.getValueFromArgs(cleanedUpdate, args)
-      const isArray = Array.isArray(newValue)
-      const isString = typeof newValue === 'string'
-
-      if (isArray) newValue = newValue.map(cleanColors)
-      if (isString) newValue = cleanColors(newValue)
-
-      arg.setValue(newValue)
-    })
-
-    nextCommand.prepare()
-
-    if (nextCommand.status === commandStatuses.ERROR) break
-    await nextCommand.execute()
-    nextCommand.saveUpdates()
-    if (nextCommand.status === commandStatuses.ERROR) break
-  }
-
-  if (nextCommand.nextCommand && !nextCommand.failed) {
-    await nextCommand.executeNext()
-  }
-}
 
 const getHighestTitleCountInSection = (sectionNames, options) => {
   return sectionNames.reduce((max, sectionName) => {
@@ -71,7 +37,7 @@ export const createHelpView = command => {
 
   helpSectionsNames.forEach(sectionName => {
     const optionsBySection = options.getByHelpSection(sectionName)
-    const quotedTitle = getQuotedString(sectionName)
+    const quotedTitle = quotify(sectionName)
 
     helps.push([`${C`brightPurple`}${quotedTitle}${C`reset`}`])
 
@@ -84,48 +50,64 @@ export const createHelpView = command => {
       const tab = `.`.repeat(highestTitleCount + 1 - titleCount)
 
       const completeDescription = `${displayName} ${type} ${C`brightBlack`}${tab} ${C`reset`}${description}${C`reset`}`
-      const quotedCompleteDescription = getQuotedString(completeDescription)
+      const quotedCompleteDescription = quotify(completeDescription)
 
       helps.push([quotedCompleteDescription])
     })
   })
 
-  command.update(...helps)
+  command.log(...helps)
 }
 
-export const stringifyFragments = fragments => {
-  return fragments
-    .flatMap(fragment => {
-      const isString = typeof fragment === 'string'
+export const renderLine = segments => {
+  return segments
+    .flatMap(segment => {
+      const isString = typeof segment === 'string'
 
-      return !isString ? `[${stringifyUpdates([fragment])}]` : fragment
+      return !isString ? `[${renderOutput([segment])}]` : segment
     })
     .join(' ')
 }
 
-export const stringifyUpdates = fragmentsRaw => {
-  return fragmentsRaw.reduce((lines, fragments) => {
-    const line = stringifyFragments(fragments)
+export const renderOutput = rawLines => {
+  return rawLines.reduce((lines, segments) => {
+    const line = renderLine(segments)
 
     return lines.concat(line)
   }, [])
 }
 
-export const makeLogSafe = (log, shouldRemoveColors) => {
-  const isArray = log instanceof Array
+export const flatLogs = logs => {
+  const isArray = logs instanceof Array
 
   if (!isArray) return []
 
-  return log.map(fragment => {
-    const isArray = fragment instanceof Array
-    const isString = typeof fragment === 'string'
+  return logs.map(logValue => {
+    const isArray = logValue instanceof Array
 
-    if (isArray) return makeLogSafe(fragment)
-    if (!isString) return String(fragment)
-    const hasDoubleQuotes = /^"|"$/g.test(fragment)
-    const hasSingleQuotes = /^'|'$/g.test(fragment)
-    const fragmentString = shouldRemoveColors ? cleanColors(fragment) : fragment
+    if (isArray) return flatLogs(logValue)
+    const logValueNoColor = cleanColors(logValue)
+    const hasSingleQuotes = singleQuotesPattern.test(logValueNoColor)
+    const hasDoubleQuotes = doubleQuotesPattern.test(logValueNoColor)
 
-    return hasDoubleQuotes || hasSingleQuotes ? fragmentString : getQuotedString(fragmentString)
+    if (hasSingleQuotes) return logValueNoColor.replace(singleQuotesPattern, '')
+    if (hasDoubleQuotes) return logValueNoColor.replace(doubleQuotesPattern, '')
+    return parseInt(logValueNoColor)
   })
+}
+
+export const sanitizeLogs = logs => {
+  return logs.reduce((result, logValue) => {
+    const isArray = logValue instanceof Array
+
+    if (isArray) {
+      const recalledValue = sanitizeLogs(logValue)
+
+      return result.concat(recalledValue)
+    }
+
+    const logValueAsString = String(logValue)
+
+    return result.concat(logValueAsString)
+  }, [])
 }

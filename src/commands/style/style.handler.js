@@ -4,7 +4,7 @@ import { origins } from '@src/constants/command.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatStyle, formatText } from '@src/helpers/format.helpers'
-import { getQuotedString, truncate } from '@src/helpers/utils.helpers'
+import { quotify, truncate } from '@src/helpers/string.helpers'
 
 export const styleHandler = async command => {
   const storage = command.get('storage')
@@ -14,7 +14,7 @@ export const styleHandler = async command => {
   if (P`list`) {
     const config = storage.get(storageKeys.CONFIG)
 
-    command.update(['"Searching element styles."'])
+    command.log(['"Searching element styles."'])
     const styledElement = await processManager.getElementStyles(tabId, {
       searchByXpath: P`xpath`,
       searchByProperty: P`style`,
@@ -23,8 +23,8 @@ export const styleHandler = async command => {
 
     const formattedStyles = formatStyle(styledElement)
 
-    command.reset()
-    if (styledElement.styles.length) command.update(formattedStyles)
+    command.clearLogs()
+    if (styledElement.styles.length) command.log(formattedStyles)
   }
 
   if (P`apply`) {
@@ -38,7 +38,7 @@ export const styleHandler = async command => {
 
     const formattedStyles = formatStyle(styledElement)
 
-    command.update(formattedStyles)
+    command.log(formattedStyles)
   }
 
   if (P`color-pick`) {
@@ -50,23 +50,23 @@ export const styleHandler = async command => {
     }
 
     if (origin !== origins.MANUAL) {
-      command.update(['"To proceed, you need to pick a color. Do you want to pick it now? (y/n)"'])
+      command.log(['"To proceed, you need to pick a color. Do you want to pick it now? (y/n)"'])
       const input = await processManager.requestInput()
       const formattedInput = formatText({ text: input })
       const truncatedInput = truncate(input, 30)
-      const quotedInput = getQuotedString(truncatedInput)
+      const quotedInput = quotify(truncatedInput)
 
-      command.update(formattedInput)
+      command.log(formattedInput)
       if (input === 'n') throw 'Operation canceled by user.'
       if (input !== 'y') throw `Invalid input ${quotedInput}. Defaulting to cancellation.`
     }
 
-    command.update(['"Pick a color."'])
+    command.log(['"Pick a color."'])
     const color = await processManager.pickColor()
-    const update = formatText({ text: color })
+    const log = formatText({ text: color })
 
-    command.reset()
-    command.update(update)
+    command.clearLogs()
+    command.log(log)
   }
 
   if (P`help`) createHelpView(command)

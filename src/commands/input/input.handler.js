@@ -8,10 +8,10 @@ export const inputHandler = async command => {
 
   if (P`text`) {
     const input = await processManager.requestInput()
-    const update = formatText({ text: input })
+    const log = formatText({ text: input })
 
-    command.reset()
-    command.update(update)
+    command.clearLogs()
+    command.log(log)
   }
 
   if (P`help`) createHelpView(command)

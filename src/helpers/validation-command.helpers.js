@@ -4,9 +4,9 @@ import {
   tabIdPattern,
   windowIdPattern
 } from '@src/constants/patterns.constants'
+import { getArrayAsLine } from '@src/helpers/arguments.helpers'
+import { quotify } from '@src/helpers/string.helpers'
 import { validateSchema } from '@src/helpers/validation-schema.helpers'
-import { getArrayAsLine } from './arguments.helpers'
-import { getQuotedString } from './utils.helpers'
 
 export const isRegExp = (option, value) => {
   try {
@@ -193,7 +193,7 @@ export const allow = (...dependencies) => {
     if (hasUnknownDependencies) {
       const name = option.displayName
       const firstUknownDependency = uknownDependencies.at(0)
-      const quotedFirstUknownDependency = getQuotedString(firstUknownDependency)
+      const quotedFirstUknownDependency = quotify(firstUknownDependency)
 
       throw `${name} can not be executed with ${quotedFirstUknownDependency}.`
     }
@@ -209,7 +209,7 @@ export const requireAll = (...dependencies) => {
     if (hasMissingDependencies) {
       const name = option.displayName
       const firstUknownDependency = missingDependencies.at(0)
-      const quotedFirstUknownDependency = getQuotedString(firstUknownDependency)
+      const quotedFirstUknownDependency = quotify(firstUknownDependency)
 
       throw `${name} must be executed with ${quotedFirstUknownDependency}.`
     }
@@ -240,7 +240,7 @@ export const conflict = (...dependencies) => {
     if (hasConflicts) {
       const name = option.displayName
       const firstConflict = conflictingDependencies.at(0)
-      const quotedFirstConflict = getQuotedString(firstConflict)
+      const quotedFirstConflict = quotify(firstConflict)
 
       throw `${name} conflicts with ${quotedFirstConflict}.`
     }
@@ -265,7 +265,7 @@ export const requireNoOther = (option, _value, props) => {
   if (hasForbbidenDependencies) {
     const name = option.displayName
     const firstForbiddenDependency = forbiddenDependencies.at(0)
-    const quotedFirstForbiddenDependency = getQuotedString(firstForbiddenDependency)
+    const quotedFirstForbiddenDependency = quotify(firstForbiddenDependency)
 
     throw `${name} can not be executed with ${quotedFirstForbiddenDependency}.`
   }

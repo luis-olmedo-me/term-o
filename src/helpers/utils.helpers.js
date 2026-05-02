@@ -38,15 +38,6 @@ export const delay = time => {
   return new Promise(resolve => setTimeout(resolve, time))
 }
 
-export const getQuotedString = value => {
-  const hasDoubleQuote = value.includes('"')
-  const hasSingleQuote = value.includes("'")
-
-  if (hasDoubleQuote && !hasSingleQuote) return `'${value}'`
-  else if (!hasDoubleQuote && hasSingleQuote) return `"${value}"`
-  return `"${value.replaceAll('"', '\\"')}"`
-}
-
 export const spreadIf = (condition, value) => {
   const defaultValue = Array.isArray(value) ? [] : {}
 
@@ -107,10 +98,6 @@ export const isDarkTheme = hex => {
 }
 
 export const isRgb = value => rgbStartPattern.test(value)
-
-export const truncate = (value, maxCount) => {
-  return value.length > maxCount ? `${value.slice(0, maxCount)}...` : value
-}
 
 export const safeJsonParse = value => {
   try {

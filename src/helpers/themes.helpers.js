@@ -1,6 +1,5 @@
 import { backgroundLogo, rotationValues } from '@src/constants/string-svg.constants'
-import { fillTemplate, toTitleCase } from './string.helpers'
-import { getQuotedString } from './utils.helpers'
+import { fillTemplate, quotify, toTitleCase } from './string.helpers'
 
 export const getColor = color => {
   return `{tfg:${color}}`
@@ -46,7 +45,7 @@ const createVariablesFromTheme = (theme, pre = null) => {
 
     const isHexColor = validValue.startsWith('#')
     const isMeasure = validValue.endsWith('px') || validValue.endsWith('rem')
-    const value = isMeasure || isHexColor ? validValue : getQuotedString(validValue)
+    const value = isMeasure || isHexColor ? validValue : quotify(validValue)
 
     variables += `--${name}: ${value}; `
   })

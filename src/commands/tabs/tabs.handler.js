@@ -20,29 +20,29 @@ export const tabsHandler = async command => {
   let tabId = storage.get(storageKeys.TAB).id
 
   if (P`tab-id`) {
-    command.update(['"Connecting to the tab."'])
+    command.log(['"Connecting to the tab."'])
     const validTab = await getTab({ tabId: cleanTabId(P`tab-id`) })
 
     tabId = validTab.id
   }
 
   if (P`reload`) {
-    if (P`wait`) command.update(['"Please wait while the page is loading."'])
+    if (P`wait`) command.log(['"Please wait while the page is loading."'])
     const tab = await reloadTab({ tabId, wait: P`wait` })
-    const update = formatTab(tab)
+    const log = formatTab(tab)
 
-    command.reset()
-    command.update(update)
+    command.clearLogs()
+    command.log(log)
   }
 
   if (P`point`) {
     const tab = await getTab({ tabId })
-    const update = formatTab(tab)
+    const log = formatTab(tab)
 
     storage.set(storageKeys.TAB, tab)
 
-    command.reset()
-    command.update(update)
+    command.clearLogs()
+    command.log(log)
   }
 
   if (P`switch`) {
@@ -52,48 +52,48 @@ export const tabsHandler = async command => {
     if (!window.focused) await updateWindow({ windowId: tab.windowId, focused: true })
     await updateTab({ tabId: tab.id, selected: true })
 
-    const update = formatTab(tab)
+    const log = formatTab(tab)
 
-    command.reset()
-    command.update(update)
+    command.clearLogs()
+    command.log(log)
   }
 
   if (P`close`) {
     const tab = await getTab({ tabId })
-    const update = formatTab(tab)
+    const log = formatTab(tab)
 
     await closeTab({ tabId: tab.id })
 
-    command.reset()
-    command.update(update)
+    command.clearLogs()
+    command.log(log)
   }
 
   if (P`open`) {
-    if (P`wait`) command.update(['"Please wait while the page is loading."'])
+    if (P`wait`) command.log(['"Please wait while the page is loading."'])
     const tab = await createTab({
       url: P`url`,
       active: P`active`,
       wait: P`wait`
     })
 
-    const update = formatTab(tab, P`url`)
+    const log = formatTab(tab, P`url`)
 
-    command.reset()
-    command.update(update)
+    command.clearLogs()
+    command.log(log)
   }
 
   if (P`current`) {
     const tab = await getCurrentTab()
-    const update = formatTab(tab)
+    const log = formatTab(tab)
 
-    command.update(update)
+    command.log(log)
   }
 
   if (P`pointing`) {
     const tab = await getTab({ tabId })
-    const update = formatTab(tab)
+    const log = formatTab(tab)
 
-    command.update(update)
+    command.log(log)
   }
 
   if (P`list`) {
@@ -107,10 +107,10 @@ export const tabsHandler = async command => {
       byGroupId: P`group-id`,
       byTabId: P`tab-id`
     })
-    const updates = tabs.map(formatTab)
+    const logs = tabs.map(formatTab)
 
-    command.reset()
-    command.update(...updates)
+    command.clearLogs()
+    command.log(...logs)
   }
 
   if (P`help`) createHelpView(command)

@@ -8,9 +8,9 @@ export const aliasHandler = async command => {
 
   if (P`list`) {
     const aliases = storage.get(storageKeys.ALIASES)
-    const updates = aliases.map(formatAlias)
+    const logs = aliases.map(formatAlias)
 
-    command.update(...updates)
+    command.log(...logs)
   }
 
   if (P`add`) {
@@ -23,10 +23,10 @@ export const aliasHandler = async command => {
       if (alreadyExists) throw `The alias "${key}" already exists.`
 
       const newAliases = aliases.concat(newAlias)
-      const update = formatAlias(newAlias)
+      const log = formatAlias(newAlias)
 
       storage.set(storageKeys.ALIASES, newAliases)
-      command.update(update)
+      command.log(log)
     })
   }
 
@@ -39,10 +39,10 @@ export const aliasHandler = async command => {
     if (!existingAlias) throw `The alias "${key}" does not exist.`
 
     const newAliases = aliases.filter(alias => alias.key !== key)
-    const update = formatAlias(existingAlias)
+    const log = formatAlias(existingAlias)
 
     storage.set(storageKeys.ALIASES, newAliases)
-    command.update(update)
+    command.log(log)
   }
 
   if (P`help`) createHelpView(command)

@@ -4,7 +4,7 @@ import { commandNames, origins } from '@src/constants/command.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatAddon, formatText } from '@src/helpers/format.helpers'
-import { getQuotedString, truncate } from '@src/helpers/utils.helpers'
+import { quotify, truncate } from '@src/helpers/string.helpers'
 
 export const addonsHandler = async command => {
   const storage = command.get('storage')
@@ -12,9 +12,9 @@ export const addonsHandler = async command => {
 
   if (P`list`) {
     const addons = storage.get(storageKeys.ADDONS)
-    const updates = addons.values.map(formatAddon)
+    const logs = addons.values.map(formatAddon)
 
-    command.update(...updates)
+    command.log(...logs)
   }
 
   if (P`upload`) {
@@ -27,20 +27,18 @@ export const addonsHandler = async command => {
     }
 
     if (origin !== origins.MANUAL) {
-      command.update([
-        '"To proceed, you need to upload a file. Do you want to upload it now? (y/n)"'
-      ])
+      command.log(['"To proceed, you need to upload a file. Do you want to upload it now? (y/n)"'])
       const input = await processManager.requestInput()
       const formattedInput = formatText({ text: input })
       const truncatedInput = truncate(input, 30)
-      const quotedInput = getQuotedString(truncatedInput)
+      const quotedInput = quotify(truncatedInput)
 
-      command.update(formattedInput)
+      command.log(formattedInput)
       if (input === 'n') throw 'Operation canceled by user.'
       if (input !== 'y') throw `Invalid input ${quotedInput}. Defaulting to cancellation.`
     }
 
-    command.update(['"Select a file to upload."'])
+    command.log(['"Select a file to upload."'])
     const file = await processManager.uploadFile({ extensions: ['json'] })
     const newAddon = JSON.parse(file.content)
 
@@ -51,10 +49,10 @@ export const addonsHandler = async command => {
     if (alreadyExists) throw `The addon "${newAddon.name}" already exists.`
 
     addons.add(newAddon)
-    const update = formatAddon(newAddon)
+    const log = formatAddon(newAddon)
 
-    command.reset()
-    command.update(update)
+    command.clearLogs()
+    command.log(log)
   }
 
   if (P`delete`) {
@@ -64,10 +62,10 @@ export const addonsHandler = async command => {
     const addon = await addons.get(name)
 
     if (!addon) throw `The addon "${name}" does not exist.`
-    const update = formatAddon(addon)
+    const log = formatAddon(addon)
 
     addons.delete(name)
-    command.update(update)
+    command.log(log)
   }
 
   if (P`help`) createHelpView(command)

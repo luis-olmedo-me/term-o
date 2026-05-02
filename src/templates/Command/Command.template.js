@@ -4,9 +4,10 @@ import EventListener from '@src/templates/EventListener'
 import { commandStatuses } from '@src/constants/command.constants'
 
 import { buildArgsFromProps } from '@src/helpers/arguments.helpers'
-import { executePerUpdates, stringifyUpdates } from '@src/helpers/command.helpers'
+import { renderLine } from '@src/helpers/command.helpers'
 import { formatError } from '@src/helpers/format.helpers'
 import { getPropsFromString } from '@src/helpers/options.helpers'
+import { cleanColors } from '@src/helpers/themes.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 
 export class Command extends EventListener {
@@ -15,62 +16,44 @@ export class Command extends EventListener {
 
     this.id = createUUIDv4()
     this.name = name
-    this.props = {}
-    this.updates = []
-    this.staticUpdates = []
-    this.status = commandStatuses.IDLE
-    this.nextCommand = null
-    this.options = options
     this.args = []
-    this.canExecuteNext = true
+    this.props = {}
+    this.status = commandStatuses.IDLE
+    this.options = options
     this.visible = true
+    this._logs = []
+    this._staticLogs = []
     this._shared = {}
   }
 
+  get logs() {
+    return [...this._staticLogs, ...this._logs]
+  }
+  get hasArgsPending() {
+    return this.args.some(arg => arg.isHoldingUp)
+  }
   get finished() {
     return [commandStatuses.ERROR, commandStatuses.DONE].includes(this.status)
   }
   get failed() {
     return [commandStatuses.ERROR].includes(this.status)
   }
-  get allCommands() {
-    let tempCommand = this
-    let commands = []
 
-    while (tempCommand != null) {
-      commands.push(tempCommand)
-      tempCommand = tempCommand.nextCommand
-    }
-
-    return commands
-  }
-
-  reset() {
-    this.updates = this.staticUpdates
+  clearLogs() {
+    this._logs = []
 
     this.dispatchEvent('update', this)
   }
 
-  update(...updates) {
-    this.updates = [...this.updates, ...updates]
+  log(...newLogs) {
+    this._logs = [...this._logs, ...newLogs]
 
     this.dispatchEvent('update', this)
   }
 
-  setUpdates(...updates) {
-    this.updates = updates
-
-    this.dispatchEvent('update', this)
-  }
-
-  saveUpdates() {
-    this.staticUpdates = this.updates
-  }
-
-  allowToExecuteNext(permission) {
-    this.canExecuteNext = permission
-
-    return this
+  saveLogs() {
+    this._staticLogs = [...this._staticLogs, ...this._logs]
+    this._logs = []
   }
 
   prepare(args) {
@@ -103,23 +86,16 @@ export class Command extends EventListener {
   }
 
   async execute() {
-    const hasArgsPending = this.args.some(arg => arg.isHoldingUp)
-
     try {
-      if (hasArgsPending) throw 'Params were not finished'
+      if (this.hasArgsPending) throw 'Params were not finished'
 
       this.props = this.options.getValues()
-      this.startExecuting()
 
+      this.clearLogs()
+      this.changeStatus(commandStatuses.EXECUTING)
       await this.dispatchEvent('execute', this)
 
-      if (!this.finished) {
-        if (this.canExecuteNext && this.nextCommand) await this.executeNext()
-
-        this.changeStatus(commandStatuses.DONE)
-      } else {
-        this.changeStatus(this.status)
-      }
+      this.changeStatus(commandStatuses.DONE)
     } catch (error) {
       this.throw(error)
     }
@@ -127,48 +103,51 @@ export class Command extends EventListener {
     return this
   }
 
+  async executePerLogs(previousCommand) {
+    const argsHoldingUp = this.args.filter(arg => arg.isHoldingUp)
+
+    for (const log of previousCommand.logs) {
+      const line = renderLine(log)
+      const cleanedLine = cleanColors(line)
+
+      argsHoldingUp.forEach(arg => {
+        let newValue = arg.getValueFromArgs(cleanedLine, log)
+        const isArray = Array.isArray(newValue)
+        const isString = typeof newValue === 'string'
+
+        if (isArray) newValue = newValue.map(cleanColors)
+        if (isString) newValue = cleanColors(newValue)
+
+        arg.setValue(newValue)
+      })
+
+      this.prepare()
+
+      if (this.failed) break
+
+      await this.execute()
+      this.saveLogs()
+
+      if (this.failed) break
+    }
+  }
+
   throw(message) {
     if (message === null) message = ''
     else if (typeof message !== 'string') message = message.toString()
     const errorUpdate = formatError({ title: message })
 
-    this.update(errorUpdate)
+    this.log(errorUpdate)
     this.changeStatus(commandStatuses.ERROR)
-  }
-
-  async executeNext() {
-    const nextCommand = this.nextCommand
-    const staticUpdates = [...this.updates]
-    const hasArgsHoldingUp = nextCommand.args.some(arg => arg.isHoldingUp)
-
-    if (nextCommand.finished) return this.update(...nextCommand.updates)
-
-    this.saveUpdates()
-    nextCommand.addEventListener('update', ({ updates }) => {
-      this.setUpdates(...this.staticUpdates, ...updates)
-    })
-    nextCommand.addEventListener('statuschange', command => {
-      if (command.finished) this.changeStatus(nextCommand.status)
-    })
-
-    if (hasArgsHoldingUp) await executePerUpdates(nextCommand, staticUpdates)
-    else await nextCommand.execute()
   }
 
   share(newSharedData) {
     this._shared = { ...this._shared, ...newSharedData }
 
-    if (this.nextCommand) this.nextCommand.share(this._shared)
-
     return this
   }
   get(key) {
     return this._shared[key] ?? null
-  }
-
-  startExecuting() {
-    this.changeStatus(commandStatuses.EXECUTING)
-    this.reset()
   }
 
   changeStatus(newStatus) {
@@ -178,37 +157,5 @@ export class Command extends EventListener {
 
   hide() {
     this.visible = false
-  }
-
-  getCommandVisibleInChain() {
-    const allCommands = this.allCommands
-    const hasAnyHidden = allCommands.some(command => !command.visible)
-
-    return this.failed || !hasAnyHidden
-      ? allCommands.find(command => command.visible)
-      : allCommands.reverse().find(command => command.visible)
-  }
-
-  jsonUI() {
-    return {
-      id: this.id,
-      status: this.status,
-      updates: stringifyUpdates(this.updates),
-      context: this.get('context'),
-      origin: this.get('origin'),
-      title: this.get('title'),
-      event: this.get('eventType')
-    }
-  }
-
-  json() {
-    return {
-      id: this.id,
-      status: this.status,
-      updates: this.updates,
-      context: this.get('context'),
-      origin: this.get('origin'),
-      title: this.get('title')
-    }
   }
 }

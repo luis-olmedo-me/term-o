@@ -1,6 +1,6 @@
 import StorageSimple from '@src/templates/StorageSimple'
 
-import { bannerTypes } from '@src/constants/banners.constants'
+import { bannerIds, bannerTypes } from '@src/constants/banners.constants'
 import { commandStatuses } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
@@ -47,7 +47,7 @@ export class StorageCommandQueue extends StorageSimple {
         message: `${discardedCount} lines were discarded.`,
         type: bannerTypes.WARNING,
         duration: 5_000,
-        id: 'command-exceed-warning'
+        id: bannerIds.COMMAND_LOG_OVERFLOW
       })
     }
 
@@ -58,7 +58,7 @@ export class StorageCommandQueue extends StorageSimple {
     const alreadyExists = this._cache.some(item => item.id === id)
 
     this._cache = alreadyExists
-      ? this._cache.filter(item => item.id === id)
+      ? this._cache.map(item => (item.id === id ? { ...item, queue } : item))
       : this._cache.concat({ id, queue })
   }
 
@@ -81,11 +81,20 @@ export class StorageCommandQueue extends StorageSimple {
   }
 
   clearCompleted() {
-    const newQueue = this.$latest().value.filter(
-      ({ command }) => !command || command.status === commandStatuses.EXECUTING
-    )
+    const banners = this.$storageService.get(storageKeys.BANNERS)
 
+    const newQueue = this.$latest().value.filter(
+      ({ command }) =>
+        !command ||
+        command.status === commandStatuses.EXECUTING ||
+        command.status === commandStatuses.IDLE
+    )
+    const current = newQueue.map(item => item.id)
+    const newCache = this._cache.filter(item => current.includes(item.id))
+
+    this._cache = newCache
     this.$storageService.set(storageKeys.COMMAND_QUEUE, newQueue)
+    banners.remove(bannerIds.COMMAND_LOG_OVERFLOW)
   }
 
   delete(queueId) {

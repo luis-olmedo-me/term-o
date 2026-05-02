@@ -9,9 +9,9 @@ export const eventsHandler = async command => {
 
   if (P`list`) {
     const events = storage.get(storageKeys.EVENTS)
-    const updates = events.map(formatRegisteredEvent)
+    const logs = events.map(formatRegisteredEvent)
 
-    command.update(...updates)
+    command.log(...logs)
   }
 
   if (P`register`) {
@@ -21,10 +21,10 @@ export const eventsHandler = async command => {
       const events = storage.get(storageKeys.EVENTS)
 
       const newEvents = events.concat(newEvent)
-      const update = formatRegisteredEvent(newEvent)
+      const log = formatRegisteredEvent(newEvent)
 
       storage.set(storageKeys.EVENTS, newEvents)
-      command.update(update)
+      command.log(log)
     })
   }
 
@@ -37,10 +37,10 @@ export const eventsHandler = async command => {
     if (!existingEvent) throw `The event "${id}" does not exist.`
 
     const newEvents = events.filter(alias => alias.id !== id)
-    const update = formatRegisteredEvent(existingEvent)
+    const log = formatRegisteredEvent(existingEvent)
 
     storage.set(storageKeys.EVENTS, newEvents)
-    command.update(update)
+    command.log(log)
   }
 
   if (P`help`) createHelpView(command)

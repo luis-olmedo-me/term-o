@@ -1,6 +1,6 @@
-import { stringifyFragments } from './command.helpers'
-import { isArray, isQuoted } from './string.helpers'
-import { countMatches, getQuotedString } from './utils.helpers'
+import { renderLine } from './command.helpers'
+import { isArray, isQuoted, quotify } from './string.helpers'
+import { countMatches } from './utils.helpers'
 
 export const getArgs = value => {
   const fragments = value.split(' ')
@@ -107,23 +107,6 @@ export const splitBy = (value, key) => {
   return output
 }
 
-export const getArray = value => {
-  const inner = value.slice(1, -1)
-  const args = getArgs(inner)
-
-  const result = []
-
-  for (const arg of args) {
-    const parsed = parseArrayItem(arg)
-
-    if (parsed === null) return null
-
-    result.push(parsed)
-  }
-
-  return result
-}
-
 export const getArrayAsLine = value => {
   const arrayValuesAsLine = value.reduce((line, arg, index) => {
     const isArray = Array.isArray(arg)
@@ -151,7 +134,7 @@ export const buildArgsFromProps = (props, name = null) => {
       }
 
       case 'string': {
-        return [...args, `--${name}`, getQuotedString(value)]
+        return [...args, `--${name}`, quotify(value)]
       }
 
       default: {
@@ -161,30 +144,20 @@ export const buildArgsFromProps = (props, name = null) => {
   }, defaultValue)
 }
 
-export const getRawArgs = value => {
-  const args = getArgs(value)
-
-  return args.reduce((rawArgs, arg) => {
-    if (arg.startsWith('"') && arg.endsWith('"')) return [...rawArgs, arg.slice(1, -1)]
-    if (arg.startsWith("'") && arg.endsWith("'")) return [...rawArgs, arg.slice(1, -1)]
-    return [...rawArgs, arg]
-  }, [])
-}
-
 export const getParamValue = (indexes, values) => {
   if (indexes.length === 1) {
     const [index] = indexes
     const value = values[index]
     const isArrayValue = Array.isArray(value)
 
-    if (isArrayValue) return `[${stringifyFragments(value)}]`
+    if (isArrayValue) return `[${renderLine(value)}]`
 
     return typeof value !== 'undefined' ? value : null
   }
 
   const params = indexes.map(index => values[index]).filter(value => typeof value !== 'undefined')
 
-  return `[${stringifyFragments(params)}]`
+  return `[${renderLine(params)}]`
 }
 
 const parseArrayItem = value => {
@@ -201,4 +174,21 @@ const parseArrayItem = value => {
   if (!Number.isNaN(num)) return num
 
   return null
+}
+
+export const getArray = value => {
+  const inner = value.slice(1, -1)
+  const args = getArgs(inner)
+
+  const result = []
+
+  for (const arg of args) {
+    const parsed = parseArrayItem(arg)
+
+    if (parsed === null) return null
+
+    result.push(parsed)
+  }
+
+  return result
 }

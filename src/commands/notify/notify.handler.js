@@ -14,7 +14,7 @@ export const notifyHandler = async command => {
   let tabId = storage.get(storageKeys.TAB).id
 
   if (P`tab-id`) {
-    command.update(['"Connecting to the tab."'])
+    command.log(['"Connecting to the tab."'])
     const validTab = await getTab({ tabId: cleanTabId(P`tab-id`) })
 
     tabId = validTab.id
@@ -32,10 +32,10 @@ export const notifyHandler = async command => {
       color: customColorThemeKeys.ACCENT
     })
 
-    const update = formatNotification(notification)
+    const log = formatNotification(notification)
 
-    command.reset()
-    command.update(update)
+    command.clearLogs()
+    command.log(log)
   }
 
   if (P`help`) createHelpView(command)

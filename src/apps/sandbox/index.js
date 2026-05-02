@@ -1,6 +1,6 @@
 import { commandNames } from '@src/constants/command.constants'
 import { sandboxEvents } from '@src/constants/sandbox.constants'
-import { makeLogSafe } from '@src/helpers/command.helpers'
+import { sanitizeLogs } from '@src/helpers/command.helpers'
 
 async function safeEval(event) {
   const code = event.data.data.code
@@ -12,10 +12,10 @@ async function safeEval(event) {
       const handleSandboxCommand = event => {
         if (event.data?.type !== sandboxEvents.COMMAND_RETURN) return
         const data = event.data.data
-        const errorMessage = data.updates.at(-1)
+        const errorMessage = data.logs.at(-1)
 
         window.removeEventListener('message', handleSandboxCommand)
-        if (!data.hasError) resolve(data.updates)
+        if (!data.hasError) resolve(data.logs)
         else reject(errorMessage)
       }
 
@@ -30,44 +30,21 @@ async function safeEval(event) {
 
   const log = (...args) => {
     return new Promise((resolve, reject) => {
+      const sanitizedArgs = sanitizeLogs(args)
       const handleSandboxCommand = event => {
-        if (event.data?.type !== sandboxEvents.COMMAND_UPDATE_RETURN) return
+        if (event.data?.type !== sandboxEvents.COMMAND_LOG_RETURN) return
         const data = event.data.data
-        const errorMessage = data.updates.at(-1)
+        const errorMessage = data.logs.at(-1)
 
         window.removeEventListener('message', handleSandboxCommand)
-        if (!data.hasError) resolve(data.updates)
+        if (!data.hasError) resolve(data.logs)
         else reject(errorMessage)
       }
 
       window.addEventListener('message', handleSandboxCommand)
 
       event.source.window.postMessage(
-        { type: sandboxEvents.COMMAND_UPDATE, data: { updates: [makeLogSafe(args, false)] } },
-        event.origin
-      )
-    })
-  }
-
-  const setLogs = (...args) => {
-    return new Promise((resolve, reject) => {
-      const handleSandboxCommand = event => {
-        if (event.data?.type !== sandboxEvents.COMMAND_SET_UPDATES_RETURN) return
-        const data = event.data.data
-        const errorMessage = data.updates.at(-1)
-
-        window.removeEventListener('message', handleSandboxCommand)
-        if (!data.hasError) resolve(data.updates)
-        else reject(errorMessage)
-      }
-
-      window.addEventListener('message', handleSandboxCommand)
-
-      event.source.window.postMessage(
-        {
-          type: sandboxEvents.COMMAND_SET_UPDATES,
-          data: { updates: [makeLogSafe(args, false)] }
-        },
+        { type: sandboxEvents.COMMAND_LOG, data: { logs: [sanitizedArgs] } },
         event.origin
       )
     })
@@ -76,18 +53,18 @@ async function safeEval(event) {
   const clear = () => {
     return new Promise((resolve, reject) => {
       const handleSandboxCommand = event => {
-        if (event.data?.type !== sandboxEvents.COMMAND_CLEAR_UPDATES_RETURN) return
+        if (event.data?.type !== sandboxEvents.COMMAND_CLEAR_LOGS_RETURN) return
         const data = event.data.data
-        const errorMessage = data.updates.at(-1)
+        const errorMessage = data.logs.at(-1)
 
         window.removeEventListener('message', handleSandboxCommand)
-        if (!data.hasError) resolve(data.updates)
+        if (!data.hasError) resolve(data.logs)
         else reject(errorMessage)
       }
 
       window.addEventListener('message', handleSandboxCommand)
 
-      event.source.window.postMessage({ type: sandboxEvents.COMMAND_CLEAR_UPDATES }, event.origin)
+      event.source.window.postMessage({ type: sandboxEvents.COMMAND_CLEAR_LOGS }, event.origin)
     })
   }
 
@@ -131,7 +108,7 @@ async function safeEval(event) {
   } catch (error) {
     const message = String(error?.message ?? error)
 
-    await setLogs(message)
+    await log(message)
     return message
   }
 }

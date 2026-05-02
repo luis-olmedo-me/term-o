@@ -4,7 +4,8 @@ import EventListener from '@src/templates/EventListener'
 
 import { getArgs, splitBy } from '@src/helpers/arguments.helpers'
 import { getHighestTitleCountInBases } from '@src/helpers/command.helpers'
-import { truncate } from '@src/helpers/utils.helpers'
+import { truncate } from '@src/helpers/string.helpers'
+import { CommandList } from '@src/templates/CommandList'
 
 export class CommandParser extends EventListener {
   constructor(bases) {
@@ -23,29 +24,27 @@ export class CommandParser extends EventListener {
     this.aliases = aliases
   }
 
-  read(rawScript) {
-    const scriptFormatted = this.getWithAliasesResolved(rawScript)
-    let [firstFragment, ...nextFragments] = splitBy(scriptFormatted, '&&')
+  read(rawCompleteLine) {
+    const completeLine = this._solveAliases(rawCompleteLine)
+    const segments = splitBy(completeLine, '&&')
+    const commandChain = new CommandList({
+      metadata: {
+        highestTitleCount: getHighestTitleCountInBases(this.bases),
+        title: rawCompleteLine
+      }
+    })
 
-    const command = this.parse(firstFragment)
-    let carriedCommand = command
+    for (let segment of segments) {
+      const command = this._build(segment)
 
-    for (let fragment of nextFragments) {
-      const nextCommand = this.parse(fragment)
-      carriedCommand.nextCommand = nextCommand
-
-      if (nextCommand.finished) break
-
-      carriedCommand = nextCommand
+      commandChain.add(command)
+      if (command.failed) break
     }
 
-    return command.share({
-      highestTitleCount: getHighestTitleCountInBases(this.bases),
-      title: rawScript
-    })
+    return commandChain
   }
 
-  parse(fragment) {
+  _build(fragment) {
     const [name, ...scriptArgs] = getArgs(fragment)
 
     const base = this.bases.find(base => base.name === name)
@@ -61,12 +60,10 @@ export class CommandParser extends EventListener {
       return error
     }
 
-    const command = base.create().prepare(scriptArgs)
-
-    return command
+    return base.create().prepare(scriptArgs)
   }
 
-  getWithAliasesResolved(script) {
+  _solveAliases(script) {
     const fragments = splitBy(script, '&&')
 
     const fragmentsWithAliases = fragments.map(fragment => {

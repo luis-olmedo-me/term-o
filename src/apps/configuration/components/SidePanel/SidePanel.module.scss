@@ -2,6 +2,7 @@
 
 .sidepanel {
   flex-shrink: 0;
+  backdrop-filter: blur(var(--space-400));
   background-color: with-opacity($colors-white, 0.02);
   padding: $space-600 0;
   min-width: fit-content;

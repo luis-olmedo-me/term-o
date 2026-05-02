@@ -8,7 +8,12 @@ import Watch from '@src/icons/Watch.icon'
 
 import { toTitleCase } from '@src/helpers/string.helpers'
 import { availableInputTypes } from './inputs.constants'
-import { basicColorKeys, colorThemeKeys, defaultColorTheme } from './themes.constants'
+import {
+  basicColorKeys,
+  colorThemeKeys,
+  defaultColorTheme,
+  themeVariants
+} from './themes.constants'
 
 export const PROMPT_MARK = '❯'
 export const DEFAULT_CONTEXT = '{tfg:purple}{tab_id}{tfg:brightBlack}/{tfg:blue}{title}'
@@ -27,6 +32,7 @@ export const configInputIds = {
   CONTEXT: 'status',
   FONT_FAMILY: 'font-family',
   THEME_NAME: 'theme-name',
+  THEME_VARIANT: 'theme-variant',
   COLOR_ACCENT: 'color-accent',
   CLEAR_USER_DATA: 'clear-user-data',
   RESET_CONFIGURATION: 'reset-configuration',
@@ -63,6 +69,7 @@ export const configDefaultValues = {
   [configInputIds.FONT_FAMILY]: 'Consolas',
   [configInputIds.CARET_SHAPE]: caretShapes.BAR,
   [configInputIds.THEME_NAME]: defaultColorTheme.name,
+  [configInputIds.THEME_VARIANT]: themeVariants.FLAT,
   [configInputIds.COLOR_ACCENT]: colorThemeKeys.GREEN,
   [configInputIds.EXPORT_CONFIGURATION]: 'Export',
   [configInputIds.IMPORT_CONFIGURATION]: 'Import',
@@ -193,6 +200,20 @@ export const defaultConfigSections = [
         options: [],
         validations: [],
         value: configDefaultValues[configInputIds.THEME_NAME]
+      },
+      {
+        id: configInputIds.THEME_VARIANT,
+        name: 'Theme Variant',
+        description: 'Choose the visual style of components.',
+        type: availableInputTypes.SELECT,
+        postFix: null,
+        iconButton: null,
+        options: [
+          { id: themeVariants.FLAT, name: 'Flat' },
+          { id: themeVariants.OUTLINED, name: 'Outlined' }
+        ],
+        validations: [],
+        value: configDefaultValues[configInputIds.THEME_VARIANT]
       },
       {
         id: configInputIds.COLOR_ACCENT,

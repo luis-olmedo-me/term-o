@@ -71,7 +71,7 @@ term-o-notification-item.visible:hover {
 
   position: relative;
   cursor: pointer;
-  box-shadow: 0 5px 10px rgb(from black r g b / 0.4);
+  box-shadow: 0px 6px 10px 2px rgb(from black r g b / 0.35);
   border-radius: var(--radius-200);
   background-color: var(--colors-background);
   padding: var(--space-400) var(--space-300) var(--space-400) var(--space-700);

@@ -18,3 +18,16 @@
     }
   }
 }
+
+@mixin theme-variant($mode) {
+  @if $mode == any {
+    :global(.theme-provider-flat) &,
+    :global(.theme-provider-outlined) & {
+      @content;
+    }
+  } @else {
+    :global(.theme-provider-#{$mode}) & {
+      @content;
+    }
+  }
+}

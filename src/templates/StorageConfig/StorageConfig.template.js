@@ -82,7 +82,8 @@ export class StorageConfig extends StorageSimple {
       ...defaultStyleMeasures,
       colors: { ...selectedTheme, ...accentColors },
       font: fontFamily,
-      isDarkMode: isDarkTheme(selectedTheme.background)
+      mode: isDarkTheme(selectedTheme.background) ? 'dark' : 'light',
+      variant: isDarkTheme(selectedTheme.background) ? 'flat' : 'outlined'
     }
   }
 

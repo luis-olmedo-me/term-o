@@ -21,13 +21,14 @@ export class Command extends EventListener {
     this.status = commandStatuses.IDLE
     this.options = options
     this.visible = true
-    this._logs = []
     this._staticLogs = []
+    this._errorLogs = []
+    this._logs = []
     this._shared = {}
   }
 
   get logs() {
-    return [...this._staticLogs, ...this._logs]
+    return [...this._staticLogs, ...this._logs, this._errorLogs]
   }
   get hasArgsPending() {
     return this.args.some(arg => arg.isHoldingUp)
@@ -132,12 +133,16 @@ export class Command extends EventListener {
     }
   }
 
-  throw(message) {
-    if (message === null) message = ''
-    else if (typeof message !== 'string') message = message.toString()
-    const errorUpdate = formatError({ title: message })
+  throw(error) {
+    let errorLogs = []
 
-    this.log(errorUpdate)
+    if (typeof error === 'string') errorLogs = [error]
+    else if (error instanceof Error) errorLogs = [error.toString()]
+    else errorLogs = ['Unexpected error was thrown.']
+
+    const logs = errorLogs.map(log => formatError({ title: log }))
+
+    this._errorLogs = [...this._errorLogs, ...logs]
     this.changeStatus(commandStatuses.ERROR)
   }
 

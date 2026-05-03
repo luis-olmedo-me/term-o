@@ -56,7 +56,7 @@ export const Header = ({ onSearch }) => {
         >
           <Cloud size={iconSizes.SM} />
 
-          <span>0.9.2</span>
+          <span>0.9.3</span>
         </a>
       </nav>
     </header>

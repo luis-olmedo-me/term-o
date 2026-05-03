@@ -9,17 +9,18 @@
 }
 
 .typed_select__input_wrapper:hover + .typed_select__options_container {
-  @include theme(light) {
+  @include theme-mode(light) {
     border-color: $colors-brightBlack;
   }
-  @include theme(dark) {
+  @include theme-mode(dark) {
     border-color: $colors-accent;
   }
 }
 
 .typed_select__input {
   transition:
-    border-color 0.1s ease-in-out,
+    border-color 0.2s ease-in-out,
+    background-color 0.1s ease-in-out,
     border-radius 0.1s ease-in-out 0.3s;
 
   &___state_open,
@@ -46,12 +47,16 @@
     scale 0.2s ease-in-out 0.3s,
     opacity 0.2s ease-in-out 0.3s;
   box-sizing: border-box;
-  border: $space-50 solid $colors-brightBlack;
-  border-width: 0 $space-50 $space-50;
+  box-shadow: 0 $space-250 $space-400 $space-100 #00000060;
   border-radius: 0 0 $radius-200 $radius-200;
   background-color: $colors-background;
   padding-right: $space-250;
   width: 100%;
+
+  @include theme-variant(outlined) {
+    border: $space-50 solid $colors-brightBlack;
+    border-width: 0 $space-50 $space-50;
+  }
 
   &___open {
     scale: 1 1;
@@ -77,11 +82,14 @@
     color 0.1s ease-in-out;
   cursor: pointer;
   margin-right: $space-250;
-  border: solid with-opacity($colors-brightBlack, 0.5);
-  border-width: 0 $space-50 $space-50 0;
   padding: $space-200 $space-300;
   color: $colors-foreground;
   line-height: $lineHeight-200;
+
+  @include theme-variant(outlined) {
+    border: solid with-opacity($colors-brightBlack, 0.5);
+    border-width: 0 $space-50 $space-50 0;
+  }
 
   &:hover,
   &:focus {

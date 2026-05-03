@@ -6,15 +6,42 @@
   }
 }
 
-@mixin theme($mode) {
+@mixin theme-mode($mode) {
   @if $mode == any {
-    :global(.theme-provider-dark) &,
-    :global(.theme-provider-light) & {
+    :global(.theme-provider-mode-dark) &,
+    :global(.theme-provider-mode-light) & {
       @content;
     }
   } @else {
-    :global(.theme-provider-#{$mode}) & {
+    :global(.theme-provider-mode-#{$mode}) & {
       @content;
     }
+  }
+}
+
+@mixin theme-variant($mode) {
+  @if $mode == any {
+    :global(.theme-provider-variant-flat) &,
+    :global(.theme-provider-variant-outlined) & {
+      @content;
+    }
+  } @else {
+    :global(.theme-provider-variant-#{$mode}) & {
+      @content;
+    }
+  }
+}
+
+@mixin truncate($lines: 1) {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @if $lines == 1 {
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $lines;
   }
 }

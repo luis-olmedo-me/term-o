@@ -10,10 +10,6 @@
   &___mod_disabled {
     cursor: text;
   }
-
-  &___type_number {
-    max-width: 200px;
-  }
 }
 
 .input__real_input {
@@ -53,37 +49,54 @@
   }
 
   &___variant_outlined {
-    transition: border-color 0.1s ease-in-out;
-    border: $space-50 solid $colors-brightBlack;
+    transition:
+      border-color 0.2s ease-in-out,
+      background-color 0.1s ease-in-out;
+    border: $space-50 solid transparent;
     border-radius: $radius-200 0 0 $radius-200;
     background-color: with-opacity($colors-white, 0.05);
     padding-left: $space-300;
+
+    @include theme-variant(outlined) {
+      border-color: $colors-brightBlack;
+    }
 
     &:last-child {
       border-radius: $radius-200;
     }
 
     &:focus {
-      @include theme(light) {
+      @include theme-mode(light) {
         border: $space-50 solid $colors-brightBlack;
       }
-      @include theme(dark) {
+      @include theme-mode(dark) {
         border: $space-50 solid $colors-accent;
       }
     }
 
     &:hover {
-      background-color: with-opacity($colors-accent, 0.8);
+      background-color: with-opacity($colors-accent, 0.3);
       color: $colors-brightWhite;
     }
 
-    &:hover,
-    &:hover + .input__postfix {
-      @include theme(light) {
+    &:hover {
+      @include theme-mode(light) {
         border-color: $colors-brightBlack;
       }
-      @include theme(dark) {
+      @include theme-mode(dark) {
         border-color: $colors-accent;
+      }
+    }
+
+    &:focus + .input__postfix,
+    &:hover + .input__postfix {
+      @include theme-mode(light) {
+        border-color: $colors-brightBlack;
+      }
+      @include theme-mode(dark) {
+        border-color: $colors-accent;
+        background-color: with-opacity($colors-accent, 0.15);
+        color: $colors-accent;
       }
     }
   }
@@ -92,9 +105,12 @@
 .input__postfix {
   display: flex;
   align-items: center;
-  transition: border-color 0.1s ease-in-out;
+  transition:
+    background-color 0.2s ease-in-out,
+    border-color 0.2s ease-in-out,
+    color 0.2s ease-in-out;
   cursor: help;
-  border: solid $colors-brightBlack;
+  border: solid transparent;
   border-width: $space-50 $space-50 $space-50 0;
   border-radius: 0 $space-200 $space-200 0;
   background-color: with-opacity($colors-white, 0.2);
@@ -102,4 +118,13 @@
   height: -webkit-fill-available;
   pointer-events: unset;
   color: $colors-foreground;
+
+  @include theme-variant(outlined) {
+    border-color: $colors-brightBlack;
+  }
+
+  &_label {
+    width: 70px;
+    @include truncate();
+  }
 }

@@ -26,6 +26,7 @@ import {
   preferences__main,
   preferences__section,
   preferences__section_description,
+  preferences__section_inputs,
   preferences__section_title
 } from './Preferences.module.scss'
 
@@ -129,26 +130,28 @@ export const Preferences = () => {
 
                 <p className={preferences__section_description}>{section.description}</p>
 
-                {section.inputs.map(input => {
-                  return (
-                    <FieldRenderer
-                      key={input.id}
-                      description={input.description}
-                      value={input.value}
-                      inputId={input.id}
-                      type={input.type}
-                      options={input.options}
-                      validations={input.validations}
-                      postFix={input.postFix}
-                      iconButton={input.iconButton}
-                      name={`${section.id}-${input.id}`}
-                      title={input.name}
-                      changeConfig={handleConfigChange}
-                      handleClickInButtons={handleClicksInButtonFields}
-                      sendNotification={sendNotification}
-                    />
-                  )
-                })}
+                <div className={preferences__section_inputs}>
+                  {section.inputs.map(input => {
+                    return (
+                      <FieldRenderer
+                        key={input.id}
+                        description={input.description}
+                        value={input.value}
+                        inputId={input.id}
+                        type={input.type}
+                        options={input.options}
+                        validations={input.validations}
+                        postFix={input.postFix}
+                        iconButton={input.iconButton}
+                        name={`${section.id}-${input.id}`}
+                        title={input.name}
+                        changeConfig={handleConfigChange}
+                        handleClickInButtons={handleClicksInButtonFields}
+                        sendNotification={sendNotification}
+                      />
+                    )
+                  })}
+                </div>
               </section>
             )
           })}

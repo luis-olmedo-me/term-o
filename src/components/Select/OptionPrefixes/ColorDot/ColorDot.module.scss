@@ -1,7 +1,13 @@
+@use '@styles/mixins.module' as *;
+
 .dot {
+  display: inline-block;
+  border: $space-50 solid with-opacity(currentColor, 0.4);
+  border-radius: $radius-200;
   width: 0.6rem;
   height: 0.6rem;
-  display: inline-block;
-  border-radius: $radius-200;
-  border: $space-50 solid currentColor;
+
+  @include theme-variant(outlined) {
+    border-color: currentColor;
+  }
 }

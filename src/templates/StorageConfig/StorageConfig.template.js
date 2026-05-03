@@ -2,7 +2,7 @@ import StorageSimple from '@src/templates/StorageSimple'
 
 import { configInputIds } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
-import { defaultStyleMeasures } from '@src/constants/themes.constants'
+import { defaultStyleMeasures, themeModes, themeVariants } from '@src/constants/themes.constants'
 import {
   buildDetailedConfig,
   getConfigValueByInputId,
@@ -73,16 +73,19 @@ export class StorageConfig extends StorageSimple {
   theme() {
     const themeName = this.getValueById(configInputIds.THEME_NAME)
     const fontFamily = this.getValueById(configInputIds.FONT_FAMILY)
+    const fontVariant = this.getValueById(configInputIds.THEME_VARIANT)
     const colorAccent = this.getValueById(configInputIds.COLOR_ACCENT)
 
     const selectedTheme = this.themes().find(theme => theme.name === themeName)
     const accentColors = getAccentColors(selectedTheme, colorAccent)
+    const isFlatVariant = fontVariant === themeVariants.FLAT
 
     return {
       ...defaultStyleMeasures,
       colors: { ...selectedTheme, ...accentColors },
       font: fontFamily,
-      isDarkMode: isDarkTheme(selectedTheme.background)
+      mode: isDarkTheme(selectedTheme.background) ? themeModes.DARK : themeModes.LIGHT,
+      variant: isFlatVariant ? themeVariants.FLAT : themeVariants.OUTLINED
     }
   }
 

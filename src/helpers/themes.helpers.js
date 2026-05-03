@@ -1,4 +1,5 @@
 import { backgroundLogo, rotationValues } from '@src/constants/string-svg.constants'
+import { themeModes } from '@src/constants/themes.constants'
 import { fillTemplate, quotify, toTitleCase } from './string.helpers'
 
 export const getColor = color => {
@@ -58,12 +59,13 @@ export const createCssVariablesFromTheme = (theme, selector = ':root') => {
 }
 
 export const createImageVariablesFromTheme = theme => {
+  const opacity = theme.mode === themeModes.DARK ? 0.02 : 0.075
   const components = rotationValues.map(rotation => {
     return fillTemplate(backgroundLogo, {
       top: theme.colors.white,
       bottom: theme.colors.white,
       body: theme.colors.accent,
-      opacity: theme.isDarkMode ? 0.02 : 0.075,
+      opacity,
       rotation
     })
   })

@@ -2,18 +2,20 @@
 
 .field {
   display: flex;
+  column-gap: $space-800;
   justify-content: space-between;
   align-items: center;
-  border: $space-50 solid with-opacity($colors-brightBlack, 0.5);
-  border-top: $space-50 solid $colors-brightBlack;
-  border-width: $space-50 $space-50 0 $space-50;
   padding: $space-500 $space-900;
 
-  @include theme(light) {
+  @include theme-mode(light) {
     background-color: with-opacity($colors-black, 0.02);
   }
-  @include theme(dark) {
+  @include theme-mode(dark) {
     background-color: with-opacity($colors-white, 0.02);
+  }
+  @include theme-variant(outlined) {
+    border: $space-50 solid with-opacity($colors-brightBlack, 0.5);
+    border-width: $space-50 $space-50 0 $space-50;
   }
 
   &:first-of-type {
@@ -33,10 +35,14 @@
   }
 
   &___mod_error {
-    @include theme(any) {
+    @include theme-mode(any) {
       background-color: with-opacity($colors-red, 0.04);
     }
   }
+}
+
+.field__leyends {
+  flex: 1;
 }
 
 .field__title {
@@ -55,9 +61,18 @@
 
 .field__input {
   outline: $space-50 dashed transparent;
-  width: fit-content;
+  box-shadow: 0 $space-100 $space-400 $space-100 #00000015;
+  border-radius: $radius-200;
 
-  &___mod_full_width {
+  &___width_fit {
+    width: fit-content;
+  }
+
+  &___width_static {
+    width: 250px;
+  }
+
+  &___width_full {
     width: 100%;
   }
 

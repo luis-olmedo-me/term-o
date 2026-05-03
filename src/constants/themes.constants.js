@@ -115,3 +115,13 @@ export const brightColorKeys = [
   colorThemeKeys.BRIGHT_RED,
   colorThemeKeys.BRIGHT_YELLOW
 ]
+
+export const themeModes = {
+  DARK: 'dark',
+  LIGHT: 'light'
+}
+
+export const themeVariants = {
+  FLAT: 'flat',
+  OUTLINED: 'outlined'
+}

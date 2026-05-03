@@ -3,14 +3,19 @@
 .header {
   display: flex;
   justify-content: space-between;
-  border-bottom: $space-50 solid $colors-brightBlack;
+  z-index: 1;
+  backdrop-filter: blur(var(--space-400));
+  box-shadow: 0 $space-250 $space-400 $space-100 #00000010;
   padding: $space-600 $space-500 $space-600 $space-400;
 
-  @include theme(light) {
+  @include theme-mode(light) {
     background-color: with-opacity($colors-black, 0.02);
   }
-  @include theme(dark) {
+  @include theme-mode(dark) {
     background-color: with-opacity($colors-white, 0.02);
+  }
+  @include theme-variant(outlined) {
+    border-bottom: $space-50 solid $colors-brightBlack;
   }
 }
 

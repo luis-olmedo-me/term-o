@@ -41,7 +41,7 @@
     transition: background-color 0.1s ease-in-out;
     content: '';
 
-    @include theme(light) {
+    @include theme-mode(light) {
       outline: $space-50 solid $colors-brightBlack;
     }
   }
@@ -67,7 +67,7 @@
       height: calc(100% - 1rem);
       content: '';
 
-      @include theme(light) {
+      @include theme-mode(light) {
         outline: $space-50 solid $colors-brightBlack;
       }
     }
@@ -118,7 +118,7 @@
   &___mod_lighted.viewer__command___indicator_dot::after {
     box-shadow: 0 0 $space-200 $space-100 currentColor;
 
-    @include theme(light) {
+    @include theme-mode(light) {
       outline-color: currentColor;
     }
   }
@@ -160,7 +160,7 @@
   width: $space-400;
   height: calc(100% - 0.5rem);
 
-  @include theme(light) {
+  @include theme-mode(light) {
     border: solid $colors-brightBlack;
     border-width: $space-50 $space-50 $space-50 0;
   }

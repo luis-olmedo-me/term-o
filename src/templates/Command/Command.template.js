@@ -27,6 +27,9 @@ export class Command extends EventListener {
     this._shared = {}
   }
 
+  get errors() {
+    return this._errorLogs
+  }
   get logs() {
     return [...this._staticLogs, ...this._logs, this._errorLogs]
   }

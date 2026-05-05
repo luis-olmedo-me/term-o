@@ -186,17 +186,21 @@ export const hasAllItemsAs = (...validations) => {
 }
 
 export const allow = (...dependencies) => {
-  return (option, _value, props) => {
+  return (option, _value, props, manager) => {
     const possibles = dependencies.concat(option.name)
     const uknownDependencies = Object.keys(props).filter(name => !possibles.includes(name))
     const hasUnknownDependencies = uknownDependencies.length > 0
 
     if (hasUnknownDependencies) {
       const name = option.displayName
-      const firstUknownDependency = uknownDependencies.at(0)
-      const quotedFirstUknownDependency = quotify(firstUknownDependency)
+      const options = uknownDependencies.map(name => {
+        const dependencyOption = manager.getByName(name)
+        const type = getOptionTypeLabel(dependencyOption.type)
 
-      throw `${name} can not be executed with ${quotedFirstUknownDependency}.`
+        return `! ${dependencyOption.displayName} ${type}`
+      })
+
+      throw [`${name} option cannot be used with the following:`, ...options]
     }
   }
 }
@@ -213,7 +217,7 @@ export const requireAll = (...dependencies) => {
         const dependencyOption = manager.getByName(name)
         const type = getOptionTypeLabel(dependencyOption.type)
 
-        return `${dependencyOption.displayName} ${type}`
+        return `! ${dependencyOption.displayName} ${type}`
       })
 
       throw [`${name} option must be used with the following:`, ...options]
@@ -234,7 +238,7 @@ export const requireAnyOf = (...dependencies) => {
         const dependencyOption = manager.getByName(name)
         const type = getOptionTypeLabel(dependencyOption.type)
 
-        return `${dependencyOption.displayName} ${type}`
+        return `! ${dependencyOption.displayName} ${type}`
       })
 
       throw [`${name} option must be used with one of the following:`, ...options]

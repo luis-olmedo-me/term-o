@@ -52,6 +52,13 @@ export const formatNotification = ({ title, message }) => {
   return [`${C`brightYellow`}${quotedTitle}${C`reset`}`, `${C`yellow`}${quotedMessage}${C`reset`}`]
 }
 
+export const formatError = ({ title }) => {
+  const cleanedTitle = escapeColors(title)
+  const quotedTitle = quotify(cleanedTitle)
+
+  return [`${C`red`}${quotedTitle}${C`reset`}`]
+}
+
 export const formatWarning = ({ title }) => {
   const quotedTitle = quotify(title)
 
@@ -214,11 +221,4 @@ export const formatGap = ({ distanceX, distanceY }, xpathA, xpathB) => {
     `${C`blue`}${quotedXpathA}${C`reset`}`,
     `${C`blue`}${quotedXpathB}${C`reset`}`
   ]
-}
-
-export const formatError = ({ title }) => {
-  const cleanedTitle = escapeColors(title)
-  const quotedTitle = quotify(cleanedTitle)
-
-  return `${C`red`}${quotedTitle}${C`reset`}`
 }

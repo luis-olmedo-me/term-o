@@ -145,9 +145,8 @@ export class Command extends EventListener {
     else errorLogs = ['Unexpected error was thrown.']
 
     const logs = errorLogs.map(log => formatError({ title: log }))
-    const errorsPerLine = logs.map(log => [log])
 
-    this._errorLogs = [...this._errorLogs, ...errorsPerLine]
+    this._errorLogs = [...this._errorLogs, ...logs]
     this.changeStatus(commandStatuses.ERROR)
   }
 

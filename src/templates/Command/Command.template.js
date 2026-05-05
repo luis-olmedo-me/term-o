@@ -31,7 +31,7 @@ export class Command extends EventListener {
     return this._errorLogs
   }
   get logs() {
-    return [...this._staticLogs, ...this._logs, this._errorLogs]
+    return [...this._staticLogs, ...this._logs, ...this._errorLogs]
   }
   get hasArgsPending() {
     return this.args.some(arg => arg.isHoldingUp)
@@ -145,8 +145,9 @@ export class Command extends EventListener {
     else errorLogs = ['Unexpected error was thrown.']
 
     const logs = errorLogs.map(log => formatError({ title: log }))
+    const errorsPerLine = logs.map(log => [log])
 
-    this._errorLogs = [...this._errorLogs, ...logs]
+    this._errorLogs = [...this._errorLogs, ...errorsPerLine]
     this.changeStatus(commandStatuses.ERROR)
   }
 

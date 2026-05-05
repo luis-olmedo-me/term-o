@@ -217,7 +217,7 @@ export const requireAll = (...dependencies) => {
 }
 
 export const requireAnyOf = (...dependencies) => {
-  return (option, _value, props) => {
+  return (option, _value, props, manager) => {
     const propNames = Object.keys(props)
     const possibles = dependencies.concat(option.name)
     const usedRequiredDependencies = possibles.filter(dependency => propNames.includes(dependency))
@@ -225,8 +225,9 @@ export const requireAnyOf = (...dependencies) => {
 
     if (!isUsingRequiredOnes) {
       const name = option.displayName
+      const options = dependencies.map(name => manager.getByName(name).displayName)
 
-      throw `${name} is not expected to be executed within this set of options.`
+      throw [`${name} is required to be exucuted with one of the following.`, ...options]
     }
   }
 }

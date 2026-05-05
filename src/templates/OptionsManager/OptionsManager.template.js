@@ -23,7 +23,7 @@ export class OptionsManager {
     Object.entries(values).forEach(([name, value]) => {
       const option = this.getByName(name)
 
-      option.validate(value, values)
+      option.validate(value, values, this)
       option.setValue(value)
     })
   }

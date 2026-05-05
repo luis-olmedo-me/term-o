@@ -7,6 +7,7 @@ import {
 import { getArrayAsLine } from '@src/helpers/arguments.helpers'
 import { validateSchema } from '@src/helpers/validation-schema.helpers'
 import { getOptionTypeLabel } from './options.helpers'
+import { quotify } from './string.helpers'
 
 export const isRegExp = (option, value) => {
   try {
@@ -94,9 +95,9 @@ export const isAnyOf = validValues => {
   return (option, value) => {
     if (!validValues.includes(value)) {
       const name = option.displayName
-      const availableValues = validValues.map(val => `"${val}"`).join(' | ')
+      const options = validValues.map(value => `✓ ${quotify(value)}`)
 
-      throw `${name} expects one of the following values: ${availableValues}. Instead, it received "${value}".`
+      throw [`${name} option must be used with one of the following values:`, ...options]
     }
   }
 }
@@ -216,7 +217,7 @@ export const requireAll = (...dependencies) => {
         const dependencyOption = manager.getByName(name)
         const type = getOptionTypeLabel(dependencyOption.type)
 
-        return `! ${dependencyOption.displayName} ${type}`
+        return `✓ ${dependencyOption.displayName} ${type}`
       })
 
       throw [`${name} option must be used with the following:`, ...options]
@@ -237,7 +238,7 @@ export const requireAnyOf = (...dependencies) => {
         const dependencyOption = manager.getByName(name)
         const type = getOptionTypeLabel(dependencyOption.type)
 
-        return `! ${dependencyOption.displayName} ${type}`
+        return `✓ ${dependencyOption.displayName} ${type}`
       })
 
       throw [`${name} option must be used with one of the following:`, ...options]

@@ -11,18 +11,24 @@ export const formatTabId = ({ tabId }) => {
   return []
 }
 
+export const formatText = ({ text }) => {
+  if (!text) return []
+  const quotedText = quotify(text)
+
+  return [`${C`yellow`}${quotedText}${C`reset`}`]
+}
+
 export const formatElement = ({ tagName, attributes, xpath, textContent, tabId }) => {
   const hasXpath = xpath !== null
   const hasTextContent = textContent !== null
 
   const quotedXpath = hasXpath && quotify(xpath)
-  const quotedTextContent = hasTextContent && quotify(textContent)
 
   if (hasXpath || hasTextContent) {
     return [
       ...formatTabId({ tabId }),
       ...spreadIf(hasXpath, [`${C`blue`}${quotedXpath}${C`reset`}`]),
-      ...spreadIf(hasTextContent, [`${C`yellow`}${quotedTextContent}${C`reset`}`])
+      ...formatText({ text: textContent })
     ]
   }
 
@@ -40,12 +46,6 @@ export const formatElement = ({ tagName, attributes, xpath, textContent, tabId }
   const quotedTagName = quotify(tagName)
 
   return [...formatTabId({ tabId }), `${C`red`}${quotedTagName}${C`reset`}`, ...attrs]
-}
-
-export const formatText = ({ text }) => {
-  const quotedText = quotify(text)
-
-  return [`${C`yellow`}${quotedText}${C`reset`}`]
 }
 
 export const formatNotification = ({ title, message }) => {
@@ -98,9 +98,8 @@ export const formatResponse = ({ response, responseBody, method }) => {
 
 export const formatStorageAsString = ({ storage, tabId }) => {
   const stringStorage = JSON.stringify(storage)
-  const quotedStorage = quotify(stringStorage)
 
-  return [[...formatTabId({ tabId }), `${C`yellow`}${quotedStorage}${C`reset`}`]]
+  return [[...formatTabId({ tabId }), ...formatText({ text: stringStorage })]]
 }
 
 export const formatAlias = ({ key, value }) => {

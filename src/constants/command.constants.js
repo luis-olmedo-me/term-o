@@ -9,6 +9,7 @@ export const commandNames = {
   INPUT: 'input',
   INSPECT: 'inspect',
   NOTIFY: 'notify',
+  OUTPUT: 'output',
   REQUEST: 'request',
   SEARCH: 'search',
   STORAGE: 'storage',

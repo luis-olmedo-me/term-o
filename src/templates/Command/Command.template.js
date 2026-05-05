@@ -139,7 +139,8 @@ export class Command extends EventListener {
   throw(error) {
     let errorLogs = []
 
-    if (typeof error === 'string') errorLogs = [error]
+    if (error instanceof Array) errorLogs = error.map(String)
+    else if (typeof error === 'string') errorLogs = [error]
     else if (error instanceof Error) errorLogs = [error.toString()]
     else errorLogs = ['Unexpected error was thrown.']
 

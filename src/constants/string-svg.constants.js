@@ -21,9 +21,9 @@ export const backgroundLogo = `
         <feDropShadow
           dx="0"
           dy="0"
-          stdDeviation="0.4"
+          stdDeviation="0.6"
           flood-color="black"
-          flood-opacity="0.4"
+          flood-opacity="0.6"
         />
       </filter>
     </defs>

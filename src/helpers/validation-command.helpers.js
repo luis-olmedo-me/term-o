@@ -247,17 +247,21 @@ export const requireAnyOf = (...dependencies) => {
 }
 
 export const conflict = (...dependencies) => {
-  return (option, _value, props) => {
+  return (option, _value, props, manager) => {
     const names = Object.keys(props)
     const conflictingDependencies = dependencies.filter(dependency => names.includes(dependency))
     const hasConflicts = conflictingDependencies.length > 0
 
     if (hasConflicts) {
       const name = option.displayName
-      const firstConflict = conflictingDependencies.at(0)
-      const quotedFirstConflict = quotify(firstConflict)
+      const options = conflictingDependencies.map(name => {
+        const dependencyOption = manager.getByName(name)
+        const type = getOptionTypeLabel(dependencyOption.type)
 
-      throw `${name} conflicts with ${quotedFirstConflict}.`
+        return `! ${dependencyOption.displayName} ${type}`
+      })
+
+      throw [`${name} option cannot be used with the following:`, ...options]
     }
   }
 }

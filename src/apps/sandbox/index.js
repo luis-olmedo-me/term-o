@@ -12,11 +12,10 @@ async function safeEval(event) {
       const handleSandboxCommand = event => {
         if (event.data?.type !== sandboxEvents.COMMAND_RETURN) return
         const data = event.data.data
-        const errorMessage = data.logs.at(-1)
 
         window.removeEventListener('message', handleSandboxCommand)
         if (!data.hasError) resolve(data.logs)
-        else reject(errorMessage)
+        else reject(data.errors)
       }
 
       window.addEventListener('message', handleSandboxCommand)
@@ -34,11 +33,10 @@ async function safeEval(event) {
       const handleSandboxCommand = event => {
         if (event.data?.type !== sandboxEvents.COMMAND_LOG_RETURN) return
         const data = event.data.data
-        const errorMessage = data.logs.at(-1)
 
         window.removeEventListener('message', handleSandboxCommand)
         if (!data.hasError) resolve(data.logs)
-        else reject(errorMessage)
+        else reject(data.errors)
       }
 
       window.addEventListener('message', handleSandboxCommand)
@@ -55,11 +53,10 @@ async function safeEval(event) {
       const handleSandboxCommand = event => {
         if (event.data?.type !== sandboxEvents.COMMAND_CLEAR_LOGS_RETURN) return
         const data = event.data.data
-        const errorMessage = data.logs.at(-1)
 
         window.removeEventListener('message', handleSandboxCommand)
         if (!data.hasError) resolve(data.logs)
-        else reject(errorMessage)
+        else reject(data.errors)
       }
 
       window.addEventListener('message', handleSandboxCommand)
@@ -104,12 +101,16 @@ async function safeEval(event) {
     const result = userMain(term)
     await Promise.resolve(result)
 
-    return ''
+    return []
   } catch (error) {
-    const message = String(error?.message ?? error)
+    let errorLogs = []
 
-    await log(message)
-    return message
+    if (error instanceof Array) errorLogs = error.map(String)
+    else if (typeof error === 'string') errorLogs = [error]
+    else if (error instanceof Error) errorLogs = [error.toString()]
+    else errorLogs = ['Unexpected error was thrown.']
+
+    return errorLogs
   }
 }
 

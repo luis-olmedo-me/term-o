@@ -5,8 +5,8 @@ import {
   windowIdPattern
 } from '@src/constants/patterns.constants'
 import { getArrayAsLine } from '@src/helpers/arguments.helpers'
-import { quotify } from '@src/helpers/string.helpers'
 import { validateSchema } from '@src/helpers/validation-schema.helpers'
+import { getOptionTypeLabel } from './options.helpers'
 
 export const isRegExp = (option, value) => {
   try {
@@ -185,39 +185,47 @@ export const hasAllItemsAs = (...validations) => {
 }
 
 export const allow = (...dependencies) => {
-  return (option, _value, props) => {
+  return (option, _value, props, manager) => {
     const possibles = dependencies.concat(option.name)
     const uknownDependencies = Object.keys(props).filter(name => !possibles.includes(name))
     const hasUnknownDependencies = uknownDependencies.length > 0
 
     if (hasUnknownDependencies) {
       const name = option.displayName
-      const firstUknownDependency = uknownDependencies.at(0)
-      const quotedFirstUknownDependency = quotify(firstUknownDependency)
+      const options = uknownDependencies.map(name => {
+        const dependencyOption = manager.getByName(name)
+        const type = getOptionTypeLabel(dependencyOption.type)
 
-      throw `${name} can not be executed with ${quotedFirstUknownDependency}.`
+        return `! ${dependencyOption.displayName} ${type}`
+      })
+
+      throw [`${name} option cannot be used with the following:`, ...options]
     }
   }
 }
 
 export const requireAll = (...dependencies) => {
-  return (option, _value, props) => {
+  return (option, _value, props, manager) => {
     const propNames = Object.keys(props)
     const missingDependencies = dependencies.filter(dependency => !propNames.includes(dependency))
     const hasMissingDependencies = missingDependencies.length > 0
 
     if (hasMissingDependencies) {
       const name = option.displayName
-      const firstUknownDependency = missingDependencies.at(0)
-      const quotedFirstUknownDependency = quotify(firstUknownDependency)
+      const options = dependencies.map(name => {
+        const dependencyOption = manager.getByName(name)
+        const type = getOptionTypeLabel(dependencyOption.type)
 
-      throw `${name} must be executed with ${quotedFirstUknownDependency}.`
+        return `! ${dependencyOption.displayName} ${type}`
+      })
+
+      throw [`${name} option must be used with the following:`, ...options]
     }
   }
 }
 
 export const requireAnyOf = (...dependencies) => {
-  return (option, _value, props) => {
+  return (option, _value, props, manager) => {
     const propNames = Object.keys(props)
     const possibles = dependencies.concat(option.name)
     const usedRequiredDependencies = possibles.filter(dependency => propNames.includes(dependency))
@@ -225,49 +233,63 @@ export const requireAnyOf = (...dependencies) => {
 
     if (!isUsingRequiredOnes) {
       const name = option.displayName
+      const options = dependencies.map(name => {
+        const dependencyOption = manager.getByName(name)
+        const type = getOptionTypeLabel(dependencyOption.type)
 
-      throw `${name} is not expected to be executed within this set of options.`
+        return `! ${dependencyOption.displayName} ${type}`
+      })
+
+      throw [`${name} option must be used with one of the following:`, ...options]
     }
   }
 }
 
 export const conflict = (...dependencies) => {
-  return (option, _value, props) => {
+  return (option, _value, props, manager) => {
     const names = Object.keys(props)
     const conflictingDependencies = dependencies.filter(dependency => names.includes(dependency))
     const hasConflicts = conflictingDependencies.length > 0
 
     if (hasConflicts) {
       const name = option.displayName
-      const firstConflict = conflictingDependencies.at(0)
-      const quotedFirstConflict = quotify(firstConflict)
+      const options = conflictingDependencies.map(name => {
+        const dependencyOption = manager.getByName(name)
+        const type = getOptionTypeLabel(dependencyOption.type)
 
-      throw `${name} conflicts with ${quotedFirstConflict}.`
+        return `! ${dependencyOption.displayName} ${type}`
+      })
+
+      throw [`${name} option cannot be used with the following:`, ...options]
     }
   }
 }
 
-export const when = (trigger, validations) => {
-  return (option, value, props) => {
-    const isTriggered = Object.keys(props).includes(trigger)
-
-    if (isTriggered) {
-      validations.forEach(validation => validation(option, value, props))
-    }
-  }
-}
-
-export const requireNoOther = (option, _value, props) => {
+export const requireNoOther = (option, _value, props, manager) => {
   const propNames = Object.keys(props)
   const forbiddenDependencies = propNames.filter(name => name !== option.name)
   const hasForbbidenDependencies = forbiddenDependencies.length > 0
 
   if (hasForbbidenDependencies) {
     const name = option.displayName
-    const firstForbiddenDependency = forbiddenDependencies.at(0)
-    const quotedFirstForbiddenDependency = quotify(firstForbiddenDependency)
+    const options = forbiddenDependencies.map(name => {
+      const dependencyOption = manager.getByName(name)
+      const type = getOptionTypeLabel(dependencyOption.type)
 
-    throw `${name} can not be executed with ${quotedFirstForbiddenDependency}.`
+      return `! ${dependencyOption.displayName} ${type}`
+    })
+
+    throw [`${name} option cannot be used with the following:`, ...options]
+  }
+}
+
+export const when = (trigger, validations) => {
+  return (option, value, props, manager) => {
+    const isTriggered = Object.keys(props).includes(trigger)
+
+    if (isTriggered) {
+      validations.forEach(validation => validation(option, value, props, manager))
+    }
   }
 }
 

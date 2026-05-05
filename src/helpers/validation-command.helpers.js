@@ -5,7 +5,6 @@ import {
   windowIdPattern
 } from '@src/constants/patterns.constants'
 import { getArrayAsLine } from '@src/helpers/arguments.helpers'
-import { quotify } from '@src/helpers/string.helpers'
 import { validateSchema } from '@src/helpers/validation-schema.helpers'
 import { getOptionTypeLabel } from './options.helpers'
 

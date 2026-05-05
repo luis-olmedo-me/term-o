@@ -266,6 +266,24 @@ export const conflict = (...dependencies) => {
   }
 }
 
+export const requireNoOther = (option, _value, props, manager) => {
+  const propNames = Object.keys(props)
+  const forbiddenDependencies = propNames.filter(name => name !== option.name)
+  const hasForbbidenDependencies = forbiddenDependencies.length > 0
+
+  if (hasForbbidenDependencies) {
+    const name = option.displayName
+    const options = forbiddenDependencies.map(name => {
+      const dependencyOption = manager.getByName(name)
+      const type = getOptionTypeLabel(dependencyOption.type)
+
+      return `! ${dependencyOption.displayName} ${type}`
+    })
+
+    throw [`${name} option cannot be used with the following:`, ...options]
+  }
+}
+
 export const when = (trigger, validations) => {
   return (option, value, props, manager) => {
     const isTriggered = Object.keys(props).includes(trigger)
@@ -273,20 +291,6 @@ export const when = (trigger, validations) => {
     if (isTriggered) {
       validations.forEach(validation => validation(option, value, props, manager))
     }
-  }
-}
-
-export const requireNoOther = (option, _value, props) => {
-  const propNames = Object.keys(props)
-  const forbiddenDependencies = propNames.filter(name => name !== option.name)
-  const hasForbbidenDependencies = forbiddenDependencies.length > 0
-
-  if (hasForbbidenDependencies) {
-    const name = option.displayName
-    const firstForbiddenDependency = forbiddenDependencies.at(0)
-    const quotedFirstForbiddenDependency = quotify(firstForbiddenDependency)
-
-    throw `${name} can not be executed with ${quotedFirstForbiddenDependency}.`
   }
 }
 

@@ -7,6 +7,7 @@ import {
 import { getArrayAsLine } from '@src/helpers/arguments.helpers'
 import { quotify } from '@src/helpers/string.helpers'
 import { validateSchema } from '@src/helpers/validation-schema.helpers'
+import { getOptionTypeLabel } from './options.helpers'
 
 export const isRegExp = (option, value) => {
   try {
@@ -201,17 +202,21 @@ export const allow = (...dependencies) => {
 }
 
 export const requireAll = (...dependencies) => {
-  return (option, _value, props) => {
+  return (option, _value, props, manager) => {
     const propNames = Object.keys(props)
     const missingDependencies = dependencies.filter(dependency => !propNames.includes(dependency))
     const hasMissingDependencies = missingDependencies.length > 0
 
     if (hasMissingDependencies) {
       const name = option.displayName
-      const firstUknownDependency = missingDependencies.at(0)
-      const quotedFirstUknownDependency = quotify(firstUknownDependency)
+      const options = dependencies.map(name => {
+        const dependencyOption = manager.getByName(name)
+        const type = getOptionTypeLabel(dependencyOption.type)
 
-      throw `${name} must be executed with ${quotedFirstUknownDependency}.`
+        return `${dependencyOption.displayName} ${type}`
+      })
+
+      throw [`${name} option must be used with the following:`, ...options]
     }
   }
 }
@@ -225,7 +230,12 @@ export const requireAnyOf = (...dependencies) => {
 
     if (!isUsingRequiredOnes) {
       const name = option.displayName
-      const options = dependencies.map(name => manager.getByName(name).displayName)
+      const options = dependencies.map(name => {
+        const dependencyOption = manager.getByName(name)
+        const type = getOptionTypeLabel(dependencyOption.type)
+
+        return `${dependencyOption.displayName} ${type}`
+      })
 
       throw [`${name} option must be used with one of the following:`, ...options]
     }

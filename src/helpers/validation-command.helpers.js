@@ -267,11 +267,11 @@ export const conflict = (...dependencies) => {
 }
 
 export const when = (trigger, validations) => {
-  return (option, value, props) => {
+  return (option, value, props, manager) => {
     const isTriggered = Object.keys(props).includes(trigger)
 
     if (isTriggered) {
-      validations.forEach(validation => validation(option, value, props))
+      validations.forEach(validation => validation(option, value, props, manager))
     }
   }
 }

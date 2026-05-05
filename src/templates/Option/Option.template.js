@@ -20,7 +20,7 @@ export class Option {
   }
 
   get displayName() {
-    return `-${this.abbreviation}, --${this.name}`
+    return `--${this.name} (-${this.abbreviation})`
   }
 
   setValue(value) {

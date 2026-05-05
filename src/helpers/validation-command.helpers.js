@@ -227,7 +227,7 @@ export const requireAnyOf = (...dependencies) => {
       const name = option.displayName
       const options = dependencies.map(name => manager.getByName(name).displayName)
 
-      throw [`${name} is required to be exucuted with one of the following.`, ...options]
+      throw [`${name} option must be used with one of the following:`, ...options]
     }
   }
 }

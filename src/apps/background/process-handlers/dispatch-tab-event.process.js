@@ -13,7 +13,7 @@ export default async (resolve, _reject, data, storage) => {
     return matchUrl && matchType
   })
 
-  pendingEvents.forEach(event => queue.add(event.line, origins.AUTO, tab, event.type))
+  pendingEvents.forEach(event => queue.add(event.line, origins.AUTO, tab, event))
 
   resolve(null)
 }

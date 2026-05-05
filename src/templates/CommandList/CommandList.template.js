@@ -1,5 +1,6 @@
 import EventListener from '@src/templates/EventListener'
 
+import { outputBase } from '@src/commands'
 import { createUUIDv4, debounce } from '@src/helpers/utils.helpers'
 import { getCommandListLogs, getCommandListStatus } from './CommandList.helpers'
 
@@ -27,6 +28,14 @@ export class CommandList extends EventListener {
 
   share(newSharedData) {
     this._shared = { ...this._shared, ...newSharedData }
+
+    return this
+  }
+
+  preloadParams(params) {
+    const preCommand = outputBase.create().mock({ log: true, value: params })
+
+    this._nodes = [preCommand, ...this._nodes]
 
     return this
   }
@@ -77,7 +86,7 @@ export class CommandList extends EventListener {
       context: this.get('context'),
       origin: this.get('origin'),
       title: this.get('title'),
-      event: this.get('eventType')
+      event: this.get('event')
     }
   }
 

@@ -103,10 +103,10 @@ export class StorageCommandQueue extends StorageSimple {
     this.$storageService.set(storageKeys.COMMAND_QUEUE, newQueue)
   }
 
-  add(line, origin, tab, eventType = null) {
+  add(line, origin, tab, event = null) {
     const newValue = [
       ...this.$latest().value,
-      { id: createUUIDv4(), line, origin, tab, eventType, command: null }
+      { id: createUUIDv4(), line, origin, tab, event, command: null }
     ]
 
     this.$storageService.set(storageKeys.COMMAND_QUEUE, newValue)

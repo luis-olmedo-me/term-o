@@ -49,12 +49,18 @@ export class CommandList extends EventListener {
       const command = this._nodes[index]
       const previousCommand = this._nodes[index - 1]
 
+      const hasArgsPending = command.hasArgsPending
+      const hasPreviousCommand = Boolean(previousCommand)
+      const hasPreviousParams = hasPreviousCommand && Boolean(previousCommand.logs.length)
+
       if (command.failed) break
       command.share(this._shared)
       command.addEventListener('update', registerTimerId)
       command.addEventListener('statuschange', registerTimerId)
 
-      if (previousCommand && command.hasArgsPending) await command.executePerLogs(previousCommand)
+      if (!hasPreviousCommand && hasArgsPending) command.throw('Params were not finished.')
+      else if (!hasPreviousParams && hasArgsPending) command.throw('Params were not finished.')
+      else if (hasArgsPending) await command.executePerLogs(previousCommand)
       else await command.execute()
 
       command.removeEventListener('update', registerTimerId)

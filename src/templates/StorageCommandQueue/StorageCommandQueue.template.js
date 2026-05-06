@@ -3,6 +3,7 @@ import StorageSimple from '@src/templates/StorageSimple'
 import { bannerIds, bannerTypes } from '@src/constants/banners.constants'
 import { commandStatuses } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
+import { queueItemStatuses } from '@src/constants/queue.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { limitQueueByConfig, updateQueueValueIn } from '@src/helpers/queue.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
@@ -104,10 +105,11 @@ export class StorageCommandQueue extends StorageSimple {
   }
 
   add(line, origin, tab, event = null) {
-    const newValue = [
-      ...this.$latest().value,
-      { id: createUUIDv4(), line, origin, tab, event, command: null }
-    ]
+    const id = createUUIDv4()
+    const command = null
+    const status = queueItemStatuses.SCHEDULED
+
+    const newValue = [...this.$latest().value, { id, line, origin, tab, event, status, command }]
 
     this.$storageService.set(storageKeys.COMMAND_QUEUE, newValue)
   }

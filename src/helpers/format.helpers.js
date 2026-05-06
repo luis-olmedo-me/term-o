@@ -219,8 +219,8 @@ export const formatOutput = ({ values }) => {
     const isNumber = typeof value === 'number'
     const isArray = Array.isArray(value)
 
-    if (isNumber) return formatText({ text: String(value) }).at(0)
-    if (isString) return formatText({ text: value }).at(0)
+    if (isNumber) return `${C`brightBlack`}${value}${C`reset`}`
+    if (isString) return `${C`brightBlack`}${quotify(value)}${C`reset`}`
     if (isArray) return formatOutput({ values: value })
   })
 }

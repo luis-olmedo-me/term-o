@@ -36,6 +36,9 @@ export class Command extends EventListener {
   get hasArgsPending() {
     return this.args.some(arg => arg.isHoldingUp)
   }
+  get pendingArgs() {
+    return this.args.filter(arg => arg.isHoldingUp)
+  }
   get finished() {
     return [commandStatuses.ERROR, commandStatuses.DONE].includes(this.status)
   }

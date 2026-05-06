@@ -8,9 +8,11 @@ export const groupIdPattern = /G(\d)+/
 
 export const colorPattern = /\{t(fg|bg):([A-Za-z]+)\}/g
 
-export const singleQuotesPattern = /^'|'$/g
+export const singleQuotesPattern = /^'|'$/
 
-export const doubleQuotesPattern = /^"|"$/g
+export const doubleQuotesPattern = /^"|"$/
+
+export const abbreviationPattern = /^-\w$/
 
 // FIXME: Delete after 0.9.1 realese
 export const oldColorPattern = /\[termo\.(color|bgcolor)\.([A-Za-z]+)\]/g

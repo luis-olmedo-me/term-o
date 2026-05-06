@@ -212,3 +212,15 @@ export const formatGap = ({ distanceX, distanceY }, xpathA, xpathB) => {
     `${C`blue`}${quotedXpathB}${C`reset`}`
   ]
 }
+
+export const formatOutput = ({ values }) => {
+  return values.map(value => {
+    const isString = typeof value === 'string'
+    const isNumber = typeof value === 'number'
+    const isArray = Array.isArray(value)
+
+    if (isNumber) return formatText({ text: String(value) })
+    if (isString) return formatText({ text: value })
+    if (isArray) return formatOutput({ values: value })
+  })
+}

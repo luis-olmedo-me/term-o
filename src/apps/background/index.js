@@ -39,25 +39,25 @@ const getCommandParser = storage => {
 
 const handleCommandQueueChange = async (storage, commandParser) => {
   const queue = storage.get(storageKeys.COMMAND_QUEUE)
-  const executable = queue.executable
+  const queueItem = queue.next()
 
-  if (queue.isExecuting || !executable) return
+  if (queue.isExecuting || !queueItem) return
 
   const originalTab = storage.get(storageKeys.TAB)
   const config = storage.get(storageKeys.CONFIG)
 
-  const id = executable.id
-  const tab = executable.tab || originalTab
-  const origin = executable.origin
-  const event = executable.event
+  const id = queueItem.id
+  const tab = queueItem.tab || originalTab
+  const origin = queueItem.origin
+  const event = queueItem.event
 
-  if (executable.tab) storage.set(storageKeys.TAB, executable.tab)
+  if (queueItem.tab) storage.set(storageKeys.TAB, queueItem.tab)
 
   const contextInputValue = config.getValueById(configInputIds.CONTEXT)
   const isTermOpen = !!sidePanelPort
 
   const context = createContext(contextInputValue, tab)
-  const commandList = commandParser.read(executable.line)
+  const commandList = commandParser.read(queueItem.line)
 
   if (event) commandList.preloadParams(event.params)
   commandList.share({ storage, isTermOpen, context, origin, event, commandList })
@@ -66,7 +66,8 @@ const handleCommandQueueChange = async (storage, commandParser) => {
 
   await commandList.execute()
 
-  if (executable.tabId) storage.set(storageKeys.TAB, originalTab)
+  if (queueItem.tabId) storage.set(storageKeys.TAB, originalTab)
+  queue.complete(queueItem.id)
 }
 
 const ensureOffscreenIsActive = async () => {

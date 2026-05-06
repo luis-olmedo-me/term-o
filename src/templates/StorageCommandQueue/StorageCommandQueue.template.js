@@ -3,7 +3,7 @@ import StorageSimple from '@src/templates/StorageSimple'
 import { bannerIds, bannerTypes } from '@src/constants/banners.constants'
 import { commandStatuses } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
-import { queueStatuses } from '@src/constants/queue.constants'
+import { queueStatuses, visibleStatuses } from '@src/constants/queue.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { limitQueueByConfig, updateQueueValueIn } from '@src/helpers/queue.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
@@ -116,9 +116,12 @@ export class StorageCommandQueue extends StorageSimple {
   }
 
   getUIValues() {
-    return this.$latest()
-      .value.map(item => item.command)
-      .filter(Boolean)
+    return this.$latest().value.reduce((commands, item) => {
+      const isItemVisible = visibleStatuses.includes(item.status)
+      const isValidCommand = Boolean(item.command)
+
+      return isItemVisible && isValidCommand ? commands.concat(item.command) : commands
+    }, [])
   }
 
   getIsExecuting() {

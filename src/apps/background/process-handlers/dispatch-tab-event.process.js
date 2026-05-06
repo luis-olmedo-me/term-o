@@ -1,7 +1,8 @@
 import { origins } from '@src/constants/command.constants'
 import { storageKeys } from '@src/constants/storage.constants'
+import { quotify } from '@src/helpers/string.helpers'
 
-export default async (resolve, _reject, data, storage) => {
+export default async (resolve, _reject, data, { storage, sender }) => {
   const queue = storage.get(storageKeys.COMMAND_QUEUE)
   const events = storage.get(storageKeys.EVENTS)
   const tab = storage.get(storageKeys.TAB)
@@ -13,7 +14,12 @@ export default async (resolve, _reject, data, storage) => {
     return matchUrl && matchType
   })
 
-  pendingEvents.forEach(event => queue.add(event.line, origins.AUTO, tab, event))
+  for (const event of pendingEvents) {
+    const tabId = sender.tab.id
+    const eventData = { ...event, params: [quotify(`T${tabId}`)] }
+
+    queue.add(event.line, origins.AUTO, tab, eventData)
+  }
 
   resolve(null)
 }

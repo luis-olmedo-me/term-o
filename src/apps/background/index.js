@@ -59,6 +59,7 @@ const handleCommandQueueChange = async (storage, commandParser) => {
   const context = createContext(contextInputValue, tab)
   const commandList = commandParser.read(executable.line)
 
+  if (event) commandList.preloadParams(event.params)
   commandList.share({ storage, isTermOpen, context, origin, event, commandList })
   queue.change(id, commandList.toJSON({ flat: true }))
   commandList.addEventListener('update', () => queue.change(id, commandList.toJSON({ flat: true })))
@@ -132,9 +133,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       data => sendResponse({ status: 'ok', data }),
       error => sendResponse({ status: 'error', error }),
       data,
-      storage,
-      commandParser,
-      isTermOpen
+      { sender, storage, commandParser, isTermOpen }
     )
   }
 

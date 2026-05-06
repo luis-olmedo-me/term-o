@@ -1,9 +1,7 @@
 import EventListener from '@src/templates/EventListener'
 
 import { outputBase } from '@src/commands'
-import { abbreviationPattern } from '@src/constants/patterns.constants'
-import { getOptionTypeLabel } from '@src/helpers/options.helpers'
-import { quotify } from '@src/helpers/string.helpers'
+import { throwParamsError } from '@src/helpers/command.helpers'
 import { createUUIDv4, debounce } from '@src/helpers/utils.helpers'
 import { getCommandListLogs, getCommandListStatus } from './CommandList.helpers'
 
@@ -61,8 +59,8 @@ export class CommandList extends EventListener {
       command.addEventListener('update', registerTimerId)
       command.addEventListener('statuschange', registerTimerId)
 
-      if (!hasPreviousCommand && hasArgsPending) this._throwParamsError(command)
-      else if (!hasPreviousParams && hasArgsPending) this._throwParamsError(command)
+      if (!hasPreviousCommand && hasArgsPending) throwParamsError(command)
+      else if (!hasPreviousParams && hasArgsPending) throwParamsError(command)
       else if (hasArgsPending) await command.executePerLogs(previousCommand)
       else await command.execute()
 
@@ -101,27 +99,5 @@ export class CommandList extends EventListener {
 
   _onUpdate() {
     this.dispatchEvent('update', this)
-  }
-
-  _throwParamsError(command) {
-    const pendingOptionsAsArgs = command.args.reduce((args, arg, index) => {
-      const isPending = arg.isHoldingUp
-
-      if (!isPending) return args
-      const optionArg = command.args[index - 1]
-      const isAbbreviation = abbreviationPattern.test(optionArg.value)
-      const optionName = optionArg.value.slice(isAbbreviation ? 1 : 2)
-      const option = isAbbreviation
-        ? command.options.getByAbbreviation(optionName)
-        : command.options.getByName(optionName)
-      const type = getOptionTypeLabel(option.type)
-
-      return args.concat(`! ${option.displayName} ${type}`)
-    }, [])
-
-    return command.throw([
-      `${quotify(command.name)} command expects for params in options:`,
-      ...pendingOptionsAsArgs
-    ])
   }
 }

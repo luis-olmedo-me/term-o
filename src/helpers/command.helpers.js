@@ -1,4 +1,8 @@
-import { doubleQuotesPattern, singleQuotesPattern } from '@src/constants/patterns.constants'
+import {
+  abbreviationPattern,
+  doubleQuotesPattern,
+  singleQuotesPattern
+} from '@src/constants/patterns.constants'
 import { getOptionTypeLabel } from '@src/helpers/options.helpers'
 import { quotify } from '@src/helpers/string.helpers'
 import { getColor as C, cleanColors } from '@src/helpers/themes.helpers'
@@ -110,4 +114,26 @@ export const sanitizeLogs = logs => {
 
     return result.concat(logValueAsString)
   }, [])
+}
+
+export const throwParamsError = command => {
+  const pendingOptionsAsArgs = command.args.reduce((args, arg, index) => {
+    const isPending = arg.isHoldingUp
+
+    if (!isPending) return args
+    const optionArg = command.args[index - 1]
+    const isAbbreviation = abbreviationPattern.test(optionArg.value)
+    const optionName = optionArg.value.slice(isAbbreviation ? 1 : 2)
+    const option = isAbbreviation
+      ? command.options.getByAbbreviation(optionName)
+      : command.options.getByName(optionName)
+    const type = getOptionTypeLabel(option.type)
+
+    return args.concat(`! ${option.displayName} ${type}`)
+  }, [])
+
+  return command.throw([
+    `${quotify(command.name)} command expects for params in options:`,
+    ...pendingOptionsAsArgs
+  ])
 }

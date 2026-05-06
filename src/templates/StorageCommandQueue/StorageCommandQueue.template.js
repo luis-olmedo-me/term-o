@@ -142,8 +142,9 @@ export class StorageCommandQueue extends StorageSimple {
     const isExecuting = this.getIsExecuting()
 
     if (isExecuting) return null
-
     const nextItem = queue.find(({ status }) => status === queueStatuses.SCHEDULED)
+
+    if (!nextItem) return null
     const newQueue = queue.map(item =>
       item.id === nextItem.id ? { ...item, status: queueStatuses.IN_PROGRESS } : item
     )

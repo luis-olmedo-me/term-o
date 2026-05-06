@@ -16,7 +16,7 @@ export default async (resolve, _reject, data, { storage, sender }) => {
 
   for (const event of pendingEvents) {
     const tabId = sender.tab.id
-    const eventData = { ...event, params: [quotify(`T${tabId}`)] }
+    const eventData = { ...event, params: [quotify(event.type), quotify(`T${tabId}`)] }
 
     queue.add(event.line, origins.AUTO, tab, eventData)
   }

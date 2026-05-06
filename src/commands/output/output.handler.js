@@ -5,9 +5,9 @@ export const outputHandler = async command => {
   const P = name => command.props[name]
 
   if (P`log`) {
-    const logs = formatOutput({ values: P`value` })
+    const log = formatOutput({ values: P`value` })
 
-    command.log(...logs)
+    command.log(log)
   }
 
   if (P`help`) createHelpView(command)

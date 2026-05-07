@@ -51,31 +51,6 @@ export class Storage extends EventListener {
     this.dispatchEvent('init', this)
   }
 
-  async refresh() {
-    const promises = Object.entries(this.values).map(([key, instance]) => {
-      return getStorageValue(instance.$namespace, key, instance.$storageValue, instance.$json).then(
-        result => {
-          const isDefault = result.value === instance.$storageValue
-
-          if (isDefault) return
-          this.getInstance(key).$update({
-            value: result.value,
-            updatedAt: new Date().toISOString()
-          })
-        }
-      )
-    })
-
-    await Promise.all(promises)
-
-    if (!this.manualMode && chrome.storage.onChanged.hasListener(this.handleStorageChangesRef)) {
-      chrome.storage.onChanged.removeListener(this.handleStorageChangesRef)
-    }
-    if (!this.manualMode) {
-      chrome.storage.onChanged.addListener(this.handleStorageChangesRef)
-    }
-  }
-
   reset() {
     storageValues.forEach(({ key, defaultValue }) => {
       const canReset = !storageKeysNonResetables.includes(key)

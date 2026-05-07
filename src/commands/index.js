@@ -20,7 +20,6 @@ export default [
   aliasBase,
   clearBase,
   domBase,
-  errorBase,
   eventsBase,
   historyBase,
   inputBase,

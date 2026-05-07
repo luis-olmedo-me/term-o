@@ -15,6 +15,11 @@
   word-break: break-all;
 }
 
+.viewer__static_line {
+  margin: 0;
+  white-space: pre-line;
+}
+
 .viewer__line {
   margin: 0;
   white-space: pre-line;
@@ -49,6 +54,10 @@
   &___mod_truncated {
     display: flex;
     flex-direction: column;
+  }
+
+  &___mod_collapsed .viewer__line {
+    display: none;
   }
 
   &___origin_manual,
@@ -154,11 +163,16 @@
   transition:
     background-color 0.2s ease-in-out,
     box-shadow 0.2s ease-in-out;
+  cursor: pointer;
   box-sizing: border-box;
   border-radius: 0 $radius-200 $radius-200 0;
   background-color: with-opacity($colors-brightBlack, 0.4);
   width: $space-400;
   height: calc(100% - 0.5rem);
+
+  &:hover {
+    background-color: with-opacity($colors-accent, 0.4);
+  }
 
   @include theme-mode(light) {
     border: solid $colors-brightBlack;

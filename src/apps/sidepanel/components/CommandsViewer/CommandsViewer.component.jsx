@@ -33,7 +33,7 @@ import {
 export const CommandsViewer = ({ commands }) => {
   const wrapper = useRef(null)
 
-  const [collapsedIds, setCollapsedIds] = useState([])
+  const [expandedIds, setExpandedIds] = useState([])
 
   const [config] = useStorage({ key: storageKeys.CONFIG })
   const statusIndicator = config.getValueById(configInputIds.STATUS_INDICATOR)
@@ -84,12 +84,12 @@ export const CommandsViewer = ({ commands }) => {
     }
   }
 
-  const toggleCollapsedById = commandId => {
-    const newCollapsedIds = collapsedIds.includes(commandId)
-      ? collapsedIds.filter(id => id !== commandId)
-      : collapsedIds.concat(commandId)
+  const toggleExpandedById = commandId => {
+    const newExpandedIds = expandedIds.includes(commandId)
+      ? expandedIds.filter(id => id !== commandId)
+      : expandedIds.concat(commandId)
 
-    setCollapsedIds(newCollapsedIds)
+    setExpandedIds(newExpandedIds)
   }
 
   return (
@@ -99,7 +99,7 @@ export const CommandsViewer = ({ commands }) => {
           const hasErrorMessage = command.status === commandStatuses.ERROR
           const isAuto = command.origin === origins.AUTO
           const isEvent = command.event !== null
-          const isCollapsed = collapsedIds.includes(command.id)
+          const isExpanded = expandedIds.includes(command.id)
 
           return (
             <article
@@ -111,16 +111,16 @@ export const CommandsViewer = ({ commands }) => {
                 ${hasStatusBar ? getClassNameByOrigin(command.origin) : ''}
                 ${hasStatusLight ? viewer__command___mod_lighted : ''}
                 ${isTruncated ? viewer__command___mod_truncated : ''}
-                ${isCollapsed ? viewer__command___mod_collapsed : ''}
+                ${!isExpanded ? viewer__command___mod_collapsed : ''}
               `}
             >
               {isAuto && (
                 <span
                   className={viewer__command_auto}
-                  onClick={() => toggleCollapsedById(command.id)}
+                  onClick={() => toggleExpandedById(command.id)}
                 />
               )}
-              s
+
               {isAuto && isEvent && (
                 <p className={viewer__static_line}>
                   <ColoredText
@@ -128,9 +128,11 @@ export const CommandsViewer = ({ commands }) => {
                   />
                 </p>
               )}
+
               <p onMouseUp={handleLineMouseUp} className={viewer__line}>
                 <ColoredText value={command.context} />
               </p>
+
               <p
                 onMouseUp={handleLineMouseUp}
                 className={`
@@ -140,6 +142,7 @@ export const CommandsViewer = ({ commands }) => {
               >
                 {command.title}
               </p>
+
               {command.logs.map((log, index) => {
                 const isLastItem = index === command.logs.length - 1
                 const isLastErrorMessage = isLastItem && hasErrorMessage
@@ -158,6 +161,7 @@ export const CommandsViewer = ({ commands }) => {
                   </p>
                 )
               })}
+
               {command.warning && (
                 <p
                   className={`${viewer__line} ${viewer__line___mod_warn}`}

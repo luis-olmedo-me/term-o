@@ -47,6 +47,10 @@ export const isStrictDoubleQuoted = value => {
   return isDoubleQuoted(value) && quotesCount === 2
 }
 
+export const isStrictQuoted = value => {
+  return isStrictDoubleQuoted(value) || isStrictSingleQuoted(value)
+}
+
 export const quotify = value => {
   const hasDoubleQuote = value.includes('"')
   const hasSingleQuote = value.includes("'")

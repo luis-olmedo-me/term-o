@@ -1,5 +1,6 @@
 import { commandTypes } from '@src/constants/command.constants'
 import { getArray } from './arguments.helpers'
+import { isStrictQuoted, quotify, truncate } from './string.helpers'
 import { countMatches } from './utils.helpers'
 
 export const getOptionTypeLabel = type => {
@@ -27,16 +28,15 @@ export const parseOptions = (index, arg, argsBySpace, type) => {
     case commandTypes.STRING: {
       index++
       const argValue = argsBySpace.at(index) || ''
+      const truncatedArgValue = truncate(argValue, 30)
       const quote = argValue.charAt(0)
+      const hasQuotes = isStrictQuoted(argValue)
 
-      const startsWithQuote = /"|'/g.test(quote)
-      const endsWithQUote = argValue.endsWith(quote)
-
-      if ((!startsWithQuote || !endsWithQUote) && !argValue)
+      if (!hasQuotes && !argValue)
         throw `${arg} expects for quoted ${typeLabel} value. Instead, it received nothing.`
 
-      if (!startsWithQuote || !endsWithQUote)
-        throw `${arg} expects for quoted ${typeLabel} value. Instead, it received ${argValue}.`
+      if (!hasQuotes)
+        throw `${arg} expects for quoted ${typeLabel} value. Instead, it received ${quotify(truncatedArgValue)}.`
 
       const quotesPattern = new RegExp(`^${quote}|${quote}$`, 'g')
       const value = argValue.replace(quotesPattern, '')
@@ -45,7 +45,7 @@ export const parseOptions = (index, arg, argsBySpace, type) => {
       const quotesCount = countMatches(argValue, quotePattern)
 
       if (quotesCount !== 2)
-        throw `${arg} expects for a properly quoted ${typeLabel} value. Instead, it received ${argValue}.`
+        throw `${arg} expects for a properly quoted ${typeLabel} value. Instead, it received ${quotify(truncatedArgValue)}.`
 
       return { value, newIndex: index }
     }

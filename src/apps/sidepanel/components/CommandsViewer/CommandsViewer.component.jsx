@@ -86,7 +86,7 @@ export const CommandsViewer = ({ commands }) => {
         {commands.map((command, commandIndex) => {
           const hasErrorMessage = command.status === commandStatuses.ERROR
           const isAuto = command.origin === origins.AUTO
-          const eventType = fillTemplate(AUTOMATED_COMMAND_LABEL, { eventType: command.event })
+          const isEvent = command.event !== null
 
           return (
             <article
@@ -102,9 +102,11 @@ export const CommandsViewer = ({ commands }) => {
             >
               {isAuto && <span className={viewer__command_auto}></span>}
 
-              {isAuto && (
+              {isAuto && isEvent && (
                 <p className={viewer__line}>
-                  <ColoredText value={eventType} />
+                  <ColoredText
+                    value={fillTemplate(AUTOMATED_COMMAND_LABEL, { eventType: command.event.type })}
+                  />
                 </p>
               )}
 

@@ -2,20 +2,33 @@ import { getBgColor as BG, getColor as C, escapeColors } from '@src/helpers/them
 import { spreadIf } from '@src/helpers/utils.helpers'
 import { isStrictDoubleQuoted, isStrictSingleQuoted, quotify } from './string.helpers'
 
+export const formatTabId = ({ tabId }) => {
+  const isString = typeof tabId === 'string'
+  const isNumber = typeof tabId === 'number'
+
+  if (isString) return [`${C`blue`}${quotify(tabId)}${C`reset`}`]
+  if (isNumber) return [`${C`blue`}${quotify(`T${tabId}`)}${C`reset`}`]
+  return []
+}
+
+export const formatText = ({ text }) => {
+  if (!text) return []
+  const quotedText = quotify(text)
+
+  return [`${C`yellow`}${quotedText}${C`reset`}`]
+}
+
 export const formatElement = ({ tagName, attributes, xpath, textContent, tabId }) => {
-  const hasTabId = Boolean(tabId)
   const hasXpath = xpath !== null
   const hasTextContent = textContent !== null
 
-  const quotedTabId = hasTabId && quotify(tabId)
   const quotedXpath = hasXpath && quotify(xpath)
-  const quotedTextContent = hasTextContent && quotify(textContent)
 
   if (hasXpath || hasTextContent) {
     return [
-      ...spreadIf(hasTabId, [`${C`blue`}${quotedTabId}${C`reset`}`]),
+      ...formatTabId({ tabId }),
       ...spreadIf(hasXpath, [`${C`blue`}${quotedXpath}${C`reset`}`]),
-      ...spreadIf(hasTextContent, [`${C`yellow`}${quotedTextContent}${C`reset`}`])
+      ...formatText({ text: textContent })
     ]
   }
 
@@ -32,17 +45,7 @@ export const formatElement = ({ tagName, attributes, xpath, textContent, tabId }
 
   const quotedTagName = quotify(tagName)
 
-  return [
-    ...spreadIf(hasTabId, [`${C`blue`}${quotedTabId}${C`reset`}`]),
-    `${C`red`}${quotedTagName}${C`reset`}`,
-    ...attrs
-  ]
-}
-
-export const formatText = ({ text }) => {
-  const quotedText = quotify(text)
-
-  return [`${C`yellow`}${quotedText}${C`reset`}`]
+  return [...formatTabId({ tabId }), `${C`red`}${quotedTagName}${C`reset`}`, ...attrs]
 }
 
 export const formatNotification = ({ title, message }) => {
@@ -66,14 +69,11 @@ export const formatWarning = ({ title }) => {
 }
 
 export const formatStorageProp = ({ key, value, tabId }) => {
-  const hasTabId = Boolean(tabId)
-
-  const quotedTabId = hasTabId && quotify(tabId)
   const quotedKey = quotify(key)
   const quotedValue = quotify(value)
 
   return [
-    ...spreadIf(hasTabId, [`${C`blue`}${quotedTabId}${C`reset`}`]),
+    ...formatTabId({ tabId }),
     `${C`purple`}${quotedKey}${C`reset`}`,
     `${C`yellow`}${quotedValue}${C`reset`}`
   ]
@@ -98,17 +98,8 @@ export const formatResponse = ({ response, responseBody, method }) => {
 
 export const formatStorageAsString = ({ storage, tabId }) => {
   const stringStorage = JSON.stringify(storage)
-  const hasTabId = Boolean(tabId)
 
-  const quotedTabId = hasTabId && quotify(tabId)
-  const quotedStorage = quotify(stringStorage)
-
-  return [
-    [
-      ...spreadIf(hasTabId, [`${C`blue`}${quotedTabId}${C`reset`}`]),
-      `${C`yellow`}${quotedStorage}${C`reset`}`
-    ]
-  ]
+  return [[...formatTabId({ tabId }), ...formatText({ text: stringStorage })]]
 }
 
 export const formatAlias = ({ key, value }) => {
@@ -149,14 +140,13 @@ export const formatDomEvent = ({ event, xpath }) => {
 export const formatTab = ({ windowId, id, title, url, groupId }, staticUrl) => {
   const quotedWindowId = quotify(`W${windowId}`)
   const quotedGroupId = quotify(groupId !== -1 ? `G${groupId}` : '')
-  const quotedId = quotify(`T${id}`)
   const quotedTitle = quotify(title)
   const quotedURL = quotify(url || staticUrl)
 
   return [
     `${C`purple`}${quotedWindowId}${C`reset`}`,
     `${C`green`}${quotedGroupId}${C`reset`}`,
-    `${C`blue`}${quotedId}${C`reset`}`,
+    ...formatTabId({ tabId: id }),
     `${C`brightYellow`}${quotedTitle}${C`reset`}`,
     `${C`yellow`}${quotedURL}${C`reset`}`
   ]
@@ -221,4 +211,16 @@ export const formatGap = ({ distanceX, distanceY }, xpathA, xpathB) => {
     `${C`blue`}${quotedXpathA}${C`reset`}`,
     `${C`blue`}${quotedXpathB}${C`reset`}`
   ]
+}
+
+export const formatOutput = ({ values }) => {
+  return values.map(value => {
+    const isString = typeof value === 'string'
+    const isNumber = typeof value === 'number'
+    const isArray = Array.isArray(value)
+
+    if (isNumber) return `${C`brightBlack`}${value}${C`reset`}`
+    if (isString) return `${C`brightBlack`}${quotify(value)}${C`reset`}`
+    if (isArray) return formatOutput({ values: value })
+  })
 }

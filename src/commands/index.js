@@ -8,6 +8,7 @@ import historyBase from './history/history.command'
 import inputBase from './input/input.command'
 import inspectBase from './inspect/inspect.command'
 import notifyBase from './notify/notify.command'
+import outputBase from './output/output.command'
 import requestBase from './request/request.command'
 import storageBase from './storage/storage.command'
 import styleBase from './style/style.command'
@@ -19,7 +20,6 @@ export default [
   aliasBase,
   clearBase,
   domBase,
-  errorBase,
   eventsBase,
   historyBase,
   inputBase,
@@ -43,6 +43,7 @@ export {
   inputBase,
   inspectBase,
   notifyBase,
+  outputBase,
   requestBase,
   storageBase,
   styleBase,

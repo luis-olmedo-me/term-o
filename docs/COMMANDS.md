@@ -1,7 +1,7 @@
 # Term-O Commands
 
 > Version 0.9.3  
-> Updated: 2026-05-02
+> Updated: 2026-05-06
 
 ---
 
@@ -19,7 +19,6 @@
   - [NOTIFY](#notify)
   - [SEARCH](#search)
   - [STORAGE](#storage)
-  - [ERROR](#error)
   - [EVENTS](#events)
   - [INPUT](#input)
   - [THEME](#theme)
@@ -650,30 +649,6 @@ When using `storage` command the options can express **4** possible action:
    storage
        --copy                                                                # REQUIRED
        --input "test-value"                                                  # REQUIRED
-   ```
-
-## ERROR
-
-The `error` command is a bridge to the error API.
-
-| Option             | Short | Description                 |
-| ------------------ | ----- | --------------------------- |
-| `--create`         | `-c`  | Create an error.            |
-| `--title <string>` | `-t`  | Define the title.           |
-| `--help`           | `-h`  | Show help for this command. |
-
-### Dependency Rules
-
-When using `error` command the options can express **1** possible action:
-
-1. Throw an error (using `--create`)
-
-   `--create` will trigger the creation of an error.
-
-   ```bash
-   search
-       --create                                                             # REQUIRED
-       --title "test title"                                                 # REQUIRED
    ```
 
 ## EVENTS

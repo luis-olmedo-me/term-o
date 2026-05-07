@@ -13,13 +13,13 @@ export const getBgColor = color => {
 export const cleanColors = value => {
   const colorPattern = /\{tfg:[A-Za-z]+\}|\{tbg:[A-Za-z]+\}/g
 
-  return value.replace(colorPattern, '')
+  return value.replaceAll(colorPattern, '')
 }
 
 export const escapeColors = (value = '') => {
   const colorPattern = /\{tfg:[A-Za-z]+\}|\{tbg:[A-Za-z]+\}/g
 
-  return value.replace(colorPattern, character => RegExp.escape(character))
+  return value.replaceAll(colorPattern, character => RegExp.escape(character))
 }
 
 export const getAccentColors = (colorThemes, accentName) => {

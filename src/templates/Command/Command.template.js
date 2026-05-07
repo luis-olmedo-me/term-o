@@ -4,7 +4,7 @@ import EventListener from '@src/templates/EventListener'
 import { commandStatuses } from '@src/constants/command.constants'
 
 import { buildArgsFromProps } from '@src/helpers/arguments.helpers'
-import { renderLine } from '@src/helpers/command.helpers'
+import { renderLine, throwParamsError } from '@src/helpers/command.helpers'
 import { formatError } from '@src/helpers/format.helpers'
 import { getPropsFromString } from '@src/helpers/options.helpers'
 import { cleanColors } from '@src/helpers/themes.helpers'
@@ -91,7 +91,7 @@ export class Command extends EventListener {
 
   async execute() {
     try {
-      if (this.hasArgsPending) throw 'Params were not finished'
+      if (this.hasArgsPending) return throwParamsError(this)
 
       this.props = this.options.getValues()
 

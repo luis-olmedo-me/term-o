@@ -1,5 +1,7 @@
 import EventListener from '@src/templates/EventListener'
 
+import { outputBase } from '@src/commands'
+import { throwParamsError } from '@src/helpers/command.helpers'
 import { createUUIDv4, debounce } from '@src/helpers/utils.helpers'
 import { getCommandListLogs, getCommandListStatus } from './CommandList.helpers'
 
@@ -31,6 +33,14 @@ export class CommandList extends EventListener {
     return this
   }
 
+  preloadParams(params) {
+    const preCommand = outputBase.create().mock({ log: true, value: params })
+
+    this._nodes = [preCommand, ...this._nodes]
+
+    return this
+  }
+
   async execute() {
     this._timerId = null
     const debouncedOnUpdate = debounce(this._onUpdate.bind(this), 50)
@@ -40,12 +50,18 @@ export class CommandList extends EventListener {
       const command = this._nodes[index]
       const previousCommand = this._nodes[index - 1]
 
+      const hasArgsPending = command.hasArgsPending
+      const hasPreviousCommand = Boolean(previousCommand)
+      const hasPreviousParams = hasPreviousCommand && Boolean(previousCommand.logs.length)
+
       if (command.failed) break
       command.share(this._shared)
       command.addEventListener('update', registerTimerId)
       command.addEventListener('statuschange', registerTimerId)
 
-      if (previousCommand && command.hasArgsPending) await command.executePerLogs(previousCommand)
+      if (!hasPreviousCommand && hasArgsPending) throwParamsError(command)
+      else if (!hasPreviousParams && hasArgsPending) throwParamsError(command)
+      else if (hasArgsPending) await command.executePerLogs(previousCommand)
       else await command.execute()
 
       command.removeEventListener('update', registerTimerId)
@@ -77,7 +93,7 @@ export class CommandList extends EventListener {
       context: this.get('context'),
       origin: this.get('origin'),
       title: this.get('title'),
-      event: this.get('eventType')
+      event: this.get('event')
     }
   }
 

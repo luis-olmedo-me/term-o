@@ -3,6 +3,7 @@ import StorageSimple from '@src/templates/StorageSimple'
 import { bannerIds, bannerTypes } from '@src/constants/banners.constants'
 import { commandStatuses } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
+import { queueStatuses, visibleStatuses } from '@src/constants/queue.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { limitQueueByConfig, updateQueueValueIn } from '@src/helpers/queue.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
@@ -21,7 +22,8 @@ export class StorageCommandQueue extends StorageSimple {
       managed: this.$latest().value,
       value: this.getUIValues(),
       isExecuting: this.getIsExecuting(),
-      executable: this.getExecutable(),
+      next: this.next.bind(this),
+      complete: this.complete.bind(this),
       clearCompleted: this.clearCompleted.bind(this),
       delete: this.delete.bind(this),
       change: this.change.bind(this),
@@ -103,26 +105,55 @@ export class StorageCommandQueue extends StorageSimple {
     this.$storageService.set(storageKeys.COMMAND_QUEUE, newQueue)
   }
 
-  add(line, origin, tab, eventType = null) {
-    const newValue = [
-      ...this.$latest().value,
-      { id: createUUIDv4(), line, origin, tab, eventType, command: null }
-    ]
+  add(line, origin, tab, event = null) {
+    const id = createUUIDv4()
+    const command = null
+    const status = queueStatuses.SCHEDULED
+
+    const newValue = [...this.$latest().value, { id, line, origin, tab, event, status, command }]
 
     this.$storageService.set(storageKeys.COMMAND_QUEUE, newValue)
   }
 
   getUIValues() {
-    return this.$latest()
-      .value.map(item => item.command)
-      .filter(Boolean)
+    return this.$latest().value.reduce((commands, item) => {
+      const isItemVisible = visibleStatuses.includes(item.status)
+      const isValidCommand = Boolean(item.command)
+
+      return isItemVisible && isValidCommand ? commands.concat(item.command) : commands
+    }, [])
   }
 
   getIsExecuting() {
-    return this.$latest().value.some(({ command }) => command?.status === commandStatuses.EXECUTING)
+    const queue = this.$latest().value
+    const hasItemInProgress = queue.some(({ status }) => status === queueStatuses.IN_PROGRESS)
+
+    return hasItemInProgress
   }
 
-  getExecutable() {
-    return this.$latest().value.find(({ command }) => !command)
+  complete(queueId) {
+    const queue = this.$latest().value
+    const newQueue = queue.map(item =>
+      item.id === queueId ? { ...item, status: queueStatuses.DONE } : item
+    )
+
+    this.$storageService.set(storageKeys.COMMAND_QUEUE, newQueue)
+  }
+
+  next() {
+    const queue = this.$latest().value
+    const isExecuting = this.getIsExecuting()
+
+    if (isExecuting) return null
+    const nextItem = queue.find(({ status }) => status === queueStatuses.SCHEDULED)
+
+    if (!nextItem) return null
+    const newQueue = queue.map(item =>
+      item.id === nextItem.id ? { ...item, status: queueStatuses.IN_PROGRESS } : item
+    )
+
+    this.$storageService.set(storageKeys.COMMAND_QUEUE, newQueue)
+
+    return nextItem
   }
 }

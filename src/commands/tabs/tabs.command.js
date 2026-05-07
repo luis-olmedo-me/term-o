@@ -62,7 +62,7 @@ export default new CommandBase({
   .expect({
     name: 'close',
     abbreviation: 'c',
-    type: commandTypes.STRING,
+    type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Close a specific tab by its identifier',
     validate: [options.requireAll('tab-id')]

@@ -116,8 +116,8 @@ chrome.storage.onChanged.addListener(async changes => {
   const storage = await getStorage()
   const commandParser = getCommandParser(storage)
 
-  storageInstance.handleStorageChanges(changes)
-  if (hasQueueChanges) await handleCommandQueueChange(storage, commandParser)
+  const isValidUpdate = storageInstance.handleStorageChanges(changes)
+  if (hasQueueChanges && isValidUpdate) await handleCommandQueueChange(storage, commandParser)
 })
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {

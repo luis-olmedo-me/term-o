@@ -109,6 +109,8 @@ export class Storage extends EventListener {
   }
 
   handleStorageChanges(changes) {
+    let hasUpdated = false
+
     for (let [storageKey, { newValue: compressedValue }] of Object.entries(changes)) {
       if (!(storageKey in this.values)) return
       const instance = this.getInstance(storageKey)
@@ -116,9 +118,14 @@ export class Storage extends EventListener {
       const decompressedValue = decompressFromUTF16(compressedValue)
       const value = instance.$json ? JSON.parse(decompressedValue) : decompressedValue
 
-      instance.$update(value)
+      const update = instance.$update(value)
+
+      if (!update) return
       this.dispatchEvent(storageKey, this)
+      hasUpdated = true
     }
+
+    return hasUpdated
   }
 
   handleStorageChangesManually() {

@@ -5,7 +5,7 @@ import { quotify } from '@src/helpers/string.helpers'
 export default async (resolve, _reject, data, { storage, sender }) => {
   const queue = storage.get(storageKeys.COMMAND_QUEUE)
   const events = storage.get(storageKeys.EVENTS)
-  const tab = storage.get(storageKeys.TAB)
+  const tab = sender.tab
 
   const pendingEvents = events.filter(event => {
     const matchUrl = new RegExp(event.url).test(tab.url)

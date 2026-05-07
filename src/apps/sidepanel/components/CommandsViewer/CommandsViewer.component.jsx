@@ -99,7 +99,7 @@ export const CommandsViewer = ({ commands }) => {
           const hasErrorMessage = command.status === commandStatuses.ERROR
           const isAuto = command.origin === origins.AUTO
           const isEvent = command.event !== null
-          const isExpanded = expandedIds.includes(command.id)
+          const isExpanded = !isAuto || expandedIds.includes(command.id)
 
           return (
             <article

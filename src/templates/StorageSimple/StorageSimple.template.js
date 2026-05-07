@@ -12,12 +12,25 @@ export class StorageSimple {
   }
 
   $update(storageValue) {
-    if (storageValue.version === this.$storageValue.version) return
+    const isDefault = !!this.$storageValue.version || this.$storageValue.updatedAt === null
 
-    this.$storageValue = storageValue
+    if (!isDefault) {
+      const currentUpdatedAt = new Date(this.$storageValue.updatedAt)
+      const newUpdatedAt = new Date(storageValue.updatedAt)
+      const isNewUpdate = newUpdatedAt >= currentUpdatedAt
+      const hasInvalidMeasures = isNaN(currentUpdatedAt.getTime()) || isNaN(newUpdatedAt.getTime())
+
+      if (!isNewUpdate && hasInvalidMeasures) return
+    }
+
+    this.$storageValue = this.$interceptUpdate(storageValue)
   }
 
   $latest() {
     return this.$storageValue
+  }
+
+  $interceptUpdate(newStorageValue) {
+    return newStorageValue
   }
 }

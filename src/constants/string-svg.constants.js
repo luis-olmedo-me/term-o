@@ -1,6 +1,13 @@
 export const rotationValues = [210, 30]
 export const backgroundLogo = `
-  <svg opacity="{opacity}" width="512" height="512" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    opacity="{opacity}"
+    width="512"
+    height="512"
+    viewBox="0 0 64 64"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <g transform="rotate({rotation} 32 32)" filter="url(#shadow)">
       <path
         d="M48.1614 30.0229C49.333 31.1945 49.333 33.094 48.1614 34.2655L27.2624 55.1645C26.0908 56.3358 24.1912 56.336 23.0198 55.1645L18.0438 50.1886C16.8723 49.0171 16.8725 47.1175 18.0438 45.9459L31.8489 32.1408L22.4998 22.7916C22.1093 22.4011 22.1094 21.7679 22.4998 21.3774L30.3042 13.573C30.6947 13.1825 31.3279 13.1825 31.7184 13.573L41.0676 22.9221L41.0641 22.9256L48.1614 30.0229Z"
@@ -15,7 +22,7 @@ export const backgroundLogo = `
         fill="{bottom}"
       />
     </g>
-    
+
     <defs>
       <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
         <feDropShadow

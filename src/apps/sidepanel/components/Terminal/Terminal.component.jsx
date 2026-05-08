@@ -26,7 +26,7 @@ export const Terminal = () => {
   const [tab] = useStorage({ key: storageKeys.TAB })
   const [aliases] = useStorage({ key: storageKeys.ALIASES })
   const [config] = useStorage({ key: storageKeys.CONFIG })
-  const [queue] = useStorage({ key: storageKeys.COMMAND_QUEUE })
+  const [queue] = useStorage({ key: storageKeys.QUEUE })
   const [addons] = useStorage({ key: storageKeys.ADDONS })
 
   const rawContext = config.getValueById(configInputIds.CONTEXT)

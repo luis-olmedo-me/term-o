@@ -7,7 +7,7 @@ import {
   storageValues
 } from '@src/constants/storage.constants'
 import { download, readFileContent } from '@src/helpers/file.helpers'
-import { createUUIDv4, safeJsonParse } from '@src/helpers/utils.helpers'
+import { safeJsonParse } from '@src/helpers/utils.helpers'
 import { safeDecompress } from '@src/helpers/zip.helpers'
 import { compressToUTF16, decompressFromUTF16 } from 'lz-string'
 
@@ -20,7 +20,7 @@ export class Storage extends EventListener {
     this.handleStorageChangesRef = this.handleStorageChanges.bind(this)
     this.values = storageValues.reduce(
       (values, { key, Template, defaultValue, namespace, json }) => {
-        const storageValue = { value: defaultValue, version: null }
+        const storageValue = { value: defaultValue, updatedAt: null }
         const props = { key, namespace, json, storageValue }
 
         return {
@@ -34,7 +34,7 @@ export class Storage extends EventListener {
 
   async init() {
     const promises = storageValues.map(({ namespace, key, defaultValue, json }) => {
-      const defaultStorageValue = { value: defaultValue, version: null }
+      const defaultStorageValue = { value: defaultValue, updatedAt: null }
 
       return getStorageValue(namespace, key, defaultStorageValue, json).then(result => {
         const isDefault = result.value === defaultValue
@@ -49,29 +49,6 @@ export class Storage extends EventListener {
 
     this.initiated = true
     this.dispatchEvent('init', this)
-  }
-
-  async restart() {
-    const promises = Object.entries(this.values).map(([key, instance]) => {
-      return getStorageValue(instance.$namespace, key, instance.$storageValue, instance.$json).then(
-        result => {
-          const isDefault = result.value === instance.$storageValue
-
-          if (!isDefault) this.getInstance(key).$update(result)
-        }
-      )
-    })
-
-    await Promise.all(promises)
-
-    if (!this.manualMode && chrome.storage.onChanged.hasListener(this.handleStorageChangesRef)) {
-      chrome.storage.onChanged.removeListener(this.handleStorageChangesRef)
-    }
-    if (!this.manualMode) {
-      chrome.storage.onChanged.addListener(this.handleStorageChangesRef)
-    }
-
-    this.dispatchEvent('restart', this)
   }
 
   reset() {
@@ -122,7 +99,7 @@ export class Storage extends EventListener {
     if (storageKey in this.values) {
       const instance = this.getInstance(storageKey)
 
-      instance.$update({ value: newValue, version: createUUIDv4() })
+      instance.$update({ value: newValue, updatedAt: new Date().toISOString() })
       setStorageValue(instance.$namespace, storageKey, instance.$latest(), instance.$json)
     }
   }
@@ -132,6 +109,8 @@ export class Storage extends EventListener {
   }
 
   handleStorageChanges(changes) {
+    let hasUpdated = false
+
     for (let [storageKey, { newValue: compressedValue }] of Object.entries(changes)) {
       if (!(storageKey in this.values)) return
       const instance = this.getInstance(storageKey)
@@ -139,9 +118,14 @@ export class Storage extends EventListener {
       const decompressedValue = decompressFromUTF16(compressedValue)
       const value = instance.$json ? JSON.parse(decompressedValue) : decompressedValue
 
-      instance.$update(value)
+      const update = instance.$update(value)
+
+      if (!update) return false
       this.dispatchEvent(storageKey, this)
+      hasUpdated = true
     }
+
+    return hasUpdated
   }
 
   handleStorageChangesManually() {

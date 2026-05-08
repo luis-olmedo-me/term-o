@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'preact/hooks'
+import { useEffect, useRef, useState } from 'preact/hooks'
 
 import ColoredText from '@src/components/ColoredText'
 import useStorage from '@src/hooks/useStorage'
@@ -20,16 +20,20 @@ import {
 import {
   viewer,
   viewer__command,
+  viewer__command___mod_collapsed,
   viewer__command___mod_lighted,
   viewer__command___mod_truncated,
   viewer__command_auto,
   viewer__line,
   viewer__line___mod_truncated,
-  viewer__line___mod_warn
+  viewer__line___mod_warn,
+  viewer__static_line
 } from './CommandsViewer.module.scss'
 
 export const CommandsViewer = ({ commands }) => {
   const wrapper = useRef(null)
+
+  const [expandedIds, setExpandedIds] = useState([])
 
   const [config] = useStorage({ key: storageKeys.CONFIG })
   const statusIndicator = config.getValueById(configInputIds.STATUS_INDICATOR)
@@ -80,6 +84,14 @@ export const CommandsViewer = ({ commands }) => {
     }
   }
 
+  const toggleExpandedById = commandId => {
+    const newExpandedIds = expandedIds.includes(commandId)
+      ? expandedIds.filter(id => id !== commandId)
+      : expandedIds.concat(commandId)
+
+    setExpandedIds(newExpandedIds)
+  }
+
   return (
     <div className={`${global__scrollable} ${viewer}`}>
       <section ref={wrapper}>
@@ -87,6 +99,7 @@ export const CommandsViewer = ({ commands }) => {
           const hasErrorMessage = command.status === commandStatuses.ERROR
           const isAuto = command.origin === origins.AUTO
           const isEvent = command.event !== null
+          const isExpanded = !isAuto || expandedIds.includes(command.id)
 
           return (
             <article
@@ -98,15 +111,19 @@ export const CommandsViewer = ({ commands }) => {
                 ${hasStatusBar ? getClassNameByOrigin(command.origin) : ''}
                 ${hasStatusLight ? viewer__command___mod_lighted : ''}
                 ${isTruncated ? viewer__command___mod_truncated : ''}
+                ${!isExpanded ? viewer__command___mod_collapsed : ''}
               `}
             >
-              {isAuto && <span className={viewer__command_auto}></span>}
+              {isAuto && (
+                <span
+                  className={viewer__command_auto}
+                  onClick={() => toggleExpandedById(command.id)}
+                />
+              )}
 
               {isAuto && isEvent && (
-                <p className={viewer__line}>
-                  <ColoredText
-                    value={fillTemplate(AUTOMATED_COMMAND_LABEL, { eventType: command.event.type })}
-                  />
+                <p className={viewer__static_line}>
+                  <ColoredText value={fillTemplate(AUTOMATED_COMMAND_LABEL, command.event)} />
                 </p>
               )}
 

@@ -12,12 +12,36 @@ export class StorageSimple {
   }
 
   $update(storageValue) {
-    if (storageValue.version === this.$storageValue.version) return
+    const isOldUpdateScheme = Boolean(this.$storageValue.version)
+    const isDefault = this.$storageValue.updatedAt === null
 
-    this.$storageValue = storageValue
+    // FIXME: Delete after 0.9.4 realese
+    if (isOldUpdateScheme) {
+      const updatedStorageValue = {
+        value: storageValue.value,
+        updatedAt: storageValue.updatedAt || new Date().toISOString()
+      }
+
+      return (this.$storageValue = this.$interceptUpdate(updatedStorageValue))
+    }
+
+    if (!isDefault) {
+      const currentUpdatedAt = new Date(this.$storageValue.updatedAt)
+      const newUpdatedAt = new Date(storageValue.updatedAt)
+      const isNewUpdate = newUpdatedAt >= currentUpdatedAt
+      const hasInvalidMeasures = isNaN(currentUpdatedAt.getTime()) || isNaN(newUpdatedAt.getTime())
+
+      if (!isNewUpdate && hasInvalidMeasures) return null
+    }
+
+    return (this.$storageValue = this.$interceptUpdate(storageValue))
   }
 
   $latest() {
     return this.$storageValue
+  }
+
+  $interceptUpdate(newStorageValue) {
+    return newStorageValue
   }
 }

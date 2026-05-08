@@ -3,9 +3,9 @@ import { storageKeys } from '@src/constants/storage.constants'
 import { quotify } from '@src/helpers/string.helpers'
 
 export default async (resolve, _reject, data, { storage, sender }) => {
-  const queue = storage.get(storageKeys.COMMAND_QUEUE)
+  const queue = storage.get(storageKeys.QUEUE)
   const events = storage.get(storageKeys.EVENTS)
-  const tab = storage.get(storageKeys.TAB)
+  const tab = sender.tab
 
   const pendingEvents = events.filter(event => {
     const matchUrl = new RegExp(event.url).test(tab.url)
@@ -16,7 +16,10 @@ export default async (resolve, _reject, data, { storage, sender }) => {
 
   for (const event of pendingEvents) {
     const tabId = sender.tab.id
-    const eventData = { ...event, params: [quotify(event.type), quotify(`T${tabId}`)] }
+    const eventData = {
+      ...event,
+      params: [quotify(event.id), quotify(event.type), quotify(`T${tabId}`)]
+    }
 
     queue.add(event.line, origins.AUTO, tab, eventData)
   }

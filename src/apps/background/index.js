@@ -37,8 +37,8 @@ const getCommandParser = storage => {
   return commandParserInstance
 }
 
-const handleCommandQueueChange = async (storage, commandParser) => {
-  const queue = storage.get(storageKeys.COMMAND_QUEUE)
+const handleQueueChange = async (storage, commandParser) => {
+  const queue = storage.get(storageKeys.QUEUE)
   const queueItem = queue.next()
 
   if (queue.isExecuting || !queueItem) return
@@ -112,12 +112,12 @@ chrome.runtime.onInstalled.addListener(async () => {
 })
 
 chrome.storage.onChanged.addListener(async changes => {
-  const hasQueueChanges = storageKeys.COMMAND_QUEUE in changes
+  const hasQueueChanges = storageKeys.QUEUE in changes
   const storage = await getStorage()
   const commandParser = getCommandParser(storage)
 
-  storageInstance.handleStorageChanges(changes)
-  if (hasQueueChanges) await handleCommandQueueChange(storage, commandParser)
+  const isValidUpdate = storageInstance.handleStorageChanges(changes)
+  if (hasQueueChanges && isValidUpdate) await handleQueueChange(storage, commandParser)
 })
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {

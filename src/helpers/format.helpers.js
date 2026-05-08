@@ -3,7 +3,7 @@ import { spreadIf } from '@src/helpers/utils.helpers'
 import { isStrictDoubleQuoted, isStrictSingleQuoted, quotify } from './string.helpers'
 
 export const formatTabId = ({ tabId }) => {
-  const isString = typeof tabId === 'string'
+  const isString = tabId && typeof tabId === 'string'
   const isNumber = typeof tabId === 'number'
 
   if (isString) return [`${C`blue`}${quotify(tabId)}${C`reset`}`]

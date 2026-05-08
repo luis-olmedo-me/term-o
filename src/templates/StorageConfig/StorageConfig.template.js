@@ -36,11 +36,9 @@ export class StorageConfig extends StorageSimple {
     }
   }
 
-  $update(storageValue) {
-    if (this.$storageValue.version === storageValue.version) return
-
-    this.$storageValue = storageValue
-    this.details = buildDetailedConfig(storageValue.value)
+  $interceptUpdate(newStorageValue) {
+    this.details = buildDetailedConfig(newStorageValue.value)
+    return newStorageValue
   }
 
   handleInit() {

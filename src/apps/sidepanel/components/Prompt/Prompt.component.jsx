@@ -46,7 +46,7 @@ export const Prompt = ({
 
   const overlayRef = useRef(null)
 
-  const [historial, setHistorial] = useStorage({ key: storageKeys.PROMPT_HISTORY })
+  const [prompts, setPrompts] = useStorage({ key: storageKeys.PROMPTS })
   const [config] = useStorage({ key: storageKeys.CONFIG })
   const [banners] = useStorage({ key: storageKeys.BANNERS })
 
@@ -109,7 +109,7 @@ export const Prompt = ({
   }
 
   const addHistoryValueConditionally = targetValue => {
-    setHistorial(history => {
+    setPrompts(history => {
       const lastHistoryValue = history.at(-1)
       const isRepeatedAtEnd = lastHistoryValue === targetValue
       const newHistory = isRepeatedAtEnd ? history : [...history, targetValue]
@@ -155,11 +155,11 @@ export const Prompt = ({
     if (key === 'ArrowUp') {
       event.preventDefault()
       const newIndex = historialIndex - 1
-      const canBeStored = newIndex * -1 <= historial.length
+      const canBeStored = newIndex * -1 <= prompts.length
 
       if (canBeStored) {
         setHistorialIndex(newIndex)
-        setValue(newIndex === 0 ? '' : historial.at(newIndex))
+        setValue(newIndex === 0 ? '' : prompts.at(newIndex))
       }
 
       return
@@ -172,7 +172,7 @@ export const Prompt = ({
 
       if (canBeStored) {
         setHistorialIndex(newIndex)
-        setValue(newIndex === 0 ? '' : historial.at(newIndex))
+        setValue(newIndex === 0 ? '' : prompts.at(newIndex))
       }
 
       return

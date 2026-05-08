@@ -9,7 +9,7 @@ export const clearHandler = async command => {
   if (origin !== origins.MANUAL)
     throw 'Clearing the terminal is only allowed through direct user interaction.'
 
-  const queue = storage.get(storageKeys.COMMAND_QUEUE)
+  const queue = storage.get(storageKeys.QUEUE)
 
   commandList.hideUntil(command.id)
   queue.clearCompleted()

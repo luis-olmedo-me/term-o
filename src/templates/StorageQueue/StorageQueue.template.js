@@ -8,7 +8,7 @@ import { storageKeys } from '@src/constants/storage.constants'
 import { limitQueueByConfig, updateQueueValueIn } from '@src/helpers/queue.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 
-export class StorageCommandQueue extends StorageSimple {
+export class StorageQueue extends StorageSimple {
   constructor(storageService, props) {
     super(storageService, props)
 
@@ -53,7 +53,7 @@ export class StorageCommandQueue extends StorageSimple {
       })
     }
 
-    this.$storageService.set(storageKeys.COMMAND_QUEUE, limitNewQueue)
+    this.$storageService.set(storageKeys.QUEUE, limitNewQueue)
   }
 
   saveInCache(id, queue) {
@@ -69,9 +69,17 @@ export class StorageCommandQueue extends StorageSimple {
   }
 
   getFromCache(id) {
-    const found = this._cache.find(item => item.id === id)
+    const match = this._cache.find(item => item.id === id)
 
-    return found?.queue ?? null
+    if (!match) return null
+    const scheduledQueue = this.$latest().value.filter(item => {
+      const isScheduled = item.status === queueStatuses.SCHEDULED
+      const isInMatch = match.queue.some(matchItem => matchItem.id === item.id)
+
+      return isScheduled && !isInMatch
+    })
+
+    return match.queue.concat(scheduledQueue)
   }
 
   handleInit() {
@@ -79,7 +87,7 @@ export class StorageCommandQueue extends StorageSimple {
     this.$storageService.addEventListener(storageKeys.CONFIG, this.handleConfigChangesRef)
   }
   handleConfigChanges() {
-    this.$storageService.set(storageKeys.COMMAND_QUEUE, this.$latest().value)
+    this.$storageService.set(storageKeys.QUEUE, this.$latest().value)
   }
 
   clearCompleted() {
@@ -95,14 +103,14 @@ export class StorageCommandQueue extends StorageSimple {
     const newCache = this._cache.filter(item => current.includes(item.id))
 
     this._cache = newCache
-    this.$storageService.set(storageKeys.COMMAND_QUEUE, newQueue)
+    this.$storageService.set(storageKeys.QUEUE, newQueue)
     banners.remove(bannerIds.COMMAND_LOG_OVERFLOW)
   }
 
   delete(queueId) {
     const newQueue = this.$latest().value.filter(({ id }) => id !== queueId)
 
-    this.$storageService.set(storageKeys.COMMAND_QUEUE, newQueue)
+    this.$storageService.set(storageKeys.QUEUE, newQueue)
   }
 
   add(line, origin, tab, event = null) {
@@ -112,7 +120,7 @@ export class StorageCommandQueue extends StorageSimple {
 
     const newValue = [...this.$latest().value, { id, line, origin, tab, event, status, command }]
 
-    this.$storageService.set(storageKeys.COMMAND_QUEUE, newValue)
+    this.$storageService.set(storageKeys.QUEUE, newValue)
   }
 
   getUIValues() {
@@ -137,7 +145,7 @@ export class StorageCommandQueue extends StorageSimple {
       item.id === queueId ? { ...item, status: queueStatuses.DONE } : item
     )
 
-    this.$storageService.set(storageKeys.COMMAND_QUEUE, newQueue)
+    this.$storageService.set(storageKeys.QUEUE, newQueue)
   }
 
   next() {
@@ -152,7 +160,7 @@ export class StorageCommandQueue extends StorageSimple {
       item.id === nextItem.id ? { ...item, status: queueStatuses.IN_PROGRESS } : item
     )
 
-    this.$storageService.set(storageKeys.COMMAND_QUEUE, newQueue)
+    this.$storageService.set(storageKeys.QUEUE, newQueue)
 
     return nextItem
   }

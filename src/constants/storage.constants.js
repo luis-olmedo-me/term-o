@@ -1,6 +1,6 @@
 import StorageAddons from '@src/templates/StorageAddons'
-import StorageCommandQueue from '@src/templates/StorageCommandQueue'
 import StorageConfig from '@src/templates/StorageConfig'
+import StorageQueue from '@src/templates/StorageQueue'
 import StorageSimple from '@src/templates/StorageSimple'
 import StorageTab from '@src/templates/StorageTab'
 
@@ -13,10 +13,10 @@ export const storageKeys = {
   CONFIG: 'config',
   EVENTS: 'events',
   ADDONS: 'addons',
-  PROMPT_HISTORY: 'prompt-history',
+  PROMPTS: 'prompts',
   THEMES: 'themes',
   TAB: 'tab',
-  COMMAND_QUEUE: 'commandQueue',
+  QUEUE: 'queue',
   BANNERS: 'banners'
 }
 
@@ -31,8 +31,8 @@ export const storageKeysNonResetables = [storageKeys.TAB]
 
 export const storageKeysNonExportables = [
   storageKeys.TAB,
-  storageKeys.PROMPT_HISTORY,
-  storageKeys.COMMAND_QUEUE,
+  storageKeys.PROMPTS,
+  storageKeys.QUEUE,
   storageKeys.ADDONS
 ]
 
@@ -73,7 +73,7 @@ export const storageValues = [
     json: true
   },
   {
-    key: storageKeys.PROMPT_HISTORY,
+    key: storageKeys.PROMPTS,
     namespace: storageNamespaces.SYNC,
     defaultValue: [],
     Template: StorageSimple,
@@ -87,10 +87,10 @@ export const storageValues = [
     json: true
   },
   {
-    key: storageKeys.COMMAND_QUEUE,
+    key: storageKeys.QUEUE,
     namespace: storageNamespaces.SESSION,
     defaultValue: [],
-    Template: StorageCommandQueue,
+    Template: StorageQueue,
     json: true
   },
   {

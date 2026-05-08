@@ -1,0 +1,16 @@
+.banners__banner {
+  cursor: text;
+  margin: 0;
+  margin-bottom: $space-200;
+  border-bottom: $space-50 dashed;
+  border-radius: $radius-200;
+  padding: $space-100 $space-300;
+  white-space: pre-line;
+  word-break: break-word;
+
+  &___mod_warning {
+    border-color: $colors-yellow;
+    background-color: $colors-yellow;
+    color: $colors-background;
+  }
+}

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'preact/hooks'
 
+import Banners from '@sidepanel/components/Banners'
 import ColoredText from '@src/components/ColoredText'
 import useDebouncedCallback from '@src/hooks/useDebouncedCallback'
 import useStorage from '@src/hooks/useStorage'
@@ -9,10 +10,9 @@ import { configInputIds, PROMPT_MARK } from '@src/constants/config.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { insert } from '@src/helpers/string.helpers'
 import { global__loader } from '@styles/global.module.scss'
-import { createSuggestion, getClassNameByBannerType, getSymbolByBannerType } from './Prompt.helpers'
+import { createSuggestion } from './Prompt.helpers'
 import {
   prompt,
-  prompt__banner,
   prompt__input,
   prompt__input_line,
   prompt__line,
@@ -48,7 +48,6 @@ export const Prompt = ({
 
   const [prompts, setPrompts] = useStorage({ key: storageKeys.PROMPTS })
   const [config] = useStorage({ key: storageKeys.CONFIG })
-  const [banners] = useStorage({ key: storageKeys.BANNERS })
 
   const historialSize = config.getValueById(configInputIds.HISTORIAL_SIZE)
 
@@ -60,20 +59,6 @@ export const Prompt = ({
     },
     [],
     200
-  )
-
-  useEffect(
-    function cleanBanners() {
-      const bannersByTimer = Object.groupBy(banners.values, banner => banner.duration)
-      const timeoutIds = Object.entries(bannersByTimer).map(([duration, items]) => {
-        const durationMs = Number(duration)
-
-        return setTimeout(() => items.forEach(item => banners.remove(item.id)), durationMs)
-      })
-
-      return () => timeoutIds.forEach(clearTimeout)
-    },
-    [banners.values]
   )
 
   useEffect(function expectForRequests() {
@@ -205,11 +190,9 @@ export const Prompt = ({
   }
 
   const prefix = historialIndex || PROMPT_MARK
-
   const start = caret !== null ? value.slice(0, caret) : value
   const end = caret !== null ? value.slice(caret) : ''
   const isLoading = loading && !isRequesting
-  const hasBanners = banners.values.length > 0
 
   return (
     <div
@@ -218,17 +201,7 @@ export const Prompt = ({
         ${loading ? global__loader : ''}
       `}
     >
-      {hasBanners &&
-        banners.values.map(({ id, message, type }) => {
-          const classNameByType = getClassNameByBannerType(type)
-          const symbolByType = getSymbolByBannerType(type)
-
-          return (
-            <p key={id} className={`${prompt__line} ${prompt__banner} ${classNameByType}`}>
-              {`${symbolByType} ${message}`}
-            </p>
-          )
-        })}
+      <Banners />
 
       <p
         className={`

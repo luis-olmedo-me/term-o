@@ -69,9 +69,17 @@ export class StorageCommandQueue extends StorageSimple {
   }
 
   getFromCache(id) {
-    const found = this._cache.find(item => item.id === id)
+    const match = this._cache.find(item => item.id === id)
 
-    return found?.queue ?? null
+    if (!match) return null
+    const scheduledQueue = this.$latest().value.filter(item => {
+      const isScheduled = item.status === queueStatuses.SCHEDULED
+      const isInMatch = match.queue.some(matchItem => matchItem.id === item.id)
+
+      return isScheduled && !isInMatch
+    })
+
+    return match.queue.concat(scheduledQueue)
   }
 
   handleInit() {

@@ -120,7 +120,7 @@ export class Storage extends EventListener {
 
       const update = instance.$update(value)
 
-      if (!update) return
+      if (!update) return false
       this.dispatchEvent(storageKey, this)
       hasUpdated = true
     }

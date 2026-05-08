@@ -1,3 +1,3 @@
 import { getColor as C } from '@src/helpers/themes.helpers'
 
-export const AUTOMATED_COMMAND_LABEL = `${C`yellow`}:{type}:{id}:`
+export const AUTOMATED_COMMAND_LABEL = `${C`yellow`}:{id}:{type}:`

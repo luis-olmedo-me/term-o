@@ -1,7 +1,15 @@
+.banners__wrapper {
+  position: absolute;
+  right: 2rem;
+  bottom: 100%;
+  left: 2rem;
+}
+
 .banners__banner {
   cursor: text;
   margin: 0;
   margin-bottom: $space-200;
+  box-shadow: 0 $space-250 $space-400 $space-100 #00000060;
   border-bottom: $space-50 dashed;
   border-radius: $radius-200;
   padding: $space-100 $space-300;

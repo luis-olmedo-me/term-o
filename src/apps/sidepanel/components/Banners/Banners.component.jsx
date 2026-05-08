@@ -3,7 +3,7 @@ import useStorage from '@src/hooks/useStorage'
 import { storageKeys } from '@src/constants/storage.constants'
 import { useEffect } from 'preact/hooks'
 import { getClassNameByBannerType, getSymbolByBannerType } from './Banners.helpers'
-import { banners__banner } from './Banners.module.scss'
+import { banners__banner, banners__wrapper } from './Banners.module.scss'
 
 export const Banners = () => {
   const [banners] = useStorage({ key: storageKeys.BANNERS })
@@ -26,7 +26,7 @@ export const Banners = () => {
 
   return (
     hasBanners && (
-      <div>
+      <div className={banners__wrapper}>
         {banners.values.map(({ id, message, type }) => {
           const classNameByType = getClassNameByBannerType(type)
           const symbolByType = getSymbolByBannerType(type)

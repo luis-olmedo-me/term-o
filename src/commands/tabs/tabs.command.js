@@ -165,5 +165,12 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define a Tab ID where apply an action',
-    validate: [value.isRegExp, options.requireAnyOf('list', 'reload', 'switch', 'point', 'close')]
+    validate: [
+      options.requireAnyOf('list', 'reload', 'switch', 'point', 'close'),
+      options.when('list', [value.isRegExp]),
+      options.when('reload', [value.isTabId]),
+      options.when('switch', [value.isTabId]),
+      options.when('point', [value.isTabId]),
+      options.when('close', [value.isTabId])
+    ]
   })

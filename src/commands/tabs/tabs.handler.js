@@ -62,7 +62,7 @@ export const tabsHandler = async command => {
     const tab = await getTab({ tabId })
     const log = formatTab(tab)
 
-    await closeTab({ tabId: tab.id })
+    await closeTab({ tabId })
 
     command.clearLogs()
     command.log(log)

@@ -16,7 +16,7 @@ export const storageKeys = {
   PROMPT_HISTORY: 'prompt-history',
   THEMES: 'themes',
   TAB: 'tab',
-  COMMAND_QUEUE: 'commandQueue',
+  QUEUE: 'queue',
   BANNERS: 'banners'
 }
 
@@ -32,7 +32,7 @@ export const storageKeysNonResetables = [storageKeys.TAB]
 export const storageKeysNonExportables = [
   storageKeys.TAB,
   storageKeys.PROMPT_HISTORY,
-  storageKeys.COMMAND_QUEUE,
+  storageKeys.QUEUE,
   storageKeys.ADDONS
 ]
 
@@ -87,7 +87,7 @@ export const storageValues = [
     json: true
   },
   {
-    key: storageKeys.COMMAND_QUEUE,
+    key: storageKeys.QUEUE,
     namespace: storageNamespaces.SESSION,
     defaultValue: [],
     Template: StorageCommandQueue,

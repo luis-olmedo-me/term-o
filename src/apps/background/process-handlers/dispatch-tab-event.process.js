@@ -3,7 +3,7 @@ import { storageKeys } from '@src/constants/storage.constants'
 import { quotify } from '@src/helpers/string.helpers'
 
 export default async (resolve, _reject, data, { storage, sender }) => {
-  const queue = storage.get(storageKeys.COMMAND_QUEUE)
+  const queue = storage.get(storageKeys.QUEUE)
   const events = storage.get(storageKeys.EVENTS)
   const tab = sender.tab
 

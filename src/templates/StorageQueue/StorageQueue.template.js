@@ -8,7 +8,7 @@ import { storageKeys } from '@src/constants/storage.constants'
 import { limitQueueByConfig, updateQueueValueIn } from '@src/helpers/queue.helpers'
 import { createUUIDv4 } from '@src/helpers/utils.helpers'
 
-export class StorageCommandQueue extends StorageSimple {
+export class StorageQueue extends StorageSimple {
   constructor(storageService, props) {
     super(storageService, props)
 

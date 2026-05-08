@@ -1,6 +1,6 @@
 import StorageAddons from '@src/templates/StorageAddons'
-import StorageCommandQueue from '@src/templates/StorageCommandQueue'
 import StorageConfig from '@src/templates/StorageConfig'
+import StorageQueue from '@src/templates/StorageQueue'
 import StorageSimple from '@src/templates/StorageSimple'
 import StorageTab from '@src/templates/StorageTab'
 
@@ -90,7 +90,7 @@ export const storageValues = [
     key: storageKeys.QUEUE,
     namespace: storageNamespaces.SESSION,
     defaultValue: [],
-    Template: StorageCommandQueue,
+    Template: StorageQueue,
     json: true
   },
   {

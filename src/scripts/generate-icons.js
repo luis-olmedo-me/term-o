@@ -8,7 +8,7 @@ const { cyan, gray, green, reset } = require('../constants/system.constants')
 const INPUT_SVG = path.resolve(__dirname, '../images/logo.svg')
 const OUT_DIR = path.resolve(__dirname, '../images/icons')
 
-const SIZES = [16, 32, 48, 128]
+const SIZES = [16, 32, 48, 64, 128]
 const ICON_PATTERN = /^logo-\d+_x_\d+\.png$/
 
 const generate = async () => {

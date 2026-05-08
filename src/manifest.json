@@ -17,6 +17,7 @@
     "16": "assets/icons/logo-16_x_16.png",
     "32": "assets/icons/logo-32_x_32.png",
     "48": "assets/icons/logo-48_x_48.png",
+    "64": "assets/icons/logo-64_x_64.png",
     "128": "assets/icons/logo-128_x_128.png"
   },
   "content_scripts": [

@@ -123,9 +123,7 @@ export const CommandsViewer = ({ commands }) => {
 
               {isAuto && isEvent && (
                 <p className={viewer__static_line}>
-                  <ColoredText
-                    value={fillTemplate(AUTOMATED_COMMAND_LABEL, { eventType: command.event.type })}
-                  />
+                  <ColoredText value={fillTemplate(AUTOMATED_COMMAND_LABEL, command.event)} />
                 </p>
               )}
 

@@ -26,6 +26,7 @@
   word-break: break-word;
 
   @include theme-mode(dark) {
+    box-shadow: 0 $space-100 $space-300 $space-100 #00000099;
     border-color: transparent;
   }
 

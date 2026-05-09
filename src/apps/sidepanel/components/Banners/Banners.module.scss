@@ -16,12 +16,16 @@
 }
 
 .banners__banner {
-  cursor: text;
+  transition:
+    background-color 0.1s ease-in-out,
+    color 0.1s ease-in-out;
+  cursor: pointer;
   margin: 0;
-  box-shadow: 0 $space-100 $space-300 $space-100 #00000060;
+  box-shadow: 0 $space-150 $space-300 $space-100 #00000060;
   border: var(--space-50) solid with-opacity($colors-brightBlack, 0.5);
   border-radius: $radius-200;
   padding: $space-100 $space-300;
+  user-select: none;
   white-space: pre-line;
   word-break: break-word;
 
@@ -33,5 +37,10 @@
   &___mod_warning {
     background-color: $colors-yellow;
     color: $colors-background;
+
+    &:hover {
+      background-color: $colors-brightYellow;
+      color: $colors-brightBlack;
+    }
   }
 }

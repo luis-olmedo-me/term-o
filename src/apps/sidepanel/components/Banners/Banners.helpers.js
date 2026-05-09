@@ -1,3 +1,5 @@
+import Warning from '@src/icons/Warning.icon'
+
 import { bannerTypes } from '@src/constants/banners.constants'
 import { statusIndicators } from '@src/constants/config.constants'
 import {
@@ -12,8 +14,8 @@ export const getClassNameByBannerType = type => {
   return ''
 }
 
-export const getSymbolByBannerType = type => {
-  if (type === bannerTypes.WARNING) return '⚠'
+export const getIconByBannerType = type => {
+  if (type === bannerTypes.WARNING) return Warning
   return ''
 }
 

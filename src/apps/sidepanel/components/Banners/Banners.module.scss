@@ -16,6 +16,9 @@
 }
 
 .banners__banner {
+  display: flex;
+  column-gap: $space-200;
+  align-items: center;
   transition:
     background-color 0.1s ease-in-out,
     color 0.1s ease-in-out;
@@ -25,6 +28,7 @@
   border: var(--space-50) solid with-opacity($colors-brightBlack, 0.5);
   border-radius: $radius-200;
   padding: $space-100 $space-300;
+  font-size: $fontSize-50;
   user-select: none;
   white-space: pre-line;
   word-break: break-word;

@@ -1,11 +1,12 @@
 import useStorage from '@src/hooks/useStorage'
 
+import { iconSizes } from '@src/constants/icon.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { useEffect } from 'preact/hooks'
 import {
   getClassNameByBannerType,
   getClassNameByIndicator,
-  getSymbolByBannerType
+  getIconByBannerType
 } from './Banners.helpers'
 import { banners__banner, banners__container } from './Banners.module.scss'
 
@@ -34,7 +35,7 @@ export const Banners = ({ statusIndicator }) => {
       <div className={`${banners__container} ${classByIndicator}`}>
         {banners.values.map(({ id, message, type }) => {
           const classNameByType = getClassNameByBannerType(type)
-          const symbolByType = getSymbolByBannerType(type)
+          const IconByType = getIconByBannerType(type)
 
           return (
             <p
@@ -42,7 +43,9 @@ export const Banners = ({ statusIndicator }) => {
               className={`${banners__banner} ${classNameByType}`}
               onClick={() => banners.remove(id)}
             >
-              {`${symbolByType} ${message}`}
+              <IconByType size={iconSizes.XXS} />
+
+              <span>{message}</span>
             </p>
           )
         })}

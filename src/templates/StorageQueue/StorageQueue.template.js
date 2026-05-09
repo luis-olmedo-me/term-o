@@ -49,7 +49,7 @@ export class StorageQueue extends StorageSimple {
         message: `${discardedCount} lines were discarded.`,
         type: bannerTypes.WARNING,
         duration: 5_000,
-        id: bannerIds.COMMAND_LOG_OVERFLOW
+        id: command.id
       })
     }
 

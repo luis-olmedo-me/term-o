@@ -50,6 +50,7 @@ export const Prompt = ({
   const [config] = useStorage({ key: storageKeys.CONFIG })
 
   const historialSize = config.getValueById(configInputIds.HISTORIAL_SIZE)
+  const statusIndicator = config.getValueById(configInputIds.STATUS_INDICATOR)
 
   const calculateSuggestion = useDebouncedCallback(
     (value, caret, aliases, addons) => {
@@ -201,7 +202,7 @@ export const Prompt = ({
         ${loading ? global__loader : ''}
       `}
     >
-      <Banners />
+      <Banners statusIndicator={statusIndicator} />
 
       <p
         className={`

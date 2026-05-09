@@ -2,9 +2,17 @@
 
 .banners__wrapper {
   position: absolute;
-  top: -1.5rem;
+  top: -2.25rem;
   right: 1.5rem;
-  left: 1.5rem;
+
+  &___indicator_half_dot {
+    left: 0.75rem;
+  }
+
+  &___indicator_dot,
+  &___indicator_none {
+    left: 1.25rem;
+  }
 }
 
 .banners__banner {

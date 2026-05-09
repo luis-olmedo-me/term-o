@@ -1,23 +1,27 @@
+@use '@styles/mixins.module' as *;
+
 .banners__wrapper {
   position: absolute;
-  right: 2rem;
-  bottom: 100%;
-  left: 2rem;
+  top: -1.5rem;
+  right: 1.5rem;
+  left: 1.5rem;
 }
 
 .banners__banner {
   cursor: text;
   margin: 0;
-  margin-bottom: $space-200;
-  box-shadow: 0 $space-250 $space-400 $space-100 #00000060;
-  border-bottom: $space-50 dashed;
+  box-shadow: 0 $space-100 $space-300 $space-100 #00000060;
+  border: var(--space-50) solid with-opacity($colors-brightBlack, 0.5);
   border-radius: $radius-200;
   padding: $space-100 $space-300;
   white-space: pre-line;
   word-break: break-word;
 
+  @include theme-mode(dark) {
+    border-color: transparent;
+  }
+
   &___mod_warning {
-    border-color: $colors-yellow;
     background-color: $colors-yellow;
     color: $colors-background;
   }

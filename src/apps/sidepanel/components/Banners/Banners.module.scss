@@ -53,8 +53,8 @@
   &::after {
     position: absolute;
     z-index: -1;
-    animation: fill-space 5s linear;
-    inset: 0 100% 0 0;
+    animation: fill-space 4.8s linear;
+    inset: 0;
     border-radius: $radius-200;
     background-color: with-opacity($colors-white, 0.1);
     content: '';

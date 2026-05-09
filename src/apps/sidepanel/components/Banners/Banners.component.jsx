@@ -37,7 +37,11 @@ export const Banners = ({ statusIndicator }) => {
           const symbolByType = getSymbolByBannerType(type)
 
           return (
-            <p key={id} className={`${banners__banner} ${classNameByType}`}>
+            <p
+              key={id}
+              className={`${banners__banner} ${classNameByType}`}
+              onClick={() => banners.remove(id)}
+            >
               {`${symbolByType} ${message}`}
             </p>
           )

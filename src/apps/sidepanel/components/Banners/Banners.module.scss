@@ -42,22 +42,20 @@
     border-color: transparent;
   }
 
-  &::before {
-    position: absolute;
-    z-index: -1;
-    inset: 0;
-    border-radius: $radius-200;
-    background-color: $colors-background;
-    content: '';
-  }
+  &::before,
   &::after {
     position: absolute;
     z-index: -1;
-    animation: fill-space 4.8s linear;
     inset: 0;
     border-radius: $radius-200;
-    background-color: with-opacity($colors-white, 0.1);
     content: '';
+  }
+  &::before {
+    background-color: $colors-background;
+  }
+  &::after {
+    animation: fill-space 4.8s linear;
+    background-color: with-opacity($colors-white, 0.1);
   }
 
   &___mod_warning {

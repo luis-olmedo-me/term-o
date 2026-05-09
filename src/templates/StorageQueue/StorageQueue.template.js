@@ -1,6 +1,6 @@
 import StorageSimple from '@src/templates/StorageSimple'
 
-import { bannerIds, bannerTypes } from '@src/constants/banners.constants'
+import { bannerTypes } from '@src/constants/banners.constants'
 import { commandStatuses } from '@src/constants/command.constants'
 import { configInputIds } from '@src/constants/config.constants'
 import { queueStatuses, visibleStatuses } from '@src/constants/queue.constants'
@@ -48,7 +48,6 @@ export class StorageQueue extends StorageSimple {
       banners.addOrUpdate({
         message: `${discardedCount} lines were discarded.`,
         type: bannerTypes.WARNING,
-        duration: 5_000,
         id: command.id
       })
     }
@@ -104,7 +103,12 @@ export class StorageQueue extends StorageSimple {
 
     this._cache = newCache
     this.$storageService.set(storageKeys.QUEUE, newQueue)
-    banners.remove(bannerIds.COMMAND_LOG_OVERFLOW)
+
+    for (const queueItem of this.$latest().value) {
+      if (!queueItem.command) return
+
+      banners.remove(queueItem.command.id)
+    }
   }
 
   delete(queueId) {

@@ -10,17 +10,17 @@ import {
 } from './Banners.helpers'
 import { banners__banner, banners__container } from './Banners.module.scss'
 
+const BANNER_DURATION = 5_000
+
 export const Banners = ({ statusIndicator }) => {
   const [banners] = useStorage({ key: storageKeys.BANNERS })
 
   useEffect(
     function removeBanners() {
-      const bannersByTimer = Object.groupBy(banners.values, banner => banner.duration)
-      const timeoutIds = Object.entries(bannersByTimer).map(([duration, items]) => {
-        const durationMs = Number(duration)
-
-        return setTimeout(() => items.forEach(item => banners.remove(item.id)), durationMs * 100)
-      })
+      const timeoutIds = banners.values.map(
+        banner => setTimeout(() => banners.remove(banner.id)),
+        BANNER_DURATION
+      )
 
       return () => timeoutIds.forEach(clearTimeout)
     },

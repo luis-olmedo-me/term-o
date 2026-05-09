@@ -34,13 +34,26 @@
     border-color: transparent;
   }
 
+  &::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    border-radius: $radius-200;
+    background-color: $colors-background;
+    content: '';
+  }
+
   &___mod_warning {
-    background-color: $colors-yellow;
-    color: $colors-background;
+    background-color: with-opacity($colors-yellow, 0.35);
+    color: $colors-foreground;
 
     &:hover {
-      background-color: $colors-brightYellow;
-      color: $colors-brightBlack;
+      border-color: $colors-yellow;
+      background-color: with-opacity($colors-yellow, 0.7);
+      color: $colors-brightWhite;
     }
   }
 }

@@ -69,7 +69,6 @@
       transition:
         background-color 0.2s ease-in-out,
         box-shadow 0.2s ease-in-out;
-
       border-radius: $radius-200;
       background-color: with-opacity($colors-brightBlack, 0.2);
       width: $space-200;
@@ -150,7 +149,7 @@
 
       &::before,
       &::after {
-        left: $space-600;
+        left: $space-800;
       }
     }
   }
@@ -167,7 +166,7 @@
   box-sizing: border-box;
   border-radius: 0 $radius-200 $radius-200 0;
   background-color: with-opacity($colors-brightBlack, 0.4);
-  width: $space-400;
+  width: $space-500;
   height: calc(100% - 0.5rem);
 
   &:hover {

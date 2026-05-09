@@ -17,9 +17,8 @@ export const Banners = ({ statusIndicator }) => {
 
   useEffect(
     function removeBanners() {
-      const timeoutIds = banners.values.map(
-        banner => setTimeout(() => banners.remove(banner.id)),
-        BANNER_DURATION
+      const timeoutIds = banners.values.map(banner =>
+        setTimeout(() => banners.remove(banner.id), BANNER_DURATION)
       )
 
       return () => timeoutIds.forEach(clearTimeout)

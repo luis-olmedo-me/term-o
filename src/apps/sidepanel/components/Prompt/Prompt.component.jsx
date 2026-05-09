@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'preact/hooks'
 
-import Banners from '@sidepanel/components/Banners'
 import ColoredText from '@src/components/ColoredText'
 import useDebouncedCallback from '@src/hooks/useDebouncedCallback'
 import useStorage from '@src/hooks/useStorage'
@@ -50,7 +49,6 @@ export const Prompt = ({
   const [config] = useStorage({ key: storageKeys.CONFIG })
 
   const historialSize = config.getValueById(configInputIds.HISTORIAL_SIZE)
-  const statusIndicator = config.getValueById(configInputIds.STATUS_INDICATOR)
 
   const calculateSuggestion = useDebouncedCallback(
     (value, caret, aliases, addons) => {
@@ -202,8 +200,6 @@ export const Prompt = ({
         ${loading ? global__loader : ''}
       `}
     >
-      <Banners statusIndicator={statusIndicator} />
-
       <p
         className={`
           ${prompt__line}

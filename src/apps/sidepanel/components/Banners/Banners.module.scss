@@ -4,8 +4,8 @@
 .banners__container {
   display: flex;
   position: absolute;
+  top: 110%;
   right: 1.5rem;
-  bottom: 110%;
   row-gap: $space-200;
   flex-direction: column;
 

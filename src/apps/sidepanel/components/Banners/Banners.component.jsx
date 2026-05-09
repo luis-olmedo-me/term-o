@@ -1,5 +1,6 @@
 import useStorage from '@src/hooks/useStorage'
 
+import { BANNER_DURATION } from '@src/constants/banners.constants'
 import { iconSizes } from '@src/constants/icon.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { useEffect } from 'preact/hooks'
@@ -9,8 +10,6 @@ import {
   getIconByBannerType
 } from './Banners.helpers'
 import { banners__banner, banners__container } from './Banners.module.scss'
-
-const BANNER_DURATION = 5_000
 
 export const Banners = ({ statusIndicator }) => {
   const [banners] = useStorage({ key: storageKeys.BANNERS })

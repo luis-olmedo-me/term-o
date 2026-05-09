@@ -31,8 +31,15 @@ export class StorageBanners extends StorageSimple {
     return this.$latest().value.find(banner => banner.id === id)
   }
 
-  remove(id) {
-    const newBanners = this.$latest().value.filter(banner => banner.id !== id)
+  remove(id, options) {
+    const { startsWith = '' } = options || {}
+    const newBanners = this.$latest().value.filter(banner => {
+      const isExpectedId = banner.id === id
+      const matchesStart = banner.id.startsWith(startsWith)
+
+      if (startsWith) return !isExpectedId && !matchesStart
+      return !isExpectedId
+    })
 
     this.$storageService.set(storageKeys.BANNERS, newBanners)
   }

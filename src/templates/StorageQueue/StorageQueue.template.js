@@ -48,7 +48,7 @@ export class StorageQueue extends StorageSimple {
       banners.addOrUpdate({
         message: `${discardedCount} lines were discarded.`,
         type: bannerTypes.WARNING,
-        id: command.id
+        id: `queue_${queueId}`
       })
     }
 
@@ -104,11 +104,7 @@ export class StorageQueue extends StorageSimple {
     this._cache = newCache
     this.$storageService.set(storageKeys.QUEUE, newQueue)
 
-    for (const queueItem of this.$latest().value) {
-      if (!queueItem.command) return
-
-      banners.remove(queueItem.command.id)
-    }
+    banners.remove(null, { startsWith: 'queue_' })
   }
 
   delete(queueId) {

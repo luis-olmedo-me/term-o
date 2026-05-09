@@ -9,6 +9,7 @@
 
 .terminal__header {
   display: flex;
+  position: relative;
   justify-content: end;
   z-index: 1;
   transition: box-shadow 0.2s ease-in-out;

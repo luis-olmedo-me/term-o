@@ -11,12 +11,12 @@ export class StorageBanners extends StorageSimple {
     }
   }
 
-  addOrUpdate({ message, type, duration, id }) {
+  addOrUpdate({ message, type, id }) {
     const banners = this.$latest().value
     const bannerIDs = banners.map(banner => banner.id)
 
     const isNewBanner = bannerIDs.includes(id)
-    const newBanner = { message, type, duration, id: id || createUUIDv4() }
+    const newBanner = { message, type, id: id || createUUIDv4() }
 
     const newBanners = isNewBanner
       ? banners.map(banner => (banner.id === id ? newBanner : banner))
@@ -31,8 +31,15 @@ export class StorageBanners extends StorageSimple {
     return this.$latest().value.find(banner => banner.id === id)
   }
 
-  remove(id) {
-    const newBanners = this.$latest().value.filter(banner => banner.id !== id)
+  remove(id, options) {
+    const { startsWith = '' } = options || {}
+    const newBanners = this.$latest().value.filter(banner => {
+      const isExpectedId = banner.id === id
+      const matchesStart = banner.id.startsWith(startsWith)
+
+      if (startsWith) return !isExpectedId && !matchesStart
+      return !isExpectedId
+    })
 
     this.$storageService.set(storageKeys.BANNERS, newBanners)
   }

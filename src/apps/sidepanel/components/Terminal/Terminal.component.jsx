@@ -1,5 +1,6 @@
 import { useCallback, useRef } from 'preact/hooks'
 
+import Banners from '@sidepanel/components/Banners'
 import CommandsViewer from '@sidepanel/components/CommandsViewer'
 import Prompt from '@sidepanel/components/Prompt'
 import Dropdown from '@src/components/Dropdown'
@@ -30,6 +31,7 @@ export const Terminal = () => {
   const [addons] = useStorage({ key: storageKeys.ADDONS })
 
   const rawContext = config.getValueById(configInputIds.CONTEXT)
+  const statusIndicator = config.getValueById(configInputIds.STATUS_INDICATOR)
 
   const focusOnPrompt = useCallback(() => {
     inputRef.current?.focus()
@@ -70,6 +72,8 @@ export const Terminal = () => {
   return (
     <div className={terminal} onMouseUp={handleMouseUp}>
       <header className={terminal__header}>
+        <Banners statusIndicator={statusIndicator} />
+
         <Dropdown
           Icon={Adjust}
           onSelect={handleDropdownSelect}

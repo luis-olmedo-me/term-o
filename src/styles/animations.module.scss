@@ -14,3 +14,15 @@
     left: 100%;
   }
 }
+
+@keyframes fill-space {
+  0% {
+    right: 100%;
+    left: 0%;
+  }
+
+  100% {
+    right: 0%;
+    left: 0%;
+  }
+}

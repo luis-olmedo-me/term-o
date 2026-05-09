@@ -8,7 +8,8 @@ const { cyan, gray, green, reset } = require('../constants/system.constants')
 const INPUT_SVG = path.resolve(__dirname, '../images/logo.svg')
 const OUT_DIR = path.resolve(__dirname, '../images/icons')
 
-const SIZES = [16, 32, 48, 512]
+const SIZES = [16, 32, 48, 64, 128]
+const ICON_PATTERN = /^logo-\d+_x_\d+\.png$/
 
 const generate = async () => {
   const start = performance.now()
@@ -18,7 +19,17 @@ const generate = async () => {
     process.exit(1)
   }
 
-  if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true })
+  if (!fs.existsSync(OUT_DIR)) {
+    fs.mkdirSync(OUT_DIR, { recursive: true })
+  }
+
+  const files = fs.readdirSync(OUT_DIR)
+
+  for (const file of files) {
+    if (!ICON_PATTERN.test(file)) continue
+
+    fs.unlinkSync(path.join(OUT_DIR, file))
+  }
 
   const svgBuffer = fs.readFileSync(INPUT_SVG)
 

@@ -7,7 +7,7 @@ import {
   getClassNameByIndicator,
   getSymbolByBannerType
 } from './Banners.helpers'
-import { banners__banner, banners__wrapper } from './Banners.module.scss'
+import { banners__banner, banners__container } from './Banners.module.scss'
 
 export const Banners = ({ statusIndicator }) => {
   const [banners] = useStorage({ key: storageKeys.BANNERS })
@@ -31,7 +31,7 @@ export const Banners = ({ statusIndicator }) => {
 
   return (
     hasBanners && (
-      <div className={`${banners__wrapper} ${classByIndicator}`}>
+      <div className={`${banners__container} ${classByIndicator}`}>
         {banners.values.map(({ id, message, type }) => {
           const classNameByType = getClassNameByBannerType(type)
           const symbolByType = getSymbolByBannerType(type)

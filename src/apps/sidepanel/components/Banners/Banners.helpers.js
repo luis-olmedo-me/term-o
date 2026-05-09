@@ -2,9 +2,9 @@ import { bannerTypes } from '@src/constants/banners.constants'
 import { statusIndicators } from '@src/constants/config.constants'
 import {
   banners__banner___mod_warning,
-  banners__wrapper___indicator_dot,
-  banners__wrapper___indicator_half_dot,
-  banners__wrapper___indicator_none
+  banners__container___indicator_dot,
+  banners__container___indicator_half_dot,
+  banners__container___indicator_none
 } from './Banners.module.scss'
 
 export const getClassNameByBannerType = type => {
@@ -18,8 +18,8 @@ export const getSymbolByBannerType = type => {
 }
 
 export const getClassNameByIndicator = indicator => {
-  if (indicator === statusIndicators.DOT) return banners__wrapper___indicator_dot
-  if (indicator === statusIndicators.HALF_DOT) return banners__wrapper___indicator_half_dot
-  if (indicator === statusIndicators.NONE) return banners__wrapper___indicator_none
+  if (indicator === statusIndicators.DOT) return banners__container___indicator_dot
+  if (indicator === statusIndicators.HALF_DOT) return banners__container___indicator_half_dot
+  if (indicator === statusIndicators.NONE) return banners__container___indicator_none
   return ''
 }

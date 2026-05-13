@@ -1,8 +1,10 @@
+import Info from '@src/icons/Info.icon'
 import Warning from '@src/icons/Warning.icon'
 
 import { bannerTypes } from '@src/constants/banners.constants'
 import { statusIndicators } from '@src/constants/config.constants'
 import {
+  banners__banner___mod_info,
   banners__banner___mod_warning,
   banners__container___indicator_dot,
   banners__container___indicator_half_dot,
@@ -11,11 +13,13 @@ import {
 
 export const getClassNameByBannerType = type => {
   if (type === bannerTypes.WARNING) return banners__banner___mod_warning
+  if (type === bannerTypes.INFO) return banners__banner___mod_info
   return ''
 }
 
 export const getIconByBannerType = type => {
   if (type === bannerTypes.WARNING) return Warning
+  if (type === bannerTypes.INFO) return Info
   return ''
 }
 

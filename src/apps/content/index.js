@@ -1,9 +1,9 @@
 import processHandlers from '@content/process-handlers'
 import processManager from '@src/libs/process-manager'
 
-import { listenedEventTypes } from '@src/constants/options.constants'
+import { tabEventCategory } from '@src/constants/options.constants'
 import { importInjectables } from '@src/helpers/injectables.helpers'
-import { getListenedEventType } from '@src/helpers/options.helpers'
+import { getEventDefinition } from '@src/helpers/options.helpers'
 import { setUpHandlers } from '@src/helpers/process.helpers'
 import { importWebComponents } from '@src/helpers/web-components.helpers'
 
@@ -21,13 +21,13 @@ const registerEvent = (below, event) => {
 
 processManager.getEvents().then(events => {
   for (const event of events) {
-    const listenedEventType = getListenedEventType(event)
+    const definition = getEventDefinition(event)
 
-    switch (listenedEventType) {
-      case listenedEventTypes.DOCUMENT:
+    switch (definition.category) {
+      case tabEventCategory.DOCUMENT:
         return registerEvent(window.document, event)
 
-      case listenedEventTypes.WINDOW:
+      case tabEventCategory.WINDOW:
         return registerEvent(window, event)
     }
   }

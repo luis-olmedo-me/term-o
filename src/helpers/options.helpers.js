@@ -1,5 +1,5 @@
 import { commandTypes } from '@src/constants/command.constants'
-import { listenedEvents } from '@src/constants/options.constants'
+import { tabEventDefinitions } from '@src/constants/options.constants'
 import { getArray } from './arguments.helpers'
 import { isStrictQuoted, quotify, truncate } from './string.helpers'
 import { countMatches } from './utils.helpers'
@@ -160,8 +160,6 @@ export const getPropsFromString = command => {
   return props
 }
 
-export const getListenedEventType = event => {
-  const foundEvent = listenedEvents.find(listenedEvent => listenedEvent.pattern.test(event.type))
-
-  return foundEvent ? foundEvent.type : null
+export const getEventDefinition = event => {
+  return tabEventDefinitions.find(definition => definition.pattern.test(event.type))
 }

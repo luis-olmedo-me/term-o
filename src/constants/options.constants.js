@@ -14,14 +14,14 @@ export const domEvents = {
   CLICK: 'click'
 }
 
-export const listenedEventTypes = {
+export const tabEventCategory = {
   DOCUMENT: 'document',
   WINDOW: 'window'
 }
 
-export const listenedEvents = [
-  { label: 'doc-*', pattern: /^doc-\S+$/, type: listenedEventTypes.DOCUMENT },
-  { label: 'win-*', pattern: /^win-\S+$/, type: listenedEventTypes.WINDOW }
+export const tabEventDefinitions = [
+  { label: 'doc-*', pattern: /^doc-\S+$/, category: tabEventCategory.DOCUMENT },
+  { label: 'win-*', pattern: /^win-\S+$/, category: tabEventCategory.WINDOW }
 ]
 
 export const avaialableDomEvents = Object.values(domEvents)

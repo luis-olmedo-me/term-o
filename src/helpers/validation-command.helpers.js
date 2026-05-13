@@ -143,13 +143,13 @@ export const isSpaceForbidden = (option, value) => {
   }
 }
 
-export const isAnyMatchOf = patternDescriptions => {
+export const isAnyMatchOf = definitions => {
   return (option, value) => {
-    const isMatch = patternDescriptions.some(description => description.pattern.test(value))
+    const isMatch = definitions.some(definition => definition.pattern.test(value))
 
     if (!isMatch) {
       const name = option.displayName
-      const options = patternDescriptions.map(description => `✓ ${quotify(description.label)}`)
+      const options = definitions.map(definition => `✓ ${quotify(definition.label)}`)
 
       throw [`${name} option must be used with one of the following values:`, ...options]
     }

@@ -164,7 +164,7 @@ chrome.runtime.onInstalled.addListener(async details => {
     config.change(configInputIds.CONTEXT, DEFAULT_CONTEXT)
     banners.addOrUpdate({
       message: `Invalid terminal context line were cleared.`,
-      type: bannerTypes.WARNING,
+      type: bannerTypes.INFO,
       id: 'terminal-context-outdated'
     })
   }
@@ -176,7 +176,7 @@ chrome.runtime.onInstalled.addListener(async details => {
     storage.set(storageKeys.EVENTS, [])
     banners.addOrUpdate({
       message: `Invalid tab events were cleared.`,
-      type: bannerTypes.WARNING,
+      type: bannerTypes.INFO,
       id: 'tab-events-outdated'
     })
   }

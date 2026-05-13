@@ -1,15 +1,9 @@
 import { storageKeys } from '@src/constants/storage.constants'
 
-export default async (resolve, _reject, data, { storage, sender }) => {
+export default async (resolve, _reject, _data, { storage, sender }) => {
   const events = storage.get(storageKeys.EVENTS)
   const tab = sender.tab
-
-  const pendingEvents = events.filter(event => {
-    const matchUrl = new RegExp(event.url).test(tab.url)
-    const matchType = event.type === data.type
-
-    return matchUrl && matchType
-  })
+  const pendingEvents = events.filter(event => new RegExp(event.url).test(tab.url))
 
   resolve(pendingEvents)
 }

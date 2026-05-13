@@ -12,6 +12,10 @@ chrome.runtime.onMessage.addListener(contentHandler)
 importWebComponents()
 importInjectables()
 
+processManager.getEvents().then(events => {
+  console.log('💬 ~ events:', events)
+})
+
 document.addEventListener(
   'selectionchange',
   debounce(() => {

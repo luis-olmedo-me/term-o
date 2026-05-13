@@ -143,6 +143,19 @@ export const isSpaceForbidden = (option, value) => {
   }
 }
 
+export const isAnyMatchOf = patternDescriptions => {
+  return (option, value) => {
+    const isMatch = patternDescriptions.some(description => description.pattern.test(value))
+
+    if (!isMatch) {
+      const name = option.displayName
+      const options = patternDescriptions.map(description => `✓ ${quotify(description.label)}`)
+
+      throw [`${name} option must be used with one of the following values:`, ...options]
+    }
+  }
+}
+
 export const hasLength = staticLength => {
   return (option, value) => {
     const isValid = value.length === staticLength
@@ -305,6 +318,7 @@ export const value = {
   isGroupId,
   isURL,
   isAnyOf,
+  isAnyMatchOf,
   isPositive,
   isInteger,
   isString,

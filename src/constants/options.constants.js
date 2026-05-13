@@ -18,6 +18,11 @@ export const tabEvents = {
   SELECTION_CONTENT: 'tab-selection-content'
 }
 
+export const eventListenedPatterns = [
+  { label: 'doc-*', pattern: /^doc-\S+$/ },
+  { label: 'win-*', pattern: /^win-\S+$/ }
+]
+
 export const avaialableDomEvents = Object.values(domEvents)
 export const availableTabEvents = Object.values(tabEvents)
 

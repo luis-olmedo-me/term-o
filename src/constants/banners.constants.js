@@ -1,5 +1,6 @@
 export const bannerTypes = {
-  WARNING: 'warning'
+  WARNING: 'warning',
+  INFO: 'info'
 }
 
-export const BANNER_DURATION = 5_000
+export const BANNER_DURATION = 10_000

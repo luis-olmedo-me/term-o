@@ -3,6 +3,7 @@ import CommandParser from '@src/libs/command-parser/manual'
 import Storage from '@src/libs/storage/manual'
 
 import { getCurrentTab, getTab } from '@src/browser-api/tabs.api'
+import { bannerTypes } from '@src/constants/banners.constants'
 import { configInputIds, DEFAULT_CONTEXT } from '@src/constants/config.constants'
 import { oldColorPattern } from '@src/constants/patterns.constants'
 import { storageKeys } from '@src/constants/storage.constants'
@@ -153,14 +154,31 @@ chrome.runtime.onConnect.addListener(port => {
 chrome.runtime.onInstalled.addListener(async details => {
   if (details.reason !== 'update') return
   const was090 = details.previousVersion === '0.9.0'
+  const was091 = details.previousVersion === '0.9.1'
+  const was092 = details.previousVersion === '0.9.2'
 
   if (was090) {
     const storage = await getStorage()
-
     const config = storage.get(storageKeys.CONFIG)
-    const contextInputValue = config.getValueById(configInputIds.CONTEXT)
-    const hasOldColorPattern = oldColorPattern.test(contextInputValue)
+    const banners = storage.get(storageKeys.BANNERS)
 
-    if (hasOldColorPattern) config.change(configInputIds.CONTEXT, DEFAULT_CONTEXT)
+    config.change(configInputIds.CONTEXT, DEFAULT_CONTEXT)
+    banners.addOrUpdate({
+      message: `Invalid terminal context line were cleared.`,
+      type: bannerTypes.WARNING,
+      id: 'terminal-context-outdated'
+    })
+  }
+
+  if (was092 || was091 || was090) {
+    const storage = await getStorage()
+    const banners = storage.get(storageKeys.BANNERS)
+
+    storage.set(storageKeys.EVENTS, [])
+    banners.addOrUpdate({
+      message: `Invalid tab events were cleared.`,
+      type: bannerTypes.WARNING,
+      id: 'tab-events-outdated'
+    })
   }
 })

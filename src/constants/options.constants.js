@@ -13,10 +13,6 @@ export const optionDefaultValues = {
 export const domEvents = {
   CLICK: 'click'
 }
-export const tabEvents = {
-  LOADED: 'tab-loaded',
-  SELECTION_CONTENT: 'tab-selection-content'
-}
 
 export const listenedEventTypes = {
   DOCUMENT: 'document',
@@ -29,7 +25,6 @@ export const listenedEvents = [
 ]
 
 export const avaialableDomEvents = Object.values(domEvents)
-export const availableTabEvents = Object.values(tabEvents)
 
 export const responseFormatSupported = ['blob', 'text', 'json']
 

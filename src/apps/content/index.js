@@ -1,11 +1,10 @@
 import processHandlers from '@content/process-handlers'
 import processManager from '@src/libs/process-manager'
 
-import { listenedEventTypes, tabEvents } from '@src/constants/options.constants'
+import { listenedEventTypes } from '@src/constants/options.constants'
 import { importInjectables } from '@src/helpers/injectables.helpers'
 import { getListenedEventType } from '@src/helpers/options.helpers'
 import { setUpHandlers } from '@src/helpers/process.helpers'
-import { debounce } from '@src/helpers/utils.helpers'
 import { importWebComponents } from '@src/helpers/web-components.helpers'
 
 const contentHandler = setUpHandlers(processHandlers)
@@ -34,17 +33,17 @@ processManager.getEvents().then(events => {
   }
 })
 
-document.addEventListener(
-  'selectionchange',
-  debounce(() => {
-    const selection = document.getSelection().toString()
+// document.addEventListener(
+//   'selectionchange',
+//   debounce(() => {
+//     const selection = document.getSelection().toString()
 
-    if (!selection) return
+//     if (!selection) return
 
-    processManager.dispathTabEvent({ type: tabEvents.SELECTION_CONTENT, params: null })
-  }, 100)
-)
+//     processManager.dispathTabEvent({ type: tabEvents.SELECTION_CONTENT, params: null })
+//   }, 100)
+// )
 
-window.addEventListener('load', () => {
-  processManager.dispathTabEvent({ type: tabEvents.LOADED, params: null })
-})
+// window.addEventListener('load', () => {
+//   processManager.dispathTabEvent({ type: tabEvents.LOADED, params: null })
+// })

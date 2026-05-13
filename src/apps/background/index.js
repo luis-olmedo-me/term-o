@@ -4,11 +4,9 @@ import Storage from '@src/libs/storage/manual'
 
 import { getCurrentTab, getTab } from '@src/browser-api/tabs.api'
 import { configInputIds, DEFAULT_CONTEXT } from '@src/constants/config.constants'
-import { tabEvents } from '@src/constants/options.constants'
 import { oldColorPattern } from '@src/constants/patterns.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
-import { createShortID } from '@src/helpers/utils.helpers'
 import processHandlers from './process-handlers'
 
 let storageInstance
@@ -155,8 +153,6 @@ chrome.runtime.onConnect.addListener(port => {
 chrome.runtime.onInstalled.addListener(async details => {
   if (details.reason !== 'update') return
   const was090 = details.previousVersion === '0.9.0'
-  const was091 = details.previousVersion === '0.9.1'
-  const was092 = details.previousVersion === '0.9.2'
 
   if (was090) {
     const storage = await getStorage()
@@ -166,22 +162,5 @@ chrome.runtime.onInstalled.addListener(async details => {
     const hasOldColorPattern = oldColorPattern.test(contextInputValue)
 
     if (hasOldColorPattern) config.change(configInputIds.CONTEXT, DEFAULT_CONTEXT)
-  }
-
-  if (was092 || was091 || was090) {
-    const storage = await getStorage()
-
-    const events = storage.get(storageKeys.EVENTS)
-    const newEvents = events.map(event => {
-      if (event.type) return event
-
-      return {
-        ...event,
-        type: tabEvents.LOADED,
-        id: event.id.length > 8 ? createShortID() : event.id
-      }
-    })
-
-    storage.set(storageKeys.EVENTS, newEvents)
   }
 })

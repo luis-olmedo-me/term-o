@@ -18,9 +18,14 @@ export const tabEvents = {
   SELECTION_CONTENT: 'tab-selection-content'
 }
 
+export const tabEventCategory = {
+  DOCUMENT: 'document',
+  WINDOW: 'window'
+}
+
 export const eventListenedPatterns = [
-  { label: 'doc-*', pattern: /^doc-\S+$/ },
-  { label: 'win-*', pattern: /^win-\S+$/ }
+  { label: 'doc-*', pattern: /^doc-\S+$/, category: tabEventCategory.DOCUMENT },
+  { label: 'win-*', pattern: /^win-\S+$/, category: tabEventCategory.WINDOW }
 ]
 
 export const avaialableDomEvents = Object.values(domEvents)

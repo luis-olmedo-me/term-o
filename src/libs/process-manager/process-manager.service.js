@@ -185,6 +185,14 @@ class ProcessManager {
     })
   }
 
+  getEvents() {
+    return createWorkerProcessRequest({
+      type: processNames.GET_EVENTS,
+      defaultResponse: [],
+      data: null
+    })
+  }
+
   dispathTabEvent({ type }) {
     return createWorkerProcessRequest({
       type: processNames.DISPATCH_TAB_EVENT,

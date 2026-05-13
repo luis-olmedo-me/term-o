@@ -8,6 +8,7 @@ export const processNames = {
   FIND_DOM_ELEMENT: 'find-dom-element',
   GET_DOM_ELEMENTS: 'get-dom-elements',
   GET_ELEMENT_STYLES: 'get-element-styles',
+  GET_EVENTS: 'get-events',
   GET_FONTS_AVAILABLE: 'get-fonts-available',
   GET_STORAGE: 'get-storage',
   INJECT_HTML: 'inject-html',

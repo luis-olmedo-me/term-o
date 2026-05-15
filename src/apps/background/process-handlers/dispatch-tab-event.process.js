@@ -18,7 +18,7 @@ export default async (resolve, _reject, data, { storage, sender }) => {
     const tabId = sender.tab.id
     const eventData = {
       ...event,
-      params: [quotify(event.id), quotify(event.type), quotify(`T${tabId}`)]
+      params: [quotify(event.id), quotify(event.type), quotify(`T${tabId}`), ...data.params]
     }
 
     queue.add(event.line, origins.AUTO, tab, eventData)

@@ -3,7 +3,7 @@ import processManager from '@src/libs/process-manager'
 import { commandTypes } from '@src/constants/command.constants'
 import { tabEventCategory, tabEventDefinitions } from '@src/constants/options.constants'
 import { getArray } from '@src/helpers/arguments.helpers'
-import { getElementXPath } from '@src/helpers/dom-locator.helpers'
+import { getTargetXpath } from '@src/helpers/dom-locator.helpers'
 import { isStrictQuoted, quotify, truncate } from '@src/helpers/string.helpers'
 import { countMatches } from '@src/helpers/utils.helpers'
 
@@ -172,9 +172,8 @@ const registerEvent = (below, definition, event) => {
   const eventName = definition.getName(rawEventName)
 
   below.addEventListener(eventName, event => {
-    const target = event.target
-    const xpath = target ? getElementXPath(target) : ''
-    const params = target ? [quotify(xpath)] : null
+    const xpath = getTargetXpath(event.target)
+    const params = xpath ? [quotify(xpath)] : []
 
     processManager.dispathTabEvent({ type: rawEventName, params })
   })

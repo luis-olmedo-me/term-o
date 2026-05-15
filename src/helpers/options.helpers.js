@@ -1,8 +1,11 @@
+import processManager from '@src/libs/process-manager'
+
 import { commandTypes } from '@src/constants/command.constants'
-import { tabEventDefinitions } from '@src/constants/options.constants'
-import { getArray } from './arguments.helpers'
-import { isStrictQuoted, quotify, truncate } from './string.helpers'
-import { countMatches } from './utils.helpers'
+import { tabEventCategory, tabEventDefinitions } from '@src/constants/options.constants'
+import { getArray } from '@src/helpers/arguments.helpers'
+import { getElementXPath } from '@src/helpers/dom-locator.helpers'
+import { isStrictQuoted, quotify, truncate } from '@src/helpers/string.helpers'
+import { countMatches } from '@src/helpers/utils.helpers'
 
 export const getOptionTypeLabel = type => {
   if (type === commandTypes.ARRAY) return '<array>'
@@ -162,4 +165,35 @@ export const getPropsFromString = command => {
 
 export const getEventDefinition = event => {
   return tabEventDefinitions.find(definition => definition.pattern.test(event.type))
+}
+
+const registerEvent = (below, definition, event) => {
+  const rawEventName = event.type
+  const eventName = definition.getName(rawEventName)
+
+  below.addEventListener(eventName, event => {
+    const target = event.target
+    const xpath = target ? getElementXPath(target) : ''
+    const params = target ? [quotify(xpath)] : null
+
+    processManager.dispathTabEvent({ type: rawEventName, params })
+  })
+}
+
+export const registerTabEvents = async () => {
+  const events = await processManager.getEvents()
+
+  for (const event of events) {
+    const definition = getEventDefinition(event)
+
+    if (!definition) continue
+
+    switch (definition.category) {
+      case tabEventCategory.DOCUMENT:
+        return registerEvent(window.document, definition, event)
+
+      case tabEventCategory.WINDOW:
+        return registerEvent(window, definition, event)
+    }
+  }
 }

@@ -79,7 +79,7 @@ export const getElementChild = (element, childIndex) => {
 export const getTargetXpath = target => {
   const isElementNodeType = target?.nodeType === 1
 
-  if (!target || !isElementNodeType) return []
+  if (!target || !isElementNodeType) return ''
   const xpath = target ? getElementXPath(target) : ''
 
   return xpath

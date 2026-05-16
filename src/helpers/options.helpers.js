@@ -179,20 +179,48 @@ const registerEvent = (below, definition, event) => {
   })
 }
 
+const interceptEarlyEvents = event => {
+  const isWinLoad = event.type === 'win-load'
+  const isWinDOMLoad = event.type === 'win-DOMContentLoaded'
+
+  const isDocumentComplete = document.readyState === 'complete'
+  const isDocumentInteractive = document.readyState === 'interactive'
+
+  if (isWinLoad && isDocumentComplete) {
+    processManager.dispathTabEvent({ type: event.type, params: [] })
+
+    return true
+  }
+  if (isWinDOMLoad && (isDocumentComplete || isDocumentInteractive)) {
+    processManager.dispathTabEvent({ type: event.type, params: [] })
+
+    return true
+  }
+
+  return false
+}
+
 export const registerTabEvents = async () => {
-  const events = await processManager.getEvents()
+  const tabEvents = await processManager.getEvents()
 
-  for (const event of events) {
-    const definition = getEventDefinition(event)
+  for (const tabEvent of tabEvents) {
+    const definition = getEventDefinition(tabEvent)
+    const hasBeenIntercepted = interceptEarlyEvents(tabEvent)
 
-    if (!definition) continue
+    if (!definition || hasBeenIntercepted) continue
 
     switch (definition.category) {
-      case tabEventCategory.DOCUMENT:
-        return registerEvent(window.document, definition, event)
+      case tabEventCategory.DOCUMENT: {
+        registerEvent(window.document, definition, tabEvent)
 
-      case tabEventCategory.WINDOW:
-        return registerEvent(window, definition, event)
+        break
+      }
+
+      case tabEventCategory.WINDOW: {
+        registerEvent(window, definition, tabEvent)
+
+        break
+      }
     }
   }
 }

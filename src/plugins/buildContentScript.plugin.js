@@ -5,9 +5,8 @@ import path from 'path'
 
 import { cyan, gray, green, reset, yellow } from '../constants/system.constants'
 
-const tempDir = path.resolve(__dirname, '../../build/temp-content')
-const contentJs = path.join(tempDir, 'content.js')
-const dest = path.resolve(__dirname, '../../build/assets/js/content.js')
+const tempDir = path.resolve(__dirname, '../../build/temp-content/')
+const dest = path.resolve(__dirname, '../../build/assets/js/')
 
 export function buildContentScript(mode, watch) {
   const approvalLabel = watch ? `${cyan}` : `${green}✔ `
@@ -20,11 +19,17 @@ export function buildContentScript(mode, watch) {
 
       console.log(`${cyan}content script build started...${reset}`)
 
-      execSync(`vite build --config vite.content.config.js --mode ${mode}`, {
+      execSync(`vite build --logLevel silent --config vite.content.config.js --mode ${mode}`, {
         stdio: 'inherit'
       })
 
-      fs.copyFileSync(contentJs, dest)
+      fs.readdirSync(tempDir).forEach(file => {
+        const origin = path.join(tempDir, file)
+        const to = path.join(dest, file)
+
+        fs.copyFileSync(origin, to)
+        console.log(`${gray}build/assets/js/${yellow}${file}${reset}`)
+      })
 
       const existTempDir = fs.existsSync(tempDir)
 
@@ -33,8 +38,7 @@ export function buildContentScript(mode, watch) {
       const end = performance.now()
       const time = Math.round(end - start)
 
-      console.log(`${gray}build/${yellow}assets/js/content.js${reset}`)
-      console.log(`${approvalLabel}Content script copied and flattened in ${time}ms.${reset}`)
+      console.log(`${approvalLabel}Content script injected in ${time}ms.${reset}`)
     }
   }
 }

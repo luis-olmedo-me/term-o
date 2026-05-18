@@ -12,18 +12,3 @@ chrome.runtime.onMessage.addListener(contentHandler)
 registerTabEvents()
 importWebComponents()
 importInjectables()
-
-// document.addEventListener(
-//   'selectionchange',
-//   debounce(() => {
-//     const selection = document.getSelection().toString()
-
-//     if (!selection) return
-
-//     processManager.dispathTabEvent({ type: tabEvents.SELECTION_CONTENT, params: null })
-//   }, 100)
-// )
-
-// window.addEventListener('load', () => {
-//   processManager.dispathTabEvent({ type: tabEvents.LOADED, params: null })
-// })

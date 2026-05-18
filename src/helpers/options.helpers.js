@@ -5,7 +5,7 @@ import { tabEventCategory, tabEventDefinitions } from '@src/constants/options.co
 import { getArray } from '@src/helpers/arguments.helpers'
 import { getTargetXpath } from '@src/helpers/dom-locator.helpers'
 import { isStrictQuoted, quotify, truncate } from '@src/helpers/string.helpers'
-import { countMatches } from '@src/helpers/utils.helpers'
+import { countMatches, debounce } from '@src/helpers/utils.helpers'
 
 export const getOptionTypeLabel = type => {
   if (type === commandTypes.ARRAY) return '<array>'
@@ -171,12 +171,15 @@ const registerEvent = (below, definition, event) => {
   const rawEventName = event.type
   const eventName = definition.getName(rawEventName)
 
-  below.addEventListener(eventName, event => {
-    const xpath = getTargetXpath(event.target)
-    const params = xpath ? [quotify(xpath)] : []
+  below.addEventListener(
+    eventName,
+    debounce(event => {
+      const xpath = getTargetXpath(event.target)
+      const params = xpath ? [quotify(xpath)] : []
 
-    processManager.dispathTabEvent({ type: rawEventName, params })
-  })
+      processManager.dispathTabEvent({ type: rawEventName, params })
+    }, 30)
+  )
 }
 
 const interceptEarlyEvents = event => {

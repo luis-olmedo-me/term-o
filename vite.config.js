@@ -4,6 +4,7 @@ import { resolve } from 'path'
 import { defineConfig } from 'vite'
 
 import { buildContentScript } from './src/plugins/buildContentScript.plugin'
+import { buildSizeDisplay } from './src/plugins/buildSizeDisplay.plugin'
 import { copyIcons } from './src/plugins/copyIcons.plugin'
 import { copyManifest } from './src/plugins/copyManifest.plugin'
 import { flattenHtml } from './src/plugins/flattenHtml.plugin'
@@ -27,10 +28,11 @@ const scriptEntries = {
 export default defineConfig(({ mode }) => ({
   plugins: [
     preact(),
+    buildContentScript(mode, watch),
     copyIcons(watch),
     copyManifest(watch),
     flattenHtml(watch),
-    buildContentScript(mode, watch)
+    buildSizeDisplay(watch)
   ],
   build: {
     outDir: 'build',

@@ -40,10 +40,15 @@ class NotificationManager extends WebElement {
     requestAnimationFrame(() => this._showFirstOne())
     this._updateCounter()
 
-    notificationItem.addEventListener('click', () => this._removeNotification(notificationItem))
+    notificationItem.addEventListener('click', event => {
+      event.stopPropagation()
+
+      this._removeNotification(notificationItem)
+    })
   }
 
-  _handleCounterClick() {
+  _handleCounterClick(event) {
+    event.stopPropagation()
     this._displayThree = !this._displayThree
 
     if (this._displayThree) this._showFirstThree()

@@ -1,7 +1,11 @@
+import processManager from '@src/libs/process-manager'
+
 import { commandTypes } from '@src/constants/command.constants'
-import { getArray } from './arguments.helpers'
-import { isStrictQuoted, quotify, truncate } from './string.helpers'
-import { countMatches } from './utils.helpers'
+import { tabEventCategory, tabEventDefinitions } from '@src/constants/options.constants'
+import { getArray } from '@src/helpers/arguments.helpers'
+import { getTargetXpath } from '@src/helpers/dom-locator.helpers'
+import { isStrictQuoted, quotify, truncate } from '@src/helpers/string.helpers'
+import { countMatches, debounce } from '@src/helpers/utils.helpers'
 
 export const getOptionTypeLabel = type => {
   if (type === commandTypes.ARRAY) return '<array>'
@@ -157,4 +161,69 @@ export const getPropsFromString = command => {
   }
 
   return props
+}
+
+export const getEventDefinition = event => {
+  return tabEventDefinitions.find(definition => definition.pattern.test(event.type))
+}
+
+const registerEvent = (below, definition, event) => {
+  const rawEventName = event.type
+  const eventName = definition.getName(rawEventName)
+
+  below.addEventListener(
+    eventName,
+    debounce(event => {
+      const xpath = getTargetXpath(event.target)
+      const params = xpath ? [quotify(xpath)] : []
+
+      processManager.dispathTabEvent({ type: rawEventName, params })
+    }, 30)
+  )
+}
+
+const interceptEarlyEvents = event => {
+  const isWinLoad = event.type === 'win-load'
+  const isWinDOMLoad = event.type === 'win-DOMContentLoaded'
+
+  const isDocumentComplete = document.readyState === 'complete'
+  const isDocumentInteractive = document.readyState === 'interactive'
+
+  if (isWinLoad && isDocumentComplete) {
+    processManager.dispathTabEvent({ type: event.type, params: [] })
+
+    return true
+  }
+  if (isWinDOMLoad && (isDocumentComplete || isDocumentInteractive)) {
+    processManager.dispathTabEvent({ type: event.type, params: [] })
+
+    return true
+  }
+
+  return false
+}
+
+export const registerTabEvents = async () => {
+  const tabEvents = await processManager.getEvents()
+
+  for (const tabEvent of tabEvents) {
+    const definition = getEventDefinition(tabEvent)
+    const hasBeenIntercepted = interceptEarlyEvents(tabEvent)
+
+    if (!definition || hasBeenIntercepted) continue
+
+    switch (definition.category) {
+      case tabEventCategory.DOCUMENT: {
+        registerEvent(window.document, definition, tabEvent)
+
+        break
+      }
+
+      case tabEventCategory.WINDOW: {
+        registerEvent(window, definition, tabEvent)
+
+        break
+      }
+    }
+  }
 }

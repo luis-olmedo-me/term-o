@@ -13,13 +13,28 @@ export const optionDefaultValues = {
 export const domEvents = {
   CLICK: 'click'
 }
-export const tabEvents = {
-  LOADED: 'tab-loaded',
-  SELECTION_CONTENT: 'tab-selection-content'
+
+export const tabEventCategory = {
+  DOCUMENT: 'document',
+  WINDOW: 'window'
 }
 
+export const tabEventDefinitions = [
+  {
+    label: 'doc-*',
+    pattern: /^doc-\S+$/,
+    category: tabEventCategory.DOCUMENT,
+    getName: value => value.slice(4)
+  },
+  {
+    label: 'win-*',
+    pattern: /^win-\S+$/,
+    category: tabEventCategory.WINDOW,
+    getName: value => value.slice(4)
+  }
+]
+
 export const avaialableDomEvents = Object.values(domEvents)
-export const availableTabEvents = Object.values(tabEvents)
 
 export const responseFormatSupported = ['blob', 'text', 'json']
 

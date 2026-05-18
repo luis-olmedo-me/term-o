@@ -5,12 +5,13 @@ export default defineConfig(({ mode }) => ({
   plugins: [],
   build: {
     outDir: 'build/temp-content',
-    sourcemap: mode !== 'production',
+    sourcemap: mode !== 'production' ? 'inline' : false,
+    minify: mode === 'production',
+    target: 'es2020',
     rollupOptions: {
       input: 'src/apps/content/index.js',
       output: {
-        entryFileNames: 'content.js',
-        inlineDynamicImports: true
+        entryFileNames: 'content.js'
       }
     }
   },

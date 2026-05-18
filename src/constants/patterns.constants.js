@@ -13,6 +13,3 @@ export const singleQuotesPattern = /^'|'$/
 export const doubleQuotesPattern = /^"|"$/
 
 export const abbreviationPattern = /^-\w$/
-
-// FIXME: Delete after 0.9.1 realese
-export const oldColorPattern = /\[termo\.(color|bgcolor)\.([A-Za-z]+)\]/g

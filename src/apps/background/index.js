@@ -3,12 +3,10 @@ import CommandParser from '@src/libs/command-parser/manual'
 import Storage from '@src/libs/storage/manual'
 
 import { getCurrentTab, getTab } from '@src/browser-api/tabs.api'
+import { bannerTypes } from '@src/constants/banners.constants'
 import { configInputIds, DEFAULT_CONTEXT } from '@src/constants/config.constants'
-import { tabEvents } from '@src/constants/options.constants'
-import { oldColorPattern } from '@src/constants/patterns.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { createContext } from '@src/helpers/contexts.helpers'
-import { createShortID } from '@src/helpers/utils.helpers'
 import processHandlers from './process-handlers'
 
 let storageInstance
@@ -160,28 +158,26 @@ chrome.runtime.onInstalled.addListener(async details => {
 
   if (was090) {
     const storage = await getStorage()
-
     const config = storage.get(storageKeys.CONFIG)
-    const contextInputValue = config.getValueById(configInputIds.CONTEXT)
-    const hasOldColorPattern = oldColorPattern.test(contextInputValue)
+    const banners = storage.get(storageKeys.BANNERS)
 
-    if (hasOldColorPattern) config.change(configInputIds.CONTEXT, DEFAULT_CONTEXT)
+    config.change(configInputIds.CONTEXT, DEFAULT_CONTEXT)
+    banners.addOrUpdate({
+      message: `Invalid terminal context line were cleared.`,
+      type: bannerTypes.INFO,
+      id: 'terminal-context-outdated'
+    })
   }
 
   if (was092 || was091 || was090) {
     const storage = await getStorage()
+    const banners = storage.get(storageKeys.BANNERS)
 
-    const events = storage.get(storageKeys.EVENTS)
-    const newEvents = events.map(event => {
-      if (event.type) return event
-
-      return {
-        ...event,
-        type: tabEvents.LOADED,
-        id: event.id.length > 8 ? createShortID() : event.id
-      }
+    storage.set(storageKeys.EVENTS, [])
+    banners.addOrUpdate({
+      message: `Invalid tab events were cleared.`,
+      type: bannerTypes.INFO,
+      id: 'tab-events-outdated'
     })
-
-    storage.set(storageKeys.EVENTS, newEvents)
   }
 })

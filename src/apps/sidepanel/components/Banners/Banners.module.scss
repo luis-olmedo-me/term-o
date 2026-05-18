@@ -54,7 +54,7 @@
     background-color: $colors-background;
   }
   &::after {
-    animation: fill-space 4.8s linear;
+    animation: fill-space 9.8s linear;
     background-color: with-opacity($colors-white, 0.1);
   }
 
@@ -65,6 +65,16 @@
     &:hover {
       border-color: $colors-yellow;
       background-color: with-opacity($colors-yellow, 0.7);
+      color: $colors-brightWhite;
+    }
+  }
+  &___mod_info {
+    background-color: with-opacity($colors-blue, 0.35);
+    color: $colors-foreground;
+
+    &:hover {
+      border-color: $colors-blue;
+      background-color: with-opacity($colors-blue, 0.7);
       color: $colors-brightWhite;
     }
   }

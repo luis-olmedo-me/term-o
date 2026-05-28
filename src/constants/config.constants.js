@@ -16,7 +16,7 @@ import {
 } from './themes.constants'
 
 export const PROMPT_MARK = '❯'
-export const DEFAULT_CONTEXT = '{tfg:purple}{tab_id}{tfg:brightBlack}/{tfg:blue}{title}'
+export const DEFAULT_CONTEXT = '{tbg:purple}{tab_id}{tbg:brightBlack}/{tbg:blue}{host}'
 
 export const configIds = {
   FUNCTIONALITY: 'functionality',

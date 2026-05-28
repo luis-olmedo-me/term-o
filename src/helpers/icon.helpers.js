@@ -3,15 +3,14 @@ import { themeModes, themeVariants } from '@src/constants/themes.constants'
 export const getColorsByTheme = ({ theme }) => {
   const isDarkMode = theme.mode === themeModes.DARK
   const isFlatVariant = theme.variant === themeVariants.FLAT
-  const isFlatDark = isDarkMode && isFlatVariant
 
   if (isFlatVariant && isDarkMode) {
     return {
       primary: {
-        fill: isFlatDark ? theme.colors.accent : `rgb(from ${theme.colors.accent} r g b / 0.7)`
+        fill: theme.colors.accent
       },
       secondary: {
-        fill: isFlatDark ? theme.colors.white : `rgb(from ${theme.colors.white} r g b / 0.7)`
+        fill: theme.colors.white
       }
     }
   }
@@ -19,15 +18,32 @@ export const getColorsByTheme = ({ theme }) => {
   if (isFlatVariant && !isDarkMode) {
     return {
       primary: {
-        fill: isFlatDark ? theme.colors.accent : `rgb(from ${theme.colors.accent} r g b / 0.7)`,
-        stroke: isDarkMode ? theme.colors.accent : theme.colors.brightBlack,
-        strokeOpacity: 0.1,
+        fill: `rgb(from ${theme.colors.brightAccent} r g b / 0.7)`,
+        stroke: theme.colors.brightAccent,
+        strokeOpacity: 0.5,
         strokeWidth: '1px'
       },
       secondary: {
-        fill: isFlatDark ? theme.colors.white : `rgb(from ${theme.colors.white} r g b / 0.7)`,
+        fill: `rgb(from ${theme.colors.white} r g b / 0.7)`,
         stroke: theme.colors.brightBlack,
-        strokeOpacity: 0.1,
+        strokeOpacity: 0.2,
+        strokeWidth: '1px'
+      }
+    }
+  }
+
+  if (!isFlatVariant && isDarkMode) {
+    return {
+      primary: {
+        fill: `rgb(from ${theme.colors.accent} r g b / 0.5)`,
+        stroke: theme.colors.brightAccent,
+        strokeOpacity: 0.5,
+        strokeWidth: '1px'
+      },
+      secondary: {
+        fill: `rgb(from ${theme.colors.white} r g b / 0.5)`,
+        stroke: theme.colors.brightWhite,
+        strokeOpacity: 0.5,
         strokeWidth: '1px'
       }
     }
@@ -35,15 +51,15 @@ export const getColorsByTheme = ({ theme }) => {
 
   return {
     primary: {
-      fill: isFlatDark ? theme.colors.accent : `rgb(from ${theme.colors.accent} r g b / 0.7)`,
-      stroke: isDarkMode ? theme.colors.accent : theme.colors.brightBlack,
-      strokeOpacity: 0.5,
+      fill: `rgb(from ${theme.colors.brightAccent} r g b / 0.7)`,
+      stroke: theme.colors.brightBlack,
+      strokeOpacity: 1,
       strokeWidth: '1px'
     },
     secondary: {
-      fill: isFlatDark ? theme.colors.white : `rgb(from ${theme.colors.white} r g b / 0.7)`,
+      fill: `rgb(from ${theme.colors.white} r g b / 0.7)`,
       stroke: theme.colors.brightBlack,
-      strokeOpacity: 0.5,
+      strokeOpacity: 1,
       strokeWidth: '1px'
     }
   }

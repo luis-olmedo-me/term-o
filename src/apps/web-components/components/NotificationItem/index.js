@@ -1,3 +1,4 @@
+import Bell from '@src/svg/bell.svg?raw'
 import WebElement from '@web-components/templates/WebElement'
 import NotificationItemHtml from './NotificationItem.html?raw'
 
@@ -20,9 +21,12 @@ class NotificationItem extends WebElement {
     const titleElement = this.$get('title')
     const messageElement = this.$get('message')
     const notificationElement = this.$get('notification')
+    const iconContainerElement = this.$get('icon-container')
 
     titleElement.innerHTML = buildHtmlTextContent(title)
     messageElement.innerHTML = buildHtmlTextContent(message)
+    iconContainerElement.innerHTML = Bell
+
     notificationElement.setAttribute('data-bgcolor', color)
     notificationElement.style.setProperty('--color', `var(--colors-${color})`)
   }

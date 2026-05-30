@@ -1,6 +1,6 @@
 import WebElement from '@web-components/templates/WebElement'
-import HighlightCss from './Highlight.raw.css?raw'
-import HighlightHtml from './Highlight.raw.html?raw'
+import HighlightCss from './Highlight.css?raw'
+import HighlightHtml from './Highlight.html?raw'
 
 import { webElements } from '@src/constants/web-elements.constants'
 import { delay } from '@src/helpers/utils.helpers'

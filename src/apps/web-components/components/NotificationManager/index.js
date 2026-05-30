@@ -1,6 +1,6 @@
 import WebElement from '@web-components/templates/WebElement'
-import NotificationManagerCss from './NotificationManager.raw.css?raw'
-import NotificationManagerHtml from './NotificationManager.raw.html?raw'
+import NotificationManagerCss from './NotificationManager.css?raw'
+import NotificationManagerHtml from './NotificationManager.html?raw'
 
 import { embedWebElements, webElements } from '@src/constants/web-elements.constants'
 import { createWebElement } from '@src/helpers/web-components.helpers'

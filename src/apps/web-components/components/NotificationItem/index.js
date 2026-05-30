@@ -1,8 +1,8 @@
 import WebElement from '@web-components/templates/WebElement'
-import { buildHtmlTextContent } from './NotificationItem.helpers'
-import NotificationItemHtml from './NotificationItem.raw.html?raw'
+import NotificationItemHtml from './NotificationItem.html?raw'
 
 import { embedWebElements } from '@src/constants/web-elements.constants'
+import { buildHtmlTextContent } from './NotificationItem.helpers'
 
 class NotificationItem extends WebElement {
   constructor() {

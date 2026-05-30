@@ -1,7 +1,8 @@
 export const notificationIcons = {
   DEFAULT: 'default',
   SUCCESS: 'success',
-  ERROR: 'error'
+  ERROR: 'error',
+  INFO: 'info'
 }
 
 export const avaialableNotificationIcons = Object.values(notificationIcons)

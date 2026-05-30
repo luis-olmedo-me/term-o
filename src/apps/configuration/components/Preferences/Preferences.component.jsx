@@ -59,12 +59,12 @@ export const Preferences = () => {
     [config.details, search]
   )
 
-  const sendNotification = (inputName, message, color) => {
+  const sendNotification = (inputName, message, color, icon) => {
     createNotification({
       title: `Term-O | ${inputName}`,
       message,
       color,
-      icon: notificationIcons.DEFAULT,
+      icon,
       theme: config.theme
     })
   }
@@ -80,9 +80,14 @@ export const Preferences = () => {
       if (inputId === configInputIds.EXPORT_CONFIGURATION) storage.export()
       if (inputId === configInputIds.IMPORT_CONFIGURATION) await handleImportConfig({ onError })
 
-      sendNotification(inputDetails.name, 'Task completed successfully!', colorThemeKeys.GREEN)
+      sendNotification(
+        inputDetails.name,
+        'Task completed successfully!',
+        colorThemeKeys.GREEN,
+        notificationIcons.SUCCESS
+      )
     } catch (message) {
-      sendNotification(inputDetails.name, message, colorThemeKeys.RED)
+      sendNotification(inputDetails.name, message, colorThemeKeys.RED, notificationIcons.DEFAULT)
     }
   }
 
@@ -91,7 +96,7 @@ export const Preferences = () => {
     const oldValue = config.getValueById(inputId)
     const message = getInputMessageByType(inputDetails, oldValue, newValue)
 
-    sendNotification(inputDetails.name, message, colorThemeKeys.GREEN)
+    sendNotification(inputDetails.name, message, colorThemeKeys.GREEN, notificationIcons.SUCCESS)
     config.change(inputId, newValue)
   }
 

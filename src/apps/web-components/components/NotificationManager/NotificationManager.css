@@ -59,6 +59,7 @@ term-o-notification-item {
     transform 0.3s ease;
   pointer-events: none;
 }
+
 term-o-notification-item.visible {
   transform: translateX(0%) scale(1);
   opacity: 1;
@@ -67,6 +68,17 @@ term-o-notification-item.visible {
 }
 term-o-notification-item.visible:hover {
   right: var(--space-200);
+}
+
+term-o-notification-item.masked {
+  filter: blur(2px);
+  pointer-events: none;
+}
+term-o-notification-item.masked .notification {
+  box-shadow: none;
+}
+term-o-notification-item.masked .leyends {
+  display: none;
 }
 
 .notification {

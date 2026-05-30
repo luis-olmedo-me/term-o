@@ -64,30 +64,25 @@ class NotificationManager extends WebElement {
       const isFirstItem = index === 0
       const shouldDisplay = areLessThanThree || index < NOTIFICATION_MAX
       const isVisible = item.classList.contains('visible')
+      const isMasked = item.classList.contains('masked')
 
       if (shouldDisplay && !isVisible) item.classList.add('visible')
       if (!shouldDisplay && isVisible) item.classList.remove('visible')
+      if ((!shouldDisplay && isMasked) || (isFirstItem && isMasked)) item.classList.remove('masked')
+      if (shouldDisplay && !isFirstItem && !isMasked) item.classList.add('masked')
+
       item.style.removeProperty('top')
       item.style.removeProperty('opacity')
       item.style.removeProperty('filter')
       item.style.removeProperty('pointer-events')
 
       if (!shouldDisplay) continue
-      const previousItem = this._notifications[index - 1]
-      const offset =
-        previousItem?.clientHeight > item.clientHeight
-          ? previousItem.clientHeight - item.clientHeight
-          : 0
 
-      item.style.setProperty('top', `${carriedTop + offset}px`)
-      carriedTop = item.clientHeight * 0.1 + carriedTop + offset
+      item.style.setProperty('top', `${carriedTop}px`)
+      carriedTop = item.clientHeight * 0.3 + carriedTop
 
       if (isFirstItem) continue
-      this.$addStyles(item, {
-        opacity: `${100 - index * 40}%`,
-        filter: 'blur(2px)',
-        'pointer-events': 'none'
-      })
+      this.$addStyles(item, { opacity: `${100 - index * 40}%` })
     }
   }
 
@@ -98,9 +93,12 @@ class NotificationManager extends WebElement {
     for (const [index, item] of this._notifications.entries()) {
       const shouldDisplay = areLessThanThree || index < NOTIFICATION_MAX
       const isVisible = item.classList.contains('visible')
+      const isMasked = item.classList.contains('masked')
 
       if (shouldDisplay && !isVisible) item.classList.add('visible')
       if (!shouldDisplay && isVisible) item.classList.remove('visible')
+      if (isMasked) item.classList.remove('masked')
+
       item.style.removeProperty('top')
       item.style.removeProperty('opacity')
       item.style.removeProperty('filter')

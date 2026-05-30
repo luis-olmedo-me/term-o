@@ -8,6 +8,7 @@ import useStorage from '@src/hooks/useStorage'
 import storage from '@src/libs/storage'
 
 import { configIds, configInputIds } from '@src/constants/config.constants'
+import { notificationIcons } from '@src/constants/notifications.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { colorThemeKeys } from '@src/constants/themes.constants'
 import { getConfigDetailsByInputId } from '@src/helpers/config.helpers'
@@ -63,6 +64,7 @@ export const Preferences = () => {
       title: `Term-O | ${inputName}`,
       message,
       color,
+      icon: notificationIcons.DEFAULT,
       theme: config.theme
     })
   }

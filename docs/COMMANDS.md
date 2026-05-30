@@ -1,7 +1,7 @@
 # Term-O Commands
 
 > Version 0.9.3  
-> Updated: 2026-05-06
+> Updated: 2026-05-30
 
 ---
 
@@ -554,6 +554,8 @@ The `notify` command is a bridge to manage visual notifications on a tab.
 | `--tab-id <tabid>`   | `-i`  | Define a Tab ID where apply an action. |
 | `--title <string>`   | `-t`  | Define the title.                      |
 | `--message <string>` | `-m`  | Define the message.                    |
+| `--icon <string>`    | `-I`  | Define the icon used.                  |
+| `--color <string>`   | `-C`  | Define the color used.                 |
 | `--help`             | `-h`  | Show help for this command.            |
 
 ### Dependency Rules
@@ -570,6 +572,8 @@ When using `notify` command the options can express **1** possible action:
        --title "Testing Title"                                              # REQUIRED
        --message "Message to be aware of."                                  # REQUIRED
        --tab-id "T00000000"                                                 # OPTIONAL
+       --icon "success"                                                     # OPTIONAL
+       --color "red"                                                        # OPTIONAL
    ```
 
 ## STORAGE

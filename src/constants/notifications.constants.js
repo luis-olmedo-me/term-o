@@ -6,3 +6,5 @@ export const notificationIcons = {
 }
 
 export const avaialableNotificationIcons = Object.values(notificationIcons)
+
+export const NOTIFICATION_MAX = 3

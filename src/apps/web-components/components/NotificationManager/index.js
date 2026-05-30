@@ -57,13 +57,30 @@ class NotificationManager extends WebElement {
   }
 
   _collapse() {
+    const areLessThanThree = this._notifications.length <= NOTIFICATION_MAX
+    let carriedTop = 0
+
     this._notifications.forEach((item, index) => {
       const isFirstItem = index === 0
+      const shouldDisplay = areLessThanThree || index < NOTIFICATION_MAX
       const isVisible = item.classList.contains('visible')
 
+      if (shouldDisplay && !isVisible) item.classList.add('visible')
+      if (!shouldDisplay && isVisible) item.classList.remove('visible')
       item.style.removeProperty('top')
-      if (isFirstItem && !isVisible) item.classList.add('visible')
-      if (!isFirstItem && isVisible) item.classList.remove('visible')
+      item.style.removeProperty('opacity')
+      item.style.removeProperty('filter')
+
+      if (!shouldDisplay) return
+      item.style.setProperty('top', `${carriedTop}px`)
+      carriedTop = item.clientHeight * 0.1 + carriedTop
+
+      if (isFirstItem) return
+      this.$addStyles(item, {
+        opacity: `${100 - index * 40}%`,
+        filter: 'blur(2px)',
+        'pointer-events': 'none'
+      })
     })
   }
 
@@ -77,6 +94,9 @@ class NotificationManager extends WebElement {
 
       if (shouldDisplay && !isVisible) item.classList.add('visible')
       if (!shouldDisplay && isVisible) item.classList.remove('visible')
+      item.style.removeProperty('top')
+      item.style.removeProperty('opacity')
+      item.style.removeProperty('filter')
 
       if (!shouldDisplay) return
       item.style.setProperty('top', `${carriedTop}px`)

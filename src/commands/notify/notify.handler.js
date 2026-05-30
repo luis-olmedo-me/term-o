@@ -2,7 +2,6 @@ import processManager from '@src/libs/process-manager'
 
 import { getTab } from '@src/browser-api/tabs.api'
 import { storageKeys } from '@src/constants/storage.constants'
-import { customColorThemeKeys } from '@src/constants/themes.constants'
 import { createHelpView } from '@src/helpers/command.helpers'
 import { formatNotification } from '@src/helpers/format.helpers'
 import { cleanTabId } from '@src/helpers/tabs.helpers'
@@ -25,13 +24,14 @@ export const notifyHandler = async command => {
     const title = P`title`
     const message = P`message`
     const icon = P`icon`
+    const color = P`color`
 
     const notification = await processManager.createNotification(tabId, {
       icon,
       title,
       message,
-      theme: config.theme,
-      color: customColorThemeKeys.ACCENT
+      color,
+      theme: config.theme
     })
 
     const log = formatNotification(notification)

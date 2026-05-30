@@ -5,6 +5,7 @@ import {
   avaialableNotificationIcons,
   notificationIcons
 } from '@src/constants/notifications.constants'
+import { availableUserColors, customColorThemeKeys } from '@src/constants/themes.constants'
 import { options, value } from '@src/helpers/validation-command.helpers'
 import { notifyHandler } from './notify.handler'
 
@@ -19,7 +20,7 @@ export default new CommandBase({
     helpSection: helpSections.ACTIONS,
     description: 'Create a notification',
     validate: [
-      options.allow('tab-id', 'message', 'title', 'icon'),
+      options.allow('tab-id', 'message', 'title', 'icon', 'color'),
       options.requireAll('message', 'title')
     ]
   })
@@ -55,4 +56,13 @@ export default new CommandBase({
     description: 'Define the icon used',
     validate: [value.isAnyOf(avaialableNotificationIcons), options.requireAnyOf('create')],
     defaultValue: notificationIcons.DEFAULT
+  })
+  .expect({
+    name: 'color',
+    abbreviation: 'C',
+    type: commandTypes.STRING,
+    helpSection: helpSections.DETAILS,
+    description: 'Define the color used',
+    validate: [value.isAnyOf(availableUserColors), options.requireAnyOf('create')],
+    defaultValue: customColorThemeKeys.ACCENT
   })

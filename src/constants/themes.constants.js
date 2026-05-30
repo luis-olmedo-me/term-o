@@ -116,6 +116,13 @@ export const brightColorKeys = [
   colorThemeKeys.BRIGHT_YELLOW
 ]
 
+export const availableUserColors = [
+  ...basicColorKeys,
+  customColorThemeKeys.ACCENT,
+  ...brightColorKeys,
+  customColorThemeKeys.BRIGHT_ACCENT
+]
+
 export const themeModes = {
   DARK: 'dark',
   LIGHT: 'light'

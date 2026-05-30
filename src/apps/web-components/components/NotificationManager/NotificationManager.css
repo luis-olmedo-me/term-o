@@ -100,9 +100,9 @@ term-o-notification-item.visible:hover {
 
 .icon-container {
   border-radius: var(--radius-400);
-  background-color: rgb(from var(--colors-brightAccent) r g b / 0.25);
+  background-color: rgb(from var(--color) r g b / 0.25);
   padding: var(--space-250);
-  color: var(--colors-brightAccent);
+  color: var(--color);
 }
 .icon-container svg {
   display: block;

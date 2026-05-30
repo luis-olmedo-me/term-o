@@ -87,7 +87,7 @@ export const Preferences = () => {
         notificationIcons.SUCCESS
       )
     } catch (message) {
-      sendNotification(inputDetails.name, message, colorThemeKeys.RED, notificationIcons.DEFAULT)
+      sendNotification(inputDetails.name, message, colorThemeKeys.RED, notificationIcons.ERROR)
     }
   }
 

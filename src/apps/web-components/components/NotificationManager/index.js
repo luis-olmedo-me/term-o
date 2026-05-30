@@ -60,7 +60,7 @@ class NotificationManager extends WebElement {
     const areLessThanThree = this._notifications.length <= NOTIFICATION_MAX
     let carriedTop = 0
 
-    this._notifications.forEach((item, index) => {
+    for (const [index, item] of this._notifications.entries()) {
       const isFirstItem = index === 0
       const shouldDisplay = areLessThanThree || index < NOTIFICATION_MAX
       const isVisible = item.classList.contains('visible')
@@ -70,25 +70,32 @@ class NotificationManager extends WebElement {
       item.style.removeProperty('top')
       item.style.removeProperty('opacity')
       item.style.removeProperty('filter')
+      item.style.removeProperty('pointer-events')
 
-      if (!shouldDisplay) return
-      item.style.setProperty('top', `${carriedTop}px`)
-      carriedTop = item.clientHeight * 0.1 + carriedTop
+      if (!shouldDisplay) continue
+      const previousItem = this._notifications[index - 1]
+      const offset =
+        previousItem?.clientHeight > item.clientHeight
+          ? previousItem.clientHeight - item.clientHeight
+          : 0
 
-      if (isFirstItem) return
+      item.style.setProperty('top', `${carriedTop + offset}px`)
+      carriedTop = item.clientHeight * 0.1 + carriedTop + offset
+
+      if (isFirstItem) continue
       this.$addStyles(item, {
         opacity: `${100 - index * 40}%`,
         filter: 'blur(2px)',
         'pointer-events': 'none'
       })
-    })
+    }
   }
 
   _expand() {
     const areLessThanThree = this._notifications.length <= NOTIFICATION_MAX
     let carriedTop = 0
 
-    this._notifications.forEach((item, index) => {
+    for (const [index, item] of this._notifications.entries()) {
       const shouldDisplay = areLessThanThree || index < NOTIFICATION_MAX
       const isVisible = item.classList.contains('visible')
 
@@ -97,11 +104,12 @@ class NotificationManager extends WebElement {
       item.style.removeProperty('top')
       item.style.removeProperty('opacity')
       item.style.removeProperty('filter')
+      item.style.removeProperty('pointer-events')
 
       if (!shouldDisplay) return
       item.style.setProperty('top', `${carriedTop}px`)
       carriedTop = item.clientHeight + carriedTop + 12
-    })
+    }
   }
 
   _removeNotification(notificationItem) {

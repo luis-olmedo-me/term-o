@@ -1,6 +1,10 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes, helpSections } from '@src/constants/command.constants'
+import {
+  avaialableNotificationIcons,
+  notificationIcons
+} from '@src/constants/notifications.constants'
 import { options, value } from '@src/helpers/validation-command.helpers'
 import { notifyHandler } from './notify.handler'
 
@@ -39,4 +43,13 @@ export default new CommandBase({
     helpSection: helpSections.DETAILS,
     description: 'Define the message',
     validate: [options.requireAnyOf('create')]
+  })
+  .expect({
+    name: 'icon',
+    abbreviation: 'I',
+    type: commandTypes.STRING,
+    helpSection: helpSections.DETAILS,
+    description: 'Define the icon used',
+    validate: [value.isAnyOf(avaialableNotificationIcons), options.requireAnyOf('create')],
+    defaultValue: notificationIcons.DEFAULT
   })

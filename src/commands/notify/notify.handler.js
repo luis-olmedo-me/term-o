@@ -25,12 +25,13 @@ export const notifyHandler = async command => {
     const config = storage.get(storageKeys.CONFIG)
     const title = P`title`
     const message = P`message`
+    const icon = P`icon`
 
     const notification = await processManager.createNotification(tabId, {
+      icon,
       title,
       message,
       theme: config.theme,
-      icon: notificationIcons.DEFAULT,
       color: customColorThemeKeys.ACCENT
     })
 

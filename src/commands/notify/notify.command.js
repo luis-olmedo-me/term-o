@@ -18,7 +18,10 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Create a notification',
-    validate: [options.allow('tab-id', 'message', 'title'), options.requireAll('message', 'title')]
+    validate: [
+      options.allow('tab-id', 'message', 'title', 'icon'),
+      options.requireAll('message', 'title')
+    ]
   })
   .expect({
     name: 'tab-id',

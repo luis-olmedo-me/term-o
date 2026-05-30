@@ -1,7 +1,6 @@
 import processManager from '@src/libs/process-manager'
 
 import { getTab } from '@src/browser-api/tabs.api'
-import { notificationIcons } from '@src/constants/notifications.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { customColorThemeKeys } from '@src/constants/themes.constants'
 import { createHelpView } from '@src/helpers/command.helpers'

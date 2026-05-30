@@ -1,4 +1,5 @@
 import Bell from '@src/svg/bell.svg?raw'
+import Tick from '@src/svg/tick.svg?raw'
 
 import { notificationIcons } from '@src/constants/notifications.constants'
 import { getPaintedFragments } from '@src/helpers/paint.helpers'
@@ -13,4 +14,5 @@ export const buildHtmlTextContent = value => {
 
 export const getIconSvgByNotificationIcon = notificationIcon => {
   if (notificationIcon === notificationIcons.DEFAULT) return Bell
+  if (notificationIcon === notificationIcons.SUCCESS) return Tick
 }

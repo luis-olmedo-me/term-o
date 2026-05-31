@@ -73,12 +73,10 @@ class NotificationManager extends WebElement {
 
       item.style.removeProperty('top')
       item.style.removeProperty('opacity')
-      item.style.removeProperty('filter')
-      item.style.removeProperty('pointer-events')
 
       if (!shouldDisplay) continue
 
-      item.style.setProperty('top', `${carriedTop}px`)
+      this.$addStyles(item, { top: `${carriedTop}px` })
       carriedTop = item.clientHeight * 0.3 + carriedTop
 
       if (isFirstItem) continue
@@ -101,11 +99,9 @@ class NotificationManager extends WebElement {
 
       item.style.removeProperty('top')
       item.style.removeProperty('opacity')
-      item.style.removeProperty('filter')
-      item.style.removeProperty('pointer-events')
 
       if (!shouldDisplay) return
-      item.style.setProperty('top', `${carriedTop}px`)
+      this.$addStyles(item, { top: `${carriedTop}px` })
       carriedTop = item.clientHeight + carriedTop + 12
     }
   }

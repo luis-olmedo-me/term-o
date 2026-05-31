@@ -74,13 +74,14 @@ class NotificationManager extends WebElement {
       item.style.removeProperty('top')
       item.style.removeProperty('opacity')
 
-      if (!shouldDisplay) continue
+      if (!shouldDisplay || isFirstItem) continue
+      const lastClientHeight = this._notifications[index - 1].clientHeight
+      const offset = lastClientHeight - (50 - 10)
 
-      this.$addStyles(item, { top: `${carriedTop}px` })
-      carriedTop = item.clientHeight * 0.3 + carriedTop
-
-      if (isFirstItem) continue
-      this.$addStyles(item, { opacity: `${100 - index * 40}%` })
+      this.$addStyles(item, {
+        top: `${(carriedTop += offset)}px`,
+        opacity: `${100 - index * 40}%`
+      })
     }
   }
 

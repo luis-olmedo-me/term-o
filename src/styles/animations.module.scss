@@ -15,6 +15,15 @@
   }
 }
 
+@keyframes slide-background {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 400px 331px;
+  }
+}
+
 @keyframes fill-space {
   0% {
     right: 100%;

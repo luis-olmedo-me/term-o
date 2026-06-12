@@ -1,10 +1,12 @@
+@use '@styles/animations.module' as *;
+
 .preferences {
   display: flex;
   flex-direction: column;
-  background-image: $url-000, $url-100;
-  background-position:
-    220px -80px,
-    -60px 60px;
+  animation: slide-background 150s linear infinite;
+  background-image: $url-000;
+  background-position: 0 0;
+  background-size: 400px 331px;
   background-repeat: repeat;
   height: 100vh;
   color: $colors-foreground;

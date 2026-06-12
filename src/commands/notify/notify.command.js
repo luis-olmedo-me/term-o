@@ -1,6 +1,11 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes, helpSections } from '@src/constants/command.constants'
+import {
+  avaialableNotificationIcons,
+  notificationIcons
+} from '@src/constants/notifications.constants'
+import { availableUserColors, customColorThemeKeys } from '@src/constants/themes.constants'
 import { options, value } from '@src/helpers/validation-command.helpers'
 import { notifyHandler } from './notify.handler'
 
@@ -14,7 +19,10 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Create a notification',
-    validate: [options.allow('tab-id', 'message', 'title'), options.requireAll('message', 'title')]
+    validate: [
+      options.allow('tab-id', 'message', 'title', 'icon', 'color'),
+      options.requireAll('message', 'title')
+    ]
   })
   .expect({
     name: 'tab-id',
@@ -39,4 +47,22 @@ export default new CommandBase({
     helpSection: helpSections.DETAILS,
     description: 'Define the message',
     validate: [options.requireAnyOf('create')]
+  })
+  .expect({
+    name: 'icon',
+    abbreviation: 'I',
+    type: commandTypes.STRING,
+    helpSection: helpSections.DETAILS,
+    description: 'Define the icon used',
+    validate: [value.isAnyOf(avaialableNotificationIcons), options.requireAnyOf('create')],
+    defaultValue: notificationIcons.DEFAULT
+  })
+  .expect({
+    name: 'color',
+    abbreviation: 'C',
+    type: commandTypes.STRING,
+    helpSection: helpSections.DETAILS,
+    description: 'Define the color used',
+    validate: [value.isAnyOf(availableUserColors), options.requireAnyOf('create')],
+    defaultValue: customColorThemeKeys.ACCENT
   })

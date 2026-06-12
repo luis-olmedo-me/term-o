@@ -1,7 +1,8 @@
 import WebElement from '@web-components/templates/WebElement'
-import NotificationManagerCss from './NotificationManager.raw.css?raw'
-import NotificationManagerHtml from './NotificationManager.raw.html?raw'
+import NotificationManagerCss from './NotificationManager.css?raw'
+import NotificationManagerHtml from './NotificationManager.html?raw'
 
+import { NOTIFICATION_MAX } from '@src/constants/notifications.constants'
 import { embedWebElements, webElements } from '@src/constants/web-elements.constants'
 import { createWebElement } from '@src/helpers/web-components.helpers'
 
@@ -14,7 +15,7 @@ class NotificationManager extends WebElement {
     })
 
     this._notifications = []
-    this._displayThree = false
+    this._isExpanded = false
 
     this.addEventListener('add', this._handleAdd)
   }
@@ -35,9 +36,9 @@ class NotificationManager extends WebElement {
     })
 
     this._notifications = [notificationItem, ...this._notifications]
-    this._displayThree = false
+    this._isExpanded = false
 
-    requestAnimationFrame(() => this._showFirstOne())
+    requestAnimationFrame(() => this._collapse())
     this._updateCounter()
 
     notificationItem.addEventListener('click', event => {
@@ -49,46 +50,76 @@ class NotificationManager extends WebElement {
 
   _handleCounterClick(event) {
     event.stopPropagation()
-    this._displayThree = !this._displayThree
+    this._isExpanded = !this._isExpanded
 
-    if (this._displayThree) this._showFirstThree()
-    else this._showFirstOne()
+    if (this._isExpanded) this._expand()
+    else this._collapse()
   }
 
-  _showFirstOne() {
-    this._notifications.forEach((item, index) => {
-      const isFirstItem = index === 0
-      const isVisible = item.classList.contains('visible')
-
-      item.style.removeProperty('top')
-      if (isFirstItem && !isVisible) item.classList.add('visible')
-      if (!isFirstItem && isVisible) item.classList.remove('visible')
-    })
-  }
-
-  _showFirstThree() {
-    const areLessThanThree = this._notifications.length <= 3
+  _collapse() {
+    const areLessThanThree = this._notifications.length <= NOTIFICATION_MAX
     let carriedTop = 0
 
-    this._notifications.forEach((item, index) => {
-      const shouldDisplay = areLessThanThree || index < 3
+    for (const [index, item] of this._notifications.entries()) {
+      const notification = item.$get('notification')
+      const isFirstItem = index === 0
+      const shouldDisplay = areLessThanThree || index < NOTIFICATION_MAX
       const isVisible = item.classList.contains('visible')
+      const isMasked = item.classList.contains('masked')
 
       if (shouldDisplay && !isVisible) item.classList.add('visible')
       if (!shouldDisplay && isVisible) item.classList.remove('visible')
+      if ((!shouldDisplay && isMasked) || (isFirstItem && isMasked)) item.classList.remove('masked')
+      if (shouldDisplay && !isFirstItem && !isMasked) item.classList.add('masked')
+
+      this.$removeStyles(item, ['top', 'opacity', 'right'])
+      this.$removeStyles(notification, ['padding-inline-start'])
+
+      if (!shouldDisplay || isFirstItem) continue
+      const lastClientHeight = this._notifications[index - 1].clientHeight
+      const offset = lastClientHeight - (50 - 10)
+
+      this.$addStyles(item, {
+        top: `${(carriedTop += offset)}px`,
+        opacity: `12.5%`,
+        right: `10px`
+      })
+      this.$addStyles(notification, {
+        'padding-inline-start': '0'
+      })
+    }
+  }
+
+  _expand() {
+    const areLessThanThree = this._notifications.length <= NOTIFICATION_MAX
+    let carriedTop = 0
+
+    for (const [index, item] of this._notifications.entries()) {
+      const notification = item.$get('notification')
+      const shouldDisplay = areLessThanThree || index < NOTIFICATION_MAX
+      const isVisible = item.classList.contains('visible')
+      const isMasked = item.classList.contains('masked')
+
+      if (shouldDisplay && !isVisible) item.classList.add('visible')
+      if (!shouldDisplay && isVisible) item.classList.remove('visible')
+      if (isMasked) item.classList.remove('masked')
+
+      this.$removeStyles(item, ['top', 'opacity', 'right'])
+      this.$removeStyles(notification, ['padding-inline-start'])
 
       if (!shouldDisplay) return
-      item.style.setProperty('top', `${carriedTop}px`)
+
+      this.$addStyles(item, { top: `${carriedTop}px` })
       carriedTop = item.clientHeight + carriedTop + 12
-    })
+    }
   }
 
   _removeNotification(notificationItem) {
     notificationItem.classList.remove('visible')
     this._notifications = this._notifications.filter(item => item !== notificationItem)
 
-    if (this._displayThree) this._showFirstThree()
-    else this._showFirstOne()
+    if (this._isExpanded) this._expand()
+    else this._collapse()
 
     setTimeout(() => notificationItem.remove(), 500)
 

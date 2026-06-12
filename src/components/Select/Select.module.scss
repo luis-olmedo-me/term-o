@@ -29,6 +29,9 @@
   font-size: $fontSize-50;
   font-family: $font;
 
+  @include theme-mode(light) {
+    border-color: with-opacity($colors-brightBlack, 0.3);
+  }
   @include theme-variant(outlined) {
     border-color: $colors-brightBlack;
   }

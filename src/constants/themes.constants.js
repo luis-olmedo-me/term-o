@@ -25,7 +25,7 @@ export const colorThemeKeys = {
 
 export const customColorThemeKeys = {
   ACCENT: 'accent',
-  BRIGHT_ACCENT: 'bright_accent'
+  BRIGHT_ACCENT: 'brightAccent'
 }
 
 export const defaultColorTheme = {
@@ -114,6 +114,13 @@ export const brightColorKeys = [
   colorThemeKeys.BRIGHT_PURPLE,
   colorThemeKeys.BRIGHT_RED,
   colorThemeKeys.BRIGHT_YELLOW
+]
+
+export const availableUserColors = [
+  ...basicColorKeys,
+  customColorThemeKeys.ACCENT,
+  ...brightColorKeys,
+  customColorThemeKeys.BRIGHT_ACCENT
 ]
 
 export const themeModes = {

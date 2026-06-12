@@ -23,6 +23,9 @@
   width: 2.5rem;
   height: 1.5rem;
 
+  @include theme-mode(light) {
+    border-color: with-opacity($colors-brightBlack, 0.3);
+  }
   @include theme-variant(outlined) {
     border-color: $colors-brightBlack;
   }

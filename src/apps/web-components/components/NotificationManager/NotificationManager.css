@@ -21,7 +21,6 @@
     padding 0.1s ease-in-out,
     opacity 0.3s ease-in-out;
   cursor: pointer;
-  box-shadow: 0px 6px 10px 2px rgb(from black r g b / 0.35);
   border-radius: var(--radius-200) 0 0 var(--radius-200);
   background-color: var(--colors-background);
   padding: var(--space-200);
@@ -59,6 +58,7 @@ term-o-notification-item {
     transform 0.3s ease;
   pointer-events: none;
 }
+
 term-o-notification-item.visible {
   transform: translateX(0%) scale(1);
   opacity: 1;
@@ -69,12 +69,34 @@ term-o-notification-item.visible:hover {
   right: var(--space-200);
 }
 
+term-o-notification-item.masked {
+  filter: blur(2px);
+  pointer-events: none;
+}
+term-o-notification-item.masked .notification {
+  box-shadow: none;
+  background-color: var(--colors-brightBlack);
+}
+term-o-notification-item.masked .leyends,
+term-o-notification-item.masked .notification::after {
+  display: none;
+}
+term-o-notification-item.masked .icon-container {
+  opacity: 0;
+}
+
 .notification {
   --color: var(--colors-accent);
 
+  display: flex;
   position: relative;
+  align-items: center;
+  gap: var(--space-500);
+  transition:
+    padding-inline-start 0.3s ease,
+    background-color 0.3s ease,
+    border-color 0.3s ease;
   cursor: pointer;
-  box-shadow: 0px 6px 10px 2px rgb(from black r g b / 0.25);
   border-radius: var(--radius-200);
   background-color: var(--colors-background);
   padding: var(--space-400) var(--space-300) var(--space-400) var(--space-700);
@@ -90,9 +112,19 @@ term-o-notification-item.visible:hover {
   left: var(--space-200);
   border-radius: var(--radius-100);
   background-color: var(--color);
-  width: var(--space-250);
+  width: var(--space-200);
   height: calc(100% - var(--space-450));
   content: '';
+}
+
+.icon-container {
+  border-radius: var(--radius-400);
+  background-color: rgb(from var(--color) r g b / 0.25);
+  padding: var(--space-250);
+  color: var(--color);
+}
+.icon-container svg {
+  display: block;
 }
 
 .title,

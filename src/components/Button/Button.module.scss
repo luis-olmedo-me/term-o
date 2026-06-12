@@ -67,6 +67,9 @@
     border-radius: $radius-200;
     background-color: with-opacity(var(--default-color), 0.15);
 
+    @include theme-mode(light) {
+      border-color: with-opacity($colors-brightBlack, 0.3);
+    }
     @include theme-variant(outlined) {
       border-color: $colors-brightBlack;
     }

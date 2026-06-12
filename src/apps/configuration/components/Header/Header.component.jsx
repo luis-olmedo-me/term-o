@@ -12,7 +12,8 @@ import {
   header__link,
   header__search,
   header__title,
-  header__title_container
+  header__title_container,
+  header__title_dash
 } from './Header.module.scss'
 
 export const Header = ({ onSearch }) => {
@@ -31,7 +32,9 @@ export const Header = ({ onSearch }) => {
         <div className={header__title_container}>
           <Logo size={iconSizes.LG} />
 
-          <h1 className={header__title}>TERM-O</h1>
+          <h1 className={header__title}>
+            TERM<span className={header__title_dash}>-</span>O
+          </h1>
         </div>
 
         <form role="search" className={header__search}>

@@ -1,6 +1,6 @@
 import WebElement from '@web-components/templates/WebElement'
-import elementPickerCss from './ElementPicker.raw.css?raw'
-import elementPickerHtml from './ElementPicker.raw.html?raw'
+import ElementPickerCss from './ElementPicker.css?raw'
+import ElementPickerHtml from './ElementPicker.html?raw'
 
 import { webElements } from '@src/constants/web-elements.constants'
 import { renderLine } from '@src/helpers/command.helpers'
@@ -11,8 +11,8 @@ import { calculatePosition, createPaintedElement } from './ElementPicker.helpers
 class ElementPicker extends WebElement {
   constructor() {
     super({
-      html: elementPickerHtml,
-      css: elementPickerCss,
+      html: ElementPickerHtml,
+      css: ElementPickerCss,
       isolated: true
     })
 

@@ -5,7 +5,8 @@ export default async (resolve, _reject, data) => {
   const notification = {
     title: data.title,
     message: data.message,
-    color: data.color
+    color: data.color,
+    icon: data.icon
   }
 
   createNotification({ ...notification, theme: data.theme })

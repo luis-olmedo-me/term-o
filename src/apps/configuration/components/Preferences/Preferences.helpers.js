@@ -32,21 +32,21 @@ export const getInputMessageByType = (input, oldValue, newValue) => {
     const oldUIValue = oldValue ? 'On' : 'Off'
     const newUIValue = newValue ? 'On' : 'Off'
 
-    return `${oldUIValue} -> ${newUIValue}`
+    return `${oldUIValue} -> ${newUIValue}.`
   }
 
   if (input.type === availableInputTypes.NUMBER) {
-    return `${oldValue} -> ${newValue}`
+    return `${oldValue} -> ${newValue}.`
   }
 
   if (input.type === availableInputTypes.SELECT) {
     const oldUIValue = input.options.find(option => option.id === oldValue).name
     const newUIValue = input.options.find(option => option.id === newValue).name
 
-    return `"${oldUIValue}" -> "${newUIValue}"`
+    return `"${oldUIValue}" -> "${newUIValue}".`
   }
 
-  return `"${oldValue}${reset}" -> "${newValue}${reset}"`
+  return `"${oldValue}${reset}" -> "${newValue}${reset}".`
 }
 
 export const getLatestSectionId = sectionElementContainer => {

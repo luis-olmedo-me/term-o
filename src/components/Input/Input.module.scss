@@ -57,6 +57,9 @@
     background-color: with-opacity($colors-white, 0.05);
     padding-left: $space-300;
 
+    @include theme-mode(light) {
+      border-color: with-opacity($colors-brightBlack, 0.3);
+    }
     @include theme-variant(outlined) {
       border-color: $colors-brightBlack;
     }
@@ -119,6 +122,9 @@
   pointer-events: unset;
   color: $colors-foreground;
 
+  @include theme-mode(light) {
+    border-color: with-opacity($colors-brightBlack, 0.3);
+  }
   @include theme-variant(outlined) {
     border-color: $colors-brightBlack;
   }

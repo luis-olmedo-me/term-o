@@ -143,12 +143,12 @@ class ProcessManager {
     })
   }
 
-  createNotification(tabId, { title, message, theme, color }) {
+  createNotification(tabId, { title, message, theme, color, icon }) {
     return createWorkerProcessRequest({
       type: processNames.CREATE_NOTIFICATION,
       defaultResponse: {},
       tabId,
-      data: { title, message, theme, color }
+      data: { title, message, theme, color, icon }
     })
   }
 

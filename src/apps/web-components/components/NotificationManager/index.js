@@ -61,6 +61,7 @@ class NotificationManager extends WebElement {
     let carriedTop = 0
 
     for (const [index, item] of this._notifications.entries()) {
+      const notification = item.$get('notification')
       const isFirstItem = index === 0
       const shouldDisplay = areLessThanThree || index < NOTIFICATION_MAX
       const isVisible = item.classList.contains('visible')
@@ -71,18 +72,16 @@ class NotificationManager extends WebElement {
       if ((!shouldDisplay && isMasked) || (isFirstItem && isMasked)) item.classList.remove('masked')
       if (shouldDisplay && !isFirstItem && !isMasked) item.classList.add('masked')
 
-      item.style.removeProperty('top')
-      item.style.removeProperty('right')
-      item.style.removeProperty('opacity')
+      this.$removeStyles(item, ['top', 'opacity', 'right'])
+      this.$removeStyles(notification, ['padding-inline-start'])
 
       if (!shouldDisplay || isFirstItem) continue
-      const notification = item.$get('notification')
       const lastClientHeight = this._notifications[index - 1].clientHeight
       const offset = lastClientHeight - (50 - 10)
 
       this.$addStyles(item, {
         top: `${(carriedTop += offset)}px`,
-        opacity: `15%`,
+        opacity: `12.5%`,
         right: `10px`
       })
       this.$addStyles(notification, {
@@ -105,10 +104,8 @@ class NotificationManager extends WebElement {
       if (!shouldDisplay && isVisible) item.classList.remove('visible')
       if (isMasked) item.classList.remove('masked')
 
-      item.style.removeProperty('top')
-      item.style.removeProperty('opacity')
-      item.style.removeProperty('right')
-      notification.style.removeProperty('padding-inline-start')
+      this.$removeStyles(item, ['top', 'opacity', 'right'])
+      this.$removeStyles(notification, ['padding-inline-start'])
 
       if (!shouldDisplay) return
 

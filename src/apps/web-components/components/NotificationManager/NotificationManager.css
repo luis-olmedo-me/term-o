@@ -21,7 +21,6 @@
     padding 0.1s ease-in-out,
     opacity 0.3s ease-in-out;
   cursor: pointer;
-  box-shadow: 0px 6px 10px 2px rgb(from black r g b / 0.35);
   border-radius: var(--radius-200) 0 0 var(--radius-200);
   background-color: var(--colors-background);
   padding: var(--space-200);
@@ -76,9 +75,14 @@ term-o-notification-item.masked {
 }
 term-o-notification-item.masked .notification {
   box-shadow: none;
+  background-color: var(--colors-brightBlack);
 }
-term-o-notification-item.masked .leyends {
+term-o-notification-item.masked .leyends,
+term-o-notification-item.masked .notification::after {
   display: none;
+}
+term-o-notification-item.masked .icon-container {
+  opacity: 0;
 }
 
 .notification {
@@ -88,8 +92,11 @@ term-o-notification-item.masked .leyends {
   position: relative;
   align-items: center;
   gap: var(--space-500);
+  transition:
+    padding-inline-start 0.3s ease,
+    background-color 0.3s ease,
+    border-color 0.3s ease;
   cursor: pointer;
-  box-shadow: 0px 6px 10px 2px rgb(from black r g b / 0.25);
   border-radius: var(--radius-200);
   background-color: var(--colors-background);
   padding: var(--space-400) var(--space-300) var(--space-400) var(--space-700);

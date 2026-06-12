@@ -72,15 +72,21 @@ class NotificationManager extends WebElement {
       if (shouldDisplay && !isFirstItem && !isMasked) item.classList.add('masked')
 
       item.style.removeProperty('top')
+      item.style.removeProperty('right')
       item.style.removeProperty('opacity')
 
       if (!shouldDisplay || isFirstItem) continue
+      const notification = item.$get('notification')
       const lastClientHeight = this._notifications[index - 1].clientHeight
       const offset = lastClientHeight - (50 - 10)
 
       this.$addStyles(item, {
         top: `${(carriedTop += offset)}px`,
-        opacity: `${100 - index * 40}%`
+        opacity: `15%`,
+        right: `10px`
+      })
+      this.$addStyles(notification, {
+        'padding-inline-start': '0'
       })
     }
   }
@@ -90,6 +96,7 @@ class NotificationManager extends WebElement {
     let carriedTop = 0
 
     for (const [index, item] of this._notifications.entries()) {
+      const notification = item.$get('notification')
       const shouldDisplay = areLessThanThree || index < NOTIFICATION_MAX
       const isVisible = item.classList.contains('visible')
       const isMasked = item.classList.contains('masked')
@@ -100,8 +107,11 @@ class NotificationManager extends WebElement {
 
       item.style.removeProperty('top')
       item.style.removeProperty('opacity')
+      item.style.removeProperty('right')
+      notification.style.removeProperty('padding-inline-start')
 
       if (!shouldDisplay) return
+
       this.$addStyles(item, { top: `${carriedTop}px` })
       carriedTop = item.clientHeight + carriedTop + 12
     }

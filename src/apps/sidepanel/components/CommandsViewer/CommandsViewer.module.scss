@@ -67,7 +67,7 @@
     &::before {
       position: absolute;
       top: 0.5rem;
-      left: $space-300;
+      left: $space-275;
       transition:
         background-color 0.2s ease-in-out,
         box-shadow 0.2s ease-in-out;
@@ -103,7 +103,7 @@
     display: none;
   }
   &___indicator_dot::after {
-    left: $space-300;
+    left: $space-275;
     border-radius: $radius-200;
     width: $space-200;
     height: $space-200;
@@ -164,7 +164,7 @@
   box-sizing: border-box;
   border-radius: 0 $radius-200 $radius-200 0;
   background-color: with-opacity($colors-brightBlack, 0.4);
-  width: $space-500;
+  width: $space-400;
   height: calc(100% - 0.5rem);
 
   &:hover {

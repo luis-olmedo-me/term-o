@@ -173,12 +173,12 @@ const registerEvent = (below, definition, event) => {
 
   below.addEventListener(
     eventName,
-    debounce(event => {
-      const xpath = getTargetXpath(event.target)
+    debounce(listenedEvent => {
+      const xpath = getTargetXpath(listenedEvent.target)
       const params = xpath ? [quotify(xpath)] : []
 
-      processManager.dispathTabEvent({ type: rawEventName, params })
-    }, 30)
+      processManager.dispathTabEvent({ event, params })
+    }, event.debounce || 80)
   )
 }
 
@@ -190,12 +190,12 @@ const interceptEarlyEvents = event => {
   const isDocumentInteractive = document.readyState === 'interactive'
 
   if (isWinLoad && isDocumentComplete) {
-    processManager.dispathTabEvent({ type: event.type, params: [] })
+    processManager.dispathTabEvent({ event, params: [] })
 
     return true
   }
   if (isWinDOMLoad && (isDocumentComplete || isDocumentInteractive)) {
-    processManager.dispathTabEvent({ type: event.type, params: [] })
+    processManager.dispathTabEvent({ event, params: [] })
 
     return true
   }

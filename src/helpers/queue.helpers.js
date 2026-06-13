@@ -1,3 +1,5 @@
+import { origins } from '@src/constants/command.constants'
+
 export const updateQueueValueIn = (queue, queueId, command) => {
   return queue.map(value => (value.id === queueId ? { ...value, command } : value))
 }
@@ -16,7 +18,14 @@ export const limitQueueByConfig = (queue, maxCount) => {
       newQueue.unshift(queueItem)
       continue
     }
+
     const logs = command.logs
+    const isAuto = command.origin === origins.AUTO
+
+    if (isAuto) {
+      newQueue.unshift({ ...queueItem, command: { ...command, logs } })
+      continue
+    }
 
     count += logs.length
 
@@ -24,11 +33,15 @@ export const limitQueueByConfig = (queue, maxCount) => {
       const cutLogs = logs.slice((maxCount - count) * -1)
       const overflowCount = logs.length - cutLogs.length
 
-      if (overflowCount) discardedCount += overflowCount
+      if (overflowCount && !alreadyExceed) {
+        discardedCount += overflowCount
+      }
+
       if (alreadyExceed) {
         discardedCount += logs.length
         continue
       }
+
       newQueue.unshift({ ...queueItem, command: { ...command, logs: cutLogs } })
       alreadyExceed = true
       continue

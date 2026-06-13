@@ -15,7 +15,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Register a new command for future execution',
-    validate: [options.requireAll('event')]
+    validate: [options.allow('debounce', 'event'), options.requireAll('event')]
   })
   .expect({
     name: 'list',
@@ -40,6 +40,15 @@ export default new CommandBase({
     helpSection: helpSections.DETAILS,
     description: 'Define the command identifier of the event',
     validate: [options.requireAnyOf('delete')]
+  })
+  .expect({
+    name: 'debounce',
+    abbreviation: 'D',
+    type: commandTypes.NUMBER,
+    helpSection: helpSections.DETAILS,
+    description: 'Define the debounce time of the event',
+    validate: [value.isPositiveWithZero, value.isInteger, options.requireAnyOf('register')],
+    defaultValue: 80
   })
   .expect({
     name: 'event',

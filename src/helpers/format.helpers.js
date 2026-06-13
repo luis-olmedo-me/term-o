@@ -116,7 +116,7 @@ export const formatAddon = ({ name, version }) => {
   return [`${C`green`}${quotedName}${C`reset`}`, `${C`cyan`}${quotedDateTime}${C`reset`}`]
 }
 
-export const formatRegisteredEvent = ({ type, url, line, id }) => {
+export const formatRegisteredEvent = ({ type, url, line, id, debounce }) => {
   const quotedId = quotify(id)
   const quotedType = quotify(type)
   const quotedURL = quotify(url)
@@ -126,7 +126,8 @@ export const formatRegisteredEvent = ({ type, url, line, id }) => {
     `${C`purple`}${quotedId}${C`reset`}`,
     `${C`green`}${quotedType}${C`reset`}`,
     `${C`yellow`}${quotedURL}${C`reset`}`,
-    `${C`yellow`}${quotedLine}${C`reset`}`
+    `${C`yellow`}${quotedLine}${C`reset`}`,
+    `${C`cyan`}${debounce}${C`reset`}`
   ]
 }
 

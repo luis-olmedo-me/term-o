@@ -1,6 +1,6 @@
 {
   "name": "Term-O",
-  "version": "0.9.3",
+  "version": "0.9.4",
   "description": "A terminal-style tool to interact with web pages, automate workflows, and boost productivity directly in your browser.",
   "manifest_version": 3,
   "permissions": [

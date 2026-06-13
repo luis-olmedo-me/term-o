@@ -15,9 +15,11 @@ export const eventsHandler = async command => {
   }
 
   if (P`register`) {
+    const debounce = P`debounce`
+
     P`event`.forEach(([type, url, line]) => {
       const id = createShortID()
-      const newEvent = { url, line, id, type }
+      const newEvent = { url, line, id, type, debounce }
       const events = storage.get(storageKeys.EVENTS)
 
       const newEvents = events.concat(newEvent)

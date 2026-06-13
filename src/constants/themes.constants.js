@@ -70,6 +70,7 @@ export const defaultStyleMeasures = {
     150: '3px',
     200: '4px',
     250: '6px',
+    275: '7px',
     300: '8px',
     400: '10px',
     450: '12px',

@@ -193,11 +193,11 @@ class ProcessManager {
     })
   }
 
-  dispathTabEvent({ type, params }) {
+  dispathTabEvent({ event, params }) {
     return createWorkerProcessRequest({
       type: processNames.DISPATCH_TAB_EVENT,
       defaultResponse: null,
-      data: { type, params }
+      data: { event, params }
     })
   }
 }

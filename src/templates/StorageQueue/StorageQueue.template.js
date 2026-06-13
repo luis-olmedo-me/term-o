@@ -15,6 +15,8 @@ export class StorageQueue extends StorageSimple {
     this.handleInitRef = this.handleInit.bind(this)
     this.handleConfigChangesRef = this.handleConfigChanges.bind(this)
     this._cache = []
+    this._additions = []
+    this._additionsTimeout = null
   }
 
   get $value() {
@@ -27,7 +29,8 @@ export class StorageQueue extends StorageSimple {
       clearCompleted: this.clearCompleted.bind(this),
       delete: this.delete.bind(this),
       change: this.change.bind(this),
-      add: this.add.bind(this)
+      add: this.add.bind(this),
+      scheduleAddition: this.scheduleAddition.bind(this)
     }
   }
 
@@ -111,6 +114,26 @@ export class StorageQueue extends StorageSimple {
     const newQueue = this.$latest().value.filter(({ id }) => id !== queueId)
 
     this.$storageService.set(storageKeys.QUEUE, newQueue)
+  }
+
+  scheduleAddition(line, origin, tab, event = null) {
+    const id = createUUIDv4()
+    const command = null
+    const status = queueStatuses.SCHEDULED
+
+    this._additions = this._additions.concat({ id, line, origin, tab, event, status, command })
+
+    if (this._additionsTimeout) clearTimeout(this._additionsTimeout)
+    this._additionsTimeout = setTimeout(this.applyScheduledAdditions.bind(this), 50)
+  }
+
+  applyScheduledAdditions() {
+    const newValue = [...this.$latest().value, ...this._additions]
+
+    clearTimeout(this._additionsTimeout)
+
+    this._additions = []
+    this.$storageService.set(storageKeys.QUEUE, newValue)
   }
 
   add(line, origin, tab, event = null) {

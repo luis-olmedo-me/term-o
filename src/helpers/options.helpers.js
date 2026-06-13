@@ -178,7 +178,7 @@ const registerEvent = (below, definition, event) => {
       const params = xpath ? [quotify(xpath)] : []
 
       processManager.dispathTabEvent({ event, params })
-    }, 50)
+    }, 80)
   )
 }
 

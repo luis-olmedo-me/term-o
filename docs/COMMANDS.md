@@ -1,7 +1,7 @@
 # Term-O Commands
 
-> Version 0.9.3  
-> Updated: 2026-06-12
+> Version 0.9.4  
+> Updated: 2026-06-13
 
 ---
 
@@ -664,6 +664,7 @@ The `events` command is a bridge to the page events API and DOM element events.
 | `--register`          | `-r`  | Register a new command for future execution. |
 | `--list`              | `-l`  | List all registered events.                  |
 | `--delete`            | `-d`  | Delete a registered event by its identifier. |
+| `--debounce <number>` | `-D`  | Define the debounce time of the event.       |
 | `--event <array>`     | `-e`  | Define a type-url-command event tuple.       |
 | `--event-id <string>` | `-E`  | Define the event identifier.                 |
 
@@ -688,6 +689,7 @@ When using `events` command the options can express **3** possible action:
    events
        --register                                                           # REQUIRED
        --event ["tab-loaded" 'https://test.com' 'dom -s']                   # REQUIRED
+       --debounce 80                                                        # OPTIONAL
    ```
 
 3. Delete a page events (using `--delete`)

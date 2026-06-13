@@ -155,6 +155,7 @@ chrome.runtime.onInstalled.addListener(async details => {
   const was090 = details.previousVersion === '0.9.0'
   const was091 = details.previousVersion === '0.9.1'
   const was092 = details.previousVersion === '0.9.2'
+  const was093 = details.previousVersion === '0.9.3'
 
   if (was090) {
     const storage = await getStorage()
@@ -169,7 +170,7 @@ chrome.runtime.onInstalled.addListener(async details => {
     })
   }
 
-  if (was092 || was091 || was090) {
+  if (was093 || was092 || was091 || was090) {
     const storage = await getStorage()
     const banners = storage.get(storageKeys.BANNERS)
 

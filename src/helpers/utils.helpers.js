@@ -2,7 +2,15 @@ const rgbStartPattern = /\brgba?\(/
 const rgbPattern = /rgba?\([^)]+\)/g
 
 export const debounce = (callback, wait) => {
-  let timerId
+  let timerId = null
+
+  if (!wait) {
+    return (...args) => {
+      callback(...args)
+
+      return null
+    }
+  }
 
   return (...args) => {
     clearTimeout(timerId)

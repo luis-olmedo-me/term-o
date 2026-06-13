@@ -110,6 +110,14 @@ export const isPositive = (option, value) => {
   }
 }
 
+export const isPositiveWithZero = (option, value) => {
+  if (value < 0) {
+    const name = option.displayName
+
+    throw `${name} expects a non-negative value. Instead, it received "${value}".`
+  }
+}
+
 export const isInteger = (option, value) => {
   if (value % 1 !== 0 || isNaN(value)) {
     const name = option.displayName
@@ -320,6 +328,7 @@ export const value = {
   isAnyOf,
   isAnyMatchOf,
   isPositive,
+  isPositiveWithZero,
   isInteger,
   isString,
   isArray,

@@ -47,7 +47,7 @@ export default new CommandBase({
     type: commandTypes.NUMBER,
     helpSection: helpSections.DETAILS,
     description: 'Define the debounce time of the event',
-    validate: [value.isPositive, value.isInteger, options.requireAnyOf('register')],
+    validate: [value.isPositiveWithZero, value.isInteger, options.requireAnyOf('register')],
     defaultValue: 80
   })
   .expect({

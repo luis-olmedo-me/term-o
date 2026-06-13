@@ -121,14 +121,13 @@ export const formatRegisteredEvent = ({ type, url, line, id, debounce }) => {
   const quotedType = quotify(type)
   const quotedURL = quotify(url)
   const quotedLine = quotify(line)
-  const quotedDebounce = quotify(`${debounce}`)
 
   return [
     `${C`purple`}${quotedId}${C`reset`}`,
     `${C`green`}${quotedType}${C`reset`}`,
     `${C`yellow`}${quotedURL}${C`reset`}`,
     `${C`yellow`}${quotedLine}${C`reset`}`,
-    `${C`yellow`}${quotedDebounce}${C`reset`}`
+    `${C`cyan`}${debounce}${C`reset`}`
   ]
 }
 

@@ -24,7 +24,7 @@
   word-break: break-all;
 
   @include theme-mode(light) {
-    border-color: with-opacity($colors-brightBlack, 0.3);
+    border-color: with-opacity($colors-brightBlack, 0.25);
   }
   @include theme-variant(outlined) {
     border-color: $colors-brightBlack;

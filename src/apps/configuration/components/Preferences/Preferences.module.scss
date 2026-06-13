@@ -22,8 +22,8 @@
 
 .preferences__main {
   box-sizing: content-box;
-  margin: $space-600;
-  padding-bottom: 100px;
+  padding: $space-600 0 100px $space-600;
+  margin-right: $space-600;
   width: 100%;
   overflow: hidden scroll;
 }

@@ -89,16 +89,13 @@
   }
 
   &___status_done::after {
-    background-color: $colors-brightGreen;
     color: $colors-brightGreen;
   }
   &___status_error::after {
-    background-color: $colors-brightRed;
     color: $colors-brightRed;
   }
   &___status_executing::after,
   &___status_idle::after {
-    background-color: $colors-brightWhite;
     color: $colors-brightWhite;
   }
 

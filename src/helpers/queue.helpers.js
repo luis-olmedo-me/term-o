@@ -13,24 +13,25 @@ export const limitQueueByConfig = (queue, maxCount) => {
   for (let index = -1; index >= -1 * queue.length; index--) {
     const queueItem = queue.at(index)
     const command = queueItem.command
-    const isAuto = command.origin === origins.AUTO
 
     if (!command) {
       newQueue.unshift(queueItem)
       continue
     }
+
     const logs = command.logs
+    const isAuto = command.origin === origins.AUTO
+
+    if (isAuto) {
+      newQueue.unshift({ ...queueItem, command: { ...command, logs } })
+      continue
+    }
 
     count += logs.length
 
     if (count > maxCount) {
       const cutLogs = logs.slice((maxCount - count) * -1)
       const overflowCount = logs.length - cutLogs.length
-
-      if (isAuto) {
-        newQueue.unshift({ ...queueItem, command: { ...command, logs } })
-        continue
-      }
 
       if (overflowCount && !alreadyExceed) {
         discardedCount += overflowCount

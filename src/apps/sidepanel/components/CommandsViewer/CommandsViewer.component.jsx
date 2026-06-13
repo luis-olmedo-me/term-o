@@ -20,13 +20,11 @@ import {
 import {
   viewer,
   viewer__command,
-  viewer__command___mod_collapsed,
   viewer__command___mod_lighted,
   viewer__command___mod_truncated,
   viewer__command_auto,
   viewer__line,
   viewer__line___mod_truncated,
-  viewer__line___mod_warn,
   viewer__static_line
 } from './CommandsViewer.module.scss'
 
@@ -111,7 +109,6 @@ export const CommandsViewer = ({ commands }) => {
                 ${hasStatusBar ? getClassNameByOrigin(command.origin) : ''}
                 ${hasStatusLight ? viewer__command___mod_lighted : ''}
                 ${isTruncated ? viewer__command___mod_truncated : ''}
-                ${!isExpanded ? viewer__command___mod_collapsed : ''}
               `}
             >
               {isAuto && (
@@ -127,48 +124,43 @@ export const CommandsViewer = ({ commands }) => {
                 </p>
               )}
 
-              <p onMouseUp={handleLineMouseUp} className={viewer__line}>
-                <ColoredText value={command.context} />
-              </p>
+              {isExpanded && (
+                <p onMouseUp={handleLineMouseUp} className={viewer__line}>
+                  <ColoredText value={command.context} />
+                </p>
+              )}
 
-              <p
-                onMouseUp={handleLineMouseUp}
-                className={`
+              {isExpanded && (
+                <p
+                  onMouseUp={handleLineMouseUp}
+                  className={`
                   ${viewer__line}
                   ${isTruncated ? viewer__line___mod_truncated : ''}
                 `}
-              >
-                {command.title}
-              </p>
+                >
+                  {command.title}
+                </p>
+              )}
 
-              {command.logs.map((log, index) => {
-                const isLastItem = index === command.logs.length - 1
-                const isLastErrorMessage = isLastItem && hasErrorMessage
-                const isTruncatedMessage = isTruncated && !isLastErrorMessage
+              {isExpanded &&
+                command.logs.map((log, index) => {
+                  const isLastItem = index === command.logs.length - 1
+                  const isLastErrorMessage = isLastItem && hasErrorMessage
+                  const isTruncatedMessage = isTruncated && !isLastErrorMessage
 
-                return (
-                  <p
-                    key={`${commandIndex}-${index}`}
-                    onMouseUp={handleLineMouseUp}
-                    className={`
+                  return (
+                    <p
+                      key={`${commandIndex}-${index}`}
+                      onMouseUp={handleLineMouseUp}
+                      className={`
                       ${viewer__line}
                       ${isTruncatedMessage ? viewer__line___mod_truncated : ''}
                     `}
-                  >
-                    <ColoredText value={log} />
-                  </p>
-                )
-              })}
-
-              {command.warning && (
-                <p
-                  className={`${viewer__line} ${viewer__line___mod_warn}`}
-                  key={command.warning}
-                  onMouseUp={handleLineMouseUp}
-                >
-                  <ColoredText value={command.warning} />
-                </p>
-              )}
+                    >
+                      <ColoredText value={log} />
+                    </p>
+                  )
+                })}
             </article>
           )
         })}

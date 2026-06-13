@@ -24,10 +24,6 @@
   margin: 0;
   white-space: pre-line;
 
-  &___mod_warn {
-    opacity: 0.7;
-  }
-
   &___mod_truncated {
     min-width: 0;
     overflow: hidden;
@@ -56,10 +52,6 @@
   &___mod_truncated {
     display: flex;
     flex-direction: column;
-  }
-
-  &___mod_collapsed .viewer__line {
-    display: none;
   }
 
   &___origin_manual,

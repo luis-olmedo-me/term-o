@@ -44,10 +44,12 @@
     position: absolute;
     top: 0.5rem;
     transition: background-color 0.1s ease-in-out;
+    background-color: currentColor;
     content: '';
 
     @include theme-mode(light) {
-      outline: $space-50 solid $colors-brightBlack;
+      border: $space-50 solid with-opacity($colors-brightBlack, 0.4);
+      background-color: with-opacity(currentColor, 0.5);
     }
   }
 
@@ -76,7 +78,7 @@
       content: '';
 
       @include theme-mode(light) {
-        outline: $space-50 solid $colors-brightBlack;
+        border: $space-50 solid with-opacity($colors-brightBlack, 0.2);
       }
     }
 
@@ -86,11 +88,9 @@
     }
   }
 
-  &___status_done {
-    &::after {
-      background-color: $colors-brightGreen;
-      color: $colors-brightGreen;
-    }
+  &___status_done::after {
+    background-color: $colors-brightGreen;
+    color: $colors-brightGreen;
   }
   &___status_error::after {
     background-color: $colors-brightRed;
@@ -124,10 +124,11 @@
 
   &___mod_lighted.viewer__command___indicator_half_dot::after,
   &___mod_lighted.viewer__command___indicator_dot::after {
-    box-shadow: 0 0 $space-200 $space-100 currentColor;
+    box-shadow: 0 0 $space-200 $space-100 with-opacity(currentColor, 0.8);
 
     @include theme-mode(light) {
-      outline-color: currentColor;
+      border-color: transparent;
+      background-color: with-opacity(currentColor, 0.8);
     }
   }
 

@@ -1,4 +1,5 @@
 @use '@styles/animations.module' as *;
+@use '@styles/mixins.module' as *;
 
 .preferences {
   display: flex;
@@ -49,6 +50,14 @@
 .preferences__section_inputs {
   backdrop-filter: blur($space-400);
   box-shadow: 0 $space-250 $space-400 $space-100 #00000010;
+  border-radius: $radius-200;
+
+  @include theme-mode(light) {
+    border: $space-50 solid with-opacity($colors-brightBlack, 0.1);
+  }
+  @include theme-variant(outlined) {
+    border: none;
+  }
 }
 
 @media only screen and (min-width: 1650px) {

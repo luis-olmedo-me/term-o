@@ -15,7 +15,8 @@ export const commandNames = {
   STORAGE: 'storage',
   STYLE: 'style',
   TABS: 'tabs',
-  THEME: 'theme'
+  THEME: 'theme',
+  URL: 'url'
 }
 
 export const origins = {

@@ -48,6 +48,13 @@ export const formatElement = ({ tagName, attributes, xpath, textContent, tabId }
   return [...formatTabId({ tabId }), `${C`red`}${quotedTagName}${C`reset`}`, ...attrs]
 }
 
+export const formatUrlParams = ({ params }) => {
+  return [...params].map(([name, value]) => [
+    `${C`green`}${quotify(name)}${C`reset`}`,
+    `${C`yellow`}${quotify(value)}${C`reset`}`
+  ])
+}
+
 export const formatNotification = ({ title, message }) => {
   const quotedTitle = quotify(title)
   const quotedMessage = quotify(message)

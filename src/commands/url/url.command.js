@@ -9,11 +9,43 @@ export default new CommandBase({
   handler: urlHandler
 })
   .expect({
-    name: 'current',
-    abbreviation: 'C',
+    name: 'host',
+    abbreviation: 'o',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
-    description: 'Show the current URL',
+    description: 'Get the current URL host',
+    validate: [options.allow('tab-id')]
+  })
+  .expect({
+    name: 'pathname',
+    abbreviation: 'p',
+    type: commandTypes.BOOLEAN,
+    helpSection: helpSections.ACTIONS,
+    description: 'Get the current URL pathname',
+    validate: [options.allow('tab-id')]
+  })
+  .expect({
+    name: 'search',
+    abbreviation: 's',
+    type: commandTypes.BOOLEAN,
+    helpSection: helpSections.ACTIONS,
+    description: 'Get the current URL search string',
+    validate: [options.allow('tab-id')]
+  })
+  .expect({
+    name: 'params',
+    abbreviation: 'P',
+    type: commandTypes.BOOLEAN,
+    helpSection: helpSections.ACTIONS,
+    description: 'Get the current URL search parameters',
+    validate: [options.allow('tab-id')]
+  })
+  .expect({
+    name: 'href',
+    abbreviation: 'H',
+    type: commandTypes.BOOLEAN,
+    helpSection: helpSections.ACTIONS,
+    description: 'Get the full current URL',
     validate: [options.allow('tab-id')]
   })
   .expect({
@@ -22,5 +54,5 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define a Tab ID where apply an action',
-    validate: [value.isTabId, options.requireAnyOf('current')]
+    validate: [value.isTabId, options.requireAnyOf('host', 'href', 'pathname')]
   })

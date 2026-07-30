@@ -20,7 +20,7 @@ export const urlHandler = async command => {
     tabId = validTab.id
   }
 
-  if (P`host`) {
+  if (P`get` && P`host`) {
     const text = await processManager.readPath(tabId, { path: 'window.location.href' })
     const currentUrl = unquotify(text)
     const url = new URL(currentUrl)
@@ -30,7 +30,7 @@ export const urlHandler = async command => {
     command.log(log)
   }
 
-  if (P`href`) {
+  if (P`get` && P`href`) {
     const text = await processManager.readPath(tabId, { path: 'window.location.href' })
     const currentUrl = unquotify(text)
     const url = new URL(currentUrl)
@@ -40,7 +40,7 @@ export const urlHandler = async command => {
     command.log(log)
   }
 
-  if (P`pathname`) {
+  if (P`get` && P`pathname`) {
     const text = await processManager.readPath(tabId, { path: 'window.location.href' })
     const currentUrl = unquotify(text)
     const url = new URL(currentUrl)
@@ -50,7 +50,7 @@ export const urlHandler = async command => {
     command.log(log)
   }
 
-  if (P`search`) {
+  if (P`get` && P`search`) {
     const text = await processManager.readPath(tabId, { path: 'window.location.href' })
     const currentUrl = unquotify(text)
     const url = new URL(currentUrl)
@@ -60,7 +60,7 @@ export const urlHandler = async command => {
     command.log(log)
   }
 
-  if (P`params`) {
+  if (P`get` && P`params`) {
     const text = await processManager.readPath(tabId, { path: 'window.location.href' })
     const currentUrl = unquotify(text)
 

@@ -161,6 +161,15 @@ class ProcessManager {
     })
   }
 
+  changeUrl(tabId, { url }) {
+    return createWorkerProcessRequest({
+      type: processNames.CHANGE_URL,
+      defaultResponse: null,
+      tabId,
+      data: { url }
+    })
+  }
+
   executeCode({ code, props, addonNames }) {
     return createWorkerProcessRequest({
       type: processNames.EXECUTE_CODE,

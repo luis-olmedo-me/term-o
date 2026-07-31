@@ -1,7 +1,7 @@
 import CommandBase from '@src/templates/CommandBase'
 
 import { commandNames, commandTypes, helpSections } from '@src/constants/command.constants'
-import { options, value } from '@src/helpers/validation-command.helpers'
+import { array, options, value } from '@src/helpers/validation-command.helpers'
 import { urlHandler } from './url.handler'
 
 export default new CommandBase({
@@ -14,47 +14,66 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Get property from current URL',
-    validate: [options.allow('tab-id', 'host', 'pathname', 'search', 'params', 'href')]
+    validate: [
+      options.allow('tab-id', 'host', 'pathname', 'search', 'params', 'href'),
+      options.requireAnyOf('host', 'pathname', 'search', 'params', 'href')
+    ]
+  })
+  .expect({
+    name: 'set',
+    abbreviation: 's',
+    type: commandTypes.BOOLEAN,
+    helpSection: helpSections.ACTIONS,
+    description: 'Set a property from current URL',
+    validate: [
+      options.allow('tab-id', 'host', 'pathname', 'search', 'params', 'href', 'value', 'param'),
+      options.requireAnyOf('host', 'pathname', 'search', 'params', 'href'),
+      options.when('host', [options.requireAll('value')]),
+      options.when('pathname', [options.requireAll('value')]),
+      options.when('search', [options.requireAll('value')]),
+      options.when('href', [options.requireAll('value')]),
+      options.when('params', [options.requireAll('param')])
+    ]
   })
   .expect({
     name: 'host',
     abbreviation: 'o',
     type: commandTypes.BOOLEAN,
-    helpSection: helpSections.ACTIONS,
+    helpSection: helpSections.DETAILS,
     description: 'Get the current URL host',
-    validate: [options.allow('get', 'tab-id'), options.requireAll('get')]
+    validate: [options.requireAnyOf('get', 'set')]
   })
   .expect({
     name: 'pathname',
     abbreviation: 'p',
     type: commandTypes.BOOLEAN,
-    helpSection: helpSections.ACTIONS,
+    helpSection: helpSections.DETAILS,
     description: 'Get the current URL pathname',
-    validate: [options.allow('get', 'tab-id'), options.requireAll('get')]
+    validate: [options.requireAnyOf('get', 'set')]
   })
   .expect({
     name: 'search',
-    abbreviation: 's',
+    abbreviation: 'S',
     type: commandTypes.BOOLEAN,
-    helpSection: helpSections.ACTIONS,
+    helpSection: helpSections.DETAILS,
     description: 'Get the current URL search string',
-    validate: [options.allow('get', 'tab-id'), options.requireAll('get')]
+    validate: [options.requireAnyOf('get', 'set')]
   })
   .expect({
     name: 'params',
     abbreviation: 'P',
     type: commandTypes.BOOLEAN,
-    helpSection: helpSections.ACTIONS,
+    helpSection: helpSections.DETAILS,
     description: 'Get the current URL search parameters',
-    validate: [options.allow('get', 'tab-id'), options.requireAll('get')]
+    validate: [options.requireAnyOf('get', 'set')]
   })
   .expect({
     name: 'href',
     abbreviation: 'H',
     type: commandTypes.BOOLEAN,
-    helpSection: helpSections.ACTIONS,
+    helpSection: helpSections.DETAILS,
     description: 'Get the full current URL',
-    validate: [options.allow('get', 'tab-id'), options.requireAll('get')]
+    validate: [options.requireAnyOf('get', 'set')]
   })
   .expect({
     name: 'tab-id',
@@ -62,5 +81,25 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define a Tab ID where apply an action',
-    validate: [value.isTabId, options.requireAnyOf('host', 'href', 'pathname')]
+    validate: [value.isTabId, options.requireAnyOf('get', 'set')]
+  })
+  .expect({
+    name: 'value',
+    abbreviation: 'v',
+    type: commandTypes.STRING,
+    helpSection: helpSections.DETAILS,
+    description: 'Define the value',
+    validate: [options.requireAnyOf('set')]
+  })
+  .expect({
+    name: 'param',
+    abbreviation: 'a',
+    type: commandTypes.ARRAY,
+    helpSection: helpSections.DETAILS,
+    description: 'Define the param',
+    validate: [
+      array.hasAllItemsAs(value.isArray, array.hasLength(2), array.hasAllItemsAs(value.isString)),
+      options.requireAnyOf('set')
+    ],
+    repeatable: true
   })

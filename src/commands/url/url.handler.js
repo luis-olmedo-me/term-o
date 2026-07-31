@@ -72,5 +72,78 @@ export const urlHandler = async command => {
     command.log(log)
   }
 
+  if (P`set` && P`host`) {
+    const text = await processManager.readPath(tabId, { path: 'window.location.href' })
+    const currentUrl = unquotify(text)
+    const url = new URL(currentUrl)
+
+    url.host = P`value`
+
+    await processManager.changeUrl(tabId, { url: url.href })
+    const log = formatText({ text: url.href })
+
+    command.clearLogs()
+    command.log(log)
+  }
+
+  if (P`set` && P`href`) {
+    const text = await processManager.readPath(tabId, { path: 'window.location.href' })
+    const currentUrl = unquotify(text)
+    const url = new URL(currentUrl)
+
+    url.href = P`value`
+
+    await processManager.changeUrl(tabId, { url: url.href })
+    const log = formatText({ text: url.href })
+
+    command.clearLogs()
+    command.log(log)
+  }
+
+  if (P`set` && P`pathname`) {
+    const text = await processManager.readPath(tabId, { path: 'window.location.href' })
+    const currentUrl = unquotify(text)
+    const url = new URL(currentUrl)
+
+    url.pathname = P`value`
+
+    await processManager.changeUrl(tabId, { url: url.href })
+    const log = formatText({ text: url.href })
+
+    command.clearLogs()
+    command.log(log)
+  }
+
+  if (P`set` && P`search`) {
+    const text = await processManager.readPath(tabId, { path: 'window.location.href' })
+    const currentUrl = unquotify(text)
+    const url = new URL(currentUrl)
+
+    url.search = P`value`
+
+    await processManager.changeUrl(tabId, { url: url.href })
+    const log = formatText({ text: url.href })
+
+    command.clearLogs()
+    command.log(log)
+  }
+
+  if (P`set` && P`params`) {
+    const newParams = P`param`
+    const text = await processManager.readPath(tabId, { path: 'window.location.href' })
+    const currentUrl = unquotify(text)
+    const url = new URL(currentUrl)
+
+    newParams.forEach(([key, value]) => {
+      url.searchParams.set(key, value)
+    })
+
+    await processManager.changeUrl(tabId, { url: url.href })
+    const log = formatText({ text: url.href })
+
+    command.clearLogs()
+    command.log(log)
+  }
+
   if (P`help`) createHelpView(command)
 }

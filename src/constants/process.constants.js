@@ -1,5 +1,6 @@
 export const processNames = {
   APPLY_ELEMENT_STYLES: 'apply-element-styles',
+  CHANGE_URL: 'change-url',
   CREATE_ELEMENT: 'create-element',
   CREATE_NOTIFICATION: 'create-notification',
   DISPATCH_TAB_EVENT: 'dispatch-tab-event',

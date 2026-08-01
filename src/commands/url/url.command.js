@@ -15,8 +15,8 @@ export default new CommandBase({
     helpSection: helpSections.ACTIONS,
     description: 'Get property from current URL',
     validate: [
-      options.allow('tab-id', 'host', 'pathname', 'search', 'params', 'href', 'hash'),
-      options.requireAnyOf('host', 'pathname', 'search', 'params', 'href', 'hash')
+      options.allow('tab-id', 'host', 'pathname', 'search', 'as-params', 'href', 'hash'),
+      options.requireAnyOf('host', 'pathname', 'search', 'as-params', 'href', 'hash')
     ]
   })
   .expect({
@@ -26,13 +26,13 @@ export default new CommandBase({
     helpSection: helpSections.ACTIONS,
     description: 'Set a property from current URL',
     validate: [
-      options.allow('tab-id', 'host', 'pathname', 'search', 'params', 'href', 'value', 'param'),
-      options.requireAnyOf('host', 'pathname', 'search', 'params', 'href'),
+      options.allow('tab-id', 'host', 'pathname', 'search', 'as-params', 'href', 'value', 'param'),
+      options.requireAnyOf('host', 'pathname', 'search', 'as-params', 'href'),
       options.when('host', [options.requireAll('value')]),
       options.when('pathname', [options.requireAll('value')]),
       options.when('search', [options.requireAll('value')]),
       options.when('href', [options.requireAll('value')]),
-      options.when('params', [options.requireAll('param')])
+      options.when('as-params', [options.requireAll('param')])
     ]
   })
   .expect({
@@ -68,12 +68,12 @@ export default new CommandBase({
     validate: [options.requireAnyOf('get', 'set')]
   })
   .expect({
-    name: 'params',
+    name: 'as-params',
     abbreviation: 'P',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
-    description: 'Get the current URL search parameters',
-    validate: [options.requireAnyOf('get', 'set')]
+    description: 'Get the current URL search/hash parameters',
+    validate: [options.requireAnyOf('get', 'set'), options.requireAnyOf('hash', 'search')]
   })
   .expect({
     name: 'href',

@@ -54,19 +54,10 @@ export const urlHandler = async command => {
     const text = await processManager.readPath(tabId, { path: 'window.location.href' })
     const currentUrl = unquotify(text)
     const url = new URL(currentUrl)
-    const log = formatText({ text: url.search })
 
-    command.clearLogs()
-    command.log(log)
-  }
-
-  if (P`get` && P`params`) {
-    const text = await processManager.readPath(tabId, { path: 'window.location.href' })
-    const currentUrl = unquotify(text)
-
-    const url = new URL(currentUrl)
-    const params = new URLSearchParams(url.search)
-    const log = formatUrlParams({ params: params })
+    const log = P`as-params`
+      ? formatUrlParams({ params: new URLSearchParams(url.search) })
+      : formatText({ text: url.search })
 
     command.clearLogs()
     command.log(log)
@@ -76,7 +67,11 @@ export const urlHandler = async command => {
     const text = await processManager.readPath(tabId, { path: 'window.location.href' })
     const currentUrl = unquotify(text)
     const url = new URL(currentUrl)
-    const log = formatText({ text: url.hash })
+    const hash = url.hash.slice(1)
+
+    const log = P`as-params`
+      ? formatUrlParams({ params: new URLSearchParams(hash) })
+      : formatText({ text: hash })
 
     command.clearLogs()
     command.log(log)
@@ -138,7 +133,7 @@ export const urlHandler = async command => {
     command.log(log)
   }
 
-  if (P`set` && P`params`) {
+  if (P`set` && P`as-params`) {
     const newParams = P`param`
     const text = await processManager.readPath(tabId, { path: 'window.location.href' })
     const currentUrl = unquotify(text)

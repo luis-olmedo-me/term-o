@@ -72,6 +72,16 @@ export const urlHandler = async command => {
     command.log(log)
   }
 
+  if (P`get` && P`hash`) {
+    const text = await processManager.readPath(tabId, { path: 'window.location.href' })
+    const currentUrl = unquotify(text)
+    const url = new URL(currentUrl)
+    const log = formatText({ text: url.hash })
+
+    command.clearLogs()
+    command.log(log)
+  }
+
   if (P`set` && P`host`) {
     const text = await processManager.readPath(tabId, { path: 'window.location.href' })
     const currentUrl = unquotify(text)

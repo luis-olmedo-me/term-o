@@ -15,8 +15,8 @@ export default new CommandBase({
     helpSection: helpSections.ACTIONS,
     description: 'Get property from current URL',
     validate: [
-      options.allow('tab-id', 'host', 'pathname', 'search', 'params', 'href'),
-      options.requireAnyOf('host', 'pathname', 'search', 'params', 'href')
+      options.allow('tab-id', 'host', 'pathname', 'search', 'params', 'href', 'hash'),
+      options.requireAnyOf('host', 'pathname', 'search', 'params', 'href', 'hash')
     ]
   })
   .expect({
@@ -49,6 +49,14 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
     description: 'Get the current URL pathname',
+    validate: [options.requireAnyOf('get', 'set')]
+  })
+  .expect({
+    name: 'hash',
+    abbreviation: 'a',
+    type: commandTypes.BOOLEAN,
+    helpSection: helpSections.DETAILS,
+    description: 'Get the current URL hash',
     validate: [options.requireAnyOf('get', 'set')]
   })
   .expect({
@@ -93,7 +101,7 @@ export default new CommandBase({
   })
   .expect({
     name: 'param',
-    abbreviation: 'a',
+    abbreviation: 'r',
     type: commandTypes.ARRAY,
     helpSection: helpSections.DETAILS,
     description: 'Define the param',

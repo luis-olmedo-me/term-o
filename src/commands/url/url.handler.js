@@ -120,31 +120,43 @@ export const urlHandler = async command => {
   }
 
   if (P`set` && P`search`) {
-    const text = await processManager.readPath(tabId, { path: 'window.location.href' })
-    const currentUrl = unquotify(text)
-    const url = new URL(currentUrl)
-
-    url.search = P`value`
-
-    await processManager.changeUrl(tabId, { url: url.href })
-    const log = formatText({ text: url.href })
-
-    command.clearLogs()
-    command.log(log)
-  }
-
-  if (P`set` && P`as-params`) {
     const newParams = P`param`
     const text = await processManager.readPath(tabId, { path: 'window.location.href' })
     const currentUrl = unquotify(text)
     const url = new URL(currentUrl)
 
-    newParams.forEach(([key, value]) => {
-      url.searchParams.set(key, value)
-    })
+    if (P`as-params`) newParams.forEach(([key, value]) => url.searchParams.set(key, value))
+    else url.search = P`value`
 
     await processManager.changeUrl(tabId, { url: url.href })
-    const log = formatText({ text: url.href })
+
+    const log = P`as-params`
+      ? formatUrlParams({ params: new URLSearchParams(url.search) })
+      : formatText({ text: url.search })
+
+    command.clearLogs()
+    command.log(log)
+  }
+
+  if (P`set` && P`hash`) {
+    const newParams = P`param`
+    const text = await processManager.readPath(tabId, { path: 'window.location.href' })
+    const currentUrl = unquotify(text)
+    const url = new URL(currentUrl)
+    const hash = url.hash.slice(1)
+    const hashParams = new URLSearchParams(hash)
+
+    if (P`as-params`) {
+      newParams.forEach(([key, value]) => hashParams.set(key, value))
+
+      url.hash = `#${hashParams.toString()}`
+    } else url.hash = P`value`
+
+    await processManager.changeUrl(tabId, { url: url.href })
+
+    const log = P`as-params`
+      ? formatUrlParams({ params: new URLSearchParams(url.search) })
+      : formatText({ text: url.search })
 
     command.clearLogs()
     command.log(log)

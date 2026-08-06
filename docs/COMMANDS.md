@@ -23,6 +23,7 @@
   - [INPUT](#input)
   - [THEME](#theme)
   - [ADDONS](#addons)
+  - [URL](#url)
   - [CLEAR](#clear)
 
 ---

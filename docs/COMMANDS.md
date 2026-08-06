@@ -1,7 +1,7 @@
 # Term-O Commands
 
 > Version 0.9.4  
-> Updated: 2026-06-13
+> Updated: 2026-08-06
 
 ---
 
@@ -609,9 +609,9 @@ When using `storage` command the options can express **4** possible action:
    ```bash
    storage
        --list                                                               # REQUIRED
-       --local                                                              # |
+       --local                                                              # -
        --session                                                            # | ONE REQUIRED
-       --cookie                                                             # |
+       --cookie                                                             # -
        --tab-id "T00000000"                                                 # OPTIONAL
        --data ["test-" "-value"]                                            # OPTIONAL
        --see-json                                                           # OPTIONAL
@@ -624,9 +624,9 @@ When using `storage` command the options can express **4** possible action:
    ```bash
    storage
        --set                                                                # REQUIRED
-       --local                                                              # |
+       --local                                                              # -
        --session                                                            # | ONE REQUIRED
-       --cookie                                                             # |
+       --cookie                                                             # -
        --data ["test-name" "test-value"]                                    # REQUIRED/REPEATABLE
        --tab-id "T00000000"                                                 # OPTIONAL
    ```
@@ -639,9 +639,9 @@ When using `storage` command the options can express **4** possible action:
    storage
        --get                                                                # REQUIRED
        --key "test-value"                                                   # REQUIRED
-       --local                                                              # |
+       --local                                                              # -
        --session                                                            # | ONE REQUIRED
-       --cookie                                                             # |
+       --cookie                                                             # -
        --tab-id "T00000000"                                                 # OPTIONAL
    ```
 
@@ -841,6 +841,58 @@ When using `theme` command the options can express **3** possible actions:
    ```
 
    Please, see [addon-example.json](assets/addon-example.json) to find a more detailed example of a valid addon.
+
+## URL
+
+The `url` command manages the URL of the current tab.
+
+| Option                  | Short | Description                                 |
+| ----------------------- | ----- | ------------------------------------------- |
+| `--get <boolean>`       | `-g`  | Get property from current URL.              |
+| `--set <boolean>`       | `-s`  | Set a property from current URL.            |
+| `--host <boolean>`      | `-o`  | Get the current URL host.                   |
+| `--pathname <boolean>`  | `-p`  | Get the current URL pathname.               |
+| `--href <boolean>`      | `-H`  | Get the full current URL.                   |
+| `--hash <boolean>`      | `-a`  | Get the current URL hash.                   |
+| `--search <boolean>`    | `-S`  | Get the current URL search string.          |
+| `--as-params <boolean>` | `-P`  | Get the current URL search/hash parameters. |
+| `--tab-id <string>`     | `-i`  | Define a Tab ID where apply an action.      |
+| `--value <string>`      | `-v`  | Define the value.                           |
+| `--param <array>`       | `-r`  | Define the param.                           |
+| `--help`                | `-h`  | Show help for this command.                 |
+
+### Dependency Rules
+
+When using `url` command the options can express **2** possible actions:
+
+1. Get an URL attribute (using `--get`)
+
+   ```bash
+   url
+       --get                                                                # REQUIRED
+       --host                                                               # -
+       --pathname                                                           # |
+       --href                                                               # | ONE REQUIRED
+       --search                                                             # |
+       --hash                                                               # -
+       --tab-id "T00000000"                                                 # OPTIONAL
+   ```
+
+2. Set an URL attribute (using `--set`)
+
+   ```bash
+   url
+       --set                                                                # REQUIRED
+       --host                                                               # -
+       --pathname                                                           # |
+       --href                                                               # | ONE REQUIRED
+       --search                                                             # |
+       --hash                                                               # -
+       --value "test"                                                       # -
+       --as-params                                                          # | ONE REQUIRED
+       --param ["key" "value"]                                              # -
+       --tab-id "T00000000"                                                 # OPTIONAL
+   ```
 
 ## CLEAR
 

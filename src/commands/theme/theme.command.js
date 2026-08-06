@@ -15,7 +15,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Import a color scheme in JSON format',
-    validate: [options.requireAll('theme-json')]
+    validate: [options.mustHave('theme-json')]
   })
   .expect({
     name: 'list',
@@ -31,7 +31,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Delete a theme by its name',
-    validate: [options.requireAll('name')]
+    validate: [options.mustHave('name')]
   })
   .expect({
     name: 'apply',
@@ -39,7 +39,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Apply a theme by name',
-    validate: [options.requireAll('name')]
+    validate: [options.mustHave('name')]
   })
   .expect({
     name: 'current',
@@ -55,7 +55,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define the Theme in JSON-String',
-    validate: [value.isJSON, value.isJSONScheme(colorScheme), options.requireAnyOf('import')]
+    validate: [value.isJSON, value.isJSONScheme(colorScheme), options.requireOneOf('import')]
   })
   .expect({
     name: 'name',
@@ -63,5 +63,5 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define the name of the theme',
-    validate: [options.requireAnyOf('delete', 'apply')]
+    validate: [options.requireOneOf('delete', 'apply')]
   })

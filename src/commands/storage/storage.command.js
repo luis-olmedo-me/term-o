@@ -16,7 +16,7 @@ export default new CommandBase({
     description: 'List all storage key-values',
     validate: [
       options.allow('local', 'session', 'cookie', 'see-json', 'tab-id', 'data'),
-      options.requireAnyOf('local', 'session', 'cookie')
+      options.requireOneOf('local', 'session', 'cookie')
     ]
   })
   .expect({
@@ -27,8 +27,8 @@ export default new CommandBase({
     description: 'Set a key-value pair in the selected storage',
     validate: [
       options.allow('local', 'session', 'cookie', 'data', 'tab-id'),
-      options.requireAnyOf('local', 'session', 'cookie'),
-      options.requireAll('data')
+      options.requireOneOf('local', 'session', 'cookie'),
+      options.mustHave('data')
     ]
   })
   .expect({
@@ -37,7 +37,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Copy a value to the clipboard',
-    validate: [options.requireAll('input')]
+    validate: [options.mustHave('input')]
   })
   .expect({
     name: 'get',
@@ -47,7 +47,7 @@ export default new CommandBase({
     description: 'Get storage data',
     validate: [
       options.allow('local', 'session', 'cookie', 'see-json', 'tab-id', 'key'),
-      options.requireAnyOf('local', 'session', 'cookie')
+      options.requireOneOf('local', 'session', 'cookie')
     ]
   })
   .expect({
@@ -56,7 +56,10 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
     description: 'Define whether the local storage should be displayed',
-    validate: [options.requireAnyOf('list', 'set', 'get'), options.conflict('session', 'cookie')]
+    validate: [
+      options.requireOneOf('list', 'set', 'get'),
+      options.conflictWith('session', 'cookie')
+    ]
   })
   .expect({
     name: 'session',
@@ -64,7 +67,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
     description: 'Define whether the session storage should be displayed',
-    validate: [options.requireAnyOf('list', 'set', 'get'), options.conflict('local', 'cookie')]
+    validate: [options.requireOneOf('list', 'set', 'get'), options.conflictWith('local', 'cookie')]
   })
   .expect({
     name: 'cookie',
@@ -72,7 +75,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
     description: 'Define whether the cookie storage should be displayed',
-    validate: [options.requireAnyOf('list', 'set', 'get'), options.conflict('local', 'session')]
+    validate: [options.requireOneOf('list', 'set', 'get'), options.conflictWith('local', 'session')]
   })
   .expect({
     name: 'see-json',
@@ -80,7 +83,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
     description: 'Define whether the JSON format should be displayed',
-    validate: [options.requireAnyOf('list')]
+    validate: [options.requireOneOf('list')]
   })
   .expect({
     name: 'tab-id',
@@ -88,7 +91,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define a Tab ID where apply an action',
-    validate: [value.isTabId, options.requireAnyOf('list')]
+    validate: [value.isTabId, options.requireOneOf('list')]
   })
   .expect({
     name: 'input',
@@ -96,7 +99,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define a user input',
-    validate: [options.requireAnyOf('copy')]
+    validate: [options.requireOneOf('copy')]
   })
   .expect({
     name: 'key',
@@ -104,7 +107,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define a storage key',
-    validate: [options.requireAnyOf('get')]
+    validate: [options.requireOneOf('get')]
   })
   .expect({
     name: 'data',
@@ -117,6 +120,6 @@ export default new CommandBase({
       array.hasAllItemsAs(value.isArray, array.hasAllItemsAs(value.isString)),
       options.when('set', [array.hasAllItemsAs(array.hasLength(2))]),
       options.when('list', [array.hasAllItemsAs(array.hasLengthBetween(1, 2))]),
-      options.requireAnyOf('set', 'list')
+      options.requireOneOf('set', 'list')
     ]
   })

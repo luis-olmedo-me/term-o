@@ -14,7 +14,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Delete a addon by name',
-    validate: [options.requireAll('name')]
+    validate: [options.mustHave('name')]
   })
   .expect({
     name: 'list',
@@ -38,5 +38,5 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define the name of the addon',
-    validate: [options.requireAnyOf('delete')]
+    validate: [options.requireOneOf('delete')]
   })

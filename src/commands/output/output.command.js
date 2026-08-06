@@ -14,7 +14,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Log a value',
-    validate: [options.requireAll('value')]
+    validate: [options.mustHave('value')]
   })
   .expect({
     name: 'value',
@@ -22,5 +22,5 @@ export default new CommandBase({
     type: commandTypes.ARRAY,
     helpSection: helpSections.DETAILS,
     description: 'Define the value',
-    validate: [options.requireAnyOf('log')]
+    validate: [options.requireOneOf('log')]
   })

@@ -21,7 +21,7 @@ export default new CommandBase({
     description: 'Create a notification',
     validate: [
       options.allow('tab-id', 'message', 'title', 'icon', 'color'),
-      options.requireAll('message', 'title')
+      options.mustHave('message', 'title')
     ]
   })
   .expect({
@@ -30,7 +30,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define a Tab ID where apply an action',
-    validate: [value.isTabId, options.requireAnyOf('create')]
+    validate: [value.isTabId, options.requireOneOf('create')]
   })
   .expect({
     name: 'title',
@@ -38,7 +38,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define the title',
-    validate: [options.requireAnyOf('create')]
+    validate: [options.requireOneOf('create')]
   })
   .expect({
     name: 'message',
@@ -46,7 +46,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define the message',
-    validate: [options.requireAnyOf('create')]
+    validate: [options.requireOneOf('create')]
   })
   .expect({
     name: 'icon',
@@ -54,7 +54,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define the icon used',
-    validate: [value.isAnyOf(avaialableNotificationIcons), options.requireAnyOf('create')],
+    validate: [value.isAnyOf(avaialableNotificationIcons), options.requireOneOf('create')],
     defaultValue: notificationIcons.DEFAULT
   })
   .expect({
@@ -63,6 +63,6 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define the color used',
-    validate: [value.isAnyOf(availableUserColors), options.requireAnyOf('create')],
+    validate: [value.isAnyOf(availableUserColors), options.requireOneOf('create')],
     defaultValue: customColorThemeKeys.ACCENT
   })

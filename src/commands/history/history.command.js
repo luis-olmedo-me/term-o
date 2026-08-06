@@ -22,7 +22,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Delete pages in a specific date range',
-    validate: [options.requireAll('from', 'to')]
+    validate: [options.mustHave('from', 'to')]
   })
   .expect({
     name: 'title',
@@ -30,7 +30,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define the title',
-    validate: [value.isRegExp, options.requireAnyOf('list')]
+    validate: [value.isRegExp, options.requireOneOf('list')]
   })
   .expect({
     name: 'url',
@@ -38,7 +38,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define a valid URL',
-    validate: [value.isRegExp, options.requireAnyOf('list')]
+    validate: [value.isRegExp, options.requireOneOf('list')]
   })
   .expect({
     name: 'max-results',
@@ -46,7 +46,7 @@ export default new CommandBase({
     type: commandTypes.NUMBER,
     helpSection: helpSections.DETAILS,
     description: 'Define the limit of items displayed',
-    validate: [value.isPositive, value.isInteger, options.requireAnyOf('list')]
+    validate: [value.isPositive, value.isInteger, options.requireOneOf('list')]
   })
   .expect({
     name: 'from',
@@ -54,7 +54,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define the start date',
-    validate: [value.isDate, options.requireAnyOf('list', 'delete')]
+    validate: [value.isDate, options.requireOneOf('list', 'delete')]
   })
   .expect({
     name: 'to',
@@ -62,5 +62,5 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define the end date',
-    validate: [value.isDate, options.requireAnyOf('list', 'delete')]
+    validate: [value.isDate, options.requireOneOf('list', 'delete')]
   })

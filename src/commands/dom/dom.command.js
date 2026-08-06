@@ -45,7 +45,7 @@ export default new CommandBase({
         'tab-id',
         'xpath'
       ),
-      options.requireAll('xpath')
+      options.mustHave('xpath')
     ]
   })
   .expect({
@@ -56,7 +56,7 @@ export default new CommandBase({
     description: 'Create a DOM element',
     validate: [
       options.allow('attr', 'below', 'see-content', 'see-xpath', 'tab-id', 'tag'),
-      options.requireAll('tag')
+      options.mustHave('tag')
     ]
   })
   .expect({
@@ -83,7 +83,7 @@ export default new CommandBase({
     description: 'Inject HTML as within an element',
     validate: [
       options.allow('html', 'see-content', 'see-xpath', 'tab-id', 'xpath'),
-      options.requireAll('html', 'xpath')
+      options.mustHave('html', 'xpath')
     ]
   })
   .expect({
@@ -108,7 +108,7 @@ export default new CommandBase({
     type: commandTypes.NUMBER,
     helpSection: helpSections.DETAILS,
     description: 'Define the sibling index',
-    validate: [value.isInteger, options.requireAnyOf('find')]
+    validate: [value.isInteger, options.requireOneOf('find')]
   })
   .expect({
     name: 'parent',
@@ -116,7 +116,7 @@ export default new CommandBase({
     abbreviation: 'p',
     helpSection: helpSections.DETAILS,
     description: 'Define the parent index',
-    validate: [value.isInteger, value.isPositive, options.requireAnyOf('find')]
+    validate: [value.isInteger, value.isPositive, options.requireOneOf('find')]
   })
   .expect({
     name: 'child',
@@ -124,7 +124,7 @@ export default new CommandBase({
     type: commandTypes.NUMBER,
     helpSection: helpSections.DETAILS,
     description: 'Define the child index',
-    validate: [value.isInteger, value.isPositive, options.requireAnyOf('find')]
+    validate: [value.isInteger, value.isPositive, options.requireOneOf('find')]
   })
   .expect({
     name: 'attr',
@@ -139,7 +139,7 @@ export default new CommandBase({
         array.hasLengthBetween(1, 2),
         array.hasAllItemsAs(value.isString)
       ),
-      options.requireAnyOf('create', 'search')
+      options.requireOneOf('create', 'search')
     ]
   })
   .expect({
@@ -155,7 +155,7 @@ export default new CommandBase({
         array.hasLengthBetween(1, 2),
         array.hasAllItemsAs(value.isString)
       ),
-      options.requireAnyOf('search')
+      options.requireOneOf('search')
     ]
   })
   .expect({
@@ -164,7 +164,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define the element tag name',
-    validate: [value.isKebabCase, options.requireAnyOf('create', 'search')]
+    validate: [value.isKebabCase, options.requireOneOf('create', 'search')]
   })
   .expect({
     name: 'content',
@@ -172,7 +172,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define the text content',
-    validate: [options.requireAnyOf('search')]
+    validate: [options.requireOneOf('search')]
   })
   .expect({
     name: 'html',
@@ -180,7 +180,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define the HTML content',
-    validate: [options.requireAnyOf('inject')]
+    validate: [options.requireOneOf('inject')]
   })
   .expect({
     name: 'see-content',
@@ -188,7 +188,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
     description: 'Define whether the text content should be displayed',
-    validate: [options.requireAnyOf('create', 'inject', 'find', 'search', 'pick')]
+    validate: [options.requireOneOf('create', 'inject', 'find', 'search', 'pick')]
   })
   .expect({
     name: 'see-xpath',
@@ -196,7 +196,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
     description: 'Define whether XPath(s) should be displayed',
-    validate: [options.requireAnyOf('create', 'inject', 'find', 'search', 'pick')]
+    validate: [options.requireOneOf('create', 'inject', 'find', 'search', 'pick')]
   })
   .expect({
     name: 'tab-id',
@@ -206,7 +206,7 @@ export default new CommandBase({
     description: 'Define a Tab ID where apply an action',
     validate: [
       value.isTabId,
-      options.requireAnyOf(
+      options.requireOneOf(
         'dispatch',
         'create',
         'find',
@@ -224,7 +224,7 @@ export default new CommandBase({
     abbreviation: 'B',
     helpSection: helpSections.DETAILS,
     description: 'Define an Element XPath query where apply an action',
-    validate: [options.requireAnyOf('create', 'find', 'search')]
+    validate: [options.requireOneOf('create', 'find', 'search')]
   })
   .expect({
     name: 'xpath',
@@ -232,7 +232,7 @@ export default new CommandBase({
     abbreviation: 'x',
     helpSection: helpSections.DETAILS,
     description: 'Define an XPath query',
-    validate: [options.requireAnyOf('dispatch', 'find', 'inject')]
+    validate: [options.requireOneOf('dispatch', 'find', 'inject')]
   })
   .expect({
     name: 'times',
@@ -241,7 +241,7 @@ export default new CommandBase({
     helpSection: helpSections.DETAILS,
     description: 'Define how many times the action must be done',
     defaultValue: 1,
-    validate: [options.requireAnyOf('pick')]
+    validate: [options.requireOneOf('pick')]
   })
   .expect({
     name: 'from',
@@ -249,7 +249,7 @@ export default new CommandBase({
     abbreviation: 'F',
     helpSection: helpSections.DETAILS,
     description: 'Define the origin element XPath',
-    validate: [options.requireAnyOf('measure')]
+    validate: [options.requireOneOf('measure')]
   })
   .expect({
     name: 'to',
@@ -257,7 +257,7 @@ export default new CommandBase({
     abbreviation: 'T',
     helpSection: helpSections.DETAILS,
     description: 'Define the destination element XPath',
-    validate: [options.requireAnyOf('measure')]
+    validate: [options.requireOneOf('measure')]
   })
   .expect({
     name: 'event-name',
@@ -265,5 +265,5 @@ export default new CommandBase({
     abbreviation: 'e',
     helpSection: helpSections.DETAILS,
     description: 'Define the event name',
-    validate: [value.isAnyOf(avaialableDomEvents), options.requireAnyOf('dispatch')]
+    validate: [value.isAnyOf(avaialableDomEvents), options.requireOneOf('dispatch')]
   })

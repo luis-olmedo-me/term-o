@@ -17,7 +17,7 @@ export default new CommandBase({
     description: 'Start an API request',
     validate: [
       options.allow('headers', 'method', 'payload', 'read-as', 'url'),
-      options.requireAll('url')
+      options.mustHave('url')
     ]
   })
   .expect({
@@ -34,7 +34,7 @@ export default new CommandBase({
         array.hasAllItemsAs(value.isString),
         array.hasItemAs(0, value.isSpaceForbidden)
       ),
-      options.requireAnyOf('fetch')
+      options.requireOneOf('fetch')
     ]
   })
   .expect({
@@ -43,7 +43,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define the payload',
-    validate: [value.isJSON, options.requireAnyOf('fetch')]
+    validate: [value.isJSON, options.requireOneOf('fetch')]
   })
   .expect({
     name: 'method',
@@ -52,7 +52,7 @@ export default new CommandBase({
     helpSection: helpSections.DETAILS,
     description: 'Define a HTTP method',
     defaultValue: 'GET',
-    validate: [options.requireAnyOf('fetch')]
+    validate: [options.requireOneOf('fetch')]
   })
   .expect({
     name: 'url',
@@ -60,7 +60,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define a valid URL',
-    validate: [value.isURL, options.requireAnyOf('fetch')]
+    validate: [value.isURL, options.requireOneOf('fetch')]
   })
   .expect({
     name: 'read-as',
@@ -68,6 +68,6 @@ export default new CommandBase({
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
     description: 'Define how response should be read as',
-    validate: [value.isAnyOf(responseFormatSupported), options.requireAnyOf('fetch')],
+    validate: [value.isAnyOf(responseFormatSupported), options.requireOneOf('fetch')],
     defaultValue: 'json'
   })

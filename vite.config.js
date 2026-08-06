@@ -54,7 +54,8 @@ export default defineConfig(({ mode }) => ({
           return 'assets/[name][extname]'
         }
       }
-    }
+    },
+    modulePreload: false
   },
   resolve: {
     alias: {

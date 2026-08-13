@@ -37,7 +37,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     abbreviation: 'x',
     helpSection: helpSections.DETAILS,
-    description: 'Define an XPath query',
+    description: 'Specify an XPath query',
     validate: [options.requireOneOf('apply', 'list')]
   })
   .expect({
@@ -45,7 +45,7 @@ export default new CommandBase({
     abbreviation: 'S',
     type: commandTypes.ARRAY,
     helpSection: helpSections.DETAILS,
-    description: 'Define a name-value style pair',
+    description: 'Specify a name-value style pair',
     repeatable: true,
     validate: [
       array.hasAllItemsAs(

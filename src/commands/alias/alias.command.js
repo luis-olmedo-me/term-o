@@ -37,7 +37,7 @@ export default new CommandBase({
     abbreviation: 'n',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define the name of the alias',
+    description: 'Specify the alias name',
     validate: [value.isSpaceForbidden, options.requireOneOf('delete')]
   })
   .expect({
@@ -45,7 +45,7 @@ export default new CommandBase({
     abbreviation: 'A',
     type: commandTypes.ARRAY,
     helpSection: helpSections.DETAILS,
-    description: 'Define a name-command pair',
+    description: 'Specify a name-command pair',
     repeatable: true,
     validate: [
       array.hasAllItemsAs(

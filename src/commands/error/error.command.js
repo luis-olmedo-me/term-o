@@ -21,6 +21,6 @@ export default new CommandBase({
     abbreviation: 't',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define the title',
+    description: 'Specify the title',
     validate: [options.requireOneOf('create')]
   })

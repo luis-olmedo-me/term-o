@@ -25,7 +25,7 @@ export default new CommandBase({
     abbreviation: 'H',
     type: commandTypes.ARRAY,
     helpSection: helpSections.DETAILS,
-    description: 'Define the request headers',
+    description: 'Specify the request headers',
     repeatable: true,
     validate: [
       array.hasAllItemsAs(
@@ -42,7 +42,7 @@ export default new CommandBase({
     abbreviation: 'p',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define the payload',
+    description: 'Specify the request payload',
     validate: [value.isJSON, options.requireOneOf('fetch')]
   })
   .expect({
@@ -50,7 +50,7 @@ export default new CommandBase({
     abbreviation: 'm',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a HTTP method',
+    description: 'Specify an HTTP method',
     defaultValue: 'GET',
     validate: [options.requireOneOf('fetch')]
   })
@@ -59,7 +59,7 @@ export default new CommandBase({
     abbreviation: 'u',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a valid URL',
+    description: 'Specify a valid URL',
     validate: [value.isURL, options.requireOneOf('fetch')]
   })
   .expect({
@@ -67,7 +67,7 @@ export default new CommandBase({
     abbreviation: 'r',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define how response should be read as',
+    description: 'Specify how the response should be read',
     validate: [value.isAnyOf(responseFormatSupported), options.requireOneOf('fetch')],
     defaultValue: 'json'
   })

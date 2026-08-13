@@ -13,7 +13,7 @@ export default new CommandBase({
     abbreviation: 'g',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
-    description: 'Get property from current URL',
+    description: 'Show a property from the current URL',
     validate: [
       options.allow('tab-id', 'host', 'pathname', 'search', 'hash', 'as-params', 'href'),
       options.requireOneOf('host', 'pathname', 'search', 'hash', 'as-params', 'href')
@@ -24,7 +24,7 @@ export default new CommandBase({
     abbreviation: 's',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
-    description: 'Set a property from current URL',
+    description: 'Set a property on the current URL',
     validate: [
       options.allow(
         'tab-id',
@@ -54,7 +54,7 @@ export default new CommandBase({
     abbreviation: 'o',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
-    description: 'Get the current URL host',
+    description: 'Show the current URL host',
     validate: [
       options.requireOneOf('get', 'set'),
       options.conflictWith('pathname', 'search', 'hash', 'href')
@@ -65,7 +65,7 @@ export default new CommandBase({
     abbreviation: 'p',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
-    description: 'Get the current URL pathname',
+    description: 'Show the current URL pathname',
     validate: [
       options.requireOneOf('get', 'set'),
       options.conflictWith('host', 'search', 'hash', 'href')
@@ -76,7 +76,7 @@ export default new CommandBase({
     abbreviation: 'H',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
-    description: 'Get the full current URL',
+    description: 'Show the full current URL',
     validate: [
       options.requireOneOf('get', 'set'),
       options.conflictWith('host', 'pathname', 'search', 'hash')
@@ -87,7 +87,7 @@ export default new CommandBase({
     abbreviation: 'a',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
-    description: 'Get the current URL hash',
+    description: 'Show the current URL hash',
     validate: [
       options.requireOneOf('get', 'set'),
       options.conflictWith('host', 'pathname', 'search', 'href')
@@ -98,7 +98,7 @@ export default new CommandBase({
     abbreviation: 'S',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
-    description: 'Get the current URL search string',
+    description: 'Show the current URL search string',
     validate: [
       options.requireOneOf('get', 'set'),
       options.conflictWith('host', 'pathname', 'hash', 'href')
@@ -109,7 +109,7 @@ export default new CommandBase({
     abbreviation: 'P',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
-    description: 'Get the current URL search/hash parameters',
+    description: 'Show the current URL search/hash parameters',
     validate: [options.requireOneOf('get', 'set'), options.conflictWith('value')]
   })
   .expect({
@@ -117,7 +117,7 @@ export default new CommandBase({
     abbreviation: 'i',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a Tab ID where apply an action',
+    description: 'Specify a Tab ID to apply the action',
     validate: [value.isTabId, options.requireOneOf('get', 'set')]
   })
   .expect({
@@ -125,7 +125,7 @@ export default new CommandBase({
     abbreviation: 'v',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define the value',
+    description: 'Specify the value',
     validate: [options.requireOneOf('get', 'set'), options.conflictWith('as-params')]
   })
   .expect({
@@ -133,7 +133,7 @@ export default new CommandBase({
     abbreviation: 'r',
     type: commandTypes.ARRAY,
     helpSection: helpSections.DETAILS,
-    description: 'Define the param',
+    description: 'Specify a URL param pair',
     validate: [
       array.hasAllItemsAs(value.isArray, array.hasLength(2), array.hasAllItemsAs(value.isString)),
       options.requireOneOf('set')

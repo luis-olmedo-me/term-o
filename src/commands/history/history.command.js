@@ -29,7 +29,7 @@ export default new CommandBase({
     abbreviation: 't',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define the title',
+    description: 'Specify a title filter',
     validate: [value.isRegExp, options.requireOneOf('list')]
   })
   .expect({
@@ -37,7 +37,7 @@ export default new CommandBase({
     abbreviation: 'u',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a valid URL',
+    description: 'Specify a valid URL',
     validate: [value.isRegExp, options.requireOneOf('list')]
   })
   .expect({
@@ -45,7 +45,7 @@ export default new CommandBase({
     abbreviation: 'r',
     type: commandTypes.NUMBER,
     helpSection: helpSections.DETAILS,
-    description: 'Define the limit of items displayed',
+    description: 'Specify the maximum number of items to display',
     validate: [value.isPositive, value.isInteger, options.requireOneOf('list')]
   })
   .expect({
@@ -53,7 +53,7 @@ export default new CommandBase({
     abbreviation: 'F',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define the start date',
+    description: 'Specify the start date',
     validate: [value.isDate, options.requireOneOf('list', 'delete')]
   })
   .expect({
@@ -61,6 +61,6 @@ export default new CommandBase({
     abbreviation: 'T',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define the end date',
+    description: 'Specify the end date',
     validate: [value.isDate, options.requireOneOf('list', 'delete')]
   })

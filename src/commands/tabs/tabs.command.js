@@ -88,7 +88,7 @@ export default new CommandBase({
     abbreviation: 'I',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
-    description: 'Define whether incognito tabs should be focused',
+    description: 'Specify whether to include incognito tabs',
     validate: [options.requireOneOf('list')]
   })
   .expect({
@@ -96,7 +96,7 @@ export default new CommandBase({
     abbreviation: 't',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define the title',
+    description: 'Specify a title filter',
     validate: [value.isRegExp, options.requireOneOf('list')]
   })
   .expect({
@@ -104,7 +104,7 @@ export default new CommandBase({
     abbreviation: 'u',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a valid URL',
+    description: 'Specify a valid URL or regex',
     validate: [
       options.requireOneOf('list', 'open'),
       options.when('open', [value.isURL]),
@@ -116,7 +116,7 @@ export default new CommandBase({
     abbreviation: 'm',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
-    description: 'Define whether muted tabs should be focused',
+    description: 'Specify whether to include muted tabs',
     validate: [options.requireOneOf('list'), options.conflictWith('unmuted')]
   })
   .expect({
@@ -124,7 +124,7 @@ export default new CommandBase({
     abbreviation: 'M',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
-    description: 'Define whether unmuted tabs should be focused',
+    description: 'Specify whether to include unmuted tabs',
     validate: [options.requireOneOf('list'), options.conflictWith('muted')]
   })
   .expect({
@@ -132,7 +132,7 @@ export default new CommandBase({
     abbreviation: 'W',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
-    description: 'Define whether the action must complete before continuing',
+    description: 'Specify whether to wait for action completion',
     validate: [options.requireOneOf('open', 'reload')]
   })
   .expect({
@@ -140,7 +140,7 @@ export default new CommandBase({
     abbreviation: 'a',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
-    description: 'Define whether to use the current tab',
+    description: 'Specify whether to use the current tab',
     validate: [options.requireOneOf('open')]
   })
   .expect({
@@ -148,7 +148,7 @@ export default new CommandBase({
     abbreviation: 'w',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a Window ID where apply an action',
+    description: 'Specify a Window ID to apply the action',
     validate: [value.isRegExp, options.requireOneOf('list')]
   })
   .expect({
@@ -156,7 +156,7 @@ export default new CommandBase({
     abbreviation: 'g',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a Group ID where apply an action',
+    description: 'Specify a Group ID to apply the action',
     validate: [value.isRegExp, options.requireOneOf('list')]
   })
   .expect({
@@ -164,7 +164,7 @@ export default new CommandBase({
     abbreviation: 'i',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a Tab ID where apply an action',
+    description: 'Specify a Tab ID to apply the action',
     validate: [
       options.requireOneOf('list', 'reload', 'switch', 'point', 'close'),
       options.when('list', [value.isRegExp]),

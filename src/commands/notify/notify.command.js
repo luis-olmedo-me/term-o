@@ -29,7 +29,7 @@ export default new CommandBase({
     abbreviation: 'i',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a Tab ID where apply an action',
+    description: 'Specify a Tab ID to apply the action',
     validate: [value.isTabId, options.requireOneOf('create')]
   })
   .expect({
@@ -37,7 +37,7 @@ export default new CommandBase({
     abbreviation: 't',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define the title',
+    description: 'Specify the title',
     validate: [options.requireOneOf('create')]
   })
   .expect({
@@ -45,7 +45,7 @@ export default new CommandBase({
     abbreviation: 'm',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define the message',
+    description: 'Specify the message',
     validate: [options.requireOneOf('create')]
   })
   .expect({
@@ -53,7 +53,7 @@ export default new CommandBase({
     abbreviation: 'I',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define the icon used',
+    description: 'Specify the icon to show',
     validate: [value.isAnyOf(avaialableNotificationIcons), options.requireOneOf('create')],
     defaultValue: notificationIcons.DEFAULT
   })
@@ -62,7 +62,7 @@ export default new CommandBase({
     abbreviation: 'C',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define the color used',
+    description: 'Specify the notification color',
     validate: [value.isAnyOf(availableUserColors), options.requireOneOf('create')],
     defaultValue: customColorThemeKeys.ACCENT
   })

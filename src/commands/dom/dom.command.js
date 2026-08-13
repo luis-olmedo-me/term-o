@@ -107,7 +107,7 @@ export default new CommandBase({
     abbreviation: 'b',
     type: commandTypes.NUMBER,
     helpSection: helpSections.DETAILS,
-    description: 'Define the sibling index',
+    description: 'Specify the sibling index',
     validate: [value.isInteger, options.requireOneOf('find')]
   })
   .expect({
@@ -115,7 +115,7 @@ export default new CommandBase({
     type: commandTypes.NUMBER,
     abbreviation: 'p',
     helpSection: helpSections.DETAILS,
-    description: 'Define the parent index',
+    description: 'Specify the parent index',
     validate: [value.isInteger, value.isPositive, options.requireOneOf('find')]
   })
   .expect({
@@ -123,7 +123,7 @@ export default new CommandBase({
     abbreviation: 'd',
     type: commandTypes.NUMBER,
     helpSection: helpSections.DETAILS,
-    description: 'Define the child index',
+    description: 'Specify the child index',
     validate: [value.isInteger, value.isPositive, options.requireOneOf('find')]
   })
   .expect({
@@ -131,7 +131,7 @@ export default new CommandBase({
     abbreviation: 'a',
     type: commandTypes.ARRAY,
     helpSection: helpSections.DETAILS,
-    description: 'Define a name-value attribute pair',
+    description: 'Specify a name-value attribute pair',
     repeatable: true,
     validate: [
       array.hasAllItemsAs(
@@ -147,7 +147,7 @@ export default new CommandBase({
     abbreviation: 'S',
     type: commandTypes.ARRAY,
     helpSection: helpSections.DETAILS,
-    description: 'Define a name-value style pair',
+    description: 'Specify a name-value style pair',
     repeatable: true,
     validate: [
       array.hasAllItemsAs(
@@ -163,7 +163,7 @@ export default new CommandBase({
     abbreviation: 'g',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define the element tag name',
+    description: 'Specify the element tag name',
     validate: [value.isKebabCase, options.requireOneOf('create', 'search')]
   })
   .expect({
@@ -171,7 +171,7 @@ export default new CommandBase({
     abbreviation: 't',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define the text content',
+    description: 'Specify the text content',
     validate: [options.requireOneOf('search')]
   })
   .expect({
@@ -179,7 +179,7 @@ export default new CommandBase({
     abbreviation: 'H',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define the HTML content',
+    description: 'Specify the HTML content',
     validate: [options.requireOneOf('inject')]
   })
   .expect({
@@ -187,7 +187,7 @@ export default new CommandBase({
     abbreviation: 'C',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
-    description: 'Define whether the text content should be displayed',
+    description: 'Show text content in results',
     validate: [options.requireOneOf('create', 'inject', 'find', 'search', 'pick')]
   })
   .expect({
@@ -195,7 +195,7 @@ export default new CommandBase({
     abbreviation: 'X',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
-    description: 'Define whether XPath(s) should be displayed',
+    description: 'Show XPath(s) in results',
     validate: [options.requireOneOf('create', 'inject', 'find', 'search', 'pick')]
   })
   .expect({
@@ -203,7 +203,7 @@ export default new CommandBase({
     abbreviation: 'i',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a Tab ID where apply an action',
+    description: 'Specify a Tab ID to apply the action',
     validate: [
       value.isTabId,
       options.requireOneOf(
@@ -223,7 +223,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     abbreviation: 'B',
     helpSection: helpSections.DETAILS,
-    description: 'Define an Element XPath query where apply an action',
+    description: 'Specify an Element XPath query to apply the action',
     validate: [options.requireOneOf('create', 'find', 'search')]
   })
   .expect({
@@ -231,7 +231,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     abbreviation: 'x',
     helpSection: helpSections.DETAILS,
-    description: 'Define an XPath query',
+    description: 'Specify an XPath query',
     validate: [options.requireOneOf('dispatch', 'find', 'inject')]
   })
   .expect({
@@ -239,7 +239,7 @@ export default new CommandBase({
     type: commandTypes.NUMBER,
     abbreviation: 'm',
     helpSection: helpSections.DETAILS,
-    description: 'Define how many times the action must be done',
+    description: 'Specify how many times to repeat the action',
     defaultValue: 1,
     validate: [options.requireOneOf('pick')]
   })
@@ -248,7 +248,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     abbreviation: 'F',
     helpSection: helpSections.DETAILS,
-    description: 'Define the origin element XPath',
+    description: 'Specify the origin element XPath',
     validate: [options.requireOneOf('measure')]
   })
   .expect({
@@ -256,7 +256,7 @@ export default new CommandBase({
     type: commandTypes.STRING,
     abbreviation: 'T',
     helpSection: helpSections.DETAILS,
-    description: 'Define the destination element XPath',
+    description: 'Specify the destination element XPath',
     validate: [options.requireOneOf('measure')]
   })
   .expect({
@@ -264,6 +264,6 @@ export default new CommandBase({
     type: commandTypes.STRING,
     abbreviation: 'e',
     helpSection: helpSections.DETAILS,
-    description: 'Define the event name',
+    description: 'Specify the event name',
     validate: [value.isAnyOf(avaialableDomEvents), options.requireOneOf('dispatch')]
   })

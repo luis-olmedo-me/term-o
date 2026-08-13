@@ -33,7 +33,7 @@ export default new CommandBase({
     abbreviation: 'p',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a variable path',
+    description: 'Specify a variable path',
     validate: [options.requireOneOf('read')]
   })
   .expect({
@@ -41,7 +41,7 @@ export default new CommandBase({
     abbreviation: 'i',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a Tab ID where apply an action',
+    description: 'Specify a Tab ID to apply the action',
     validate: [value.isTabId, options.requireOneOf('read')]
   })
   .expect({
@@ -49,7 +49,7 @@ export default new CommandBase({
     abbreviation: 'q',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a regular expression used to match within an input',
+    description: 'Specify a regular expression to match within an input',
     validate: [value.isRegExp, options.requireOneOf('match')]
   })
   .expect({
@@ -57,6 +57,6 @@ export default new CommandBase({
     abbreviation: 'I',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a user input',
+    description: 'Specify a user input',
     validate: [options.requireOneOf('match', 'read'), options.when('read', [value.isJSON])]
   })

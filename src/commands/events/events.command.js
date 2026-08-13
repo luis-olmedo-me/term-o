@@ -38,7 +38,7 @@ export default new CommandBase({
     abbreviation: 'E',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define the command identifier of the event',
+    description: 'Specify the event identifier',
     validate: [options.requireOneOf('delete')]
   })
   .expect({
@@ -46,7 +46,7 @@ export default new CommandBase({
     abbreviation: 'D',
     type: commandTypes.NUMBER,
     helpSection: helpSections.DETAILS,
-    description: 'Define the debounce time of the event',
+    description: 'Specify the debounce time (ms) for the event',
     validate: [value.isPositiveWithZero, value.isInteger, options.requireOneOf('register')],
     defaultValue: 80
   })
@@ -55,7 +55,7 @@ export default new CommandBase({
     abbreviation: 'e',
     type: commandTypes.ARRAY,
     helpSection: helpSections.DETAILS,
-    description: 'Define a type-url-command event tuple',
+    description: 'Specify a type-url-command event tuple',
     repeatable: true,
     validate: [
       array.hasAllItemsAs(

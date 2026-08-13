@@ -21,6 +21,6 @@ export default new CommandBase({
     abbreviation: 'v',
     type: commandTypes.ARRAY,
     helpSection: helpSections.DETAILS,
-    description: 'Define the value',
+    description: 'Specify the value',
     validate: [options.requireOneOf('log')]
   })

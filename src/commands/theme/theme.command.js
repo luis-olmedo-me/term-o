@@ -54,7 +54,7 @@ export default new CommandBase({
     abbreviation: 't',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define the Theme in JSON-String',
+    description: 'Specify the theme as a JSON string',
     validate: [value.isJSON, value.isJSONScheme(colorScheme), options.requireOneOf('import')]
   })
   .expect({
@@ -62,6 +62,6 @@ export default new CommandBase({
     abbreviation: 'n',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define the name of the theme',
+    description: 'Specify the theme name',
     validate: [options.requireOneOf('delete', 'apply')]
   })

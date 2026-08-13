@@ -55,7 +55,7 @@ export default new CommandBase({
     abbreviation: 'L',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
-    description: 'Define whether the local storage should be displayed',
+    description: 'Specify whether to target local storage',
     validate: [
       options.requireOneOf('list', 'set', 'get'),
       options.conflictWith('session', 'cookie')
@@ -66,7 +66,7 @@ export default new CommandBase({
     abbreviation: 'S',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
-    description: 'Define whether the session storage should be displayed',
+    description: 'Specify whether to target session storage',
     validate: [options.requireOneOf('list', 'set', 'get'), options.conflictWith('local', 'cookie')]
   })
   .expect({
@@ -74,7 +74,7 @@ export default new CommandBase({
     abbreviation: 'C',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
-    description: 'Define whether the cookie storage should be displayed',
+    description: 'Specify whether to target cookie storage',
     validate: [options.requireOneOf('list', 'set', 'get'), options.conflictWith('local', 'session')]
   })
   .expect({
@@ -82,7 +82,7 @@ export default new CommandBase({
     abbreviation: 'j',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
-    description: 'Define whether the JSON format should be displayed',
+    description: 'Specify whether to display JSON format',
     validate: [options.requireOneOf('list')]
   })
   .expect({
@@ -90,7 +90,7 @@ export default new CommandBase({
     abbreviation: 'i',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a Tab ID where apply an action',
+    description: 'Specify a Tab ID to apply the action',
     validate: [value.isTabId, options.requireOneOf('list')]
   })
   .expect({
@@ -98,7 +98,7 @@ export default new CommandBase({
     abbreviation: 'I',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a user input',
+    description: 'Specify a user input',
     validate: [options.requireOneOf('copy')]
   })
   .expect({
@@ -106,7 +106,7 @@ export default new CommandBase({
     abbreviation: 'k',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a storage key',
+    description: 'Specify a storage key',
     validate: [options.requireOneOf('get')]
   })
   .expect({
@@ -114,7 +114,7 @@ export default new CommandBase({
     abbreviation: 'D',
     type: commandTypes.ARRAY,
     helpSection: helpSections.DETAILS,
-    description: 'Define a key-value pair',
+    description: 'Specify a key-value pair',
     repeatable: true,
     validate: [
       array.hasAllItemsAs(value.isArray, array.hasAllItemsAs(value.isString)),

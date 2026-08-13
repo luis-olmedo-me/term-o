@@ -5,6 +5,18 @@
 
 ---
 
+## Quick Start
+
+A minimal set of examples to get started with Term-O commands.
+
+```bash
+# Open a new tab and wait until it loads
+tabs --open "https://example.com" --wait --active
+
+# Search for buttons containing "Submit" and show their XPaths
+dom --search --tag "button" --content "Submit" --see-xpath
+```
+
 # Table of Contents
 
 - [Overview](#overview)
@@ -52,7 +64,7 @@ The `dom` command enables element selection, filtering, and contextual queries i
 | `--find`                | `-f`  | Find one element by criteria.                        |
 | `--create`              | `-c`  | Create a DOM element.                                |
 | `--pick`                | `-P`  | Pick an element from the tab.                        |
-| `--measure`             | `-M`  | Calculate the distance between two elements..        |
+| `--measure`             | `-M`  | Calculate the distance between two elements.         |
 | `--inject`              | `-I`  | Inject HTML as within an element.                    |
 | `--dispatch`            | `-D`  | Dispatch an element over an element.                 |
 | `--selection`           | `-l`  | Get selected text in the tab.                        |
@@ -100,7 +112,7 @@ When using `dom` command the options can express **8** possible actions:
 
    The option `--find` will trigger an only element search. This option is commonly used to make a concatenated search. An xpath can be passed as a parameter, then continue the search using combining it with more options.
 
-   ```bash
+```bash
    dom
        --find                                                               # REQUIRED
        --xpath '//*[@id="main-container"]'                                  # REQUIRED
@@ -110,7 +122,7 @@ When using `dom` command the options can express **8** possible actions:
        --tab-id "T00000000"                                                 # OPTIONAL
        --see-content                                                        # OPTIONAL
        --see-xpath                                                          # OPTIONAL
-   ```
+```
 
 3. Inject HTML code below an element (using `--inject`)
 
@@ -166,15 +178,15 @@ When using `dom` command the options can express **8** possible actions:
        --tab-id "T00000000"                                                 # OPTIONAL
    ```
 
-7. Dispatch an event over an element (using `--dipatch`)
+7. Dispatch an event over an element (using `--dispatch`)
 
-   The `--dipatch` will dispatch an event on a element from the DOM.
+   The `--dispatch` will dispatch an event on an element from the DOM.
 
    ```bash
    dom
-       --dipatch                                                            # REQUIRED
+       --dispatch                                                           # REQUIRED
        --event-name 'click'                                                 # REQUIRED
-       --xpath '//*[@id="main-container"]'                                  # REQUIRED
+       --xpath '//*[@id="cards-container"]'                                 # REQUIRED
        --tab-id "T00000000"                                                 # OPTIONAL
    ```
 
@@ -620,7 +632,7 @@ When using `storage` command the options can express **4** possible action:
 
 2. Set a value in a certain storage in a certain tab (using `--set`)
 
-   The `--set` will assigned a value in a ceratin tab at a certain tab.
+   The `--set` assigns a value in a certain storage in a certain tab.
 
    ```bash
    storage
@@ -899,4 +911,4 @@ When using `url` command the options can express **2** possible actions:
 
 Interact with the clean up of the UI terminal.
 
-This command does not expect for any option, its only porpuse is to clean the terminal when called.
+This command does not expect any option; its only purpose is to clear the terminal when called.

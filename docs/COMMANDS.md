@@ -68,23 +68,23 @@ The `dom` command enables element selection, filtering, and contextual queries i
 | `--inject`              | `-I`  | Inject HTML as within an element.                    |
 | `--dispatch`            | `-D`  | Dispatch an element over an element.                 |
 | `--selection`           | `-l`  | Get selected text in the tab.                        |
-| `--sibling <number>`    | `-b`  | Define the sibling index.                            |
-| `--parent <number>`     | `-p`  | Define the parent index.                             |
-| `--child <number>`      | `-d`  | Define the child index.                              |
-| `--attr <array>`        | `-a`  | Define a name-value attribute pair.                  |
-| `--style <array>`       | `-S`  | Define a name-value style pair.                      |
-| `--tag <string>`        | `-g`  | Define the element tag name.                         |
-| `--content <string>`    | `-t`  | Define the text content.                             |
-| `--html <string>`       | `-H`  | Define the HTML content.                             |
-| `--see-content`         | `-C`  | Define whether the text content should be displayed. |
-| `--see-xpath`           | `-X`  | Define whether XPath(s) should be displayed.         |
-| `--tab-id <string>`     | `-i`  | Define a Tab ID where apply an action.               |
-| `--below <string>`      | `-B`  | Define an Element XPath query where apply an action. |
-| `--xpath <string>`      | `-x`  | Define an XPath query.                               |
-| `--times <number>`      | `-m`  | Define how many times the action must be done.       |
-| `--from <string>`       | `-F`  | Define the origin element XPath.                     |
-| `--to <string>`         | `-T`  | Define the destination element XPath.                |
-| `--event-name <string>` | `-e`  | Define the event name.                               |
+| `--sibling <number>`    | `-b`  | Specify the sibling index.                           |
+| `--parent <number>`     | `-p`  | Specify the parent index.                            |
+| `--child <number>`      | `-d`  | Specify the child index.                             |
+| `--attr <array>`        | `-a`  | Specify a name-value attribute pair.                 |
+| `--style <array>`       | `-S`  | Specify a name-value style pair.                     |
+| `--tag <string>`        | `-g`  | Specify the element tag name.                        |
+| `--content <string>`    | `-t`  | Specify the text content.                            |
+| `--html <string>`       | `-H`  | Specify the HTML content.                            |
+| `--see-content`         | `-C`  | Show text content in results.                        |
+| `--see-xpath`           | `-X`  | Show XPath(s) in results.                            |
+| `--tab-id <string>`     | `-i`  | Specify a Tab ID to apply the action.                |
+| `--below <string>`      | `-B`  | Specify an Element XPath query to apply the action.  |
+| `--xpath <string>`      | `-x`  | Specify an XPath query.                              |
+| `--times <number>`      | `-m`  | Specify how many times to repeat the action.         |
+| `--from <string>`       | `-F`  | Specify the origin element XPath.                    |
+| `--to <string>`         | `-T`  | Specify the destination element XPath.               |
+| `--event-name <string>` | `-e`  | Specify the event name.                              |
 | `--help`                | `-h`  | Show help for this command.                          |
 
 ### Dependency Rules
@@ -216,16 +216,16 @@ The `tabs` command displays all data related to the browser's tabs.
 | `--current`            | `-C`  | Show the currently active tab.                             |
 | `--pointing`           | `-P`  | Show the tab currently targeted by the terminal.           |
 | `--close <string>`     | `-c`  | Close a specific tab by its identifier.                    |
-| `--incognito`          | `-I`  | Define whether incognito tabs should be focused.           |
-| `--muted`              | `-m`  | Define whether muted tabs should be focused.               |
-| `--unmuted`            | `-M`  | Define whether unmuted tabs should be focused.             |
-| `--wait`               | `-W`  | Define whether the action must complete before continuing. |
-| `--active`             | `-a`  | Define whether to use the current tab.                     |
-| `--title <string>`     | `-t`  | Define the title.                                          |
-| `--url <string>`       | `-u`  | Define a valid URL.                                        |
+| `--incognito`          | `-I`  | Include incognito tabs.                                     |
+| `--muted`              | `-m`  | Include muted tabs.                                         |
+| `--unmuted`            | `-M`  | Include unmuted tabs.                                       |
+| `--wait`               | `-W`  | Wait for the action to complete before continuing.          |
+| `--active`             | `-a`  | Use the current tab.                                        |
+| `--title <string>`     | `-t`  | Specify a title filter.                                    |
+| `--url <string>`       | `-u`  | Specify a valid URL.                                       |
 | `--window-id <string>` | `-w`  | Define a Window ID where apply an action.                  |
 | `--group-id <string>`  | `-g`  | Define a Group ID where apply an action.                   |
-| `--tab-id <string>`    | `-i`  | Define a Tab ID where apply an action.                     |
+| `--tab-id <string>`    | `-i`  | Specify a Tab ID to apply the action.                     |
 | `--help`               | `-h`  | Show help for this command.                                |
 
 ### Example
@@ -340,11 +340,11 @@ The `history` command displays all data related to the old tabs open in the brow
 | ------------------------ | ----- | --------------------------------------- |
 | `--list`                 | `-l`  | Show a list of previously opened pages. |
 | `--delete`               | `-d`  | Delete pages in a specific date range.  |
-| `--title <string>`       | `-t`  | Define the title.                       |
-| `--url <string>`         | `-u`  | Define a valid URL.                     |
-| `--max-results <number>` | `-r`  | Define the limit of items displayed.    |
-| `--from <string>`        | `-F`  | Define the start date.                  |
-| `--to <string>`          | `-T`  | Define the end date.                    |
+| `--title <string>`       | `-t`  | Specify a title filter.                  |
+| `--url <string>`         | `-u`  | Specify a valid URL.                     |
+| `--max-results <number>` | `-r`  | Specify the maximum number of items to display.    |
+| `--from <string>`        | `-F`  | Specify the start date.                  |
+| `--to <string>`          | `-T`  | Specify the end date.                    |
 | `--help`                 | `-h`  | Show help for this command.             |
 
 ### Example
@@ -395,11 +395,11 @@ The `request` command is a bridge to the Fetch API of the browser.
 | Option                    | Short | Description                            |
 | ------------------------- | ----- | -------------------------------------- |
 | `--fetch`                 | `-l`  | Start an API request.                  |
-| `--headers <[header ..]>` | `-u`  | Define the request headers.            |
+| `--headers <[header ..]>` | `-u`  | Specify the request headers.            |
 | `--method <method>`       | `-F`  | Define a HTTP method.                  |
-| `--payload <json>`        | `-r`  | Define the payload.                    |
+| `--payload <json>`        | `-r`  | Specify the request payload.           |
 | `--read-as <string>`      | `-T`  | Define how response should be read as. |
-| `--url <url>`             | `-t`  | Define a valid URL.                    |
+| `--url <url>`             | `-t`  | Specify a valid URL.                    |
 | `--help`                  | `-h`  | Show help for this command.            |
 
 ### Example
@@ -441,8 +441,8 @@ The `alias` command is a bridge to manage aliases of commands in the terminal.
 | `--list`                     | `-l`  | List all defined aliases.                     |
 | `--add`                      | `-a`  | Add a new alias and the associated command.   |
 | `--delete`                   | `-d`  | Remove an alias by name.                      |
-| `--name <aliasname>`         | `-n`  | Define the name of the alias.                 |
-| `--command <executableline>` | `-c`  | Define the command associated with the alias. |
+| `--name <aliasname>`         | `-n`  | Specify the alias name.                        |
+| `--command <executableline>` | `-c`  | Specify the command associated with the alias. |
 | `--help`                     | `-h`  | Show help for this command.                   |
 
 ### Example
@@ -562,7 +562,7 @@ The `inspect` command is a bridge to review global variables in the global objec
 | `--read`            | `-r`  | Read a variable from the global context of the Tab.        |
 | `--match`           | `-m`  | Match a given query within an input value.                 |
 | `--path <string>`   | `-p`  | Define a variable path.                                    |
-| `--tab-id <string>` | `-i`  | Define a Tab ID where apply an action.                     |
+| `--tab-id <string>` | `-i`  | Specify a Tab ID to apply the action.                     |
 | `--query <string>`  | `-q`  | Define a regular expression used to match within an input. |
 | `--input <string>`  | `-I`  | Define a user input.                                       |
 | `--help`            | `-h`  | Show help for this command.                                |
@@ -624,11 +624,11 @@ The `notify` command is a bridge to manage visual notifications on a tab.
 | Option               | Short | Description                            |
 | -------------------- | ----- | -------------------------------------- |
 | `--create`           | `-c`  | Create a notification.                 |
-| `--tab-id <tabid>`   | `-i`  | Define a Tab ID where apply an action. |
-| `--title <string>`   | `-t`  | Define the title.                      |
-| `--message <string>` | `-m`  | Define the message.                    |
-| `--icon <string>`    | `-I`  | Define the icon used.                  |
-| `--color <string>`   | `-C`  | Define the color used.                 |
+| `--tab-id <tabid>`   | `-i`  | Specify a Tab ID to apply the action. |
+| `--title <string>`   | `-t`  | Specify the notification title.        |
+| `--message <string>` | `-m`  | Specify the notification message.      |
+| `--icon <string>`    | `-I`  | Specify the icon to show.              |
+| `--color <string>`   | `-C`  | Specify the notification color.        |
 | `--help`             | `-h`  | Show help for this command.            |
 
 ### Example
@@ -668,11 +668,11 @@ The `storage` command is a bridge to the storage API and clipboard API at any ta
 | `--set`             | `-s`  | Set a key-value pair in the selected storage.           |
 | `--get`             | `-g`  | Get storage data.                                       |
 | `--copy`            | `-c`  | Copy a value to the clipboard.                          |
-| `--local`           | `-L`  | Define whether the local storage should be displayed.   |
-| `--session`         | `-S`  | Define whether the session storage should be displayed. |
-| `--cookie`          | `-C`  | Define whether the cookie storage should be displayed.  |
-| `--see-json`        | `-j`  | Define whether the JSON format should be displayed.     |
-| `--tab-id <string>` | `-i`  | Define a Tab ID where apply an action.                  |
+| `--local`           | `-L`  | Target local storage.                                     |
+| `--session`         | `-S`  | Target session storage.                                   |
+| `--cookie`          | `-C`  | Target cookie storage.                                    |
+| `--see-json`        | `-j`  | Display results as JSON.                                  |
+| `--tab-id <string>` | `-i`  | Specify a Tab ID to apply the action.                  |
 | `--key <string>`    | `-k`  | Define a storage key.                                   |
 | `--input <string>`  | `-I`  | Define a user input.                                    |
 | `--data <array>`    | `-d`  | Define a key-value pair.                                |
@@ -754,9 +754,9 @@ The `events` command is a bridge to the page events API and DOM element events.
 | `--register`          | `-r`  | Register a new command for future execution. |
 | `--list`              | `-l`  | List all registered events.                  |
 | `--delete`            | `-d`  | Delete a registered event by its identifier. |
-| `--debounce <number>` | `-D`  | Define the debounce time of the event.       |
-| `--event <array>`     | `-e`  | Define a type-url-command event tuple.       |
-| `--event-id <string>` | `-E`  | Define the event identifier.                 |
+| `--debounce <number>` | `-D`  | Specify the debounce time (ms) for the event. |
+| `--event <array>`     | `-e`  | Specify a type-url-command event tuple.       |
+| `--event-id <string>` | `-E`  | Specify the event identifier.                 |
 
 ### Example
 
@@ -839,8 +839,8 @@ The `theme` command is a bridge to manage the theme in Term-O.
 | `--delete`              | `-d`  | Delete a theme by its name.           |
 | `--apply`               | `-a`  | Apply a theme by name.                |
 | `--current`             | `-C`  | Show the currently applied theme.     |
-| `--theme-json <string>` | `-t`  | Define the Theme in JSON-String.      |
-| `--name <string>`       | `-n`  | Define the name of the theme.         |
+| `--theme-json <string>` | `-t`  | Specify the theme JSON string.        |
+| `--name <string>`       | `-n`  | Specify the name of the theme.        |
 | `--help`                | `-h`  | Show help for this command.           |
 
 ### Example
@@ -916,7 +916,7 @@ An addon is a new command added to Term-O.
 | `--list`            | `-l`  | List all addons.                  |
 | `--upload`          | `-u`  | Upload a file to add as an addon. |
 | `--delete <string>` | `-d`  | Delete an addon by name.          |
-| `--name`            | `-n`  | Define the name of the addon.     |
+| `--name`            | `-n`  | Specify the name of the addon.     |
 | `--help`            | `-h`  | Show help for this command.       |
 
 ### Example
@@ -977,9 +977,9 @@ The `url` command manages the URL of the current tab.
 | `--hash <boolean>`      | `-a`  | Get the current URL hash.                   |
 | `--search <boolean>`    | `-S`  | Get the current URL search string.          |
 | `--as-params <boolean>` | `-P`  | Get the current URL search/hash parameters. |
-| `--tab-id <string>`     | `-i`  | Define a Tab ID where apply an action.      |
-| `--value <string>`      | `-v`  | Define the value.                           |
-| `--param <array>`       | `-r`  | Define the param.                           |
+| `--tab-id <string>`     | `-i`  | Specify a Tab ID to apply the action.      |
+| `--value <string>`      | `-v`  | Specify the value.                           |
+| `--param <array>`       | `-r`  | Specify a parameter key/value pair.          |
 | `--help`                | `-h`  | Show help for this command.                 |
 
 ### Example

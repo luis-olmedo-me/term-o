@@ -204,7 +204,7 @@ When using `dom` command the options can express **8** possible actions:
 
 Interact with the tabs of the browser.
 
-The `tab` command displays all data related to the current tabs active browser.
+The `tabs` command displays all data related to the browser's tabs.
 
 | Option                 | Short | Description                                                |
 | ---------------------- | ----- | ---------------------------------------------------------- |
@@ -227,6 +227,16 @@ The `tab` command displays all data related to the current tabs active browser.
 | `--group-id <string>`  | `-g`  | Define a Group ID where apply an action.                   |
 | `--tab-id <string>`    | `-i`  | Define a Tab ID where apply an action.                     |
 | `--help`               | `-h`  | Show help for this command.                                |
+
+### Example
+
+```bash
+# Open a new tab and set it active
+tabs --open --url "https://example.com" --wait --active
+
+# List tabs with titles matching "Example"
+tabs --list --title "Example"
+```
 
 ### Dependency Rules
 
@@ -337,6 +347,16 @@ The `history` command displays all data related to the old tabs open in the brow
 | `--to <string>`          | `-T`  | Define the end date.                    |
 | `--help`                 | `-h`  | Show help for this command.             |
 
+### Example
+
+```bash
+# List recent history entries
+history --list --max-results 10
+
+# Delete history between two datetimes
+history --delete --from "2026-01-01T00:00:00Z" --to "2026-01-31T23:59:59Z"
+```
+
 ### Dependency Rules
 
 When using `history` command the options can express **2** possible actions:
@@ -382,6 +402,16 @@ The `request` command is a bridge to the Fetch API of the browser.
 | `--url <url>`             | `-t`  | Define a valid URL.                    |
 | `--help`                  | `-h`  | Show help for this command.            |
 
+### Example
+
+```bash
+# Simple GET request and read JSON
+request --fetch --url "https://api.example.com/items" --method "GET" --read-as "json"
+
+# POST with payload
+request --fetch --url "https://api.example.com/items" --method "POST" --payload '{"name":"test"}'
+```
+
 ### Dependency Rules
 
 When using `request` command the options can express **1** possible action:
@@ -414,6 +444,16 @@ The `alias` command is a bridge to manage aliases of commands in the terminal.
 | `--name <aliasname>`         | `-n`  | Define the name of the alias.                 |
 | `--command <executableline>` | `-c`  | Define the command associated with the alias. |
 | `--help`                     | `-h`  | Show help for this command.                   |
+
+### Example
+
+```bash
+# List aliases
+alias --list
+
+# Add a new alias
+alias --add --name "gotest" --command 'tabs --open --url "https://test.com" --wait'
+```
 
 ### Dependency Rules
 
@@ -466,6 +506,16 @@ The `style` command is a bridge elements styles or just styles API related.
 | `--style <array>`  | `-S`  | Define a name-value style pair.                            |
 | `--help`           | `-h`  | Show help for this command.                                |
 
+### Example
+
+```bash
+# Apply inline style to an element
+style --apply --style ["display" "none"] --xpath '//*[@id="cards-container"]'
+
+# Pick a color from the page (interactive)
+style --color-pick
+```
+
 ### Dependency Rules
 
 When using `style` command the options can express **3** possible actions:
@@ -514,8 +564,18 @@ The `inspect` command is a bridge to review global variables in the global objec
 | `--path <string>`   | `-p`  | Define a variable path.                                    |
 | `--tab-id <string>` | `-i`  | Define a Tab ID where apply an action.                     |
 | `--query <string>`  | `-q`  | Define a regular expression used to match within an input. |
-| `--input <string>`  | `-i`  | Define a user input.                                       |
+| `--input <string>`  | `-I`  | Define a user input.                                       |
 | `--help`            | `-h`  | Show help for this command.                                |
+
+### Example
+
+```bash
+# Read a global property from the current tab
+inspect --read --path "window.navigator.userAgent"
+
+# Inspect a value inside a JSON input
+inspect --read --input '{"test":3}' --path "test"
+```
 
 ### Dependency Rules
 
@@ -571,6 +631,13 @@ The `notify` command is a bridge to manage visual notifications on a tab.
 | `--color <string>`   | `-C`  | Define the color used.                 |
 | `--help`             | `-h`  | Show help for this command.            |
 
+### Example
+
+```bash
+# Create a visual notification in the current tab
+notify --create --title "Hi" --message "This is a test" --icon "success"
+```
+
 ### Dependency Rules
 
 When using `notify` command the options can express **1** possible action:
@@ -610,6 +677,16 @@ The `storage` command is a bridge to the storage API and clipboard API at any ta
 | `--input <string>`  | `-I`  | Define a user input.                                    |
 | `--data <array>`    | `-d`  | Define a key-value pair.                                |
 | `--help`            | `-h`  | Show help for this command.                             |
+
+### Example
+
+```bash
+# Set a key in session storage
+storage --set --session --data ["lastSearch" "term-o"]
+
+# Get a key from local storage
+storage --get --key "lastSearch" --local
+```
 
 ### Dependency Rules
 
@@ -681,6 +758,13 @@ The `events` command is a bridge to the page events API and DOM element events.
 | `--event <array>`     | `-e`  | Define a type-url-command event tuple.       |
 | `--event-id <string>` | `-E`  | Define the event identifier.                 |
 
+### Example
+
+```bash
+# Register a page event that runs a command when the page loads
+events --register --event ["tab-loaded" "https://example.com" "dom -s"] --debounce 80
+```
+
 ### Dependency Rules
 
 When using `events` command the options can express **3** possible action:
@@ -719,11 +803,17 @@ When using `events` command the options can express **3** possible action:
 
 The `input` command is a bridge to UI terminal requests.
 
-| Option     | Short | Description                         |
-| ---------- | ----- | ----------------------------------- |
-| `--text`   | `-t`  | Request user input in terminal.     |
-| `--tab-id` | `-i`  | Specify a tab ID to take action on. |
-| `--help`   | `-h`  | Show help for this command.         |
+| Option   | Short | Description                     |
+| -------- | ----- | ------------------------------- |
+| `--text` | `-t`  | Request user input in terminal. |
+| `--help` | `-h`  | Show help for this command.     |
+
+### Example
+
+```bash
+# Request a text input from the terminal
+input --text
+```
 
 ### Dependency Rules
 
@@ -752,6 +842,14 @@ The `theme` command is a bridge to manage the theme in Term-O.
 | `--theme-json <string>` | `-t`  | Define the Theme in JSON-String.      |
 | `--name <string>`       | `-n`  | Define the name of the theme.         |
 | `--help`                | `-h`  | Show help for this command.           |
+
+### Example
+
+```bash
+# Import and apply a theme
+theme --import --theme-json '{"name":"dark","colors":{}}'
+theme --apply --name "dark"
+```
 
 ### Dependency Rules
 
@@ -809,21 +907,31 @@ When using `theme` command the options can express **5** possible actions:
 
 ## ADDONS
 
-The `theme` command is a bridge to manage the addons in Term-O.
+The `addons` command is a bridge to manage addons in Term-O.
 
 An addon is a new command added to Term-O.
 
-| Option              | Short | Description                      |
-| ------------------- | ----- | -------------------------------- |
-| `--list`            | `-l`  | List all addons.                 |
-| `--upload`          | `-u`  | Upload a file to add as a addon. |
-| `--delete <string>` | `-d`  | Delete a addon by name.          |
-| `--name`            | `-n`  | Define the name of the addon.    |
-| `--help`            | `-h`  | Show help for this command.      |
+| Option              | Short | Description                       |
+| ------------------- | ----- | --------------------------------- |
+| `--list`            | `-l`  | List all addons.                  |
+| `--upload`          | `-u`  | Upload a file to add as an addon. |
+| `--delete <string>` | `-d`  | Delete an addon by name.          |
+| `--name`            | `-n`  | Define the name of the addon.     |
+| `--help`            | `-h`  | Show help for this command.       |
+
+### Example
+
+```bash
+# Upload an addon (interactive file picker)
+addons --upload
+
+# List installed addons
+addons --list
+```
 
 ### Dependency Rules
 
-When using `theme` command the options can express **3** possible actions:
+When using `addons` command the options can express **3** possible actions:
 
 1. Create a summary of all addons available (using `--list`)
 
@@ -849,8 +957,8 @@ When using `theme` command the options can express **3** possible actions:
    The option `--upload` will trigger a file picker to show up asking for an addon in JSON format. Here is an example of how specific it can be:
 
    ```bash
-   theme
-       --upload                                                             # REQUIRED
+   addons
+      --upload                                                             # REQUIRED
    ```
 
    Please, see [addon-example.json](assets/addon-example.json) to find a more detailed example of a valid addon.
@@ -873,6 +981,18 @@ The `url` command manages the URL of the current tab.
 | `--value <string>`      | `-v`  | Define the value.                           |
 | `--param <array>`       | `-r`  | Define the param.                           |
 | `--help`                | `-h`  | Show help for this command.                 |
+
+### Example
+
+```bash
+# Get the full href of the current tab
+url --get --href
+
+# Set the current tab URL
+url --set --search --as-params --param ["ref" "123"]
+url --set --search --value "ref=123"
+url --set --href --value "https://www.example.com"
+```
 
 ### Dependency Rules
 
@@ -912,3 +1032,10 @@ When using `url` command the options can express **2** possible actions:
 Interact with the clean up of the UI terminal.
 
 This command does not expect any option; its only purpose is to clear the terminal when called.
+
+### Example
+
+```bash
+# Clear the terminal
+clear
+```

@@ -33,30 +33,28 @@ This documentation provides context about the basics of the Term-O Browser Exten
 
 **Term-O is a Browser Extension terminal-style developer tool for interacting with browser APIs.**
 
-The goal of Term-O is to give to the user, the power of the browser APIs that we have only available while we create a browser extension and more.
+The goal of Term-O is to give users access to browser APIs that are usually available only to extensions.
 
-To do that, all we need is a user input in the Terminal that will be converted into commands/instructions.
+Users type input in the terminal, which is parsed into commands and options.
 
 Each command:
 
 - Has a unique name.
 - Accepts typed options.
-- Exists to build an answer with the given options.
-- Supports short flags (`command -a` -> `-a` does not require explicit value).
-- Supports short flags series (`command -abc` = `command -a -b -c`).
-- May define dependencies between options.
-- Can enforce strict option combinations.
+- Produces output (logs/answers) based on the provided options.
+- Supports short flags (e.g., `command -a` — `-a` does not require an explicit value).
+- Supports short flag series (e.g., `command -abc` is equivalent to `command -a -b -c`).
+- May define dependencies between options and enforce valid combinations.
 
-Once you finish this document, it is recommendable for you to take a look at [Term-O Commands](COMMANDS.md).
+After reading this document, check [Term-O Commands](COMMANDS.md) for the full reference.
 
 ---
 
 # Commands
 
-A command is just an instruction to be completed with an input from the user and the defined arguments, also called "Options". Once user input is provided, it is interpretated and converted into options, which if they fail it throws an error.
+A command is an instruction executed with user input and optional arguments (options). User input is parsed into options; invalid or missing required options produce an error.
 
-if arguments are valid, then a handler starts running in the background building an answer that we call "Logs". A command can have temporal logs while we wait for it to be completed but, at the end, it always returns a consistent anwser.
-
+If the arguments are valid, a command handler runs and produces output (logs). Commands may emit temporary logs during execution but eventually return a final, consistent answer.
 ```bash
 command [options]
 ```
@@ -65,13 +63,11 @@ command [options]
 
 # Options
 
-Options are data supplied to the command handler and are defined within the user input.
+Options are the data supplied to a command and are defined within the user input.
 
-It is important to understand that options are hard typed in Term-O. That means that if an option expects for a explicit value (i.e. "string"), the input must have quotes.
+Options are strongly typed in Term-O. For example, string values must be quoted. If a command declares required options, omitting them will cause an execution error.
 
-A command with existing options will always require options described within the input otherwise you will get an error at execution.
-
-Some options can be repeated in one command line sentence. This means it can describe one or more values. Internally they are handled as an array.
+Some options can be repeated on the same command line. Repeated options are represented as arrays internally.
 
 ---
 
@@ -79,7 +75,7 @@ Some options can be repeated in one command line sentence. This means it can des
 
 In Term-O, almost everything is a validated value. We have defined all the possible types that can be used as an option value and also command answer.
 
-This is an expamle of all the possibilities that can be expected as input and answers:
+The following is an example of input and possible answers:
 
 ```bash
 command --a-test --b-test "value" --c-test ["value" "value"] --d-test 30
@@ -87,7 +83,7 @@ command --a-test --b-test "value" --c-test ["value" "value"] --d-test 30
 "answer-2" true ["answer-2" "answer-2"] 90
 ```
 
-The above command execution example is internally interpretated as:
+The above command execution example is interpreted as:
 
 ```json
 {
@@ -111,11 +107,11 @@ The above command execution example is internally interpretated as:
 }
 ```
 
-Options have a shortcut that can be used. Most of the times, they start with the first letter to be easy to remember but there commands with so many options that shortcuts must take another letter.
+Options have short flags (shortcuts). Usually they use the first letter of the option, but when conflicts occur shortcuts may use a different letter.
 
-> That's why all commands have an option by default called "--help" where all command options are displayed with a short description and their shortcut.
+All commands include a `--help` option that shows available options with descriptions and their short flags.
 
-The above example can be replicated using them this way:
+The example above can be written using short flags like this:
 
 ```bash
 command -ab "value" -c ["value" "value"]
@@ -125,7 +121,7 @@ command -ab "value" -c ["value" "value"]
 
 ## String
 
-String types are defined as chain a characters. In simple words, it is just text. It must be declared within quotes otherwise it will fail.
+String values are sequences of characters (plain text). They must be enclosed in quotes.
 
 Double Quotes Accepted (user input):
 
@@ -147,7 +143,7 @@ command --title 'testing'
 
 ## Boolean (flag)
 
-Boolean types are defined as a binary value. In simple words, it is a `true` or `false` value. Its value is not needed to be explicit when it comes to options. So, in those cases, we just need to mention it in the user input.
+Boolean values are true/false flags. For options that are flags, mentioning the option in the input sets it to `true`.
 
 ```bash
 command --enabled
@@ -158,7 +154,7 @@ command --enabled
 
 ## Array
 
-Array types are defined as a chain of values. This means they can contain many values inside and are described almost the same as arrays are in javascript/JSON but without commas.
+Array values are ordered collections of values. They are written similarly to JavaScript/JSON arrays but without commas.
 
 ```bash
 command --titles ["title-1" 23 false ["embed-value" 2]]
@@ -182,26 +178,26 @@ command --count 50
 
 # Parameters
 
-A parameter is a piece of the answer that a command can share with another command. To do that, both commands must be next to each other.
+A parameter is a piece of output from one command that can be reused by another command. To chain commands, place them next to each other using `&&`.
 
-Comunication between commands can happen just in a unidirectional way and can be described in a few ways.
+Communication between commands is unidirectional: output from the first command is passed to the next.
 
 ## Pick Single
 
-Take a look a the following example:
+Take a look at the following example:
 
 ```bash
 command-a --count 50 && command-b --title $0
 ```
 
-1. The execution of `command-a --count 50` leave us with an answer of:
+1. The execution of `command-a --count 50` leaves the following answer:
    ```bash
    command --count 50
    'test-answer-1' false ["answer-1" "answer-1"] 12
    'test-answer-2' true ["answer-2" "answer-2"] 12
    ```
-2. The execution of `command-b --title $0` starts, but the `title` option is described using a `$0` keyword.
-3. The value `$0` is replaced with the first parameter in the answers from the previous command, this is represented with `'test-answer-1'`. The previous command answers are two lines so `command-b --title $0` will be executed two times with each of the values.
+2. The execution of `command-b --title $0` starts; the `title` option uses `$0` as a placeholder.
+3. The value `$0` is replaced with the first parameter from each answer line of the previous command (e.g., `'test-answer-1'`). Since the previous command returns two lines, `command-b --title $0` will run twice with each value.
 
 In brief, the above example is equal to the following command chain:
 
@@ -211,20 +207,20 @@ command-a --count 50 && command-b --title 'test-answer-1' && command-b  --title 
 
 ## Pick Many
 
-Take a look a the following example:
+Take a look at the following example:
 
 ```bash
 command-a --count 50 && command-b --titles $0,1
 ```
 
-1. The execution of `command-a --count 50` leave us with an answer of:
+1. The execution of `command-a --count 50` leaves the following answer:
    ```bash
    command --count 50
    'test-answer-1' "test-title" ["answer-1" "answer-1"] 12
    'test-answer-2' "test-title" ["answer-2" "answer-2"] 12
    ```
 2. The execution of `command-b --titles $0,1` starts, but the `titles` option is described using a `$0,1` keyword.
-3. The value `$0,1` is replaced with an array of the first and second parameters in the answers from the previous command, this is represented with `['test-answer-1' "test-title"]`. The previous command answers are two lines so `command-b --titles $0,1` will be executed two times with each of the values.
+3. The value `$0,1` is replaced with an array containing the first and second parameters from each answer line (e.g., `['test-answer-1', "test-title"]`). The command will run once per answer line.
 
 In brief, the above example is equal to the following command chain:
 
@@ -234,7 +230,7 @@ command-a --count 50 && command-b --titles ['test-answer-1' "test-title"] && com
 
 ## Pick All
 
-Take a look a the following example:
+Take a look at the following example:
 
 ```bash
 command-a --count 50 && command-b --titles $.
@@ -247,7 +243,7 @@ command-a --count 50 && command-b --titles $.
    'test-answer-2' "test-title" "another-title"
    ```
 2. The execution of `command-b --titles $.` starts, but the `titles` option is described using a `$.` keyword.
-3. The value `$.` is replaced with an array all the parameters avaialble in the answers from the previous command, this is represented with `['test-answer-1' "test-title" "another-title"]`. The previous command answers are two lines so `command-b --titles $.` will be executed two times with each of the values.
+3. The value `$.` is replaced with an array containing all parameters available in each answer line (e.g., `['test-answer-1', "test-title", "another-title"]`). The command will run once per answer line.
 
 In brief, the above example is equal to the following command chain:
 
@@ -257,7 +253,7 @@ command-a --count 50 && command-b --titles ['test-answer-1' "test-title" "anothe
 
 ## Pick All As A String
 
-Take a look a the following example:
+Take a look at the following example:
 
 ```bash
 command-a --count 50 && command-b --title $-
@@ -270,7 +266,7 @@ command-a --count 50 && command-b --title $-
    "test-answer-2" "test-title" "another-title"
    ```
 2. The execution of `command-b --title $-` starts, but the `title` option is described using a `$-` keyword.
-3. The value `$-` is replaced with all the parameters avaialble in the answers from the previous command in string format, this is represented with `'"test-answer-1" "test-title" "another-title"'`. The previous command answers are two lines so `command-b --title $-` will be executed two times with each of the values.
+3. The value `$-` is replaced with all parameters from each answer line converted to a single string (e.g., `"\"test-answer-1\" \"test-title\" \"another-title\""`). The command will run once per answer line.
 
 In brief, the above example is equal to the following command chain:
 

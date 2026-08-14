@@ -8,6 +8,7 @@
 # Table of Contents
 
 - [Overview](#overview)
+  - [Quick Start](#quick-start)
 - [Commands](#commands)
 - [Options](#options)
 - [Types](#types)
@@ -48,6 +49,46 @@ Each command:
 
 After reading this document, check [Term-O Commands](COMMANDS.md) for the full reference.
 
+## Quick Start
+
+Use Term-O from the terminal inside the extension UI. Here are a few common workflows to get started quickly.
+
+- Show a command's options and shortcuts:
+
+```bash
+tabs --help
+```
+
+- Get XPath(s) for `button` elements in the current page DOM:
+
+```bash
+dom --search --tag "button" --see-xpath
+```
+
+- Get the current URL host for a specific tab:
+
+```bash
+url --get --host --tab-id "T00000000"
+```
+
+- Chain commands and reuse output (use `$0` to pick the first parameter from previous output):
+
+```bash
+history --list --max-results 5 && tabs --open --url $0
+```
+
+- Set a storage key and then copy it to the clipboard (re-using the stored key):
+
+```bash
+storage --set --local --data ["apiKey" "ABC123"] && storage --copy --input $0
+```
+
+- Read a JSON value from a page context and match a field:
+
+```bash
+inspect --read --path "user.profile" && inspect --match --input $0 --query "/name/"
+```
+
 ---
 
 # Commands
@@ -55,6 +96,7 @@ After reading this document, check [Term-O Commands](COMMANDS.md) for the full r
 A command is an instruction executed with user input and optional arguments (options). User input is parsed into options; invalid or missing required options produce an error.
 
 If the arguments are valid, a command handler runs and produces output (logs). Commands may emit temporary logs during execution but eventually return a final, consistent answer.
+
 ```bash
 command [options]
 ```

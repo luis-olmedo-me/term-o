@@ -7,6 +7,7 @@ import { createUUIDv4 } from '@src/helpers/utils.helpers'
 
 export default async (resolve, reject, data) => {
   const id = createUUIDv4()
+
   const handleMessage = event => {
     if (event.data?.source !== TERMO_SOURCE) return
     if (event.data?.state !== injectableStates.SOLVED) return
@@ -14,8 +15,8 @@ export default async (resolve, reject, data) => {
 
     window.removeEventListener('message', handleMessage)
 
-    if (event.data.response.error) reject(event.data.response.error)
-    else resolve(event.data.response.value)
+    if (event.data.response.error) reject(event.data.response)
+    else resolve(event.data.response)
   }
 
   window.addEventListener('message', handleMessage, false)

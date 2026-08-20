@@ -209,6 +209,14 @@ class ProcessManager {
       data: { event, params }
     })
   }
+
+  importInjectableScripts() {
+    return createWorkerProcessRequest({
+      type: processNames.IMPORT_INJECTABLE_SCRIPTS,
+      defaultResponse: null,
+      data: null
+    })
+  }
 }
 
 export const processManager = new ProcessManager()

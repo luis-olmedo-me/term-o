@@ -13,6 +13,7 @@ export const processNames = {
   GET_FONTS_AVAILABLE: 'get-fonts-available',
   GET_STORAGE: 'get-storage',
   INJECT_HTML: 'inject-html',
+  IMPORT_INJECTABLE_SCRIPTS: 'import-injectable-scripts',
   MEASURE: 'measure',
   PICK_COLOR: 'pick-color',
   READ_SELECTION: 'read-selection',

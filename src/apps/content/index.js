@@ -1,6 +1,6 @@
 import processHandlers from '@content/process-handlers'
+import processManager from '@src/libs/process-manager'
 
-import { importInjectables } from '@src/helpers/injectables.helpers'
 import { registerTabEvents } from '@src/helpers/options.helpers'
 import { setUpHandlers } from '@src/helpers/process.helpers'
 import { importWebComponents } from '@src/helpers/web-components.helpers'
@@ -11,4 +11,4 @@ chrome.runtime.onMessage.addListener(contentHandler)
 
 registerTabEvents()
 importWebComponents()
-importInjectables()
+processManager.importInjectableScripts()

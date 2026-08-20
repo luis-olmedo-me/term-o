@@ -14,7 +14,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'List CSS styles applied to elements matching the criteria',
-    validate: [options.requireAll('style', 'xpath')]
+    validate: [options.mustHave('style', 'xpath')]
   })
   .expect({
     name: 'apply',
@@ -22,7 +22,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Apply styles to elements matching the criteria',
-    validate: [options.requireAll('style', 'xpath')]
+    validate: [options.mustHave('style', 'xpath')]
   })
   .expect({
     name: 'color-pick',
@@ -37,15 +37,15 @@ export default new CommandBase({
     type: commandTypes.STRING,
     abbreviation: 'x',
     helpSection: helpSections.DETAILS,
-    description: 'Define an XPath query',
-    validate: [options.requireAnyOf('apply', 'list')]
+    description: 'Specify an XPath query',
+    validate: [options.requireOneOf('apply', 'list')]
   })
   .expect({
     name: 'style',
     abbreviation: 'S',
     type: commandTypes.ARRAY,
     helpSection: helpSections.DETAILS,
-    description: 'Define a name-value style pair',
+    description: 'Specify a name-value style pair',
     repeatable: true,
     validate: [
       array.hasAllItemsAs(
@@ -54,6 +54,6 @@ export default new CommandBase({
         array.hasAllItemsAs(value.isString),
         array.hasItemAs(0, value.isSpaceForbidden)
       ),
-      options.requireAnyOf('xpath')
+      options.requireOneOf('xpath')
     ]
   })

@@ -1,5 +1,5 @@
 import { renderLine } from './command.helpers'
-import { isArray, isQuoted, quotify } from './string.helpers'
+import { isArray, isQuoted, quotify, unquotify } from './string.helpers'
 import { countMatches } from './utils.helpers'
 
 export const getArgs = value => {
@@ -161,9 +161,7 @@ export const getParamValue = (indexes, values) => {
 }
 
 const parseArrayItem = value => {
-  if (isQuoted(value)) {
-    return value.slice(1, -1)
-  }
+  if (isQuoted(value)) return unquotify(value)
 
   if (value === 'true') return true
   if (value === 'false') return false

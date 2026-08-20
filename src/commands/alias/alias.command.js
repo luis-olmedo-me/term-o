@@ -14,7 +14,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Add a new alias and the associated command',
-    validate: [options.requireAll('alias')]
+    validate: [options.mustHave('alias')]
   })
   .expect({
     name: 'delete',
@@ -22,7 +22,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Remove an alias by name',
-    validate: [options.requireAll('name')]
+    validate: [options.mustHave('name')]
   })
   .expect({
     name: 'list',
@@ -37,15 +37,15 @@ export default new CommandBase({
     abbreviation: 'n',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define the name of the alias',
-    validate: [value.isSpaceForbidden, options.requireAnyOf('delete')]
+    description: 'Specify the alias name',
+    validate: [value.isSpaceForbidden, options.requireOneOf('delete')]
   })
   .expect({
     name: 'alias',
     abbreviation: 'A',
     type: commandTypes.ARRAY,
     helpSection: helpSections.DETAILS,
-    description: 'Define a name-command pair',
+    description: 'Specify a name-command pair',
     repeatable: true,
     validate: [
       array.hasAllItemsAs(
@@ -54,6 +54,6 @@ export default new CommandBase({
         array.hasAllItemsAs(value.isString),
         array.hasItemAs(0, value.isSpaceForbidden)
       ),
-      options.requireAnyOf('add')
+      options.requireOneOf('add')
     ]
   })

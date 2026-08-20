@@ -13,8 +13,8 @@ export default new CommandBase({
     abbreviation: 'd',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
-    description: 'Delete a addon by name',
-    validate: [options.requireAll('name')]
+    description: 'Delete an addon by name',
+    validate: [options.mustHave('name')]
   })
   .expect({
     name: 'list',
@@ -29,7 +29,7 @@ export default new CommandBase({
     abbreviation: 'u',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
-    description: 'Upload a file to add as a addon',
+    description: 'Upload an addon file',
     validate: [options.requireNoOther]
   })
   .expect({
@@ -37,6 +37,6 @@ export default new CommandBase({
     abbreviation: 'n',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define the name of the addon',
-    validate: [options.requireAnyOf('delete')]
+    description: 'Specify the addon name',
+    validate: [options.requireOneOf('delete')]
   })

@@ -21,7 +21,6 @@ const htmlEntries = Object.fromEntries(
 
 const scriptEntries = {
   background: resolve(__dirname, 'src/apps/background/index.js'),
-  injectables: resolve(__dirname, 'src/apps/injectables/index.js'),
   'web-components': resolve(__dirname, 'src/apps/web-components/index.js')
 }
 
@@ -54,7 +53,8 @@ export default defineConfig(({ mode }) => ({
           return 'assets/[name][extname]'
         }
       }
-    }
+    },
+    modulePreload: false
   },
   resolve: {
     alias: {

@@ -14,6 +14,7 @@ import storageBase from './storage/storage.command'
 import styleBase from './style/style.command'
 import tabsBase from './tabs/tabs.command'
 import themeBase from './theme/theme.command'
+import urlBase from './url/url.command'
 
 export default [
   addonsBase,
@@ -29,7 +30,8 @@ export default [
   storageBase,
   styleBase,
   tabsBase,
-  themeBase
+  themeBase,
+  urlBase
 ]
 
 export {
@@ -48,5 +50,6 @@ export {
   storageBase,
   styleBase,
   tabsBase,
-  themeBase
+  themeBase,
+  urlBase
 }

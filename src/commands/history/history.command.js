@@ -22,45 +22,45 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Delete pages in a specific date range',
-    validate: [options.requireAll('from', 'to')]
+    validate: [options.mustHave('from', 'to')]
   })
   .expect({
     name: 'title',
     abbreviation: 't',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define the title',
-    validate: [value.isRegExp, options.requireAnyOf('list')]
+    description: 'Specify a title filter',
+    validate: [value.isRegExp, options.requireOneOf('list')]
   })
   .expect({
     name: 'url',
     abbreviation: 'u',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a valid URL',
-    validate: [value.isRegExp, options.requireAnyOf('list')]
+    description: 'Specify a valid URL',
+    validate: [value.isRegExp, options.requireOneOf('list')]
   })
   .expect({
     name: 'max-results',
     abbreviation: 'r',
     type: commandTypes.NUMBER,
     helpSection: helpSections.DETAILS,
-    description: 'Define the limit of items displayed',
-    validate: [value.isPositive, value.isInteger, options.requireAnyOf('list')]
+    description: 'Specify the maximum number of items to display',
+    validate: [value.isPositive, value.isInteger, options.requireOneOf('list')]
   })
   .expect({
     name: 'from',
     abbreviation: 'F',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define the start date',
-    validate: [value.isDate, options.requireAnyOf('list', 'delete')]
+    description: 'Specify the start date',
+    validate: [value.isDate, options.requireOneOf('list', 'delete')]
   })
   .expect({
     name: 'to',
     abbreviation: 'T',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define the end date',
-    validate: [value.isDate, options.requireAnyOf('list', 'delete')]
+    description: 'Specify the end date',
+    validate: [value.isDate, options.requireOneOf('list', 'delete')]
   })

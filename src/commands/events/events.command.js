@@ -15,7 +15,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Register a new command for future execution',
-    validate: [options.allow('debounce', 'event'), options.requireAll('event')]
+    validate: [options.allow('debounce', 'event'), options.mustHave('event')]
   })
   .expect({
     name: 'list',
@@ -31,23 +31,23 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Delete a registered event by its identifier',
-    validate: [options.requireAll('event-id')]
+    validate: [options.mustHave('event-id')]
   })
   .expect({
     name: 'event-id',
     abbreviation: 'E',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define the command identifier of the event',
-    validate: [options.requireAnyOf('delete')]
+    description: 'Specify the event identifier',
+    validate: [options.requireOneOf('delete')]
   })
   .expect({
     name: 'debounce',
     abbreviation: 'D',
     type: commandTypes.NUMBER,
     helpSection: helpSections.DETAILS,
-    description: 'Define the debounce time of the event',
-    validate: [value.isPositiveWithZero, value.isInteger, options.requireAnyOf('register')],
+    description: 'Specify the debounce time (ms) for the event',
+    validate: [value.isPositiveWithZero, value.isInteger, options.requireOneOf('register')],
     defaultValue: 80
   })
   .expect({
@@ -55,7 +55,7 @@ export default new CommandBase({
     abbreviation: 'e',
     type: commandTypes.ARRAY,
     helpSection: helpSections.DETAILS,
-    description: 'Define a type-url-command event tuple',
+    description: 'Specify a type-url-command event tuple',
     repeatable: true,
     validate: [
       array.hasAllItemsAs(
@@ -65,6 +65,6 @@ export default new CommandBase({
         array.hasItemAs(1, value.isURL),
         array.hasAllItemsAs(value.isString)
       ),
-      options.requireAnyOf('register')
+      options.requireOneOf('register')
     ]
   })

@@ -14,13 +14,13 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Log a value',
-    validate: [options.requireAll('value')]
+    validate: [options.mustHave('value')]
   })
   .expect({
     name: 'value',
     abbreviation: 'v',
     type: commandTypes.ARRAY,
     helpSection: helpSections.DETAILS,
-    description: 'Define the value',
-    validate: [options.requireAnyOf('log')]
+    description: 'Specify the value',
+    validate: [options.requireOneOf('log')]
   })

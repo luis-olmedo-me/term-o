@@ -13,7 +13,8 @@ export default defineConfig(({ mode }) => ({
       output: {
         entryFileNames: 'content.js'
       }
-    }
+    },
+    modulePreload: false
   },
   resolve: {
     alias: {

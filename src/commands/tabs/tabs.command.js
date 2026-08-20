@@ -33,7 +33,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Open a new tab with the given URL',
-    validate: [options.allow('wait', 'active', 'url'), options.requireAll('url')]
+    validate: [options.allow('wait', 'active', 'url'), options.mustHave('url')]
   })
   .expect({
     name: 'reload',
@@ -41,7 +41,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Reload a specific tab by its identifier',
-    validate: [options.allow('wait', 'tab-id'), options.requireAll('tab-id')]
+    validate: [options.allow('wait', 'tab-id'), options.mustHave('tab-id')]
   })
   .expect({
     name: 'switch',
@@ -49,7 +49,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Switch focus to a specific tab by its identifier',
-    validate: [options.requireAll('tab-id')]
+    validate: [options.mustHave('tab-id')]
   })
   .expect({
     name: 'point',
@@ -57,7 +57,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Point the terminal to a specific tab by its identifier',
-    validate: [options.requireAll('tab-id')]
+    validate: [options.mustHave('tab-id')]
   })
   .expect({
     name: 'close',
@@ -65,7 +65,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Close a specific tab by its identifier',
-    validate: [options.requireAll('tab-id')]
+    validate: [options.mustHave('tab-id')]
   })
   .expect({
     name: 'current',
@@ -88,25 +88,25 @@ export default new CommandBase({
     abbreviation: 'I',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
-    description: 'Define whether incognito tabs should be focused',
-    validate: [options.requireAnyOf('list')]
+    description: 'Specify whether to include incognito tabs',
+    validate: [options.requireOneOf('list')]
   })
   .expect({
     name: 'title',
     abbreviation: 't',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define the title',
-    validate: [value.isRegExp, options.requireAnyOf('list')]
+    description: 'Specify a title filter',
+    validate: [value.isRegExp, options.requireOneOf('list')]
   })
   .expect({
     name: 'url',
     abbreviation: 'u',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a valid URL',
+    description: 'Specify a valid URL or regex',
     validate: [
-      options.requireAnyOf('list', 'open'),
+      options.requireOneOf('list', 'open'),
       options.when('open', [value.isURL]),
       options.when('list', [value.isRegExp])
     ]
@@ -116,57 +116,57 @@ export default new CommandBase({
     abbreviation: 'm',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
-    description: 'Define whether muted tabs should be focused',
-    validate: [options.requireAnyOf('list'), options.conflict('unmuted')]
+    description: 'Specify whether to include muted tabs',
+    validate: [options.requireOneOf('list'), options.conflictWith('unmuted')]
   })
   .expect({
     name: 'unmuted',
     abbreviation: 'M',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
-    description: 'Define whether unmuted tabs should be focused',
-    validate: [options.requireAnyOf('list'), options.conflict('muted')]
+    description: 'Specify whether to include unmuted tabs',
+    validate: [options.requireOneOf('list'), options.conflictWith('muted')]
   })
   .expect({
     name: 'wait',
     abbreviation: 'W',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
-    description: 'Define whether the action must complete before continuing',
-    validate: [options.requireAnyOf('open', 'reload')]
+    description: 'Specify whether to wait for action completion',
+    validate: [options.requireOneOf('open', 'reload')]
   })
   .expect({
     name: 'active',
     abbreviation: 'a',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
-    description: 'Define whether to use the current tab',
-    validate: [options.requireAnyOf('open')]
+    description: 'Specify whether to use the current tab',
+    validate: [options.requireOneOf('open')]
   })
   .expect({
     name: 'window-id',
     abbreviation: 'w',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a Window ID where apply an action',
-    validate: [value.isRegExp, options.requireAnyOf('list')]
+    description: 'Specify a Window ID to apply the action',
+    validate: [value.isRegExp, options.requireOneOf('list')]
   })
   .expect({
     name: 'group-id',
     abbreviation: 'g',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a Group ID where apply an action',
-    validate: [value.isRegExp, options.requireAnyOf('list')]
+    description: 'Specify a Group ID to apply the action',
+    validate: [value.isRegExp, options.requireOneOf('list')]
   })
   .expect({
     name: 'tab-id',
     abbreviation: 'i',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a Tab ID where apply an action',
+    description: 'Specify a Tab ID to apply the action',
     validate: [
-      options.requireAnyOf('list', 'reload', 'switch', 'point', 'close'),
+      options.requireOneOf('list', 'reload', 'switch', 'point', 'close'),
       options.when('list', [value.isRegExp]),
       options.when('reload', [value.isTabId]),
       options.when('switch', [value.isTabId]),

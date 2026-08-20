@@ -161,6 +161,15 @@ class ProcessManager {
     })
   }
 
+  changeUrl(tabId, { url }) {
+    return createWorkerProcessRequest({
+      type: processNames.CHANGE_URL,
+      defaultResponse: null,
+      tabId,
+      data: { url }
+    })
+  }
+
   executeCode({ code, props, addonNames }) {
     return createWorkerProcessRequest({
       type: processNames.EXECUTE_CODE,
@@ -198,6 +207,14 @@ class ProcessManager {
       type: processNames.DISPATCH_TAB_EVENT,
       defaultResponse: null,
       data: { event, params }
+    })
+  }
+
+  importInjectableScripts() {
+    return createWorkerProcessRequest({
+      type: processNames.IMPORT_INJECTABLE_SCRIPTS,
+      defaultResponse: null,
+      data: null
     })
   }
 }

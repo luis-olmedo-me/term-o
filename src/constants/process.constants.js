@@ -1,5 +1,6 @@
 export const processNames = {
   APPLY_ELEMENT_STYLES: 'apply-element-styles',
+  CHANGE_URL: 'change-url',
   CREATE_ELEMENT: 'create-element',
   CREATE_NOTIFICATION: 'create-notification',
   DISPATCH_TAB_EVENT: 'dispatch-tab-event',
@@ -12,6 +13,7 @@ export const processNames = {
   GET_FONTS_AVAILABLE: 'get-fonts-available',
   GET_STORAGE: 'get-storage',
   INJECT_HTML: 'inject-html',
+  IMPORT_INJECTABLE_SCRIPTS: 'import-injectable-scripts',
   MEASURE: 'measure',
   PICK_COLOR: 'pick-color',
   READ_SELECTION: 'read-selection',

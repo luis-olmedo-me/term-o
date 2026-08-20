@@ -1,9 +1,21 @@
 # Term-O Commands
 
 > Version 0.9.4  
-> Updated: 2026-06-13
+> Updated: 2026-08-06
 
 ---
+
+## Quick Start
+
+A minimal set of examples to get started with Term-O commands.
+
+```bash
+# Open a new tab and wait until it loads
+tabs --open "https://example.com" --wait --active
+
+# Search for buttons containing "Submit" and show their XPaths
+dom --search --tag "button" --content "Submit" --see-xpath
+```
 
 # Table of Contents
 
@@ -23,6 +35,7 @@
   - [INPUT](#input)
   - [THEME](#theme)
   - [ADDONS](#addons)
+  - [URL](#url)
   - [CLEAR](#clear)
 
 ---
@@ -45,34 +58,34 @@ Interact with the DOM elements using declarative filters and structured search r
 
 The `dom` command enables element selection, filtering, and contextual queries inside the active browser tab.
 
-| Option                  | Short | Description                                          |
-| ----------------------- | ----- | ---------------------------------------------------- |
-| `--search`              | `-s`  | Search for elements by criteria.                     |
-| `--find`                | `-f`  | Find one element by criteria.                        |
-| `--create`              | `-c`  | Create a DOM element.                                |
-| `--pick`                | `-P`  | Pick an element from the tab.                        |
-| `--measure`             | `-M`  | Calculate the distance between two elements..        |
-| `--inject`              | `-I`  | Inject HTML as within an element.                    |
-| `--dispatch`            | `-D`  | Dispatch an element over an element.                 |
-| `--selection`           | `-l`  | Get selected text in the tab.                        |
-| `--sibling <number>`    | `-b`  | Define the sibling index.                            |
-| `--parent <number>`     | `-p`  | Define the parent index.                             |
-| `--child <number>`      | `-d`  | Define the child index.                              |
-| `--attr <array>`        | `-a`  | Define a name-value attribute pair.                  |
-| `--style <array>`       | `-S`  | Define a name-value style pair.                      |
-| `--tag <string>`        | `-g`  | Define the element tag name.                         |
-| `--content <string>`    | `-t`  | Define the text content.                             |
-| `--html <string>`       | `-H`  | Define the HTML content.                             |
-| `--see-content`         | `-C`  | Define whether the text content should be displayed. |
-| `--see-xpath`           | `-X`  | Define whether XPath(s) should be displayed.         |
-| `--tab-id <string>`     | `-i`  | Define a Tab ID where apply an action.               |
-| `--below <string>`      | `-B`  | Define an Element XPath query where apply an action. |
-| `--xpath <string>`      | `-x`  | Define an XPath query.                               |
-| `--times <number>`      | `-m`  | Define how many times the action must be done.       |
-| `--from <string>`       | `-F`  | Define the origin element XPath.                     |
-| `--to <string>`         | `-T`  | Define the destination element XPath.                |
-| `--event-name <string>` | `-e`  | Define the event name.                               |
-| `--help`                | `-h`  | Show help for this command.                          |
+| Option                  | Short | Description                                         |
+| ----------------------- | ----- | --------------------------------------------------- |
+| `--search`              | `-s`  | Search for elements by criteria.                    |
+| `--find`                | `-f`  | Find one element by criteria.                       |
+| `--create`              | `-c`  | Create a DOM element.                               |
+| `--pick`                | `-P`  | Pick an element from the tab.                       |
+| `--measure`             | `-M`  | Calculate the distance between two elements.        |
+| `--inject`              | `-I`  | Inject HTML as within an element.                   |
+| `--dispatch`            | `-D`  | Dispatch an element over an element.                |
+| `--selection`           | `-l`  | Get selected text in the tab.                       |
+| `--sibling <number>`    | `-b`  | Specify the sibling index.                          |
+| `--parent <number>`     | `-p`  | Specify the parent index.                           |
+| `--child <number>`      | `-d`  | Specify the child index.                            |
+| `--attr <array>`        | `-a`  | Specify a name-value attribute pair.                |
+| `--style <array>`       | `-S`  | Specify a name-value style pair.                    |
+| `--tag <string>`        | `-g`  | Specify the element tag name.                       |
+| `--content <string>`    | `-t`  | Specify the text content.                           |
+| `--html <string>`       | `-H`  | Specify the HTML content.                           |
+| `--see-content`         | `-C`  | Show text content in results.                       |
+| `--see-xpath`           | `-X`  | Show XPath(s) in results.                           |
+| `--tab-id <string>`     | `-i`  | Specify a Tab ID to apply the action.               |
+| `--below <string>`      | `-B`  | Specify an Element XPath query to apply the action. |
+| `--xpath <string>`      | `-x`  | Specify an XPath query.                             |
+| `--times <number>`      | `-m`  | Specify how many times to repeat the action.        |
+| `--from <string>`       | `-F`  | Specify the origin element XPath.                   |
+| `--to <string>`         | `-T`  | Specify the destination element XPath.              |
+| `--event-name <string>` | `-e`  | Specify the event name.                             |
+| `--help`                | `-h`  | Show help for this command.                         |
 
 ### Dependency Rules
 
@@ -99,7 +112,7 @@ When using `dom` command the options can express **8** possible actions:
 
    The option `--find` will trigger an only element search. This option is commonly used to make a concatenated search. An xpath can be passed as a parameter, then continue the search using combining it with more options.
 
-   ```bash
+```bash
    dom
        --find                                                               # REQUIRED
        --xpath '//*[@id="main-container"]'                                  # REQUIRED
@@ -109,7 +122,7 @@ When using `dom` command the options can express **8** possible actions:
        --tab-id "T00000000"                                                 # OPTIONAL
        --see-content                                                        # OPTIONAL
        --see-xpath                                                          # OPTIONAL
-   ```
+```
 
 3. Inject HTML code below an element (using `--inject`)
 
@@ -165,15 +178,15 @@ When using `dom` command the options can express **8** possible actions:
        --tab-id "T00000000"                                                 # OPTIONAL
    ```
 
-7. Dispatch an event over an element (using `--dipatch`)
+7. Dispatch an event over an element (using `--dispatch`)
 
-   The `--dipatch` will dispatch an event on a element from the DOM.
+   The `--dispatch` will dispatch an event on an element from the DOM.
 
    ```bash
    dom
-       --dipatch                                                            # REQUIRED
+       --dispatch                                                           # REQUIRED
        --event-name 'click'                                                 # REQUIRED
-       --xpath '//*[@id="main-container"]'                                  # REQUIRED
+       --xpath '//*[@id="cards-container"]'                                 # REQUIRED
        --tab-id "T00000000"                                                 # OPTIONAL
    ```
 
@@ -191,29 +204,39 @@ When using `dom` command the options can express **8** possible actions:
 
 Interact with the tabs of the browser.
 
-The `tab` command displays all data related to the current tabs active browser.
+The `tabs` command displays all data related to the browser's tabs.
 
-| Option                 | Short | Description                                                |
-| ---------------------- | ----- | ---------------------------------------------------------- |
-| `--list`               | `-l`  | List all currently open tabs.                              |
-| `--open`               | `-o`  | Open a new tab with the given URL.                         |
-| `--reload`             | `-r`  | Reload a specific tab by its identifier.                   |
-| `--switch`             | `-s`  | Switch focus to a specific tab by its identifier.          |
-| `--point`              | `-p`  | Point the terminal to a specific tab by its identifier.    |
-| `--current`            | `-C`  | Show the currently active tab.                             |
-| `--pointing`           | `-P`  | Show the tab currently targeted by the terminal.           |
-| `--close <string>`     | `-c`  | Close a specific tab by its identifier.                    |
-| `--incognito`          | `-I`  | Define whether incognito tabs should be focused.           |
-| `--muted`              | `-m`  | Define whether muted tabs should be focused.               |
-| `--unmuted`            | `-M`  | Define whether unmuted tabs should be focused.             |
-| `--wait`               | `-W`  | Define whether the action must complete before continuing. |
-| `--active`             | `-a`  | Define whether to use the current tab.                     |
-| `--title <string>`     | `-t`  | Define the title.                                          |
-| `--url <string>`       | `-u`  | Define a valid URL.                                        |
-| `--window-id <string>` | `-w`  | Define a Window ID where apply an action.                  |
-| `--group-id <string>`  | `-g`  | Define a Group ID where apply an action.                   |
-| `--tab-id <string>`    | `-i`  | Define a Tab ID where apply an action.                     |
-| `--help`               | `-h`  | Show help for this command.                                |
+| Option                 | Short | Description                                             |
+| ---------------------- | ----- | ------------------------------------------------------- |
+| `--list`               | `-l`  | List all currently open tabs.                           |
+| `--open`               | `-o`  | Open a new tab with the given URL.                      |
+| `--reload`             | `-r`  | Reload a specific tab by its identifier.                |
+| `--switch`             | `-s`  | Switch focus to a specific tab by its identifier.       |
+| `--point`              | `-p`  | Point the terminal to a specific tab by its identifier. |
+| `--current`            | `-C`  | Show the currently active tab.                          |
+| `--pointing`           | `-P`  | Show the tab currently targeted by the terminal.        |
+| `--close <string>`     | `-c`  | Close a specific tab by its identifier.                 |
+| `--incognito`          | `-I`  | Include incognito tabs.                                 |
+| `--muted`              | `-m`  | Include muted tabs.                                     |
+| `--unmuted`            | `-M`  | Include unmuted tabs.                                   |
+| `--wait`               | `-W`  | Wait for the action to complete before continuing.      |
+| `--active`             | `-a`  | Use the current tab.                                    |
+| `--title <string>`     | `-t`  | Specify a title filter.                                 |
+| `--url <string>`       | `-u`  | Specify a valid URL.                                    |
+| `--window-id <string>` | `-w`  | Define a Window ID where apply an action.               |
+| `--group-id <string>`  | `-g`  | Define a Group ID where apply an action.                |
+| `--tab-id <string>`    | `-i`  | Specify a Tab ID to apply the action.                   |
+| `--help`               | `-h`  | Show help for this command.                             |
+
+### Example
+
+```bash
+# Open a new tab and set it active
+tabs --open --url "https://example.com" --wait --active
+
+# List tabs with titles matching "Example"
+tabs --list --title "Example"
+```
 
 ### Dependency Rules
 
@@ -313,16 +336,26 @@ Interact with the tabs of the browser.
 
 The `history` command displays all data related to the old tabs open in the browser.
 
-| Option                   | Short | Description                             |
-| ------------------------ | ----- | --------------------------------------- |
-| `--list`                 | `-l`  | Show a list of previously opened pages. |
-| `--delete`               | `-d`  | Delete pages in a specific date range.  |
-| `--title <string>`       | `-t`  | Define the title.                       |
-| `--url <string>`         | `-u`  | Define a valid URL.                     |
-| `--max-results <number>` | `-r`  | Define the limit of items displayed.    |
-| `--from <string>`        | `-F`  | Define the start date.                  |
-| `--to <string>`          | `-T`  | Define the end date.                    |
-| `--help`                 | `-h`  | Show help for this command.             |
+| Option                   | Short | Description                                     |
+| ------------------------ | ----- | ----------------------------------------------- |
+| `--list`                 | `-l`  | Show a list of previously opened pages.         |
+| `--delete`               | `-d`  | Delete pages in a specific date range.          |
+| `--title <string>`       | `-t`  | Specify a title filter.                         |
+| `--url <string>`         | `-u`  | Specify a valid URL.                            |
+| `--max-results <number>` | `-r`  | Specify the maximum number of items to display. |
+| `--from <string>`        | `-F`  | Specify the start date.                         |
+| `--to <string>`          | `-T`  | Specify the end date.                           |
+| `--help`                 | `-h`  | Show help for this command.                     |
+
+### Example
+
+```bash
+# List recent history entries
+history --list --max-results 10
+
+# Delete history between two datetimes
+history --delete --from "2026-01-01T00:00:00Z" --to "2026-01-31T23:59:59Z"
+```
 
 ### Dependency Rules
 
@@ -362,12 +395,22 @@ The `request` command is a bridge to the Fetch API of the browser.
 | Option                    | Short | Description                            |
 | ------------------------- | ----- | -------------------------------------- |
 | `--fetch`                 | `-l`  | Start an API request.                  |
-| `--headers <[header ..]>` | `-u`  | Define the request headers.            |
+| `--headers <[header ..]>` | `-u`  | Specify the request headers.           |
 | `--method <method>`       | `-F`  | Define a HTTP method.                  |
-| `--payload <json>`        | `-r`  | Define the payload.                    |
+| `--payload <json>`        | `-r`  | Specify the request payload.           |
 | `--read-as <string>`      | `-T`  | Define how response should be read as. |
-| `--url <url>`             | `-t`  | Define a valid URL.                    |
+| `--url <url>`             | `-t`  | Specify a valid URL.                   |
 | `--help`                  | `-h`  | Show help for this command.            |
+
+### Example
+
+```bash
+# Simple GET request and read JSON
+request --fetch --url "https://api.example.com/items" --method "GET" --read-as "json"
+
+# POST with payload
+request --fetch --url "https://api.example.com/items" --method "POST" --payload '{"name":"test"}'
+```
 
 ### Dependency Rules
 
@@ -393,14 +436,24 @@ Interact with the aliases/shortcut of commands on Term-O.
 
 The `alias` command is a bridge to manage aliases of commands in the terminal.
 
-| Option                       | Short | Description                                   |
-| ---------------------------- | ----- | --------------------------------------------- |
-| `--list`                     | `-l`  | List all defined aliases.                     |
-| `--add`                      | `-a`  | Add a new alias and the associated command.   |
-| `--delete`                   | `-d`  | Remove an alias by name.                      |
-| `--name <aliasname>`         | `-n`  | Define the name of the alias.                 |
-| `--command <executableline>` | `-c`  | Define the command associated with the alias. |
-| `--help`                     | `-h`  | Show help for this command.                   |
+| Option                       | Short | Description                                    |
+| ---------------------------- | ----- | ---------------------------------------------- |
+| `--list`                     | `-l`  | List all defined aliases.                      |
+| `--add`                      | `-a`  | Add a new alias and the associated command.    |
+| `--delete`                   | `-d`  | Remove an alias by name.                       |
+| `--name <aliasname>`         | `-n`  | Specify the alias name.                        |
+| `--command <executableline>` | `-c`  | Specify the command associated with the alias. |
+| `--help`                     | `-h`  | Show help for this command.                    |
+
+### Example
+
+```bash
+# List aliases
+alias --list
+
+# Add a new alias
+alias --add --name "gotest" --command 'tabs --open --url "https://test.com" --wait'
+```
 
 ### Dependency Rules
 
@@ -453,6 +506,16 @@ The `style` command is a bridge elements styles or just styles API related.
 | `--style <array>`  | `-S`  | Define a name-value style pair.                            |
 | `--help`           | `-h`  | Show help for this command.                                |
 
+### Example
+
+```bash
+# Apply inline style to an element
+style --apply --style ["display" "none"] --xpath '//*[@id="cards-container"]'
+
+# Pick a color from the page (interactive)
+style --color-pick
+```
+
 ### Dependency Rules
 
 When using `style` command the options can express **3** possible actions:
@@ -499,10 +562,20 @@ The `inspect` command is a bridge to review global variables in the global objec
 | `--read`            | `-r`  | Read a variable from the global context of the Tab.        |
 | `--match`           | `-m`  | Match a given query within an input value.                 |
 | `--path <string>`   | `-p`  | Define a variable path.                                    |
-| `--tab-id <string>` | `-i`  | Define a Tab ID where apply an action.                     |
+| `--tab-id <string>` | `-i`  | Specify a Tab ID to apply the action.                      |
 | `--query <string>`  | `-q`  | Define a regular expression used to match within an input. |
-| `--input <string>`  | `-i`  | Define a user input.                                       |
+| `--input <string>`  | `-I`  | Define a user input.                                       |
 | `--help`            | `-h`  | Show help for this command.                                |
+
+### Example
+
+```bash
+# Read a global property from the current tab
+inspect --read --path "window.navigator.userAgent"
+
+# Inspect a value inside a JSON input
+inspect --read --input '{"test":3}' --path "test"
+```
 
 ### Dependency Rules
 
@@ -548,15 +621,22 @@ Interact with visual notifications inside a tab.
 
 The `notify` command is a bridge to manage visual notifications on a tab.
 
-| Option               | Short | Description                            |
-| -------------------- | ----- | -------------------------------------- |
-| `--create`           | `-c`  | Create a notification.                 |
-| `--tab-id <tabid>`   | `-i`  | Define a Tab ID where apply an action. |
-| `--title <string>`   | `-t`  | Define the title.                      |
-| `--message <string>` | `-m`  | Define the message.                    |
-| `--icon <string>`    | `-I`  | Define the icon used.                  |
-| `--color <string>`   | `-C`  | Define the color used.                 |
-| `--help`             | `-h`  | Show help for this command.            |
+| Option               | Short | Description                           |
+| -------------------- | ----- | ------------------------------------- |
+| `--create`           | `-c`  | Create a notification.                |
+| `--tab-id <tabid>`   | `-i`  | Specify a Tab ID to apply the action. |
+| `--title <string>`   | `-t`  | Specify the notification title.       |
+| `--message <string>` | `-m`  | Specify the notification message.     |
+| `--icon <string>`    | `-I`  | Specify the icon to show.             |
+| `--color <string>`   | `-C`  | Specify the notification color.       |
+| `--help`             | `-h`  | Show help for this command.           |
+
+### Example
+
+```bash
+# Create a visual notification in the current tab
+notify --create --title "Hi" --message "This is a test" --icon "success"
+```
 
 ### Dependency Rules
 
@@ -582,21 +662,31 @@ Interact with the storage API and clipboard API at any tab.
 
 The `storage` command is a bridge to the storage API and clipboard API at any tab.
 
-| Option              | Short | Description                                             |
-| ------------------- | ----- | ------------------------------------------------------- |
-| `--list`            | `-l`  | List all storage key-values.                            |
-| `--set`             | `-s`  | Set a key-value pair in the selected storage.           |
-| `--get`             | `-g`  | Get storage data.                                       |
-| `--copy`            | `-c`  | Copy a value to the clipboard.                          |
-| `--local`           | `-L`  | Define whether the local storage should be displayed.   |
-| `--session`         | `-S`  | Define whether the session storage should be displayed. |
-| `--cookie`          | `-C`  | Define whether the cookie storage should be displayed.  |
-| `--see-json`        | `-j`  | Define whether the JSON format should be displayed.     |
-| `--tab-id <string>` | `-i`  | Define a Tab ID where apply an action.                  |
-| `--key <string>`    | `-k`  | Define a storage key.                                   |
-| `--input <string>`  | `-I`  | Define a user input.                                    |
-| `--data <array>`    | `-d`  | Define a key-value pair.                                |
-| `--help`            | `-h`  | Show help for this command.                             |
+| Option              | Short | Description                                   |
+| ------------------- | ----- | --------------------------------------------- |
+| `--list`            | `-l`  | List all storage key-values.                  |
+| `--set`             | `-s`  | Set a key-value pair in the selected storage. |
+| `--get`             | `-g`  | Get storage data.                             |
+| `--copy`            | `-c`  | Copy a value to the clipboard.                |
+| `--local`           | `-L`  | Target local storage.                         |
+| `--session`         | `-S`  | Target session storage.                       |
+| `--cookie`          | `-C`  | Target cookie storage.                        |
+| `--see-json`        | `-j`  | Display results as JSON.                      |
+| `--tab-id <string>` | `-i`  | Specify a Tab ID to apply the action.         |
+| `--key <string>`    | `-k`  | Define a storage key.                         |
+| `--input <string>`  | `-I`  | Define a user input.                          |
+| `--data <array>`    | `-d`  | Define a key-value pair.                      |
+| `--help`            | `-h`  | Show help for this command.                   |
+
+### Example
+
+```bash
+# Set a key in session storage
+storage --set --session --data ["lastSearch" "term-o"]
+
+# Get a key from local storage
+storage --get --key "lastSearch" --local
+```
 
 ### Dependency Rules
 
@@ -609,9 +699,9 @@ When using `storage` command the options can express **4** possible action:
    ```bash
    storage
        --list                                                               # REQUIRED
-       --local                                                              # |
+       --local                                                              # -
        --session                                                            # | ONE REQUIRED
-       --cookie                                                             # |
+       --cookie                                                             # -
        --tab-id "T00000000"                                                 # OPTIONAL
        --data ["test-" "-value"]                                            # OPTIONAL
        --see-json                                                           # OPTIONAL
@@ -619,14 +709,14 @@ When using `storage` command the options can express **4** possible action:
 
 2. Set a value in a certain storage in a certain tab (using `--set`)
 
-   The `--set` will assigned a value in a ceratin tab at a certain tab.
+   The `--set` assigns a value in a certain storage in a certain tab.
 
    ```bash
    storage
        --set                                                                # REQUIRED
-       --local                                                              # |
+       --local                                                              # -
        --session                                                            # | ONE REQUIRED
-       --cookie                                                             # |
+       --cookie                                                             # -
        --data ["test-name" "test-value"]                                    # REQUIRED/REPEATABLE
        --tab-id "T00000000"                                                 # OPTIONAL
    ```
@@ -639,9 +729,9 @@ When using `storage` command the options can express **4** possible action:
    storage
        --get                                                                # REQUIRED
        --key "test-value"                                                   # REQUIRED
-       --local                                                              # |
+       --local                                                              # -
        --session                                                            # | ONE REQUIRED
-       --cookie                                                             # |
+       --cookie                                                             # -
        --tab-id "T00000000"                                                 # OPTIONAL
    ```
 
@@ -659,14 +749,21 @@ When using `storage` command the options can express **4** possible action:
 
 The `events` command is a bridge to the page events API and DOM element events.
 
-| Option                | Short | Description                                  |
-| --------------------- | ----- | -------------------------------------------- |
-| `--register`          | `-r`  | Register a new command for future execution. |
-| `--list`              | `-l`  | List all registered events.                  |
-| `--delete`            | `-d`  | Delete a registered event by its identifier. |
-| `--debounce <number>` | `-D`  | Define the debounce time of the event.       |
-| `--event <array>`     | `-e`  | Define a type-url-command event tuple.       |
-| `--event-id <string>` | `-E`  | Define the event identifier.                 |
+| Option                | Short | Description                                   |
+| --------------------- | ----- | --------------------------------------------- |
+| `--register`          | `-r`  | Register a new command for future execution.  |
+| `--list`              | `-l`  | List all registered events.                   |
+| `--delete`            | `-d`  | Delete a registered event by its identifier.  |
+| `--debounce <number>` | `-D`  | Specify the debounce time (ms) for the event. |
+| `--event <array>`     | `-e`  | Specify a type-url-command event tuple.       |
+| `--event-id <string>` | `-E`  | Specify the event identifier.                 |
+
+### Example
+
+```bash
+# Register a page event that runs a command when the page loads
+events --register --event ["tab-loaded" "https://example.com" "dom -s"] --debounce 80
+```
 
 ### Dependency Rules
 
@@ -706,11 +803,17 @@ When using `events` command the options can express **3** possible action:
 
 The `input` command is a bridge to UI terminal requests.
 
-| Option     | Short | Description                         |
-| ---------- | ----- | ----------------------------------- |
-| `--text`   | `-t`  | Request user input in terminal.     |
-| `--tab-id` | `-i`  | Specify a tab ID to take action on. |
-| `--help`   | `-h`  | Show help for this command.         |
+| Option   | Short | Description                     |
+| -------- | ----- | ------------------------------- |
+| `--text` | `-t`  | Request user input in terminal. |
+| `--help` | `-h`  | Show help for this command.     |
+
+### Example
+
+```bash
+# Request a text input from the terminal
+input --text
+```
 
 ### Dependency Rules
 
@@ -736,9 +839,17 @@ The `theme` command is a bridge to manage the theme in Term-O.
 | `--delete`              | `-d`  | Delete a theme by its name.           |
 | `--apply`               | `-a`  | Apply a theme by name.                |
 | `--current`             | `-C`  | Show the currently applied theme.     |
-| `--theme-json <string>` | `-t`  | Define the Theme in JSON-String.      |
-| `--name <string>`       | `-n`  | Define the name of the theme.         |
+| `--theme-json <string>` | `-t`  | Specify the theme JSON string.        |
+| `--name <string>`       | `-n`  | Specify the name of the theme.        |
 | `--help`                | `-h`  | Show help for this command.           |
+
+### Example
+
+```bash
+# Import and apply a theme
+theme --import --theme-json '{"name":"dark","colors":{}}'
+theme --apply --name "dark"
+```
 
 ### Dependency Rules
 
@@ -796,21 +907,31 @@ When using `theme` command the options can express **5** possible actions:
 
 ## ADDONS
 
-The `theme` command is a bridge to manage the addons in Term-O.
+The `addons` command is a bridge to manage addons in Term-O.
 
 An addon is a new command added to Term-O.
 
-| Option              | Short | Description                      |
-| ------------------- | ----- | -------------------------------- |
-| `--list`            | `-l`  | List all addons.                 |
-| `--upload`          | `-u`  | Upload a file to add as a addon. |
-| `--delete <string>` | `-d`  | Delete a addon by name.          |
-| `--name`            | `-n`  | Define the name of the addon.    |
-| `--help`            | `-h`  | Show help for this command.      |
+| Option              | Short | Description                       |
+| ------------------- | ----- | --------------------------------- |
+| `--list`            | `-l`  | List all addons.                  |
+| `--upload`          | `-u`  | Upload a file to add as an addon. |
+| `--delete <string>` | `-d`  | Delete an addon by name.          |
+| `--name`            | `-n`  | Specify the name of the addon.    |
+| `--help`            | `-h`  | Show help for this command.       |
+
+### Example
+
+```bash
+# Upload an addon (interactive file picker)
+addons --upload
+
+# List installed addons
+addons --list
+```
 
 ### Dependency Rules
 
-When using `theme` command the options can express **3** possible actions:
+When using `addons` command the options can express **3** possible actions:
 
 1. Create a summary of all addons available (using `--list`)
 
@@ -836,14 +957,85 @@ When using `theme` command the options can express **3** possible actions:
    The option `--upload` will trigger a file picker to show up asking for an addon in JSON format. Here is an example of how specific it can be:
 
    ```bash
-   theme
-       --upload                                                             # REQUIRED
+   addons
+      --upload                                                             # REQUIRED
    ```
 
    Please, see [addon-example.json](assets/addon-example.json) to find a more detailed example of a valid addon.
+
+## URL
+
+The `url` command manages the URL of the current tab.
+
+| Option                  | Short | Description                                 |
+| ----------------------- | ----- | ------------------------------------------- |
+| `--get <boolean>`       | `-g`  | Get property from current URL.              |
+| `--set <boolean>`       | `-s`  | Set a property from current URL.            |
+| `--host <boolean>`      | `-o`  | Get the current URL host.                   |
+| `--pathname <boolean>`  | `-p`  | Get the current URL pathname.               |
+| `--href <boolean>`      | `-H`  | Get the full current URL.                   |
+| `--hash <boolean>`      | `-a`  | Get the current URL hash.                   |
+| `--search <boolean>`    | `-S`  | Get the current URL search string.          |
+| `--as-params <boolean>` | `-P`  | Get the current URL search/hash parameters. |
+| `--tab-id <string>`     | `-i`  | Specify a Tab ID to apply the action.       |
+| `--value <string>`      | `-v`  | Specify the value.                          |
+| `--param <array>`       | `-r`  | Specify a parameter key/value pair.         |
+| `--help`                | `-h`  | Show help for this command.                 |
+
+### Example
+
+```bash
+# Get the full href of the current tab
+url --get --href
+
+# Set the current tab URL
+url --set --search --as-params --param ["ref" "123"]
+url --set --search --value "ref=123"
+url --set --href --value "https://www.example.com"
+```
+
+### Dependency Rules
+
+When using `url` command the options can express **2** possible actions:
+
+1. Get an URL attribute (using `--get`)
+
+   ```bash
+   url
+       --get                                                                # REQUIRED
+       --host                                                               # -
+       --pathname                                                           # |
+       --href                                                               # | ONE REQUIRED
+       --search                                                             # |
+       --hash                                                               # -
+       --tab-id "T00000000"                                                 # OPTIONAL
+   ```
+
+2. Set an URL attribute (using `--set`)
+
+   ```bash
+   url
+       --set                                                                # REQUIRED
+       --host                                                               # -
+       --pathname                                                           # |
+       --href                                                               # | ONE REQUIRED
+       --search                                                             # |
+       --hash                                                               # -
+       --value "test"                                                       # -
+       --as-params                                                          # | ONE REQUIRED
+       --param ["key" "value"]                                              # -
+       --tab-id "T00000000"                                                 # OPTIONAL
+   ```
 
 ## CLEAR
 
 Interact with the clean up of the UI terminal.
 
-This command does not expect for any option, its only porpuse is to clean the terminal when called.
+This command does not expect any option; its only purpose is to clear the terminal when called.
+
+### Example
+
+```bash
+# Clear the terminal
+clear
+```

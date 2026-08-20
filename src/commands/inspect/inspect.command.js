@@ -16,8 +16,8 @@ export default new CommandBase({
     description: 'Read a variable from the global context of the Tab',
     validate: [
       options.allow('input', 'path', 'tab-id'),
-      options.when('input', [options.requireAll('path')]),
-      options.requireAnyOf('path', 'input')
+      options.when('input', [options.mustHave('path')]),
+      options.requireOneOf('path', 'input')
     ]
   })
   .expect({
@@ -26,37 +26,37 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Match a given query within an input value',
-    validate: [options.requireAll('input', 'query')]
+    validate: [options.mustHave('input', 'query')]
   })
   .expect({
     name: 'path',
     abbreviation: 'p',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a variable path',
-    validate: [options.requireAnyOf('read')]
+    description: 'Specify a variable path',
+    validate: [options.requireOneOf('read')]
   })
   .expect({
     name: 'tab-id',
     abbreviation: 'i',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a Tab ID where apply an action',
-    validate: [value.isTabId, options.requireAnyOf('read')]
+    description: 'Specify a Tab ID to apply the action',
+    validate: [value.isTabId, options.requireOneOf('read')]
   })
   .expect({
     name: 'query',
     abbreviation: 'q',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a regular expression used to match within an input',
-    validate: [value.isRegExp, options.requireAnyOf('match')]
+    description: 'Specify a regular expression to match within an input',
+    validate: [value.isRegExp, options.requireOneOf('match')]
   })
   .expect({
     name: 'input',
     abbreviation: 'I',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a user input',
-    validate: [options.requireAnyOf('match', 'read'), options.when('read', [value.isJSON])]
+    description: 'Specify a user input',
+    validate: [options.requireOneOf('match', 'read'), options.when('read', [value.isJSON])]
   })

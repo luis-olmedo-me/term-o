@@ -14,13 +14,13 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Create an error',
-    validate: [options.requireAll('title')]
+    validate: [options.mustHave('title')]
   })
   .expect({
     name: 'title',
     abbreviation: 't',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define the title',
-    validate: [options.requireAnyOf('create')]
+    description: 'Specify the title',
+    validate: [options.requireOneOf('create')]
   })

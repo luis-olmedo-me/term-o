@@ -16,7 +16,7 @@ export default new CommandBase({
     description: 'List all storage key-values',
     validate: [
       options.allow('local', 'session', 'cookie', 'see-json', 'tab-id', 'data'),
-      options.requireAnyOf('local', 'session', 'cookie')
+      options.requireOneOf('local', 'session', 'cookie')
     ]
   })
   .expect({
@@ -27,8 +27,8 @@ export default new CommandBase({
     description: 'Set a key-value pair in the selected storage',
     validate: [
       options.allow('local', 'session', 'cookie', 'data', 'tab-id'),
-      options.requireAnyOf('local', 'session', 'cookie'),
-      options.requireAll('data')
+      options.requireOneOf('local', 'session', 'cookie'),
+      options.mustHave('data')
     ]
   })
   .expect({
@@ -37,7 +37,7 @@ export default new CommandBase({
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.ACTIONS,
     description: 'Copy a value to the clipboard',
-    validate: [options.requireAll('input')]
+    validate: [options.mustHave('input')]
   })
   .expect({
     name: 'get',
@@ -47,7 +47,7 @@ export default new CommandBase({
     description: 'Get storage data',
     validate: [
       options.allow('local', 'session', 'cookie', 'see-json', 'tab-id', 'key'),
-      options.requireAnyOf('local', 'session', 'cookie')
+      options.requireOneOf('local', 'session', 'cookie')
     ]
   })
   .expect({
@@ -55,68 +55,71 @@ export default new CommandBase({
     abbreviation: 'L',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
-    description: 'Define whether the local storage should be displayed',
-    validate: [options.requireAnyOf('list', 'set', 'get'), options.conflict('session', 'cookie')]
+    description: 'Specify whether to target local storage',
+    validate: [
+      options.requireOneOf('list', 'set', 'get'),
+      options.conflictWith('session', 'cookie')
+    ]
   })
   .expect({
     name: 'session',
     abbreviation: 'S',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
-    description: 'Define whether the session storage should be displayed',
-    validate: [options.requireAnyOf('list', 'set', 'get'), options.conflict('local', 'cookie')]
+    description: 'Specify whether to target session storage',
+    validate: [options.requireOneOf('list', 'set', 'get'), options.conflictWith('local', 'cookie')]
   })
   .expect({
     name: 'cookie',
     abbreviation: 'C',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
-    description: 'Define whether the cookie storage should be displayed',
-    validate: [options.requireAnyOf('list', 'set', 'get'), options.conflict('local', 'session')]
+    description: 'Specify whether to target cookie storage',
+    validate: [options.requireOneOf('list', 'set', 'get'), options.conflictWith('local', 'session')]
   })
   .expect({
     name: 'see-json',
     abbreviation: 'j',
     type: commandTypes.BOOLEAN,
     helpSection: helpSections.DETAILS,
-    description: 'Define whether the JSON format should be displayed',
-    validate: [options.requireAnyOf('list')]
+    description: 'Specify whether to display JSON format',
+    validate: [options.requireOneOf('list')]
   })
   .expect({
     name: 'tab-id',
     abbreviation: 'i',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a Tab ID where apply an action',
-    validate: [value.isTabId, options.requireAnyOf('list')]
+    description: 'Specify a Tab ID to apply the action',
+    validate: [value.isTabId, options.requireOneOf('list')]
   })
   .expect({
     name: 'input',
     abbreviation: 'I',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a user input',
-    validate: [options.requireAnyOf('copy')]
+    description: 'Specify a user input',
+    validate: [options.requireOneOf('copy')]
   })
   .expect({
     name: 'key',
     abbreviation: 'k',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a storage key',
-    validate: [options.requireAnyOf('get')]
+    description: 'Specify a storage key',
+    validate: [options.requireOneOf('get')]
   })
   .expect({
     name: 'data',
     abbreviation: 'D',
     type: commandTypes.ARRAY,
     helpSection: helpSections.DETAILS,
-    description: 'Define a key-value pair',
+    description: 'Specify a key-value pair',
     repeatable: true,
     validate: [
       array.hasAllItemsAs(value.isArray, array.hasAllItemsAs(value.isString)),
       options.when('set', [array.hasAllItemsAs(array.hasLength(2))]),
       options.when('list', [array.hasAllItemsAs(array.hasLengthBetween(1, 2))]),
-      options.requireAnyOf('set', 'list')
+      options.requireOneOf('set', 'list')
     ]
   })

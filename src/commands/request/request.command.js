@@ -17,7 +17,7 @@ export default new CommandBase({
     description: 'Start an API request',
     validate: [
       options.allow('headers', 'method', 'payload', 'read-as', 'url'),
-      options.requireAll('url')
+      options.mustHave('url')
     ]
   })
   .expect({
@@ -25,7 +25,7 @@ export default new CommandBase({
     abbreviation: 'H',
     type: commandTypes.ARRAY,
     helpSection: helpSections.DETAILS,
-    description: 'Define the request headers',
+    description: 'Specify the request headers',
     repeatable: true,
     validate: [
       array.hasAllItemsAs(
@@ -34,7 +34,7 @@ export default new CommandBase({
         array.hasAllItemsAs(value.isString),
         array.hasItemAs(0, value.isSpaceForbidden)
       ),
-      options.requireAnyOf('fetch')
+      options.requireOneOf('fetch')
     ]
   })
   .expect({
@@ -42,32 +42,32 @@ export default new CommandBase({
     abbreviation: 'p',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define the payload',
-    validate: [value.isJSON, options.requireAnyOf('fetch')]
+    description: 'Specify the request payload',
+    validate: [value.isJSON, options.requireOneOf('fetch')]
   })
   .expect({
     name: 'method',
     abbreviation: 'm',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a HTTP method',
+    description: 'Specify an HTTP method',
     defaultValue: 'GET',
-    validate: [options.requireAnyOf('fetch')]
+    validate: [options.requireOneOf('fetch')]
   })
   .expect({
     name: 'url',
     abbreviation: 'u',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define a valid URL',
-    validate: [value.isURL, options.requireAnyOf('fetch')]
+    description: 'Specify a valid URL',
+    validate: [value.isURL, options.requireOneOf('fetch')]
   })
   .expect({
     name: 'read-as',
     abbreviation: 'r',
     type: commandTypes.STRING,
     helpSection: helpSections.DETAILS,
-    description: 'Define how response should be read as',
-    validate: [value.isAnyOf(responseFormatSupported), options.requireAnyOf('fetch')],
+    description: 'Specify how the response should be read',
+    validate: [value.isAnyOf(responseFormatSupported), options.requireOneOf('fetch')],
     defaultValue: 'json'
   })

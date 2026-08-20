@@ -226,7 +226,7 @@ export const allow = (...dependencies) => {
   }
 }
 
-export const requireAll = (...dependencies) => {
+export const mustHave = (...dependencies) => {
   return (option, _value, props, manager) => {
     const propNames = Object.keys(props)
     const missingDependencies = dependencies.filter(dependency => !propNames.includes(dependency))
@@ -246,7 +246,7 @@ export const requireAll = (...dependencies) => {
   }
 }
 
-export const requireAnyOf = (...dependencies) => {
+export const requireOneOf = (...dependencies) => {
   return (option, _value, props, manager) => {
     const propNames = Object.keys(props)
     const possibles = dependencies.concat(option.name)
@@ -267,7 +267,7 @@ export const requireAnyOf = (...dependencies) => {
   }
 }
 
-export const conflict = (...dependencies) => {
+export const conflictWith = (...dependencies) => {
   return (option, _value, props, manager) => {
     const names = Object.keys(props)
     const conflictingDependencies = dependencies.filter(dependency => names.includes(dependency))
@@ -344,9 +344,9 @@ export const array = {
 
 export const options = {
   allow,
-  requireAll,
-  requireAnyOf,
+  mustHave,
+  requireOneOf,
   requireNoOther,
-  conflict,
+  conflictWith,
   when
 }

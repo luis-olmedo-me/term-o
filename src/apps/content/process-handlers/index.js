@@ -1,4 +1,5 @@
 import applyElementStyles from './apply-element-styles.process'
+import changeUrl from './change-url.process'
 import createElement from './create-element.process'
 import createNotification from './create-notification.process'
 import findDOMElement from './find-dom-element.process'
@@ -17,6 +18,7 @@ import { processNames } from '@src/constants/process.constants'
 
 export default {
   [processNames.APPLY_ELEMENT_STYLES]: applyElementStyles,
+  [processNames.CHANGE_URL]: changeUrl,
   [processNames.CREATE_ELEMENT]: createElement,
   [processNames.CREATE_NOTIFICATION]: createNotification,
   [processNames.FIND_DOM_ELEMENT]: findDOMElement,

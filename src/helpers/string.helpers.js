@@ -65,3 +65,7 @@ export const quotify = value => {
 export const truncate = (value, maxCount) => {
   return value.length > maxCount ? `${value.slice(0, maxCount)}...` : value
 }
+
+export const unquotify = value => {
+  return value.slice(1, -1)
+}

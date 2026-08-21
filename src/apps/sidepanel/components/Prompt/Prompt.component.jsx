@@ -3,12 +3,13 @@ import { useEffect, useRef, useState } from 'preact/hooks'
 import ColoredText from '@src/components/ColoredText'
 import useDebouncedCallback from '@src/hooks/useDebouncedCallback'
 import useStorage from '@src/hooks/useStorage'
+import Logo from '@src/icons/Logo.icon'
 
 import { eventNames } from '@sidepanel/constants/events.constants'
-import { configInputIds, PROMPT_MARK } from '@src/constants/config.constants'
+import { configInputIds } from '@src/constants/config.constants'
+import { iconSizes } from '@src/constants/icon.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { insert } from '@src/helpers/string.helpers'
-import { global__loader } from '@styles/global.module.scss'
 import { createSuggestion } from './Prompt.helpers'
 import {
   prompt,
@@ -188,18 +189,12 @@ export const Prompt = ({
     setCaret(isSelecting ? null : event.target.selectionStart)
   }
 
-  const prefix = historialIndex || PROMPT_MARK
   const start = caret !== null ? value.slice(0, caret) : value
   const end = caret !== null ? value.slice(caret) : ''
   const isLoading = loading && !isRequesting
 
   return (
-    <div
-      className={`
-        ${prompt}
-        ${loading ? global__loader : ''}
-      `}
-    >
+    <div className={prompt}>
       <p
         className={`
           ${prompt__line}
@@ -211,7 +206,11 @@ export const Prompt = ({
       </p>
 
       <div className={prompt__input_line}>
-        <span className={prompt__mark}>{prefix}</span>
+        {historialIndex ? (
+          <span className={prompt__mark}>{historialIndex}</span>
+        ) : (
+          <Logo size={iconSizes.XS} monocromatic={!isLoading} />
+        )}
 
         <div className={prompt__input}>
           <div ref={overlayRef} className={prompt__overlay}>

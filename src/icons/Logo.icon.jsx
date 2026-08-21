@@ -4,7 +4,7 @@ import { iconPropType } from '@src/constants/icon.constants'
 import { storageKeys } from '@src/constants/storage.constants'
 import { getColorsByTheme } from '@src/helpers/icon.helpers'
 
-const Logo = ({ size, className }) => {
+const Logo = ({ size, className, monocromatic }) => {
   const [config] = useStorage({ key: storageKeys.CONFIG })
 
   const theme = config.theme
@@ -20,7 +20,7 @@ const Logo = ({ size, className }) => {
     >
       <path
         d="M18.284 10.406a1.99 1.99 0 0 1 0 2.825l-7.232 7.346a1.95 1.95 0 0 1-2.782 0l-.834-.848a1.99 1.99 0 0 1 0-2.825l5.006-5.085-.278-.283a2.36 2.36 0 0 1 0-3.39l.278-.282a2.33 2.33 0 0 1 3.338 0z"
-        fill={colors.primary.fill}
+        fill={monocromatic ? colors.secondary.fill : colors.primary.fill}
         stroke={colors.primary.stroke}
         stroke-opacity={colors.primary.strokeOpacity}
         stroke-width={colors.primary.strokeWidth}
@@ -42,6 +42,6 @@ const Logo = ({ size, className }) => {
   )
 }
 
-Logo.propTypes = iconPropType
+Logo.propTypes = { ...iconPropType, monocromatic: Boolean }
 
 export default Logo

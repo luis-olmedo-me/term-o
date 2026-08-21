@@ -15,7 +15,6 @@ import {
   themeVariants
 } from './themes.constants'
 
-export const PROMPT_MARK = '❯'
 export const DEFAULT_CONTEXT = '{tbg:purple}{tab_id}{tbg:brightBlack}/{tbg:blue}{host}'
 
 export const configIds = {
